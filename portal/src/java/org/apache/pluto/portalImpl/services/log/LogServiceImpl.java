@@ -57,9 +57,6 @@
 
 package org.apache.pluto.portalImpl.services.log;
 
-import org.apache.pluto.portalImpl.util.Properties;
-import org.apache.pluto.portalImpl.services.Service;
-import org.apache.pluto.services.log.*;
 import org.apache.pluto.services.log.Logger;
 import org.apache.commons.logging.LogFactory;
 
