@@ -15,8 +15,6 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
@@ -88,9 +86,5 @@ public class WebAppDDTest extends TestCase {
         assertEquals(servlets[0], dd.getServletMapping("/test/one"));
         assertEquals(servlets[1], dd.getServletMapping("/two"));
     }
-
-
-
-
 }
 
