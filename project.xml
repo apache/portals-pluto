@@ -53,9 +53,9 @@ limitations under the License.
   <siteDirectory>/www/portals.apache.org/pluto/</siteDirectory>
 
   <repository>
-    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-pluto</connection>
-    <developerConnection>scm:cvs:ext:${maven.username}@cvs.apache.org:/home/cvs:jakarta-pluto</developerConnection>
-    <url>http://cvs.apache.org/viewcvs/jakarta-pluto/</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/trunk</developerConnection>
+    <url>http://svn.apache.org/repos/asf/portals/pluto/trunk</url>
   </repository>
 
   <mailingLists>

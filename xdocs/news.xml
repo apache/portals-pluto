@@ -23,6 +23,13 @@ limitations under the License.
 
 <body>
   <section name="News">
+    <subsection name="July/August 2004 - Pluto moved out of the Incubator">
+      <p>The Pluto Project is now a sub project under the portals PMC and
+       has moved out of the incubator. This move comes with some changes
+       regarding mailing addresses etc. In addition Pluto now uses Subversion
+       instead of CVS.
+      </p>
+    </subsection>
     <subsection name="21 March 2004 - Pluto Declaration of Intent Finalized">
       <p>The Pluto Community has finalized a declaration of intent which
          clarifies the direction with which Pluto development will
