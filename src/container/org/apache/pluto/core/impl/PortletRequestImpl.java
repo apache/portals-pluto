@@ -427,10 +427,17 @@ implements PortletRequest, InternalPortletRequest
         {
             throw new IllegalArgumentException("Attribute name == null");
         }
+        if (isNameReserved(name))
+        {
+            // Reserved names go directly in the underlying request
+            _getHttpServletRequest().removeAttribute(name);
+        }
+        else
+        {
 
-        this._getHttpServletRequest().removeAttribute(
-                                                     NamespaceMapperAccess.getNamespaceMapper().encode(portletWindow.getId(), name)
-                                                     );
+            this._getHttpServletRequest().
+              removeAttribute(NamespaceMapperAccess.getNamespaceMapper().encode(portletWindow.getId(), name));
+        }                                                  
     }
 
     public String getRequestedSessionId()
