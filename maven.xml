@@ -137,7 +137,7 @@ limitations under the License.
     />
   </goal>
 
-  <goal name="distribute:binary" prereqs="distribute:init,multiproject:install">
+  <goal name="distribute:binary" prereqs="distribute:init,multiproject:install,multiproject:site">
     <!-- Set Some Default Properties -->
     <j:set var="dist.tomcat" 
            value="http://www.apache.org/dist/jakarta/tomcat-5/v5.0.28/bin/jakarta-tomcat-5.0.28.tar.gz"/>
@@ -168,14 +168,21 @@ limitations under the License.
 
     <!-- Cleanup the tomcat distribution; purge unwanted examples. -->
     <delete>
-      <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/webapps" includes="**/*" excludes="ROOT/*"/>
+      <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/webapps" includes="**"/>
+      <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/webapps" includes="**/*.*"/>
       <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/conf/Catalina/localhost" includes="**/*"/>
     </delete>
+
 
     <!-- Deploy Pluto (and it's licenses)! -->
     <copy todir="${maven.dist.dir}/${plutobin.dist.name}">
       <fileset dir="${basedir}" includes="LICENSE*"/>
       <fileset dir="${basedir}" includes="README"/>
+    </copy>
+
+    <!-- Pluto Documentation -->
+    <copy todir="${maven.dist.dir}/${plutobin.dist.name}/webapps/ROOT">
+      <fileset dir="${basedir}/target/docs" includes="**/*.*"/>
     </copy>
     
     <j:invokeStatic className="java.lang.System" method="setProperty">
