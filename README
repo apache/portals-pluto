@@ -24,7 +24,7 @@ the following steps:
 3) Set the property named 'maven.tomcat.version.major' to
    the major version of tomcat which you have.
 
-4) Run the 'fullDeployment' maven goal.
+4) Run the 'pluto:deploy-all' maven goal.
 
 5) Point your browser to http://localhost:8080/pluto/portal
 
