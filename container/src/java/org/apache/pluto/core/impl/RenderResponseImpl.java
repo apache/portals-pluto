@@ -22,12 +22,17 @@ package org.apache.pluto.core.impl;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Iterator;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.om.window.PortletWindow;
+import org.apache.pluto.om.entity.PortletEntity;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.ContentTypeSet;
+import org.apache.pluto.om.portlet.ContentType;
 import org.apache.pluto.services.title.DynamicTitle;
 import org.apache.pluto.util.NamespaceMapperAccess;
 
@@ -154,8 +159,27 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
 
     private boolean isValidContentType(String type)
     {
-        //return type.equals("text/html");
-        return true;        
+        type = stripCharacterEncoding(type);
+        String wildcard = null;
+        int index = type.indexOf("/");
+        if(index > -1) {
+            wildcard = type.substring(0, index);
+        }
+
+        PortletEntity entity = portletWindow.getPortletEntity();
+        PortletDefinition def = entity.getPortletDefinition();
+        ContentTypeSet contentTypes = def.getContentTypeSet();
+        Iterator it = contentTypes.iterator();
+        while(it.hasNext()) {
+            ContentType ct = (ContentType)it.next();
+            if(ct.getContentType().equals(type)) {
+                return true;
+            }
+            else if(ct.getContentType().equals(wildcard)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String stripCharacterEncoding(String type)

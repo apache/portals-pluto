@@ -41,7 +41,7 @@ public abstract class PortletResponseImpl extends javax.servlet.http.HttpServlet
 implements InternalPortletResponse, PortletResponse
 {
 
-    private PortletWindow portletWindow;
+    PortletWindow portletWindow;
 
     /**
      * this variable holds the servlet request of the target/portlet's
