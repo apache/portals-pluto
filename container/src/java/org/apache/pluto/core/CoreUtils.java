@@ -32,7 +32,7 @@ public class CoreUtils
             request = ((PortletRequestWrapper)request).getPortletRequest();
             if (request == null)
             {
-                return null;
+                throw new IllegalStateException("The internal portlet request cannot be found.");                
             }
         }
         return(InternalPortletRequest)request;
@@ -46,7 +46,7 @@ public class CoreUtils
             response = ((PortletResponseWrapper)response).getPortletResponse();
             if (response == null)
             {
-                return null;
+                throw new IllegalStateException("The internal portlet response cannot be found.");                
             }
         }
         return(InternalPortletResponse)response;
