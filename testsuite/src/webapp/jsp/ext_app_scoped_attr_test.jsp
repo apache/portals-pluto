@@ -1,0 +1,36 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
+
+<portlet:defineObjects/>
+
+<script name="JavaScript">
+function openCompanionWindow() {
+	w = 500;
+	h = 400;
+	x = (screen.width - w) / 2;
+	y = (screen.height - h) / 2;
+	window.open('<HTML><BODY><CENTER><FONT color=red>Testing Session Attributes</FONT></CENTER></BODY></HTML>', 'companionWindow', 'resizable=yes,scrollbars=yes,status=yes,width=' + w + ',height=' + h + ',screenX=' + x + ',screenY=' + y + ',left=' + x + ',top=' + y);
+}
+</script>
+
+<c:choose>
+<c:when test="${results.inQuestion}">
+<TABLE>
+<TR><TH colspan="2" style="background-color:blue;color:white;">MANUAL TEST</TH></TR>
+<TR><TH colspan="2">Application Scoped Session Attributes Test</TH></TR>
+<TR><TD>
+    <P>This test is to validate that application scoped attributes can be viewed
+    by resources outside of the portlet.  Additionally, it tests to make sure that
+    session attributes set by other resources may be viewed by the portlet as an
+    application scoped session attribute.</P>
+    This test requires manual intervention.  Click
+    <A href="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/test/extAppScopedTest?sessionId="+request.getSession().getId())%>" target="companionWindow" onclick="openCompanionWindow()">here</A>
+    </TD></TR>
+<TABLE>
+</c:when>
+<c:otherwise>
+<%@ include file="test_results.inc" %>
+</c:otherwise>
+</c:choose>
+
+<%@ include file="navigation.inc" %>
