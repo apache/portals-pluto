@@ -1,0 +1,37 @@
+<project default="deployPlutoToTomcat"
+         xmlns:j="jelly:core"
+         xmlns:maven="jelly:maven"
+         xmlns:ant="jelly:ant">     
+         
+       <!-- the war goal should always create pluto.war with no version numbers -->
+      <preGoal name="war:init" >
+      	 <j:set var="maven.war.final.name" value="pluto.war"/>
+      </preGoal>
+      <!--
+      	- Deploys the pluto.jar and deps to the tomcat.home.pluto.
+      	- you should define tomcat.home in your $USER_HOME/build.properties file.
+      -->
+      <goal name="deployPlutoToTomcat">
+      	 <attainGoal name="war" />
+      	 <!-- Deploy endorsed jars -->
+         <copy file="${maven.repo.local}/xerces/jars/xerces-2.3.0.jar" todir="${tomcat.home.pluto}/common/endorsed"/>
+         <copy file="${maven.repo.local}/xml-apis/jars/xml-apis-2.0.2.jar" todir="${tomcat.home.pluto}/common/endorsed"/>
+      	 
+      	 <!-- Deploy shared jars -->
+         <copy file="${maven.repo.local}/portlet-api/jars/portlet-api-1.0.jar" todir="${tomcat.home.pluto}/shared/lib"/>
+         <copy file="${maven.repo.local}/pluto/jars/pluto-1.0.jar" todir="${tomcat.home.pluto}/shared/lib"/>
+         
+         <!-- Remove old deployemnts -->         
+         <delete file="${tomcat.home.pluto}/webapps/${maven.war.final.name}" />
+         <delete dir="${tomcat.home.pluto}/webapps/pluto" />
+         
+         <!-- copy the pluto.xml that sets up the pluto webapp's context -->
+         <copy file="pluto.xml" todir="${tomcat.home.pluto}/webapps"/>   
+         
+         <!-- Deploy the pluto.war -->
+         <!-- <copy file="target/pluto.war" todir="${tomcat.home.pluto}/webapps"/>  -->    	
+         <unwar src="target/pluto.war" dest="${tomcat.home.pluto}/webapps/pluto"/>
+      </goal>
+            
+
+</project>

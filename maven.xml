@@ -1,4 +1,8 @@
-<project xmlns:j="jelly:core" xmlns:m="maven">
+<project default="java:jar"
+         xmlns:j="jelly:core"
+         xmlns:maven="jelly:maven"
+         xmlns:ant="jelly:ant">
+         
   <preGoal name="xdoc:jelly-transform">
     <attainGoal name="faq"/>
   </preGoal>   
@@ -7,5 +11,72 @@
   	 <attainGoal name="xdoc" />
   	 <attainGoal name="javadoc" />
   </goal>
+  
+  <goal name="allClean"
+        description="Cleans a project targets">
+     <attainGoal name="clean" /> 
+     <maven:reactor
+               basedir="${basedir}"
+               includes="container/project.xml"
+               goals="clean"
+               banner="Cleaning Container"
+               postProcessing="false"
+               ignoreFailures="false"/>
+    <maven:reactor
+               basedir="${basedir}"
+               includes="portal/project.xml"
+               goals="clean"
+               banner="Cleaning Portal"
+               postProcessing="false"
+               ignoreFailures="false"/>
+   	    <maven:reactor
+               basedir="${basedir}"
+               includes="api/project.xml"
+               goals="clean"
+               banner="Cleaning API"
+               postProcessing="false"
+               ignoreFailures="false"/>
+        <maven:reactor
+               basedir="${basedir}"
+               includes="testsuite/project.xml"
+               goals="clean"
+               banner="Cleaning Test Suitet"
+               postProcessing="false"
+               ignoreFailures="false"/>
+   </goal>
+  
+  
+  
+ 
+
+  
+  <goal name="fullDeployment" >
+  	
+  	      <maven:reactor
+               basedir="${basedir}"
+               includes="container/project.xml"
+               goals="jar:install"
+               banner="Installing container jar"
+               postProcessing="false"
+               ignoreFailures="false"/>
+
+       <maven:reactor
+               basedir="${basedir}"
+               includes="portal/project.xml"
+               goals="jar:install,deployPlutoToTomcat"
+               banner="Deploying Portal"
+               postProcessing="false"
+               ignoreFailures="false"/>
+       <maven:reactor
+               basedir="${basedir}"
+               includes="testsuite/project.xml"
+               goals="deployTestsuite"
+               banner="Deploying Test Suite to Pluto"
+               postProcessing="false"
+               ignoreFailures="false"/>  	  	  
+  </goal>
+  
+  
+  
 </project>
 

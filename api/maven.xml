@@ -1,0 +1,6 @@
+<project default="jar:install"
+         xmlns:j="jelly:core"
+         xmlns:maven="jelly:maven"
+         xmlns:ant="jelly:ant">     
+
+</project>

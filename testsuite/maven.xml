@@ -1,0 +1,23 @@
+<project default="jar:install"
+         xmlns:j="jelly:core"
+         xmlns:maven="jelly:maven"
+         xmlns:ant="jelly:ant">     
+         
+         
+ <goal name="deployTestsuite">
+ 	     <delete dir="${tomcat.home.pluto}/webapps/testsuite" />
+ 	     <attainGoal name="war" />
+         <java classname="org.apache.pluto.portalImpl.Deploy" fork="yes">
+          <classpath>
+            <path refid="maven.dependency.classpath"/>
+            <pathelement path="${maven.build.dest}"/>
+          </classpath>
+            <arg value="${tomcat.home.pluto}/webapps" />
+            <arg value="pluto" />
+            <arg value="${basedir}/target/${maven.war.final.name}" />
+            <arg value="../container/target" />    
+         </java>       
+ </goal>
+         
+
+</project>

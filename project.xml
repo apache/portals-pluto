@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-
-  <pomVersion>1</pomVersion>
+  <pomVersion>3</pomVersion>
   <name>jakarta-pluto</name>
-  <id>pluto</id>
+  <id>pluto-project</id>
+  <groupId>pluto</groupId>
   <currentVersion>1.0</currentVersion>
   <organization>
     <name>Apache Software Foundation</name>
@@ -235,7 +235,7 @@
 
     <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
 
-    <sourceDirectory>src/container</sourceDirectory>
+    <sourceDirectory>src/java</sourceDirectory>
     <aspectSourceDirectory/>
 
     <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
