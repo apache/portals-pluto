@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry excluding="**/CVS*" kind="src" path="src/api"/>
-    <classpathentry excluding="**/CVS*" kind="src" path="src/portal"/>
-    <classpathentry excluding="**/CVS*" kind="src" path="src/container"/>
-    <classpathentry exported="true" kind="lib" path="temp/api/portlet-api.jar"/>
-    <classpathentry exported="true" kind="lib" path="lib/portal/jakarta-regexp-1.2.jar"/>
-    <classpathentry exported="true" kind="lib" path="lib/portal/castor-0.9.4.1-xml.jar"/>
-    <classpathentry exported="true" kind="lib" path="lib/container/exclude-servlet.jar"/>
-    <classpathentry exported="true" kind="lib" path="lib/portal/exclude-servlet.jar"/>
-    <classpathentry exported="true" kind="lib" path="build/ant/lib/optional.jar"/>
-    <classpathentry exported="true" kind="lib" path="temp/container/pluto-0.1-dev-unreleased.jar"/>
-    <classpathentry exported="true" kind="lib" path="driver/shared/pluto-0.1-dev-unreleased.jar"/>
-    <classpathentry exported="true" kind="lib" path="build/ant/lib/ForeachTask.jar"/>
-    <classpathentry exported="true" kind="lib" path="build/ant/lib/ant.jar"/>
-    <classpathentry exported="true" kind="lib" path="build/ant/lib/xml-apis.jar"/>
-    <classpathentry exported="true" kind="lib" path="build/ant/lib/junit.jar"/>
-    <classpathentry exported="true" kind="lib" path="driver/shared/portlet-api.jar"/>
-    <classpathentry exported="true" kind="lib" path="build/ant/lib/jakarta-regexp-1.3-dev.jar"/>
-    <classpathentry exported="true" kind="lib" path="portlets/lib/servlet.jar"/>
-    <classpathentry exported="true" kind="lib" path="lib/portal/endorsed-xmlParserAPIs.jar"/>
-    <classpathentry exported="true" kind="lib" path="build/ant/lib/xercesImpl.jar"/>
-    <classpathentry exported="true" kind="lib" path="lib/portal/endorsed-xercesImpl.jar"/>
-    <classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-    <classpathentry kind="output" path="temp/portal/classes"/>
+	<classpathentry excluding="**/CVS*" kind="src" path="src/api"/>
+	<classpathentry excluding="**/CVS*" kind="src" path="src/portal"/>
+	<classpathentry excluding="**/CVS*" kind="src" path="src/container"/>
+	<classpathentry exported="true" kind="lib" path="lib/portal/jakarta-regexp-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="portlets/lib/servlet.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/portal/endorsed-xmlParserAPIs.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/portal/endorsed-xercesImpl.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/portal/castor-0.9.5.2-xml.jar"/>
+	<classpathentry kind="lib" path="lib/portal/commons-logging-api.jar"/>
+	<classpathentry kind="output" path="temp/portal/classes"/>
 </classpath>
