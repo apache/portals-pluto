@@ -35,6 +35,7 @@ import org.apache.pluto.portalImpl.portlet.test.SimplePreferenceTest;
 import org.apache.pluto.portalImpl.portlet.test.ActionTest;
 import org.apache.pluto.portalImpl.portlet.test.MiscTest;
 import org.apache.pluto.portalImpl.portlet.test.ExternalAppScopedAttributeTest;
+import org.apache.pluto.portalImpl.portlet.test.ContextInitParameterTest;
 
 public class TestPortlet extends GenericPortlet {
 
@@ -51,6 +52,7 @@ public class TestPortlet extends GenericPortlet {
         TESTS.put("07_window_state_test", null);
         TESTS.put("08_security_mapping_test", new SecurityMappingTest());
         TESTS.put("09_misc_test", new MiscTest());
+        TESTS.put("10_context_init_param_test", new ContextInitParameterTest());
 
         TEST_IDX = new ArrayList(TESTS.keySet());
     }
