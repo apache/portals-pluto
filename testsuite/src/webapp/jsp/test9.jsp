@@ -43,10 +43,9 @@ PortletSession ps = renderRequest.getPortletSession();
 <I>Tests passed ...</I>
 <P>
 
-<portlet:renderURL windowState="Normal" portletMode="View" secure="False" var="url">
+<portlet:renderURL windowState="Normal" portletMode="View" secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
 	<portlet:param name="jspName" value="test1.jsp"/>
 </portlet:renderURL>
-
 
 <FORM METHOD="POST" ACTION="<%=url%>">
 <INPUT value="Next >>" TYPE="submit">

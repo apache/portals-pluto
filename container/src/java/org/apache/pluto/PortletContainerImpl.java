@@ -43,7 +43,7 @@ import org.apache.pluto.services.log.LogService;
 /**
  *  Implements the Pluto Container.
  * 
- * @version $Id: PortletContainerImpl.java,v 1.5 2004/03/02 14:49:00 cziegeler Exp $
+ * @version $Id: PortletContainerImpl.java,v 1.6 2004/04/01 13:33:36 blumm Exp $
  */
 public class PortletContainerImpl implements PortletContainer
 {
@@ -257,10 +257,10 @@ public class PortletContainerImpl implements PortletContainer
 	        {
 	            redirectURL.setWindowState(provider.getWindowState(portletWindow));
 	        }
-	        //            if (secure)
-	        //            {
-	        //                redirectURL.setSecure(); // TBD
-	        //            }
+	        if (servletRequest.isSecure())
+	        {
+	            redirectURL.setSecure(); // TBD
+	        }
 	        redirectURL.clearParameters();
 	        redirectURL.setParameters(renderParameter);
 	

@@ -31,6 +31,7 @@ PortletSession ps = renderRequest.getPortletSession();
 <%
 PortletURL url = renderResponse.createActionURL();
 url.setParameter("checkAction","action1");
+url.setSecure(renderRequest.isSecure());
 %>
 click <A HREF="<%=url.toString()%>">here</A> to invoke the first portlet action.<BR>
 <%
@@ -46,6 +47,7 @@ if ("action1".equals(ps.getAttribute("checkAction", PortletSession.PORTLET_SCOPE
 PortletURL url1 = renderResponse.createActionURL();
 url1.setParameter("checkActionRender","step1");
 url1.setParameter("jspNameTransfer","test4.jsp");
+url.setSecure(renderRequest.isSecure());
 %>
 click <A HREF="<%=url1.toString()%>">here</A> for step 1.<BR>
 <%
@@ -55,6 +57,7 @@ if ("step2".equals(renderRequest.getParameter("checkActionRender2")))
     url2.setParameter("checkActionRender2","step2");
     url2.setParameter("checkActionRender3","step3");
     url2.setParameter("jspName","test4.jsp");
+    url2.setSecure(renderRequest.isSecure());
 %>
 click <A HREF="<%=url2.toString()%>">here</A> for step 2.<BR>
 <%
@@ -70,6 +73,7 @@ if (("step3".equals(renderRequest.getParameter("checkActionRender3"))) &&
 <%
 url = renderResponse.createRenderURL();
 url.setParameter("jspName","test5.jsp");
+url.setSecure(renderRequest.isSecure());
 %>
 <FORM METHOD="POST" ACTION="<%=url.toString()%>">
 <INPUT value="Next >>" TYPE="submit">

@@ -66,7 +66,7 @@ public class PortletContainerServices
      * This method needs to be called to prepare the portlet container
      * environment. This allows to have multiple container instances.
      */
-    public static void prepare(String uniqueContainerName)
+    synchronized public static void prepare(String uniqueContainerName)
     {
         // get container service stack out of the thread local
         Stack currentContainerServiceStack = (Stack)currentContainerService.get();

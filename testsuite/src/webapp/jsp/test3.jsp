@@ -74,6 +74,7 @@ click <A HREF="<%=url.toString()%>">here</A> to change into MAXIMIZED window sta
 <%
 url = renderResponse.createRenderURL();
 url.setParameter("jspName","test4.jsp");
+url.setSecure(renderRequest.isSecure());
 %>
 <FORM METHOD="POST" ACTION="<%=url.toString()%>">
 <INPUT value="Next >>" TYPE="submit">

@@ -30,6 +30,7 @@ limitations under the License.
 <%
 PortletURL url = renderResponse.createRenderURL();
 url.setParameter("jspName","test1.jsp");
+url.setSecure(renderRequest.isSecure());
 %>
 <FORM METHOD="POST" ACTION="<%=url.toString()%>">
 <INPUT value="Next >>" TYPE="submit">

@@ -138,6 +138,7 @@ setAttribute('globalTestValue', APPLICATION_SCOPE)...done<%portletSession.setAtt
 <%
 PortletURL url = renderResponse.createActionURL();
 url.setParameter("jspName","test2.jsp");
+url.setSecure(renderRequest.isSecure());
 %>
 <FORM METHOD="POST" ACTION="<%=url.toString()%>">
     <INPUT value="Next >>" TYPE="submit">

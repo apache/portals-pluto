@@ -199,6 +199,7 @@ Testing store() (only allowed with Portlet Actions)...<BR>
 PortletURL url1 = renderResponse.createActionURL();
 url1.setParameter("checkPreferences","storeAndReset");
 url1.setParameter("jspNameTransfer","test6.jsp");
+url1.setSecure(renderRequest.isSecure());
 %>
 <FORM METHOD="POST" ACTION="<%=url1.toString()%>">
 <INPUT value="Next >>" TYPE="submit">
@@ -208,6 +209,7 @@ url1.setParameter("jspNameTransfer","test6.jsp");
 <%
 PortletURL url = renderResponse.createRenderURL();
 url.setParameter("jspName","test7.jsp");
+url.setSecure(renderRequest.isSecure());
 %>
 <FORM METHOD="POST" ACTION="<%=url.toString()%>">
 <INPUT value="Skip Next -->>" TYPE="submit">

@@ -42,6 +42,7 @@ import org.apache.pluto.om.common.LanguageSet;
 import org.apache.pluto.om.entity.PortletEntity;
 import org.apache.pluto.om.portlet.ContentType;
 import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.servlet.ServletDefinition;
 import org.apache.pluto.om.servlet.ServletDefinitionCtrl;
 import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.om.window.PortletWindowCtrl;
@@ -54,8 +55,8 @@ import org.apache.pluto.portalImpl.core.PortalURL;
 import org.apache.pluto.portalImpl.core.PortletContainerFactory;
 import org.apache.pluto.portalImpl.factory.FactoryAccess;
 import org.apache.pluto.portalImpl.om.window.impl.PortletWindowImpl;
-import org.apache.pluto.portalImpl.services.portletentityregistry.PortletEntityRegistry;
 import org.apache.pluto.portalImpl.services.log.Log;
+import org.apache.pluto.portalImpl.services.portletentityregistry.PortletEntityRegistry;
 import org.apache.pluto.portalImpl.servlet.ServletObjectAccess;
 import org.apache.pluto.portalImpl.util.ObjectID;
 import org.apache.pluto.services.information.DynamicInformationProvider;
@@ -152,8 +153,9 @@ public class PortletFragment extends AbstractFragmentSingle {
 		// create a PortletInfo object. This is used to communicate with
 		// the header and footer JSP pages for this portlet
 		PortletInfo portletInfo = new PortletInfo();
-
-		if (!portletWindow.getPortletEntity().getPortletDefinition().getServletDefinition().isUnavailable()) {
+		
+        ServletDefinition servletDefinition = portletWindow.getPortletEntity().getPortletDefinition().getServletDefinition();
+        if (servletDefinition != null && !servletDefinition.isUnavailable()) {
 			PrintWriter writer2 = new PrintWriter(storedWriter);
 
 			// create a wrapped response which the Portlet will be rendered to

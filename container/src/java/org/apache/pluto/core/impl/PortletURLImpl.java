@@ -131,13 +131,6 @@ public class PortletURLImpl implements PortletURL {
 
     public void setSecure (boolean secure) throws PortletSecurityException
     {
-        // This implementation does assume not having a supporting security environment installed! 
-        if (secure == true) {
-            throw new PortletSecurityException(
-                "The current implementation does assume not having a supporting security environment installed!"
-            );
-        }
-
         this.secure = secure;
     }
     

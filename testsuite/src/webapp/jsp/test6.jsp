@@ -93,6 +93,7 @@ Setting unvalid preference value.<BR>
 PortletURL url = renderResponse.createActionURL();
 url.setParameter("checkPreferences","TidyUp");
 url.setParameter("jspNameTransfer","test9.jsp");
+url.setSecure(renderRequest.isSecure());
 %>
 <FORM METHOD="POST" ACTION="<%=url.toString()%>">
 <INPUT value="Next >>" TYPE="submit">
