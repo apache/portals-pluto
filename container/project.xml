@@ -17,18 +17,14 @@ limitations under the License.
 -->
 <project>
   <extend>${basedir}/../project.xml</extend>
-  <pomVersion>3</pomVersion>
   <name>Pluto Portlet Container</name>
   <id>pluto</id>
-  <currentVersion>1.0</currentVersion>
 
   <organization>
     <logo>/../../images/jakarta-logo-blue.gif</logo>
   </organization>
   <logo>/../../images/pluto-feather.gif</logo>
-  
-  <package>org.apache.pluto</package>
-  <gumpRepositoryId>jakarta</gumpRepositoryId>
+
   <shortDescription>A JSR-168 Compliant Portlet Engine.</shortDescription>
 
   <description>
