@@ -26,6 +26,7 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.pluto.deploy.Assembler;
+import org.apache.pluto.deploy.AssemblerFactory;
 
 /**
  * Command Line Interface to the Pluto Assembler.
@@ -81,8 +82,9 @@ public class AssemblerCLI {
         System.out.println("Assembling: "+source.getCanonicalPath());
         System.out.println("        to: "+result.getCanonicalPath());
 
-        Assembler assembler = new Assembler();
-        assembler.assemble(new File(args[0]), new File(dest));
+        Assembler assembler = AssemblerFactory.getFactory()
+            .createAssembler(new File(args[0]), new File(dest));
+        assembler.assemble();
 
         System.out.println("Complete!");
     }

@@ -20,6 +20,7 @@
 package org.apache.pluto.core.impl;
 
 import java.net.MalformedURLException;
+import java.io.InputStream;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
@@ -29,18 +30,41 @@ import javax.servlet.ServletContext;
 import org.apache.pluto.binding.PortletAppDD;
 import org.apache.pluto.core.InternalPortletContext;
 
+/**
+ * Pluto's Portlet Context Implementation.
+ * Implements the InternalPortletContext which provides container
+ * specific information which is needed for processing.
+ *
+ * @version 1.1
+ * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ *
+ */
 public class PortletContextImpl
     implements PortletContext, InternalPortletContext {
 
+    /** Portlet Application Descriptor. */
     private PortletAppDD portletAppDD;
+
+    /** ServletContext in which we are contained. */
     private ServletContext servletContext;
 
+    /**
+     * Sole constructor.
+     *
+     * @param servletContext the servlet context in which we are contained.
+     * @param portletAppDD the application descriptor.
+     */
     public PortletContextImpl(ServletContext servletContext,
                               PortletAppDD portletAppDD) {
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
     }
 
+    /**
+     * Retrieve the PortletContainer's server info.
+     * @return the server info in the form of <i>Server/Version</i>
+     * @see Environment#getServerInfo()
+     */
     public String getServerInfo() {
         return Environment.getServerInfo();
     }
@@ -48,23 +72,26 @@ public class PortletContextImpl
     public PortletRequestDispatcher getRequestDispatcher(String path) {
         try {
             RequestDispatcher rd = servletContext.getRequestDispatcher(path);
-            return new PortletRequestDispatcherImpl(rd);
+            if(rd != null) {
+                return new PortletRequestDispatcherImpl(rd);
+            }
         } catch (Exception e) {
             // need to catch exception because of tomcat 4.x bug
             // tomcat throws an exception instead of return null
             // if the path was not found
-            return null;
         }
+        return null;
     }
 
     public PortletRequestDispatcher getNamedDispatcher(String name) {
-        javax.servlet.RequestDispatcher rd = servletContext.getNamedDispatcher(
-            name);
-        return rd != null ? new PortletRequestDispatcherImpl(rd)
-               : null;
+        RequestDispatcher rd = servletContext.getNamedDispatcher(name);
+        if(rd != null) {
+            return new PortletRequestDispatcherImpl(rd);
+        }
+        return null;
     }
 
-    public java.io.InputStream getResourceAsStream(String path) {
+    public InputStream getResourceAsStream(String path) {
         return servletContext.getResourceAsStream(path);
     }
 

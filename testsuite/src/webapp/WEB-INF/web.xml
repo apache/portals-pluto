@@ -47,9 +47,5 @@ limitations under the License.
         <role-name>tomcat</role-name>
     </security-role>
 
-    <taglib>
-        <taglib-uri>http://java.sun.com/portlet</taglib-uri>
-        <taglib-location>/WEB-INF/tld/portlet.tld</taglib-location>
-    </taglib>
 </web-app>
 

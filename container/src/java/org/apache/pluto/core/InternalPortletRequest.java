@@ -20,17 +20,18 @@
 package org.apache.pluto.core;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletContext;
 
 public interface InternalPortletRequest extends PortletRequest {
 
-    public void lateInit(
-        javax.servlet.http.HttpServletRequest webModuleServletRequest);
 
-    public InternalPortletWindow getInternalPortletWindow();
+    void setPortletContext(PortletContext context);
 
-    public void setIncluded(boolean included);
+    InternalPortletWindow getInternalPortletWindow();
 
-    public boolean isIncluded();
+    void setIncluded(boolean included);
+
+    boolean isIncluded();
 }
 
 

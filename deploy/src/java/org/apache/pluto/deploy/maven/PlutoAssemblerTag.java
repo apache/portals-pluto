@@ -23,6 +23,7 @@ import org.apache.commons.jelly.XMLOutput;
 import org.apache.commons.jelly.MissingAttributeException;
 import org.apache.commons.jelly.JellyTagException;
 import org.apache.pluto.deploy.Assembler;
+import org.apache.pluto.deploy.AssemblerFactory;
 
 /**
  * Tag which is used to assemble portlet applications.
@@ -36,7 +37,6 @@ public class PlutoAssemblerTag extends TagSupport {
     private Assembler assembler;
 
     public PlutoAssemblerTag() {
-        this.assembler = new Assembler();
     }
 
     public void doTag(XMLOutput xmlOutput) throws MissingAttributeException,
@@ -56,7 +56,9 @@ public class PlutoAssemblerTag extends TagSupport {
                     "org.apache.xalan.processor.TransformerFactoryImpl"
                 );
             }
-            assembler.assemble(source, source);
+            assembler =  AssemblerFactory.getFactory().
+                createAssembler(source, source);
+            assembler.assemble();
         }
         catch(IOException io) {
             io.printStackTrace();

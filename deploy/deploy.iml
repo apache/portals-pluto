@@ -14,6 +14,7 @@
     <orderEntry type="module" module-name="binding" />
     <orderEntry type="library" name="commons-cli-1.0" level="application" />
     <orderEntry type="library" name="commons-jelly-1.0-beta-4" level="application" />
+    <orderEntry type="library" name="servlet-api-2.3" level="application" />
     <orderEntryProperties />
   </component>
 </module>

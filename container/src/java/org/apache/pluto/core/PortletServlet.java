@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.Constants;
 import org.apache.pluto.binding.PortletAppDD;
 import org.apache.pluto.binding.PortletDD;
 import org.apache.pluto.core.impl.ActionRequestImpl;
@@ -145,27 +146,32 @@ public class PortletServlet extends HttpServlet {
                 (Integer) request.getAttribute(
                     org.apache.pluto.Constants.METHOD_ID);
 
-            if (method_id == org.apache.pluto.Constants.METHOD_RENDER) {
-                RenderRequestImpl renderRequest = (RenderRequestImpl)
-                    request.getAttribute(
-                        org.apache.pluto.Constants.PORTLET_REQUEST);
+            InternalPortletRequest pRequest = (InternalPortletRequest)
+                request.getAttribute(Constants.PORTLET_REQUEST);
 
-                RenderResponseImpl renderResponse = (RenderResponseImpl)
-                    request.getAttribute(
-                        org.apache.pluto.Constants.PORTLET_RESPONSE);
+            InternalPortletResponse pResponse = (InternalPortletResponse)
+                request.getAttribute(Constants.PORTLET_RESPONSE);
+
+            pRequest.setPortletContext(portletContext);
+
+
+            if (method_id == org.apache.pluto.Constants.METHOD_RENDER) {
+                RenderRequestImpl renderRequest =
+                    (RenderRequestImpl) pRequest;
+
+                RenderResponseImpl renderResponse =
+                    (RenderResponseImpl) pResponse;
 
                 //renderRequest.lateInit(request);
                 //renderResponse.lateInit(request, response);
 
                 portlet.render(renderRequest, renderResponse);
             } else if (method_id == org.apache.pluto.Constants.METHOD_ACTION) {
-                ActionRequestImpl actionRequest = (ActionRequestImpl)
-                    request.getAttribute(
-                        org.apache.pluto.Constants.PORTLET_REQUEST);
+                ActionRequestImpl actionRequest =
+                    (ActionRequestImpl) pRequest;
 
-                ActionResponseImpl actionResponse = (ActionResponseImpl)
-                    request.getAttribute(
-                        org.apache.pluto.Constants.PORTLET_RESPONSE);
+                ActionResponseImpl actionResponse =
+                    (ActionResponseImpl) pResponse;
 
                 //actionRequest.lateInit(request);
                 //actionResponse.lateInit(request, response);

@@ -21,10 +21,13 @@ package org.apache.pluto.core.impl;
 
 import java.util.Enumeration;
 import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletSessionUtil;
+import javax.servlet.http.HttpSessionContext;
+import javax.servlet.ServletContext;
 
 import org.apache.pluto.core.InternalPortletWindow;
 
@@ -138,7 +141,6 @@ public class PortletSessionImpl implements PortletSession,
                     }
                 }
             }
-
             return portletAttributes.elements();
         }
     }
@@ -171,17 +173,23 @@ public class PortletSessionImpl implements PortletSession,
     }
 
     public PortletContext getPortletContext() {
-        return getInternalPortletContext();
+        return portletContext;
     }
-    // --------------------------------------------------------------------------------------------
 
-    // javax.servlet.http.HttpSession implementation ----------------------------------------------
-    public javax.servlet.ServletContext getServletContext() {
-        // TBD, open issue. it would be good if we could also implement the ServletContext interface at the PortletContextImpl
+    /**
+     * HttpSession Implementation.
+     * @return
+     */
+    public ServletContext getServletContext() {
         return httpSession.getServletContext();
     }
 
-    public javax.servlet.http.HttpSessionContext getSessionContext() {
+    /**
+     * Implemented for backwards compatability.
+     * @deprecated
+     * @return
+     */
+    public HttpSessionContext getSessionContext() {
         return httpSession.getSessionContext();
     }
 
@@ -189,9 +197,13 @@ public class PortletSessionImpl implements PortletSession,
         return this.getAttribute(name, DEFAULT_SCOPE);
     }
 
+    /**
+     * Implemented for backwards compatibility with HttpSession.
+     * @deprecated
+     * @return
+     */
     public String[] getValueNames() {
-        // TBD
-        return null;
+        return httpSession.getValueNames();
     }
 
     public void putValue(String name, Object value) {
@@ -201,11 +213,4 @@ public class PortletSessionImpl implements PortletSession,
     public void removeValue(String name) {
         this.removeAttribute(name, DEFAULT_SCOPE);
     }
-    // --------------------------------------------------------------------------------------------
-
-    // internal methods ---------------------------------------------------------------------------
-    private synchronized PortletContext getInternalPortletContext() {
-        return this.portletContext;
-    }
-    // --------------------------------------------------------------------------------------------
 }
