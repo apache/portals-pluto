@@ -67,7 +67,7 @@ public class LoggerImpl implements Logger {
     }
 
     public void error(String aMessage, Throwable aThrowable) {
-        log.error(aMessage);
+        log.error(aMessage, aThrowable);
     }
 
     public void error(Throwable aThrowable) {
