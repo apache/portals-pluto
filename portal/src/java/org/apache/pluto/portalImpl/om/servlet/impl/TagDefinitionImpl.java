@@ -30,35 +30,40 @@ public class TagDefinitionImpl  implements java.io.Serializable {
         super();
     }
     /**
-     * @return
+     * @return the location
      */
     public String getLocation() {
         return location;
     }
 
     /**
-     * @return
+     * @return the uri
      */
     public String getUri() {
         return uri;
     }
 
     /**
-     * @param string
+     * @param string the new location
      */
     public void setLocation(String string) {
         location = string;
     }
 
     /**
-     * @param string
+     * @param string the uri
      */
     public void setUri(String string) {
         uri = string;
     }
 
-    // internal methods used for debugging purposes only
-
+    /**
+     * Print a string representation of this tag definition.
+     * The results of this toString() implementation are meant
+     * for debugging purposes.
+     *
+     * @return String representation of this tag definition.
+     */
     public String toString()
     {
         return toString(0);

@@ -48,21 +48,21 @@ public abstract class PageRegistryService extends Service
 
 
     /**
-     * Returns the description of the complete portal site
+     * Returns the description of the complete portal site.
      * 
      * @return the object model description
      */
     public abstract RootFragment getRootFragment();
 
     /**
-     * Returns the fragment with the given id
+     * Returns the fragment with the given id.
      *
      * return the fragment object with this id
      **/
     public abstract Fragment getFragment(String id);
     
    /**
-    * Add a fragment to the page registry
+    * Add a fragment to the page registry.
     * 
     * @param fragment the fragment to add
     **/

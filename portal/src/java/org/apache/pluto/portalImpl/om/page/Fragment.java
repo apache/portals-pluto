@@ -24,7 +24,7 @@ import java.util.*;
 /**
  * <P>
  * The <CODE>Fragment</CODE> interface represents a single fragment on a site,
- * such as a page, a row, or even a portlet fragment
+ * such as a page, a row, or even a portlet fragment.
  * </P>
  * <P>
  * The interfaces defined in this package represent an abstract object
@@ -45,42 +45,42 @@ public interface Fragment
 
 
     /**
-     * Returns the administrative name of this fragment
+     * Returns the administrative name of this fragment.
      * 
      * @return the administrative name
      */
     public String getName();
 
     /**
-     * binds an administrative name to this fragment
+     * binds an administrative name to this fragment.
      * 
      * @param name the administrative name
      */
     public void setName(String name);
 
     /**
-     * Returns the type of the class bound to this fragment
+     * Returns the type of the class bound to this fragment.
      * 
      * @return the type
      */
     public String getType();
 
     /**
-     * binds a type to this fragment
+     * binds a type to this fragment.
      * 
      * @param type the type
      */
     public void setType(String type);
 
     /**
-     * Returns the classname of the class bound to this fragment
+     * Returns the classname of the class bound to this fragment.
      * 
      * @return the classname
      */
     public String getClassname();
 
     /**
-     * binds a classname to this fragment
+     * binds a classname to this fragment.
      * 
      * @param classname the classname
      */
@@ -95,7 +95,7 @@ public interface Fragment
     public Navigation getNavigation();
 
     /**
-     * binds navigational information to this fragment
+     * binds navigational information to this fragment.
      * 
      * @param navigation the navigational information
      */
@@ -103,7 +103,7 @@ public interface Fragment
 
     /**
      * Returns all fragments used in this node. This may be
-     * a page fragment or even directly a portlet fragment
+     * a page fragment or even directly a portlet fragment.
      * 
      * @return a collection containing Fragment objects
      */

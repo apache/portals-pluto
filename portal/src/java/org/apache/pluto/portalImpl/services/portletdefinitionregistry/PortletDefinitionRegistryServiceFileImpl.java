@@ -45,8 +45,10 @@ import org.exolab.castor.xml.Unmarshaller;
 import org.xml.sax.InputSource;
 
 /**
- * A simple XML Castor file based implementation of the <code>PortletRegistryService</config>
- * <p>This store persit the PortletRegistry informations</p>
+ * A simple XML Castor file based implementation of the
+ * <code>PortletRegistryService</config>.
+ *
+ * <p>This store persit the PortletRegistry informations.</p>
  *
  */
 

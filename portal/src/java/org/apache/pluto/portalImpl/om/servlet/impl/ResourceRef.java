@@ -27,23 +27,32 @@ public class ResourceRef  {
     private String sharing = "shareable";
     
     /**
-     * @return
+     * @return description of the resource reference.
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * @return
+     * @return name of the reference.
      */
     public String getName() {
         return name;
     }
 
+    /**
+     * Retrieve the type of resource referenced by this
+     * resource reference.
+     * @return the resource type.
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     *
+     * @return the authorization type of the resource.
+     */
     public String getAuth() {
         return auth;
     }
@@ -53,14 +62,14 @@ public class ResourceRef  {
     }
 
     /**
-     * @param string
+     * @param string the resource reference description.
      */
     public void setDescription(String string) {
         description = string;
     }
 
     /**
-     * @param string
+     * @param string the name of the resource reference
      */
     public void setName(String string) {
         name = string;

@@ -80,13 +80,15 @@ public class Log
         log.error(aThrowable);
     }
 
-    /** Returns the LogService which has been registered
+    /**
+     *  Returns the LogService which has been registered
      *  with the ServiceManager. If one does not yet exist,
      *  the StandardOutLogService (LogServiceImpl) is
      *  and returned.  This must take place since the
      *  Deployer (which does not register services) requires
      *  a valid log.
-     * @return
+     *
+     * @return the {@link LogService} used for static logging.
      */
     public static LogService getService() {
         LogService ls = (LogService)

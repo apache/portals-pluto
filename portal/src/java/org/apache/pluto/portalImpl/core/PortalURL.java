@@ -105,7 +105,6 @@ public class PortalURL {
     private HashMap startControlParameter = new HashMap();
     private HashMap startStateLessControlParameter = new HashMap();
     private boolean analyzed = false;
-    private boolean secure;
 
     private PortalEnvironment environment;
 
@@ -176,7 +175,7 @@ public class PortalURL {
 
     /**
      * Adds a navigational information pointing to a local portal part inside
-     * of a global portal part, e.g. a portlet on a page
+     * of a global portal part, for example, a portlet on a page.
      * 
      * @param nav    the string pointing to a local portal part
      */

@@ -288,21 +288,21 @@ public class PortletFragment extends AbstractFragmentSingle {
 		private List availablePortletWindowStates = new ArrayList();
 
 		/**
-		 * @return
+		 * @return portlet title.
 		 */
 		public String getTitle() {
 			return title;
 		}
 
 		/**
-		 * @param string
+		 * @param string representing the new title.
 		 */
 		public void setTitle(String string) {
 			title = string;
 		}
 
 		/**
-		 * @return
+		 * @return available modes
 		 */
 		public List getAvailablePortletModes() {
 			return availablePortletModes;
@@ -314,7 +314,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 		}
 
 		/**
-		 * @return
+		 * @return list of all available portlet states.
 		 */
 		public List getAvailablePortletWindowStates() {
 			return availablePortletWindowStates;
@@ -354,7 +354,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 			this.isCurrent = isCurrent;
 		}
 		/**
-		 * @return
+		 * @return the label.
 		 */
 		public String getLabel() {
 			return label;
@@ -368,14 +368,14 @@ public class PortletFragment extends AbstractFragmentSingle {
 		}
 
 		/**
-		 * @return
+		 * @return current indicator.
 		 */
 		public boolean isCurrent() {
 			return isCurrent;
 		}
 
 		/**
-		 * @return
+		 * @return url
 		 */
 		public String getUrl() {
 			return url;
@@ -413,21 +413,21 @@ public class PortletFragment extends AbstractFragmentSingle {
 		}
 
 		/**
-		 * @return
+		 * @return current flag
 		 */
 		public boolean isCurrent() {
 			return isCurrent;
 		}
 
 		/**
-		 * @return
+		 * @return name
 		 */
 		public String getName() {
 			return name;
 		}
 
 		/**
-		 * @return
+		 * @return url
 		 */
 		public String getUrl() {
 			return url;

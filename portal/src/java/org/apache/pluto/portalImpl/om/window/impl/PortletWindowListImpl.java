@@ -48,7 +48,7 @@ public class PortletWindowListImpl implements PortletWindowList, PortletWindowLi
     /**
      * Returns the portlet window object of the given id
      *
-     * @param
+     * @param id the window id.
      *
      * @return the portlet window object or null if the list does not
      *         contain a portlet window with the given id

@@ -38,7 +38,7 @@ public class FactoryManager
      ** Returns the service implementation for the given service class, or
      ** <CODE>null</CODE> if no such service is registered.
      **
-     ** @param   aClass
+     ** @param   theClass
      **          the service class
      **
      ** @return   the service implementation

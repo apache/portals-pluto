@@ -305,12 +305,11 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
         return buffer.toString();
     }
 
-    /**
-     * @return
-     */
-
     // modified by YCLI: START :: handling multiple taglib tags and resource-ref tag
 
+    /**
+     * @return Custom tag definitions configured in the webapp.
+     */
     public TagDefinitionSet getTagDefinitionSet()
     {
         return taglibs;

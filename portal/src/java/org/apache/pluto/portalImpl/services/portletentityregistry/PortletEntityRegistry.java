@@ -40,7 +40,6 @@ public class PortletEntityRegistry
     /**
      * Returns the portlet application instance with the given id.
      * 
-     * @param id   the identifier of the portlet application instance to be returned
      * @return the portlet application instance
      */
     public static PortletApplicationEntityList getPortletApplicationEntityList()

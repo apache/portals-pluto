@@ -24,20 +24,23 @@ public class TagDefinition  {
     private String location = "/WEB-INF/tld/portlet.tld";
     
     /**
-     * @return
+     * Retrieve the location of the tag definition.
+     * @return location
      */
     public String getLocation() {
         return location;
     }
 
     /**
-     * @return
+     * Retrieve the uri of the tag definition.
+     * @return uri
      */
     public String getUri() {
         return uri;
     }
 
     /**
+     *  Set the location of the tag definition.
      * @param string
      */
     public void setLocation(String string) {
@@ -45,6 +48,7 @@ public class TagDefinition  {
     }
 
     /**
+     * Set the uri of the tag definition.
      * @param string
      */
     public void setUri(String string) {

@@ -38,11 +38,12 @@ import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
 
 /**
- * A simple XML Castor file based implementation of the <code>PageRegistryService</config>
- * <p>This store persit the PageRegistry informations</p>
+ * A simple XML Castor file based implementation of the
+ * <code>PageRegistryService</config>.
+ *
+ * <p>This store persit the PageRegistry informations.</p>
  *
  */
-
 public class PageRegistryServiceFileImpl extends PageRegistryService
 {
 

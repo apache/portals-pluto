@@ -43,8 +43,10 @@ import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
 
 /**
- * A simple XML Castor file based implementation of the <code>PortletEntityRegistryService</config>
- * <p>This store persit the PortletEntityRegistry informations</p>
+ * A simple XML Castor file based implementation of the
+ * <code>PortletEntityRegistryService</config>.
+ *
+ * <p>This store persit the PortletEntityRegistry informations.</p>
  *
  */
 

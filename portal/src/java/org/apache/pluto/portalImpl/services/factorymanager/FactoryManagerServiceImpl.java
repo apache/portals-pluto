@@ -192,7 +192,7 @@ public class FactoryManagerServiceImpl extends FactoryManagerService
     /**
      ** Destroys all services.
      **
-     ** @param   aConfig
+     ** @param   config
      **          the servlet configuration
      **/
 
@@ -230,7 +230,7 @@ public class FactoryManagerServiceImpl extends FactoryManagerService
      ** Returns the service implementation for the given service class, or
      ** <CODE>null</CODE> if no such service is registered.
      **
-     ** @param   aClass
+     ** @param   theClass
      **          the service class
      **
      ** @return   the service implementation

@@ -55,7 +55,7 @@ public abstract class NameValuePairs
      ** @param   aName
      **          the name of a pair
      **
-     ** @param   the value of the pair
+     ** @return   the value of the pair
      **/
 
     public String getString (String aName)
@@ -72,7 +72,7 @@ public abstract class NameValuePairs
      ** @param   aDefault
      **          the default value
      **
-     ** @param   the value of the pair
+     ** @return   the value of the pair
      **/
 
     public String getString (String aName, String aDefault)
@@ -92,7 +92,7 @@ public abstract class NameValuePairs
      ** @param   aName
      **          the name of a pair
      **
-     ** @param   the values of the pair
+     ** @return   the values of the pair
      **/
 
     public String [] getStrings (String aName)
