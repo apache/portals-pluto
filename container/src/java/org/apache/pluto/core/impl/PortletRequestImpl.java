@@ -30,7 +30,9 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.binding.PortletDD;
@@ -95,7 +97,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
     public PortletRequestImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
-                              javax.servlet.http.HttpServletRequest servletRequest) {
+                              HttpServletRequest servletRequest) {
         super(servletRequest);
         this.container = container;
         this.internalPortletWindow = internalPortletWindow;
@@ -145,7 +147,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
     public PortletSession getPortletSession(boolean create) {
         // check if the session was invalidated
-        javax.servlet.http.HttpSession httpSession = this.getHttpServletRequest()
+        HttpSession httpSession = this.getHttpServletRequest()
             .getSession(false);
 
         if ((portletSession != null) && (httpSession == null)) {
@@ -467,12 +469,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
     // --------------------------------------------------------------------------------------------
 
-    // org.apache.pluto.core.InternalPortletRequest implementation --------------------------------
-    public void lateInit(
-        javax.servlet.http.HttpServletRequest webModuleServletRequest) {
-        super.setRequest(webModuleServletRequest);
-    }
-
     public InternalPortletWindow getInternalPortletWindow() {
         return internalPortletWindow;
     }
@@ -487,8 +483,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     // --------------------------------------------------------------------------------------------
 
     // internal methods ---------------------------------------------------------------------------
-    private javax.servlet.http.HttpServletRequest getHttpServletRequest() {
-        return (javax.servlet.http.HttpServletRequest) super.getRequest();
+    private HttpServletRequest getHttpServletRequest() {
+        return (HttpServletRequest) super.getRequest();
     }
 
     /**
@@ -501,7 +497,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     // --------------------------------------------------------------------------------------------
 
     // additional methods
-    // javax.servlet.http.HttpServletRequestWrapper
+    // .HttpServletRequestWrapper
     public java.lang.String getCharacterEncoding() {
         return this.getHttpServletRequest().getCharacterEncoding();
     }
