@@ -16,13 +16,17 @@
 
 package org.apache.pluto.portalImpl;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.io.Reader;
+import java.io.StreamTokenizer;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -92,7 +96,28 @@ public class Deploy {
         while (files.hasMoreElements()) {
             JarEntry entry = (JarEntry) files.nextElement();
 
-            File file = new File(destination, entry.getName());
+
+            /* Check for use of '/WEB-INF/tld/portlet.tld' instead of 'http://java.sun.com/portlet' in taglib declaration*/
+            String fileName = entry.getName();
+            if( !entry.isDirectory() && entry.getName().endsWith(".jsp")) {
+        		InputStream is = jarFile.getInputStream(entry);
+        		Reader r = new BufferedReader(new InputStreamReader(is));
+        		StreamTokenizer st = new StreamTokenizer(r);
+        		st.quoteChar('\'');
+        		st.quoteChar('"');
+        		while(st.nextToken()!=StreamTokenizer.TT_EOF) {
+        			if(st.ttype=='\'' || st.ttype=='"'){
+        				String sval = st.sval;
+        				String sqc = Character.toString((char)st.ttype);
+        				if(sval.equals("/WEB-INF/tld/portlet.tld")){
+        					System.out.println("Warning: " + sqc+st.sval+sqc + " has been found in file " + fileName + ". Use instead " +sqc+"http://java.sun.com/portlet"+sqc+" with your portlet taglib declaration!\n");
+        					break;
+        				}
+        			}
+        		}
+         	}
+
+            File file = new File(destination, fileName);
             File dirF = new File(file.getParent());
             dirF.mkdirs();
             if (entry.isDirectory()) {
