@@ -1,19 +1,19 @@
 /*
  * Copyright 2003,2004 The Apache Software Foundation.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
+/*
 
  */
 
@@ -40,7 +40,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     private static final String illegalStateExceptionText = "No content type set.";
 
     private String currentContentType = null;   // needed as servlet 2.3 does not have a response.getContentType
-    
+
     public RenderResponseImpl(PortletWindow portletWindow,
                               javax.servlet.http.HttpServletRequest servletRequest,
                               javax.servlet.http.HttpServletResponse servletResponse)
@@ -55,31 +55,39 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
         // return this._getHttpServletResponse().getContentType();
         return currentContentType;
     }
-    
+
     public PortletURL createRenderURL()
     {
         PortletURL url = createURL(false);
         return url;
     }
-    
+
     public PortletURL createActionURL()
     {
         PortletURL url = createURL(true);
         return url;
     }
-    
+
     public String getNamespace()
     {
-        return NamespaceMapperAccess.getNamespaceMapper().encode(getInternalPortletWindow().getId(), "");
+        String namespace = NamespaceMapperAccess.getNamespaceMapper().encode(getInternalPortletWindow().getId(), "");
+        
+        // correct all chars in the ns + name that are not valid for qualified names
+        // ECMA-262 Chap. 7.6
+        if (namespace.indexOf('-') != -1) {
+            namespace = namespace.replace('-', '_');
+        }
+        
+        return namespace;
     }
-    
+
     public void setTitle(String title)
     {
         DynamicTitle.setDynamicTitle(getInternalPortletWindow(),
                                      getHttpServletRequest(),
                                      title);
     }
-    
+
     public void setContentType(String type)
     {
         String mimeType = stripCharacterEncoding(type);
@@ -94,7 +102,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     {
         return this._getHttpServletResponse().getCharacterEncoding();
     }
-    
+
     public PrintWriter getWriter() throws IOException, IllegalStateException {
         if (currentContentType == null) {
             throw new java.lang.IllegalStateException(illegalStateExceptionText);
@@ -112,13 +120,13 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     {
         throw new IllegalStateException("portlet container does not support buffering");
     }
-    
+
     public int getBufferSize()
     {
         //return this._getHttpServletResponse().getBufferSize();
         return 0;
     }
-    
+
     public void flushBuffer() throws java.io.IOException
     {
         this._getHttpServletResponse().flushBuffer();
@@ -138,13 +146,13 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     {
         this._getHttpServletResponse().reset();
     }
-    
+
     public OutputStream getPortletOutputStream() throws java.io.IOException,java.lang.IllegalStateException
     {
         if (currentContentType == null) {
             throw new java.lang.IllegalStateException(illegalStateExceptionText);
         }
-        return getOutputStream(); 
+        return getOutputStream();
     }
     // --------------------------------------------------------------------------------------------
 
