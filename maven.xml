@@ -7,11 +7,6 @@
     <attainGoal name="faq"/>
   </preGoal>   
   
-  <goal name="allDoc">
-  	 <attainGoal name="xdoc" />
-  	 <attainGoal name="javadoc" />
-  </goal>
-  
   <goal name="allClean"
         description="Cleans a project targets">
      <attainGoal name="clean" /> 
