@@ -49,7 +49,7 @@ public class Deploy {
     // Private Services we use internally but don't
     // want to expose to the rest of the work - yet.
     private PortletApplicationExploder exploder;
-    private PortalRegistrarService registrar;
+    private PortalRegistrarServiceImpl registrarImpl;
 
     private boolean debug = false;
 
@@ -98,12 +98,12 @@ public class Deploy {
         this.exploder = exploder;
     }
 
-    PortalRegistrarService getRegistrar() {
-        return registrar;
+    PortalRegistrarServiceImpl getRegistrar() {
+        return registrarImpl;
     }
 
-    void setRegistrar(PortalRegistrarService registrar) {
-        this.registrar = registrar;
+    void setRegistrar(PortalRegistrarServiceImpl registrarImpl) {
+        this.registrarImpl = registrarImpl;
     }
 
     public boolean isDebug() {
@@ -153,7 +153,7 @@ public class Deploy {
         updateDescriptors();
         File portalWebApp = null;
         if(portalWebApp != null) {
-            registrar.register(portletAppDescriptorService);
+            registrarImpl.register(portletAppDescriptorService);
         }
     }
 

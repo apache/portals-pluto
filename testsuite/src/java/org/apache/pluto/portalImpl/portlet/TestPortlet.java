@@ -30,6 +30,7 @@ import java.util.HashMap;
 import org.apache.pluto.portalImpl.portlet.test.PortletTest;
 import org.apache.pluto.portalImpl.portlet.test.TestResults;
 import org.apache.pluto.portalImpl.portlet.test.ActionTest;
+import org.apache.pluto.portalImpl.portlet.test.NoOpTest;
 
 public class TestPortlet extends GenericPortlet {
 
@@ -53,16 +54,16 @@ public class TestPortlet extends GenericPortlet {
                 while(it.hasNext()) {
                     TestConfig config = (TestConfig)it.next();
                     String name=  config.getTestClassName();
+                    PortletTest test = null;
                     if(name != null) {
                         Class cl = Class.forName(config.getTestClassName());
-                        PortletTest test = (PortletTest)cl.newInstance();
-                        test.init(config.getInitParameters());
-                        tests.put(String.valueOf(i++), test);
+                        test = (PortletTest)cl.newInstance();
                     }
                     else {
-                        i++;
+                        test = new NoOpTest();
                     }
-
+                    test.init(config);
+                    tests.put(String.valueOf(i++), test);
                 }
             }
             catch (Throwable t) {
@@ -91,7 +92,7 @@ public class TestPortlet extends GenericPortlet {
         Map renderParameters = null;
 
         if(test!=null) {
-            renderParameters = renderParameters = test.getRenderParameters(request);
+            renderParameters = test.getRenderParameters(request);
         }
 
         if(renderParameters==null) {
@@ -133,6 +134,28 @@ public class TestPortlet extends GenericPortlet {
 
             if(testId == null) {
                 request.setAttribute("tests", configs);
+            }
+            else {
+                TestConfig next = null;
+                TestConfig prev = null;
+                int index = configs.indexOf(test.getConfig());
+                System.out.println("Index: "+index);
+                System.out.println("test: "+test);
+                System.out.println("testConfig: "+test.getConfig());
+                if(index==0) {
+                    prev = (TestConfig)configs.get(configs.size()-1);
+                    next = (TestConfig)configs.get(index+1);
+                }
+                else if(index == configs.size()-1) {
+                    prev = (TestConfig)configs.get(index-1);
+                    next = (TestConfig)configs.get(0);
+                }
+                else {
+                    prev = (TestConfig)configs.get(index-1);
+                    next = (TestConfig)configs.get(index+1);
+                }
+                request.setAttribute("prevTest", prev);
+                request.setAttribute("nextTest", next);
             }
 
             PortletContext context = getPortletContext();

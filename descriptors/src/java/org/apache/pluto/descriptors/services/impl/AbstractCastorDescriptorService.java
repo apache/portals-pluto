@@ -34,7 +34,7 @@ import org.apache.xml.serialize.XMLSerializer;
  * and writing deployment descriptors using Castor.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 5, 2005
  */
 abstract class AbstractCastorDescriptorService {
@@ -64,6 +64,7 @@ abstract class AbstractCastorDescriptorService {
         try {
             Mapping mapping = getCastorMapping();
             Unmarshaller unmarshaller = new Unmarshaller(mapping);
+            unmarshaller.setEntityResolver(new EntityResolverImpl());
             unmarshaller.setIgnoreExtraElements(getIgnoreExtraElements());
             if(is!=null) {
                 InputStreamReader in = new InputStreamReader(is);

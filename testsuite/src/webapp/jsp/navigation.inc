@@ -1,4 +1,6 @@
-<%--
+<%@ page import="java.util.Map,
+                 org.apache.pluto.portalImpl.portlet.TestConfig"%>
+ <%--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
@@ -24,6 +26,12 @@ limitations under the License.
 <TR><TD align="center" nowrap="true">
 <portlet:actionURL secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
 	<portlet:param name="nextTestId" value="<%=renderRequest.getParameter("testId") %>"/>
+      <c:forEach var="param" items="${prevTest.actionParameters}">
+        <% Map.Entry parm = ((Map.Entry)pageContext.findAttribute("param")); %>
+        <% System.out.println("parm.key: "+parm.getKey()); %>
+         <% System.out.println("parm.key: "+parm.getValue()); %>
+        <portlet:param name="<%=parm.getKey().toString()%>" value="<%=parm.getValue().toString()%>"/>
+      </c:forEach>
 </portlet:actionURL>
 
 <A href="<%=url%>"><IMG SRC="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/images/previous.png")%>" border="0"></A>
@@ -36,6 +44,11 @@ limitations under the License.
 
 <portlet:actionURL secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
 	<portlet:param name="previousTestId" value="<%=renderRequest.getParameter("testId")%>"/>
+      <% TestConfig test = (TestConfig)pageContext.findAttribute("nextTest"); %>
+      <c:forEach var="param" items="${nextTest.actionParameters}">
+        <% Map.Entry parm = ((Map.Entry)pageContext.findAttribute("param")); %>
+        <portlet:param name="<%=parm.getKey().toString()%>" value="<%=parm.getValue().toString()%>"/>
+      </c:forEach>
 </portlet:actionURL>
 
 <A href="<%=url%>"><IMG SRC="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/images/next.png")%>" border="0"></A>

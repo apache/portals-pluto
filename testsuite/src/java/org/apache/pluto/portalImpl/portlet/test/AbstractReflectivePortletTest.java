@@ -25,12 +25,15 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletConfig;
 
+import org.apache.pluto.portalImpl.portlet.TestConfig;
+
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public abstract class AbstractReflectivePortletTest implements PortletTest {
 
     private Map initParameters;
+    private TestConfig config;
 
     public TestResults doTest(PortletConfig config,
                               PortletContext context,
@@ -60,8 +63,9 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         return results;
     }
 
-    public void init(Map initParameters) {
-        this.initParameters = initParameters;
+    public void init(TestConfig config) {
+        this.initParameters = config.getInitParameters();
+        this.config = config;
     }
 
     private TestResult invoke(Method method, PortletConfig config,
@@ -101,5 +105,9 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
 
     public Map getInitParameters() {
         return initParameters;
+    }
+
+    public TestConfig getConfig() {
+        return config;
     }
 }

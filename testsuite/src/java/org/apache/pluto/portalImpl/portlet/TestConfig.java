@@ -30,7 +30,9 @@ public class TestConfig {
     private String testClassName;
     private String name;
     private String displayURI;
-    private Map params = new java.util.HashMap();
+    private Map initParams = new java.util.HashMap();
+    private Map actionParameters = new java.util.HashMap();
+    private Map renderParameters = new java.util.HashMap();
 
     public TestConfig() {
 
@@ -61,14 +63,31 @@ public class TestConfig {
     }
 
     public void addInitParameter(String parameter, String value) {
-        this.params.put(parameter, value);
+        this.initParams.put(parameter, value);
     }
 
     public Map getInitParameters() {
-        return Collections.unmodifiableMap(params);
+        return Collections.unmodifiableMap(initParams);
     }
 
+    public void addActionParameter(String parameter, String value) {
+        this.actionParameters.put(parameter, value);
+    }
 
+    public Map getActionParameters() {
+        return Collections.unmodifiableMap(actionParameters);
+    }
 
+    public void addRenderParameter(String parameter, String value) {
+        this.renderParameters.put(parameter, value);
+    }
+
+    public Map getRenderParameters() {
+        return Collections.unmodifiableMap(renderParameters);
+    }
+
+    public String toString() {
+        return super.toString()+"<"+getName()+">";
+    }
 }
 

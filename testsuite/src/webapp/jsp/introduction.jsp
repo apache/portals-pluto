@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.Map"%>
+ <%--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
@@ -35,11 +36,16 @@ limitations under the License.
     <TR><TD><c:out value="${test.name}"/></TD>
         <portlet:actionURL secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
     	<portlet:param name="testId" value='<%=((javax.servlet.jsp.jstl.core.LoopTagStatus)pageContext.getAttribute("status")).getIndex()+""%>'/>
+        <c:forEach var="param" items="${test.actionParameters}">
+        <%
+            Map.Entry parm = ((Map.Entry)pageContext.findAttribute("param"));
+        %>
+          <portlet:param name="<%=parm.getKey().toString()%>" value="<%=parm.getValue().toString()%>"/>
+        </c:forEach>
         </portlet:actionURL>
         <TD><A href="<c:out value="${url}"/>">Test</A></TD>
     </c:forEach>
     </TABLE>
-
     </P>
     </TD></TR>
 </TABLE>

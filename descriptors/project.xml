@@ -68,6 +68,8 @@ limitations under the License.
         <directory>${basedir}/src/resources</directory>
         <includes>
           <include>**/*.xml</include>
+          <include>**/*.dtd</include>
+          <include>**/*.xsd</include>
         </includes>
       </resource>
 
@@ -94,6 +96,8 @@ limitations under the License.
         <includes>
             <include>**/*.properties</include>
 	        <include>**/*.xml</include>
+	        <include>**/*.xsd</include>
+	        <include>**/*.dtd</include>
         </includes>
       </resource>
     </resources>

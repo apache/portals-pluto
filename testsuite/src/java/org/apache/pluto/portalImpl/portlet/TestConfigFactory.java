@@ -52,6 +52,13 @@ public class TestConfigFactory {
         digester.addCallParam("testportlet-config/testsuite-config/init-param/name", 0);
         digester.addCallParam("testportlet-config/testsuite-config/init-param/value", 1);
 
+        digester.addCallMethod("testportlet-config/testsuite-config/action-param", "addActionParameter", 2);
+        digester.addCallParam("testportlet-config/testsuite-config/action-param/name", 0);
+        digester.addCallParam("testportlet-config/testsuite-config/action-param/value", 1);
+
+        digester.addCallMethod("testportlet-config/testsuite-config/render-param", "addRenderParameter", 2);
+        digester.addCallParam("testportlet-config/testsuite-config/render-param/name", 0);
+        digester.addCallParam("testportlet-config/testsuite-config/render-param/value", 1);
 
         digester.addSetRoot("testportlet-config/testsuite-config",
                             "add");

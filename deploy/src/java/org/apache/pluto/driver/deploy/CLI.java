@@ -42,18 +42,29 @@ public class CLI {
     -version,              print versioning information
     -verbose, -v           be extra verbose
     -help, -h              print this messagae</pre>
+  Possible Future Options
+    -regsitrar, -r         class name of the registrar which should be used
      * @param args
      * @throws Exception
      */
     public static void main(String args[]) throws Exception {
         CLIArgs cli = parseArgs(args);
-        Deploy deploy = createDeployer(cli);
-        deploy.deploy(cli.portletApplication);
+        // cli will be null if the -version or -help flags
+        // have been turned on.
+        if(cli!=null) {
+            Deploy deploy = createDeployer(cli);
+            deploy.deploy(cli.portletApplication);
+        }
     }
 
-    public static Deploy createDeployer(CLIArgs args) {
+    /**
+     * Create a deployer from the parsed arguments.
+     * @param args CLIArgs parsed from the command line.
+     * @return an instance of the Deployer.
+     */
+    private static Deploy createDeployer(CLIArgs args) {
         PortletApplicationExploder exploder = null;
-        PortalRegistrarService registrar = null;
+        PortalRegistrarServiceImpl registrarImpl = null;
         WebAppDescriptorService webAppDescriptorService = null;
         PortletAppDescriptorService portletAppDescriptorService = null;
 
@@ -63,7 +74,7 @@ public class CLI {
         }
 
         if(args.portalApplication!=null) {
-            registrar = new PortalRegistrarService(args.portalApplication);
+            registrarImpl = new PortalRegistrarServiceImpl(args.portalApplication);
         }
         if(args.debug) {
             System.out.println("<VERBOSE> Portal WebApp: "+ args.portalApplication.getAbsolutePath());
@@ -88,11 +99,17 @@ public class CLI {
         Deploy deploy = new Deploy(webAppDescriptorService, portletAppDescriptorService);
         deploy.setDebug(args.debug);
         deploy.setExploder(exploder);
-        deploy.setRegistrar(registrar);
+        deploy.setRegistrar(registrarImpl);
         return deploy;
     }
 
-    public static CLIArgs parseArgs(String[] args) {
+    /**
+     * Parse the command line arguments into the appropriate
+     * File objects.
+     * @param args
+     * @return
+     */
+    private static CLIArgs parseArgs(String[] args) {
         CLIArgs result = new CLIArgs();
 
         for (int i=0;i<args.length;i++) {
@@ -166,6 +183,8 @@ public class CLI {
         sb.append("  -version,              print versioning information"+sep);
         sb.append("  -verbose, -v           be extra verbose"+sep);
         sb.append("  -help, -h              print this messagae"+sep);
+        sb.append("Future Options: "+sep);
+        sb.append("  -registrar, -r         the class name of the registrar used to register the portlets with the portal"+sep);
         System.out.println(sb);
     }
 
@@ -174,12 +193,10 @@ public class CLI {
     }
 
     static class CLIArgs {
-
         private File portletApplication;
         private File portalApplication;
         private File destinationDirectory;
         private boolean debug;
-
     }
 
 }

@@ -13,65 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.pluto.driver.deploy;
 
-import java.io.File;
-import java.io.RandomAccessFile;
-import java.io.IOException;
-import java.util.Iterator;
-
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 
 /**
- * Service used by the deployer to register portlet
- * applications with the Portal.
+ * Service interface defining a mechanism for registering
+ * a portlet application with a portal.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
- * @since Mar 6, 2005
+ * @since Mar 9, 2005
  */
-class PortalRegistrarService {
-
-    private static final String REGISTRY_FILE = "WEB-INF/data/portletentityregistry.xml";
-
-    private File portalRoot;
-
-    public PortalRegistrarService(File portalRoot) {
-        this.portalRoot = portalRoot;
-    }
+public interface PortalRegistrarService {
 
     /**
-     * Register the given war.
+     * Register the application defined by the service.
+     * @param service
      */
-    public void register(PortletAppDescriptorService portletAppDescriptorService)
-    throws IOException {
-        File file = new File(portalRoot, REGISTRY_FILE);
-        RandomAccessFile ras = new RandomAccessFile(file, "rw");
-
-        long length = ras.length();
-        byte[] contentByte = new byte[(int) length];
-        ras.read(contentByte);
-        String contentString = new String(contentByte);
-        long pos = contentString.lastIndexOf("</portlet-entity-registry>");
-        ras.seek(pos);
-        ras.writeBytes("    <application id=\"" + portletAppDescriptorService.getContextPath() + "\">\r\n");
-        ras.writeBytes("        <definition-id>" + portletAppDescriptorService.getContextPath() + "</definition-id>\r\n");
-
-        PortletAppDD app = portletAppDescriptorService.read();
-        PortletDD p;
-        Iterator i = app.getPortlets().iterator();
-        while(i.hasNext()) {
-            p = (PortletDD)i.next();
-            ras.writeBytes("        <portlet id=\"" + p.getPortletName() + "\">\r\n");
-            ras.writeBytes("            <definition-id>" + portletAppDescriptorService.getContextPath()
-                               + "." + p.getPortletName() + "</definition-id>\r\n");
-            ras.writeBytes("        </portlet>\r\n");
-        }
-        ras.writeBytes("    </application>\r\n");
-        ras.writeBytes("</portlet-entity-registry>\r\n");
-        ras.close();
-    }
+    void register(PortletAppDescriptorService service);
 }
-

@@ -7,11 +7,11 @@
 		<portlet-class>org.apache.pluto.portlet.admin.controller.DeployWarPortlet</portlet-class>
         <init-param>
             <name>view_include</name>
-            <value>/DeployWarView.jsp</value>
+            <value>/portlets/admin/DeployWarView.jsp</value>
         </init-param>
         <init-param>
             <name>help_include</name>
-            <value>/DeployWarHelp.html</value>
+            <value>/portlets/admin/DeployWarHelp.html</value>
         </init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -30,15 +30,15 @@
 		<portlet-class>org.apache.pluto.portlet.admin.controller.PortletEntityRegistryPortlet</portlet-class>
         <init-param>
             <name>view_include</name>
-            <value>/PortletEntityRegistryView.jsp</value>
+            <value>/portlets/admin/PortletEntityRegistryView.jsp</value>
         </init-param>
         <init-param>
             <name>edit_include</name>
-            <value>/PortletEntityRegistryEdit.jsp</value>
+            <value>/portlets/admin/PortletEntityRegistryEdit.jsp</value>
         </init-param>
         <init-param>
             <name>help_include</name>
-            <value>/PortletEntityRegistryHelp.html</value>
+            <value>/portlets/admin/PortletEntityRegistryHelp.html</value>
         </init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -57,15 +57,15 @@
 		<portlet-class>org.apache.pluto.portlet.admin.controller.PageRegistryPortlet</portlet-class>
         <init-param>
             <name>view_include</name>
-            <value>/PageRegistryView.jsp</value>
+            <value>/portlets/admin/PageRegistryView.jsp</value>
         </init-param>
         <init-param>
             <name>edit_include</name>
-            <value>/PageRegistryEdit.jsp</value>
+            <value>/portlets/admin/PageRegistryEdit.jsp</value>
         </init-param>
         <init-param>
             <name>help_include</name>
-            <value>/PageRegistryHelp.html</value>
+            <value>/portlets/admin/PageRegistryHelp.html</value>
         </init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
