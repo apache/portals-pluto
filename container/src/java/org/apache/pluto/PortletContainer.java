@@ -33,25 +33,26 @@ import org.apache.pluto.services.PortletContainerEnvironment;
  * defined way.<P>
  * The base functionality of the portlet container can be enhanced or even
  * modified by PortletContainerServices.
+ *
  * <P>
  * The methods of this class have to be called in the following order:
  * <UL>
  * <LI>only once</LI>
  *   <UL>
- *   <LI>init</LI>
- *   <LI>destroy</LI>
+ *   <LI>{@link #init(java.lang.String, javax.servlet.ServletConfig, org.apache.pluto.services.PortletContainerEnvironment, java.util.Properties)}</LI>
+ *   <LI>{@link #shutdown()}</LI>
  *   </UL>
  * <LI>for each request</LI>
  *   <UL>
- *   <LI>renderPortlet (for each portlet)</LI>
+ *   <LI>{@link #renderPortlet(org.apache.pluto.om.window.PortletWindow, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)} (for each portlet)</LI>
  *   </UL>
  * <LI>optional for each request</LI>
  *   <UL>
- *   <LI>processPortletAction (for portlet receiving the action request)</LI>
+ *   <LI>{@link #processPortletAction(org.apache.pluto.om.window.PortletWindow, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)} (for portlet receiving the action request)</LI>
  *   </UL>
  * </UL>
  * 
- * @version $Id: PortletContainer.java,v 1.4 2004/05/27 11:53:43 cziegeler Exp $
+ * @version $Id: PortletContainer.java,v 1.5 2004/07/30 14:16:06 ddewolf Exp $
  */
 public interface PortletContainer
 {
