@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import java.util.Locale;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
@@ -40,6 +41,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.om.window.PortletWindow;
+import org.apache.pluto.om.common.SecurityRoleRef;
+import org.apache.pluto.om.common.SecurityRoleRefSet;
+import org.apache.pluto.om.entity.PortletEntity;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.property.PropertyManager;
@@ -258,9 +263,35 @@ implements PortletRequest, InternalPortletRequest
         return this._getHttpServletRequest().getUserPrincipal();
     }
 
-    public boolean isUserInRole(String role)
+    /**
+     * Determines whether a user is mapped to the specified
+     * role.  As specified in PLT-20-3, we must reference
+     * the &lt;security-role-ref&gt; mappings within the
+     * deployment descriptor. If no mapping is available,
+     * then, and only then, do we check use the actual role
+     * name specified against the web application deployment
+     * descriptor.
+     *
+     * @param roleName the name of the role
+     * @return true if it is determined the user has the given role.
+     *
+     */
+    public boolean isUserInRole(String roleName)
     {
-        return this._getHttpServletRequest().isUserInRole(role);
+        PortletEntity entity = portletWindow.getPortletEntity();
+        PortletDefinition def = entity.getPortletDefinition();
+        SecurityRoleRefSet set = def.getInitSecurityRoleRefSet();
+        SecurityRoleRef ref = set.get(roleName);
+
+        String link = null;
+        if ( ref != null && ref.getRoleLink()!=null) {
+            link = ref.getRoleLink();
+        }
+        else {
+            link = roleName;
+        }
+
+        return this._getHttpServletRequest().isUserInRole(link);
     }
 
     public Object getAttribute(String name)

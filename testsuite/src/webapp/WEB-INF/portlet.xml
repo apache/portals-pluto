@@ -58,8 +58,13 @@ limitations under the License.
 				<value>dummyValue2</value>
 			</preference>
             <preferences-validator>org.apache.pluto.core.impl.PreferencesValidatorImpl</preferences-validator>
-        </portlet-preferences>        
+        </portlet-preferences>
+        <security-role-ref>
+            <role-name>plutoTestRole</role-name>
+            <role-link>tomcat</role-link>
+        </security-role-ref>
 	</portlet>
+
 	<portlet>
         <description>TestSuiteDescription</description>
 		
@@ -102,6 +107,10 @@ limitations under the License.
 				<value>dummyValue2</value>
 			</preference>
             <preferences-validator>org.apache.pluto.core.impl.PreferencesValidatorImpl</preferences-validator>
-        </portlet-preferences>        
+        </portlet-preferences>
+        <security-role-ref>
+          <role-name>plutoTestRole</role-name>
+          <role-link>tomcat</role-link>
+        </security-role-ref>
 	</portlet>
  </portlet-app>
