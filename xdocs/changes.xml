@@ -1,0 +1,14 @@
+<document>
+  <properties>
+    <title>Changes</title>
+  </properties>
+  <body>
+
+    <release version="1.0" date="in CVS">
+      <action dev="cziegeler" type="update">
+        Updating to the new ASF License 2.0.
+      </action>              
+    </release>
+
+  </body>
+</document>
