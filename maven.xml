@@ -45,8 +45,14 @@ limitations under the License.
   </goal>
 
   <goal name="deploy">
-   	   <attainGoal name="fullDeployment" />
-
+    <echo>
+************************************************
+* Please ensure that a fullDeployment has      *
+* previously been run if this deploy attempt   *
+* fails.  It is the fullDeployment that        *
+* deploys pluto container and portal driver.   *
+************************************************
+    </echo>
        <maven:reactor
                basedir="${basedir}"
                includes="deploy/project.xml"
