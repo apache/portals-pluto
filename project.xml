@@ -18,17 +18,17 @@
   <shortDescription>A JSR-168 Compliant Portlet Engine.</shortDescription>
 
   <description>
-  Pluto is the Reference Implementation of the Java 
-  Portlet Specfication.  Portlets are designed to run 
-  in the context of a portal. They are written to the 
+  Pluto is the Reference Implementation of the Java
+  Portlet Specfication.  Portlets are designed to run
+  in the context of a portal. They are written to the
   Portlet API which are similar to the Servlet API.
-  A portlet container provides a runtime environment 
-  for portlets implemented according to the Portlet 
+  A portlet container provides a runtime environment
+  for portlets implemented according to the Portlet
   API. In this environment portlets can be instantiated,
-  used and finally destroyed. The portlet container is 
-  not a stand-alone container like the servlet container; 
-  instead it is implemented as a thin layer on top of 
-  the servlet container and reuses the functionality 
+  used and finally destroyed. The portlet container is
+  not a stand-alone container like the servlet container;
+  instead it is implemented as a thin layer on top of
+  the servlet container and reuses the functionality
   provided by the servlet container.
   </description>
 
@@ -135,61 +135,61 @@
             <id>ggolden</id>
             <email/>
         </developer>
-    
+
         <developer>
             <name/>
             <id>shesmer</id>
             <email/>
         </developer>
-            
+
         <developer>
             <name/>
             <id>nacho</id>
             <email/>
         </developer>
-    
+
         <developer>
             <name/>
             <id>akempf</id>
             <email/>
         </developer>
-    
+
         <developer>
             <name>Scott T. Weaver</name>
             <id>weaver</id>
             <email>weaver{aT}apache{d0t}org</email>
         </developer>
-    
+
         <developer>
             <name/>
             <id>jford</id>
             <email/>
         </developer>
-    
+
         <developer>
             <name/>
             <id>aurelien</id>
             <email/>
         </developer>
-    
+
         <developer>
             <name/>
             <id>rubys</id>
             <email/>
         </developer>
-    
+
         <developer>
             <name>Michael Blum</name>
             <id>blumm</id>
             <email>blumm{aT}apache{d0t}org</email>
         </developer>
-    
+
         <developer>
             <name>Stefan Hepper</name>
             <id>sthepper</id>
             <email>sthepper{aT}apache{d0t}org</email>
         </developer>
-    
+
         <developer>
             <name>Carsten Ziegeler</name>
             <id>cziegeler</id>
@@ -201,6 +201,13 @@
 			<id>ddewolf</id>
 			<email>ddewolf{aT}apache{d0t}org</email>
         </developer>
+
+		<developer>
+            <name>Nick Lothian</name>
+			<id>nlothian</id>
+			<email>nlothian{aT}apache{d0t}org</email>
+        </developer>
+
       </developers>
   <build>
 
