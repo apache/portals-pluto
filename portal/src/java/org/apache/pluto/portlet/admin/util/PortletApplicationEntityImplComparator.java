@@ -43,10 +43,8 @@ public class PortletApplicationEntityImplComparator extends BaseAdminObject impl
 			throw new ClassCastException("Wrong class type used for PortletApplicationEntityImplComparator");
 		} else {
 			PortletApplicationEntityImpl app1 = (PortletApplicationEntityImpl)obj1;
-			Integer app1ID = new Integer(Integer.parseInt(app1.getCastorId()));
 			PortletApplicationEntityImpl app2 = (PortletApplicationEntityImpl)obj2;
-			Integer app2ID = new Integer(Integer.parseInt(app2.getCastorId()));
-			return app1ID.compareTo(app2ID);
+            return app1.getCastorId().compareTo(app2.getCastorId());
 		}
 	}
 
