@@ -196,16 +196,16 @@
             <email>cziegeler{aT}apache{d0t}org</email>
         </developer>
 
-		<developer>
+        <developer>
             <name>David DeWolf</name>
-			<id>ddewolf</id>
-			<email>ddewolf{aT}apache{d0t}org</email>
+            <id>ddewolf</id>
+            <email>ddewolf{aT}apache{d0t}org</email>
         </developer>
 
-		<developer>
+        <developer>
             <name>Nick Lothian</name>
-			<id>nlothian</id>
-			<email>nlothian{aT}apache{d0t}org</email>
+            <id>nlothian</id>
+            <email>nlothian{aT}apache{d0t}org</email>
         </developer>
 
       </developers>
