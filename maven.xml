@@ -23,6 +23,10 @@ limitations under the License.
     <attainGoal name="faq"/>
   </preGoal>
 
+  <preGoal name="clean">
+    <attainGoal name="multiproject:clean"/>
+  </preGoal>
+
   <preGoal name="fullDeployment">
     <attainGoal name="multiproject:install"/>
   </preGoal>

@@ -15,20 +15,22 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
- * <B>TODO</B>: Document
+ * Web Resource Collection configuration.
+ * 
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 4, 2005
  */
 public class WebResourceCollectionDD {
 
     private String webResourceName;
     private String description;
-    private Set httpMethods;
-    private Set urlPatterns;
+    private List httpMethods = new ArrayList();
+    private List urlPatterns = new ArrayList();
 
     public WebResourceCollectionDD() {
 
@@ -50,19 +52,19 @@ public class WebResourceCollectionDD {
         this.description = description;
     }
 
-    public Set getHttpMethods() {
+    public List getHttpMethods() {
         return httpMethods;
     }
 
-    public void setHttpMethods(Set httpMethods) {
+    public void setHttpMethods(List httpMethods) {
         this.httpMethods = httpMethods;
     }
 
-    public Set getUrlPatterns() {
+    public List getUrlPatterns() {
         return urlPatterns;
     }
 
-    public void setUrlPatterns(Set urlPatterns) {
+    public void setUrlPatterns(List urlPatterns) {
         this.urlPatterns = urlPatterns;
     }
 

@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.pluto.descriptors.common.InitParamDD;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
@@ -36,6 +37,7 @@ import org.apache.pluto.descriptors.servlet.SecurityRoleDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
 import org.apache.pluto.descriptors.servlet.ServletMappingDD;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.driver.deploy.impl.PortletEntityRegistryRegistrarService;
 
 public class Deploy {
 
@@ -49,7 +51,7 @@ public class Deploy {
     // Private Services we use internally but don't
     // want to expose to the rest of the work - yet.
     private PortletApplicationExploder exploder;
-    private PortalRegistrarServiceImpl registrarImpl;
+    private List registrars = new ArrayList();
 
     private boolean debug = false;
 
@@ -98,12 +100,16 @@ public class Deploy {
         this.exploder = exploder;
     }
 
-    PortalRegistrarServiceImpl getRegistrar() {
-        return registrarImpl;
+    List getRegistrars() {
+        return registrars;
     }
 
-    void setRegistrar(PortalRegistrarServiceImpl registrarImpl) {
-        this.registrarImpl = registrarImpl;
+    void setRegistrars(List registrars) {
+        this.registrars = registrars;
+    }
+
+    void addRegistrar(PortalRegistrarService registrar) {
+        this.registrars.add(registrar);
     }
 
     public boolean isDebug() {
@@ -112,6 +118,26 @@ public class Deploy {
 
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    /**
+     * Deploy the war file at the given location
+     * utilizing the preconfigured resources.
+     *
+     * @param warFile
+     * @throws IOException
+     */
+    public void deploy(File warFile) throws IOException {
+        if(exploder != null) {
+            exploder.explode(warFile);
+        }
+        updateDescriptors();
+        Iterator it = registrars.iterator();
+        PortalRegistrarService registrar = null;
+        while(it.hasNext()) {
+            registrar = (PortalRegistrarService)it.next();
+            registrar.register(portletAppDescriptorService);
+        }
     }
 
     public void updateDescriptors()
@@ -123,7 +149,6 @@ public class Deploy {
         PortletDD portlet;
         while (portlets.hasNext()) {
             portlet = (PortletDD) portlets.next();
-
             createServlet(webApp, portlet);
             createServletMapping(webApp, portlet);
         }
@@ -131,31 +156,7 @@ public class Deploy {
         this.webAppDescriptorService.write(webApp);
     }
 
-    public static void copy(String from, String to) throws IOException {
-        File f = new File(to);
-        f.getParentFile().mkdirs();
 
-        byte[] buffer = new byte[1024];
-        int length = 0;
-        InputStream fis = new FileInputStream(from);
-        FileOutputStream fos = new FileOutputStream(f);
-
-        while ((length = fis.read(buffer)) >= 0) {
-            fos.write(buffer, 0, length);
-        }
-        fos.close();
-    }
-
-    public void deploy(File warFile) throws IOException {
-        if(exploder != null) {
-            exploder.explode(warFile);
-        }
-        updateDescriptors();
-        File portalWebApp = null;
-        if(portalWebApp != null) {
-            registrarImpl.register(portletAppDescriptorService);
-        }
-    }
 
 
     private void createServlet(WebAppDD webApp, PortletDD portlet) {
@@ -276,7 +277,4 @@ public class Deploy {
             webApp.getServletMappings().add(servletMapping);
         }
     }
-
-
-
 }

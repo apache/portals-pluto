@@ -27,7 +27,7 @@
     <map-to xml="portlet-app"/>
     <field name="Portlets"
            type="org.apache.pluto.descriptors.portlet.PortletDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="portlet" node="element"/>
     </field>
   </class>

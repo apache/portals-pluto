@@ -15,9 +15,9 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import org.apache.pluto.descriptors.common.IconDD;
 
@@ -35,23 +35,23 @@ public class WebAppDD {
     private String displayName;
     private String description;
     private boolean distributable;
-    private Set contextParams;
-    private Set filters;
-    private Set filterMappings;
-    private Set listeners;
-    private Set servlets;
-    private Set servletMappings;
+    private List contextParams = new ArrayList();
+    private List filters = new ArrayList();
+    private List filterMappings = new ArrayList();
+    private List listeners = new ArrayList();
+    private List servlets = new ArrayList();
+    private List servletMappings = new ArrayList();
     private SessionConfigDD sessionConfig;
-    private Set mimeMappings;
-    private WelcomeFileListDD welcomeFileSet;
-    private Set errorPages;
-    private Set taglibs;
-    private Set resourceRefs;
-    private Set securityConstraints;
+    private List mimeMappings = new ArrayList();
+    private WelcomeFileListDD welcomeFileList;
+    private List errorPages = new ArrayList();
+    private List taglibs = new ArrayList();
+    private List resourceRefs = new ArrayList();
+    private List securityConstraints = new ArrayList();
     private LoginConfigDD loginConfig;
-    private Set securityRoles;
-    private Set envEntrys;
-    private Set ejbRefs;
+    private List securityRoles = new ArrayList();
+    private List envEntrys = new ArrayList();
+    private List ejbRefs = new ArrayList();
 
     public WebAppDD() {
 
@@ -97,51 +97,51 @@ public class WebAppDD {
      * Retrieve the context parameters.
      * @return InitParamDD instances.
      */
-    public Set getContextParams() {
+    public List getContextParams() {
         return contextParams;
     }
 
-    public void setContextParams(Set contextParams) {
+    public void setContextParams(List contextParams) {
         this.contextParams = contextParams;
     }
 
-    public Set getFilters() {
+    public List getFilters() {
         return filters;
     }
 
-    public void setFilters(Set filters) {
+    public void setFilters(List filters) {
         this.filters = filters;
     }
 
-    public Set getFilterMappings() {
+    public List getFilterMappings() {
         return filterMappings;
     }
 
-    public void setFilterMappings(Set filterMappings) {
+    public void setFilterMappings(List filterMappings) {
         this.filterMappings = filterMappings;
     }
 
-    public Set getListeners() {
+    public List getListeners() {
         return listeners;
     }
 
-    public void setListeners(Set listeners) {
+    public void setListeners(List listeners) {
         this.listeners = listeners;
     }
 
-    public Set getServlets() {
+    public List getServlets() {
         return servlets;
     }
 
-    public void setServlets(Set servlets) {
+    public void setServlets(List servlets) {
         this.servlets = servlets;
     }
 
-    public Set getServletMappings() {
+    public List getServletMappings() {
         return servletMappings;
     }
 
-    public void setServletMappings(Set servletMappings) {
+    public void setServletMappings(List servletMappings) {
         this.servletMappings = servletMappings;
     }
 
@@ -153,51 +153,51 @@ public class WebAppDD {
         this.sessionConfig = sessionConfig;
     }
 
-    public Set getMimeMappings() {
+    public List getMimeMappings() {
         return mimeMappings;
     }
 
-    public void setMimeMappings(Set mimeMappings) {
+    public void setMimeMappings(List mimeMappings) {
         this.mimeMappings = mimeMappings;
     }
 
     public WelcomeFileListDD getWelcomeFileList() {
-        return welcomeFileSet;
+        return welcomeFileList;
     }
 
-    public void setWelcomeFileList(WelcomeFileListDD welcomeFileSet) {
-        this.welcomeFileSet = welcomeFileSet;
+    public void setWelcomeFileList(WelcomeFileListDD welcomeFileList) {
+        this.welcomeFileList = welcomeFileList;
     }
 
-    public Set getErrorPages() {
+    public List getErrorPages() {
         return errorPages;
     }
 
-    public void setErrorPages(Set errorPages) {
+    public void setErrorPages(List errorPages) {
         this.errorPages = errorPages;
     }
 
-    public Set getTaglibs() {
+    public List getTaglibs() {
         return taglibs;
     }
 
-    public void setTaglibs(Set taglibs) {
+    public void setTaglibs(List taglibs) {
         this.taglibs = taglibs;
     }
 
-    public Set getResourceRefs() {
+    public List getResourceRefs() {
         return resourceRefs;
     }
 
-    public void setResourceRefs(Set resourceRefs) {
+    public void setResourceRefs(List resourceRefs) {
         this.resourceRefs = resourceRefs;
     }
 
-    public Set getSecurityConstraints() {
+    public List getSecurityConstraints() {
         return securityConstraints;
     }
 
-    public void setSecurityConstraints(Set securityConstraints) {
+    public void setSecurityConstraints(List securityConstraints) {
         this.securityConstraints = securityConstraints;
     }
 
@@ -209,34 +209,34 @@ public class WebAppDD {
         this.loginConfig = loginConfig;
     }
 
-    public Set getSecurityRoles() {
+    public List getSecurityRoles() {
         return securityRoles;
     }
 
-    public void setSecurityRoles(Set securityRoles) {
+    public void setSecurityRoles(List securityRoles) {
         this.securityRoles = securityRoles;
     }
 
-    public Set getEnvEntrys() {
+    public List getEnvEntrys() {
         return envEntrys;
     }
 
-    public void setEnvEntrys(Set envEntrys) {
+    public void setEnvEntrys(List envEntrys) {
         this.envEntrys = envEntrys;
     }
 
-    public Set getEjbRefs() {
+    public List getEjbRefs() {
         return ejbRefs;
     }
 
-    public void setEjbRefs(Set ejbRefs) {
+    public void setEjbRefs(List ejbRefs) {
         this.ejbRefs = ejbRefs;
     }
 
 // Helpers
 
     public ServletDD getServlet(String name) {
-        HashSet set = new HashSet(servlets);
+        ArrayList set = new ArrayList(servlets);
         Iterator it = set.iterator();
         ServletDD dd;
         while(name!=null && it.hasNext()) {
@@ -249,7 +249,7 @@ public class WebAppDD {
     }
 
     public ServletMappingDD getServletMapping(String uri) {
-        HashSet set = new HashSet(servletMappings);
+        ArrayList set = new ArrayList(servletMappings);
         Iterator it = set.iterator();
         ServletMappingDD dd;
         while(uri!=null && it.hasNext()) {

@@ -67,37 +67,37 @@
 
     <field name="ContextParams"
            type="org.apache.pluto.descriptors.common.InitParamDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="context-param" node="element"/>
     </field>
 
     <field name="Filters"
            type="org.apache.pluto.descriptors.servlet.FilterDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="filter" node="element"/>
     </field>
 
     <field name="Listeners"
         type="org.apache.pluto.descriptors.servlet.ListenerDD"
-        collection="set">
+        collection="arraylist">
         <bind-xml name="listener" node="element"/>
     </field>
 
     <field name="Servlets"
            type="org.apache.pluto.descriptors.servlet.ServletDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="servlet" node="element"/>
     </field>
 
     <field name="FilterMappings"
            type="org.apache.pluto.descriptors.servlet.FilterMappingDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="filter-mapping" node="element"/>
     </field>
 
     <field name="ServletMappings"
         type="org.apache.pluto.descriptors.servlet.ServletMappingDD"
-        collection="set">
+        collection="arraylist">
         <bind-xml name="servlet-mapping" node="element"/>
     </field>
 
@@ -108,7 +108,7 @@
 
     <field name="MimeMappings"
            type="org.apache.pluto.descriptors.servlet.MimeMappingDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="mime-mapping" node="element"/>
     </field>
 
@@ -119,25 +119,25 @@
 
     <field name="ErrorPages"
            type="org.apache.pluto.descriptors.servlet.ErrorPageDD"
-           collection="set">
+           collection="arraylist">
         <bind-xml name="error-page" node="element"/>
     </field>
 
     <field name="Taglibs"
            type="org.apache.pluto.descriptors.servlet.TaglibDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="taglib" node="element"/>
     </field>
 
     <field name="ResourceRefs"
            type="org.apache.pluto.descriptors.servlet.ResourceRefDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="resource-ref" node="element"/>
     </field>
 
     <field name="SecurityConstraints"
            type="org.apache.pluto.descriptors.servlet.SecurityConstraintDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="security-constraint" node="element"/>
     </field>
 
@@ -148,19 +148,19 @@
 
     <field name="SecurityRoles"
            type="org.apache.pluto.descriptors.servlet.SecurityRoleDD"
-           collection="set">
+           collection="arraylist">
         <bind-xml name="security-role" node="element"/>
     </field>
 
     <field name="envEntrys"
            type="org.apache.pluto.descriptors.servlet.EnvEntryDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="env-entry" node="element"/>    
     </field>
       
     <field name="ejbRefs"
            type="org.apache.pluto.descriptors.servlet.EjbRefDD"
-           collection="set">
+           collection="arraylist">
       <bind-xml name="ejb-ref" node="element"/>
     </field>
   </class>
@@ -206,11 +206,11 @@
     </field>
 
     <field name="UrlPatterns" type="java.lang.String"
-           collection="set">
+           collection="arraylist">
         <bind-xml name="url-pattern" node="element"/>
     </field>
     <field name="Dispatchers" type="java.lang.String"
-           collection="set">
+           collection="arraylist">
         <bind-xml name="dispatcher" node="element"/>
     </field>
   </class>
@@ -295,10 +295,10 @@
     <class name="org.apache.pluto.descriptors.servlet.WebResourceCollectionDD">
         <field name="description" type="java.lang.String"/>
         <field name="webResourceName" type="java.lang.String"/>
-        <field name="httpMethods" type="java.lang.String" collection="set">
+        <field name="httpMethods" type="java.lang.String" collection="arraylist">
           <bind-xml name="http-method" node="element"/>
         </field>
-        <field name="urlPatterns" type="java.lang.String" collection="set">
+        <field name="urlPatterns" type="java.lang.String" collection="arraylist">
             <bind-xml name="url-pattern" node="element"/>
         </field>
     </class>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module version="4" relativePaths="true" type="J2EE_WEB_MODULE" j2ee-integration="Tomcat Server">
+<module version="4" relativePaths="true" type="J2EE_WEB_MODULE" j2ee-integration="Generic Application Server">
   <component name="ModuleRootManager" />
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/target/pluto-driver/WEB-INF/classes" />
@@ -21,7 +21,6 @@
     <orderEntry type="module" module-name="descriptors" />
     <orderEntry type="library" name="commons-cli-1.0" level="application" />
     <orderEntry type="library" name="portlet-api-1.0" level="application" />
-    <orderEntry type="library" name="[portals-pluto] Tomcat" level="application_server_libraries" />
     <orderEntryProperties />
   </component>
   <component name="WebModuleBuildComponent">

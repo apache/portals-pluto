@@ -17,11 +17,14 @@
 package org.apache.pluto.driver.deploy;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.services.impl.FilePortletAppDescriptorServiceImpl;
 import org.apache.pluto.descriptors.services.impl.FileWebAppDescriptorServiceImpl;
+import org.apache.pluto.driver.deploy.impl.PortletEntityRegistryRegistrarService;
+import org.apache.pluto.driver.deploy.impl.ContextRegistryRegistrarService;
 
 public class CLI {
 
@@ -63,8 +66,8 @@ public class CLI {
      * @return an instance of the Deployer.
      */
     private static Deploy createDeployer(CLIArgs args) {
+        ArrayList registrars = new ArrayList();
         PortletApplicationExploder exploder = null;
-        PortalRegistrarServiceImpl registrarImpl = null;
         WebAppDescriptorService webAppDescriptorService = null;
         PortletAppDescriptorService portletAppDescriptorService = null;
 
@@ -74,7 +77,8 @@ public class CLI {
         }
 
         if(args.portalApplication!=null) {
-            registrarImpl = new PortalRegistrarServiceImpl(args.portalApplication);
+            registrars.add(new PortletEntityRegistryRegistrarService(args.portalApplication));
+            registrars.add(new ContextRegistryRegistrarService(args.portalApplication));
         }
         if(args.debug) {
             System.out.println("<VERBOSE> Portal WebApp: "+ args.portalApplication.getAbsolutePath());
@@ -99,7 +103,7 @@ public class CLI {
         Deploy deploy = new Deploy(webAppDescriptorService, portletAppDescriptorService);
         deploy.setDebug(args.debug);
         deploy.setExploder(exploder);
-        deploy.setRegistrar(registrarImpl);
+        deploy.setRegistrars(registrars);
         return deploy;
     }
 
@@ -173,6 +177,9 @@ public class CLI {
         return result;
     }
 
+    /**
+     * Print command usage information.
+     */
     private static void printUsage() {
         String sep = System.getProperty("line.separator");
         StringBuffer sb = new StringBuffer(sep);
@@ -188,10 +195,16 @@ public class CLI {
         System.out.println(sb);
     }
 
+    /**
+     * Print version informaiton.
+     */
     private static void printVersion() {
         System.out.println("Apache Pluto Deploy / 1.0");
     }
 
+    /**
+     * Parged and converted Command Line arguments.
+     */
     static class CLIArgs {
         private File portletApplication;
         private File portalApplication;

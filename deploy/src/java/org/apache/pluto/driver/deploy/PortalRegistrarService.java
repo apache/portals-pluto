@@ -16,6 +16,8 @@
 
 package org.apache.pluto.driver.deploy;
 
+import java.io.IOException;
+
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 
 /**
@@ -32,5 +34,6 @@ public interface PortalRegistrarService {
      * Register the application defined by the service.
      * @param service
      */
-    void register(PortletAppDescriptorService service);
+    void register(PortletAppDescriptorService service)
+        throws IOException;
 }

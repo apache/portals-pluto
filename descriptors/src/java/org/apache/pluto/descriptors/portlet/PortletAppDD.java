@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Portlet Application Configuration.
@@ -28,7 +28,7 @@ import java.util.Set;
 public class PortletAppDD {
 
     /** The defined portlets within the system. */
-    private Set portlets = new HashSet();
+    private List portlets = new ArrayList();
 
     /**
      * Default Constructor.
@@ -40,7 +40,7 @@ public class PortletAppDD {
      * Retrieve the portlets which exist within this application.
      * @return
      */
-    public Set getPortlets() {
+    public List getPortlets() {
         return portlets;
     }
 
@@ -48,7 +48,7 @@ public class PortletAppDD {
      * Set the portlets that exist within this application.
      * @param portlets
      */
-    public void setPortlets(Set portlets) {
+    public void setPortlets(List portlets) {
         this.portlets = portlets;
     }
 

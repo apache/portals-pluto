@@ -16,6 +16,7 @@
 package org.apache.pluto.descriptors.portlet;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Bare bones implementation of the Portlet descriptor.
@@ -35,7 +36,7 @@ public class PortletDD {
     private String portletClass;
 
     /** All security role references. */
-    private List securityRoleRefs;
+    private List securityRoleRefs = new ArrayList();
 
     /**
      * Default Constructor.

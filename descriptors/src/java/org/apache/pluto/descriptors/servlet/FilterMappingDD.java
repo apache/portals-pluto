@@ -15,21 +15,21 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * FilterMapping configuration as contained within the
  * web.xml Deployment Descriptor.
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Feb 28, 2005
  */
 public class FilterMappingDD {
 
     private String filterName;
     private String servletName;
-    private Set urlPattern;
-    private Set dispatchers;
+    private List urlPattern;
+    private List dispatchers;
 
     public FilterMappingDD() {
 
@@ -43,11 +43,11 @@ public class FilterMappingDD {
         this.filterName = filterName;
     }
 
-    public Set getUrlPatterns() {
+    public List getUrlPatterns() {
         return urlPattern;
     }
 
-    public void setUrlPatterns(Set urlPattern) {
+    public void setUrlPatterns(List urlPattern) {
         this.urlPattern = urlPattern;
     }
 
@@ -59,11 +59,11 @@ public class FilterMappingDD {
         this.servletName = servletName;
     }
 
-    public Set getDispatchers() {
+    public List getDispatchers() {
         return dispatchers;
     }
 
-    public void setDispatchers(Set dispatchers) {
+    public void setDispatchers(List dispatchers) {
         this.dispatchers = dispatchers;
     }
 
