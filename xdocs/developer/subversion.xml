@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- 
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+<properties>
+  <author email="ddewolf@apache.org">David DeWolf</author>
+  <title>Developer Guide: Obtaining the Source Code</title>
+</properties>
+
+<body>
+  <section name="Developer Guide: Obtaining the Source Code">
+  <p>
+    There are several reasons why you may want to have access to
+    the pluto source code.  Some may want to participate in 
+    the development of Pluto by submiting patches.  Others may want
+    to utilize Pluto as a reference implementation to clarify
+    the Portlet Specification.  Whatever the reason, there are two
+    ways to access the source code.
+  </p>
+
+  <p>
+    <A href="#Downloading_the_Source_Distribution">Downloading the
+    most recent Source Distribution</A> is the easiest
+    way to access the source.  Of course, because this method is 
+    reliant on realeases, you may not have the most recent source.
+    That said, you do have a better chance at recieving a more
+    stable codebase if you are using a distiribution.
+  </p>
+
+  <p>
+    <A href="#Using_Subversion">Using Subversion</A> to checkout the
+    absolute up-to-date version of the code is the best way to
+    retrieve the source code.  If you plan to submit patches, 
+    we ask that you use the Subversion Trunk to create your
+    diffs.
+  </p>
+    
+    <subsection name="Downloading the Source Distribution">
+
+    </subsection>
+
+    <subsection name="Using Subversion">
+
+    </subsection>
+
+  </section>
+</body>
+</document>
