@@ -18,6 +18,18 @@ limitations under the License.
          xmlns:j="jelly:core"
          xmlns:maven="jelly:maven"
          xmlns:ant="jelly:ant">     
+
+ <preGoal name="jar:jar">
+    <mkdir dir="${basedir}/target/lib"/>
+    <j:forEach var="lib" items="${pom.artifacts}">
+      <j:set var="dep" value="${lib.dependency}"/>
+      <j:if test="${dep.type == 'jar'}">
+        <ant:copy todir="${basedir}/target/lib" 
+                  file="${lib.path}"/>  
+      </j:if>  
+	</j:forEach>
+ </preGoal>
+
  <goal name="deploy">
     <java classname="org.apache.pluto.driver.deploy.CLI" fork="yes">
       <classpath>
@@ -30,4 +42,5 @@ limitations under the License.
       <arg value="${deploy}" />
     </java>       
  </goal>
+
 </project>

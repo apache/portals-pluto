@@ -17,8 +17,6 @@
 package org.apache.pluto.driver.deploy;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Enumeration;
 
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;

@@ -18,7 +18,7 @@ limitations under the License.
 <project>
   <extend>${basedir}/../project.xml</extend>
   <name>Pluto Portlet Deployment</name>
-  <id>deploy</id>
+  <id>pluto-deploy</id>
   <groupId>pluto</groupId>
 
   <organization>
@@ -42,55 +42,11 @@ limitations under the License.
       <id>pluto-descriptors</id>
       <groupId>pluto</groupId>
       <version>1.0.1-rc3</version>
-      <properties>
-        <war.bundle>false</war.bundle>
-      </properties>
-    </dependency>
-
-    <dependency>
-      <id>pluto-portal</id>
-      <groupId>pluto</groupId>
-      <version>1.0.1-rc3</version>
-      <properties>
-        <war.bundle>false</war.bundle>
-      </properties>
-    </dependency>
-k
-    <dependency>
-      <id>pluto</id>
-      <version>1.0.1-rc3</version>
-      <properties>
-        <war.bundle>false</war.bundle>
-      </properties>
-    </dependency>
-
-    <!-- Secondary Dependencies -->
-
-    <dependency>
-      <id>portlet-api</id>
-      <groupId>portlet-api</groupId>
-      <version>1.0</version>
-      <properties>
-        <war.bundle>false</war.bundle>
-      </properties>
-    </dependency>
-
-    <dependency>
-      <id>servletapi</id>
-      <version>2.3</version>
-      <properties>
-        <war.bundle>false</war.bundle>
-      </properties>
     </dependency>
 
  	<dependency>
       <id>castor</id>
       <version>0.9.5.3</version>
-    </dependency>
-
-    <dependency>
-      <id>commons-logging</id>
-      <version>1.0.4</version>
     </dependency>
 
     <dependency>

@@ -165,6 +165,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/deploy/deploy.iml" filepath="$PROJECT_DIR$/deploy/deploy.iml" />
       <module fileurl="file://$PROJECT_DIR$/descriptors/descriptors.iml" filepath="$PROJECT_DIR$/descriptors/descriptors.iml" />
       <module fileurl="file://$PROJECT_DIR$/container/pluto-core.iml" filepath="$PROJECT_DIR$/container/pluto-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/portal/pluto-driver.iml" filepath="$PROJECT_DIR$/portal/pluto-driver.iml" />

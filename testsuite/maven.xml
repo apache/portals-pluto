@@ -32,10 +32,8 @@ limitations under the License.
             <pathelement path="${maven.build.dest}"/>
           </classpath>
             <arg value="-verbose"/>
-            <arg value="-p"/>
-            <arg value="${maven.tomcat.home}/webapps/pluto"/>
-            <arg value="-d"/>
-            <arg value="${maven.tomcat.home}/webapps"/>
+            <arg value="-p"/><arg value="${maven.tomcat.home}/webapps/pluto"/>
+            <arg value="-d"/><arg value="${maven.tomcat.home}/webapps"/>
             <arg value="${basedir}/target/${maven.war.final.name}" />
          </java>       
  </goal>

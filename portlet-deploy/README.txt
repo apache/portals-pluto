@@ -1,1 +1,0 @@
-build.xml is an ant script that can be used to deploy portlet applications to Pluto
