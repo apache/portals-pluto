@@ -61,15 +61,21 @@ limitations under the License.
   <mailingLists>
     <mailingList>
       <name>Pluto User List</name>
-      <subscribe>pluto-user-subscribe@jakarta.apache.org</subscribe>
-      <unsubscribe>pluto-user-unsubscribe@jakarta.apache.org</unsubscribe>
-      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=pluto-user@jakarta.apache.org</archive>
+      <subscribe>pluto-user-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-user-unsubscribe@portals.apache.org</unsubscribe>
+      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=pluto-user@portals.apache.org</archive>
     </mailingList>
     <mailingList>
       <name>Pluto Developer List</name>
-      <subscribe>pluto-dev-subscribe@jakarta.apache.org</subscribe>
-      <unsubscribe>pluto-dev-unsubscribe@jakarta.apache.org</unsubscribe>
-      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=pluto-dev@jakarta.apache.org</archive>
+      <subscribe>pluto-dev-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-dev-unsubscribe@portals.apache.org</unsubscribe>
+      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=pluto-dev@portals.apache.org</archive>
+    </mailingList>
+    <mailingList>
+      <name>Pluto SCM List</name>
+      <subscribe>pluto-scm-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-scm-unsubscribe@portals.apache.org</unsubscribe>
+      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=pluto-scm@portals.apache.org</archive>
     </mailingList>
   </mailingLists>
 
@@ -232,7 +238,7 @@ limitations under the License.
       </contributors>
   <build>
 
-    <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
+    <nagEmailAddress>pluto-dev@portals.apache.org</nagEmailAddress>
 
     <sourceDirectory>src/java</sourceDirectory>
     <aspectSourceDirectory/>
