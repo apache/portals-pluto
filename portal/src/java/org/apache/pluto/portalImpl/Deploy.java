@@ -429,7 +429,9 @@ public class Deploy {
                 throw new Exception();
             }
             String strTo = dirDelim + "WEB-INF" + dirDelim + "tld" + dirDelim + "portlet.tld";
-            String strFrom = ".." + dirDelim + "war" + strTo;
+           // String strFrom = ".." + dirDelim + "war" + strTo;           
+		   String strFrom = ".." + dirDelim + "portal"+dirDelim+"src"+dirDelim+"webapp"+strTo;
+		   
              
             copy(strFrom, webAppsDir + webModule + strTo);
         } catch (Exception e) {
