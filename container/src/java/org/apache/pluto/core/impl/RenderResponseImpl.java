@@ -28,7 +28,6 @@ import javax.portlet.RenderResponse;
 
 import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.title.DynamicTitle;
 import org.apache.pluto.util.NamespaceMapperAccess;
 
@@ -36,6 +35,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     private static final String illegalStateExceptionText = "No content type set.";
 
     private boolean isContentTypeSet;
+    private String currentContentType;   // needed as servlet 2.3 does not have a response.getContentType
     
     public RenderResponseImpl(PortletWindow portletWindow,
                               javax.servlet.http.HttpServletRequest servletRequest,
@@ -50,7 +50,9 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
         if (!isContentTypeSet) {
             return null;
         }
-        return InformationProviderAccess.getDynamicProvider(getHttpServletRequest()).getResponseContentType();
+        // in servlet 2.4 we could simply use this:
+        // return this._getHttpServletResponse().getContentType();
+        return currentContentType;
     }
     
     public PortletURL createRenderURL()
@@ -85,6 +87,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
         }
         this._getHttpServletResponse().setContentType(mimeType);
         isContentTypeSet = true;
+        currentContentType = mimeType;
     }
 
     public String getCharacterEncoding()
