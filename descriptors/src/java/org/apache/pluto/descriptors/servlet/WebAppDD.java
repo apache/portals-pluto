@@ -262,5 +262,17 @@ public class WebAppDD {
     }
 
 
+    public FilterDD getFilter(String name) {
+        ArrayList list = new ArrayList(filters);
+        Iterator it = list.iterator();
+        FilterDD dd;
+        while(name!=null && it.hasNext()) {
+            dd = (FilterDD)it.next();
+            if(name.equals(dd.getFilterName())) {
+                return dd;
+            }
+        }
+        return null;
+    }
 }
 
