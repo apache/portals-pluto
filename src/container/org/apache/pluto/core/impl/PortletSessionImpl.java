@@ -179,15 +179,20 @@ public class PortletSessionImpl implements PortletSession, javax.servlet.http.Ht
             {
                 String attribute = (String)attributes.nextElement();
 
-                String portletAttribute = PortletSessionUtil.decodeAttributeName(attribute);
-
-                if (portletAttribute!=null)
-                { // it is in the portlet's namespace
-                    portletAttributes.add(portletAttribute);
+                int attributeScope = PortletSessionUtil.decodeScope(attribute);
+                
+                if (attributeScope == PortletSession.PORTLET_SCOPE)
+                {
+                	String portletAttribute = PortletSessionUtil.decodeAttributeName(attribute);
+                	
+                	if (portletAttribute!=null)
+                	{ // it is in the portlet's namespace
+                		portletAttributes.add(portletAttribute);
+                	}
                 }
-            }
+           }
 
-            return portletAttributes.elements();
+           return portletAttributes.elements();
         }
     }
 
