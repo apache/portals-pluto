@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<project default="all" name="pluto-project" basedir=".">
+
+	<target name="all" depends="api, container, portal">
+	</target>
+
+	<target name="clean" depends="api-clean, container-clean, portal-clean">
+	</target>
+
+	<target name="api">
+		<property name="final.name" value="portlet-api-@@DATE@@"/>
+		<ant antfile="build.xml" dir="api" target="jar" inheritAll="false" />
+	</target>
+	<target name="api-clean">
+		<ant antfile="build.xml" dir="api" target="clean" inheritAll="false" />
+	</target>
+
+	<target name="container" depends="api">
+		<ant antfile="build.xml" dir="container" target="jar" inheritAll="false" />
+	</target>
+
+	<target name="container-clean">
+		<ant antfile="build.xml" dir="container" target="clean" inheritAll="false" />
+	</target>
+
+	<target name="portal" depends="container">
+		<ant antfile="build.xml" dir="portal" target="jar" inheritAll="false" />
+	</target>
+	<target name="portal-clean">
+		<ant antfile="build.xml" dir="portal" target="clean" inheritAll="false" />
+	</target>
+
+</project>
