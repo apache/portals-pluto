@@ -36,7 +36,7 @@
     <th width="261">what is it?</th>
   </tr>
   <tr>
-    <td width="134">tomcat.home.pluto</td>
+    <td width="134">maven.tomcat.home</td>
     <td width="229">/tomcat</td>
     <td width="261">location of the Tomcat install where you want to deploy Pluto</td>
   </tr>
