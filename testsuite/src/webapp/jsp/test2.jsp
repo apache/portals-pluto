@@ -2,6 +2,7 @@
 <%@ taglib uri='/WEB-INF/tld/portlet.tld' prefix='portlet'%>
 <%@ page import="javax.portlet.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="org.apache.pluto.testsuite.*"%>
 <portlet:defineObjects/>
 <%
     String baseNS = renderResponse.getNamespace();
@@ -83,20 +84,29 @@ trying to get attributes(PRIVATE_SCOPE) from last request...
 <BR>
 <BR>
 <B>Testing Portal Context...</B><BR>
-trying to verify that the PortalContext is the Pluto/1.0 portal context<BR>
 <%
+	String expectedPortalInfo = ExpectedResults.getExpectedProperties().getProperty(ExpectedResults.EXPECTED_PORTAL_INFO_KEY);
+%>
+trying to verify that the PortalContext is the <%= expectedPortalInfo %> portal context<BR>
+<%
+	if (expectedPortalInfo == null) {
+		out.print("<font color=red>Could not find what the Portal Info should return. This should be specified as ");
+		out.print("<i> " + ExpectedResults.EXPECTED_PORTAL_INFO_KEY + "</i> in a ");
+		out.print("properties file named <i>" + ExpectedResults.PROPERTY_FILENAME + "</i> in the testsuite classpath</font> ");
+	}
+
     PortalContext portalContext = renderRequest.getPortalContext();
     allOk = true;
     String info = portalContext.getPortalInfo();
-    out.print("PortalInfo = "+info);
+    out.print("PortalInfo returned: "+info);
 %>
 <BR>
 <%
-    if (info != null && info.length() > 0) {
-        // provided getPortalInfo() returns something
-        // it is okay. The Pluto Portal returns "Pluto/1.0"
-        out.print("PortalInfo test passed...");
-    } else { out.print("PortalInfo failed..."); allOk = false; }
+     if (expectedPortalInfo != null && expectedPortalInfo.equals(info)) {
+		out.print("PortalInfo passed...");
+     } else {
+     	out.print("PortalInfo failed..."); allOk = false;
+     }
 %>
 <BR>
 <BR>
