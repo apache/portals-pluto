@@ -27,6 +27,8 @@
          
          <!-- copy the pluto.xml that sets up the pluto webapp's context -->
          <copy file="pluto.xml" todir="${tomcat.home.pluto}/webapps"/>   
+	 <!-- *dirty* fix - copy pluto.xml additionally to conf/Catalina/localhost for Tomcat 5.x -->
+	 <copy file="pluto.xml" todir="${tomcat.home.pluto}/conf/Catalina/localhost"/>   
          
          <!-- Deploy the pluto.war -->
          <!-- <copy file="target/pluto.war" todir="${tomcat.home.pluto}/webapps"/>  -->    	
