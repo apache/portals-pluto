@@ -50,18 +50,6 @@ public class ServletRequestImpl extends javax.servlet.http.HttpServletRequestWra
         return(javax.servlet.http.HttpServletRequest) super.getRequest();
     }
 
-// HttpServletRequestWrapper overlay
-          
-    public java.lang.String getContentType()
-    {
-        String contentType = "text/html";
-        if (getCharacterEncoding()!=null)
-        {
-            contentType += ";" + getCharacterEncoding();
-        }
-        return contentType;
-    }
-
 // ServletRequestWrapper overlay
 
     public String getParameter(String name) 
