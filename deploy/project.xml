@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2004 The Apache Software Foundation.
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project>
+<extend>${basedir}/../project.xml</extend>
+
+<name>Portlet Deployer</name>
+<id>pluto-deploy</id>
+<logo>/../../images/pluto.png</logo>
+
+<organization>
+  <logo>/../../images/apache-portals.gif</logo>
+</organization>
+
+<shortDescription>Deployment Utility for Pluto 1.1</shortDescription>
+
+<description>
+      Deployment tool used to build portlet application archives.
+</description>
+
+<dependencies>
+  <dependency>
+    <groupId>pluto</groupId>
+    <artifactId>pluto-binding</artifactId>
+    <version>1.1</version>
+  </dependency>
+
+  <dependency>
+    <id>commons-cli</id>
+    <version>1.0</version>
+  </dependency>
+
+  <dependency>
+    <id>commons-digester</id>
+    <version>1.6</version>
+  </dependency>
+
+  <dependency>
+    <id>commons-beanutils</id>
+    <version>1.7.0</version>
+  </dependency>
+
+  <dependency>
+    <id>commons-logging</id>
+    <version>1.0.4</version>
+  </dependency>
+
+</dependencies>
+
+</project>
