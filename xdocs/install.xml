@@ -7,7 +7,7 @@
   </properties>
 
 <body>
-<section name="Intallation">
+<section name="Installation">
 Follow the steps below to compile and install Pluto
 <p><strong>Prepare Environment</strong>
    <ul>
@@ -55,10 +55,10 @@ Follow the steps below to compile and install Pluto
 
 <p><strong>Install Portlets</strong>
    <p>
-    <ul>To install portlets after you successfully installed Pluto, copy the 
-        portlet war's to the ${pluto.home}/portlets directory and execute 
-		<code>${pluto.home}/build/build.bat deploy_portlets</code>
-    </ul>.
+    <ul>To install portlets after you successfully installed Pluto, 
+       invoke Maven to deploy the portlet's war by executing:
+		<code>maven deploy -Ddeploy=FULL_PATH_TO_YOUR_PORTLET_WAR</code>
+    </ul>
    </p>
 </p>
 </section>
