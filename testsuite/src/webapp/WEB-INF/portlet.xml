@@ -34,11 +34,6 @@ limitations under the License.
         </init-param>
 
         <init-param>
-            <name>display-name</name>
-            <value>Test Portlet #1</value>
-        </init-param>
-
-        <init-param>
 			<name>dummyName</name>
 			<value>dummyValue</value>
 		</init-param>
@@ -92,10 +87,6 @@ limitations under the License.
         <init-param>
             <name>config</name>
             <value>/WEB-INF/testsuite-2-config.xml</value>
-        </init-param>
-        <init-param>
-            <name>display-name</name>
-            <value>Test Portlet #2</value>
         </init-param>
         <init-param>
 			<name>dummyName</name>

@@ -43,17 +43,10 @@ import org.apache.pluto.portalImpl.portlet.test.ContextInitParameterTest;
 
 public class TestPortlet extends GenericPortlet {
 
-    private String portletName;
-
     private List configs;
     private Map tests;
 
     public void init() throws PortletException {
-        portletName = getInitParameter("display-name");
-        if(portletName==null) {
-            portletName = "Test Portlet";
-        }
-
         String configFile = getInitParameter("config");
         if(configFile==null) {
             configFile = "/WEB-INF/testsuite-config.xml";
@@ -119,8 +112,8 @@ public class TestPortlet extends GenericPortlet {
         response.setRenderParameters(renderParameters);
     }
 
-    public void doDispatch(RenderRequest request,
-                           RenderResponse response)
+    public void doView(RenderRequest request,
+                       RenderResponse response)
     throws PortletException, IOException {
 
         String testId = getTestId(request);
@@ -131,11 +124,9 @@ public class TestPortlet extends GenericPortlet {
         }
 
         PortletTest test = (PortletTest)tests.get(testId);
-        response.setTitle(portletName);
 
-        PortletMode mode = request.getPortletMode();
         WindowState state = request.getWindowState();
-        if (!state.equals(WindowState.MINIMIZED) && PortletMode.VIEW.equals(mode)) {
+        if (!state.equals(WindowState.MINIMIZED)) {
         	response.setContentType("text/html");
 
             if(test != null && !(test instanceof ActionTest) ) {
@@ -164,17 +155,26 @@ public class TestPortlet extends GenericPortlet {
             }
             rd.include(request,response);
         }
+    }
 
-        else if(!state.equals(WindowState.MINIMIZED) && PortletMode.EDIT.equals(mode)) {
+
+    protected void doEdit(RenderRequest req, RenderResponse res)
+    throws PortletException, IOException {
+        WindowState state = req.getWindowState();
+        if(!state.equals(WindowState.MINIMIZED)) {
             PortletContext context = getPortletContext();
             PortletRequestDispatcher rd = context.getRequestDispatcher("/jsp/edit.jsp");
-            rd.include(request,response);
+            rd.include(req,res);
         }
+    }
 
-        else if(!state.equals(WindowState.MINIMIZED) && PortletMode.HELP.equals(mode)) {
+    protected void doHelp(RenderRequest req, RenderResponse res)
+    throws PortletException, IOException {
+        WindowState state = req.getWindowState();
+        if(!state.equals(WindowState.MINIMIZED)) {
             PortletContext context = getPortletContext();
             PortletRequestDispatcher rd = context.getRequestDispatcher("/jsp/help.jsp");
-            rd.include(request,response);
+            rd.include(req,res);
         }
     }
 

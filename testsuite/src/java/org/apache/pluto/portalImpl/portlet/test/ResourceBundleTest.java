@@ -55,9 +55,6 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         res.setName("Get ResourceBundle Test");
         res.setDesc("Retrieves the resource bundle and ensures it's not null.");
 
-        System.out.println("req: "+req);
-        System.out.println("config: "+config);
-        System.out.println("locale: "+req.getLocale());
         ResourceBundle rb = config.getResourceBundle(req.getLocale());
         if(rb != null) {
             res.setReturnCode(TestResult.PASSED);
