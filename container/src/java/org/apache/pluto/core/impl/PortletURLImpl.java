@@ -166,7 +166,13 @@ public class PortletURLImpl implements PortletURL {
     // --------------------------------------------------------------------------------------------
 
     // internal methods ---------------------------------------------------------------------------
-    private boolean isPortletModeSupported(PortletMode requestedPortletMode,PortletWindow referencedPortletWindow) {
+    private boolean isPortletModeSupported(PortletMode requestedPortletMode,PortletWindow referencedPortletWindow) 
+    {
+        // PLT 8.1: View Portlet Mode should always be supported by a portlet, even if not defined in the descriptor
+        if (requestedPortletMode.equals(PortletMode.VIEW) || requestedPortletMode.toString().equalsIgnoreCase("view"))
+        {
+            return true;
+        }
         PortletDefinition portletDefinition = referencedPortletWindow.getPortletEntity().getPortletDefinition();
         ContentTypeSet contentTypes = portletDefinition.getContentTypeSet();
         return contentTypes.supportsPortletMode(requestedPortletMode);
