@@ -274,9 +274,8 @@ implements PortletRequest, InternalPortletRequest
                                                                      NamespaceMapperAccess.getNamespaceMapper().encode(portletWindow.getId(),name)
                                                                      );
 
-        if (attribute==null)
+        if (attribute==null && isNameReserved(name))
         {
-            // TBD, not sure, if this should be done for all attributes or only javax.servlet.
             attribute = this._getHttpServletRequest().getAttribute(name);
         }
         return attribute;
