@@ -308,7 +308,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         Object attribute = this.getHttpServletRequest().getAttribute(
             mapper.encode(internalPortletWindow.getId(), name));
 
-        if (attribute == null && isNameReserved(name)) {
+        if (attribute == null) {
             attribute = this.getHttpServletRequest().getAttribute(name);
         }
         return attribute;
