@@ -9,50 +9,50 @@
 <body>
   <section name="Jakarta Pluto">
 
-<p>The project is currently in the 
-  <a href="http://incubator.apache.org/">Apache Incubator</a>. The more 
-  there will be interest for Pluto, the better the chances are to see it 
-  as an Apache Jakarta within  a short period  of time.
+<p>The project is currently in the
+  <a href="http://incubator.apache.org/">Apache Incubator</a>. The more
+  interest there is in Pluto, the better the chances of it moving to a full
+  Apache Jakarta project within a short period  of time.
 </p>
 
-<p>Pluto is the Reference Implementation of the Java Portlet 
-   Specfication. The current version of this specification is 
+<p>Pluto is the Reference Implementation of the Java Portlet
+   Specfication. The current version of this specification is
    <a href="http://jcp.org/en/jsr/detail?id=168">JSR 168</a>.
 </p>
 
-<p>Portlets are designed to run in the context of a portal. 
+<p>Portlets are designed to run in the context of a portal.
    They are written to the Portlet API which are similar to the Servlet API.</p>
 
-<p>In contrast to servlets, portlets may not do things like sending 
-    redirects or errors to browsers directly, forwarding requests or 
+<p>In contrast to servlets, portlets may not do things like sending
+    redirects or errors to browsers directly, forwarding requests or
     writing arbitrary markup to the output stream to assure that they
-    don&#8217;t distract the portal web application which uses them. 
-    Another difference compared to servlets is that portlets rely on 
-    portal specific infrastructure functions such as access to user 
-    profile information, standard interface for storing/retrieving 
-    persistent settings, getting client information, etc. Generally, 
-    portlets are administrated more dynamically than servlets typically 
-    are. 
+    don&#8217;t distract the portal web application which uses them.
+    Another difference compared to servlets is that portlets rely on
+    portal specific infrastructure functions such as access to user
+    profile information, standard interface for storing/retrieving
+    persistent settings, getting client information, etc. Generally,
+    portlets are administrated more dynamically than servlets typically
+    are.
 </p>
 
-<p>A portlet container provides a runtime environment for portlets 
-   implemented according to the Portlet API. In this environment 
-   portlets can be instantiated, used and finally destroyed.  The 
-   portlet container is not a stand-alone container like the 
+<p>A portlet container provides a runtime environment for portlets
+   implemented according to the Portlet API. In this environment
+   portlets can be instantiated, used and finally destroyed.  The
+   portlet container is not a stand-alone container like the
    servlet container; instead it is implemented as a thin layer on
-   top of the servlet container and reuses the functionality 
+   top of the servlet container and reuses the functionality
    provided by the servlet container.
 </p>
 
-<p>Pluto serves as portlet container that implements the Portlet 
-   API and offers developers a working example platform from which 
-   they can test their portlets. However, it's cumbersome to execute 
-   and test the portlet container without a driver, in this case, 
-   the portal. Pluto's simple portal component is built only on 
-   the portlet container's and the JSR 168's requirements. (In 
-   contrast, the more sophisticated, 
+<p>Pluto serves as portlet container that implements the Portlet
+   API and offers developers a working example platform from which
+   they can test their portlets. However, it's cumbersome to execute
+   and test the portlet container without a driver, in this case,
+   the portal. Pluto's simple portal component is built only on
+   the portlet container's and the JSR 168's requirements. (In
+   contrast, the more sophisticated,
    <a href="http://jakarta.apache.org/jetspeed/site/index.html">Jetspeed</a>
-   project concentrates on the portal itself rather than the portlet 
+   project concentrates on the portal itself rather than the portlet
    container, and considers requirements from other groups.)
 </p>
 </section>
@@ -67,7 +67,7 @@
 
 <section name="Compilation / Installation">
 <p><b><i>Installation Procedure:</i></b>
-<!--   <li>Download the source code of Apache Pluto 
+<!--   <li>Download the source code of Apache Pluto
            <a href="http://jakarta.apache.org/site/sourceindex.cgi">here</a></li> -->
    <ul>
    <li><a href="install.html">Installing Pluto</a></li>
@@ -76,7 +76,9 @@
 
 <p><b><i>Prereq's:</i></b>
    <ul>
-   <li>The Pluto Project requires Apache Tomcat 4.1.27 and Java 1.3.1</li>
+   <li>The Pluto Project requires at least Apache Tomcat 4.1.27 and Java 1.3.1.
+Some <a href="http://nagoya.apache.org/wiki/apachewiki.cgi?PlutoProjectPages/WorkingConfigurations">other configurations</a> have been tested successfully as well.
+</li>
    <li>To build you will need to have Apache Maven 1.0-beta-10</li>
    </ul>
 </p>
