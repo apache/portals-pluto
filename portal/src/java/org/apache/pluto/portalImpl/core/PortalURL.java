@@ -370,9 +370,10 @@ public class PortalURL {
         // check the complete pathInfo for
         // * navigational information
         // * control information
-        String pathInfo = environment.getRequest().getPathInfo();
-
-        if (pathInfo != null) {
+        
+        if (environment.getRequest().getPathInfo() != null) 
+        {
+            String pathInfo = new String(environment.getRequest().getPathInfo());
             StringTokenizer tokenizer = new StringTokenizer(pathInfo, "/.");
 
             int mode = 0; // 0=navigation, 1=control information
