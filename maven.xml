@@ -59,17 +59,10 @@ limitations under the License.
   <goal name="website">
     <!-- this creates the website in "target/docs" -->
     <attainGoal name="multiproject:site"/>
-    
-    <!-- Now delete the old created website and copy the files -->
-    <mkdir dir="${website.directory}"/>
-    <delete>
-      <fileset dir="${website.directory}" includes="**"/>
-    </delete>    
-    <copy todir="${website.directory}">
-      <fileset dir="target/docs">
-        <include name="**"/>
-      </fileset>
-    </copy>
+
+    <!-- deploy the website to our server -->
+    <attainGoal name="site:sshdeploy"/>
+     
   </goal>
 
 <!-- ========================= -->
