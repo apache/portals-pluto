@@ -22,6 +22,7 @@ limitations under the License.
   <postGoal name="dist:prepare-bin-filesystem">
     <ant:copy todir="${maven.dist.bin.assembly.dir}">
       <ant:fileset dir="${basedir}/.." includes="LICENSE.TXT"/>
+      <ant:fileset dir="${basedir}/.." includes="README"/>
     </ant:copy>
   </postGoal>
 </project>
