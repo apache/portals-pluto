@@ -212,6 +212,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
             XmlParser.parsePortletXml(new FileInputStream(portletXml));
 
             Unmarshaller unmarshaller = new Unmarshaller(this.mappingPortletXml);
+			unmarshaller.setIgnoreExtraElements(true);
             PortletApplicationDefinitionImpl portletApp = 
                 (PortletApplicationDefinitionImpl)unmarshaller.unmarshal( portletDocument );
 
@@ -223,6 +224,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
                 XmlParser.parseWebXml(new FileInputStream(webXml));
 
                 unmarshaller = new Unmarshaller(this.mappingWebXml);
+				unmarshaller.setIgnoreExtraElements(true);
                 webApp = 
                     (WebApplicationDefinitionImpl)unmarshaller.unmarshal(webDocument);
 
