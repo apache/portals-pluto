@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
- * (C) Copyright IBM Corp. 2003 
- */
+
 package org.apache.pluto.portalImpl.om.servlet.impl;
 
 public class ResourceRef  {
