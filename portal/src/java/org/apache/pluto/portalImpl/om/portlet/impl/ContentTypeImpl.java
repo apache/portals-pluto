@@ -137,6 +137,10 @@ implements ContentType, java.io.Serializable, Support {
         this.portletModes = portletModes;
     }
 
+    public boolean supportsPortletMode(javax.portlet.PortletMode portletMode)
+    {
+    	return portletModes.contains(portletMode);
+    }	
     
     public String toString()
     {

@@ -57,17 +57,23 @@
 
 package org.apache.pluto.portalImpl.om.portlet.impl;
 
-import org.apache.pluto.om.portlet.*;
-import org.apache.pluto.util.StringUtils;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
+import org.apache.pluto.om.portlet.ContentType;
+import org.apache.pluto.om.portlet.ContentTypeSet;
 import org.apache.pluto.portalImpl.om.common.AbstractSupportSet;
+import org.apache.pluto.util.StringUtils;
 
 public class ContentTypeSetImpl extends AbstractSupportSet
 implements ContentTypeSet, java.io.Serializable {
 
 
     // ContentTypeSet implementation.
+
+	// special content type that represents the union of all supported markups
+	private ContentType anyContentType;
     
     public ContentType get(String contentType)
     {
@@ -80,6 +86,32 @@ implements ContentTypeSet, java.io.Serializable {
         }
         return null;
     }
+
+	// support implemenation
+    public void postLoad(Object parameter) throws Exception
+    {
+    	super.postLoad(parameter);
+    	
+    	Collection allPortletModes = new ArrayList();
+
+    	Iterator contentTypes = this.iterator();
+		while (contentTypes.hasNext()){
+			ContentType aContentType = (ContentType)contentTypes.next();
+			Iterator portletModes = aContentType.getPortletModes();
+			
+			while(portletModes.hasNext()) {
+				Object portletMode = portletModes.next();
+				if(!allPortletModes.contains(portletMode)) {
+					allPortletModes.add(portletMode);	 
+				}
+			}
+		}
+		
+		ContentTypeImpl _anyContentType = new ContentTypeImpl();
+		_anyContentType.setPortletModes(allPortletModes);
+		anyContentType = _anyContentType;
+	}
+
 
     // additional methods.
 
@@ -100,4 +132,8 @@ implements ContentTypeSet, java.io.Serializable {
         }
         return buffer.toString();
     }    
+
+	public boolean supportsPortletMode(javax.portlet.PortletMode portletMode) {
+		return anyContentType.supportsPortletMode(portletMode);
+	}
 }

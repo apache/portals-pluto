@@ -126,7 +126,10 @@ implements ActionResponse, InternalActionResponse {
         boolean supported = provider.isPortletModeAllowed(portletMode);
 
         // check if portlet supports portlet mode as well
-        supported &= PortletModeHelper.isPortletModeAllowedByPortlet(getInternalPortletWindow(), this.getHttpServletRequest().getContentType(), portletMode);
+        if (supported)
+        {
+            supported = PortletModeHelper.isPortletModeAllowedByPortlet(getInternalPortletWindow(), portletMode);
+        }
 
         // if porlet mode is allowed
         if (supported) {
@@ -135,6 +138,7 @@ implements ActionResponse, InternalActionResponse {
             throw new PortletModeException("Can't set this PortletMode",portletMode);
 
         redirectAllowed = false;
+
     }
 
     public void sendRedirect(String location) throws java.io.IOException

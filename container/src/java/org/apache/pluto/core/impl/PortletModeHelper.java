@@ -57,31 +57,19 @@
 
 package org.apache.pluto.core.impl;
 
-import java.util.Iterator;
-
 import javax.portlet.PortletMode;
 
-import org.apache.pluto.om.portlet.ContentType;
 import org.apache.pluto.om.window.PortletWindow;
 
 public class PortletModeHelper
 {
-    public static boolean isPortletModeAllowedByPortlet(PortletWindow portletWindow, 
-                                                        String contentType, 
-                                                        PortletMode portletMode) 
-    {
-        // check if portlet supports portlet mode
-        boolean supported = false;
-        ContentType ct = portletWindow.getPortletEntity().getPortletDefinition().getContentTypeSet().get(contentType);
-        if (ct == null)
-        {
-            return false;
-        }
-        Iterator modes = ct.getPortletModes();
-        while (!supported && modes.hasNext())
-        {
-            supported = ((PortletMode)modes.next()).equals(portletMode);
-        }
-        return supported;
-    }
+	public static boolean isPortletModeAllowedByPortlet(PortletWindow portletWindow, 
+														PortletMode portletMode) 
+	{
+		// check if portlet supports portlet mode
+		boolean supported = portletWindow.getPortletEntity().getPortletDefinition().getContentTypeSet().supportsPortletMode(portletMode);
+       
+		return supported;
+	}
+
 }

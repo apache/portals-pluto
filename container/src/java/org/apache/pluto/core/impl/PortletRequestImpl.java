@@ -130,9 +130,7 @@ implements PortletRequest, InternalPortletRequest
         // check if portlet supports portlet mode as well
         if (supported)
         {
-            supported = PortletModeHelper.isPortletModeAllowedByPortlet(portletWindow,
-                                                                        this._getHttpServletRequest().getContentType(),
-                                                                        portletMode);
+            supported = PortletModeHelper.isPortletModeAllowedByPortlet(portletWindow, portletMode);
         }
 
         return supported;

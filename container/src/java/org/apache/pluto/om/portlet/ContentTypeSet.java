@@ -86,5 +86,11 @@ public interface ContentTypeSet extends org.apache.pluto.om.Model
      * @return the content type object
      */
     public ContentType get(String contentType);
+    
+	/**
+	 * Return true if the given portlet mode is supported for any content type
+	 * in this set.
+	 */
+	public boolean supportsPortletMode(javax.portlet.PortletMode portletMode);
 
 }
