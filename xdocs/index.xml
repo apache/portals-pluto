@@ -9,6 +9,12 @@
 <body>
   <section name="Jakarta Pluto">
 
+<p>The project is currently in the 
+  <a href="http://incubator.apache.org/">Apache Incubator.</a> The more 
+  there will be interest for Pluto, the better the chances are to see it 
+  as an Apache Jakarta within  a short period  of time.
+</p>
+
 <p>Pluto is the Reference Implementation of the Java Portlet 
    Specfication. The current version of this specification is 
    <a href="http://jcp.org/en/jsr/detail?id=168">JSR 168</a>.
