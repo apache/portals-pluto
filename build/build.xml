@@ -75,6 +75,11 @@
     </target>
 
     <!-- ================================================================== -->
+    <!-- ALL target for gump, really another name for driver                             -->
+    <!-- ================================================================== -->
+	<target name="all" depends="driver"/>
+	
+    <!-- ================================================================== -->
     <!-- Prints useful build environment values                             -->
     <!-- ================================================================== -->
     <target name="env" depends="check_for_optional_packages, compiler.eclipse" unless="install">
