@@ -22,8 +22,10 @@ import java.util.Properties;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +45,7 @@ import org.apache.pluto.services.log.LogService;
 /**
  *  Implements the Pluto Container.
  * 
- * @version $Id: PortletContainerImpl.java,v 1.7 2004/05/27 11:53:43 cziegeler Exp $
+ * @version $Id$
  */
 public class PortletContainerImpl implements PortletContainer
 {
@@ -225,20 +227,25 @@ public class PortletContainerImpl implements PortletContainer
 	
 	        //TODO: don't send changes in case of exception -> PORTLET:SPEC:17
 	
+            PortletMode portletMode = provider.getPortletMode(portletWindow);
+            WindowState windowState = provider.getWindowState(portletWindow);
+            
 	        // get the changings of this portlet entity that might be set during action handling
 	        // change portlet mode
 	        if (_actionResponse.getChangedPortletMode() != null)
 	        {
+                portletMode = _actionResponse.getChangedPortletMode();
 	            InformationProviderAccess.getDynamicProvider(servletRequest)
 	                .getPortletActionProvider(portletWindow)
-	                .changePortletMode(_actionResponse.getChangedPortletMode());
+	                .changePortletMode(portletMode);
 	        }
 	        // change window state
 	        if (_actionResponse.getChangedWindowState() != null)
 	        {
+                windowState = _actionResponse.getChangedWindowState();
 	            InformationProviderAccess.getDynamicProvider(servletRequest)
 	                .getPortletActionProvider(portletWindow)
-	                .changePortletWindowState(_actionResponse.getChangedWindowState());
+	                .changePortletWindowState(windowState);
 	        }
 	        // get render parameters
 	        Map renderParameter = _actionResponse.getRenderParameters();
@@ -247,11 +254,11 @@ public class PortletContainerImpl implements PortletContainer
 	
 	        if (provider.getPortletMode(portletWindow)!=null)
 	        {
-	            redirectURL.setPortletMode(provider.getPortletMode(portletWindow));
+	            redirectURL.setPortletMode(portletMode);
 	        }
 	        if (provider.getWindowState(portletWindow)!=null)
 	        {
-	            redirectURL.setWindowState(provider.getWindowState(portletWindow));
+	            redirectURL.setWindowState(windowState);
 	        }
 	        if (servletRequest.isSecure())
 	        {
