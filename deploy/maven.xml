@@ -10,7 +10,7 @@
             <path refid="maven.dependency.classpath"/>
             <pathelement path="${maven.build.dest}"/>
           </classpath>
-            <arg value="${tomcat.home.pluto}/webapps" />
+            <arg value="${maven.tomcat.home}/webapps" />
             <arg value="pluto" />
             <arg value="${deploy}" />
             <arg value="../container/target" />    
