@@ -34,6 +34,7 @@ import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.ResourceURLProvider;
+import org.apache.pluto.util.StringUtils;
 
 public class ActionResponseImpl extends PortletResponseImpl
 implements ActionResponse, InternalActionResponse {
@@ -146,7 +147,7 @@ implements ActionResponse, InternalActionResponse {
             }
         }
 
-        renderParameters.putAll(parameters);
+        renderParameters = StringUtils.copyParameters(parameters);
 
         redirectAllowed = false;
     }
@@ -176,7 +177,7 @@ implements ActionResponse, InternalActionResponse {
             throw new IllegalArgumentException("Render parameter key or value must not be null or values be an empty array.");
         }
 
-        renderParameters.put(key, values);
+        renderParameters.put(key, StringUtils.copy(values));
 
         redirectAllowed = false;
     }

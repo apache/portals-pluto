@@ -19,6 +19,10 @@
 
 package org.apache.pluto.util;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 /**
  ** <CODE>StringUtils</CODE> hosts a couple of utility methods around
  ** strings.
@@ -354,4 +358,32 @@ public class StringUtils
         }
         return result;
     }
+
+    public static String[] copy(String[] source) 
+    {
+        if (source == null)
+            return null;
+        int length = source.length;
+        String[] result = new String[length];
+        System.arraycopy(source, 0, result, 0, length);
+        return result;    
+    }
+
+    public static Map copyParameters(Map parameters)
+    { 
+        Map result = new HashMap(parameters);
+        for (Iterator iter = result.entrySet().iterator(); iter.hasNext();) {
+            Map.Entry entry = (Map.Entry)iter.next();
+            if (!(entry.getKey() instanceof String)) {
+                throw new IllegalArgumentException("Parameter map keys must not be null and of type java.lang.String.");
+            }
+            try {
+                entry.setValue(copy((String[]) entry.getValue()));
+            } catch (ClassCastException ex) {                
+                throw new IllegalArgumentException("Parameter map values must not be null and of type java.lang.String[].");
+            }
+        }
+        return result;
+    }
+ 
 }

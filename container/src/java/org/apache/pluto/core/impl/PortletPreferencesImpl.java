@@ -45,6 +45,7 @@ import org.apache.pluto.om.entity.PortletEntityCtrl;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletDefinitionCtrl;
 import org.apache.pluto.util.Enumerator;
+import org.apache.pluto.util.StringUtils;
 
 
 public class PortletPreferencesImpl implements PortletPreferences
@@ -145,7 +146,7 @@ public class PortletPreferencesImpl implements PortletPreferences
         // get modified preferences
         if (changedPreferences.containsKey(key))
         {
-            return(String[]) changedPreferences.get(key);
+            return StringUtils.copy((String[]) changedPreferences.get(key));
         }
 
         // get all preference sets
@@ -171,7 +172,10 @@ public class PortletPreferencesImpl implements PortletPreferences
         }
         else
         { // if preference exists
-            return this.getValuesFromPreference(preference);
+            String[] result = this.getValuesFromPreference(preference);
+            if (result != null)
+                result = StringUtils.copy(result);
+            return result;
         }
     }
     
@@ -199,7 +203,7 @@ public class PortletPreferencesImpl implements PortletPreferences
             throw new ReadOnlyException("Preference attribute called " + key + " may not be modified");
         }
 
-        changedPreferences.put(key, values);
+        changedPreferences.put(key, StringUtils.copy(values));
         removedPreferences.remove(key);
 
     }
@@ -257,10 +261,10 @@ public class PortletPreferencesImpl implements PortletPreferences
         while (enum.hasMoreElements())
         {
             String name = (String)enum.nextElement();
-            map.put(name, getValues(name,new String[]{"no value set"}));
+            map.put(name, getValues(name,null));
         }
 
-        return Collections.unmodifiableMap(map);
+        return map;
     }
 
     public void reset(String key) throws ReadOnlyException

@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
-import java.util.Locale;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
@@ -40,16 +39,17 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.factory.PortletObjectAccess;
-import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.om.common.SecurityRoleRef;
 import org.apache.pluto.om.common.SecurityRoleRefSet;
 import org.apache.pluto.om.entity.PortletEntity;
 import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.property.PropertyManager;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapperAccess;
+import org.apache.pluto.util.StringUtils;
 
 public abstract class PortletRequestImpl extends javax.servlet.http.HttpServletRequestWrapper
 implements PortletRequest, InternalPortletRequest
@@ -368,15 +368,17 @@ implements PortletRequest, InternalPortletRequest
 
         bodyAccessed = true;
 
-        Map parameters = this._getHttpServletRequest().getParameterMap();
-        return(String[])parameters.get(name);
+        String[] values = (String[])this._getHttpServletRequest().getParameterMap().get(name);
+        if (values != null)
+            values = StringUtils.copy(values);
+        return values;
     }
 
     public Map getParameterMap()
     {
         bodyAccessed = true;
-
-        return Collections.unmodifiableMap(this._getHttpServletRequest().getParameterMap());
+        Map result = StringUtils.copyParameters(this._getHttpServletRequest().getParameterMap());
+        return result;
     }
 
     public boolean isSecure()

@@ -36,12 +36,13 @@ import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.PortletURLProvider;
+import org.apache.pluto.util.StringUtils;
 
 public class PortletURLImpl implements PortletURL {
     protected DynamicInformationProvider provider; // <ibm>
     protected PortletMode mode = null;
 
-    protected HashMap parameters = new HashMap();
+    protected Map parameters = new HashMap();
 
     protected PortletWindow portletWindow;
 
@@ -110,7 +111,7 @@ public class PortletURLImpl implements PortletURL {
             throw new IllegalArgumentException("name and values must not be null or values be an empty array");
         }
 
-        parameters.put( name, values);
+        parameters.put(name, StringUtils.copy(values));
     }
     
     /* (non-Javadoc)
@@ -130,7 +131,7 @@ public class PortletURLImpl implements PortletURL {
             }
         }
 
-        this.parameters = new HashMap(parameters);
+        this.parameters = StringUtils.copyParameters(parameters);
     }
 
     public void setSecure (boolean secure) throws PortletSecurityException
