@@ -90,7 +90,7 @@ public interface DynamicInformationProvider
     /**
      * Returns the <CODE>WindowState</CODE> of the given portlet window.
      *
-     * @param portletEntity    the portlet Entity
+     * @param portletWindow    the portlet window
      * @return the portlet window state
      */
     public WindowState getWindowState(PortletWindow portletWindow);

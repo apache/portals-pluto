@@ -214,7 +214,7 @@ public class PortletPreferencesImpl implements PortletPreferences
         // iterate through all modified preferences of first layer
         while (changedIter.hasNext())
         {
-            keyset.add((String)changedIter.next());
+            keyset.add(changedIter.next());
         }
 
         // iterate through all existing preferences of first layer
@@ -228,7 +228,7 @@ public class PortletPreferencesImpl implements PortletPreferences
         // iterate through all removed preferences of first layer      
         while (removedIter.hasNext())
         {
-            keyset.remove((String)removedIter.next());
+            keyset.remove(removedIter.next());
         }
 
 

@@ -27,11 +27,8 @@ import org.apache.pluto.core.impl.PortletSessionImpl;
 
 public class PortletSessionFactoryImpl implements PortletSessionFactory {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
     }
 
     // org.apache.pluto.factory.PortletSessionFactory ---------------------------------------------

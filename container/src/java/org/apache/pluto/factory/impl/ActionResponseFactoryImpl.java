@@ -27,11 +27,8 @@ import org.apache.pluto.core.impl.ActionResponseImpl;
 
 public class ActionResponseFactoryImpl implements ActionResponseFactory {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
     }
 
     // org.apache.pluto.factory.ActionResponseFactory implementation ------------------------------

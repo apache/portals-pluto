@@ -27,11 +27,8 @@ import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 public class PortletContextFactoryImpl implements PortletContextFactory {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
     }
 
     // org.apache.pluto.factory.PortletContextFactory implementation ------------------------------

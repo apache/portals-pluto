@@ -52,21 +52,21 @@ public interface ServletDefinitionCtrl extends org.apache.pluto.om.Controller
    /**
      * Sets the descriptions
      * 
-     * @param name the new description
+     * @param descriptions the new description
      */
     public void setDescriptions(DescriptionSet descriptions);
 
     /**
      * Sets the display names
      * 
-     * @param name the new display names
+     * @param displayNames the new display names
      */
     public void setDisplayNames(DisplayNameSet displayNames);
 
     /**
      * Sets the class name of this servlet
      * 
-     * @param name the new class name
+     * @param servletClass the new class name
      */
     public void setServletClass(String servletClass);
     

@@ -61,14 +61,14 @@ public interface PortletDefinitionCtrl extends org.apache.pluto.om.Controller
     /**
      * Sets the descriptions
      * 
-     * @param name the new description
+     * @param descriptions the new description
      */
     public void setDescriptions(DescriptionSet descriptions);
 
     /**
      * Sets the display names
      * 
-     * @param name the new display names
+     * @param displayNames the new display names
      */
     public void setDisplayNames(DisplayNameSet displayNames);
 
@@ -76,7 +76,7 @@ public interface PortletDefinitionCtrl extends org.apache.pluto.om.Controller
     /**
      * Sets the class loader of the portlet
      * 
-     * @param ClassLoader
+     * @param loader
      */
     public void setPortletClassLoader(ClassLoader loader);
 

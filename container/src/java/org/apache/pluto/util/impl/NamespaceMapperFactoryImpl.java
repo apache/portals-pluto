@@ -25,12 +25,10 @@ import org.apache.pluto.util.NamespaceMapper;
 public class NamespaceMapperFactoryImpl implements NamespaceMapperFactory
 {
 
-    private javax.servlet.ServletConfig servletConfig;
     private NamespaceMapperImpl namespaceMapper;
     
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
         namespaceMapper = new NamespaceMapperImpl();
     }
     

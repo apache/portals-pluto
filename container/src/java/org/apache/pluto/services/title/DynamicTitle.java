@@ -25,7 +25,7 @@ import org.apache.pluto.om.window.PortletWindow;
 /**
  * The static accessor for the <CODE>DynamicTitleService</CODE>.
  *
- * @see   PropertyManagerService
+ * @see   DynamicTitleService
  **/
 public class DynamicTitle
 {

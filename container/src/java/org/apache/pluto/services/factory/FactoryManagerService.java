@@ -36,7 +36,7 @@ public interface FactoryManagerService extends ContainerService {
      * Returns the factory implementation for the given interface class, or
      * <CODE>null</CODE> if no such interface is registered.
      *
-     * @param   aClass
+     * @param   theClass
      *          the interface class
      *
      * @return   the factory implementation

@@ -51,7 +51,7 @@ public interface ParameterCtrl extends org.apache.pluto.om.Controller
     /**
      * Sets the description
      * 
-     * @param description the new description
+     * @param descriptions the new description
      */
     public void setDescriptionSet(DescriptionSet descriptions);
 

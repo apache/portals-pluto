@@ -26,11 +26,9 @@ import org.apache.pluto.factory.RenderRequestFactory;
 import org.apache.pluto.om.window.PortletWindow;
 
 public class RenderRequestFactoryImpl implements RenderRequestFactory {
-    private javax.servlet.ServletConfig servletConfig;
 
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
     }
 
     // org.apache.pluto.factory.RenderRequestFactory implementation -------------------------------

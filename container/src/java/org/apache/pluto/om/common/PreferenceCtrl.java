@@ -51,7 +51,7 @@ public interface PreferenceCtrl extends org.apache.pluto.om.Controller
     /**
      * Defines whether this preference is modifiable
      * 
-     * @param modifiable true, if this preference is modifiable
+     * @param readOnly true, if this preference is modifiable
      */
     public void setReadOnly(String readOnly);
 

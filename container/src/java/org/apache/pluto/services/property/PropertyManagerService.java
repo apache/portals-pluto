@@ -72,7 +72,6 @@ public interface PropertyManagerService extends ContainerService
      *
      * @param window the portlet window of this property
      * @param request the servlet request
-     * @param response the servlet response
      * 
      * @return		a <code>Map</code> containing
      *                  all properties. If there are no properties of

@@ -27,11 +27,8 @@ import org.apache.pluto.om.window.PortletWindow;
 
 public class PortletURLFactoryImpl implements PortletURLFactory {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
     }
 
     // org.apache.pluto.factory.PortletURLFactory implementation ----------------------------------

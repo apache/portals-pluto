@@ -45,21 +45,21 @@ public class TestPortlet extends GenericPortlet
         portletSession = request.getPortletSession();
 
         //corresponding action to test4.jsp part1:'checkAction'
-        checkAction = (String)request.getParameter("checkAction");
+        checkAction = request.getParameter("checkAction");
         if ( checkAction != null ) {
             portletSession.setAttribute("checkAction", checkAction);
             actionResponse.setRenderParameter("jspName", "test4.jsp");
         }
 
         //corresponding action to test4.jsp part2:'checkActionRender'
-        checkActionRender = (String)request.getParameter("checkActionRender");
+        checkActionRender = request.getParameter("checkActionRender");
         if(checkActionRender != null && "step1".equals(checkActionRender))
         {
            actionResponse.setRenderParameter("checkActionRender2","step2");
         }
         
         //corresponding action to test6.jsp:'testPreferenceStore' (called from test5.jsp)
-        checkPreferences = (String)request.getParameter("checkPreferences");
+        checkPreferences = request.getParameter("checkPreferences");
         if (checkPreferences != null)
         {
             PortletPreferences preferences = request.getPreferences();
@@ -103,7 +103,7 @@ public class TestPortlet extends GenericPortlet
         }
 
         // transfer jsp name
-        jspNameTransfer = (String)request.getParameter("jspNameTransfer");
+        jspNameTransfer = request.getParameter("jspNameTransfer");
         if (jspNameTransfer!=null)
         {
             actionResponse.setRenderParameter("jspName",jspNameTransfer);

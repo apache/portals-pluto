@@ -32,8 +32,6 @@ import java.util.Vector;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.apache.pluto.om.common.DescriptionSet;
-import org.apache.pluto.om.common.DisplayNameSet;
 import org.apache.pluto.om.common.Parameter;
 import org.apache.pluto.om.common.ParameterCtrl;
 import org.apache.pluto.om.common.ParameterSet;
@@ -201,13 +199,13 @@ public class Deploy {
                 dispName.setLocale(Locale.ENGLISH);
                 DisplayNameSetImpl dispSet = new DisplayNameSetImpl();
                 dispSet.add(dispName);
-                webApp.setDisplayNames((DisplayNameSet) dispSet);
+                webApp.setDisplayNames(dispSet);
                 DescriptionImpl desc = new DescriptionImpl();
                 desc.setDescription("Automated generated Application Wrapper");
                 desc.setLocale(Locale.ENGLISH);
                 DescriptionSetImpl descSet = new DescriptionSetImpl();
                 descSet.add(desc);
-                webApp.setDescriptions((DescriptionSet) descSet);
+                webApp.setDescriptions(descSet);
             }
 
             org.apache.pluto.om.ControllerFactory controllerFactory =
@@ -255,7 +253,7 @@ public class Deploy {
                 dispName.setLocale(Locale.ENGLISH);
                 DisplayNameSetImpl dispSet = new DisplayNameSetImpl();
                 dispSet.add(dispName);
-                servletCtrl.setDisplayNames((DisplayNameSet) dispSet);
+                servletCtrl.setDisplayNames(dispSet);
                 DescriptionImpl desc = new DescriptionImpl();
                 desc.setDescription("Automated generated Portlet Wrapper");
                 desc.setLocale(Locale.ENGLISH);
@@ -324,6 +322,7 @@ public class Deploy {
                 SecurityRoleRefSet portletSecurityRoleRefs =
                     portlet.getInitSecurityRoleRefSet();
 
+                // TODO - Do we need this call? The variable is never read
                 SecurityRoleRefSetCtrl portletSecurityRoleRefSetCtrl =
                     (SecurityRoleRefSetCtrl) controllerFactory.get(
                         portletSecurityRoleRefs);
@@ -493,7 +492,6 @@ public class Deploy {
     }
 
     static private void addToEntityReg(String[] args) {
-        String pluto = args[1];
         File portletAppFile = new File(args[2]);
         String portletAppFileName = portletAppFile.getName();
         String portletApp =

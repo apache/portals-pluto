@@ -43,14 +43,12 @@ import org.apache.pluto.services.log.LogService;
 /**
  *  Implements the Pluto Container.
  * 
- * @version $Id: PortletContainerImpl.java,v 1.6 2004/04/01 13:33:36 blumm Exp $
+ * @version $Id: PortletContainerImpl.java,v 1.7 2004/05/27 11:53:43 cziegeler Exp $
  */
 public class PortletContainerImpl implements PortletContainer
 {
 
-    private ServletConfig servletConfig;
     private String uniqueContainerName;
-    private Properties properties;
     private boolean initialized;
 
     private Logger log = null;
@@ -61,10 +59,8 @@ public class PortletContainerImpl implements PortletContainer
                      Properties properties)
     throws PortletContainerException
     {
-        this.servletConfig = servletConfig;
         this.uniqueContainerName = uniqueContainerName;
         PortletContainerServices.createReference(uniqueContainerName, environment);
-        this.properties = properties;
         initialized = true;
 
         // Initialize the Logger that we will use

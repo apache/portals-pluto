@@ -37,13 +37,11 @@ import org.apache.pluto.om.window.PortletWindow;
  * Window>Preferences>Java>Code Generation.
  */
 public class ActionRequestFactoryImpl implements ActionRequestFactory {
-    private javax.servlet.ServletConfig servletConfig;
 
     /**
      * @see org.apache.pluto.factory.Factory#init(ServletConfig, Map)
      */
     public void init(ServletConfig config, Map properties) throws Exception {
-        servletConfig = config;
     }
 
     // org.apache.pluto.factory.ActionRequestFactory implementation -------------------------------

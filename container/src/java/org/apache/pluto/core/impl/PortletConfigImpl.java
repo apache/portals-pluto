@@ -80,7 +80,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig
             throw new IllegalArgumentException("Parameter name == null");
         }
         parm = portletDefinition.getInitParameterSet().get(name);
-        return(String)(parm == null ? null : parm.getValue());
+        return (parm == null ? null : parm.getValue());
     }
 
     public java.util.Enumeration getInitParameterNames()

@@ -214,7 +214,7 @@ public abstract class BasicURLTag extends TagSupport
 
     /**
      * Sets secure to boolean value of the string
-     * @param String
+     * @param secure
      */
     public void setSecure(String secure)
     {

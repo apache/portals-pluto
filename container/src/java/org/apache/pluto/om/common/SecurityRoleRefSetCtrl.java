@@ -55,7 +55,7 @@ public interface SecurityRoleRefSetCtrl extends org.apache.pluto.om.Controller
     /**
      * Removes the given SecurityRoleRef from the set
      * 
-     * @param SecurityRoleRef the SecurityRoleRef to be removed
+     * @param securityRoleRef the SecurityRoleRef to be removed
      */
     public void remove(SecurityRoleRef securityRoleRef);
 

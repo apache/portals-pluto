@@ -19,8 +19,6 @@
 
 package org.apache.pluto.core.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
@@ -75,11 +73,11 @@ public class ActionRequestImpl extends PortletRequestImpl implements ActionReque
     // PortletRequestImpl implementation ----------------------------------------------------------
     public PortletPreferences getPreferences()
     {
-        if (portletPreferences == null)
+        if (this.portletPreferences == null)
         {
-            portletPreferences = PortletObjectAccess.getPortletPreferences(org.apache.pluto.Constants.METHOD_ACTION, super.getInternalPortletWindow().getPortletEntity());
+            this.portletPreferences = PortletObjectAccess.getPortletPreferences(org.apache.pluto.Constants.METHOD_ACTION, super.getInternalPortletWindow().getPortletEntity());
         }
-        return portletPreferences;
+        return this.portletPreferences;
     }
     // --------------------------------------------------------------------------------------------
 }

@@ -27,11 +27,8 @@ import org.apache.pluto.core.impl.RenderResponseImpl;
 
 public class RenderResponseFactoryImpl implements RenderResponseFactory {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
     }
 
     // org.apache.pluto.factory.RenderRequestFactory implementation -------------------------------

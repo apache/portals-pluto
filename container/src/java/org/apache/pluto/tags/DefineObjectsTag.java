@@ -35,9 +35,9 @@ import org.apache.pluto.Constants;
  * <LI><CODE>renderResponse</CODE>
  * <LI><CODE>portletConfig</CODE>
  * </UL>
- * @see   org.apache.pluto.portlet.PortletRequest
- * @see   org.apache.pluto.portlet.RenderResponse
- * @see   org.apache.pluto.portlet.PortletConfig
+ * @see   javax.portlet.PortletRequest
+ * @see   javax.portlet.RenderResponse
+ * @see   javax.portlet.PortletConfig
  *
  */
 public class DefineObjectsTag extends TagSupport

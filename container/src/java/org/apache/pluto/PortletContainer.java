@@ -51,7 +51,7 @@ import org.apache.pluto.services.PortletContainerEnvironment;
  *   </UL>
  * </UL>
  * 
- * @version $Id: PortletContainer.java,v 1.3 2004/03/02 14:49:00 cziegeler Exp $
+ * @version $Id: PortletContainer.java,v 1.4 2004/05/27 11:53:43 cziegeler Exp $
  */
 public interface PortletContainer
 {
@@ -123,8 +123,8 @@ public interface PortletContainer
      * 
      * @param portletWindow
      *                 the portlet Window
-     * @param request  the servlet request
-     * @param response the servlet response
+     * @param servletRequest  the servlet request
+     * @param servletResponse the servlet response
      * @exception PortletException
      *                   if one portlet has trouble fulfilling the request
      * @exception PortletContainerException
