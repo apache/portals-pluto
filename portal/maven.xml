@@ -14,7 +14,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<project default="deployPlutoToTomcat"
+<project default="tomcat:deploy"
          xmlns:j="jelly:core"
          xmlns:maven="jelly:maven"
          xmlns:ant="jelly:ant">     
