@@ -1,0 +1,18 @@
+PLUTO
+=======================
+
+Pluto is licensed under the Apache 2 License and contains
+other opens source libraries.  Each dependency license is
+included within this distribution.
+
+Pluto is organized into multiple subprojects:
+1) container: the core portlet container implementation.
+
+2) portal: a thin portal wrapper which can be used for 
+   testing the container and/or portlets.
+
+3) testsuite: a test portlet which can be used to test 
+   the portlet container implementaion.
+
+Please see GETTING-STARTED.html for additional assistance.
+
