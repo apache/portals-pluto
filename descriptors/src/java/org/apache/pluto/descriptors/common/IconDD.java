@@ -16,32 +16,55 @@
 package org.apache.pluto.descriptors.common;
 
 /**
- * <B>TODO</B>: Document
+ * Resource Icon configuration.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Feb 28, 2005
  */
 public class IconDD{
 
+    /** The large icon uri. */
     private String largeIcon;
+
+    /** The small icon uri. */
     private String smallIcon;
 
+    /**
+     * Default Constructor.
+     */
     public IconDD() {
 
     }
 
+    /**
+     * Retrieve the large icon uri.
+     * @return the uri to the large icon (relative to the context path).
+     */
     public String getLargeIcon() {
         return largeIcon;
     }
 
+    /**
+     * Set the large icon uri.
+     * @param largeIcon the relative path to the icon resource.
+     */
     public void setLargeIcon(String largeIcon) {
         this.largeIcon = largeIcon;
     }
 
+    /**
+     * Retrieve the small icon uri.
+     * @return the uri to the small icon (relative to the context path).
+     */
     public String getSmallIcon() {
         return smallIcon;
     }
 
+    /**
+     * Set the small Icon uri.
+     * @param smallIcon the relative path to the icon resource.
+     */
     public void setSmallIcon(String smallIcon) {
         this.smallIcon = smallIcon;
     }

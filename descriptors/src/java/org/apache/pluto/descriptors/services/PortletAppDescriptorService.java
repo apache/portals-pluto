@@ -21,16 +21,37 @@ import java.io.IOException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 /**
- * 
+ * Read/Write services for Portlet Application configuration
+ * This service reads the portlet.xml and converts it to a
+ * standard bean model.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 6, 2005
  */
 public interface PortletAppDescriptorService {
 
+    /**
+     * Retrieve the name of the context path
+     * within which PortletApps retrieved from this
+     * service reside.
+     * @return
+     */
     String getContextPath();
 
+    /**
+     * Retrieve the PortletApp deployment descriptor
+     * (web.xml).
+     * @return Object representation of the descriptor.
+     * @throws IOException if an IO error occurs.
+     */
     PortletAppDD read() throws IOException;
 
+    /**
+     * Write the PortletApp deployment descriptor
+     * (web.xml).
+     * @param pd
+     * @throws IOException if an IO error occurs.
+     */
     void write(PortletAppDD pd) throws IOException;
 }

@@ -16,44 +16,76 @@
 package org.apache.pluto.descriptors.common;
 
 /**
- * <B>TODO</B>: Document
+ * Security Role Reference Configuration.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Feb 28, 2005
  */
 public class SecurityRoleRefDD {
 
+    /** The name of the role reference. */
     private String roleName;
+
+    /** The role to which the reference is linked. */
     private String roleLink;
+
+    /** The description of what the role is utilized for. */
     private String description;
 
+    /**
+     * Default Constructor.
+     */
     public SecurityRoleRefDD() {
 
     }
 
+    /**
+     * Retrieve the name of the role reference.
+     * @return
+     */
     public String getRoleName() {
         return roleName;
     }
 
+    /**
+     * Set the name of the role reference.
+     * @param roleName
+     */
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
 
+    /**
+     * Retrieve then role to which the reference is linked.
+     * @return
+     */
     public String getRoleLink() {
         return roleLink;
     }
 
+    /**
+     * Set the role to which the reference is linked.
+     * @param roleLink
+     */
     public void setRoleLink(String roleLink) {
         this.roleLink = roleLink;
     }
 
+    /**
+     * Retrieve the description of the role reference.
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Set the description of the role reference.
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
 

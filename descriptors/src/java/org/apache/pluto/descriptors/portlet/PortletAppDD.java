@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Portlet Application Configuration.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id$
@@ -26,15 +27,27 @@ import java.util.Set;
  */
 public class PortletAppDD {
 
+    /** The defined portlets within the system. */
     private Set portlets = new HashSet();
 
+    /**
+     * Default Constructor.
+     */
     public PortletAppDD() {
     }
 
+    /**
+     * Retrieve the portlets which exist within this application.
+     * @return
+     */
     public Set getPortlets() {
         return portlets;
     }
 
+    /**
+     * Set the portlets that exist within this application.
+     * @param portlets
+     */
     public void setPortlets(Set portlets) {
         this.portlets = portlets;
     }

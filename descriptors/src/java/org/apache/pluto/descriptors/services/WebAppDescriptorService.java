@@ -24,14 +24,32 @@ import org.apache.pluto.descriptors.servlet.WebAppDD;
  * within the web.xml Deployment Descriptor.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Feb 28, 2005
  */
 public interface WebAppDescriptorService {
 
+    /**
+     * Retrieve the name of the context path
+     * within which WebApps retrieved from this
+     * service reside.
+     * @return
+     */
     String getContextPath();
 
+    /**
+     * Retrieve the WebApp deployment descriptor
+     * (web.xml).
+     * @return Object representation of the descriptor.
+     * @throws IOException if an IO error occurs.
+     */ 
     WebAppDD read() throws IOException;
 
+    /**
+     * Write the WebApp deployment descriptor
+     * (web.xml).
+     * @param dd
+     * @throws IOException if an IO error occurs.
+     */
     void write(WebAppDD dd) throws IOException;
 }

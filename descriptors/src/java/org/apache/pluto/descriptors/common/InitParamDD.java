@@ -16,41 +16,74 @@
 package org.apache.pluto.descriptors.common;
 
 /**
- * <B>TODO</B>: Document
+ * Initialization Parameter configuration.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Feb 28, 2005
  */
 public class InitParamDD {
 
+    /** The name of the parameter. */
     private String paramName;
+
+    /** The value of the parameter. */
     private String paramValue;
+
+    /** The description of the parameter. */
     private String description;
 
+    /**
+     * Default Constructor.
+     */
     public InitParamDD() {
 
     }
 
+    /**
+     * Retrieve the name of the parameter.
+     * @return
+     */
     public String getParamName() {
         return paramName;
     }
 
+    /**
+     * Set the name of the parameter.
+     * @param paramName
+     */
     public void setParamName(String paramName) {
         this.paramName = paramName;
     }
 
+    /**
+     * Get the name of the parameter.
+     * @return
+     */
     public String getParamValue() {
         return paramValue;
     }
 
+    /**
+     * Set the value of the parameter.
+     * @param paramValue
+     */
     public void setParamValue(String paramValue) {
         this.paramValue = paramValue;
     }
 
+    /**
+     * Retrieve the description.
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Set the description of the parameter.
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
