@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
-
- */
-
 package org.apache.pluto.core;
 
 import java.io.IOException;
@@ -33,24 +29,30 @@ import org.apache.pluto.core.impl.PortletRequestImpl;
 import org.apache.pluto.core.impl.PortletResponseImpl;
 import org.apache.pluto.core.impl.RenderRequestImpl;
 import org.apache.pluto.core.impl.RenderResponseImpl;
+import org.apache.pluto.util.StringManager;
+import org.apache.pluto.PortletContainerException;
 
 /**
  * Used internally to invoke/dispatch requests from the container to
  * the portlet application.
  *
- * @version 1.1
+ * @version $Id$
  *
  */
 class PortletInvoker {
+
     /** Internal Logger.  */
     private static final Log LOG = LogFactory.getLog(PortletInvoker.class);
+
+    /** Exception Messages. */
+    private static final StringManager EXCEPTIONS =
+        StringManager.getManager(PortletInvoker.class.getPackage().getName());
 
     /**
      * Portlet Window for which we are invoking
      * the portlet.
      */
     private InternalPortletWindow window;
-
 
     /**
      * Default Constructor.  Create a new invoker which
@@ -95,7 +97,7 @@ class PortletInvoker {
     public void render(RenderRequestImpl request, RenderResponseImpl response)
         throws PortletException, IOException {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Performing Action Invocation");
+            LOG.debug("Performing Render Invocation");
         }
         invoke(request, response, org.apache.pluto.Constants.METHOD_RENDER);
     }
@@ -110,17 +112,11 @@ class PortletInvoker {
      * @see PortletServlet
      */
     public void load(PortletRequestImpl request, PortletResponseImpl response)
-        throws PortletException {
-        try {
-            invoke(request, response, org.apache.pluto.Constants.METHOD_NOOP);
-        } catch (IOException e) {
-            if (LOG.isErrorEnabled()) {
-                LOG.error(
-                    "PortletInvoker.load() - Error while dispatching portlet.",
-                    e);
-            }
-            throw new PortletException(e);
+        throws PortletException, IOException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Performing Load Invocation");
         }
+        invoke(request, response, org.apache.pluto.Constants.METHOD_NOOP);
     }
 
     /**
@@ -151,43 +147,47 @@ class PortletInvoker {
                     org.apache.pluto.Constants.PORTLET_RESPONSE, response);
                 dispatcher.include(request, response);
             } catch (javax.servlet.UnavailableException e) {
-                LOG.error(
-                    "PortletInvoker.invoke() - Error while dispatching portlet.",
-                    e);
-                if (e.isPermanent()) {
-                    throw new javax.portlet.UnavailableException(
-                        e.getMessage());
-                } else {
-                    throw new javax.portlet.UnavailableException(
-                        e.getMessage(), e.getUnavailableSeconds());
+                int seconds = e.isPermanent()?-1:e.getUnavailableSeconds();
+                String message =  EXCEPTIONS.getString(
+                    "error.portlet.unavailable",
+                    new String[] {String.valueOf(seconds)}
+                );
+                if(LOG.isErrorEnabled()) {
+                    LOG.error(message, e);
                 }
+                throw new javax.portlet.UnavailableException(
+                        message, seconds
+                );
             } catch (javax.servlet.ServletException e) {
-                if (e.getRootCause() != null) {
-                    LOG.error(
-                        "PortletInvoker.render() - Error while dispatching portlet.",
-                        e.getRootCause());
-                    if (e.getRootCause() instanceof PortletException) {
+                String message = EXCEPTIONS.getString("error.portlet.invoke");
+                if(LOG.isErrorEnabled()) {
+                    LOG.error(message);
+                }
+
+                if (e.getRootCause() != null &&
+                    e.getRootCause() instanceof PortletException) {
                         throw (PortletException) e.getRootCause();
-                    } else {
-                        throw new PortletException(e.getRootCause());
-                    }
-                } else {
-                    LOG.error(
-                        "PortletInvoker.invoke() - Error while dispatching portlet.",
-                        e);
+                }
+                else if(e.getRootCause() != null) {
+                    throw new PortletException(e.getRootCause());
+                }
+                else {
                     throw new PortletException(e);
                 }
             } finally {
                 request.removeAttribute(org.apache.pluto.Constants.METHOD_ID);
-                request.removeAttribute(
-                    org.apache.pluto.Constants.PORTLET_REQUEST);
-                request.removeAttribute(
-                    org.apache.pluto.Constants.PORTLET_RESPONSE);
+                request.removeAttribute(org.apache.pluto.Constants.PORTLET_REQUEST);
+                request.removeAttribute(org.apache.pluto.Constants.PORTLET_RESPONSE);
             }
         } else {
-            LOG.error(
-                "PortletInvoker.action() - Unable to find RequestDispatcher ["+uri+"].");
-            throw new PortletException("Unable to find dispatcher for the portlet located at: "+uri);
+            String msg = EXCEPTIONS.getString(
+                "error.portlet.invoker.dispatcher",
+                new String[] {servletContext.getServletContextName(), uri}
+            );
+            if(LOG.isErrorEnabled()) {
+                LOG.error(msg);
+            }
+            throw new PortletException(msg);
         }
     }
 

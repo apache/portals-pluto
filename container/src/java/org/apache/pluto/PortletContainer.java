@@ -112,7 +112,7 @@ public interface PortletContainer {
     public void doLoad(PortletWindow internalPortletWindow,
                        HttpServletRequest servletRequest,
                        HttpServletResponse servletResponse)
-        throws PortletException, PortletContainerException;
+        throws PortletException, IOException, PortletContainerException;
 
     /**
      * Returns whether the container is already initialized or not.

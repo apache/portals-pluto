@@ -24,4 +24,9 @@ limitations under the License.
             <ant:fileset dir="${basedir}/.." includes="LICENSE.TXT"/>
         </ant:copy>
     </postGoal>
+
+    <preGoal name="jar:jar">
+      <echo message="${maven.has.jar.resource.patterns}"/>
+      <echo message="${maven.jar.resources.set}"/>
+    </preGoal>
 </project>

@@ -23,6 +23,7 @@ import javax.portlet.PortletContext;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.util.StringManager;
 import org.apache.pluto.binding.PortletAppDD;
 import org.apache.pluto.binding.XMLBindingFactory;
 import org.apache.pluto.core.impl.PortletContextImpl;
@@ -39,6 +40,12 @@ public class PortletContextManager {
 
     /** Portlet deployment descriptor location. */
     private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
+
+    /** Exception Messages. */
+    private static final StringManager EXCEPTIONS =
+        StringManager.getManager(
+            PortletContextManager.class.getPackage().getName()
+        );
 
     /** Singleton instance. */
     private static PortletContextManager manager;
@@ -88,14 +95,18 @@ public class PortletContextManager {
      * @throws PortletContainerException
      */
     private PortletAppDD createDefinition(ServletContext ctx)
-        throws PortletContainerException {
+    throws PortletContainerException {
         PortletAppDD app = null;
         try {
             InputStream in = ctx.getResourceAsStream(PORTLET_XML);
             app = XMLBindingFactory.createXMLBinding().getPortletAppDD(in);
         } catch (IOException io) {
             throw new PortletContainerException(
-                "Unable to open portlet.xml file. " + io.getMessage(), io);
+                EXCEPTIONS.getString(
+                    "error.context.descriptor.load",
+                    new String[] {ctx.getServletContextName()}
+                ),
+                io);
         }
         return app;
     }

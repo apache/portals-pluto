@@ -19,6 +19,12 @@ limitations under the License.
     xmlns:maven="jelly:maven"
     xmlns:ant="jelly:ant">
 
+    <postGoal name="war:webapp">
+      <copy
+          file="src/conf/expectedResults.properties"
+          todir="${maven.war.webapp.dir}/WEB-INF/classes"/>
+    </postGoal>
+
     <!-- The multiproject won't let us call war directly, we must specify
          since it won't be set by war goal. -->
     <preGoal name="tomcat:deploy">

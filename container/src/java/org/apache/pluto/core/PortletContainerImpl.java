@@ -236,7 +236,7 @@ public class PortletContainerImpl implements PortletContainer {
     public void doLoad(PortletWindow pWindow,
                        HttpServletRequest request,
                        HttpServletResponse response)
-        throws PortletException, PortletContainerException {
+        throws PortletException, IOException, PortletContainerException {
 
         InternalPortletWindow window = new InternalPortletWindow(context,
                                                                  pWindow);

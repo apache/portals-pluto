@@ -1,7 +1,7 @@
 <pluto-portal-driver>
 
     <portal-name>pluto-portal-driver</portal-name>
-    <portal-version>1.0.1</portal-version>
+    <portal-version>1.1-ALPHA</portal-version>
     <container-name>Pluto Portal Driver</container-name>
 
     <supports>
