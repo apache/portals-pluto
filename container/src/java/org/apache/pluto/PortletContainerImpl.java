@@ -81,7 +81,7 @@ import org.apache.pluto.services.log.LogService;
 /**
  *  Implements the Pluto Container.
  * 
- * @version $Id: PortletContainerImpl.java,v 1.3 2004/02/17 14:23:57 blumm Exp $
+ * @version $Id: PortletContainerImpl.java,v 1.4 2004/02/22 15:19:48 sthepper Exp $
  */
 public class PortletContainerImpl implements PortletContainer
 {
@@ -207,59 +207,7 @@ public class PortletContainerImpl implements PortletContainer
         {
             try
             {
-                if (location == null && _actionResponse != null)
-                {
-                    DynamicInformationProvider provider = InformationProviderAccess.getDynamicProvider(servletRequest);
-
-                    //ToDo: don't send changes in case of exception -> PORTLET:SPEC:17
-
-                    // get the changings of this portlet entity that might be set during action handling
-                    // change portlet mode
-                    if (_actionResponse.getChangedPortletMode() != null)
-                    {
-                        InformationProviderAccess.getDynamicProvider(servletRequest)
-                            .getPortletActionProvider(portletWindow)
-                            .changePortletMode(_actionResponse.getChangedPortletMode());
-                    }
-                    // change window state
-                    if (_actionResponse.getChangedWindowState() != null)
-                    {
-                        InformationProviderAccess.getDynamicProvider(servletRequest)
-                            .getPortletActionProvider(portletWindow)
-                            .changePortletWindowState(_actionResponse.getChangedWindowState());
-                    }
-                    // get render parameters
-                    Map renderParameter = _actionResponse.getRenderParameters();
-
-                    PortletURLProvider redirectURL = provider.getPortletURLProvider(portletWindow);
-
-                    if (provider.getPortletMode(portletWindow)!=null)
-                    {
-                        redirectURL.setPortletMode(provider.getPortletMode(portletWindow));
-                    }
-                    if (provider.getWindowState(portletWindow)!=null)
-                    {
-                        redirectURL.setWindowState(provider.getWindowState(portletWindow));
-                    }
-                    //            if (secure)
-                    //            {
-                    //                redirectURL.setSecure(); // TBD
-                    //            }
-                    redirectURL.clearParameters();
-                    redirectURL.setParameters(renderParameter);
-
-                    //servletResponse.sendRedirect(servletResponse.encodeRedirectURL(redirectURL.toString()));
-                    location = servletResponse.encodeRedirectURL(redirectURL.toString());
-                }
-                //servletResponse.sendRedirect(location);
-
-                javax.servlet.http.HttpServletResponse redirectResponse = servletResponse;
-                while (redirectResponse instanceof javax.servlet.http.HttpServletResponseWrapper)
-                {
-                    redirectResponse = (javax.servlet.http.HttpServletResponse)
-                                       ((javax.servlet.http.HttpServletResponseWrapper)redirectResponse).getResponse();
-                }
-                redirectResponse.sendRedirect(location);
+				redirect(location, portletWindow, servletRequest, servletResponse, _actionResponse);
             }
             finally
             {
@@ -307,4 +255,63 @@ public class PortletContainerImpl implements PortletContainer
         return initialized;
     }
 
+    protected void redirect(String location, 
+                              PortletWindow portletWindow, 
+                              HttpServletRequest servletRequest, 
+                              HttpServletResponse servletResponse, 
+                              InternalActionResponse _actionResponse) 
+    throws IOException {
+	    if (location == null && _actionResponse != null)
+	    {
+	        DynamicInformationProvider provider = InformationProviderAccess.getDynamicProvider(servletRequest);
+	
+	        //TODO: don't send changes in case of exception -> PORTLET:SPEC:17
+	
+	        // get the changings of this portlet entity that might be set during action handling
+	        // change portlet mode
+	        if (_actionResponse.getChangedPortletMode() != null)
+	        {
+	            InformationProviderAccess.getDynamicProvider(servletRequest)
+	                .getPortletActionProvider(portletWindow)
+	                .changePortletMode(_actionResponse.getChangedPortletMode());
+	        }
+	        // change window state
+	        if (_actionResponse.getChangedWindowState() != null)
+	        {
+	            InformationProviderAccess.getDynamicProvider(servletRequest)
+	                .getPortletActionProvider(portletWindow)
+	                .changePortletWindowState(_actionResponse.getChangedWindowState());
+	        }
+	        // get render parameters
+	        Map renderParameter = _actionResponse.getRenderParameters();
+	
+	        PortletURLProvider redirectURL = provider.getPortletURLProvider(portletWindow);
+	
+	        if (provider.getPortletMode(portletWindow)!=null)
+	        {
+	            redirectURL.setPortletMode(provider.getPortletMode(portletWindow));
+	        }
+	        if (provider.getWindowState(portletWindow)!=null)
+	        {
+	            redirectURL.setWindowState(provider.getWindowState(portletWindow));
+	        }
+	        //            if (secure)
+	        //            {
+	        //                redirectURL.setSecure(); // TBD
+	        //            }
+	        redirectURL.clearParameters();
+	        redirectURL.setParameters(renderParameter);
+	
+	        location = servletResponse.encodeRedirectURL(redirectURL.toString());
+	    }
+	
+	    javax.servlet.http.HttpServletResponse redirectResponse = servletResponse;
+	    while (redirectResponse instanceof javax.servlet.http.HttpServletResponseWrapper)
+	    {
+	        redirectResponse = (javax.servlet.http.HttpServletResponse)
+	                           ((javax.servlet.http.HttpServletResponseWrapper)redirectResponse).getResponse();
+	    }
+	    redirectResponse.sendRedirect(location);
+	
+	    }
 }
