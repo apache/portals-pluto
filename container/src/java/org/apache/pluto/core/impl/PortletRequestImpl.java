@@ -540,37 +540,31 @@ implements PortletRequest, InternalPortletRequest
 
     public Cookie[] getCookies()
     {
-        //must be based on the PortletRequest property [!]
         return this._getHttpServletRequest().getCookies();
     }
 
     public long getDateHeader(String name)
     {
-        //must be based on the PortletRequest property [!]
         return this._getHttpServletRequest().getDateHeader(name);
     }
 
     public String getHeader(String name)
     {
-        //must be based on the PortletRequest property [!]
         return this._getHttpServletRequest().getHeader(name);
     }
 
     public Enumeration getHeaders(String name)
     {
-        //must be based on the PortletRequest property [!]
         return this._getHttpServletRequest().getHeaders(name);
     }
 
     public Enumeration getHeaderNames()
     {
-        //must be based on the PortletRequest property [!]
         return this._getHttpServletRequest().getHeaderNames();
     }
 
     public int getIntHeader(String name)
     {
-        //must be based on the PortletRequest property [!]
         return this._getHttpServletRequest().getIntHeader(name);
 
     }
