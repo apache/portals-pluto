@@ -26,14 +26,21 @@ limitations under the License.
   </organization>
   <logo>/../../images/pluto.png</logo>
 
-  <shortDescription>Assorted portlets for testing</shortDescription>
+  <shortDescription>
+    Portlet used to test portlet specification compliance.
+  </shortDescription>
 
   <description>
-    Assorted portlets for testing
+    The Pluto Testsuite provides a convenient mechanism for
+    testing a portlet container (or full portlet implementation)
+    in regards to Portlet Specification compliance.  The tests
+    within the suite are designed to provide a visual, high
+    level compatibility overview and should not be considered
+    comprehensive.
   </description>
 
   <dependencies>
-  	  <dependency>
+    <dependency>
       <id>castor</id>
       <version>0.9.5</version>
       <properties>
@@ -66,6 +73,7 @@ limitations under the License.
         <war.bundle>false</war.bundle>
       </properties>
     </dependency>
+
     <dependency>
       <id>servletapi</id>
       <version>2.3</version>
@@ -100,7 +108,7 @@ limitations under the License.
 
     <dependency>
         <id>commons-digester</id>
-        <version>1.5</version>
+        <version>1.6</version>
         <properties>
             <war.bundle>true</war.bundle>
         </properties>
@@ -108,7 +116,7 @@ limitations under the License.
 
     <dependency>
         <id>commons-beanutils</id>
-        <version>1.6.1</version>
+        <version>1.7.0</version>
         <url>http://jakarta.apache.org/commons/beanutils</url>
         <properties>
             <war.bundle>true</war.bundle>
@@ -126,55 +134,14 @@ limitations under the License.
 
   </dependencies>
 
-  <build>
-
-    <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
-
-    <sourceDirectory>src/java</sourceDirectory>
-    <aspectSourceDirectory/>
-
-    <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-
-    <unitTest>
-      <includes>
-        <include>**/*Test.java</include>
-      </includes>
-    </unitTest>
-
-    <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
-
-    <integrationUnitTest>
-      <includes>
-        <include>**/*Test.java</include>
-      </includes>
-    </integrationUnitTest>
-
-    <resources>
-      <includes>
-        <include>conf/**/*pipeline.xml</include>
-        <include>conf/**/*valve.xml</include>
-      </includes>
-    </resources>
-
-    <jars/>
-
-  </build>
-
-  <reports>
-    <!--
-    <report>maven-jdepend-plugin</report>
-    -->
-    <report>maven-checkstyle-plugin</report>
-    <report>maven-changelog-plugin</report>
-    <report>maven-developer-activity-plugin</report>
-    <report>maven-file-activity-plugin</report>
-    <report>maven-javadoc-plugin</report>
-    <report>maven-jxr-plugin</report>
-    <!--
-    <report>maven-junit-report-plugin</report>
-    -->
-    <report>maven-tasklist-plugin</report>
-
-  </reports>
+<reports>
+  <report>maven-checkstyle-plugin</report>
+  <report>maven-changelog-plugin</report>
+  <report>maven-developer-activity-plugin</report>
+  <report>maven-file-activity-plugin</report>
+  <report>maven-javadoc-plugin</report>
+  <report>maven-jxr-plugin</report>
+  <report>maven-tasklist-plugin</report>
+</reports>
 
 </project>
