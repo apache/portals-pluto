@@ -38,7 +38,7 @@ public final class Environment {
     }
 
     public static final String getPortletContainerMinorVersion() {
-        return PROPS.getString("pluto.container.version.major");
+        return PROPS.getString("pluto.container.version.minor");
     }
 
     public static final String getServerInfo() {
