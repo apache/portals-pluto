@@ -163,6 +163,7 @@ public class PortletInvokerImpl implements PortletInvoker
         else
         {
             getLog().error("PortletInvokerImpl.action() - Unable to find RequestDispatcher.");
+            throw new PortletException("Unable to find dispatcher for context: "+servletContext.getServletContextName());
         }
     }
     // --------------------------------------------------------------------------------------------
