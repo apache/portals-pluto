@@ -43,7 +43,7 @@ limitations under the License.
    Pluto Testsuite.</P>
 <P>To install the binary distribution:
    <ul>
-   <li><A href="download.html">Download</A>
+   <li><A href="mirrors.cgi">Download</A>
        the current binary distribution of Pluto</li>
    <li>Extract the binary distribution to a directory
        from here forward refered to as "&lt;PLUTO_HOME&gt;".</li>
