@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <%@ page session="false" %>
-<%@ taglib uri='/WEB-INF/tld/portlet.tld' prefix='portlet'%>
+<%@ taglib uri='http://java.sun.com/portlet' prefix='portlet'%>
 <%@ page import="javax.portlet.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="org.apache.pluto.testsuite.*"%>
