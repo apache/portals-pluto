@@ -228,7 +228,7 @@ public class PortletServlet extends HttpServlet
         try
         {
             // fill attribute, so that JSPs/servlets can access the config
-            request.setAttribute("javax.portlet.config", portletConfig);
+            request.setAttribute(org.apache.pluto.Constants.PORTLET_CONFIG, portletConfig);
 
             Integer method_id = (Integer)request.getAttribute(org.apache.pluto.Constants.METHOD_ID);
             if (method_id == org.apache.pluto.Constants.METHOD_RENDER)
@@ -286,7 +286,7 @@ public class PortletServlet extends HttpServlet
         }
         finally
         {
-            request.removeAttribute("javax.portlet.config");
+            request.removeAttribute(org.apache.pluto.Constants.PORTLET_CONFIG);
         }
 
     }
