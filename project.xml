@@ -243,6 +243,12 @@ limitations under the License.
     <id>nlothian</id>
     <email>nlothian{aT}apache{d0t}org</email>
   </developer>
+
+  <developer>
+    <name>Craig Doremus</name>
+    <id>cdoremus</id>
+    <email>cdoremus{aT}apache{d0t}org</email>
+  </developer>
 </developers>
 
 <contributors>
