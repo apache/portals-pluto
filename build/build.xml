@@ -652,6 +652,9 @@ java.home = ${java.home}
                 <fileset dir="${ant.lib}">
                     <include name="*.jar"/>
                 </fileset>
+                <fileset dir="../portlets/lib">
+                    <include name="*.jar"/>
+                </fileset>
             </classpath>
         </java>
 
