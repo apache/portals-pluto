@@ -95,10 +95,16 @@ limitations under the License.
 	        <include>**/*.xml</include>
         </includes>
       </resource>
+
+      <resource>
+        <directory>${basedir}/src/tld</directory >
+        <targetPath>META-INF</targetPath >
+        <includes>
+          <include>*.tld</include >
+        </includes>
+      </resource>
     </resources>
-
     <jars/>
-
   </build>
 
 </project>
