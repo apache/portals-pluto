@@ -6,7 +6,12 @@
   <name>Pluto Portal Driver</name>
   <id>pluto-portal</id>
   <currentVersion>1.0</currentVersion>
-  
+ 
+  <organization>
+    <logo>/../../images/jakarta-logo-blue.gif</logo>
+  </organization>
+  <logo>/../../images/pluto-feather.gif</logo>
+ 
   <inceptionYear>2003</inceptionYear>
   <package>org.apache.pluto</package>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
