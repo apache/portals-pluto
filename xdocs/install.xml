@@ -26,22 +26,22 @@ limitations under the License.
 <body>
 
 <section name="Installation Guide">
-<P>This install guide covers the following types of installations:
+<p>This install guide covers the following types of installations:
 <ul><li><A href="#Installing_Distributions">Installing Distributions</A></li>
     <li><A href="#Installing_Portlets">Installing Portlets</A></li></ul>
-</P>
+</p>
 </section>
 
 <section name="Installing Distributions">
 
 <subsection name="Binary Distribution">
-<P>The binary distribution of Pluto is packaged with Tomcat
+<p>The binary distribution of Pluto is packaged with Tomcat
    (currently version 5.0.28).  Pluto leverages Tomcat to 
    provide the web container in which the Pluto portlet 
    container executes. The binary distribution includes 
    the Pluto Portlet Container, The Portal Driver, and 
-   Pluto Testsuite.</P>
-<P>To install the binary distribution:
+   Pluto Testsuite.</p>
+<p>To install the binary distribution:
    <ul>
    <li><A href="mirrors.cgi">Download</A>
        the current binary distribution of Pluto</li>
@@ -54,28 +54,28 @@ limitations under the License.
        <A href="http://localhost:8080/pluto/portal">The Pluto Driver</A>
        and your ready to go!</li>
    </ul>
-</P>
+</p>
 </subsection>
 
 <subsection name="Library Distributions">
-<P>The pluto library distributions are packaged to allow
-   integration with an external portal server.</P>
-<P>To install the library distributions to your portal server:
+<p>The pluto library distributions are packaged to allow
+   integration with an external portal server.</p>
+<p>To install the library distributions to your portal server:
    <ul>Ensure that the pluto-x.x.x.jar is loaded by a classloader
        to which both the portal and portlet application web apps
-       have access.</ul></P>
+       have access.</ul></p>
 
 </subsection>
 
 <subsection name="Source Distribution">
-<P>Installing the source distribution requires the most effort,
+<p>Installing the source distribution requires the most effort,
    and is recomended only for those individuals who are interested
    in modifying the container.  The source distribution is 
    basically a snapshot of the source code repository at a given
    time. Because of this, please see the build instructions, which
    will provide information about how to build Pluto from scratch.
-   </P>
-<P>To install the source distribution into tomcat:
+   </p>
+<p>To install the source distribution into tomcat:
    <ul>
    <li>Install Java 1.3 or greater</li>
    <li>Install Maven 1.0 or greater</li>
@@ -102,18 +102,76 @@ limitations under the License.
        <A href="http://localhost:8080/pluto/portal">The Pluto Driver</A>
        and your ready to go!</li>
    </ul>
-</P>
+</p>
 </subsection>
 </section>
 
 <section name="Installing Portlets">
-<P><FONT color="red">
+<p><FONT color="red">
   Currently, to automate the deployment/installation of portlets
-  you must utilize the source distribution of pluto.</FONT></P>
-<P>To install portlets after you successfully installed Pluto, 
-       invoke Maven to deploy the portlet's war by executing:
-	<code>maven deploy -Ddeploy=FULL_PATH_TO_YOUR_PORTLET_WAR</code>
-</P>
+  you must utilize the source distribution of pluto.</FONT></p>
+
+<p>In order to deploy a portlet application to pluto, you must
+   follow the steps below:
+</p>
+  <ul>
+  <li>Assemble your portlet application into a valid war.</li>
+  <li><p>Run the maven deploy goal on your war</p>
+      <p>This can be done by:
+         <pre>maven deploy -Ddeploy=/MyPathToMyPortlet/target/MyPortlet.war</pre>
+      </p>
+      <p>TODO: There are properties, etc. . .that must be set
+         in order for this to work properly.  They should be
+         specified here.</p></li>
+  <li>Modify the Portlet Entity Registry and the Page Registry files.  These
+      configuration files are located at:
+<pre>
+      [portal-home]/WEB-INF/data/portletentityregistry.xml
+
+      [portal-home]/WEB-INF/data/pageregistry.xml
+</pre>
+
+<p>
+The Portlet entity registry file requires that you specify an application and 
+a Portlet ID for your new Portlet. The Application ID must be unique. It also 
+needs to know the name of the Portlet so that it can go out and find it in 
+the webapps path. Furthermore, this information is used to map the Portlet 
+name to the appropriate class path for loading the class. The following is an 
+example of some additions you can make to the entity registry file:
+</p>
+
+<pre>
+&lt;application id="6"&gt;
+  &lt;definition-id&gt;MyPortlet&lt;/definition-id&gt;
+  &lt;portlet id="1"&gt;
+      &lt;definition-id&gt;MyPortlet.MyPortlet&lt;/definition-id&gt;
+  &lt;/portlet&gt;
+&lt;/application&gt;
+</pre>
+
+<p>
+The page registry provides Pluto with the layout information for your Portlet. 
+The names used in the fragments must be unique as done in the following example:
+</p>
+
+<pre>
+&lt;fragment name="MyPortlet" type="page"&gt;
+  &lt;navigation&gt;
+    &lt;title&gt;My First Portlet&lt;/title&gt;
+    &lt;description&gt;...&lt;/description&gt;
+  &lt;/navigation&gt;
+
+  &lt;fragment name="row3" type="row"&gt;
+    &lt;fragment name="col3" type="column"&gt;
+      &lt;fragment name="p4" type="portlet"&gt;
+        &lt;property name="portlet" value="6.1"/&gt;
+      &lt;/fragment&gt;
+    &lt;/fragment&gt;
+  &lt;/fragment&gt;
+</pre>
+
+</li>
+</ul>
 </section>
 
 </body>
