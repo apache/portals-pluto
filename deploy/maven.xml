@@ -18,20 +18,16 @@ limitations under the License.
          xmlns:j="jelly:core"
          xmlns:maven="jelly:maven"
          xmlns:ant="jelly:ant">     
-         
-         
  <goal name="deploy">
-         <java classname="org.apache.pluto.portalImpl.Deploy" fork="yes">
-          <classpath>
-            <path refid="maven.dependency.classpath"/>
-            <pathelement path="${maven.build.dest}"/>
-          </classpath>
-            <arg value="${maven.tomcat.home}/webapps" />
-            <arg value="pluto" />
-            <arg value="${deploy}" />
-            <arg value=".." />    
-         </java>       
+    <java classname="org.apache.pluto.driver.deploy.CLI" fork="yes">
+      <classpath>
+        <path refid="maven.dependency.classpath"/>
+        <pathelement path="${maven.build.dest}"/>
+      </classpath>
+      <arg value="-verbose"/>
+      <arg value="-p"/><arg value="${maven.tomcat.home}/webapps/pluto"/>
+      <arg value="-d"/><arg value="${maven.tomcat.home}/webapps"/>
+      <arg value="${deploy}" />
+    </java>       
  </goal>
-         
-
 </project>
