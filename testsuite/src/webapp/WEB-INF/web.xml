@@ -43,11 +43,6 @@ limitations under the License.
         <url-pattern>/test/extAppScopedTest</url-pattern>
     </servlet-mapping>
 
-    <taglib>
-        <taglib-uri>http://java.sun.com/portlet</taglib-uri>
-        <taglib-location>/WEB-INF/tld/portlet.tld</taglib-location>
-    </taglib>
-
     <security-role>
         <role-name>tomcat</role-name>
     </security-role>

@@ -399,10 +399,9 @@ public class Deploy {
 
             }
 
-            TagDefinitionImpl portletTagLib =
-                new TagDefinitionImpl();
+            //TagDefinitionImpl portletTagLib = new TagDefinitionImpl();
             Collection taglibs = webApp.getCastorTagDefinitions();
-            taglibs.add(portletTagLib); 
+            //taglibs.add(portletTagLib); 
             
 
             if (debug) {
@@ -433,11 +432,12 @@ public class Deploy {
                 e.printStackTrace(System.out);
                 throw new Exception();
             }
-            String strTo = dirDelim + "WEB-INF" + dirDelim + "tld" + dirDelim + "portlet.tld";
-            String strFrom = plutoHome + "portal" + dirDelim + "src" + 
-                dirDelim + "webapp" + strTo;
+            // REMOVED copy of  tld b/c it's now included in the container distribution.
+            //String strTo = dirDelim + "WEB-INF" + dirDelim + "tld" + dirDelim + "portlet.tld";
+            //String strFrom = plutoHome + "portal" + dirDelim + "src" +
+            //    dirDelim + "webapp" + strTo;
              
-            copy(strFrom, webAppsDir + webModule + strTo);
+            //copy(strFrom, webAppsDir + webModule + strTo);
         } catch (Exception e) {
        
             e.printStackTrace(System.out);
