@@ -175,6 +175,7 @@ limitations under the License.
     <!-- Deploy Pluto (and it's licenses)! -->
     <copy todir="${maven.dist.dir}/${plutobin.dist.name}">
       <fileset dir="${basedir}" includes="LICENSE*"/>
+      <fileset dir="${basedir}" includes="README"/>
     </copy>
     
     <j:invokeStatic className="java.lang.System" method="setProperty">
@@ -286,6 +287,7 @@ limitations under the License.
     <!-- -->
 	<ant:copy todir="${maven.dist.dir}/${plutotools.dist.name}/">
       <ant:fileset dir="${basedir}" includes="LICENSE*"/>
+      <ant:fileset dir="${basedir}" includes="README"/>
 	</ant:copy>
 
 	<!-- STEP #2: Copy all to our dist dist dir -->
