@@ -21,9 +21,10 @@ limitations under the License.
   <id>pluto</id>
 
   <organization>
-    <logo>/../../images/jakarta-logo-blue.gif</logo>
+    <logo>/../../images/apache-portals.gif</logo>
   </organization>
-  <logo>/../../images/pluto-feather.gif</logo>
+
+  <logo>/../../images/pluto.png</logo>
 
   <shortDescription>A JSR-168 Compliant Portlet Engine.</shortDescription>
 

@@ -22,9 +22,9 @@ limitations under the License.
   <groupId>pluto</groupId>
 
   <organization>
-    <logo>/../../images/jakarta-logo-blue.gif</logo>
+    <logo>/../../images/apache-portals.gif</logo>
   </organization>
-  <logo>/../../images/pluto-feather.gif</logo>
+  <logo>/../../images/pluto.png</logo>
 
   <shortDescription>Assorted portlets for testing</shortDescription>
 

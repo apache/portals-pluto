@@ -21,9 +21,9 @@ limitations under the License.
   <id>pluto-portal</id>
 
   <organization>
-    <logo>/../../images/jakarta-logo-blue.gif</logo>
+    <logo>/../../images/apache-portals.gif</logo>
   </organization>
-  <logo>/../../images/pluto-feather.gif</logo>
+  <logo>/../../images/pluto.png</logo>
 
   <shortDescription>
     Simple portal that allows testing of Pluto with the Sun(tm) TCK.
