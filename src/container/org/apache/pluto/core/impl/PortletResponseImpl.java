@@ -89,6 +89,7 @@ implements InternalPortletResponse, PortletResponse
     private boolean usingStream;
 
     private ServletOutputStream wrappedWriter;
+    private Map properties;
 
     public PortletResponseImpl(PortletWindow portletWindow,
                                javax.servlet.http.HttpServletRequest servletRequest,
@@ -108,26 +109,25 @@ implements InternalPortletResponse, PortletResponse
             throw new IllegalArgumentException("Property key == null");
         }
 
-        // get properties from PropertyManager
-        Map map = PropertyManager.getRequestProperties(portletWindow, this.getHttpServletRequest());
-        if (map == null)
+        Map props = getProperties();
+        
+        String[] oldValues = (String[]) props.get(key);
+        String[] newValues = null;
+        if (oldValues == null)
         {
-            map = new HashMap();
-        }
-
-        String[] properties = (String[]) map.get(key);
-        if (properties == null)
-        {
-            properties = new String[]{value};
+            newValues = new String[]{value}; 
         }
         else
         {
-            properties[properties.length] = value;
+            int len = oldValues.length;
+            newValues = new String[len+1];
+            System.arraycopy(oldValues, 0, newValues, 0, len);
+            newValues[len] = value;
         }
+        props.put(key, newValues);
 
-        map.put(key, properties);
+        PropertyManager.setResponseProperties(portletWindow, this.getHttpServletRequest(), _getHttpServletResponse(), props);
 
-        PropertyManager.setResponseProperties(portletWindow, this.getHttpServletRequest(), _getHttpServletResponse(), map);
     }
     
     public void setProperty(String key, String value) 
@@ -137,18 +137,12 @@ implements InternalPortletResponse, PortletResponse
             throw new IllegalArgumentException("Property key == null");
         }
 
-        // get properties from PropertyManager
-        Map map = PropertyManager.getRequestProperties(portletWindow, this.getHttpServletRequest());
-        if (map == null)
-        {
-            map = new HashMap();
-        }
+        Map props = getProperties();
+        
+        String[] newValues = new String[]{value}; 
+        props.put(key, newValues);
 
-        String[] properties = new String[]{value};
-
-        map.put(key, properties);
-
-        PropertyManager.setResponseProperties(portletWindow, getHttpServletRequest(), _getHttpServletResponse(), map);
+        PropertyManager.setResponseProperties(portletWindow, this.getHttpServletRequest(), _getHttpServletResponse(), props);
     }
     
     public String encodeURL(String path)
@@ -188,6 +182,12 @@ implements InternalPortletResponse, PortletResponse
     protected javax.servlet.http.HttpServletRequest getHttpServletRequest()
     {
         return webModuleServletRequest;
+    }
+
+    private Map getProperties() {
+        if (properties == null)
+            properties = new HashMap();
+        return properties;
     }
     // --------------------------------------------------------------------------------------------
 
