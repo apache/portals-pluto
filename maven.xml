@@ -1,0 +1,11 @@
+<project xmlns:j="jelly:core" xmlns:m="maven">
+  <preGoal name="xdoc:jelly-transform">
+    <attainGoal name="faq"/>
+  </preGoal>   
+  
+  <goal name="allDoc">
+  	 <attainGoal name="xdoc" />
+  	 <attainGoal name="javadoc" />
+  </goal>
+</project>
+
