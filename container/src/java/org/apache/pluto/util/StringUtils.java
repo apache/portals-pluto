@@ -61,8 +61,9 @@ public class StringUtils
     public static final String lineSeparator = System.getProperty("line.separator");
 
     /**
-     ** Returns the package of a class, ie. without class name and
-     ** and .class suffix.
+     ** Returns the name of the package of the specified class.
+     ** The package will not include the common (short) name of the
+     ** class or the file extension.
      **
      ** @param   aClass
      **          a class object
@@ -90,8 +91,8 @@ public class StringUtils
     }
 
     /**
-     * Returns the name of a class, ie. without package name and
-     * and .class suffix.
+     * Returns the short name of the specified class.
+     * The name will not include the package name or file extension.
      *
      * @param   aClass
      *          a class object

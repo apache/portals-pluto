@@ -31,16 +31,17 @@ public interface LogService extends ContainerService {
     /** Used to retrieve a Logger implementation
      *  which can be used to log information for the given
      *  component.
-     * @param component
-     * @return
+     * @param component the component for which the desired logger should be
+     *        retrieved.
+     * @return logger implementation associated with the named component.
      */
     Logger getLogger(String component);
 
     /** Used to retrieve a Logger implementation
      *  which can be used to log information for the given
      *  Class.
-     * @param klass
-     * @return
+     * @param klass the class for which the desired logger should be retrieved.
+     * @return logger implementation associated with the specified Class.
      */
     Logger getLogger(Class klass);
 
