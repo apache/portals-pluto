@@ -23,7 +23,7 @@ limitations under the License.
   </properties>
 
 <body>
-  <section name="Pluto">
+<section name="Pluto">
 
 <p>Pluto is the Reference Implementation of the Java Portlet
    Specfication. The current version of this specification is
@@ -71,8 +71,9 @@ limitations under the License.
 <p>Pluto Versions</p>
 <table>
 <tr><th>Portlet Spec</th><th>Pluto Version</th><th>Status</th></tr>
-<tr><td>1.0</td><td>1.0.0</td><td>Never Released, built from initial CVS Head</td></tr>
-<tr><td>1.0.</td><td>1.0.1</td><td>In Development</td></tr>
+<tr><td>1.0</td><td>1.0.1-rc2</td><td>In Development</td></tr>
+<tr><td>1.0</td><td>1.0.1-rc1</td><td>Released Oct 8, 2004</td></tr>
+<tr><td>1.0</td><td>1.0.0</td><td>Initial Import / Never Released</td></tr>
 </table>
 </section>
 

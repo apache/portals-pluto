@@ -1,43 +1,67 @@
 <document>
-  <properties>
-    <title>Changes</title>
-  </properties>
-  <body>
+<properties>
+  <title>Pluto Change Log</title>
+</properties>
+<body>
 
-    <release version="1.0.1" date="TBD" description="Not Yet Released">
-      <action dev="ddewolf" type="fix">
-        Updating Pluto JavaDocs.
-        (<A href="http://nagoya.apache.org/jira/browse/PLUTO-28">PLUTO-46</A>)
-      </action>
-      <action dev="ddewolf" type="fix">
-        Support role mapping in portlet.xml
-        (<A href="http://nagoya.apache.org/jira/browse/PLUTO-46">PLUTO-46</A>)
-      </action>
-      <action dev="ddewolf" type="fix">
-        Support multiple resource-ref entried in portlet app web.xml
-        (<A href="http://nagoya.apache.org/jira/browse/PLUTO-48">PLUTO-48</A>)
-      </action>
-      <action dev="ddewolf" type="fix">
-        Removed fullDeployment dependency from pluto deployer.
-        (<A href="http://nagoya.apache.org/jira/browse/PLUTO-49">PLUTO-49</A>)
-      </action>
-      <action dev="ddewolf" type="fix">
-        Implement Mime Type Matching.  
-        (<A href="http://nagoya.apache.org/jira/browse/PLUTO-55">PLUTO-55</A>)
-      </action>
-      <action dev="cziegeler" type="fix">
-        Add handling of mime-mappings in web application definition.
-	  </action>
-      <action dev="ddewolf" type="update">
-        Updating site generation for Apache Portals
-	  </action>
-	</release>
+<release version="1.0.1-rc2" date="n/a" description="Release Candidate">
+  <action dev="ddewolf" type="update">
+    Include Pluto Documentation in Binary release
+  </action>
+  <action dev="ddewolf" type="update">
+    Add portlet deployment documentation to installation document.
+    Thank you Ken Ramirez.
+  </action>
+  <action dev="ddewolf" type="update">
+    Add README file to all releases.  Thank you Craig Doremus for pointing 
+    out that it wasn't included.
+  </action>
+  <action dev="ddewolf" type="fix">
+    Removed swallowed error condition in the PortletInvoker.  Upon
+    failing to find a RequestDispatcher to which a portlet request
+    could be invoked, the container was previously returning normally.
+    A PortletException is now thrown.  Thank you Brad Johnson.
+  </action>
+  <action dev="ddewolf" type="update">
+    Upgraded the default testsuite beanutils and digester dependencies
+    to remove the dependency upon commons-collections.
+  </action>
+</release>
 
-    <release version="1.0" date="2003" description="Initial CVS Import">
-      <action dev="cziegeler" type="update">
-        Updating to the new ASF License 2.0.
-      </action>              
-    </release>
+<release version="1.0.1-rc1" date="Oct 8, 2004" description="Release Candidate">
+  <action dev="ddewolf" type="fix">
+    Updating Pluto JavaDocs.
+    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-28">PLUTO-46</A>)
+  </action>
+  <action dev="ddewolf" type="fix">
+    Support role mapping in portlet.xml
+    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-46">PLUTO-46</A>)
+  </action>
+  <action dev="ddewolf" type="fix">
+    Support multiple resource-ref entried in portlet app web.xml
+    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-48">PLUTO-48</A>)
+  </action>
+  <action dev="ddewolf" type="fix">
+    Removed fullDeployment dependency from pluto deployer.
+    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-49">PLUTO-49</A>)
+  </action>
+  <action dev="ddewolf" type="fix">
+    Implement Mime Type Matching.  
+    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-55">PLUTO-55</A>)
+  </action>
+  <action dev="cziegeler" type="fix">
+    Add handling of mime-mappings in web application definition.
+  </action>
+  <action dev="ddewolf" type="update">
+   Updating site generation for Apache Portals
+  </action>
+</release>
+
+<release version="1.0" date="2003" description="Initial CVS Import">
+   <action dev="cziegeler" type="update">
+    Updating to the new ASF License 2.0.
+   </action>              
+</release>
 
   </body>
 </document>
