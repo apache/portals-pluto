@@ -1,0 +1,22 @@
+<container>
+  <component
+    key='org.apache.pluto.PlutoContainer'
+    class='org.apache.pluto.core.PlutoContainerImpl'/>
+  
+  <component
+    key="org.apache.pluto.services.ServiceFactory"
+    class="org.apache.pluto.driver.impl.services.ServiceFactoryImpl"/>
+  
+  <component
+    key="org.apache.pluto.services.LoggerService"
+    class="org.apache.pluto.driver.impl.services.LoggerServiceImpl"/>
+  
+  <component
+    key="org.apache.pluto.services.PortletURLService"
+    class="org.apache.pluto.driver.impl.services.PortletURLServiceImpl"/>
+
+  <component
+    key="org.apache.pluto.services.PortletInvokerService"
+    class="org.apache.pluto.core.PortletInvokerServiceImpl"/>
+
+</container>
