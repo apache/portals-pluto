@@ -16,7 +16,8 @@
 package org.apache.pluto.driver;
 
 /**
- * <B>TODO</B>: Document
+ * Constants used as attribute keys.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 25, 2004

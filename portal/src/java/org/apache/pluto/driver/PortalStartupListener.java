@@ -34,22 +34,43 @@ import org.apache.pluto.driver.services.PortalContextImpl;
 import org.xml.sax.SAXException;
 
 /**
+ * Listener used to start up the Pluto Portal Driver upon
+ * startup of the servlet context in which it resides.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
 public class PortalStartupListener implements ServletContextListener {
+    /** Internal Logger. */
     private static final Log LOG =
         LogFactory.getLog(PortalStartupListener.class);
 
+    /**  The location of the portal driver configuration. */
     private static final String CONFIG_FILE =
         "/WEB-INF/pluto-portal-driver-config.xml";
 
+    /** The KEY with which the container is bound to the context. */
     private static final String CONTAINER_KEY = AttributeKeys.PORTLET_CONTAINER;
 
+    /** The KEY with which the configuration is bound to the context. */
     private static final String CONFIG_KEY = AttributeKeys.DRIVER_CONFIG;
 
 
+    /**
+     * Receive the startup notification and subsequently start up
+     * the portal driver. The following are done in this order:
+     * <ol><li>Retrieve the Configuration File</li>
+     *     <li>Parse the Configuration File into Configuration Objects</li>
+     *     <li>Create a Portal Context</li>
+     *     <li>Create the ContainerServices implementation</li>
+     *     <li>Create the Portlet Container</li>
+     *     <li>Initialize the Container</li>
+     *     <li>Bind the configuration to the ServletContext</li>
+     *     <li>Bind the container to the ServletContext</li><ul>
+     *
+     * @param event the servlet context event.
+     */
     public void contextInitialized(ServletContextEvent event) {
         ServletContext ctx = event.getServletContext();
         try {
@@ -117,6 +138,12 @@ public class PortalStartupListener implements ServletContextListener {
         }
     }
 
+    /**
+     * Recieve notification that the context is being shut down
+     * and subsequently destroy the container.
+     *
+     * @param event the destrubtion even.t
+     */
     public void contextDestroyed(ServletContextEvent event) {
         ServletContext ctx = event.getServletContext();
         PortletContainer container =
@@ -130,7 +157,5 @@ public class PortalStartupListener implements ServletContextListener {
             ctx.removeAttribute(CONTAINER_KEY);
         }
     }
-
-
 }
 
