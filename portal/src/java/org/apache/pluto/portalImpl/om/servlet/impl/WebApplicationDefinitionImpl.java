@@ -55,7 +55,6 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     public String mimeMapping = null;
     public String welcomeFileList = null;
     public String errorPage = null;
-    public String taglib = null;
     public String resourceRef = null;
     public String securityConstraint = null;
     public String loginConfig = null;
@@ -74,7 +73,7 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     private Collection servletMappings = new ArrayList();
     private ServletDefinitionList servlets = new ServletDefinitionListImpl();
     private SecurityRoleSet securityRoles = new org.apache.pluto.portalImpl.om.common.impl.SecurityRoleSetImpl();
-    private TagDefinition castorTagDefinition = new TagDefinition();
+    private Collection castorTagDefinitions = new ArrayList();
 
     // WebApplicationDefinition implementation.
     
@@ -292,6 +291,16 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
         while (iterator.hasNext()) {
             buffer.append(((ServletMappingImpl)iterator.next()).toString(indent+2));
         }
+
+        iterator = castorTagDefinitions.iterator();
+        if (iterator.hasNext()) {
+            StringUtils.newLine(buffer,indent);
+            buffer.append("CastorTagDefinitions:");
+        }
+        while (iterator.hasNext()) {
+            buffer.append(((TagDefinitionImpl)iterator.next()).toString(indent+2));
+        }
+
         StringUtils.newLine(buffer,indent);
         buffer.append("contextPath='"); buffer.append(contextPath); buffer.append("'");
         StringUtils.newLine(buffer,indent);
@@ -302,14 +311,14 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     /**
      * @return
      */
-    public TagDefinition getCastorTagDefinition() {
-        return castorTagDefinition;
+    public Collection getCastorTagDefinitions() {
+        return castorTagDefinitions;
     }
 
     /**
      * @param definition
      */
-    public void setCastorTagDefinition(TagDefinition definition) {
-        castorTagDefinition = definition;
+    public void setCastorTagDefinitions(Collection definition) {
+        castorTagDefinitions = definition;
     }
 }

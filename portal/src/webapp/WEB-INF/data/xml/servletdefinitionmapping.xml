@@ -29,7 +29,7 @@ limitations under the License.
     </field>
   </class>
     
-  <class name="org.apache.pluto.portalImpl.om.servlet.impl.TagDefinition">
+  <class name="org.apache.pluto.portalImpl.om.servlet.impl.TagDefinitionImpl">
 
     <field name="uri" type="java.lang.String" required="true">
       <bind-xml name="taglib-uri" node="element"/>
@@ -191,7 +191,9 @@ limitations under the License.
       <bind-xml name="servlet-mapping" node="element"/>
     </field>
     
-    <field name="castorTagDefinition" type="org.apache.pluto.portalImpl.om.servlet.impl.TagDefinition">
+    <field name="castorTagDefinitions"
+           type="org.apache.pluto.portalImpl.om.servlet.impl.TagDefinitionImpl"
+           collection="collection">
        <bind-xml name="taglib" node="element" />
     </field>
 

@@ -51,8 +51,9 @@ import org.apache.pluto.portalImpl.om.common.impl.DescriptionSetImpl;
 import org.apache.pluto.portalImpl.om.common.impl.DisplayNameImpl;
 import org.apache.pluto.portalImpl.om.common.impl.DisplayNameSetImpl;
 import org.apache.pluto.portalImpl.om.portlet.impl.PortletApplicationDefinitionImpl;
-import org.apache.pluto.portalImpl.om.servlet.impl.ServletMappingImpl;
 import org.apache.pluto.portalImpl.om.servlet.impl.ServletDefinitionImpl;
+import org.apache.pluto.portalImpl.om.servlet.impl.ServletMappingImpl;
+import org.apache.pluto.portalImpl.om.servlet.impl.TagDefinitionImpl;
 import org.apache.pluto.portalImpl.om.servlet.impl.WebApplicationDefinitionImpl;
 import org.apache.pluto.portalImpl.xml.Constants;
 import org.apache.pluto.portalImpl.xml.XmlParser;
@@ -189,6 +190,7 @@ public class Deploy {
                     XmlParser.parseWebXml(new FileInputStream(webXml));
 
                 Unmarshaller unmarshallerWeb = new Unmarshaller(mappingWebXml);
+    			unmarshallerWeb.setIgnoreExtraElements(true);
                 webApp =
                     (WebApplicationDefinitionImpl) unmarshallerWeb.unmarshal(
                         webDocument);
@@ -361,6 +363,12 @@ public class Deploy {
                 }
 
             }
+
+            TagDefinitionImpl portletTagLib =
+                new TagDefinitionImpl();
+            Collection taglibs = webApp.getCastorTagDefinitions();
+            taglibs.add(portletTagLib); 
+            
 
             if (debug) {
                 System.out.println(webApp);
