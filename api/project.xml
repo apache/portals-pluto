@@ -36,7 +36,7 @@ limitations under the License.
 
   <build>
 
-    <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
+    <nagEmailAddress>pluto-dev@portals.apache.org</nagEmailAddress>
 
     <sourceDirectory>src/java</sourceDirectory>
     <aspectSourceDirectory/>
