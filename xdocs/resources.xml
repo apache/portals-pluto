@@ -25,7 +25,19 @@ limitations under the License.
 <body>
 <section name="Resources">
     <p>
-         <a href="http://jcp.org/en/jsr/detail?id=168">JSR 168</a>
+    <table>
+    <tr><th>Resource</th><th>Type</th></tr>
+	<tr><td><a href="http://jcp.org/en/jsr/detail?id=168">JSR 168</a></td>
+        <td>JCP Request Info</td></tr>
+    <tr><td><a href="http://jcp.org/aboutJava/communityprocess/final/jsr168/index.html">Portlet Specification</a></td>
+        <td>Specification</td></tr>
+    <tr><td><a href="multiproject/pluto/dependencies.html">Pluto Container Dependencies</a></td>
+	    <td>Dependecy Info</td></tr>
+    <tr><td><a href="multiproject/pluto-portal/dependencies.html">Portal Driver Dependencies</a></td>
+	    <td>Dependecy Info</td></tr>
+    <tr><td><a href="multiproject/testsuite/dependencies.html">Test Suite Dependencies</a></td>
+	    <td>Dependecy Info</td></tr>
+    </table>
     </p>
 </section>
 </body>

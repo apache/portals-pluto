@@ -4,6 +4,12 @@
   </properties>
   <body>
 
+    <release version="1.0.1" date="Not Yet Released">
+      <action dev="ddewolf" type="update">
+        Updating site generation for Apache Portals
+	  </action>
+	</release>
+
     <release version="1.0" date="in CVS">
       <action dev="cziegeler" type="update">
         Updating to the new ASF License 2.0.
