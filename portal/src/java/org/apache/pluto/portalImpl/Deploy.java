@@ -64,6 +64,9 @@ import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
 
+/**
+ * @deprecated use {@see org.apache.pluto.driver.deploy.CLI}
+ */
 public class Deploy {
 
     private static boolean debug = false;
@@ -357,11 +360,6 @@ public class Deploy {
                 SecurityRoleRefSet portletSecurityRoleRefs =
                     portlet.getInitSecurityRoleRefSet();
 
-                // TODO - Do we need this call? The variable is never read
-                SecurityRoleRefSetCtrl portletSecurityRoleRefSetCtrl =
-                    (SecurityRoleRefSetCtrl) controllerFactory.get(
-                        portletSecurityRoleRefs);
-
                 Iterator p = portletSecurityRoleRefs.iterator();
 
                 while (p.hasNext()) {
@@ -397,11 +395,6 @@ public class Deploy {
                 }
 
             }
-
-            //TagDefinitionImpl portletTagLib = new TagDefinitionImpl();
-            Collection taglibs = webApp.getCastorTagDefinitions();
-            //taglibs.add(portletTagLib); 
-            
 
             if (debug) {
                 System.out.println(webApp);
