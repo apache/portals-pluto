@@ -20,7 +20,7 @@ limitations under the License.
   <name>jakarta-pluto</name>
   <id>pluto-project</id>
   <groupId>pluto</groupId>
-  <currentVersion>1.0</currentVersion>
+  <currentVersion>1.0.1</currentVersion>
   <organization>
     <name>Apache Software Foundation</name>
     <url>http://jakarta.apache.org/</url>
