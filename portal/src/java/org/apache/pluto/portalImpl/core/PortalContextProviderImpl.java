@@ -61,7 +61,7 @@ public class PortalContextProviderImpl implements PortalContextProvider {
         // these are the minimum states that the portal needs to support
         states = getDefaultStates(); 
         // set info
-        info = Environment.getServerInfo();   
+        info = Config.getParameters().getString("portaldriver.info");  
     }
 
     // PortalContextProvider implementation.

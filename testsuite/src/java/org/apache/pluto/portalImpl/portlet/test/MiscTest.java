@@ -69,17 +69,32 @@ public class MiscTest extends AbstractReflectivePortletTest {
 
 
 
-    protected TestResult checkContextServerInfo(PortletRequest req) {
+    protected TestResult checkContextServerInfo(PortletContext ctx) {
         TestResult res = new TestResult();
         res.setName("Server Info Test");
         res.setDesc("Make sure that the expected server info is returned.");
+        Properties props = ExpectedResults.getExpectedProperties();
+        if(ctx.getServerInfo().equals(props.getProperty("expected.serverInfo"))) {
+            res.setReturnCode(TestResult.PASSED);
+        }
+        else {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Server info: "+ctx.getServerInfo()+". Expected: "+props.getProperty("expected.serverInfo"));
+        }
+        return res;
+    }
+
+    protected TestResult checkPortalInfo(PortletRequest req) {
+        TestResult res = new TestResult();
+        res.setName("Portal Info Test");
+        res.setDesc("Make sure that the expected portal info is returned.");
         Properties props = ExpectedResults.getExpectedProperties();
         if(req.getPortalContext().getPortalInfo().equals(props.getProperty("expected.portalInfo"))) {
             res.setReturnCode(TestResult.PASSED);
         }
         else {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Server info: "+req.getPortalContext().getPortalInfo()+". Expected: "+props.getProperty("expected.portalInfo"));
+            res.setResults("Portal info: "+req.getPortalContext().getPortalInfo()+". Expected: "+props.getProperty("expected.portalInfo"));
         }
         return res;
     }

@@ -1,4 +1,4 @@
-<%@ page import="org.apache.pluto.Environment"%>
+<%@ page import="org.apache.pluto.portalImpl.services.config.Config"%>
  <%--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
@@ -17,7 +17,7 @@ limitations under the License.
 --%>
 <table>
   <tr><th><img src="http://portals.apache.org/pluto/images/pluto.png"/></th></tr>
-  <tr class="banner"><td>Pluto Portal Driver <FONT class="small">(<%=Environment.getServerInfo()%>)</FONT></td>
+  <tr class="banner"><td>Pluto Portal Driver <FONT class="small">(<%=Config.getParameters().getString("portaldriver.info")%>)</FONT></td>
       <td align="right"><A href="<%=request.getContextPath()%>/login_success.jsp">Login</A></td>
   </tr>
 </table>
