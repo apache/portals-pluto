@@ -45,63 +45,6 @@ public abstract class BasicURLTag extends TagSupport
 
     public static class TEI extends TagExtraInfo
     {
-        public final static Hashtable definedWindowStates = getDefinedWindowStates();
-        public final static Hashtable portletModes        = getDefinedPortletModes();
-
-        /**
-         * Provides a list of all static PortletMode available in the specifications by
-         * using introspection
-         * @return Hashtable
-         */
-        private static Hashtable getDefinedPortletModes()
-        {
-            Hashtable portletModes = new Hashtable();
-            Field[] f = PortletMode.class.getDeclaredFields();
-
-            for (int i = 0; i < f.length; i++)
-            {
-                if (f[i].getType().isAssignableFrom(javax.portlet.PortletMode.class))
-                {
-                    try
-                    {
-                        portletModes.put(f[i].get(f[i]).toString().toUpperCase(), f[i].get(f[i]));
-                    }
-                    catch (IllegalAccessException e)
-                    {
-                    }
-                }
-            }
-
-            return portletModes;
-        }
-
-        /**
-         * Provides a list of all static WindowsStates available in the specifications by
-         * using introspection
-         * @return Hashtable
-         */
-        private static Hashtable getDefinedWindowStates()
-        {
-            Hashtable definedWindowStates = new Hashtable();
-            Field[] f = WindowState.class.getDeclaredFields();
-
-            for (int i = 0; i < f.length; i++)
-            {
-                if (f[i].getType().isAssignableFrom(javax.portlet.WindowState.class))
-                {
-                    try
-                    {
-                        definedWindowStates.put(f[i].get(f[i]).toString().toUpperCase(), f[i].get(f[i]));
-                    }
-                    catch (IllegalAccessException e)
-                    {
-                        
-                    }
-                }
-            }
-            return definedWindowStates;
-        }
-
         public VariableInfo[] getVariableInfo(TagData tagData)
         {
             VariableInfo vi[] = null;
@@ -113,7 +56,6 @@ public abstract class BasicURLTag extends TagSupport
             }
             return vi;
         }
-
     }
 
     protected String portletMode;

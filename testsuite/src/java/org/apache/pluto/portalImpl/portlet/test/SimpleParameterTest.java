@@ -28,7 +28,7 @@ public class SimpleParameterTest extends AbstractReflectivePortletTest {
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
     public static final String VALUE = "org.apache.pluto.testsuite.PARAM_TEST_VALUE";
 
-    private static final String IKEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
+    private static final String IKEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY_I";
 
     public String getTestSuiteName() {
         return "Simple Parameter Test";

@@ -61,7 +61,8 @@ public class RenderURLTag extends BasicURLTag
             {
                 try
                 {
-                    url.setPortletMode((PortletMode)TEI.portletModes.get(portletMode.toUpperCase()));
+                    PortletMode mode = new PortletMode(portletMode);
+                    url.setPortletMode(mode);
                 }
                 catch (PortletModeException e)
                 {
@@ -72,7 +73,8 @@ public class RenderURLTag extends BasicURLTag
             {
                 try
                 {
-                    url.setWindowState((WindowState)TEI.definedWindowStates.get(windowState.toUpperCase()));
+                    WindowState state = new WindowState(windowState);
+                    url.setWindowState(state);
                 }
                 catch (WindowStateException e)
                 {
