@@ -72,16 +72,11 @@ import org.apache.pluto.portalImpl.services.config.Config;
 
 public class PortalURL {
 
-    static public final String URI_CONTEXT_PATH = "portal.contextroot";
-
     static String hostNameHTTP;
     static String hostNameHTTPS;
-    static String contextRoot;
 
     static
     {
-        contextRoot   = Config.getParameters().getString (URI_CONTEXT_PATH, "");
-
         String hostName      = Config.getParameters().getString ("host.name", "localhost");
         String hostPortHTTP  = Config.getParameters().getString ("host.port.http", "80");
         String hostPortHTTPS = Config.getParameters().getString ("host.port.https", "443");
@@ -141,16 +136,6 @@ public class PortalURL {
         return result.toString();
     }
 
-    static public String getBaseURLincludeContext()
-    {
-        StringBuffer result = new StringBuffer(256);
-
-        result.append(hostNameHTTP);
-        result.append('/');
-        result.append(contextRoot);
-
-        return result.toString();
-    }
 
     private String base;
     private List startGlobalNavigation = new ArrayList();
