@@ -16,18 +16,6 @@
     Deployment of portlets
   </description>
 
-  <url>http://jakarta.apache.org/pluto/</url>
-  <issueTrackingUrl>http://issues.apache.org/bugzilla</issueTrackingUrl>
-  <siteAddress>jakarta.apache.org</siteAddress>
-  <siteDirectory>/www/jakarta.apache.org/pluto/</siteDirectory>
-
-  <repository>
-    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-pluto</connection>
-    <developerConnection>scm:cvs:ext:${maven.username}@cvs.apache.org:/home/cvs:jakarta-pluto</developerConnection>
-    <url>http://cvs.apache.org/viewcvs/jakarta-pluto/</url>
-  </repository>
-
-
   <dependencies>
   	  <dependency>
       <id>castor</id>
@@ -102,48 +90,6 @@
     <sourceDirectory>src/java</sourceDirectory>
     <aspectSourceDirectory/>
 
-    <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-
-    <unitTest>
-      <includes>
-        <include>**/*Test.java</include>
-      </includes>
-    </unitTest>
-
-    <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
-
-    <integrationUnitTest>
-      <includes>
-        <include>**/*Test.java</include>
-      </includes>
-    </integrationUnitTest>
-
-    <resources>
-      <includes>
-        <include>conf/**/*pipeline.xml</include>
-        <include>conf/**/*valve.xml</include>
-      </includes>
-    </resources>
-
-    <jars/>
-
   </build>
-
-  <reports>
-    <!--
-    <report>maven-jdepend-plugin</report>
-    -->
-    <report>maven-checkstyle-plugin</report>
-    <report>maven-changelog-plugin</report>
-    <report>maven-developer-activity-plugin</report>
-    <report>maven-file-activity-plugin</report>
-    <report>maven-javadoc-plugin</report>
-    <report>maven-jxr-plugin</report>
-    <!--
-    <report>maven-junit-report-plugin</report>
-    -->
-    <report>maven-tasklist-plugin</report>
-
-  </reports>
 
 </project>

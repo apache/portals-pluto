@@ -1,4 +1,0 @@
-# The existance of this file within the /portlets/build
-# directory indicates the buildprocess to include a portlet
-# with this name in the pluto build process.
-# The defined structure of all portlet files must exists.

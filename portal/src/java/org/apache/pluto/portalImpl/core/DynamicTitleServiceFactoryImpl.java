@@ -57,8 +57,6 @@
 
 package org.apache.pluto.portalImpl.core;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.pluto.portalImpl.factory.DynamicTitleServiceFactory;
 import org.apache.pluto.services.title.DynamicTitleService;
 

@@ -1,3 +1,0 @@
-DO NOT USE THIS!!!
-
-This is the old area for building the test suite portlets.  You should now use the mavenized approach as documented in the GETTING-STARTED.html document.

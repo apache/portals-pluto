@@ -63,7 +63,6 @@ import java.io.PrintWriter;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.om.window.PortletWindow;

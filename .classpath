@@ -4,7 +4,7 @@
 	<classpathentry excluding="**/CVS*" kind="src" path="api/src/java"/>
 	<classpathentry excluding="**/CVS*" kind="src" path="portal/src/java"/>
 	<classpathentry excluding="**/CVS*" kind="src" path="container/src/java"/>
-	<classpathentry excluding="**/CVS*" kind="src" path="portlets/testsuite/src"/>
+	<classpathentry kind="src" path="testsuite/src/java"/>
 	<classpathentry kind="var" path="MAVEN_REPO/xerces/jars/xerces-2.3.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/xml-apis/jars/xml-apis-2.0.2.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>

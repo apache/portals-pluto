@@ -16,16 +16,6 @@
    The JSR-168 API
   </description>
 
-  <url>http://jakarta.apache.org/pluto/</url>
-  <issueTrackingUrl>http://issues.apache.org/bugzilla</issueTrackingUrl>
-  <siteAddress>jakarta.apache.org</siteAddress>
-  <siteDirectory>/www/jakarta.apache.org/pluto/</siteDirectory>
-
-  <repository>
-    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-pluto</connection>
-    <developerConnection>scm:cvs:ext:${maven.username}@cvs.apache.org:/home/cvs:jakarta-pluto</developerConnection>
-    <url>http://cvs.apache.org/viewcvs/jakarta-pluto/</url>
-  </repository>
   <build>
 
     <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
@@ -52,22 +42,5 @@
     <jars/>
 
   </build>
-
-  <reports>
-    <!--
-    <report>maven-jdepend-plugin</report>
-    -->
-    <report>maven-checkstyle-plugin</report>
-    <report>maven-changelog-plugin</report>
-    <report>maven-developer-activity-plugin</report>
-    <report>maven-file-activity-plugin</report>
-    <report>maven-javadoc-plugin</report>
-    <report>maven-jxr-plugin</report>
-    <!--
-    <report>maven-junit-report-plugin</report>
-    -->
-    <report>maven-tasklist-plugin</report>
-
-  </reports>
 
 </project>
