@@ -21,9 +21,13 @@ package org.apache.pluto.portalImpl.portlet;
 
 import javax.portlet.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.List;
+import java.util.Iterator;
+import java.util.HashMap;
 
 import org.apache.pluto.portalImpl.portlet.test.SimpleAttributeTest;
 import org.apache.pluto.portalImpl.portlet.test.PortletTest;
@@ -39,29 +43,50 @@ import org.apache.pluto.portalImpl.portlet.test.ContextInitParameterTest;
 
 public class TestPortlet extends GenericPortlet {
 
-    public static final Map TESTS = new TreeMap();
-    public static final ArrayList TEST_IDX;
-
-    static {
-        TESTS.put("01_simple_parameter_test", new SimpleParameterTest());
-        TESTS.put("02_simple_attribute_test", new SimpleAttributeTest());
-        TESTS.put("03_complex_attribute_test", new ComplexAttributeTest());
-        TESTS.put("04_ext_app_scoped_attr_test", new ExternalAppScopedAttributeTest());
-        TESTS.put("05_simple_preference_test", new SimplePreferenceTest());
-        TESTS.put("06_portlet_mode_test", null);
-        TESTS.put("07_window_state_test", null);
-        TESTS.put("08_security_mapping_test", new SecurityMappingTest());
-        TESTS.put("09_misc_test", new MiscTest());
-        TESTS.put("10_context_init_param_test", new ContextInitParameterTest());
-
-        TEST_IDX = new ArrayList(TESTS.keySet());
-    }
-
     private String portletName;
-    public void init() {
-        portletName = getPortletContext().getInitParameter("display-name");
+
+    private List configs;
+    private Map tests;
+
+    public void init() throws PortletException {
+        portletName = getInitParameter("display-name");
         if(portletName==null) {
             portletName = "Test Portlet";
+        }
+
+        String configFile = getInitParameter("config");
+        if(configFile==null) {
+            configFile = "/WEB-INF/testsuite-config.xml";
+        }
+
+        InputStream in = getPortletContext().getResourceAsStream(configFile);
+        if( in !=null ) {
+            TestConfigFactory fact = new TestConfigFactory();
+            try {
+                configs = fact.createTests(in);
+                tests = new HashMap();
+                Iterator it = configs.iterator();
+                int i = 0;
+                while(it.hasNext()) {
+                    TestConfig config = (TestConfig)it.next();
+                    String name=  config.getTestClassName();
+                    if(name != null) {
+                        Class cl = Class.forName(config.getTestClassName());
+                        PortletTest test = (PortletTest)cl.newInstance();
+                        tests.put(String.valueOf(i++), test);
+                    }
+                    else {
+                        i++;
+                    }
+
+                }
+            }
+            catch (Throwable t) {
+                throw new PortletException("Unable to read configuration", t);
+            }
+        }
+        else {
+            throw new IllegalStateException("Configuration File Not Found");
         }
     }
 
@@ -71,7 +96,7 @@ public class TestPortlet extends GenericPortlet {
     throws PortletException, java.io.IOException {
 
         String testId = getTestId(request);
-        PortletTest test = (PortletTest)TESTS.get(testId);
+        PortletTest test = (PortletTest)tests.get(testId);
 
         if(test!=null && test instanceof ActionTest) {
             TestResults results = test.doTest(getPortletContext(), request, response);
@@ -96,7 +121,13 @@ public class TestPortlet extends GenericPortlet {
     throws PortletException, IOException {
 
         String testId = getTestId(request);
-        PortletTest test = (PortletTest)TESTS.get(testId);
+
+        TestConfig config = null;
+        if(testId != null) {
+            config = (TestConfig)configs.get(Integer.parseInt(testId));
+        }
+
+        PortletTest test = (PortletTest)tests.get(testId);
         response.setTitle(portletName);
 
         PortletMode mode = request.getPortletMode();
@@ -114,12 +145,18 @@ public class TestPortlet extends GenericPortlet {
                 request.setAttribute("results", results);
             }
 
-            if("xx_introduction".equals(testId)) {
-                request.setAttribute("tests", TEST_IDX);
+            if(testId == null) {
+                request.setAttribute("tests", configs);
             }
 
             PortletContext context = getPortletContext();
-            PortletRequestDispatcher rd = context.getRequestDispatcher("/jsp/"+testId.substring(3)+".jsp");
+            PortletRequestDispatcher rd = null;
+            if(config != null) {
+                rd = context.getRequestDispatcher(config.getDisplayURI());
+            }
+            else {
+                rd = context.getRequestDispatcher("/jsp/introduction.jsp");
+            }
             rd.include(request,response);
         }
 
@@ -137,32 +174,32 @@ public class TestPortlet extends GenericPortlet {
     }
 
     private String getTestId(PortletRequest req) {
-        String testId = req.getParameter("testId");
+        String testId =   req.getParameter("testId");
         String previous = req.getParameter("previousTestId");
         String next     = req.getParameter("nextTestId");
 
         if(testId == null && next == null &&
-           previous == null && TESTS.size() > 0) {
-            testId = "xx_introduction";
+           previous == null && tests.size() > 0) {
+            return null;
         }
         // Retrieve the test which is next to the previous
         else if(testId == null && previous !=null) {
-            int idx = TEST_IDX.indexOf(previous);
-            if(idx >= TEST_IDX.size()-1) {
-                testId = (String)TEST_IDX.get(0);
+            int pId = Integer.parseInt(previous);
+            if(pId >= configs.size()-1) {
+                testId = "0";
             }
             else {
-                testId = (String)TEST_IDX.get(idx+1);
+                testId = String.valueOf(pId+1);
             }
         }
         // Retrieve the test which is previous to the next
         else if(testId == null && next !=null) {
-            int idx = TEST_IDX.indexOf(next);
-            if(idx <= 0) {
-                testId = (String)TEST_IDX.get(TEST_IDX.size()-1);
+            int nId = Integer.parseInt(next);
+            if(nId <= 0) {
+                testId = String.valueOf(configs.size()-1);
             }
             else {
-                testId = (String)TEST_IDX.get(idx - 1);
+                testId = String.valueOf(nId - 1);
             }
         }
 
