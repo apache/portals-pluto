@@ -223,10 +223,9 @@
     <dependency>
       <id>servletapi</id>
       <version>2.3</version>
-    </dependency>
-    <dependency>
-      <id>servletapi</id>
-      <version>2.3</version>
+      <properties>
+        <war.bundle.jar>false</war.bundle.jar>
+      </properties>
     </dependency>
     
 
