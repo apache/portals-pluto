@@ -61,6 +61,34 @@ code {font-size: 10pt;}
 </ul>
 <h2>3. Start Tomcat</h2>
 <p>Run Tomcat, go to http://localhost:8080/pluto/portal.</p>
+<h2>What if I just want the Pluto container jar (like for Jetspeed 2)?</h2>
+<ol>
+  <li>cd to /container directory</li>
+  <li>maven jar:install</li>
+</ol>
+<p>This will create the container jar in /container/target and also copy into 
+  you maven repository.</p>
+<h2>What if I just want to deploy the Pluto portal without the test suite?</h2>
+<ol>
+  <li>Follow all the steps from &quot;<i>What if I just want the Pluto container 
+    jar (like for Jetspeed 2)?</i>&quot;</li>
+  <li>cd to the /portal directory.</li>
+  <li>maven (with no goal)</li>
+</ol>
+<p>This will invoke the default maven goal for the /portal sub-project, deployPlutoToTomcat. 
+  &nbsp;This will build and deploy the Pluto portal minus the test suite into 
+  tomcat.</p>
+<h2>What if I decide I want to deploy the test suite portlets after I deploy the 
+  Pluto portal by itself?</h2>
+<ol>
+  <li>Follow all the steps from &quot;<i>What if I decide I want to deploy the 
+    test suite portlets after I deploy JUST the Pluto portal?</i>&quot;</li>
+  <li>cd to the /testsuite directory.</li>
+  <li>maven (with no goal)</li>
+</ol>
+<p>This will invoke the default maven goal for the /testsute sub-project, deployTestsuite. 
+  &nbsp;This willbuild and deploy the test suite portlets into your already deployed 
+  Pluto portal.</p>
 <h2>&nbsp;</h2>
 </body>
 </html>
