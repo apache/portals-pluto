@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <title>Pluto Project News and Status</title>
+  </properties>
+
+<body>
+  <section name="News">
+  <subsection name="10 November 2003 - Pluto Gets a Face Lift">
+  <p>Pluto is now managed by maven and it's website has subsequently recieved
+     a face lift. http://jakarta.apache.org/pluto now contains additional
+     information that should be helpfull in establishing this community.
+  </p>
+  </subsection>
+  <subsection name="9 November 2003 - Pluto added to Bugzilla">
+  <p>Pluto has been added to Bugzilla 
+     <A href="http://nagoya.apache.org/bugzilla">(http://nagoya.apache.org/bugzilla)</A>.
+     Issues, bugs, and enhancements will now be managed through this
+     bug database.</p>
+  </subsection>
+</section>
+
+
+</body>
+</document>
+

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs title="Frequently Asked Questions">
+  <part id="general">
+    <title>General</title>
+    <faq id="mail-list">
+      <question>Where can I find the Mailing List Archives for Pluto?</question>
+      <answer>
+        <p>
+          The lists are archived at
+          <A href="http://nagoya.apache.org/">http://nagoya.apache.org</A>
+          .  Direct links to the pluto
+          specific archives are:
+          <ul>
+            <li>
+              <a href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=175">Developer List</a>
+            </li>
+            <li>
+              <a href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=176">User List</a>
+            </li>
+          </ul>
+        </p>
+        <p>
+          During the first several weeks in the incubator, the Pluto
+          mail archives were not being generated. If you can not find what
+          you are looking for, you may be able to find a more complete
+          history at
+          <A href="http://news.gmane.org">Gmane</A>
+          .
+          The Pluto specific archives at Gmane are:
+          <ul>
+            <li>
+              <a href="http://news.gmane.org/gmane.comp.jakarta.pluto.devel">Developer List</a>
+            </li>
+            <li>
+              <a href="http://news.gmane.org/gmane.comp.jakarta.pluto.user">User List</a>
+            </li>
+          </ul>
+        </p>
+      </answer>
+    </faq>
+    <faq id="javaworld">
+      <question>Why can't I get the Javaworld bookmark example to work with Pluto?</question>
+      <answer>
+        <p>
+          The Javaworld examples are based on the proposed final
+          <b>draft</b>
+          of JSR-168.  The final specification included several changes,
+          including some changes to the xsd.
+        </p>
+        <p>
+          Please see the following for a modified version of this example
+          which will work with Pluto.
+          <BR/>
+          <A href="http://nagoya.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27">http://nagoya.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27</A>
+        </p>
+      </answer>
+    </faq>
+  </part>
+  <part id="architecture">
+    <title>Architecture</title>
+    <faq id="portal-impl">
+      <question>Is Pluto a fully functional portal implementation?</question>
+      <answer>
+        <p>
+          No, Pluto is a Portlet Container. If you are looking for a
+          Portal implementation, try checking out
+          <a href="http://jakarta.apache.org/jetspeed">Jetspeed</a>
+          .
+        </p>
+        <p>
+          Need more information about the difference between a Portal
+          and a Portlet Container?  Take a look at the
+          <A href="#container">next question.</A>
+        </p>
+      </answer>
+    </faq>
+    <faq id="container">
+      <question>
+        What is the difference between a Portal and a Portlet
+        Container?
+      </question>
+      <answer>
+        <p>
+          This question was answered on the developer list in the following
+          way:
+        <table>
+          <tr><th>Date:</th>
+              <th>Tue, 11 Nov 2003 15:21:32 -0600</th></tr>
+          <tr><th>From:</th>
+              <th>Craig Walls [wallsc.AT.michaels.DOT.com]</th></tr>
+          <tr><th>Subject:</th>
+              <th>setRenderParameter</th></tr>
+          <tr><th>Content-Type:</th>
+              <th>text/plain; charset=us-ascii</th></tr>
+          <tr><td colspan="2">
+          This question seems to come up every other day. Perhaps this should be a FAQ?
+          Let me attempt to answer it...
+          <BR/>
+          <BR/>
+          Pluto is a JSR-168 compliant portlet container. That means that it provides a
+          place for portlets to reside, but nothing else. Think of it this way: A portlet
+          container (which is what Pluto is) is to portlets what an aquarium is to fish.
+          <BR/>
+          <BR/>
+          Pluto comes with a minimal portal implementation. A portal implementation builds
+          on top of the base container providing additional features which may vary from
+          implementation to implementation. Layout and security are features that may be
+          provided by a portal implementation, but they are in addition to what the
+          container provides. Using the fish analogy again, a portal is to a portlet
+          container what decorations are to an aquarium.
+          <BR/>
+          <BR/>
+          That said, a portlet container provides the basic necessities required for
+          portlets to live, just as an aquarium provides water (and a barrier to contain
+          the water) for fish. A portal implementation provides extra stuff in addition to
+          the portlet container just as an aquarium may have plants, rocks, and tiny
+          little treasure chests that open and close. The fish can survive without the
+          extras, just as a portlet can survive without security or some fancy layout
+          engine. But the fish sure do look much nicer when surrounded with the extra
+          stuff, just as portlets are much more useful when used alongside extra portal
+          features.
+        </td></tr></table>
+        </p>
+        <p>
+          Want a more technical answer?
+          <a href="arch.html">architectural overview</a>
+          for a more complete description
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

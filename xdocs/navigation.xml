@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Jakarta Pluto Site" href="http://jakarta.apache.org/pluto">
+
+   <title>The Jakarta Site</title>
+   <logo href="/images/pluto.jpg">Jakarta Pluto</logo>
+
+  <body>
+    <links>
+        <item name="JSR 168"  href="http://jcp.org/en/jsr/detail?id=168"/>
+    </links>
+    <menu name="General Information">
+        <item name="Overview"            href="/index.html"/>        
+        <item name="News and Status"     href="/news.html"/>
+        <item name="Roadmap"             href="/roadmap.html"/>
+        <item name="FAQs"            href="/faq.html"/>
+    </menu>
+
+    <menu name="Getting Started">
+        <item name="Installation"    href="/install.html"/>
+        <item name="Architecture"    href="/arch.html"/>
+        <item name="Download" href="/site/binindex.html"/>
+        <item name="Resources"       href="/resources.html"/>
+        <item name="JavaDoc"    href="/apidocs/index.html"/>
+    </menu>
+
+    <menu name="Download">
+        <item name="Binaries"              href="/site/binindex.html"/>
+        <item name="Source Code"           href="/site/sourceindex.html"/>
+    </menu>
+  </body>
+</project>
+
