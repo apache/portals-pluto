@@ -26,15 +26,17 @@ limitations under the License.
  </preGoal>
          
  <goal name="deployTestsuite">
-         <java classname="org.apache.pluto.portalImpl.Deploy" fork="yes">
+         <java classname="org.apache.pluto.driver.deploy.CLI" fork="yes">
           <classpath>
             <path refid="maven.dependency.classpath"/>
             <pathelement path="${maven.build.dest}"/>
           </classpath>
-            <arg value="${maven.tomcat.home}/webapps" />
-            <arg value="pluto" />
+            <arg value="-verbose"/>
+            <arg value="-p"/>
+            <arg value="${maven.tomcat.home}/webapps/pluto"/>
+            <arg value="-d"/>
+            <arg value="${maven.tomcat.home}/webapps"/>
             <arg value="${basedir}/target/${maven.war.final.name}" />
-            <arg value=".." />    
          </java>       
  </goal>
          

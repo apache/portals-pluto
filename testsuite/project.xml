@@ -42,7 +42,7 @@ limitations under the License.
   <dependencies>
     <dependency>
       <id>castor</id>
-      <version>0.9.5</version>
+      <version>0.9.5.3</version>
       <properties>
         <war.bundle>true</war.bundle>
       </properties>
@@ -58,6 +58,15 @@ limitations under the License.
 
     <dependency>
       <id>pluto-portal</id>
+      <groupId>pluto</groupId>
+      <version>1.0.1-rc3</version>
+      <properties>
+        <war.bundle>false</war.bundle>
+      </properties>
+    </dependency>
+
+    <dependency>
+      <id>pluto-descriptors</id>
       <groupId>pluto</groupId>
       <version>1.0.1-rc3</version>
       <properties>
