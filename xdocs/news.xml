@@ -23,6 +23,54 @@ limitations under the License.
 
 <body>
   <section name="News">
+    <subsection name="8 October 2004 - Portals Pluto 1.0.1-rc1 Released">
+     <p>
+      The Apache Pluto Community is proud to announce the release
+      of Apache Pluto 1.0.1-rc-1: the first binary release of the
+      reference implementation of the Java Portlet Specification.
+     </p>
+     <p>
+      Pluto 1.0.1-rc-1 is considered a release candidate.  The
+      promotion of this release candidate to general availability
+      is expected within the few weeks, pending feedback from 
+      the community.
+     </p>
+     <p>
+      The Java Portlet Specification defines a Portlet API
+      very similar to the Servlet API. The API provides a means
+      for aggregating disperate content sources.  The specification
+      addresses security and personalization considerations and 
+      defines a standard with which these sources, or portlets 
+      can be deployed.
+     </p>
+     <p>
+      Pluto is an embedable portlet container which will typically
+      be bundled within a fully functional Portal.  The Pluto 
+      community has developed a simple portal driver implementation
+      which allows for the testing and development of portlets with
+      the container.  The Pluto testsuite is an implementation 
+      agnostic portlet application which tests several basic
+      operations of the container in which it is deployed.
+     </p>
+     <p>
+      The distribution is organized into four releases:
+      <ul>
+       <li>
+        1. A binary distribution bundled with Tomcat. This distribution is the easiest to install.
+       </li>
+       <li>
+        2. A source distribution.
+       </li>
+       <li>
+        3. A binary distribution containing the container library.
+       </li>
+       <li>
+        4. A binary tools distribution with the portal driver and 
+           testsuite.
+       </li>
+      </ul>
+     </p>
+    </subsection>
     <subsection name="September 2004 - Releasing Pluto">
       <p>The Pluto Team is currently working on the first public release
         which is expected by the end of September.
