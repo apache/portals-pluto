@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry excluding="**/CVS*" kind="src" path="api/src/java"/>
+	<classpathentry kind="src" path="deploy/src/java"/>
 	<classpathentry kind="src" path="descriptors/src/java"/>
 	<classpathentry kind="src" path="descriptors/src/test"/>
 	<classpathentry excluding="**/CVS*" kind="src" path="portal/src/java"/>
@@ -11,7 +12,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/xml-apis/jars/xml-apis-2.0.2.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/castor/jars/castor-0.9.5.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/castor/jars/castor-0.9.5.3.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-digester/jars/commons-digester-1.6.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/junit/jars/junit-3.8.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-fileupload/jars/commons-fileupload-1.0.jar"/>
