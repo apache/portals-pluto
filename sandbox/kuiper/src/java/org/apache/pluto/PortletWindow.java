@@ -24,7 +24,7 @@ import javax.portlet.PortletPreferences;
 /**
  * <B>TODO</B>: Document
  * 
- * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
+ * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 4, 2004 at 10:47:02 PM
  */

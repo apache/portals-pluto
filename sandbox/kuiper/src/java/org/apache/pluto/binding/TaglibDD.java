@@ -35,7 +35,7 @@ package org.apache.pluto.binding;
 /** Implemented by the binding provider in order
  *  to represent a taglib binding.
  * 
- * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
+ * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Feb 24, 2004 at 7:26:56 PM
  */

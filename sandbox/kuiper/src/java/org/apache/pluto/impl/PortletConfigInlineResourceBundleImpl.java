@@ -22,7 +22,7 @@ import java.util.Properties;
 
 /**
  * 
- * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
+ * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 15, 2004 at 10:11:25 PM
  */

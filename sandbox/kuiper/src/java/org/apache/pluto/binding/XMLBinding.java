@@ -38,7 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
+ * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Feb 23, 2004 at 8:02:50 PM
  */

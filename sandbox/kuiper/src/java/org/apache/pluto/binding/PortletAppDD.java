@@ -37,7 +37,7 @@ package org.apache.pluto.binding;
  *  (portlet.xml)
  *
  * 
- * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
+ * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Feb 23, 2004 at 11:17:50 PM
  */

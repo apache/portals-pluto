@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
+ * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 9, 2004 at 9:26:15 AM
  */

@@ -20,7 +20,7 @@ import org.apache.pluto.binding.PortletAppDD;
 
 /**
  *
- * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
+ * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 9, 2004 at 4:36:23 PM
  */
