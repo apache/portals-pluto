@@ -51,35 +51,47 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-/* 
-
- */
-
 package org.apache.pluto.invoker.impl;
 
 import org.apache.pluto.factory.PortletInvokerFactory;
 import org.apache.pluto.invoker.PortletInvoker;
 import org.apache.pluto.om.portlet.PortletDefinition;
 
-public class PortletInvokerFactoryImpl implements PortletInvokerFactory {
+public class PortletInvokerFactoryImpl implements PortletInvokerFactory 
+{
     private javax.servlet.ServletConfig servletConfig;
 
-    public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
-    {
-        servletConfig = config;
-    }
-
-    // org.apache.pluto.factory.PortletInvokerFactory implementation ------------------------------
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.factory.PortletInvokerFactory#getPortletInvoker(org.apache.pluto.om.portlet.PortletDefinition)
+     */
     public PortletInvoker getPortletInvoker(PortletDefinition portletDefinition)
     {
         PortletInvoker invoker = new PortletInvokerImpl(portletDefinition, servletConfig);
         return invoker;
     }
-    // --------------------------------------------------------------------------------------------
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.factory.PortletInvokerFactory#releasePortletInvoker(org.apache.pluto.invoker.PortletInvoker)
+     */
+    public void releasePortletInvoker(PortletInvoker invoker)
+    {
+    }
 
-    // additional methods -------------------------------------------------------------------------
+    /* (non-Javadoc)
+     * @see org.apache.pluto.factory.Factory#init(javax.servlet.ServletConfig, java.util.Map)
+     */    
+    public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
+    {
+        servletConfig = config;
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.pluto.factory.Factory#destroy()
+     */
     public void destroy() throws Exception
     {
     }
-    // --------------------------------------------------------------------------------------------
+    
+    
 }

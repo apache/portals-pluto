@@ -51,10 +51,6 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-/* 
-
- */
-
 package org.apache.pluto;
 
 import java.io.IOException;
@@ -82,8 +78,9 @@ import org.apache.pluto.services.information.PortletURLProvider;
 import org.apache.pluto.services.log.Log;
 
 /**
- *  
-
+ *  Implements the Pluto Container.
+ * 
+ * @version $Id: PortletContainerImpl.java,v 1.2 2004/01/08 02:20:16 taylor Exp $
  */
 public class PortletContainerImpl implements PortletContainer
 {
@@ -118,7 +115,8 @@ public class PortletContainerImpl implements PortletContainer
     throws PortletException, IOException, PortletContainerException
     {
         PortletContainerServices.prepare(uniqueContainerName);
-
+        PortletInvoker invoker = null;
+        
         if (Log.isDebugEnabled("org.apache.pluto.invoker"))
         {
             Log.debug("org.apache.pluto.invoker",
@@ -135,11 +133,12 @@ public class PortletContainerImpl implements PortletContainer
                                                                                   servletRequest, 
                                                                                   servletResponse);
 
-            PortletInvoker invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
+            invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
             invoker.render(renderRequest, renderResponse);
         }
         finally
         {
+            PortletInvokerAccess.releasePortletInvoker(invoker);            
             PortletContainerServices.release();
         }
 
@@ -152,6 +151,7 @@ public class PortletContainerImpl implements PortletContainer
     throws PortletException, IOException, PortletContainerException
     {
         PortletContainerServices.prepare(uniqueContainerName);
+        PortletInvoker invoker = null;
 
         if (Log.isDebugEnabled("org.apache.pluto.invoker"))
         {
@@ -175,7 +175,7 @@ public class PortletContainerImpl implements PortletContainer
             ActionResponse actionResponse = PortletObjectAccess.getActionResponse(portletWindow, 
                                                                                   servletRequest, 
                                                                                   servletResponse);
-            PortletInvoker invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
+            invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
 
             _actionResponse = (InternalActionResponse)actionResponse;
 
@@ -210,12 +210,16 @@ public class PortletContainerImpl implements PortletContainer
                     // change portlet mode
                     if (_actionResponse.getChangedPortletMode() != null)
                     {
-                        InformationProviderAccess.getDynamicProvider(servletRequest).getPortletActionProvider(portletWindow).changePortletMode(_actionResponse.getChangedPortletMode());
+                        InformationProviderAccess.getDynamicProvider(servletRequest)
+                            .getPortletActionProvider(portletWindow)
+                            .changePortletMode(_actionResponse.getChangedPortletMode());
                     }
                     // change window state
                     if (_actionResponse.getChangedWindowState() != null)
                     {
-                        InformationProviderAccess.getDynamicProvider(servletRequest).getPortletActionProvider(portletWindow).changePortletWindowState(_actionResponse.getChangedWindowState());
+                        InformationProviderAccess.getDynamicProvider(servletRequest)
+                            .getPortletActionProvider(portletWindow)
+                            .changePortletWindowState(_actionResponse.getChangedWindowState());
                     }
                     // get render parameters
                     Map renderParameter = _actionResponse.getRenderParameters();
@@ -252,6 +256,7 @@ public class PortletContainerImpl implements PortletContainer
             }
             finally
             {
+                PortletInvokerAccess.releasePortletInvoker(invoker);                            
                 PortletContainerServices.release();
             }
         }
@@ -263,6 +268,7 @@ public class PortletContainerImpl implements PortletContainer
     throws PortletException, PortletContainerException
     {
         PortletContainerServices.prepare(uniqueContainerName);
+        PortletInvoker invoker = null;
 
         if (Log.isDebugEnabled("org.apache.pluto.invoker"))
             Log.debug("org.apache.pluto.invoker",
@@ -276,7 +282,7 @@ public class PortletContainerImpl implements PortletContainer
                                                                               servletRequest, 
                                                                               servletResponse);
 
-        PortletInvoker invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
+        invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
 
         try
         {
@@ -284,7 +290,8 @@ public class PortletContainerImpl implements PortletContainer
         }
         finally
         {
-            PortletContainerServices.release();
+            PortletInvokerAccess.releasePortletInvoker(invoker);                        
+            PortletContainerServices.release();            
         }
 
     }

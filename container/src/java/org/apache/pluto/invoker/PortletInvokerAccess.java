@@ -51,10 +51,6 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-/* 
-
- */
-
 package org.apache.pluto.invoker;
 
 import org.apache.pluto.factory.PortletInvokerFactory;
@@ -62,16 +58,29 @@ import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.services.factory.FactoryManager;
 
 /**
- * 
-
+ * PortletInvokerAccess is a static accessor for getting and releasing portlet invokers via
+ * the portal's portlet invoker factory.
+ *
+ * @version $Id: PortletInvokerAccess.java,v 1.2 2004/01/08 02:20:16 taylor Exp $
  */
-public class PortletInvokerAccess {
-
+public class PortletInvokerAccess 
+{
+    private static PortletInvokerFactory invokerFactory = 
+            (PortletInvokerFactory)FactoryManager.getFactory(org.apache.pluto.invoker.PortletInvoker.class);
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.factory.PortletInvokerFactory#getPortletInvoker(org.apache.pluto.om.portlet.PortletDefinition)
+     */
     public static PortletInvoker getPortletInvoker(PortletDefinition portletDefinition)
     {
         return invokerFactory.getPortletInvoker(portletDefinition);
     }
 
-    private static PortletInvokerFactory invokerFactory = 
-            (PortletInvokerFactory)FactoryManager.getFactory(org.apache.pluto.invoker.PortletInvoker.class);
+    /* (non-Javadoc)
+     * @see org.apache.pluto.factory.PortletInvokerFactory#releasePortletInvoker(org.apache.pluto.invoker.PortletInvoker)
+     */
+    public static void releasePortletInvoker(PortletInvoker invoker)
+    {
+        invokerFactory.releasePortletInvoker(invoker);
+    }
 }

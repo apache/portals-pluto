@@ -51,10 +51,6 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-/* 
-
- */
-
 package org.apache.pluto;
 
 import java.util.Properties;
@@ -93,7 +89,7 @@ import org.apache.pluto.services.PortletContainerEnvironment;
  *   </UL>
  * </UL>
  * 
-
+ * @version $Id: PortletContainer.java,v 1.2 2004/01/08 02:20:16 taylor Exp $
  */
 public interface PortletContainer
 {
