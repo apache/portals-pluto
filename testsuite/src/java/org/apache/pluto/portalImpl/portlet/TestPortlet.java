@@ -146,6 +146,8 @@ public class TestPortlet extends GenericPortlet
     public void doDispatch (RenderRequest request,
                         RenderResponse response) throws PortletException, IOException
     {
+        response.setTitle("My dynamic PortletTitle");
+
         WindowState state = request.getWindowState();
 
         if ( ! state.equals(WindowState.MINIMIZED)) {
