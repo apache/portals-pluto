@@ -24,13 +24,16 @@ limitations under the License.
 <body>
   <section name="Portal using Pluto">
     <p>
-	  The following portals use Pluto as their for their portlet
+	  The following portals use Pluto for their portlet
       container:
 
 	  <table>
       <tr><th>Portal</th><th>Website</th><th>License</th></tr>
 	  <tr><td>Jetspeed</td>
           <td><a href="http://portals.apache.org/jetspeed-1">http://portals.apache.org/jetspeed-1</a></td>
+          <td>Apache 2.0</td></tr>
+	  <tr><td>Cocoon</td>
+          <td><a href="http://cocoon.apache.org">http://cocoon.apache.org</a></td>
           <td>Apache 2.0</td></tr>
 	  </table>
     </p>
