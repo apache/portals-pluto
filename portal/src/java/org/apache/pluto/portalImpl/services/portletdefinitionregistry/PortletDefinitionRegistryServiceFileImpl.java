@@ -55,9 +55,23 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
 
     private static String fileSeparator = System.getProperty("file.separator");
 
-    // 
-    public final  static String TMP_PREFIX="tmp12345";
-    private final static String WAR_FILE_EXT=".war";
+    /**
+     * The initial portion of the web module prefix used by JBoss.
+     */
+    private final static String INITIAL_TMP_PREFIX = "tmp";
+
+    /**
+     * The length of the full web module prefix used by JBoss ({@link
+     * #INITIAL_TMP_PREFIX} plus numeric portion).
+     */
+    private final static int FULL_TMP_PREFIX_LEN =
+        INITIAL_TMP_PREFIX.length() + 5;
+
+    /**
+     * The file extension for web application archives (including the
+     * leading dot).
+     */
+    private final static String WAR_FILE_EXT = ".war";
     
     // default configuration values
     public final static String DEFAULT_MAPPING_PORTLETXML = "WEB-INF/data/xml/portletdefinitionmapping.xml";
@@ -159,23 +173,27 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
             }
         }
     }
+
     /**
-    * Handles resolution of a web module's file system name to its
-    * URI identifier.
-    *
-    * @param webModule The file system name.
-    * @return The URI part.
-    */
+     * Handles resolution of a web module's file system name to its
+     * URI identifier.
+     *
+     * @param webModule The file system name.
+     * @return The URI part.
+     */
     private String resolveURI(String webModule)
     {
-    // For JBoss compatibility, change webModule from the form
-    // of "tmp12345foo.war" to "foo".
-    int len = webModule.length();
-    if (webModule.endsWith(WAR_FILE_EXT) && webModule.startsWith(TMP_PREFIX.substring(0,3)) && len > TMP_PREFIX.length() + WAR_FILE_EXT.length()) { 
-        webModule = webModule.substring(TMP_PREFIX.length(), len - WAR_FILE_EXT.length());
-    }
-    // else assumed literal.
-    return webModule;
+        // For JBoss compatibility, change webModule from the form
+        // of "tmp12345foo.war" to "foo".
+        int len = webModule.length();
+        if (webModule.endsWith(WAR_FILE_EXT) &&
+            webModule.startsWith(INITIAL_TMP_PREFIX) &&
+            len > FULL_TMP_PREFIX_LEN + WAR_FILE_EXT.length()) {
+            webModule = webModule.substring(FULL_TMP_PREFIX_LEN,
+                                            len - WAR_FILE_EXT.length());
+        }
+        // else assumed literal.
+        return webModule;
     }
 
     private void load(String baseDir, String webModule) throws Exception
