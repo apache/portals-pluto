@@ -16,11 +16,14 @@
 package org.apache.pluto.portalImpl.portlet.test;
 
 import java.util.Map;
+import java.util.Properties;
 
 import javax.portlet.PortletContext;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+
+import org.apache.pluto.testsuite.ExpectedResults;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -44,12 +47,15 @@ public class SecurityMappingTest extends AbstractReflectivePortletTest {
             return res;
         }
 
-        if(req.isUserInRole("plutoTestRole")) {
+        Properties props = ExpectedResults.getExpectedProperties();
+        String role = props.getProperty("expected.security.role.mapped");
+
+        if(req.isUserInRole(role)) {
             res.setReturnCode(TestResult.PASSED);
         }
         else {
             res.setReturnCode(TestResult.WARNING);
-            res.setReturnCode("User is not in the expected 'tomcat' role.  This may be due to misconfiuration.");
+            res.setReturnCode("User is not in the expected '"+role+"' role.  This may be due to misconfiuration.");
         }
 
         return res;
@@ -63,12 +69,15 @@ public class SecurityMappingTest extends AbstractReflectivePortletTest {
             return res;
         }
 
-        if(req.isUserInRole("tomcat")) {
+        Properties props = ExpectedResults.getExpectedProperties();
+        String role = props.getProperty("expected.security.role");
+
+        if(req.isUserInRole(role)) {
             res.setReturnCode(TestResult.PASSED);
         }
         else {
             res.setReturnCode(TestResult.WARNING);
-            res.setReturnCode("User is not in the expected 'tomcat' role.  This may be due to misconfiuration.");
+            res.setReturnCode("User is not in the expected '"+role+"' role.  This may be due to misconfiuration.");
         }
 
         return res;

@@ -67,5 +67,10 @@
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
+  <testsuite-config>
+    <name>Security Mapping Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.SecurityMappingTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config> 
 
 </testportlet-config>
