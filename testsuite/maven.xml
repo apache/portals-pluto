@@ -85,6 +85,7 @@ limitations under the License.
     </goal>
 
     <goal name="tomcat:deploy">
+        <attainGoal name="tomcat:init"/>
         <j:set var="depType" value="${maven.tomcat.deploy}"/>
         <j:if test="${depType=='exploded'}">
             <unwar src="target/${maven.war.final.name}" dest="${maven.tomcat.home}/webapps/testsuite"/>
@@ -93,7 +94,23 @@ limitations under the License.
             <copy file="target/${maven.war.final.name}"
                 todir="${maven.tomcat.home}/webapps"/>
         </j:if>
+
+
+        <!-- ===================== -->
+        <!-- Deploy Context Config -->
+        <!-- ===================== -->
+        <j:set var="version" value="${maven.tomcat.version.major}"/>
+
+        <!-- If we are in Tomcat4.x-->
+        <j:if test="${version==4}">
+            <copy file="${maven.tomcat.context.config}"
+                todir="${maven.tomcat.home}/webapps"/>
+        </j:if>
+
+        <!-- If we are in Tomcat5.x-->
+        <j:if test="${version==5}">
+            <copy file="${maven.tomcat.context.config}"
+                todir="${maven.tomcat.home}/conf/Catalina/${maven.tomcat.host}"/>
+        </j:if>
     </goal>
-
-
 </project>
