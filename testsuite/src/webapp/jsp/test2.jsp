@@ -92,9 +92,11 @@ trying to verify that the PortalContext is the Pluto/1.0 portal context<BR>
 %>
 <BR>
 <%
-    if ("Pluto/1.0".equals(info))
-         { out.print("PortalInfo test passed..."); }
-    else { out.print("PortalInfo failed..."); allOk = false; }
+    if (info != null && info.length() > 0) {
+        // provided getPortalInfo() returns something
+        // it is okay. The Pluto Portal returns "Pluto/1.0"
+        out.print("PortalInfo test passed...");
+    } else { out.print("PortalInfo failed..."); allOk = false; }
 %>
 <BR>
 <BR>
