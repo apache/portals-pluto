@@ -15,10 +15,46 @@
   </section>
 
   <section name="To Do List">
+    <subsection name="Current">
+	<p>
     <ul>
-    <li>Document "How To Integrate Pluto Into Your Portal"</li>
     <li>Define Roadmap</li>
+	<li>Create Letter of Intent concerning the primary focus of 
+        development. (See 
+		<a href="http://nagoya.apache.org/eyebrowse/BrowseList?listName=pluto-user@jakarta.apache.org&amp;by=thread&amp;from=650304">
+		this thread</a> for some starting points)</li>
+	<li>Flush out the faq doc</li>
+	<li>Provide automatic extract of the pluto web pages out of the CVS</li>
+	<li>Support custom portlet modes and window states</li>
+	<li>User profile attribute support</li>
+	<li>Enable PortletURL.setSecure</li>
+	<li>Write howto guide about using the pluto container (is already started
+        by Stefan Hepper and Stephan Hesmer)</li>
+	<li>Write howto guide for deploying portlets with the pluto portal driver</li>
     </ul>
+	</p>
+	</subsection>
+
+	<subsection name="Future">
+	<p>
+    <ul>
+    </ul>
+	</p>
+	</subsection> 
+
+	<subsection name="Complete">
+	<p>
+    <ul>
+	<li>Mavenize build</li>
+	<li>Enable setTitle</li>
+	<li>Provide support for jdk 1.4</li>
+	<li>Provide support for Tomcat 5</li>
+	<li>Document How to use the Pluto Portal</li>
+	<li>Change logging to commons logging</li>
+    <li>Document "How To Integrate Pluto Into Your Portal"</li>
+    </ul>
+	</p>
+	</subsection>
   </section>
 
 </body>
