@@ -34,14 +34,6 @@ limitations under the License.
 
     <dependencies>
         <dependency>
-            <id>castor</id>
-            <version>0.9.5</version>
-            <properties>
-                <war.bundle>true</war.bundle>
-            </properties>
-        </dependency>
-
-        <dependency>
             <id>portlet-api</id>
             <groupId>portlet-api</groupId>
             <version>1.0</version>
@@ -68,7 +60,7 @@ limitations under the License.
 
         <dependency>
             <id>commons-digester</id>
-            <version>1.5</version>
+            <version>1.6</version>
             <properties>
                 <war.bundle>true</war.bundle>
             </properties>
@@ -76,7 +68,7 @@ limitations under the License.
 
         <dependency>
             <id>commons-beanutils</id>
-            <version>1.6.1</version>
+            <version>1.7.0</version>
             <url>http://jakarta.apache.org/commons/beanutils</url>
             <properties>
                 <war.bundle>true</war.bundle>
@@ -93,6 +85,10 @@ limitations under the License.
         </dependency>
 
     </dependencies>
+
+<build>
+  <sourceDirectory>${pluto.testsuite.dir}/src/java</sourceDirectory>
+</build>
 
 
 <reports>

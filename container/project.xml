@@ -66,7 +66,7 @@ limitations under the License.
         <dependency>
             <groupId>pluto</groupId>
             <artifactId>pluto-binding</artifactId>
-            <version>1.1</version>
+            <version>1.1-ALPHA</version>
         </dependency>
 
         <dependency>
@@ -75,43 +75,5 @@ limitations under the License.
         </dependency>
 
     </dependencies>
-
-    <build>
-
-        <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
-
-        <sourceDirectory>src/java</sourceDirectory>
-        <aspectSourceDirectory/>
-
-        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-
-        <unitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </unitTest>
-
-        <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
-
-        <integrationUnitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </integrationUnitTest>
-
-
-        <resources>
-            <resource>
-                <directory>src/conf</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
-
-        <jars/>
-
-    </build>
 
 </project>

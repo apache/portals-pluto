@@ -53,6 +53,9 @@ limitations under the License.
             by read from properties files and internationalized.</td>
         <td>Container</td>
         <td> Yes </td></tr>
+    <tr><td>Implement Strategy for providing user attributes.</td>
+        <td>Container / Portal Driver</td>
+        <td> No </td></tr>
     </table>
 </P>
 </section>

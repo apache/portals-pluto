@@ -47,7 +47,7 @@ limitations under the License.
 
         <dependency>
             <id>commons-beanutils</id>
-            <version>1.6.1</version>
+            <version>1.7.0</version>
             <url>http://jakarta.apache.org/commons/beanutils</url>
             <properties>
                 <war.bundle>false</war.bundle>
@@ -66,7 +66,7 @@ limitations under the License.
         <dependency>
             <id>pluto</id>
             <groupId>pluto</groupId>
-            <version>1.1</version>
+            <version>1.1-ALPHA</version>
             <properties>
                 <war.bundle>false</war.bundle>
                 <tomcat.shared>true</tomcat.shared>
@@ -76,7 +76,7 @@ limitations under the License.
         <dependency>
             <groupId>pluto</groupId>
             <artifactId>pluto-binding</artifactId>
-            <version>1.1</version>
+            <version>1.1-ALPHA</version>
             <properties>
                 <war.bundle>false</war.bundle>
                 <tomcat.shared>true</tomcat.shared>
@@ -118,45 +118,4 @@ limitations under the License.
             </properties>
         </dependency>
     </dependencies>
-
-    <build>
-
-        <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
-
-        <sourceDirectory>src/java</sourceDirectory>
-        <aspectSourceDirectory/>
-
-        <resources>
-            <resource>
-                <directory>${basedir}/src/resources</directory>
-            </resource>
-        </resources>
-
-        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-
-        <unitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </unitTest>
-
-        <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
-
-        <integrationUnitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </integrationUnitTest>
-
-        <resources>
-            <includes>
-                <include>conf/**/*pipeline.xml</include>
-                <include>conf/**/*valve.xml</include>
-            </includes>
-        </resources>
-
-        <jars/>
-
-    </build>
-
 </project>

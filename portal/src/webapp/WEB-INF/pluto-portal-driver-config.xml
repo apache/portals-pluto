@@ -15,13 +15,6 @@
         <window-state>minimized</window-state>
     </supports>
 
-    <host>
-        <!-- Yuck, Yuck, Yuck -->
-        <name>localhost</name>
-        <http-port>8080</http-port>
-        <https-port></https-port>
-    </host>
-
     <portlet-app>
         <context-path>/testsuite</context-path>
         <portlets>
@@ -40,30 +33,4 @@
             <portlet context="/testsuite" name="TestPortlet2"/>
         </page>
     </render-config>
-
-    <!--
-      <aggregation>
-        <fragment name="navigation" class="org.apache.pluto.driver.aggregation.navigation.TabNavigation"/>
-        <fragment name="test" type="org.apache.pluto.driver.aggregation.PageFragment">
-            <navigation>
-                <title>Test</title>
-                <description>...</description>
-            </navigation>
-
-            <fragment name="row" type="org.apache.pluto.driver.aggregation.RowFragment">
-                <fragment name="col1" type="org.apache.pluto.driver.aggregation.ColumnFragment">
-                    <fragment name="p1" type="org.apache.pluto.driver.aggregation.PortletFragment">
-                        <property name="app-id" value="primary"/>
-                        <property name="portlet" value="TestPortlet1"/>
-                    </fragment>
-
-                    <fragment name="p2" type="org.apache.pluto.driver.aggregation.PortletFragment">
-                        <property name="app-id" value="secondary"/>
-                        <property name="portlet" value="TestPortlet2"/>
-                    </fragment>
-                </fragment>
-            </fragment>
-        </fragment>
-      </aggregation>
-    -->
 </pluto-portal-driver>

@@ -14,7 +14,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<project default="multiproject:artifact"
+<project default="pluto:deploy"
          xmlns:j="jelly:core"
          xmlns:maven="jelly:maven"
          xmlns:ant="jelly:ant">
@@ -27,14 +27,23 @@ limitations under the License.
     <attainGoal name="multiproject:install"/>
   </preGoal>
 
-  <goal name="fullDeployment">
+
+  <goal name="pluto:deploy-all" prereqs="multiproject:install">
+    <attainGoal name="pluto:deploy-container"/>
+    <attainGoal name="pluto:deploy-testsuite"/>
+  </goal>
+
+  <goal name="pluto:deploy-container">
     <maven:reactor
-            basedir="${basedir}"
-            includes="portal/project.xml"
-            goals="tomcat:deploy"
-            banner="Deploying Portal Driver"
-            postProcessing="false"
-            ignoreFailures="false"/>
+      basedir="${basedir}"
+      includes="portal/project.xml"
+      goals="tomcat:deploy"
+      banner="Deploying Pluto Portal Driver to Tomcat"
+      postProcessing="false"
+      ignoreFailures="false"/>
+  </goal>
+
+  <goal name="pluto:deploy-testsuite">
     <maven:reactor
             basedir="${basedir}"
             includes="testsuite/project.xml"
@@ -43,5 +52,6 @@ limitations under the License.
             postProcessing="false"
             ignoreFailures="false"/>  	
   </goal>
+
 </project>
 

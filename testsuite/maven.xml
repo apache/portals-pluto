@@ -14,40 +14,13 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<project default="deployTestsuite"
+<project default="tomcat:deploy"
     xmlns:j="jelly:core"
     xmlns:maven="jelly:maven"
     xmlns:ant="jelly:ant">
 
-<!--
-    <preGoal name="war">
-        <maven:reactor
-          basedir="${pluto.testsuite.dir}"
-          includes="project.xml"
-          goals="war:war"
-          postProcessing="false"
-          ignoreFailures="false"/>
-    </preGoal>
--->
-
     <!-- The multiproject won't let us call war directly, we must specify
          since it won't be set by war goal. -->
-    <preGoal name="deployTestsuite">
-        <j:set var="maven.war.final.name" value="testsuite.war"/>
-    </preGoal>
-
-    <goal name="deployTestsuite">
-        <java classname="org.apache.pluto.portalImpl.Deploy" fork="yes">
-            <classpath>
-                <path refid="maven.dependency.classpath"/>
-                <pathelement path="${maven.build.dest}"/>
-            </classpath>
-            <arg value="${maven.tomcat.home}/webapps"/>
-            <arg value="pluto"/>
-            <arg value="${basedir}/target/${maven.war.final.name}"/>
-            <arg value=".."/>
-        </java>
-    </goal>
     <preGoal name="tomcat:deploy">
         <j:set var="maven.war.final.name" value="testsuite.war"/>
     </preGoal>

@@ -39,42 +39,4 @@ limitations under the License.
             <version>1.6</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
-
-        <sourceDirectory>src/java</sourceDirectory>
-        <aspectSourceDirectory/>
-
-        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-
-        <unitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </unitTest>
-
-        <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
-
-        <integrationUnitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </integrationUnitTest>
-
-
-        <resources>
-            <resource>
-                <directory>src/conf</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
-
-        <jars/>
-
-    </build>
-
 </project>
