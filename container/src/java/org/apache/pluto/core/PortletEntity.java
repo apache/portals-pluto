@@ -19,17 +19,16 @@
 
 package org.apache.pluto.core;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.core.impl.PortletPreferenceImpl;
 import org.apache.pluto.binding.PortletAppDD;
 import org.apache.pluto.binding.PortletDD;
 import org.apache.pluto.binding.ServletDD;
-import org.apache.pluto.binding.XMLBindingFactory;
 import org.apache.pluto.binding.PortletPreferenceDD;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -99,17 +98,17 @@ public class PortletEntity {
         if(LOG.isDebugEnabled()) {
             LOG.debug("Retrieved context: "+ctx);
         }
-        InputStream in = ctx.getResourceAsStream(PortletAppDD.PORTLET_XML);
         try {
-            PortletAppDD appDD = XMLBindingFactory.createXMLBinding().getPortletAppDD(in);
+            PortletAppDD appDD = PortletDescriptorRegistry.getRegistry()
+                .getPortletAppDD(ctx);
             PortletDD[] dds = appDD.getPortlets();
             for (int i = 0; i < dds.length && dd == null; i++) {
                 if (dds[i].getPortletName().equals(window.getPortletName())) {
                     dd = dds[i];
                 }
             }
-        } catch (IOException io) {
-            io.printStackTrace();
+        } catch (PortletContainerException io) {
+            throw new NullPointerException("Unable to load the Portlet Application Deployment Descriptor: "+io.getMessage());
         }
     }
 

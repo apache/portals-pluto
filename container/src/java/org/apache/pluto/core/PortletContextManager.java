@@ -25,7 +25,6 @@ import javax.servlet.ServletContext;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.binding.PortletAppDD;
-import org.apache.pluto.binding.XMLBindingFactory;
 import org.apache.pluto.core.impl.PortletContextImpl;
 
 /**
@@ -38,14 +37,7 @@ import org.apache.pluto.core.impl.PortletContextImpl;
  */
 public class PortletContextManager {
 
-    /** Portlet deployment descriptor location. */
-    private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 
-    /** Exception Messages. */
-    private static final StringManager EXCEPTIONS =
-        StringManager.getManager(
-            PortletContextManager.class.getPackage().getName()
-        );
 
     /** Singleton instance. */
     private static PortletContextManager manager;
@@ -80,35 +72,14 @@ public class PortletContextManager {
     public InternalPortletContext getContext(ServletContext context)
         throws PortletContainerException {
         if (!contexts.containsKey(context)) {
-            PortletAppDD def = createDefinition(context);
+            PortletAppDD def = PortletDescriptorRegistry.getRegistry()
+                .getPortletAppDD(context);
             PortletContext pc = new PortletContextImpl(context, def);
             contexts.put(context, pc);
         }
         return (InternalPortletContext) contexts.get(context);
     }
 
-    /**
-     * Create the portlet.xml deployment descriptor representation.
-     *
-     * @param ctx
-     * @return
-     * @throws PortletContainerException
-     */
-    private PortletAppDD createDefinition(ServletContext ctx)
-    throws PortletContainerException {
-        PortletAppDD app = null;
-        try {
-            InputStream in = ctx.getResourceAsStream(PORTLET_XML);
-            app = XMLBindingFactory.createXMLBinding().getPortletAppDD(in);
-        } catch (IOException io) {
-            throw new PortletContainerException(
-                EXCEPTIONS.getString(
-                    "error.context.descriptor.load",
-                    new String[] {ctx.getServletContextName()}
-                ),
-                io);
-        }
-        return app;
-    }
+
 }
 
