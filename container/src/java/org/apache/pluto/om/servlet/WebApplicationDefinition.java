@@ -26,6 +26,7 @@ import javax.servlet.ServletContext;
 import org.apache.pluto.om.common.Description;
 import org.apache.pluto.om.common.DisplayName;
 import org.apache.pluto.om.common.ParameterSet;
+import org.apache.pluto.om.common.SecurityRoleSet;
 
 /**
  * <P>
@@ -104,4 +105,13 @@ public interface WebApplicationDefinition extends org.apache.pluto.om.Model
      * @return the context root
      */
     public String getContextRoot();
+    
+    /**
+     * Returns the security roles defined for the web application.
+     * The returned value cannot be NULL.
+     * 
+     * @return a set containing SecurityRole objects 
+     */
+    public SecurityRoleSet getSecurityRoles();
+    
 }
