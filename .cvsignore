@@ -3,3 +3,4 @@ driver
 target
 *.log
 build.properties
+bin
