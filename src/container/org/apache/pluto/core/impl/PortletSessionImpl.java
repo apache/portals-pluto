@@ -175,13 +175,17 @@ public class PortletSessionImpl implements PortletSession, javax.servlet.http.Ht
 
             Vector portletAttributes = new Vector();
 
+	        /* Fix that ONLY attributes of PORTLET_SCOPE are returned. */
+            int prefix_length = "javax.portlet.p.".length();
+            String portletWindowId = portletWindow.getId().toString();
+            
             while (attributes.hasMoreElements())
             {
                 String attribute = (String)attributes.nextElement();
 
                 int attributeScope = PortletSessionUtil.decodeScope(attribute);
                 
-                if (attributeScope == PortletSession.PORTLET_SCOPE)
+                if (attributeScope == PortletSession.PORTLET_SCOPE && attribute.startsWith(portletWindowId, prefix_length))
                 {
                 	String portletAttribute = PortletSessionUtil.decodeAttributeName(attribute);
                 	
