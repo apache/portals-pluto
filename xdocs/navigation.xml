@@ -18,15 +18,18 @@
     <menu name="Getting Started">
         <item name="Installation"    href="/install.html"/>
         <item name="Architecture"    href="/arch.html"/>
+<!--
         <item name="Download" href="/site/binindex.html"/>
+-->        
         <item name="Resources"       href="/resources.html"/>
         <item name="JavaDoc"    href="/apidocs/index.html"/>
     </menu>
-
+<!--
     <menu name="Download">
         <item name="Binaries"              href="/site/binindex.html"/>
         <item name="Source Code"           href="/site/sourceindex.html"/>
     </menu>
+-->    
   </body>
 </project>
 
