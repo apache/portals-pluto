@@ -39,7 +39,6 @@ public class MiscTest extends AbstractReflectivePortletTest {
         res.setName("Server Info Test");
         res.setDesc("Make sure that the expected server info is returned.");
         Properties props = ExpectedResults.getExpectedProperties();
-        System.out.println("PortalContext: "+req.getPortalContext());
         if(req.getPortalContext().getPortalInfo().equals(props.getProperty("expected.portalInfo"))) {
             res.setReturnCode(TestResult.PASSED);
         }
