@@ -172,6 +172,12 @@ limitations under the License.
     <!-- Rename tomcat's license -->
     <move file="${maven.dist.dir}/${plutobin.dist.name}/LICENSE" tofile="LICENSE.tomcat"/>
 
+    <!-- Add emptySessionPath="true" to Connector element in server.xml -->
+    <ant:replace file="${maven.dist.dir}/${plutobin.dist.name}/conf/server.xml"
+    	token="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;" 
+    	value="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; emptySessionPath=&quot;true&quot; /&gt;" 
+    	summary="true"/>
+
     <!-- Cleanup the tomcat distribution; purge unwanted examples. -->
     <delete>
       <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/webapps" includes="**"/>
