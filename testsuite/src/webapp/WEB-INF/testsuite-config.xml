@@ -1,0 +1,71 @@
+<!--
+  Copyright 2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<testportlet-config>
+    
+  <testsuite-config>
+    <name>Simple Parameter Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.SimpleParameterTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+    
+  <testsuite-config>
+    <name>Simple Attribute Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.SimpleAttributeTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+    
+  <testsuite-config>
+    <name>Complex Attribute Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.ComplexAttributeTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+    
+  <testsuite-config>
+    <name>External App Scoped Attribute Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.ExternalAppScopedAttributeTest</class>
+    <display-uri>/jsp/ext_app_scoped_attr_test.jsp</display-uri>
+  </testsuite-config>
+
+  <testsuite-config>
+    <name>Context Init Parameter Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.ContextInitParameterTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+
+  <testsuite-config>
+    <name>Simple Preference Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.SimplePreferenceTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+
+  <testsuite-config>
+    <name>Portlet Mode Test</name>
+    <display-uri>/jsp/portlet_mode_test.jsp</display-uri>
+  </testsuite-config>
+
+  <testsuite-config>
+    <name>Window State Test</name>
+    <display-uri>/jsp/window_state_test.jsp</display-uri>
+  </testsuite-config>
+
+  <testsuite-config>
+    <name>Misc Test</name>
+    <class>org.apache.pluto.portalImpl.portlet.test.MiscTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+
+
+</testportlet-config>
