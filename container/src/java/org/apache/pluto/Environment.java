@@ -41,6 +41,14 @@ public final class Environment {
         return PROPS.getString("pluto.container.version.minor");
     }
 
+    public static final int getMajorSpecificationVersion() {
+        return Integer.parseInt(PROPS.getString("javax.portlet.version.major"));
+    }
+
+    public static final int getMinorSpecificationVersion() {
+        return Integer.parseInt(PROPS.getString("javax.portlet.version.minor"));
+    }
+
     public static final String getServerInfo() {
         StringBuffer sb = new StringBuffer(getPortletContainerName())
             .append("/")
