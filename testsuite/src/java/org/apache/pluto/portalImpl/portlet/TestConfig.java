@@ -15,6 +15,9 @@
  */
 package org.apache.pluto.portalImpl.portlet;
 
+import java.util.Map;
+import java.util.Collections;
+
 /**
  * TestPortlet Configuration.
  *
@@ -27,6 +30,7 @@ public class TestConfig {
     private String testClassName;
     private String name;
     private String displayURI;
+    private Map params = new java.util.HashMap();
 
     public TestConfig() {
 
@@ -55,6 +59,15 @@ public class TestConfig {
     public void setDisplayURI(String displayURI) {
         this.displayURI = displayURI;
     }
+
+    public void addInitParameter(String parameter, String value) {
+        this.params.put(parameter, value);
+    }
+
+    public Map getInitParameters() {
+        return Collections.unmodifiableMap(params);
+    }
+
 
 
 }

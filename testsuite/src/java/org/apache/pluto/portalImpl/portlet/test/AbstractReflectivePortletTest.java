@@ -23,13 +23,17 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
+import javax.portlet.PortletConfig;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public abstract class AbstractReflectivePortletTest implements PortletTest {
 
-    public TestResults doTest(PortletContext context,
+    private Map initParameters;
+
+    public TestResults doTest(PortletConfig config,
+                              PortletContext context,
                               PortletRequest req,
                               PortletResponse res) {
         TestResults results = new TestResults(getTestSuiteName());
@@ -40,7 +44,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         for(int i = 0; i<methods.length;i++) {
             if(methods[i].getName().startsWith("check")) {
                 try {
-                    results.add(invoke(methods[i], context, req, res));
+                    results.add(invoke(methods[i], config, context, req, res));
                 }
                 catch(Exception e) {
                     e.printStackTrace();
@@ -55,8 +59,13 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         }
         return results;
     }
-    
-    public TestResult invoke(Method method, PortletContext context,
+
+    public void init(Map initParameters) {
+        this.initParameters = initParameters;
+    }
+
+    private TestResult invoke(Method method, PortletConfig config,
+                             PortletContext context,
                              PortletRequest req, PortletResponse res)
     throws IllegalAccessException, InvocationTargetException {
 
@@ -77,13 +86,20 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
             if(paramTypes[i].equals(PortletSession.class)) {
                 paramValues[i] = req.getPortletSession();
             }
-            result = (TestResult)method.invoke(this, paramValues);
+            if(paramTypes[i].equals(PortletConfig.class)) {
+                paramValues[i] = config;
+            }
         }
+        result = (TestResult)method.invoke(this, paramValues);
         return result;
     }
 
     public Map getRenderParameters(PortletRequest req) {
         Map map = new java.util.HashMap();
         return map;
+    }
+
+    public Map getInitParameters() {
+        return initParameters;
     }
 }

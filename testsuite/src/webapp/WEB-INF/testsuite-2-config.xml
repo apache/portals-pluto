@@ -79,20 +79,45 @@
     <display-uri>/jsp/test_results.jsp</display-uri>
     <init-param>
         <name>resource-bundle</name>
-        <value>false</value>
+        <value>true</value>
     </init-param>
     <init-param>
-      <name>title</name>
-      <value>Test Portlet #1</value>
+      <name>title_en</name>
+      <value>Test Portlet 2 (en)</value>
     </init-param>
     <init-param>
-      <name>shorttitle</name>
-      <value>Test #1</value>
+      <name>shorttitle_en</name>
+      <value>Test 2 (en)</value>
     </init-param>
     <init-param>
-      <name>keywords</name>
+      <name>keywords_en</name>
+      <value>Test,Testing</value>
+    </init-param>
+
+    <init-param>
+      <name>title_de</name>
+      <value>Test Portlet 2 (de)</value>
+    </init-param>
+    <init-param>
+      <name>shorttitle_de</name>
+      <value>Test 2 (de)</value>
+    </init-param>
+    <init-param>
+        <name>keywords_de</name>
+        <value>Test,Testen</value>
+    </init-param>
+
+    <init-param>
+      <name>title_dflt</name>
+      <value>Test Portlet 2 (dflt)</value>
+    </init-param>
+    <init-param>
+      <name>shorttitle_dflt</name>
+      <value>Test 2 (dflt)</value>
+    </init-param>
+    <init-param>
+      <name>keywords_dflt</name>
       <value>Test,Testing</value>
     </init-param>
   </testsuite-config>
-
 </testportlet-config>

@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletConfig;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -31,8 +32,10 @@ public interface PortletTest {
     
     Map getRenderParameters(PortletRequest req);
 
-    TestResults doTest(PortletContext context,
+    TestResults doTest(PortletConfig config,
+                       PortletContext context,
                        PortletRequest req,
                        PortletResponse res);
 
+    void init(Map initParameters);
 }

@@ -29,6 +29,11 @@ limitations under the License.
         <portlet-class>org.apache.pluto.portalImpl.portlet.TestPortlet</portlet-class>
 
         <init-param>
+            <name>config</name>
+            <value>/WEB-INF/testsuite-config.xml</value>
+        </init-param>
+
+        <init-param>
             <name>display-name</name>
             <value>Test Portlet #1</value>
         </init-param>
@@ -52,8 +57,8 @@ limitations under the License.
 
 		<portlet-info>
 			<title>Test Portlet #1</title>
-			<short-title>Test1</short-title>
-			<keywords>Test, Testen</keywords>
+			<short-title>Test #1</short-title>
+			<keywords>Test,Testing</keywords>
         </portlet-info>
 	    <portlet-preferences>            
             <preference>
@@ -80,18 +85,18 @@ limitations under the License.
 
 	<portlet>
         <description>TestSuiteDescription</description>
-		
         <portlet-name>TestPortlet2</portlet-name>
-		
         <display-name>Test Portlet #2</display-name>
-		
         <portlet-class>org.apache.pluto.portalImpl.portlet.TestPortlet</portlet-class>
 
+        <init-param>
+            <name>config</name>
+            <value>/WEB-INF/testsuite-2-config.xml</value>
+        </init-param>
         <init-param>
             <name>display-name</name>
             <value>Test Portlet #2</value>
         </init-param>
-
         <init-param>
 			<name>dummyName</name>
 			<value>dummyValue</value>
@@ -106,14 +111,10 @@ limitations under the License.
             <portlet-mode>HELP</portlet-mode>
 		</supports>
 
-        <supported-locale>en</supported-locale>        
+        <supported-locale>en</supported-locale>
         <supported-locale>de</supported-locale>
-        <!--resource-bundle>TestPortlet</resource-bundle-->
-        <portlet-info>            
-            <title>Test Portlet #2</title>
-            <short-title>Test2</short-title>
-            <keywords>Test, Testing</keywords>
-        </portlet-info>
+        <resource-bundle>TestPortlet</resource-bundle>
+
 	    <portlet-preferences >            
             <preference>
 				<name>dummyName</name>

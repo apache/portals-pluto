@@ -35,6 +35,7 @@ public class TestConfigFactory {
         digester.addObjectCreate("testportlet-config",
                                  java.util.ArrayList.class);
 
+
         digester.addObjectCreate("testportlet-config/testsuite-config",
                                  TestConfig.class);
 
@@ -46,6 +47,11 @@ public class TestConfigFactory {
 
         digester.addBeanPropertySetter("testportlet-config/testsuite-config/display-uri",
                                        "displayURI");
+
+        digester.addCallMethod("testportlet-config/testsuite-config/init-param", "addInitParameter", 2);
+        digester.addCallParam("testportlet-config/testsuite-config/init-param/name", 0);
+        digester.addCallParam("testportlet-config/testsuite-config/init-param/value", 1);
+
 
         digester.addSetRoot("testportlet-config/testsuite-config",
                             "add");

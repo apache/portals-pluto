@@ -73,6 +73,7 @@ public class TestPortlet extends GenericPortlet {
                     if(name != null) {
                         Class cl = Class.forName(config.getTestClassName());
                         PortletTest test = (PortletTest)cl.newInstance();
+                        test.init(config.getInitParameters());
                         tests.put(String.valueOf(i++), test);
                     }
                     else {
@@ -99,7 +100,9 @@ public class TestPortlet extends GenericPortlet {
         PortletTest test = (PortletTest)tests.get(testId);
 
         if(test!=null && test instanceof ActionTest) {
-            TestResults results = test.doTest(getPortletContext(), request, response);
+            TestResults results = test.doTest(getPortletConfig(),
+                                              getPortletContext(),
+                                              request, response);
             request.getPortletSession().setAttribute(test.getClass().getName(), results);
         }
         Map renderParameters = null;
@@ -136,7 +139,9 @@ public class TestPortlet extends GenericPortlet {
         	response.setContentType("text/html");
 
             if(test != null && !(test instanceof ActionTest) ) {
-                TestResults results = test.doTest(getPortletContext(), request, response);
+                TestResults results = test.doTest(getPortletConfig(),
+                                                  getPortletContext(),
+                                                  request, response);
                 request.setAttribute("results", results);
             }
             else if(test != null) {
