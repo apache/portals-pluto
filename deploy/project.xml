@@ -43,7 +43,7 @@ limitations under the License.
 
     <dependency>
       <id>commons-logging</id>
-      <version>1.0.2</version>
+      <version>1.0.4</version>
     </dependency>
 
     <dependency>
@@ -51,11 +51,6 @@ limitations under the License.
       <version>1.0</version>
     </dependency>
 	
-    <dependency>
-      <id>regexp</id>
-      <version>1.3-dev</version>
-    </dependency>
-
     <dependency>
       <id>pluto</id>
       <version>1.0.1</version>

@@ -45,7 +45,7 @@ limitations under the License.
     </dependency>
     <dependency>
       <id>commons-logging</id>
-      <version>1.0.2</version>
+      <version>1.0.4</version>
       <properties>
         <war.bundle>false</war.bundle>
       </properties>
@@ -68,14 +68,6 @@ limitations under the License.
       <properties>
         <war.bundle>false</war.bundle>
 		<tomcat.shared>true</tomcat.shared>
-      </properties>
-    </dependency>
-
-     <dependency>
-      <id>regexp</id>
-      <version>1.3-dev</version>
-       <properties>
-        <war.bundle>true</war.bundle>
       </properties>
     </dependency>
 

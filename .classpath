@@ -8,7 +8,7 @@
 	<classpathentry kind="var" path="MAVEN_REPO/xerces/jars/xerces-2.3.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/xml-apis/jars/xml-apis-2.0.2.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.2.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-logging/jars/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/castor/jars/castor-0.9.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
