@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2004 The Apache Software Foundation.
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project>
+    <extend>${basedir}/../project.xml</extend>
+    <name>Pluto Portlet Test Suite</name>
+    <id>testsuite</id>
+    <groupId>pluto</groupId>
+
+    <organization>
+        <logo>/../../images/apache-portals.gif</logo>
+    </organization>
+    <logo>/../../images/pluto.png</logo>
+
+    <shortDescription>Assorted portlets for testing</shortDescription>
+
+    <description>
+    Assorted portlets for testing
+    </description>
+
+    <dependencies>
+        <dependency>
+            <id>castor</id>
+            <version>0.9.5</version>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>pluto</id>
+            <version>1.0.1</version>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>pluto-portal</id>
+            <groupId>pluto</groupId>
+            <version>1.0.1</version>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>portlet-api</id>
+            <groupId>portlet-api</groupId>
+            <version>1.0</version>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+        <dependency>
+            <id>servletapi</id>
+            <version>2.3</version>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>xerces</id>
+            <version>2.3.0</version>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>xml-apis</id>
+            <version>2.0.2</version>
+            <properties>
+                <war.bundle>false</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>jstl</id>
+            <version>1.0.2</version>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>commons-digester</id>
+            <version>1.5</version>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <id>commons-beanutils</id>
+            <version>1.6.1</version>
+            <url>http://jakarta.apache.org/commons/beanutils</url>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.0.4</version>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
+
+        <sourceDirectory>${pluto.testsuite.dir}/src/java</sourceDirectory>
+        <aspectSourceDirectory/>
+
+        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+
+        <unitTest>
+            <includes>
+                <include>**/*Test.java</include>
+            </includes>
+        </unitTest>
+
+        <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
+
+        <integrationUnitTest>
+            <includes>
+                <include>**/*Test.java</include>
+            </includes>
+        </integrationUnitTest>
+
+        <resources>
+            <includes>
+                <include>conf/**/*pipeline.xml</include>
+                <include>conf/**/*valve.xml</include>
+            </includes>
+        </resources>
+
+        <jars/>
+
+    </build>
+
+    <reports>
+        <!--
+        <report>maven-jdepend-plugin</report>
+        -->
+        <report>maven-checkstyle-plugin</report>
+        <report>maven-changelog-plugin</report>
+        <report>maven-developer-activity-plugin</report>
+        <report>maven-file-activity-plugin</report>
+        <report>maven-javadoc-plugin</report>
+        <report>maven-jxr-plugin</report>
+        <!--
+        <report>maven-junit-report-plugin</report>
+        -->
+        <report>maven-tasklist-plugin</report>
+
+    </reports>
+
+</project>
