@@ -27,6 +27,12 @@ import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.portlet.PortletRequestWrapper;
 import org.apache.pluto.portlet.PortletResponseWrapper;
 
+/**
+ * Utility used to convert a generic PortletRequest or
+ * PortletResponse object into an Internal respresentation
+ * of the same object.
+ *
+ */
 class InternalImplConverter {
 
 
@@ -35,8 +41,8 @@ class InternalImplConverter {
      * PortletRequestWrapper defined by the spec.  Because of this, there's a
      * chance someone might implement their own wrapper and we won't be able to
      * get the real internal one!
-     * @param request
-     * @return
+     * @param request the request to be converted.
+     * @return the internal request.
      */
     public static InternalPortletRequest getInternalRequest(
         PortletRequest request) {
@@ -55,8 +61,8 @@ class InternalImplConverter {
      * PortletRequestWrapper defined by the spec.  Because of this, there's a
      * chance someone might implement their own wrapper and we won't be able to
      * get the real internal one!
-     * @param response
-     * @return
+     * @param response the response being converted
+     * @return the internal response.
      */
     public static InternalPortletResponse getInternalResponse(
         PortletResponse response) {

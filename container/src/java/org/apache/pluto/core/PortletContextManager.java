@@ -28,16 +28,25 @@ import org.apache.pluto.binding.XMLBindingFactory;
 import org.apache.pluto.core.impl.PortletContextImpl;
 
 /**
+ * Manager used to cache the portlet configurations which have
+ * been previously parsed.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 20, 2004
  */
 public class PortletContextManager {
 
+    /** Portlet deployment descriptor location. */
     private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 
+    /** Singleton instance. */
     private static PortletContextManager manager;
 
+    /**
+     * Singleton accessor method.
+     * @return the PortletContextManager implementation.
+     */
     public static PortletContextManager getManager() {
         if (manager == null) {
             manager = new PortletContextManager();
@@ -45,17 +54,20 @@ public class PortletContextManager {
         return manager;
     }
 
+    /** The PortletContext cache. */
     private Map contexts;
 
+    /** Singleton Constructor. */
     private PortletContextManager() {
         contexts = new java.util.HashMap();
     }
 
     /**
-     * Retrieve the PortletContext associated with the given ServletContext.  If
-     * one does not exist, it is created.
-     * @param context
-     * @return
+     * Retrieve the PortletContext associated with the given ServletContext.
+     * If one does not exist, it is created.
+     *
+     * @param context the servlet context
+     * @return the portlet context existing within the ServletContext.
      * @throws PortletContainerException
      */
     public InternalPortletContext getContext(ServletContext context)
@@ -68,6 +80,13 @@ public class PortletContextManager {
         return (InternalPortletContext) contexts.get(context);
     }
 
+    /**
+     * Create the portlet.xml deployment descriptor representation.
+     *
+     * @param ctx
+     * @return
+     * @throws PortletContainerException
+     */
     private PortletAppDD createDefinition(ServletContext ctx)
         throws PortletContainerException {
         PortletAppDD app = null;
@@ -80,7 +99,5 @@ public class PortletContextManager {
         }
         return app;
     }
-
-
 }
 

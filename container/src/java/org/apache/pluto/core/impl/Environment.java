@@ -34,14 +34,26 @@ final class Environment {
     }
 
 
+    /**
+     * Retrieve the name of the container.
+     * @return the container name.
+     */
     public static final String getPortletContainerName() {
         return PROPS.getString("pluto.container.name");
     }
 
+    /**
+     * Retrieve the major version number.
+     * @return the major version number.
+     */
     public static final String getPortletContainerMajorVersion() {
         return PROPS.getString("pluto.container.version.major");
     }
 
+    /**
+     * Retrieve the minor version number.
+     * @return the minor version number.
+     */
     public static final String getPortletContainerMinorVersion() {
         return PROPS.getString("pluto.container.version.minor");
     }
@@ -49,7 +61,7 @@ final class Environment {
     /**
      * Retrieve the major version number of the specification which this version
      * of pluto supports.
-     * @return
+     * @return te major specification version.
      */
     public static final int getMajorSpecificationVersion() {
         return Integer.parseInt(PROPS.getString("javax.portlet.version.major"));
@@ -58,7 +70,7 @@ final class Environment {
     /**
      * Retrieve the minor version number of the specification which this version
      * of pluto supports.
-     * @return
+     * @return the minor specification version.
      */
     public static final int getMinorSpecificationVersion() {
         return Integer.parseInt(PROPS.getString("javax.portlet.version.minor"));
@@ -67,7 +79,7 @@ final class Environment {
     /**
      * Retrieve the formatted server info String required to be returned by the
      * PortletContext.
-     * @return
+     * @return the server info.
      */
     public static final String getServerInfo() {
         StringBuffer sb = new StringBuffer(getPortletContainerName())

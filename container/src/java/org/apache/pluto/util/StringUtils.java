@@ -24,10 +24,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * * <CODE>StringUtils</CODE> hosts a couple of utility methods around *
+ * <CODE>StringUtils</CODE> hosts a couple of utility methods around
  * strings.
  */
-
 public class StringUtils {
 
     static java.util.BitSet dontNeedEncoding;
@@ -55,7 +54,7 @@ public class StringUtils {
     }
 
     /**
-     * * The operating system's line separator ('\n' on UNIX, '\r\n' on
+     * The operating system's line separator ('\n' on UNIX, '\r\n' on
      * Windows)
      */
 
@@ -63,12 +62,12 @@ public class StringUtils {
         "line.separator");
 
     /**
-     * * Returns the name of the package of the specified class. * The package
-     * will not include the common (short) name of the * class or the file
-     * extension. * * @param   aClass *          a class object * * @return
-     * its package
+     * Returns the name of the package of the specified class. The package
+     * will not include the common (short) name of the class or the file
+     * extension.
+     * @param  aClass a class object
+     * @return its package
      */
-
     public static String packageOf(Class aClass) {
         if (aClass == null) {
             throw (new IllegalArgumentException(

@@ -36,24 +36,37 @@ import org.apache.pluto.services.PortletContainerServices;
 import org.apache.pluto.services.PortletURLProvider;
 
 /**
- * Container implementation.
+ * Default Pluto Container implementation.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
 public class PortletContainerImpl implements PortletContainer {
 
+    /** Internal logger. */
     private static final Log LOG =
         LogFactory.getLog(PortletContainerImpl.class);
 
 
+    /** The portlet container name. */
     private String name;
+
+    /** The PortletContainerServices associated with this container. */
     private PortletContainerServices containerServices;
+
+    /** The ServletContext associated with this container. */
     private ServletContext context;
 
-
+    /** Flag indicating whether or not we've been initialized. */
     private boolean initialized;
 
+    /** Default Constructor.  Create a container implementation
+     *  whith the given name and given services.
+     *
+     * @param name the name of the container.
+     * @param services the container services implementation.
+     */
     public PortletContainerImpl(String name,
                                 PortletContainerServices services) {
         this.name = name;
@@ -75,7 +88,7 @@ public class PortletContainerImpl implements PortletContainer {
 
     /**
      * Determine whether this container has been initialized or not.
-     * @return
+     * @return true if the container has been initialized.
      */
     public boolean isInitialized() {
         return initialized;

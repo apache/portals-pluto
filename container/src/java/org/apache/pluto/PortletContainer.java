@@ -122,13 +122,13 @@ public interface PortletContainer {
 
     /**
      * Retrieve the unique container name
-     * @return
+     * @return the container name.
      */
     public String getName();
 
     /**
      * Retreive the container services associated with this container.
-     * @return
+     * @return the container services associated with this container.
      */
     public PortletContainerServices getContainerServices();
 }

@@ -27,18 +27,15 @@ package org.apache.pluto;
  * @version 1.0
  */
 public class PortletContainerException extends Exception {
-
     private Throwable cause;
 
-
     /**
-     * Constructs a new PortletContainerException. This exception will have no
-     * message and no root cause.
+     * Constructs a new PortletContainerException.
+     * This exception will have no message and no root cause.
      */
     public PortletContainerException() {
 
     }
-
 
     /**
      * Constructs a new PortletContainerException with the given message.
@@ -60,23 +57,20 @@ public class PortletContainerException extends Exception {
     }
 
     /**
-     * * Constructs a new portlet invoker exception when the portlet needs to
-     * throw an * exception. The exception's message is based on the localized
-     * message * of the underlying exception. * * @param   cause *          the
-     * root cause
+     * Constructs a new portlet invoker exception when the portlet needs to
+     * throw an exception. The exception's message is based on the localized
+     * message of the underlying exception.
+     * @param cause the root cause
      */
-
     public PortletContainerException(Throwable cause) {
         super(cause.getLocalizedMessage());
-
         this.cause = cause;
     }
 
     /**
-     * * Returns the exception that cause this portlet exception. * * @return
-     * the <CODE>Throwable</CODE> that caused this portlet exception.
+     * Returns the exception that cause this portlet exception.
+     * @return the <CODE>Throwable</CODE> that caused this portlet exception.
      */
-
     public Throwable getRootCause() {
         return (cause);
     }

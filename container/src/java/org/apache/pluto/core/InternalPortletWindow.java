@@ -54,18 +54,34 @@ public class InternalPortletWindow implements PortletWindow {
         this.window = window;
     }
 
+    /**
+     * Standard Getter.
+     * @return the context path.
+     */
     public String getContextPath() {
         return window.getContextPath();
     }
 
+    /**
+     * Standard getter.
+     * @return the portlet name as defined in the deployment descriptor.
+     */
     public String getPortletName() {
         return window.getPortletName();
     }
 
+    /**
+     * Standard getter.
+     * @return the window state.
+     */
     public WindowState getWindowState() {
         return window.getWindowState();
     }
 
+    /**
+     * Standard getter.
+     * @return the portlet mode the portlet mode
+     */
     public PortletMode getPortletMode() {
         return window.getPortletMode();
     }
@@ -82,7 +98,7 @@ public class InternalPortletWindow implements PortletWindow {
 
     /**
      * The Context from which this window can be serviced.
-     * @return
+     * @return the associated servlet context.
      */
     public ServletContext getServletContext() {
         return context;

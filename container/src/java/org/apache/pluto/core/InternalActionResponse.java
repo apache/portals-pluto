@@ -40,20 +40,20 @@ public interface InternalActionResponse extends InternalPortletResponse {
 
     /**
      * Retrieve the portlet mode.
-     * @return
+     * @return the changed portlet mode.
      */
     public PortletMode getChangedPortletMode();
 
     /**
      * Retrieve the window state.
-     * @return
+     * @return the changed window state.
      */
     public WindowState getChangedWindowState();
 
     /**
      * Retreive the location for which the action should
      * be redirected.
-     * @return
+     * @return the redirect location.
      */
     public String getRedirectLocation();
 }

@@ -57,13 +57,13 @@ public interface PortletWindow {
 
     /**
      * Retrieve the current window state for this window.
-     * @return
+     * @return the current window state.
      */
     WindowState getWindowState();
 
     /**
      * Retrieve the current portlet mode for this window.
-     * @return
+     * @return the current portlet mode.
      */
     PortletMode getPortletMode();
 }

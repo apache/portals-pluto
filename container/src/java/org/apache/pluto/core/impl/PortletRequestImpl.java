@@ -49,6 +49,7 @@ import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 /**
  * <code>PortletRequest</code> Implementation.
+ *
  */
 public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     implements PortletRequest, InternalPortletRequest {
@@ -110,8 +111,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     /**
      * Determine whether or not the specified WindowState is allowed for this
      * portlet.
-     * @param state
-     * @return
+     * @param state the state in question
+     * @return true if the state is allowed.
      */
     public boolean isWindowStateAllowed(WindowState state) {
         Enumeration supportedStates = portalContext.getSupportedWindowStates();

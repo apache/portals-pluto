@@ -35,7 +35,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * * Supporting class for the <CODE>renderURL</CODE> tag. * Creates a url that
+ * Supporting class for the <CODE>renderURL</CODE> tag. Creates a url that
  * points to the current Portlet and triggers an render request * with the
  * supplied parameters. *
  */

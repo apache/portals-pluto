@@ -25,10 +25,11 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 
 /**
- * * Supporting class for the <CODE>param</CODE> tag. * defines a parameter that
- * can be added to a <CODE>actionURL</CODE> or * a <CODE>renderURL</CODE> *
- * <BR>The following attributes are mandatory * <UL> * <LI><CODE>name</CODE> *
- * <LI><CODE>value</CODE> * </UL>
+ * Supporting class for the <CODE>param</CODE> tag. Defines a parameter that
+ * can be added to a <CODE>actionURL</CODE> or a <CODE>renderURL</CODE>
+ * <BR>The following attributes are mandatory:
+ *   <UL><LI><CODE>name</CODE>
+ *       <LI><CODE>value</CODE></UL>
  */
 public class ParamTag extends TagSupport {
 
