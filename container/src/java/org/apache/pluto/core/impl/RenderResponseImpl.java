@@ -34,8 +34,7 @@ import org.apache.pluto.util.NamespaceMapperAccess;
 public class RenderResponseImpl extends PortletResponseImpl implements RenderResponse {
     private static final String illegalStateExceptionText = "No content type set.";
 
-    private boolean isContentTypeSet;
-    private String currentContentType;   // needed as servlet 2.3 does not have a response.getContentType
+    private String currentContentType = null;   // needed as servlet 2.3 does not have a response.getContentType
     
     public RenderResponseImpl(PortletWindow portletWindow,
                               javax.servlet.http.HttpServletRequest servletRequest,
@@ -47,9 +46,6 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     // javax.portlet.RenderResponse ---------------------------------------------------------------
     public String getContentType()
     {
-        if (!isContentTypeSet) {
-            return null;
-        }
         // in servlet 2.4 we could simply use this:
         // return this._getHttpServletResponse().getContentType();
         return currentContentType;
@@ -86,7 +82,6 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
             throw new IllegalArgumentException(mimeType);
         }
         this._getHttpServletResponse().setContentType(mimeType);
-        isContentTypeSet = true;
         currentContentType = mimeType;
     }
 
@@ -96,7 +91,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     }
     
     public PrintWriter getWriter() throws IOException, IllegalStateException {
-        if (!isContentTypeSet) {
+        if (currentContentType == null) {
             throw new java.lang.IllegalStateException(illegalStateExceptionText);
         }
 
@@ -141,7 +136,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     
     public OutputStream getPortletOutputStream() throws java.io.IOException,java.lang.IllegalStateException
     {
-        if (!isContentTypeSet) {
+        if (currentContentType == null) {
             throw new java.lang.IllegalStateException(illegalStateExceptionText);
         }
         return getOutputStream(); 
