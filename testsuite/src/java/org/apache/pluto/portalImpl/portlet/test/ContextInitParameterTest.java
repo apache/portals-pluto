@@ -18,6 +18,7 @@ package org.apache.pluto.portalImpl.portlet.test;
 import java.util.Enumeration;
 
 import javax.portlet.PortletContext;
+import javax.portlet.PortletSession;
 
 /**
  * <B>TODO</B>: Document
@@ -90,6 +91,22 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
         else {
             res.setReturnCode(TestResult.FAILED);
             res.setResults("Expected value not found for key '"+TEST_PARAM_NAME+"'.  Found '"+TEST_PARAM_VAL+"'");
+        }
+        return res;
+    }
+
+    protected TestResult checkGetContextFromSession(PortletSession session) {
+        TestResult res = new TestResult();
+        res.setName("PortletContext Retrieved From Session Test");
+        res.setDesc("Test ensures that the PortletContext can be retrieved from the session.");
+
+        PortletContext ctx = session.getPortletContext();
+        if(ctx != null) {
+            res.setReturnCode(TestResult.PASSED);
+        }
+        else {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Portlet Context is Null");
         }
         return res;
     }
