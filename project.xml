@@ -17,7 +17,7 @@ limitations under the License.
 -->
 <project>
   <pomVersion>3</pomVersion>
-  <name>jakarta-pluto</name>
+  <name>portals-pluto</name>
   <id>pluto-project</id>
   <groupId>pluto</groupId>
   <currentVersion>1.0.1</currentVersion>
@@ -29,7 +29,7 @@ limitations under the License.
   <logo>/images/pluto.png</logo>
   <inceptionYear>2003</inceptionYear>
   <package>org.apache.pluto</package>
-  <gumpRepositoryId>jakarta</gumpRepositoryId>
+  <gumpRepositoryId>portals</gumpRepositoryId>
   <shortDescription>A JSR-168 Compliant Portlet Engine.</shortDescription>
 
   <description>
@@ -48,7 +48,7 @@ limitations under the License.
   </description>
 
   <url>http://portals.apache.org/pluto/</url>
-  <issueTrackingUrl>http://issues.apache.org/bugzilla</issueTrackingUrl>
+  <issueTrackingUrl>http://nagoya.apache.org/jira/secure/BrowseProject.jspa?id=10560</issueTrackingUrl>
   <siteAddress>portals.apache.org</siteAddress>
   <siteDirectory>/www/portals.apache.org/pluto/</siteDirectory>
 
