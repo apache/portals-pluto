@@ -57,6 +57,8 @@
 
 package org.apache.pluto.om.entity;
 
+import org.apache.pluto.om.portlet.PortletDefinition;
+
 /**
  * <P>
  * The <CODE>PortletEntityCtrl</CODE> interface represents a single portlet occurance,
@@ -79,6 +81,14 @@ public interface PortletEntityCtrl extends org.apache.pluto.om.Controller
      * @param id the new identifier
      */
     public void setId(String id);
+
+    /**
+     * Sets the portlet definition for this entity.
+     * This value should not be null
+     * 
+     * @param portletDefinition the portlet description
+     */
+    public void setPortletDefinition(PortletDefinition portletDefinition);
 
     /**
      * Stores the object persistently

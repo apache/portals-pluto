@@ -120,6 +120,11 @@ org.apache.pluto.portalImpl.om.common.Support {
         return applicationEntity.getPortletApplicationDefinition().getPortletDefinitionList().get(org.apache.pluto.portalImpl.util.ObjectID.createFromString(definitionId));
     }
 
+    public void setPortletDefinition(PortletDefinition portletDefinition)
+    {
+        this.definitionId = portletDefinition.getId().toString();
+    }
+
     public PortletApplicationEntity getPortletApplicationEntity()
     {
         return applicationEntity;
