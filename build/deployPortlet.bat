@@ -1,0 +1,1 @@
+@ant\bin\ant.bat -Dbuild.compiler.emacs=true -emacs DeployPortlet -DfullPathPortletToDeploy=%1

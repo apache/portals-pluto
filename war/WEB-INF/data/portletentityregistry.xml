@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-entity-registry>
+    <application id="3">
+        <definition-id>testsuite</definition-id>
+        <portlet id="1">
+            <definition-id>testsuite.TestPortlet1</definition-id>
+            <preferences>
+                <pref-name>TestName4</pref-name>
+                <pref-value>TestValue4</pref-value>
+                <read-only>true</read-only>
+            </preferences>
+        </portlet>
+    </application>
+    <application id="4">
+        <definition-id>testsuite</definition-id>
+        <portlet id="1">
+            <definition-id>testsuite.TestPortlet2</definition-id>
+            <preferences>
+                <pref-name>TestName4</pref-name>
+                <pref-value>TestValue4</pref-value>
+                <read-only>true</read-only>
+            </preferences>
+        </portlet>
+    </application>
+</portlet-entity-registry>

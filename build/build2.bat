@@ -1,0 +1,1 @@
+@ant\bin\ant.bat -Dbuild.compiler=jikes -Dbuild.compiler.emacs=true -emacs %1

@@ -1,0 +1,683 @@
+<?xml version="1.0"?>
+
+<!-- Build file for Pluto -->
+
+<project name="Pluto" default="driver" basedir=".">
+
+    <taskdef name="foreach" classname="org.apache.tools.ant.taskdefs.optional.ForeachTask"/>
+
+    <!-- Give user a chance to override without editing this file
+         (and without typing -D each time they invoke a target) -->
+    <property file="${user.home}/ant.properties" />
+    <property file="ant.properties" />
+
+    <property file="build.properties"/>
+
+    <property name="Name" value="Pluto"/>
+    <property name="version" value="0.1-dev-unreleased"/>
+    <property name="project" value="pluto"/>
+    <property name="src.java.dir" value="../src"/>
+    <property name="build.dir" value="../temp"/>
+    <property name="build.jar" value="${build.dir}/jar"/>
+    
+    <property name="build.api.dir" value="${build.dir}/api"/>
+    <property name="build.api.src" value="${src.java.dir}/api"/>
+    <property name="build.api.dest" value="${build.api.dir}/classes"/>
+    <property name="build.api.lib" value="../lib/api"/>
+
+    <property name="build.container.dir" value="${build.dir}/container"/>
+    <property name="build.container.src" value="${src.java.dir}/container"/>
+    <property name="build.container.dest" value="${build.container.dir}/classes"/>
+    <property name="build.container.lib" value="../lib/container"/>
+
+    <property name="build.portal.dir" value="${build.dir}/portal"/>
+    <property name="build.portal.war" value="../war"/>
+    <property name="build.portal.src" value="${src.java.dir}/portal"/>
+    <property name="build.portal.dest" value="${build.portal.dir}/classes"/>
+    <property name="build.portal.lib" value="../lib/portal"/>
+
+    <property name="build.portlets.dir" value="../portlets"/>
+
+    <property name="final.portal.name" value="pluto-portal-impl"/>
+    <property name="final.container.name" value="${project}-${version}"/>
+    <property name="final.api.name" value="portlet-api"/>
+    <property name="final.driver.dir" value="../driver"/>
+    <property name="final.driver.shared.dir" value="${final.driver.dir}/shared"/>
+    <property name="final.driver.endorsed.dir" value="${final.driver.dir}/endorsed"/>
+    <property name="final.driver.short_name" value="pluto"/>
+    <property name="final.driver.name" value="${final.driver.short_name}.war"/>
+    <property name="final.driver.reference" value="${final.driver.short_name}.xml"/>
+
+    <property name="javadoc.destdir" value="../docs/apidocs"/>
+
+    <property name="year" value="2002"/>
+    <property name="ant.home" value="."/>
+    <property name="debug" value="on"/>
+    <property name="optimize" value="off"/>
+    <property name="deprecation" value="off"/>
+
+    <property name="docs.dest" value="../docs"/>
+    <property name="docs.src" value="../xdocs"/>
+
+    <!-- Build classpath -->
+    <path id="classpath">
+        <fileset dir="../lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="compiler.classic" unless="eclipse.running">
+        <property name="build.compiler" value="classic"/>
+    </target>
+
+    <target name="compiler.eclipse" depends="compiler.classic" if="eclipse.running">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Prints useful build environment values                             -->
+    <!-- ================================================================== -->
+    <target name="env" depends="check_for_optional_packages, compiler.eclipse" unless="install">
+        <echo>
+build.compiler = ${build.compiler}
+java.home = ${java.home}
+        </echo>
+        <!--
+        <echo message="user.home = ${user.home}"/>
+        <echo message="java.class.path = ${java.class.path}"/>
+        -->
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Help on usage                                                      -->
+    <!-- ================================================================== -->
+    <target name="usage">
+        <echo message="use -projecthelp to see the available targets"/>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Check to see what optional dependencies are available              -->
+    <!-- ================================================================== -->
+    <target name="check_for_optional_packages">
+    <!--
+        <available property="jsdk2.2.present"
+                   classname="javax.servlet.jsp.PageContext">
+            <classpath refid="classpath"/>
+        </available>
+        <available property="log4java.present"
+           classname="org.apache.log4j.Category">
+            <classpath refid="classpath"/>
+        </available>
+    -->
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Prepares the build directory                                       -->
+    <!-- ================================================================== -->
+    <target name="prepare" depends="env">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.portal.dir}"/>
+        <mkdir dir="${build.container.dir}"/>
+        <mkdir dir="${build.api.dest}"/>
+        <mkdir dir="${build.container.dest}"/>
+        <mkdir dir="${build.portal.dest}"/>
+        <mkdir dir="${final.driver.dir}"/>
+        <mkdir dir="${final.driver.shared.dir}"/>
+        <mkdir dir="${final.driver.endorsed.dir}"/>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Rebuild the whole project                                          -->
+    <!-- ================================================================== -->
+    <target name="rebuild"
+            depends="clean,driver"
+            description="--> rebuilds the project (clean and driver)"/>
+
+    <!-- ================================================================== -->
+    <!-- Compiles the source directory                                      -->
+    <!-- ================================================================== -->
+    <target name="compile_api"
+            depends="prepare"
+            description="--> compiles the Portlet API source code">
+        <javac srcdir="${build.api.src}"
+            destdir="${build.api.dest}"
+            debug="${debug}"
+            deprecation="${deprecation}"
+            optimize="${optimize}">
+
+            <classpath>
+                <pathelement path="${classpath}/"/>
+                <fileset dir="${build.api.lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Creates the jar file                                               -->
+    <!-- ================================================================== -->
+    <target name="jar_api"
+            depends="compile_api" >
+        <jar jarfile="${build.api.dir}/${final.api.name}.jar" compress="true">
+            <fileset dir="${build.api.dest}">
+                <include name="**/**"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Compiles the source directory                                      -->
+    <!-- ================================================================== -->
+    <target name="compile_container"
+            depends="jar_api"
+            description="--> compiles the container source code">
+        <javac srcdir="${build.container.src}"
+            destdir="${build.container.dest}"
+            debug="${debug}"
+            deprecation="${deprecation}"
+            optimize="${optimize}">
+
+            <classpath>
+                <pathelement path="${classpath}/"/>
+                <fileset dir="${build.api.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${build.container.lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Creates the jar file                                               -->
+    <!-- ================================================================== -->
+    <target name="jar_container"
+            depends="compile_container" >
+        <jar jarfile="${build.container.dir}/${final.container.name}.jar" compress="true">
+			<metainf dir="${build.portal.war}/WEB-INF/tld">
+					<include name="**/portlet.tld"/>
+			</metainf>
+            <fileset dir="${build.container.dest}">
+                <include name="**/**"/>
+                <!--exclude name="org/apache/pluto/core/PortletServlet.*"/-->
+            </fileset>
+        </jar>
+        <!--jar jarfile="${build.container.dir}/container.jar" compress="true">
+            <fileset dir="${build.container.dest}">
+                <include name="org/apache/pluto/core/PortletServlet.*"/>
+            </fileset>
+        </jar-->
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Compiles the source directory                                      -->
+    <!-- ================================================================== -->
+    <target name="compile_portal"
+            depends="jar_container"
+            description="--> compiles the portal source code">
+        <javac srcdir="${build.portal.src}"
+            destdir="${build.portal.dest}"
+            debug="${debug}"
+            deprecation="${deprecation}"
+            optimize="${optimize}">
+
+            <classpath>
+                <pathelement path="${classpath}/"/>
+                <fileset dir="${build.api.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${build.container.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${build.portal.lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Creates the jar file                                               -->
+    <!-- ================================================================== -->
+    <target name="jar_portal"
+            depends="compile_portal" >
+        <jar jarfile="${build.portal.dir}/${final.portal.name}.jar" compress="true">
+            <fileset dir="${build.portal.dest}">
+                <include name="**/**"/>
+            </fileset>
+            <fileset dir="${build.portal.src}">
+                <include name="**/*.dtd"/>
+                <include name="**/*.xsd"/>
+                <include name="**/*.xml"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- builds the pluto.war                                               -->
+    <!-- ================================================================== -->
+    <target name="driver" 
+            depends="jar_portal"
+            description="--> build the final driver of the portal">
+        <mkdir dir="${final.driver.dir}"/>
+        <mkdir dir="${build.jar}/WEB-INF/lib/"/>
+
+        <copy todir="${build.jar}/WEB-INF/lib">
+            <fileset dir="${build.api.lib}">
+                <exclude name="exclude-*.jar"/>
+                <exclude name="shared-*.jar"/>
+                <exclude name="endorsed-*.jar"/>
+            </fileset>
+            <fileset dir="${build.container.lib}">
+                <exclude name="exclude-*.jar"/>
+                <exclude name="shared-*.jar"/>
+                <exclude name="endorsed-*.jar"/>
+            </fileset>
+            <fileset dir="${build.portal.lib}">
+                <exclude name="exclude-*.jar"/>
+                <exclude name="shared-*.jar"/>
+                <exclude name="endorsed-*.jar"/>
+            </fileset>
+            <fileset dir="${build.portal.dir}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${final.driver.shared.dir}">
+            <fileset dir="${build.api.dir}">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="${build.container.dir}">
+                <include name="*.jar"/>
+            </fileset>
+            <!--
+            <fileset dir="${build.portal.dir}">
+                <include name="*.jar"/>
+            </fileset>
+            -->
+            <fileset dir="${build.api.lib}">
+                <include name="shared-*.jar"/>
+            </fileset>
+            <fileset dir="${build.container.lib}">
+                <include name="shared-*.jar"/>
+            </fileset>
+            <fileset dir="${build.portal.lib}">
+                <include name="shared-*.jar"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${final.driver.endorsed.dir}">
+            <fileset dir="${build.api.lib}">
+                <include name="endorsed-*.jar"/>
+            </fileset>
+            <fileset dir="${build.container.lib}">
+                <include name="endorsed-*.jar"/>
+            </fileset>
+            <fileset dir="${build.portal.lib}">
+                <include name="endorsed-*.jar"/>
+            </fileset>
+        </copy>
+
+        <jar jarfile="${final.driver.dir}/${final.driver.name}">
+            <fileset dir="${build.jar}">
+                <exclude name="**/*.$$*"/>
+            </fileset>
+            <fileset dir="${build.portal.war}">
+                <exclude name="**/*.$$*"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Prepare Pluto to run in Tomcat                                     -->
+    <!-- ================================================================== -->
+    <target name="init.checkPrepareRun1">
+        <available file="prepareRun.properties" property="prepareRun.present"/>
+    </target>
+
+    <target name="init.checkPrepareRun2" unless="prepareRun.present">
+        <fail message="Could not find file: prepareRun.properties"/>
+    </target>
+    
+    <target name="init.prepareRun"
+            depends="init.checkPrepareRun1, init.checkPrepareRun2">
+        <property file="prepareRun.properties"/>
+    </target>
+
+    <target name="init.checkDriverDir1">
+        <available file="${final.driver.dir}" property="driverDir.present"/>
+    </target>
+
+    <target name="init.checkDriverDir2" unless="driverDir.present">
+        <fail message="Could not find driver directory!"/>
+    </target>
+    
+    <target name="prepareRun"
+            depends="init.prepareRun, init.checkDriverDir1, init.checkDriverDir2"
+            description="--> prepares tomcat to run with pluto">
+                
+        <copy todir="${TOMCAT_HOME}/shared/lib">
+            <fileset dir="${final.driver.shared.dir}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+        <mkdir dir="${TOMCAT_HOME}/webapps/${final.driver.short_name}"/>
+        <!--
+        <unzip src="${final.driver.dir}/${final.driver.name}" 
+               dest="${TOMCAT_HOME}/webapps/${final.driver.short_name}"/>
+        -->
+        <copy todir="${TOMCAT_HOME}/webapps/${final.driver.short_name}">
+            <fileset dir="${build.jar}">
+                <exclude name="**/*.$$*"/>
+            </fileset>
+            <fileset dir="${build.portal.war}">
+                <exclude name="**/*.$$*"/>
+                <!--exclude name="**/tld/portlet.tld"/-->
+            </fileset>
+        </copy>
+        <copy todir="${TOMCAT_HOME}/webapps">
+            <fileset dir=".">
+                <include name="${final.driver.reference}"/>
+            </fileset>
+        </copy>
+    
+    </target>
+
+    <target name="prepareRun.undo">
+                
+        <delete>
+            <fileset dir="${TOMCAT_HOME}/shared/lib">
+                <include name="*.jar"/>
+            </fileset>
+        </delete>
+
+        <delete dir="${TOMCAT_HOME}/webapps/${final.driver.short_name}"/>
+
+        <delete>
+            <fileset dir="${TOMCAT_HOME}/webapps">
+                <include name="${final.driver.reference}"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Creates the API documentation                                      -->
+    <!-- ================================================================== -->
+    <target name="javadocs"
+            description="--> generates the API documentation">
+        <mkdir dir="${javadoc.destdir}"/>
+        <javadoc packagenames="org.apache.pluto.*,javax.portlet.*"
+            sourcepath="${src.java.dir}/api; ${src.java.dir}/container; ${src.java.dir}/portal"
+            destdir="${javadoc.destdir}"
+            author="true"
+            private="true"
+            version="true"
+            use="true"
+            windowtitle="${Name} ${version} API"
+            doctitle="${Name} ${version} API"
+            bottom="--">
+           <classpath refid="classpath"/>
+       </javadoc>
+    </target>
+    <!-- Copyright &amp;copy; ${year} Stephan Hesmer and David S Faller. All Rights Reserved. -->
+
+    <!-- ================================================================== -->
+    <!-- Cleans up the build directory                                      -->
+    <!-- ================================================================== -->
+    <target name="clean" description="--> cleans up the build directory">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Build all portlets                                                 -->
+    <!-- ================================================================== -->
+
+    <target name="compile_portlets" description="--> compiles all portlets">
+
+        <foreach target="CompilePortlet">
+            <param name="basePortlet"  type="truncate">
+                <fileset dir=      "${build.portlets.dir}/build"
+                         includes= "*.include"/>
+            </param>
+        </foreach>
+
+    </target>
+
+    <target name="CompilePortlet">
+
+        <ant antfile="${build.portlets.dir}/build/build.xml"
+              target="build"
+                 dir="${build.portlets.dir}">
+             <property name="base.dir"     value="../"/>
+             <property name="portlet.dir"  value="${build.portlets.dir}/${basePortlet}"/>
+        </ant>
+
+    </target>
+
+    <target name="clean_portlets" description="--> cleans all portlet directories">
+
+        <foreach target="CleanPortlet">
+            <param name="basePortlet"  type="truncate">
+                <fileset dir=      "${build.portlets.dir}/build"
+                         includes= "*.include"/>
+            </param>
+        </foreach>
+
+    </target>
+
+    <target name="CleanPortlet">
+
+        <ant antfile="${build.portlets.dir}/build/build.xml"
+              target="clean"
+                 dir="${build.portlets.dir}">
+             <property name="base.dir"     value="../"/>
+             <property name="portlet.dir"  value="${build.portlets.dir}/${basePortlet}"/>
+        </ant>
+
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Deploy all portlets                                                -->
+    <!-- ================================================================== -->
+
+    <target name="DeployPortlet"
+            depends="init.prepareRun"
+            description="--> deploys a single portlet">
+
+        <property file="prepareRun.properties"/>
+
+        <antcall target="DeployPortlet.intern"/>
+
+    </target>
+
+    <target name="deploy_portlets" 
+            depends="init.prepareRun"
+            description="--> deploys all portlets">
+
+        <foreach target="DeployPortlet.foreach">
+            <param name="portletToDeploy"  type="truncate">
+                <fileset dir=      "${build.portlets.dir}/build"
+                         includes= "*.include"/>
+            </param>
+        </foreach>
+
+        <foreach target="DeployPortletWAR.foreach">
+            <param name="portletToDeploy" type="truncate">
+                <fileset dir="${build.portlets.dir}"
+                    includes="*.war"/>
+            </param>
+        </foreach>
+
+    </target>
+
+    <target name="DeployPortlet.foreach">
+
+        <antcall target="DeployPortlet.intern">
+            <param name="fullPathPortletToDeploy" value="${build.portlets.dir}/${portletToDeploy}/driver/${portletToDeploy}.war"/>
+        </antcall>
+
+    </target>
+
+    <target name="DeployPortletWAR.foreach">
+
+        <antcall target="DeployPortlet.intern">
+            <param name="fullPathPortletToDeploy" value="${build.portlets.dir}/${portletToDeploy}.war"/>
+        </antcall>
+
+    </target>
+
+    <target name="DeployPortlet.intern">
+
+        <java classname="org.apache.pluto.portalImpl.Deploy" fork="true">
+            
+            <arg value="${TOMCAT_HOME}/webapps"/>
+            <arg value="${final.driver.short_name}"/>
+            <arg value="${fullPathPortletToDeploy}"/>
+            <arg value="${build.container.dir}"/>
+
+            <classpath>
+                <pathelement path="${classpath}/"/>
+                <fileset dir="${build.api.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${build.container.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${build.portal.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${build.portal.lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </java>
+
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Undeploy all portlets                                              -->
+    <!-- ================================================================== -->
+
+    <target name="deploy_portlets.undo">
+
+        <foreach target="DeployPortlet.undo">
+            <param name="portletToDeploy"  type="truncate">
+                <fileset dir=      "${build.portlets.dir}/build"
+                         includes= "*.include"/>
+            </param>
+        </foreach>
+
+    </target>
+
+    <target name="DeployPortlet.undo">
+
+        <delete dir="${TOMCAT_HOME}/webapps/${portletToDeploy}"/>
+
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Prepare Pluto to run in Tomcat                                     -->
+    <!-- ================================================================== -->
+    <target name="setup.ask">
+        <input message="Please enter the directory of Tomcat (e.g. C:/Tomcat-4.1): "
+               addproperty="setup.tomcat.home"/>
+    </target>
+
+    <target name="setup.check1">
+        <available file="${setup.tomcat.home}" property="tomcatDir.present"/>
+    </target>
+
+    <target name="setup.check2" unless="tomcatDir.present">
+        <fail message="Could not locate tomcat at: ${setup.tomcat.home}"/>
+    </target>
+
+    <target name="setup"
+            depends="setup.ask, setup.check1, setup.check2"
+            description="--> setup pluto environment">
+
+        <copy file="prepareRun.properties.original"
+              tofile="prepareRun.properties"
+              overwrite="true"/>
+
+        <replace file="prepareRun.properties"
+                 token="@HOME@"
+                 value="${setup.tomcat.home}"/>
+
+    </target>
+
+    <!-- ================================================================== -->
+    <!-- Installs Pluto in Tomcat                                           -->
+    <!-- ================================================================== -->
+    <target name="install"
+            description="--> installs pluto in tomcat">
+        
+        <property name="install" value="true"/>
+
+        <antcall target="setup"/>
+
+        <antcall target="clean"/>
+        <antcall target="clean_portlets"/>
+
+        <echo/>
+        <echo message="Compiling Project..."/>
+        <antcall target="driver"/>
+
+        <echo/>
+        <echo message="Compiling Portlets..."/>
+        <antcall target="compile_portlets"/>
+        
+        <echo/>
+        <echo message="Installing Pluto..."/>
+        <antcall target="prepareRun"/>
+        
+        <echo/>
+        <echo message="Installing Portlets..."/>
+        <antcall target="deploy_portlets"/>
+
+        <property file="prepareRun.properties"/>
+
+        <echo>
+****************************************
+** Installation successfully finished **
+**
+** Important Notice **
+**
+** If you use an older version.of tomcat:
+** You need to copy the /driver/endorsed/*.jar files 
+** into the tomcat's /common/endorsed/ directory.
+** Rename them to overwrite the existing jar files.
+**
+****************************************
+        </echo>
+
+    </target>
+          
+    <!-- ================================================================== -->
+    <!-- Uninstalls Pluto in Tomcat                                           -->
+    <!-- ================================================================== -->
+    <target name="uninstall"
+            depends="init.prepareRun"
+            description="--> uninstalls pluto in tomcat">
+        
+        <property name="install" value="true"/>
+
+        <property file="prepareRun.properties"/>
+
+        <echo message="Uninstalling Pluto..."/>
+        <antcall target="prepareRun.undo"/>
+        
+        <echo/>
+        <echo message="Uninstalling Portlets..."/>
+        <antcall target="deploy_portlets.undo"/>
+
+        <echo>
+******************************************
+** Uninstallation successfully finished **
+******************************************
+        </echo>
+
+    </target>
+
+</project>

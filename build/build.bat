@@ -1,0 +1,1 @@
+@ant\bin\ant.bat -Dbuild.compiler.emacs=true -emacs %1 %2 %3 %4 %5

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+           "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+    <display-name>Pluto Reference Implementation</display-name>
+
+    <servlet>
+        <servlet-name>pluto</servlet-name>
+        <display-name>Pluto Driver</display-name>
+        <servlet-class>org.apache.pluto.portalImpl.Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TCKDriver</servlet-name>
+        <display-name>TCK Servlet</display-name>
+        <description>Test servlet for TCK Tests</description>
+        <servlet-class>org.apache.pluto.portalImpl.servlet.TCKdriver</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+       <servlet-name>pluto</servlet-name>
+       <url-pattern>/portal/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TCKDriver</servlet-name>
+        <url-pattern>/tck/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+
