@@ -1,8 +1,8 @@
-<!-- 
+<!--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
-You may obtain a copy of the License at 
+You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
@@ -21,7 +21,7 @@ limitations under the License.
 
   <preGoal name="xdoc:jelly-transform">
     <attainGoal name="faq"/>
-  </preGoal>   
+  </preGoal>
 
   <preGoal name="fullDeployment">
     <attainGoal name="multiproject:install"/>
@@ -41,7 +41,7 @@ limitations under the License.
             goals="deployTestsuite"
             banner="Deploying Test Suite to Pluto"
             postProcessing="false"
-            ignoreFailures="false"/>  	
+            ignoreFailures="false"/>
   </goal>
 
   <goal name="deploy">
@@ -59,7 +59,7 @@ limitations under the License.
                goals="deploy"
                banner="Deploy a portlet"
                postProcessing="false"
-               ignoreFailures="false"/>  	  	  
+               ignoreFailures="false"/>
   </goal>
 
   <goal name="website">
@@ -68,7 +68,7 @@ limitations under the License.
 
     <!-- deploy the website to our server -->
     <attainGoal name="site:sshdeploy"/>
-     
+
   </goal>
 
 <!-- ========================= -->
@@ -131,7 +131,7 @@ limitations under the License.
       </ant:patternset>
     </ant:tar>
 
-    <ant:gzip 
+    <ant:gzip
       zipfile="${maven.dist.dir}/${plutosrc.dist.name}.tar.gz"
       src="${maven.dist.dir}/${plutosrc.dist.name}.tar"
     />
@@ -139,8 +139,8 @@ limitations under the License.
 
   <goal name="distribute:binary" prereqs="distribute:init,multiproject:install,multiproject:site">
     <!-- Set Some Default Properties -->
-    <j:set var="dist.tomcat" 
-           value="http://www.apache.org/dist/jakarta/tomcat-5/v5.0.28/bin/jakarta-tomcat-5.0.28.tar.gz"/>
+    <j:set var="dist.tomcat"
+           value="http://www.apache.org/dist/jakarta/tomcat-5/v5.5.4/bin/jakarta-tomcat-5.5.4.tar.gz"/>
     <j:set var="plutobin.dist.name" value="pluto-${pom.currentVersion}"/>
 
     <j:set var="plutobin.tomcatgz" value="${maven.dist.dir}/plutobin-tomcat.tar.gz"/>
@@ -148,7 +148,7 @@ limitations under the License.
 
     <!-- Retrieve the Tomcat Release -->
     <j:if test="${context.getVariable('maven.proxy.host') != null}">
-        <setproxy proxyhost="${maven.proxy.host}" proxyport="${maven.proxy.port}"/>    
+        <setproxy proxyhost="${maven.proxy.host}" proxyport="${maven.proxy.port}"/>
     </j:if>
     <get src="${dist.tomcat}" dest="${plutobin.tomcatgz}"/>
     <gunzip src="${plutobin.tomcatgz}" dest="${plutobin.tomcattar}"/>
@@ -160,9 +160,9 @@ limitations under the License.
 
     <!-- Rename the Distribution -->
     <move todir="${maven.dist.dir}/${plutobin.dist.name}">
-      <fileset dir="${maven.dist.dir}/jakarta-tomcat-5.0.28"/>
+      <fileset dir="${maven.dist.dir}/jakarta-tomcat-5.5.4"/>
     </move>
- 
+
     <!-- Rename tomcat's license -->
     <move file="${maven.dist.dir}/${plutobin.dist.name}/LICENSE" tofile="LICENSE.tomcat"/>
 
@@ -184,7 +184,7 @@ limitations under the License.
     <copy todir="${maven.dist.dir}/${plutobin.dist.name}/webapps/ROOT">
       <fileset dir="${basedir}/target/docs" includes="**/*.*"/>
     </copy>
-    
+
     <j:invokeStatic className="java.lang.System" method="setProperty">
       <j:arg type="java.lang.String" value="maven.tomcat.home"/>
       <j:arg type="java.lang.String" value="${maven.dist.dir}/${plutobin.dist.name}"/>
@@ -211,11 +211,11 @@ limitations under the License.
             goals="deployTestsuite"
             banner="Deploying Test Suite to Binary Distribution"
             postProcessing="false"
-            ignoreFailures="false"/>  
+            ignoreFailures="false"/>
 
     <!-- Make the Archives -->
 	<ant:zip zipfile="${maven.dist.dir}/${plutobin.dist.name}.zip">
-	  <ant:zipfileset 
+	  <ant:zipfileset
 		dir="${maven.dist.dir}"
         includes="${plutobin.dist.name}/**/*"/>
 	</ant:zip>
@@ -225,7 +225,7 @@ limitations under the License.
 	      includes="${plutobin.dist.name}/**/*"/>
     </ant:tar>
 
-    <ant:gzip 
+    <ant:gzip
       zipfile="${maven.dist.dir}/${plutobin.dist.name}.tar.gz"
       src="${maven.dist.dir}/${plutobin.dist.name}.tar"
     />
@@ -245,10 +245,10 @@ limitations under the License.
             banner="Creating Pluto Container Distributions"
             postProcessing="false"
             ignoreFailures="false"/>
-	<ant:copy 
+	<ant:copy
       tofile="${maven.dist.dir}/pluto-lib-core-${pom.currentVersion}.zip"
 	  file="${basedir}/container/target/distributions/${pluto.dist.name}.zip"/>
-	<ant:copy 
+	<ant:copy
       tofile="${maven.dist.dir}/pluto-lib-core-${pom.currentVersion}.tar.gz"
 	  file="${basedir}/container/target/distributions/${pluto.dist.name}.tar.gz"/>
   </goal>
@@ -257,7 +257,7 @@ limitations under the License.
 <!-- pluto-optional-x.x distributions -->
 <!-- ================================ -->
   <goal name="distribute:optional">
-    <j:set var="plutooptional.dist.name" 
+    <j:set var="plutooptional.dist.name"
            value="pluto-lib-optional-${pom.currentVersion}"/>
     <!-- None Yet! -->
   </goal>
@@ -266,7 +266,7 @@ limitations under the License.
 <!-- pluto-tools-x.x distribution -->
 <!-- ============================ -->
   <goal name="distribute:tools" prereqs="distribute:init">
-    <j:set var="plutotools.dist.name" 
+    <j:set var="plutotools.dist.name"
            value="pluto-lib-tools-${pom.currentVersion}"/>
     <!-- STEP #1: Create archives and docs for each -->
     <maven:reactor
@@ -299,7 +299,7 @@ limitations under the License.
 
 	<!-- STEP #2: Copy all to our dist dist dir -->
 	<!--          First the driver. -->
-	<ant:copy 
+	<ant:copy
       tofile="${maven.dist.dir}/${plutotools.dist.name}/pluto-driver-${pom.currentVersion}.war"
       file="${basedir}/portal/target/pluto.war"/>
 
@@ -308,7 +308,7 @@ limitations under the License.
 	</ant:copy>
 
 	<!--          Now the testsuite. -->
-	<ant:copy 
+	<ant:copy
 			tofile="${maven.dist.dir}/${plutotools.dist.name}/pluto-testsuite-${pom.currentVersion}.war"
       file="${basedir}/testsuite/target/testsuite.war"/>
 
@@ -320,7 +320,7 @@ limitations under the License.
 
 	<!-- STEP #3: Create the Distributions -->
 	<ant:zip zipfile="${maven.dist.dir}/${plutotools.dist.name}.zip">
-	  <ant:zipfileset 
+	  <ant:zipfileset
 		dir="${maven.dist.dir}"
         includes="${plutotools.dist.name}/**/*"/>
 	</ant:zip>
@@ -330,7 +330,7 @@ limitations under the License.
 	      includes="${plutotools.dist.name}/**/*"/>
     </ant:tar>
 
-    <ant:gzip 
+    <ant:gzip
       zipfile="${maven.dist.dir}/${plutotools.dist.name}.tar.gz"
       src="${maven.dist.dir}/${plutotools.dist.name}.tar"
     />
