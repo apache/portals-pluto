@@ -35,6 +35,9 @@ limitations under the License.
 	  <tr><td>Cocoon</td>
           <td><a href="http://cocoon.apache.org">http://cocoon.apache.org</a></td>
           <td>Apache 2.0</td></tr>
+      <tr><td>uPortal</td>
+          <td><a href="http://www.uportal.org">http://www.uportal.org</a></td>
+          <td>JA-SIG</td></tr>
 	  </table>
     </p>
   </section>
