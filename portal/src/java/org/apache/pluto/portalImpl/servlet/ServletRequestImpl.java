@@ -54,8 +54,11 @@ public class ServletRequestImpl extends javax.servlet.http.HttpServletRequestWra
 
     public String getParameter(String name) 
     {
-        return (String) this.getParameterMap().get(name);
-
+        String[] values=(String[]) this.getParameterMap().get(name);
+        if (values!=null) {
+             return values[0];	
+        }
+        return null;
     }
     
     public Map getParameterMap() 
