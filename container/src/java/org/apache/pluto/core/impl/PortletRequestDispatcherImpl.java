@@ -24,7 +24,9 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.pluto.core.CoreUtils;
 import org.apache.pluto.core.InternalPortletRequest;
+import org.apache.pluto.core.InternalPortletResponse;
 
 public class PortletRequestDispatcherImpl implements PortletRequestDispatcher
 {
@@ -39,13 +41,15 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher
     // javax.portlet.PortletRequestDispatcher implementation --------------------------------------
     public void include(RenderRequest request, RenderResponse response) throws PortletException, java.io.IOException
     {
-        InternalPortletRequest internalRequest = (InternalPortletRequest)request;
+        InternalPortletRequest internalRequest = CoreUtils.getInternalRequest(request);
+        InternalPortletResponse internalResponse = CoreUtils.getInternalResponse(response);
         try
         {
             internalRequest.setIncluded(true);
+            internalResponse.setIncluded(true);
+
             this.requestDispatcher.include((javax.servlet.http.HttpServletRequest)request, 
                                            (javax.servlet.http.HttpServletResponse)response);
-
         }
         catch (java.io.IOException e)
         {
@@ -65,6 +69,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher
         finally
         {
             internalRequest.setIncluded(false);
+            internalResponse.setIncluded(false);
         }
     }
     // --------------------------------------------------------------------------------------------

@@ -27,5 +27,8 @@ public interface InternalPortletResponse {
                          javax.servlet.http.HttpServletResponse webModuleServletResponse);
 
     public PortletWindow getInternalPortletWindow();
+    
+    public void setIncluded(boolean included);
 
+    public boolean isIncluded();
 }

@@ -47,7 +47,7 @@ implements InternalPortletResponse, PortletResponse
      * this variable holds the servlet request of the target/portlet's
      * web module
      */
-    private HttpServletRequest webModuleServletRequest;
+    private javax.servlet.http.HttpServletRequest webModuleServletRequest;
 
     private boolean usingWriter;
     private boolean usingStream;
@@ -55,9 +55,14 @@ implements InternalPortletResponse, PortletResponse
     private ServletOutputStream wrappedWriter;
     private Map properties;
 
+    /**
+     * true if we are in an include call
+     */
+    private boolean included;
+
     public PortletResponseImpl(PortletWindow portletWindow,
-                               HttpServletRequest servletRequest,
-                               HttpServletResponse servletResponse)
+                               javax.servlet.http.HttpServletRequest servletRequest,
+                               javax.servlet.http.HttpServletResponse servletResponse)
     {
         super(servletResponse);
 
@@ -170,12 +175,12 @@ implements InternalPortletResponse, PortletResponse
 
     public String encodeRedirectUrl(String url)
     {
-        return this._getHttpServletResponse().encodeRedirectUrl(url);
+        return included ? null : this._getHttpServletResponse().encodeRedirectUrl(url);
     }
 
     public String encodeRedirectURL(String url)
     {
-        return this._getHttpServletResponse().encodeRedirectURL(url);
+        return included ? null : this._getHttpServletResponse().encodeRedirectURL(url);
     }
 
     public void sendRedirect(String location) throws java.io.IOException
@@ -287,4 +292,14 @@ implements InternalPortletResponse, PortletResponse
     {
         return webModuleServletRequest;
     }
+
+   public void setIncluded(boolean included)
+   {
+       this.included = included;
+   }
+
+   public boolean isIncluded()
+   {
+       return included;
+   }
 }
