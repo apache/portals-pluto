@@ -45,6 +45,8 @@ import org.apache.pluto.portalImpl.om.portlet.impl.PortletApplicationDefinitionI
 import org.apache.pluto.portalImpl.om.portlet.impl.PortletApplicationDefinitionListImpl;
 import org.apache.pluto.portalImpl.om.servlet.impl.WebApplicationDefinitionImpl;
 import org.apache.pluto.portalImpl.util.Properties;
+import org.apache.pluto.portalImpl.xml.Constants;
+import org.apache.pluto.portalImpl.xml.XmlParser.EntityResolver;
 
 /**
  * A version of the registry service that obtains data from a ServletContext
@@ -150,6 +152,7 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
         Unmarshaller unmarshaller;
         try {
             unmarshaller = new Unmarshaller(portletXmlMapping);
+            unmarshaller.setEntityResolver(new EntityResolver(Constants.RES_PORTLET_DTDS, Constants.RES_PORTLET_DTD_NAMES));
         } catch (MappingException e) {
             throw (UnavailableException) new UnavailableException("Unable to construct unmarshaller for portlet.xml").initCause(e);
         }
@@ -171,6 +174,9 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
         source = new InputSource(stream);
         try {
             unmarshaller = new Unmarshaller(webXmlMapping);
+            unmarshaller.setEntityResolver(new EntityResolver(Constants.RES_WEB_PUBLIC_ID,
+                                                       Constants.RES_WEB_DTD,
+                                                       Constants.RES_WEB_DTD_NAME));
         } catch (MappingException e) {
             throw (UnavailableException) new UnavailableException("Unable to construct unmarshaller for web.xml").initCause(e);
         }
