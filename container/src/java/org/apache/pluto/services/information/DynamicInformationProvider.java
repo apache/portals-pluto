@@ -126,28 +126,12 @@ public interface DynamicInformationProvider
     public PortletMode getPortletMode(PortletWindow portletWindow);
 
     /**
-     * Returns the previous <CODE>PortletMode</CODE> of the given portlet window.
-     *
-     * @param portletWindow    the portlet Window
-     * @return the previous portlet mode
-     */
-    public PortletMode getPreviousPortletMode(PortletWindow portletWindow);
-
-    /**
      * Returns the <CODE>WindowState</CODE> of the given portlet window.
      *
      * @param portletEntity    the portlet Entity
      * @return the portlet window state
      */
     public WindowState getWindowState(PortletWindow portletWindow);
-
-    /**
-     * Returns the previous <CODE>WindowState</CODE> of the given portlet window.
-     *
-     * @param portletWindow    the portlet Window
-     * @return the previous portlet window state
-     */
-    public WindowState getPreviousWindowState(PortletWindow portletWindow);
 
     /**
      * Returns true if the portal supports the requested
