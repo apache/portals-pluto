@@ -28,6 +28,7 @@ import javax.portlet.WindowState;
 
 import org.apache.pluto.portalImpl.services.config.Config;
 import org.apache.pluto.services.information.PortalContextProvider;
+import org.apache.pluto.Environment;
 
 /**
 
@@ -60,7 +61,7 @@ public class PortalContextProviderImpl implements PortalContextProvider {
         // these are the minimum states that the portal needs to support
         states = getDefaultStates(); 
         // set info
-        info = "Pluto/1.0";   
+        info = Environment.getServerInfo();   
     }
 
     // PortalContextProvider implementation.
