@@ -221,6 +221,11 @@ limitations under the License.
             <name>David DeWolf</name>
             <id>ddewolf</id>
             <email>ddewolf{aT}apache{d0t}org</email>
+            <timezone>-4</timezone>
+            <organization>Vivare, INC</organization>
+            <roles>
+              <role>Java Developer</role>
+            </roles>
         </developer>
 
         <developer>
