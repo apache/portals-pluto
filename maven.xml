@@ -147,6 +147,9 @@ limitations under the License.
     <j:set var="plutobin.tomcattar" value="${maven.dist.dir}/plutobin-tomcat.tar"/>
 
     <!-- Retrieve the Tomcat Release -->
+    <j:if test="${context.getVariable('maven.proxy.host') != null}">
+        <setproxy proxyhost="${maven.proxy.host}" proxyport="${maven.proxy.port}"/>    
+    </j:if>
     <get src="${dist.tomcat}" dest="${plutobin.tomcatgz}"/>
     <gunzip src="${plutobin.tomcatgz}" dest="${plutobin.tomcattar}"/>
     <untar src="${plutobin.tomcattar}" dest="${maven.dist.dir}"/>
