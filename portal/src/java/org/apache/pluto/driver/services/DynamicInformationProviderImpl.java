@@ -61,19 +61,4 @@ public class DynamicInformationProviderImpl
         return new ResourceURLProviderImpl(env.getRequest(),
                                            internalPortletWindow);
     }
-
-    public String getResponseContentType() {
-        return "text/html";
-    }
-
-    /**
-     * @return Iterator of all response mimeTypes.
-     * @todo not implemented properly.
-     */
-    public Iterator getResponseContentTypes() {
-        HashSet responseMimeTypes = new HashSet(NUMBER_KNOWN_MIMETYPES);
-        responseMimeTypes.add("text/html");
-
-        return responseMimeTypes.iterator();
-    }
 }

@@ -80,6 +80,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      */
     private PortletSession portletSession;
 
+    /** Response content types. */
+    private Vector contentTypes;
+
     private DynamicInformationProvider provider;
     private NamespaceMapper mapper = new NamespaceMapperImpl();
 
@@ -426,16 +429,26 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public String getResponseContentType() {
-        // get the default response content type from the container
-        String responseContentType = provider.getResponseContentType();
-        return responseContentType;
+        Enumeration enum = getResponseContentTypes();
+        while(enum.hasMoreElements()) {
+            return (String)enum.nextElement();
+        }
+        return "text/html";
     }
 
     public Enumeration getResponseContentTypes() {
-        // get the default response content types from the container
-        Iterator responseContentTypes = provider.getResponseContentTypes();
-
-        return new Enumerator(responseContentTypes);
+        if(contentTypes == null) {
+            contentTypes = new Vector();
+            PortletDD dd = internalPortletWindow.getPortletEntity().getPortletDefinition();
+            SupportedMimeTypeDD[] types = dd.getSupportedMimeTypes();
+            for(int i=0;i<types.length;i++) {
+                contentTypes.add(types[i].getMimeType());
+            }
+            if(contentTypes.size() < 1) {
+                contentTypes.add("text/html");
+            }
+        }
+        return contentTypes.elements();
     }
 
     public java.util.Locale getLocale() {

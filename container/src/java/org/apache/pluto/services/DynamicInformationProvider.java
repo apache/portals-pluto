@@ -27,23 +27,6 @@ import org.apache.pluto.PortletWindow;
  */
 public interface DynamicInformationProvider {
 
-
-    /**
-     * Returns the content type the portlet should use in its response The
-     * content type only includes the content type, not the character set.
-     * @return the content type to use for the response
-     */
-    public String getResponseContentType();
-
-    /**
-     * Gets a list of mime types which the portal accepts for the response. This
-     * list is ordered with the most preferable types listed first.
-     * <p/>
-     * The content type only includes the content type, not the character set.
-     * @return an java.util.Iterator of content types for the response
-     */
-    public java.util.Iterator getResponseContentTypes();
-
     /**
      * Returns an URL pointing to the given portlet window
      * @param portletWindow the portlet Window
