@@ -38,13 +38,19 @@ class MavenDeploymentConfig extends DeploymentConfig  {
     }
 
     public String getDeploymentProperty(String key) {
-        Object var = context.getVariable(key);
-        // for backwards compatibility, if it's null
-        // we will append maven. and retry.
-        if(var == null) {
-            var = context.getVariable("maven."+key);
+        String val = System.getProperty(key);
+        if(val == null) {
+            val = System.getProperty("maven."+key);
         }
-        return var==null?null:var.toString();
+
+        if(val == null) {
+            val = (String)context.getVariable(key);
+        }
+
+        if(val == null) {
+            val = (String)context.getVariable("maven."+key);
+        }
+        return val==null?null:val.toString();
     }
 }
 

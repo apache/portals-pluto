@@ -96,11 +96,7 @@ limitations under the License.
       <ant:fileset dir="${basedir}" includes="README"/>
     </ant:copy>
 
-    <!--
-    <ant:copy todir="${maven.dist.dir}/${plutobin.dist.name}/webapps/ROOT">
-      <fileset dir="${basedir}/target/docs" includes="**/*.*"/>
-    </ant:copy>
-    -->
+    <ant:copy file="${basedir}/portal/src/conf/server.xml" tofile="${pluto}/conf/server.xml" overwrite="true"/>
 
     <j:invokeStatic className="java.lang.System" method="setProperty">
       <j:arg type="java.lang.String" value="maven.tomcat.home"/>
@@ -108,8 +104,8 @@ limitations under the License.
     </j:invokeStatic>
 
     <j:invokeStatic className="java.lang.System" method="setProperty">
-      <j:arg type="java.lang.String" value="maven.tomcat.version.major"/>
-      <j:arg type="java.lang.String" value="5"/>
+      <j:arg type="java.lang.String" value="org.apache.pluto.deploy.Deployer"/>
+      <j:arg type="java.lang.String" value="org.apache.pluto.deploy.impl.Tomcat5FileSystemDeployer"/>
     </j:invokeStatic>
 
     <attainGoal name="pluto:deploy-portal-driver"/>
@@ -157,9 +153,9 @@ limitations under the License.
       <ant:move 
         file="${tomcat}/jakarta-tomcat-${version}/LICENSE" 
         tofile="${tomcat}/LICENSE.jakarta-tomcat"/>
-      <delete>
+
+      <delete includeEmptyDirs="true">
         <fileset dir="${tomcat}/jakarta-tomcat-${version}/webapps" includes="**"/>
-        <fileset dir="${tomcat}/jakarta-tomcat-${version}/webapps" includes="**/*.*"/>
         <fileset dir="${tomcat}/jakarta-tomcat-${version}/conf/Catalina/localhost" includes="**/*"/>
       </delete>
   </goal>
