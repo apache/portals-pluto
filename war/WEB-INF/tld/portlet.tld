@@ -6,6 +6,7 @@
     <tlibversion>1.0</tlibversion>
     <jspversion>1.1</jspversion>
     <shortname>portlet</shortname>
+    <uri>http://java.sun.com/portlet</uri>
     <tag>
         <name>defineObjects</name>
         <tagclass>org.apache.pluto.tags.DefineObjectsTag</tagclass>
