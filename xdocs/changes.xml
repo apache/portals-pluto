@@ -4,7 +4,7 @@
 </properties>
 <body>
 
-<release version="1.0.1-rc2" date="n/a" description="Release Candidate">
+<release version="1.0.1-rc2" date="Dec 22, 2004" description="Release Candidate">
   <action dev="nlothian" type="update">
 	Upgraded to Tomcat 5.5.4 for Pluto/Tomcat Bundle
   </action>
