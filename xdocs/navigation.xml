@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Jakarta Pluto Site" href="http://jakarta.apache.org/pluto">
 
-   <title>The Jakarta Site</title>
+   <title>The Jakarta Pluto Site</title>
    <logo href="/images/pluto.jpg">Jakarta Pluto</logo>
 
   <body>
@@ -12,8 +12,14 @@
         <item name="Overview"            href="/index.html"/>        
         <item name="News and Status"     href="/news.html"/>
         <item name="Roadmap"             href="/roadmap.html"/>
-        <item name="FAQs"            href="/faq.html"/>
+        <item name="FAQs"                href="/faq.html"/>
     </menu>
+    <menu name="Projects">
+        <item name="Portlet API (JSR-168)"       href="/multiproject/portlet-api/index.html"/>
+        <item name="Portlet Container"           href="/multiproject/pluto/index.html"/>
+        <item name="Jakarta Pluto Portal Driver" href="/multiproject/pluto-portal/index.html"/>
+        <item name="Pluto Portlet Test Suite"    href="/multiproject/testsuite/index.html"/>
+        </menu>
 
     <menu name="Getting Started">
         <item name="Installation"    href="/install.html"/>
