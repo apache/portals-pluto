@@ -1,4 +1,4 @@
-<project default="jar:install"
+<project default="deployTestsuite"
          xmlns:j="jelly:core"
          xmlns:maven="jelly:maven"
          xmlns:ant="jelly:ant">     
