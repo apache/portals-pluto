@@ -54,7 +54,7 @@ limitations under the License.
     </subsection>
 
     <subsection name="Using Subversion">
-		<p>The Pluro project uses the
+		<p>The Pluto project uses the
 		<a href="http://subversion.tigris.org/">Subversion</a> version control
 		system.  If you're new to Subversion, you can check out the
 		<a href="http://svnbook.red-bean.com/">online book</a> about Subversion.
