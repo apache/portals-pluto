@@ -70,7 +70,125 @@ limitations under the License.
         <include name="**"/>
       </fileset>
     </copy>
-    
+  </goal>
+
+<!-- ========================= -->
+<!-- Pluto Distributions Goals -->
+<!-- ========================= -->
+
+  <goal name="distribute:all">
+    <attainGoal name="distribute:container"/>
+    <attainGoal name="distribute:optional"/>
+    <attainGoal name="distribute:tools"/>
+  </goal>
+
+<!-- ======================= -->
+<!-- pluto-x.x distributions -->
+<!-- ======================= -->
+
+  <goal name="distribute:init">
+    <j:set var="maven.dist.dir" value="${basedir}/target/distributions"/>
+  </goal>
+
+  <goal name="distribute:container" prereqs="distribute:init">
+    <j:set var="pluto.dist.name" value="pluto-${pom.currentVersion}"/>
+    <maven:reactor
+            basedir="${basedir}"
+            includes="container/project.xml"
+			goals="dist:build"
+            banner="Creating Pluto Container Distributions"
+            postProcessing="false"
+            ignoreFailures="false"/>
+	<ant:copy 
+      todir="${maven.dist.dir}"
+	  file="${basedir}/container/target/distributions/${pluto.dist.name}.zip"/>
+	<ant:copy 
+      todir="${maven.dist.dir}"
+	  file="${basedir}/container/target/distributions/${pluto.dist.name}.tar.gz"/>
+  </goal>
+
+<!-- ================================ -->
+<!-- pluto-optional-x.x distributions -->
+<!-- ================================ -->
+  <goal name="distribute:optional">
+    <j:set var="plutooptional.dist.name" 
+           value="pluto-optional-${pom.currentVersion}"/>
+    <!-- None Yet! -->
+  </goal>
+
+<!-- ============================ -->
+<!-- pluto-tools-x.x distribution -->
+<!-- ============================ -->
+  <goal name="distribute:tools" prereqs="distribute:init">
+    <j:set var="plutotools.dist.name" 
+           value="pluto-tools-${pom.currentVersion}"/>
+    <!-- STEP #1: Create archives and docs for each -->
+    <maven:reactor
+            basedir="${basedir}"
+			includes="portal/project.xml"
+			goals="war:war,javadoc:generate"
+            banner="Creating Tools-Portal Distribution"
+            postProcessing="false"
+            ignoreFailures="false"/>
+    <maven:reactor
+            basedir="${basedir}"
+			includes="testsuite/project.xml"
+			goals="war:war,javadoc:generate"
+            banner="Creating Tools-TestSuite Distribution"
+            postProcessing="false"
+            ignoreFailures="false"/>
+    <maven:reactor
+            basedir="${basedir}"
+			includes="deploy/project.xml"
+			goals="jar:jar,javadoc:generate"
+            banner="Creating Tools-Deploy Distribution"
+            postProcessing="false"
+            ignoreFailures="false"/>
+
+	<!-- STEP #2: Copy all to our dist dist dir -->
+	<!--          First the driver. -->
+	<ant:copy 
+      tofile="${maven.dist.dir}/${plutotools.dist.name}/pluto-driver-${pom.currentVersion}.war"
+      file="${basedir}/portal/target/pluto.war"/>
+
+	<ant:copy todir="${maven.dist.dir}/${plutotools.dist.name}/docs/pluto-driver-${pom.currentVersion}">
+      <ant:fileset dir="${basedir}/portal/target/docs" includes="apidocs/**/*"/>
+	</ant:copy>
+
+	<!--          Now the testsuite. -->
+	<ant:copy 
+			tofile="${maven.dist.dir}/${plutotools.dist.name}/pluto-testsuite-${pom.currentVersion}.war"
+      file="${basedir}/testsuite/target/testsuite.war"/>
+
+	<ant:copy todir="${maven.dist.dir}/${plutotools.dist.name}/docs/pluto-testsuite-${pom.currentVersion}">
+      <ant:fileset dir="${basedir}/testsuite/target/docs" includes="apidocs/**/*"/>
+	</ant:copy>
+
+	<!--          What do we do for the deployer? -->
+
+	<!-- STEP #3: Create the Distributions -->
+	<ant:zip zipfile="${maven.dist.dir}/${plutotools.dist.name}.zip">
+	  <ant:zipfileset 
+		dir="${maven.dist.dir}"
+        includes="${plutotools.dist.name}/**/*"/>
+      <ant:zipfileset 
+		dir="${basedir}"
+		includes="LICENSE.TXT"/>
+	</ant:zip>
+
+	<ant:tar longfile="gnu" tarfile="${maven.dist.dir}/${plutotools.dist.name}.tar">
+	  <ant:tarfileset dir="${maven.dist.dir}"
+	      includes="${plutotools.dist.name}/**/*"/>
+      <ant:tarfileset 
+		dir="${basedir}"
+		includes="LICENSE.TXT"/>
+    </ant:tar>
+
+    <ant:gzip 
+      zipfile="${maven.dist.dir}/${plutotools.dist.name}.tar.gz"
+      src="${maven.dist.dir}/${plutotools.dist.name}.tar"
+    />
+
   </goal>
 </project>
 
