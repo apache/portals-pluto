@@ -26,11 +26,12 @@ limitations under the License.
         {
             Fragment subfragment = (Fragment)iterator.next();
 %>
-<TD>
+<TD valign="top">
 <%
             subfragment.service(request, response);
 %>
 </TD>
+<TD> &nbsp; </TD>
 <%
         }
 %>

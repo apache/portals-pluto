@@ -26,9 +26,8 @@ limitations under the License.
 <%@ include file="./Head.jsp" %>
 <body marginwidth="0" marginheight="0">
 <%@ include file="./Banner.jsp" %>
-<table border="0" cellpadding="0" cellspacing="2" width="100%">
-  <tr>
-    <td width="30%" valign="top">
+<table>
+  <tr><td valign="top" class="nav" width="150">
 <%
         Iterator childIterator = fragment.getChildFragments().iterator();
 
@@ -44,17 +43,22 @@ limitations under the License.
         }
 %>
     </td>
-    <td valign="top">
 <%
         childIterator = fragment.getChildFragments().iterator();
 
         while (childIterator.hasNext()) {
+%>
+       <td valign="top">
+<%
             Fragment subfragment = (Fragment)childIterator.next();
 
             if (!(subfragment instanceof AbstractNavigationFragment))
             {
                 subfragment.service(request, response);
             }
+%>
+       </td>
+<%
 
         }
 %>

@@ -15,5 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <HEAD>
-    <TITLE>Pluto Home</TITLE>
+    <TITLE>Pluto Portal Driver</TITLE>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/pluto_style.css" type="text/css">
 </HEAD>

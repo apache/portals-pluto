@@ -1,4 +1,5 @@
-<%--
+<%@ page import="org.apache.pluto.Environment"%>
+ <%--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
@@ -14,10 +15,10 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-<table border="0" cellspacing="5" cellpadding="0" width="100%" bgcolor="#3333FF">
-  <tr>
-    <td><b><font size="+1" color="#FFFFFF"> Pluto - Reference Implementation</font></b></td>
-    <td><A href="<%=request.getContextPath()%>/login_success.jsp">Login</A>
+<table>
+  <tr><th><img src="http://portals.apache.org/pluto/images/pluto.png"/></th></tr>
+  <tr class="banner"><td>Pluto Portal Driver <FONT class="small">(<%=Environment.getServerInfo()%>)</FONT></td>
+      <td align="right"><A href="<%=request.getContextPath()%>/login_success.jsp">Login</A></td>
   </tr>
 </table>
 <br>

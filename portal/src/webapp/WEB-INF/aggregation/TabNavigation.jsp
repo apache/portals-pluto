@@ -23,7 +23,7 @@ limitations under the License.
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.Navigation" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.NavigationTreeBean" %>
 <jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.navigation.TabNavigation" scope="request" />
-<table border="0" cellspacing="0" cellpadding="0" width="100%">
+<table class="nav">
 <%
     PortalURL url = PortalEnvironment.getPortalEnvironment(request).getRequestedPortalURL();
     NavigationTreeBean[] tree = fragment.getNavigationView(url);
@@ -32,7 +32,7 @@ limitations under the License.
             Navigation nav = tree[i].navigation;
             boolean partOfNav = tree[i].partOfGlobalNav;
             if (partOfNav) {
-                %><td bgcolor="#0000B4" nowrap><%
+                %><td class="nav" nowrap><%
             } else {
                 %><td bgcolor="#AAAAFF" nowrap><%
             }
@@ -41,15 +41,11 @@ limitations under the License.
             }
             %>&nbsp;<a href="<%=new PortalURL(request, nav.getLinkedFragment()).toString()%>"><%
             if (partOfNav) {
-                %><font color="#FFFFFF"><B><%
-            } else {
-                %><font color="#000000"><%
+                %><B><%
             }
             %><%=nav.getTitle()%><%
             if (partOfNav) {
-                %></font></B><%
-            }else {
-                %></font><%
+                %></B><%
             }
             %></A>&nbsp;</TD><%
             %><TR><%
