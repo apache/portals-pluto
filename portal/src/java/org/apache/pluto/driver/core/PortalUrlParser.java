@@ -182,7 +182,7 @@ class PortalUrlParser {
     private String encode(String[] values) {
         String value = "";
         for (int i = 0; i < values.length; i++) {
-            value += values[i];
+            value += values[i]==null?"":values[i];
             if (i + 1 != values.length) {
                 value += ",";
             }
