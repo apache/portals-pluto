@@ -28,16 +28,7 @@ import javax.portlet.WindowState;
 
 import org.apache.pluto.portalImpl.services.config.Config;
 import org.apache.pluto.services.information.PortalContextProvider;
-import org.apache.pluto.Environment;
 
-/**
-
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- * To enable and disable the creation of type comments go to
- * Window>Preferences>Java>Code Generation.
- */
 public class PortalContextProviderImpl implements PortalContextProvider {
 
 

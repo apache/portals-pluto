@@ -29,12 +29,11 @@ import org.apache.pluto.services.information.PortalContextProvider;
 public class StaticInformationProviderImpl implements StaticInformationProvider
 { 
 
-    private ServletConfig config = null;
-    private PortalContextProvider provider = null;
+    private PortalContextProvider provider;
 
     public StaticInformationProviderImpl(ServletConfig config)
     {
-        this.config = config;
+        // nothing do to
     }
 
     // StaticInformationProvider implementation.

@@ -48,7 +48,6 @@ org.apache.pluto.portalImpl.om.common.Support {
     private PortletApplicationEntity applicationEntity;
     private PortletWindowList portletWindows;
     private ObjectID objectId;
-    private PortletEntity modifiedObject;        
     private DescriptionSet descriptions;
 
     public PortletEntityImpl()

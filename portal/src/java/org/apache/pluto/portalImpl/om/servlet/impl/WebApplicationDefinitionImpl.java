@@ -321,7 +321,7 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     }
 
     public Collection getCastorTagDefinitions() {
-        return (TagDefinitionSet) taglibs;
+        return taglibs;
     }
 
     public void setCastorTagDefinitions(TagDefinitionSet taglibs)

@@ -21,7 +21,6 @@ package org.apache.pluto.portalImpl.services.pageregistry;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.HashMap;
 
 import javax.servlet.ServletConfig;
@@ -34,7 +33,6 @@ import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.util.Properties;
 import org.apache.pluto.services.log.Logger;
 import org.exolab.castor.mapping.Mapping;
-import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
 
 /**
@@ -128,23 +126,6 @@ public class PageRegistryServiceFileImpl extends PageRegistryService
             throw new Exception(msg);
         }
 
-    }
-
-    private void store() throws Exception
-    {
-        String filename = CONFIG_FILE;
-        
-        File f = new File(filename);
-        if (!f.isAbsolute())
-           filename = servletContext.getRealPath(filename);
-        
-        FileWriter writer = new FileWriter(filename);
-        
-        Marshaller marshaller = new Marshaller(writer);
-        
-        marshaller.setMapping(this.mapping);
-        
-        marshaller.marshal(registry);
     }
 
     private void load() throws Exception

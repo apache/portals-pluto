@@ -45,11 +45,6 @@ public class ServletRequestImpl extends javax.servlet.http.HttpServletRequestWra
 
     }
 
-    private javax.servlet.http.HttpServletRequest _getHttpServletRequest()
-    {
-        return(javax.servlet.http.HttpServletRequest) super.getRequest();
-    }
-
 // HttpServletRequestWrapper overlay
           
     public java.lang.String getContentType()
@@ -91,7 +86,7 @@ public class ServletRequestImpl extends javax.servlet.http.HttpServletRequestWra
         if (pid.equals(wid)) {
             for (Enumeration parameters = super.getParameterNames(); parameters.hasMoreElements();) {
                 String   paramName   = (String)parameters.nextElement();
-                String[] paramValues = (String[])super.getParameterValues(paramName);
+                String[] paramValues = super.getParameterValues(paramName);
                 String[] values      = (String[])portletParameters.get(paramName);
     
                 if (values != null) {

@@ -54,18 +54,6 @@ public class PortalControlParameter {
         return paramValue;
     }
 
-    private static String decodeRenderParamName(String encodedParamName)
-    {
-        StringTokenizer tokenizer = new StringTokenizer(encodedParamName, "_");
-        if (!tokenizer.hasMoreTokens()) return null;
-        String constant = tokenizer.nextToken();
-        if (!tokenizer.hasMoreTokens()) return null;
-        String objectId = tokenizer.nextToken();
-        if (!tokenizer.hasMoreTokens()) return null;
-        String name = tokenizer.nextToken();
-        return name;
-    }
-
     private static String[] decodeRenderParamValues(String encodedParamValues)
     {
         StringTokenizer tokenizer = new StringTokenizer(encodedParamValues, "_");

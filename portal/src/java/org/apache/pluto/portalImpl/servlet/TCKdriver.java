@@ -231,8 +231,4 @@ public class TCKdriver extends org.apache.pluto.portalImpl.Servlet {
         doGet (request, response);
     }
 
-    // --- PRIVATE MEMBERS --- //
-
-    private static boolean IS_DEBUG_ENABLED;
-
 }

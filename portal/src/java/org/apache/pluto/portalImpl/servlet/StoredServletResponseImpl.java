@@ -34,11 +34,6 @@ public class StoredServletResponseImpl extends ServletResponseImpl
         writer = _writer;
     }
 
-    private javax.servlet.http.HttpServletResponse _getHttpServletResponse()
-    {
-        return(javax.servlet.http.HttpServletResponse) super.getResponse();
-    }
-
     public void setResponse(HttpServletResponse response) 
     {
         super.setResponse(response);

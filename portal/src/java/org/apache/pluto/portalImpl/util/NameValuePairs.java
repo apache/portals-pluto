@@ -342,7 +342,7 @@ public abstract class NameValuePairs
         private EntryIterator (NameValuePairs aPairs)
         {
             iPairs = aPairs;
-            iIterator = iPairs.getEntries().iterator();;
+            iIterator = iPairs.getEntries().iterator();
         }
 
         // Iterator implementation.
@@ -372,7 +372,7 @@ public abstract class NameValuePairs
             {
                 iPairs = iPairs.getParent();
                 if (iPairs==null) return false;
-                iIterator = iPairs.getEntries().iterator();;
+                iIterator = iPairs.getEntries().iterator();
             }
             return true;
         }

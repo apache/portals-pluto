@@ -35,11 +35,6 @@ public class ServletResponseImpl extends javax.servlet.http.HttpServletResponseW
 		return contentType;
 	 }
 
-    private javax.servlet.http.HttpServletResponse _getHttpServletResponse()
-    {
-        return(javax.servlet.http.HttpServletResponse) super.getResponse();
-    }
-
     public void setResponse(HttpServletResponse response) 
     {
         super.setResponse(response);

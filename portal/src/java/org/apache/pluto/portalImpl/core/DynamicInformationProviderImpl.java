@@ -42,7 +42,6 @@ public class DynamicInformationProviderImpl implements DynamicInformationProvide
     private ServletConfig config;
 
     private PortalEnvironment env;
-    private PortalURL currentURL;
 
     HttpServletRequest request;
 
@@ -53,7 +52,6 @@ public class DynamicInformationProviderImpl implements DynamicInformationProvide
         this.config = config;
 
         env        = PortalEnvironment.getPortalEnvironment(request);
-        currentURL = env.getRequestedPortalURL();
     }
 
     // DynamicInformationProviderImpl implementation.

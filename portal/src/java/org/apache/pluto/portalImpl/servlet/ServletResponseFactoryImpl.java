@@ -26,8 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletResponseFactoryImpl implements ServletResponseFactory
 {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     // ServletResponseFactory implementation.
 
     public javax.servlet.http.HttpServletResponse getServletResponse(HttpServletResponse response)
@@ -47,11 +45,12 @@ public class ServletResponseFactoryImpl implements ServletResponseFactory
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) 
     throws Exception
     {
-        servletConfig = config;
+        // nothing to do
     }
     
     public void destroy()
     throws Exception
     {
+        // nothing to do
     }
 }

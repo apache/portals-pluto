@@ -25,14 +25,12 @@ import org.apache.pluto.services.information.ResourceURLProvider;
 public class ResourceURLProviderImpl implements ResourceURLProvider
 {
 
-    private PortletWindow portletWindow = null;
     private String stringUrl = "";
     private String base = "";
 
     public ResourceURLProviderImpl(DynamicInformationProviderImpl provider,
                                    PortletWindow portletWindow)
     {
-        this.portletWindow = portletWindow;
         this.base = PortalURL.getBaseURLexcludeContext();
     }
 

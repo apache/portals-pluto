@@ -27,19 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.services.information.PortletActionProvider;
 
-/**
-
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- * To enable and disable the creation of type comments go to
- * Window>Preferences>Java>Code Generation.
- */
 public class PortletActionProviderImpl implements PortletActionProvider {
 
 
     private HttpServletRequest request;
-    private ServletConfig config;
     private PortletWindow portletWindow;
 
     public PortletActionProviderImpl(HttpServletRequest request,
@@ -47,7 +38,6 @@ public class PortletActionProviderImpl implements PortletActionProvider {
                                      PortletWindow portletWindow)
     {
         this.request = request;
-        this.config = config;
         this.portletWindow = portletWindow;
     }
 

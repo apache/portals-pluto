@@ -237,10 +237,8 @@ public class PortalURL {
     public String getControlParameterAsString(PortalControlParameter controlParam)
     {
         Map stateFullParams = startControlParameter;
-        Map stateLessParams = null;
         if (controlParam != null) {
             stateFullParams = controlParam.getStateFullControlParameter();
-            stateLessParams = controlParam.getStateLessControlParameter();
         }
 
         StringBuffer result = new StringBuffer(100);
@@ -284,7 +282,7 @@ public class PortalURL {
                     result.append(name);
                     result.append("=");
                     result.append(values[i]);
-                };
+                }
 
                 hasNext=iterator.hasNext();
                 if (hasNext) {

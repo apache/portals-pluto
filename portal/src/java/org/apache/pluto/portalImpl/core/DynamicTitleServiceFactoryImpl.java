@@ -24,8 +24,6 @@ import org.apache.pluto.services.title.DynamicTitleService;
 
 public class DynamicTitleServiceFactoryImpl implements DynamicTitleServiceFactory {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     public DynamicTitleService getDynamicTitleService()
     {
         return new DynamicTitleServiceImpl();
@@ -35,11 +33,12 @@ public class DynamicTitleServiceFactoryImpl implements DynamicTitleServiceFactor
 
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
+        // nothing to do
     }
 
     public void destroy() throws Exception
     {
+        // nothing to do
     }
 
 }

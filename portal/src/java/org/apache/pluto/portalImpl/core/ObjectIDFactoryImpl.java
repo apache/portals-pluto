@@ -21,8 +21,6 @@ import org.apache.pluto.om.common.ObjectID;
 
 public class ObjectIDFactoryImpl implements org.apache.pluto.factory.ObjectIDFactory {
 
-    private ServletConfig servletConfig;
-
     // org.apache.pluto.factory.ObjectIDFactory implementation.
 
     public ObjectID createObjectID(String portletGUID)
@@ -34,11 +32,12 @@ public class ObjectIDFactoryImpl implements org.apache.pluto.factory.ObjectIDFac
 
     public void init(ServletConfig config, java.util.Map properties) throws Exception
     {
-        servletConfig = config;
+        // nothing to do
     }
 
     public void destroy() throws Exception
     {
+        // nothing to do
     }
 
 }

@@ -197,13 +197,9 @@ public class Servlet extends HttpServlet
         }
         catch (Throwable t)
         {
-            ;
+            // nothing to do
         }
-        finally
-        {
-
-        }
-
+   
     }
 
     public void doPost (HttpServletRequest request,

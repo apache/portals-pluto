@@ -31,9 +31,6 @@ import javax.servlet.ServletContext;
 public class Parameters extends NameValuePairs
 {
 
-    private final static String RAW_ENCODING     = "8859_1";
-    private final static String DEFAULT_ENCODING = "UTF-8";
-
     public Parameters (Map params)
     {
         Iterator iterator = params.keySet().iterator();

@@ -30,9 +30,6 @@ public class PortletWindowImpl implements PortletWindow, PortletWindowCtrl {
     private String id;
     private PortletEntity portletEntity;
 
-    //counter used to generate unique id's
-    private static int counter; 
-
     public PortletWindowImpl(String id) {
         this.id = id;
     }

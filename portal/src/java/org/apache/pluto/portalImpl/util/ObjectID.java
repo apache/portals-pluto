@@ -30,16 +30,9 @@ import java.io.*;
 public class ObjectID implements org.apache.pluto.om.common.ObjectID, java.io.Serializable
 {
 
-    private String  stringOID = null;
+    private String  stringOID;
     private int     intOID;
 
-    private ObjectID (int oid)
-    {
-        stringOID = String.valueOf (oid);
-        intOID    = oid;
-    }
-
-        
     private ObjectID (int oid, String stringOID)
     {
         this.stringOID = stringOID;

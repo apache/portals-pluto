@@ -25,8 +25,6 @@ import org.apache.pluto.om.window.PortletWindow;
 public class ServletRequestFactoryImpl implements ServletRequestFactory
 {
 
-    private javax.servlet.ServletConfig servletConfig;
-
     // ServletRequestFactory implementation.
 
     public HttpServletRequest getServletRequest(HttpServletRequest request, PortletWindow portletWindow)
@@ -39,13 +37,13 @@ public class ServletRequestFactoryImpl implements ServletRequestFactory
     public void init(javax.servlet.ServletConfig config, java.util.Map properties) 
     throws Exception
     {
-        servletConfig = config;
+        // nothing to do
     }
     
     public void destroy()
     throws Exception
     {
-
+        // nothing to do
     }
 
 }
