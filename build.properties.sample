@@ -1,0 +1,9 @@
+# -------------------------------------------------------------------
+# B U I L D  P R O P E R T I E S - S A M P L E
+# -------------------------------------------------------------------
+#
+# Rename this file to build.properties and change the values:
+
+# location of the Tomcat install where you want to deploy Pluto
+tomcat.home.pluto=/tomcat
+

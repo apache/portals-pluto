@@ -1,10 +1,5 @@
 temp
 driver
 target
-maven.log
-velocity.log
-
-
-
-target
 *.log
+build.properties
