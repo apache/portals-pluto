@@ -26,6 +26,7 @@
     <menu name="Getting Started">
         <item name="Installation"    href="/install.html"/>
         <item name="Architecture"    href="/arch.html"/>
+        <item name="Pluto in your portal"    href="/Howto_use_the_Pluto_container.html"/>
 <!--
         <item name="Download" href="/site/binindex.html"/>
 -->        
