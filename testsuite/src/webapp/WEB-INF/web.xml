@@ -23,9 +23,23 @@ limitations under the License.
 
     <display-name>Pluto Testsuite</display-name>
 
+    <servlet>
+        <servlet-class>org.apache.pluto.portalImpl.portlet.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
+        <servlet-name>extAppScopedTest</servlet-name>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>extAppScopedTest</servlet-name>
+        <url-pattern>/test/extAppScopedTest</url-pattern>
+    </servlet-mapping>
+
     <security-role>
         <role-name>tomcat</role-name>
     </security-role>
 
+    <taglib>
+        <taglib-uri>http://java.sun.com/portlet</taglib-uri>
+        <taglib-location>/WEB-INF/tld/portlet.tld</taglib-location>
+    </taglib>
 </web-app>
 
