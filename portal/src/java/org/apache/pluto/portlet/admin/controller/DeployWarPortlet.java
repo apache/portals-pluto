@@ -100,12 +100,12 @@ public class DeployWarPortlet extends ControllerPortlet {
 					request.getPortletSession().setAttribute(PlutoAdminConstants.PAGE_ATTR, oPage);
 
 					//forward to next page to pick rows/cols
-					_incView = "/PageRegistryAdd.jsp";
+					_incView = "/portlets/admin/PageRegistryAdd.jsp";
 					response.setPortletMode(PortletMode.VIEW);
 
 				} else if (action.equals("showhome")) {
 
-					_incView = "/DeployWarView.jsp";
+					_incView = "/portlets/admin/DeployWarView.jsp";
 					response.setPortletMode(PortletMode.VIEW);
 
 				} else if (action.equals("showpagelayout")) {
@@ -119,10 +119,10 @@ public class DeployWarPortlet extends ControllerPortlet {
 					if (page != null && !service.pageExists(name)) {
 						service.setPage(request);
 						//forward to page layout page
-						_incView = "/PageRegistryAdd2.jsp";
+						_incView = "/portlets/admin/PageRegistryAdd2.jsp";
 					} else {
 						session.setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Page '" + name + "' already exists in pageregistry.xml", PortletMessageType.INFO));
-						_incView = "/DeployWarView.jsp";
+						_incView = "/portlets/admin/DeployWarView.jsp";
 					}
 					response.setPortletMode(PortletMode.VIEW);
 
@@ -131,7 +131,7 @@ public class DeployWarPortlet extends ControllerPortlet {
 					service.savePageLayout(request);
 					//forward to first page
           request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment successful. Please restart the Pluto portal.", PortletMessageType.SUCCESS));
-					_incView = "/DeployWarView.jsp";
+					_incView = "/portlets/admin/DeployWarView.jsp";
 					response.setPortletMode(PortletMode.VIEW);
 				}
 
