@@ -49,6 +49,9 @@ public class PortletContextImpl implements PortletContext, InternalPortletContex
     {
 		try {
 	        javax.servlet.RequestDispatcher rd = servletContext.getRequestDispatcher(path);
+            if(rd == null) {
+                return null;
+            }
     	    return new PortletRequestDispatcherImpl(rd);
         } catch (Exception e) {
     		// need to catch exception because of tomcat 4.x bug
