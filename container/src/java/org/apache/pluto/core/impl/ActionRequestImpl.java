@@ -71,14 +71,7 @@ public class ActionRequestImpl extends PortletRequestImpl implements ActionReque
         return servletRequest.getInputStream();
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.ServletRequest#getReader()
-     */
-    public BufferedReader getReader() throws IOException {
-        return super.getReader();
-    }
     // --------------------------------------------------------------------------------------------
-
     // PortletRequestImpl implementation ----------------------------------------------------------
     public PortletPreferences getPreferences()
     {
