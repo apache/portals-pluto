@@ -1,4 +1,0 @@
-2004-01-07 12:05:50,401 INFO  org.apache.maven.verifier.DependencyVerifier - Attempting to download maven-SNAPSHOT.jar.
-2004-01-07 12:05:54,213 INFO  org.apache.maven.cli.App - Total time: 8 seconds
-2004-01-07 12:05:54,213 INFO  org.apache.maven.cli.App - Finished at: Wed Jan 07 12:05:54 EST 2004
-2004-01-07 12:05:54,213 INFO  org.apache.maven.cli.App - 
