@@ -16,85 +16,138 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <faqs title="Frequently Asked Questions">
-  <part id="general">
-    <title>General</title>
-    <faq id="mail-list">
-      <question>Where can I find the Mailing List Archives for Pluto?</question>
-      <answer>
-        <p>
-          The lists are archived at
-          <A href="http://nagoya.apache.org/">http://nagoya.apache.org</A>
-          .  Direct links to the pluto
-          specific archives are:
-          <ul>
-            <li>
-              <a href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=175">Developer List</a>
-            </li>
-            <li>
-              <a href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=176">User List</a>
-            </li>
-          </ul>
-        </p>
-        <p>
-          During the first several weeks in the incubator, the Pluto
-          mail archives were not being generated. If you can not find what
-          you are looking for, you may be able to find a more complete
-          history at
-          <A href="http://news.gmane.org">Gmane</A>
-          .
-          The Pluto specific archives at Gmane are:
-          <ul>
-            <li>
-              <a href="http://news.gmane.org/gmane.comp.jakarta.pluto.devel">Developer List</a>
-            </li>
-            <li>
-              <a href="http://news.gmane.org/gmane.comp.jakarta.pluto.user">User List</a>
-            </li>
-          </ul>
-        </p>
-      </answer>
-    </faq>
-    <faq id="javaworld">
-      <question>Why can't I get the Javaworld bookmark example to work with Pluto?</question>
-      <answer>
-        <p>
-          The Javaworld examples are based on the proposed final
-          <b>draft</b>
-          of JSR-168.  The final specification included several changes,
-          including some changes to the xsd.
-        </p>
-        <p>
-          Please see the following for a modified version of this example
-          which will work with Pluto.
-          <BR/>
-          <A href="http://nagoya.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27">http://nagoya.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27</A>
-        </p>
-      </answer>
-    </faq>
-  </part>
-  <part id="architecture">
-    <title>Architecture</title>
-    <faq id="portal-impl">
-      <question>Is Pluto a fully functional portal implementation?</question>
-      <answer>
-        <p>
-          No, Pluto is a Portlet Container. If you are looking for a
-          Portal implementation, try checking out
-          <a href="http://jakarta.apache.org/jetspeed">Jetspeed</a>
-          .
-        </p>
-        <p>
-          Need more information about the difference between a Portal
-          and a Portlet Container?  Take a look at the
-          <A href="#container">next question.</A>
-        </p>
-      </answer>
-    </faq>
+<part id="general">
+<title>General</title>
+
+  <faq id="releases">
+  <question><b>
+    Which version of Pluto should I use?
+  </b></question>
+  <answer>
+    Pluto 1.0.1-RC1 is the most recent distribution.  
+    This version of Pluto passes all of the TCK tests.
+  </answer>
+  </faq>
+
+  <faq id="versions">
+  <question><b>
+    I've seen references to both Pluto 1.0.x and Pluto 
+    1.1.x.  It seems as though both are being developed
+    at the same time.  What is the difference between
+    the two versions?
+  </b></question>
+  <answer>
+    <p>You're right.  Pluto 1.0.x is currently going through
+    the release process.  Pluto 1.0.x is based off of the code
+    base which was originally donated to the ASF by IBM.
+    The first release candidate in this series was published 
+    on October 8, 2004.</p>
+    <p>Around the same time that this release occured 
+    Pluto 1.1.0-ALPHA was imported into our source repository.
+    The 1.1.x series is a refactoring/rewrite of Pluto.  It's
+    entire purpose is to simplify the container and make it
+    easier for both Portlet Developers and Portal Developers
+    looking to embed Pluto into their portal to use Pluto.
+    The 1.1.x series has made great progress and currently
+    passes all of the tests available in the Pluto Testsuite.
+    </p>
+  </answer>
+  </faq>
+
+  <faq id="matching">
+  <question><b>
+    Do Pluto Versions corespond with Portlet Specification 
+    Versions. 
+  </b></question>
+  <answer>
+    No.  See the Pluto home page for a mapping
+    of Pluto versions to Portlet Specification versions.
+  </answer>
+  </faq>
+
+</part>
+
+
+<part id="portlets">
+<title>Portlets and Deployment</title>
+
+  <!-- Java World Portlet -->
+  <faq id="javaworld">
+  <question><b>
+    Why can't I get the Javaworld bookmark example to work with Pluto?
+  </b></question>
+  <answer>
+  <p>The Javaworld examples are based on the <b>Proposed Final Draft</b>
+     of JSR-168.  The final specification included several changes,
+     including some changes to the xsd.</p>
+  <p>Please see the <A href="http://nagoya.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27">
+     message archives</A>for a modified version of this example 
+     which will work with Pluto.</p>
+  </answer>
+  </faq>
+
+  <faq id="portal-impl">
+  <question><b>
+    Is Pluto a fully functional portal implementation?
+  </b></question>
+  <answer>
+   <p>No, Pluto is a Portlet Container. If you are looking for a
+      Portal implementation, try checking out
+      <a href="http://portals.apache.org/jetspeed-2">Jetspeed</a>.</p>
+   <p>Need more information about the difference between a Portal
+      and a Portlet Container?  Take a look at the
+      <A href="#container">next question.</A></p>
+   </answer>
+   </faq>
+
+</part>
+
+<part id="embed">
+<title>Embedding Pluto</title>
+  <faq id="embed">
+  <question><b>
+    I'd like to embed Pluto into my Portal.  How do I start?
+  </b></question>
+  <answer>
+    Take a look at the Developer documentation on the website.
+    This has an integration and architecture guide.  Additionally
+    we suggest that you look at Jetspeed for an example of how
+    it can be done.  We readily admit that this embeding 
+    documentation may be a little sparse and welcome any 
+    documentation patches.
+  </answer>
+  </faq>
+
+  <faq id="services">
+  <question><b>
+    What are the required services that must be implemented
+    by a Portal wanting to embed Pluto?
+  </b></question>
+  <answer>
+    <ul><li>Information Provider</li>
+        <li>Factory Manager Service</li>
+        <li>Log Services</li></ul>
+  </answer>
+  </faq>
+  
+  <faq id="optional">
+  <question><b>
+    What services are optional when integrating Pluto?
+  </b></question>
+  <answer>
+    <ul><li>Property Manager Service</li>
+        <li>Dynamic Title Service</li></ul>
+  </answer>
+  </faq>
+</part>
+
+<part id="architecture">
+<title>Architecture, Design, and Implementation</title>
     <faq id="container">
-      <question>
+      <question><b>
         What is the difference between a Portal and a Portlet
         Container?
-      </question>
+      </b></question>
       <answer>
         <p>
           This question was answered on the developer list in the following
@@ -148,9 +201,9 @@ limitations under the License.
   <part id="config">
     <title>Configuration</title>
     <faq id="portal">
-      <question>
+      <question><b>
         How do I configure the pluto portal?
-      </question>
+      </b></question>
       <answer>
       	<p>
         Firstly, please understand that the pluto portal is only intended to be
