@@ -20,25 +20,25 @@
     <property name="build.dir" value="../temp"/>
     <property name="build.jar" value="${build.dir}/jar"/>
     
-    <property name="build.api.dir" value="${build.dir}/api"/>
+    <property name="build.api.dir" value="../api/target"/>
   <!--  <property name="build.api.src" value="${src.java.dir}/api"/> -->
     <property name="build.api.src" value="../api/src/java"/>
     <property name="build.api.dest" value="${build.api.dir}/classes"/>
-    <property name="build.api.lib" value="../lib/api"/>
+    <property name="build.api.lib" value="../api/target"/>
 
-    <property name="build.container.dir" value="${build.dir}/container"/>
+    <property name="build.container.dir" value="../container/target"/>
     <!-- <property name="build.container.src" value="${src.java.dir}/container"/> -->
     <property name="build.container.src" value="../container/src/java"/>
     <property name="build.container.dest" value="${build.container.dir}/classes"/>
-    <property name="build.container.lib" value="../lib/container"/>
+    <property name="build.container.lib" value="../container/target"/>
 
-    <property name="build.portal.dir" value="${build.dir}/portal"/>
+    <property name="build.portal.dir" value="../portal/target"/>
     <!-- <property name="build.portal.war" value="../war"/> -->
     <property name="build.portal.war" value="../portal/src/webapp"/>
     <!-- <property name="build.portal.src" value="${src.java.dir}/portal"/> -->
     <property name="build.portal.src" value="../portal/src/java"/>
     <property name="build.portal.dest" value="${build.portal.dir}/classes"/>
-    <property name="build.portal.lib" value="../lib/portal"/>
+    <property name="build.portal.lib" value="../portal/target/pluto-portal/WEB-INF/lib"/>
 
     <property name="build.portlets.dir" value="../portlets"/>
 
@@ -54,7 +54,9 @@
 
     <property name="javadoc.destdir" value="../docs/apidocs"/>
 
-    <property name="year" value="2002"/>
+    <property name="ant.lib" value="./ant/lib"/>
+
+    <property name="year" value="2004"/>
     <property name="ant.home" value="."/>
     <property name="debug" value="on"/>
     <property name="optimize" value="off"/>
@@ -645,6 +647,9 @@ java.home = ${java.home}
                     <include name="*.jar"/>
                 </fileset>
                 <fileset dir="${build.portal.lib}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${ant.lib}">
                     <include name="*.jar"/>
                 </fileset>
             </classpath>
