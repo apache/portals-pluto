@@ -78,7 +78,7 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     // modified by YCLI: START :: to handle multiple taglib tags and resource-ref tag
     // private TagDefinition castorTagDefinition = new TagDefinition();
     private TagDefinitionSet taglibs = new TagDefinitionSet();
-    private ResourceRef castorResourceRef = new ResourceRef();
+    private ResourceRefSet castorResourceRef = new ResourceRefSet();
     // modified by YCLI: END
 
     // WebApplicationDefinition implementation.
@@ -324,12 +324,12 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
         this.taglibs = taglibs;
     }
 
-    public ResourceRef getResourceRef() {
+    public ResourceRefSet getCastorResourceRefSet() {
         return castorResourceRef;
     }
 
-    public void setResourceRef(ResourceRef resourceRef) {
-        castorResourceRef = resourceRef;
+    public void setCastorResourceRefSet(ResourceRefSet resourceRefs) {
+        castorResourceRef = resourceRefs;
     }
     // modified by YCLI: END
 

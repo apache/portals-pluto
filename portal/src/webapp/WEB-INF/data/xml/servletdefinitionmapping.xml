@@ -232,8 +232,9 @@
        <bind-xml name="taglib" node="element" />
     </field>
 
-    <field name="resourceRef" 
-	type="org.apache.pluto.portalImpl.om.servlet.impl.ResourceRef"> 
+    <field name="castorResourceRefSet"
+           type="org.apache.pluto.portalImpl.om.servlet.impl.ResourceRef"
+           collection="collection">
         <bind-xml name="resource-ref" node="element"/>
     </field>
 
