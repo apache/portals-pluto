@@ -29,7 +29,7 @@ limitations under the License.
 <A href="<%=url%>"><IMG SRC="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/images/previous.png")%>" border="0"></A>
 
 <portlet:actionURL secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-	<portlet:param name="testId" value="xx_introduction"/>
+	<portlet:param name="testId" value="<%=null%>"/>
 </portlet:actionURL>
 
 <A href="<%=url%>"><IMG SRC="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/images/return_index.png")%>" border="0"></A>

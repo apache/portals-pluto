@@ -31,10 +31,10 @@ limitations under the License.
 
     <P>Please select one of the following tests:
     <TABLE>
-    <c:forEach var="test" items="${tests}">
-    <TR><TD><%=pageContext.getAttribute("test").toString()%></TD>
+    <c:forEach var="test" items="${tests}" varStatus="status">
+    <TR><TD><c:out value="${test.name}"/></TD>
         <portlet:actionURL secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-    	<portlet:param name="testId" value='<%=pageContext.getAttribute("test").toString()%>'/>
+    	<portlet:param name="testId" value='<%=((javax.servlet.jsp.jstl.core.LoopTagStatus)pageContext.getAttribute("status")).getIndex()+""%>'/>
         </portlet:actionURL>
         <TD><A href="<c:out value="${url}"/>">Test</A></TD>
     </c:forEach>
