@@ -5,7 +5,7 @@
 <taglib>
     <tlibversion>1.0</tlibversion>
     <jspversion>1.1</jspversion>
-    <shortname>Tags for portlets</shortname>
+    <shortname>portlet</shortname>
     <tag>
         <name>defineObjects</name>
         <tagclass>org.apache.pluto.tags.DefineObjectsTag</tagclass>
