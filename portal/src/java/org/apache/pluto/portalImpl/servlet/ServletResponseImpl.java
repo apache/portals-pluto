@@ -29,6 +29,12 @@ public class ServletResponseImpl extends javax.servlet.http.HttpServletResponseW
         super(response);
     }
 
+    public java.lang.String getContentType()
+	 {
+        String contentType = "text/html";	// default...		 
+		return contentType;
+	 }
+
     private javax.servlet.http.HttpServletResponse _getHttpServletResponse()
     {
         return(javax.servlet.http.HttpServletResponse) super.getResponse();

@@ -24,7 +24,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.*;
 
-public class StoredServletResponseImpl extends javax.servlet.http.HttpServletResponseWrapper 
+public class StoredServletResponseImpl extends ServletResponseImpl 
 {
     private PrintWriter writer;
 

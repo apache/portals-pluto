@@ -58,6 +58,7 @@ import org.apache.pluto.portalImpl.om.window.impl.PortletWindowImpl;
 import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.services.portletentityregistry.PortletEntityRegistry;
 import org.apache.pluto.portalImpl.servlet.ServletObjectAccess;
+import org.apache.pluto.portalImpl.servlet.ServletResponseImpl;
 import org.apache.pluto.portalImpl.util.ObjectID;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.PortalContextProvider;
@@ -85,7 +86,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 
     public static final String PORTLET_ERROR_MSG = "Error occurred in portlet!";
 
-	public PortletFragment(String id,
+    public PortletFragment(String id,
                            ServletConfig config,
                            org.apache.pluto.portalImpl.aggregation.Fragment parent,
                            org.apache.pluto.portalImpl.om.page.Fragment fragDesc,
@@ -106,6 +107,7 @@ public class PortletFragment extends AbstractFragmentSingle {
             throws ServletException, IOException
     {
 		HttpServletRequest wrappedRequest = ServletObjectAccess.getServletRequest(request, portletWindow);
+		ServletResponseImpl wrappedResponse = (ServletResponseImpl)ServletObjectAccess.getServletResponse(response);
 		PrintWriter responseWriter = response.getWriter();
 		StringWriter storedWriter = new StringWriter();
 
@@ -159,7 +161,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 			PrintWriter writer2 = new PrintWriter(storedWriter);
 
 			// create a wrapped response which the Portlet will be rendered to
-			HttpServletResponse wrappedResponse = ServletObjectAccess.getStoredServletResponse(response, writer2);
+			wrappedResponse = (ServletResponseImpl)ServletObjectAccess.getStoredServletResponse(response, writer2);
 
 			try {
 				// render the Portlet to the wrapped response, to be output later.
@@ -192,7 +194,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 		portletInfo.setTitle(title);
 
 		DynamicInformationProvider provider = FactoryAccess.getDynamicProvider(request);
-		ContentType supported = portletDefinition.getContentTypeSet().get(wrappedRequest.getContentType());
+		ContentType supported = portletDefinition.getContentTypeSet().get(wrappedResponse.getContentType());
 		PortalContextProvider portalContextProvider = FactoryAccess.getStaticProvider().getPortalContextProvider();
 
 		// get the list of modes this Portlet supports
