@@ -33,7 +33,7 @@ import org.apache.pluto.util.Enumerator;
 public class PortalContextImpl implements PortalContext
 {
 
-    PortalContextProvider provider = null;
+    private PortalContextProvider provider = null;
 
     public PortalContextImpl() 
     {

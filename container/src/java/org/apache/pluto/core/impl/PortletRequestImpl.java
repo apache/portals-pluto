@@ -214,12 +214,7 @@ implements PortletRequest, InternalPortletRequest
         Map map = PropertyManager.getRequestProperties(portletWindow, this._getHttpServletRequest());
         if (map != null)
         {
-            Iterator propsIter = map.keySet().iterator();
-
-            while (propsIter.hasNext())
-            {
-                v.add(propsIter.next());
-            }
+            v.addAll(map.keySet());            
         }
 
         // get properties from request header

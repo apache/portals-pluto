@@ -37,10 +37,12 @@ import org.apache.pluto.om.portlet.ContentType;
 import org.apache.pluto.om.portlet.ContentTypeSet;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.window.PortletWindow;
+import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.PortletURLProvider;
 
 public class PortletURLImpl implements PortletURL {
+    protected DynamicInformationProvider provider; // <ibm>
     protected PortletMode mode = null;
 
     protected HashMap parameters = new HashMap();
@@ -68,25 +70,31 @@ public class PortletURLImpl implements PortletURL {
     // javax.portlet.PortletURL -------------------------------------------------------------------
     public void setWindowState(WindowState windowState) throws WindowStateException
     {
-        PortalContext portalContext = PortletObjectAccess.getPortalContext();
-        Enumeration supportedWindowStates = portalContext.getSupportedWindowStates();
-        if (windowState != null) {
-            while (supportedWindowStates.hasMoreElements()) {
-                WindowState supportedWindowState = (WindowState)supportedWindowStates.nextElement();
-                if (windowState.equals(supportedWindowState)) {
-                    state = windowState;
-                    return;             
-                }
-            }
+        if (provider == null)
+            provider = InformationProviderAccess.getDynamicProvider(servletRequest);
+        if (windowState != null && provider.isWindowStateAllowed(windowState))
+        {
+            state = windowState;                        
+            return;             
         }
+ 
         throw new WindowStateException("unsupported Window State used: " + windowState,windowState);
     }
 
     public void setPortletMode (PortletMode portletMode) throws PortletModeException
     {
-        if (isPortletModeSupported(portletMode,portletWindow)) {
-            mode = portletMode;
-            return;             
+  
+		// check if portal supports portlet mode
+//		DynamicInformationProvider provider = InformationProviderAccess.getDynamicProvider(servletRequest);
+        if (provider == null)
+            provider = InformationProviderAccess.getDynamicProvider(servletRequest);
+        if (portletMode != null && provider.isPortletModeAllowed(portletMode))
+        {
+            if (isPortletModeSupported(portletMode, portletWindow))
+            {
+                mode = portletMode;
+                return;             
+            }
         }
         throw new PortletModeException("unsupported Portlet Mode used: " + portletMode,portletMode);
     }
@@ -165,17 +173,7 @@ public class PortletURLImpl implements PortletURL {
     private boolean isPortletModeSupported(PortletMode requestedPortletMode,PortletWindow referencedPortletWindow) {
         PortletDefinition portletDefinition = referencedPortletWindow.getPortletEntity().getPortletDefinition();
         ContentTypeSet contentTypes = portletDefinition.getContentTypeSet();
-        ContentType contentType = contentTypes.get("text/html");
-        Iterator portletModes = contentType.getPortletModes();
-        if (requestedPortletMode != null) {
-            while (portletModes.hasNext()) {
-                PortletMode supportedPortletMode = (PortletMode)portletModes.next();
-                if (requestedPortletMode.equals(supportedPortletMode)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return contentTypes.supportsPortletMode(requestedPortletMode);
     }
     // --------------------------------------------------------------------------------------------
 
