@@ -14,7 +14,7 @@ public class PortletContainerServices
 
     public static ContainerService get(Class service)
     {
-        // get current environment from thread locale
+        // get current environment from thread local
         // after prepare has been called
         Stack currentContainerServiceStack = (Stack)currentContainerService.get();
 
@@ -35,7 +35,7 @@ public class PortletContainerServices
 
     public static String getUniqueContainerName()
     {
-        // get uniqueContainerName stack out of the thread locale
+        // get uniqueContainerName stack out of the thread local
         Stack currentNameStack = (Stack)currentUniqueContainerName.get();
 
         if (currentNameStack.isEmpty())
@@ -68,14 +68,14 @@ public class PortletContainerServices
      */
     public static void prepare(String uniqueContainerName)
     {
-        // get container service stack out of the thread locale
+        // get container service stack out of the thread local
         Stack currentContainerServiceStack = (Stack)currentContainerService.get();
-        // add current environment to stack stored in thread locale
+        // add current environment to stack stored in thread local
         currentContainerServiceStack.push(containerServices.get(uniqueContainerName));
 
-        // get uniqueContainerName stack out of the thread locale
+        // get uniqueContainerName stack out of the thread local
         Stack currentNameStack = (Stack)currentUniqueContainerName.get();
-        // add current uniqueContainerName to stack stored in thread locale
+        // add current uniqueContainerName to stack stored in thread local
         currentNameStack.push(uniqueContainerName);
     }
 
@@ -84,7 +84,7 @@ public class PortletContainerServices
      */
     public static void release()
     {
-        // remove current environment from thread locale
+        // remove current environment from thread local
         // after prepare has been called
         Stack currentContainerServiceStack = (Stack)currentContainerService.get();
         if (!currentContainerServiceStack.isEmpty())
@@ -92,7 +92,7 @@ public class PortletContainerServices
             currentContainerServiceStack.pop();
         }
 
-        // remove uniqueContainerName from thread locale
+        // remove uniqueContainerName from thread local
         // after prepare has been called
         Stack currentNameStack = (Stack)currentUniqueContainerName.get();
         if (!currentNameStack.isEmpty())
@@ -102,16 +102,16 @@ public class PortletContainerServices
     }
 
     // holds a stack of the current environments for temporary use
-    private static ThreadLocal currentContainerService = new StackedThreadLocale(); 
+    private static ThreadLocal currentContainerService = new StackedThreadLocal(); 
     // holds the current environment reference for temporary use
-    private static ThreadLocal currentUniqueContainerName = new StackedThreadLocale(); 
+    private static ThreadLocal currentUniqueContainerName = new StackedThreadLocal(); 
 
     // map of possible environments
     private static HashMap containerServices = new HashMap();  
 
 
 
-    private static class StackedThreadLocale extends ThreadLocal
+    private static class StackedThreadLocal extends ThreadLocal
     {
         public Object initialValue()
         {
