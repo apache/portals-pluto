@@ -1,0 +1,81 @@
+<!--
+Copyright 2004,2005 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<h2>Deploy War Portlet Help</h2>
+
+
+<p class="portlet-font">
+This portlet is used to deploy new portlet applications to Pluto packaged
+in a war file. Deployment involves unzippling the war file into
+Pluto's webapps directory and adding records to the
+registry files located in <CATALINA_HOME>/webapps/pluto/WEB-INF/data (
+portletentityregistry.xml, pageregistry.xml and portletcontexts.txt).
+</p>
+
+
+<h3>Deploying portlets</h3>
+
+<ol>
+</li>
+<li class="portlet-font">
+Build a valid war file containing the portlet application to be deployed including a portlet.xml and web.xml
+file in the WEB-INF directory.
+</li>
+<li class="portlet-font">Select the war file using the Browse button in the Deploy War
+portlet.
+</li>
+<li class="portlet-font">Click submit. The war will be deployed to Pluto's webapps directory and
+a record added to portletentityregistry.xml and portletcontexts.txt.
+</li>
+<li class="portlet-font">Fill in the portlet's title, which will be used as a navigation link,
+and the number of rows and columns needed to display all portlets in the
+application. If the portlet app only contains one portlet, then keep the default
+one row, one column. The description field on that page is optional.
+JavaScript validation is done on this page to make sure that the layout
+(rows and columns) can accomodate the number of portlets in the portlet
+application that is being deployed
+</li>
+<li class="portlet-font">Click submit. The Define Page Layout page should be displayed next.
+</li>
+<li class="portlet-font">In each row/column cell, select the portlet that will be displayed there.
+</li>
+<li class="portlet-font">Click Submit. The pageregistry.xml file should be updated and the first
+page of the Deploy War portlet displayed. You will also notice new records in the Portlet Entity Registry and Page Registry portlets.
+</li>
+<li class="portlet-font">Restart Pluto and you will notice a link to the new portlet on Pluto's
+navigation bar.
+</li>
+</ol>
+
+<h3>Redeploying portlets</h3>
+<p class="portlet-font">
+Redeployment of previously deployed portlets can be done, but the results can be
+somewhat flaky due to caching of portlet content by the Pluto portal.
+To redeploy select the war file with its new contents using the Browse
+button and click Submit.
+The new war file will be uploaded, but no changes will be made to the
+porletentityregistry.xml or portletcontexts.txt. You should skip the following
+two pages that set page layout because they cannot be changed at this time.
+</p>
+<p class="portlet-font">
+Once the portlet has been redeployed, we have found that clicking on the
+Admin link  in Pluto's menu will cause the cache to be refreshed. Then you
+can click on the portlet's link. If the portlet is not refreshed, try
+clearing your browser cache and/or restarting Pluto. Pluto's
+portal, which uses Tomcat, also contains a cache of the portlet contents
+within its 'work' directory. This can be deleted after the portal is shutdown
+to clear the old content.
+</p>
