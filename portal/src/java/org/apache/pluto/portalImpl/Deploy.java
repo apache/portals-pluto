@@ -69,7 +69,7 @@ public class Deploy {
     private static String webInfDir = dirDelim + "WEB-INF" + dirDelim;
     private static String webAppsDir;
     private static String portalImplWebDir;
-    private static String buildContainerDirectory;
+    private static String plutoHome;
 
     public static void deployArchive(String webAppsDir, String warFile)
         throws IOException {
@@ -391,9 +391,8 @@ public class Deploy {
                 throw new Exception();
             }
             String strTo = dirDelim + "WEB-INF" + dirDelim + "tld" + dirDelim + "portlet.tld";
-           // String strFrom = ".." + dirDelim + "war" + strTo;           
-		   String strFrom = ".." + dirDelim + "portal"+dirDelim+"src"+dirDelim+"webapp"+strTo;
-		   
+            String strFrom = plutoHome + "portal" + dirDelim + "src" + 
+                dirDelim + "webapp" + strTo;
              
             copy(strFrom, webAppsDir + webModule + strTo);
         } catch (Exception e) {
@@ -428,7 +427,7 @@ public class Deploy {
             System.out.println(
                 "No argument specified. This command hast to be issued as:");
             System.out.println(
-                "deploy <TOMCAT-webapps-directory> <TOMCAT-pluto-webmodule-name> <web-archive> <build-container-dir> [-debug] [-addToEntityReg <app-id> [<portlet-id>:<portlet-name>]+]");
+                "deploy <TOMCAT-webapps-directory> <TOMCAT-pluto-webmodule-name> <web-archive> <pluto-home-dir> [-debug] [-addToEntityReg <app-id> [<portlet-id>:<portlet-name>]+]");
             return;
         }
 
@@ -454,9 +453,9 @@ public class Deploy {
 
         warFile = args[2];
 
-        buildContainerDirectory = args[3];
-        if (!buildContainerDirectory.endsWith(dirDelim))
-            buildContainerDirectory += dirDelim;
+        plutoHome = args[3];
+        if (!plutoHome.endsWith(dirDelim))
+            plutoHome += dirDelim;
 
         if (args.length > 4) {
             if ((args[4].equals("-debug")) || (args[4].equals("/debug"))) {
