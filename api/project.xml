@@ -20,6 +20,7 @@ limitations under the License.
   <name>Portlet API (JSR-168)</name>
   <id>portlet-api</id>
   <groupId>portlet-api</groupId>
+  <currentVersion>1.0</currentVersion>
 
   <organization>
     <logo>/../../images/jakarta-logo-blue.gif</logo>
