@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="src/api"/>
-    <classpathentry kind="src" path="src/portal"/>
-    <classpathentry kind="src" path="src/container"/>
+    <classpathentry excluding="**/CVS*" kind="src" path="src/api"/>
+    <classpathentry excluding="**/CVS*" kind="src" path="src/portal"/>
+    <classpathentry excluding="**/CVS*" kind="src" path="src/container"/>
     <classpathentry exported="true" kind="lib" path="temp/api/portlet-api.jar"/>
     <classpathentry exported="true" kind="lib" path="lib/portal/jakarta-regexp-1.2.jar"/>
     <classpathentry exported="true" kind="lib" path="temp/jar/WEB-INF/lib/pluto-portal-impl.jar"/>
