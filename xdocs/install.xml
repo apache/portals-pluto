@@ -29,11 +29,18 @@ Follow the steps below to compile and install Pluto
 
 <p><strong>Install Pluto</strong>
 	<ul>
+	<li>Get the latest source from the jakarta-pluto CVS repository.
+	   For more information have a look <a href="http://jakarta.apache.org/site/cvsindex.html">here.</a>
+        We will refer to the directory for the remainder of this document 
+        as ${pluto.home}.</li>
+	</li>
+<!--
 	<li>Download Pluto the latest source from 
         <a href="/site/sourceindex.cgi">the Jakarta Source index</a>
 		or directly from <a href="http://jakarta.apache.org/site/cvsindex.html">
         cvs</a>. Place the source tree in a directory which will be
         referred to for the remainder of this document as ${pluto.home}.</li>
+-->
     <li>From the command line, go to the ${pluto.hom}/build directory and call 
 			"build", if you need to completely rebuild you can use "build rebuild"</li>
     <li>Call the "install" script (install.bat or install.sh). You will be asked 
