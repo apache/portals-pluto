@@ -1,12 +1,12 @@
 /*
  * Copyright 2003,2004 The Apache Software Foundation.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,16 +17,16 @@ package org.apache.pluto.factory;
 
 /**
  * <p>
- * This interface defines portal/container factories and their life-cycle. 
+ * This interface defines portal/container factories and their life-cycle.
  * A Pluto defines the interfaces for the factories, and the portal implements the factory.
  * A portal's factory implementation must be a derivative from this interface and implement the
  * <CODE>init()</CODE> and <CODE>destroy()</CODE> methods to meet Pluto's factory contract.
- * Factories create the shared classes between the portal and Pluto container. 
+ * Factories create the shared classes between the portal and Pluto container.
  * Implementations are created by portal provided factories. Many of the classes created by the factories
- * are the implementations of the Java Portlet API interfaces. 
+ * are the implementations of the Java Portlet API interfaces.
  * <p>
  * Factory Managed Interfaces per Pluto requirements:
- * <p> 
+ * <p>
  * <a href='http://www.bluesunrise.com/portlet-api/javax/portlet/ActionRequest.html'>javax.portlet.ActionRequest</a><br>
  * <a href='http://www.bluesunrise.com/portlet-api/javax/portlet/ActionResponse.html'>javax.portlet.ActionResponse</a><br>
  * <a href='http://www.bluesunrise.com/portlet-api/javax/portlet/RenderRequest.html'>javax.portlet.RenderRequest</a><br>
@@ -41,20 +41,20 @@ package org.apache.pluto.factory;
  * <a href='http://www.bluesunrise.com/portlet-api/javax/portlet/PreferencesValidator.html'>javax.portlet.PreferencesValidator</a><br>
  * <a href='http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/http/HttpServletRequest.html'>javax.servlet.http.HttpServletRequest</a><br>
  * <a href='http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/http/HttpServletResponse.html'>javax.servlet.http.HttpServletResponse</a><br>
- * <a href='http://jakarta.apache.org/pluto/apidocs/org/apache/pluto/invoker/PortletInvoker.html'>org.apache.pluto.invoker.PortletInvoker</a><br>
- * <a href='http://jakarta.apache.org/pluto/apidocs/org/apache/pluto/util/NamespaceMapper.html'>org.apache.pluto.util.NamespaceMapper</a><br>
- * <a href='http://jakarta.apache.org/pluto/apidocs/org/apache/pluto/om/ControllerFactory.html'>org.apache.pluto.om.ControllerFactory</a><br>
+ * <a href='hhttp://portals.apache.org/pluto/multiproject/pluto/apidocs/org/apache/pluto/invoker/PortletInvoker.html'>org.apache.pluto.invoker.PortletInvoker</a><br>
+ * <a href='http://portals.apache.org/pluto/multiproject/pluto/apidocs/org/apache/pluto/util/NamespaceMapper.html'>org.apache.pluto.util.NamespaceMapper</a><br>
+ * <a href='http://portals.apache.org/pluto/multiproject/pluto/apidocs/org/apache/pluto/om/ControllerFactory.html'>org.apache.pluto.om.ControllerFactory</a><br>
  * <p>
  * Pluto Service Providers
  * <p>
- * <a href='http://jakarta.apache.org/pluto/apidocs/org/apache/pluto/services/information/StaticInformationProvider.html'>org.apache.pluto.services.information.InformationProviderService</a><br>
- * <a href='http://jakarta.apache.org/pluto/apidocs/org/apache/pluto/services/information/DynamicInformationProvider.html'>org.apache.pluto.services.information.DynamicInformationProvider</a><br>
- * <a href='http://jakarta.apache.org/pluto/apidocs/org/apache/pluto/services/information/PortletActionProvider.html'>org.apache.pluto.services.information.PortletActionProvider</a><br>
- * <a href='http://jakarta.apache.org/pluto/apidocs/org/apache/pluto/services/information/PortalContextProvider.html'>org.apache.pluto.services.information.PortalContextProvider</a><br>
- * 
- * @version $Id: Factory.java,v 1.3 2004/03/02 14:48:55 cziegeler Exp $
+ * <a href='http://portals.apache.org/pluto/multiproject/pluto/apidocs/org/apache/pluto/services/information/StaticInformationProvider.html'>org.apache.pluto.services.information.InformationProviderService</a><br>
+ * <a href='http://portals.apache.org/pluto/multiproject/pluto/apidocs/org/apache/pluto/services/information/DynamicInformationProvider.html'>org.apache.pluto.services.information.DynamicInformationProvider</a><br>
+ * <a href='http://portals.apache.org/pluto/multiproject/pluto/apidocs/org/apache/pluto/services/information/PortletActionProvider.html'>org.apache.pluto.services.information.PortletActionProvider</a><br>
+ * <a href='http://portals.apache.org/pluto/multiproject/pluto/apidocs/org/apache/pluto/services/information/PortalContextProvider.html'>org.apache.pluto.services.information.PortalContextProvider</a><br>
+ *
+ * @version $Id$
  */
-public interface Factory 
+public interface Factory
 {
 
 
