@@ -79,6 +79,7 @@ import org.apache.pluto.portalImpl.util.Properties;
 import org.apache.pluto.portalImpl.xml.XmlParser;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.xml.Unmarshaller;
+import org.xml.sax.InputSource;
 
 /**
  * A simple XML Castor file based implementation of the <code>PortletRegistryService</config>
@@ -208,13 +209,13 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
                           "Loading the following Portlet Applications XML files..."+portletXml+", "+webXml);
             }
 
-            org.w3c.dom.Document portletDocument = 
-            XmlParser.parsePortletXml(new FileInputStream(portletXml));
-
+            InputSource source = new InputSource(new FileInputStream(portletXml));
+            source.setSystemId(portletXml.toURL().toExternalForm());
+            
             Unmarshaller unmarshaller = new Unmarshaller(this.mappingPortletXml);
 			unmarshaller.setIgnoreExtraElements(true);
             PortletApplicationDefinitionImpl portletApp = 
-                (PortletApplicationDefinitionImpl)unmarshaller.unmarshal( portletDocument );
+                (PortletApplicationDefinitionImpl)unmarshaller.unmarshal( source );
 
             WebApplicationDefinitionImpl webApp = null;
 
@@ -303,5 +304,4 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
         }
 
     }
-
 }
