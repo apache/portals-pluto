@@ -48,6 +48,7 @@ limitations under the License.
         <war.bundle>false</war.bundle>
       </properties>
     </dependency>
+
     <dependency>
       <id>pluto-portal</id>
       <groupId>pluto</groupId>
@@ -80,6 +81,7 @@ limitations under the License.
         <war.bundle>false</war.bundle>
       </properties>
     </dependency>
+
     <dependency>      
       <id>xml-apis</id>
       <version>2.0.2</version>
@@ -88,6 +90,22 @@ limitations under the License.
       </properties>
     </dependency>
     
+    <dependency>
+        <id>jstl</id>
+        <version>1.0.2</version>
+        <properties>
+            <war.bundle>true</war.bundle>
+        </properties>
+    </dependency>
+
+    <dependency>
+        <groupId>taglibs</groupId>
+        <artifactId>standard</artifactId>
+        <version>1.0.4</version>
+        <properties>
+            <war.bundle>true</war.bundle>
+        </properties>
+    </dependency>
 
   </dependencies>
 
