@@ -50,6 +50,8 @@ import org.apache.pluto.portalImpl.servlet.ServletObjectAccess;
 public class Servlet extends HttpServlet
 {
 
+    private static String CONTENT_TYPE = "text/html";
+
     private Logger log = null;
 
     public String getServletInfo()
@@ -60,6 +62,11 @@ public class Servlet extends HttpServlet
     public void init (ServletConfig config) throws ServletException
     {
         super.init (config);
+
+        String charset = config.getInitParameter("charset");
+        if (charset != null && charset.length() > 0) {
+            CONTENT_TYPE = "text/html; charset=" + charset;
+        }
 
         try
         {
@@ -146,7 +153,7 @@ public class Servlet extends HttpServlet
     public void doGet (HttpServletRequest servletRequest,
                              HttpServletResponse servletResponse) throws IOException, ServletException
     {
-        servletResponse.setContentType("text/html");
+        servletResponse.setContentType(CONTENT_TYPE);
 
         PortalEnvironment env =
             new PortalEnvironment(servletRequest,

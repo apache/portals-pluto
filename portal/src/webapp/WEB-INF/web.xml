@@ -27,6 +27,13 @@ limitations under the License.
         <servlet-name>pluto</servlet-name>
         <display-name>Pluto Driver</display-name>
         <servlet-class>org.apache.pluto.portalImpl.Servlet</servlet-class>
+        <!-- Uncomment the following to allow for non latin-1 character sets in output. -->
+        <!--
+        <init-param>
+            <param-name>charset</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+        -->
     </servlet>
     <servlet>
         <servlet-name>TCKDriver</servlet-name>
