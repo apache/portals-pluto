@@ -544,7 +544,6 @@ public class Deploy {
             ras.writeBytes("        <definition-id>" + portletApp + "</definition-id>\r\n");
 
             StringTokenizer tokenizer;
-            Iterator it;
             for (int i = o; i < args.length; ++i) {
                 tokenizer = new StringTokenizer(args[i], ":");
                 String portletId = tokenizer.nextToken();
