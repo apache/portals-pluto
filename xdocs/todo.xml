@@ -39,14 +39,14 @@ limitations under the License.
     <tr><td>Implement the Driver's PortletPreferenceProvider 
             implementation. See: org.apache.pluto.driver.services.PortletPreferencesProviderImpl</td>
         <td>Portal Driver</td>
-        <td> No </td></tr>
+        <td> Yes </td></tr>
     <tr><td>Implement a Deployer for Pluto 1.1.  In order to 
             simplify configuration, Pluto 1.1 has changed the
             configuration requirements of portlets being deployed
             to the container.  As a result, a new deployer should
             be written.</td>
         <td>Deployer</td>
-        <td> No </td></tr>
+        <td> Yes </td></tr>
     <tr><td>Clean up error/exception messages.  The StringManager
             should be used to create error messages for exceptions
             thrown by the container.  This will allow messages to
@@ -55,6 +55,12 @@ limitations under the License.
         <td> Yes </td></tr>
     <tr><td>Implement Strategy for providing user attributes.</td>
         <td>Container / Portal Driver</td>
+        <td> No </td></tr>
+    <tr><td>Create a new test in the testsuite for Portlet Resource Bundles.</td>
+        <td>Testsuite</td>
+        <td> No </td></tr>
+    <tr><td>Develope the TCK Driver for Pluto Portal Driver 1.1</td>
+        <td>Portal Driver</td>
         <td> No </td></tr>
     </table>
 </P>
