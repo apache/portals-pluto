@@ -189,6 +189,12 @@ public class Deploy {
                 XmlParser.parsePortletXml(new FileInputStream(portletXml));
 
             Unmarshaller unmarshaller = new Unmarshaller(mappingPortletXml);
+
+            // modified by YCLI: START :: to ignore extra elements and attributes
+            unmarshaller.setIgnoreExtraElements(true);
+            unmarshaller.setIgnoreExtraAttributes(true);
+            // modified by YCLI: END 
+
             PortletApplicationDefinitionImpl portletApp =
                 (PortletApplicationDefinitionImpl) unmarshaller.unmarshal(
                     portletDocument);
@@ -213,7 +219,12 @@ public class Deploy {
                     XmlParser.parseWebXml(new FileInputStream(webXml));
 
                 Unmarshaller unmarshallerWeb = new Unmarshaller(mappingWebXml);
-    			unmarshallerWeb.setIgnoreExtraElements(true);
+
+                // modified by YCLI: START :: to ignore extra elements and attributes
+                unmarshallerWeb.setIgnoreExtraElements(true);
+                unmarshallerWeb.setIgnoreExtraAttributes(true);
+                // modified by YCLI: END 
+
                 webApp =
                     (WebApplicationDefinitionImpl) unmarshallerWeb.unmarshal(
                         webDocument);

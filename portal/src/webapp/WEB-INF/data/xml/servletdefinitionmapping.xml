@@ -40,6 +40,30 @@
 
   </class>
   
+  <class name="org.apache.pluto.portalImpl.om.servlet.impl.ResourceRef">
+
+    <field name="description" type="java.lang.String" required="false">
+      <bind-xml name="description" node="element"/>
+    </field>
+
+    <field name="name" type="java.lang.String" required="false">
+      <bind-xml name="res-ref-name" node="element"/>
+    </field>
+
+    <field name="type" type="java.lang.String" required="false">
+      <bind-xml name="res-type" node="element"/>
+    </field>
+
+    <field name="auth" type="java.lang.String" required="false">
+      <bind-xml name="res-auth" node="element"/>
+    </field>
+
+    <field name="sharing" type="java.lang.String" required="false">
+      <bind-xml name="res-sharing-scope" node="element"/>
+    </field>
+
+  </class>
+  
   <class name="org.apache.pluto.portalImpl.om.servlet.impl.MimeTypeImpl">
 
     <field name="extension" type="java.lang.String" required="true">
@@ -208,6 +232,11 @@
        <bind-xml name="taglib" node="element" />
     </field>
 
+    <field name="resourceRef" 
+	type="org.apache.pluto.portalImpl.om.servlet.impl.ResourceRef"> 
+        <bind-xml name="resource-ref" node="element"/>
+    </field>
+
     <!-- only for completion, not used in class file -->
     <field name="icon" transient="true" direct="true">
         <bind-xml name="icon" node="element"/>
@@ -232,9 +261,6 @@
         <bind-xml name="error-page" node="element"/>
     </field>
     
-    <field name="resourceRef" transient="true" direct="true">
-        <bind-xml name="resource-ref" node="element"/>
-    </field>
     <field name="securityConstraint" transient="true" direct="true">
         <bind-xml name="security-constraint" node="element"/>
     </field>

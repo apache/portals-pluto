@@ -49,20 +49,20 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
 
 
     // <not used variables - only for castor>
-    public String icon;
-    public String distributable;
-    public String sessionConfig;
-    public String mimeMapping;
-    public String welcomeFileList;
-    public String errorPage;
-    public String resourceRef;
-    public String securityConstraint;
-    public String loginConfig;
-    public String securityRole;
-    public String envEntry;
-    public String ejbRef;
-    private Collection castorMimeMappings = new ArrayList();
-    // </not used variables - only for castor>
+    public String icon = null;
+    public String distributable = null;
+    public String sessionConfig = null;
+    public String mimeMapping = null;
+    public String welcomeFileList = null;
+    public String errorPage = null;
+    public String taglib = null;
+    public String resourceRef = null;
+    public String securityConstraint = null;
+    public String loginConfig = null;
+    public String securityRole = null;
+    public String envEntry = null;
+    public String ejbRef = null;
+    private Collection castorMimeMappings = new ArrayList();    // </not used variables - only for castor>
 
 
     private String contextPath = null;        
@@ -74,7 +74,12 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     private Collection servletMappings = new ArrayList();
     private ServletDefinitionList servlets = new ServletDefinitionListImpl();
     private SecurityRoleSet securityRoles = new org.apache.pluto.portalImpl.om.common.impl.SecurityRoleSetImpl();
-    private Collection castorTagDefinitions = new ArrayList();
+
+    // modified by YCLI: START :: to handle multiple taglib tags and resource-ref tag
+    // private TagDefinition castorTagDefinition = new TagDefinition();
+    private TagDefinitionSet taglibs = new TagDefinitionSet();
+    private ResourceRef castorResourceRef = new ResourceRef();
+    // modified by YCLI: END
 
     // WebApplicationDefinition implementation.
     
@@ -293,15 +298,6 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
             buffer.append(((ServletMappingImpl)iterator.next()).toString(indent+2));
         }
 
-        iterator = castorTagDefinitions.iterator();
-        if (iterator.hasNext()) {
-            StringUtils.newLine(buffer,indent);
-            buffer.append("CastorTagDefinitions:");
-        }
-        while (iterator.hasNext()) {
-            buffer.append(((TagDefinitionImpl)iterator.next()).toString(indent+2));
-        }
-
         StringUtils.newLine(buffer,indent);
         buffer.append("contextPath='"); buffer.append(contextPath); buffer.append("'");
         StringUtils.newLine(buffer,indent);
@@ -312,16 +308,32 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     /**
      * @return
      */
-    public Collection getCastorTagDefinitions() {
-        return castorTagDefinitions;
+
+    // modified by YCLI: START :: handling multiple taglib tags and resource-ref tag
+
+    public TagDefinitionSet getTagDefinitionSet()
+    {
+        return taglibs;
     }
 
-    /**
-     * @param definition
-     */
-    public void setCastorTagDefinitions(Collection definition) {
-        castorTagDefinitions = definition;
+    public Collection getCastorTagDefinitions() {
+        return (TagDefinitionSet) taglibs;
     }
+
+    public void setCastorTagDefinitions(TagDefinitionSet taglibs)
+    {
+        this.taglibs = taglibs;
+    }
+
+    public ResourceRef getResourceRef() {
+        return castorResourceRef;
+    }
+
+    public void setResourceRef(ResourceRef resourceRef) {
+        castorResourceRef = resourceRef;
+    }
+    // modified by YCLI: END
+
     /**
      * @return Returns the castorMimeMappings.
      */

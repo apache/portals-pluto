@@ -75,7 +75,9 @@ public class XmlParser
                                                        Constants.RES_WEB_DTD,
                                                        Constants.RES_WEB_DTD_NAME));
             
-        domParser.setFeature("http://xml.org/sax/features/validation", true);
+	// modified by YCLI: START :: do not do validation for web.xml
+        domParser.setFeature("http://xml.org/sax/features/validation", false);
+	// modified by YCLI: END 
         domParser.setFeature("http://apache.org/xml/features/dom/include-ignorable-whitespace", false);
 
         InputSource source = new InputSource( webXml );
