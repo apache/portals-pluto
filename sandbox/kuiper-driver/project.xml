@@ -164,12 +164,11 @@ limitations under the License.
     </dependency>
 
 	<!-- Pico/Nano Dep -->
-	<!-- Not Yet Used 
     <dependency>
       <id>picocontainer</id>
       <version>1.0-beta-5-SNAPSHOT</version>
       <properties>
-        <war.bundle>true</war.bundle>
+        <war.bundle.jar>true</war.bundle.jar>
       </properties>
     </dependency>
 
@@ -177,12 +176,10 @@ limitations under the License.
       <id>nanocontainer</id>
       <version>1.0-beta-1-SNAPSHOT</version>
       <properties>
-        <war.bundle>true</war.bundle>
+        <war.bundle.jar>true</war.bundle.jar>
       </properties>
-    </dependency>
-	-->
-
-
+    </dependency>    
+	
   </dependencies>
 
   <build>
