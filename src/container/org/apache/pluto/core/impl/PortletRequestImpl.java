@@ -159,23 +159,26 @@ implements PortletRequest, InternalPortletRequest
     public PortletSession getPortletSession(boolean create)
     {
         // check if the session was invalidated
-        if (portletSession != null)
+        javax.servlet.http.HttpSession httpSession = this._getHttpServletRequest().getSession(false);
+
+        if ((portletSession != null) && (httpSession == null))
         {
-            javax.servlet.http.HttpSession httpSession = this._getHttpServletRequest().getSession(false);
-            if (httpSession == null)
-            {
-                portletSession = null;
-            }
+        	portletSession = null;
+        }
+        else if (httpSession != null)
+        {
+        	create = true;
         }
 
         if (create && portletSession == null)
         {
-            javax.servlet.http.HttpSession httpSession = this._getHttpServletRequest().getSession(create);
-            if (httpSession != null)
-            {
-                portletSession = PortletObjectAccess.getPortletSession(portletWindow, httpSession);
-            }
+        	httpSession = this._getHttpServletRequest().getSession(create);
+        	if (httpSession != null)
+        	{
+        		portletSession = PortletObjectAccess.getPortletSession(portletWindow, httpSession);
+        	}
         }
+
         return portletSession;
     }
     
