@@ -50,7 +50,7 @@ limitations under the License.
 
     <dependency>
       <id>pluto</id>
-      <version>1.0.1-rc2</version>
+      <version>1.0.1-rc3</version>
       <properties>
         <war.bundle>false</war.bundle>
       </properties>
@@ -59,7 +59,7 @@ limitations under the License.
     <dependency>
       <id>pluto-portal</id>
       <groupId>pluto</groupId>
-      <version>1.0.1-rc2</version>
+      <version>1.0.1-rc3</version>
       <properties>
         <war.bundle>false</war.bundle>
       </properties>
