@@ -42,23 +42,6 @@ limitations under the License.
         </dependency>
 
         <dependency>
-            <id>pluto</id>
-            <version>1.0.1</version>
-            <properties>
-                <war.bundle>false</war.bundle>
-            </properties>
-        </dependency>
-
-        <dependency>
-            <id>pluto-portal</id>
-            <groupId>pluto</groupId>
-            <version>1.0.1</version>
-            <properties>
-                <war.bundle>false</war.bundle>
-            </properties>
-        </dependency>
-
-        <dependency>
             <id>portlet-api</id>
             <groupId>portlet-api</groupId>
             <version>1.0</version>
@@ -66,25 +49,10 @@ limitations under the License.
                 <war.bundle>false</war.bundle>
             </properties>
         </dependency>
+
         <dependency>
             <id>servletapi</id>
             <version>2.3</version>
-            <properties>
-                <war.bundle>false</war.bundle>
-            </properties>
-        </dependency>
-
-        <dependency>
-            <id>xerces</id>
-            <version>2.3.0</version>
-            <properties>
-                <war.bundle>false</war.bundle>
-            </properties>
-        </dependency>
-
-        <dependency>
-            <id>xml-apis</id>
-            <version>2.0.2</version>
             <properties>
                 <war.bundle>false</war.bundle>
             </properties>
@@ -126,55 +94,15 @@ limitations under the License.
 
     </dependencies>
 
-    <build>
 
-        <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
-
-        <sourceDirectory>${pluto.testsuite.dir}/src/java</sourceDirectory>
-        <aspectSourceDirectory/>
-
-        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-
-        <unitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </unitTest>
-
-        <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
-
-        <integrationUnitTest>
-            <includes>
-                <include>**/*Test.java</include>
-            </includes>
-        </integrationUnitTest>
-
-        <resources>
-            <includes>
-                <include>conf/**/*pipeline.xml</include>
-                <include>conf/**/*valve.xml</include>
-            </includes>
-        </resources>
-
-        <jars/>
-
-    </build>
-
-    <reports>
-        <!--
-        <report>maven-jdepend-plugin</report>
-        -->
-        <report>maven-checkstyle-plugin</report>
-        <report>maven-changelog-plugin</report>
-        <report>maven-developer-activity-plugin</report>
-        <report>maven-file-activity-plugin</report>
-        <report>maven-javadoc-plugin</report>
-        <report>maven-jxr-plugin</report>
-        <!--
-        <report>maven-junit-report-plugin</report>
-        -->
-        <report>maven-tasklist-plugin</report>
-
-    </reports>
+<reports>
+  <report>maven-checkstyle-plugin</report>
+  <report>maven-changelog-plugin</report>
+  <report>maven-developer-activity-plugin</report>
+  <report>maven-file-activity-plugin</report>
+  <report>maven-javadoc-plugin</report>
+  <report>maven-jxr-plugin</report>
+  <report>maven-tasklist-plugin</report>
+</reports>
 
 </project>

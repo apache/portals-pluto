@@ -18,7 +18,6 @@
     <orderEntry type="library" name="servlet-api-2.3" level="application" />
     <orderEntry type="library" name="jstl-standard-1.0.4" level="application" />
     <orderEntry type="library" name="commons-digester-1.5" level="application" />
-    <orderEntry type="library" name="Tomcat" level="application_server_libraries" />
     <orderEntryProperties />
   </component>
   <component name="WebModuleBuildComponent">

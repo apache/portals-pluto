@@ -186,7 +186,8 @@ class PortletInvoker {
             }
         } else {
             LOG.error(
-                "PortletInvoker.action() - Unable to find RequestDispatcher.");
+                "PortletInvoker.action() - Unable to find RequestDispatcher ["+uri+"].");
+            throw new PortletException("Unable to find dispatcher for the portlet located at: "+uri);
         }
     }
 

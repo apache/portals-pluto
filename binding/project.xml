@@ -17,8 +17,9 @@ limitations under the License.
 -->
 <project>
     <extend>${basedir}/../project.xml</extend>
-    <name>Portlet OM and Bindings </name>
-    <id>pluto-binding</id>
+    <name>Portlet Deployment Descripter Bindings </name>
+    <groupId>pluto</groupId>
+    <artifactId>pluto-binding</artifactId>
 
     <organization>
         <logo>/../../images/apache-portals.gif</logo>

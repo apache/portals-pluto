@@ -18,7 +18,8 @@ limitations under the License.
 <project>
     <extend>${basedir}/../project.xml</extend>
     <name>Pluto Portlet Container</name>
-    <id>pluto</id>
+    <groupId>pluto</groupId>
+    <artifactId>pluto</artifactId>
 
     <organization>
         <logo>/../../images/apache-portals.gif</logo>
@@ -65,7 +66,7 @@ limitations under the License.
         <dependency>
             <groupId>pluto</groupId>
             <artifactId>pluto-binding</artifactId>
-            <version>1.0.1</version>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
