@@ -53,7 +53,7 @@ TABLE {
 
 </STYLE>
 </HEAD>
-<TABLE style="font-size: -1">
+<TABLE style="font-size: -1" border="1">
 <c:choose>
 <c:when test="${passed}">
 <TR><TH colspan="2" style="background-color:green;color:white">PASSED</FONT>
@@ -64,12 +64,19 @@ TABLE {
 </c:choose>
 
 <TR><TD colspan="2">
-    This resource has been requested outside of the portal framework.  It is
+    <p>This resource has been requested outside of the portal framework.  It is
     intended to test application scope attribute functions of the PortletSession.
     If the PortletSession is functioning as designed the key set in the PortletSession
     should be readable.  If it were, this test would have passed. This resource has
     also added a key to it's HttpSession which should be viewable through the PortletSession
-    attribute.</TD></TR>
+    attribute.</p>
+
+    <p>Note that this test is not expected to pass on Tomcat 4.x or 5.0.x. On Tomcat 5.5.x
+    it requires <i>emptySessionPath="true"</i> to be added to the connector configuration
+    in server.xml. See
+    <a href="http://portals.apache.org/pluto/faq.html#tomcat5_5" target="_blank">the FAQ</a>
+    for details.</p>
+</TD></TR>
 <TR><TH colspan="2">Session Id Comparison</TH></TR>
 <TR><TD>This HttpSession Id</TD>
     <TD><c:out value="${pageContext.request.session.id}"/></TD></TR>
