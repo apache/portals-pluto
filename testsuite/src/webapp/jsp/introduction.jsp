@@ -34,7 +34,7 @@ limitations under the License.
     <TABLE>
     <c:forEach var="test" items="${tests}" varStatus="status">
     <TR><TD><c:out value="${test.name}"/></TD>
-        <portlet:actionURL secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
+        <portlet:actionURL secure='<%=renderRequest.isSecure()?"True":"False"%>' var="url">
     	<portlet:param name="testId" value='<%=((javax.servlet.jsp.jstl.core.LoopTagStatus)pageContext.getAttribute("status")).getIndex()+""%>'/>
         <c:forEach var="param" items="${test.actionParameters}">
         <%
