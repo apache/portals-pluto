@@ -25,10 +25,9 @@ limitations under the License.
 <body>
   <section name="Jakarta Pluto">
 
-<p>The project is currently in the
-  <a href="http://incubator.apache.org/">Apache Incubator</a>. The more
-  interest there is in Pluto, the better the chances of it moving to a full
-  Apache Jakarta project within a short period  of time.
+<p>The project is currently moving out of the 
+  <a href="http://incubator.apache.org/">Apache Incubator</a> into the
+  <a href="http://portals.apache.org">Portals projects</a>.
 </p>
 
 <p>Pluto is the Reference Implementation of the Java Portlet
