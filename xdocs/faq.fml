@@ -129,4 +129,93 @@
       </answer>
     </faq>
   </part>
+  <part id="config">
+    <title>Configuration</title>
+    <faq id="portal">
+      <question>
+        How do I configure the pluto portal?
+      </question>
+      <answer>
+      	<p>
+        Firstly, please understand that the pluto portal is only intended to be
+        demonstration of how to use pluto-the-container in a portal. The layout
+        of the portal is controlled by two files, WEB-INF\data\pageregistry.xml
+        and WEB-INF\data\portletentityregistry.xml. An explaination for the
+        use of these files follows:
+        <p>
+        <table>
+          <tr><th>Date:</th>
+              <th>Tue, 11 Nov 2003 02:05:43 +0800</th></tr>
+          <tr><th>From:</th>
+              <th>Koh Choong Yong  [dunpanic.AT.mailhost.DOT.net]</th></tr>
+          <tr><th>Subject:</th>
+              <th>Re: portletentityregistry.xml and pageregistry.xml</th></tr>
+          <tr><th>Content-Type:</th>
+              <th>charset=ISO-8859-1; format=flowed</th></tr>
+          <tr><td colspan="2">
+			<p>
+			pageregistry.xml describes the layout of the portal in pluto.  If you
+			replace the correct sections in the default pageregistry.xml file with
+			the following fragment, you will see that the 2 portlets are displayed
+			one on top of another instead of side-by-side.  The attribute for
+			"value" in the &lt;property&gt; tag is a reference to the application id and
+			portlet id in portletentityregistry.xml (see discussion below).
+			<source>
+	&lt;fragment name="row" type="row"&gt;
+	    &lt;fragment name="col1" type="column"&gt;
+	        &lt;fragment name="p1" type="portlet"&gt;
+	            &lt;property name="portlet" value="3.1"/&gt;
+	        &lt;/fragment&gt;
+	    &lt;/fragment&gt;
+
+	&lt;/fragment&gt;
+	&lt;fragment name="row2" type="row"&gt;
+	    &lt;fragment name="col2" type="column"&gt;
+	        &lt;fragment name="p2" type="portlet"&gt;
+	            &lt;property name="portlet" value="4.1"/&gt;
+	        &lt;/fragment&gt;
+	    &lt;/fragment&gt;
+	&lt;/fragment&gt;
+			</source>
+
+			portletentityregistry.xml describes the portlets available in the portal.</p>
+
+			<p>Each &lt;application&gt; tag defines one application (corresponding to one
+			web-app on the portal container), which can contain multiple &lt;portlet&gt;
+			tags.  The "id" attribute in this tag identifies the application, and it
+			does not necessary needs to be numeral.</p>
+
+			<p>The &lt;definition-id&gt; tag within the &lt;application&gt; refers to the name of
+			the web-app that contains the portlets in this application.</p>
+
+			<p>Each &lt;portlet&gt; tag defines one portlet.  Similarly the "id" attribute in
+			this tag identifies the portlet. Note that the application id
+			concatenated with the portlet id will be mapped to the "value" attribute
+			in the &lt;proprety&gt; tag in pageregistry.xml</p>
+
+			<p>The &lt;definition-id&gt; within the &lt;portlet&gt; is a concatenated id string
+			identifying the portlet within the application.  This is a reference to
+			the &lt;portlet-name&gt; tag in the portlet.xml in the respective web-app.  In
+			the default setting,
+			<source>
+	&lt;definition-id&gt;testsuite.TestPortlet2&lt;/definition-id&gt;
+            </source>
+			the portlet referred to was the TestPortlet2 portlet within the
+			testsuite web-app.</p>
+
+			<p>Each &lt;preferences&gt; tag within the &lt;portlet&gt; tag defines name/value pairs
+			for the PorletPreferences.  These values can be retrieved within the
+			JSPs using the following code fragment:
+			<source>
+	 PortletPreferences preferences = renderRequest.getPreferences();
+	 String testPermanence =  preferences.getValue("TEST_PERMANENCE", "Default");
+	 out.println(testPermanence);
+			</source></p>
+          </td></tr></table>
+          </p>
+        </p>
+
+      </answer>
+    </faq>
+  </part>
 </faqs>

@@ -3,65 +3,105 @@
   <properties>
     <author email="unknown">Jean-Baptiste Joret</author>
     <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <author email="nl.AT.essential.DOT.com.DOT.au">Nick Lothian</author>
     <title>Pluto Project</title>
   </properties>
 
 <body>
 <section name="Installation">
-Follow the steps below to compile and install Pluto
-<p><strong>Prepare Environment</strong>
-   <ul>
-	<li>Download and Install a Java Development Kit release (version 1.3.1) 
-        from http://java.sun.com/j2se/</li>
-    <li>Install the JDK according to the instructions included with the 
-			release.</li>
-    <li>Set an environment variable JAVA_HOME to the pathname of the directory
-		to which the JDK has been installed.</li>
-    <li>Download and Install the Tomcat 4.1 Binary Distribution from 
-		http://jakarta.apache.org/builds/jakarta-tomcat-4.1</li>
-    <li>Unpack the binary distribution into a convenient location so that the 
-        distribution resides in its own directory (conventionally named 
-		"jakarta-tomcat-4.1"). For the purposes of the remainder of this 
-		document, the symbolic name "${catalina.home}" is used to refer to the 
-		full pathname of the release directory.</li>
-    </ul>
-</p>
+<subsection name="Prerequisites">
+<p>It is expected that the user is familiar with both the <a href="http://maven.apache.org">Apache
+  Maven</a> project tool and the <a href="http://ant.apache.org">Apache Ant</a>
+  build tool.</p>
+</subsection>
+<subsection name="Requirements">
+<ul>
+  <li><a href="http://ant.apache.org/bindownload.cgi">Ant 1.5</a> or higher</li>
+  <li><a href="http://maven.apache.org/start/download.html">Maven 1.0-beta-10</a>
+    or higher</li>
+  <li>Java 1.3 or higher</li>
+  <li>Servlet 2.3:<br/>
+    Tomcat 4.1.18-LE w/JDK 1.4<br/>
+    <b>or</b> <br/>
+    Tomcat 4.1.24 w/ JDK 1.3</li>
+</ul>
+</subsection>
+<subsection name="Get Maven Ready">
+<p>If you have not already done so, download and install Maven.</p>
+<p>2. build.properties settings:</p>
+<p>Please set these values in your <code>build.properties</code>
+  file:</p>
+<table width="650" border="1" cellspacing="0" cellpadding="3">
+  <tr>
+    <th width="134">property</th>
+    <th width="229">example</th>
+    <th width="261">what is it?</th>
+  </tr>
+  <tr>
+    <td width="134">tomcat.home.pluto</td>
+    <td width="229">/tomcat</td>
+    <td width="261">location of the Tomcat install where you want to deploy Pluto</td>
+  </tr>
+</table>
+<p>You can copy the <code>build.properties.sample</code> file and name it
+	<code>build.properties</code> and use this is a starting point.</p>
+</subsection>
+<subsection name="Building and deploying">
 
-<p><strong>Install Pluto</strong>
-	<ul>
-	<li>Get the latest source from the jakarta-pluto CVS repository.
-	   For more information have a look <a href="http://jakarta.apache.org/site/cvsindex.html">here.</a>
-        We will refer to the directory for the remainder of this document 
-        as ${pluto.home}.
-	</li>
-<!--
-	<li>Download Pluto the latest source from 
-        <a href="/site/sourceindex.cgi">the Jakarta Source index</a>
-		or directly from <a href="http://jakarta.apache.org/site/cvsindex.html">
-        cvs</a>. Place the source tree in a directory which will be
-        referred to for the remainder of this document as ${pluto.home}.</li>
--->
-    <li>From the command line, go to the ${pluto.hom}/build directory and call 
-			"build", if you need to completely rebuild you can use "build rebuild"</li>
-    <li>Call the "install" script (install.bat or install.sh). You will be asked 
-			to type the Path where Tomcat is installed</li>
-    <li>Start Up Tomcat 4.1. Please see Tomcat instructions for information
-    <li>Run Pluto: Default url to start Pluto is </li>
-			http://localhost:8080/pluto/portal</li>
-	<li>In case Tomcat runs on a different port, change the port setting in 
-        ${catalina.home}/webapps/pluto/WEB-INF/config/services/ConfigService.properties</li>
-    </ul>
-</p>
+<ul>
+  <li>change your directory to root of the Pluto project.</li>
+  <li>maven fullDeployment</li>
+  <li>This will take care of everything for you including copying shared jars,
+    and deploy the base Pluto portal along with the Portlet Test Suite</li>
+</ul>
+</subsection>
+<subsection name="Start Tomcat">
+<p>Run Tomcat, go to http://localhost:8080/pluto/portal.</p>
+</subsection>
+</section>
 
-<p><strong>Install Portlets</strong>
+<section name="What if I just want the Pluto container jar (like for Jetspeed 2)?">
+<ol>
+  <li>cd to /container directory</li>
+  <li>maven jar:install</li>
+</ol>
+<p>This will create the container jar in /container/target and also copy into
+  you maven repository.</p>
+ </section>
+
+<section name="What if I just want to deploy the Pluto portal without the test suite?">
+<ol>
+  <li>Follow all the steps from &quot;<i>What if I just want the Pluto container
+    jar (like for Jetspeed 2)?</i>&quot;</li>
+  <li>cd to the /portal directory.</li>
+  <li>maven (with no goal)</li>
+</ol>
+<p>This will invoke the default maven goal for the /portal sub-project, deployPlutoToTomcat.
+  This will build and deploy the Pluto portal minus the test suite into
+  tomcat.</p>
+</section>
+
+<section name="What if I decide I want to deploy the test suite portlets after I deploy the Pluto portal by itself?">
+<ol>
+  <li>Follow all the steps from &quot;<i>What if I decide I want to deploy the
+    test suite portlets after I deploy JUST the Pluto portal?</i>&quot;</li>
+  <li>cd to the /testsuite directory.</li>
+  <li>maven (with no goal)</li>
+</ol>
+<p>This will invoke the default maven goal for the /testsute sub-project, deployTestsuite.
+  This will build and deploy the test suite portlets into your already deployed
+  Pluto portal.</p>
+</section>
+
+<section name="Install Portlets">
    <p>
     <ul>To install portlets after you successfully installed Pluto, 
        invoke Maven to deploy the portlet's war by executing:
 		<code>maven deploy -Ddeploy=FULL_PATH_TO_YOUR_PORTLET_WAR</code>
     </ul>
    </p>
-</p>
 </section>
+
 </body>
 </document>
 

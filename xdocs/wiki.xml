@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="nl.AT.essential.DOT.com.DOT.au">Nick Lothian</author>
+    <title>Pluto Wiki</title>
+  </properties>
+
+<body>
+  <section name="Wiki">
+  <subsection name="Pluto Wiki">
+  <p>The starting point in the Apache Wiki can be found
+  <a href="http://nagoya.apache.org/wiki/apachewiki.cgi?PlutoProjectPages">here</a>.
+  Please add any hints, tips or other things about Pluto you find useful.
+  </p>
+  </subsection>
+  <subsection name="Using the Wiki">
+  <p><a href="http://www.usemod.com/cgi-bin/wiki.pl?TextFormattingRules">Documentation</a> for
+  how to use the wiki is available.
+  </p>
+  </subsection>
+
+</section>
+
+
+</body>
+</document>
+

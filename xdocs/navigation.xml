@@ -13,6 +13,7 @@
         <item name="News and Status"     href="/news.html"/>
         <item name="Roadmap"             href="/roadmap.html"/>
         <item name="FAQs"                href="/faq.html"/>
+        <item name="Wiki"                href="/wiki.html"/>
     </menu>
     <menu name="Projects">
         <item name="Portlet API (JSR-168)"       href="/multiproject/portlet-api/index.html"/>
