@@ -157,7 +157,7 @@ PortletURL url = renderResponse.createRenderURL();
 url.setParameter("jspName","test3.jsp");
 url.setSecure(renderRequest.isSecure());
 %>
-<FORM METHOD="GET" ACTION="<%=url.toString()%>">
+<FORM METHOD="POST" ACTION="<%=url.toString()%>">
 <INPUT value="Next >>" TYPE="submit">
 </FORM>
 </FONT>
