@@ -105,7 +105,7 @@ public class PortletURLImpl implements PortletURL {
             throw new IllegalArgumentException("name and value must not be null");
         }
 
-        parameters.put( name, value);
+        parameters.put( name, new String[]{value});
     }
 
     public void setParameter (String name, String[] values)
