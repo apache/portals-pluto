@@ -115,7 +115,9 @@ public class PortalControlParameter {
         returnvalue.append(paramValues.length);
         for (int i=0; i<paramValues.length; i++) {
             returnvalue.append("_");
-            returnvalue.append(encodeValue(paramValues[i]));
+            if(paramValues[i]!=null) {
+                returnvalue.append(encodeValue(paramValues[i]));
+            }
         }
         return returnvalue.toString();
     }

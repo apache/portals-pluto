@@ -248,9 +248,12 @@ public class PortalURL {
         while (iterator.hasNext()) {
             if (iterator.hasNext()) result.append("/");
             String name = (String)iterator.next();
-            result.append(PortalControlParameter.encodeParameter(name));
-            result.append("/");
-            result.append((String)stateFullParams.get(name));
+            String value = (String)stateFullParams.get(name);
+            if(value!=null) {
+                result.append(PortalControlParameter.encodeParameter(name));
+                result.append("/");
+                result.append(value);
+            }
         }
 
         return result.toString();
