@@ -58,88 +58,35 @@
 package org.apache.pluto.portalImpl.services.log;
 
 import org.apache.pluto.portalImpl.util.Properties;
+import org.apache.pluto.portalImpl.services.Service;
+import org.apache.pluto.services.log.*;
+import org.apache.pluto.services.log.Logger;
+import org.apache.commons.logging.LogFactory;
 
-public class LogServiceImpl extends LogService
-{
+/** LogService implementation which uses Commons Logging.
+ *  The use of commons logging provides us with a simple yet
+ *  effective way to abstract the logging implementation.  Commons
+ *  Logging will be initialized in it's default manner according
+ *  to: http://jakarta.apache.org/commons/logging/userguide.html.
+ *
+ *  If no configuraiton is found, Commons Logging will use it's
+ *  SimpleLog configuration, which will log everything to standard
+ *  error.
+ */
+public class LogServiceImpl
+    extends LogService {
 
-    public void init (Properties aProperties)
-    {
-        iIsDebugEnabled = aProperties.getBoolean ("debug.enable", Boolean.FALSE).booleanValue ();
-        iIsInfoEnabled  = aProperties.getBoolean ("info.enable", Boolean.FALSE).booleanValue ();
-        iIsWarnEnabled  = aProperties.getBoolean ("warn.enable", Boolean.FALSE).booleanValue ();
-        iIsErrorEnabled = aProperties.getBoolean ("error.enable", Boolean.FALSE).booleanValue ();
+    public Logger getLogger(String component) {
+        return new LoggerImpl(
+            LogFactory.getLog(component)
+        );
+
     }
 
-    public boolean isDebugEnabled (String aComponent)
-    {
-        return (iIsDebugEnabled);
+    public Logger getLogger(Class klass) {
+        return new LoggerImpl(
+            LogFactory.getLog(klass)
+        );
     }
 
-    public boolean isInfoEnabled (String aComponent)
-    {
-        return (iIsInfoEnabled);
-    }
-
-    public boolean isWarnEnabled (String aComponent)
-    {
-        return (iIsWarnEnabled);
-    }
-
-    public boolean isErrorEnabled (String aComponent)
-    {
-        return (iIsErrorEnabled);
-    }
-
-    public void debug (String aComponent, String aMessage)
-    {
-        if (iIsDebugEnabled)
-        {
-            System.out.println ("DEBUG  " + aComponent + "   " + aMessage);
-        }
-    }
-
-    public void debug (String aComponent, String aMessage, Throwable aThrowable)
-    {
-        if (iIsDebugEnabled)
-        {
-            System.out.println ("DEBUG  " + aComponent + "   " + aMessage);
-        }
-    }
-
-    public void info (String aComponent, String aMessage)
-    {
-        if (iIsInfoEnabled)
-        {
-            System.out.println ("INFO   " + aComponent + "   " + aMessage);
-        }
-    }
-
-    public void warn (String aComponent, String aMessage)
-    {
-        if (iIsWarnEnabled)
-        {
-            System.out.println ("WARN   " + aComponent + "   " + aMessage);
-        }
-    }
-
-    public void error (String aComponent, String aMessage, Throwable aThrowable)
-    {
-        if (iIsErrorEnabled)
-        {
-            System.out.println ("ERROR  " + aComponent + "   " + aMessage);
-
-            if (aThrowable != null)
-                aThrowable.printStackTrace (System.out);
-        }
-    }
-
-    public void error (String aComponent, Throwable aThrowable)
-    {
-        error (aComponent, "An exception has been thrown:", aThrowable);
-    }
-
-    private boolean iIsDebugEnabled;
-    private boolean iIsInfoEnabled;
-    private boolean iIsWarnEnabled;
-    private boolean iIsErrorEnabled;
 }

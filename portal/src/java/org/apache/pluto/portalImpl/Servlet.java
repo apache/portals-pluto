@@ -68,6 +68,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.services.log.Logger;
 import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.portalImpl.aggregation.RootFragment;
 import org.apache.pluto.portalImpl.core.PortalControlParameter;
@@ -76,9 +77,9 @@ import org.apache.pluto.portalImpl.core.PortalURL;
 import org.apache.pluto.portalImpl.core.PortletContainerEnvironment;
 import org.apache.pluto.portalImpl.core.PortletContainerFactory;
 import org.apache.pluto.portalImpl.services.ServiceManager;
+import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
 import org.apache.pluto.portalImpl.factory.FactoryAccess;
-import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.services.config.Config;
 import org.apache.pluto.portalImpl.services.pageregistry.PageRegistry;
 import org.apache.pluto.portalImpl.servlet.ServletObjectAccess;
@@ -87,9 +88,7 @@ import org.apache.pluto.portalImpl.servlet.ServletObjectAccess;
 public class Servlet extends HttpServlet
 {
 
-    public Servlet ()
-    {
-    }
+    private Logger log = null;
 
     public String getServletInfo()
     {
@@ -122,14 +121,19 @@ public class Servlet extends HttpServlet
             throw (new javax.servlet.UnavailableException ("Post initialization of one or more services failed."));
         }
 
-        IS_DEBUG_ENABLED = Log.isDebugEnabled ("org.apache.pluto.portalImpl");
+        log = Log.getService().getLogger(getClass());
 
         if (!PortletContainerFactory.getPortletContainer().isInitialized()) {
-            log ("Initializing PortletContainer...");
+            String uniqueContainerName =
+               Config.getParameters().getString("portletcontainer.uniquename", "pluto");
+
+            if(log.isInfoEnabled())
+                log.info("Initializing PortletContainer ["
+                          +uniqueContainerName+"]...");
     
-            String uniqueContainerName = Config.getParameters().getString ("portletcontainer.uniquename", "pluto");
-    
-            PortletContainerEnvironment environment = new PortletContainerEnvironment();
+            PortletContainerEnvironment environment
+                = new PortletContainerEnvironment();
+
             environment.addContainerService(Log.getService());
             environment.addContainerService(FactoryManager.getService());
             environment.addContainerService(FactoryAccess.getInformationProviderContainerService());
@@ -145,19 +149,20 @@ public class Servlet extends HttpServlet
             }
             catch (PortletContainerException exc)
             {
-                log ("Initialization of the portlet container failed!", exc);
-    
+                log.error("Initialization of the portlet container failed!", exc);
                 throw (new javax.servlet.UnavailableException ("Initialization of the portlet container failed."));
             }
-        } else {
-            log("PortletContainer already initialized");
+        } else if(log.isInfoEnabled()) {
+            log.info("PortletContainer already initialized");
         }
 
-        log ("Ready to serve you.");
+        log.debug("Ready to serve you.");
     }
 
     public void destroy()
     {
+        if(log.isInfoEnabled())
+            log.info("Shutting down portlet container. . .");
         try
         {
             PortletContainerFactory.
@@ -237,10 +242,5 @@ public class Servlet extends HttpServlet
     {
         doGet (request, response);
     }
-
-    // --- PRIVATE MEMBERS --- //
-
-
-    private static boolean IS_DEBUG_ENABLED;
 
 }

@@ -55,31 +55,64 @@
 
  */
 
-package org.apache.pluto.services.log;
+package org.apache.pluto.portalImpl.services.log;
 
-import org.apache.pluto.services.ContainerService;
+import org.apache.pluto.services.log.Logger;
 
-/** Implemented in order to provides access to
- *  a custom Logger implementation. The Logger
- *  provides component aware logging capabilities.
- *
+/** An incredible simple Logger implementation which
+ *  simply directs messages to StandardOut.  This Logger
+ *  is only used in cases, such as in the Deployer, when
+ *  no services are registered with the ServiceManager.
  */
-public interface LogService extends ContainerService {
+public class StandardOutLogger implements Logger {
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  component.
-     * @param component
-     * @return
-     */
-    Logger getLogger(String component);
+    public StandardOutLogger() {
+    }
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  Class.
-     * @param klass
-     * @return
-     */
-    Logger getLogger(Class klass);
+    public boolean isDebugEnabled() {
+        return true;
+    }
+
+    public boolean isInfoEnabled() {
+        return true;
+    }
+
+    public boolean isWarnEnabled() {
+        return true;
+    }
+
+    public boolean isErrorEnabled() {
+        return true;
+    }
+
+    public void debug(String aMessage) {
+        System.out.println(aMessage);
+    }
+
+    public void debug(String aMessage, Throwable aThrowable) {
+        System.out.println(aMessage);
+        aThrowable.printStackTrace();
+    }
+
+    public void info(String aMessage) {
+        System.out.println(aMessage);
+    }
+
+    public void warn(String aMessage) {
+        System.out.println(aMessage);
+    }
+
+    public void error(String aMessage) {
+        System.out.println(aMessage);
+    }
+
+    public void error(String aMessage, Throwable aThrowable) {
+        System.out.println(aMessage);
+        aThrowable.printStackTrace();
+    }
+
+    public void error(Throwable aThrowable) {
+        aThrowable.printStackTrace();
+    }
 
 }

@@ -70,6 +70,7 @@ import org.apache.pluto.portalImpl.aggregation.RootFragment;
 import org.apache.pluto.portalImpl.om.page.impl.PortalImpl;
 import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.util.Properties;
+import org.apache.pluto.services.log.Logger;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
@@ -97,12 +98,14 @@ public class PageRegistryServiceFileImpl extends PageRegistryService
     // Root element
     private PortalImpl registry = null;
     private RootFragment root = null;
+    private Logger log = null;
 
     private HashMap fragments = new HashMap();
 
     public void init (ServletConfig config, Properties properties) throws Exception
     {        
         servletContext = config.getServletContext();
+        log = Log.getService().getLogger(getClass());
 
         String _mapping = properties.getString(CONFIG_MAPPING, DEFAULT_MAPPING);
         File f = new File(_mapping);
@@ -116,19 +119,16 @@ public class PageRegistryServiceFileImpl extends PageRegistryService
         }
         catch (Exception e)
         {
-            Log.error("org.apache.pluto.portalImpl.services", 
-                      "Failed to load mapping file "+_mapping,e);
+            log.error("Failed to load mapping file "+_mapping,e);
             throw e;
         }
 
         load();
 
-        if (Log.isDebugEnabled("org.apache.pluto.portalImpl.services"))
+        if (log.isDebugEnabled())
         {
-            Log.debug("org.apache.pluto.portalImpl.services", 
-                      "Dumping complete object model description as it is read from the xml file...");
-            Log.debug("org.apache.pluto.portalImpl.services", 
-                      registry.toString());
+            log.debug("Dumping complete object model description as it is read from the xml file...");
+            log.debug(registry.toString());
         }        
     }
 
@@ -136,12 +136,10 @@ public class PageRegistryServiceFileImpl extends PageRegistryService
         
         root = registry.build(config);
              
-        if (Log.isDebugEnabled("org.apache.pluto.portalImpl.services"))
+        if (log.isDebugEnabled())
         {
-            Log.debug("org.apache.pluto.portalImpl.services", 
-                      "Dumping complete navigation tree created of the object model...");
-            Log.debug("org.apache.pluto.portalImpl.services", 
-                      root.getNavigation().toString());
+            log.debug("Dumping complete navigation tree created of the object model...");
+            log.debug(root.getNavigation().toString());
         }
     }
 
@@ -163,7 +161,7 @@ public class PageRegistryServiceFileImpl extends PageRegistryService
         } else {
 
             String msg = "Fragment with this name "+id+" already exists in the pageregistry.xml.";
-            Log.error("org.apache.pluto.portalImpl.services", msg);
+            log.error(msg);
             throw new Exception(msg);
         }
 

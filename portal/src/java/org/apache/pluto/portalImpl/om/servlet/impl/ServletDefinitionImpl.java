@@ -147,13 +147,11 @@ implements ServletDefinition, ServletDefinitionCtrl, java.io.Serializable, Suppo
     {
         ServletContext newContext = webApplication.getServletContext(servletContext);
         if (newContext==null) {
-            Log.error("org.apache.pluto.portalImpl",
-                      "ServletContext '"+((WebApplicationDefinitionImpl)webApplication).getContextRoot()+"' not found!");
+            Log.error("ServletContext '"+((WebApplicationDefinitionImpl)webApplication).getContextRoot()+"' not found!");
             return null;
         }
-        if (Log.isDebugEnabled("org.apache.pluto.portalImpl")) {
-            Log.debug("org.apache.pluto.portalImpl",
-                      "Looking up RequestDispatcher for servlet mapping "+servletMapping.getUrlPattern());
+        if (Log.isDebugEnabled()) {
+            Log.debug("Looking up RequestDispatcher for servlet mapping "+servletMapping.getUrlPattern());
         }
         return newContext.getRequestDispatcher(servletMapping.getUrlPattern());
     }

@@ -93,11 +93,12 @@ import org.apache.pluto.portalImpl.core.PortletContainerFactory;
 import org.apache.pluto.portalImpl.factory.FactoryAccess;
 import org.apache.pluto.portalImpl.om.window.impl.PortletWindowImpl;
 import org.apache.pluto.portalImpl.services.portletentityregistry.PortletEntityRegistry;
+import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.servlet.ServletObjectAccess;
 import org.apache.pluto.portalImpl.util.ObjectID;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.PortalContextProvider;
-import org.apache.pluto.services.log.Log;
+import org.apache.pluto.services.log.Logger;
 
 /**
  * <p>Responsible for rendering a single Portlet.<p>
@@ -117,6 +118,7 @@ import org.apache.pluto.services.log.Log;
 public class PortletFragment extends AbstractFragmentSingle {
     
     private PortletWindow portletWindow = null;
+    private Logger log = null;
 
     public static final String PORTLET_ERROR_MSG = "Error occurred in portlet!";
 
@@ -128,6 +130,7 @@ public class PortletFragment extends AbstractFragmentSingle {
             throws Exception
     {
 		super(id, config, parent, fragDesc, navigation);
+        log = Log.getService().getLogger(getClass());
 		String portletEntityId = getInitParameters().getString("portlet");
 		PortletEntity portletEntity = PortletEntityRegistry.getPortletEntity(ObjectID.createFromString(portletEntityId));
 		portletWindow = new PortletWindowImpl(getId());
@@ -151,12 +154,12 @@ public class PortletFragment extends AbstractFragmentSingle {
 		try {
 			PortletContainerFactory.getPortletContainer().portletLoad(portletWindow, wrappedRequest, response);
 		} catch (PortletContainerException e) {
-			Log.error("Error in Portlet", e);
+			log.error("Error in Portlet", e);
 			errorMsg = getErrorMsg();
 		} catch (Throwable t) {
 			// If we catch any throwable, we want to try to continue
 			// so that the rest of the portal renders correctly
-			Log.error("Error in Portlet", t);
+			log.error("Error in Portlet", t);
 			if (t instanceof VirtualMachineError) {
 				// if the Throwable is a VirtualMachineError then
 				// it is very unlikely (!) that the portal is going
@@ -198,7 +201,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 				// render the Portlet to the wrapped response, to be output later.
 				PortletContainerFactory.getPortletContainer().renderPortlet(portletWindow, wrappedRequest, wrappedResponse);
 			} catch (UnavailableException e) {
-				Log.error("Portlet is Unavailable", e);
+				log.error("Portlet is Unavailable", e);
 				writer2.println("the portlet is currently unavailable!");
 
 				ServletDefinitionCtrl servletDefinitionCtrl = (ServletDefinitionCtrl) ControllerObjectAccess.get(portletWindow.getPortletEntity().getPortletDefinition().getServletDefinition());
@@ -212,7 +215,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 					servletDefinitionCtrl.setAvailable(System.currentTimeMillis() + unavailableSeconds * 1000);
 				}
 			} catch (Exception e) {
-				Log.error("Error in Portlet", e);
+				log.error("Error in Portlet", e);
 				writer2.println(getErrorMsg());
 			}
 			String dyn_title = ((DynamicTitleServiceImpl) FactoryAccess.getDynamicTitleContainerService()).getDynamicTitle(portletWindow, request);

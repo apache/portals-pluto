@@ -59,27 +59,26 @@ package org.apache.pluto.services.log;
 
 import org.apache.pluto.services.ContainerService;
 
-/** Implemented in order to provides access to
- *  a custom Logger implementation. The Logger
- *  provides component aware logging capabilities.
+/** Implemented in order to provide component aware
+ *  logging.
+ *
+ * @see LogService
  *
  */
-public interface LogService extends ContainerService {
+public interface Logger extends ContainerService
+{
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  component.
-     * @param component
-     * @return
-     */
-    Logger getLogger(String component);
+    public boolean isDebugEnabled();
+    public boolean isInfoEnabled();
+    public boolean isWarnEnabled();
+    public boolean isErrorEnabled();
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  Class.
-     * @param klass
-     * @return
-     */
-    Logger getLogger(Class klass);
+    public void debug(String aMessage);
+    public void debug(String aMessage, Throwable aThrowable);
+    public void info(String aMessage);
+    public void warn(String aMessage);
+    public void error(String aMessage);
+    public void error(String aMessage, Throwable aThrowable);
+    public void error(Throwable aThrowable);
 
 }

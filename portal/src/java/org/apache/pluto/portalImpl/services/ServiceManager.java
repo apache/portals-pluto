@@ -68,7 +68,7 @@ import org.apache.pluto.portalImpl.util.Properties;
 
 /**
  * Manages the life-time of services registered during servlet startup.
- * A service has to derive from {@link ContainerService} and implement the
+ * A service has to derive from {@link org.apache.pluto.services.ContainerService} and implement the
  * <CODE>init()</CODE> and <CODE>destroy()</CODE> methods as appropriate.
  * 
  * <P>
@@ -77,7 +77,7 @@ import org.apache.pluto.portalImpl.util.Properties;
  * available to the portal engine. The format of the file is simple:
  * 
  * <PRE>
- *   org.apache.pluto.portalImpl.services.log.LogService = org.apache.pluto.portalImpl.services.log.LogServicesImpl
+ *   org.apache.pluto.portalImpl.services.log.Logger = org.apache.pluto.portalImpl.services.log.LogServicesImpl
  * </PRE>
  * 
  * Each entry represents one service. The left-hand side is the abstract
@@ -89,7 +89,8 @@ import org.apache.pluto.portalImpl.util.Properties;
  * <CODE>/config/services</CODE>. It has to have the name of either
  * implementation or abstract class of the service, without the
  * leading package name. For example, the service manager looks
- * for <CODE>LogServiceImpl.properties</CODE>. This allows a special
+ * for <CODE>LoggerImpl
+.properties</CODE>. This allows a special
  * implementation to provide different configuration than the
  * general (abstract) service requires.
  * 
@@ -99,7 +100,7 @@ import org.apache.pluto.portalImpl.util.Properties;
  * object. Not providing a service configuration file is okay too,
  * in that case the properties are empty.
  * 
- * @see ContainerService
+ * @see org.apache.pluto.services.ContainerService
  */
 public class ServiceManager
 {

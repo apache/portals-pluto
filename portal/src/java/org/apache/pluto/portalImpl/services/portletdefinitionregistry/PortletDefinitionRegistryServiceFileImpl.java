@@ -77,6 +77,7 @@ import org.apache.pluto.portalImpl.om.servlet.impl.WebApplicationDefinitionImpl;
 import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.util.Properties;
 import org.apache.pluto.portalImpl.xml.XmlParser;
+import org.apache.pluto.services.log.Logger;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.xml.Unmarshaller;
 import org.xml.sax.InputSource;
@@ -106,6 +107,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
     private ServletContext servletContext = null;
     // Base Dir where all web modules are located
     private String baseWMDir = null;
+    private Logger log = null;
 
     // Helper lists and hashtables to access the data as fast as possible
     // List containing all portlet applications available in the system
@@ -115,6 +117,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
 
     public void init (ServletConfig config, Properties properties) throws Exception
     {
+        log = Log.getService().getLogger(getClass());
         servletContext = config.getServletContext();
 
         if (properties.getBoolean("non-servlet")==Boolean.TRUE)
@@ -123,7 +126,8 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
             baseWMDir = root + fileSeparator + 
 		"WEB-INF" + fileSeparator + 
 		"portletapps" + fileSeparator; //org.apache.pluto.portalImpl.services.deploy.DeployServiceFileImpl.DEFAULT_PROTECTED;
-            Log.debug("org.apache.pluto.portalImpl.services.Portletregistry", "baseWMDir = " + baseWMDir + " fileSeparator = " + fileSeparator);
+            if(log.isDebugEnabled())
+                log.debug("baseWMDir = " + baseWMDir + " fileSeparator = " + fileSeparator);
         }
         else
         {
@@ -143,8 +147,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
         }
         catch (Exception e)
         {
-            Log.error("org.apache.pluto.portalImpl.services", 
-                      "Failed to load mapping file "+_mapping,e);
+            log.error("Failed to load mapping file "+_mapping,e);
             throw e;
         }
         // get web xml mapping file
@@ -158,8 +161,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
         }
         catch (Exception e)
         {
-            Log.error("org.apache.pluto.portalImpl.services", 
-                      "Failed to load mapping file "+_mapping,e);
+            log.error("Failed to load mapping file "+_mapping,e);
             throw e;
         }
 
@@ -203,10 +205,9 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
         // portlet application web module
         if (portletXml.exists()) // && (webXml.exists()))
         {
-            if (Log.isDebugEnabled("org.apache.pluto.portalImpl.services"))
+            if (log.isDebugEnabled())
             {
-                Log.debug("org.apache.pluto.portalImpl.services", 
-                          "Loading the following Portlet Applications XML files..."+portletXml+", "+webXml);
+                log.debug("Loading the following Portlet Applications XML files..."+portletXml+", "+webXml);
             }
 
             InputSource source = new InputSource(new FileInputStream(portletXml));
@@ -240,16 +241,16 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
 
                 webApp.postBuild(structure);
 
-                if (Log.isDebugEnabled("org.apache.pluto.portalImpl.services"))
+                if (log.isDebugEnabled())
                 {
-                    Log.debug("org.apache.pluto.portalImpl.services", webApp.toString());
+                    log.debug(webApp.toString());
                 }
             }
             else
             {
-                if (Log.isDebugEnabled("org.apache.pluto.portalImpl.services"))
+                if (log.isDebugEnabled())
                 {
-                    Log.debug("org.apache.pluto.portalImpl.services", "no web.xml...");
+                    log.debug("no web.xml...");
                 }
                 Vector structure = new Vector();
                 structure.add("/" + webModule);
@@ -265,19 +266,15 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
 
             registry.add( portletApp );
 
-            if (Log.isDebugEnabled("org.apache.pluto.portalImpl.services"))
+            if (log.isDebugEnabled())
             {
                 if (webApp!=null)
                 {
-                    Log.debug("org.apache.pluto.portalImpl.services", 
-                              "Dumping content of web.xml...");
-                    Log.debug("org.apache.pluto.portalImpl.services", 
-                              webApp.toString());
+                    log.debug("Dumping content of web.xml...");
+                    log.debug(webApp.toString());
                 }
-                Log.debug("org.apache.pluto.portalImpl.services", 
-                          "Dumping content of portlet.xml...");
-                Log.debug("org.apache.pluto.portalImpl.services", 
-                          portletApp.toString());
+                log.debug("Dumping content of portlet.xml...");
+                log.debug(portletApp.toString());
             }
         }
 

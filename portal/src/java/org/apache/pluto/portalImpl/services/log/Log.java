@@ -58,76 +58,80 @@
 package org.apache.pluto.portalImpl.services.log;
 
 import org.apache.pluto.portalImpl.services.ServiceManager;
+import org.apache.pluto.services.log.Logger;
 
 /**
- ** This is the static accessor for the <code>LogService</code>.
+ ** This is the static accessor for the <code>Logger</code>.
+ ** All log messages logged using this classes static log
+ ** methods log to the org.apache.pluto.portalImpl category.
  **
- ** @see   LogService
+ ** @see   org.apache.pluto.services.log.Logger
  **/
 
 public class Log
 {
 
+    private static Logger log =
+        getService().getLogger("org.apache.pluto.portalImpl");
 
-    public static boolean isDebugEnabled (String aComponent)
-    {
-        return (cService.isDebugEnabled (aComponent));
+    public static boolean isDebugEnabled() {
+        return log.isDebugEnabled();
     }
 
-    public static boolean isInfoEnabled (String aComponent)
-    {
-        return (cService.isInfoEnabled (aComponent));
+    public static boolean isInfoEnabled() {
+        return log.isInfoEnabled();
     }
 
-    public static boolean isWarnEnabled (String aComponent)
-    {
-        return (cService.isWarnEnabled (aComponent));
+    public static boolean isWarnEnabled() {
+        return log.isWarnEnabled();
     }
 
-    public static boolean isErrorEnabled (String aComponent)
-    {
-        return (cService.isErrorEnabled (aComponent));
+    public static boolean isErrorEnabled() {
+        return log.isErrorEnabled();
     }
 
-    public static void debug (String aComponent, String aMessage)
-    {
-        cService.debug (aComponent, aMessage);
+    public static void debug(String aMessage) {
+        log.debug(aMessage);
     }
 
-    public static void debug (String aComponent, String aMessage, Throwable aThrowable)
-    {
-        cService.debug (aComponent, aMessage, aThrowable);
+    public static void debug(String aMessage, Throwable aThrowable) {
+        log.debug(aMessage, aThrowable);
     }
 
-    public static void info (String aComponent, String aMessage)
-    {
-        cService.info (aComponent, aMessage);
+    public static void info(String aMessage) {
+        log.info(aMessage);
     }
 
-    public static void warn (String aComponent, String aMessage)
-    {
-        cService.warn (aComponent, aMessage);
+    public static void warn(String aMessage) {
+        log.warn(aMessage);
     }
 
-    public static void error (String aComponent, String aMessage)
-    {
-        cService.error (aComponent, aMessage, null);
+    public static void error(String aMessage) {
+        log.error(aMessage);
     }
 
-    public static void error (String aComponent, String aMessage, Throwable aThrowable)
-    {
-        cService.error (aComponent, aMessage, aThrowable);
+    public static void error(String aMessage, Throwable aThrowable) {
+        log.error(aMessage, aThrowable);
     }
 
-    public static void error (String aComponent, Throwable aThrowable)
-    {
-        cService.error (aComponent, aThrowable);
+    public static void error(Throwable aThrowable) {
+        log.error(aThrowable);
     }
 
-    public static LogService getService()
-    {
-        return cService;
+    /** Returns the LogService which has been registered
+     *  with the ServiceManager. If one does not yet exist,
+     *  the StandardOutLogService (LogServiceImpl) is
+     *  and returned.  This must take place since the
+     *  Deployer (which does not register services) requires
+     *  a valid log.
+     * @return
+     */
+    public static LogService getService() {
+        LogService ls = (LogService)
+                ServiceManager.getService(LogService.class);
+        if(ls==null)
+            ls = StandardOutLogService.getInstance();
+        return ls;
     }
 
-    private final static LogService cService = (LogService) ServiceManager.getService (LogService.class);
 }

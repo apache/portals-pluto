@@ -160,8 +160,7 @@ public class FragmentImpl implements Fragment, java.io.Serializable {
         org.apache.pluto.portalImpl.aggregation.Fragment fragment = null;
         if (classname == null) {
             if (type == null) {
-                Log.error("org.apache.pluto.portalImpl",
-                          "No type defined in pageregistry.xml");
+                Log.error("No type defined in pageregistry.xml");
                 return null;
             }
             if (type.equalsIgnoreCase("page")) {
@@ -189,8 +188,7 @@ public class FragmentImpl implements Fragment, java.io.Serializable {
                                                                                        this,
                                                                                        nav);
             } else {
-                Log.error("org.apache.pluto.portalImpl",
-                          "Unknown type "+type+" defined in pageregistry.xml");
+                Log.error("Unknown type "+type+" defined in pageregistry.xml");
                 return null;
             }
         } else {
@@ -206,12 +204,10 @@ public class FragmentImpl implements Fragment, java.io.Serializable {
             try {
                 constructor = Class.forName(classname).getConstructor(parameterClasses);
             } catch (NoSuchMethodException e) {
-                Log.error("org.apache.pluto.portalImpl",
-                          "Invalid class or classname defined in pageregistry.xml",e);
+                Log.error("Invalid class or classname defined in pageregistry.xml",e);
                 return null;
             } catch (ClassNotFoundException e) {
-                Log.error("org.apache.pluto.portalImpl",
-                          "Invalid class or classname defined in pageregistry.xml",e);
+                Log.error("Invalid class or classname defined in pageregistry.xml",e);
                 return null;
             }
             Object[] parameters = {
@@ -224,22 +220,18 @@ public class FragmentImpl implements Fragment, java.io.Serializable {
             try {
                 Object _fragment = constructor.newInstance(parameters);
                 if (!(_fragment instanceof org.apache.pluto.portalImpl.aggregation.Fragment)) {
-                    Log.error("org.apache.pluto.portalImpl",
-                              "Invalid class or classname defined in pageregistry.xml");
+                    Log.error("Invalid class or classname defined in pageregistry.xml");
                     return null;
                 }
                 fragment = (org.apache.pluto.portalImpl.aggregation.Fragment)_fragment;
             } catch (InstantiationException e) {
-                Log.error("org.apache.pluto.portalImpl",
-                          "Invalid class or classname defined in pageregistry.xml",e);
+                Log.error("Invalid class or classname defined in pageregistry.xml",e);
                 return null;
             } catch (IllegalAccessException e) {
-                Log.error("org.apache.pluto.portalImpl",
-                          "Invalid class or classname defined in pageregistry.xml",e);
+                Log.error("Invalid class or classname defined in pageregistry.xml",e);
                 return null;
             } catch (InvocationTargetException e) {
-                Log.error("org.apache.pluto.portalImpl",
-                          "Invalid class or classname defined in pageregistry.xml",e);
+                Log.error("Invalid class or classname defined in pageregistry.xml",e);
                 return null;
             }
         }        

@@ -59,30 +59,10 @@ package org.apache.pluto.portalImpl.services.log;
 
 import org.apache.pluto.portalImpl.services.Service;
 
+/** Defines the PortalDrivers LogService implementation
+ *  for pluto.
+ */
 public abstract class LogService extends Service
-implements org.apache.pluto.services.log.LogService
-{
-
-    // org.apache.pluto.services.log.LogService implementation.
-    public abstract boolean isDebugEnabled (String aComponent);
-    
-    public abstract boolean isInfoEnabled (String aComponent);
-    
-    public abstract boolean isWarnEnabled (String aComponent);
-
-    public abstract boolean isErrorEnabled (String aComponent);
-
-
-    public abstract void debug (String aComponent, String aMessage);
-
-    public abstract void debug (String aComponent, String aMessage, Throwable aThrowable);
-
-    public abstract void info (String aComponent, String aMessage);
-
-    public abstract void warn (String aComponent, String aMessage);
-
-    public abstract void error (String aComponent, String aMessage, Throwable aThrowable);
-
-    public abstract void error (String aComponent, Throwable aThrowable);
+implements org.apache.pluto.services.log.LogService {
 
 }

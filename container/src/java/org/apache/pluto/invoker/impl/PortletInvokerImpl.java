@@ -73,17 +73,27 @@ import javax.servlet.ServletResponse;
 import org.apache.pluto.core.CoreUtils;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletResponse;
-import org.apache.pluto.services.log.Log;
+import org.apache.pluto.services.log.Logger;
+import org.apache.pluto.services.log.LogService;
 import org.apache.pluto.invoker.PortletInvoker;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.servlet.ServletDefinition;
+import org.apache.pluto.PortletContainerServices;
 
 public class PortletInvokerImpl implements PortletInvoker
 {
     private javax.servlet.ServletConfig servletConfig;
     private PortletDefinition portletDefinition;
 
-    public PortletInvokerImpl(PortletDefinition portletDefinition, 
+    /* This Logger can be saved due to the
+     * fact that a unique instance of PortletInvoker
+     * will be used for each request. We load it
+     * lazily since we only log exceptions at
+     * this point.
+     */
+    private Logger log = null;
+
+    public PortletInvokerImpl(PortletDefinition portletDefinition,
                               javax.servlet.ServletConfig servletConfig)
     {
         this.portletDefinition = portletDefinition;
@@ -93,7 +103,7 @@ public class PortletInvokerImpl implements PortletInvoker
     // org.apache.pluto.invoker.PortletInvoker implementation -------------------------------------
     public void action(ActionRequest request, ActionResponse response) throws PortletException,IOException
     {
-        invoke(request,response,org.apache.pluto.Constants.METHOD_ACTION);  
+        invoke(request,response,org.apache.pluto.Constants.METHOD_ACTION);
     }
 
     public void render(RenderRequest request, RenderResponse response) throws PortletException, IOException
@@ -109,8 +119,7 @@ public class PortletInvokerImpl implements PortletInvoker
         }
         catch (IOException e)
         {
-            Log.error("org.apache.pluto.invoker",
-                      "PortletInvokerImpl.load() - Error while dispatching portlet.",e);
+            getLog().error("PortletInvokerImpl.load() - Error while dispatching portlet.",e);
             throw new PortletException(e);
         }
     }
@@ -150,8 +159,7 @@ public class PortletInvokerImpl implements PortletInvoker
             }
             catch (javax.servlet.UnavailableException e)
             {
-                Log.error("org.apache.pluto.invoker",
-                          "PortletInvokerImpl.invoke() - Error while dispatching portlet.",e);
+                getLog().error("PortletInvokerImpl.invoke() - Error while dispatching portlet.",e);
                 if (e.isPermanent())
                 {
                     throw new javax.portlet.UnavailableException(e.getMessage());
@@ -165,8 +173,7 @@ public class PortletInvokerImpl implements PortletInvoker
             {
                 if (e.getRootCause() != null)
                 {
-                    Log.error("org.apache.pluto.invoker",
-                              "PortletInvokerImpl.render() - Error while dispatching portlet.",
+                    getLog().error("PortletInvokerImpl.render() - Error while dispatching portlet.",
                               e.getRootCause());
                     if (e.getRootCause() instanceof PortletException)
                     {
@@ -179,8 +186,7 @@ public class PortletInvokerImpl implements PortletInvoker
                 }
                 else
                 {
-                    Log.error("org.apache.pluto.invoker",
-                              "PortletInvokerImpl.invoke() - Error while dispatching portlet.",
+                    getLog().error("PortletInvokerImpl.invoke() - Error while dispatching portlet.",
                               e);
                     throw new PortletException(e);
                 }
@@ -194,9 +200,24 @@ public class PortletInvokerImpl implements PortletInvoker
         }
         else
         {
-            Log.error("org.apache.pluto.invoker",
-                      "PortletInvokerImpl.action() - Unable to find RequestDispatcher.");
+            getLog().error("PortletInvokerImpl.action() - Unable to find RequestDispatcher.");
         }
     }
     // --------------------------------------------------------------------------------------------
+
+    /** Provides lazy instantiation of the Logger.
+     *  This is usefull since the log is currently only
+     *  used when an error occurs.  B/C of this, there is
+     *  no reason to retrieve the log until needed.
+     * @return
+     */
+    private Logger getLog() {
+        if(log==null) {
+        // from here forward for this Container:
+            log = ((LogService)PortletContainerServices
+                .get(LogService.class))
+                .getLogger(getClass());
+        }
+        return log;
+    }
 }

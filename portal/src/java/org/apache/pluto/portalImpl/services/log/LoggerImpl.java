@@ -55,31 +55,61 @@
 
  */
 
-package org.apache.pluto.services.log;
+package org.apache.pluto.portalImpl.services.log;
 
-import org.apache.pluto.services.ContainerService;
+import org.apache.commons.logging.Log;
+import org.apache.pluto.services.log.Logger;
 
-/** Implemented in order to provides access to
- *  a custom Logger implementation. The Logger
- *  provides component aware logging capabilities.
- *
- */
-public interface LogService extends ContainerService {
+public class LoggerImpl implements Logger {
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  component.
-     * @param component
-     * @return
-     */
-    Logger getLogger(String component);
+    private Log log = null;
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  Class.
-     * @param klass
-     * @return
-     */
-    Logger getLogger(Class klass);
+    public LoggerImpl(Log log) {
+        this.log = log;
+    }
+
+    public boolean isDebugEnabled() {
+        return log.isDebugEnabled();
+    }
+
+    public boolean isInfoEnabled() {
+        return log.isInfoEnabled();
+    }
+
+    public boolean isWarnEnabled() {
+        return log.isWarnEnabled();
+    }
+
+    public boolean isErrorEnabled() {
+        return log.isErrorEnabled();
+    }
+
+    public void debug(String aMessage) {
+        log.debug(aMessage);
+    }
+
+    public void debug(String aMessage, Throwable aThrowable) {
+        log.debug(aMessage, aThrowable);
+    }
+
+    public void info(String aMessage) {
+        log.info(aMessage);
+    }
+
+    public void warn(String aMessage) {
+        log.warn(aMessage);
+    }
+
+    public void error(String aMessage) {
+        log.error(aMessage);
+    }
+
+    public void error(String aMessage, Throwable aThrowable) {
+        log.error(aMessage);
+    }
+
+    public void error(Throwable aThrowable) {
+        log.error("Exception caught: ", aThrowable);
+    }
 
 }

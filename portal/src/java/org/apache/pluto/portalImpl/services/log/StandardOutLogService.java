@@ -55,31 +55,44 @@
 
  */
 
-package org.apache.pluto.services.log;
+package org.apache.pluto.portalImpl.services.log;
 
-import org.apache.pluto.services.ContainerService;
+import org.apache.pluto.services.log.Logger;
 
-/** Implemented in order to provides access to
- *  a custom Logger implementation. The Logger
- *  provides component aware logging capabilities.
+/** Defines a LogService that may be used when
+ *  one has not been registered with the ServiceManager.
+ *  This is specifically usefull in cases, such as
+ *  when the Deployer is run, in which no Service are
+ *  registered.
  *
+ *  The StandardOutLogService is implemented as a
+ *  Singleton since all log messages will be going
+ *  to StandardOut no matter what! Since all behaivior
+ *  will be identical, there's no reason to create
+ *  multiple instances.
  */
-public interface LogService extends ContainerService {
+public class StandardOutLogService extends LogService {
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  component.
-     * @param component
-     * @return
-     */
-    Logger getLogger(String component);
+    private static Logger logger = null;
 
-    /** Used to retrieve a Logger implementation
-     *  which can be used to log information for the given
-     *  Class.
-     * @param klass
-     * @return
-     */
-    Logger getLogger(Class klass);
+    private static LogService service;
+
+    public static LogService getInstance() {
+        if(service==null)
+            service = new StandardOutLogService();
+        return service;
+    }
+
+    private StandardOutLogService() {
+        logger = new StandardOutLogger();
+    }
+
+    public Logger getLogger(String aComponent) {
+        return logger;
+    }
+    
+    public Logger getLogger(Class klass) {
+        return logger;
+    }
 
 }

@@ -67,13 +67,19 @@ import org.apache.pluto.om.common.Preference;
 import org.apache.pluto.om.common.PreferenceSet;
 import org.apache.pluto.om.common.PreferenceSetCtrl;
 import org.apache.pluto.util.StringUtils;
-import org.apache.pluto.services.log.Log;
+import org.apache.pluto.portalImpl.services.log.Log;
+import org.apache.pluto.services.log.Logger;
 
 public class PreferenceSetImpl extends HashSet
 implements PreferenceSet, PreferenceSetCtrl, java.io.Serializable {
 
     private String castorPreferencesValidator; 
     private ClassLoader classLoader;
+    private Logger log = null;
+
+    public PreferenceSetImpl() {
+        this.log = Log.getService().getLogger(getClass());
+    }
 
     // PreferenceSet implementation.
 
@@ -102,10 +108,9 @@ implements PreferenceSet, PreferenceSetCtrl, java.io.Serializable {
             if (validator instanceof PreferencesValidator)
                 return(PreferencesValidator)validator;
             else
-                Log.error("org.apache.pluto.portalImpl.om.common.impl.PreferenceSetImpl", 
-                          "Specified class " + castorPreferencesValidator +" is no preferences validator.");
+                log.error("Specified class " + castorPreferencesValidator +" is no preferences validator.");
         } catch (Exception e) {
-            Log.error("org.apache.pluto.portalImpl.om.common.impl.PreferenceSetImpl", e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
 
         return null;

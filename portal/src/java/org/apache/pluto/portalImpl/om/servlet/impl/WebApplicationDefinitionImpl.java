@@ -147,9 +147,8 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
 
     public ServletContext getServletContext(ServletContext servletContext)
     {
-        if (Log.isDebugEnabled("org.apache.pluto.portalImpl")) {
-            Log.debug("org.apache.pluto.portalImpl",
-                      "Looking up ServletContext for path "+contextPath);
+        if (Log.isDebugEnabled()) {
+            Log.debug("Looking up ServletContext for path "+contextPath);
         }
         return servletContext.getContext(contextPath);
     }

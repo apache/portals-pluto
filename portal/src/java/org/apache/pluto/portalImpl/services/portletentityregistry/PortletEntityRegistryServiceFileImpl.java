@@ -75,6 +75,7 @@ import org.apache.pluto.om.entity.PortletEntity;
 import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityListImpl;
 import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.util.Properties;
+import org.apache.pluto.services.log.Logger;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
@@ -99,6 +100,7 @@ public class PortletEntityRegistryServiceFileImpl extends PortletEntityRegistryS
     protected Mapping mapping = null;
     // Servlet Context
     protected ServletContext servletContext = null;
+    private Logger log = null;
     // Registry
     protected PortletApplicationEntityListImpl registry = null;
     
@@ -108,6 +110,7 @@ public class PortletEntityRegistryServiceFileImpl extends PortletEntityRegistryS
     public void init (ServletConfig servletConfig, Properties properties) throws Exception
     {
         servletContext = servletConfig.getServletContext();
+        log = Log.getService().getLogger(getClass());
 
         String _mapping = properties.getString(CONFIG_MAPPING, DEFAULT_MAPPING);
         File f = new File(_mapping);
@@ -121,7 +124,7 @@ public class PortletEntityRegistryServiceFileImpl extends PortletEntityRegistryS
         }
         catch (Exception e)
         {
-            Log.error("Failed to load mapping file "+_mapping,e);
+            log.error("Failed to load mapping file "+_mapping,e);
             throw e;
         }
     
@@ -185,12 +188,10 @@ public class PortletEntityRegistryServiceFileImpl extends PortletEntityRegistryS
     {
         _load();
 
-        if (Log.isDebugEnabled("org.apache.pluto.portalImpl.services"))
+        if (log.isDebugEnabled())
         {
-            Log.debug("org.apache.pluto.portalImpl.services", 
-                      "Dumping complete object model description as it is read from the xml file...");
-            Log.debug("org.apache.pluto.portalImpl.services", 
-                      registry.toString());
+            log.debug("Dumping complete object model description as it is read from the xml file...");
+            log.debug(registry.toString());
         }
 
         fill();

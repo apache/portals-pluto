@@ -61,9 +61,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.portalImpl.util.Properties;
-import org.apache.pluto.util.StringUtils;
-
-import org.apache.pluto.portalImpl.services.log.*;
 
 /**
  ** This is the base class for all services of the system. It prototypes
@@ -85,23 +82,11 @@ import org.apache.pluto.portalImpl.services.log.*;
 public abstract class Service
 {
 
-
-    protected final boolean IS_DEBUG_ENABLED;
-
     /**
      ** Constructs the service.
      **/
+    protected Service () {
 
-    protected Service ()
-    {
-        if (ServiceManager.getService (LogService.class) != null)
-        {
-            IS_DEBUG_ENABLED = Log.isDebugEnabled (StringUtils.packageOf (getClass ()));
-        }
-        else
-        {
-            IS_DEBUG_ENABLED = true;
-        }
     }
 
     /**

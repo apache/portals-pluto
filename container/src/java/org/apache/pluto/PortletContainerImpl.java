@@ -75,12 +75,13 @@ import org.apache.pluto.services.PortletContainerEnvironment;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.PortletURLProvider;
-import org.apache.pluto.services.log.Log;
+import org.apache.pluto.services.log.Logger;
+import org.apache.pluto.services.log.LogService;
 
 /**
  *  Implements the Pluto Container.
  * 
- * @version $Id: PortletContainerImpl.java,v 1.2 2004/01/08 02:20:16 taylor Exp $
+ * @version $Id: PortletContainerImpl.java,v 1.3 2004/02/17 14:23:57 blumm Exp $
  */
 public class PortletContainerImpl implements PortletContainer
 {
@@ -89,6 +90,8 @@ public class PortletContainerImpl implements PortletContainer
     private String uniqueContainerName;
     private Properties properties;
     private boolean initialized;
+
+    private Logger log = null;
 
     public void init(String uniqueContainerName,
                      ServletConfig servletConfig,
@@ -101,6 +104,12 @@ public class PortletContainerImpl implements PortletContainer
         PortletContainerServices.createReference(uniqueContainerName, environment);
         this.properties = properties;
         initialized = true;
+
+        // Initialize the Logger that we will use
+        // from here forward for this Container:
+        log = ((LogService)environment
+                .getContainerService(LogService.class))
+                .getLogger(getClass());
     }
 
     public void shutdown() throws PortletContainerException
@@ -117,10 +126,9 @@ public class PortletContainerImpl implements PortletContainer
         PortletContainerServices.prepare(uniqueContainerName);
         PortletInvoker invoker = null;
         
-        if (Log.isDebugEnabled("org.apache.pluto.invoker"))
+        if (log.isDebugEnabled())
         {
-            Log.debug("org.apache.pluto.invoker",
-                      "PortletContainerImpl.portletService(" + portletWindow.getId() + ") called.");
+            log.debug("PortletContainerImpl.portletService(" + portletWindow.getId() + ") called.");
         }
 
         try
@@ -153,10 +161,9 @@ public class PortletContainerImpl implements PortletContainer
         PortletContainerServices.prepare(uniqueContainerName);
         PortletInvoker invoker = null;
 
-        if (Log.isDebugEnabled("org.apache.pluto.invoker"))
+        if (log.isDebugEnabled())
         {
-            Log.debug("org.apache.pluto.invoker",
-                      "PortletContainerImpl.performPortletAction(" + portletWindow.getId() + ") called.");
+            log.debug("PortletContainerImpl.performPortletAction(" + portletWindow.getId() + ") called.");
         }
 
         String location = null;
@@ -270,9 +277,8 @@ public class PortletContainerImpl implements PortletContainer
         PortletContainerServices.prepare(uniqueContainerName);
         PortletInvoker invoker = null;
 
-        if (Log.isDebugEnabled("org.apache.pluto.invoker"))
-            Log.debug("org.apache.pluto.invoker",
-                      "PortletContainerImpl.portletLoad("+portletWindow.getId()+") called.");
+        if (log.isDebugEnabled())
+            log.debug("PortletContainerImpl.portletLoad("+portletWindow.getId()+") called.");
 
         RenderRequest renderRequest = PortletObjectAccess.getRenderRequest(portletWindow, 
                                                                            servletRequest, 
