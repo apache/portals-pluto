@@ -38,7 +38,7 @@ limitations under the License.
   <dependencies>
      <dependency>
       <id>castor</id>
-      <version>0.9.5</version>
+      <version>0.9.5.3</version>
       <properties>
         <war.bundle>true</war.bundle>
       </properties>
