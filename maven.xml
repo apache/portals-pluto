@@ -23,17 +23,15 @@ limitations under the License.
     <attainGoal name="faq"/>
   </preGoal>   
 
-  <preGoal name="fullDeployment">
-    <attainGoal name="multiproject:install"/>
-  </preGoal>
-
-
+<!-- ===== ================ ===== -->
+<!-- ===== Deployment Goals ===== -->
+<!-- ===== ================ ===== -->
   <goal name="pluto:deploy-all" prereqs="multiproject:install">
-    <attainGoal name="pluto:deploy-container"/>
+    <attainGoal name="pluto:deploy-portal-driver"/>
     <attainGoal name="pluto:deploy-testsuite"/>
   </goal>
 
-  <goal name="pluto:deploy-container">
+  <goal name="pluto:deploy-portal-driver">
     <maven:reactor
       basedir="${basedir}"
       includes="portal/project.xml"
@@ -51,6 +49,109 @@ limitations under the License.
             banner="Deploying Test Suite"
             postProcessing="false"
             ignoreFailures="false"/>  	
+  </goal>
+
+<!-- ===== ================ ===== -->
+<!-- ===== Distribute Goals ===== -->
+<!-- ===== ================ ===== -->
+  <goal name="distribute:all">
+    <maven:reactor
+      basedir="${basedir}"
+      includes="**/project.xml"
+      goals="dist:build"
+      banner="Building Distribution"
+      postProcessing="false"
+      ignoreFailures="false"/>
+    <attainGoal name="distribute:binary"/>
+  </goal>
+
+  <goal name="distribute:init">
+    <j:set var="downloads" value="${context.getVariable('maven.build.dir')}/.downloads"/>
+    <mkdir dir="${downloads}"/>
+  </goal>
+
+  <goal name="distribute:binary" prereqs="dist:build-setup,distribute:init">
+    <j:set var="tomcat" value="${downloads}/tomcat-${context.getVariable('maven.dist.tomcat.version')}"/>
+    <j:set var="maven.dist.final.name" value="pluto-${pom.currentVersion}"/>
+    <j:set var="pluto" value="${context.getVariable('maven.dist.dir')}/${maven.dist.final.name}"/>
+    
+    <ant:available property="exists" file="${tomcat}"/>
+    <j:if test="${exists != true}">
+      <attainGoal name="distribute:download-tomcat"/>
+    </j:if>
+
+    <ant:copy todir="${pluto}">
+      <ant:fileset dir="${tomcat}/jakarta-tomcat-${context.getVariable('maven.dist.tomcat.version')}"/>
+      <ant:fileset dir="${basedir}" includes="LICENSE*" excludes="LICENSE.TXT"/>
+      <ant:fileset dir="${basedir}" includes="README"/>
+    </ant:copy>
+
+    <!--
+    <ant:copy todir="${maven.dist.dir}/${plutobin.dist.name}/webapps/ROOT">
+      <fileset dir="${basedir}/target/docs" includes="**/*.*"/>
+    </ant:copy>
+    -->
+
+    <j:invokeStatic className="java.lang.System" method="setProperty">
+      <j:arg type="java.lang.String" value="maven.tomcat.home"/>
+      <j:arg type="java.lang.String" value="${pluto}"/>
+    </j:invokeStatic>
+
+    <j:invokeStatic className="java.lang.System" method="setProperty">
+      <j:arg type="java.lang.String" value="maven.tomcat.version.major"/>
+      <j:arg type="java.lang.String" value="5"/>
+    </j:invokeStatic>
+
+    <attainGoal name="pluto:deploy-portal-driver"/>
+    <attainGoal name="pluto:deploy-testsuite"/>
+
+	<ant:zip zipfile="${pluto}.zip">
+	  <ant:zipfileset dir="${maven.dist.dir}" includes="${maven.dist.final.name}/**/*"/>
+	</ant:zip>
+
+	<ant:tar longfile="gnu" tarfile="${pluto}.tar">
+	  <ant:tarfileset dir="${maven.dist.dir}" includes="${maven.dist.final.name}/**/*"/>
+    </ant:tar>
+
+    <ant:gzip zipfile="${pluto}.tar.gz" src="${pluto}.tar"/>
+
+  </goal>
+
+  <goal name="distribute:download-tomcat">
+    <j:set var="version" value="${context.getVariable('maven.dist.tomcat.version')}"/>
+    <j:set var="tomcaturl" value="${context.getVariable('maven.dist.tomcat.baseurl')}/v${version}/bin/jakarta-tomcat-${version}.tar.gz"/>
+    <j:set var="compaturl" value="${context.getVariable('maven.dist.tomcat.baseurl')}/v${version}/bin/jakarta-tomcat-${version}-compat.tar.gz"/>
+
+      <j:if test="${context.getVariable('maven.proxy.host') != null}">
+        <setproxy proxyhost="${maven.proxy.host}" proxyport="${maven.proxy.port}"/>    
+      </j:if>
+
+      <echo message=" **********************************************************************"/>
+      <echo message=" ** Please wait while the current tomcat distribution is downloaded. **"/>
+      <echo message=" **********************************************************************"/>
+      <get src="${tomcaturl}" dest="${tomcat}.tar.gz"/>
+      <gunzip src="${tomcat}.tar.gz" dest="${tomcat}.tar"/>
+      <untar src="${tomcat}.tar" dest="${tomcat}"/>
+      <delete file="${tomcat}.tar.gz"/>
+      <delete file="${tomcat}.tar"/>
+
+      <echo message=" **********************************************************************"/>
+      <echo message=" ** Please wait while the tomcat compat bundle is downloaded.        **"/>
+      <echo message=" **********************************************************************"/>
+      <get src="${compaturl}" dest="${tomcat}.tar.gz"/>
+      <gunzip src="${tomcat}.tar.gz" dest="${tomcat}.tar"/>
+      <untar src="${tomcat}.tar" dest="${tomcat}"/>
+      <delete file="${tomcat}.tar.gz"/>
+      <delete file="${tomcat}.tar"/>
+
+      <ant:move 
+        file="${tomcat}/jakarta-tomcat-${version}/LICENSE" 
+        tofile="${tomcat}/LICENSE.jakarta-tomcat"/>
+      <delete>
+        <fileset dir="${tomcat}/jakarta-tomcat-${version}/webapps" includes="**"/>
+        <fileset dir="${tomcat}/jakarta-tomcat-${version}/webapps" includes="**/*.*"/>
+        <fileset dir="${tomcat}/jakarta-tomcat-${version}/conf/Catalina/localhost" includes="**/*"/>
+      </delete>
   </goal>
 
 </project>
