@@ -42,8 +42,8 @@ getAttributeNames()...
         while (attributes.hasMoreElements())
         {
             String name = (String)attributes.nextElement();
-            attribute = (String)renderRequest.getAttribute(name);
-            if (attribute!=null)
+            Object a = renderRequest.getAttribute(name);
+            if (a!=null)
                  { out.print("#"+nr+" passed..."); }
             else { out.print("#"+nr+" failed..."); allOk = false; }
             nr++;
@@ -98,8 +98,8 @@ getAttributeNames()...
         while (attributes.hasMoreElements())
         {
             String name = (String)attributes.nextElement();
-            attribute = (String)portletSession.getAttribute(name, PortletSession.PORTLET_SCOPE);
-            if (attribute!=null)
+            Object a = portletSession.getAttribute(name, PortletSession.PORTLET_SCOPE);
+            if (a!=null)
                  { out.print("#"+nr+" passed..."); }
             else { out.print("#"+nr+" failed..."); allOk = false; }
             nr++;
