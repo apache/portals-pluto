@@ -25,10 +25,14 @@ import java.io.InputStream;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.core.impl.PortletPreferenceImpl;
 import org.apache.pluto.binding.PortletAppDD;
 import org.apache.pluto.binding.PortletDD;
 import org.apache.pluto.binding.ServletDD;
 import org.apache.pluto.binding.XMLBindingFactory;
+import org.apache.pluto.binding.PortletPreferenceDD;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -38,6 +42,9 @@ import org.apache.pluto.binding.XMLBindingFactory;
  * information as defined by the{@link ServletDD}
  */
 public class PortletEntity {
+    private static final Log LOG =
+        LogFactory.getLog(PortletEntity.class);
+
     private static final String PREFIX = "/PlutoInvoker/";
 
     private ServletContext ctx;
@@ -45,6 +52,7 @@ public class PortletEntity {
 
     //  Looked up and Cached
     private PortletDD dd;
+    private PortletPreference[] prefs;
 
     PortletEntity(ServletContext ctx, PortletWindow window) {
         this.ctx = ctx;
@@ -56,7 +64,18 @@ public class PortletEntity {
      * @return the preference set
      */
     public PortletPreference[] getDefaultPreferences() {
-        return null;
+        if(prefs == null) {
+            PortletDD dd = getPortletDefinition();
+            PortletPreferenceDD[] pdd = dd.getPortletPreferences();
+            prefs = new PortletPreference[pdd.length];
+            for(int i = 0;i<pdd.length;i++) {
+                prefs[i] = new PortletPreferenceImpl(
+                    pdd[i].getName(),
+                    new String[] { pdd[i].getValue()}
+                );
+            }
+        }
+        return prefs;
     }
 
     /**
@@ -72,7 +91,14 @@ public class PortletEntity {
     }
 
     private void load() {
-        ServletContext ctx = this.ctx.getContext(window.getContextPath());
+        String context = window.getContextPath();
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Loading PortletAppDD for context: "+context);
+        }
+        ServletContext ctx = this.ctx.getContext(context);
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Retrieved context: "+ctx);
+        }
         InputStream in = ctx.getResourceAsStream(PortletAppDD.PORTLET_XML);
         try {
             PortletAppDD appDD = XMLBindingFactory.createXMLBinding().getPortletAppDD(in);

@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.core.InternalPortletWindow;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 /**
  * To change this generated comment edit the template variable "typecomment":
@@ -36,6 +38,8 @@ import org.apache.pluto.core.InternalPortletWindow;
  */
 public class ActionRequestImpl
     extends PortletRequestImpl implements ActionRequest {
+
+    private static final Log LOG = LogFactory.getLog(ActionRequestImpl.class);
     /**
      * Holds the portlet preferences
      */
@@ -45,6 +49,8 @@ public class ActionRequestImpl
                              InternalPortletWindow internalPortletWindow,
                              HttpServletRequest servletRequest) {
         super(container, internalPortletWindow, servletRequest);
+        LOG.debug("Created action request for: "+internalPortletWindow);
+
     }
 
     // javax.portlet.ActionRequest implementation -------------------------------------------------
@@ -69,6 +75,7 @@ public class ActionRequestImpl
     // PortletRequestImpl implementation ----------------------------------------------------------
     public PortletPreferences getPreferences() {
         if (this.portletPreferences == null) {
+            InternalPortletWindow window = getWindow();
             portletPreferences = new PortletPreferencesImpl(getContainer(),
                                                             getWindow(), this,
                                                             Constants.METHOD_ACTION);

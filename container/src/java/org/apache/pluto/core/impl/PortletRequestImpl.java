@@ -19,7 +19,6 @@ import java.io.BufferedReader;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -40,7 +39,6 @@ import org.apache.pluto.binding.SupportedMimeTypeDD;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.PortletEntity;
-import org.apache.pluto.services.DynamicInformationProvider;
 import org.apache.pluto.services.PropertyManagerService;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
@@ -83,7 +81,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     /** Response content types. */
     private Vector contentTypes;
 
-    private DynamicInformationProvider provider;
     private NamespaceMapper mapper = new NamespaceMapperImpl();
 
     /**
@@ -102,9 +99,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         super(servletRequest);
         this.container = container;
         this.internalPortletWindow = internalPortletWindow;
-        this.provider =
-        container.getContainerServices().getDynamicInformationProvider(
-            servletRequest);
         this.portalContext =
         container.getContainerServices().getPortalContext();
 

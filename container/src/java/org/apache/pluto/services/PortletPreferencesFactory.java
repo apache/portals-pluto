@@ -19,22 +19,21 @@
 
 package org.apache.pluto.services;
 
-import java.io.IOException;
-
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.core.PortletPreference;
 
 public interface PortletPreferencesFactory {
 
     PortletPreference[] getStoredPreferences(PortletWindow window,
-                                             PortletRequest req);
+                                             PortletRequest req)
+        throws PortletContainerException;
 
-    PortletPreference getStoredPreference(PortletWindow window,
-                                          PortletRequest req,
-                                          String preferenceName);
-
-    void store(PortletPreference[] preferences) throws IOException;
+    void store(PortletWindow window,
+               PortletRequest req,
+               PortletPreference[] preferences)
+        throws PortletContainerException;
 
 }

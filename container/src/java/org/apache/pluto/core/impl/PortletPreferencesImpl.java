@@ -32,13 +32,18 @@ import javax.portlet.ValidatorException;
 
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.PortletPreference;
+import org.apache.pluto.core.PortletEntity;
 import org.apache.pluto.services.PortletPreferencesFactory;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 
 public class PortletPreferencesImpl implements PortletPreferences {
+    private static final Log LOG = LogFactory.getLog(PortletPreferencesImpl.class);
 
     private PortletPreferencesFactory factory;
 
@@ -65,20 +70,25 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
         this.preferences = new java.util.HashMap();
 
-        PortletPreference[] prefs
-            = window.getPortletEntity().getDefaultPreferences();
+        PortletEntity entity = window.getPortletEntity();
+        PortletPreference[] prefs = entity.getDefaultPreferences();
 
         for (int i = 0; i < prefs.length; i++) {
-            preferences.put(prefs[i].getName(), prefs);
+            preferences.put(prefs[i].getName(), prefs[i]);
         }
 
         PortletPreferencesFactory factory
             = container.getContainerServices().getPortletPreferencesFactory();
 
-        prefs = factory.getStoredPreferences(window, request);
+        try {
+            prefs = factory.getStoredPreferences(window, request);
+        }
+        catch(PortletContainerException pe) {
+            LOG.error("Error retrieving preferences.", pe);
+        }
 
         for (int i = 0; i < prefs.length; i++) {
-            preferences.put(prefs[i].getName(), prefs);
+            preferences.put(prefs[i].getName(), prefs[i]);
         }
 
     }
@@ -167,7 +177,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         Map map = new java.util.HashMap();
         Iterator it = preferences.keySet().iterator();
         while (it.hasNext()) {
-            PortletPreference pref = (PortletPreference) it.next();
+            PortletPreference pref = (PortletPreference)preferences.get(it.next());
             map.put(pref.getName(), pref.getValues());
         }
         return Collections.unmodifiableMap(map);
@@ -184,16 +194,20 @@ public class PortletPreferencesImpl implements PortletPreferences {
                 "preference attribute called " + key + " may not be modified");
         }
 
-        PortletPreference preference = factory.getStoredPreference(window,
-                                                                   request,
-                                                                   key);
-        preferences.put(preference.getName(), preference);
+        // I think we should remove all preferences which are stored --
+        // NOT reset them to how they were stored before!
+        /*
+        PortletPreference[] preferences = factory.getStoredPreferences(window, request);
+        for(int i=0;i<preferences.length;i++) {
+            preferences.put(preference.getName(), preference);
+        }
+         */
 
     }
 
     public void store() throws java.io.IOException, ValidatorException {
         // not allowed when not called in action
-        if (!Constants.METHOD_ID.equals(methodId)) {
+        if (!Constants.METHOD_ACTION.equals(methodId)) {
             throw new java.lang.IllegalStateException(
                 "store is only allowed inside a processAction call");
         }
@@ -220,7 +234,12 @@ public class PortletPreferencesImpl implements PortletPreferences {
             (PortletPreference[]) preferences.values().toArray(
                 new PortletPreference[preferences.size()]);
 
-        factory.store(pref);
+        try {
+            factory.store(window, request, pref);
+        }
+        catch(PortletContainerException pe) {
+            LOG.error("Error storing preferences.", pe);
+        }
     }
     // --------------------------------------------------------------------------------------------
 
