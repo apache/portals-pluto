@@ -1,0 +1,79 @@
+package org.apache.pluto.portalImpl.portlet.test;
+
+import java.util.Map;
+
+import javax.portlet.PortletContext;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletSession;
+
+/**
+ * @author <a href="david.dewolf@vivare.com">David H. DeWolf</a>
+ */
+public class ComplexAttributeTest extends AbstractReflectivePortletTest {
+
+    private static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
+    private static final String KEY = "org.apache.pluto.testsuite.KEY";
+    private static final String VAL = "VALUE";
+
+    public String getTestSuiteName() {
+        return "Complex Attribute Test";
+    }
+
+    public Map doPrerequisiteAction(PortletContext context, ActionRequest req,
+                                    ActionResponse res) {
+        return new java.util.HashMap();
+    }
+
+    protected TestResult checkGetEmptyApplicationScopedAttribute(PortletSession session) {
+        TestResult res = new TestResult();
+        res.setName("Get Empty Application Scoped Attribute Test");
+        res.setDesc("Retrieve an attribute that has not been set in the session's application scope and ensure it's value is null.");
+
+        Object val = session.getAttribute(BOGUS_KEY, PortletSession.APPLICATION_SCOPE);
+        if(val == null) {
+            res.setReturnCode(TestResult.PASSED);
+        }
+        else {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Retrieved attribute value '"+val+"'; expected null.");
+        }
+        return res;
+    }
+
+    protected TestResult checkSetApplicationScopedAttribute(PortletSession session) {
+        TestResult res = new TestResult();
+        res.setName("Set Application Scoped Attribute Test");
+        res.setDesc("Set an application scoped session attribute and ensure it's retrievable");
+
+        session.setAttribute(KEY, VAL, PortletSession.APPLICATION_SCOPE);
+
+        Object val = session.getAttribute(KEY, PortletSession.APPLICATION_SCOPE);
+        if(VAL.equals(val)) {
+            res.setReturnCode(TestResult.PASSED);
+        }
+        else {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Retrieved attribute value '"+val+"'; expected '"+VAL+"'");
+        }
+        return res;
+    }
+
+    protected TestResult checkRemoveApplicationScopedAttribute(PortletSession session) {
+        TestResult res = new TestResult();
+        res.setName("Remove Application Scoped Attribute Test");
+        res.setDesc("Remove an application scoped session attribute and ensure it's null.");
+
+        session.setAttribute(KEY, VAL, PortletSession.APPLICATION_SCOPE);
+        session.removeAttribute(KEY, PortletSession.APPLICATION_SCOPE);
+        Object val = session.getAttribute(KEY, PortletSession.APPLICATION_SCOPE);
+        if(null == val) {
+            res.setReturnCode(TestResult.PASSED);
+        }
+        else {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Retrieved attribute value '"+val+"'; expected null.");
+        }
+        return res;
+    }
+}
