@@ -5,6 +5,23 @@
 <body>
 
 <release version="1.0.1-rc2" date="n/a" description="Release Candidate">
+  <action dev="ddewolf" type="fix">
+    Added the Security Mapping Test to the testsuite.
+  </action>
+  <action dev="ddewolf" type="update">
+    Updated the Security Mapping test in the testsuite to allow
+    simple configuration to determine which roles should be used
+    for the test.
+  </action>
+  <action dev="ddewolf" type="fix">
+    PortalURLs were incorrectly converting null values to the String
+    "null".  This was happending when action requests with a query
+    string such as: <code>?param=&amp;param2=</code>.  
+  </action>
+  <action dev="ddewolf" type="fix">
+    Issue PLUTO-66.  The testsuite TestPortlet was not testing
+    for empty string parameters.  Thanks Ken Weiner for the patch.
+  </action>
   <action dev="ddewolf" type="update">
     Include Pluto Documentation in Binary release
   </action>
