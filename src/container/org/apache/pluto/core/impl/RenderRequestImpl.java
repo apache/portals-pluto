@@ -58,7 +58,7 @@
 package org.apache.pluto.core.impl;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.IOException;import java.util.Enumeration;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.PortletPreferences;
@@ -96,11 +96,10 @@ public class RenderRequestImpl extends PortletRequestImpl implements RenderReque
     }
 
     public PortletPreferences getPreferences()
-    {
+    {        System.out.println("**** Getting Prefs " + portletPreferences);
         if (portletPreferences == null) {
             portletPreferences = PortletObjectAccess.getPortletPreferences(org.apache.pluto.Constants.METHOD_RENDER, super.getInternalPortletWindow().getPortletEntity());
-        }
-        return portletPreferences; 
+        }        System.out.println("**** RETURNING Prefs: " + portletPreferences);        Enumeration e = portletPreferences.getNames();        while (e.hasMoreElements())        {            String name = (String)e.nextElement();            System.out.println("PREF: name == " + name);        }        System.out.println("**** DONE PREF");                return portletPreferences; 
     }
     // --------------------------------------------------------------------------------------------
 }

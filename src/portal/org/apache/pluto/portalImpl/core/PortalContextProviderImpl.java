@@ -92,13 +92,9 @@ public class PortalContextProviderImpl implements PortalContextProvider {
 
 
     public PortalContextProviderImpl()
-    {
-        // these are the minimum modes that the portal needs to support
-        modes = getDefaultModes();
-        // these are the minimum states that the portal needs to support
-        states = getDefaultStates(); 
-        // set info
-        info = "Pluto/1.0";   
+    {        // these are the minimum modes that the portal needs to support        modes = getDefaultModes();
+        // these are the minimum states that the portal needs to support        states = getDefaultStates(); 
+        // set info        info = "Pluto/1.0";   
     }
 
     // PortalContextProvider implementation.
