@@ -73,12 +73,12 @@ public class PortletContextImpl implements PortletContext, InternalPortletContex
     
     public int getMajorVersion()
     {
-        return 1;
+        return Environment.getMajorSpecificationVersion();
     }
 
     public int getMinorVersion()
     {
-        return 0;
+        return Environment.getMinorSpecificationVersion();
     }
 
     public String getMimeType(String file)
