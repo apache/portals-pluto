@@ -76,7 +76,7 @@ public class SecurityMappingTest extends AbstractReflectivePortletTest {
 
     protected TestResult checkIsUserIndUndeclaredRole(PortletRequest req) {
         TestResult res = isUserLoggedIn(req);
-        res.setName("User In Role Test");
+        res.setName("User In Undeclared Role Test");
         res.setDesc("Test if user is in undeclared role");
         if(TestResult.WARNING.equals(res.getReturnCode())) {
             return res;
@@ -95,12 +95,12 @@ public class SecurityMappingTest extends AbstractReflectivePortletTest {
 
 
     private TestResult isUserLoggedIn(PortletRequest req) {
-        if(req.getRemoteUser()==null) {
+        if (req.getRemoteUser()==null) {
             TestResult res = new TestResult();
             res.setReturnCode(TestResult.WARNING);
             res.setResults("User is not logged in.");
             return res;
         }
-        else return new TestResult();
+        return new TestResult();
     }
 }
