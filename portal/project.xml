@@ -6,12 +6,12 @@
   <name>Pluto Portal Driver</name>
   <id>pluto-portal</id>
   <currentVersion>1.0</currentVersion>
- 
+
   <organization>
     <logo>/../../images/jakarta-logo-blue.gif</logo>
   </organization>
   <logo>/../../images/pluto-feather.gif</logo>
- 
+
   <inceptionYear>2003</inceptionYear>
   <package>org.apache.pluto</package>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
@@ -21,7 +21,7 @@
 
   <description>
     Simple portal that allows testing of Pluto with the Sun(tm) TCK .
-    This is not meant to be a fully functional portal as it only meants 
+    This is not meant to be a fully functional portal as it only meets
     the bare minimum requirements for the Pluto container to be tested.
   </description>
 
@@ -81,7 +81,7 @@
     	- Both xerces and xmlApis should be located in
     	- your common/endorsed directory in Tomcat
     	- or the equivalent directory for your servlet container
-		- 
+		-
      -->
     <dependency>
       <id>xerces</id>
@@ -93,7 +93,7 @@
       </properties>
     </dependency>
 
-    <dependency>      
+    <dependency>
       <id>xml-apis</id>
       <version>2.0.2</version>
       <properties>
@@ -111,7 +111,7 @@
 
     <sourceDirectory>src/java</sourceDirectory>
     <aspectSourceDirectory/>
-    
+
     <resources>
 		<resource>
 			<directory>${basedir}/src/resources</directory>
