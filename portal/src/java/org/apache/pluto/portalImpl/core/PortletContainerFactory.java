@@ -68,7 +68,7 @@ public class PortletContainerFactory
 {
 
     public static final String ENTRANCE_IMPL = "portletcontainer.entrance.impl";
-    public static final String ENTRANCE_WRAPPER_IMPL = "portletcontainer.entrance.warpper.impl";
+    public static final String ENTRANCE_WRAPPER_IMPL = "portletcontainer.entrance.wrapper.impl";
     
     private static PortletContainer portletContainer;
     private static PortletContainer portletContainerWrapper;
