@@ -147,6 +147,11 @@ implements PortletApplicationDefinition, java.io.Serializable, Support {
 
     private void setContextRoot(String contextRoot)
     {
+        // Test for IBM WebSphere 
+        if (contextRoot != null && contextRoot.endsWith(".war")) 
+        {
+            contextRoot = contextRoot.substring(0, contextRoot.length()-4);
+        }
         this.contextPath = contextRoot;                
     }
 

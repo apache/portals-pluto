@@ -231,6 +231,11 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     
     protected void setContextRoot(String contextPath)
     {
+        // Test for IBM WebSphere 
+        if (contextPath != null && contextPath.endsWith(".war"))
+        {
+            contextPath = contextPath.substring(0, contextPath.length()-4);
+        }
         this.contextPath = contextPath;
     }    
 

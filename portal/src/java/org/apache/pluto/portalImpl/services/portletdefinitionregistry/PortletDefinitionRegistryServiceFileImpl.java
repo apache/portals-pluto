@@ -113,9 +113,20 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
         }
         else
         {
-            baseWMDir = servletContext.getRealPath("");
-            baseWMDir = baseWMDir.substring(0,
-                                            baseWMDir.lastIndexOf(fileSeparator))+fileSeparator;
+            this.baseWMDir = this.servletContext.getRealPath("");
+            // BEGIN PATCH for IBM WebSphere 
+            if (this.baseWMDir.endsWith(fileSeparator)) {
+                this.baseWMDir = this.baseWMDir.substring(0, this.baseWMDir.length()-1);
+            }
+            // END PATCH for IBM WebSphere 
+            
+            this.baseWMDir = this.baseWMDir.substring(0,
+                                            this.baseWMDir.lastIndexOf(fileSeparator))+fileSeparator;
+            if (log.isDebugEnabled()) 
+            {
+                log.debug("servletContext.getRealPath('') =" + this.servletContext.getRealPath(""));
+                log.debug("baseWMDir = " + this.baseWMDir);
+            }            
         }
 
         // get portlet xml mapping file
@@ -171,6 +182,10 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
             File entry = new File(baseWMDir+entries[i]);
             if (entry.isDirectory())
             {
+                if (log.isDebugEnabled()) 
+                {
+                    log.debug("Searching in directory: " + entries[i]);
+                }
                 load(baseWMDir, entries[i]);
             }
         }
