@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="unknown">Jean-Baptiste Joret</author>
+    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <title>Pluto Project</title>
+  </properties>
+
+<body>
+<section name="Intallation">
+Follow the steps below to compile and install Pluto
+<p><strong>Prepare Environment</strong>
+   <ul>
+	<li>Download and Install a Java Development Kit release (version 1.3.1) 
+        from http://java.sun.com/j2se/</li>
+    <li>Install the JDK according to the instructions included with the 
+			release.</li>
+    <li>Set an environment variable JAVA_HOME to the pathname of the directory
+		to which the JDK has been installed.</li>
+    <li>Download and Install the Tomcat 4.1 Binary Distribution from 
+		http://jakarta.apache.org/builds/jakarta-tomcat-4.1</li>
+    <li>Unpack the binary distribution into a convenient location so that the 
+        distribution resides in its own directory (conventionally named 
+		"jakarta-tomcat-4.1"). For the purposes of the remainder of this 
+		document, the symbolic name "${catalina.home}" is used to refer to the 
+		full pathname of the release directory.</li>
+    </ul>
+</p>
+
+<p><strong>Install Pluto</strong>
+	<ul>
+	<li>Download Pluto the latest source from 
+        <a href="/site/sourceindex.cgi">the Jakarta Source index</a>
+		or directly from <a href="http://jakarta.apache.org/site/cvsindex.html">
+        cvs</a>. Place the source tree in a directory which will be
+        referred to for the remainder of this document as ${pluto.home}.</li>
+    <li>From the command line, go to the ${pluto.hom}/build directory and call 
+			"build", if you need to completely rebuild you can use "build rebuild"</li>
+    <li>Call the "install" script (install.bat or install.sh). You will be asked 
+			to type the Path where Tomcat is installed</li>
+    <li>Start Up Tomcat 4.1. Please see Tomcat instructions for information
+    <li>Run Pluto: Default url to start Pluto is </li>
+			http://localhost:8080/pluto/portal</li>
+	<li>In case Tomcat runs on a different port, change the port setting in 
+        ${catalina.home}/webapps/pluto/WEB-INF/config/services/ConfigService.properties</li>
+    </ul>
+</p>
+
+<p><strong>Install Portlets</strong>
+   <p>
+    <ul>To install portlets after you successfully installed Pluto, copy the 
+        portlet war's to the ${pluto.home}/portlets directory and execute 
+		<code>${pluto.home}/build/build.bat deploy_portlets</code>
+    </ul>.
+   </p>
+</p>
+</section>
+</body>
+</document>
+

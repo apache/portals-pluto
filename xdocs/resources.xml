@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="unknown">Jean-Baptiste Joret</author>
+    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <title>Pluto Project</title>
+  </properties>
+
+<body>
+<section name="Resources">
+    <p>
+         <a href="http://jcp.org/en/jsr/detail?id=168">JSR 168</a>
+    </p>
+</section>
+</body>
+</document>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="unknown">Jean-Baptiste Joret</author>
+    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <title>Pluto Project</title>
+  </properties>
+
+<body>
+<section name="Frequently Asked Questions">
+   <p><strong>Where can I find the Mailing List Archives for Pluto?</strong></p>
+   <p>The lists are archived at several places, including: 
+	  <ul>
+      <li><a href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=175">
+		  Developer List (Apache Mail Archives)</a></li>
+      <li><a href="http://nagoya.apache.org/eyebrowse/SummarizeList?listId=176">
+		  User List (Apache Mail Archives)</a></li>
+      <li><a href="http://news.gmane.org/gmane.comp.jakarta.pluto.devel">
+         http://news.gmane.org/gmane.comp.jakarta.pluto.devel</a></li>
+      <li><a href="http://news.gmane.org/gmane.comp.jakarta.pluto.user">
+         http://news.gmane.org/gmane.comp.jakarta.pluto.user</a></li>
+      </ul>
+   </p>
+
+   <p><strong>Is Pluto a fully functional portal implementation?</strong></p>
+   <p>No, Pluto is a Portlet Container.  Within a Portal, the Portlet Container
+      is soley responsible for managing the lifecycle of deployed portlets.  If
+      you are looking for a Portal implementation, try checking out 
+	  <a href="http://jakarta.apache.org/jetspeed">Jetspeed</a>.</p>
+
+   <p><strong>What is the difference between a Portal and a Portlet Container?</strong></p>
+   <p>See the <a href="arch.html">architectural overview</a> for a more complete description</p>
+
+
+</section>
+</body>
+</document>
+

@@ -403,6 +403,93 @@ java.home = ${java.home}
     </target>
 
     <!-- ================================================================== -->
+    <!-- Creates the site documentation                                     -->
+    <!-- ================================================================== -->
+    <target name="docs" depends="javadocs,site-docs"/>
+    <target name="check-site2">
+        <available file="../../jakarta-site2" type="dir" property="JakartaSite2.present"/>
+        <available classname="org.apache.velocity.anakia.AnakiaTask"
+                   property="AnakiaTask.present">
+            <classpath>
+                <path refid="classpath"/>
+                <fileset dir="../../jakarta-site2/lib">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </available>
+        <condition property="SiteDocs.proceed">
+            <and>
+                <equals arg1="${JakartaSite2.present}" arg2="true"/>
+                <equals arg1="${AnakiaTask.present}" arg2="true"/>
+            </and>
+        </condition>
+    </target>
+
+    <target name="echo-missing-site2" depends="check-site2" unless="JakartaSite2.present">
+        <echo>
+****************************************
+** Unable to create documentation.    **
+** Unable to find jakarta-site2       **
+** module.  This module contains      **
+** the jakarta templates necessary    **
+** for document creation.             **
+****************************************
+        </echo>
+    </target>
+
+   <target name="echo-missing-anakiatask" depends="check-site2" unless="AnakiaTask.present">
+      <echo>
+****************************************
+** Unable to create documentation.    **
+** AnakiaTask is not present! Please  **
+** check to make sure that            **
+** velocity.jar is in your classpath. **
+** Typically, this is done by         **
+** installing the jakarta-site2 module**
+** as a sibling directory of the      **
+** jakarta-pluto module.              **
+****************************************
+      </echo>
+    </target>
+
+    <target name="site-docs" depends="echo-missing-site2,echo-missing-anakiatask" if="SiteDocs.proceed">
+        <taskdef name="anakia" classname="org.apache.velocity.anakia.AnakiaTask">
+           <classpath>
+           <path refid="classpath"/>
+           <fileset dir="../../jakarta-site2/lib">
+                   <include name="**/*.jar"/>
+           </fileset>
+           </classpath>
+        </taskdef>
+
+        <anakia basedir="${docs.src}" destdir="${docs.dest}/"
+             extension=".html" style="./site.vsl"
+             projectFile="stylesheets/project.xml"
+             excludes="**/stylesheets/** empty.xml"
+             includes="**/*.xml"
+             lastModifiedCheck="true"
+             templatePath="../../jakarta-site2/xdocs/stylesheets">
+        </anakia>
+
+        <copy todir="${docs.dest}/images" filtering="no">
+            <fileset dir="${docs.src}/images">
+                <include name="**/*.gif"/>
+                <include name="**/*.jpeg"/>
+                <include name="**/*.jpg"/>
+            </fileset>
+        </copy>
+
+        <!-- In case we have CSS someday
+        <copy todir="${docs.dest}" filtering="no">
+            <fileset dir="${docs.src}">
+                <include name="**/*.css"/>
+            </fileset>
+        </copy>
+        -->
+    </target>
+
+
+    <!-- ================================================================== -->
     <!-- Creates the API documentation                                      -->
     <!-- ================================================================== -->
     <target name="javadocs"

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Jakarta Pluto Site" href="http://jakarta.apache.org/pluto">
+
+    <title>The Jakarta Site</title>
+    <logo href="/images/pluto.jpg">The Jakarta Project</logo>
+    <body>
+    <menu name="Pluto">
+        <item name="Home"            href="/index.html"/>        
+        <item name="Resources"       href="/resources.html"/>
+        <item name="FAQs"            href="/faqs.html"/>
+    </menu>
+
+    <menu name="Documentation">
+        <item name="Architecture"    href="/arch.html"/>
+        <item name="Installation"    href="/install.html"/>
+		<item name="JavaDoc"    href="/apidocs/index.html"/>
+    </menu>
+
+    <menu name="Download">
+        <item name="Binaries"              href="/site/binindex.html"/>
+        <item name="Source Code"           href="/site/sourceindex.html"/>
+    </menu>
+
+    <menu name="Get Involved">
+        <item name="Overview"              href="/site/getinvolved.html"/>
+        <item name="CVS Repositories"      href="/site/cvsindex.html"/>
+        <item name="Mailing Lists"         href="/site/mail.html"/>
+        <item name="Reference Library"     href="/site/library.html"/>
+        <item name="Bug Database"          href="/site/bugs.html"/>
+    </menu>
+
+    <menu name="Misc">
+        <item name="Who We Are"            href="/site/whoweare.html"/>
+        <item name="Acknowledgements"      href="/site/acknowledgements.html"/>
+        <item name="Contact"               href="/site/contact.html"/>
+        <item name="Legal"                 href="/site/legal.html"/>
+    </menu>
+    </body>
+</project>
