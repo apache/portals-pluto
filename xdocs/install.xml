@@ -32,7 +32,7 @@ Follow the steps below to compile and install Pluto
 	<li>Get the latest source from the jakarta-pluto CVS repository.
 	   For more information have a look <a href="http://jakarta.apache.org/site/cvsindex.html">here.</a>
         We will refer to the directory for the remainder of this document 
-        as ${pluto.home}.</li>
+        as ${pluto.home}.
 	</li>
 <!--
 	<li>Download Pluto the latest source from 
