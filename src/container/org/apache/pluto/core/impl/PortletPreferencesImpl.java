@@ -63,8 +63,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
@@ -74,7 +74,6 @@ import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
 import org.apache.pluto.om.ControllerObjectAccess;
-import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.om.common.Preference;
 import org.apache.pluto.om.common.PreferenceCtrl;
 import org.apache.pluto.om.common.PreferenceSet;

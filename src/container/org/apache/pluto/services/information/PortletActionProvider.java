@@ -60,9 +60,6 @@ package org.apache.pluto.services.information;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.services.ContainerService;
-
 /**
  * Handle operations that the portlet may perform in an action method.
  * This service is request based.

@@ -58,13 +58,14 @@
 package org.apache.pluto.core.impl;
 
 import java.io.BufferedReader;
-import java.io.IOException;import java.util.Enumeration;
+import java.io.IOException;
+import java.util.Enumeration;
 
-import javax.portlet.RenderRequest;
 import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
 
-import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.factory.PortletObjectAccess;
+import org.apache.pluto.om.window.PortletWindow;
 
 /**
 

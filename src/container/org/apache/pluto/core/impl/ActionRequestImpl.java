@@ -64,8 +64,8 @@ import java.io.InputStream;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 
-import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.factory.PortletObjectAccess;
+import org.apache.pluto.om.window.PortletWindow;
 
 /**
 

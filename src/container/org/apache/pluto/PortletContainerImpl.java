@@ -74,14 +74,12 @@ import org.apache.pluto.core.InternalActionResponse;
 import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.invoker.PortletInvoker;
 import org.apache.pluto.invoker.PortletInvokerAccess;
-import org.apache.pluto.om.ControllerObjectAccess;
 import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.om.window.PortletWindowCtrl;
+import org.apache.pluto.services.PortletContainerEnvironment;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.PortletURLProvider;
 import org.apache.pluto.services.log.Log;
-import org.apache.pluto.services.PortletContainerEnvironment;
 
 /**
  *  

@@ -58,8 +58,8 @@
 package org.apache.pluto.core.impl;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
@@ -69,8 +69,8 @@ import javax.portlet.WindowStateException;
 
 import org.apache.pluto.core.InternalActionResponse;
 import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.DynamicInformationProvider;
+import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.ResourceURLProvider;
 
 public class ActionResponseImpl extends PortletResponseImpl

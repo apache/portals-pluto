@@ -54,8 +54,8 @@
 
 package org.apache.pluto.util;
 
-import org.apache.pluto.om.common.ObjectID;
 import org.apache.pluto.factory.ObjectIDFactory;
+import org.apache.pluto.om.common.ObjectID;
 import org.apache.pluto.services.factory.FactoryManager;
 
 public class ObjectIDAccess

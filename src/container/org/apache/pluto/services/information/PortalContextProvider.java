@@ -57,7 +57,6 @@
 
 package org.apache.pluto.services.information;
 
-import javax.portlet.PortalContext;
 
 /**
  * Provide information about the calling portal.

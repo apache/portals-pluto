@@ -62,8 +62,6 @@ import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import org.apache.pluto.services.ContainerService;
-
 public interface PortletURLProvider
 {
 

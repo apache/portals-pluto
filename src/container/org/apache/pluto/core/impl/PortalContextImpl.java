@@ -59,9 +59,8 @@ package org.apache.pluto.core.impl;
 
 import javax.portlet.PortalContext;
 
-import org.apache.pluto.services.information.PortalContextProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
-
+import org.apache.pluto.services.information.PortalContextProvider;
 import org.apache.pluto.util.Enumerator;
 /**
  * The <CODE>PortalContext</CODE> interface gives the portlet

@@ -57,8 +57,8 @@
  
 package org.apache.pluto.services.information;
 
-import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.common.ObjectID;
+import org.apache.pluto.om.portlet.PortletDefinition;
 /**
  * Provide information from the portal to portlet container
  * that don't change between requests.

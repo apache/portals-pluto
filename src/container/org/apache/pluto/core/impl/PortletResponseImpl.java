@@ -57,6 +57,12 @@
 
 package org.apache.pluto.core.impl;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletResponse;
 import javax.servlet.ServletOutputStream;
 
@@ -66,12 +72,6 @@ import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.ResourceURLProvider;
 import org.apache.pluto.services.property.PropertyManager;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import java.util.HashMap;
 
 public abstract class PortletResponseImpl extends javax.servlet.http.HttpServletResponseWrapper 
 implements InternalPortletResponse, PortletResponse

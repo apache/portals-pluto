@@ -64,10 +64,9 @@ import java.io.PrintWriter;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
-import org.apache.pluto.Constants;
 import org.apache.pluto.factory.PortletObjectAccess;
-import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.om.window.PortletWindow;
+import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.util.NamespaceMapperAccess;
 
 public class RenderResponseImpl extends PortletResponseImpl implements RenderResponse {

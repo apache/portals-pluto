@@ -57,8 +57,6 @@
 
 package org.apache.pluto.services.information;
 
-import java.util.Map;
-
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
