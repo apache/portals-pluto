@@ -67,6 +67,7 @@ limitations under the License.
             <role-name>tomcat</role-name>
         </auth-constraint>
     </security-constraint>
+
     <security-constraint>
       <web-resource-collection>
        <web-resource-name/>
@@ -83,9 +84,13 @@ limitations under the License.
      </user-data-constraint>
   </security-constraint>
 
-    <login-config>
-        <auth-method>BASIC</auth-method>
-    </login-config>
+  <login-config>
+    <auth-method>FORM</auth-method>
+	<form-login-config>
+      <form-login-page>/login.jsp</form-login-page>
+      <form-error-page>/login.jsp?error=1</form-error-page>
+    </form-login-config>
+  </login-config>
 
     <security-role>
         <role-name>tomcat</role-name>
