@@ -76,18 +76,69 @@ limitations under the License.
 <!-- ========================= -->
 
   <goal name="distribute:all">
+    <attainGoal name="distribute:source"/>
     <attainGoal name="distribute:container"/>
     <attainGoal name="distribute:optional"/>
     <attainGoal name="distribute:tools"/>
   </goal>
 
-<!-- ======================= -->
-<!-- pluto-x.x distributions -->
-<!-- ======================= -->
 
   <goal name="distribute:init">
     <j:set var="maven.dist.dir" value="${basedir}/target/distributions"/>
+    <ant:mkdir dir="${maven.dist.dir}"/>
   </goal>
+
+<!-- =========================== -->
+<!-- pluto-src-x.x distributions -->
+<!-- =========================== -->
+
+  <goal name="distribute:source" prereqs="distribute:init">
+    <j:set var="plutosrc.dist.name" value="pluto-src-${pom.currentVersion}"/>
+	<ant:zip zipfile="${maven.dist.dir}/${plutosrc.dist.name}.zip" basedir="${basedir}">
+	  <ant:patternset dir="${basedir}" defaultexcludes="on">
+        <ant:include name="container/**/*"/>
+        <ant:include name="deploy/**/*"/>
+        <ant:include name="portal/**/*"/>
+        <ant:include name="testsuite/**/*"/>
+        <ant:include name="xdocs/**/*"/>
+        <ant:include name="LICENSE*"/>
+        <ant:include name="GETTING-STARTED.html"/>
+        <ant:include name="maven.xml"/>
+        <ant:include name="project.xml"/>
+        <ant:include name="project.properties"/>
+        <ant:include name="build.properties.sample"/>
+        <ant:include name="README"/>
+        <ant:exclude name="**/target/**"/>
+      </ant:patternset>
+	</ant:zip>
+
+	<ant:tar longfile="gnu" tarfile="${maven.dist.dir}/${plutosrc.dist.name}.tar" basedir="${basedir}">
+	  <ant:patternset dir="${basedir}" defaultexcludes="on">
+        <ant:include name="container/**/*"/>
+        <ant:include name="deploy/**/*"/>
+        <ant:include name="portal/**/*"/>
+        <ant:include name="testsuite/**/*"/>
+        <ant:include name="xdocs/**/*"/>
+        <ant:include name="LICENSE*"/>
+        <ant:include name="GETTING-STARTED.html"/>
+        <ant:include name="maven.xml"/>
+        <ant:include name="project.xml"/>
+        <ant:include name="project.properties"/>
+        <ant:include name="build.properties.sample"/>
+        <ant:include name="README"/>
+        <ant:exclude name="**/target/**"/>
+      </ant:patternset>
+    </ant:tar>
+
+    <ant:gzip 
+      zipfile="${maven.dist.dir}/${plutosrc.dist.name}.tar.gz"
+      src="${maven.dist.dir}/${plutosrc.dist.name}.tar"
+    />
+  </goal>
+
+<!-- ======================= -->
+<!-- pluto-x.x distributions -->
+<!-- ======================= -->
 
   <goal name="distribute:container" prereqs="distribute:init">
     <j:set var="pluto.dist.name" value="pluto-${pom.currentVersion}"/>
