@@ -119,7 +119,9 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
         if (properties.getBoolean("non-servlet")==Boolean.TRUE)
         {
             String root = config.getServletContext().getRealPath("/"); //root
-            baseWMDir = root + "\\WEB-INF\\portletapps\\"; //org.apache.pluto.portalImpl.services.deploy.DeployServiceFileImpl.DEFAULT_PROTECTED;
+            baseWMDir = root + fileSeparator + 
+		"WEB-INF" + fileSeparator + 
+		"portletapps" + fileSeparator; //org.apache.pluto.portalImpl.services.deploy.DeployServiceFileImpl.DEFAULT_PROTECTED;
             Log.debug("org.apache.pluto.portalImpl.services.Portletregistry", "baseWMDir = " + baseWMDir + " fileSeparator = " + fileSeparator);
         }
         else
