@@ -65,30 +65,6 @@ import java.util.*;
 public class LanguageImpl implements Language, java.io.Serializable {
     // ResourceBundle creation part
 
-    /*private static class Resources extends ListResourceBundle {
-        private Object [][] resources = null;
-        private Language source = null;
-
-        public Resources(Language source)
-        {                        
-            this.source = source;
-            Vector v  = new Vector();
-            Iterator it = source.getKeywords();
-            while(it != null && it.hasNext()) 
-                v.add(it.next());
-
-            resources = new Object [][] {            
-                    { "javax.portlet.title", source.getTitle()==null? "": source.getTitle()},
-                    { "javax.portlet.short-title", source.getShortTitle()==null? "": source.getShortTitle()},
-                    { "javax.portlet.keywords", v.size() > 0 ? v.toArray().toString() : ""}};
-        }
-
-        public Object[][] getContents()
-        {
-            return resources;
-        }        
-    }*/
-
     private static class DefaultsResourceBundle extends ListResourceBundle {
         private Object[][] resources;
 
@@ -120,7 +96,6 @@ public class LanguageImpl implements Language, java.io.Serializable {
                 for (Enumeration enum = bundle.getKeys(); enum.hasMoreElements();) {
                     String key   = (String)enum.nextElement();
                     Object value = bundle.getObject(key);
-
                     data.put(key, value);
                 }
             }

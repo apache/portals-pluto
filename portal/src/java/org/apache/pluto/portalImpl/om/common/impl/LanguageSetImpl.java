@@ -98,7 +98,6 @@ public class LanguageSetImpl extends AbstractSupportSet implements LanguageSet, 
     private Language createLanguage(Locale locale, ResourceBundle bundle)
     {
         LanguageImpl lang = new LanguageImpl(locale, bundle, title, shortTitle, castorKeywords);
-
         return(Language)lang;
     }
 
@@ -190,6 +189,8 @@ public class LanguageSetImpl extends AbstractSupportSet implements LanguageSet, 
     {   
         locales.addAll((Collection)parameter);                 
         initInlinedInfos();
+        if ( resources != null )
+        	initResourceBundle();
     }
 
     public void postStore(Object parameter) throws Exception
