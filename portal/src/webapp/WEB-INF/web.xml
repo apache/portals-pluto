@@ -47,6 +47,10 @@ limitations under the License.
        <url-pattern>/portal/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+      <servlet-name>pluto</servlet-name>
+      <url-pattern>/secure/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>TCKDriver</servlet-name>
         <url-pattern>/tck/*</url-pattern>
     </servlet-mapping>
@@ -63,6 +67,21 @@ limitations under the License.
             <role-name>tomcat</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+      <web-resource-collection>
+       <web-resource-name/>
+       <url-pattern>/secure/*</url-pattern>
+       <http-method>GET</http-method>
+       <http-method>POST</http-method>
+       <http-method>PUT</http-method>
+     </web-resource-collection>
+     <auth-constraint>
+       <role-name>tomcat</role-name>
+     </auth-constraint>
+     <user-data-constraint>
+       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+     </user-data-constraint>
+  </security-constraint>
 
     <login-config>
         <auth-method>BASIC</auth-method>

@@ -31,7 +31,7 @@ public class ResourceURLProviderImpl implements ResourceURLProvider
     public ResourceURLProviderImpl(DynamicInformationProviderImpl provider,
                                    PortletWindow portletWindow)
     {
-        this.base = PortalURL.getBaseURLexcludeContext();
+//        this.base = PortalURL.getBaseURLexcludeContext();
     }
 
     // ResourceURLProvider implementation.
@@ -48,6 +48,7 @@ public class ResourceURLProviderImpl implements ResourceURLProvider
     
     public String toString()
     {
+/*
         URL url = null;
 
         if (!"".equals(stringUrl))
@@ -63,7 +64,8 @@ public class ResourceURLProviderImpl implements ResourceURLProvider
         }
 
         return ((url==null)?"":url.toString());
-        
+*/
+        return stringUrl;
     }
 
 }

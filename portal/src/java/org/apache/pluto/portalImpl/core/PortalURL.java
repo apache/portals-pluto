@@ -34,30 +34,11 @@ import org.apache.pluto.portalImpl.services.config.Config;
 
 public class PortalURL {
 
-    static String hostNameHTTP;
-    static String hostNameHTTPS;
-
-    static
-    {
-        String hostName      = Config.getParameters().getString ("host.name", "localhost");
-        String hostPortHTTP  = Config.getParameters().getString ("host.port.http", "80");
-        String hostPortHTTPS = Config.getParameters().getString ("host.port.https", "443");
-
-        StringBuffer hostHTTP = new StringBuffer("http://");
-        hostHTTP.append(hostName);
-        if (!hostPortHTTP.equals("80")) {
-            hostHTTP.append(":");
-            hostHTTP.append(hostPortHTTP);
-        }
-        hostNameHTTP = hostHTTP.toString();
-
-        StringBuffer hostHTTPS = new StringBuffer("https://");
-        hostHTTPS.append(hostName);
-        if (!hostPortHTTPS.equals("443")) {
-            hostHTTPS.append(":");
-            hostHTTPS.append(hostPortHTTPS);
-        }
-        hostNameHTTPS = hostHTTPS.toString();
+    private static final String insecureServlet;
+    private static final String secureServlet;
+    static {
+        insecureServlet = Config.getParameters().getString("servlet.insecure");
+        secureServlet = Config.getParameters().getString("servlet.secure");
     }
 
     /**
@@ -89,17 +70,6 @@ public class PortalURL {
         return result.toString();
     }
 
-    static public String getBaseURLexcludeContext()
-    {
-        StringBuffer result = new StringBuffer(256);
-
-        result.append(hostNameHTTP);
-
-        return result.toString();
-    }
-
-
-    private String base;
     private List startGlobalNavigation = new ArrayList();
     private List startLocalNavigation = new ArrayList();
     private HashMap startControlParameter = new HashMap();
@@ -116,7 +86,6 @@ public class PortalURL {
     public PortalURL(PortalEnvironment env)
     {
         environment = env;
-        this.base = getBasePortalURL(environment);
     }
 
     /**
@@ -214,7 +183,8 @@ public class PortalURL {
             result.append((String)iterator.next());
             while (iterator.hasNext()) {
                 result.append("/");
-                result.append((String)iterator.next());
+                String st = (String)iterator.next();
+                result.append(st);
             }
         }
         return result.toString();
@@ -311,8 +281,8 @@ public class PortalURL {
         } else {
             secure=environment.getRequest().isSecure(); 
         }
-        urlBase.append(secure?hostNameHTTPS:hostNameHTTP);
-        urlBase.append(base);
+        urlBase.append(environment.getRequest().getContextPath());
+        urlBase.append(secure ? secureServlet : insecureServlet);
 
         String url = urlBase.toString();
         String global = getGlobalNavigationAsString();
@@ -320,6 +290,7 @@ public class PortalURL {
             url += "/";
             url += global;
         }
+
 
         String control = getControlParameterAsString(controlParam);
         if (control.length() > 0) {
