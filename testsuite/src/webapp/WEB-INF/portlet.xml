@@ -15,15 +15,23 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+<portlet-app
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+    version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
+                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
 	<portlet>
         <description>TestSuiteDescription</description>
-		
         <portlet-name>TestPortlet1</portlet-name>
-		
         <display-name>Test Portlet #1</display-name>
 		
         <portlet-class>org.apache.pluto.portalImpl.portlet.TestPortlet</portlet-class>
+
+        <init-param>
+            <name>display-name</name>
+            <value>Test Portlet #1</value>
+        </init-param>
 
         <init-param>
 			<name>dummyName</name>
@@ -49,7 +57,7 @@ limitations under the License.
         </portlet-info>
 	    <portlet-preferences>            
             <preference>
-				<name>dumnmyName</name>
+				<name>dummyName</name>
 				<value>dummyValue</value>
 				<read-only>false</read-only>
 			</preference>			
@@ -57,6 +65,11 @@ limitations under the License.
 				<name>dummyName2</name>
 				<value>dummyValue2</value>
 			</preference>
+            <preference>
+                <name>readonly</name>
+                <value>readonly</value>
+                <read-only>true</read-only>
+            </preference>
             <preferences-validator>org.apache.pluto.core.impl.PreferencesValidatorImpl</preferences-validator>
         </portlet-preferences>
         <security-role-ref>
@@ -73,6 +86,11 @@ limitations under the License.
         <display-name>Test Portlet #2</display-name>
 		
         <portlet-class>org.apache.pluto.portalImpl.portlet.TestPortlet</portlet-class>
+
+        <init-param>
+            <name>display-name</name>
+            <value>Test Portlet #2</value>
+        </init-param>
 
         <init-param>
 			<name>dummyName</name>
@@ -106,6 +124,11 @@ limitations under the License.
 				<name>dummyName2</name>
 				<value>dummyValue2</value>
 			</preference>
+            <preference>
+                <name>readonly</name>
+                <value>readonly</value>
+                <read-only>true</read-only>
+            </preference>
             <preferences-validator>org.apache.pluto.core.impl.PreferencesValidatorImpl</preferences-validator>
         </portlet-preferences>
         <security-role-ref>
