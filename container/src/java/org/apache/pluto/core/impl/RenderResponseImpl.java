@@ -154,7 +154,8 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
 
     private boolean isValidContentType(String type)
     {
-        return type.equals("text/html");
+        //return type.equals("text/html");
+        return true;        
     }
 
     private String stripCharacterEncoding(String type)
