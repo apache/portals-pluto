@@ -26,6 +26,7 @@ limitations under the License.
     </links>
     <menu name="General Information">
         <item name="Overview"            href="/index.html"/>
+        <item name="Intent"            href="/intent.html"/>
         <item name="News and Status"     href="/news.html"/>
         <item name="Roadmap"             href="/roadmap.html"/>
         <item name="FAQs"                href="/faq.html"/>

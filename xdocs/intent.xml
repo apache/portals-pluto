@@ -23,8 +23,6 @@ limitations under the License.
 
 <body>
   <section name="Statement of Intent">
-  <p><b> #### PROPOSAL ####</b></p>
-    
     <p>
     The Pluto Portlet Container is the Reference Implementation of 
     the Java Portlet Specification. As such, Pluto offers 

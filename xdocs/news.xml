@@ -17,12 +17,19 @@ limitations under the License.
 -->
 <document>
   <properties>
-    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <author email="ddewolf.aT.apache.D0t.org">David H. DeWolf</author>
     <title>Pluto Project News and Status</title>
   </properties>
 
 <body>
   <section name="News">
+    <subsection name="21 March 2004 - Pluto Declaration of Intent Finalized">
+      <p>The Pluto Community has finalized a declaration of intent which
+         clarifies the direction with which Pluto development will
+         move forward.
+      </p>
+    </subsection>
+
     <subsection name="27 February 2004 - Pluto SubProject Documentation Available">
       <p>The maven subproject documentation is now being generated and included
          in the Pluto documentation builds.</p>
