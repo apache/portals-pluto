@@ -50,10 +50,11 @@ public class ActionResponseImpl extends PortletResponseImpl
 
     /** Default Constructor. */
     public ActionResponseImpl(PortletWindow window,
-                              HttpServletResponse response) {
+                              HttpServletResponse response,
+                              Map renderParameters) {
         super(response);
         this.window = window;
-        this.renderParameters = new java.util.HashMap();
+        this.renderParameters = renderParameters;
     }
 
     /** Update the window state by utilizing
@@ -116,6 +117,10 @@ public class ActionResponseImpl extends PortletResponseImpl
      */
     public void setRenderParameter(String key, String[] values) {
         renderParameters.put(key, values);
+    }
+
+    public Map getRenderParameters() {
+        return renderParameters;
     }
 
     /** Determine whther the response has been commited.
