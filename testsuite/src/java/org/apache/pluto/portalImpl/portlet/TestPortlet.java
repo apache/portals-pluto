@@ -178,8 +178,8 @@ public class TestPortlet extends GenericPortlet {
         String previous = req.getParameter("previousTestId");
         String next     = req.getParameter("nextTestId");
 
-        if(testId == null && next == null &&
-           previous == null && tests.size() > 0) {
+        if((testId == null || testId.trim().length()==0)
+           && next == null && previous == null && tests.size() > 0) {
             return null;
         }
         // Retrieve the test which is next to the previous
