@@ -83,8 +83,6 @@ public abstract class PortletRequestImpl extends
 				.getDynamicProvider(_getHttpServletRequest());
 	}
 
-	// javax.portlet.PortletRequest implementation
-	// ------------------------------------------------
 	public boolean isWindowStateAllowed(WindowState state) {
 		return provider.isWindowStateAllowed(state);
 	}
@@ -298,8 +296,10 @@ public abstract class PortletRequestImpl extends
 			if (portletAttribute != null) { // it is in the portlet's namespace
 				portletAttributes.add(portletAttribute);
 			}
+            else {
+                portletAttributes.add(attribute);
+            }
 		}
-
 		return portletAttributes.elements();
 	}
 
