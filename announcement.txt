@@ -17,19 +17,41 @@
   Release Announcement Template
 -->
 
-  The Apache Pluto Community is proud to announce the new release
-  of Apache Pluto. This release, 1.0.1-rc-1, is the first public release.
-  The final 1.0.1 release is expected in the next weeks.
-  
-  Pluto is the Reference Implementation of the Java Portlet Specfication.
+  The Apache Pluto Community is proud to announce the release
+  of Apache Pluto 1.0.1-rc-1: the first binary release of the
+  reference implementation of the Java Portlet Specification.
+
+  Pluto 1.0.1-rc-1 is considered a release candidate.  The
+  promotion of this release candidate to generatl availability
+  is expected within the few weeks, pending feedback from 
+  the community.
+
+  The Java Portlet Specification defines a Portlet API
+  very similar to the Servlet API. The API provides a means
+  for aggregating disperate content sources.  The specification
+  addresses security and personalization considerations and 
+  defines a standard with which these sources, or portlets 
+  can be deployed.
+
+  Pluto is an embedable portlet container which will typically
+  be bundled within a fully functional Portal.  The Pluto 
+  community has developed a simple portal driver implementation
+  which allows for the testing and development of portlets with
+  the container.  The Pluto testsuite is an implementation 
+  agnostic portlet application which tests several basic o
+  perations of the container in which it is deployed.
+
   The distribution is organized into four releases:
-  1) A binary distribution that includes Tomcat.
+
+  1) A binary distribution bundled with Tomcat. This
+     distribution is the easiest to install.
   
-  2) A source distribution
+  2) A source distribution.
   
-  3) A binary distribution containing the container library
+  3) A binary distribution containing the container library.
   
-  4) A binary tools distribution with the driver and testsuite
+  4) A binary tools distribution with the portal driver and 
+     testsuite.
 
   Thanks for using Pluto.
 
