@@ -36,5 +36,4 @@ limitations under the License.
   <component
     key="org.apache.pluto.services.PortletInvokerService"
     class="org.apache.pluto.core.PortletInvokerServiceImpl"/>
-
 </container>

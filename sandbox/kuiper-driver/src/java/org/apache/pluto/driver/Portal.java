@@ -147,6 +147,42 @@ public class Portal {
             MutablePicoContainer pico =
                 (MutablePicoContainer)containerRef.get();
 
+            // We've read in all of the configuration parameters.
+            // Now we must registry the runtime objects that can't
+            // be configured (like ServletContext).
+            //
+            // For now, I consider PlutoEnvironment a runtime obj,
+            // but once I figure out how to register the container
+            // name string as a parameter, this won't be necessary
+
+            String containerName =
+                servletContext.getInitParameter("pluto-container-name");
+
+            if(containerName==null) {
+                containerName = "plutoContainer<no-name>"; //??
+            }
+
+            Properties portalProperties = new Properties();
+            PortalContext portalContext =
+                new PortalContextImpl(portalProperties);
+
+            PlutoEnvironment environment =
+                new PlutoEnvironmentImpl(
+                    containerName,
+                    portalContext,
+                    servletContext
+                );
+
+            pico.registerComponentInstance(
+                "javax.servlet.ServletContext",
+                servletContext
+            );
+
+            pico.registerComponentInstance(
+                "org.apache.pluto.PlutoEnvironment",
+                environment
+            );
+
             container = (PlutoContainer)pico.
                             getComponentInstanceOfType(PlutoContainer.class);
         }
@@ -156,26 +192,7 @@ public class Portal {
             throw new PlutoException("Unable to configure container.");
         }
 
-        /* Now that the container is build, we will initialize
-         * the container with it's "runtime" configuration -
-         * which is basically all of the components which
-         * depend upon the servlet container's environment
-         */
 
-        String containerName =
-            servletContext.getInitParameter("pluto-container-name");
-        if(containerName==null) {
-            containerName = "plutoContainer<no-name>"; //??
-        }
-
-        //@TODO runtime load properties
-        Properties portalProperties = new Properties();
-        PortalContext portalContext = new PortalContextImpl(portalProperties);
-
-        PlutoEnvironment config =
-            new PlutoEnvironmentImpl(containerName, portalContext, servletContext);
-
-        container.init(config);
         container.start();
     }
 
@@ -184,8 +201,10 @@ public class Portal {
             LOG.debug("Portal Destruction: Shutting down portal for context: "
                       +context.getServletContextName());
         }
-        container.stop();
-        container = null;
+        if(container!=null) {
+            container.stop();
+            container = null;
+        }
     }
 
     public void doRender(PortletWindow window,
