@@ -171,7 +171,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
     // For JBoss compatibility, change webModule from the form
     // of "tmp12345foo.war" to "foo".
     int len = webModule.length();
-    if (webModule.endsWith(WAR_FILE_EXT) && webModule.startsWith(TMP_PREFIX) && len > TMP_PREFIX.length() + WAR_FILE_EXT.length()) {
+    if (webModule.endsWith(WAR_FILE_EXT) && webModule.startsWith(TMP_PREFIX.substring(0,3)) && len > TMP_PREFIX.length() + WAR_FILE_EXT.length()) { 
         webModule = webModule.substring(TMP_PREFIX.length(), len - WAR_FILE_EXT.length());
     }
     // else assumed literal.
