@@ -242,28 +242,6 @@ public class LanguageSetImpl extends AbstractSupportSet implements LanguageSet, 
             bundle = loadResourceBundle(locale);
             if (bundle != null)
             {
-                /*String title;
-                String shortTitle;
-                String keywords;
-                
-                try {
-                    title=bundle.getString("javax.portlet.title");
-                } catch(MissingResourceException x) {
-                    title = this.title;
-                }
-                
-                try {
-                    shortTitle=bundle.getString("javax.portlet.short-title");
-                } catch(MissingResourceException x) {
-                    shortTitle = this.shortTitle;
-                }
-
-                try {
-                    keywords=bundle.getString("javax.portlet.keywords");
-                } catch(MissingResourceException x) {
-                    keywords = this.castorKeywords;
-                }*/
-
                 Language language = createLanguage(locale, bundle);
                 remove(language);
                 add(language);
