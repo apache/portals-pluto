@@ -86,11 +86,15 @@ limitations under the License.
       </includes>
     </integrationUnitTest>
 
+
     <resources>
-      <includes>
-        <include>conf/**/*pipeline.xml</include>
-        <include>conf/**/*valve.xml</include>
-      </includes>
+      <resource>
+        <directory>src/conf</directory>
+        <includes>
+            <include>**/*.properties</include>
+	        <include>**/*.xml</include>
+        </includes>
+      </resource>
     </resources>
 
     <jars/>
