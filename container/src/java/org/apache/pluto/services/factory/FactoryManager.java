@@ -20,7 +20,6 @@
 package org.apache.pluto.services.factory;
 
 import org.apache.pluto.PortletContainerServices;
-
 import org.apache.pluto.factory.Factory;
 
 /**

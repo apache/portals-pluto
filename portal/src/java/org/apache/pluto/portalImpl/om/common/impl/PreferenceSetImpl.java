@@ -29,9 +29,9 @@ import javax.portlet.PreferencesValidator;
 import org.apache.pluto.om.common.Preference;
 import org.apache.pluto.om.common.PreferenceSet;
 import org.apache.pluto.om.common.PreferenceSetCtrl;
-import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.services.log.Logger;
+import org.apache.pluto.util.StringUtils;
 
 public class PreferenceSetImpl extends HashSet
 implements PreferenceSet, PreferenceSetCtrl, java.io.Serializable {

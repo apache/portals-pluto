@@ -22,7 +22,7 @@ package org.apache.pluto.portalImpl.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletResponse;
 
 public class StoredServletResponseImpl extends ServletResponseImpl 
 {

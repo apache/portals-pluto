@@ -19,7 +19,7 @@
 
 package org.apache.pluto.portalImpl.om.common;
 
-import java.lang.Exception;
+
 
 public interface Support {
 

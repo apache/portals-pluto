@@ -16,12 +16,13 @@
 
 package org.apache.pluto.services.property;
 
-import org.apache.pluto.services.ContainerService;
-import java.util.*;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.pluto.om.window.PortletWindow;
+import org.apache.pluto.services.ContainerService;
 
 /**
  * The <code>PropertyManagerService</code> interface is a container service

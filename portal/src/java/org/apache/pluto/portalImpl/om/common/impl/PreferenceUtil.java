@@ -19,7 +19,9 @@
 
 package org.apache.pluto.portalImpl.om.common.impl;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import org.apache.pluto.om.common.Preference;
 

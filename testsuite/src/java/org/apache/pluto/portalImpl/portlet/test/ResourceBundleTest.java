@@ -15,19 +15,19 @@
  */
 package org.apache.pluto.portalImpl.portlet.test;
 
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletContext;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
 
 /**
  * Tests basic attribute retrieval and storage functions within

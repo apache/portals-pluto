@@ -32,15 +32,15 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.pluto.PortletContainerServices;
 import org.apache.pluto.core.CoreUtils;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletResponse;
-import org.apache.pluto.services.log.Logger;
-import org.apache.pluto.services.log.LogService;
 import org.apache.pluto.invoker.PortletInvoker;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.servlet.ServletDefinition;
-import org.apache.pluto.PortletContainerServices;
+import org.apache.pluto.services.log.LogService;
+import org.apache.pluto.services.log.Logger;
 
 public class PortletInvokerImpl implements PortletInvoker
 {

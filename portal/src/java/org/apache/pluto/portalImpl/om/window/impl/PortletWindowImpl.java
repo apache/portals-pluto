@@ -19,9 +19,10 @@
 
 package org.apache.pluto.portalImpl.om.window.impl;
 
-import org.apache.pluto.om.window.*;
-import org.apache.pluto.om.entity.*;
 import org.apache.pluto.om.common.ObjectID;
+import org.apache.pluto.om.entity.PortletEntity;
+import org.apache.pluto.om.window.PortletWindow;
+import org.apache.pluto.om.window.PortletWindowCtrl;
 
 public class PortletWindowImpl implements PortletWindow, PortletWindowCtrl {
         

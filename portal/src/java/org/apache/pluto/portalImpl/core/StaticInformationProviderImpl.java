@@ -23,8 +23,8 @@ import javax.servlet.ServletConfig;
 
 import org.apache.pluto.om.common.ObjectID;
 import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.services.information.StaticInformationProvider;
 import org.apache.pluto.services.information.PortalContextProvider;
+import org.apache.pluto.services.information.StaticInformationProvider;
 
 public class StaticInformationProviderImpl implements StaticInformationProvider
 { 

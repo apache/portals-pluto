@@ -16,13 +16,13 @@
 package org.apache.pluto.driver.deploy;
 
 import java.io.File;
-import java.io.RandomAccessFile;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Iterator;
 
-import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 
 /**
  * Service Implementation used by the command line deployer

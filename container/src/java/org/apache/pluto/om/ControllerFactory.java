@@ -19,8 +19,7 @@
 
 package org.apache.pluto.om;
 
-import org.apache.pluto.om.Model;
-import org.apache.pluto.om.Controller;
+
 
 public interface ControllerFactory extends org.apache.pluto.factory.Factory
 {

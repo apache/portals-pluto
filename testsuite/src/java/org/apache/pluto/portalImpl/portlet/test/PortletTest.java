@@ -18,10 +18,10 @@ package org.apache.pluto.portalImpl.portlet.test;
 
 import java.util.Map;
 
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.apache.pluto.portalImpl.portlet.TestConfig;
 

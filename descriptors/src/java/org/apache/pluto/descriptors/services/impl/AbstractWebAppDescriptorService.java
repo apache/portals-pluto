@@ -15,14 +15,14 @@
  */
 package org.apache.pluto.descriptors.services.impl;
 
-import java.net.URL;
 import java.io.IOException;
+import java.net.URL;
 
+import org.apache.pluto.descriptors.services.Constants;
+import org.apache.pluto.descriptors.services.WebAppDescriptorService;
+import org.apache.pluto.descriptors.servlet.WebAppDD;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.services.Constants;
 
 /**
  * Abstract Implementation of the Web Application Deployment
@@ -31,7 +31,7 @@ import org.apache.pluto.descriptors.services.Constants;
  * input streams to/from the actual descriptor.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 5, 2005
  */
 public abstract class AbstractWebAppDescriptorService

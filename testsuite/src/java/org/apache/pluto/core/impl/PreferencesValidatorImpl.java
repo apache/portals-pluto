@@ -19,8 +19,13 @@
 
 package org.apache.pluto.core.impl;
 
-import javax.portlet.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.PreferencesValidator;
+import javax.portlet.ValidatorException;
 
 public class PreferencesValidatorImpl implements PreferencesValidator
 {

@@ -19,8 +19,13 @@
 
 package org.apache.pluto.core;
 
-import javax.portlet.*;
-import org.apache.pluto.portlet.*;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.apache.pluto.portlet.PortletRequestWrapper;
+import org.apache.pluto.portlet.PortletResponseWrapper;
 
 public class CoreUtils
 {

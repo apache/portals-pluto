@@ -19,10 +19,10 @@
 
 package org.apache.pluto.factory.impl;
 
-import javax.portlet.*;
+import javax.portlet.PortalContext;
 
-import org.apache.pluto.factory.*;
 import org.apache.pluto.core.impl.PortalContextImpl;
+import org.apache.pluto.factory.PortalContextFactory;
 
 
 public class PortalContextFactoryImpl implements PortalContextFactory {

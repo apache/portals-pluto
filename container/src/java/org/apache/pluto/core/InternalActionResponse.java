@@ -20,6 +20,7 @@
 package org.apache.pluto.core;
 
 import java.util.Map;
+
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 

@@ -19,7 +19,7 @@
 
 package org.apache.pluto.portalImpl.om.page;
 
-import java.util.*;
+import java.util.Collection;
 
 /**
  * <P>

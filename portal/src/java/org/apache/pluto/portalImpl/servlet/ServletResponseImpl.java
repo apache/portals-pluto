@@ -19,7 +19,7 @@
 
 package org.apache.pluto.portalImpl.servlet;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletResponse;
 
 public class ServletResponseImpl extends javax.servlet.http.HttpServletResponseWrapper 
 {

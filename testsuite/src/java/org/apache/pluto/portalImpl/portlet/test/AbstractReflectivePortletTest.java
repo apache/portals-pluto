@@ -15,15 +15,15 @@
  */
 package org.apache.pluto.portalImpl.portlet.test;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
-import javax.portlet.PortletConfig;
 
 import org.apache.pluto.portalImpl.portlet.TestConfig;
 

@@ -19,7 +19,7 @@
 
 package org.apache.pluto.factory;
 
-import javax.portlet.*;
+import javax.portlet.PortletURL;
 
 import org.apache.pluto.om.window.PortletWindow;
 

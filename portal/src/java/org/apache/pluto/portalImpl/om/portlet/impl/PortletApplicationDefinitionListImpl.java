@@ -19,10 +19,13 @@
 
 package org.apache.pluto.portalImpl.om.portlet.impl;
 
+import java.util.HashSet;
+import java.util.Iterator;
+
 import org.apache.pluto.om.common.ObjectID;
-import org.apache.pluto.om.portlet.*;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinitionList;
 import org.apache.pluto.util.StringUtils;
-import java.util.*;
 
 public class PortletApplicationDefinitionListImpl extends HashSet
 implements PortletApplicationDefinitionList, java.io.Serializable {

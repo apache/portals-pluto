@@ -15,18 +15,11 @@
  */
 package org.apache.pluto.portlet.admin.services;
 
-import java.io.InputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,6 +28,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
 import org.apache.pluto.portlet.admin.PlutoAdminException;
 import org.apache.pluto.portlet.admin.PlutoAdminLogger;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  *

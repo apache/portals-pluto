@@ -19,10 +19,19 @@
 
 package org.apache.pluto.portalImpl.om.common.impl;
 
-import org.apache.pluto.om.common.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ListResourceBundle;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.StringTokenizer;
+
+import org.apache.pluto.om.common.Language;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.StringUtils;
-import java.util.*;
 
 public class LanguageImpl implements Language, java.io.Serializable {
     // ResourceBundle creation part

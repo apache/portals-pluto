@@ -15,19 +15,17 @@
  */
 package org.apache.pluto.descriptors.services.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 import java.net.URL;
 
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.descriptors.services.impl.AbstractWebAppDescriptorService;
-
 /**
  * <B>TODO</B>: Document
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 5, 2005
  */
 public class ContextWebAppDescriptorServiceImpl extends AbstractWebAppDescriptorService {

@@ -20,16 +20,17 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityImpl;
 import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityListImpl;
 import org.apache.pluto.portalImpl.om.entity.impl.PortletEntityImpl;
+import org.apache.pluto.portlet.admin.BaseAdminObject;
+import org.apache.pluto.portlet.admin.PlutoAdminException;
+import org.apache.pluto.portlet.admin.util.PlutoAdminContext;
+import org.apache.pluto.util.StringUtils;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
-import org.apache.pluto.portlet.admin.PlutoAdminException;
-import org.apache.pluto.portlet.admin.BaseAdminObject;
-import org.apache.pluto.portlet.admin.util.PlutoAdminContext;
-import org.apache.pluto.util.StringUtils;
 
 /**
  * This class is used to access and store data in the portletentityregistry.xml file.

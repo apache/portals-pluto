@@ -15,9 +15,9 @@
  */
 package org.apache.pluto.descriptors.services.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 import java.net.URL;
 
 import javax.servlet.ServletContext;
@@ -28,7 +28,7 @@ import javax.servlet.ServletContext;
  * retrieves reads the descriptor from the ServletContext.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 5, 2005
  */
 public class ContextPortletAppDescriptorServiceImpl extends AbstractPortletAppDescriptorService {

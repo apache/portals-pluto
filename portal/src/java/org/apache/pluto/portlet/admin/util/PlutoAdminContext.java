@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.pluto.portlet.admin.PlutoAdminConstants;
 import org.apache.pluto.portlet.admin.PlutoAdminException;
 import org.apache.pluto.portlet.admin.PlutoAdminLogger;
-import org.apache.pluto.portlet.admin.PlutoAdminConstants;
 
 /**
  * A singleton factory that holds methods to get various data on

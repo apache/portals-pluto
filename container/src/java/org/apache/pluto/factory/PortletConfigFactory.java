@@ -19,7 +19,8 @@
 
 package org.apache.pluto.factory;
 
-import javax.portlet.*;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 
 import org.apache.pluto.om.portlet.PortletDefinition;
 

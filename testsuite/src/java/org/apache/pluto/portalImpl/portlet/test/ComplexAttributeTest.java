@@ -18,9 +18,9 @@ package org.apache.pluto.portalImpl.portlet.test;
 
 import java.util.Map;
 
-import javax.portlet.PortletContext;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 
 /**

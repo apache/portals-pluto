@@ -19,10 +19,15 @@
 
 package org.apache.pluto.tags;
 
-import javax.portlet.*;
-
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
+import javax.portlet.RenderResponse;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.TagData;
+import javax.servlet.jsp.tagext.TagExtraInfo;
+import javax.servlet.jsp.tagext.TagSupport;
+import javax.servlet.jsp.tagext.VariableInfo;
 
 import org.apache.pluto.Constants;
 

@@ -21,7 +21,12 @@ package org.apache.pluto.portlet;
 
 import java.util.Enumeration;
 
-import javax.portlet.*;
+import javax.portlet.PortalContext;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.WindowState;
 
 public class PortletRequestWrapper extends javax.servlet.http.HttpServletRequestWrapper 
 implements PortletRequest 

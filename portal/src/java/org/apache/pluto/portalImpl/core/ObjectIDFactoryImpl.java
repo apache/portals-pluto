@@ -17,6 +17,7 @@
 package org.apache.pluto.portalImpl.core;
 
 import javax.servlet.ServletConfig;
+
 import org.apache.pluto.om.common.ObjectID;
 
 public class ObjectIDFactoryImpl implements org.apache.pluto.factory.ObjectIDFactory {

@@ -15,9 +15,9 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.Set;
-import java.util.Iterator;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.pluto.descriptors.common.IconDD;
 
@@ -26,7 +26,7 @@ import org.apache.pluto.descriptors.common.IconDD;
  * within the web.xml Deployment Descriptor.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Feb 28, 2005
  */
 public class WebAppDD {

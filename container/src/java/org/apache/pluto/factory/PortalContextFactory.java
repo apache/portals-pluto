@@ -19,7 +19,7 @@
 
 package org.apache.pluto.factory;
 
-import javax.portlet.*;
+import javax.portlet.PortalContext;
 
 public interface PortalContextFactory extends Factory {
 

@@ -19,11 +19,11 @@
 
 package org.apache.pluto.portalImpl.util;
 
-import org.apache.pluto.util.StringUtils;
-
-import java.util.List;
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.pluto.util.StringUtils;
 
 /**
  ** This class collects name/value pairs and provides

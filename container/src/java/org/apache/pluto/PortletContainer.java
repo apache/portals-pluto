@@ -15,8 +15,8 @@
  */
 package org.apache.pluto;
 
-import java.util.Properties;
 import java.io.IOException;
+import java.util.Properties;
 
 import javax.portlet.PortletException;
 import javax.servlet.ServletConfig;
@@ -52,7 +52,7 @@ import org.apache.pluto.services.PortletContainerEnvironment;
  *   </UL>
  * </UL>
  * 
- * @version $Id: PortletContainer.java,v 1.5 2004/07/30 14:16:06 ddewolf Exp $
+ * @version $Id$
  */
 public interface PortletContainer
 {

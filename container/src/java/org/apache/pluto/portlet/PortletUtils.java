@@ -19,12 +19,21 @@
 
 package org.apache.pluto.portlet;
 
-import javax.portlet.*;
-import org.apache.pluto.core.*;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
-import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.core.CoreUtils;
+import org.apache.pluto.core.InternalPortletConfig;
+import org.apache.pluto.core.InternalPortletContext;
+import org.apache.pluto.core.InternalPortletRequest;
+import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.window.PortletWindow;
 
 
 public class PortletUtils

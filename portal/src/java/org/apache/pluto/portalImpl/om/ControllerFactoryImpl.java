@@ -19,7 +19,9 @@
 
 package org.apache.pluto.portalImpl.om;
 
-import org.apache.pluto.om.*;
+import org.apache.pluto.om.Controller;
+import org.apache.pluto.om.ControllerFactory;
+import org.apache.pluto.om.Model;
 
 public class ControllerFactoryImpl implements ControllerFactory
 {

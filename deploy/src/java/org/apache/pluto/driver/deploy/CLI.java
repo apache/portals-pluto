@@ -18,10 +18,10 @@ package org.apache.pluto.driver.deploy;
 
 import java.io.File;
 
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.descriptors.services.impl.FileWebAppDescriptorServiceImpl;
+import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.services.impl.FilePortletAppDescriptorServiceImpl;
+import org.apache.pluto.descriptors.services.impl.FileWebAppDescriptorServiceImpl;
 
 public class CLI {
 

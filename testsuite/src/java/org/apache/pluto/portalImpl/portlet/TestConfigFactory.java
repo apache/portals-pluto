@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.portalImpl.portlet;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.apache.commons.digester.Digester;

@@ -19,10 +19,10 @@
 
 package org.apache.pluto.factory.impl;
 
-import javax.portlet.*;
+import javax.portlet.PortletURL;
 
-import org.apache.pluto.factory.*;
 import org.apache.pluto.core.impl.PortletURLImpl;
+import org.apache.pluto.factory.PortletURLFactory;
 import org.apache.pluto.om.window.PortletWindow;
 
 public class PortletURLFactoryImpl implements PortletURLFactory {

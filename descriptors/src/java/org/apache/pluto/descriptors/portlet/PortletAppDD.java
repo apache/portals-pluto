@@ -15,13 +15,13 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 6, 2005
  */
 public class PortletAppDD {

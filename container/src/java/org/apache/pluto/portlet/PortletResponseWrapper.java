@@ -19,7 +19,7 @@
 
 package org.apache.pluto.portlet;
 
-import javax.portlet.*;
+import javax.portlet.PortletResponse;
 
 public class PortletResponseWrapper extends javax.servlet.http.HttpServletResponseWrapper 
 implements PortletResponse 

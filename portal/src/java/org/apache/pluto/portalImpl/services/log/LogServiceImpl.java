@@ -19,8 +19,8 @@
 
 package org.apache.pluto.portalImpl.services.log;
 
-import org.apache.pluto.services.log.Logger;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.services.log.Logger;
 
 /** LogService implementation which uses Commons Logging.
  *  The use of commons logging provides us with a simple yet

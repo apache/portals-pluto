@@ -20,7 +20,6 @@
 package org.apache.pluto.portalImpl.services.factorymanager;
 
 import org.apache.pluto.factory.Factory;
-
 import org.apache.pluto.portalImpl.services.Service;
 
 /**

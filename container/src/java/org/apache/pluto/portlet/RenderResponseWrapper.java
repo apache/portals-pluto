@@ -21,7 +21,9 @@ package org.apache.pluto.portlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import javax.portlet.*;
+
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 public class RenderResponseWrapper extends PortletResponseWrapper 
 implements RenderResponse 

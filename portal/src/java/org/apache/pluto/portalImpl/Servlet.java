@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.services.log.Logger;
 import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.portalImpl.aggregation.RootFragment;
 import org.apache.pluto.portalImpl.core.PortalControlParameter;
@@ -38,13 +37,14 @@ import org.apache.pluto.portalImpl.core.PortalEnvironment;
 import org.apache.pluto.portalImpl.core.PortalURL;
 import org.apache.pluto.portalImpl.core.PortletContainerEnvironment;
 import org.apache.pluto.portalImpl.core.PortletContainerFactory;
-import org.apache.pluto.portalImpl.services.ServiceManager;
-import org.apache.pluto.portalImpl.services.log.Log;
-import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
 import org.apache.pluto.portalImpl.factory.FactoryAccess;
+import org.apache.pluto.portalImpl.services.ServiceManager;
 import org.apache.pluto.portalImpl.services.config.Config;
+import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
+import org.apache.pluto.portalImpl.services.log.Log;
 import org.apache.pluto.portalImpl.services.pageregistry.PageRegistry;
 import org.apache.pluto.portalImpl.servlet.ServletObjectAccess;
+import org.apache.pluto.services.log.Logger;
 
 
 public class Servlet extends HttpServlet

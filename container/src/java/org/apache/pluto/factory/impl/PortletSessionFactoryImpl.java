@@ -19,11 +19,11 @@
 
 package org.apache.pluto.factory.impl;
 
-import javax.portlet.*;
+import javax.portlet.PortletSession;
 
-import org.apache.pluto.factory.*;
-import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.core.impl.PortletSessionImpl;
+import org.apache.pluto.factory.PortletSessionFactory;
+import org.apache.pluto.om.window.PortletWindow;
 
 public class PortletSessionFactoryImpl implements PortletSessionFactory {
 

@@ -28,11 +28,11 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import org.apache.pluto.factory.PortletObjectAccess;
-import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.om.entity.PortletEntity;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.ContentTypeSet;
 import org.apache.pluto.om.portlet.ContentType;
+import org.apache.pluto.om.portlet.ContentTypeSet;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.services.title.DynamicTitle;
 import org.apache.pluto.util.NamespaceMapperAccess;
 

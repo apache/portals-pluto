@@ -26,11 +26,11 @@ import java.util.Enumeration;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
+import org.apache.pluto.PortletContainerServices;
 import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.services.log.LogService;
 import org.apache.pluto.services.log.Logger;
-import org.apache.pluto.PortletContainerServices;
 
 /**
 

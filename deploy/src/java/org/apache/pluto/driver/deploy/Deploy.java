@@ -21,21 +21,21 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
-import org.apache.pluto.descriptors.servlet.ServletDD;
-import org.apache.pluto.descriptors.servlet.ServletMappingDD;
-import org.apache.pluto.descriptors.servlet.SecurityRoleDD;
 import org.apache.pluto.descriptors.common.InitParamDD;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
+import org.apache.pluto.descriptors.services.WebAppDescriptorService;
+import org.apache.pluto.descriptors.servlet.SecurityRoleDD;
+import org.apache.pluto.descriptors.servlet.ServletDD;
+import org.apache.pluto.descriptors.servlet.ServletMappingDD;
+import org.apache.pluto.descriptors.servlet.WebAppDD;
 
 public class Deploy {
 

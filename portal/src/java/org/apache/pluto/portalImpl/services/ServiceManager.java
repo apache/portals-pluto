@@ -19,14 +19,19 @@
 
 package org.apache.pluto.portalImpl.services;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.portalImpl.util.Properties;
+import org.apache.pluto.util.StringUtils;
 
 /**
  * Manages the life-time of services registered during servlet startup.

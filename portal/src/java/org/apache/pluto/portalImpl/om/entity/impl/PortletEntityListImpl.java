@@ -19,12 +19,15 @@
 
 package org.apache.pluto.portalImpl.om.entity.impl;
 
-import org.apache.pluto.om.common.ObjectID;
-import org.apache.pluto.om.entity.*;
-import org.apache.pluto.util.StringUtils;
-import java.util.*;
+import java.util.Iterator;
 
+import org.apache.pluto.om.common.ObjectID;
+import org.apache.pluto.om.entity.PortletApplicationEntity;
+import org.apache.pluto.om.entity.PortletEntity;
+import org.apache.pluto.om.entity.PortletEntityList;
+import org.apache.pluto.om.entity.PortletEntityListCtrl;
 import org.apache.pluto.portalImpl.om.common.AbstractSupportSet;
+import org.apache.pluto.util.StringUtils;
 
 public class PortletEntityListImpl extends AbstractSupportSet
     implements PortletEntityList, PortletEntityListCtrl, java.io.Serializable {

@@ -19,11 +19,11 @@
 
 package org.apache.pluto.factory.impl;
 
-import javax.portlet.*;
+import javax.portlet.ActionResponse;
 
-import org.apache.pluto.factory.*;
-import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.core.impl.ActionResponseImpl;
+import org.apache.pluto.factory.ActionResponseFactory;
+import org.apache.pluto.om.window.PortletWindow;
 
 public class ActionResponseFactoryImpl implements ActionResponseFactory {
 

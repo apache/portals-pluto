@@ -19,11 +19,11 @@ import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.PortletException;
-import javax.portlet.PortletMode;
 
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
 import org.apache.pluto.portlet.admin.bean.PageTO;

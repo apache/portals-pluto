@@ -19,8 +19,10 @@
 
 package org.apache.pluto.portalImpl.om.common.impl;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 public class UnmodifiableSet implements Set, Serializable {
 

@@ -20,6 +20,7 @@
 package org.apache.pluto.portalImpl.servlet;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.pluto.om.window.PortletWindow;
 
 public class ServletRequestFactoryImpl implements ServletRequestFactory

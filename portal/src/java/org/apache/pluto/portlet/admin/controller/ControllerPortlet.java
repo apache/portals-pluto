@@ -20,13 +20,13 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.portlet.GenericPortlet;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.PortletConfig;
 
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
 import org.apache.pluto.portlet.admin.util.PlutoAdminContext;

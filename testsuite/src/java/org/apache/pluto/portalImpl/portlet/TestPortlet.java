@@ -19,18 +19,29 @@
 
 package org.apache.pluto.portalImpl.portlet;
 
-import javax.portlet.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
-import java.util.List;
-import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.pluto.portalImpl.portlet.test.PortletTest;
-import org.apache.pluto.portalImpl.portlet.test.TestResults;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
+
 import org.apache.pluto.portalImpl.portlet.test.ActionTest;
 import org.apache.pluto.portalImpl.portlet.test.NoOpTest;
+import org.apache.pluto.portalImpl.portlet.test.PortletTest;
+import org.apache.pluto.portalImpl.portlet.test.TestResults;
 
 public class TestPortlet extends GenericPortlet {
 
@@ -139,9 +150,6 @@ public class TestPortlet extends GenericPortlet {
                 TestConfig next = null;
                 TestConfig prev = null;
                 int index = configs.indexOf(test.getConfig());
-                System.out.println("Index: "+index);
-                System.out.println("test: "+test);
-                System.out.println("testConfig: "+test.getConfig());
                 if(index==0) {
                     prev = (TestConfig)configs.get(configs.size()-1);
                     next = (TestConfig)configs.get(index+1);

@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.portalImpl.portlet;
 
-import java.util.Map;
 import java.util.Collections;
+import java.util.Map;
 
 /**
  * TestPortlet Configuration.

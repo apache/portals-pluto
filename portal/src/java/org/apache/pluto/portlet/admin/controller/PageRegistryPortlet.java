@@ -25,7 +25,6 @@ import javax.portlet.RenderResponse;
 
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
 import org.apache.pluto.portlet.admin.services.PageRegistryService;
-import org.apache.pluto.portlet.admin.controller.ControllerPortlet;
 
 /**
  * PageRegistryPortlet

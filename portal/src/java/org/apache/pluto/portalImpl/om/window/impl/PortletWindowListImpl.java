@@ -19,9 +19,12 @@
 
 package org.apache.pluto.portalImpl.om.window.impl;
 
-import java.util.*;
-import org.apache.pluto.om.window.*;
+import java.util.HashMap;
+
 import org.apache.pluto.om.common.ObjectID;
+import org.apache.pluto.om.window.PortletWindow;
+import org.apache.pluto.om.window.PortletWindowList;
+import org.apache.pluto.om.window.PortletWindowListCtrl;
 
 public class PortletWindowListImpl implements PortletWindowList, PortletWindowListCtrl {
 

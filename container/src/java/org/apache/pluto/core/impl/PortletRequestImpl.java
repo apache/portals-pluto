@@ -310,7 +310,7 @@ public abstract class PortletRequestImpl extends
 
 		bodyAccessed = true;
 
-		Map parameters = this._getHttpServletRequest().getParameterMap();
+		Map parameters = getParameterMap();
 		String[] values = (String[]) parameters.get(name);
 		if (values != null) {
 			return values[0];
@@ -321,7 +321,7 @@ public abstract class PortletRequestImpl extends
 	public java.util.Enumeration getParameterNames() {
 		bodyAccessed = true;
 
-		Map parameters = this._getHttpServletRequest().getParameterMap();
+		Map parameters = getParameterMap();
 		return Collections.enumeration(parameters.keySet());
 	}
 
@@ -332,8 +332,7 @@ public abstract class PortletRequestImpl extends
 
 		bodyAccessed = true;
 
-		String[] values = (String[]) this._getHttpServletRequest()
-				.getParameterMap().get(name);
+		String[] values = (String[]) getParameterMap().get(name);
 		if (values != null)
 			values = StringUtils.copy(values);
 		return values;
@@ -341,8 +340,10 @@ public abstract class PortletRequestImpl extends
 
 	public Map getParameterMap() {
 		bodyAccessed = true;
-		Map result = StringUtils.copyParameters(this._getHttpServletRequest()
-				.getParameterMap());
+		Map result =
+            StringUtils.copyParameters(
+                this._getHttpServletRequest().getParameterMap()
+            );
 		return result;
 	}
 

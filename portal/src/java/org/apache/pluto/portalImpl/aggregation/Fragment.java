@@ -19,14 +19,16 @@
 
 package org.apache.pluto.portalImpl.aggregation;
 
-import org.apache.pluto.portalImpl.aggregation.navigation.Navigation;
-import org.apache.pluto.portalImpl.util.*;
-import org.apache.pluto.portalImpl.core.*;
+import java.io.IOException;
+import java.util.Collection;
 
-import java.util.*;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.pluto.portalImpl.aggregation.navigation.Navigation;
+import org.apache.pluto.portalImpl.core.PortalURL;
+import org.apache.pluto.portalImpl.util.Parameters;
 
 public interface Fragment
 {

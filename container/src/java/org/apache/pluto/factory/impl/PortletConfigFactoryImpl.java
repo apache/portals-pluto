@@ -19,10 +19,11 @@
 
 package org.apache.pluto.factory.impl;
 
-import javax.portlet.*;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 
-import org.apache.pluto.factory.*;
 import org.apache.pluto.core.impl.PortletConfigImpl;
+import org.apache.pluto.factory.PortletConfigFactory;
 import org.apache.pluto.om.portlet.PortletDefinition;
 
 public class PortletConfigFactoryImpl implements PortletConfigFactory {

@@ -15,14 +15,14 @@
  */
 package org.apache.pluto.descriptors.services.impl;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
  * <B>TODO</B>: Document
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 7, 2005
  */
 public class StreamPortletAppDescriptorServiceImpl 

@@ -19,7 +19,7 @@
 
 package org.apache.pluto.portlet;
 
-import javax.portlet.*;
+import javax.portlet.ActionRequest;
 
 public class ActionRequestWrapper extends PortletRequestWrapper
 implements ActionRequest 

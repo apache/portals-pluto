@@ -26,16 +26,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.UnavailableException;
-
-import org.exolab.castor.mapping.Mapping;
-import org.exolab.castor.mapping.MappingException;
-import org.exolab.castor.xml.MarshalException;
-import org.exolab.castor.xml.Unmarshaller;
-import org.exolab.castor.xml.ValidationException;
-import org.xml.sax.InputSource;
 
 import org.apache.pluto.om.common.ObjectID;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
@@ -47,6 +41,12 @@ import org.apache.pluto.portalImpl.om.servlet.impl.WebApplicationDefinitionImpl;
 import org.apache.pluto.portalImpl.util.Properties;
 import org.apache.pluto.portalImpl.xml.Constants;
 import org.apache.pluto.portalImpl.xml.XmlParser.EntityResolver;
+import org.exolab.castor.mapping.Mapping;
+import org.exolab.castor.mapping.MappingException;
+import org.exolab.castor.xml.MarshalException;
+import org.exolab.castor.xml.Unmarshaller;
+import org.exolab.castor.xml.ValidationException;
+import org.xml.sax.InputSource;
 
 /**
  * A version of the registry service that obtains data from a ServletContext

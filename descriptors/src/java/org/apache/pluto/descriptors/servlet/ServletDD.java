@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.pluto.descriptors.common.IconDD;
 
@@ -25,7 +25,7 @@ import org.apache.pluto.descriptors.common.IconDD;
  * web.xml Deployment Descriptor.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Feb 28, 2005
  */
 public class ServletDD {

@@ -19,10 +19,10 @@
 
 package org.apache.pluto.factory.impl;
 
-import javax.portlet.*;
+import javax.portlet.PortletPreferences;
 
-import org.apache.pluto.factory.*;
 import org.apache.pluto.core.impl.PortletPreferencesImpl;
+import org.apache.pluto.factory.PortletPreferencesFactory;
 import org.apache.pluto.om.entity.PortletEntity;
 import org.apache.pluto.om.portlet.PortletDefinition;
 

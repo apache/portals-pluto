@@ -39,8 +39,8 @@ import org.apache.pluto.services.PortletContainerEnvironment;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderAccess;
 import org.apache.pluto.services.information.PortletURLProvider;
-import org.apache.pluto.services.log.Logger;
 import org.apache.pluto.services.log.LogService;
+import org.apache.pluto.services.log.Logger;
 
 /**
  *  Implements the Pluto Container.

@@ -19,7 +19,9 @@
 
 package org.apache.pluto.portalImpl.util;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  ** Wraps around the internal Object IDs. By holding both

@@ -20,12 +20,15 @@
 package org.apache.pluto.core.impl;
 
 import java.net.MalformedURLException;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.portlet.PortletContext;
+import javax.servlet.RequestDispatcher;
 
+import org.apache.pluto.Environment;
 import org.apache.pluto.core.InternalPortletContext;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.Environment;
 
 public class PortletContextImpl implements PortletContext, InternalPortletContext
 {
@@ -47,12 +50,10 @@ public class PortletContextImpl implements PortletContext, InternalPortletContex
 
     public javax.portlet.PortletRequestDispatcher getRequestDispatcher(String path)
     {
+        Map parms = parseQueryParams(path);
 		try {
-	        javax.servlet.RequestDispatcher rd = servletContext.getRequestDispatcher(path);
-            if(rd == null) {
-                return null;
-            }
-    	    return new PortletRequestDispatcherImpl(rd);
+	        RequestDispatcher rd = servletContext.getRequestDispatcher(path);
+            return rd == null?null:new PortletRequestDispatcherImpl(rd, parms);
         } catch (Exception e) {
     		// need to catch exception because of tomcat 4.x bug
     		// tomcat throws an exception instead of return null
@@ -185,5 +186,24 @@ public class PortletContextImpl implements PortletContext, InternalPortletContex
         return portletApplicationDefinition;
     }
     // --------------------------------------------------------------------------------------------
+
+    private Map parseQueryParams(String path) {
+        Map map = new java.util.HashMap();
+        int idx = path.indexOf("?");
+        if(idx < 0) {
+            return null;
+        }
+        String parms = path.substring(idx+1);
+        StringTokenizer st = new StringTokenizer(parms, "&");
+        while(st.hasMoreTokens()) {
+            String pair = st.nextToken();
+            if(pair.indexOf("=")>0) {
+                String key = pair.substring(0,pair.indexOf("="));
+                String val = pair.substring(pair.indexOf("=")+1);
+                map.put(key, new String[] {val});
+            }
+        }
+        return map;
+    }
 }
 

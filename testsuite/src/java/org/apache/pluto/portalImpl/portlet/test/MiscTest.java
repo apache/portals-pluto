@@ -15,13 +15,13 @@
  */
 package org.apache.pluto.portalImpl.portlet.test;
 
-import java.util.Properties;
 import java.util.Enumeration;
+import java.util.Properties;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
+import javax.portlet.WindowState;
 
 import org.apache.pluto.testsuite.ExpectedResults;
 

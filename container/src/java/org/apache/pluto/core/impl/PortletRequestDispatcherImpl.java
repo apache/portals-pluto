@@ -19,10 +19,13 @@
 
 package org.apache.pluto.core.impl;
 
+import java.util.Map;
+
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.RequestDispatcher;
 
 import org.apache.pluto.core.CoreUtils;
 import org.apache.pluto.core.InternalPortletRequest;
@@ -31,11 +34,18 @@ import org.apache.pluto.core.InternalPortletResponse;
 public class PortletRequestDispatcherImpl implements PortletRequestDispatcher
 {
 
-    private javax.servlet.RequestDispatcher requestDispatcher;
+    private RequestDispatcher requestDispatcher;
+    private Map queryParams;
 
-    public PortletRequestDispatcherImpl(javax.servlet.RequestDispatcher requestDispatcher)
+    public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher)
     {
         this.requestDispatcher = requestDispatcher;
+    }
+
+    public PortletRequestDispatcherImpl(RequestDispatcher disp, Map queryParams) {
+        this(disp);
+        this.queryParams = queryParams;
+
     }
 
     // javax.portlet.PortletRequestDispatcher implementation --------------------------------------
@@ -43,6 +53,10 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher
     {
         InternalPortletRequest internalRequest = CoreUtils.getInternalRequest(request);
         InternalPortletResponse internalResponse = CoreUtils.getInternalResponse(response);
+
+        if(queryParams!=null) {
+            internalRequest = new IncludedRenderRequestImpl(internalRequest, queryParams);
+        }
         try
         {
             internalRequest.setIncluded(true);

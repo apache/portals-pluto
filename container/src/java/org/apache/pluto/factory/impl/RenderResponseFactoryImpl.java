@@ -19,11 +19,11 @@
 
 package org.apache.pluto.factory.impl;
 
-import javax.portlet.*;
+import javax.portlet.RenderResponse;
 
-import org.apache.pluto.factory.*;
-import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.core.impl.RenderResponseImpl;
+import org.apache.pluto.factory.RenderResponseFactory;
+import org.apache.pluto.om.window.PortletWindow;
 
 public class RenderResponseFactoryImpl implements RenderResponseFactory {
 

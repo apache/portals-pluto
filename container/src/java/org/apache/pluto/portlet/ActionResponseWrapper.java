@@ -21,7 +21,11 @@ package org.apache.pluto.portlet;
 
 import java.util.Map;
 
-import javax.portlet.*;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletModeException;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 public class ActionResponseWrapper extends PortletResponseWrapper 
 implements ActionResponse 

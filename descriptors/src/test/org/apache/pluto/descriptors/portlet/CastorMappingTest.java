@@ -21,13 +21,12 @@ import java.io.OutputStream;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import org.apache.pluto.descriptors.services.impl.StreamPortletAppDescriptorServiceImpl;
 
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id:$
+ * @version $Id$
  * @since Mar 4, 2005
  */
 public class CastorMappingTest extends TestCase {

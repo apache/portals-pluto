@@ -139,7 +139,6 @@ public class DeployWarService extends BaseAdminObject {
 										ArrayList  argList = createDeploymentArgs(serverFileName, tempDir, request, appExists);
 										Map pmap = (HashMap) request.getPortletSession().getAttribute(PlutoAdminConstants.PORTLET_MAP_ATTR);
 										logDebug(METHOD_NAME, "pmap: " + mapToEntrySetString(pmap));
-										System.out.println("pmap: " + mapToEntrySetString(pmap));
 										String[] args = arrayListToStringArray(argList);
 										for (int i =0; i < args.length; i++) {
 											logDebug(METHOD_NAME, "args["+i+"]="+args[i]);

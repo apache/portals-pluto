@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.factory;
 
-import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.invoker.PortletInvoker;
+import org.apache.pluto.om.portlet.PortletDefinition;
 
 /**
  * <p>
@@ -35,7 +35,7 @@ import org.apache.pluto.invoker.PortletInvoker;
  * standard <code>init</code> and <code>destroy</code> methods.
  * </p>
  * 
- * @version $Id: PortletInvokerFactory.java,v 1.3 2004/03/02 14:48:55 cziegeler Exp $
+ * @version $Id$
  */
 
 public interface PortletInvokerFactory extends Factory 
