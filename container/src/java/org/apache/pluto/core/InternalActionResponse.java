@@ -24,13 +24,37 @@ import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+/**
+ * ActionResponse implemntation.
+ *
+ */
 public interface InternalActionResponse extends InternalPortletResponse {
+
+    /**
+     * Retrieve the render parameters associated with
+     * this response.
+     *
+     * @return map of all render parameters associated with this request.
+     */
     public Map getRenderParameters();
 
+    /**
+     * Retrieve the portlet mode.
+     * @return
+     */
     public PortletMode getChangedPortletMode();
 
+    /**
+     * Retrieve the window state.
+     * @return
+     */
     public WindowState getChangedWindowState();
 
+    /**
+     * Retreive the location for which the action should
+     * be redirected.
+     * @return
+     */
     public String getRedirectLocation();
 }
 

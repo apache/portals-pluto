@@ -23,6 +23,7 @@ package org.apache.pluto;
  * Thrown when an internal portlet container exception occurs within Pluto.
  * This type of exception indicates an error from which the container is not
  * able to recover.
+ *
  * @version 1.0
  */
 public class PortletContainerException extends Exception {

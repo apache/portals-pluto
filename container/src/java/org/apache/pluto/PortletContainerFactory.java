@@ -24,12 +24,14 @@ import org.apache.pluto.services.PortletContainerServices;
  * Factory used to create new PortletContainer instances.  The factor constructs
  * the underlying pluto container implementation by using the the given
  * container services.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
 public class PortletContainerFactory {
 
+    /** Internal Logger. */
     private static final Log LOG =
         LogFactory.getLog(PortletContainerFactory.class);
 

@@ -126,5 +126,9 @@ public interface PortletContainer {
      */
     public String getName();
 
+    /**
+     * Retreive the container services associated with this container.
+     * @return
+     */
     public PortletContainerServices getContainerServices();
 }
