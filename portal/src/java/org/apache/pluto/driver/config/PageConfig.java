@@ -26,6 +26,7 @@ public class PageConfig {
     private String name;
     private String uri;
     private Collection portletIds;
+    private int orderNumber;
 
     public PageConfig() {
         this.portletIds = new ArrayList();
@@ -54,6 +55,14 @@ public class PageConfig {
     public void addPortlet(String contextPath, String portletName) {
         portletIds.add(
             PortletWindowConfig.createPortletId(contextPath, portletName));
+    }
+
+    void setOrderNumber(int number) {
+        this.orderNumber = number;
+    }
+
+    int getOrderNumber() {
+        return orderNumber;
     }
 
 }

@@ -24,13 +24,14 @@
     </portlet-app>
 
     <render-config default="Test Page">
-        <page name="Test Page" uri="/WEB-INF/fragments/template.jsp">
+        <page name="Test Page" uri="/WEB-INF/fragments/portlet.jsp">
             <portlet context="/testsuite" name="TestPortlet1"/>
             <portlet context="/testsuite" name="TestPortlet2"/>
         </page>
-        <page name="Secondary Page" uri="/WEB-INF/fragments/template.jsp">
+        <page name="Secondary Page" uri="/WEB-INF/fragments/portlet.jsp">
             <portlet context="/testsuite" name="TestPortlet1"/>
             <portlet context="/testsuite" name="TestPortlet2"/>
         </page>
+        <page name="About Pluto" uri="/WEB-INF/fragments/about.jsp"/>
     </render-config>
 </pluto-portal-driver>

@@ -36,7 +36,7 @@
 
 <TR><TD>
     <%-- This could be dynamic.  At this point there's no need --%>
-    <jsp:include page="/WEB-INF/fragments/portlet-page.jsp"/>
+    <jsp:include page='<%=(String)pageContext.findAttribute("include")%>'/>
     </TD></TR>
 </TABLE>
 </BODY>

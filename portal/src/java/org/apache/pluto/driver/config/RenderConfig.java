@@ -17,6 +17,10 @@ package org.apache.pluto.driver.config;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Comparator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,8 +35,31 @@ public class RenderConfig {
     private Map pages;
     private String defaultPageId;
 
+    // internally used.
+    private int orderNumberCounter = 0;
+    private Comparator pageComparator;
+
     public RenderConfig() {
         this.pages = new java.util.HashMap();
+        this.pageComparator = new Comparator() {
+            public int compare(Object a, Object b) {
+                PageConfig pa = (PageConfig)a;
+                PageConfig pb = (PageConfig)b;
+                if(pa.getOrderNumber() > pb.getOrderNumber()) {
+                    return 1;
+                }
+                else if(pa.getOrderNumber() == pb.getOrderNumber()) {
+                    return 0;
+                }
+                else {
+                    return -1;
+                }
+            }
+
+            public boolean equals(Object a) {
+                return false;
+            }
+        };
     }
 
 
@@ -45,7 +72,9 @@ public class RenderConfig {
     }
 
     public Collection getPages() {
-        return pages.values();
+        List col =  new ArrayList(pages.values());
+        Collections.sort(col, pageComparator);
+        return col;
     }
 
     public PageConfig getPageConfig(String pageId) {
@@ -61,6 +90,7 @@ public class RenderConfig {
     }
 
     public void addPage(PageConfig config) {
+        config.setOrderNumber(orderNumberCounter++);
         pages.put(config.getName(), config);
     }
 
