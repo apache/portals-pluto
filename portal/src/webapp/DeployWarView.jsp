@@ -21,7 +21,7 @@ limitations under the License.
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page session="false" %>
 <%@ taglib uri='http://java.sun.com/portlet' prefix='portlet'%>
-<%@ taglib uri="/WEB-INF/pluto-admin.tld" prefix="pluto-admin" %>
+<%@ taglib uri="http://portals.apache.org/pluto/admin" prefix="pluto-admin" %>
 
 <portlet:defineObjects/>
 
