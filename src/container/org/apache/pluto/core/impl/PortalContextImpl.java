@@ -57,10 +57,6 @@
 
 package org.apache.pluto.core.impl;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Vector;
-
 import javax.portlet.PortalContext;
 
 import org.apache.pluto.services.information.PortalContextProvider;

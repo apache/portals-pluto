@@ -60,7 +60,6 @@ package org.apache.pluto.core.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
@@ -107,7 +106,7 @@ public class ActionRequestImpl extends PortletRequestImpl implements ActionReque
                                                          );
             }
         }
-        return(InputStream)servletRequest.getInputStream();
+        return servletRequest.getInputStream();
     }
 
     /* (non-Javadoc)
