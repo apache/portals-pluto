@@ -9,12 +9,14 @@
         <item name="JSR 168"  href="http://jcp.org/en/jsr/detail?id=168"/>
     </links>
     <menu name="General Information">
-        <item name="Overview"            href="/index.html"/>        
+        <item name="Overview"            href="/index.html"/>
         <item name="News and Status"     href="/news.html"/>
         <item name="Roadmap"             href="/roadmap.html"/>
         <item name="FAQs"                href="/faq.html"/>
         <item name="Wiki"                href="/wiki.html"/>
     </menu>
+<!--
+    Removed because links do not work. Add back in when they do.
 
     <menu name="Projects">
         <item name="Portlet API (JSR-168)"       href="/multiproject/portlet-api/index.html"/>
@@ -22,14 +24,15 @@
         <item name="Jakarta Pluto Portal Driver" href="/multiproject/pluto-portal/index.html"/>
         <item name="Pluto Portlet Test Suite"    href="/multiproject/testsuite/index.html"/>
      </menu>
-
+-->
     <menu name="Getting Started">
         <item name="Installation"    href="/install.html"/>
         <item name="Architecture"    href="/arch.html"/>
         <item name="Pluto in your portal"    href="/Howto_use_the_Pluto_container.html"/>
+        <item name="Using the Pluto Portal"    href="/Howto_use_the_Pluto_portal.html"/>
 <!--
         <item name="Download" href="/site/binindex.html"/>
--->        
+-->
         <item name="Resources"       href="/resources.html"/>
 <!--
         <item name="JavaDoc"    href="/apidocs/index.html"/>
@@ -40,7 +43,7 @@
         <item name="Binaries"              href="/site/binindex.html"/>
         <item name="Source Code"           href="/site/sourceindex.html"/>
     </menu>
--->    
+-->
   </body>
 </project>
 
