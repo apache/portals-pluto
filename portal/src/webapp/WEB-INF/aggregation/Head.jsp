@@ -17,4 +17,5 @@ limitations under the License.
 <HEAD>
     <TITLE>Pluto Portal Driver</TITLE>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/pluto_style.css" type="text/css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/portlet-spec-1.0.css" type="text/css">
 </HEAD>

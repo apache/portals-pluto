@@ -1,0 +1,219 @@
+/*
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+/*
+NOTE: 
+This stylesheet is a formatted copy of Appendix PLT. C in the Portlet API specification, which defines
+CSS styles to be used in portlets conforming to the spec.
+*/
+
+/*****************************************************************************************
+Java(TM) Portlet Specification, version 1.0 (10/07/2003) pp. 115-118
+
+PLT.C
+CSS Style Definitions
+To achieve a common look and feel throughout the portal page, all portlets in the portal
+page should use a common CSS style sheet when generating content.
+This appendix defines styles for a variety of logical units in the markup. It follows the
+style being considered by the OASIS Web Services for Remote Portlets Technical Committee.
+******************************************************************************************/
+
+/*****************************************************************************************
+PLT.C.1 Links (Anchor)
+A custom CSS class is not defined for the <a> tag. The entity should use the default
+classes when embedding anchor tags.
+******************************************************************************************/
+
+/*****************************************************************************************
+PLT.C.2 Fonts
+The font style definitions affect the font attributes only (font face, size, color, style, etc).
+******************************************************************************************/
+
+/* Font attributes for the "normal" fragment font. Used for the display of non-accentuated information. 
+Example: Normal Text */
+.portlet-font {
+
+}
+
+/* Font attributes similar to the portlet-font but the color is lighter. Example: Dim Text */
+.portlet-font-dim {
+
+}
+
+/*****************************************************************************************
+PLT.C.3 Messages
+Message style definitions affect the rendering of a paragraph (alignment, borders,
+background color, etc) as well as text attributes.
+******************************************************************************************/
+/* Status of the current operation. Example: Progress: 80% */
+.portlet-msg-status {
+
+}
+
+/* Help messages, general additional information, etc. Example: Info about */
+.portlet-msg-info {
+
+}
+
+/* Error messages. 
+Example: Portlet not available*/
+.portlet-msg-error {
+
+}
+
+/* Warning messages. 
+Example: Timeout occurred, try again later */
+.portlet-msg-alert {
+
+}
+
+/* Verification of the successful completion of a task. Example: Operation completed successfully */
+.portlet-msg-success {
+
+}
+
+/*****************************************************************************************
+PLT.C.4 Sections
+Section style definitions affect the rendering of markup sections such as table, div and 5 
+span (alignment, borders, background color, etc) as well as their text attributes.
+******************************************************************************************/
+/* Table or section header */
+.portlet-section-header {
+
+}
+
+/* Normal text in a table cell */
+.portlet-section-body {
+
+}
+
+/* Text in every other row in the cell */
+.portlet-section-alternate {
+
+}
+
+/* Text in a selected cell range */
+.portlet-section-selected {
+
+}
+
+/* Text of a subheading */
+.portlet-section-subheader {
+
+}
+
+/* Table or section footnote */
+.portlet-section-footer {
+
+}
+
+/* Text that belongs to the table but does not fall in one of
+the other categories (e.g. explanatory or help text that is
+associated with the section). */
+.portlet-section-text {
+
+}
+
+/*****************************************************************************************
+PLT.C.5 Forms
+Form styles define the look-and-feel of the elements in an HTML form.
+******************************************************************************************/
+/* Text used for the descriptive label of the whole form (not the labels for fields). */
+.portlet-form-label {
+
+}
+
+/* Text of the user-input in an input field. */
+.portlet-form-input-field {
+
+}
+
+/* Text on a button */
+.portlet-form-button {
+
+}
+
+/* Text that appears beside a context dependent action icon. */
+.portlet-icon-label {
+
+}
+
+/* Text that appears beside a "standard" icon (e.g. Ok, or Cancel) */
+.portlet-dlg-icon-label {
+
+}
+
+/* Text for a separator of fields (e.g. checkboxes, etc.) */
+.portlet-form-field-label {
+
+}
+
+/* Text for a field (not input field, e.g. checkboxes, etc) */
+.portlet-form-field {
+
+}
+
+/*****************************************************************************************
+PLT.C.6 Menus
+Menu styles define the look-and-feel of the text and background of a menu structure. This
+structure may be embedded in the aggregated page or may appear as a context sensitive
+popup menu.
+******************************************************************************************/
+/* General menu settings such as background color, margins, etc */
+.portlet-menu {
+
+}
+
+/* Normal, unselected menu item. */
+.portlet-menu-item {
+
+}
+
+/* Selected menu item. */
+.portlet-menu-item-selected {
+
+}
+
+/* Normal, unselected menu item when the mouse hovers over it. */
+.portlet-menu-item-hover {
+
+}
+
+/* Selected menu item when the mouse hovers over it. */
+.portlet-menu-item-hover-selected {
+
+}
+
+/* Normal, unselected menu item that has submenus. */
+.portlet-menu-cascade-item {
+
+}
+
+/* Selected sub-menu item that has sub-menus. */
+.portlet-menu-cascade-item-selected {
+
+}
+
+/* Descriptive text for the menu (e.g. in a help context below the menu) */
+.portlet-menu-description {
+
+}
+
+/* Menu caption */
+.portlet-menu-caption {
+
+}
+
