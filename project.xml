@@ -103,7 +103,7 @@
         </developer>
         <developer>
             <name>David S. Taylor</name>
-            <id/>
+            <id>taylor</id>
             <email>david{aT}bluesunrise{d0t}com</email>
             <organization/>
         </developer>
@@ -155,8 +155,8 @@
         </developer>
     
         <developer>
-            <name/>
-            <id>Scott T. Weaver</id>
+            <name>Scott T. Weaver</name>
+            <id>weaver</id>
             <email>weaver{aT}apache{d0t}org</email>
         </developer>
     
@@ -203,8 +203,6 @@
           <email>david.AT.daviddewolf.DOT.com</email>
         </contributor>
       </contributors>
-
-
 
   <build>
 
