@@ -373,7 +373,7 @@ public class PortalURL {
         if (environment.getRequest().getPathInfo() != null) 
         {
             String pathInfo = environment.getRequest().getPathInfo();
-            StringTokenizer tokenizer = new StringTokenizer(pathInfo, "/.");
+            StringTokenizer tokenizer = new StringTokenizer(pathInfo, "/");
 
             int mode = 0; // 0=navigation, 1=control information
             String name = null;
