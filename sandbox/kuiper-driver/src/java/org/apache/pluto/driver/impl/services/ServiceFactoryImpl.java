@@ -17,15 +17,8 @@
 package org.apache.pluto.driver.impl.services;
 
 import org.apache.pluto.services.ServiceFactory;
-import org.apache.pluto.services.Logger;
 import org.apache.pluto.services.LoggerService;
 import org.apache.pluto.services.PortletURLService;
-import org.apache.pluto.services.PortletInvokerService;
-import org.apache.pluto.core.PortletInvokerServiceImpl;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
-
-import javax.servlet.ServletContext;
 
 /**
  * <B>TODO</B>: Document
@@ -38,14 +31,11 @@ public class ServiceFactoryImpl implements ServiceFactory {
     
     private LoggerService loggerService;
     private PortletURLService portletURLService;
-    private PortletInvokerService portletInvokerService;
-    
+
     public ServiceFactoryImpl(LoggerService ls,
-                              PortletURLService pus,
-                              PortletInvokerService pis) {
+                              PortletURLService pus) {
         this.loggerService = ls;
         this.portletURLService = pus;
-        this.portletInvokerService = pis;
     }
 
     public LoggerService getLoggerService() {
@@ -55,10 +45,4 @@ public class ServiceFactoryImpl implements ServiceFactory {
     public PortletURLService getPortletURLService() {
         return portletURLService;
     }
-
-    public PortletInvokerService getPortletInvokerService() {
-        return portletInvokerService;
-    }
-
-
 }
