@@ -38,7 +38,6 @@ public class PreferencesValidatorImpl implements PreferencesValidator
       String[] defValues = {"no values"};
       String[] values = null;
       String key = null;
-      boolean validationFailed = false;
 
       while (names.hasMoreElements())
       {

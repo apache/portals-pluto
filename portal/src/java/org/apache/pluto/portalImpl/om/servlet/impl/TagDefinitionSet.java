@@ -19,12 +19,10 @@
 
 package org.apache.pluto.portalImpl.om.servlet.impl;
 
-import java.util.Iterator;
 import java.util.Locale;
 
 import org.apache.pluto.portalImpl.om.common.AbstractSupportSet;
 import org.apache.pluto.portalImpl.om.common.Support;
-import org.apache.pluto.util.StringUtils;
 
 public class TagDefinitionSet extends AbstractSupportSet implements java.io.Serializable, Support {
 

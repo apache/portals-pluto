@@ -311,7 +311,7 @@ implements ServletDefinition, ServletDefinitionCtrl, java.io.Serializable, Suppo
         if (servletMapping!=null) {
             StringUtils.newLine(buffer,indent);
             buffer.append("Linked ServletMapping:");
-            buffer.append(((ServletMappingImpl)servletMapping).toString(indent+2));
+            buffer.append(servletMapping.toString(indent+2));
         }
         StringUtils.newLine(buffer,indent);
         buffer.append("}");

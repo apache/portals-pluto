@@ -60,28 +60,7 @@ public class LanguageSetImpl extends AbstractSupportSet implements LanguageSet, 
     private Language createLanguage(Locale locale, ResourceBundle bundle)
     {
         LanguageImpl lang = new LanguageImpl(locale, bundle, title, shortTitle, castorKeywords);
-        return(Language)lang;
-    }
-
-    // creates a locale object from a string representation
-    private Locale createLocale(String locale)
-    {
-        // parse locale String
-        StringTokenizer tokenizer = new StringTokenizer(locale,"_");
-        String[] localeDef = new String[5]; // just in case we have more than one variant
-        for (int i = 0; i < localeDef.length; i++)
-        {
-            if (tokenizer.hasMoreTokens())
-            {
-                localeDef[i] = tokenizer.nextToken();
-            }
-            else
-            {
-                localeDef[i] = "";
-            }
-        }
-
-        return new java.util.Locale(localeDef[0], localeDef[1], localeDef[2]+localeDef[3]+localeDef[4]);
+        return lang;
     }
 
     // AbstractSupportSet implementation.

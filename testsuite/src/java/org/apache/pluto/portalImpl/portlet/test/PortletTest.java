@@ -21,8 +21,6 @@ import java.util.Map;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletContext;
-import javax.portlet.ActionResponse;
-import javax.portlet.ActionRequest;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>

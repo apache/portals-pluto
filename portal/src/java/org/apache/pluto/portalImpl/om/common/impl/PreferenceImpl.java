@@ -59,7 +59,7 @@ public class PreferenceImpl implements Preference, PreferenceCtrl, java.io.Seria
 
         // replace all NULL_ARRAYENTRY Strings by NULL
         for (int i = 0; i < returnValue.size(); i++) {
-            if (NULL_ARRAYENTRY.equals((String)returnValue.get(i))) {
+            if (NULL_ARRAYENTRY.equals(returnValue.get(i))) {
                 returnValue.set(i, null);
             }
         }

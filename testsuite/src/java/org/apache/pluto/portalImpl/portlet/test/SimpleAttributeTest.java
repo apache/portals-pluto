@@ -19,7 +19,6 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.HashMap;
 
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletContext;

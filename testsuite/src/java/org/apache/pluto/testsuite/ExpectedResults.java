@@ -35,17 +35,17 @@ public class ExpectedResults {
 	private Properties properties;
 	
 	private ExpectedResults() throws IOException {
-		properties = new Properties();
+		this.properties = new Properties();
 		
 		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTY_FILENAME);
 		if (in == null) {
 			throw new IOException("Could not find " + PROPERTY_FILENAME);
 		}
-		properties.load(in);
+		this.properties.load(in);
 	}
 	
 	public Properties getProperties() {
-		return properties;
+		return this.properties;
 	}
 	
 	/**

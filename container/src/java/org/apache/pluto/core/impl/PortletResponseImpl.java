@@ -28,7 +28,6 @@ import java.util.Map;
 import javax.portlet.PortletResponse;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.om.window.PortletWindow;

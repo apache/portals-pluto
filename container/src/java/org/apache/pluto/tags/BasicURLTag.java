@@ -95,7 +95,7 @@ public abstract class BasicURLTag extends TagSupport
                     }
                     catch (IllegalAccessException e)
                     {
-                        ;
+                        
                     }
                 }
             }

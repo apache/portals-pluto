@@ -19,9 +19,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Enumeration;
 
-import javax.portlet.PortletContext;
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 /**
