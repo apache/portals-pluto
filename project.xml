@@ -195,15 +195,13 @@
             <id>cziegeler</id>
             <email>cziegeler{aT}apache{d0t}org</email>
         </developer>
+
+		<developer>
+            <name>David DeWolf</name>
+			<id>ddewolf</id>
+			<email>ddewolf{aT}apache{d0t}org</email>
+        </developer>
       </developers>
-
-      <contributors>
-        <contributor>
-          <name>David H. DeWolf</name>
-		  <email>david{aT}daviddewolf{d0t}com</email>
-        </contributor>
-      </contributors>
-
   <build>
 
     <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
