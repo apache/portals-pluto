@@ -54,6 +54,14 @@
   	
   	      <maven:reactor
                basedir="${basedir}"
+               includes="api/project.xml"
+               goals="jar:install"
+               banner="Installing api jar"
+               postProcessing="false"
+               ignoreFailures="false"/>
+  	
+  	      <maven:reactor
+               basedir="${basedir}"
                includes="container/project.xml"
                goals="jar:install"
                banner="Installing container jar"

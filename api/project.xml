@@ -5,6 +5,7 @@
   <pomVersion>3</pomVersion>
   <name>portlet-api</name>
   <id>portlet-api</id>
+  <groupId>portlet-api</groupId>
   <currentVersion>1.0</currentVersion>
 
   <package>javax.portlet</package>
