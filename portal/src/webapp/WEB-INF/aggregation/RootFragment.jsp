@@ -16,9 +16,6 @@ limitations under the License.
 --%>
 <%@ page session="true" buffer="none" %>
 <%@ page import="java.util.Iterator" %>
-<%@ page import="org.apache.pluto.portalImpl.util.Parameters" %>
-<%@ page import="org.apache.pluto.portalImpl.core.PortalURL" %>
-<%@ page import="org.apache.pluto.portalImpl.core.PortalEnvironment" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.Fragment" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.AbstractNavigationFragment" %>
 <jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />

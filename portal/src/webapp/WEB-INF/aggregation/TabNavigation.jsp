@@ -15,11 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <%@ page session="false" buffer="none" %>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="org.apache.pluto.portalImpl.util.Parameters" %>
 <%@ page import="org.apache.pluto.portalImpl.core.PortalURL" %>
 <%@ page import="org.apache.pluto.portalImpl.core.PortalEnvironment" %>
-<%@ page import="org.apache.pluto.portalImpl.aggregation.Fragment" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.Navigation" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.NavigationTreeBean" %>
 <jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.navigation.TabNavigation" scope="request" />
