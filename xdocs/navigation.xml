@@ -17,7 +17,7 @@ limitations under the License.
 -->
 <project name="Apache Pluto" href="http://portals.apache.org/pluto">
 
-   <title>The Jakarta Pluto Site</title>
+   <title>The Portals Pluto Site</title>
    <logo href="/images/pluto.png">Pluto, an Apache Portals project.</logo>
 
 <body>
@@ -36,7 +36,7 @@ limitations under the License.
 </menu>
 
 <menu name="Getting Started">
-  <item name="Download"              href="download.html"/>
+  <item name="Download"              href="mirror.cgi"/>
   <item name="Installation Guide"    href="/install.html"/>
 
   <item name="User Guide"            href="/userguide/index.html" collapse="true">
