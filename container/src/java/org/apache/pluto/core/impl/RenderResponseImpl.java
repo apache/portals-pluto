@@ -168,23 +168,32 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     private boolean isValidContentType(String type)
     {
         type = stripCharacterEncoding(type);
-        String wildcard = null;
-        int index = type.indexOf("/");
-        if(index > -1) {
-            wildcard = type.substring(0, index);
-        }
-
         PortletEntity entity = portletWindow.getPortletEntity();
         PortletDefinition def = entity.getPortletDefinition();
         ContentTypeSet contentTypes = def.getContentTypeSet();
         Iterator it = contentTypes.iterator();
         while(it.hasNext()) {
             ContentType ct = (ContentType)it.next();
-            if(ct.getContentType().equals(type)) {
+            String supportedType = ct.getContentType();
+            if (supportedType.equals(type)) {
                 return true;
-            }
-            else if(ct.getContentType().equals(wildcard)) {
-                return true;
+            } else if (supportedType.indexOf("*") >= 0) {                
+                // the supported type contains a wildcard
+                int index = supportedType.indexOf("/");
+                String supportedPrefix = supportedType.substring(0, index);
+                String supportedSuffix = supportedType.substring(index + 1, supportedType.length());
+                
+                index = type.indexOf("/");
+                String typePrefix = type.substring(0, index);
+                String typeSuffix = type.substring(index + 1, type.length());
+                                
+                if (supportedPrefix.equals("*") || supportedPrefix.equals(typePrefix)) {
+                    // the prefixes match
+                    if (supportedSuffix.equals("*") || supportedSuffix.equals(typeSuffix)) {
+                        // the suffixes match
+                        return true;
+                    }
+                }                
             }
         }
         return false;
