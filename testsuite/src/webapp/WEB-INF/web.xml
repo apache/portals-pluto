@@ -23,6 +23,16 @@ limitations under the License.
 
     <display-name>Pluto Testsuite</display-name>
 
+    <context-param>
+        <param-name>test-parameter-name</param-name>
+        <param-value>test-parameter-val</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>parameter-name</param-name>
+        <param-value>parameter-value</param-value>
+    </context-param>
+
     <servlet>
         <servlet-class>org.apache.pluto.portalImpl.portlet.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
         <servlet-name>extAppScopedTest</servlet-name>
