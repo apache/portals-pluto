@@ -36,7 +36,7 @@ limitations under the License.
 </menu>
 
 <menu name="Getting Started">
-  <item name="Download"              href="mirror.cgi"/>
+  <item name="Download"              href="mirrors.cgi"/>
   <item name="Installation Guide"    href="/install.html"/>
 
   <item name="User Guide"            href="/userguide/index.html" collapse="true">
