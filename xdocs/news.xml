@@ -7,6 +7,11 @@
 
 <body>
   <section name="News">
+    <subsection name="27 February 2004 - Pluto SubProject Documentation Available">
+      <p>The maven subproject documentation is now being generated and included
+         in the Pluto documentation builds.</p>
+    </subsection>
+
   <subsection name="10 November 2003 - Pluto Gets a Face Lift">
   <p>Pluto is now managed by maven and it's website has subsequently recieved
      a face lift. http://jakarta.apache.org/pluto now contains additional
