@@ -280,7 +280,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 		return portletWindow;
 	}
 
-	public class PortletInfo {
+	public static class PortletInfo {
 		private String title;
 		private List availablePortletModes = new ArrayList();
 		private List availablePortletWindowStates = new ArrayList();
@@ -307,7 +307,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 		}
 
 		public void addPortletMode(PortletMode mode, String activationURL, boolean isCurrent) {
-			PortletModeInfo pmi = new PortletModeInfo(mode.toString(), activationURL, isCurrent);
+		    PortletModeInfo pmi = new PortletModeInfo(mode.toString(), activationURL, isCurrent);
 			availablePortletModes.add(pmi);
 		}
 
@@ -325,7 +325,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 
 	}
 
-	public class PortletWindowStateInfo implements Comparable {
+	public static class PortletWindowStateInfo implements Comparable {
 		private String label;
 		private String url;
 		private boolean isCurrent;
@@ -399,7 +399,7 @@ public class PortletFragment extends AbstractFragmentSingle {
 
 	}
 
-	public class PortletModeInfo implements Comparable {
+	public static class PortletModeInfo implements Comparable {
 		private String name;
 		private String url;
 		private boolean isCurrent;
