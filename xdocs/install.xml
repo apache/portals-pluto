@@ -56,6 +56,11 @@ limitations under the License.
     <td width="229">/tomcat</td>
     <td width="261">location of the Tomcat install where you want to deploy Pluto</td>
   </tr>
+  <tr>
+    <td width="134">maven.tomcat.version.major</td>
+    <td width="229">4</td>
+    <td width="261">Major version number (4 or 5) of the Tomcat install where you want to deploy Pluto</td>
+  </tr>
 </table>
 <p>You can copy the <code>build.properties.sample</code> file and name it
 	<code>build.properties</code> and use this is a starting point.</p>
