@@ -138,6 +138,11 @@ limitations under the License.
             postProcessing="false"
             ignoreFailures="false"/>
 
+    <!-- -->
+	<ant:copy todir="${maven.dist.dir}/${plutotools.dist.name}/">
+      <ant:fileset dir="${basedir}" includes="LICENSE*"/>
+	</ant:copy>
+
 	<!-- STEP #2: Copy all to our dist dist dir -->
 	<!--          First the driver. -->
 	<ant:copy 
@@ -164,17 +169,11 @@ limitations under the License.
 	  <ant:zipfileset 
 		dir="${maven.dist.dir}"
         includes="${plutotools.dist.name}/**/*"/>
-      <ant:zipfileset 
-		dir="${basedir}"
-		includes="LICENSE.TXT"/>
 	</ant:zip>
 
 	<ant:tar longfile="gnu" tarfile="${maven.dist.dir}/${plutotools.dist.name}.tar">
 	  <ant:tarfileset dir="${maven.dist.dir}"
 	      includes="${plutotools.dist.name}/**/*"/>
-      <ant:tarfileset 
-		dir="${basedir}"
-		includes="LICENSE.TXT"/>
     </ant:tar>
 
     <ant:gzip 
