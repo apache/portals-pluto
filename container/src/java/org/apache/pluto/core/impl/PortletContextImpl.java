@@ -25,6 +25,7 @@ import javax.portlet.PortletContext;
 
 import org.apache.pluto.core.InternalPortletContext;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.Environment;
 
 public class PortletContextImpl implements PortletContext, InternalPortletContext
 {
@@ -41,7 +42,7 @@ public class PortletContextImpl implements PortletContext, InternalPortletContex
     // javax.portlet.PortletContext implementation ------------------------------------------------
     public String getServerInfo()
     {
-        return "Pluto/1.0";
+        return Environment.getServerInfo();
     }
 
     public javax.portlet.PortletRequestDispatcher getRequestDispatcher(String path)
