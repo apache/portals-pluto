@@ -204,32 +204,7 @@
         </contributor>
       </contributors>
 
-  <dependencies>
-    <dependency>
-      <id>regexp</id>
-      <version>1.3-dev</version>
-    </dependency>
-    <dependency>
-      <!--
-      	- portlet-api.jar must be located in your Maven repository under portlet-api/jars 
-      	- This usually $USER_HOME/.maven/repository 
-      	-->
-      <id>portlet-api</id>
-      <version>1.0</version>
-      <properties>
-        <war.bundle.jar>false</war.bundle.jar>
-      </properties>
-    </dependency>
-    <dependency>
-      <id>servletapi</id>
-      <version>2.3</version>
-      <properties>
-        <war.bundle.jar>false</war.bundle.jar>
-      </properties>
-    </dependency>
-    
 
-  </dependencies>
 
   <build>
 
