@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.io.FileInputStream;
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
+ * @version $Id:$
  * @since Mar 5, 2005
  */
 public class FilePortletAppDescriptorServiceImpl extends AbstractPortletAppDescriptorService {

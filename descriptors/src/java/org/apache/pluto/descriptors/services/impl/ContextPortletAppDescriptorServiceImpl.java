@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,13 @@ import java.net.URL;
 
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.descriptors.servlet.WebAppDD;
-import org.apache.pluto.descriptors.services.impl.AbstractWebAppDescriptorService;
 
 /**
  * Portlet Application Deployment Descriptor Service which
  * retrieves reads the descriptor from the ServletContext.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
+ * @version $Id:$
  * @since Mar 5, 2005
  */
 public class ContextPortletAppDescriptorServiceImpl extends AbstractPortletAppDescriptorService {

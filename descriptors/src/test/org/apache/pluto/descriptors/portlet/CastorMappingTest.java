@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,18 @@
 package org.apache.pluto.descriptors.portlet;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.URL;
-import java.util.Enumeration;
 
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Test;
-import org.exolab.castor.xml.Unmarshaller;
-import org.exolab.castor.mapping.Mapping;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
-import org.apache.pluto.descriptors.services.impl.FilePortletAppDescriptorServiceImpl;
+
 import org.apache.pluto.descriptors.services.impl.StreamPortletAppDescriptorServiceImpl;
 
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
+ * @version $Id:$
  * @since Mar 4, 2005
  */
 public class CastorMappingTest extends TestCase {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import org.apache.xml.serialize.XMLSerializer;
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
+ * @version $Id:$
  * @since Mar 4, 2005
  */
 public class CastorMappingTest extends TestCase {

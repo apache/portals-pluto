@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2005 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package org.apache.pluto.descriptors.services.impl;
 
 import java.net.URL;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -35,7 +34,7 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
  * input streams to/from the actual descriptor.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
+ * @version $Id:$
  * @since Mar 5, 2005
  */
 public abstract class AbstractPortletAppDescriptorService
