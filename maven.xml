@@ -84,6 +84,17 @@
                ignoreFailures="false"/>  	  	  
   </goal>
   
+  <goal name="deploy">
+   	   <attainGoal name="fullDeployment" />
+
+       <maven:reactor
+               basedir="${basedir}"
+               includes="deploy/project.xml"
+               goals="deploy"
+               banner="Deploy a portlet"
+               postProcessing="false"
+               ignoreFailures="false"/>  	  	  
+  </goal>
   
   
 </project>

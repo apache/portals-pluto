@@ -1,0 +1,21 @@
+<project default="deploy"
+         xmlns:j="jelly:core"
+         xmlns:maven="jelly:maven"
+         xmlns:ant="jelly:ant">     
+         
+         
+ <goal name="deploy">
+         <java classname="org.apache.pluto.portalImpl.Deploy" fork="yes">
+          <classpath>
+            <path refid="maven.dependency.classpath"/>
+            <pathelement path="${maven.build.dest}"/>
+          </classpath>
+            <arg value="${tomcat.home.pluto}/webapps" />
+            <arg value="pluto" />
+            <arg value="${deploy}" />
+            <arg value="../container/target" />    
+         </java>       
+ </goal>
+         
+
+</project>
