@@ -27,7 +27,7 @@ public class TestResult {
     private String name;
     private String desc;
     private String returnCode;
-    private String results ="uknown";
+    private String results ="unknown";
 
 
     public String getName() {
