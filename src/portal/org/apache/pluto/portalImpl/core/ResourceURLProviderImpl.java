@@ -71,7 +71,7 @@ public class ResourceURLProviderImpl implements ResourceURLProvider
                                    PortletWindow portletWindow)
     {
         this.portletWindow = portletWindow;
-        this.base = PortalEnvironment.getPortalEnvironment(provider.request).getRequestedPortalURL().getBaseURLexcludeContext();
+        this.base = PortalURL.getBaseURLexcludeContext();
     }
 
     // ResourceURLProvider implementation.
