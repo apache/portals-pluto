@@ -319,8 +319,8 @@ public class PortletPreferencesImpl implements PortletPreferences
 
     public void store() throws java.io.IOException,ValidatorException
     {
-        // not allowed when called in action
-        if (this.methodId.equals(org.apache.pluto.Constants.METHOD_RENDER))
+        // not allowed when not called in action
+        if ( ! this.methodId.equals(org.apache.pluto.Constants.METHOD_ACTION))
         {
             throw new java.lang.IllegalStateException("store is only allowed inside a processAction call");
         }
