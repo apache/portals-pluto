@@ -87,7 +87,7 @@ public class PortalContextImpl implements PortalContext {
 
     /**
      * Get an enumeration containing all names of the portal properties.
-     * @return
+     * @return an enumeration of all keys to which properties are bound.
      */
     public Enumeration getPropertyNames() {
         Vector names = new Vector(properties.keySet());
@@ -98,7 +98,7 @@ public class PortalContextImpl implements PortalContext {
     /**
      * Get an enumeration of all <code>PortletMode</code>s supported by this
      * portal.
-     * @return
+     * @return enumeration of all supported portlet modes.
      */
     public Enumeration getSupportedPortletModes() {
         if (portletModes == null) {
@@ -115,7 +115,7 @@ public class PortalContextImpl implements PortalContext {
     /**
      * Get an enumeration of all <code>WindowState</code>s supported by this
      * portal.
-     * @return
+     * @return an enumeration of all supported window states.
      */
     public Enumeration getSupportedWindowStates() {
         if (windowStates == null) {
@@ -131,7 +131,7 @@ public class PortalContextImpl implements PortalContext {
 
     /**
      * Get the portal info for this portal.
-     * @return
+     * @return the portal information for this context.
      */
     public String getPortalInfo() {
         return info;

@@ -67,7 +67,7 @@ public class DynamicInformationProviderImpl
     }
 
     /**
-     * @return
+     * @return Iterator of all response mimeTypes.
      * @todo not implemented properly.
      */
     public Iterator getResponseContentTypes() {

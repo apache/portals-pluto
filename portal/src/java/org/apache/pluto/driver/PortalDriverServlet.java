@@ -38,13 +38,16 @@ import org.apache.pluto.driver.core.PortalURL;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 
 /**
- * The controller servlet used to driver the Portal Driver. All requests mapped
+ * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
+ * 
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
 public class PortalDriverServlet extends HttpServlet {
+
+    /** Internal Logger. */
     private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);
 
     /**
@@ -124,6 +127,17 @@ public class PortalDriverServlet extends HttpServlet {
         }
     }
 
-
+    /**
+     * Pass all requests on to {@link #doPost(HttpServletRequest, HttpServletResponse)}.
+     * @param req the request
+     * @param res the response
+     * @throws ServletException if an exception occurs.
+     * @throws IOException if an exception occurs writing to the response.
+     */
+    public void doPost(HttpServletRequest req,
+                       HttpServletResponse res)
+    throws ServletException, IOException {
+        doPost(req, res);
+    }
 }
 

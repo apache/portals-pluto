@@ -110,7 +110,7 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
     /**
      * Get an enumeration which contains each of the names for which parameters
      * exist.
-     * @return
+     * @return an enumeration of all names bound as parameters.
      */
     public Enumeration getParameterNames() {
         return Collections.enumeration(getParameterMap().keySet());
@@ -119,7 +119,7 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
     /**
      * Get the values associated with the given parameter key.
      * @param name the Parameter name used to key the parameter.
-     * @return
+     * @return a String[] of all values bound to the given name as a parameter.
      */
     public String[] getParameterValues(String name) {
         return (String[]) getParameterMap().get(name);

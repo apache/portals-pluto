@@ -157,7 +157,7 @@ public class PortalURL implements Cloneable {
 
     /**
      * Retrieve the server uri, (protocol, name, port).
-     * @return
+     * @return the server uri portion of the url.
      */
     public String getServerUri() {
         return server.toString();

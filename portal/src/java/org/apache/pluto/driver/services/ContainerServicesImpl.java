@@ -51,6 +51,10 @@ public class ContainerServicesImpl implements PortletContainerServices {
         propertyService = new PropertyManagerProviderImpl();
     }
 
+    /**
+     * Standard Getter.
+     * @return the portal context for the portal which we service.
+     */
     public PortalContext getPortalContext() {
         return context;
     }
@@ -58,7 +62,7 @@ public class ContainerServicesImpl implements PortletContainerServices {
     /**
      * The PortletPreferencesFactory provides access to the portal's
      * PortletPreference persistence mechanism.
-     * @return
+     * @return a PortletPreferencesFactory instance.
      */
     public PortletPreferencesFactory getPortletPreferencesFactory() {
         return preferencesFactory;
@@ -67,8 +71,8 @@ public class ContainerServicesImpl implements PortletContainerServices {
     /**
      * The DynamicInformationProvider provides dynamic, runtime evaluated,
      * information.
-     * @param req
-     * @return
+     * @param req the HttpServletRequest identifying the request
+     * @return a DynamicInformationProvider implementation.
      */
     public DynamicInformationProvider getDynamicInformationProvider(
         HttpServletRequest req) {
@@ -76,11 +80,19 @@ public class ContainerServicesImpl implements PortletContainerServices {
     }
 
 
+    /**
+     * The PortalCallbackProvider allows the container to communicate
+     * actions back to the portal.
+     * @return a PortalCallbackProvider implementation.
+     */
     public PortalCallbackProvider getPortalCallbackProvider() {
         return callback;
     }
 
-
+    /**
+     * The PropertyManagerService manages portal properties.
+     * @return a PropertyManagerService implemenatation.
+     */
     public PropertyManagerService getPropertyManagerService() {
         return this.propertyService;
     }
