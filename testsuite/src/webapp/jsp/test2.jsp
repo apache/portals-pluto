@@ -83,7 +83,7 @@ trying to get attributes(PRIVATE_SCOPE) from last request...
 <BR>
 <BR>
 <B>Testing Portal Context...</B><BR>
-trying to verify the PortalContext<BR>
+trying to verify that the PortalContext is the Pluto/1.0 portal context<BR>
 <%
     PortalContext portalContext = renderRequest.getPortalContext();
     allOk = true;
