@@ -5,6 +5,9 @@
   <body>
 
     <release version="1.0.1" date="Not Yet Released">
+      <action dev="cziegeler" type="fix">
+        Add handling of mime-mappings in web application definition.
+	  </action>
       <action dev="ddewolf" type="update">
         Updating site generation for Apache Portals
 	  </action>

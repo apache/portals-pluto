@@ -49,18 +49,19 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
 
 
     // <not used variables - only for castor>
-    public String icon = null;
-    public String distributable = null;
-    public String sessionConfig = null;
-    public String mimeMapping = null;
-    public String welcomeFileList = null;
-    public String errorPage = null;
-    public String resourceRef = null;
-    public String securityConstraint = null;
-    public String loginConfig = null;
-    public String securityRole = null;
-    public String envEntry = null;
-    public String ejbRef = null;
+    public String icon;
+    public String distributable;
+    public String sessionConfig;
+    public String mimeMapping;
+    public String welcomeFileList;
+    public String errorPage;
+    public String resourceRef;
+    public String securityConstraint;
+    public String loginConfig;
+    public String securityRole;
+    public String envEntry;
+    public String ejbRef;
+    private Collection castorMimeMappings = new ArrayList();
     // </not used variables - only for castor>
 
 
@@ -320,5 +321,20 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
      */
     public void setCastorTagDefinitions(Collection definition) {
         castorTagDefinitions = definition;
+    }
+    /**
+     * @return Returns the castorMimeMappings.
+     */
+    public Collection getCastorMimeMappings() 
+    {
+        return castorMimeMappings;
+    }
+    
+    /**
+     * @param castorMimeMappings The castorMimeMappings to set.
+     */
+    public void setCastorMimeMappings(Collection castorMimeMappings) 
+    {
+        this.castorMimeMappings = castorMimeMappings;
     }
 }
