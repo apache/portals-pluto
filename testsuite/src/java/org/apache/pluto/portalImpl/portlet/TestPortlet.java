@@ -23,23 +23,13 @@ import javax.portlet.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.TreeMap;
 import java.util.List;
 import java.util.Iterator;
 import java.util.HashMap;
 
-import org.apache.pluto.portalImpl.portlet.test.SimpleAttributeTest;
 import org.apache.pluto.portalImpl.portlet.test.PortletTest;
 import org.apache.pluto.portalImpl.portlet.test.TestResults;
-import org.apache.pluto.portalImpl.portlet.test.SimpleParameterTest;
-import org.apache.pluto.portalImpl.portlet.test.SecurityMappingTest;
-import org.apache.pluto.portalImpl.portlet.test.ComplexAttributeTest;
-import org.apache.pluto.portalImpl.portlet.test.SimplePreferenceTest;
 import org.apache.pluto.portalImpl.portlet.test.ActionTest;
-import org.apache.pluto.portalImpl.portlet.test.MiscTest;
-import org.apache.pluto.portalImpl.portlet.test.ExternalAppScopedAttributeTest;
-import org.apache.pluto.portalImpl.portlet.test.ContextInitParameterTest;
 
 public class TestPortlet extends GenericPortlet {
 
