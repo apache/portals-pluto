@@ -55,6 +55,10 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
 
     private static String fileSeparator = System.getProperty("file.separator");
 
+    // 
+    public final  static String TMP_PREFIX="tmp12345";
+    private final static String WAR_FILE_EXT=".war";
+    
     // default configuration values
     public final static String DEFAULT_MAPPING_PORTLETXML = "WEB-INF/data/xml/portletdefinitionmapping.xml";
     public final static String DEFAULT_MAPPING_WEBXML     = "WEB-INF/data/xml/servletdefinitionmapping.xml";
@@ -155,6 +159,24 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
             }
         }
     }
+    /**
+    * Handles resolution of a web module's file system name to its
+    * URI identifier.
+    *
+    * @param webModule The file system name.
+    * @return The URI part.
+    */
+    private String resolveURI(String webModule)
+    {
+    // For JBoss compatibility, change webModule from the form
+    // of "tmp12345foo.war" to "foo".
+    int len = webModule.length();
+    if (webModule.endsWith(WAR_FILE_EXT) && webModule.startsWith(TMP_PREFIX) && len > TMP_PREFIX.length() + WAR_FILE_EXT.length()) {
+        webModule = webModule.substring(TMP_PREFIX.length(), len - WAR_FILE_EXT.length());
+    }
+    // else assumed literal.
+    return webModule;
+    }
 
     private void load(String baseDir, String webModule) throws Exception
     {
@@ -194,7 +216,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
 
                 Vector structure = new Vector();
                 structure.add(portletApp);
-                structure.add("/"+webModule);
+                structure.add("/" + resolveURI(webModule));
 
                 webApp.postLoad(structure);
 
@@ -215,7 +237,7 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
                     log.debug("no web.xml...");
                 }
                 Vector structure = new Vector();
-                structure.add("/" + webModule);
+                structure.add("/" + resolveURI(webModule));
                 structure.add(null);
                 structure.add(null);
 
