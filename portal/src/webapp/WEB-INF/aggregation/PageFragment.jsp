@@ -6,7 +6,7 @@
 <%@ page import="org.apache.pluto.portalImpl.aggregation.Fragment" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.Navigation" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.PageFragment" %>
-<jsp:useBean id="fragment" class="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />
+<jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />
 <%
     PortalURL url = PortalEnvironment.getPortalEnvironment(request).getRequestedPortalURL();
     if (url.isPartOfGlobalNavigation(fragment.getId()))

@@ -2,7 +2,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="org.apache.pluto.portalImpl.util.Parameters" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.Fragment" %>
-<jsp:useBean id="fragment" class="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />
+<jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />
 <%
         Iterator iterator = fragment.getChildFragments().iterator();
 

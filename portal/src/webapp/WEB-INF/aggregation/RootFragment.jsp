@@ -5,7 +5,7 @@
 <%@ page import="org.apache.pluto.portalImpl.core.PortalEnvironment" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.Fragment" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.AbstractNavigationFragment" %>
-<jsp:useBean id="fragment" class="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />
+<jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />
 <html>
 <%@ include file="./Head.jsp" %>
 <body marginwidth="0" marginheight="0">

@@ -6,7 +6,7 @@
 <%@ page import="org.apache.pluto.portalImpl.aggregation.Fragment" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.Navigation" %>
 <%@ page import="org.apache.pluto.portalImpl.aggregation.navigation.NavigationTreeBean" %>
-<jsp:useBean id="fragment" class="org.apache.pluto.portalImpl.aggregation.navigation.TabNavigation" scope="request" />
+<jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.navigation.TabNavigation" scope="request" />
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <%
     PortalURL url = PortalEnvironment.getPortalEnvironment(request).getRequestedPortalURL();
