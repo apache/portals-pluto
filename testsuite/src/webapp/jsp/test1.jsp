@@ -136,7 +136,7 @@ setAttribute('globalTestValue', APPLICATION_SCOPE)...done<%portletSession.setAtt
 <I>please check in your second portlet whether you get the value 'globalTestValue'. Otherwise an error occured.</I><BR>
 <BR>
 <%
-PortletURL url = renderResponse.createRenderURL();
+PortletURL url = renderResponse.createActionURL();
 url.setParameter("jspName","test2.jsp");
 %>
 <FORM METHOD="POST" ACTION="<%=url.toString()%>">

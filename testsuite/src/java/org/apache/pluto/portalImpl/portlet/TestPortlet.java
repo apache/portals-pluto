@@ -34,6 +34,14 @@ public class TestPortlet extends GenericPortlet
         String jspNameTransfer;
         PortletSession portletSession;
         
+        //corresponding action to test2.jsp
+        String jspName=request.getParameter("jspName");
+        if (jspName!=null && jspName.equals("test2.jsp"))
+        {
+            actionResponse.setRenderParameters(request.getParameterMap());
+            return;
+        }
+        
         portletSession = request.getPortletSession();
 
         //corresponding action to test4.jsp part1:'checkAction'
