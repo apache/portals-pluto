@@ -61,7 +61,7 @@ limitations under the License.
 
     <dependency>
       <id>portlet-api</id>
-      <version>1.0</version>
+      <version>1.0.1</version>
 	  <properties>
         <tomcat.shared>true</tomcat.shared>
 	  </properties>

@@ -54,7 +54,7 @@ limitations under the License.
     <dependency>
       <id>pluto</id>
       <groupId>pluto</groupId>
-      <version>1.0</version>
+      <version>1.0.1</version>
       <properties>
         <war.bundle>false</war.bundle>
 		<tomcat.shared>true</tomcat.shared>
@@ -64,7 +64,7 @@ limitations under the License.
     <dependency>
       <id>portlet-api</id>
       <groupId>portlet-api</groupId>
-      <version>1.0</version>
+      <version>1.0.1</version>
       <properties>
         <war.bundle>false</war.bundle>
 		<tomcat.shared>true</tomcat.shared>

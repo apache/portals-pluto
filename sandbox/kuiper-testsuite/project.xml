@@ -60,7 +60,7 @@ limitations under the License.
     <dependency>
       <id>portlet-api</id>
       <groupId>portlet-api</groupId>
-      <version>1.0</version>
+      <version>1.0.1</version>
       <properties>
         <war.bundle>false</war.bundle>
       </properties>
