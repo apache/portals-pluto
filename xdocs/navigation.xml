@@ -15,14 +15,14 @@
         <item name="FAQs"                href="/faq.html"/>
         <item name="Wiki"                href="/wiki.html"/>
     </menu>
-<!--
+
     <menu name="Projects">
         <item name="Portlet API (JSR-168)"       href="/multiproject/portlet-api/index.html"/>
         <item name="Portlet Container"           href="/multiproject/pluto/index.html"/>
         <item name="Jakarta Pluto Portal Driver" href="/multiproject/pluto-portal/index.html"/>
         <item name="Pluto Portlet Test Suite"    href="/multiproject/testsuite/index.html"/>
      </menu>
--->
+
     <menu name="Getting Started">
         <item name="Installation"    href="/install.html"/>
         <item name="Architecture"    href="/arch.html"/>

@@ -200,7 +200,7 @@
       <contributors>
         <contributor>
           <name>David H. DeWolf</name>
-          <email>david.AT.daviddewolf.DOT.com</email>
+		  <email>david{aT}daviddewolf{d0t}com</email>
         </contributor>
       </contributors>
 
@@ -253,5 +253,4 @@
     -->
     <report>maven-tasklist-plugin</report>
   </reports>
-
 </project>

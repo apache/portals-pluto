@@ -6,5 +6,5 @@
 
 # location of the Tomcat install where you want to deploy Pluto
 # do not use backslashes in this path
-tomcat.home.pluto=/tomcat
-
+maven.tomcat.home=/tomcat
+maven.tomcat.version.major=4

@@ -3,7 +3,7 @@
 <project>
   <extend>${basedir}/../project.xml</extend>
   <pomVersion>3</pomVersion>
-  <name>Jakarta Pluto Portal Driver</name>
+  <name>Pluto Portal Driver</name>
   <id>pluto-portal</id>
   <currentVersion>1.0</currentVersion>
   
@@ -25,67 +25,76 @@
       <id>castor</id>
       <version>0.9.5</version>
       <properties>
-        <war.bundle.jar>true</war.bundle.jar>
+        <war.bundle>true</war.bundle>
       </properties>
     </dependency>
     <dependency>
       <id>commons-logging</id>
       <version>1.0.2</version>
       <properties>
-        <war.bundle.jar>false</war.bundle.jar>
+        <war.bundle>false</war.bundle>
       </properties>
     </dependency>
+
     <dependency>
       <id>pluto</id>
       <groupId>pluto</groupId>
       <version>1.0</version>
       <properties>
-        <war.bundle.jar>false</war.bundle.jar>
+        <war.bundle>false</war.bundle>
+		<tomcat.shared>true</tomcat.shared>
       </properties>
     </dependency>
+
     <dependency>
-      <!--
-      	- portlet-api.jar must be located in your Maven repository under portlet-api/jars 
-      	- This usually $USER_HOME/.maven/repository 
-      	-->
       <id>portlet-api</id>
       <groupId>portlet-api</groupId>
       <version>1.0</version>
       <properties>
-        <war.bundle.jar>false</war.bundle.jar>
+        <war.bundle>false</war.bundle>
+		<tomcat.shared>true</tomcat.shared>
       </properties>
     </dependency>
+
      <dependency>
       <id>regexp</id>
       <version>1.3-dev</version>
        <properties>
-        <war.bundle.jar>true</war.bundle.jar>
+        <war.bundle>true</war.bundle>
       </properties>
     </dependency>
+
     <dependency>
       <id>servletapi</id>
       <version>2.3</version>
       <properties>
-        <war.bundle.jar>false</war.bundle.jar>
+        <war.bundle>false</war.bundle>
       </properties>
     </dependency>
+
     <!--
     	- Both xerces and xmlApis should be located in
     	- your common/endorsed directory in Tomcat
     	- or the equivalent directory for your servlet container
+		- 
      -->
     <dependency>
       <id>xerces</id>
       <version>2.3.0</version>
       <properties>
-        <war.bundle.jar>false</war.bundle.jar>
+        <war.bundle>false</war.bundle>
+		<tomcat.common>true</tomcat.common>
+		<tomcat.common.endorsed>true</tomcat.common.endorsed>
       </properties>
     </dependency>
+
     <dependency>      
       <id>xml-apis</id>
       <version>2.0.2</version>
       <properties>
-        <war.bundle.jar>false</war.bundle.jar>
+        <war.bundle>false</war.bundle>
+		<tomcat.common>true</tomcat.common>
+		<tomcat.common.endorsed>true</tomcat.common.endorsed>
       </properties>
     </dependency>
 

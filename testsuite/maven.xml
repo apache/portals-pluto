@@ -3,16 +3,19 @@
          xmlns:maven="jelly:maven"
          xmlns:ant="jelly:ant">     
          
+ <!-- The multiproject won't let us call war directly, we must specify
+      since it won't be set by war goal. -->
+ <preGoal name="deployTestsuite">
+   <j:set var="maven.war.final.name" value="testsuite.war"/>
+ </preGoal>
          
  <goal name="deployTestsuite">
- 	     <delete dir="${tomcat.home.pluto}/webapps/testsuite" />
- 	     <attainGoal name="war" />
          <java classname="org.apache.pluto.portalImpl.Deploy" fork="yes">
           <classpath>
             <path refid="maven.dependency.classpath"/>
             <pathelement path="${maven.build.dest}"/>
           </classpath>
-            <arg value="${tomcat.home.pluto}/webapps" />
+            <arg value="${maven.tomcat.home}/webapps" />
             <arg value="pluto" />
             <arg value="${basedir}/target/${maven.war.final.name}" />
             <arg value="../container/target" />    
