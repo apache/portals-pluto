@@ -16,15 +16,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <Context debug="0" 
-		displayName="Kuiper" 
-		docBase="kuiper-driver.war" 
-		path="/kuiper" 
-		reloadable="true"
-		crossContext="true">
+        displayName="Kuiper" 
+        docBase="kuiper-driver.war" 
+        path="/kuiper" 
+        reloadable="true"
+        crossContext="true">
   <Loader 
     className="org.apache.catalina.loader.WebappLoader" 
     debug="0" 
     reloadable="true"/>
-  <Manager className="org.apache.catalina.session.StandardManager" maxActive="1" maxInactiveInterval="1800" pathname="" sessionCounter="1">
+  <Manager className="org.apache.catalina.session.StandardManager" 
+           maxActive="1" 
+           maxInactiveInterval="1800" 
+          pathname="" 
+          sessionCounter="1">
   </Manager>
 </Context>

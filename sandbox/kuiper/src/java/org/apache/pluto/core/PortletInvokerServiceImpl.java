@@ -21,6 +21,7 @@ import org.apache.pluto.services.LoggerService;
 import org.apache.pluto.services.Logger;
 import org.apache.pluto.services.ServiceFactory;
 import org.apache.pluto.services.PortletURLService;
+import org.apache.pluto.services.OptionalServiceFactory;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PlutoException;
 import org.apache.pluto.PlutoConstants;
@@ -48,13 +49,13 @@ import java.io.IOException;
  * @version 1.0
  * @since Mar 9, 2004 at 10:03:58 AM
  */
-public class PortletInvokerServiceImpl implements PortletInvokerService {
-
-    /** The Environment within which we belong. */
-    private PlutoEnvironment env;
+public class PortletInvokerServiceImpl
+    implements PortletInvokerService {
 
     /** The surrounding Portal's ServletContext.*/
     private ServletContext context;
+
+    private ServiceFactory factory;
 
     /** Our logging utility. */
     private Logger logger;
@@ -69,18 +70,17 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
     private PortletURLService portletURLService;
 
     /** Default Constructor. */
-    public PortletInvokerServiceImpl(PortletURLService urlService,
-                                     LoggerService service) {
-        this.portletURLService = urlService;
-        this.loggerService = service;
-        this.logger = service.getLogger(PortletInvokerServiceImpl.class);
+    public PortletInvokerServiceImpl(PlutoEnvironment env,
+                                     OptionalServiceFactory factory) {
+        this.factory = factory;
+        this.portletURLService = factory.getPortletURLService();
+        this.loggerService = factory.getLoggerService();
+        this.logger = loggerService.getLogger(PortletInvokerServiceImpl.class);
+
+        context = env.getServletContext();
     }
 
-    /** Initialize the Invoker with the runtime compontents.
-      */
-    public void init(PlutoEnvironment env, PortletRegistry registry) {
-        this.env = env;
-        this.context = env.getServletContext();
+    public void init(PortletRegistry registry) {
         this.registry = registry;
     }
 
@@ -165,18 +165,8 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
         );
 
         req.setAttribute(
-            PlutoConstants.PLUTO_ENVIRONMENT,
-            env
-        );
-
-        req.setAttribute(
-            PlutoConstants.LOGGER_SERVICE,
-            loggerService
-        );
-
-        req.setAttribute(
-            PlutoConstants.PORTLET_URL_SERVICE,
-            portletURLService
+            PlutoConstants.SERVICE_FACTORY,
+            factory
         );
 
         try {
@@ -187,6 +177,11 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
             disp.include(req,res);
             if(logger.isDebugEnabled()) {
                 logger.debug("Invokation complete");
+                logger.debug("RenderParameters: "+
+                             req.getAttribute(
+                                 PlutoConstants.RENDER_PARAMETERS
+                             )
+                );
             }
         }
         catch(javax.servlet.UnavailableException ue) {
@@ -217,9 +212,7 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
             req.removeAttribute(PlutoConstants.REQUEST_METHOD);
             req.removeAttribute(PlutoConstants.PORTLET_WINDOW);
             req.removeAttribute(PlutoConstants.PORTLET_REGISTRY);
-            req.removeAttribute(PlutoConstants.PLUTO_ENVIRONMENT);
-            req.removeAttribute(PlutoConstants.LOGGER_SERVICE);
-            req.removeAttribute(PlutoConstants.PORTLET_URL_SERVICE);
+            req.removeAttribute(PlutoConstants.SERVICE_FACTORY);
         }
     }
 }

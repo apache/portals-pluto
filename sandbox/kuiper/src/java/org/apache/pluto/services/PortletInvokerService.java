@@ -37,7 +37,7 @@ import java.io.IOException;
  */
 public interface PortletInvokerService {
 
-    void init(PlutoEnvironment config, PortletRegistry registry);
+    void init(PortletRegistry registry);
 
     void doLoad(PortletWindow window, ServletRequest req, ServletResponse res)
     throws PlutoException, PortletException, IOException;

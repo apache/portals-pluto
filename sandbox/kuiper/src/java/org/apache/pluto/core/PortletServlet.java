@@ -18,16 +18,11 @@ package org.apache.pluto.core;
 
 import org.apache.pluto.PlutoConstants;
 import org.apache.pluto.PlutoException;
-import org.apache.pluto.PlutoEnvironment;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.services.Logger;
 import org.apache.pluto.services.LoggerService;
-import org.apache.pluto.services.PortletURLService;
+import org.apache.pluto.services.OptionalServiceFactory;
 import org.apache.pluto.impl.PortletContextImpl;
-import org.apache.pluto.impl.ActionRequestImpl;
-import org.apache.pluto.impl.ActionResponseImpl;
-import org.apache.pluto.impl.RenderRequestImpl;
-import org.apache.pluto.impl.RenderResponseImpl;
 import org.apache.pluto.binding.PortletDD;
 import org.apache.pluto.binding.XMLBinding;
 import org.apache.pluto.binding.PortletAppDD;
@@ -38,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletException;
 import javax.portlet.*;
 import java.io.IOException;
+import java.util.Map;
 
 /** <P>Servlet used by the PlutoContainer to interact with and
  *  invoke a portlet application.  The PortletServlet is a thin
@@ -200,11 +196,13 @@ public class PortletServlet extends HttpServlet {
                            HttpServletResponse response)
     throws ServletException, IOException, PortletException, PlutoException {
 
+        OptionalServiceFactory factory = (OptionalServiceFactory)
+            request.getAttribute(PlutoConstants.SERVICE_FACTORY);
+
         PortletRegistry registry = (PortletRegistry)
             request.getAttribute(PlutoConstants.PORTLET_REGISTRY);
 
-        LoggerService loggerService = (LoggerService)
-            request.getAttribute(PlutoConstants.LOGGER_SERVICE);
+        LoggerService loggerService = factory.getLoggerService();
 
         if(registry==null || loggerService==null) {
             throw new ServletException("Invalid Invocation.  This servlet"
@@ -216,14 +214,8 @@ public class PortletServlet extends HttpServlet {
             initInternal(registry, loggerService);
         }
 
-        PortletURLService portletURLService = (PortletURLService)
-            request.getAttribute(PlutoConstants.PORTLET_URL_SERVICE);
-
         PortletWindow window = (PortletWindow)
             request.getAttribute(PlutoConstants.PORTLET_WINDOW);
-
-        PlutoEnvironment plutoEnvironment = (PlutoEnvironment)
-            request.getAttribute(PlutoConstants.PLUTO_ENVIRONMENT);
 
         String method = (String)
             request.getAttribute(PlutoConstants.REQUEST_METHOD);
@@ -252,29 +244,50 @@ public class PortletServlet extends HttpServlet {
 
         if(PlutoConstants.ACTION_REQUEST.equals(method)) {
             ActionRequest requ =
-                new ActionRequestImpl(plutoEnvironment, portletContext,
-                                      window, request);
+                factory.getRequestFactoryService()
+                    .createActionRequest(request, response,
+                                         portletContext, window
+                    );
 
+            Map renderParameters = new java.util.HashMap();
             ActionResponse resp =
-                new ActionResponseImpl(window, response);
+                factory.getResponseFactoryService()
+                    .createActionResponse(request, response,
+                                          portletContext, window,
+                                          renderParameters
+                    );
 
             // Do we need to set attributes here too? or just render?
-
             if(logger.isInfoEnabled()) {
                 logger.info("Invoking portlet action: "
                             +config.getPortletName());
             }
             portlet.processAction(requ,resp);
+
+            request.setAttribute(
+                PlutoConstants.RENDER_PARAMETERS,
+                renderParameters
+            );
         }
+
         else if(PlutoConstants.RENDER_REQUEST.equals(method)) {
+            Map renderParameters = (Map)
+                request.getAttribute(PlutoConstants.RENDER_PARAMETERS);
+            // null is ok - it means action wasn't done
+
             RenderRequest requ =
-                new RenderRequestImpl(plutoEnvironment, portletContext,
-                                      window, request);
+                factory.getRequestFactoryService()
+                    .createRenderRequest(request, response,
+                                         portletContext, window,
+                                         renderParameters
+                    );
 
             RenderResponse resp =
-                new RenderResponseImpl(window, request,
-                                       response,
-                                       portletURLService);
+                factory.getResponseFactoryService()
+                    .createRenderResponse(request, response,
+                                          portletContext, window
+
+                    );
 
             request.setAttribute(
                 PlutoConstants.PORTLET_REQUEST,

@@ -14,36 +14,31 @@
  * limitations under the License.
  */
 
+package org.apache.pluto.core;
 
-package org.apache.pluto.services;
+import org.apache.pluto.services.PortletConfigFactoryService;
+import org.apache.pluto.impl.PortletConfigImpl;
 
-import javax.servlet.ServletConfig;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
+import javax.servlet.ServletConfig;
 import java.util.ResourceBundle;
 import java.util.Map;
 
-/** Optional Factory Service used by the PlutoContainer
- *  to create PortletConfigs.
- *
+/**
+ * <B>TODO</B>: Document
+ * 
  * @author <A href="mailto:david.dewolf@vivare.com">David H. DeWolf</A>
  * @version 1.0
- * @since Mar 25, 2004 at 7:13:53 PM
+ * @since Mar 29, 2004 at 9:59:41 AM
  */
-public interface PortletConfigFactoryService {
-
-    /** Create a PortletConfig for the given  portletId
-     *  and the servlet config within which it resides.
-     *
-     * @param portletId
-     * @param context
-     * @param bundle
-     * @param map
-     * @return
-     */ 
-    PortletConfig createPortletConfig(String portletId,
-                                      PortletContext context,
-                                      ResourceBundle bundle,
-                                      Map map);
-
+public class PortletConfigFactoryServiceImpl 
+    implements PortletConfigFactoryService {
+    
+    public PortletConfig createPortletConfig(String portletId,
+                                             PortletContext context,
+                                             ResourceBundle bundle,
+                                             Map map) {
+        return new PortletConfigImpl(portletId, context, bundle, map);
+    }
 }

@@ -87,16 +87,10 @@ public class PlutoConstants {
     public static final String LOAD_REQUEST =
         "org.apache.pluto.core.request_method:load";
 
-    /** Attribute key with which the pluto environment is bound. */
-    public static final String PLUTO_ENVIRONMENT =
-        "org.apache.pluto.core.pluto_config";
-
-    /** Attribute key with which the logger service is bound. */
-    public static String LOGGER_SERVICE =
-        "org.apache.pluto.core.logger_service";
-
-    /** Attribute key with which the portlet url service is bound. */
-    public static final String PORTLET_URL_SERVICE =
-        "org.apache.pluto.core.portlet_url_service";
-
+    /** Attribute key with which the service factory is bound. */
+    public static final String SERVICE_FACTORY =
+        "org.apache.pluto.core.service_factory";
+    
+    public static final String RENDER_PARAMETERS = 
+        "org.apache.pluto.core.render_parameters";
 }

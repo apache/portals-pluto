@@ -20,9 +20,12 @@ package org.apache.pluto.services;
 import org.apache.pluto.PortletWindow;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletContext;
+import java.util.Map;
 
 /** Options Factory Service used by the Pluto Container
  *  to create PortletResponses.
@@ -40,7 +43,10 @@ public interface PortletResponseFactoryService {
      * @param window
      * @return
      */
-    RenderResponse createRenderResponse(HttpServletResponse res, PortletWindow window);
+    RenderResponse createRenderResponse(HttpServletRequest req,
+                                        HttpServletResponse res,
+                                        PortletContext context,
+                                        PortletWindow window);
 
     /** Create an ActionResponse for the given response and
      *  associated window.
@@ -49,7 +55,11 @@ public interface PortletResponseFactoryService {
      * @param window
      * @return
      */
-    ActionResponse createActionResponse(HttpServletResponse res, PortletWindow window);
+    ActionResponse createActionResponse(HttpServletRequest req,
+                                        HttpServletResponse res,
+                                        PortletContext context,
+                                        PortletWindow window,
+                                        Map renderParameterStorage);
 
     /** Create a Load Response for the given response and
      *  associated window.
@@ -58,5 +68,8 @@ public interface PortletResponseFactoryService {
      * @param window
      * @return
      */
-    PortletResponse createLoadResponse(HttpServletResponse res, PortletWindow window);
+    PortletResponse createLoadResponse(HttpServletRequest req,
+                                       HttpServletResponse res,
+                                       PortletContext context,
+                                       PortletWindow window);
 }

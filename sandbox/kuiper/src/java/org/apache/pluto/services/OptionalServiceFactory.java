@@ -17,6 +17,8 @@
 
 package org.apache.pluto.services;
 
+import org.apache.pluto.PlutoEnvironment;
+
 /** ServiceFactory which provides optional services which a
  *  Portal may provide to the PlutoContainer.  If these
  *  services are not provided, Pluto will use it's default
@@ -28,8 +30,26 @@ package org.apache.pluto.services;
  */
 public interface OptionalServiceFactory extends ServiceFactory {
 
-    PortletRequestFactoryService  getRequestFactoryService();
-    PortletResponseFactoryService getResponseFactoryService();
-    PortletConfigFactoryService   getPortletConfigFactoryService();
+    /** Returns the PortletInvokerService which the container
+     *  should use to invoke portlets. */
+    PortletInvokerService getPortletInvokerService();
 
+    /** Returns the RequestFactoryService which will be used
+     *  by the container to create PortletRequests.
+     * @return
+     */
+    PortletRequestFactoryService  getRequestFactoryService();
+
+    /** Returns the ResponseFactoryService which will be used
+     *  by the container to create PortletResponses.
+     * @return
+     */
+    PortletResponseFactoryService getResponseFactoryService();
+
+    /** Return ths PortletConfigFactoryService which should be
+     *  used to create PortletConfigs.
+     * @return
+     */
+    PortletConfigFactoryService   getPortletConfigFactoryService();
+    
 }

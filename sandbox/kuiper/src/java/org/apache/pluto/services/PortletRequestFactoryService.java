@@ -20,9 +20,12 @@ package org.apache.pluto.services;
 import org.apache.pluto.PortletWindow;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletContext;
+import java.util.Map;
 
 /** Optional Factory Service used by the Pluto Container
  *  to create PortletRequests.
@@ -39,7 +42,11 @@ public interface PortletRequestFactoryService {
      * @param window
      * @return
      */
-    RenderRequest createRenderRequest(HttpServletRequest req, PortletWindow window);
+    RenderRequest createRenderRequest(HttpServletRequest req,
+                                      HttpServletResponse res,
+                                      PortletContext context,
+                                      PortletWindow window,
+                                      Map renderParameters);
 
     /** Create an ActionRequest for the given
      *  servlet request and associated window.
@@ -47,7 +54,10 @@ public interface PortletRequestFactoryService {
      * @param window
      * @return
      */
-    ActionRequest createActionRequest(HttpServletRequest req, PortletWindow window);
+    ActionRequest createActionRequest(HttpServletRequest req,
+                                      HttpServletResponse res,
+                                      PortletContext context,
+                                      PortletWindow window);
 
     /** Create a load request for the given
      *  servlet request and associated window.
@@ -56,5 +66,8 @@ public interface PortletRequestFactoryService {
      * @param window
      * @return
      */
-    PortletRequest createLoadRequest(HttpServletRequest req, PortletWindow window);
+    PortletRequest createLoadRequest(HttpServletRequest req,
+                                     HttpServletResponse res,
+                                     PortletContext context,
+                                     PortletWindow window);
 }

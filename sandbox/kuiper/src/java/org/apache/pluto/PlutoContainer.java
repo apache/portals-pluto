@@ -40,12 +40,6 @@ import java.io.IOException;
  */
 public interface PlutoContainer {
 
-    /** Initialize the container with the given environment.
-     *
-     * @param config
-     */
-    void init(PlutoEnvironment config);
-
     /** Place the container in service so that it is able to handle requests. */
     void start();
 

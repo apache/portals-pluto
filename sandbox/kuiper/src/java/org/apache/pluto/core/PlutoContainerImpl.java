@@ -38,9 +38,6 @@ import java.io.IOException;
  */
 public class PlutoContainerImpl implements PlutoContainer {
 
-    // Construction Parameters
-    private ServiceFactory factory;
-
     //Service Commonly Used
     private PortletInvokerService invoker;
     private LoggerService loggerService;
@@ -51,25 +48,35 @@ public class PlutoContainerImpl implements PlutoContainer {
     // Constructed Internally
     private PortletRegistry registry;
 
-    public PlutoContainerImpl(ServiceFactory factory) {
-        this.factory = factory;
-
-        this.invoker = this.factory.getPortletInvokerService();
-        this.loggerService = this.factory.getLoggerService();
+    /** Constructor used to create the PlutoContainer
+     *  using only the required services.
+     *
+     * @param env
+     * @param factory
+     */
+    public PlutoContainerImpl(PlutoEnvironment env, ServiceFactory factory) {
+        this(env, new ServiceFactoryWrapper(env, factory));
     }
 
-    public PlutoContainerImpl(OptionalServiceFactory factory) {
-        throw new java.lang.UnsupportedOperationException("Not Yet Implemented");
+    /** Constructor used to create the PlutoContainer
+     *  using both Required and Optional services.
+     * @param env
+     * @param factory
+     */
+    public PlutoContainerImpl(PlutoEnvironment env,
+                              OptionalServiceFactory factory) {
+        this.env = env;
+
+        this.invoker = factory.getPortletInvokerService();
+        this.loggerService = factory.getLoggerService();
+
+        // Initialize the invoker
+        this.registry = new PortletRegistry(loggerService);
+        invoker.init(registry);
     }
 
     public String getContainerName() {
         return env.getContainerName();
-    }
-
-    public void init(PlutoEnvironment config) {
-        this.env = config;
-        this.registry = new PortletRegistry(loggerService);
-        invoker.init(config, registry);
     }
 
     public void destroy() {
@@ -78,12 +85,12 @@ public class PlutoContainerImpl implements PlutoContainer {
     }
 
     public void start() {
-
+        // we don't need to do anything to start
     }
 
 
     public void stop() {
-
+        // we don't need to do anything to stop
     }
 
     public void doRender(PortletWindow window,
@@ -122,5 +129,4 @@ public class PlutoContainerImpl implements PlutoContainer {
     public PortletRegistry getPortletRegistry() {
         return registry;
     }
-
 }

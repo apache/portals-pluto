@@ -26,6 +26,5 @@ public interface ServiceFactory {
 
     LoggerService getLoggerService();
     PortletURLService getPortletURLService();
-    PortletInvokerService getPortletInvokerService();
 
 }
