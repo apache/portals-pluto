@@ -1,8 +1,8 @@
-<!-- 
+<%--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
-You may obtain a copy of the License at 
+You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
@@ -13,7 +13,7 @@ implied.
 
 See the License for the specific language governing permissions and
 limitations under the License.
--->
+--%>
 <%@ page session="true" buffer="none" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="org.apache.pluto.portalImpl.util.Parameters" %>
@@ -24,29 +24,9 @@ limitations under the License.
 <jsp:useBean id="fragment" type="org.apache.pluto.portalImpl.aggregation.Fragment" scope="request" />
 <html>
 <%@ include file="./Head.jsp" %>
-<body marginwidth="0" marginheight="0">
-<%@ include file="./Banner.jsp" %>
-<table border="0" cellpadding="0" cellspacing="2" width="100%">
-  <tr>
-    <td width="30%" valign="top">
+<body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
 <%
         Iterator childIterator = fragment.getChildFragments().iterator();
-
-        while (childIterator.hasNext()) {
-            Fragment subfragment = (Fragment)childIterator.next();
-
-            if (subfragment instanceof AbstractNavigationFragment)
-            {
-                subfragment.service(request, response);
-                break;
-            }
-
-        }
-%>
-    </td>
-    <td valign="top">
-<%
-        childIterator = fragment.getChildFragments().iterator();
 
         while (childIterator.hasNext()) {
             Fragment subfragment = (Fragment)childIterator.next();
@@ -58,8 +38,5 @@ limitations under the License.
 
         }
 %>
-    </td>
-  </tr>
-</table>
 </body>
 </html>
