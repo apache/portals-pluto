@@ -69,7 +69,7 @@ public interface PortletURLProvider
       * Sets the given parameters as parameters into the URL,
       * Removes all previously set parameters.
       * 
-      * @param parameters a map containing the name [java.lang.String] and value [java.lang.String] of the parameters.
+      * @param parameters a map containing the name [java.lang.String] and value [java.lang.String[]] of the parameters.
       */
      public void setParameters(Map parameters);
 
