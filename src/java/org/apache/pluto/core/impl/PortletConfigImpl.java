@@ -1,0 +1,107 @@
+/*
+ * Copyright 2003,2004 The Apache Software Foundation.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* 
+
+ */
+
+package org.apache.pluto.core.impl;
+
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.servlet.ServletConfig;
+
+import org.apache.pluto.binding.InitParameterDD;
+import org.apache.pluto.binding.PortletDD;
+import org.apache.pluto.core.InternalPortletConfig;
+
+public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
+    private ServletConfig servletConfig;
+    private PortletContext portletContext;
+    private PortletDD portletDD;
+
+    private ResourceBundleFactory bundles;
+
+    public PortletConfigImpl(ServletConfig servletConfig,
+                             PortletContext portletContext,
+                             PortletDD portletDD) {
+        this.servletConfig = servletConfig;
+        this.portletContext = portletContext;
+        this.portletDD = portletDD;
+    }
+
+    public String getPortletName() {
+        return portletDD.getPortletName();
+    }
+
+    public PortletContext getPortletContext() {
+        return portletContext;
+    }
+
+    public ResourceBundle getResourceBundle(java.util.Locale locale) {
+        if (bundles == null) {
+            bundles = new ResourceBundleFactory(portletDD);
+        }
+        return bundles.getResourceBundle(locale);
+    }
+
+    public String getInitParameter(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Parameter name == null");
+        }
+
+        InitParameterDD[] parameters = portletDD.getInitParameters();
+        for (int i = 0; i < parameters.length; i++) {
+            if (parameters[i].getParameterName().equals(name)) {
+                return parameters[i].getParameterValue();
+            }
+        }
+        return null;
+    }
+
+    public Enumeration getInitParameterNames() {
+        return new java.util.Enumeration() {
+            private Iterator iterator =
+                Arrays.asList(portletDD.getInitParameters()).iterator();
+
+            public boolean hasMoreElements() {
+                return iterator.hasNext();
+            }
+
+            public Object nextElement() {
+                if (iterator.hasNext()) {
+                    return ((org.apache.pluto.binding.InitParameterDD) iterator.next()).getParameterName();
+                } else {
+                    return null;
+                }
+            }
+        };
+    }
+
+
+    public javax.servlet.ServletConfig getServletConfig() {
+        return servletConfig;
+    }
+
+    public PortletDD getPortletDefinition() {
+        return portletDD;
+    }
+    // --------------------------------------------------------------------------------------------
+}
