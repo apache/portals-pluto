@@ -46,7 +46,7 @@ public interface PreferenceCtrl extends org.apache.pluto.om.Controller
      * 
      * @param values   the new values
      */
-    public void setValues(java.util.Collection values);
+    public void setValues(java.util.List values);
 
     /**
      * Defines whether this preference is modifiable

@@ -86,7 +86,7 @@ public class PreferenceImpl implements Preference, PreferenceCtrl, java.io.Seria
         this.name = name;
     }
 
-    public void setValues(Collection _value)
+    public void setValues(java.util.List _value)
     {
         if (this.value == null) {
             this.value = new ArrayList();
@@ -146,7 +146,7 @@ public class PreferenceImpl implements Preference, PreferenceCtrl, java.io.Seria
         value.addAll(_value);
     }
 
-    protected Collection getClonedCastorValuesAsCollection()
+    protected List getClonedCastorValuesAsList()
     {
         List returnValue = new ArrayList(value.size());
 

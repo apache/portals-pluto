@@ -22,6 +22,7 @@ package org.apache.pluto.portalImpl.om.common.impl;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.PreferencesValidator;
 
@@ -80,7 +81,7 @@ implements PreferenceSet, PreferenceSetCtrl, java.io.Serializable {
 
     // PreferenceSetCtrl implementation.
 
-    public Preference add(String name, Collection values)
+    public Preference add(String name, List values)
     {
         PreferenceImpl preference = new PreferenceImpl();
         preference.setName(name);
@@ -160,7 +161,7 @@ implements PreferenceSet, PreferenceSetCtrl, java.io.Serializable {
         Iterator it = c.iterator();
         while (it.hasNext()) {
             PreferenceImpl pref = (PreferenceImpl) it.next();
-            this.add(pref.getName(), pref.getClonedCastorValuesAsCollection());
+            this.add(pref.getName(), pref.getClonedCastorValuesAsList());
         }
 
         return true;  //always assume something changed

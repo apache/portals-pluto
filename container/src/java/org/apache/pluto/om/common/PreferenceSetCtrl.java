@@ -19,7 +19,8 @@
 
 package org.apache.pluto.om.common;
 
-import java.util.Collection;
+import java.util.List;
+
 
 /**
  * <P>
@@ -44,7 +45,7 @@ public interface PreferenceSetCtrl extends org.apache.pluto.om.Controller
      * 
      * @return the new preference
      */
-    public Preference add(String name, Collection values);
+    public Preference add(String name, List values);
 
     /**
      * Removes the preference with the given name
