@@ -35,7 +35,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-/**
+/** <P>Invoker implementation which forwards container requests
+ *  to the appropriate {@link PortletServlet} within the
+ *  appropriate portlet application.</P>
+ *
+ *  <P>NOTE: Another example of an object that may be modified
+ *  if/when we move to an IoC (Pico/Nano?) environment. It also
+ *  sticks out as a sore thumb as a class that would truly benefit
+ *  from such an architecture.</P>
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
@@ -43,14 +50,27 @@ import java.io.IOException;
  */
 public class PortletInvokerServiceImpl implements PortletInvokerService {
 
+    /** The Environment within which we belong. */
     private PlutoEnvironment env;
+
+    /** The surrounding Portal's ServletContext.*/
     private ServletContext context;
+
+    /** Our logging utility. */
     private Logger logger;
+
+    /** The registry belonging to our container. */
     private PortletRegistry registry;
+
+    /** The LoggerService belonging to our container. */
     private LoggerService loggerService;
+
+    /** The PortletURLService belonging to our container. */
     private PortletURLService portletURLService;
 
-    public PortletInvokerServiceImpl(PortletURLService urlService, LoggerService service) {
+    /** Default Constructor. */
+    public PortletInvokerServiceImpl(PortletURLService urlService,
+                                     LoggerService service) {
         this.portletURLService = urlService;
         this.loggerService = service;
         this.logger = service.getLogger(PortletInvokerServiceImpl.class);
@@ -64,13 +84,15 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
         this.registry = registry;
     }
 
+    /** Process and action request. */
     public void doAction(PortletWindow window,
                          ServletRequest request,
                          ServletResponse response)
     throws PlutoException, PortletException, IOException {
         invoke(PlutoConstants.ACTION_REQUEST,window,request,response);
     }
-    
+
+    /** Process a render request. */
     public void doRender(PortletWindow window,
                        ServletRequest request,
                        ServletResponse response)
@@ -78,6 +100,7 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
         invoke(PlutoConstants.RENDER_REQUEST,window,request,response);
     }
 
+    /** Process a load request. **/
     public void doLoad(PortletWindow window,
                        ServletRequest request,
                        ServletResponse response)
@@ -86,6 +109,17 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
     }
 
 
+    /** Complete the invocation for the specified invocation
+     *  method.
+     * @param method
+     * @param window
+     * @param req
+     * @param res
+     * @throws PlutoException
+     * @throws PortletException
+     * @throws IOException
+     * @see PlutoConstants.REQUEST_METHOD
+     */
     protected void invoke(String method,
                           PortletWindow window,
                           ServletRequest req,
@@ -188,5 +222,4 @@ public class PortletInvokerServiceImpl implements PortletInvokerService {
             req.removeAttribute(PlutoConstants.PORTLET_URL_SERVICE);
         }
     }
-
 }

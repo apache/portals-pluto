@@ -25,7 +25,12 @@ import java.util.Vector;
 import java.util.Collections;
 import java.io.IOException;
 
-/**
+/** PortletPreferences implementation. This implementation
+ *  does NOT support setting preferences.
+ *
+ *  This implementation still needs a lot of help! We need to
+ *  support the prefernce validator as well as all storage
+ *  set and resets.
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
@@ -55,30 +60,43 @@ public class PortletPreferencesImpl implements PortletPreferences {
         return dflts;
     }
 
+    /** Set the value of the given preference. */
     public void setValue(String s, String s1) throws ReadOnlyException {
         throw new ReadOnlyException("Set not implemented/supported");
     }
 
+    /** Set the values of the given preferences. */
     public void setValues(String s, String[] strings) throws ReadOnlyException {
         throw new ReadOnlyException("Set not implemented/supported");
     }
 
+    /** Retrieve all of th names of the preferences. */
     public Enumeration getNames() {
         return new Vector(map.keySet()).elements();
     }
 
+    /** Retrieve the preferences as a map.
+     *
+     * @return
+     */
     public Map getMap() {
         return Collections.unmodifiableMap(map);
     }
 
+    /** Add all of the following preferences
+     *  to this preference store.
+     * @param map
+     */
     public void addAll(Map map) {
         this.map.putAll(map);
     }
 
+    /** Reset the given preferences to the default value. */
     public void reset(String s) throws ReadOnlyException {
         throw new ReadOnlyException("Reset not implemented/supported");
     }
 
+    /** Store any modified preferences. */
     public void store() throws IOException, ValidatorException {
         throw new IOException("Store not supported");
     }

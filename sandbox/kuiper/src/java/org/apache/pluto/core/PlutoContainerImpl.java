@@ -23,13 +23,14 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.services.PortletInvokerService;
 import org.apache.pluto.services.ServiceFactory;
 import org.apache.pluto.services.LoggerService;
+import org.apache.pluto.services.OptionalServiceFactory;
 
 import javax.portlet.PortletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
+/** Default PlutoContainer implementation.
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
@@ -55,6 +56,10 @@ public class PlutoContainerImpl implements PlutoContainer {
 
         this.invoker = this.factory.getPortletInvokerService();
         this.loggerService = this.factory.getLoggerService();
+    }
+
+    public PlutoContainerImpl(OptionalServiceFactory factory) {
+        throw new java.lang.UnsupportedOperationException("Not Yet Implemented");
     }
 
     public String getContainerName() {
@@ -86,17 +91,26 @@ public class PlutoContainerImpl implements PlutoContainer {
                          HttpServletResponse res)
     throws PlutoException, PortletException, IOException {
         invoker.doRender(window, req, res);
-
     }
-    
+
+    /** Request that the Portlet Action be serviced.
+     *  This method should always be invoked before the
+     *  Portlet commits any response.
+     * 
+     * @param window
+     * @param req
+     * @param res
+     * @throws PlutoException
+     * @throws PortletException
+     * @throws IOException
+     */
     public void doAction(PortletWindow window,
                          HttpServletRequest req,
                          HttpServletResponse res)
     throws PlutoException, PortletException, IOException {
         invoker.doAction(window, req, res);
-
     }
-    
+
     public void doLoad(PortletWindow window,
                        HttpServletRequest req,
                        HttpServletResponse res)
@@ -104,8 +118,7 @@ public class PlutoContainerImpl implements PlutoContainer {
         invoker.doLoad(window, req, res);
     }
 
-//
-    
+    /** Retrieve the registry for this container.*/
     public PortletRegistry getPortletRegistry() {
         return registry;
     }

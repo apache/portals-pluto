@@ -23,7 +23,10 @@ import javax.servlet.ServletContext;
 import java.util.Properties;
 import java.util.Set;
 
-/** Container Configuration Parameters.
+/** Runtime configuration compontents of the Pluto Container.
+ *  The PlutoEnvironment describes the environment within which
+ *  the container is running, giving it insight into it's
+ *  surrounding portal.
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
@@ -33,7 +36,7 @@ public interface PlutoEnvironment {
 
     /** Retrieve the unique container name of
      *  this container.
-     * @return
+     * @return a unigue name for this container.
      */
     String getContainerName();
 
@@ -58,9 +61,9 @@ public interface PlutoEnvironment {
     /** Retrieve the WindowState identified by state. */
     WindowState getWindowState(String state);
 
-    /** Retrieve any PortalProperties. */
+    /** Retrieve any custom PortalProperties. */
     Properties getPortalProperties();
 
-    /** Retrieve the supported content types. */
+    /** Retrieve the content types supported by this portal. */
     Set getSupportedContentTypes();
 }

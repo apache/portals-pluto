@@ -22,16 +22,22 @@ import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.Vector;
 
-/**
+/** PortletSession implementation.  Leverages the decorated
+ *  HttpSession wherever possible.
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 4, 2004 at 10:00:57 PM
  */
 public class PortletSessionImpl implements PortletSession {
-    
+
+    /** Decorated session. */
     private HttpSession session;
+
+    /** The portlet prefix which identifies us. */
     private String prefix;
+
+    /** The PortletContext in which we reside. */
     private PortletContext context;
 
     /** Constructs a PortletSessionImpl for the given
@@ -48,11 +54,20 @@ public class PortletSessionImpl implements PortletSession {
         this.prefix = "javax.portlet.p."+windowID+"?";
         this.session = session;
     }
-    
+
+    /** Retrieve the attribute (within portlet scope)
+     *  with the given key.
+     */
     public Object getAttribute(String s) {
         return getAttribute(s, PORTLET_SCOPE);
     }
 
+    /** Retrieve the attribute with the given key
+     *  and scope.
+     * @param s
+     * @param i
+     * @return
+     */
     public Object getAttribute(String s, int i) {
         if(i==PortletSession.APPLICATION_SCOPE) {
             return session.getAttribute(s);
@@ -62,6 +77,10 @@ public class PortletSessionImpl implements PortletSession {
         }
     }
 
+    /** Retrieve all of the attribute names
+     *  which reside within Portlet scope.
+     * @return
+     */
     public Enumeration getAttributeNames() {
         return getAttributeNames(PortletSession.PORTLET_SCOPE);
     }
@@ -89,34 +108,48 @@ public class PortletSessionImpl implements PortletSession {
         }
     }
 
+    /** Retrieve the time at which the
+     *  underlying session was created.
+     * @return
+     */
     public long getCreationTime() {
         return session.getCreationTime();
     }
 
+    /** Retrieve the id of the underlying session. */
     public String getId() {
         return session.getId();
     }
 
+    /** Retrieve the last time this session was accessed. */
     public long getLastAccessedTime() {
         return session.getLastAccessedTime();
     }
 
+    /** Retrieve the maximum timeout interval of
+     *  the underlying session.
+     * @return
+     */
     public int getMaxInactiveInterval() {
         return session.getMaxInactiveInterval();
     }
 
+    /** Invalidate this and the underlying session. */
     public void invalidate() {
         session.invalidate();
     }
 
+    /** Determine if the underlying session is new. */
     public boolean isNew() {
         return session.isNew();
     }
 
+    /** Remove the named attribute. */
     public void removeAttribute(String s) {
         removeAttribute(s, PortletSession.PORTLET_SCOPE);
     }
 
+    /** Remove the named attribute in the given scope. */
     public void removeAttribute(String s, int i) {
         if(i==PortletSession.APPLICATION_SCOPE) {
             session.removeAttribute(s);
@@ -126,10 +159,21 @@ public class PortletSessionImpl implements PortletSession {
         }
     }
 
+    /** Set the attribute with the given name
+     *  and value.
+     * @param s
+     * @param o
+     */
     public void setAttribute(String s, Object o) {
         setAttribute(s,o,PortletSession.PORTLET_SCOPE);
     }
 
+    /** Set the attribute with the given name,
+     *  value and scope.
+     * @param s
+     * @param o
+     * @param i
+     */
     public void setAttribute(String s, Object o, int i) {
         if(i==PortletSession.APPLICATION_SCOPE) {
             session.setAttribute(s,o);
@@ -139,6 +183,10 @@ public class PortletSessionImpl implements PortletSession {
         }
     }
 
+    /** Set the maximum inactive interval for the
+     *  underlying session.
+     * @param i
+     */
     public void setMaxInactiveInterval(int i) {
         session.setMaxInactiveInterval(i);
     }

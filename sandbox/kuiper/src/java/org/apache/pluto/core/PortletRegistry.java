@@ -35,9 +35,17 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Properties;
 
-/**
- * <B>TODO</B>: Document
- * 
+/** <P>A registry used to ensure that no portlet is instantiated
+ *  more than once.  Portlets are registered with the registy
+ *  by the {@link org.apache.pluto.core.PortletServlet}.
+ *  Subsequently each invocation uses the registry as a lookup
+ *  for the allready existing Portlet instance.</P>
+ *
+ *  <P>The registry also manages the conversion of the
+ *  portlet deployment descriptor (represented by the
+ *  {@link org.apache.pluto.binding.PortletAppDD} into an actual
+ *  Portlet (and associated config) reference.</P>
+ *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 10, 2004 at 12:01:43 PM
@@ -45,15 +53,30 @@ import java.util.Properties;
 public class PortletRegistry {
 
     private Logger logger;
+
+    /** The underlying storage container of Portlets. */
     private Map portlets = new HashMap();
 
+    /** Constructor.  If a Pico/Nano implementation
+     *  is migrated to, this constructor could be modified
+     *  and the entire surrounding container could be passed.
+     * @param logger
+     */
     public PortletRegistry(LoggerService logger) {
         this.logger = logger.getLogger(PortletRegistry.class);
     }
 
-    public void register(PortletDD dd, PortletContext context)
+    /** Register the portlet described by the descriptor
+     *  for the given context.
+     *
+     * @param descriptor
+     * @param context
+     * @throws PlutoException
+     * @throws PortletException
+     */
+    public void register(PortletDD descriptor, PortletContext context)
     throws PlutoException, PortletException {
-        String className = dd.getPortletClass();
+        String className = descriptor.getPortletClass();
         Portlet portlet = null;
 
         try {
@@ -68,7 +91,7 @@ public class PortletRegistry {
         }
 
         HashMap map = new HashMap();
-        InitParameterDD[] params = dd.getInitParameters();
+        InitParameterDD[] params = descriptor.getInitParameters();
         for(int i=0;i<params.length;i++) {
             map.put(
                 params[i].getParameterName(),
@@ -76,7 +99,7 @@ public class PortletRegistry {
             );
         }
 
-        PortletInfoDD info =  dd.getPortletInfo();
+        PortletInfoDD info =  descriptor.getPortletInfo();
         Properties props = new Properties();
         props.setProperty(PlutoConstants.PORTLET_TITLE, info.getTitle());
         props.setProperty(PlutoConstants.PORTLET_SHORT_TITLE, info.getShortTitle());
@@ -84,6 +107,7 @@ public class PortletRegistry {
 
         ResourceBundle bundle
             = new PortletConfigInlineResourceBundleImpl(props);
+
         /* TODO: Implement Spec PLT6.2
         if(dd.getResourceBundle()!=null) {
             try {
@@ -95,7 +119,8 @@ public class PortletRegistry {
         */
 
         PortletConfig config =
-            new PortletConfigImpl(dd.getPortletName(), context, bundle, map);
+            new PortletConfigImpl(descriptor.getPortletName(),
+                                  context, bundle, map);
 
         if(logger.isDebugEnabled()) {
             logger.debug("Initializing portlet with config: "+config);
@@ -112,6 +137,7 @@ public class PortletRegistry {
                      new RegisteredPortlet(portlet, config));
     }
 
+    /** Retrieve an allready registered portlet. */
     public RegisteredPortlet getPortlet(String name) {
         return (RegisteredPortlet)portlets.get(name);
     }

@@ -26,7 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.io.IOException;
 
-/**
+/** ActionRequest Implementation.  Leverages the PortletRequstImpl
+ *  for most of it's implementation.
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
@@ -42,6 +43,11 @@ public class ActionRequestImpl extends PortletRequestImpl
         super(plutoEnvironment, portletContext, window, request);
     }
 
+    /** Retrieve the input stream for this request.
+     * 
+     * @return
+     * @throws IOException
+     */
     public InputStream getPortletInputStream()
     throws IOException {
         return super.getInputStream();

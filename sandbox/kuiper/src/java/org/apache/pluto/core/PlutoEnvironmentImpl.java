@@ -28,30 +28,53 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.HashSet;
 
-/**
+/** Default environment implementation.
+ *  Uses simple getters and setters and only
+ *  the default modes. If this implementation is
+ *  chosed the Portal must only construct the
+ *  object with the appropiate parameters.
+ *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 9, 2004 at 9:26:15 AM
  */
 public class PlutoEnvironmentImpl implements PlutoEnvironment {
-    
+
+    /** The Containers unique identifier. */
     private String containerName;
 
+    /** The PortalContext of the encapsulating Portal.*/
     private PortalContext portalContext;
+
+    /** The ServletContext of the encapsulating Portal. */
     private ServletContext servletContext;
 
+    /** Portal Property cache. */
     private Properties props = null;
-    
+
+    /** WindowState cache. */
     private HashMap states = new HashMap();
+
+    /** PortletMode cache. */
     private HashMap modes  = new HashMap();
+
+    /** ContentType cache. */
     private Set contentTypes = new HashSet();
 
+    /** Default Constructor. */
     public PlutoEnvironmentImpl(String containerName,
                                 PortalContext context,
                                 ServletContext servletContext) {
         this(containerName, context, servletContext, new Properties());
     }
-    
+
+    /** Constructor used to pass custom properties
+     *  to the container through this environment.
+     * @param containerName
+     * @param context
+     * @param servletContext
+     * @param portalProperties
+     */
     public PlutoEnvironmentImpl(String containerName,
                                 PortalContext context,
                                 ServletContext servletContext,
@@ -80,18 +103,35 @@ public class PlutoEnvironmentImpl implements PlutoEnvironment {
     }
 
 
+    /** Retrieve the container's unique name.
+     *
+     * @return
+     */
     public String getContainerName() {
         return containerName;
     }
 
+    /** Retrieve the PortalContext within which
+     *  the container resides.
+     * @return
+     */
     public PortalContext getPortalContext() {
         return  portalContext;
     }
 
+    /** Retrieve the context within which
+     *  the Portal/PortalContainer resides.
+     * @return
+     */
     public ServletContext getServletContext() {
         return servletContext;
     }
 
+    /** Determine whether the given state is allowed.
+     *
+     * @param state
+     * @return
+     */
     public boolean isWindowStateAllowed(WindowState state) {
        return
            WindowState.NORMAL.equals(state)
@@ -100,6 +140,11 @@ public class PlutoEnvironmentImpl implements PlutoEnvironment {
         || states.values().contains(state);
     }
 
+    /** Determine if the given mode is allowed.
+     *
+     * @param mode
+     * @return
+     */
     public boolean isPortletModeAllowed(PortletMode mode) {
         return
             PortletMode.VIEW.equals(mode)
@@ -108,6 +153,12 @@ public class PlutoEnvironmentImpl implements PlutoEnvironment {
          || modes.values().contains(mode);
     }
 
+    /** Retrieve the window state for the given
+     *  identifier.
+     *
+     * @param state
+     * @return
+     */
     public WindowState getWindowState(String state) {
         if(WindowState.NORMAL.toString().equals(state)) {
             return WindowState.NORMAL;
@@ -121,10 +172,18 @@ public class PlutoEnvironmentImpl implements PlutoEnvironment {
         return (WindowState)states.get(state);
     }
 
+    /** Retrieve the supported content types.
+     *
+     * @return
+     */
     public Set getSupportedContentTypes() {
         return contentTypes;
     }
 
+    /** Retrieve any portal environment properties
+     *  which should be passed along to the portlets
+     *
+     */
     public Properties getPortalProperties() {
         return props;
     }

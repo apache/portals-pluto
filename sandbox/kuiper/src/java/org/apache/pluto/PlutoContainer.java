@@ -28,17 +28,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContext;
 import java.io.IOException;
 
-/**
+/** Provides the primary interface between a portal and the
+ *  pluto container.  The Pluto Container is responsible for
+ *  the lifecycle of Portlets and delegating the processing
+ *  of each portlet invocation invocation.
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 9, 2004 at 9:00:55 AM
+ * @see org.apache.pluto.core.PlutoContainerImpl
  */
 public interface PlutoContainer {
 
+    /** Initialize the container with the given environment.
+     *
+     * @param config
+     */
     void init(PlutoEnvironment config);
 
+    /** Place the container in service so that it is able to handle requests. */
     void start();
+
+    /** Take the container out of service. */
     void stop();
 
     /** Request that the container render the
@@ -96,5 +107,6 @@ public interface PlutoContainer {
 // app to register and then retrieve each
 // portlet it's going to use.
 
+    /** Retrieve this containers registry. */
     public PortletRegistry getPortletRegistry();
 }

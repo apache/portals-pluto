@@ -24,9 +24,9 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-/**
- * <B>TODO</B>: Document
- * 
+/** PortletRequestDispatcher implementation. This implementation
+ *  leverages the RequestDispatcher which it decorates.
+ *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 4, 2004 at 9:43:57 PM
@@ -34,15 +34,24 @@ import java.io.IOException;
 public class PortletRequestDispatcherImpl
     implements PortletRequestDispatcher {
 
+    /** Underlying/Decorated dispatcher. */
     private RequestDispatcher dispatcher;
+
+    /** Default Constructor. */
     public PortletRequestDispatcherImpl(RequestDispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 
+    /** Include the given resources. */
     public void include(RenderRequest request,
                         RenderResponse response)
     throws PortletException, IOException {
         try {
+            //@TODO when the OptionalServiceFactory
+            //      is implemented, we'll need to take
+            //      a hard look at this! We *may* be
+            //      ok though since it's the request
+            //      which manages out lifecycle.
             if(request instanceof RenderRequestImpl
              &&response instanceof RenderResponseImpl) {
                 dispatcher.include((RenderRequestImpl)request,

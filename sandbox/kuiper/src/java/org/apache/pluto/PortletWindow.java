@@ -21,25 +21,54 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletPreferences;
 
-/**
- * <B>TODO</B>: Document
- * 
+/** Defines the state of a single window of a
+ *  portlet instance. Each PortletWindow represents
+ *  a single portlet on a single page for a single
+ *  session.
+ *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 4, 2004 at 10:47:02 PM
  */
 public interface PortletWindow {
 
+    /** Retrieve the unique portlet identifier. */
     String getPortletId();
+
+    /** Retrieve the name of the context in
+     *  which the portlet exists.
+     * @return
+     */
     String getContextPath();
+
+    /** Retrieve the name of the Portlet which
+     *  this window reflects as indicated in the
+     *  portlet application deployment descriptor.
+     * @return
+     */
     String getPortletName();
 
+    /** Retrieve the current window state of this
+     *  portlet.
+     * @return
+     */
     WindowState getWindowState();
+
+    /** Retrieve the current portlet mode of this
+     *  portlet.
+     * @return
+     */
     PortletMode getPortletMode();
 
-    // Callbacks to the portal.
-    void setWindowState(WindowState state);
-    void setPortletMode(PortletMode mode);
-
+    /** Retrieve the portlet preferences for
+     *  this window.
+     * @return
+     */
     PortletPreferences getPortletPreferences();
+
+    /** Set the window state of this PortletWindow. */
+    void setWindowState(WindowState state);
+
+    /** Set the mode of this PortletWindow. */
+    void setPortletMode(PortletMode mode);
 }

@@ -32,7 +32,17 @@ import java.util.HashMap;
 import java.net.URL;
 import java.net.MalformedURLException;
 
-/**
+/** PortletContext implementation.
+ *  This implementation leverages the underlying ServletContext
+ *  by acting as a decorator.
+ *
+ *  <P>NOTE: The {@link LoggerService} for this implementation
+ *  not only provides internal logging facilities, it also
+ *  is used to provide the default portlet context log which
+ *  will be used for all {@link #log(java.lang.String)} and
+ *  {@link #log(java.lang.String, java.lang.Throwable)}
+ *  requests. The name associated with this log is
+ *  org.apache.pluto.impl.portlet_context_log.
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
@@ -44,7 +54,8 @@ public class PortletContextImpl implements PortletContext {
     private Logger logger;
     private HashMap attributes;
 
-    public PortletContextImpl(ServletContext context, LoggerService service) {
+    public PortletContextImpl(ServletContext context,
+                              LoggerService service) {
         this.context = context;
         this.attributes = new HashMap();
         this.logger = service.getLogger(PortletContextImpl.class);

@@ -16,9 +16,11 @@
 
 package org.apache.pluto;
 
-/**
- * <B>TODO</B>: Document
- * 
+/** Thrown when an internal error occurs within
+ *  the PlutoContainer.  This exception notifies the
+ *  surrounding portal that the container can not
+ *  process the requested invocation.
+ *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
  * @since Mar 9, 2004 at 9:59:08 AM

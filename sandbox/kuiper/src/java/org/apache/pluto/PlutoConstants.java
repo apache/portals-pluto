@@ -16,7 +16,8 @@
 
 package org.apache.pluto;
 
-/**
+/** Constant values used throughout the PlutoConatiner.
+ *  Perhaps these contants belong in this core package?
  *
  * @author <A href="mailto:ddewolf@apache.org">David H. DeWolf</A>
  * @version 1.0
@@ -24,53 +25,77 @@ package org.apache.pluto;
  */
 public class PlutoConstants {
 
+    //
+    // Should the container info (name, version) be
+    // refactored and loaded from properties?
+    //
+
+    /** This containers name. */
     public static String CONTAINER_NAME = "Pluto Kuiper";
+
+    /** This containers major version. */
     public static int MAJOR_VERSION = 1;
+
+    /** This containers minor version. */
     public static int MINOR_VERSION = 0;
-    
+
+
+    /** Attribute key with which portlet requests are bound. */
     public static final String PORTLET_REQUEST =
         "javax.portlet.request";
-    
+
+    /** Attribute key with which portlet responses are bound. */
     public static final String PORTLET_RESPONSE =
         "javax.portlet.response";
-    
+
+    /** Attribute key with which portlet configs are bound. */
     public static final String PORTLET_CONFIG =
         "javax.portlet.config";
-    
-    
-    
-    
 
+    public static final String PORTLET_TITLE =
+         "javax.portlet.title";
+
+    public static final String PORTLET_SHORT_TITLE =
+         "javax.portlet.short-title";
+
+    public static final String PORTLET_KEYWORDS =
+         "javax.portlet.keywords";
+
+    // PLUTO
+
+    /** Attribute key with which portlet registries are bound. */
     public static final String PORTLET_REGISTRY =
         "org.apache.pluto.PortletRegisrty";
-    
-    public static final String PORTLET_WINDOW =
-            "org.apache.pluto.PortletWindow";
 
+    /** Attribute key with which portlet windows are bound. */
+    public static final String PORTLET_WINDOW =
+        "org.apache.pluto.PortletWindow";
+
+    /** Attribute key with which the request method id is bound. */
     public static final String REQUEST_METHOD
         = "org.apache.pluto.core.request_method";
-    
+
+    /** Attribute value indicating an Action Request. */
     public static final String ACTION_REQUEST =
         "org.apache.pluto.core.request_method:action";
     
+    /** Attribute value indicating an Render Request. */
     public static final String RENDER_REQUEST =
         "org.apache.pluto.core.request_method:render";
     
+    /** Attribute value indicating an Load Request. */
     public static final String LOAD_REQUEST =
         "org.apache.pluto.core.request_method:load";
 
-    public static final String PORTLET_TITLE = "javax.portlet.title";
-
-    public static final String PORTLET_SHORT_TITLE = "javax.portlet.short-title";
-
-    public static final String PORTLET_KEYWORDS = "javax.portlet.keywords";
-
+    /** Attribute key with which the pluto environment is bound. */
     public static final String PLUTO_ENVIRONMENT =
         "org.apache.pluto.core.pluto_config";
 
+    /** Attribute key with which the logger service is bound. */
     public static String LOGGER_SERVICE =
         "org.apache.pluto.core.logger_service";
 
+    /** Attribute key with which the portlet url service is bound. */
     public static final String PORTLET_URL_SERVICE =
         "org.apache.pluto.core.portlet_url_service";
 
