@@ -11,7 +11,7 @@
     <url>http://jakarta.apache.org/</url>
     <logo>/images/jakarta-logo-blue.gif</logo>
   </organization>
-  <logo>/images/blue-logo.gif</logo>
+  <logo>/images/pluto-feather.gif</logo>
   <inceptionYear>2003</inceptionYear>
   <package>org.apache.pluto</package>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
