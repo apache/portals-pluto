@@ -256,8 +256,7 @@ implements InternalPortletResponse, PortletResponse
 
         if (wrappedWriter == null)
         {
-            wrappedWriter = new PrintWriterServletOutputStream(_getHttpServletResponse().getWriter(),
-                                                               _getHttpServletResponse().getCharacterEncoding());
+            wrappedWriter = new PrintWriterServletOutputStream(_getHttpServletResponse().getWriter());
         }
 
         usingStream = true;

@@ -25,19 +25,123 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletOutputStream;
 
+/**
+ * This is a specialized class implementing a ServletOutputStream that works in
+ * conjunction with a PrintWriter to send data to the browser. It is used when
+ * a J2EE server throws an IllegalStateException when you call getOutputStream
+ * on a response which someone has previously called getWriter on.
+ */
 public class PrintWriterServletOutputStream extends ServletOutputStream
 {
-    private PrintWriter writer;
-    private String      encoding;
 
-    public PrintWriterServletOutputStream(PrintWriter writer, String encoding)
-    {
-        this.writer   = writer;
-        this.encoding = encoding;
-    }
+  /**
+   * The PrintWriter that is wrapped on top of the base input stream
+   */
+  PrintWriter mPrintWriter;
 
-    public void write(int b) throws IOException {
-        // this is slow but it works for now
-        writer.write(new String(new byte[] {(byte)b}, encoding));
-    }
+  /**
+   * Construct a ServletOutputStream that coordinates output using a base
+   * ServletOutputStream and a PrintWriter that is wrapped on top of that
+   * OutputStream.
+   */
+  public PrintWriterServletOutputStream(PrintWriter pO)
+  {
+    super();
+    mPrintWriter = pO;
+  }
+
+  /**
+   * Writes an array of bytes
+   * 
+   * @param pBuf the array to be written
+   * @exception IOException if an I/O error occurred
+   */
+  public void write(byte[] pBuf) throws IOException
+  {
+    char[] cbuf = new char[pBuf.length];
+    for (int i = 0; i < cbuf.length; i++)
+      cbuf[i] = (char)(pBuf[i] & 0xff);
+    mPrintWriter.write(cbuf, 0, pBuf.length);
+  }
+
+  /**
+   * Writes a single byte to the output stream
+   */
+  public void write(int pVal) throws IOException
+  {
+    mPrintWriter.write(pVal);
+  }
+
+  /**
+   * Writes a subarray of bytes
+   * 
+   * @param pBuf the array to be written
+   * @param pOffset the offset into the array
+   * @param pLength the number of bytes to write
+   * @exception IOException if an I/O error occurred
+   */
+  public void write(byte[] pBuf, int pOffset, int pLength) throws IOException
+  {
+    char[] cbuf = new char[pLength];
+    for (int i = 0; i < pLength; i++)
+      cbuf[i] = (char)(pBuf[i + pOffset] & 0xff);
+    mPrintWriter.write(cbuf, 0, pLength);
+  }
+
+  /**
+   * Flushes the stream, writing any buffered output bytes
+   * 
+   * @exception IOException if an I/O error occurred
+   */
+  public void flush() throws IOException
+  {
+    mPrintWriter.flush();
+  }
+
+  /**
+   * Closes the stream
+   * 
+   * @exception IOException if an I/O error occurred
+   */
+  public void close() throws IOException
+  {
+    mPrintWriter.close();
+  }
+
+  /**
+   * 
+   * Prints a string.
+   * 
+   * @param pVal the String to be printed
+   * @exception IOException if an I/O error has occurred
+   */
+  public void print(String pVal) throws IOException
+  {
+    mPrintWriter.print(pVal);
+  }
+
+  /**
+   * 
+   * Prints an string followed by a CRLF.
+   * 
+   * @param pVal the String to be printed
+   * @exception IOException if an I/O error has occurred
+   */
+  public void println(String pVal) throws IOException
+  {
+    mPrintWriter.println(pVal);
+  }
+
+  /**
+   * 
+   * Prints a CRLF
+   * 
+   * @exception IOException if an I/O error has occurred
+   *  
+   */
+  public void println() throws IOException
+  {
+    mPrintWriter.println();
+  }
+
 }
