@@ -425,7 +425,7 @@ public class Deploy {
 
         if (args.length < 4) {
             System.out.println(
-                "No argument specified. This command hast to be issued as:");
+                "No argument specified. This command must be issued as:");
             System.out.println(
                 "deploy <TOMCAT-webapps-directory> <TOMCAT-pluto-webmodule-name> <web-archive> <pluto-home-dir> [-debug] [-addToEntityReg <app-id> [<portlet-id>:<portlet-name>]+]");
             return;
