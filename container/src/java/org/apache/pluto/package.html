@@ -1,0 +1,42 @@
+<HTML>
+<HEAD><TITLE>Apache Pluto</TITLE></HEAD>
+<BODY>
+<P>The root package of the Pluto Portlet Container.</P>
+
+<P>Portals embedding Pluto must implement the 
+   {@link org.apache.pluto.services.PortletContainerServices}
+   interfac and then retrieve an instance of the container from
+   the {@link org.apache.pluto.PortletContainerFactory}.</P>
+<H3>Initialization of the container</H3>   
+<P>
+<xmp>
+PortletContainerServices services = // your implementation!
+PortletContainer container =
+   PortletContainerFactory.createContainer("MyContainer", services);
+
+ServletContext context = // the servlet context within which the portal is executing
+container.init(servletContext);
+</xmp>
+</P>
+
+<H3>Processing of Requests</H3>   
+<P>
+<xmp>
+if(isActionRequest) {
+    container.doAction(request, response);
+}
+else if(isRenderRequest) {
+    container.doRender(request, response);
+}
+</xmp>
+</P>
+
+<H3>Shutting Down the Container</H3>
+<P>
+<xmp>
+container.destroy();
+</xmp>
+</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+PLUTO 1.1
+=======================
+
+Pluto is licensed under the Apache 2 License and contains
+other opens source libraries.  Each dependency license is
+included within this distribution.
+
+Installation of Pluto 1.1 can be completed by completing
+the following steps:
+
+1) Set the property name 'pluto.testsuite.dir' to
+   the directory in which the pluto testsuite source
+   code exists.  The testsuite is not currently included
+   the 1.1 branch as no changes are necessary. (NOTE, 
+   the web.xml does container minor changes and thus
+   is duplicated in this code base.  The deployment
+   targets will handle updating the webapp appropriately).
+
+2) Set the property named 'maven.tomcat.dir' to the
+   directory which is your TOMCAT_HOME (or TOMCAT_BASE)
+   directory.  This directory will be used when determining
+   where to deploy the portal.
+
+3) Set the property named 'maven.tomcat.version.major' to
+   the major version of tomcat which you have.
+
+4) Run the 'fullDeployment' maven goal.
+
+5) Point your browser to http://localhost:8080/pluto/portal
+
+6) That's IT!
