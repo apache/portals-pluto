@@ -19,21 +19,19 @@
 
   The Apache Pluto Community is proud to announce the new release
   of Apache Pluto. This release, 1.0.1-rc-1, is the first public release.
-
+  The final 1.0.1 release is expected in the next weeks.
   
-   Pluto is the Reference Implementation of the Java Portlet
-   Specfication. It is organized into multiple subprojects:
-
-   1) container: the core portlet container implementation.
-
-   2) portal: a thin portal wrapper which can be used for 
-      testing the container and/or portlets.
-
-   3) testsuite: a test portlet which can be used to test 
-      the portlet container implementaion.
+  Pluto is the Reference Implementation of the Java Portlet Specfication.
+  The distribution is organized into four releases:
+  1) A binary distribution that includes Tomcat.
+  
+  2) A source distribution
+  
+  3) A binary distribution containing the container library
+  
+  4) A binary tools distribution with the driver and testsuite
 
   Thanks for using Pluto.
-
 
                                       The Apache Pluto Project
                                       http://portals.apache.org/pluto
