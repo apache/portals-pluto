@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
-You may obtain a copy of the License at 
+You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
@@ -332,6 +332,16 @@ aggregation.base.dir=/WEB-INF/templates/
 				PortletFragmentHeader.jsp and PortletFragmentFooter.jsp.
 				</p>
 			</subsection>
+			<subsection name="Internationalization">
+				<p>The Pluto portal supports non latin-1 character-sets in its output. To enable this, uncomment the section
+				<source>
+	 &lt;init-param&gt;
+	     &lt;param-name&gt;charset&lt;/param-name&gt;
+	     &lt;param-value&gt;utf-8&lt;/param-value&gt;
+	 &lt;/init-param&gt;
+				</source>
+				from the "pluto" Servlet section in the file ${TOMCAT_HOME}/webapps/pluto/WEB-INF/web.xml.</p>
+			</subsection>
 			<subsection name="Further information">
 				<p>
 				Further information can be found in the <a href="faq.html">FAQ</a>, on the <a href="mail-lists.html">Mailing Lists</a>
@@ -341,3 +351,4 @@ aggregation.base.dir=/WEB-INF/templates/
 		</section>
 	</body>
 </document>
+
