@@ -18,107 +18,102 @@ limitations under the License.
 <document>
   <properties>
     <author email="unknown">Jean-Baptiste Joret</author>
-    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <author email="ddewolf.AT.apache.DOT.org">David H. DeWolf</author>
     <author email="nl.AT.essential.DOT.com.DOT.au">Nick Lothian</author>
     <title>Pluto Project</title>
   </properties>
 
 <body>
-<section name="Installation">
-<subsection name="Prerequisites">
-<p>It is expected that the user is familiar with the <a href="http://maven.apache.org">Apache
-  Maven</a> project tool.</p>
-</subsection>
-<subsection name="Requirements">
-<ul>
-  <li><a href="http://maven.apache.org/start/download.html">Maven 1.0</a>
-    or higher</li>
-  <li>Java 1.3 or higher</li>
-  <li>Servlet 2.3:<br/>
-    Tomcat 4.1.18-LE w/JDK 1.4<br/>
-    <b>or</b> <br/>
-    Tomcat 4.1.24 w/ JDK 1.3</li>
-</ul>
-</subsection>
-<subsection name="Get Maven Ready">
-<p>If you have not already done so, download and install Maven.</p>
-<p>2. build.properties settings:</p>
-<p>Please set these values in your <code>build.properties</code>
-  file:</p>
-<table width="650" border="1" cellspacing="0" cellpadding="3">
-  <tr>
-    <th width="134">property</th>
-    <th width="229">example</th>
-    <th width="261">what is it?</th>
-  </tr>
-  <tr>
-    <td width="134">maven.tomcat.home</td>
-    <td width="229">/tomcat</td>
-    <td width="261">location of the Tomcat install where you want to deploy Pluto</td>
-  </tr>
-  <tr>
-    <td width="134">maven.tomcat.version.major</td>
-    <td width="229">4</td>
-    <td width="261">Major version number (4 or 5) of the Tomcat install where you want to deploy Pluto</td>
-  </tr>
-</table>
-<p>You can copy the <code>build.properties.sample</code> file and name it
-	<code>build.properties</code> and use this is a starting point.</p>
-</subsection>
-<subsection name="Building and deploying">
 
-<ul>
-  <li>change your directory to root of the Pluto project.</li>
-  <li>maven fullDeployment</li>
-  <li>This will take care of everything for you including copying shared jars,
-    and deploy the base Pluto portal along with the Portlet Test Suite</li>
-</ul>
+<section name="Installation Guide">
+<P>This install guide covers the following types of installations:
+<ul><li><A href="#Installing_Distributions">Installing Distributions</A></li>
+    <li><A href="#Installing_Portlets">Installing Portlets</A></li></ul>
+</P>
+</section>
+
+<section name="Installing Distributions">
+
+<subsection name="Binary Distribution">
+<P>The binary distribution of Pluto is packaged with Tomcat
+   (currently version 5.0.28).  Pluto leverages Tomcat to 
+   provide the web container in which the Pluto portlet 
+   container executes. The binary distribution includes 
+   the Pluto Portlet Container, The Portal Driver, and 
+   Pluto Testsuite.</P>
+<P>To install the binary distribution:
+   <ul>
+   <li><A href="download.html">Download</A>
+       the current binary distribution of Pluto</li>
+   <li>Extract the binary distribution to a directory
+       from here forward refered to as "&lt;PLUTO_HOME&gt;".</li>
+   <li>Startup the server by using the appropriate tomcat 
+       startup script located at &lt;PLUTO_HOME&gt;/bin.
+       For *nix use startup.sh; for windows use startup.bat.</li>
+   <li>Point your browser to 
+       <A href="http://localhost:8080/pluto/portal">The Pluto Driver</A>
+       and your ready to go!</li>
+   </ul>
+</P>
 </subsection>
-<subsection name="Start Tomcat">
-<p>Run Tomcat, go to http://localhost:8080/pluto/portal.</p>
+
+<subsection name="Library Distributions">
+<P>The pluto library distributions are packaged to allow
+   integration with an external portal server.</P>
+<P>To install the library distributions to your portal server:
+   <ul>Ensure that the pluto-x.x.x.jar is loaded by a classloader
+       to which both the portal and portlet application web apps
+       have access.</ul></P>
+
+</subsection>
+
+<subsection name="Source Distribution">
+<P>Installing the source distribution requires the most effort,
+   and is recomended only for those individuals who are interested
+   in modifying the container.  The source distribution is 
+   basically a snapshot of the source code repository at a given
+   time. Because of this, please see the build instructions, which
+   will provide information about how to build Pluto from scratch.
+   </P>
+<P>To install the source distribution into tomcat:
+   <ul>
+   <li>Install Java 1.3 or greater</li>
+   <li>Install Maven 1.0 or greater</li>
+   <li>Install Tomcat 4.x or Tomcat 5.x to 
+       a directory from here forward refered to as
+       &lt;TOMCAT_HOME&gt;</li>
+   <li>Edit your &lt;PLUTO_HOME&gt;/build.properties to include
+       the following properties:
+       <table><tr><th>Property</th><th>Value</th><th>Example(s)</th></tr>
+              <tr><td>maven.tomcat.home</td>
+                  <td>Tomcat Installation Directory</td>
+                  <td><code>\\usr\\local\\jakarta-tomcat.5.0.27</code>, 
+                      <code>c:\\jakarta-tomcat.5.0.27</code></td></tr>
+              <tr><td>maven.tomcat.version.major</td>
+                  <td>Tomcat Major Version Number</td>
+                  <td>5</td></tr>
+       </table></li>
+    <li>From &lt;PLUTO_HOME&gt; issue the command: 
+        <code>'maven fullDeployment'</code></li>
+    <li>Startup the server by using the appropriate tomcat 
+       startup script located at &lt;PLUTO_HOME&gt;/bin.
+       For *nix use startup.sh; for windows use startup.bat.</li>
+    <li>Point your browser to 
+       <A href="http://localhost:8080/pluto/portal">The Pluto Driver</A>
+       and your ready to go!</li>
+   </ul>
+</P>
 </subsection>
 </section>
 
-<section name="What if I just want the Pluto container jar (like for Jetspeed 2)?">
-<ol>
-  <li>cd to /container directory</li>
-  <li>maven jar:install</li>
-</ol>
-<p>This will create the container jar in /container/target and also copy into
-  you maven repository.</p>
- </section>
-
-<section name="What if I just want to deploy the Pluto portal without the test suite?">
-<ol>
-  <li>Follow all the steps from &quot;<i>What if I just want the Pluto container
-    jar (like for Jetspeed 2)?</i>&quot;</li>
-  <li>cd to the /portal directory.</li>
-  <li>maven (with no goal)</li>
-</ol>
-<p>This will invoke the default maven goal for the /portal sub-project, deployPlutoToTomcat.
-  This will build and deploy the Pluto portal minus the test suite into
-  tomcat.</p>
-</section>
-
-<section name="What if I decide I want to deploy the test suite portlets after I deploy the Pluto portal by itself?">
-<ol>
-  <li>Follow all the steps from &quot;<i>What if I decide I want to deploy the
-    test suite portlets after I deploy JUST the Pluto portal?</i>&quot;</li>
-  <li>cd to the /testsuite directory.</li>
-  <li>maven (with no goal)</li>
-</ol>
-<p>This will invoke the default maven goal for the /testsute sub-project, deployTestsuite.
-  This will build and deploy the test suite portlets into your already deployed
-  Pluto portal.</p>
-</section>
-
-<section name="Install Portlets">
-   <p>
-    <ul>To install portlets after you successfully installed Pluto, 
+<section name="Installing Portlets">
+<P><FONT color="red">
+  Currently, to automate the deployment/installation of portlets
+  you must utilize the source distribution of pluto.</FONT></P>
+<P>To install portlets after you successfully installed Pluto, 
        invoke Maven to deploy the portlet's war by executing:
-		<code>maven deploy -Ddeploy=FULL_PATH_TO_YOUR_PORTLET_WAR</code>
-    </ul>
-   </p>
+	<code>maven deploy -Ddeploy=FULL_PATH_TO_YOUR_PORTLET_WAR</code>
+</P>
 </section>
 
 </body>

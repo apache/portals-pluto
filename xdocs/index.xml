@@ -70,31 +70,12 @@ limitations under the License.
 <section name="Pluto Versions">
 <p>Pluto Versions</p>
 <table>
-<tr><th>Portlet Spec</th><th>Pluto Version</th></tr>
-<tr><td>1.0</td><td>1.0</td></tr>
+<tr><th>Portlet Spec</th><th>Pluto Version</th><th>Status</th></tr>
+<tr><td>1.0</td><td>1.0.0</td><td>Never Released, built from initial CVS Head</td></tr>
+<tr><td>1.0.</td><td>1.0.1</td><td>In Development</td></tr>
 </table>
 </section>
 
-<section name="Compilation / Installation">
-<p><b><i>Installation Procedure:</i></b>
-<!--   <li>Download the source code of Apache Pluto
-           <a href="http://jakarta.apache.org/site/sourceindex.cgi">here</a></li> -->
-   <ul>
-   <li><a href="install.html">Installing Pluto</a></li>
-   </ul>
-</p>
-
-<p><b><i>Prereq's:</i></b>
-   <ul>
-   <li>The Pluto Project requires at least Apache Tomcat 4.1.27 and Java 1.3.1.
-Some <a href="http://nagoya.apache.org/wiki/apachewiki.cgi?PlutoProjectPages/WorkingConfigurations">other configurations</a> have been tested successfully as well.
-</li>
-   <li>To build you will need to have Apache Maven 1.0-beta-10</li>
-   </ul>
-</p>
-
-
-</section>
 </body>
 </document>
 

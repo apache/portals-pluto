@@ -22,55 +22,46 @@ limitations under the License.
   </properties>
 
 <body>
-  <section name="Roadmap">
-  <p>Pluto is currently part of the Apache Incubator.  
-     We are currently working to define a roadmap. 
+<section name="Roadmap">
+  <p>
+     Interested in getting involved?  Looking for a place to start? 
+     This document is inteded to assist you in figuring out what to do.
   </p>
-  <p>Please see the "todo" list if you would like to get
-     involved.</p>
-  </section>
 
-  <section name="To Do List">
-    <subsection name="Current">
-	<p>
-    <ul>
-    <li>Define Roadmap</li>
-	<li>Create Letter of Intent concerning the primary focus of 
-        development. (See 
-		<a href="http://nagoya.apache.org/eyebrowse/BrowseList?listName=pluto-user@jakarta.apache.org&amp;by=thread&amp;from=650304">
-		this thread</a> for some starting points)</li>
-	<li>Flush out the faq doc</li>
-	<li>Provide automatic extract of the pluto web pages out of the CVS</li>
-	<li>Support custom portlet modes and window states</li>
-	<li>User profile attribute support</li>
-	<li>Enable PortletURL.setSecure</li>
-	<li>Write howto guide about using the pluto container (is already started
-        by Stefan Hepper and Stephan Hesmer)</li>
-	<li>Write howto guide for deploying portlets with the pluto portal driver</li>
-    </ul>
-	</p>
-	</subsection>
+  <subsection name="Where We're Headed">
+  <p>
+    Having recently graduated from the incubator, the first
+    goal of our community is the release a binary version of
+    the Pluto Container.  This binary release will be based
+    upon the initial Pluto contribution which was donated by
+    IBM.
+  </p>
 
-	<subsection name="Future">
-	<p>
-    <ul>
-    </ul>
-	</p>
-	</subsection> 
+  <p>
+    Several people have suggested a revolutionary approach to
+    Pluto's implementation.  The suggestion centers around the
+    complexity of the current implementation and a desire to
+    make Pluto more "container like".  In the future, a 
+    second generation of pluto may be implemented to simplify
+    Pluto's implemetation and to use more standard design
+    patterns.  IoC has been mentioned as a possible container
+    design.
+  </p>
+  </subsection>
 
-	<subsection name="Complete">
-	<p>
+  <subsection name="To Do List">
+  <p>
     <ul>
-	<li>Mavenize build</li>
-	<li>Enable setTitle</li>
-	<li>Provide support for jdk 1.4</li>
-	<li>Provide support for Tomcat 5</li>
-	<li>Document How to use the Pluto Portal</li>
-	<li>Change logging to commons logging</li>
-    <li>Document "How To Integrate Pluto Into Your Portal"</li>
+    <li>JavaDoc, JavaDoc, JavaDoc</li>
+    <li>Documentation, Documentation, Documentation</li>
+    <li>Flush out the FAQ documentation.</li>
+    <li>Support custom portlet modes and window states.</li>
+    <li>Support User profile attributes.</li>
+    <li>Enable PortletURL.setSecure</li>
+    <li>Create Windows Installer</li>
     </ul>
-	</p>
-	</subsection>
+  </p>
+  </subsection>
   </section>
 
 </body>
