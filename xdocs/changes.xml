@@ -6,10 +6,13 @@
 
 <release version="1.0.1-rc2" date="n/a" description="Release Candidate">
   <action dev="nlothian" type="update">
+	Upgraded to Tomcat 5.5.4 for Pluto/Tomcat Bundle
+  </action>
+  <action dev="nlothian" type="update">
 	Update FAQ and installation instructions.
   </action>
   <action dev="nlothian" type="update">
-	Update version number to 1.0.1-rc2 in \project.xml, \deploy\project.xml, \portal\project.xml, \testsuite\project.xml, 
+	Update version number to 1.0.1-rc2 in \project.xml, \deploy\project.xml, \portal\project.xml, \testsuite\project.xml,
 	\container\src\conf\org\apache\pluto\environment.properties and \portal\src\webapp\WEB-INF\config\services\ConfigService.properties
   </action>
   <action dev="nlothian" type="fix">

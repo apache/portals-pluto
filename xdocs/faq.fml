@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
-You may obtain a copy of the License at 
+You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
@@ -24,14 +24,14 @@ limitations under the License.
     Which version of Pluto should I use?
   </b></question>
   <answer>
-    Pluto 1.0.1-RC1 is the most recent distribution.  
+    Pluto 1.0.1-RC2 is the most recent distribution.
     This version of Pluto passes all of the TCK tests.
   </answer>
   </faq>
 
   <faq id="versions">
   <question><b>
-    I've seen references to both Pluto 1.0.x and Pluto 
+    I've seen references to both Pluto 1.0.x and Pluto
     1.1.x.  It seems as though both are being developed
     at the same time.  What is the difference between
     the two versions?
@@ -40,9 +40,9 @@ limitations under the License.
     <p>You're right.  Pluto 1.0.x is currently going through
     the release process.  Pluto 1.0.x is based off of the code
     base which was originally donated to the ASF by IBM.
-    The first release candidate in this series was published 
+    The first release candidate in this series was published
     on October 8, 2004.</p>
-    <p>Around the same time that this release occured 
+    <p>Around the same time that this release occured
     Pluto 1.1.0-ALPHA was imported into our source repository.
     The 1.1.x series is a refactoring/rewrite of Pluto.  It's
     entire purpose is to simplify the container and make it
@@ -56,8 +56,8 @@ limitations under the License.
 
   <faq id="matching">
   <question><b>
-    Do Pluto Versions corespond with Portlet Specification 
-    Versions. 
+    Do Pluto Versions corespond with Portlet Specification
+    Versions.
   </b></question>
   <answer>
     No.  See the Pluto home page for a mapping
@@ -81,7 +81,7 @@ limitations under the License.
      of JSR-168.  The final specification included several changes,
      including some changes to the xsd.</p>
   <p>Please see the <A href="http://nagoya.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27">
-     message archives</A>for a modified version of this example 
+     message archives</A>for a modified version of this example
      which will work with Pluto.</p>
   </answer>
   </faq>
@@ -112,8 +112,8 @@ limitations under the License.
     Take a look at the Developer documentation on the website.
     This has an integration and architecture guide.  Additionally
     we suggest that you look at Jetspeed for an example of how
-    it can be done.  We readily admit that this embeding 
-    documentation may be a little sparse and welcome any 
+    it can be done.  We readily admit that this embeding
+    documentation may be a little sparse and welcome any
     documentation patches.
   </answer>
   </faq>
@@ -129,7 +129,7 @@ limitations under the License.
         <li>Log Services</li></ul>
   </answer>
   </faq>
-  
+
   <faq id="optional">
   <question><b>
     What services are optional when integrating Pluto?
@@ -286,5 +286,44 @@ limitations under the License.
 
       </answer>
     </faq>
+    <faq id="tomcat5.5">
+    	<question><b>How do I make Application Scoped Session Attibutes work? (Do I need to configure Tomcat 5.5 differently?)</b></question>
+    	<answer>
+    	<p>
+    		<p>Application Scoped Session Attibutes only work in Tomcat 5.5.</p>
+
+    		<p>In order to enable them on in Tomcat 5.5, you will need to modify your connector configuration.
+    		Specifically, set the parameter "emptySessionPath" to true in your connector config in the server.xml.
+    		</p>
+    		<source>
+	&lt;Connector port="8080" maxThreads="150" minSpareThreads="25"
+	 maxSpareThreads="75" enableLookups="false"
+	 redirectPort="8443" acceptCount="100"
+	 connectionTimeout="20000" disableUploadTimeout="true"
+	 <b>emptySessionPath="true"</b> /&gt;
+    		</source>
+
+		</p>
+    	</answer>
+    </faq>
   </part>
+
+	<part id="problems">
+		<title>Common Problems</title>
+		<faq id="NullPointerException">
+			<question><b>NullPointerException: org.apache.pluto.invoker.impl.PortletInvokerImpl.invoke</b></question>
+			<answer>
+				<p>This is usually because pluto cannot load classes for a portlet.</p>
+
+				<p>Common causes include:
+					<ul>
+					<li>Cross context dispatching is not turned on for both the pluto portal and your portlet application</li>
+					<li>The Portlet application has not been installed properly. Use the <a href="install.html#Installing_Portlets">Maven task</a>
+					to install the portlet application properly</li>
+					</ul>
+				</p>
+			</answer>
+		</faq>
+	</part>
+
 </faqs>
