@@ -5,6 +5,12 @@
 <body>
 
 <release version="1.0.1-rc2" date="n/a" description="Release Candidate">
+  <action dev="ddewolf" type="add">
+    Added FAQ documentation.
+  </action>
+  <action dev="ddewolf" type="fix">
+    Added the Resource Bundle Test to the testsuite.
+  </action>
   <action dev="ddewolf" type="fix">
     Added the Security Mapping Test to the testsuite.
   </action>
