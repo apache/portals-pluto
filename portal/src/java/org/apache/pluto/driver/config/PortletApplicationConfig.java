@@ -22,7 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * @author <a href="david.dewolf@vivare.com">David H. DeWolf</a>
+ * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public class PortletApplicationConfig {
     private static final Log LOG =

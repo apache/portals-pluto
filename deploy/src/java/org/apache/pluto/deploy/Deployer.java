@@ -15,16 +15,27 @@
  */
 package org.apache.pluto.deploy;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
+ * Interface defining the methods necessary to deploy a portlet
+ * application to a servlet container.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
-public class Deployer {
+public interface Deployer {
 
-    public Deployer() {
-
-    }
+    /**
+     * Deploy the specified web application
+     * @param config
+     * @param webapp
+     * @throws IOException
+     */
+    public void deploy(DeploymentConfig config, InputStream webapp)
+        throws IOException, DeploymentException;
 
 }
 

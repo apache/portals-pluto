@@ -17,168 +17,95 @@ limitations under the License.
 -->
 <document>
   <properties>
-    <author email="ddewolf@apache.org">David H. DeWolf</author>
-    <title>Differences Pluto 1.1 vs Pluto 1.0.1</title>
+    <author email="unknown">Jean-Baptiste Joret</author>
+    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <title>Pluto Project</title>
   </properties>
 
 <body>
-<section name="Document Overview">
-<P>
-    This document attempts to describe the differences between 
-    Pluto 1.0.x and Pluto 1.1.  It seeks to define both the 
-    architectural and design changes along with the reasons why
-    each decision was made.
+<section name="Pluto">
 
-<subsection name="Table of Contents">
-<P>
-    <ul><li><A href="#Overview_of_Changes">Overview of Changes</A></li>
-        <li><A href="#Project_Modules">Changes by Project Module</A>
-            <ul><li><A href="#Embedder_Interface">Embedder Interface</A></li>
-                <li><A href="#Container_Simplification">Container Simplification</A></li>
-                <li><A href="#Portal_Driver">Portal Driver</A></li></ul>
-            </li></ul>
-</P>
-</subsection>
-</P>
+<p>Pluto is the Reference Implementation of the Java Portlet
+   Specfication. The current version of this specification is
+   <a href="http://jcp.org/en/jsr/detail?id=168">JSR 168</a>.
+</p>
+
+<p>Portlets are designed to run in the context of a portal.
+   They are written to the Portlet API which are similar to the Servlet API.</p>
+
+<p>In contrast to servlets, portlets may not do things like sending
+    redirects or errors to browsers directly, forwarding requests or
+    writing arbitrary markup to the output stream to assure that they
+    don&#8217;t distract the portal web application which uses them.
+    Another difference compared to servlets is that portlets rely on
+    portal specific infrastructure functions such as access to user
+    profile information, standard interface for storing/retrieving
+    persistent settings, getting client information, etc. Generally,
+    portlets are administrated more dynamically than servlets typically
+    are.
+</p>
+
+<p>A portlet container provides a runtime environment for portlets
+   implemented according to the Portlet API. In this environment
+   portlets can be instantiated, used and finally destroyed.  The
+   portlet container is not a stand-alone container like the
+   servlet container; instead it is implemented as a thin layer on
+   top of the servlet container and reuses the functionality
+   provided by the servlet container.
+</p>
+
+<p>Pluto serves as portlet container that implements the Portlet
+   API and offers developers a working example platform from which
+   they can test their portlets. However, it's cumbersome to execute
+   and test the portlet container without a driver, in this case,
+   the portal. Pluto's simple portal component is built only on
+   the portlet container's and the JSR 168's requirements. (In
+   contrast, the more sophisticated,
+   <a href="http://jakarta.apache.org/jetspeed/site/index.html">Jetspeed</a>
+   project concentrates on the portal itself rather than the portlet
+   container, and considers requirements from other groups.)
+</p>
 </section>
 
-<section name="Overview of Changes">
-<P>
-    The Pluto 1.1 branch is a refactoring and reimplementation of the
-    originally donated codebase (which was originally released as
-    Pluto 1.0).  While this codebase met the requirements of Portlet 
-    Specification, it was found by the community to be clumzy and 
-    complex.  As a result, Pluto 1.1 aims to take a semi-revolutionary 
-    approach which follows best practices and a more traditional design.
-</P>
-<P>
-    The semi-revolutionary approach can be considered both a refactoring
-    and a rewrite due to the fact it originally leveraged Pluto 1.0.1
-    implementations where-ever possible without jeopordizing the 
-    community's intention to simplify integration.
-</P>
-<P>
-    The following are the high level considerations which were the goal
-    of the development of Pluto 1.1 seed code.
-    <ul><li>Simplify the container, driver, and deployer in order 
-            to encourage increased participation in our community.</li>
-        <li>Reduce the cost of entry required to start using and developing
-            portlets with pluto.</li>
-        <li>Reduce the complexity of embedding pluto into a portal.</li>
-        <li>Use common best practices and design patterns to reduce
-            the cost of entry for contributions.</li></ul>
-</P>
-</section>
+<section name="Pluto Versions">
+<p> 
+  For more information concerning the differences between
+  the Pluto 1.0.x series and the Pluto 1.1 series, please
+  see the <a href="versions.html">Versioning</a> document.
+</p>
+<table>
+<tr><th>Pluto Version</th>
+    <th>Portlet Spec</th>
+    <th>Status</th>
+    <th>URL</th>
+    <th>Notes</th></tr>
 
-<section name="Project Modules">
-<subsection name="Embedder Interface">
-<P>
-    The simplification of the interface used to integrate pluto into 
-    a portal involves the following:
-    <ul><li><H5>Creation of a well defined Integration Interface</H5>
-            The Pluto 1.0.x Container Services interface defines a 
-            single method from which services can be retrieved
-            (by class). This led to some confusion as to which
-            services were required.</li>
-        <li><H5>Usage of a Container Approach</H5>
-            Instead of continually invoking pluto through a static
-            interface, a container instance (which has a well 
-            defined interface) is created and returned upon instantiation.
-            This reference is then used from there forward to invoke the
-            container.  Additionally, this approach allows us to hide
-            the underlying container implementation. A container now
-            has the following lifecycle:
-            <P>
-            <pre>
-// Initialization
+<tr><td>1.1.0</td>
+    <td>1.0</td>
+    <td>In Development</td>
+    <td>http://svn.apache.org/asf/portals/pluto/branches/pluto-1.1/</td>
+    <td>Rewrite of the original import. Supports simplified 
+        integration and deployment.</td></tr>
 
-String name = // the container name
-ServletContext context = // the portal's context
-PortletContainerServices services = // the portal's implementation
+<tr><td>1.0.1-rc2</td>
+    <td>1.0</td>
+    <td>In Development</td>
+    <td>http://svn.apache.org/asf/portals/pluto/trunk/</td>
+    <td>Second Release Candidate for Pluto 1.0.1</td></tr>
 
-PortletContainer container =
-    PortletContainerFactory.createContainer(name, services);
-container.init(servletContext);
+<tr><td>1.0.1-rc1</td>
+    <td>1.0</td>
+    <td>Available</td>
+    <td>http://svn.apache.org/asf/portals/pluto/tags/1.0.1-rc1</td>
+    <td>First Release Candidate for Pluto 1.0.1</td></tr>
 
-
-// Action Processing
-container.doAction(portletWindow, request, response);
-
-
-// Render Processing 
-container.doRender(portletWindow, request, response);
-
-
-// Destruction / Shutdown
-container.destroy();
-            </pre>
-            </P>
-            Besides the container services, no other implementation details are needed
-            by the portal.
-        </li>
-        <li><H5>Removal of unecessary services.</H5>
-            Pluto 1.0.x allowed an overwhelming number of services/
-            factories to allow for unlimited flexibility.  Some of 
-            these services/factories are unecessary as they allow
-            for so much flexibility that in fact you are no longer
-            using the container (see PortletInvoker). The removal
-            of this incredible flexibility allows for a simplified
-            integration AND simplification of the container.</li>
-        <li><H5>Migration of Deployment Descriptor consumption to container</H5>
-            By moving the responsibility of consuming the deployment 
-            descriptor to the container, implementers have one less 
-            responsibility.  Additionally, the PortletWindow interface
-            is able to become much simpler.</li></ul>
-
-</P>
-</subsection>
-
-<subsection name="Container Simplification">
-<P>
-    The considerations for simplifying they container are as follows:
-    <ul><li><H5>Dependency Injection</H5>
-            The use of dependency injection throughout the
-            container will allow for the removal of several
-            factories and, perhaps most importantly, the removal
-            of the necessity of ThreadLocal's for lookup of 
-            services.</li>
-        <li><H5>Usage of Internal Objects</H5>
-            By removing unecessary services it becomes possible to
-            pass references by specific implementation instead of 
-            interface. This reduces the converstions (i.e. from
-            ActionRequest to InternalActionRequest) that are required
-            and allows the container to be a little more intelligent
-            about it's environment.
-            </li></ul>
-</P>
-</subsection>
-
-<subsection name="Portal Driver">
-<P>
-    The Pluto Portal Driver is intended to provide an example of how to
-    imbed pluto and perhaps even more importantly, provide a wrapper 
-    which can be used to test portlets and the container. As a result
-    the portal should be short on bells and whistles and have an
-    extremely low cost of entry to encourage users to join the community.
-    <ul><li><H5>Removal of Aggregation/Fragment frameworks</H5>
-        Because the portal is not intended to be a full portal 
-        implementation, it is not necessary for Pluto to provide 
-        it's own templating implementation.  By simply allowing
-        a single resource to be defined which renders the portal 
-        layout and renders portlets using custom tags, the driver
-        is able to provide an extremely simple layout facility while
-        at the same time allowing the flexibility of using a more
-        complex templating agent (the single resource may be a
-        servlet, jsp, etc. . .which invokes the agent).</li>
-        <li><H5>Consolidation of Configuration Files</H5>
-        Instead of defining configuration in several files, all
-        configuration is completed through a single xml file.</li>
-        <li><H5>Removal of Duplicated Configurations</H5>
-        A couple of different configurations are defined in multiple
-        configuration files.  The reimplementation removes these.
-        </li></ul>
-</P>
-</subsection>
+<tr><td>1.0</td>
+    <td>1.0</td>
+    <td> - </td>
+    <td>http://svn.apache.org/asf/portals/pluto/branches/import</td>
+    <td>The initial CVS import of Pluto is considered Pluto 1.0.
+        No binary builds were ever released.</td></tr>
+</table>
 </section>
 
 </body>

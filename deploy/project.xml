@@ -59,6 +59,29 @@ limitations under the License.
     <version>1.0.4</version>
   </dependency>
 
+  <dependency>
+    <id>commons-jelly</id>
+    <version>1.0-beta-4</version>
+  </dependency>
+
 </dependencies>
 
+<build>
+<resources>
+  <resource> 
+    <directory>${basedir}/src/maven-plugin</directory> 
+    <includes> 
+      <include>plugin.jelly</include> 
+      <include>plugin.properties</include> 
+    </includes>
+  </resource>
+  <resource>
+    <directory>${basedir}</directory> 
+    <includes> 
+      <include>project.properties</include> 
+      <include>project.xml</include> 
+    </includes> 
+  </resource> 
+</resources>
+</build>
 </project>

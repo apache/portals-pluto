@@ -28,6 +28,14 @@ import org.apache.pluto.binding.PortletInfoDD;
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 class ResourceBundleFactory {
+    
+    private static final ResourceBundle EMPTY_BUNDLE =
+        new ListResourceBundle() {
+            private String[][] contents = new String[][] {};
+            public Object[][] getContents() {
+                return contents;
+            }
+        };
 
     private ResourceBundle defaultBundle;
     private Map bundles = new java.util.HashMap();
@@ -35,17 +43,23 @@ class ResourceBundleFactory {
 
     public ResourceBundleFactory(PortletDD dd) {
         PortletInfoDD info = dd.getPortletInfo();
-        final String[] title = new String[]{"javax.portlet.title",
-                                            info.getTitle()};
-        final String[] shrtt = new String[]{"javax.portlet.short-title",
-                                            info.getShortTitle()};
-        final String[] keys = new String[]{"javax.portlet.keywords",
-                                           info.getKeywords()};
-        defaultBundle = new ListResourceBundle() {
-            public Object[][] getContents() {
-                return new String[][]{title, shrtt, keys};
-            }
-        };
+        if(info != null) {
+            final String[] title = new String[]{"javax.portlet.title",
+                                                info.getTitle()};
+            final String[] shrtt = new String[]{"javax.portlet.short-title",
+                                                info.getShortTitle()};
+            final String[] keys = new String[]{"javax.portlet.keywords",
+                                               info.getKeywords()};
+            defaultBundle = new ListResourceBundle() {
+                Object[][] contents =  new String[][]{title, shrtt, keys};
+                public Object[][] getContents() {
+                    return contents;
+                }
+            }; 
+        }
+        else {
+            defaultBundle = EMPTY_BUNDLE;
+        }
 
         bundleName = dd.getResourceBundle();
     }
@@ -68,9 +82,10 @@ class ResourceBundleFactory {
                 }
             }
         } catch (MissingResourceException mre) {
-            bundles.put(locale, defaultBundle);
+            // intentionally swallow.  Allow the default Bundle.
         }
 
+        bundles.put(locale, defaultBundle);
         return defaultBundle;
     }
 }

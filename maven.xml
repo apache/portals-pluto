@@ -31,6 +31,16 @@ limitations under the License.
     <attainGoal name="pluto:deploy-testsuite"/>
   </goal>
 
+  <postGoal name="pluto:deploy-all">
+    <maven:reactor
+      basedir="${basedir}"
+      includes="deploy/project.xml"
+      goals="plugin:install"
+      banner="Installing the Deploy Plugin for Later Use"
+      postProcessing="false"
+      ignoreFailures="false"/>
+  </postGoal>
+
   <goal name="pluto:deploy-portal-driver">
     <maven:reactor
       basedir="${basedir}"
@@ -45,7 +55,7 @@ limitations under the License.
     <maven:reactor
             basedir="${basedir}"
             includes="testsuite/project.xml"
-            goals="tomcat:deploy"
+            goals="pluto:deploy"
             banner="Deploying Test Suite"
             postProcessing="false"
             ignoreFailures="false"/>  	

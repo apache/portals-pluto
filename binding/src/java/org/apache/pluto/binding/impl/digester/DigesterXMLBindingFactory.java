@@ -23,6 +23,7 @@ import org.apache.commons.digester.Digester;
 import org.apache.pluto.binding.PortletAppDD;
 import org.apache.pluto.binding.WebAppDD;
 import org.apache.pluto.binding.XMLBindingFactory;
+import org.apache.pluto.binding.util.EntityResolverImpl;
 import org.xml.sax.SAXException;
 
 /**
@@ -73,7 +74,7 @@ public class DigesterXMLBindingFactory extends XMLBindingFactory {
     }
 
     private void initPortletDigester() {
-        pDigester.setValidating(false);
+        pDigester.setEntityResolver(new EntityResolverImpl());
         pDigester.addObjectCreate("portlet-app", DigesterPortletAppDD.class);
 
         // ** Portlet Entity ** //

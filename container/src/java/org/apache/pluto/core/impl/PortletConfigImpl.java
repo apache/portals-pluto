@@ -87,7 +87,8 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
             public Object nextElement() {
                 if (iterator.hasNext()) {
-                    return ((org.apache.pluto.binding.InitParameterDD) iterator.next()).getParameterName();
+                    return ((org.apache.pluto.binding.InitParameterDD)
+                        iterator.next()).getParameterName();
                 } else {
                     return null;
                 }

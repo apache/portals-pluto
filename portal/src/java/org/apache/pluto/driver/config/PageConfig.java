@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author <a href="david.dewolf@vivare.com">David H. DeWolf</a>
+ * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public class PageConfig {
 

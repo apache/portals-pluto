@@ -38,39 +38,9 @@ limitations under the License.
         <servlet-name>extAppScopedTest</servlet-name>
     </servlet>
 
-    <servlet>
-        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
-        <servlet-name>TestPortlet1</servlet-name>
-        <init-param>
-            <param-name>portlet-name</param-name>
-            <param-value>TestPortlet1</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet>
-        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
-        <servlet-name>TestPortlet2</servlet-name>
-        <init-param>
-            <param-name>portlet-name</param-name>
-            <param-value>TestPortlet2</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
     <servlet-mapping>
         <servlet-name>extAppScopedTest</servlet-name>
         <url-pattern>/test/extAppScopedTest</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>TestPortlet1</servlet-name>
-        <url-pattern>/PlutoInvoker/TestPortlet1</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>TestPortlet2</servlet-name>
-        <url-pattern>/PlutoInvoker/TestPortlet2</url-pattern>
     </servlet-mapping>
 
     <security-role>

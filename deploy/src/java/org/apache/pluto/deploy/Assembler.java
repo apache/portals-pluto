@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Enumeration;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -45,13 +46,12 @@ import javax.xml.transform.dom.DOMSource;
 import org.apache.pluto.binding.PortletDD;
 import org.apache.pluto.binding.PortletAppDD;
 import org.apache.pluto.binding.XMLBindingFactory;
-import org.apache.crimson.tree.TextNode;
+import org.apache.pluto.binding.util.EntityResolverImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
-import sun.tools.jar.resources.jar;
 
 /**
  * Used to assemble a web application into a portlet application.
@@ -69,11 +69,38 @@ public class Assembler {
     private static final String DISPATCH_SERVLET_CLASS =
         "org.apache.pluto.core.PortletServlet";
 
+    private Properties properties;
 
     public Assembler() {
-
+        properties = new Properties();
+        properties.setProperty(OutputKeys.INDENT, "yes");
+        //properties.setProperty("{http://xml.apache.org/xslt}indent-amount", "4");
     }
 
+    /**
+     * Assemble a web applicaiton into a portlet
+     * web application which is deployable into
+     * the pluto-1.1 portlet container.  The
+     * specified web application will be overwritten
+     * with the new application.
+     *
+     * @param webapp
+     */
+    public void assemble(File webapp) throws IOException {
+        assemble(webapp, webapp);
+    }
+
+    /**
+     * Assemble a web application into a portlet
+     * web application which is deployable into the
+     * pluto-1.1 portlet container.  The assembly
+     * will be conducted in the specified
+     * destination.
+     *
+     * @param webapp
+     * @param destination
+     * @throws IOException
+     */
     public void assemble(File webapp, File destination)
     throws IOException {
 
@@ -111,23 +138,23 @@ public class Assembler {
             Element servlet = doc.createElement("servlet");
 
             Element servletName = doc.createElement("servlet-name");
-            servletName.appendChild(new TextNode(name));
+            servletName.appendChild(doc.createTextNode(name));
 
             Element servletClass = doc.createElement("servlet-class");
-            servletClass.appendChild(new TextNode(DISPATCH_SERVLET_CLASS));
+            servletClass.appendChild(doc.createTextNode(DISPATCH_SERVLET_CLASS));
 
             Element initParam = doc.createElement("init-param");
             Element paramName = doc.createElement("param-name");
-            paramName.appendChild(new TextNode("portlet-name"));
+            paramName.appendChild(doc.createTextNode("portlet-name"));
 
             Element paramValue = doc.createElement("param-value");
-            paramValue.appendChild(new TextNode(name));
+            paramValue.appendChild(doc.createTextNode(name));
 
             initParam.appendChild(paramName);
             initParam.appendChild(paramValue);
 
             Element load = doc.createElement("load-on-startup");
-            load.appendChild(new TextNode("1"));
+            load.appendChild(doc.createTextNode("1"));
 
             servlet.appendChild(servletName);
             servlet.appendChild(servletClass);
@@ -136,9 +163,9 @@ public class Assembler {
 
             Element mapping = doc.createElement("servlet-mapping");
             servletName = doc.createElement("servlet-name");
-            servletName.appendChild(new TextNode(name));
+            servletName.appendChild(doc.createTextNode(name));
             Element uri = doc.createElement("url-pattern");
-            uri.appendChild(new TextNode("/PlutoInvoker/"+name));
+            uri.appendChild(doc.createTextNode("/PlutoInvoker/"+name));
             mapping.appendChild(servletName);
             mapping.appendChild(uri);
 
@@ -203,6 +230,7 @@ public class Assembler {
         try {
             DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = fact.newDocumentBuilder();
+            builder.setEntityResolver(new EntityResolverImpl());
             doc = builder.parse(in);
         } catch (ParserConfigurationException e) {
             throw new IOException(e.getMessage());
@@ -215,13 +243,16 @@ public class Assembler {
     private void save(Document doc, OutputStream out)
     throws IOException {
         try {
+
             TransformerFactory fact = TransformerFactory.newInstance();
             Transformer trans = fact.newTransformer();
-            trans.setOutputProperty(OutputKeys.INDENT, "yes");
+            trans.setOutputProperties(properties);
             trans.transform(new DOMSource(doc), new StreamResult(out));
         } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
             throw new IOException(e.getMessage());
         } catch (TransformerException e) {
+            e.printStackTrace();
             throw new IOException(e.getMessage());
         } finally {
             out.flush();

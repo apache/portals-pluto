@@ -65,7 +65,7 @@ limitations under the License.
         </echo>
     </goal>
 
-    <goal name="tomcat:deploy">
+    <goal name="tomcat:deploy" prereqs="war">
         <attainGoal name="tomcat:init"/>
         <!-- ===================== -->
         <!-- Deploy Dependencies   -->

@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+  <properties>
+  <author email="ddewolf.AT.apache.D0T.org">David H. DeWolf</author>
+  <title>Pluto User Guide: Installation</title>
+</properties>
+
+<body>
+<section name="Installing Pluto">
+<p>
+</p>
+<subsection name="Installing Binary Distribution">
+<p>
+  To install Pluto 1.1.x from the binary distribution
+  package, follow these instructions:
+  <ul><li><p>
+       Unpack the distribution into a directory from here
+       forward referred to as &lt;PLUTO_HOME&gt;
+      </p></li>
+      <li><p>
+       Execute the appropriate startup script located
+       in &lt;PLUTO_HOME&gt;/bin/.  For unix platforms 
+       this will be startup.sh.  For windows platforms, 
+       this will be startup.bat.
+      </p></li>
+      <li><p>
+       The Portal is now deployed and started. Point 
+       your browser to http://localhost:8080/pluto/portal
+       to access the portal.
+      </p></li>
+      </ul>
+</p>
+</subsection>
+
+<subsection name="Installing Library Distribution">
+<p>
+Documentation Needed
+</p>
+</subsection>
+
+<subsection name="Installing From Source">
+<p>
+  To install Pluto 1.1.x from source, complete the
+  following instructions.
+  <ul><li><p>
+       Set the property name '<code>pluto.testsuite.dir</code>' 
+       to the directory in which the pluto testsuite source code
+       exists.</p>
+      <p><div style="color:red">NOTE:</div>
+       The testsuite is 
+       not currently included the 1.1 branch as no changes 
+       are necessary beyond deployment with the Pluto 1.1.x
+       deployer.
+      </p></li>
+
+      <li><p>
+       Set the property named '<code>tomcat.dir</code>' to the 
+       directory which is your <code>TOMCAT_HOME</code> (or 
+       <code>TOMCAT_BASE</code>) directory.  This directory 
+       will be used when determining where to deploy the portal.
+       (The property '<code>maven.tomcat.dir'</code> is now 
+       deprecated, but will still work for backwards compatibility).
+      </p></li>
+
+      <li><p>
+       Run the '<code>pluto:deploy-all</code>' maven goal. This 
+       will install the Plutp Portal Driver (and container), 
+       and deploy the Testsuite application to the Portal.
+      </p></li>
+
+      <li><p>
+       The Portal is now deployed.  Startup the Portal by 
+       starting up the tomcat installation to which you
+       deployed the portal. Once started, you can point 
+       your browser to http://localhost:8080/pluto/portal
+       to access the portal.
+      </p></li>
+      </ul>
+   </p>
+</subsection>
+</section>
+</body>
+</document>
