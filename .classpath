@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="**/CVS*" kind="src" path="src/api"/>
-	<classpathentry excluding="**/CVS*" kind="src" path="src/portal"/>
-	<classpathentry excluding="**/CVS*" kind="src" path="src/container"/>
-	<classpathentry exported="true" kind="lib" path="lib/portal/jakarta-regexp-1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="portlets/lib/servlet.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/portal/endorsed-xmlParserAPIs.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/portal/endorsed-xercesImpl.jar"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/portal/castor-0.9.5.2-xml.jar"/>
-	<classpathentry kind="lib" path="lib/portal/commons-logging-api.jar"/>
-	<classpathentry kind="output" path="temp/portal/classes"/>
+    <classpathentry kind="src" path="api/src/java"/>
+    <classpathentry kind="src" path="container/src/java"/>
+    <classpathentry kind="src" path="portal/src/java"/>
+    <classpathentry kind="src" path="testsuite/src/java"/>
+    <classpathentry kind="src" path="portal/src/resources"/>
+    <classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+    <classpathentry kind="var" path="MAVEN_REPO/castor/jars/castor-0.9.5.jar"/>
+    <classpathentry kind="var" path="MAVEN_REPO/commons-logging/jars/commons-logging-1.1-dev.jar"/>
+    <classpathentry kind="var" path="MAVEN_REPO/xerces/jars/xerces-2.3.0.jar"/>
+    <classpathentry kind="var" path="MAVEN_REPO/xml-apis/jars/xml-apis-2.0.2.jar"/>
+    <classpathentry kind="var" path="MAVEN_REPO/regexp/jars/regexp-1.2.jar"/>
+    <classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>
+    <classpathentry kind="output" path="temp/portal/classes"/>
 </classpath>

@@ -21,18 +21,22 @@
     <property name="build.jar" value="${build.dir}/jar"/>
     
     <property name="build.api.dir" value="${build.dir}/api"/>
-    <property name="build.api.src" value="${src.java.dir}/api"/>
+  <!--  <property name="build.api.src" value="${src.java.dir}/api"/> -->
+    <property name="build.api.src" value="../api/src/java"/>
     <property name="build.api.dest" value="${build.api.dir}/classes"/>
     <property name="build.api.lib" value="../lib/api"/>
 
     <property name="build.container.dir" value="${build.dir}/container"/>
-    <property name="build.container.src" value="${src.java.dir}/container"/>
+    <!-- <property name="build.container.src" value="${src.java.dir}/container"/> -->
+    <property name="build.container.src" value="../container/src/java"/>
     <property name="build.container.dest" value="${build.container.dir}/classes"/>
     <property name="build.container.lib" value="../lib/container"/>
 
     <property name="build.portal.dir" value="${build.dir}/portal"/>
-    <property name="build.portal.war" value="../war"/>
-    <property name="build.portal.src" value="${src.java.dir}/portal"/>
+    <!-- <property name="build.portal.war" value="../war"/> -->
+    <property name="build.portal.war" value="../portal/src/webapp"/>
+    <!-- <property name="build.portal.src" value="${src.java.dir}/portal"/> -->
+    <property name="build.portal.src" value="../portal/src/java"/>
     <property name="build.portal.dest" value="${build.portal.dir}/classes"/>
     <property name="build.portal.lib" value="../lib/portal"/>
 
