@@ -15,7 +15,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<project name="Jakarta Pluto Site" href="http://jakarta.apache.org/pluto">
+<project name="Pluto Site" href="http://portals.apache.org/pluto">
 
    <title>Apache Portals &gt; Pluto &gt; Pluto Container</title>
    <logo href="../../images/pluto.png">Pluto, an Apache Portals project.</logo>
