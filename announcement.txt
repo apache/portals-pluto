@@ -22,7 +22,7 @@
   reference implementation of the Java Portlet Specification.
 
   Pluto 1.0.1-rc-1 is considered a release candidate.  The
-  promotion of this release candidate to generatl availability
+  promotion of this release candidate to general availability
   is expected within the few weeks, pending feedback from 
   the community.
 
@@ -38,8 +38,8 @@
   community has developed a simple portal driver implementation
   which allows for the testing and development of portlets with
   the container.  The Pluto testsuite is an implementation 
-  agnostic portlet application which tests several basic o
-  perations of the container in which it is deployed.
+  agnostic portlet application which tests several basic
+  operations of the container in which it is deployed.
 
   The distribution is organized into four releases:
 
