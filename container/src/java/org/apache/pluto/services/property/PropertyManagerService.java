@@ -51,9 +51,6 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-/* 
-
- */
 
 package org.apache.pluto.services.property;
 
@@ -65,19 +62,27 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.om.window.PortletWindow;
 
 /**
- * The interfaces defined in this package represent an abstract object
- * model (OM) that is applicable for different implementations.
- * <P>
- * This abstraction layer helps to generalize the portlet container from
- * special implementations like data storage and moreover it is not bound
- * to a special implementation.
+ * The <code>PropertyManagerService</code> interface is a container service
+ * providing the portlet container with external defined properties.
+ * This interface allows to associate properties with the portlet request
+ * and portlet response.
+ * <br> 
+ * This service represents an abstract layer to make the property 
+ * management independent of the portlet container and to allow
+ * diverse special implementations. 
  * 
+ * <p>This SPI interface can be implemented by the portal.</p>
  **/
 public interface PropertyManagerService extends ContainerService 
 {
 
     /**
-     * Sets all properties of the given map to the portlet response.
+     * Sets the given property map defined by the portlet window in its response.  
+     * <br>
+     * The purpose of this method is to provide the portal framework
+     * with a new map of properties set by the portlet. The map can be empty, but not NULL
+     * <br>
+     * This method can be called multiple times during one request by the portlet container
      * 
      * @param window the portlet window of this property
      * @param request the servlet request
@@ -91,16 +96,25 @@ public interface PropertyManagerService extends ContainerService
                                       Map properties);
 
     /**
-     * Returns all properties for the portlet request 
-     * defined in the portal as String/String array map
+     * Returns all properties for the given portlet window 
+     * defined in the portal as String/String array map.
+     * They will be made available to the portlet through the
+     * portlet request.
+     * <br>
+     * The purpose of this method is to allow the portal framework
+     * to create a map of properties and make it available to the portlet container.
+     * <br>
+     * This method can be called multiple times during one request by the portlet container
+     * <br>
+     * The return value cannot be null.
      *
      * @param window the portlet window of this property
      * @param request the servlet request
      * @param response the servlet response
      * 
      * @return		a <code>Map</code> containing
-     *                  	all properties. If there are no properties of
-     *                  	that name returns an empty <code>Map</code>.    
+     *                  all properties. If there are no properties of
+     *                  that name returns an empty <code>Map</code>.    
      **/          
     public Map getRequestProperties(PortletWindow window,
                                     HttpServletRequest request);
