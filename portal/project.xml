@@ -107,20 +107,9 @@ limitations under the License.
       </properties>
     </dependency>
 
-      <dependency>
-      <id>xml-apis</id>
-      <version>2.0.2</version>
-      <properties>
-        <war.bundle>false</war.bundle>
-		<tomcat.common>true</tomcat.common>
-		<tomcat.common.endorsed>true</tomcat.common.endorsed>
-      </properties>
-    </dependency>
-
   </dependencies>
 
   <build>
-
     <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
 
     <sourceDirectory>src/java</sourceDirectory>
