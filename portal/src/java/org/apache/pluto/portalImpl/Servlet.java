@@ -132,7 +132,8 @@ public class Servlet extends HttpServlet
             PortletContainerEnvironment environment = new PortletContainerEnvironment();
             environment.addContainerService(Log.getService());
             environment.addContainerService(FactoryManager.getService());
-            environment.addContainerService(FactoryAccess.getService());
+            environment.addContainerService(FactoryAccess.getInformationProviderContainerService());
+            environment.addContainerService(FactoryAccess.getDynamicTitleContainerService());
     
     		Properties properties = new Properties();
     		

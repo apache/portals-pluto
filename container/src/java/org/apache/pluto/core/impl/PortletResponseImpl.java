@@ -65,6 +65,8 @@ import java.util.Map;
 
 import javax.portlet.PortletResponse;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.om.window.PortletWindow;
@@ -83,7 +85,7 @@ implements InternalPortletResponse, PortletResponse
      * this variable holds the servlet request of the target/portlet's
      * web module
      */
-    private javax.servlet.http.HttpServletRequest webModuleServletRequest;
+    private HttpServletRequest webModuleServletRequest;
 
     private boolean usingWriter;
     private boolean usingStream;
@@ -92,8 +94,8 @@ implements InternalPortletResponse, PortletResponse
     private Map properties;
 
     public PortletResponseImpl(PortletWindow portletWindow,
-                               javax.servlet.http.HttpServletRequest servletRequest,
-                               javax.servlet.http.HttpServletResponse servletResponse)
+                               HttpServletRequest servletRequest,
+                               HttpServletResponse servletResponse)
     {
         super(servletResponse);
 
@@ -317,5 +319,11 @@ implements InternalPortletResponse, PortletResponse
     {
         return portletWindow;
     }
-    // --------------------------------------------------------------------------------------------
+    
+    // internal
+    
+    HttpServletRequest getHttpDServletRequest()
+    {
+        return webModuleServletRequest;
+    }
 }

@@ -51,45 +51,36 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-/* 
 
- */
-
-package org.apache.pluto.portalImpl.servlet;
-
-import java.io.PrintWriter;
+package org.apache.pluto.services.title;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pluto.PortletContainerServices;
 import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
 
-public class ServletObjectAccess
+
+/**
+ * The static accessor for the <CODE>DynamicTitleService</CODE>.
+ *
+ * @see   PropertyManagerService
+ **/
+public class DynamicTitle
 {
 
-    public static HttpServletRequest getServletRequest(HttpServletRequest request, PortletWindow portletWindow)
+
+    public static void setDynamicTitle(PortletWindow window,
+                                       HttpServletRequest request,
+                                       String dynamicTitle)
     {
-        return getRequestFactory().getServletRequest(request, portletWindow);
+        if (getService() != null)
+        {
+            getService().setDynamicTitle( window, request, dynamicTitle);
+        }
     }
 
-    public static HttpServletResponse getServletResponse(HttpServletResponse response)
+    private static DynamicTitleService getService()
     {
-        return getResponseFactory().getServletResponse(response);
-    }
-
-    public static HttpServletResponse getStoredServletResponse(HttpServletResponse response, PrintWriter writer)
-    {
-        return getResponseFactory().getStoredServletResponse(response, writer);
-    }
-
-
-    private static ServletRequestFactory getRequestFactory()
-    {
-        return (ServletRequestFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletRequest.class);
-    }
-    private static ServletResponseFactory getResponseFactory()
-    {
-        return (ServletResponseFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletResponse.class);
+        return(DynamicTitleService )PortletContainerServices.get(DynamicTitleService .class);
     }
 }

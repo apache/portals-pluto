@@ -63,17 +63,19 @@ import java.io.PrintWriter;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.factory.PortletObjectAccess;
 import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.services.information.InformationProviderAccess;
+import org.apache.pluto.services.title.DynamicTitle;
 import org.apache.pluto.util.NamespaceMapperAccess;
 
 public class RenderResponseImpl extends PortletResponseImpl implements RenderResponse {
     private static final String illegalStateExceptionText = "No content type set.";
 
     private boolean isContentTypeSet;
-
+    
     public RenderResponseImpl(PortletWindow portletWindow,
                               javax.servlet.http.HttpServletRequest servletRequest,
                               javax.servlet.http.HttpServletResponse servletResponse)
@@ -109,7 +111,9 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     
     public void setTitle(String title)
     {
-        //TBD
+        DynamicTitle.setDynamicTitle(getInternalPortletWindow(),
+                                     getHttpServletRequest(),
+                                     title);
     }
     
     public void setContentType(String type)

@@ -57,39 +57,72 @@
 
 package org.apache.pluto.portalImpl.servlet;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
-
-public class ServletObjectAccess
+public class StoredServletResponseImpl extends javax.servlet.http.HttpServletResponseWrapper 
 {
+    private PrintWriter writer;
 
-    public static HttpServletRequest getServletRequest(HttpServletRequest request, PortletWindow portletWindow)
+    public StoredServletResponseImpl(HttpServletResponse response, PrintWriter _writer)
     {
-        return getRequestFactory().getServletRequest(request, portletWindow);
+        super(response);
+        writer = _writer;
     }
 
-    public static HttpServletResponse getServletResponse(HttpServletResponse response)
+    private javax.servlet.http.HttpServletResponse _getHttpServletResponse()
     {
-        return getResponseFactory().getServletResponse(response);
+        return(javax.servlet.http.HttpServletResponse) super.getResponse();
     }
 
-    public static HttpServletResponse getStoredServletResponse(HttpServletResponse response, PrintWriter writer)
+    public void setResponse(HttpServletResponse response) 
     {
-        return getResponseFactory().getStoredServletResponse(response, writer);
+        super.setResponse(response);
+    }
+/*    
+    public ServletOutputStream getOutputStream()
+        throws IOException
+    {
+        return response.getOutputStream();
+    }
+*/
+    public PrintWriter getWriter()
+        throws IOException
+    {
+        return writer;
+    }
+/*
+    public void setBufferSize(int size)
+    {
+        response.setBufferSize(size);
     }
 
+    public int getBufferSize()
+    {
+        return response.getBufferSize();
+    }
+*/
+    public void flushBuffer()
+        throws IOException
+    {
+        writer.flush();
+    }
+/*
+    public boolean isCommitted()
+    {
+        return response.isCommitted();
+    }
 
-    private static ServletRequestFactory getRequestFactory()
+    public void reset()
     {
-        return (ServletRequestFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletRequest.class);
+        response.reset();
     }
-    private static ServletResponseFactory getResponseFactory()
+
+    public void resetBuffer()
     {
-        return (ServletResponseFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletResponse.class);
+        response.resetBuffer();
     }
+*/
 }

@@ -59,6 +59,7 @@ package org.apache.pluto.portalImpl.aggregation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Iterator;
 
 import javax.portlet.PortletMode;
@@ -81,6 +82,7 @@ import org.apache.pluto.om.window.PortletWindow;
 import org.apache.pluto.om.window.PortletWindowCtrl;
 import org.apache.pluto.om.window.PortletWindowList;
 import org.apache.pluto.om.window.PortletWindowListCtrl;
+import org.apache.pluto.portalImpl.core.DynamicTitleServiceImpl;
 import org.apache.pluto.portalImpl.core.PortalControlParameter;
 import org.apache.pluto.portalImpl.core.PortalEnvironment;
 import org.apache.pluto.portalImpl.core.PortalURL;
@@ -154,6 +156,45 @@ public class PortletFragment extends AbstractFragmentSingle {
         String title = lang != null ? lang.getTitle()
                                     : "no title available";
 
+        // get dynamic title
+        StringWriter storedWriter = new StringWriter();
+        
+        if (!portletWindow.getPortletEntity().getPortletDefinition().getServletDefinition().isUnavailable())
+        {
+            PrintWriter writer2 = new PrintWriter(storedWriter);
+            
+            HttpServletResponse wrappedResponse = 
+                ServletObjectAccess.getStoredServletResponse(response, writer2);
+                        
+            try {
+                PortletContainerFactory.getPortletContainer().renderPortlet(portletWindow, wrappedRequest, wrappedResponse);
+            } catch (PortletContainerException e) {
+                e.printStackTrace(System.err);
+                writer2.println("error occured in portlet!");
+            } catch (UnavailableException e) {
+                e.printStackTrace(System.err);
+                writer2.println("the portlet is currently unavailable!");
+                
+                ServletDefinitionCtrl servletDefinitionCtrl = (ServletDefinitionCtrl)ControllerObjectAccess.get(portletWindow.getPortletEntity().getPortletDefinition().getServletDefinition());
+                if (e.isPermanent()) {
+                    servletDefinitionCtrl.setAvailable(Long.MAX_VALUE);
+                } else {
+                    int unavailableSeconds = e.getUnavailableSeconds();
+                    if (unavailableSeconds <= 0) {
+                        unavailableSeconds = 60; // arbitrary default
+                    }
+                    servletDefinitionCtrl.setAvailable(System.currentTimeMillis() + unavailableSeconds * 1000);
+                }
+            } catch (Throwable t) {
+                t.printStackTrace(System.err);
+                writer2.println("error occured in portlet!");
+            }
+            
+            String dyn_title = 
+            ((DynamicTitleServiceImpl)FactoryAccess.getDynamicTitleContainerService()).getDynamicTitle(portletWindow, request);            
+            if (dyn_title!=null) title = dyn_title;            
+        }                           
+
         writer.println("<I><b>" + title + "</b></I>");
         writer.println("</td><td align='right'><font size='-3'>");
 
@@ -214,10 +255,10 @@ public class PortletFragment extends AbstractFragmentSingle {
         if (portletWindow.getPortletEntity().getPortletDefinition().getServletDefinition().isUnavailable()) {
             writer.println("the portlet is currently unavailable!");
         } else {
+            writer.println(storedWriter.toString());
+/*            
             try {
-                PortletContainerFactory.
-                getPortletContainer().
-                renderPortlet(portletWindow, wrappedRequest, response);
+                PortletContainerFactory.getPortletContainer().renderPortlet(portletWindow, wrappedRequest, response);
             } catch (PortletContainerException e) {
                 e.printStackTrace(System.err);
                 writer.println("error occured in portlet!");
@@ -238,6 +279,7 @@ public class PortletFragment extends AbstractFragmentSingle {
                 t.printStackTrace(System.err);
                 writer.println("error occured in portlet!");
             }
+*/            
         }
         writer.println("</td></tr>");
         writer.println("</table>");

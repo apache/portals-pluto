@@ -61,6 +61,7 @@ import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
 import org.apache.pluto.services.information.DynamicInformationProvider;
 import org.apache.pluto.services.information.InformationProviderService;
 import org.apache.pluto.services.information.StaticInformationProvider;
+import org.apache.pluto.services.title.DynamicTitleService;
 
 public class FactoryAccess {
 
@@ -74,9 +75,14 @@ public class FactoryAccess {
         return getProviderFactory().getDynamicProvider(request);
     }
 
-    public static org.apache.pluto.services.information.InformationProviderService getService()
+    public static InformationProviderService getInformationProviderContainerService()
     {
         return getProviderService();
+    }
+    
+    public static DynamicTitleService getDynamicTitleContainerService()
+    {
+        return getDynTitleServiceFactory().getDynamicTitleService();
     }
 
     private static InformationProviderFactory getProviderFactory()
@@ -87,6 +93,11 @@ public class FactoryAccess {
     private static InformationProviderService getProviderService()
     { 
         return(InformationProviderService)FactoryManager.getFactory(org.apache.pluto.portalImpl.factory.InformationProviderFactory.class);
+    }
+
+    private static DynamicTitleServiceFactory getDynTitleServiceFactory()
+    { 
+        return(DynamicTitleServiceFactory)FactoryManager.getFactory(org.apache.pluto.portalImpl.factory.DynamicTitleServiceFactory.class);
     }
 
 }                           

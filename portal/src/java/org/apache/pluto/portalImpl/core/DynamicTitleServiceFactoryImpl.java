@@ -55,41 +55,31 @@
 
  */
 
-package org.apache.pluto.portalImpl.servlet;
-
-import java.io.PrintWriter;
+package org.apache.pluto.portalImpl.core;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
+import org.apache.pluto.portalImpl.factory.DynamicTitleServiceFactory;
+import org.apache.pluto.services.title.DynamicTitleService;
 
-public class ServletObjectAccess
-{
+public class DynamicTitleServiceFactoryImpl implements DynamicTitleServiceFactory {
 
-    public static HttpServletRequest getServletRequest(HttpServletRequest request, PortletWindow portletWindow)
+    private javax.servlet.ServletConfig servletConfig;
+
+    public DynamicTitleService getDynamicTitleService()
     {
-        return getRequestFactory().getServletRequest(request, portletWindow);
+        return new DynamicTitleServiceImpl();
     }
 
-    public static HttpServletResponse getServletResponse(HttpServletResponse response)
+    // additional methods
+
+    public void init(javax.servlet.ServletConfig config, java.util.Map properties) throws Exception
     {
-        return getResponseFactory().getServletResponse(response);
+        servletConfig = config;
     }
 
-    public static HttpServletResponse getStoredServletResponse(HttpServletResponse response, PrintWriter writer)
+    public void destroy() throws Exception
     {
-        return getResponseFactory().getStoredServletResponse(response, writer);
     }
 
-
-    private static ServletRequestFactory getRequestFactory()
-    {
-        return (ServletRequestFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletRequest.class);
-    }
-    private static ServletResponseFactory getResponseFactory()
-    {
-        return (ServletResponseFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletResponse.class);
-    }
 }

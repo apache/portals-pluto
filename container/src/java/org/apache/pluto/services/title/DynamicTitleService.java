@@ -51,45 +51,34 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-/* 
 
- */
-
-package org.apache.pluto.portalImpl.servlet;
-
-import java.io.PrintWriter;
+package org.apache.pluto.services.title;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.om.window.PortletWindow;
-import org.apache.pluto.portalImpl.services.factorymanager.FactoryManager;
+import org.apache.pluto.services.ContainerService;
 
-public class ServletObjectAccess
+/**
+ * The interfaces defined in this package represent an abstract object
+ * model (OM) that is applicable for different implementations.
+ * <P>
+ * This abstraction layer helps to generalize the portlet container from
+ * special implementations like data storage and moreover it is not bound
+ * to a special implementation.
+ * 
+ **/
+public interface DynamicTitleService extends ContainerService 
 {
 
-    public static HttpServletRequest getServletRequest(HttpServletRequest request, PortletWindow portletWindow)
-    {
-        return getRequestFactory().getServletRequest(request, portletWindow);
-    }
+    /**
+     * Sets all properties of the given map to the portlet response.
+     * 
+     * @param window the portlet window 
+     * @param dynamicTitle the string containing the dynamic title. NULL will reset the title to the default one.
+     **/
+    public void setDynamicTitle(PortletWindow window,
+                                HttpServletRequest request,
+                                String dynamicTitle);
 
-    public static HttpServletResponse getServletResponse(HttpServletResponse response)
-    {
-        return getResponseFactory().getServletResponse(response);
-    }
-
-    public static HttpServletResponse getStoredServletResponse(HttpServletResponse response, PrintWriter writer)
-    {
-        return getResponseFactory().getStoredServletResponse(response, writer);
-    }
-
-
-    private static ServletRequestFactory getRequestFactory()
-    {
-        return (ServletRequestFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletRequest.class);
-    }
-    private static ServletResponseFactory getResponseFactory()
-    {
-        return (ServletResponseFactory)FactoryManager.getFactory(javax.servlet.http.HttpServletResponse.class);
-    }
 }

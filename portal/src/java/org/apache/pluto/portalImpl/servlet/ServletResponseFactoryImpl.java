@@ -57,6 +57,8 @@
 
 package org.apache.pluto.portalImpl.servlet;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletResponse;
 
 public class ServletResponseFactoryImpl implements ServletResponseFactory
@@ -69,6 +71,12 @@ public class ServletResponseFactoryImpl implements ServletResponseFactory
     public javax.servlet.http.HttpServletResponse getServletResponse(HttpServletResponse response)
     {
         HttpServletResponse servletResponse = new ServletResponseImpl(response);
+        return servletResponse;
+    }
+
+    public javax.servlet.http.HttpServletResponse getStoredServletResponse(HttpServletResponse response, PrintWriter writer)
+    {
+        HttpServletResponse servletResponse = new StoredServletResponseImpl(response, writer);
         return servletResponse;
     }
 
