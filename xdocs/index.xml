@@ -67,8 +67,8 @@
 
 <section name="Compilation / Installation">
 <p><b><i>Installation Procedure:</i></b>
-   <li>Download the source code of Apache Pluto 
-		   <a href="http://jakarta.apache.org/site/sourceindex.cgi">here</a></li>
+<!--   <li>Download the source code of Apache Pluto 
+		   <a href="http://jakarta.apache.org/site/sourceindex.cgi">here</a></li> -->
    <li><a href="install.html">Installing Pluto</a></li>
 </p>
 
