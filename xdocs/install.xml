@@ -31,7 +31,7 @@ limitations under the License.
 </subsection>
 <subsection name="Requirements">
 <ul>
-  <li><a href="http://maven.apache.org/start/download.html">Maven 1.0-RC1</a>
+  <li><a href="http://maven.apache.org/start/download.html">Maven 1.0</a>
     or higher</li>
   <li>Java 1.3 or higher</li>
   <li>Servlet 2.3:<br/>
