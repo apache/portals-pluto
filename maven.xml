@@ -146,7 +146,7 @@ limitations under the License.
   <goal name="distribute:binary" prereqs="distribute:init,multiproject:install,multiproject:site">
     <!-- Set Some Default Properties -->
     <j:set var="dist.tomcat"
-           value="http://www.apache.org/dist/jakarta/tomcat-5/v5.5.4/bin/jakarta-tomcat-5.5.4.tar.gz"/>
+           value="http://www.apache.org/dist/jakarta/tomcat-5/v5.5.7/bin/jakarta-tomcat-5.5.7.tar.gz"/>
     <j:set var="plutobin.dist.name" value="pluto-${pom.currentVersion}"/>
 
     <j:set var="plutobin.tomcatgz" value="${maven.dist.dir}/plutobin-tomcat.tar.gz"/>
@@ -166,7 +166,7 @@ limitations under the License.
 
     <!-- Rename the Distribution -->
     <move todir="${maven.dist.dir}/${plutobin.dist.name}">
-      <fileset dir="${maven.dist.dir}/jakarta-tomcat-5.5.4"/>
+      <fileset dir="${maven.dist.dir}/jakarta-tomcat-5.5.7"/>
     </move>
 
     <!-- Rename tomcat's license -->
