@@ -26,6 +26,7 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 
 /**
  * @author <a href="david.dewolf@vivare.com">David H. DeWolf</a>
+ * @version $Id$
  */
 public class PortletTag extends BodyTagSupport {
 

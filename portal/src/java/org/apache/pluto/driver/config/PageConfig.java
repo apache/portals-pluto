@@ -52,6 +52,10 @@ public class PageConfig {
         return portletIds;
     }
 
+    public void setPortletIds(Collection ids) {
+        this.portletIds = ids;
+    }
+
     public void addPortlet(String contextPath, String portletName) {
         portletIds.add(
             PortletWindowConfig.createPortletId(contextPath, portletName));
@@ -64,5 +68,6 @@ public class PageConfig {
     int getOrderNumber() {
         return orderNumber;
     }
+
 
 }

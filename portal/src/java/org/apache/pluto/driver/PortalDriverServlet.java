@@ -112,20 +112,25 @@ public class PortalDriverServlet extends HttpServlet {
                 throw new ServletException(exc);
             }
         } else {
-            String currentPage = currentURL.getRenderPath();
-
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Rendering Portal: Requested Page: " + currentPage);
-            }
-            RenderConfig renderConfig = driverConfig.getRenderConfig();
-            PageConfig page = renderConfig.getPageConfig(currentPage);
-
+            PageConfig page = getPageConfig(currentURL);
             req.setAttribute(AttributeKeys.CURRENT_PAGE, page);
             String uri = page.getUri();
             RequestDispatcher disp = req.getRequestDispatcher(uri);
             disp.forward(req, res);
         }
     }
+
+    protected PageConfig getPageConfig(PortalURL currentURL) {
+        String currentPage = currentURL.getRenderPath();
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rendering Portal: Requested Page: " + currentPage);
+        }
+
+        RenderConfig renderConfig = driverConfig.getRenderConfig();
+        return renderConfig.getPageConfig(currentPage);
+    }
+
 
     /**
      * Pass all requests on to {@link #doPost(HttpServletRequest, HttpServletResponse)}.

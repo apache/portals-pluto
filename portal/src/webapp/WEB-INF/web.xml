@@ -28,18 +28,23 @@ limitations under the License.
         <display-name>Pluto Portal Driver</display-name>
         <description>Pluto Portal Driver Controller</description>
         <servlet-class>org.apache.pluto.driver.PortalDriverServlet</servlet-class>
-        <!-- Uncomment the following to allow for non latin-1 character sets in output. -->
-        <!--
-        <init-param>
-            <param-name>charset</param-name>
-            <param-value>utf-8</param-value>
-        </init-param>
-        -->
+    </servlet>
+
+    <servlet>
+        <servlet-name>tckDriver</servlet-name>
+        <display-name>Pluto TCK Driver</display-name>
+        <description>Pluto TCK Driver Controller</description>
+        <servlet-class>org.apache.pluto.driver.TCKDriverServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>plutoPortalDriver</servlet-name>
         <url-pattern>/portal/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>tckDriver</servlet-name>
+        <url-pattern>/tck/*</url-pattern>
     </servlet-mapping>
 
     <listener>
