@@ -17,6 +17,7 @@ package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 /**
  * Portlet Application Configuration.
@@ -50,6 +51,21 @@ public class PortletAppDD {
      */
     public void setPortlets(List portlets) {
         this.portlets = portlets;
+    }
+
+// Helpers
+
+    public PortletDD getPortlet(String name) {
+        ArrayList list = new ArrayList(portlets);
+        Iterator it = list.iterator();
+        PortletDD dd;
+        while(name != null && it.hasNext()) {
+            dd = (PortletDD)it.next();
+            if(name.equals(dd.getPortletName())) {
+                return dd;
+            }
+        }
+        return null;
     }
 
 

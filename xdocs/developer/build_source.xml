@@ -95,7 +95,7 @@ limitations under the License.
   <li>cd to the /portal directory.</li>
   <li>maven (with no goal)</li>
 </ol>
-<p>This will invoke the default maven goal for the /portal sub-project, deployPlutoToTomcat.
+<p>This will invoke the default maven goal for the /portal sub-project, tomcat:deploy.
   This will build and deploy the Pluto portal minus the test suite into
   tomcat.</p>
 </section>

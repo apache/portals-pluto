@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 
 /**
@@ -41,6 +43,16 @@ public class PortletAppDDTest extends TestCase {
 
     public void testCollectionsNotNull() {
         assertNotNull(dd.getPortlets());
+    }
+
+    public void testFindPortlet() {
+        PortletDD[] portlets = {new PortletDD(), new PortletDD()};
+        portlets[0].setPortletName("one");
+        portlets[1].setPortletName("two");
+        dd.setPortlets(Arrays.asList(portlets));
+
+        assertEquals(portlets[0], dd.getPortlet("one"));
+        assertEquals(portlets[1], dd.getPortlet("two"));
     }
 
 }
