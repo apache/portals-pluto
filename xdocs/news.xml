@@ -129,6 +129,11 @@ limitations under the License.
        instead of CVS.
       </p>
     </subsection>
+    <subsection name="May 2004 - Pluto moved issues to JIRA">
+      <p>As most projects in the ASF, we are superseding Bugzilla and
+	using JIRA to manage project issues. New URL for
+	<a href="http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10560">Pluto issues</a>.</p>
+    </subsection>
     <subsection name="21 March 2004 - Pluto Declaration of Intent Finalized">
       <p>The Pluto Community has finalized a declaration of intent which
          clarifies the direction with which Pluto development will
@@ -149,7 +154,7 @@ limitations under the License.
   </subsection>
   <subsection name="9 November 2003 - Pluto added to Bugzilla">
   <p>Pluto has been added to Bugzilla
-     <A href="http://nagoya.apache.org/bugzilla">(http://nagoya.apache.org/bugzilla)</A>.
+     <A href="http://issues.apache.org/bugzilla">(http://issues.apache.org/bugzilla)</A>.
      Issues, bugs, and enhancements will now be managed through this
      bug database.</p>
   </subsection>

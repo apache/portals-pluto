@@ -16,25 +16,25 @@
 	\container\src\conf\org\apache\pluto\environment.properties and \portal\src\webapp\WEB-INF\config\services\ConfigService.properties
   </action>
   <action dev="nlothian" type="fix">
-    Altered PortalActionProvider to suit Jetspeed better. See http://nagoya.apache.org/jira/browse/PLUTO-64
+    Altered PortalActionProvider to suit Jetspeed better. See http://issues.apache.org/jira/browse/PLUTO-64
   </action>
   <action dev="nlothian" type="fix">
-    Modified RenderResponseImpl.isValidContentType to correctly handle wildcard mime types. See http://nagoya.apache.org/jira/browse/PLUTO-84
+    Modified RenderResponseImpl.isValidContentType to correctly handle wildcard mime types. See http://issues.apache.org/jira/browse/PLUTO-84
   </action>
   <action dev="nlothian" type="fix">
-    Fixed to allow Pluto to work when disconnected from Internet. See http://nagoya.apache.org/jira/browse/PLUTO-88
+    Fixed to allow Pluto to work when disconnected from Internet. See http://issues.apache.org/jira/browse/PLUTO-88
   </action>
   <action dev="nlothian" type="fix">
     Fixed spelling error on login_success.jsp
   </action>
   <action dev="nlothian" type="fix">
-    Fixed TestSuite web.xml to be valid. http://nagoya.apache.org/jira/browse/PLUTO-81
+    Fixed TestSuite web.xml to be valid. http://issues.apache.org/jira/browse/PLUTO-81
   </action>
   <action dev="nlothian" type="fix">
-    Fix for renderResponse.getNamespace() returns invalid Javascript name. See http://nagoya.apache.org/jira/browse/PLUTO-85
+    Fix for renderResponse.getNamespace() returns invalid Javascript name. See http://issues.apache.org/jira/browse/PLUTO-85
   </action>
   <action dev="nlothian" type="add">
-    Patch from Craig Doremus to allow portlet deployment using Ant. See http://nagoya.apache.org/jira/browse/PLUTO-72
+    Patch from Craig Doremus to allow portlet deployment using Ant. See http://issues.apache.org/jira/browse/PLUTO-72
   </action>
   <action dev="nlothian" type="update">
     Updated build.properties.sample to use Tomcat 5 by default
@@ -88,23 +88,23 @@
 <release version="1.0.1-rc1" date="Oct 8, 2004" description="Release Candidate">
   <action dev="ddewolf" type="fix">
     Updating Pluto JavaDocs.
-    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-28">PLUTO-46</A>)
+    (<A href="http://issues.apache.org/jira/browse/PLUTO-28">PLUTO-46</A>)
   </action>
   <action dev="ddewolf" type="fix">
     Support role mapping in portlet.xml
-    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-46">PLUTO-46</A>)
+    (<A href="http://issues.apache.org/jira/browse/PLUTO-46">PLUTO-46</A>)
   </action>
   <action dev="ddewolf" type="fix">
     Support multiple resource-ref entried in portlet app web.xml
-    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-48">PLUTO-48</A>)
+    (<A href="http://issues.apache.org/jira/browse/PLUTO-48">PLUTO-48</A>)
   </action>
   <action dev="ddewolf" type="fix">
     Removed fullDeployment dependency from pluto deployer.
-    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-49">PLUTO-49</A>)
+    (<A href="http://issues.apache.org/jira/browse/PLUTO-49">PLUTO-49</A>)
   </action>
   <action dev="ddewolf" type="fix">
     Implement Mime Type Matching.
-    (<A href="http://nagoya.apache.org/jira/browse/PLUTO-55">PLUTO-55</A>)
+    (<A href="http://issues.apache.org/jira/browse/PLUTO-55">PLUTO-55</A>)
   </action>
   <action dev="cziegeler" type="fix">
     Add handling of mime-mappings in web application definition.

@@ -80,7 +80,7 @@ limitations under the License.
   <p>The Javaworld examples are based on the <b>Proposed Final Draft</b>
      of JSR-168.  The final specification included several changes,
      including some changes to the xsd.</p>
-  <p>Please see the <A href="http://nagoya.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27">
+  <p>Please see the <A href="http://issues.apache.org/eyebrowse/ReadMsg?listName=pluto-user@jakarta.apache.org&amp;msgNo=27">
      message archives</A>for a modified version of this example
      which will work with Pluto.</p>
   </answer>
