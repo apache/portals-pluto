@@ -43,8 +43,8 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
         res.setName("Get Init Parameter Enumeration Test");
         res.setDesc("Test the initialization parameter enumeration.");
 
-        Enumeration enum = ctx.getInitParameterNames();
-        if (enum.hasMoreElements()) {
+        Enumeration enumerator= ctx.getInitParameterNames();
+        if (enumerator.hasMoreElements()) {
             res.setReturnCode(TestResult.PASSED);
         }
         else {
@@ -60,9 +60,9 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
         res.setDesc("Test to make sure that the expected init parameters exist.");
 
         boolean found = false;
-        Enumeration enum = ctx.getInitParameterNames();
-        while(enum.hasMoreElements()) {
-            String name = (String)enum.nextElement();
+        Enumeration enumerator= ctx.getInitParameterNames();
+        while(enumerator.hasMoreElements()) {
+            String name = (String)enumerator.nextElement();
             if(TEST_PARAM_NAME.equals(name)) {
                 found = true;
             }

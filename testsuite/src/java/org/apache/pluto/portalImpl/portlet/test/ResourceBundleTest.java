@@ -76,9 +76,9 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         keys.add("javax.portlet.keywords");
 
         ResourceBundle rb = config.getResourceBundle(req.getLocale());
-        Enumeration enum = rb.getKeys();
-        while(enum.hasMoreElements()) {
-            String key = enum.nextElement().toString();
+        Enumeration enumerator= rb.getKeys();
+        while(enumerator.hasMoreElements()) {
+            String key = enumerator.nextElement().toString();
             keys.remove(key);
         }
 

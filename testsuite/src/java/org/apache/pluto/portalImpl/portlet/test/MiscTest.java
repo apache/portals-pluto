@@ -114,9 +114,9 @@ public class MiscTest extends AbstractReflectivePortletTest {
         boolean hasEdit = false;
         boolean hasHelp = false;
 
-        Enumeration enum = req.getPortalContext().getSupportedPortletModes();
-        while(enum.hasMoreElements()) {
-            PortletMode mode = (PortletMode)enum.nextElement();
+        Enumeration enumerator= req.getPortalContext().getSupportedPortletModes();
+        while(enumerator.hasMoreElements()) {
+            PortletMode mode = (PortletMode)enumerator.nextElement();
             if(mode.equals(PortletMode.VIEW)) {
                 hasView  = true;
             }
@@ -156,9 +156,9 @@ public class MiscTest extends AbstractReflectivePortletTest {
         boolean hasMax = false;
         boolean hasNor = false;
 
-        Enumeration enum = req.getPortalContext().getSupportedWindowStates();
-        while(enum.hasMoreElements()) {
-            WindowState mode = (WindowState)enum.nextElement();
+        Enumeration enumerator= req.getPortalContext().getSupportedWindowStates();
+        while(enumerator.hasMoreElements()) {
+            WindowState mode = (WindowState)enumerator.nextElement();
             if(mode.equals(WindowState.MINIMIZED)) {
                 hasMin  = true;
             }

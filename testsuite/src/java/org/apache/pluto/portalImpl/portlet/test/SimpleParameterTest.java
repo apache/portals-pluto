@@ -80,9 +80,9 @@ public class SimpleParameterTest extends AbstractReflectivePortletTest {
 
         boolean hasExternal = false;
         boolean hasInternal = false;
-        Enumeration enum = req.getParameterNames();
-        while(enum.hasMoreElements()) {
-            String val = enum.nextElement().toString();
+        Enumeration enumerator= req.getParameterNames();
+        while(enumerator.hasMoreElements()) {
+            String val = enumerator.nextElement().toString();
             if(KEY.equals(val)) {
                 hasExternal = true;
             }

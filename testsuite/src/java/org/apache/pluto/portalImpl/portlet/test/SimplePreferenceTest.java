@@ -385,10 +385,10 @@ public class SimplePreferenceTest
 
         PortletPreferences prefs = req.getPreferences();
         Map map = prefs.getMap();
-        Enumeration enum = prefs.getNames();
+        Enumeration enumerator= prefs.getNames();
         boolean hasAll = true;
-        while(enum.hasMoreElements()) {
-            if(!map.containsKey(enum.nextElement())) {
+        while(enumerator.hasMoreElements()) {
+            if(!map.containsKey(enumerator.nextElement())) {
                 hasAll = false;
                 break;
             }

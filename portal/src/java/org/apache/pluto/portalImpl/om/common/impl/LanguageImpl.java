@@ -55,8 +55,8 @@ public class LanguageImpl implements Language, java.io.Serializable {
 
         private void importData(ResourceBundle bundle) {
             if (bundle != null) {
-                for (Enumeration enum = bundle.getKeys(); enum.hasMoreElements();) {
-                    String key   = (String)enum.nextElement();
+                for (Enumeration enumerator= bundle.getKeys(); enumerator.hasMoreElements();) {
+                    String key   = (String)enumerator.nextElement();
                     Object value = bundle.getObject(key);
                     data.put(key, value);
                 }

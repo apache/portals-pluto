@@ -113,9 +113,9 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         }
 
         int found = 0;
-        Enumeration enum = req.getAttributeNames();
-        while(enum.hasMoreElements()) {
-            if(enum.nextElement().toString().startsWith(KEY)) {
+        Enumeration enumerator= req.getAttributeNames();
+        while(enumerator.hasMoreElements()) {
+            if(enumerator.nextElement().toString().startsWith(KEY)) {
                 found++;
             }
         }
@@ -199,9 +199,9 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         }
 
         int found = 0;
-        Enumeration enum = req.getAttributeNames();
-        while(enum.hasMoreElements()) {
-            if(enum.nextElement().toString().startsWith(KEY)) {
+        Enumeration enumerator= req.getAttributeNames();
+        while(enumerator.hasMoreElements()) {
+            if(enumerator.nextElement().toString().startsWith(KEY)) {
                 found++;
             }
         }
@@ -285,9 +285,9 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         }
 
         int found = 0;
-        Enumeration enum = req.getAttributeNames();
-        while(enum.hasMoreElements()) {
-            if(enum.nextElement().toString().startsWith(KEY)) {
+        Enumeration enumerator= req.getAttributeNames();
+        while(enumerator.hasMoreElements()) {
+            if(enumerator.nextElement().toString().startsWith(KEY)) {
                 found++;
             }
         }

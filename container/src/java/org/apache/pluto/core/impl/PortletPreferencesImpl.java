@@ -256,10 +256,10 @@ public class PortletPreferencesImpl implements PortletPreferences
     public Map getMap()
     {
         HashMap map = new HashMap();
-        Enumeration enum = this.getNames();
-        while (enum.hasMoreElements())
+        Enumeration enumerator= this.getNames();
+        while (enumerator.hasMoreElements())
         {
-            String name = (String)enum.nextElement();
+            String name = (String)enumerator.nextElement();
             map.put(name, getValues(name,null));
         }
 
