@@ -79,6 +79,22 @@ limitations under the License.
       </properties>
     </dependency>
 
+    <dependency>
+        <id>commons-fileupload</id>
+        <version>1.0</version>
+        <url>http://jakarta.apache.org/commons/fileupload</url>
+        <properties>
+            <war.bundle>true</war.bundle>
+        </properties>
+    </dependency>
+
+    <dependency>
+      <id>junit</id>
+      <version>3.8.1</version>
+      <properties>
+        <war.bundle>false</war.bundle>
+      </properties>
+    </dependency>
     <!--
     	- Both xerces and xmlApis should be located in
     	- your common/endorsed directory in Tomcat

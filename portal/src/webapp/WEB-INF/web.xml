@@ -41,7 +41,52 @@ limitations under the License.
         <description>Test servlet for TCK Tests</description>
         <servlet-class>org.apache.pluto.portalImpl.servlet.TCKdriver</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>portletentityregistry</servlet-name>
+        <display-name>portletentityregistry Wrapper</display-name>
+        <description>Automated generated Portlet Wrapper</description>
+        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+        <init-param>
+            <param-name>portlet-class</param-name>
+            <param-value>org.apache.pluto.portlet.admin.controller.PortletEntityRegistryPortlet</param-value>
+        </init-param>
+        <init-param>
+            <param-name>portlet-guid</param-name>
+            <param-value>pluto.portletentityregistry</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>pageregistry</servlet-name>
+        <display-name>pageregistry Wrapper</display-name>
+        <description>Automated generated Portlet Wrapper</description>
+        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+        <init-param>
+            <param-name>portlet-class</param-name>
+            <param-value>org.apache.pluto.portlet.admin.controller.PageRegistryPortlet</param-value>
+        </init-param>
+        <init-param>
+            <param-name>portlet-guid</param-name>
+            <param-value>pluto.pageregistry</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>deploywar</servlet-name>
+        <display-name>deploywar Wrapper</display-name>
+        <description>Automated generated Portlet Wrapper</description>
+        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+        <init-param>
+            <param-name>portlet-class</param-name>
+            <param-value>org.apache.pluto.portlet.admin.controller.DeployWarPortlet</param-value>
+        </init-param>
+        <init-param>
+            <param-name>portlet-guid</param-name>
+            <param-value>pluto.deploywar</param-value>
+        </init-param>
+    </servlet>
+ 
+    <!-- ======================= -->
+    <!-- Portal Driver Servlets  -->
+    <!-- ======================= -->
     <servlet-mapping>
        <servlet-name>pluto</servlet-name>
        <url-pattern>/portal/*</url-pattern>
@@ -55,18 +100,28 @@ limitations under the License.
         <url-pattern>/tck/*</url-pattern>
     </servlet-mapping>
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name></web-resource-name>
-            <url-pattern>/login_success.jsp</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-            <http-method>PUT</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>tomcat</role-name>
-        </auth-constraint>
-    </security-constraint>
+    <!-- ======================= -->
+    <!-- Administrative Portlets -->
+    <!-- ======================= -->
+    <servlet-mapping>
+        <servlet-name>deploywar</servlet-name>
+        <url-pattern>/deploywar/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portletentityregistry</servlet-name>
+        <url-pattern>/portletentityregistry/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>pageregistry</servlet-name>
+        <url-pattern>/pageregistry/*</url-pattern>
+    </servlet-mapping>
+
+    <taglib>
+      <taglib-uri>http://portals.apache.org/pluto/admin</taglib-uri>
+      <taglib-location>/WEB-INF/pluto-admin.tld</taglib-location>
+    </taglib>
 
     <security-constraint>
       <web-resource-collection>

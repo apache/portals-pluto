@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!-- 
-Copyright 2004 The Apache Software Foundation
+Copyright 2004,2005 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
 You may obtain a copy of the License at 
@@ -21,9 +21,20 @@ limitations under the License.
         <portlet id="1">
             <definition-id>testsuite.TestPortlet1</definition-id>
             <preferences>
+                <pref-name>TEST</pref-name>
+                <pref-value>TEST_VALUE</pref-value>
+                <pref-value>ANOTHER</pref-value>
+                <read-only>false</read-only>
+            </preferences>
+            <preferences>
                 <pref-name>TestName4</pref-name>
                 <pref-value>TestValue4</pref-value>
                 <read-only>true</read-only>
+            </preferences>
+            <preferences>
+                <pref-name>org.apache.pluto.testsuite.BOGUS_KEY</pref-name>
+                <pref-value>notTheOriginal</pref-value>
+                <read-only>false</read-only>
             </preferences>
         </portlet>
     </application>
@@ -36,6 +47,18 @@ limitations under the License.
                 <pref-value>TestValue4</pref-value>
                 <read-only>true</read-only>
             </preferences>
+        </portlet>
+    </application>
+    <application id="5">
+        <definition-id>pluto</definition-id>
+        <portlet id="0">
+            <definition-id>pluto.deploywar</definition-id>
+        </portlet>
+        <portlet id="1">
+            <definition-id>pluto.portletentityregistry</definition-id>
+        </portlet>
+        <portlet id="2">
+            <definition-id>pluto.pageregistry</definition-id>
         </portlet>
     </application>
 </portlet-entity-registry>

@@ -1,5 +1,5 @@
 /*
-Copyright 2004 The Apache Software Foundation
+Copyright 2004,2005 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
 You may obtain a copy of the License at
@@ -45,12 +45,20 @@ The font style definitions affect the font attributes only (font face, size, col
 /* Font attributes for the "normal" fragment font. Used for the display of non-accentuated information. 
 Example: Normal Text */
 .portlet-font {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10pt;
+	color:black;
 }
 
 /* Font attributes similar to the portlet-font but the color is lighter. Example: Dim Text */
 .portlet-font-dim {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10pt;
+	color:lightgrey;
 }
 
 /*****************************************************************************************
@@ -60,43 +68,72 @@ background color, etc) as well as text attributes.
 ******************************************************************************************/
 /* Status of the current operation. Example: Progress: 80% */
 .portlet-msg-status {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size:10pt;
+   	color:black;
 }
 
 /* Help messages, general additional information, etc. Example: Info about */
 .portlet-msg-info {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size:10pt;
+   	color:blue;
 }
 
 /* Error messages. 
 Example: Portlet not available*/
 .portlet-msg-error {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size:8pt;
+   	color:red;
 }
 
 /* Warning messages. 
 Example: Timeout occurred, try again later */
 .portlet-msg-alert {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size:10pt;
+   	color:yellow;
 }
 
 /* Verification of the successful completion of a task. Example: Operation completed successfully */
 .portlet-msg-success {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size:10pt;
+   	color:green;
 }
 
 /*****************************************************************************************
 PLT.C.4 Sections
-Section style definitions affect the rendering of markup sections such as table, div and 5 
+Section style definitions affect the rendering of markup sections such as table, div and  
 span (alignment, borders, background color, etc) as well as their text attributes.
 ******************************************************************************************/
 /* Table or section header */
 .portlet-section-header {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 16pt;
+	margin-top: 0; 
+	margin-bottom: 1em;
 }
 
 /* Normal text in a table cell */
 .portlet-section-body {
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12pt;
 
 }
 
@@ -112,7 +149,10 @@ span (alignment, borders, background color, etc) as well as their text attribute
 
 /* Text of a subheading */
 .portlet-section-subheader {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 12pt;
 }
 
 /* Table or section footnote */
@@ -133,17 +173,29 @@ Form styles define the look-and-feel of the elements in an HTML form.
 ******************************************************************************************/
 /* Text used for the descriptive label of the whole form (not the labels for fields). */
 .portlet-form-label {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 12pt;
+	color: black;
 }
 
 /* Text of the user-input in an input field. */
 .portlet-form-input-field {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10pt;
+	color: black;
 }
 
 /* Text on a button */
 .portlet-form-button {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12pt;
+	color: black;
 }
 
 /* Text that appears beside a context dependent action icon. */
@@ -158,7 +210,11 @@ Form styles define the look-and-feel of the elements in an HTML form.
 
 /* Text for a separator of fields (e.g. checkboxes, etc.) */
 .portlet-form-field-label {
-
+	font-family: Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 10pt;
+	color: black;
 }
 
 /* Text for a field (not input field, e.g. checkboxes, etc) */

@@ -18,7 +18,11 @@ limitations under the License.
 <table>
   <tr><th><img src="http://portals.apache.org/pluto/images/pluto.png"/></th></tr>
   <tr class="banner"><td>Pluto Portal Driver <FONT class="small">(<%=Config.getParameters().getString("portaldriver.info")%>)</FONT></td>
-      <td align="right"><A href="<%=request.getContextPath()%>/login_success.jsp">Login</A></td>
+      <td align="right">
+       <% if(request.getUserPrincipal()==null) { %>
+         <A href="<%=request.getContextPath()%>/secure/">Login</A>
+       <% } %>
+      </td>
   </tr>
 </table>
 <br>
