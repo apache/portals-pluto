@@ -1,0 +1,398 @@
+<html>
+<body bgcolor="white">
+<pre>
+<table bgcolor="#FFFFCC" cellpadding="0" cellspacing="0" border="0" width="100%"><a href="../../../../../../apidocs/org/apache/pluto/core/impl/PortletPreferencesImpl.html">View Javadoc</a></table>
+<a name="1" href="#1">1</a>   <font color="#329900"><i>/*</i></font>
+<a name="2" href="#2">2</a>   <font color="#329900"><i> * Copyright 2003,2004 The Apache Software Foundation.</i></font>
+<a name="3" href="#3">3</a>   <font color="#329900"><i> * </i></font>
+<a name="4" href="#4">4</a>   <font color="#329900"><i> * Licensed under the Apache License, Version 2.0 (the "License");</i></font>
+<a name="5" href="#5">5</a>   <font color="#329900"><i> * you may not use this file except in compliance with the License.</i></font>
+<a name="6" href="#6">6</a>   <font color="#329900"><i> * You may obtain a copy of the License at</i></font>
+<a name="7" href="#7">7</a>   <font color="#329900"><i> * </i></font>
+<a name="8" href="#8">8</a>   <font color="#329900"><i> *      <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></i></font>
+<a name="9" href="#9">9</a>   <font color="#329900"><i> * </i></font>
+<a name="10" href="#10">10</a>  <font color="#329900"><i> * Unless required by applicable law or agreed to in writing, software</i></font>
+<a name="11" href="#11">11</a>  <font color="#329900"><i> * distributed under the License is distributed on an "AS IS" BASIS,</i></font>
+<a name="12" href="#12">12</a>  <font color="#329900"><i> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</i></font>
+<a name="13" href="#13">13</a>  <font color="#329900"><i> * See the License for the specific language governing permissions and</i></font>
+<a name="14" href="#14">14</a>  <font color="#329900"><i> * limitations under the License.</i></font>
+<a name="15" href="#15">15</a>  <font color="#329900"><i> */</i></font>
+<a name="16" href="#16">16</a>  <font color="#329900"><i>/*<font color="#329900"><i> </i></font></i></font>
+<a name="17" href="#17">17</a>  
+<a name="18" href="#18">18</a>  <font color="#329900"><i> */</i></font>
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  <b>package</b> <a href="../../../../../org/apache/pluto/core/impl/package-summary.html">org.apache.pluto.core.impl</a>;
+<a name="21" href="#21">21</a>  
+<a name="22" href="#22">22</a>  <b>import</b> java.util.ArrayList;
+<a name="23" href="#23">23</a>  <b>import</b> java.util.Collections;
+<a name="24" href="#24">24</a>  <b>import</b> java.util.Enumeration;
+<a name="25" href="#25">25</a>  <b>import</b> java.util.HashMap;
+<a name="26" href="#26">26</a>  <b>import</b> java.util.HashSet;
+<a name="27" href="#27">27</a>  <b>import</b> java.util.Iterator;
+<a name="28" href="#28">28</a>  <b>import</b> java.util.LinkedList;
+<a name="29" href="#29">29</a>  <b>import</b> java.util.List;
+<a name="30" href="#30">30</a>  <b>import</b> java.util.ListIterator;
+<a name="31" href="#31">31</a>  <b>import</b> java.util.Map;
+<a name="32" href="#32">32</a>  
+<a name="33" href="#33">33</a>  <b>import</b> javax.portlet.PortletPreferences;
+<a name="34" href="#34">34</a>  <b>import</b> javax.portlet.PreferencesValidator;
+<a name="35" href="#35">35</a>  <b>import</b> javax.portlet.ReadOnlyException;
+<a name="36" href="#36">36</a>  <b>import</b> javax.portlet.ValidatorException;
+<a name="37" href="#37">37</a>  
+<a name="38" href="#38">38</a>  <b>import</b> org.apache.pluto.om.ControllerObjectAccess;
+<a name="39" href="#39">39</a>  <b>import</b> org.apache.pluto.om.common.Preference;
+<a name="40" href="#40">40</a>  <b>import</b> org.apache.pluto.om.common.PreferenceCtrl;
+<a name="41" href="#41">41</a>  <b>import</b> org.apache.pluto.om.common.PreferenceSet;
+<a name="42" href="#42">42</a>  <b>import</b> org.apache.pluto.om.common.PreferenceSetCtrl;
+<a name="43" href="#43">43</a>  <b>import</b> org.apache.pluto.om.entity.PortletEntity;
+<a name="44" href="#44">44</a>  <b>import</b> org.apache.pluto.om.entity.PortletEntityCtrl;
+<a name="45" href="#45">45</a>  <b>import</b> org.apache.pluto.om.portlet.PortletDefinition;
+<a name="46" href="#46">46</a>  <b>import</b> org.apache.pluto.om.portlet.PortletDefinitionCtrl;
+<a name="47" href="#47">47</a>  <b>import</b> org.apache.pluto.util.Enumerator;
+<a name="48" href="#48">48</a>  
+<a name="49" href="#49">49</a>  
+<a name="50" href="#50">50</a>  <b>public</b> <b>class</b> <a href="../../../../../org/apache/pluto/core/impl/PortletPreferencesImpl.html">PortletPreferencesImpl</a> implements PortletPreferences
+<a name="51" href="#51">51</a>  {
+<a name="52" href="#52">52</a>      <b>private</b> List    preferenceSetList  = <b>new</b> LinkedList();
+<a name="53" href="#53">53</a>      <b>private</b> HashMap changedPreferences = <b>new</b> HashMap();
+<a name="54" href="#54">54</a>      <b>private</b> HashSet removedPreferences = <b>new</b> HashSet();
+<a name="55" href="#55">55</a>  
+<a name="56" href="#56">56</a>  
+<a name="57" href="#57">57</a>      <font color="#329900"><i>// current method used for managing these preferences</i></font>
+<a name="58" href="#58">58</a>      <b>private</b> Integer methodId = <b>null</b>;
+<a name="59" href="#59">59</a>  
+<a name="60" href="#60">60</a>      <b>private</b> <a href="../../../../../org/apache/pluto/om/entity/PortletEntity.html">PortletEntity</a> portletEntity = <b>null</b>;
+<a name="61" href="#61">61</a>      <b>private</b> <a href="../../../../../org/apache/pluto/om/portlet/PortletDefinition.html">PortletDefinition</a> portletDefinition = <b>null</b>;
+<a name="62" href="#62">62</a>  
+<a name="63" href="#63">63</a>  
+<a name="64" href="#64">64</a>      <b>public</b> <a href="../../../../../org/apache/pluto/core/impl/PortletPreferencesImpl.html">PortletPreferencesImpl</a>(Integer methodId, <a href="../../../../../org/apache/pluto/om/entity/PortletEntity.html">PortletEntity</a> portletEntity)
+<a name="65" href="#65">65</a>      {
+<a name="66" href="#66">66</a>          <b>this</b>.methodId = methodId;
+<a name="67" href="#67">67</a>  
+<a name="68" href="#68">68</a>          <b>this</b>.portletEntity = portletEntity;
+<a name="69" href="#69">69</a>          <b>this</b>.portletDefinition = portletEntity.getPortletDefinition();
+<a name="70" href="#70">70</a>  
+<a name="71" href="#71">71</a>          <font color="#329900"><i>// fill list of preference sets</i></font>
+<a name="72" href="#72">72</a>          preferenceSetList.add(portletEntity.getPreferenceSet());
+<a name="73" href="#73">73</a>          preferenceSetList.add(portletDefinition.getPreferenceSet());
+<a name="74" href="#74">74</a>  
+<a name="75" href="#75">75</a>      }
+<a name="76" href="#76">76</a>  
+<a name="77" href="#77">77</a>      <b>public</b> <a href="../../../../../org/apache/pluto/core/impl/PortletPreferencesImpl.html">PortletPreferencesImpl</a>(Integer methodId, <a href="../../../../../org/apache/pluto/om/portlet/PortletDefinition.html">PortletDefinition</a> portletDefinition)
+<a name="78" href="#78">78</a>      {
+<a name="79" href="#79">79</a>          <b>this</b>.methodId = methodId;
+<a name="80" href="#80">80</a>  
+<a name="81" href="#81">81</a>          <b>this</b>.portletDefinition = portletDefinition;     
+<a name="82" href="#82">82</a>  
+<a name="83" href="#83">83</a>          <font color="#329900"><i>// fill list of preference sets</i></font>
+<a name="84" href="#84">84</a>          preferenceSetList.add(portletDefinition.getPreferenceSet());
+<a name="85" href="#85">85</a>      }
+<a name="86" href="#86">86</a>  
+<a name="87" href="#87">87</a>      <font color="#329900"><i>// javax.portlet.PortletPreferences implementation --------------------------------------------</i></font>
+<a name="88" href="#88">88</a>      <b>public</b> <b>boolean</b> isReadOnly(String key)
+<a name="89" href="#89">89</a>      {
+<a name="90" href="#90">90</a>          <b>if</b> (key == <b>null</b>)
+<a name="91" href="#91">91</a>          {
+<a name="92" href="#92">92</a>              <b>throw</b> <b>new</b> IllegalArgumentException(<font color="#000099">"key == null"</font>);
+<a name="93" href="#93">93</a>          }
+<a name="94" href="#94">94</a>  
+<a name="95" href="#95">95</a>          <font color="#329900"><i>// default is false</i></font>
+<a name="96" href="#96">96</a>          <b>boolean</b> isReadOnly = false;
+<a name="97" href="#97">97</a>  
+<a name="98" href="#98">98</a>          <font color="#329900"><i>// if managing the first layer of the preferences </i></font>
+<a name="99" href="#99">99</a>          <font color="#329900"><i>// modifiable returns always true (for administration purposes)</i></font>
+<a name="100" href="#100">100</a>         <b>if</b> (preferenceSetList.size() != 1)
+<a name="101" href="#101">101</a>         { <font color="#329900"><i>// otherwise</i></font>
+<a name="102" href="#102">102</a>             <font color="#329900"><i>// iterate through all preferences</i></font>
+<a name="103" href="#103">103</a>             <a href="../../../../../org/apache/pluto/om/common/Preference.html">Preference</a> preference = <b>null</b>;
+<a name="104" href="#104">104</a>             ListIterator iter = preferenceSetList.listIterator();
+<a name="105" href="#105">105</a>             <b>while</b> ((preference == <b>null</b>) && (iter.hasNext()))
+<a name="106" href="#106">106</a>             {
+<a name="107" href="#107">107</a>                 preference = ((PreferenceSet)iter.next()).get(key);
+<a name="108" href="#108">108</a>             }
+<a name="109" href="#109">109</a>             <b>if</b> (preference != <b>null</b>)
+<a name="110" href="#110">110</a>             {
+<a name="111" href="#111">111</a>                 isReadOnly = preference.isReadOnly();
+<a name="112" href="#112">112</a>             }
+<a name="113" href="#113">113</a>         }
+<a name="114" href="#114">114</a>         <b>return</b> isReadOnly;
+<a name="115" href="#115">115</a>     }
+<a name="116" href="#116">116</a> 
+<a name="117" href="#117">117</a>     <b>public</b> String getValue(String key, String def)
+<a name="118" href="#118">118</a>     {
+<a name="119" href="#119">119</a>         <b>if</b> (key == <b>null</b>)
+<a name="120" href="#120">120</a>         {
+<a name="121" href="#121">121</a>             <b>throw</b> <b>new</b> IllegalArgumentException(<font color="#000099">"key == null"</font>);
+<a name="122" href="#122">122</a>         }
+<a name="123" href="#123">123</a> 
+<a name="124" href="#124">124</a>         String[] defStr = <b>new</b> String[1];
+<a name="125" href="#125">125</a>         defStr[0] = def;
+<a name="126" href="#126">126</a> 
+<a name="127" href="#127">127</a>         String[] values = <b>this</b>.getValues(key, defStr);
+<a name="128" href="#128">128</a> 
+<a name="129" href="#129">129</a>         <font color="#329900"><i>// null values are allowed</i></font>
+<a name="130" href="#130">130</a>         <b>if</b> ((values == <b>null</b>) || (values.length==0))
+<a name="131" href="#131">131</a>         {
+<a name="132" href="#132">132</a>             <b>return</b> <b>null</b>;
+<a name="133" href="#133">133</a>         }
+<a name="134" href="#134">134</a> 
+<a name="135" href="#135">135</a>         <b>return</b> values[0];
+<a name="136" href="#136">136</a>     }
+<a name="137" href="#137">137</a> 
+<a name="138" href="#138">138</a>     <b>public</b> String[] getValues(String key, String[] def)
+<a name="139" href="#139">139</a>     {
+<a name="140" href="#140">140</a>         <b>if</b> (key == <b>null</b>)
+<a name="141" href="#141">141</a>         {
+<a name="142" href="#142">142</a>             <b>throw</b> <b>new</b> IllegalArgumentException(<font color="#000099">"key == null"</font>);
+<a name="143" href="#143">143</a>         }
+<a name="144" href="#144">144</a> 
+<a name="145" href="#145">145</a>         <font color="#329900"><i>// get modified preferences</i></font>
+<a name="146" href="#146">146</a>         <b>if</b> (changedPreferences.containsKey(key))
+<a name="147" href="#147">147</a>         {
+<a name="148" href="#148">148</a>             <b>return</b>(String[]) changedPreferences.get(key);
+<a name="149" href="#149">149</a>         }
+<a name="150" href="#150">150</a> 
+<a name="151" href="#151">151</a>         <font color="#329900"><i>// get all preference sets</i></font>
+<a name="152" href="#152">152</a>         ListIterator iter = preferenceSetList.listIterator();
+<a name="153" href="#153">153</a> 
+<a name="154" href="#154">154</a>         <font color="#329900"><i>// if removed preference do not look in first layer</i></font>
+<a name="155" href="#155">155</a>         <b>if</b> (removedPreferences.contains(key))
+<a name="156" href="#156">156</a>         {
+<a name="157" href="#157">157</a>             iter.next();
+<a name="158" href="#158">158</a>         }
+<a name="159" href="#159">159</a> 
+<a name="160" href="#160">160</a>         <font color="#329900"><i>// iterate through all preference sets</i></font>
+<a name="161" href="#161">161</a>         <a href="../../../../../org/apache/pluto/om/common/Preference.html">Preference</a> preference = <b>null</b>;
+<a name="162" href="#162">162</a>         <b>while</b> ((preference == <b>null</b>) && (iter.hasNext()))
+<a name="163" href="#163">163</a>         {
+<a name="164" href="#164">164</a>             preference = ((PreferenceSet)iter.next()).get(key);
+<a name="165" href="#165">165</a>         }
+<a name="166" href="#166">166</a> 
+<a name="167" href="#167">167</a>         <b>if</b> (preference == <b>null</b> || !preference.isValueSet())
+<a name="168" href="#168">168</a>         {
+<a name="169" href="#169">169</a>             <font color="#329900"><i>// if preference not exists</i></font>
+<a name="170" href="#170">170</a>             <b>return</b> def;
+<a name="171" href="#171">171</a>         }
+<a name="172" href="#172">172</a>         <b>else</b>
+<a name="173" href="#173">173</a>         { <font color="#329900"><i>// if preference exists</i></font>
+<a name="174" href="#174">174</a>             <b>return</b> <b>this</b>.getValuesFromPreference(preference);
+<a name="175" href="#175">175</a>         }
+<a name="176" href="#176">176</a>     }
+<a name="177" href="#177">177</a>     
+<a name="178" href="#178">178</a>     <b>public</b> <b>void</b> setValue(String key, String value) throws ReadOnlyException
+<a name="179" href="#179">179</a>     {
+<a name="180" href="#180">180</a>         <b>if</b> (key == <b>null</b>)
+<a name="181" href="#181">181</a>         {
+<a name="182" href="#182">182</a>             <b>throw</b> <b>new</b> IllegalArgumentException(<font color="#000099">"key == null"</font>);
+<a name="183" href="#183">183</a>         }
+<a name="184" href="#184">184</a> 
+<a name="185" href="#185">185</a>         String[] values =  <b>new</b> String[1];
+<a name="186" href="#186">186</a>         values[0] = value;
+<a name="187" href="#187">187</a>         setValues(key, values);
+<a name="188" href="#188">188</a>     }
+<a name="189" href="#189">189</a> 
+<a name="190" href="#190">190</a>     <b>public</b> <b>void</b> setValues(String key, String[] values) throws ReadOnlyException
+<a name="191" href="#191">191</a>     {
+<a name="192" href="#192">192</a>         <b>if</b> (key == <b>null</b>)
+<a name="193" href="#193">193</a>         {
+<a name="194" href="#194">194</a>             <b>throw</b> <b>new</b> IllegalArgumentException(<font color="#000099">"key == null"</font>);
+<a name="195" href="#195">195</a>         }
+<a name="196" href="#196">196</a> 
+<a name="197" href="#197">197</a>         <b>if</b> (isReadOnly(key))
+<a name="198" href="#198">198</a>         {
+<a name="199" href="#199">199</a>             <b>throw</b> <b>new</b> ReadOnlyException(<font color="#000099">"Preference attribute called "</font> + key + <font color="#000099">" may not be modified"</font>);
+<a name="200" href="#200">200</a>         }
+<a name="201" href="#201">201</a> 
+<a name="202" href="#202">202</a>         changedPreferences.put(key, values);
+<a name="203" href="#203">203</a>         removedPreferences.remove(key);
+<a name="204" href="#204">204</a> 
+<a name="205" href="#205">205</a>     }
+<a name="206" href="#206">206</a> 
+<a name="207" href="#207">207</a>     <b>public</b> Enumeration getNames()
+<a name="208" href="#208">208</a>     {
+<a name="209" href="#209">209</a>         HashSet keyset = <b>new</b> HashSet();
+<a name="210" href="#210">210</a>         ListIterator listIter = preferenceSetList.listIterator();
+<a name="211" href="#211">211</a>         Iterator changedIter = changedPreferences.keySet().iterator();
+<a name="212" href="#212">212</a>         Iterator removedIter = removedPreferences.iterator();
+<a name="213" href="#213">213</a> 
+<a name="214" href="#214">214</a>         <font color="#329900"><i>// iterate through all modified preferences of first layer</i></font>
+<a name="215" href="#215">215</a>         <b>while</b> (changedIter.hasNext())
+<a name="216" href="#216">216</a>         {
+<a name="217" href="#217">217</a>             keyset.add((String)changedIter.next());
+<a name="218" href="#218">218</a>         }
+<a name="219" href="#219">219</a> 
+<a name="220" href="#220">220</a>         <font color="#329900"><i>// iterate through all existing preferences of first layer</i></font>
+<a name="221" href="#221">221</a>         Iterator preferencesIter = ((PreferenceSet)listIter.next()).iterator();
+<a name="222" href="#222">222</a>         <b>while</b> (preferencesIter.hasNext())
+<a name="223" href="#223">223</a>         {
+<a name="224" href="#224">224</a>             String name = ((Preference)preferencesIter.next()).getName();
+<a name="225" href="#225">225</a>             keyset.add(name);
+<a name="226" href="#226">226</a>         }
+<a name="227" href="#227">227</a> 
+<a name="228" href="#228">228</a>         <font color="#329900"><i>// iterate through all removed preferences of first layer      </i></font>
+<a name="229" href="#229">229</a>         <b>while</b> (removedIter.hasNext())
+<a name="230" href="#230">230</a>         {
+<a name="231" href="#231">231</a>             keyset.remove((String)removedIter.next());
+<a name="232" href="#232">232</a>         }
+<a name="233" href="#233">233</a> 
+<a name="234" href="#234">234</a> 
+<a name="235" href="#235">235</a>         <font color="#329900"><i>// iterate through all other preference sets</i></font>
+<a name="236" href="#236">236</a>         <b>while</b> (listIter.hasNext())
+<a name="237" href="#237">237</a>         {
+<a name="238" href="#238">238</a>             preferencesIter = ((PreferenceSet)listIter.next()).iterator();
+<a name="239" href="#239">239</a> 
+<a name="240" href="#240">240</a>             <font color="#329900"><i>// iterate through all preferences</i></font>
+<a name="241" href="#241">241</a>             <b>while</b> (preferencesIter.hasNext())
+<a name="242" href="#242">242</a>             {
+<a name="243" href="#243">243</a>                 String name = ((Preference)preferencesIter.next()).getName();
+<a name="244" href="#244">244</a>                 keyset.add(name);
+<a name="245" href="#245">245</a>             }
+<a name="246" href="#246">246</a>         }
+<a name="247" href="#247">247</a> 
+<a name="248" href="#248">248</a> 
+<a name="249" href="#249">249</a>         <b>return</b> <b>new</b> <a href="../../../../../org/apache/pluto/util/Enumerator.html">Enumerator</a>(keyset.iterator());
+<a name="250" href="#250">250</a> 
+<a name="251" href="#251">251</a>     }
+<a name="252" href="#252">252</a> 
+<a name="253" href="#253">253</a>     <b>public</b> Map getMap()
+<a name="254" href="#254">254</a>     {
+<a name="255" href="#255">255</a>         HashMap map = <b>new</b> HashMap();
+<a name="256" href="#256">256</a>         Enumeration enum = <b>this</b>.getNames();
+<a name="257" href="#257">257</a>         <b>while</b> (enum.hasMoreElements())
+<a name="258" href="#258">258</a>         {
+<a name="259" href="#259">259</a>             String name = (String)enum.nextElement();
+<a name="260" href="#260">260</a>             map.put(name, getValues(name,<b>new</b> String[]{<font color="#000099">"no value set"</font>}));
+<a name="261" href="#261">261</a>         }
+<a name="262" href="#262">262</a> 
+<a name="263" href="#263">263</a>         <b>return</b> Collections.unmodifiableMap(map);
+<a name="264" href="#264">264</a>     }
+<a name="265" href="#265">265</a> 
+<a name="266" href="#266">266</a>     <b>public</b> <b>void</b> reset(String key) throws ReadOnlyException
+<a name="267" href="#267">267</a>     {
+<a name="268" href="#268">268</a>         <b>if</b> (key == <b>null</b>)
+<a name="269" href="#269">269</a>         {
+<a name="270" href="#270">270</a>             <b>throw</b> <b>new</b> IllegalArgumentException(<font color="#000099">"key == null"</font>);
+<a name="271" href="#271">271</a>         }
+<a name="272" href="#272">272</a> 
+<a name="273" href="#273">273</a>         <b>if</b> (isReadOnly(key))
+<a name="274" href="#274">274</a>         {
+<a name="275" href="#275">275</a>             <b>throw</b> <b>new</b> ReadOnlyException(<font color="#000099">"preference attribute called "</font> + key + <font color="#000099">" may not be modified"</font>);
+<a name="276" href="#276">276</a>         }
+<a name="277" href="#277">277</a> 
+<a name="278" href="#278">278</a>         changedPreferences.remove(key);
+<a name="279" href="#279">279</a>         removedPreferences.add(key);
+<a name="280" href="#280">280</a>     }
+<a name="281" href="#281">281</a> 
+<a name="282" href="#282">282</a>     <b>public</b> <b>void</b> store() throws java.io.IOException,ValidatorException
+<a name="283" href="#283">283</a>     {
+<a name="284" href="#284">284</a>         <font color="#329900"><i>// not allowed when not called in action</i></font>
+<a name="285" href="#285">285</a>         <b>if</b> ( ! <b>this</b>.methodId.equals(org.apache.pluto.Constants.METHOD_ACTION))
+<a name="286" href="#286">286</a>         {
+<a name="287" href="#287">287</a>             <b>throw</b> <b>new</b> java.lang.IllegalStateException(<font color="#000099">"store is only allowed inside a processAction call"</font>);
+<a name="288" href="#288">288</a>         }
+<a name="289" href="#289">289</a> 
+<a name="290" href="#290">290</a>         <font color="#329900"><i>// validate preferences</i></font>
+<a name="291" href="#291">291</a>         PreferencesValidator validator = portletDefinition.getPreferenceSet().getPreferencesValidator();
+<a name="292" href="#292">292</a>         <b>if</b> (validator != <b>null</b>)
+<a name="293" href="#293">293</a>         {
+<a name="294" href="#294">294</a>             validator.validate(<b>this</b>);
+<a name="295" href="#295">295</a>         }
+<a name="296" href="#296">296</a> 
+<a name="297" href="#297">297</a>         <font color="#329900"><i>// transfer changes to the top preference set </i></font>
+<a name="298" href="#298">298</a>         <a href="../../../../../org/apache/pluto/om/common/PreferenceSet.html">PreferenceSet</a> preferences = (PreferenceSet)preferenceSetList.get(0);
+<a name="299" href="#299">299</a>         <a href="../../../../../org/apache/pluto/om/common/PreferenceSetCtrl.html">PreferenceSetCtrl</a> preferencesCtrl = (PreferenceSetCtrl)ControllerObjectAccess.get(preferences);
+<a name="300" href="#300">300</a> 
+<a name="301" href="#301">301</a>         <font color="#329900"><i>// modified preferences</i></font>
+<a name="302" href="#302">302</a>         Iterator iter = changedPreferences.keySet().iterator();
+<a name="303" href="#303">303</a>         <b>while</b> (iter.hasNext())
+<a name="304" href="#304">304</a>         {
+<a name="305" href="#305">305</a>             String key = (String) iter.next();
+<a name="306" href="#306">306</a>             String[] values = (String[])changedPreferences.get(key);
+<a name="307" href="#307">307</a> 
+<a name="308" href="#308">308</a>             <font color="#329900"><i>// null values are allowed</i></font>
+<a name="309" href="#309">309</a>             List newValues = <b>null</b>;
+<a name="310" href="#310">310</a>             <b>if</b> (values != <b>null</b>)
+<a name="311" href="#311">311</a>             {
+<a name="312" href="#312">312</a>                 <font color="#329900"><i>// convert values from string[] to collection</i></font>
+<a name="313" href="#313">313</a>                 <b>new</b>Values = <b>new</b> ArrayList(values.length);
+<a name="314" href="#314">314</a>                 <b>for</b> (<b>int</b> i=0;i&lt;values.length;i++)
+<a name="315" href="#315">315</a>                     newValues.add(values[i]);
+<a name="316" href="#316">316</a>             }
+<a name="317" href="#317">317</a> 
+<a name="318" href="#318">318</a>             <font color="#329900"><i>// transfer changings</i></font>
+<a name="319" href="#319">319</a>             <a href="../../../../../org/apache/pluto/om/common/Preference.html">Preference</a> preference = preferences.get(key);
+<a name="320" href="#320">320</a>             <b>if</b> (preference != <b>null</b>)
+<a name="321" href="#321">321</a>             {
+<a name="322" href="#322">322</a>                 <font color="#329900"><i>// change preference</i></font>
+<a name="323" href="#323">323</a>                 <a href="../../../../../org/apache/pluto/om/common/PreferenceCtrl.html">PreferenceCtrl</a> preferenceCtrl = (PreferenceCtrl)ControllerObjectAccess.get(preference);
+<a name="324" href="#324">324</a>                 preferenceCtrl.setValues(newValues);
+<a name="325" href="#325">325</a>             }
+<a name="326" href="#326">326</a>             <b>else</b>
+<a name="327" href="#327">327</a>             {
+<a name="328" href="#328">328</a>                 <font color="#329900"><i>// add new preference</i></font>
+<a name="329" href="#329">329</a>                 preferencesCtrl.add(key, newValues); 
+<a name="330" href="#330">330</a>             }
+<a name="331" href="#331">331</a>         }
+<a name="332" href="#332">332</a>         changedPreferences.clear();
+<a name="333" href="#333">333</a> 
+<a name="334" href="#334">334</a>         <font color="#329900"><i>// removed preferences</i></font>
+<a name="335" href="#335">335</a>         iter = removedPreferences.iterator();
+<a name="336" href="#336">336</a>         <b>while</b> (iter.hasNext())
+<a name="337" href="#337">337</a>         {
+<a name="338" href="#338">338</a>             String key = (String) iter.next();
+<a name="339" href="#339">339</a>             preferencesCtrl.remove(key);
+<a name="340" href="#340">340</a>         }
+<a name="341" href="#341">341</a>         removedPreferences.clear();
+<a name="342" href="#342">342</a> 
+<a name="343" href="#343">343</a>         <font color="#329900"><i>// store changes to the top preference set</i></font>
+<a name="344" href="#344">344</a>         <b>if</b> (portletEntity != <b>null</b>)
+<a name="345" href="#345">345</a>         {
+<a name="346" href="#346">346</a>             <a href="../../../../../org/apache/pluto/om/entity/PortletEntityCtrl.html">PortletEntityCtrl</a> portletEntityCtrl = (PortletEntityCtrl)ControllerObjectAccess.get(portletEntity);
+<a name="347" href="#347">347</a>             portletEntityCtrl.store();
+<a name="348" href="#348">348</a>         }
+<a name="349" href="#349">349</a>         <b>else</b>
+<a name="350" href="#350">350</a>         {
+<a name="351" href="#351">351</a>             <a href="../../../../../org/apache/pluto/om/portlet/PortletDefinitionCtrl.html">PortletDefinitionCtrl</a> portletDefinitionCtrl = (PortletDefinitionCtrl)ControllerObjectAccess.get(portletDefinition);
+<a name="352" href="#352">352</a>             portletDefinitionCtrl.store();
+<a name="353" href="#353">353</a>         }
+<a name="354" href="#354">354</a> 
+<a name="355" href="#355">355</a>     }
+<a name="356" href="#356">356</a>     <font color="#329900"><i>// --------------------------------------------------------------------------------------------</i></font>
+<a name="357" href="#357">357</a> 
+<a name="358" href="#358">358</a> 
+<a name="359" href="#359">359</a>     <font color="#329900"><i>// internal methods ---------------------------------------------------------------------------</i></font>
+<a name="360" href="#360">360</a>     <b>private</b> String[] getValuesFromPreference(<a href="../../../../../org/apache/pluto/om/common/Preference.html">Preference</a> preference)
+<a name="361" href="#361">361</a>     {
+<a name="362" href="#362">362</a>         <b>if</b> (preference == <b>null</b>)
+<a name="363" href="#363">363</a>         {
+<a name="364" href="#364">364</a>             <b>return</b> <b>null</b>;
+<a name="365" href="#365">365</a>         }
+<a name="366" href="#366">366</a> 
+<a name="367" href="#367">367</a>         Iterator values = preference.getValues();
+<a name="368" href="#368">368</a> 
+<a name="369" href="#369">369</a>         <font color="#329900"><i>// null values are allowed</i></font>
+<a name="370" href="#370">370</a>         <b>if</b> (values == <b>null</b>)
+<a name="371" href="#371">371</a>         {
+<a name="372" href="#372">372</a>             <b>return</b> <b>null</b>;
+<a name="373" href="#373">373</a>         }
+<a name="374" href="#374">374</a> 
+<a name="375" href="#375">375</a>         <b>if</b> (!values.hasNext())
+<a name="376" href="#376">376</a>         {
+<a name="377" href="#377">377</a>             <b>return</b> <b>new</b> String[0];
+<a name="378" href="#378">378</a>         }
+<a name="379" href="#379">379</a> 
+<a name="380" href="#380">380</a>         <font color="#329900"><i>// convert values from Iterator to string[]</i></font>
+<a name="381" href="#381">381</a>         List <b>new</b>Values = <b>new</b> ArrayList();
+<a name="382" href="#382">382</a>         <b>while</b> (values.hasNext())
+<a name="383" href="#383">383</a>         {
+<a name="384" href="#384">384</a>             newValues.add(values.next());
+<a name="385" href="#385">385</a>         }
+<a name="386" href="#386">386</a> 
+<a name="387" href="#387">387</a>         <b>return</b>(String[])<b>new</b>Values.toArray(<b>new</b> String[<b>new</b>Values.size()]);
+<a name="388" href="#388">388</a>     }
+<a name="389" href="#389">389</a>     <font color="#329900"><i>// --------------------------------------------------------------------------------------------</i></font>
+<a name="390" href="#390">390</a> }
+</pre>
+<hr><center>This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></center></body>
+</html>
+
