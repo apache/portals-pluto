@@ -53,12 +53,12 @@ public class PortalDriverServlet extends HttpServlet {
     /**
      * The portlet container to which we will forward all portlet requests.
      */
-    private PortletContainer container;
+    protected PortletContainer container;
 
     /**
      * The driver configuration defining our configuraiton.
      */
-    private DriverConfiguration driverConfig;
+    protected DriverConfiguration driverConfig;
 
     /**
      * Initialize the Portal Driver. Initialization completes the following
@@ -137,7 +137,7 @@ public class PortalDriverServlet extends HttpServlet {
     public void doPost(HttpServletRequest req,
                        HttpServletResponse res)
     throws ServletException, IOException {
-        doPost(req, res);
+        doGet(req, res);
     }
 }
 
