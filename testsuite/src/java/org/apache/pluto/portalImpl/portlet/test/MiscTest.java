@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.portlet.PortletContext;
 
 import org.apache.pluto.testsuite.ExpectedResults;
 
@@ -33,6 +34,40 @@ public class MiscTest extends AbstractReflectivePortletTest {
     public String getTestSuiteName() {
         return "Misc Test";
     }
+
+    protected TestResult checkContextMajorVersion(PortletContext ctx) {
+        TestResult res = new TestResult();
+        res.setName("Major Version Test");
+        res.setDesc("Make sure that the expected major version number is returned.");
+        Properties props = ExpectedResults.getExpectedProperties();
+        String major = String.valueOf(ctx.getMajorVersion());
+        if(major.equals(props.getProperty("expected.version.major"))) {
+            res.setReturnCode(TestResult.PASSED);
+        }
+        else {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Major Version: "+major+". Expected: "+props.getProperty("expected.version.major"));
+        }
+        return res;
+    }
+
+    protected TestResult checkContextMinorVersion(PortletContext ctx) {
+        TestResult res = new TestResult();
+        res.setName("Minor Version Test");
+        res.setDesc("Make sure that the expected minor version number is returned.");
+        Properties props = ExpectedResults.getExpectedProperties();
+        String minor = String.valueOf(ctx.getMinorVersion());
+        if(minor.equals(props.getProperty("expected.version.minor"))) {
+            res.setReturnCode(TestResult.PASSED);
+        }
+        else {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Minor Version: "+minor+". Expected: "+props.getProperty("expected.version.minor"));
+        }
+        return res;
+    }
+
+
 
     protected TestResult checkContextServerInfo(PortletRequest req) {
         TestResult res = new TestResult();
