@@ -17,7 +17,7 @@ limitations under the License.
 -->
 <Context debug="0" 
 		displayName="Kuiper" 
-		docBase="/kuiper-driver.war" 
+		docBase="kuiper-driver.war" 
 		path="/kuiper" 
 		reloadable="true"
 		crossContext="true">
