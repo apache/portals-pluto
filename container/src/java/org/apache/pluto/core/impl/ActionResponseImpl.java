@@ -116,8 +116,10 @@ implements ActionResponse, InternalActionResponse {
                 ResourceURLProvider provider = InformationProviderAccess.getDynamicProvider(getHttpServletRequest()).getResourceURLProvider(getInternalPortletWindow());
                 if (location.indexOf("://") != -1) {
                     provider.setAbsoluteURL(location);
-                } else {
+                } else if (location.startsWith("/")) {
                     provider.setFullPath(location);
+                } else {
+                    throw new IllegalArgumentException("Only absolute and full path URLs are allowed.  The relative path '" + location+"' is not valid.");
                 }
                 location = redirectResponse.encodeRedirectURL(provider.toString());
                 //redirectResponse.sendRedirect(location);
