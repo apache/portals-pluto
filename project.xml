@@ -5,7 +5,7 @@
   <pomVersion>1</pomVersion>
   <name>jakarta-pluto</name>
   <id>pluto</id>
-  <currentVersion>0.1</currentVersion>
+  <currentVersion>1.0</currentVersion>
   <organization>
     <name>Apache Software Foundation</name>
     <url>http://jakarta.apache.org/</url>
