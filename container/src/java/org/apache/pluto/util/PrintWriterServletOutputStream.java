@@ -22,6 +22,7 @@ package org.apache.pluto.util;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletOutputStream;
 
@@ -40,15 +41,40 @@ public class PrintWriterServletOutputStream extends ServletOutputStream
   PrintWriter mPrintWriter;
 
   /**
+   * The character encoding of the response.
+   */
+  private String characterEncoding;
+
+  /**
+   * @deprecated since 1.0RC3; use PrintWriterServletOutputStream
+   * <p>
    * Construct a ServletOutputStream that coordinates output using a base
    * ServletOutputStream and a PrintWriter that is wrapped on top of that
    * OutputStream.
+   * </p>
    */
   public PrintWriterServletOutputStream(PrintWriter pO)
   {
-    super();
-    mPrintWriter = pO;
+      this(pO, null);
   }
+
+  public PrintWriterServletOutputStream(PrintWriter pw, String encoding)
+  {
+      super();
+      mPrintWriter = pw;
+      characterEncoding = encoding;
+  }
+
+
+    /**
+     * Writes a single byte to the output stream
+     * This implementation writes the byte to the
+     * underlying PrintWriter.
+     */
+    public void write(int pVal) throws IOException
+    {
+        mPrintWriter.write(pVal);
+    }
 
   /**
    * Writes an array of bytes
@@ -58,22 +84,13 @@ public class PrintWriterServletOutputStream extends ServletOutputStream
    */
   public void write(byte[] pBuf) throws IOException
   {
-    char[] cbuf = new char[pBuf.length];
-    for (int i = 0; i < cbuf.length; i++)
-      cbuf[i] = (char)(pBuf[i] & 0xff);
-    mPrintWriter.write(cbuf, 0, pBuf.length);
-  }
-
-  /**
-   * Writes a single byte to the output stream
-   */
-  public void write(int pVal) throws IOException
-  {
-    mPrintWriter.write(pVal);
+      this.write(pBuf, 0, pBuf.length);
   }
 
   /**
    * Writes a subarray of bytes
+   * This implementation redirects it's input into the
+   * underlying PrintWriter.
    * 
    * @param pBuf the array to be written
    * @param pOffset the offset into the array
@@ -82,15 +99,26 @@ public class PrintWriterServletOutputStream extends ServletOutputStream
    */
   public void write(byte[] pBuf, int pOffset, int pLength) throws IOException
   {
-    char[] cbuf = new char[pLength];
-    for (int i = 0; i < pLength; i++)
-      cbuf[i] = (char)(pBuf[i + pOffset] & 0xff);
-    mPrintWriter.write(cbuf, 0, pLength);
+    String strValue = null;
+    if(characterEncoding != null && !"".equals(characterEncoding)) {
+        try {
+            strValue = new String(pBuf, pOffset, pLength, characterEncoding);
+        }
+        catch(UnsupportedEncodingException uee) {
+            // ignore and allow the null to handle.
+        }
+    }
+
+    if(strValue == null) {
+        strValue = new String(pBuf, pOffset, pLength);
+    }
+
+    mPrintWriter.write(strValue);
   }
 
   /**
    * Flushes the stream, writing any buffered output bytes
-   * 
+   *
    * @exception IOException if an I/O error occurred
    */
   public void flush() throws IOException
