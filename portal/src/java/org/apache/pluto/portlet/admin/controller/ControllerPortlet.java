@@ -106,8 +106,14 @@ public class ControllerPortlet extends GenericPortlet {
 			//load properties
 			_properties = PlutoAdminContext.getInstance().getProperties();
 
+			//Configure the paths to the container home dir,
+			//	Pluto's dir and the deployment dir. This needs to
+			//	be done before any admin portlets are called.
+			String plutoPath = _ctx.getRealPath("");//Path with single slash is also allowed
+//			String plutoPath = null;//for testing
+			PlutoAdminContext.getInstance().parseDeploymentPaths(plutoPath);
 		} catch (Throwable e) {
-			log("Error thrown in Portlet.init()", e);
+			log("Error thrown in ControllerPortlet.init()", e);
 		}
 
 
@@ -152,13 +158,16 @@ public class ControllerPortlet extends GenericPortlet {
 
 	protected String getDataDirPath() {
 		String path = null;
-		String realPath = _ctx.getRealPath("/");
-		int indTomcatHome = realPath.indexOf( PlutoAdminConstants.FS + "webapps");
-		String tomcatHome = realPath.substring(0, indTomcatHome);
+//		String realPath = _ctx.getRealPath("/");
+//		int indTomcatHome = realPath.indexOf( PlutoAdminConstants.FS + "webapps");
+//		String tomcatHome = realPath.substring(0, indTomcatHome);
+		
+		String plutoHome = PlutoAdminContext.getInstance().getPlutoHome();
+//		path = tomcatHome + PlutoAdminConstants.FS + "webapps" +
+//			PlutoAdminConstants.FS + _properties.getProperty("pluto-web-context") +
+//			PlutoAdminConstants.FS + dataDirRelPath;
 		String dataDirRelPath = _properties.getProperty("data-dir-relative-path");
-		path = tomcatHome + PlutoAdminConstants.FS + "webapps" +
-			PlutoAdminConstants.FS + _properties.getProperty("pluto-web-context") +
-			PlutoAdminConstants.FS + dataDirRelPath;
+		path = 	plutoHome +	PlutoAdminConstants.FS + dataDirRelPath;
 		return path;
 	}
 
