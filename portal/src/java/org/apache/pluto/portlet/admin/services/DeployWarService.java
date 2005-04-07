@@ -51,7 +51,8 @@ import org.apache.pluto.portlet.admin.model.PortletEntityRegistryXao;
 import org.apache.pluto.portlet.admin.util.PlutoAdminContext;
 
 /**
- * DeployWarService
+ * This is the service that does is called by DeployWarPortlet to
+ * do the work of deploying a portlet war.
  *
  * @author Ken Atherton
  * @author Craig Doremus
@@ -59,24 +60,31 @@ import org.apache.pluto.portlet.admin.util.PlutoAdminContext;
  */
 public class DeployWarService extends BaseAdminObject {
 
-  public static final String ERROR_NO_FILE = "ERROR_NO_FILE";
+    public static final String ERROR_NO_FILE = "ERROR_NO_FILE";
 	public static final String CLASS_NAME = "DeployWarService";
 
 	/**
-	 *
+	 * Default constructor
 	 */
 	public DeployWarService() {
 		super(CLASS_NAME);
 	}
 
 	/**
-	 * @param className
+	 * Constructor taking a String used to identify a logging record.
 	 * @param logId
 	 */
 	public DeployWarService(String logId) {
 		super(CLASS_NAME, logId);
 	}
 
+	/**
+	 * Does the work of this service to deploy a portlet war file.
+	 * 
+	 * @param request DeployWarService request object.
+	 * @param response DeployWarService response object.
+	 * @return
+	 */
   public String processFileUpload(ActionRequest request, ActionResponse response) {
   	final String METHOD_NAME = "processFileUpload(request,response)";
     String fileName = null;
@@ -122,34 +130,35 @@ public class DeployWarService extends BaseAdminObject {
                     File serverFile = new File(tempDir, serverFileName);
                     item.write(serverFile);
                     response.setRenderParameter("serverFileName",  serverFileName);
-                    logDebug(METHOD_NAME, "serverFileName : " + tempDir + PlutoAdminConstants.FS + serverFileName);
 
                     //Add to portletentityregistry.xml
-										int index = serverFileName.indexOf(".war");
-										String context = "";
-										if ( index != -1) {
-											context = serverFileName.substring(0, index);
-										} else {
-											context = serverFileName;
-										}
-										//TODO: send in boolean for existance of PER
-					          //Check to see if a record exists
-					          PortletEntityRegistryXao xao = new PortletEntityRegistryXao();
-					          boolean appExists = xao.applicationExists(context);
-										ArrayList  argList = createDeploymentArgs(serverFileName, tempDir, request, appExists);
-										Map pmap = (HashMap) request.getPortletSession().getAttribute(PlutoAdminConstants.PORTLET_MAP_ATTR);
-										logDebug(METHOD_NAME, "pmap: " + mapToEntrySetString(pmap));
-										String[] args = arrayListToStringArray(argList);
-										for (int i =0; i < args.length; i++) {
-											logDebug(METHOD_NAME, "args["+i+"]="+args[i]);
-										}
-				            org.apache.pluto.portalImpl.Deploy.main(args);
-				            if (appExists) {
-				            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment of the new portlet app has been successful, but the portlet app record " + context + " already exists in portletentityregistry.xml. If you are deploying a previously deployed portlet app, caching of the old app may require that you restart Pluto to see the new changes.", PortletMessageType.INFO));
-				            } else {
-				            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment and addition to portletentityregistry.xml successful", PortletMessageType.SUCCESS));
-				            }
-				         }
+					int index = serverFileName.indexOf(".war");
+					String context = "";
+					if ( index != -1) {
+						context = serverFileName.substring(0, index);
+					} else {
+						context = serverFileName;
+					}
+			        //Check to see if a record exists
+  		            PortletEntityRegistryXao xao = new PortletEntityRegistryXao();
+			        boolean appExists = xao.applicationExists(context);
+					ArrayList  argList = createDeploymentArgs(serverFileName, tempDir, request, appExists);
+					Map pmap = (HashMap) request.getPortletSession().getAttribute(PlutoAdminConstants.PORTLET_MAP_ATTR);
+					logDebug(METHOD_NAME, "Arguments for Deploy.main():");
+					String[] args = arrayListToStringArray(argList);
+					for (int i =0; i < args.length; i++) {
+						logDebug(METHOD_NAME, "args["+i+"]="+args[i]);
+					}
+		            org.apache.pluto.portalImpl.Deploy.main(args);
+		            if (appExists) {
+		            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment of the new portlet app has been successful, but the portlet app record '" + context + "' already exists in portletentityregistry.xml. " +
+		            			"This may have occurred if the portlet was previously partially deployed. If that is the case, continue with this screen and the next to register the portlet in pageregistry.xml. " +
+		            			"If you are deploying a previously deployed portlet app, you should be able to see your changes if you select the portlet from the navigation bar. " +
+		            			"However, caching of the old app may require that you restart Pluto to see the new changes.", PortletMessageType.INFO));
+		            } else {
+		            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment and addition to portletentityregistry.xml successful.", PortletMessageType.SUCCESS));
+		            }
+		         }
             }
         }
         catch (FileUploadException e){
@@ -203,50 +212,60 @@ public class DeployWarService extends BaseAdminObject {
 
 
 
-	//[-addToEntityReg <app-id> [<portlet-id>:<portlet-name>]+]
+	/**
+	 * Creates arguments (parameters) for Deploy class that does
+	 * the deployment.
+	 *  
+	 * @param serverFileName The name of the war file to be deployed
+	 * @param tempDir Full path to temp dir that holds the war file to be deployed
+	 * @param request ActionRequest of the portlet.
+	 * @param appExists True if this is a re-deployment, else false
+	 * @return ArrayList of arguments
+	 * @throws Exception
+	 * @see org.apache.pluto.portalImpl.Deploy#main
+	 */
 	private ArrayList createDeploymentArgs(String serverFileName, String tempDir, ActionRequest request, boolean appExists) throws Exception {
-  	final String METHOD_NAME = "createDeploymentArgs(serverFileName,tempDir,request)";
-  	Properties props = PlutoAdminContext.getInstance().getProperties();
-    final String TOMCAT_HOME =  PlutoAdminContext.getInstance().getTomcatHome();
-    final String PLUTO_CONTEXT =  props.getProperty("pluto-web-context");
-    final String PORTLET_DEPLOY_DIR = props.getProperty("portlet-deploy-dir");
-    logDebug(METHOD_NAME, "Tomcat home: " + TOMCAT_HOME);
-    logDebug(METHOD_NAME, "Pluto web context: " + PLUTO_CONTEXT);
-
-    ArrayList  args = new ArrayList();
-    args.add(TOMCAT_HOME + PlutoAdminConstants.FS + "webapps");
-    args.add(PLUTO_CONTEXT);
-    args.add(tempDir + PlutoAdminConstants.FS + serverFileName);
-    args.add(TOMCAT_HOME + PlutoAdminConstants.FS + PORTLET_DEPLOY_DIR);
-    String appId = PortletRegistryService.getNextAppId();
-    //check if a record in portletentityregistry exists
-    if (!appExists) {
-	    args.add("-addToEntityReg");
-	    args.add(appId);
-    }
-
-    //Add Map of portlet name/values to session
-    // to be used in drop downs on page layout page
-    Map pmap = new HashMap();
-    InputStream ins = extractFile(tempDir + PlutoAdminConstants.FS + serverFileName, "WEB-INF/portlet.xml");
-    if (null != ins) {
-	    ArrayList names = PortletNameFinder.getPortletNames(ins);
-	    for (int i = 0; i < names.size(); i++) {
-	      //check if a record in portletentityregistry exists
-	      if (!appExists) {
-	      	args.add(i+":"+names.get(i));
-	      }
-	      pmap.put(names.get(i), appId+"." +i);
+	  	final String METHOD_NAME = "createDeploymentArgs(serverFileName,tempDir,request)";
+	  	Properties props = PlutoAdminContext.getInstance().getProperties();
+	    final String CONTAINER_HOME =  PlutoAdminContext.getInstance().getContainerHome();
+	    final String PORTLET_DEPLOY_DIR = props.getProperty("portlet-deploy-dir");
+	
+	    ArrayList  args = new ArrayList();
+	    args.add(PlutoAdminContext.getInstance().getDeploymentPath());
+	    args.add(PlutoAdminContext.getInstance().getPlutoWebContext());
+	    args.add(tempDir + PlutoAdminConstants.FS + serverFileName);
+	    //This is probably not used???, but left here to as to not change
+	    //	args indexing used by Deploy class.
+	    args.add(CONTAINER_HOME + PlutoAdminConstants.FS + PORTLET_DEPLOY_DIR);
+	    String appId = PortletRegistryService.getNextAppId();
+	    //check if a record in portletentityregistry exists
+	    if (!appExists) {
+		    args.add("-addToEntityReg");
+		    args.add(appId);
 	    }
-	    ins.close();
-    } else {
-    	String msg = "Input stream is null";
-    	PlutoAdminException e = new PlutoAdminException(msg);
-    	logError(METHOD_NAME, e);
-    	throw e;
-    }
-    request.getPortletSession().setAttribute(PlutoAdminConstants.PORTLET_MAP_ATTR, pmap);
-    return args;
+	
+	    //Add Map of portlet name/values to session
+	    // to be used in drop downs on page layout page
+	    Map pmap = new HashMap();
+	    InputStream ins = extractFile(tempDir + PlutoAdminConstants.FS + serverFileName, "WEB-INF/portlet.xml");
+	    if (null != ins) {
+		    ArrayList names = PortletNameFinder.getPortletNames(ins);
+		    for (int i = 0; i < names.size(); i++) {
+		      //check if a record in portletentityregistry exists
+		      if (!appExists) {
+		      	args.add(i + ":" + names.get(i));
+		      }
+		      pmap.put(names.get(i), appId+"." +i);
+		    }
+		    ins.close();
+	    } else {
+	    	String msg = "Input stream is null";
+	    	PlutoAdminException e = new PlutoAdminException(msg);
+	    	logError(METHOD_NAME, e);
+	    	throw e;
+	    }
+	    request.getPortletSession().setAttribute(PlutoAdminConstants.PORTLET_MAP_ATTR, pmap);
+	    return args;
 	}
 
 
@@ -278,19 +297,19 @@ public class DeployWarService extends BaseAdminObject {
 			page = new PageTO();
 		}
 		String title = req.getParameter("title");
-		logDebug(METHOD_NAME, "Title: " + title);
+//		logDebug(METHOD_NAME, "Title: " + title);
 		page.setTitle(title);
 		String desc = req.getParameter("description");
-		logDebug(METHOD_NAME, "Description: " + desc);
+//		logDebug(METHOD_NAME, "Description: " + desc);
 		page.setDescription(desc);
 		String rows = req.getParameter("numrows");
-		logDebug(METHOD_NAME, "Row count: " + rows);
+//		logDebug(METHOD_NAME, "Row count: " + rows);
 		page.setRows(Integer.parseInt(rows));
 		String cols = req.getParameter("numcols");
-		logDebug(METHOD_NAME, "Col count: " + cols);
+//		logDebug(METHOD_NAME, "Col count: " + cols);
 		page.setCols(Integer.parseInt(cols));
 		req.getPortletSession().setAttribute(PlutoAdminConstants.PAGE_ATTR, page);
-		logDebug(METHOD_NAME, "New page: " + page);
+//		logDebug(METHOD_NAME, "New page: " + page);
 		logMethodEnd(METHOD_NAME);
 	}
 	public void savePageLayout(ActionRequest req) {
@@ -298,30 +317,30 @@ public class DeployWarService extends BaseAdminObject {
 		logMethodStart(METHOD_NAME);
 		//get current page
 		PageTO page = (PageTO)req.getPortletSession().getAttribute(PlutoAdminConstants.PAGE_ATTR);
-		logDebug(METHOD_NAME, "PageTO from session: " + page);
-  	List list = new ArrayList();
+//		logDebug(METHOD_NAME, "PageTO from session: " + page);
+		List list = new ArrayList();
 		int rows = page.getRows();
 		int cols = page.getCols();
-    for (int i = 1; i <= rows ; i++) {
-      for (int j = 1; j <= cols ; j++) {
-      	String portletParam = "portlet" + i + "." + j;
-      	String name_val = req.getParameter(portletParam);
-      	//portlet name and values are separated by an underscore
-      	int underscore = name_val.lastIndexOf("_");
-      	String name = name_val.substring(0, underscore);
-      	String val = name_val.substring(underscore + 1);
-
-      	//create a PortletTO and add it to the list
-      	PortletTO nPortlet = new PortletTO();
-      	nPortlet.setName(name);
-      	nPortlet.setValue(val);
-      	nPortlet.setRow(i);
-      	nPortlet.setCol(j);
-      	list.add(nPortlet);
-      }
-    }
-    page.setPortlets(list);
-		logDebug(METHOD_NAME, "Updated PageTO: " + page);
+	    for (int i = 1; i <= rows ; i++) {
+	      for (int j = 1; j <= cols ; j++) {
+	      	String portletParam = "portlet" + i + "." + j;
+	      	String name_val = req.getParameter(portletParam);
+	      	//portlet name and values are separated by an underscore
+	      	int underscore = name_val.lastIndexOf("_");
+	      	String name = name_val.substring(0, underscore);
+	      	String val = name_val.substring(underscore + 1);
+	
+	      	//create a PortletTO and add it to the list
+	      	PortletTO nPortlet = new PortletTO();
+	      	nPortlet.setName(name);
+	      	nPortlet.setValue(val);
+	      	nPortlet.setRow(i);
+	      	nPortlet.setCol(j);
+	      	list.add(nPortlet);
+	      }
+	    }
+	    page.setPortlets(list);
+//		logDebug(METHOD_NAME, "Updated PageTO: " + page);
 
 		addToPageReg(page);
 		logMethodEnd(METHOD_NAME);
@@ -430,30 +449,51 @@ public class DeployWarService extends BaseAdminObject {
 		logMethodEnd(METHOD_NAME);
   }
 
-  public void addToPortletContexts(String context) {
+  public boolean addToPortletContexts(String context) {
   	final String METHOD_NAME = "addToPortletContexts(context)";
+	logMethodStart(METHOD_NAME);
   	logParam(METHOD_NAME, "context", context);
   	String path = PlutoAdminContext.getInstance().getPortletContextsPath();
   	logDebug(METHOD_NAME, "portletcontexts.txt path: " + path);
   	File file = new File(path);
-  	if (file.exists()) {
-//				String fileContents = FileUtils.readFileToString(file, PlutoAdminConstants.ENCODING);
+		boolean found = false;
+  	if (file.exists()) { //check for Pluto 1.0.1-rc1
 			String fileContents = readFileToString(file);
-	  	logDebug(METHOD_NAME, "portletcontexts.txt contents: " + fileContents);
+			logDebug(METHOD_NAME, "portletcontexts.txt contents: " + fileContents);
 
-			//check to see whether the context already is found in the file
-			if (fileContents.indexOf(context) == -1) {
-				logDebug(METHOD_NAME, "Writing new context");
+			//Check to see whether the context already is found in 
+			//	the portletcontexts.txt file.
+			int ind = fileContents.indexOf(context);
+			found = ind == -1 ? false : true;
+
+			//Make sure that context name is not a substring of 
+			//	another context name. For example, /foo ,
+			//	/foobar and /barfoo are all valid contexts.
+			//check if a slash before the found context name in portletcontexts.txt file
+			if (found && !fileContents.substring(ind - 1, ind).equals("/")) {
+			    found = false;
+			}
+			//check if there is a line-separator after the found context name in portletcontexts.txt file
+			if (found) {
+			    int len = context.length();//length of context String
+			    String contextInFile = fileContents.substring(ind);//substring that starts with context
+			    if (contextInFile.indexOf(PlutoAdminConstants.LS) != len) {
+				    found = false;			        
+			    }
+			}
+			if (!found) {
+				logDebug(METHOD_NAME, "Writing new context: " + context);
 				StringBuffer buf = new StringBuffer(fileContents);
 				buf.append(PlutoAdminConstants.LS);
 				buf.append("/");
 				buf.append(context);
-//					FileUtils.writeStringToFile(file,buf.toString(),PlutoAdminConstants.ENCODING);
 				writeStringToFile(file,buf.toString());
 			}
   	} else {
 			logWarn(METHOD_NAME, "File portletcontexts.txt cannot be found! You must be using Release Candidate 1.");
   	}
+	logMethodEnd(METHOD_NAME, Boolean.toString(found));
+	return found;
   }
 
 
