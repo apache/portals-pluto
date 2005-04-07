@@ -38,6 +38,12 @@ import org.apache.pluto.portlet.admin.PlutoAdminLogger;
 public class PlutoAdminContext  {
 
 	private static final String CLASS_NAME = "PlutoAdminContext";
+	/** Home for the container (servlet engine) that Pluto sits inside of. In Tomcat, this is
+	 *  */
+	private static String _containerHome = null;
+	private static String _plutoHome = null;
+	private static String _plutoContext = null;
+	private static String _deploymentPath = null;
 	private static Map _cache = new HashMap();
 	private static PlutoAdminContext _instance = new PlutoAdminContext();
 
@@ -83,11 +89,20 @@ public class PlutoAdminContext  {
 	 * container is installed.
 	 */
 	public String getPlutoHome(){
-		String plutoHome = null;
-		Properties props = getProperties();
-		String plutoContext = props.getProperty("pluto-web-context");
-		plutoHome = getWebappsPath() + PlutoAdminConstants.FS + plutoContext;
-		return plutoHome;
+	    final String METHOD_NAME = "getPlutoHome()";
+//		String plutoHome = null;
+//		Properties props = getProperties();
+//		String plutoContext = props.getProperty("pluto-web-context");
+//		plutoHome = getWebappsPath() + PlutoAdminConstants.FS + plutoContext;
+//		return plutoHome;
+//	    if (_plutoHome == null) {
+//	        String msg ="The _plutoHome variable must be set (setPlutoHome()) inside" +
+//	        		" of the ControllerPortlet.init() method using before this method is called";
+//	        IllegalStateException e = new IllegalStateException(msg); 
+//	        PlutoAdminLogger.logError(CLASS_NAME, METHOD_NAME, msg, e);
+//	        throw e;
+//	    }
+	    return _plutoHome;
 	}
 
 	/**
@@ -97,14 +112,13 @@ public class PlutoAdminContext  {
 	 * @return The absolute path to the directory where the Pluto
 	 * container is installed.
 	 */
-	public String getWebappsPath(){
-		String path = null;
-		Properties props = getProperties();
-//		String tomcatHome = props.getProperty("tomcat-home");
-		String tomcatHome = getTomcatHome();
-		path = tomcatHome + "/webapps";
-		return path;
-	}
+//	public String getWebappsPath(){
+//		String path = null;
+//		Properties props = getProperties();
+//		String tomcatHome = getTomcatHome();
+//		path = tomcatHome + "/webapps";
+//		return path;
+//	}
 
 	/**
 	 * Returns the Properties object from a properties file that is in the
@@ -118,7 +132,7 @@ public class PlutoAdminContext  {
 	 * @throws NullPointerException If the InputStream accessing the properties
 	 * file is null.
 	 */
-	public Properties getProperties(String propFileName){
+	public static Properties getProperties(String propFileName){
 		final String METHOD_NAME = "getProperties(propFileName)";
 		Properties props = null;
 		//retreive from cache if available
@@ -148,7 +162,7 @@ public class PlutoAdminContext  {
 		}
 	}
 
-	public Properties getProperties(){
+	public static Properties getProperties(){
 		return getProperties(PlutoAdminConstants.PROP_FILENAME);
 	}
 
@@ -157,20 +171,74 @@ public class PlutoAdminContext  {
 		return dir;
 	}
 
+	/**
+	 * Accessor for the full path to the portletcontexts.txt file
+	 * @return
+	 */
 	public String getPortletContextsPath() {
 		String path = getPlutoHome() + PlutoAdminConstants.FS + getRelDataDir() + PlutoAdminConstants.FS + getProperties().getProperty("portletcontexts-file");
 		return path;
 	}
 
-	public String getTomcatHome(){
-		final String METHOD_NAME = "getTomcatHome()";
-		Properties props = System.getProperties();
-		String home = (String)props.get("catalina.base");
-		if (home == null) {
-			String msg = "The System Property catalina.home has not been set!";
-			PlutoAdminLogger.logError(CLASS_NAME, METHOD_NAME, msg);
-			throw new PlutoAdminException(msg);
+	/**
+	 * Finds home directory of the container that holds Pluto (usually Tomcat)
+	 * 
+	 * @return
+	 */
+	public static String getContainerHome(){
+			final String METHOD_NAME = "getContainerHome()";
+			return _containerHome;
 		}
-		return home;
-	}
+
+	/** 
+		 * Parses out paths from the Pluto Home directory sent in from
+		 * PortletContext.getRealPath("") call in ControllerPortlet.init()
+		 * 
+     * @param home The _plutoHome to set.
+     */
+    public static void parseDeploymentPaths(String plutoHome) {
+  			final String METHOD_NAME = "parseDeploymentPaths(plutoHome)";
+  			//TODO: test for null and use of alternate path in pluto-admin.properties
+  			int lastSlash = 0;
+  			if (plutoHome == null) {
+  			    _plutoHome = getProperties().getProperty("pluto-home");
+  			    if (_plutoHome == null || _plutoHome.equals("")) {
+  			        throw new PlutoAdminException("pluto-home needs to be set in pluto-admin.properties.");
+  			    }
+		    //get rid of last slash if it is the last character
+  			} else if (plutoHome.lastIndexOf(PlutoAdminConstants.FS) == plutoHome.length()-1) {
+  			    lastSlash = plutoHome.lastIndexOf(PlutoAdminConstants.FS);
+  			    _plutoHome = plutoHome.substring(0, lastSlash);
+  			} else {
+  			    _plutoHome = plutoHome;  			    
+  			}
+    		PlutoAdminLogger.logDebug(CLASS_NAME, METHOD_NAME, "Pluto home: " + _plutoHome);
+    		//Parse out context (default=pluto)
+  			lastSlash = _plutoHome.lastIndexOf(PlutoAdminConstants.FS);
+		    _plutoContext = _plutoHome.substring(lastSlash + 1);
+  			PlutoAdminLogger.logDebug(CLASS_NAME, METHOD_NAME, "Pluto web context: " + _plutoContext);
+    		//Parse out path to deployment dir
+  			_deploymentPath = _plutoHome.substring(0, lastSlash);
+    		PlutoAdminLogger.logDebug(CLASS_NAME, METHOD_NAME, "Portlet deployment path: " + _deploymentPath);
+    		//Parse out container path (CATALINA_HOME if using Tomcat)
+    		lastSlash = _deploymentPath.lastIndexOf(PlutoAdminConstants.FS);
+  			_containerHome = _deploymentPath.substring(0, lastSlash);
+    		PlutoAdminLogger.logDebug(CLASS_NAME, METHOD_NAME, "Container (Tomcat) home: " + _containerHome);
+    }
+    
+    /**
+     * Accessor for the path to the portlet deployment directory (webapps in Tomcat container) 
+     * @return
+     */
+    public static String getDeploymentPath(){
+        return _deploymentPath;        
+    }
+    
+    /**
+     * Accessor for the web context for Pluto (default=pluto)
+     * @return
+     */
+    public static String getPlutoWebContext(){
+        return _plutoContext;        
+    }
 }
