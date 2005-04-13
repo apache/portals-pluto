@@ -206,7 +206,12 @@ public class PortletSessionImpl implements PortletSession, javax.servlet.http.Ht
         // TBD, open issue. it would be good if we could also implement the ServletContext interface at the PortletContextImpl
         return httpSession.getServletContext();
     }
-
+    
+    /**
+     * @deprecated As of Java(tm) Servlet API 2.1 for security reasons,
+     * with no replacement. This interface will be removed 
+     * in a future version of this API.
+     */
     public javax.servlet.http.HttpSessionContext getSessionContext()
     {
         return httpSession.getSessionContext();

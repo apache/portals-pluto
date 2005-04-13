@@ -172,6 +172,9 @@ implements InternalPortletResponse, PortletResponse
         return this._getHttpServletResponse().containsHeader(name);
     }
 
+    /**
+     * @deprecated use encodeRedirectURL instead
+     */
     public String encodeRedirectUrl(String url)
     {
         return included ? null : this._getHttpServletResponse().encodeRedirectUrl(url);
@@ -227,6 +230,13 @@ implements InternalPortletResponse, PortletResponse
         this._getHttpServletResponse().setStatus(sc);
     }
 
+    /**
+     * @deprecated As of version 2.1, due to ambiguous meaning 
+     * of the message parameter. To set a status code use 
+     * setStatus(int), to send an error with a description 
+     * use sendError(int, String). Sets the status code and 
+     * message for this response.
+     */
     public void setStatus(int sc, String sm)
     {
         this._getHttpServletResponse().setStatus(sc,sm);

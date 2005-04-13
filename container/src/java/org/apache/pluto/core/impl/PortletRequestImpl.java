@@ -576,6 +576,9 @@ public abstract class PortletRequestImpl extends
 		return this._getHttpServletRequest().isRequestedSessionIdFromURL();
 	}
 
+	/**
+	 * @deprecated use isRequestedSessionIdFromURL instead
+	 */
 	public boolean isRequestedSessionIdFromUrl() {
 		return this._getHttpServletRequest().isRequestedSessionIdFromUrl();
 	}
