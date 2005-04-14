@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-Copyright 2004 The Apache Software Foundation
+Copyright 2004, 2005 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
 You may obtain a copy of the License at
@@ -20,6 +20,7 @@ limitations under the License.
     <author email="unknown">Jean-Baptiste Joret</author>
     <author email="ddewolf.AT.apache.DOT.org">David H. DeWolf</author>
     <author email="nl.AT.essential.DOT.com.DOT.au">Nick Lothian</author>
+    <author email="cdoremus.AT.apache.DOT.org">Craig Doremus</author>
     <title>Pluto Project</title>
   </properties>
 
@@ -28,7 +29,8 @@ limitations under the License.
 <section name="Installation Guide">
 <p>This install guide covers the following types of installations:
 <ul><li><A href="#Installing_Distributions">Installing Distributions</A></li>
-    <li><A href="#Installing_Portlets">Installing Portlets</A></li></ul>
+    <li><A href="#Installing_Portlets_With_Maven">Installing Portlets using Maven</A></li></ul>
+    <li><A href="#Admin_Portlet_Application">Installing Portlets using the Admin Portlet App</A></li></ul>
 </p>
 </section>
 
@@ -36,11 +38,11 @@ limitations under the License.
 
 <subsection name="Binary Distribution">
 <p>The binary distribution of Pluto is packaged with Tomcat
-   (currently version 5.0.28).  Pluto leverages Tomcat to
+   (currently version 5.5.8).  Pluto leverages Tomcat to
    provide the web container in which the Pluto portlet
    container executes. The binary distribution includes
-   the Pluto Portlet Container, The Portal Driver, and
-   Pluto Testsuite.</p>
+   the Pluto Portlet Container, The Portal Driver, the
+   Pluto Testsuite and the Admin Portlet application.</p>
 <p>To install the binary distribution:
    <ul>
    <li><A href="mirrors.cgi">Download</A>
@@ -106,10 +108,13 @@ limitations under the License.
 </subsection>
 </section>
 
-<section name="Installing Portlets">
+<section name="Installing Portlets With Maven">
 <p><FONT color="red">
   Currently, to automate the deployment/installation of portlets
-  you must utilize the source distribution of pluto.</FONT></p>
+  you must utilize the source distribution of pluto.
+Alternatively, you could use the <a href="#Admin_Portlet_Application">Admin Portlet Application</a>
+to install custom portlets.
+  </FONT></p>
 
 <p>In order to deploy a portlet application to pluto, you must
    follow the steps below:
@@ -174,6 +179,29 @@ The names used in the fragments must be unique as done in the following example:
 
 </li>
 </ul>
+</section>
+
+<section name="Admin Portlet Application">
+<p>The Admin Portlet Application allows you to deploy custom portlets using an
+interface in Pluto's portal. This application automatically places the custom
+portlets to their proper place and updates the registries.
+</p>
+<p>Deploying a custom portlet application to Pluto using the Admin Portlet App
+   requires the following steps:
+</p>
+  <ul>
+  <li>Assemble your portlet application into a valid war.</li>
+  <li>Start Pluto and navigate to the <a href="http://localhost:8080/pluto/portal">Pluto home page</a></li>
+  <li>Click on the Admin navigation link. The Admin Portlet App should appear.</li>
+  <li>In the Deploy War Portlet, click on the Browse button and select your war file</li>
+  <li>Click on the Submit button of the Deploy War Portlet</li>
+  <li>In the resulting page, fill in the Title, Description (optional), and the number
+  of rows and columns you desire for laying out the portlets. Click on Submit</li>
+  <li>In the resulting page, select from the drop downs which portlet will be deployed 
+  in a particular row and column. Click on Submit.</li>
+  <li>Restart Pluto. The Title you entered for your custom portlet app should appear
+  in Pluto's navigation. Clicking on this link should bring up your portlet app.</li>
+  </ul>
 </section>
 
 </body>
