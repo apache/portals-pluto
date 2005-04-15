@@ -29,8 +29,12 @@ limitations under the License.
 <section name="Installation Guide">
 <p>This install guide covers the following types of installations:
 <ul><li><A href="#Installing_Distributions">Installing Distributions</A></li>
-    <li><A href="#Installing_Portlets_With_Maven">Installing Portlets using Maven</A></li></ul>
-    <li><A href="#Admin_Portlet_Application">Installing Portlets using the Admin Portlet App</A></li></ul>
+<li><A href="#Installing_Portlets">Installing Portlets</A></li>
+     <ul>
+       <li><A href="#Installing_With_Maven">Using Maven to Install Portlets</A></li>
+       <li><A href="#Using_the_Admin_Portlet Application">Using the Admin Portlet App to Install Portlets</A></li>
+     </ul>
+</ul>
 </p>
 </section>
 
@@ -108,7 +112,8 @@ limitations under the License.
 </subsection>
 </section>
 
-<section name="Installing Portlets With Maven">
+<section name="Installing Portlets">
+<subsection name="Installing With Maven">
 <p><FONT color="red">
   Currently, to automate the deployment/installation of portlets
   you must utilize the source distribution of pluto.
@@ -179,9 +184,9 @@ The names used in the fragments must be unique as done in the following example:
 
 </li>
 </ul>
-</section>
+</subsection>
 
-<section name="Admin Portlet Application">
+<subsection name="Using the Admin Portlet Application">
 <p>The Admin Portlet Application allows you to deploy custom portlets using an
 interface in Pluto's portal. This application automatically places the custom
 portlets to their proper place and updates the registries.
@@ -202,6 +207,7 @@ portlets to their proper place and updates the registries.
   <li>Restart Pluto. The Title you entered for your custom portlet app should appear
   in Pluto's navigation. Clicking on this link should bring up your portlet app.</li>
   </ul>
+</subsection>
 </section>
 
 </body>
