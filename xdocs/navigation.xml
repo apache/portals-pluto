@@ -37,7 +37,11 @@ limitations under the License.
 
 <menu name="Getting Started">
   <item name="Download"              href="mirrors.cgi"/>
-  <item name="Installation Guide"    href="/install.html"/>
+  <item name="Installation Guide"    href="/install.html" collapse="true">
+       <item name="Installing Distributions"    href="/install.html#Installing_Distributions"/>
+       <item name="Installing Portlets"    href="/install.html#Installing_Portlets"/>
+  </item>
+
 
   <item name="User Guide"            href="/userguide/index.html" collapse="true">
     <item name="Portal Driver User Guide" href="/userguide/portal.html"/>
