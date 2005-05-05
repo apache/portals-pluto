@@ -42,7 +42,7 @@ limitations under the License.
 
 <subsection name="Binary Distribution">
 <p>The binary distribution of Pluto is packaged with Tomcat
-   (currently version 5.5.8).  Pluto leverages Tomcat to
+   (currently version 5.5.9).  Pluto leverages Tomcat to
    provide the web container in which the Pluto portlet
    container executes. The binary distribution includes
    the Pluto Portlet Container, The Portal Driver, the
