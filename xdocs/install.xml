@@ -127,10 +127,10 @@ to install custom portlets.
   <ul>
   <li>Assemble your portlet application into a valid war.</li>
   <li><p>Run the maven deploy goal on your war</p>
-      <p>This can be done by:
+      <p>This can be done by running this command line in the deploy subdirectory:<br/>
          <pre>maven deploy -Ddeploy=/MyPathToMyPortlet/target/MyPortlet.war</pre>
       </p>
-      <p>See the <a href="developer\build_source.html">Building From Source</a> document for detailed instructions.</p></li>
+      <p>See the <a href="developer/build_source.html">Building From Source</a> document for detailed instructions.</p></li>
 
 	<p>Alternatively, there is an interactive ant script in the <tt>portlet-deploy</tt> directory
 	that will perform the same task as the Maven deployment goal.</p>
