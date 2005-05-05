@@ -115,8 +115,10 @@ limitations under the License.
 <section name="Install Portlets">
    <p>
     <ul>To install portlets after you successfully installed Pluto, 
-       invoke Maven to deploy the portlet's war by executing:
-		<code>maven deploy -Ddeploy=FULL_PATH_TO_YOUR_PORTLET_WAR</code>
+       invoke Maven from the deploy subdirectory of the base install directory to deploy the portlet's war by executing:<br/>
+		<code>maven deploy -Ddeploy=FULL_PATH_TO_YOUR_PORTLET_WAR</code><br/>		
+	Alternatively, you could use the <a href="../install.html#Admin_Portlet_Application">Admin Portlet Application</a>
+	to install custom portlets.
     </ul>
    </p>
 </section>
