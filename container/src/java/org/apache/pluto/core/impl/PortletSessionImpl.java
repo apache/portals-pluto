@@ -246,7 +246,7 @@ public class PortletSessionImpl implements PortletSession, javax.servlet.http.Ht
         {
             this.portletContext = PortletObjectAccess.getPortletContext(
                                                                        getServletContext(), 
-                                                                       portletWindow.getPortletEntity().getPortletApplicationEntity().getPortletApplicationDefinition()
+                                                                       portletWindow.getPortletEntity().getPortletDefinition().getPortletApplicationDefinition()
                                                                        );
         }
         return this.portletContext;
