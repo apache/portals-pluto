@@ -226,13 +226,13 @@ public class DeployWarService extends BaseAdminObject {
 	 */
 	private ArrayList createDeploymentArgs(String serverFileName, String tempDir, ActionRequest request, boolean appExists) throws Exception {
 	  	final String METHOD_NAME = "createDeploymentArgs(serverFileName,tempDir,request)";
-	  	Properties props = PlutoAdminContext.getInstance().getProperties();
-	    final String CONTAINER_HOME =  PlutoAdminContext.getInstance().getContainerHome();
+	  	Properties props = PlutoAdminContext.getProperties();
+	    final String CONTAINER_HOME =  PlutoAdminContext.getContainerHome();
 	    final String PORTLET_DEPLOY_DIR = props.getProperty("portlet-deploy-dir");
 	
 	    ArrayList  args = new ArrayList();
-	    args.add(PlutoAdminContext.getInstance().getDeploymentPath());
-	    args.add(PlutoAdminContext.getInstance().getPlutoWebContext());
+	    args.add(PlutoAdminContext.getDeploymentPath());
+	    args.add(PlutoAdminContext.getPlutoWebContext());
 	    args.add(tempDir + PlutoAdminConstants.FS + serverFileName);
 	    //This is probably not used???, but left here to as to not change
 	    //	args indexing used by Deploy class.

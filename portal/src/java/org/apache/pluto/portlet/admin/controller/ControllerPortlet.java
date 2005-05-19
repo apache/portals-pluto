@@ -104,14 +104,14 @@ public class ControllerPortlet extends GenericPortlet {
 			log("Help include: " + _incHelp);
 
 			//load properties
-			_properties = PlutoAdminContext.getInstance().getProperties();
+			_properties = PlutoAdminContext.getProperties();
 
 			//Configure the paths to the container home dir,
 			//	Pluto's dir and the deployment dir. This needs to
 			//	be done before any admin portlets are called.
 			String plutoPath = _ctx.getRealPath("");//Path with single slash is also allowed
 //			String plutoPath = null;//for testing
-			PlutoAdminContext.getInstance().parseDeploymentPaths(plutoPath);
+			PlutoAdminContext.parseDeploymentPaths(plutoPath);
 		} catch (Throwable e) {
 			log("Error thrown in ControllerPortlet.init()", e);
 		}

@@ -17,10 +17,7 @@
 package org.apache.pluto.driver.deploy;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,7 +34,6 @@ import org.apache.pluto.descriptors.servlet.SecurityRoleDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
 import org.apache.pluto.descriptors.servlet.ServletMappingDD;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
-import org.apache.pluto.driver.deploy.impl.PortletEntityRegistryRegistrarService;
 
 public class Deploy {
 
