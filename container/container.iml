@@ -9,6 +9,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/conf" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/tld" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -16,7 +18,9 @@
     <orderEntry type="library" name="servlet-api-2.3" level="application" />
     <orderEntry type="library" name="portlet-api-1.0" level="application" />
     <orderEntry type="module" module-name="binding" />
-    <orderEntry type="library" name="commons-logging-1.0.3" level="application" />
+    <orderEntry type="library" name="commons-logging-1.0.4" level="application" />
+    <orderEntry type="library" name="junit-3.8.1" level="application" />
+    <orderEntry type="library" name="jmock-1.0.1" level="application" />
     <orderEntryProperties />
   </component>
 </module>

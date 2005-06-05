@@ -227,7 +227,6 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/adminsuite/adminsuite.iml" filepath="$PROJECT_DIR$/adminsuite/adminsuite.iml" />
       <module fileurl="file://$PROJECT_DIR$/binding/binding.iml" filepath="$PROJECT_DIR$/binding/binding.iml" />
       <module fileurl="file://$PROJECT_DIR$/container/container.iml" filepath="$PROJECT_DIR$/container/container.iml" />
       <module fileurl="file://$PROJECT_DIR$/deploy/deploy.iml" filepath="$PROJECT_DIR$/deploy/deploy.iml" />
@@ -235,7 +234,7 @@
       <module fileurl="file://$PROJECT_DIR$/testsuite/testsuite.iml" filepath="$PROJECT_DIR$/testsuite/testsuite.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="java version &quot;1.4.2_04&quot;" />
+  <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="java version &quot;1.5.0_02&quot;" />
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
     <option name="DEBUGGING_INFO" value="true" />

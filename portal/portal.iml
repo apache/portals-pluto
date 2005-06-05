@@ -36,18 +36,6 @@
       <attribute name="method" value="1" />
       <attribute name="URI" value="/WEB-INF/classes" />
     </containerElement>
-    <containerElement type="library" level="application" name="castor-0.9.5">
-      <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib" />
-    </containerElement>
-    <containerElement type="library" level="application" name="commons-logging-1.0.3">
-      <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib" />
-    </containerElement>
-    <containerElement type="library" level="application" name="jstl-standard-1.0.4">
-      <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib" />
-    </containerElement>
     <containerElement type="library" level="application" name="portlet-api-1.0">
       <attribute name="method" value="1" />
       <attribute name="URI" value="/WEB-INF/lib" />

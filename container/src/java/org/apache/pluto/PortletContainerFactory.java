@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.services.PortletContainerServices;
+import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Factory used to create new PortletContainer instances.  The factor constructs
@@ -61,19 +62,25 @@ public class PortletContainerFactory {
     }
 
     /**
-     * Create a container with the given name, initialized from the given
+     * Create a container with the given containerName, initialized from the given
      * servlet config, and using the given container services.
-     * @param name
+     * @param containerName
      * @param env
      * @return newly created PortletContainer
      * @throws PortletContainerException
      */
-    public PortletContainer createContainer(String name,
+    public PortletContainer createContainer(String containerName,
                                             PortletContainerServices env)
         throws PortletContainerException {
-        PortletContainer container = new PortletContainerImpl(name, env);
+
+        ArgumentUtility.validateNotNull("environment", env);
+        ArgumentUtility.validateNotEmpty("containerName", containerName);
+
+        PortletContainer container =
+            new PortletContainerImpl(containerName, env);
+
         if (LOG.isInfoEnabled()) {
-            LOG.info("Portlet Container [" + name + "] created.");
+            LOG.info("Portlet Container [" + containerName + "] created.");
         }
         return container;
     }

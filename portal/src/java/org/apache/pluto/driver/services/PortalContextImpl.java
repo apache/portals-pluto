@@ -103,10 +103,10 @@ public class PortalContextImpl implements PortalContext {
     public Enumeration getSupportedPortletModes() {
         if (portletModes == null) {
             portletModes = new Vector();
-            Enumeration enum = new Vector(config.getSupportedPortletModes()).elements();
-            while (enum.hasMoreElements()) {
+            Enumeration enumeration = new Vector(config.getSupportedPortletModes()).elements();
+            while (enumeration.hasMoreElements()) {
                 portletModes.add(
-                    new PortletMode(enum.nextElement().toString()));
+                    new PortletMode(enumeration.nextElement().toString()));
             }
         }
         return portletModes.elements();
@@ -120,10 +120,10 @@ public class PortalContextImpl implements PortalContext {
     public Enumeration getSupportedWindowStates() {
         if (windowStates == null) {
             windowStates = new Vector();
-            Enumeration enum = new Vector(config.getSupportedWindowStates()).elements();
-            while (enum.hasMoreElements()) {
+            Enumeration enumeration = new Vector(config.getSupportedWindowStates()).elements();
+            while (enumeration.hasMoreElements()) {
                 windowStates.add(
-                    new WindowState(enum.nextElement().toString()));
+                    new WindowState(enumeration.nextElement().toString()));
             }
         }
         return windowStates.elements();

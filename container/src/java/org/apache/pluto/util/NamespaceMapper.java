@@ -23,7 +23,6 @@ import org.apache.pluto.om.ObjectID;
 
 /**
  **/
-
 public interface NamespaceMapper {
 
 

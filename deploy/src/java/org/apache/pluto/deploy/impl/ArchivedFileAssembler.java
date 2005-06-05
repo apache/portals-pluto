@@ -73,9 +73,9 @@ public class ArchivedFileAssembler extends AbstractAssembler {
         FileOutputStream fout = new FileOutputStream(file);
         JarOutputStream out = new JarOutputStream(fout);
 
-        Enumeration enum = war.entries();
-        while(enum.hasMoreElements()) {
-            JarEntry entry = (JarEntry)enum.nextElement();
+        Enumeration enumeration = war.entries();
+        while(enumeration.hasMoreElements()) {
+            JarEntry entry = (JarEntry)enumeration.nextElement();
             entry = new JarEntry(entry.getName());
             InputStream is = null;
             if(!entries.containsKey(entry.getName())) {

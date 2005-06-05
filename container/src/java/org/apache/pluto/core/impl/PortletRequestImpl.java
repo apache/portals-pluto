@@ -425,9 +425,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public String getResponseContentType() {
-        Enumeration enum = getResponseContentTypes();
-        while(enum.hasMoreElements()) {
-            return (String)enum.nextElement();
+        Enumeration enumeration = getResponseContentTypes();
+        while(enumeration.hasMoreElements()) {
+            return (String)enumeration.nextElement();
         }
         return "text/html";
     }

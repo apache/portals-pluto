@@ -74,6 +74,10 @@ limitations under the License.
             <version>1.0.4</version>
         </dependency>
 
+        <dependency>
+            <id>jmock</id>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
 </project>
