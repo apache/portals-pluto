@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <table>
-  <tr><th><img src="http://portals.apache.org/pluto/images/pluto.png"/></th></tr>
-  <tr class="banner"><td>Pluto Portal Driver <FONT class="small">(<%=Config.getParameters().getString("portaldriver.info")%>)</FONT></td>
+  <tr><th><img src="<%=request.getContextPath()%>/pluto.png"/></th></tr>
+  <tr class="banner"><td>Pluto Portal Driver <FONT class="small">(<%=Config.getParameters().getString("portaldriver.info")%>) deployed in <%= config.getServletContext().getServerInfo() %></FONT></td>
       <td align="right">
        <% if(request.getUserPrincipal()==null) { %>
          <A href="<%=request.getContextPath()%>/secure/">Login</A>
