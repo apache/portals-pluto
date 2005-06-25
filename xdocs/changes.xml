@@ -4,6 +4,19 @@
 </properties>
 <body>
 
+<release version="1.0.1-rc3" date="June 27, 2005" description="Release Candidate">
+  <action dev="ddewolf" type="update">Updated Maven's Default JDK Version</action>
+  <action dev="ddewolf" type="fix">Made Session Attributes Serializable for Pluto TestSuite</action>
+  <action dev="taylor" type="fix">Update PortletSession to return appropriate Context</action>
+  <action dev="cdoremus" type="update">Update Documentation</action>
+  <action dev="cdoremus" type="update">Update Admin Portlet</action>
+  <action dev="ddewolf" type="update">Update Deployment Descriptor Access</action>
+  <action dev="ddewolf" type="add">Added XML Configuration for action-param and render-param</action>
+  <action dev="ddewolf" type="add">Added Additional TestSuite Tests</action>
+  <action dev="ddewolf" type="fix">Fixed Render Parameters Include Bug</action>
+  <action dev="ddewolf" type="update">Updated the Pluto Deployer to be more flexible</action>
+</release>
+
 <release version="1.0.1-rc2" date="Dec 22, 2004" description="Release Candidate">
   <action dev="nlothian" type="update">
 	Upgraded to Tomcat 5.5.4 for Pluto/Tomcat Bundle
