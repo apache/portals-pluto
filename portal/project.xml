@@ -48,6 +48,7 @@ limitations under the License.
       <version>1.0.4</version>
       <properties>
         <war.bundle>false</war.bundle>
+        <tomcat.shared>true</tomcat.shared>
       </properties>
     </dependency>
 
@@ -57,7 +58,7 @@ limitations under the License.
       <version>1.0.1-rc3</version>
       <properties>
         <war.bundle>false</war.bundle>
-		<tomcat.shared>true</tomcat.shared>
+        <tomcat.shared>true</tomcat.shared>
       </properties>
     </dependency>
 

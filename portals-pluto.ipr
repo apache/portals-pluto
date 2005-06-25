@@ -167,13 +167,12 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/deploy/deploy.iml" filepath="$PROJECT_DIR$/deploy/deploy.iml" />
       <module fileurl="file://$PROJECT_DIR$/descriptors/descriptors.iml" filepath="$PROJECT_DIR$/descriptors/descriptors.iml" />
-      <module fileurl="file://$PROJECT_DIR$/inspector/inspector.iml" filepath="$PROJECT_DIR$/inspector/inspector.iml" />
       <module fileurl="file://$PROJECT_DIR$/container/pluto-core.iml" filepath="$PROJECT_DIR$/container/pluto-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/portal/pluto-driver.iml" filepath="$PROJECT_DIR$/portal/pluto-driver.iml" />
       <module fileurl="file://$PROJECT_DIR$/testsuite/testsuite.iml" filepath="$PROJECT_DIR$/testsuite/testsuite.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="java version &quot;1.4.2_04&quot;" />
+  <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="java version &quot;1.5.0_02&quot;" />
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
     <option name="DEBUGGING_INFO" value="true" />
