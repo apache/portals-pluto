@@ -127,3 +127,53 @@ hRIdPJ55WPTQBZWaEBCikeEHiEkEGBECAAkFAkGy7V8CGwwACgkQkh+wqTILT7To
 AgCeIYQjWxrjd4c2jsB/ytfDVBBJZiUAn2LByyqYsMAQQVRyJaWF1E8b4TD4
 =Z3c0
 -----END PGP PUBLIC KEY BLOCK-----
+pub   1024D/DD4200EA 2004-11-02
+uid                  David H. DeWolf <david@daviddewolf.com>
+sig 3        DD4200EA 2004-11-02  David H. DeWolf <david@daviddewolf.com>
+uid                  David H. DeWolf <ddewolf@apache.org>
+sig 3        DD4200EA 2004-11-02  David H. DeWolf <david@daviddewolf.com>
+uid                  David H. DeWolf <ddewolf@rocketmail.com>
+sig 3        DD4200EA 2004-11-02  David H. DeWolf <david@daviddewolf.com>
+uid                  David H. DeWolf <ddewolf@gmail.com>
+sig 3        DD4200EA 2004-11-02  David H. DeWolf <david@daviddewolf.com>
+uid                  David H. DeWolf <david.dewolf@digitalfocus.com>
+sig 3        DD4200EA 2005-06-25  David H. DeWolf <david@daviddewolf.com>
+sub   1024g/F7DE5A9C 2004-11-02
+sig          DD4200EA 2004-11-02  David H. DeWolf <david@daviddewolf.com>
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.0 (Cygwin)
+
+mQGiBEGHzhMRBACVBP2u+rePvFsGWoSnlpbXUJO3EyEHSlRKNeu+5MMLp2tYpP6k
+zM9zBFNHf0elbA8KESVkv6D6/YilYfogxvw+dgVy2sFsSDDxplaIOEumX783aiGS
+fYi7KM3W61co2g9RlKZm8Ho8ZVV0WoTD2L/OPKm1PRvlqM6eh6Pmr5fZhwCg88ZE
+jjtjg92j77t/ciZZ9a6YKrcD/0RDdIQl408krXfbCLK6AQXnzu5mJUjWit0HCtXr
+cN2UsAwX1KAANNV54N0IxxBWw1CpUIolIhZBpgE8Se5hNU90sTvvGjieWkiL1rET
+SolKIJT+cqzf6C9dzIydxuR2X+W6l6IKlytk0AYwaup9scAij0Zexx1qxHxjxylU
+Ief9A/9+lVQZ7Wd04Ul6/Wt+tcguP5OIr6fWVoD7+xRH5JtBGurUsm7eRsky65SJ
+OkNxJYsfXR4g7LygCMBZSG/nAx5Eus+Ah4mEHgHJ0h+AZOCY1EDs4K3LN47AkW/D
++vRbvfvMmh7J1pizubwyo0iyYniraQNI1zCWWrEereB/L3S9FLQnRGF2aWQgSC4g
+RGVXb2xmIDxkYXZpZEBkYXZpZGRld29sZi5jb20+iGEEExECACECGwMGCwkIBwMC
+AxUCAwMWAgECHgECF4AFAkGH1CgCGQEACgkQshdj+t1CAOrZygCgj41mE/x1iVew
+oqXBWdCTA+GYjX4AnRVodDBzkWCndt9n7HfNCL1nFL4vtCREYXZpZCBILiBEZVdv
+bGYgPGRkZXdvbGZAYXBhY2hlLm9yZz6IXgQTEQIAHgIbAwYLCQgHAwIDFQIDAxYC
+AQIeAQIXgAUCQYfUJgAKCRCyF2P63UIA6g9lAJ4i2NY+zD4bxJi0h2EpNkO+rgVF
+/ACgmL2VgAi8/lU8LXQDrLO3F30nrKi0KERhdmlkIEguIERlV29sZiA8ZGRld29s
+ZkByb2NrZXRtYWlsLmNvbT6IXgQTEQIAHgUCQYfSHwIbAwYLCQgHAwIDFQIDAxYC
+AQIeAQIXgAAKCRCyF2P63UIA6gEiAKCU58ktQAUGOMwpJXluG95mhhrCIwCg6bFe
+atZ5JvPoJwwiXBmbbZC3Oeq0I0RhdmlkIEguIERlV29sZiA8ZGRld29sZkBnbWFp
+bC5jb20+iF4EExECAB4FAkGH0jwCGwMGCwkIBwMCAxUCAwMWAgECHgECF4AACgkQ
+shdj+t1CAOqIRACgxA80v9zy9y+Aco3UNsC9DLHkwJ0AnRJPuPkt89NE/opcbgNH
+uI3+ylFbtC9EYXZpZCBILiBEZVdvbGYgPGRhdmlkLmRld29sZkBkaWdpdGFsZm9j
+dXMuY29tPoheBBMRAgAeBQJCvLVHAhsDBgsJCAcDAgMVAgMDFgIBAh4BAheAAAoJ
+ELIXY/rdQgDqCyAAmwf4gVzRpTaAFoSYp6ZmDAR8Qt5JAKCYMvybti9CFzYsa96D
+P7G0aRuxxLkBDQRBh84TEAQA6zybsVGREjBQ+wKLT764hWjR7SkBaIjYLZJHUOwl
+6TNXhl9302lT+DeQAQXeBGUIg79QR/JHjLL5MoMHeQ+xPbY/EtrlGL9O67Nn/gtq
+AqLjlGEwlKBhae9A3bzxViKEHyi2X9Qtib+lgW3jsJta33ifgGC8TWNSxCrBGnPb
+6pMAAwYEAM54Z0pEX7SnW38QomN6qn+JrJ5Kp5R3A2QCkeqTWuykTHZbI4I3vO2q
+TXiHVI8Rz0soAEFLMr+95SnpInf0jm/gBPBaKHS2DHcLMqLZvut3TH8Vs50pBlP3
+KnWqi9xqaJq2TwgWCNh1RFydcd+aC3bCHTNWq9M7B2sxM6hNaEkkiEkEGBECAAkF
+AkGHzhMCGwwACgkQshdj+t1CAOph4gCgpxV7iVMhaAHYaGFWT9m/opl9b+UAnRWl
+X5guSzlwPBtoCQ0rjtIIHGiL
+=k+ts
+-----END PGP PUBLIC KEY BLOCK-----
