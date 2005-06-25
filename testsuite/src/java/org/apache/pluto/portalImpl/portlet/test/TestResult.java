@@ -15,10 +15,12 @@
  */
 package org.apache.pluto.portalImpl.portlet.test;
 
+import java.io.Serializable;
+
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
-public class TestResult {
+public class TestResult implements Serializable {
 
     public static final String PASSED = "Passed";
     public static final String FAILED = "Failed";

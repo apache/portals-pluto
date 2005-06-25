@@ -18,11 +18,12 @@ package org.apache.pluto.portalImpl.portlet.test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.io.Serializable;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
-public class TestResults {
+public class TestResults implements Serializable {
 
     private String name;
     private ArrayList list = new ArrayList();
