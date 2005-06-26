@@ -48,7 +48,7 @@ public abstract class BasicURLTag extends TagSupport
             if (var != null)
             {
                 vi = new VariableInfo[1];
-                vi[0] = new VariableInfo(var, "java.lang.String", true, VariableInfo.AT_BEGIN);
+                vi[0] = new VariableInfo(var, "java.lang.String", true, VariableInfo.AT_END);
             }
             return vi;
         }
