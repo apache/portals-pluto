@@ -58,6 +58,7 @@ import org.apache.pluto.portalImpl.om.servlet.impl.ServletMappingImpl;
 import org.apache.pluto.portalImpl.om.servlet.impl.WebApplicationDefinitionImpl;
 import org.apache.pluto.portalImpl.xml.Constants;
 import org.apache.pluto.portalImpl.xml.XmlParser;
+import org.apache.pluto.portlet.admin.PlutoAdminException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.exolab.castor.mapping.Mapping;
@@ -169,7 +170,7 @@ public class Deploy {
         } catch (Exception e) {
             System.out.println("CASTOR-Exception: " + e);
             throw new IOException(
-                "Failed to load mapping file " + _portlet_mapping);
+            "Failed to load mapping file " + _web_mapping + ". Cause of mapping error: " + e.getMessage());
         }
 
         File portletXml =
@@ -185,7 +186,7 @@ public class Deploy {
             mappingWebXml.loadMapping(_web_mapping);
         } catch (Exception e) {
             throw new IOException(
-                "Failed to load mapping file " + _web_mapping);
+                "Failed to load mapping file " + _web_mapping + ". Cause of mapping error: " + e.getMessage());
         }
 
         File webXml = new File(webAppsDir + webModule + webInfDir + "web.xml");
@@ -426,7 +427,7 @@ public class Deploy {
             } catch (Exception e) {
                 writer.close();
                 e.printStackTrace(System.out);
-                throw new Exception();
+                throw new PlutoAdminException("Error found in Deploy.prepareWebArchive()", e);
             }
             // REMOVED copy of  tld b/c it's now included in the container distribution.
             //String strTo = dirDelim + "WEB-INF" + dirDelim + "tld" + dirDelim + "portlet.tld";
@@ -437,7 +438,7 @@ public class Deploy {
         } catch (Exception e) {
        
             e.printStackTrace(System.out);
-            throw new Exception();
+            throw new PlutoAdminException("Error found in Deploy.prepareWebArchive()", e);
         }
 
         System.out.println("finished!");
@@ -517,8 +518,11 @@ public class Deploy {
             deployArchive(webAppsDir, warFile);
 
             prepareWebArchive(webAppsDir, warFile);
+        } catch (PlutoAdminException e) {
+            throw e;
         } catch (Exception e) {
             e.printStackTrace(System.out);
+            throw new PlutoAdminException("Error found in Deploy.main()", e);
         }
 
     }
@@ -560,6 +564,7 @@ public class Deploy {
 
         } catch (Exception e) {
             e.printStackTrace(System.out);
+            throw PlutoAdminException("Error found in Deploy.addToEntityReg()", e);
         }
     }
 
