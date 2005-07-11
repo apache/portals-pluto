@@ -1,12 +1,12 @@
 /*
  * Copyright 2003,2004 The Apache Software Foundation.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -170,7 +170,7 @@ public class Deploy {
         } catch (Exception e) {
             System.out.println("CASTOR-Exception: " + e);
             throw new IOException(
-            "Failed to load mapping file " + _web_mapping + ". Cause of mapping error: " + e.getMessage());
+            "Failed to load mapping file " + _portlet_mapping + ". Cause of mapping error: " + e.getMessage());
         }
 
         File portletXml =
@@ -200,7 +200,7 @@ public class Deploy {
             // modified by YCLI: START :: to ignore extra elements and attributes
             unmarshaller.setIgnoreExtraElements(true);
             unmarshaller.setIgnoreExtraAttributes(true);
-            // modified by YCLI: END 
+            // modified by YCLI: END
 
             PortletApplicationDefinitionImpl portletApp =
                 (PortletApplicationDefinitionImpl) unmarshaller.unmarshal(
@@ -230,7 +230,7 @@ public class Deploy {
                 // modified by YCLI: START :: to ignore extra elements and attributes
                 unmarshallerWeb.setIgnoreExtraElements(true);
                 unmarshallerWeb.setIgnoreExtraAttributes(true);
-                // modified by YCLI: END 
+                // modified by YCLI: END
 
                 webApp =
                     (WebApplicationDefinitionImpl) unmarshallerWeb.unmarshal(
@@ -361,7 +361,7 @@ public class Deploy {
                         servletSecurityRoleRefs);
 
                 SecurityRoleSet webAppSecurityRoles = webApp.getSecurityRoles();
-                    
+
                 SecurityRoleRefSet portletSecurityRoleRefs =
                     portlet.getInitSecurityRoleRefSet();
 
@@ -370,9 +370,9 @@ public class Deploy {
                 while (p.hasNext()) {
                     SecurityRoleRef portletSecurityRoleRef =
                         (SecurityRoleRef) p.next();
-                    
+
                     if (	portletSecurityRoleRef.getRoleLink()== null
-                        &&		
+                        &&
                             webAppSecurityRoles.get(portletSecurityRoleRef.getRoleName())==null
                     ){
                         System.out.println(
@@ -381,7 +381,7 @@ public class Deploy {
                                 + "\" of the security-role-ref element defined for the wrapper-servlet with the name '"
                                 + portlet.getName()
                                 + "'.");
-                        break;						
+                        break;
                     }
                     SecurityRoleRef servletSecurityRoleRef =
                         servletSecurityRoleRefs.get(
@@ -415,7 +415,7 @@ public class Deploy {
                 Constants.WEB_PORTLET_DTD);
 
             FileWriter writer =
-                new FileWriter(webAppsDir + webModule + 
+                new FileWriter(webAppsDir + webModule +
                                                System.getProperty("file.separator") + "WEB-INF"+
                                                System.getProperty("file.separator") + "web.xml");
             XMLSerializer serializer = new XMLSerializer(writer, of);
@@ -433,10 +433,10 @@ public class Deploy {
             //String strTo = dirDelim + "WEB-INF" + dirDelim + "tld" + dirDelim + "portlet.tld";
             //String strFrom = plutoHome + "portal" + dirDelim + "src" +
             //    dirDelim + "webapp" + strTo;
-             
+
             //copy(strFrom, webAppsDir + webModule + strTo);
         } catch (Exception e) {
-       
+
             e.printStackTrace(System.out);
             throw new PlutoAdminException("Error found in Deploy.prepareWebArchive()", e);
         }
@@ -447,12 +447,12 @@ public class Deploy {
     public static void copy(String from, String to) throws IOException {
         File f = new File(to);
         f.getParentFile().mkdirs();
-        
+
         byte[] buffer = new byte[1024];
         int length = 0;
         InputStream fis = new FileInputStream(from);
         FileOutputStream fos = new FileOutputStream(f);
-        
+
         while ((length = fis.read(buffer)) >= 0) {
             fos.write(buffer, 0, length);
         }
@@ -479,10 +479,10 @@ public class Deploy {
 
         if(debug) {
             for(int i=0; i<args.length;i++) {
-                System.out.println( "args["+ i +"]:" + args[i]);				
+                System.out.println( "args["+ i +"]:" + args[i]);
             }
         }
-        
+
         webAppsDir = args[0];
         if (!webAppsDir.endsWith(dirDelim))
             webAppsDir += dirDelim;
@@ -509,7 +509,7 @@ public class Deploy {
             ) {
                 // parameters: app-id   portlet application id; must be unique in portletentityregistry.xml
                 //             portlet-id   portlet id; must be unique inside the portlet application
-                //             portlet-name the name of the portlet in portlet.xml   
+                //             portlet-name the name of the portlet in portlet.xml
                 addToEntityReg(args);
             }
         }
@@ -564,7 +564,7 @@ public class Deploy {
 
         } catch (Exception e) {
             e.printStackTrace(System.out);
-            throw PlutoAdminException("Error found in Deploy.addToEntityReg()", e);
+            throw new PlutoAdminException("Error found in Deploy.addToEntityReg()", e);
         }
     }
 
