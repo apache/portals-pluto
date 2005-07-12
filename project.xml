@@ -49,7 +49,7 @@ limitations under the License.
 
   <url>http://portals.apache.org/pluto/</url>
   <issueTrackingUrl>http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10560</issueTrackingUrl>
-  <siteAddress>portals.apache.org</siteAddress>
+  <siteAddress>cvs.apache.org</siteAddress>
   <siteDirectory>/www/portals.apache.org/pluto/</siteDirectory>
 
   <repository>
