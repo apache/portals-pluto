@@ -89,7 +89,7 @@ public class DefineObjectsTag extends TagSupport
         {
             VariableInfo [] info = new VariableInfo [] {
                 new VariableInfo("renderRequest",
-                                 "javax.portlet.PortletRequest",
+                                 "javax.portlet.RenderRequest",
                                  true,
                                  VariableInfo.AT_BEGIN),
                 new VariableInfo("renderResponse",
