@@ -38,14 +38,18 @@ import org.apache.pluto.util.NamespaceMapperAccess;
 
 public class RenderResponseImpl extends PortletResponseImpl implements RenderResponse {
     private static final String illegalStateExceptionText = "No content type set.";
+    
+    private boolean containerSupportsBuffering;
 
     private String currentContentType = null;   // needed as servlet 2.3 does not have a response.getContentType
 
     public RenderResponseImpl(PortletWindow portletWindow,
                               javax.servlet.http.HttpServletRequest servletRequest,
-                              javax.servlet.http.HttpServletResponse servletResponse)
+                              javax.servlet.http.HttpServletResponse servletResponse,
+                              boolean containerSupportsBuffering)
     {
         super(portletWindow, servletRequest, servletResponse);
+        this.containerSupportsBuffering = containerSupportsBuffering;
     }
 
     // javax.portlet.RenderResponse ---------------------------------------------------------------
@@ -118,13 +122,22 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
 
     public void setBufferSize(int size)
     {
-        throw new IllegalStateException("portlet container does not support buffering");
+    	if (!containerSupportsBuffering) {
+    		// default behaviour if property pluto.allowSetBufferSize in file
+    		// ConfigService.properties wasn't set or was set to a value not equal to "yes"
+    		throw new IllegalStateException("portlet container does not support buffering");
+    	} else {
+    		this._getHttpServletResponse().setBufferSize(size);
+    	}
     }
 
     public int getBufferSize()
     {
-        //return this._getHttpServletResponse().getBufferSize();
-        return 0;
+    	if (!containerSupportsBuffering) {
+    		return 0;
+    	} else {
+    		return this._getHttpServletResponse().getBufferSize();
+    	}
     }
 
     public void flushBuffer() throws java.io.IOException

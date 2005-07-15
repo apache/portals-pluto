@@ -27,5 +27,6 @@ public interface RenderResponseFactory extends Factory {
 
     public RenderResponse getRenderResponse(PortletWindow portletWindow,
                                             javax.servlet.http.HttpServletRequest servletRequest,
-                                            javax.servlet.http.HttpServletResponse servletResponse);
+                                            javax.servlet.http.HttpServletResponse servletResponse,
+                                            boolean containerSupportsBuffering);
 }

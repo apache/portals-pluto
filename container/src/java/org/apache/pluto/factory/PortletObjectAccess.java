@@ -49,11 +49,13 @@ public class PortletObjectAccess {
 
     public static RenderResponse getRenderResponse(PortletWindow portletWindow,
                                                    javax.servlet.http.HttpServletRequest servletRequest,
-                                                   javax.servlet.http.HttpServletResponse servletResponse)
+                                                   javax.servlet.http.HttpServletResponse servletResponse,
+                                                   boolean containerSupportsBuffering)
     {
         return getResponseFactory().getRenderResponse(portletWindow,
                                                       servletRequest,
-                                                      servletResponse);
+                                                      servletResponse,
+                                                      containerSupportsBuffering);
     }
 
     public static PortletSession getPortletSession(PortletWindow portletWindow,

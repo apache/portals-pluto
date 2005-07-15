@@ -34,11 +34,13 @@ public class RenderResponseFactoryImpl implements RenderResponseFactory {
     // org.apache.pluto.factory.RenderRequestFactory implementation -------------------------------
     public RenderResponse getRenderResponse(PortletWindow portletWindow,
                                             javax.servlet.http.HttpServletRequest servletRequest,
-                                            javax.servlet.http.HttpServletResponse servletResponse)
+                                            javax.servlet.http.HttpServletResponse servletResponse,
+                                            boolean containerSupportsBuffering)
     {
         RenderResponse renderResponse = new RenderResponseImpl(portletWindow,
                                                                servletRequest,
-                                                               servletResponse );
+                                                               servletResponse,
+                                                               containerSupportsBuffering);
         return renderResponse;
     }
     // --------------------------------------------------------------------------------------------

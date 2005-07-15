@@ -51,6 +51,11 @@ public class Servlet extends HttpServlet
 {
 
     private static String CONTENT_TYPE = "text/html";
+    
+    /**
+     * Stores whether the portlet container used supports buffering
+     */
+    private static String CONTAINER_SUPPORTS_BUFFERING = "portletcontainer.supportsBuffering";
 
     private Logger log = null;
 
@@ -62,7 +67,7 @@ public class Servlet extends HttpServlet
     public void init (ServletConfig config) throws ServletException
     {
         super.init (config);
-
+        
         String charset = config.getInitParameter("charset");
         if (charset != null && charset.length() > 0) {
             CONTENT_TYPE = "text/html; charset=" + charset;
@@ -108,13 +113,27 @@ public class Servlet extends HttpServlet
             environment.addContainerService(FactoryAccess.getInformationProviderContainerService());
             environment.addContainerService(FactoryAccess.getDynamicTitleContainerService());
     
-    		Properties properties = new Properties();
+            String allowSetBufferSizeString = Config.getParameters().getString(CONTAINER_SUPPORTS_BUFFERING);
+            boolean allowSetBufferSize = false;
+            if (allowSetBufferSizeString == null) {
+            	log.warn("org.apache.pluto.portalImpl.Servlet#init(): " +
+            			"Couldn't read property \"pluto.allowSetBufferSize\" " +
+            			"from config file ConfigService.properties");
+            } else {
+            	allowSetBufferSize = allowSetBufferSizeString.equalsIgnoreCase("yes");
+            }
+            Properties containerProperties = new Properties();
+
+            containerProperties.put(CONTAINER_SUPPORTS_BUFFERING, new Boolean(allowSetBufferSize));
+            
+//    		Properties properties = new Properties();
     		
             try
             {
                 PortletContainerFactory.
                     getPortletContainer().
-                        init(uniqueContainerName, config, environment, properties);
+//                        init(uniqueContainerName, config, environment, properties);
+                    	init(uniqueContainerName, config, environment, containerProperties);
             }
             catch (PortletContainerException exc)
             {

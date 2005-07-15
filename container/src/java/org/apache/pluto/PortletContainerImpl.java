@@ -52,6 +52,9 @@ public class PortletContainerImpl implements PortletContainer
 
     private String uniqueContainerName;
     private boolean initialized;
+    
+    private static String CONTAINER_SUPPORTS_BUFFERING = "portletcontainer.supportsBuffering";
+    private boolean supportsBuffering;
 
     private Logger log = null;
 
@@ -70,6 +73,16 @@ public class PortletContainerImpl implements PortletContainer
         log = ((LogService)environment
                 .getContainerService(LogService.class))
                 .getLogger(getClass());
+        
+        Boolean b = (Boolean)properties.get(CONTAINER_SUPPORTS_BUFFERING);
+        if (b == null) {
+        	log.warn("org.apache.pluto.PortletContainerImpl#init(): " +
+        			"Couldn't retrieve parameter \"" + CONTAINER_SUPPORTS_BUFFERING + "\" from" +
+        			"passed properties object. Falling back to default value \"FALSE\"");
+        	supportsBuffering = false;
+        } else {
+        	supportsBuffering = b.booleanValue();
+        }
     }
 
     public void shutdown() throws PortletContainerException
@@ -99,7 +112,8 @@ public class PortletContainerImpl implements PortletContainer
 
             RenderResponse renderResponse = PortletObjectAccess.getRenderResponse(portletWindow, 
                                                                                   servletRequest, 
-                                                                                  servletResponse);
+                                                                                  servletResponse,
+                                                                                  supportsBuffering);
 
             invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
             invoker.render(renderRequest, renderResponse);
@@ -194,7 +208,8 @@ public class PortletContainerImpl implements PortletContainer
 
         RenderResponse renderResponse = PortletObjectAccess.getRenderResponse(portletWindow, 
                                                                               servletRequest, 
-                                                                              servletResponse);
+                                                                              servletResponse,
+                                                                              supportsBuffering);
 
         invoker = PortletInvokerAccess.getPortletInvoker(portletWindow.getPortletEntity().getPortletDefinition());
 
