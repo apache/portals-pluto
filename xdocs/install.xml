@@ -32,7 +32,7 @@ limitations under the License.
 <li><A href="#Installing_Portlets">Installing Portlets</A></li>
      <ul>
        <li><A href="#Installing_With_Maven">Using Maven to Install Portlets</A></li>
-       <li><A href="#Using_the_Admin_Portlet Application">Using the Admin Portlet App to Install Portlets</A></li>
+       <li><A href="#Using_the_Admin_Portlet_Application">Using the Admin Portlet App to Install Portlets</A></li>
      </ul>
 </ul>
 </p>
