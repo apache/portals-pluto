@@ -117,7 +117,7 @@ limitations under the License.
 <p><FONT color="red">
   Currently, to automate the deployment/installation of portlets
   you must utilize the source distribution of pluto.
-Alternatively, you could use the <a href="#Admin_Portlet_Application">Admin Portlet Application</a>
+Alternatively, you could use the <a href="#Using_the_Admin_Portlet_Application">Admin Portlet Application</a>
 to install custom portlets.
   </FONT></p>
 
@@ -135,16 +135,18 @@ to install custom portlets.
 	<p>Alternatively, there is an interactive ant script in the <tt>portlet-deploy</tt> directory
 	that will perform the same task as the Maven deployment goal.</p>
 
-  <li>Modify the Portlet Entity Registry and the Page Registry files.  These
+  <li>Modify the Portlet Entity Registry and the Page Registry and Portlet Contexts files.  These
       configuration files are located at:
 <pre>
       [portal-home]/WEB-INF/data/portletentityregistry.xml
 
       [portal-home]/WEB-INF/data/pageregistry.xml
+
+      [portal-home]/WEB-INF/data/portletcontexts.txt
 </pre>
 
 <p>
-The Portlet entity registry file requires that you specify an application and
+The Portlet Entity Registry file requires that you specify an application and
 a Portlet ID for your new Portlet. The Application ID must be unique. It also
 needs to know the name of the Portlet so that it can go out and find it in
 the webapps path. Furthermore, this information is used to map the Portlet
@@ -162,7 +164,7 @@ example of some additions you can make to the entity registry file:
 </pre>
 
 <p>
-The page registry provides Pluto with the layout information for your Portlet.
+The Page Registry provides Pluto with the layout information for your Portlet.
 The names used in the fragments must be unique as done in the following example:
 </p>
 
@@ -182,6 +184,15 @@ The names used in the fragments must be unique as done in the following example:
   &lt;/fragment&gt;
 </pre>
 
+
+<p>
+The Portlet Contexts file (portletcontexts.txt) lists the webapp contexts for each portlet application
+that runs in Pluto. Each portlet app has a line in this file corresponding to a path and starting with 
+a slash ('/'). In Tomcat, this path is the value of the 'path' attribute of the 'Context' element in 
+a context XML descriptor in $TOMCAT_HOME/conf/Catalina/localhost (or another 'conf' subdirectory).
+</p>
+
+
 </li>
 </ul>
 </subsection>
@@ -196,7 +207,7 @@ portlets to their proper place and updates the registries.
 </p>
   <ul>
   <li>Assemble your portlet application into a valid war.</li>
-  <li>Start Pluto and navigate to the <a href="http://localhost:8080/pluto/portal">Pluto home page</a></li>
+  <li>Start Pluto and navigate to the <a href="http://localhost:8080/pluto/portal">local Pluto home page</a></li>
   <li>Click on the Admin navigation link. The Admin Portlet App should appear.</li>
   <li>In the Deploy War Portlet, click on the Browse button and select your war file</li>
   <li>Click on the Submit button of the Deploy War Portlet</li>
