@@ -56,6 +56,10 @@ limitations under the License.
    <li>Startup the server by using the appropriate tomcat
        startup script located at &lt;PLUTO_HOME&gt;/bin.
        For *nix use startup.sh; for windows use startup.bat.</li>
+   <li>By default Tomcat 5.5 uses JDK 1.5 (J2SE 5.0). In order to run it with
+   JDK 1.4, a compatibility package needs to be downloaded and installed. 
+   See the Running.txt file in the root directory for details.
+   </li>
    <li>Point your browser to
        <A href="http://localhost:8080/pluto/portal">The Pluto Driver</A>
        and your ready to go!</li>
@@ -83,7 +87,7 @@ limitations under the License.
    </p>
 <p>To install the source distribution into tomcat:
    <ul>
-   <li>Install Java 1.3 or greater</li>
+   <li>Install Java 1.4 or greater</li>
    <li>Install Maven 1.0 or greater</li>
    <li>Install Tomcat 4.x or Tomcat 5.x to
        a directory from here forward refered to as
