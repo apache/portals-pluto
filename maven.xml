@@ -104,7 +104,7 @@ limitations under the License.
         <ant:include name="container/**/*"/>
         <ant:include name="deploy/**/*"/>
         <ant:include name="portal/**/*"/>
-        <ant:include name="portlet-deploy/**/*"/>
+        <ant:include name="descriptors/**/*"/>
         <ant:include name="testsuite/**/*"/>
         <ant:include name="xdocs/**/*"/>
         <ant:include name="LICENSE*"/>
@@ -123,7 +123,7 @@ limitations under the License.
         <ant:include name="container/**/*"/>
         <ant:include name="deploy/**/*"/>
         <ant:include name="portal/**/*"/>
-        <ant:include name="portlet-deploy/**/*"/>
+        <ant:include name="descriptors/**/*"/>
         <ant:include name="testsuite/**/*"/>
         <ant:include name="xdocs/**/*"/>
         <ant:include name="LICENSE*"/>
