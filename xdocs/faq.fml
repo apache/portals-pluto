@@ -24,7 +24,7 @@ limitations under the License.
     Which version of Pluto should I use?
   </b></question>
   <answer>
-    Pluto 1.0.1-RC2 is the most recent distribution.
+    Pluto 1.0.1-RC3 is the most recent distribution.
     This version of Pluto passes all of the TCK tests.
   </answer>
   </faq>
@@ -284,6 +284,15 @@ limitations under the License.
           </p>
         </p>
 
+      	<p>
+        Also note that since Pluto 1.0.1-rc2, another configuration file, portletcontexts.txt, has been 
+        included in the Pluto portal. The Portlet Contexts file ($PLUTO_HOME/WEB-INF/data/portletcontexts.txt) 
+        lists the webapp 
+        contexts for each portlet application that runs in Pluto. Each portlet app has a line in this 
+        file corresponding to a path and starting with a slash ('/'). In Tomcat, this path is the value 
+        of the 'path' attribute of the 'Context' element in a context XML descriptor in 
+        $TOMCAT_HOME/conf/Catalina/localhost (or another 'conf' subdirectory).
+        <p>
       </answer>
     </faq>
     <faq id="tomcat5.5">
@@ -302,6 +311,9 @@ limitations under the License.
 	 connectionTimeout="20000" disableUploadTimeout="true"
 	 <b>emptySessionPath="true"</b> /&gt;
     		</source>
+
+    		<p><b>Note:</b> This setting is now incorporated into the binary distribution of Pluto.
+    		</p>
 
 		</p>
     	</answer>
