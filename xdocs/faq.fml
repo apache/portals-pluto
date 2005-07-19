@@ -292,7 +292,7 @@ limitations under the License.
         file corresponding to a path and starting with a slash ('/'). In Tomcat, this path is the value 
         of the 'path' attribute of the 'Context' element in a context XML descriptor in 
         $TOMCAT_HOME/conf/Catalina/localhost (or another 'conf' subdirectory).
-        <p>
+        </p>
       </answer>
     </faq>
     <faq id="tomcat5.5">
