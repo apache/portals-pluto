@@ -38,7 +38,7 @@ import org.apache.pluto.util.NamespaceMapperAccess;
 
 public class RenderResponseImpl extends PortletResponseImpl implements RenderResponse {
     private static final String illegalStateExceptionText = "No content type set.";
-    
+
     private boolean containerSupportsBuffering;
 
     private String currentContentType = null;   // needed as servlet 2.3 does not have a response.getContentType
@@ -75,14 +75,20 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
     public String getNamespace()
     {
         String namespace = NamespaceMapperAccess.getNamespaceMapper().encode(getInternalPortletWindow().getId(), "");
-        
-        // correct all chars in the ns + name that are not valid for qualified names
-        // ECMA-262 Chap. 7.6
-        if (namespace.indexOf('-') != -1) {
-            namespace = namespace.replace('-', '_');
-        }
-        
-        return namespace;
+
+         // replace all characters in the 'namespace + name' that are not valid
+         // javascript variable or function name characters by '_'.
+         StringBuffer validNamespace = new StringBuffer();
+         for (int i = 0; i < namespace.length(); i++) {
+         	char ch = namespace.charAt(i);
+         	if (Character.isJavaIdentifierPart(ch)) {
+         		validNamespace.append(ch);
+         	} else {
+         		validNamespace.append('_');
+         	}
+		}
+
+        return validNamespace.toString();
     }
 
     public void setTitle(String title)
@@ -190,23 +196,23 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
             String supportedType = ct.getContentType();
             if (supportedType.equals(type)) {
                 return true;
-            } else if (supportedType.indexOf("*") >= 0) {                
+            } else if (supportedType.indexOf("*") >= 0) {
                 // the supported type contains a wildcard
                 int index = supportedType.indexOf("/");
                 String supportedPrefix = supportedType.substring(0, index);
                 String supportedSuffix = supportedType.substring(index + 1, supportedType.length());
-                
+
                 index = type.indexOf("/");
                 String typePrefix = type.substring(0, index);
                 String typeSuffix = type.substring(index + 1, type.length());
-                                
+
                 if (supportedPrefix.equals("*") || supportedPrefix.equals(typePrefix)) {
                     // the prefixes match
                     if (supportedSuffix.equals("*") || supportedSuffix.equals(typeSuffix)) {
                         // the suffixes match
                         return true;
                     }
-                }                
+                }
             }
         }
         return false;
