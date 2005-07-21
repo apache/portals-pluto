@@ -104,7 +104,7 @@ limitations under the License.
         <ant:include name="container/**/*"/>
         <ant:include name="deploy/**/*"/>
         <ant:include name="portal/**/*"/>
-        <ant:include name="descriptors/**/*"/>
+        <ant:include name="portlet-deploy/**/*"/>
         <ant:include name="testsuite/**/*"/>
         <ant:include name="xdocs/**/*"/>
         <ant:include name="LICENSE*"/>
@@ -123,7 +123,7 @@ limitations under the License.
         <ant:include name="container/**/*"/>
         <ant:include name="deploy/**/*"/>
         <ant:include name="portal/**/*"/>
-        <ant:include name="descriptors/**/*"/>
+        <ant:include name="portlet-deploy/**/*"/>
         <ant:include name="testsuite/**/*"/>
         <ant:include name="xdocs/**/*"/>
         <ant:include name="LICENSE*"/>
@@ -178,11 +178,16 @@ limitations under the License.
     	value="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; emptySessionPath=&quot;true&quot; /&gt;" 
     	summary="true"/>
 
+    <ant:replace file="${maven.dist.dir}/${plutobin.dist.name}/conf/tomcat-users.xml"
+    	token="&lt;/tomcat-users&gt;" 
+    	value="&lt;user name=&quot;manager&quot; password=&quot;manager&quot; roles=&quot;manager&quot; /&gt;&lt;/tomcat-users&gt;" 
+    	summary="true"/>
+
     <!-- Cleanup the tomcat distribution; purge unwanted examples. -->
     <delete>
       <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/webapps" includes="**"/>
       <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/webapps" includes="**/*.*"/>
-      <fileset dir="${maven.dist.dir}/${plutobin.dist.name}/conf/Catalina/localhost" includes="**/*"/>
+      <!-- fileset dir="${maven.dist.dir}/${plutobin.dist.name}/conf/Catalina/localhost" includes="**/*"/ -->
     </delete>
 
 
