@@ -155,16 +155,20 @@ public class PortletEntityRegistryXao extends BaseAdminObject {
   		return elist;
   	}
 
-    public PortletApplicationEntityImpl getApplication(String castorId) throws Exception {
+    public PortletApplicationEntityImpl getApplication(String appContext) throws Exception {
     	PortletApplicationEntityImpl app = null;
   		Collection apps = getApplications();
   		Iterator iter = apps.iterator();
   		while(iter.hasNext()) {
-  			PortletApplicationEntityImpl currApp = (PortletApplicationEntityImpl)iter.next();
-  			if (currApp.getCastorId().equalsIgnoreCase(castorId)) {
-  				app = currApp;
-  				break;
-  			}
+//  			PortletApplicationEntityImpl currApp = (PortletApplicationEntityImpl)iter.next();
+//  			if (currApp.getCastorId().equalsIgnoreCase(castorId)) { //method parameter
+//  				app = currApp;
+//  				break;
+//  			}
+    		app = (PortletApplicationEntityImpl) iter.next();
+    		if (app.getDefinitionId().equalsIgnoreCase(appContext)) {
+    			break;
+    		}
   		}
   		return app;
     }
