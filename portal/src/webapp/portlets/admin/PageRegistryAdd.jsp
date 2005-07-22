@@ -42,8 +42,8 @@ limitations under the License.
 %>
 
 <script language="JavaScript">
-	function checkCount(field){
-		if (validateRequired(field)) {
+	function <portlet:namespace/>checkCount(field){
+		if (<portlet:namespace/>validateRequired(field)) {
 			var pcount = <%= pcount %>;
 			var cols = document.pinfoform.numcols.value;
 			var rows = document.pinfoform.numrows.value;
@@ -53,7 +53,7 @@ limitations under the License.
 		}
 	}
 	
-	function validateRequired(field) {
+	function <portlet:namespace/>validateRequired(field) {
 		if (field.value == ""){
 			alert("This field is required!");
 			return false;
@@ -95,7 +95,7 @@ limitations under the License.
 <b>Number of columns:</b>
 </td>
 <td>
-<input type="text" name="numcols" size="4" value="<%= ppage == null ? "" : Integer.toString(ppage.getCols()) %>" onBlur="validateRequired(this);">
+<input type="text" name="numcols" size="4" value="<%= ppage == null ? "" : Integer.toString(ppage.getCols()) %>" onBlur="<portlet:namespace/>validateRequired(this);">
 </td>
 </tr>
 <tr>
@@ -103,7 +103,7 @@ limitations under the License.
 <b>Number of rows:</b>
 </td>
 <td>
-<input type="text" name="numrows" size="4" value="<%= ppage == null ? "" : Integer.toString(ppage.getRows()) %>" onBlur="checkCount(this);">
+<input type="text" name="numrows" size="4" value="<%= ppage == null ? "" : Integer.toString(ppage.getRows()) %>" onBlur="<portlet:namespace/>checkCount(this);">
 </td>
 </tr>
 <tr>
