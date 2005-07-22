@@ -137,7 +137,7 @@ public class DeployWarPortlet extends ControllerPortlet {
 
 	  	} catch (Throwable e) {
 				log("Error! ", e);
-			    request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("A problem has occurred: " + e.getMessage() + ". Please check the servlet container's error log.", PortletMessageType.ERROR));
+			    request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("A problem has occurred: " + e.getMessage() + ". Please check the log file for details.", PortletMessageType.ERROR));
 			}
     }
 
