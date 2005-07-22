@@ -39,6 +39,7 @@ import javax.portlet.ActionResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.PortletDiskFileUpload;
+import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityImpl;
 import org.apache.pluto.portlet.admin.BaseAdminObject;
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
 import org.apache.pluto.portlet.admin.PlutoAdminException;
@@ -142,7 +143,7 @@ public class DeployWarService extends BaseAdminObject {
 			        //Check to see if a record exists
   		            PortletEntityRegistryXao xao = new PortletEntityRegistryXao();
 			        boolean appExists = xao.applicationExists(context);
-					ArrayList  argList = createDeploymentArgs(serverFileName, tempDir, request, appExists);
+					ArrayList  argList = createDeploymentArgs(serverFileName, tempDir, request, appExists, context);
 					Map pmap = (HashMap) request.getPortletSession().getAttribute(PlutoAdminConstants.PORTLET_MAP_ATTR);
 					logDebug(METHOD_NAME, "Arguments for Deploy.main():");
 					String[] args = arrayListToStringArray(argList);
@@ -224,7 +225,7 @@ public class DeployWarService extends BaseAdminObject {
 	 * @throws Exception
 	 * @see org.apache.pluto.portalImpl.Deploy#main
 	 */
-	private ArrayList createDeploymentArgs(String serverFileName, String tempDir, ActionRequest request, boolean appExists) throws Exception {
+	private ArrayList createDeploymentArgs(String serverFileName, String tempDir, ActionRequest request, boolean appExists, String context) throws Exception {
 	  	final String METHOD_NAME = "createDeploymentArgs(serverFileName,tempDir,request)";
 	  	Properties props = PlutoAdminContext.getProperties();
 	    final String CONTAINER_HOME =  PlutoAdminContext.getContainerHome();
@@ -242,6 +243,12 @@ public class DeployWarService extends BaseAdminObject {
 	    if (!appExists) {
 		    args.add("-addToEntityReg");
 		    args.add(appId);
+	    } else {
+	        //Don't add it to portletentityregistry.xml,
+	        //and retreive id using webapp context and XAO
+			PortletEntityRegistryXao xao = new PortletEntityRegistryXao();
+			PortletApplicationEntityImpl app = xao.getApplication(context);
+		    appId = app.getCastorId();
 	    }
 	
 	    //Add Map of portlet name/values to session
@@ -474,10 +481,13 @@ public class DeployWarService extends BaseAdminObject {
 			    found = false;
 			}
 			//check if there is a line-separator after the found context name in portletcontexts.txt file
+			// or that this context is the last token in the file
 			if (found) {
 			    int len = context.length();//length of context String
 			    String contextInFile = fileContents.substring(ind);//substring that starts with context
-			    if (contextInFile.indexOf(PlutoAdminConstants.LS) != len) {
+			    int indLS = contextInFile.indexOf(PlutoAdminConstants.LS);
+			    long fileLen = file.length(); //length of file
+			    if ((indLS != len) && (ind + len != fileLen) ) {
 				    found = false;			        
 			    }
 			}
