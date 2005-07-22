@@ -32,15 +32,16 @@ portletentityregistry.xml, pageregistry.xml and portletcontexts.txt).
 </li>
 <li class="portlet-font">
 Build a valid war file containing the portlet application to be deployed including a portlet.xml and web.xml
-file in the WEB-INF directory.
+file in the WEB-INF directory. DO NOT modify web.xml to include a reference to the PortletServlet. The
+deployer will add servlet and servlet-mapping elements related to PortletServlet.
 </li>
 <li class="portlet-font">Select the war file using the Browse button in the Deploy War
 portlet.
 </li>
 <li class="portlet-font">Click submit. The war will be deployed to Pluto's webapps directory and
-a record added to portletentityregistry.xml and portletcontexts.txt.
+a record added to portletentityregistry.xml and portletcontexts.txt in webapp/pluto/WEB-INF/data.
 </li>
-<li class="portlet-font">Fill in the portlet's title, which will be used as a navigation link,
+<li class="portlet-font">Fill in the portlet's title, which will be used as a navigation link in the portal,
 and the number of rows and columns needed to display all portlets in the
 application. If the portlet app only contains one portlet, then keep the default
 one row, one column. The description field on that page is optional.
@@ -71,11 +72,33 @@ porletentityregistry.xml or portletcontexts.txt. You should skip the following
 two pages that set page layout because they cannot be changed at this time.
 </p>
 <p class="portlet-font">
-Once the portlet has been redeployed, we have found that clicking on the
-Admin link  in Pluto's menu will cause the cache to be refreshed. Then you
-can click on the portlet's link. If the portlet is not refreshed, try
+Once the portlet has been redeployed, the Tomcat console (standard output) should show a 'Reloading context' message.
+This indicates that the deployment is done. If that does not occurr, we have found that clicking on the
+Admin link in Pluto's menu helps refresh the cache. Then you
+can click on the portlet's link in the Pluto portal. If the portlet is not refreshed, try
 clearing your browser cache and/or restarting Pluto. Pluto's
 portal, which uses Tomcat, also contains a cache of the portlet contents
 within its 'work' directory. This can be deleted after the portal is shutdown
 to clear the old content.
+</p>
+
+<h3>Troubleshooting</h3>
+<p class="portlet-font">
+The main problem with deployments using the Deploy War Portlet has to do with an improperly formatted portlet.xml file. 
+The deployment process validates portlet.xml against the official XML schema. This schema validation
+checks portlet.xml for the required XML elements and the order of those elements specified by the schema.
+See PLT.21.5 in the JSR-168 specification for details on the XML schema for portlet.xml.
+</p>
+<p class="portlet-font">
+In order for the XML Schema validation to occur correctly, the portlet.xml file must have a root element
+(web-app) with all the proper attributes. The following is an example of a correct web-app element:<br/>
+&lt;portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"/&gt;
+</p>
+<p class="portlet-font">
+There is a know bug in the Deploy War Portlet where certain elements are not properly transferred to the
+new web.xml file created with the ServletPortlet references. If your portlet is erroring out, check your original
+web.xml file (you'll find a copy of the war in the temp dir) and make sure the web.xml deploymed in
+webapps/[context]/WEB-INF carried over all the elements from the original web.xml. If not, manually move the
+missing elements from the original web.xml to the deployed one.
 </p>
