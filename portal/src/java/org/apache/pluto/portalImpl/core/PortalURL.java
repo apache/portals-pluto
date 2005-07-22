@@ -1,24 +1,25 @@
 /*
  * Copyright 2003,2004 The Apache Software Foundation.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
+/*
 
  */
 
 package org.apache.pluto.portalImpl.core;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,7 +44,7 @@ public class PortalURL {
 
     /**
      * Creates and URL pointing to the home of the portal
-     * 
+     *
      * @param request   the servlet request
      * @return the portal URL
      */
@@ -54,7 +55,7 @@ public class PortalURL {
 
     /**
      * Creates and URL pointing to the home of the portal
-     * 
+     *
      * @param env     the portal environment
      * @return the portal URL
      */
@@ -80,7 +81,7 @@ public class PortalURL {
 
     /**
      * Creates and URL pointing to the home of the portal
-     * 
+     *
      * @param env     the portal environment
      */
     public PortalURL(PortalEnvironment env)
@@ -90,7 +91,7 @@ public class PortalURL {
 
     /**
      * Creates and URL pointing to the home of the portal
-     * 
+     *
      * @param request     the servlet request
      */
     public PortalURL(HttpServletRequest request)
@@ -100,7 +101,7 @@ public class PortalURL {
 
     /**
      * Creates and URL pointing to the given fragment of the portal
-     * 
+     *
      * @param request   the servlet request
      * @param pointTo the fragment to point to
      */
@@ -112,7 +113,7 @@ public class PortalURL {
 
     /**
      * Creates and URL pointing to the given fragment of the portal
-     * 
+     *
      * @param env     the portal environment
      * @param pointTo the fragment to point to
      */
@@ -125,7 +126,7 @@ public class PortalURL {
     /**
      * Adds a navigational information pointing to a portal part, e.g. PageGroups
      * or Pages
-     * 
+     *
      * @param nav    the string pointing to a portal part
      */
     public void addGlobalNavigation(String nav)
@@ -145,7 +146,7 @@ public class PortalURL {
     /**
      * Adds a navigational information pointing to a local portal part inside
      * of a global portal part, for example, a portlet on a page.
-     * 
+     *
      * @param nav    the string pointing to a local portal part
      */
     public void addLocalNavigation(String nav)
@@ -155,7 +156,7 @@ public class PortalURL {
 
     /**
      * Returns true if the given string is part of the global navigation of this URL
-     * 
+     *
      * @param nav    the string to check
      * @return true, if the string is part of the navigation
      */
@@ -166,7 +167,7 @@ public class PortalURL {
 
     /**
      * Returns true if the given string is part of the local navigation of this URL
-     * 
+     *
      * @param nav    the string to check
      * @return true, if the string is part of the navigation
      */
@@ -273,13 +274,13 @@ public class PortalURL {
     public String toString(PortalControlParameter controlParam,Boolean p_secure)
     {
 
-        StringBuffer urlBase = new StringBuffer(256);                
+        StringBuffer urlBase = new StringBuffer(256);
 
         boolean secure=false;
         if (p_secure!=null) {
             secure=p_secure.booleanValue();
         } else {
-            secure=environment.getRequest().isSecure(); 
+            secure=environment.getRequest().isSecure();
         }
         urlBase.append(environment.getRequest().getContextPath());
         urlBase.append(secure ? secureServlet : insecureServlet);
@@ -294,7 +295,16 @@ public class PortalURL {
 
         String control = getControlParameterAsString(controlParam);
         if (control.length() > 0) {
-            url += control;
+           	// parameter string should be x-www-form-urlencoded here! See jira 119
+      		// parameter string will be decoded by the tomcat container
+      		control = URLEncoder.encode(control);
+      		// java.net.URLEncoder encodes space (' ') as a plus sign ('+'),
+      		// instead of %20 thus it will not be decoded properly by tomcat when the
+      		// request is parsed. Therefore replace all '+' by '%20'.
+      		// If there would have been any plus signs in the original string, they would
+      		// have been encoded by URLEncoder.encode()
+      		control = control.replace("+", "%20");
+        	url += control;
         }
 
         String requestParam = getRequestParameterAsString(controlParam);
@@ -341,8 +351,8 @@ public class PortalURL {
         // check the complete pathInfo for
         // * navigational information
         // * control information
-        
-        if (environment.getRequest().getPathInfo() != null) 
+
+        if (environment.getRequest().getPathInfo() != null)
         {
             String pathInfo = environment.getRequest().getPathInfo();
             StringTokenizer tokenizer = new StringTokenizer(pathInfo, "/");
