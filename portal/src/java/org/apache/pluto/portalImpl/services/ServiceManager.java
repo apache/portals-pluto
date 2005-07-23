@@ -35,9 +35,14 @@ import org.apache.pluto.util.StringUtils;
 
 /**
  * Manages the life-time of services registered during servlet startup.
- * A service has to derive from {@link org.apache.pluto.services.ContainerService} and implement the
+ * There are two types of services: Services required by the container,
+ * and Services used for the portal driver configuration and execution.
+ * All services required by the container have to derive from
+ * {@link org.apache.pluto.services.ContainerService} and implement the
  * <CODE>init()</CODE> and <CODE>destroy()</CODE> methods as appropriate.
- * 
+ * All services must derive from the
+ * {@link org.apache.pluto.portalImpl.services.Service} interface if they
+ * are to be used with the portal driver.
  * <P>
  * By registering the service and its implementation in the file
  * <CODE>/config/services.properties</CODE>, the service will become
@@ -65,7 +70,7 @@ import org.apache.pluto.util.StringUtils;
  * If present, one of the services configuration files is loaded
  * and passed to the service as {@link org.apache.pluto.portalImpl.util.Properties}
  * object. Not providing a service configuration file is okay too,
- * in that case the properties are empty.
+ * in that case the properties are emptyemptySessionPath .
  * 
  * @see org.apache.pluto.services.ContainerService
  */
