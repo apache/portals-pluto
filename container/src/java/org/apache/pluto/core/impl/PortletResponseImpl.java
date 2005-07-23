@@ -270,10 +270,15 @@ implements InternalPortletResponse, PortletResponse
 
         if (wrappedWriter == null)
         {
-            wrappedWriter = new PrintWriterServletOutputStream(
-                _getHttpServletResponse().getWriter(),
-                _getHttpServletResponse().getCharacterEncoding()
-            );
+            try {
+                wrappedWriter = _getHttpServletResponse().getOutputStream();
+            }
+            catch(IllegalStateException ise) {
+                wrappedWriter = new PrintWriterServletOutputStream(
+                        _getHttpServletResponse().getWriter(),
+                        _getHttpServletResponse().getCharacterEncoding()
+                );
+            }
         }
 
         usingStream = true;
