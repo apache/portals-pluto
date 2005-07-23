@@ -9,9 +9,21 @@
   <action dev="ddewolf" type="fix">PLUTO-131: Login Link Broken</action>
   <action dev="ddewolf" type="fix">PLUTO-138: No Access to OutputStream</action>
   <action dev="ddewolf" type="fix">PLUTO-130: Detailed Error Messages on misconfiguration</action>
-  <action dev="ddewolf" type="fix">PLUTO-133: ServiceManager JavaDoc Inacuracy</action>
+  <action dev="ddewolf" type="fix">PLUTO-133: ServiceManager JavaDoc Inaccuracy</action>
   <action dev="mblum" type="fix">PLUTO-135: DefineObjectsTag vialates Portlet Spec</action>
   <action dev="mblum" type="fix">PLUTO-129: PortletResponse SetBuffer Size</action>
+  <action dev="cdoremus" type="update">Added documentation on requirements for JDK 1.5 (J2SE 5.0) to run binary release (install.html)</action>
+  <action dev="cdoremus" type="update">Added documentation on portletcontexts.txt (install.html and faq.html)</action>
+  <action dev="cdoremus" type="update">Added Troubleshooting information to help mode file of Deploy War Portlet (DeployWarHelp.html)</action>
+  <action dev="cdoremus" type="add">Added logging.properties to binary release for logging to pluto.log</action>
+  <action dev="cdoremus" type="add">Pluto logo (pluto.png) now packaged with binary release</action>
+  <action dev="cdoremus" type="update">Added servlet container name to Banner.jsp</action>
+  <action dev="cdoremus" type="fix">Fixed Deploy War Portlet to allow for proper redeployment of partially-deployed portlet</action>
+  <action dev="cdoremus" type="fix">Fixed Deploy War Portlet to prevent duplicate entries to portletcontexts.txt</action>
+  <action dev="cdoremus" type="fix">PLUTO-85: RenderResponse.getNamespace() returns invalid JavaScript name</action>
+  <action dev="cdoremus" type="fix">PLUTO-119: setRenderParameter() problematic with keys that contain '?'</action>
+  <action dev="cdoremus" type="fix">PLUTO-126: Missing manager web application in binary release. Also added manager user/role to tomcat-users.xml</action>
+  <action dev="cdoremus" type="fix">PLUTO-136: Exceptions in Deploy class not propagated to the Admin portlets</action>
 </release>
 
 <release version="1.0.1-rc3" date="June 27, 2005" description="Release Candidate">
