@@ -33,11 +33,8 @@ limitations under the License.
 <ul>
   <li><a href="http://maven.apache.org/start/download.html">Maven 1.0</a>
     or higher</li>
-  <li>Java 1.3 or higher</li>
-  <li>Servlet 2.3:<br/>
-    Tomcat 4.1.18-LE w/JDK 1.4<br/>
-    <b>or</b> <br/>
-    Tomcat 4.1.24 w/ JDK 1.3</li>
+  <li>Java 1.4 or higher (If using JDK 1.4 in Tomcat 5.5, see Running.txt in Tomcat's home directory for modification instructions)</li>
+  <li>Servlet 2.3 compatible container: Tomcat 5.5 is suggested<br/>
 </ul>
 </subsection>
 <subsection name="Get Maven Ready">
@@ -58,8 +55,8 @@ limitations under the License.
   </tr>
   <tr>
     <td width="134">maven.tomcat.version.major</td>
-    <td width="229">4</td>
-    <td width="261">Major version number (4 or 5) of the Tomcat install where you want to deploy Pluto</td>
+    <td width="229">5</td>
+    <td width="261">Major version of Tomcat</td>
   </tr>
 </table>
 <p>You can copy the <code>build.properties.sample</code> file and name it
