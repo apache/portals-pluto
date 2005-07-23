@@ -303,7 +303,8 @@ public class PortalURL {
       		// request is parsed. Therefore replace all '+' by '%20'.
       		// If there would have been any plus signs in the original string, they would
       		// have been encoded by URLEncoder.encode()
-      		control = control.replace("+", "%20");
+//      		control = control.replace("+", "%20");//only works with JDK 1.5
+      		control = control.replaceAll("\\+", "%20");
         	url += control;
         }
 
