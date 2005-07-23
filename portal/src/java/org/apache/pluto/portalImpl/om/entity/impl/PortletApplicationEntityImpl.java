@@ -27,6 +27,7 @@ import org.apache.pluto.om.entity.PortletApplicationEntity;
 import org.apache.pluto.om.entity.PortletEntityList;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.portalImpl.services.portletdefinitionregistry.PortletDefinitionRegistry;
+import org.apache.pluto.portalImpl.services.ConfigurationException;
 import org.apache.pluto.util.StringUtils;
 
 public class PortletApplicationEntityImpl 
@@ -56,8 +57,15 @@ org.apache.pluto.portalImpl.om.common.Support {
 
     public PortletApplicationDefinition getPortletApplicationDefinition()
     {
-        return PortletDefinitionRegistry.getPortletApplicationDefinitionList().get(
-                                                                                  org.apache.pluto.portalImpl.util.ObjectID.createFromString(definitionId));
+        PortletApplicationDefinition definition =
+            PortletDefinitionRegistry.getPortletApplicationDefinitionList()
+                .get(org.apache.pluto.portalImpl.util.ObjectID.createFromString(definitionId));
+        if(definition == null) {
+            throw new ConfigurationException("Unable to find portlet application definition. "+
+                    "Ensure that all portlets definied within the portlet registry are correct" +
+                    "and have been deployed.");
+        }
+        return definition;
     }
 
     // additional methods.

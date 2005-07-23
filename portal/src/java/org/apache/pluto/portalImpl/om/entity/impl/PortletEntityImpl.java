@@ -30,9 +30,11 @@ import org.apache.pluto.om.entity.PortletApplicationEntity;
 import org.apache.pluto.om.entity.PortletEntity;
 import org.apache.pluto.om.entity.PortletEntityCtrl;
 import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletDefinitionList;
 import org.apache.pluto.om.window.PortletWindowList;
 import org.apache.pluto.portalImpl.om.common.impl.DescriptionSetImpl;
 import org.apache.pluto.portalImpl.services.portletentityregistry.PortletEntityRegistry;
+import org.apache.pluto.portalImpl.services.ConfigurationException;
 import org.apache.pluto.util.StringUtils;
 
 public class PortletEntityImpl
@@ -78,7 +80,15 @@ org.apache.pluto.portalImpl.om.common.Support {
 
     public PortletDefinition getPortletDefinition()
     {
-        return applicationEntity.getPortletApplicationDefinition().getPortletDefinitionList().get(org.apache.pluto.portalImpl.util.ObjectID.createFromString(definitionId));
+        PortletDefinition def =
+            applicationEntity.getPortletApplicationDefinition()
+                .getPortletDefinitionList()
+                .get(org.apache.pluto.portalImpl.util.ObjectID.createFromString(definitionId));
+        if(def == null) {
+            throw new ConfigurationException("Unable to obtain portlet definition for :"+definitionId+
+                    " Perhaps a portlet has been defined incorrectly in the portlet registry.");
+        }
+        return def;
     }
 
     public void setPortletDefinition(PortletDefinition portletDefinition)
