@@ -20,7 +20,7 @@ limitations under the License.
   <tr class="banner"><td>Pluto Portal Driver <FONT class="small">(<%=Config.getParameters().getString("portaldriver.info")%>) deployed in <%= config.getServletContext().getServerInfo() %></FONT></td>
       <td align="right">
        <% if(request.getUserPrincipal()==null) { %>
-         <A href="<%=request.getContextPath()%>/secure/">Login</A>
+         <A href="<%=request.getContextPath()%>/privileged/">Login</A>
        <% } %>
       </td>
   </tr>

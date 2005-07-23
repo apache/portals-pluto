@@ -128,5 +128,8 @@ limitations under the License.
         <copy file="${maven.tomcat.context.config}"
               todir="${maven.tomcat.home}/conf/Catalina/${maven.tomcat.host}"/>
 	</j:if>
+
+	<copy file="${maven.tomcat.server.config}"
+		  todir="${maven.tomcat.home}/conf"/>
   </goal>
 </project>

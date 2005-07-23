@@ -92,6 +92,10 @@ limitations under the License.
        <url-pattern>/portal/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+       <servlet-name>pluto</servlet-name>
+       <url-pattern>/privileged/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
       <servlet-name>pluto</servlet-name>
       <url-pattern>/secure/*</url-pattern>
     </servlet-mapping>
@@ -137,7 +141,20 @@ limitations under the License.
      <user-data-constraint>
        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
      </user-data-constraint>
-  </security-constraint>
+   </security-constraint>
+
+    <security-constraint>
+      <web-resource-collection>
+       <web-resource-name/>
+       <url-pattern>/privileged/*</url-pattern>
+       <http-method>GET</http-method>
+       <http-method>POST</http-method>
+       <http-method>PUT</http-method>
+     </web-resource-collection>
+     <auth-constraint>
+       <role-name>tomcat</role-name>
+     </auth-constraint>
+   </security-constraint>
 
   <login-config>
     <auth-method>FORM</auth-method>

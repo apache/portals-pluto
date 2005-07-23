@@ -57,12 +57,12 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     public String errorPage = null;
     public String taglib = null;
     public String resourceRef = null;
-    public String securityConstraint = null;
     public String loginConfig = null;
     public String securityRole = null;
     public String envEntry = null;
     public String ejbRef = null;
     private Collection castorMimeMappings = new ArrayList();    // </not used variables - only for castor>
+    private Collection securityConstraints = new ArrayList();
 
 
     private String contextPath = null;        
@@ -345,12 +345,20 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     {
         return castorMimeMappings;
     }
-    
+
+    public Collection getSecurityConstraints() {
+        return securityConstraints;
+    }
+
     /**
      * @param castorMimeMappings The castorMimeMappings to set.
      */
     public void setCastorMimeMappings(Collection castorMimeMappings) 
     {
         this.castorMimeMappings = castorMimeMappings;
+    }
+
+    public void setSecurityConstraints(Collection securityConstraints) {
+        this.securityConstraints = securityConstraints;
     }
 }
