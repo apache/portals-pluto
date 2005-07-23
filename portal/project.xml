@@ -55,7 +55,7 @@ limitations under the License.
     <dependency>
       <id>pluto</id>
       <groupId>pluto</groupId>
-      <version>1.0.1-rc3</version>
+      <version>1.0.1-rc4</version>
       <properties>
         <war.bundle>false</war.bundle>
         <tomcat.shared>true</tomcat.shared>
@@ -65,7 +65,7 @@ limitations under the License.
     <dependency>
       <id>pluto-descriptors</id>
       <groupId>pluto</groupId>
-      <version>1.0.1-rc3</version>
+      <version>1.0.1-rc4</version>
       <properties>
         <war.bundle>true</war.bundle>
       </properties>
@@ -74,7 +74,7 @@ limitations under the License.
     <dependency>
       <id>pluto-deploy</id>
       <groupId>pluto</groupId>
-      <version>1.0.1-rc3</version>
+      <version>1.0.1-rc4</version>
       <properties>
         <war.bundle>true</war.bundle>
       </properties>

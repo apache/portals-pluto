@@ -4,6 +4,16 @@
 </properties>
 <body>
 
+<release version="1.0.1-rc4" date="July 24, 2005" description="Release Candidate">
+  <action dev="ddewolf" type="fix">Support Multiple Security Constrains in the portlet driver's web.xml processing</action>
+  <action dev="ddewolf" type="fix">PLUTO-131: Login Link Broken</action>
+  <action dev="ddewolf" type="fix">PLUTO-138: No Access to OutputStream</action>
+  <action dev="ddewolf" type="fix">PLUTO-130: Detailed Error Messages on misconfiguration</action>
+  <action dev="ddewolf" type="fix">PLUTO-133: ServiceManager JavaDoc Inacuracy</action>
+  <action dev="mblum" type="fix">PLUTO-135: DefineObjectsTag vialates Portlet Spec</action>
+  <action dev="mblum" type="fix">PLUTO-129: PortletResponse SetBuffer Size</action>
+</release>
+
 <release version="1.0.1-rc3" date="June 27, 2005" description="Release Candidate">
   <action dev="ddewolf" type="update">Updated Maven's Default JDK Version</action>
   <action dev="ddewolf" type="fix">Made Session Attributes Serializable for Pluto TestSuite</action>
