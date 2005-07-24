@@ -34,7 +34,7 @@ limitations under the License.
   <li><a href="http://maven.apache.org/start/download.html">Maven 1.0</a>
     or higher</li>
   <li>Java 1.4 or higher (If using JDK 1.4 in Tomcat 5.5, see Running.txt in Tomcat's home directory for modification instructions)</li>
-  <li>Servlet 2.3 compatible container: Tomcat 5.5 is suggested<br/>
+  <li>Servlet 2.3 compatible container: Tomcat 5.5 is suggested</li>
 </ul>
 </subsection>
 <subsection name="Get Maven Ready">
