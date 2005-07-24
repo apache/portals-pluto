@@ -37,7 +37,9 @@ limitations under the License.
 	    <td>Dependecy Info</td></tr>
     <tr><td><a href="multiproject/testsuite/dependencies.html">Test Suite Dependencies</a></td>
 	    <td>Dependecy Info</td></tr>
-    </table>
+    <tr><td><a href="http://heavyz.sourceforge.net/pluto_zh">Chinese translation of Pluto documentation</a></td>
+    	    <td>Documentation</td></tr>
+</table>
     </p>
 </section>
 </body>
