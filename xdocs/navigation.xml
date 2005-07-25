@@ -23,6 +23,7 @@ limitations under the License.
 <body>
   <links>
     <item name="JSR 168"  href="http://jcp.org/en/jsr/detail?id=168"/>
+	<item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh"/>
   </links>
 
 <menu name="About Pluto">
