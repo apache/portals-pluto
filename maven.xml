@@ -102,6 +102,7 @@ limitations under the License.
 	<ant:zip zipfile="${maven.dist.dir}/${plutosrc.dist.name}.zip" basedir="${basedir}">
 	  <ant:patternset dir="${basedir}" defaultexcludes="on">
         <ant:include name="container/**/*"/>
+        <ant:include name="descriptors/**/*"/>
         <ant:include name="deploy/**/*"/>
         <ant:include name="portal/**/*"/>
         <ant:include name="portlet-deploy/**/*"/>
