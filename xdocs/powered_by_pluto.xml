@@ -29,8 +29,8 @@ limitations under the License.
 
 	  <table>
       <tr><th>Portal</th><th>Website</th><th>License</th><th>Status</th></tr>
-	  <tr><td>Jetspeed</td>
-          <td><a href="http://portals.apache.org/jetspeed-1">http://portals.apache.org/jetspeed-1</a></td>
+	  <tr><td>Jetspeed 2</td>
+          <td><a href="http://portals.apache.org/jetspeed-2">http://portals.apache.org/jetspeed-2</a></td>
           <td>Apache 2.0</td>
           <td></td></tr>
 	  <tr><td>Cocoon</td>
