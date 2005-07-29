@@ -24,7 +24,7 @@ limitations under the License.
     Which version of Pluto should I use?
   </b></question>
   <answer>
-    Pluto 1.0.1-RC3 is the most recent distribution.
+    Pluto 1.0.1-RC4 is the most recent distribution.
     This version of Pluto passes all of the TCK tests.
   </answer>
   </faq>
@@ -312,7 +312,7 @@ limitations under the License.
 	 <b>emptySessionPath="true"</b> /&gt;
     		</source>
 
-    		<p><b>Note:</b> This setting is now incorporated into the binary distribution of Pluto.
+    		<p><b>Note:</b> This setting incorporated into the binary distribution of Pluto since version 1.0.1-RC3..
     		</p>
 
 		</p>
@@ -330,7 +330,8 @@ limitations under the License.
 				<p>Common causes include:
 					<ul>
 					<li>Cross context dispatching is not turned on for both the pluto portal and your portlet application</li>
-					<li>The Portlet application has not been installed properly. Use the <a href="install.html#Installing_Portlets">Maven task</a>
+					<li>The Portlet application has not been installed properly. Use the <a href="install.html#Installing_With_Maven">Maven task</a>
+					or the <a href="install.html#Using_the_Admin_Portlet_Application">Admin Portlet Application</a> 
 					to install the portlet application properly</li>
 					</ul>
 				</p>
