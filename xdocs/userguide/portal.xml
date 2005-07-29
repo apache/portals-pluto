@@ -28,10 +28,10 @@ limitations under the License.
   <ul>
   <li><A href="#Limitations">Limitations</A></li>
   <li><A href="#Configuration">Configuration</A></li>
-  <li><A href="#Layout_and_Aggregation">Layout and Aggregation</A></li>
-  <li><A href="#Customization">Advanced Customization</A></li>
+  <li><A href="#Defining_the_Portal_Layout">Defining the Portal Layout</A></li>
+  <li><A href="#Advanced_Customization">Advanced Customization</A></li>
   <li><A href="#Internationalization">Internationalization</A></li>
-  <li><A href="#Further_Informaion">Further Information</A></li>
+  <li><A href="#Further_Information">Further Information</A></li>
   </ul>
   </p>
 </section>
@@ -48,7 +48,7 @@ limitations under the License.
 
      <p>
        To learn how to embed Pluto in your own portal, see the
-	   "<a href="Howto_use_the_Pluto_container.html">Pluto in your portal</a>" document.</p>
+	   "<a href="../developer/integrate.html">Integration Guide</a>" document.</p>
 </section>
 
 <section name="Configuration">
@@ -71,11 +71,11 @@ limitations under the License.
           <td>All</td>
           <td>&lt;PLUTO_HOME&gt;</td>
           <td>The directory to which you unarchived the distribution</td></tr>
-      <tr><td>Startup Scipts</td>
+      <tr><td>Startup Scripts</td>
           <td>*nix</td>
           <td>&lt;PLUTO_HOME&gt;/bin/startup.sh</td>
           <td>The script used to startup the portal driver</td></tr>
-      <tr><td>Startup Scipts</td>
+      <tr><td>Startup Scripts</td>
           <td>Windows</td>
           <td>&lt;PLUTO_HOME&gt;/bin/startup.bat</td>
           <td>The script used to startup the portal driver</td></tr>
@@ -229,6 +229,17 @@ limitations under the License.
 				the Portlet <i>TestPortlet2</i>	(<tt>&lt;definition-id&gt;testsuite.TestPortlet2&lt;/definition-id&gt;</tt>).
 				Note that prefixing the name of the Portlet with the name of web application (<i><b>testsuite</b>.TestPortlet1</i>)
 				is required.
+				</p>
+
+				<p>
+					Since Pluto 1.0.1-rc2, another configuration file, portletcontexts.txt, has been 
+				        included in the Pluto portal. The Portlet Contexts file ($PLUTO_HOME/WEB-INF/data/portletcontexts.txt) 
+				        lists the webapp 
+				        contexts for each portlet application that runs in Pluto. Each portlet app has a line in this 
+				        file corresponding to a path and starting with a slash ('/'). In Tomcat, this path is the value 
+				        of the 'path' attribute of the 'Context' element in a context XML descriptor in 
+				        $TOMCAT_HOME/conf/Catalina/localhost (or another 'conf' subdirectory).
+
 				</p>
 
 				<p>The Portlets themselves are defined in the portlet.xml configuration file within the
@@ -417,10 +428,10 @@ aggregation.base.dir=/WEB-INF/templates/
 				</source>
 				from the "pluto" Servlet section in the file ${TOMCAT_HOME}/webapps/pluto/WEB-INF/web.xml.</p>
 			</subsection>
-			<subsection name="Further information">
+			<subsection name="Further Information">
 				<p>
-				Further information can be found in the <a href="faq.html">FAQ</a>, on the <a href="mail-lists.html">Mailing Lists</a>
-				and on the <a href="wiki.html">Wiki</a>
+				Further information can be found in the <a href="../faq.html">FAQ</a>, on the <a href="../mail-lists.html">Mailing Lists</a>
+				and on the <a href="../wiki.html">Wiki</a>
 				</p>
 			</subsection>
 		</section>
