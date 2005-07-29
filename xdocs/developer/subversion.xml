@@ -50,7 +50,7 @@ limitations under the License.
   </p>
 
     <subsection name="Downloading the Source Distribution">
-		<p>See the <a href="mirrors.cgi">download instructions</a></p>
+		<p>See the <a href="../mirrors.cgi">download instructions</a></p>
     </subsection>
 
     <subsection name="Using Subversion">
@@ -65,7 +65,7 @@ limitations under the License.
 		<p>
 		If you just want to browse the source code, you can use the
 		<a
-		href="http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk/?root=Apache-SVN    ">ViewCVS
+		href="http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk/?root=Apache-SVN">ViewCVS
 		web interface</a> to Subversion.  This is current at all times.
 		</p>
 
