@@ -55,7 +55,7 @@ limitations under the License.
   <repository>
     <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/trunk</connection>
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/trunk</developerConnection>
-    <url>http://svn.apache.org/repos/asf/portals/pluto/trunk</url>
+    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk/?root=Apache-SVN</url>
   </repository>
 
   <mailingLists>
