@@ -1,79 +1,33 @@
-PLUTO 1.1
-==========================
+To manually install Pluto 1.1.x
 
-Pluto is licensed under the Apache 2 License and contains
-other opens source libraries.  Each dependency license is
-included within this distribution.
+1) Install Maven 2 (alpha-3 or above)
 
-INSTALLATION:
--------------------------
-Installation of Pluto 1.1 can be completed by completing
-the following steps:
+2) Install Application Server
+   - Tomcat 5.5.x or above recomened
 
-1) Set the property name 'pluto.testsuite.dir' to
-   the directory in which the pluto testsuite source
-   code exists.  The testsuite is not currently included
-   the 1.1 branch as no changes are necessary. (NOTE, 
-   the web.xml does contain minor changes and thus
-   it must be deployed using the 1.1 deployer. The deployment
-   targets will handle updating the webapp appropriately).
+2) Execute 'm2 install'
 
-2) Set the property named 'tomcat.dir' to the
-   directory which is your TOMCAT_HOME (or TOMCAT_BASE)
-   directory.  This directory will be used when determining
-   where to deploy the portal. (The property 
-   'maven.tomcat.dir' is now deprecated, but it does 
-   still work).
+3) Copy The following to a shared classloader location:
 
-4) Run the 'pluto:deploy-all' maven goal. This will install
-   the Container (and all dependencies), the Portal Driver
-   (and all dependencies), and the Testsuite.
+  - castor-0.9.6
+  - portlet-api-1.0.jar
+  - pluto-container-1.1-SNAPSHOT.jar
+  - pluto-descriptor-api-1.1-SNAPSHOT.jar
+  - pluto-descriptor-impl-1.1-SNAPSHOT.jar
 
-5) Point your browser to http://localhost:8080/pluto/portal
+  * In Tomcat, copy to: <TOMCAT>/shared/lib
 
-6) That's IT!
+4) Copy the following to an endored location:
 
-PORTLET DEPLOYMENT:
--------------------------
-Portlet Deployment is still underway, however, significant
-progress has been made in allowing for automated deployment
-of compliant portlet applications.  To date, the easiest way
-to deploy a custom portlet application is to use maven.  The
-pluto deployer contains maven plugins which allow for it to
-be executed just like the maven war goal.  The plugin is 
-automatically installed whenever the deploy-all goal is
-run from the source distribution.  To install the plugin
-manually, do the following:
+  - xercesImpl-2.6.2
+  - xmlParserAPIs-2.6.2
 
-1) From <PLUTO_HOME>, cd deploy
+4) Copy pluto.xml to <CATALINA>/conf/Catalina/localhost
 
-2) Execute the maven "plugin:install" goal
+5) Copy testsuite.xml to <CATALINA>/conf/Catalina/localhost
 
-3) That's IT!
+6) Deploy the following wars:
 
-Once installed, you may assemble portlets in any maven
-project by using the 'pluto:assemble' goal, and deploy
-portlets in any maven project by using the 'pluto:deploy'
-goal (The deploy goal will ensure that your portlets are
-assembled properly - there's no need to do both).
-
-The plugin supports the following properties:
-
-maven.pluto.deployer
-  description: class of the Deployer which should be used
-  default:     org.apache.pluto.deploy.impl.Tomcat5FileSystemDeployer
-
-  dependent properties:
-    tomcat.home (or maven.tomcat.home)
-      description:  location of tomcat
-      default: 
-
-    tomcat.host (or maven.tomcat.host)
-      description: the name of the tomcat host to deploy to
-      default:     localhost
-
-    tomcat.service (or maven.tomcat.service)
-      description: the name of the tomcat service to deploy to
-      default:     Catalina
-    
+  - pluto-portal.war
+  - pluto-testsuite.war
 

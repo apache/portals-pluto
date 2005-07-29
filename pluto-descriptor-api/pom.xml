@@ -1,0 +1,33 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.pluto</groupId>
+  <artifactId>pluto-descriptor-api</artifactId>
+  <packaging>jar</packaging>
+  <version>1.1-SNAPSHOT</version>
+  <name>Pluto Descriptor Service API</name>
+  <url>http://portals.apache.org/pluto</url>
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+	<artifactId>pluto</artifactId>
+	<version>1.1-SNAPSHOT</version>
+  </parent>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>src/assemble/bin.xml</descriptor>
+          <finalName>portals-pluto-1.0-SNAPSHOT</finalName>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

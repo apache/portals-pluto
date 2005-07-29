@@ -1,0 +1,23 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.pluto</groupId>
+  <artifactId>pluto</artifactId>
+  <packaging>pom</packaging>
+  <version>1.1-SNAPSHOT</version>
+  <name>Apache Pluto</name>
+  <url>http://portals.apache.org/pluto</url>
+  <modules>
+	<module>pluto-descriptor-api</module>
+	<module>pluto-descriptor-impl</module>
+	<module>pluto-deploy</module>
+    <module>pluto-container</module>
+	<module>pluto-portal</module>
+	<module>pluto-testsuite</module>
+  </modules>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-checkstyle-plugin</artifactId>
+    </plugin>
+  </plugins>
+</project>
