@@ -15,11 +15,11 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.descriptors.common.IconDD;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.pluto.descriptors.common.IconDD;
 
 /**
  * WebApplication configuration as contained

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services;
+package org.apache.pluto.driver.services.container;
 
 import java.util.Collection;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.driver.services.container.PortletPreferenceImpl;
 import org.apache.pluto.core.PortletPreference;
 import org.apache.pluto.services.PortletPreferencesFactory;
 import org.apache.commons.digester.Digester;

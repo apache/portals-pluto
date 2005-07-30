@@ -1,0 +1,14 @@
+1) Refactor Deployer to utilize 
+   descriptor-api for reading 
+   and writing.
+
+2) Port all recent 1.0.x fixes.
+
+3) Modify bin.xml and src.xml for
+   each distribution.  Create
+   composite distributions.
+
+4) Update NSIS and create installer
+   plugin for NSIS.
+
+5) 

@@ -13,30 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services;
+package org.apache.pluto.driver.services.container;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.services.PortalCallbackProvider;
+import org.apache.pluto.services.PropertyManagerService;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
-public class PortalCallbackProviderImpl implements PortalCallbackProvider {
+public class PropertyManagerProviderImpl implements PropertyManagerService {
 
-    public PortalCallbackProviderImpl() {
 
+    public void setResponseProperties(PortletWindow window,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response,
+                                      Map properties) {
     }
 
-    public void setTitle(HttpServletRequest request,
-                         PortletWindow window,
-                         String title) {
-        request.setAttribute("org.apache.pluto.dynamic_title", title);
+    public Map getRequestProperties(PortletWindow window,
+                                    HttpServletRequest request) {
+        return null;
     }
-
-
 }
 

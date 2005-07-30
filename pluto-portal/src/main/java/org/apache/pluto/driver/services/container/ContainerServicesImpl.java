@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services;
+package org.apache.pluto.driver.services.container;
+
+import org.apache.pluto.services.*;
 
 import javax.portlet.PortalContext;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.pluto.services.DynamicInformationProvider;
-import org.apache.pluto.services.PortalCallbackProvider;
-import org.apache.pluto.services.PortletContainerServices;
-import org.apache.pluto.services.PortletPreferencesFactory;
-import org.apache.pluto.services.PropertyManagerService;
 
 /**
  * The Portal Driver's <code>PortletContainerServices</code> implementation. The

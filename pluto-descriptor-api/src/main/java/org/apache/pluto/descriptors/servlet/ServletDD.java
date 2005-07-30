@@ -15,10 +15,10 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.descriptors.common.IconDD;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.pluto.descriptors.common.IconDD;
 
 /**
  * Filter DD() uration as contained within the

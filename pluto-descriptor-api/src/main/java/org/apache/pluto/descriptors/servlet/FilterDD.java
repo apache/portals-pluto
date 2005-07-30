@@ -15,9 +15,9 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.List;
-
 import org.apache.pluto.descriptors.common.IconDD;
+
+import java.util.List;
 
 /**
  * Filter DD() uration as contained within the
