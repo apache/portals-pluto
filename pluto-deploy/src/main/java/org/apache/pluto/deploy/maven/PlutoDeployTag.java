@@ -15,18 +15,17 @@
  */
 package org.apache.pluto.deploy.maven;
 
-import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Map;
-
+import org.apache.commons.jelly.JellyTagException;
+import org.apache.commons.jelly.MissingAttributeException;
 import org.apache.commons.jelly.TagSupport;
 import org.apache.commons.jelly.XMLOutput;
-import org.apache.commons.jelly.MissingAttributeException;
-import org.apache.commons.jelly.JellyTagException;
 import org.apache.pluto.deploy.Deployer;
 import org.apache.pluto.deploy.DeploymentConfig;
 import org.apache.pluto.deploy.DeploymentException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Tag which is used to assemble portlet applications.
