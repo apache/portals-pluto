@@ -15,13 +15,11 @@
  */
 package org.apache.pluto.maven;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Abstract Mojo for installation tasks.
@@ -29,7 +27,7 @@ import java.io.File;
  * @since 07/29/2005
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
-public abstract class AbstractInstallationMojo extends AbstractMojo {
+public abstract class AbstractInstallationMojo extends org.apache.pluto.maven.AbstractPlutoMojo {
 
     protected AbstractInstallationMojo() {
 
@@ -47,11 +45,6 @@ public abstract class AbstractInstallationMojo extends AbstractMojo {
     }
 
     /**
-     * @parameter expression="${pluto.installation.dir}"
-     * @required
-     */
-    protected File installationDirectory;
-    /**
      * @parameter expression="${pluto.installation.tomcat.host}"
      */
     protected String host = "localhost";
@@ -62,38 +55,9 @@ public abstract class AbstractInstallationMojo extends AbstractMojo {
     protected String engine = "Catalina";
 
     /**
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
-     */
-    protected MavenProject project;
-
-    /**
      * @parameter expression="${project.basedir}/.."
      */
     protected File basedir;
-
-    public void execute() throws MojoExecutionException {
-        if(!installationDirectory.exists() || !installationDirectory.isDirectory()) {
-            throw new MojoExecutionException("Installation Directory "+installationDirectory.getAbsolutePath()+" does not exist.");
-        }
-
-        try {
-            doExecute();
-        }
-        catch(MojoExecutionException mee) {
-            throw mee;
-        }
-        catch(Exception e) {
-            throw new MojoExecutionException("Error Installing Pluto", e);
-        }
-    }
-
-    /**
-     * Process the actual execution.
-     * @throws Exception
-     */
-    protected abstract void doExecute() throws Exception;
 
     protected List getSharedDependencies() {
         List list = new ArrayList();

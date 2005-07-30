@@ -26,6 +26,7 @@ import java.util.jar.JarOutputStream;
 /**
  * Used to assemble a web application into a portlet application.
  *
+ * @todo Refactor to have a default constructor and act as a service
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:heavyzheng@gmail.com">Zhong ZHENG</a>
  * @version 1.0

@@ -1,3 +1,17 @@
+Table of Contents
+=====================================
+ - Introduction
+
+ - Instalation
+   * Automated Maven Installation
+   * Manual Installation
+   * Windows Installer
+
+ - Portlet Deployment
+   * Portlet Assembly with Maven
+   * Portlet Deployment with Maven
+
+
 1) Introduction
 
  - You are looking at the source distribution of Pluto 1.1.x.
@@ -48,3 +62,19 @@
 
    - The NSIS Installer is not yet complete
 
+======================================
+3) Portlet Deployment
+
+3a) Assembly:
+---------------------------------------
+    All portlet applications must be run through
+    the pluto assembler before being deployed. 
+    To do so:
+
+    Step 1: 'cd pluto-install'
+    Step 2: 'maven pluto:assemble -Dmaven.deploy.deployment=<path to war>
+
+3b) Deployment:
+
+    Step 1: 'cd pluto-install'
+    Step 2: 'maven pluto:deploy -Dmaven.deploy.deployment=<path to war>

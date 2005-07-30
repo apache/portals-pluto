@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * @todo Enhancement.  Support installing release from repo
  * @goal install
  * @requiresDependencyResolution runtime
  */
