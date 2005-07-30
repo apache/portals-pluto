@@ -65,8 +65,8 @@ public abstract class PlutoTestCase extends MockObjectTestCase {
 
     protected void assertContains(String message, String expectedSubstring,
                                   String testString) {
-        if(!testString.contains(expectedSubstring)) {
+        if (testString.indexOf(expectedSubstring) < 0) {
             fail(message);
-        }
+        } 
     }
 }
