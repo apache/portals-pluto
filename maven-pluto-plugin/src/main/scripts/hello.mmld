@@ -1,0 +1,17 @@
+<mojo xmlns="marmalade:mojo">
+  <metadata>
+    <goal>hello</goal>
+    <description>Say Hello to the World.</description>
+    <parameters>
+      <parameter>
+        <name>salutation</name>
+        <expression>#project.build.directory</expression>
+        <description>Description of what this parameter is used for.</description>
+      </parameter>
+    </parameters>
+  </metadata>
+  <execute>
+    <c:out xmlns:c="marmalade:core">Hello, World</c:out>
+  </execute>
+</mojo>
+
