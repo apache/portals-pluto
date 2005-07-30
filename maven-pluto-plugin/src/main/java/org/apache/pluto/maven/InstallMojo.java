@@ -17,6 +17,7 @@
 package org.apache.pluto.maven;
 
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;
@@ -30,6 +31,17 @@ import java.util.Set;
  * @requiresDependencyResolution runtime
  */
 public class InstallMojo extends AbstractInstallationMojo {
+
+    public InstallMojo() {
+
+    }
+
+    public InstallMojo(MavenProject project,
+                       File installationDirectory,
+                       File basedir,
+                       String host, String engine) {
+        super(project, installationDirectory, basedir, host, engine);
+    }
 
     protected void doExecute() throws Exception {
         getLog().info("Installing Pluto to: "+installationDirectory.getAbsolutePath());

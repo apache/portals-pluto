@@ -18,6 +18,7 @@ package org.apache.pluto.maven;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.util.Iterator;
@@ -29,6 +30,13 @@ import java.util.Set;
  * @requiresDependencyResolution runtime
  */
 public class UninstallMojo extends AbstractInstallationMojo {
+
+    public UninstallMojo(MavenProject project,
+                         File installationDirectory,
+                         File basedir,
+                         String host, String engine) {
+        super(project, installationDirectory, basedir, host, engine);
+    }
 
     protected void doExecute() throws Exception {
         getLog().info("Uninstalling Pluto from: "+installationDirectory.getAbsolutePath());
@@ -53,7 +61,7 @@ public class UninstallMojo extends AbstractInstallationMojo {
     private void delete(File file) throws MojoExecutionException {
         getLog().info("Deleting "+file.getAbsolutePath());
         if(!file.delete()) {
-            throw new MojoExecutionException("Could not delete file: "+file.getAbsolutePath());
+            getLog().warn("Could not delete the file: "+file.getAbsolutePath());
         }
     }
 

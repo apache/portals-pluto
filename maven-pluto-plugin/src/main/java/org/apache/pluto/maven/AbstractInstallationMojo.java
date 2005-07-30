@@ -31,6 +31,21 @@ import java.io.File;
  */
 public abstract class AbstractInstallationMojo extends AbstractMojo {
 
+    protected AbstractInstallationMojo() {
+
+    }
+
+    protected AbstractInstallationMojo(MavenProject project,
+                                       File installationDirectory,
+                                       File basedir,
+                                       String host, String engine) {
+        this.installationDirectory = installationDirectory;
+        this.host = host;
+        this.engine = engine;
+        this.project = project;
+        this.basedir = basedir;
+    }
+
     /**
      * @parameter expression="${pluto.installation.dir}"
      * @required
