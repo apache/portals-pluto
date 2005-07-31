@@ -34,7 +34,6 @@ import java.util.jar.JarOutputStream;
  */
 public class ArchivedFileAssembler extends AbstractAssembler {
 
-    private static final String SUFFIX = ".tmp";
     private static final int BUFFER_SIZE = 2048;
 
     private JarFile war;
@@ -72,11 +71,17 @@ public class ArchivedFileAssembler extends AbstractAssembler {
 
     protected void close() throws IOException  {
 
-    	// ensure temporary directory.
-        File tempDir = new File(destination + SUFFIX);
+    	// ensure temporary directory (use system temporary dir).
+    	String tempDirName = System.getProperty("java.io.tmpdir");
+    	String tempName = destination.getName();
+    	int index = tempName.indexOf(".war");
+    	if (index != -1) {
+    		tempName = tempName.substring(0, index);
+    	}
+        File tempDir = new File(tempDirName + File.separator + tempName);
         long tempId = 0;
         while (tempDir.exists()) {
-        	tempDir = new File(destination + SUFFIX + String.valueOf(tempId));
+        	tempDir = new File(tempDir + String.valueOf(tempId));
         	tempId++;
         }
         tempDir.mkdirs();
@@ -117,7 +122,7 @@ public class ArchivedFileAssembler extends AbstractAssembler {
         }
 
         // archive contents of the temporary directory to destination war.
-        jar(tempDir, destination);
+        archiveWar(tempDir, destination);
         deleteRecursive(tempDir);
     }
 
@@ -128,7 +133,7 @@ public class ArchivedFileAssembler extends AbstractAssembler {
      * @param warFile  destination WAR file
      * @throws IOException
      */
-    private void jar(File sourceDir, File warFile)
+    private void archiveWar(File sourceDir, File warFile)
     throws IOException {
     	if (warFile.exists()) {
     		deleteRecursive(warFile);
@@ -143,7 +148,8 @@ public class ArchivedFileAssembler extends AbstractAssembler {
     	for (int i = 0; i < fileNames.length; i++) {
     		File sourceFile = new File(sourceDir, fileNames[i]);
     		if (sourceFile.isFile()) {
-    			JarEntry entry = new JarEntry(fileNames[i]);
+    			// put a jar entry representing a regular file.
+    			JarEntry entry = new JarEntry(toJarEntryName(fileNames[i]));
         		jout.putNextEntry(entry);
     			BufferedInputStream is = new BufferedInputStream(
     					new FileInputStream(sourceFile));
@@ -152,6 +158,13 @@ public class ArchivedFileAssembler extends AbstractAssembler {
     				jout.write(data, 0, count);
     			}
     			is.close();
+
+    		} else if (sourceFile.isDirectory()) {
+    			// put a jar entry representing a directory. Jar entries
+    			// whose names end with '/' are considered as directory.
+    			JarEntry entry = new JarEntry(
+    					toJarEntryName(fileNames[i]) + '/');
+        		jout.putNextEntry(entry);
     		}
     	}
     	jout.close();
@@ -159,8 +172,8 @@ public class ArchivedFileAssembler extends AbstractAssembler {
 
     /**
      * List all files under the given directory recursively. This method's
-     * behavior is different from <code>File.list()</list> in two aspects:
-     * 1. All files are listed recursively; 2. sub directories are ignored.
+     * behavior is different from <code>File.list()</code>: all files and
+     * subdirectories are listed recursively.
      *
      * @param dir  directory whose files are to be listed
      * @return a list of String containing relative file paths to the directory
@@ -174,10 +187,9 @@ public class ArchivedFileAssembler extends AbstractAssembler {
     	List fileNameList = new ArrayList();
     	String[] fileNames = dir.list();
     	for (int i = 0; i < fileNames.length; i++) {
+    		fileNameList.add(prefix + fileNames[i]);
     		File file = new File(dir, fileNames[i]);
-    		if (file.isFile()) {
-    			fileNameList.add(prefix + fileNames[i]);
-    		} else {
+    		if (file.isDirectory()) {
     			String subDirName = file.getName();
     			List subList = listRecursive(file,
     					prefix + subDirName + File.separator);
@@ -201,6 +213,17 @@ public class ArchivedFileAssembler extends AbstractAssembler {
     		}
     	}
     	file.delete();
+    }
+
+    /**
+     * Convert given file name to a valid jar entry name by replacing all '\\'
+     * characters to '/'.
+     *
+     * @param name  file name to convert
+     * @return valid jar entry name for the file name
+     */
+    private String toJarEntryName(String name) {
+    	return name.replaceAll("\\\\", "/");
     }
 
 }
