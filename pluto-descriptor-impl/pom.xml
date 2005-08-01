@@ -23,7 +23,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>1.0-SNAPSHOT</version>
         <configuration>
           <descriptor>src/assemble/bin.xml</descriptor>
           <finalName>pluto-descriptor-impl-1.1-SNAPSHOT</finalName>
