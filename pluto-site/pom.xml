@@ -24,4 +24,12 @@
       </plugin>
     </plugins>
   </reporting>
+  <repositories>
+    <repository>
+      <id>snapshots</id>
+      <name>Snapshot Development Repository</name>
+      <url>http://daviddewolf.com/m2</url>
+    </repository>
+  </repositories>
+
 </project>

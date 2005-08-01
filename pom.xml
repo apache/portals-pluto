@@ -48,6 +48,21 @@
     <url>http://www.apache.org/</url>
   </organization>
 
+  <distributionManagement>
+    <site>
+      <id>website</id>
+      <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/</url>
+    </site>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>snapshots</id>
+      <name>Snapshot Development Repository</name>
+      <url>http://daviddewolf.com/m2</url>
+    </repository>
+  </repositories>
+
   <modules>
 	<module>maven-pluto-plugin</module>
 	<module>pluto-descriptor-api</module>

@@ -75,4 +75,12 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>snapshots</id>
+      <name>Snapshot Development Repository</name>
+      <url>http://daviddewolf.com/m2</url>
+    </repository>
+  </repositories>
+
 </project>
