@@ -6,6 +6,48 @@
   <version>1.1-SNAPSHOT</version>
   <name>Apache Pluto</name>
   <url>http://portals.apache.org/pluto</url>
+
+  <issueManagement>
+    <system>jira</system>
+    <url>http://jira.codehaus.org/browse/PLUTO</url>
+  </issueManagement>
+  <ciManagement>
+    <system>continuum</system>
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <address>pluto-dev@portals.apache.org</address>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  <mailingLists>
+    <mailingList>
+      <name>Pluto User List</name>
+      <subscribe>pluto-user-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-users-unsubscribe@portals.apache.org</unsubscribe>
+      <post>pluto-users@maven.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/pluto-user</archive>
+    </mailingList>
+    <mailingList>
+      <name>Pluto Developer List</name>
+      <subscribe>pluto-dev-subscribe@pluto.apache.org</subscribe>
+      <unsubscribe>pluto-dev-unsubscribe@pluto.apache.org</unsubscribe>
+      <post>pluto-dev@pluto.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/pluto-dev</archive>
+    </mailingList>
+  </mailingLists>
+
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/branches/pluto-1.1</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/branches/pluto-1.1</developerConnection>
+	<url>http://svn.apache.org/viewcvs.cgi/portals/pluto/branches/pluto-1.1</url>
+  </scm>
+
+  <organization>
+    <name>Apache Software Foundation</name>
+    <url>http://www.apache.org/</url>
+  </organization>
+
   <modules>
 	<module>maven-pluto-plugin</module>
 	<module>pluto-descriptor-api</module>
@@ -17,4 +59,13 @@
 	<module>pluto-site</module>
 	<module>pluto-testsuite</module>
   </modules>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
 </project>
