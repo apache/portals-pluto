@@ -19,17 +19,12 @@
 
 package org.apache.pluto.driver.core;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.*;
 
 public class PortalURL implements Cloneable {
 
@@ -79,7 +74,7 @@ public class PortalURL implements Cloneable {
 
     public void setControllerPath(String context, String servletPath) {
         this.servletPath = new StringBuffer();
-        this.servletPath = this.servletPath.append(context + servletPath);
+        this.servletPath = this.servletPath.append(context).append(servletPath);
     }
 
     // BasePortalURL

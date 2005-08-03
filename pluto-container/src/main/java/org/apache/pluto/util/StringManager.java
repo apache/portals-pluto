@@ -156,7 +156,7 @@ public class StringManager {
             StringBuffer buf = new StringBuffer();
             buf.append(value);
             for (int i = 0; i < args.length; i++) {
-                buf.append(" arg[" + i + "]=" + args[i]);
+                buf.append(" arg[").append(i).append("]=").append(args[i]);
             }
             iString = buf.toString();
         }

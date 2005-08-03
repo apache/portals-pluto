@@ -45,6 +45,10 @@
       <bind-xml name="portlet-info" node="element"/>
     </field>
 
+    <field name="InitParams" type="org.apache.pluto.descriptors.common.InitParamDD" collection="arraylist">
+      <bind-xml name="init-param" node="element" />
+    </field>
+      
     <field name="ResourceBundle">
       <bind-xml name="resource-bundle" node="element"/>
     </field>
@@ -87,6 +91,14 @@
     </field>
   </class>
 
+  <class name="org.apache.pluto.descriptors.common.InitParamDD">
+    <field name="ParamName">
+      <bind-xml name="name" node="element"/>
+    </field>
+    <field name="ParamValue">
+      <bind-xml name="value" node="element"/>
+    </field>
+  </class>
 
 </mapping>
 

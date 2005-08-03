@@ -108,7 +108,7 @@ class PortalUrlParser {
         // 3) Add the action window, if it exists
         if (url.getActionWindow() != null) {
             sb.append("/");
-            sb.append(PREFIX + ACTION).append(encode(url.getActionWindow()));
+            sb.append(PREFIX).append(ACTION).append(encode(url.getActionWindow()));
         }
 
         Iterator it = url.getPortletModes().entrySet().iterator();

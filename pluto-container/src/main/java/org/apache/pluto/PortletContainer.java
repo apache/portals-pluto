@@ -15,14 +15,13 @@
  */
 package org.apache.pluto;
 
-import java.io.IOException;
+import org.apache.pluto.services.PortletContainerServices;
 
 import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.pluto.services.PortletContainerServices;
+import java.io.IOException;
 
 /**
  * The publicized entry point into Pluto. The base functionality of the portlet

@@ -15,19 +15,8 @@
  */
 package org.apache.pluto.portalImpl.portlet.test;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
+import javax.portlet.*;
+import java.util.*;
 
 /**
  * Tests basic attribute retrieval and storage functions within
@@ -90,7 +79,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
             StringBuffer sb = new StringBuffer();
             Iterator it = keys.iterator();
             while(it.hasNext()) {
-                sb.append(it.next()+", ");
+                sb.append(it.next()).append(", ");
             }
 
             res.setResults("Keys: "+sb.toString()+" are not defined.");
@@ -142,13 +131,13 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
 
         StringBuffer sb = new StringBuffer();
         if(title==null || !title.trim().equals(eTitle.trim())) {
-            sb.append("Title :'"+title+"' != '"+eTitle+"';");
+            sb.append("Title :'").append(title).append("' != '").append(eTitle).append("';");
         }
         if(sTitle==null || !sTitle.trim().equals(eSTitle.trim())) {
-            sb.append("Short Title :'"+sTitle+"' != '"+eSTitle+"';");
+            sb.append("Short Title :'").append(sTitle).append("' != '").append(eSTitle).append("';");
         }
         if(keywds==null || !keywds.trim().equals(eKeywds.trim())) {
-            sb.append("Keywords :'"+keywds+"' != '"+eKeywds+"' ");
+            sb.append("Keywords :'").append(keywds).append("' != '").append(eKeywds).append("' ");
         }
 
         if(sb.length() < 1) {
