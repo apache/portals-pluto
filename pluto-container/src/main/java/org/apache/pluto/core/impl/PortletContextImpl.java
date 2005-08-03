@@ -19,16 +19,19 @@
 
 package org.apache.pluto.core.impl;
 
-import java.net.MalformedURLException;
-import java.io.InputStream;
+import org.apache.pluto.core.InternalPortletContext;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.core.InternalPortletContext;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * Pluto's Portlet Context Implementation.
@@ -41,6 +44,9 @@ import org.apache.pluto.core.InternalPortletContext;
  */
 public class PortletContextImpl
     implements PortletContext, InternalPortletContext {
+
+    private static final Log LOG =
+        LogFactory.getLog(PortletContextImpl.class);
 
     /** Portlet Application Descriptor. */
     private PortletAppDD portletAppDD;
@@ -70,16 +76,24 @@ public class PortletContextImpl
     }
 
     public PortletRequestDispatcher getRequestDispatcher(String path) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Portlet Dispatcher Requested: "+path);
+        }
         try {
+            Map params = parseQueryParams(path);
             RequestDispatcher rd = servletContext.getRequestDispatcher(path);
             if(rd != null) {
-                return new PortletRequestDispatcherImpl(rd);
+                return new PortletRequestDispatcherImpl(rd, params);
+            }
+            else if(LOG.isInfoEnabled()) {
+                LOG.info("No Matching Request Dispatcher not found.");
             }
         } catch (Exception e) {
             // need to catch exception because of tomcat 4.x bug
             // tomcat throws an exception instead of return null
             // if the path was not found
         }
+
         return null;
     }
 
@@ -183,6 +197,28 @@ public class PortletContextImpl
 
     public PortletAppDD getPortletApplicationDefinition() {
         return portletAppDD;
+    }
+
+    private Map parseQueryParams(String path) {
+        Map map = new java.util.HashMap();
+        int idx = path.indexOf("?");
+        if(idx < 0) {
+            return null;
+        }
+        String parms = path.substring(idx+1);
+        StringTokenizer st = new StringTokenizer(parms, "&");
+        while(st.hasMoreTokens()) {
+            String pair = st.nextToken();
+            if(pair.indexOf("=")>0) {
+                String key = pair.substring(0,pair.indexOf("="));
+                String val = pair.substring(pair.indexOf("=")+1);
+                map.put(key, new String[] {val});
+            }
+        }
+        if(LOG.isDebugEnabled()) {
+            LOG.debug(map.size() + " additional Query Parameters appended to original request.");
+        }
+        return map;
     }
 }
 

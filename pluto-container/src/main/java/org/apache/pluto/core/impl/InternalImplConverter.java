@@ -19,13 +19,13 @@
 
 package org.apache.pluto.core.impl;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.portlet.PortletRequestWrapper;
 import org.apache.pluto.portlet.PortletResponseWrapper;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * Utility used to convert a generic PortletRequest or

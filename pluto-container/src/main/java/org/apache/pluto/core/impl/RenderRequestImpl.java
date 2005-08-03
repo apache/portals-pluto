@@ -19,18 +19,18 @@
 
 package org.apache.pluto.core.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Enumeration;
-
-import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.core.InternalPortletWindow;
+import org.apache.pluto.core.InternalPortletRequest;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * To change this generated comment edit the template variable "typecomment":
@@ -44,6 +44,10 @@ public class RenderRequestImpl extends PortletRequestImpl
      * Holds the portlet preferences
      */
     private PortletPreferences portletPreferences = null;
+
+    public RenderRequestImpl(InternalPortletRequest request) {
+        super(request);    
+    }
 
     public RenderRequestImpl(PortletContainer container,
                              InternalPortletWindow internalPortletWindow,

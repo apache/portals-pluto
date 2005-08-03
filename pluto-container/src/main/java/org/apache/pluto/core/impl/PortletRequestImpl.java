@@ -15,32 +15,25 @@
  */
 package org.apache.pluto.core.impl;
 
-import java.io.BufferedReader;
-import java.util.*;
-
-import javax.portlet.PortalContext;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpSession;
-
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.PortletEntity;
+import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.services.PropertyManagerService;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
+
+import javax.portlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.util.*;
 
 /**
  * <code>PortletRequest</code> Implementation.
@@ -89,6 +82,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      * true if we are in an include call
      */
     private boolean included;
+
+    public PortletRequestImpl(InternalPortletRequest impl) {
+        this(impl.getPortletContainer(), impl.getInternalPortletWindow(), impl.getHttpServletRequest());
+    }
 
     public PortletRequestImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
@@ -372,9 +369,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
     public Map getParameterMap() {
         bodyAccessed = true;
-        Map result = StringUtils.copyParameters(
+        return StringUtils.copyParameters(
             this.getHttpServletRequest().getParameterMap());
-        return result;
     }
 
     public boolean isSecure() {
@@ -470,6 +466,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         return internalPortletWindow;
     }
 
+    public PortletContainer getPortletContainer() {
+        return this.container;
+    }
+
     public void setIncluded(boolean included) {
         this.included = included;
     }
@@ -480,7 +480,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     // --------------------------------------------------------------------------------------------
 
     // internal methods ---------------------------------------------------------------------------
-    private HttpServletRequest getHttpServletRequest() {
+    public HttpServletRequest getHttpServletRequest() {
         return (HttpServletRequest) super.getRequest();
     }
 

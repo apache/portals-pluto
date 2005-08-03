@@ -19,21 +19,32 @@
 
 package org.apache.pluto.core.impl;
 
+import org.apache.pluto.core.InternalPortletRequest;
+import org.apache.pluto.core.InternalPortletResponse;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.RequestDispatcher;
-
-import org.apache.pluto.core.InternalPortletRequest;
-import org.apache.pluto.core.InternalPortletResponse;
+import java.util.Map;
 
 public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
+    private static final Log LOG =
+        LogFactory.getLog(PortletRequestDispatcherImpl.class);
 
     private javax.servlet.RequestDispatcher requestDispatcher;
+    private Map queryParams;
 
     public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher) {
         this.requestDispatcher = requestDispatcher;
+    }
+
+    public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher, Map queryParams) {
+        this(requestDispatcher);
+        this.queryParams = queryParams;
     }
 
     public void include(RenderRequest request, RenderResponse response)
@@ -45,13 +56,21 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         InternalPortletResponse internalResponse =
             InternalImplConverter.getInternalResponse(response);
 
+        if(queryParams != null) {
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("Creating Included Render Request to override query parameters.");
+            }
+            internalRequest = new IncludedRenderRequestImpl(internalRequest, queryParams);
+        }
+        boolean isIncluded = internalRequest.isIncluded() ||
+                             internalResponse.isIncluded();
         try {
             internalRequest.setIncluded(true);
             internalResponse.setIncluded(true);
 
             this.requestDispatcher.include(
-                (javax.servlet.http.HttpServletRequest) request,
-                (javax.servlet.http.HttpServletResponse) response);
+                (javax.servlet.http.HttpServletRequest) internalRequest,
+                (javax.servlet.http.HttpServletResponse) internalResponse);
         } catch (java.io.IOException e) {
             throw e;
         } catch (javax.servlet.ServletException e) {
@@ -61,8 +80,8 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
                 throw new PortletException(e);
             }
         } finally {
-            internalRequest.setIncluded(false);
-            internalResponse.setIncluded(false);
+            internalRequest.setIncluded(isIncluded);
+            internalResponse.setIncluded(isIncluded);
         }
     }
     // --------------------------------------------------------------------------------------------
