@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.portalImpl.portlet.test;
+package org.apache.pluto.testsuite.test;
 
 import java.io.IOException;
 import java.util.Enumeration;

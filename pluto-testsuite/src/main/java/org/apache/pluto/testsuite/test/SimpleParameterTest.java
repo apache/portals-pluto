@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.portalImpl.portlet.test;
+package org.apache.pluto.testsuite.test;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -23,20 +24,26 @@ import javax.portlet.PortletRequest;
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
-public class SimpleActionParameterTest
-    extends ActionAbstractReflectivePortletTest {
-
+public class SimpleParameterTest extends AbstractReflectivePortletTest {
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
     public static final String VALUE = "org.apache.pluto.testsuite.PARAM_TEST_VALUE";
 
+    private static final String IKEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY_I";
+
     public String getTestSuiteName() {
-        return "Simple Action Parameter Test";
+        return "Simple Parameter Test";
     }
 
-    protected TestResult checkSentActionParameter(PortletRequest req) {
+    public Map getRenderParameters(PortletRequest req) {
+        Map map = new HashMap(req.getParameterMap());
+        map.put(IKEY, new String[] {VALUE});
+        return map;
+    }
+
+    protected TestResult checkSentParameters(PortletRequest req) {
         TestResult res = new TestResult();
-        res.setName("Sent Action Parameter Test");
-        res.setDesc("Ensure that parameters sent through the action query stream have made it to the action reqest.");
+        res.setName("Sent Parameter Test");
+        res.setDesc("Ensure that parameters sent through the action query stream have made it all the way through");
 
         String val = req.getParameter(KEY);
         if(val == null || !VALUE.equals(val)) {
@@ -49,24 +56,20 @@ public class SimpleActionParameterTest
         return res;
     }
 
-    protected TestResult checkSentActionParamerMap(PortletRequest req) {
+
+    protected TestResult checkInternalRenderParameters(PortletRequest req) {
         TestResult res = new TestResult();
-        res.setName("Sent Action Parameter Map");
-        res.setDesc("Ensure that parameters sent through the action query stream have made it to the action parameter map");
+        res.setName("Render Parameters Test");
+        res.setDesc("Enumerate through all render parameters sent in the action");
 
-        Map map = req.getParameterMap();
-        String[] val = (String[])map.get(KEY);
-        if(val!=null) {
-            for(int i=0;i<val.length;i++) {
-                if(val[i].equals(VALUE)) {
-                    res.setReturnCode(TestResult.PASSED);
-                    return res;
-                }
-            }
+        String val = req.getParameter(IKEY);
+        if(val == null || !VALUE.equals(val)) {
+            res.setReturnCode(TestResult.FAILED);
+            res.setResults("Expected : "+VALUE+" retrieved "+val);
         }
-
-        res.setReturnCode(TestResult.FAILED);
-        res.setResults("Unable to retrieve key "+KEY+" with value of "+VALUE);
+        else {
+            res.setReturnCode(TestResult.PASSED);
+        }
         return res;
     }
 
@@ -76,16 +79,23 @@ public class SimpleActionParameterTest
         res.setDesc("Enumerate through all expected names.");
 
         boolean hasExternal = false;
+        boolean hasInternal = false;
         Enumeration enumerator= req.getParameterNames();
         while(enumerator.hasMoreElements()) {
             String val = enumerator.nextElement().toString();
             if(KEY.equals(val)) {
                 hasExternal = true;
             }
+            if(IKEY.equals(val)) {
+                hasInternal = true;
+            }
         }
-        if(!hasExternal) {
+        if(!hasInternal || !hasExternal) {
             res.setReturnCode(TestResult.FAILED);
             StringBuffer sb = new StringBuffer();
+            if(!hasInternal) {
+                sb.append("Internal Parameter Not Found. ");
+            }
             if(!hasExternal) {
                 sb.append("External Parameter Not Found. ");
             }

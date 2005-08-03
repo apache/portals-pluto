@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.portalImpl.portlet.test;
-
-import java.util.Map;
+package org.apache.pluto.testsuite.test;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
+import java.util.Map;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>

@@ -17,7 +17,7 @@
     
   <testsuite-config>
     <name>Simple Render Parameter Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.SimpleRenderParameterTest</class>
+    <class>org.apache.pluto.testsuite.test.SimpleRenderParameterTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
     <action-param>
       <name>org.apache.pluto.testsuite.PARAM_TEST_KEY</name>
@@ -27,7 +27,7 @@
 
   <testsuite-config>
       <name>Simple Action Parameter Test</name>
-      <class>org.apache.pluto.portalImpl.portlet.test.SimpleActionParameterTest</class>
+      <class>org.apache.pluto.testsuite.test.SimpleActionParameterTest</class>
       <display-uri>/jsp/test_results.jsp</display-uri>
     <action-param>
       <name>org.apache.pluto.testsuite.PARAM_TEST_KEY</name>
@@ -37,37 +37,37 @@
     
   <testsuite-config>
     <name>Dispatcher Parameter Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.DispatcherRenderParameterTest</class>
+    <class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
   <testsuite-config>
     <name>Simple Attribute Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.SimpleAttributeTest</class>
+    <class>org.apache.pluto.testsuite.test.SimpleAttributeTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
     
   <testsuite-config>
     <name>Complex Attribute Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.ComplexAttributeTest</class>
+    <class>org.apache.pluto.testsuite.test.ComplexAttributeTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
     
   <testsuite-config>
     <name>External App Scoped Attribute Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.ExternalAppScopedAttributeTest</class>
+    <class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTest</class>
     <display-uri>/jsp/ext_app_scoped_attr_test.jsp</display-uri>
   </testsuite-config>
 
   <testsuite-config>
     <name>Context Init Parameter Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.ContextInitParameterTest</class>
+    <class>org.apache.pluto.testsuite.test.ContextInitParameterTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
   <testsuite-config>
     <name>Simple Preference Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.SimplePreferenceTest</class>
+    <class>org.apache.pluto.testsuite.test.SimplePreferenceTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
@@ -83,19 +83,19 @@
 
   <testsuite-config>
     <name>Misc Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.MiscTest</class>
+    <class>org.apache.pluto.testsuite.test.MiscTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
   <testsuite-config>
     <name>Security Mapping Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.SecurityMappingTest</class>
+    <class>org.apache.pluto.testsuite.test.SecurityMappingTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
   <testsuite-config>
     <name>Resource Bundle Test</name>
-    <class>org.apache.pluto.portalImpl.portlet.test.ResourceBundleTest</class>
+    <class>org.apache.pluto.testsuite.test.ResourceBundleTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
     <init-param>
         <name>resource-bundle</name>

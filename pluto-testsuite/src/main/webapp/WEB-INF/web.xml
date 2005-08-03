@@ -55,12 +55,12 @@ limitations under the License.
 
     <servlet>
     	<servlet-name>extAppScopedTest</servlet-name>
-        <servlet-class>org.apache.pluto.portalImpl.portlet.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
+        <servlet-class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>includeTest</servlet-name>
-        <servlet-class>org.apache.pluto.portalImpl.portlet.test.DispatcherRenderParameterTestServlet</servlet-class>
+        <servlet-class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTestServlet</servlet-class>
     </servlet>
 
 

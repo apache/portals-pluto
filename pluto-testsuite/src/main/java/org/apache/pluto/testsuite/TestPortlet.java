@@ -17,7 +17,7 @@
 
  */
 
-package org.apache.pluto.portalImpl.portlet;
+package org.apache.pluto.testsuite;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,10 +38,12 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import org.apache.pluto.portalImpl.portlet.test.ActionTest;
-import org.apache.pluto.portalImpl.portlet.test.NoOpTest;
-import org.apache.pluto.portalImpl.portlet.test.PortletTest;
-import org.apache.pluto.portalImpl.portlet.test.TestResults;
+import org.apache.pluto.testsuite.test.ActionTest;
+import org.apache.pluto.testsuite.test.NoOpTest;
+import org.apache.pluto.testsuite.test.PortletTest;
+import org.apache.pluto.testsuite.test.TestResults;
+import org.apache.pluto.testsuite.TestConfig;
+import org.apache.pluto.testsuite.TestConfigFactory;
 
 public class TestPortlet extends GenericPortlet {
 
@@ -129,7 +131,7 @@ public class TestPortlet extends GenericPortlet {
 
         WindowState state = request.getWindowState();
         if (!state.equals(WindowState.MINIMIZED)) {
-        	response.setContentType("text/html");
+            response.setContentType("text/html");
 
             if(test != null && !(test instanceof ActionTest) ) {
                 TestResults results = test.doTest(getPortletConfig(),

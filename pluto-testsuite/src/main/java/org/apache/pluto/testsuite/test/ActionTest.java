@@ -14,32 +14,13 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.portalImpl.portlet.test;
-
-import java.util.Map;
-
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.apache.pluto.portalImpl.portlet.TestConfig;
+package org.apache.pluto.testsuite.test;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
-public interface PortletTest {
+public interface ActionTest extends PortletTest {
 
-    String getTestSuiteName();
-    
-    Map getRenderParameters(PortletRequest req);
 
-    TestResults doTest(PortletConfig config,
-                       PortletContext context,
-                       PortletRequest req,
-                       PortletResponse res);
 
-    void init(TestConfig config);
-
-    TestConfig getConfig();
 }

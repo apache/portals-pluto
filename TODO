@@ -3,6 +3,8 @@
    and writing.
 
 2) Port all recent 1.0.x fixes.
+  - [DONE] Render Parameters in includes
+  - What else?
 
 3) Modify bin.xml and src.xml for
    each distribution.  Create

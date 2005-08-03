@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.portalImpl.portlet.test;
+package org.apache.pluto.testsuite.test;
 
 import javax.portlet.PortletSession;
 

@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.portalImpl.portlet.test;
+package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.TestConfig;
+
+import javax.portlet.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
-
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
-
-import org.apache.pluto.portalImpl.portlet.TestConfig;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -40,7 +35,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
                               PortletRequest req,
                               PortletResponse res) {
         TestResults results = new TestResults(getTestSuiteName());
-        
+
         Class klass = getClass();
         Method[] methods = klass.getDeclaredMethods();
 
@@ -69,8 +64,8 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     }
 
     private TestResult invoke(Method method, PortletConfig config,
-                             PortletContext context,
-                             PortletRequest req, PortletResponse res)
+                              PortletContext context,
+                              PortletRequest req, PortletResponse res)
     throws IllegalAccessException, InvocationTargetException {
 
         TestResult result = null;

@@ -26,7 +26,7 @@ limitations under the License.
         <portlet-name>TestPortlet1</portlet-name>
         <display-name>Test Portlet #1</display-name>
 		
-        <portlet-class>org.apache.pluto.portalImpl.portlet.TestPortlet</portlet-class>
+        <portlet-class>org.apache.pluto.testsuite.TestPortlet</portlet-class>
 
         <init-param>
             <name>config</name>
@@ -82,7 +82,7 @@ limitations under the License.
         <description>TestSuiteDescription</description>
         <portlet-name>TestPortlet2</portlet-name>
         <display-name>Test Portlet #2</display-name>
-        <portlet-class>org.apache.pluto.portalImpl.portlet.TestPortlet</portlet-class>
+        <portlet-class>org.apache.pluto.testsuite.TestPortlet</portlet-class>
 
         <init-param>
             <name>config</name>

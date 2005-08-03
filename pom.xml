@@ -53,6 +53,14 @@
       <id>website</id>
       <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/</url>
     </site>
+    <repository>
+      <id>snapshots</id>
+      <name>Snapshot Repository</name>
+	  <url>scp://daviddewolf.com/www/daviddewolf.com/m2/</url>
+	  <snapshotPolicy>always</snapshotPolicy>
+	  <layout>default</layout>
+	  <checksumPolicy>warn</checksumPolicy>
+    </repository>
   </distributionManagement>
 
   <repositories>

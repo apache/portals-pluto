@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.portalImpl.portlet;
+package org.apache.pluto.testsuite;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import org.apache.commons.digester.Digester;
+import org.apache.pluto.testsuite.TestConfig;
 import org.xml.sax.SAXException;
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2003,2004 The Apache Software Foundation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.portalImpl.portlet.test;
+
+package org.apache.pluto.testsuite.test;
 
 import java.util.Map;
 
@@ -22,39 +23,23 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.apache.pluto.portalImpl.portlet.TestConfig;
+import org.apache.pluto.testsuite.TestConfig;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
- * @since Mar 9, 2005
  */
-public class NoOpTest implements PortletTest {
-    private TestConfig config;
+public interface PortletTest {
 
-    public NoOpTest() {
+    String getTestSuiteName();
 
-    }
+    Map getRenderParameters(PortletRequest req);
 
-    public String getTestSuiteName() {
-        return "NoOpTest";
-    }
+    TestResults doTest(PortletConfig config,
+                       PortletContext context,
+                       PortletRequest req,
+                       PortletResponse res);
 
-    public Map getRenderParameters(PortletRequest req) {
-        return new java.util.HashMap();
-    }
+    void init(TestConfig config);
 
-    public TestResults doTest(PortletConfig config, PortletContext context,
-                              PortletRequest req, PortletResponse res) {
-        return new TestResults("None");
-    }
-
-    public void init(TestConfig config) {
-        this.config = config;
-    }
-
-    public TestConfig getConfig() {
-        return config;
-    }
+    TestConfig getConfig();
 }
-
