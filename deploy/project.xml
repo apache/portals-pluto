@@ -19,7 +19,6 @@ limitations under the License.
   <extend>${basedir}/../project.xml</extend>
   <name>Pluto Portlet Deployment</name>
   <id>pluto-deploy</id>
-  <groupId>pluto</groupId>
 
   <organization>
     <logo>/../../images/jakarta-logo-blue.gif</logo>
@@ -39,9 +38,9 @@ limitations under the License.
 
     <!-- Pluto Portal Dependencies -->
     <dependency>
-      <id>pluto-descriptors</id>
-      <groupId>pluto</groupId>
-      <version>1.0.1-rc4</version>
+      <artifactId>pluto-descriptors</artifactId>
+	  <groupId>${pom.groupId}</groupId>
+	  <version>${pom.currentVersion}</version>
     </dependency>
 
  	<dependency>

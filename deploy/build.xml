@@ -21,7 +21,7 @@ limitations under the License.
   <property name="lib.dir" value="./target/lib"/>
 
   <!-- Primary Dependencies -->
-  <property name="pluto-descriptors" value="pluto-descriptors-1.0.1-rc4.jar"/>
+  <property name="pluto-descriptors" value="pluto-descriptors-1.0.1-SNAPSHOT.jar"/>
 
   <!-- Secondary Dependencies -->
   <property name="castor" value="castor-0.9.5.3.jar"/>
