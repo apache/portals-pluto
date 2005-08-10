@@ -568,7 +568,12 @@ public abstract class PortletRequestImpl extends
 
 	public String getMethod() {
 		// TBD
-		return this._getHttpServletRequest().getMethod();
+		// return this._getHttpServletRequest().getMethod();
+		if (included) {
+			return "GET";
+		} else {
+			return this._getHttpServletRequest().getMethod();
+		}
 	}
 
 	public boolean isRequestedSessionIdFromURL() {
