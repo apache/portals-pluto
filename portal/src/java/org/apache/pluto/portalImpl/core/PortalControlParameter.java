@@ -44,75 +44,39 @@ public class PortalControlParameter {
     static public final String RENDER_PARAM = "rp";
     static public final String STATE = "st";
 
-    public static String decodeParameterName(String paramName)
-    {
-        return paramName.substring(PREFIX.length());
+    private Map requestParameter = new HashMap();
+
+    /**
+     * The map containing the encoded statefull control parameters.
+     * They are encoded in the sense, that names and values of 
+     * <i>render parameters</i> and render parameters only are encoded
+     * using {{@link #encodeRenderParamName(PortletWindow, String)}}
+     * and {{@link #encodeRenderParamValues(String[])}}.
+     */
+    private Map encodedStateFullControlParameter = null;
+    
+    private Map stateLessControlParameter = null;
+    private PortalURL url;
+
+    
+    public PortalControlParameter(PortalURL url) {
+        this.url = url;
+        encodedStateFullControlParameter = this.url.getClonedEncodedStateFullControlParameter();
+        stateLessControlParameter = this.url.getClonedStateLessControlParameter();
     }
 
-    public static String decodeParameterValue(String paramName, String paramValue)
-    {
-        return paramValue;
-    }
-
-    private static String[] decodeRenderParamValues(String encodedParamValues)
-    {
-        StringTokenizer tokenizer = new StringTokenizer(encodedParamValues, "_");
-        if (!tokenizer.hasMoreTokens()) return null;
-        String _count = tokenizer.nextToken();
-        int count = Integer.valueOf(_count).intValue();
-        String[] values = new String[count];
-        for (int i=0; i<count; i++) {
-            if (!tokenizer.hasMoreTokens()) return null;
-            values[i] = decodeValue(tokenizer.nextToken());
-        }
-        return values;
-    }
-
-    private static String decodeValue(String value)
-    {
-        value = StringUtils.replace(value, "0x1", "_" );
-        value = StringUtils.replace(value, "0x2", "." );
-        value = StringUtils.replace(value, "0x3", "/" );
-        value = StringUtils.replace(value, "0x4", "\r" );
-        value = StringUtils.replace(value, "0x5", "\n" );
-        value = StringUtils.replace(value, "0x6", "<" );
-        value = StringUtils.replace(value, "0x7", ">" );
-        value = StringUtils.replace(value, "0x8", " " );
-        return value;
-    }
-
-    public static String encodeParameter(String param)
-    {
-        return PREFIX+param;
-    }
-
-    public static String encodeRenderParamName(PortletWindow window, String paramName)
-    {
-        StringBuffer returnvalue = new StringBuffer(50);
-        returnvalue.append(RENDER_PARAM);
-        returnvalue.append("_");
-        returnvalue.append(window.getId().toString());
-        returnvalue.append("_");
-        returnvalue.append(paramName);
-        return returnvalue.toString();
-    }
-
-    public static String encodeRenderParamValues(String[] paramValues)
-    {
-        StringBuffer returnvalue = new StringBuffer(100);
-        returnvalue.append(paramValues.length);
-        for (int i=0; i<paramValues.length; i++) {
-            returnvalue.append("_");
-            if(paramValues[i]!=null) {
-                returnvalue.append(encodeValue(paramValues[i]));
-            }
-        }
-        return returnvalue.toString();
-    }
-
-
-    private static String encodeValue(String value)
-    {
+    
+    /**
+     * Encodes the given String. Encoding means that all characters that might
+     * interfere with the algorithm used to prefix parameters to associate them
+     * with the correct portal window will be encoded. The reverse method is
+     * {{@link #decodeString(String)}}.  
+     * @param value The String to be encoded.
+     * @return The encoded String.
+     * @see #decodeParameterName(String)
+     */
+    private static String encodeString(String value) {
+    	value = StringUtils.replace(value, "0x", "0xx");
         value = StringUtils.replace(value, "_", "0x1" );
         value = StringUtils.replace(value, ".", "0x2" );
         value = StringUtils.replace(value, "/", "0x3" );
@@ -124,54 +88,176 @@ public class PortalControlParameter {
         return value;
     }
 
-    public static String getRenderParamKey(PortletWindow window)
-    {
-        return RENDER_PARAM+"_"+window.getId().toString();
+    /**
+     * Decodes the given String. This is the reverse method to
+     * {{@link #encodeString(String)}}.
+     * @param value The string to be decoded.
+     * @return The decoded String.
+     */
+    private static String decodeString(String value) {
+        value = StringUtils.replace(value, "0x1", "_" );
+        value = StringUtils.replace(value, "0x2", "." );
+        value = StringUtils.replace(value, "0x3", "/" );
+        value = StringUtils.replace(value, "0x4", "\r" );
+        value = StringUtils.replace(value, "0x5", "\n" );
+        value = StringUtils.replace(value, "0x6", "<" );
+        value = StringUtils.replace(value, "0x7", ">" );
+        value = StringUtils.replace(value, "0x8", " " );
+        value = StringUtils.replace(value, "0xx", "0x");
+        return value;
+    }
+    
+    /**
+     * Each parameter is encoded by prefixing it with the String
+     * {@link #PREFIX}. The reverse method is {{@link #decodeParameterName(String)}}.
+     * Don't mistake this method for {{@link #encodeRenderParamName(PortletWindow, String)}}
+     * or {{@link #encodeRenderParamValues(String[])}}.
+     * @param param The parameter to be encoded / prefixed.
+     * @return The encoded parameter.
+     */
+    public static String encodeParameterName(String param) {
+        return PREFIX + param;
     }
 
-    public static boolean isControlParameter(String param)
+    /**
+     * Decodes a parameter by deleting the prefix, if the parameter
+     * was prefixed. Reverse method to {{@link #encodeParameterName(String)}}.
+     * Don't mistake this method for {{@link #decodeRenderParameterName(String)}}
+     * or {{@link #decodeRenderParamValues(String)}}.
+     * @param param The parameter to be decoded.
+     * @return The decoded parameter.
+     */
+    public static String decodeParameterName(String param) {
+    	if (param.startsWith(PREFIX)) {
+    		return param.substring(PREFIX.length());
+    	} else {
+    		return param;
+    	}
+    }
+    
+    /**
+     * Dummy method. Does nothing!
+     */
+    public static String decodeParameterValue(String paramName, String paramValue) {
+        return paramValue;
+    }
+
+    /**
+     * Encodes the given render parameter name. The name will be encoded using the
+     * {{@link #encodeValue(String)}} method, meaning that characters that will 
+     * interfere with plutos internal url encoding and decoding
+     * mechanisms, like "/" or "_" will be encoded. The parameter name will then
+     * be prefixed with a string that encodes the portlet window the parameter belongs to.
+     * This prefix contains the characters ("/", "_", ...) that had to be encoded in
+     * the parameter name to later allow for a safe parsing of the prefix.
+     * @return A string encoding the given render parameter name to be used in portal urls.
+     */
+    public static String encodeRenderParamName(PortletWindow window, String paramName) {
+    	String encodedParamName = encodeString(paramName);
+        StringBuffer returnvalue = new StringBuffer(50);
+        returnvalue.append(getRenderParamKey(window));
+        returnvalue.append("_");
+        returnvalue.append(encodedParamName);
+        return returnvalue.toString();
+    }
+
+    /**
+     * Reverse method for method {{@link #encodeRenderParamName(PortletWindow, String)}}.
+     */
+    public static String decodeRenderParamName(PortletWindow window, String encodedRenderParamName) {
+    	String prefix = getRenderParamKey(window);
+    	String unprefixedRenderParamName = null;
+    	if (encodedRenderParamName.startsWith(prefix)) {
+    		unprefixedRenderParamName = encodedRenderParamName.substring(prefix.length());
+    	} else {
+    		unprefixedRenderParamName = encodedRenderParamName;
+    	}
+    	return decodeString(unprefixedRenderParamName);
+    }
+    
+    /**
+     * Encodes the given render parameter values. The values are encoded
+     * in one single string that will be used in portal urls. 
+     * @param paramValues The render parameter values to be encoded.
+     * @return A string containing the encoded render parameter values.
+     */
+    public static String encodeRenderParamValues(String[] paramValues)
     {
+        StringBuffer returnvalue = new StringBuffer(100);
+        returnvalue.append(paramValues.length);
+        for (int i=0; i<paramValues.length; i++) {
+            returnvalue.append("_");
+            if(paramValues[i]!=null) {
+                returnvalue.append(encodeString(paramValues[i]));
+            }
+        }
+        return returnvalue.toString();
+    }
+
+    /**
+     * Reverse method for the method {{@link #encodeRenderParamValues(String[])}}.
+     */
+    private static String[] decodeRenderParamValues(String encodedParamValues) {
+        StringTokenizer tokenizer = new StringTokenizer(encodedParamValues, "_");
+        if (!tokenizer.hasMoreTokens()) {
+        	return null;
+        }
+        String _count = tokenizer.nextToken();
+        int count = Integer.valueOf(_count).intValue();
+        String[] values = new String[count];
+        for (int i = 0; i < count; i++) {
+            if (!tokenizer.hasMoreTokens()) {
+            	return null;
+            }
+            values[i] = decodeString(tokenizer.nextToken());
+        }
+        return values;
+    }
+
+    /**
+     * Retrieve the key to use to prefix render parameters of the given
+     * portlet window.
+     * @param window
+     * @return
+     */
+    public static String getRenderParamKey(PortletWindow window) {
+        return RENDER_PARAM + "_" + window.getId().toString();
+    }
+
+    /**
+     * Check whether the given string encodes a control parameter.
+     */
+    public static boolean isControlParameter(String param) {
         return param.startsWith(PREFIX);
     }
 
-    public static boolean isStateFullParameter(String param)
-    {
+    /**
+     * Check whether the given string encodes a stateful parameter,
+     * i.e. mode, previous mode, window state, previous window state or 
+     * render parameter.
+     */
+    public static boolean isStateFullParameter(String param) {
         if (isControlParameter(param)) {
-            if ((param.startsWith(PREFIX+MODE)) ||
-                (param.startsWith(PREFIX+PREV_MODE)) ||
-                (param.startsWith(PREFIX+STATE)) ||
-                (param.startsWith(PREFIX+PREV_STATE)) ||
-                (param.startsWith(PREFIX+RENDER_PARAM))) {
+            if ((param.startsWith(PREFIX + MODE)) ||
+                (param.startsWith(PREFIX + PREV_MODE)) ||
+                (param.startsWith(PREFIX + STATE)) ||
+                (param.startsWith(PREFIX + PREV_STATE)) ||
+                (param.startsWith(PREFIX + RENDER_PARAM))) {
                 return true;
             }
         }
         return false;
     }
-    private Map requestParameter = new HashMap();
-    private Map stateFullControlParameter = null;
-    private Map stateLessControlParameter = null;
-
-
-
-
-
-    private PortalURL url;
-
-    public PortalControlParameter(PortalURL url)
-    {
-        this.url = url;
-        stateFullControlParameter = this.url.getClonedStateFullControlParameter();
-        stateLessControlParameter = this.url.getClonedStateLessControlParameter();
-    }
-
-    public void clearRenderParameters(PortletWindow portletWindow)
-    {
+    
+    /**
+     * Deletes all render parameter that belong to the given window.
+     */
+    public void clearRenderParameters(PortletWindow portletWindow) {
         String prefix = getRenderParamKey(portletWindow);
-        Iterator keyIterator = stateFullControlParameter.keySet().iterator();
-
+        Iterator keyIterator = encodedStateFullControlParameter.keySet().iterator();
         while (keyIterator.hasNext()) {
-            String name = (String)keyIterator.next();
-            if (name.startsWith(prefix)) {
+            String encodedName = (String)keyIterator.next();
+            if (encodedName.startsWith(prefix)) {
                 keyIterator.remove();
             }
         }
@@ -182,44 +268,35 @@ public class PortalControlParameter {
         return ACTION+"_"+window.getId().toString();
     }
 
-    public String[] getActionParameter(PortletWindow window, String paramName)
-    {
-        String encodedValues = (String)stateFullControlParameter.get(encodeRenderParamName(window, paramName));
-        String[] values = decodeRenderParamValues(encodedValues);
-        return values;
+    public String[] getActionParameter(PortletWindow window, String paramName) {
+        String encodedValues = (String)encodedStateFullControlParameter.get(encodeRenderParamName(window, paramName));
+        String[] decodedValues = decodeRenderParamValues(encodedValues);
+        return decodedValues;
     }
 
-
-    public PortletMode getMode(PortletWindow window)
-    {
-        String mode = (String)stateFullControlParameter.get(getModeKey(window));
-        if (mode!=null)
+    public PortletMode getMode(PortletWindow window) {
+        String mode = (String)encodedStateFullControlParameter.get(getModeKey(window));
+        if (mode != null) {
             return new PortletMode(mode);
-        else
+        } else {
             return PortletMode.VIEW;
+        }
     }
 
-
-
-
-    private String getModeKey(PortletWindow window)
-    {
-        return MODE+"_"+window.getId().toString();
+    private String getModeKey(PortletWindow window) {
+        return MODE + "_" + window.getId().toString();
     }
 
-    public String getPIDValue()
-    {
+    public String getPIDValue() {
         String value = (String)stateLessControlParameter.get(getPortletIdKey());
-        return value==null?"":value;
+        return value == null ? "" : value;
     }
 
-    private String getPortletIdKey()
-    {
+    private String getPortletIdKey() {
         return PORTLET_ID;
     }
 
-    public PortletWindow getPortletWindowOfAction()
-    {
+    public PortletWindow getPortletWindowOfAction() {
         Iterator iterator = getStateLessControlParameter().keySet().iterator();
         while (iterator.hasNext()) {
             String name = (String)iterator.next();
@@ -234,91 +311,84 @@ public class PortalControlParameter {
         return null;
     }
 
-    public PortletMode getPrevMode(PortletWindow window)
-    {
-        String mode = (String)stateFullControlParameter.get(getPrevModeKey(window));
-        if (mode!=null)
+    public PortletMode getPrevMode(PortletWindow window) {
+        String mode = (String)encodedStateFullControlParameter.get(getPrevModeKey(window));
+        if (mode != null) {
             return new PortletMode(mode);
-        else
+        } else {
             return null;
+        }
     }
-    private String getPrevModeKey(PortletWindow window)
-    {
-        return PREV_MODE+"_"+window.getId().toString();
+    
+    private String getPrevModeKey(PortletWindow window) {
+        return PREV_MODE + "_" + window.getId().toString();
     }
 
-    public WindowState getPrevState(PortletWindow window)
-    {
-        String state = (String)stateFullControlParameter.get(getPrevStateKey(window));
+    public WindowState getPrevState(PortletWindow window) {
+        String state = (String)encodedStateFullControlParameter.get(getPrevStateKey(window));
         if (state!=null)
             return new WindowState(state);
         else
             return null;
     }
-    private String getPrevStateKey(PortletWindow window)
-    {
-        return PREV_STATE+"_"+window.getId().toString();
+    
+    private String getPrevStateKey(PortletWindow window) {
+        return PREV_STATE + "_" + window.getId().toString();
     }
 
-    public Iterator getRenderParamNames(PortletWindow window)
-    {
+    public Iterator getRenderParamNames(PortletWindow window) {
         ArrayList returnvalue = new ArrayList();
         String prefix = getRenderParamKey(window);
-        Iterator keyIterator = stateFullControlParameter.keySet().iterator();
-
+        Iterator keyIterator = encodedStateFullControlParameter.keySet().iterator();
         while (keyIterator.hasNext()) {
-            String name = (String)keyIterator.next();
-            if (name.startsWith(prefix)) {
-                returnvalue.add(name.substring(prefix.length()+1));
+            String encodedName = (String)keyIterator.next();
+            if (encodedName.startsWith(prefix)) {
+            	// remove specific render parameter name encoding
+            	String decodedName = decodeRenderParamName(window, encodedName);
+            	// remove general parameter encoding
+            	String unprefixedName = decodeParameterName(decodedName);
+            	returnvalue.add(unprefixedName);
             }
         }
-
         return returnvalue.iterator();
     }
 
-    public String[] getRenderParamValues(PortletWindow window, String paramName)
-    {
-        String encodedValues = (String)stateFullControlParameter.get(encodeRenderParamName(window, paramName));
-        String[] values = decodeRenderParamValues(encodedValues);
-        return values;
+    public String[] getRenderParamValues(PortletWindow window, String paramName) {
+        String encodedValues = (String)encodedStateFullControlParameter.get(encodeRenderParamName(window, paramName));
+        String[] decodedValues = decodeRenderParamValues(encodedValues);
+        return decodedValues;
     }
 
-    public Map getRequestParameter()
-    {
+    public Map getRequestParameter() {
         return requestParameter;
     }
 
-    public WindowState getState(PortletWindow window)
-    {
-        String state = (String)stateFullControlParameter.get(getStateKey(window));
+    public WindowState getState(PortletWindow window) {
+        String state = (String)encodedStateFullControlParameter.get(getStateKey(window));
         if (state!=null)
             return new WindowState(state);
         else
             return WindowState.NORMAL;
     }
 
-    public Map getStateFullControlParameter()
-    {
-        return stateFullControlParameter;
+    public Map getEncodedStateFullControlParameter() {
+        return encodedStateFullControlParameter;
     }
 
-    private String getStateKey(PortletWindow window)
-    {
+    private String getStateKey(PortletWindow window) {
         return STATE+"_"+window.getId().toString();
     }
 
-    public Map getStateLessControlParameter()
-    {
+    public Map getStateLessControlParameter() {
         return stateLessControlParameter;
     }
 
-    public boolean isOnePortletWindowMaximized()
-    {
-        Iterator iterator = stateFullControlParameter.keySet().iterator();
+    public boolean isOnePortletWindowMaximized() {
+        Iterator iterator = encodedStateFullControlParameter.keySet().iterator();
         while (iterator.hasNext()) {
-            String name = (String)iterator.next();
-            if (name.startsWith(STATE)) {
-                if (stateFullControlParameter.get(name).equals(WindowState.MAXIMIZED.toString())) {
+            String encodedName = (String)iterator.next();
+            if (encodedName.startsWith(STATE)) {
+                if (encodedStateFullControlParameter.get(encodedName).equals(WindowState.MAXIMIZED.toString())) {
                     return true;
                 }
             }
@@ -326,50 +396,44 @@ public class PortalControlParameter {
         return false;
     }
 
-    public void setAction(PortletWindow window)
-    {
-        getStateFullControlParameter().put(getActionKey(window),ACTION.toUpperCase());
+    public void setAction(PortletWindow window) {
+        getEncodedStateFullControlParameter().put(getActionKey(window),ACTION.toUpperCase());
     }
 
-    public void setMode(PortletWindow window, PortletMode mode)
-    {
-        Object prevMode = stateFullControlParameter.get(getModeKey(window));
+    public void setMode(PortletWindow window, PortletMode mode) {
+        Object prevMode = encodedStateFullControlParameter.get(getModeKey(window));
         if (prevMode!=null)
-            stateFullControlParameter.put(getPrevModeKey(window), prevMode);
+            encodedStateFullControlParameter.put(getPrevModeKey(window), prevMode);
         // set current mode
-        stateFullControlParameter.put(getModeKey(window), mode.toString());
+        encodedStateFullControlParameter.put(getModeKey(window), mode.toString());
     }
 
-    public void setPortletId(PortletWindow window)
-    {
-        getStateFullControlParameter().put(getPortletIdKey(),window.getId().toString());
+    public void setPortletId(PortletWindow window) {
+        getEncodedStateFullControlParameter().put(getPortletIdKey(),window.getId().toString());
         //getStateLessControlParameter().put(getPortletIdKey(),window.getId().toString());
     }
 
-    public void setRenderParam(PortletWindow window, String name, String[] values)
-    {
-        stateFullControlParameter.put(encodeRenderParamName(window, name), 
+    /**
+     * Sets the given render parameter. Note that its name as well as its values will
+     * be encoded for storage using {{@link #encodeRenderParamName(PortletWindow, String)}}
+     * and {{@link #encodeRenderParamValues(String[])}.
+     */
+    public void setRenderParam(PortletWindow window, String name, String[] values) {
+        encodedStateFullControlParameter.put(encodeRenderParamName(window, name), 
                                       encodeRenderParamValues(values) );
     }
 
-    /*
-        public void setRequestParam(String name, String value)
-        {
-            requestParameter.put(name, value );
-        }
-    */
-    public void setRequestParam(String name, String[] values )
-    {
+    public void setRequestParam(String name, String[] values ) {
         requestParameter.put(name, values );
     }
 
 
-    public void setState(PortletWindow window, WindowState state)
-    {
-        Object prevState = stateFullControlParameter.get(getStateKey(window));
-        if (prevState!=null)
-            stateFullControlParameter.put(getPrevStateKey(window), prevState);
-        stateFullControlParameter.put(getStateKey(window), state.toString());
+    public void setState(PortletWindow window, WindowState state) {
+        Object prevState = encodedStateFullControlParameter.get(getStateKey(window));
+        if (prevState != null) {
+            encodedStateFullControlParameter.put(getPrevStateKey(window), prevState);
+        }
+        encodedStateFullControlParameter.put(getStateKey(window), state.toString());
     }
 
 }
