@@ -23,7 +23,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.config.PortletWindowConfig;
+import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
 import org.apache.pluto.driver.util.ObjectIdImpl;
 import org.apache.pluto.om.ObjectID;
 

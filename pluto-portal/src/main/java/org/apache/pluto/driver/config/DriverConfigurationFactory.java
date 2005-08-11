@@ -15,13 +15,15 @@
  */
 package org.apache.pluto.driver.config;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.digester.Digester;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.xml.sax.SAXException;
+import org.apache.pluto.driver.services.PortletRegistryService;
+import org.apache.pluto.driver.services.PropertyConfigService;
+import org.apache.pluto.driver.services.RenderConfigService;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+
+import javax.servlet.ServletContext;
+import java.io.InputStream;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -33,6 +35,10 @@ public class DriverConfigurationFactory {
     private static final Log LOG =
         LogFactory.getLog(DriverConfigurationFactory.class);
 
+    private static final String DRIVER_CONFIG =
+        "/WEB-INF/pluto-portal-driver-services-config.xml";
+
+
     private static DriverConfigurationFactory factory;
 
     public static DriverConfigurationFactory getFactory() {
@@ -42,74 +48,43 @@ public class DriverConfigurationFactory {
         return factory;
     }
 
-    private Digester digester;
-
     private DriverConfigurationFactory() {
-        digester = new Digester();
-        digester.setLogger(LOG);
-        digester.setClassLoader(Thread.currentThread().getContextClassLoader());
-        init();
-    }
-
-    public DriverConfiguration parse(InputStream in)
-        throws IOException, SAXException {
-        return (DriverConfiguration) digester.parse(in);
-    }
-
-
-// Digester Setup
-
-    private void init() {
-        digester.addObjectCreate("pluto-portal-driver",
-                                 DriverConfiguration.class);
-        digester.addBeanPropertySetter("pluto-portal-driver/portal-name",
-                                       "portalName");
-        digester.addBeanPropertySetter("pluto-portal-driver/portal-version",
-                                       "portalVersion");
-        digester.addBeanPropertySetter("pluto-portal-driver/container-name",
-                                       "containerName");
-
-        digester.addCallMethod("pluto-portal-driver/supports/portlet-mode",
-                               "addSupportedPortletMode", 0);
-        digester.addCallMethod("pluto-portal-driver/supports/window-state",
-                               "addSupportedWindowState", 0);
-
-        digester.addObjectCreate("pluto-portal-driver/portlet-app",
-                                 PortletApplicationConfig.class);
-        digester.addBeanPropertySetter(
-            "pluto-portal-driver/portlet-app/context-path", "contextPath");
-
-        digester.addObjectCreate(
-            "pluto-portal-driver/portlet-app/portlets/portlet",
-            PortletWindowConfig.class);
-        digester.addSetProperties(
-            "pluto-portal-driver/portlet-app/portlets/portlet", "name",
-            "portletName");
-        digester.addSetNext("pluto-portal-driver/portlet-app/portlets/portlet",
-                            "addPortlet");
-        digester.addSetNext("pluto-portal-driver/portlet-app", "addPortletApp");
-
-        digester.addObjectCreate("pluto-portal-driver/render-config",
-                                 RenderConfig.class);
-        digester.addSetProperties("pluto-portal-driver/render-config",
-                                  "default", "defaultPageId");
-        digester.addObjectCreate("pluto-portal-driver/render-config/page",
-                                 PageConfig.class);
-        digester.addSetProperties("pluto-portal-driver/render-config/page");
-        digester.addCallMethod(
-            "pluto-portal-driver/render-config/page/portlet", "addPortlet", 2);
-        digester.addCallParam("pluto-portal-driver/render-config/page/portlet",
-                              0, "context");
-        digester.addCallParam("pluto-portal-driver/render-config/page/portlet",
-                              1, "name");
-        digester.addSetNext("pluto-portal-driver/render-config/page",
-                            "addPage");
-        digester.addSetNext("pluto-portal-driver/render-config",
-                            "setRenderConfig");
-
 
     }
 
+    public DriverConfiguration getConfig(ServletContext context) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Retrieving driver configuration from: "+DRIVER_CONFIG);
+        }
 
+        InputStream in =
+            context.getResourceAsStream(DRIVER_CONFIG);
+
+        XmlBeanFactory beanFactory = new XmlBeanFactory(in);
+
+        PropertyConfigService propService = (PropertyConfigService)
+            beanFactory.getBean("PropertyConfigService");
+        propService.init(context);
+
+        PortletRegistryService registryService = (PortletRegistryService)
+            beanFactory.getBean("PortletRegistryService");
+        registryService.init(context);
+
+        RenderConfigService renderService = (RenderConfigService)
+            beanFactory.getBean("RenderConfigService");
+        renderService.init(context);
+
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("PropertyConfigService Found: "+propService.getClass().getName());
+            LOG.debug("PortletRegistryService Found: "+registryService.getClass().getName());
+            LOG.debug("RenderConfigService Found: "+renderService.getClass().getName());
+        }
+
+        return new DriverConfiguration(
+            propService,
+            registryService,
+            renderService
+        );
+    }
 }
 

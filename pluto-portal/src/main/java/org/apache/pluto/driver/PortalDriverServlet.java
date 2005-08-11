@@ -15,7 +15,16 @@
  */
 package org.apache.pluto.driver;
 
-import java.io.IOException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.core.PortalEnvironment;
+import org.apache.pluto.driver.core.PortalURL;
+import org.apache.pluto.driver.core.PortletWindowImpl;
+import org.apache.pluto.driver.services.impl.resource.PageConfig;
+import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -24,18 +33,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.driver.config.PageConfig;
-import org.apache.pluto.driver.config.PortletWindowConfig;
-import org.apache.pluto.driver.config.RenderConfig;
-import org.apache.pluto.driver.core.PortalEnvironment;
-import org.apache.pluto.driver.core.PortalURL;
-import org.apache.pluto.driver.core.PortletWindowImpl;
+import java.io.IOException;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -127,8 +125,7 @@ public class PortalDriverServlet extends HttpServlet {
             LOG.debug("Rendering Portal: Requested Page: " + currentPage);
         }
 
-        RenderConfig renderConfig = driverConfig.getRenderConfig();
-        return renderConfig.getPageConfig(currentPage);
+        return driverConfig.getPageConfig(currentPage);
     }
 
 

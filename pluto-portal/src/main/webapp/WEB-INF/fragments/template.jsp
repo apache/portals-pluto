@@ -17,7 +17,7 @@
 
 <TABLE>
 <TR class="tab">
-    <c:forEach var="page" items="${driverConfig.renderConfig.pages}">
+    <c:forEach var="page" items="${driverConfig.pages}">
     <c:choose>
     <c:when test="${page == currentPage}">
     <TD nowrap="true" class="tab-selected">
@@ -34,6 +34,7 @@
     <TR><TD colspan="<c:out value="${span * 2}"/>"> &nbsp; </TD></TR>
 </TABLE>
 
+<TABLE>
 <TR><TD>
     <%-- This could be dynamic.  At this point there's no need --%>
     <jsp:include page='<%=(String)pageContext.findAttribute("include")%>'/>

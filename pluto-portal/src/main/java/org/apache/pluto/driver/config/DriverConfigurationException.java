@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
+ * Copyright 2004 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,24 @@
 package org.apache.pluto.driver.config;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @todo Document
+ * @since Aug 10, 2005
  */
-public class PortalDisplayConfig {
+public class DriverConfigurationException extends RuntimeException {
 
-    public PortalDisplayConfig() {
+    public DriverConfigurationException() {
+    }
 
+    public DriverConfigurationException(String message) {
+        super(message);
+    }
+
+    public DriverConfigurationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public DriverConfigurationException(Throwable cause) {
+        super(cause);
     }
 }

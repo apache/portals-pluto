@@ -15,24 +15,20 @@
  */
 package org.apache.pluto.driver;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletContainerFactory;
 import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.config.DriverConfigurationFactory;
 import org.apache.pluto.driver.services.container.ContainerServicesImpl;
 import org.apache.pluto.driver.services.container.PortalContextImpl;
-import org.apache.pluto.driver.services.container.PortalContextImpl;
-import org.xml.sax.SAXException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
  * Listener used to start up the Pluto Portal Driver upon
@@ -48,8 +44,6 @@ public class PortalStartupListener implements ServletContextListener {
         LogFactory.getLog(PortalStartupListener.class);
 
     /**  The location of the portal driver configuration. */
-    private static final String CONFIG_FILE =
-        "/WEB-INF/pluto-portal-driver-config.xml";
 
     /** The KEY with which the container is bound to the context. */
     private static final String CONTAINER_KEY = AttributeKeys.PORTLET_CONTAINER;
@@ -76,15 +70,12 @@ public class PortalStartupListener implements ServletContextListener {
         ServletContext ctx = event.getServletContext();
         try {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Starting Pluto Portal Driver. . .");
+                LOG.debug("Starting Pluto Portal Driver . . .");
+                LOG.debug(" - Retreaving Driver Configuration . . .");
             }
-            InputStream in = ctx.getResourceAsStream(CONFIG_FILE);
 
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(" - Reading Configuration. . .");
-            }
             DriverConfiguration config =
-                DriverConfigurationFactory.getFactory().parse(in);
+                DriverConfigurationFactory.getFactory().getConfig(ctx);
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug(
@@ -107,8 +98,11 @@ public class PortalStartupListener implements ServletContextListener {
             }
 
             PortletContainerFactory factory = PortletContainerFactory.getInstance();
-            PortletContainer container = factory.createContainer(
-                config.getContainerName(), impl);
+            PortletContainer container =
+                factory.createContainer(
+                    config.getContainerName(),
+                    impl
+                );
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug(" - Starting Portlet Container");
@@ -122,20 +116,17 @@ public class PortalStartupListener implements ServletContextListener {
 
             ctx.setAttribute(CONFIG_KEY, config);
             ctx.setAttribute(CONTAINER_KEY, container);
-        } catch (IOException io) {
+
+        } catch (DriverConfigurationException exception) {
             LOG.error(
-                "Unable to start portal.  Configuration not found at '" +
-                CONFIG_FILE +
-                "'.",
-                io);
-        } catch (SAXException sax) {
-            LOG.error(
-                "Unable to start portal.  Invalid configuration found at '" +
-                CONFIG_FILE +
-                "'.",
-                sax);
+                "Unable to retrieve driver configuration due to configuration error.",
+                exception
+            );
         } catch (PortletContainerException exception) {
-            LOG.error("Unable to start portlet container. ", exception);
+            LOG.error(
+                "Unable to start portlet container due to configuration error.",
+                exception
+            );
         }
     }
 

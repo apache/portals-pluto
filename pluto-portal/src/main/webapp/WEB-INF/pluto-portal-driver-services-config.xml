@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- How do we get these to share the same instance. -->
+    <bean name="PropertyConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+          singleton="true">
+    </bean>
+    <bean name="PortletRegistryService"
+          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+          singleton="true">
+    </bean>
+    <bean name="RenderConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+          singleton="true">
+    </bean>
+</beans>
