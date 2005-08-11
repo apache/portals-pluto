@@ -29,6 +29,10 @@ limitations under the License.
     <attainGoal name="jar:install"/>
   </preGoal>
 
+  <preGoal name="war:deploy">
+    <attainGoal name="jar:deploy"/>
+  </preGoal> 
+
   <preGoal name="tomcat:deploy">
     <j:set var="maven.war.final.name" value="pluto.war"/>
   </preGoal>
