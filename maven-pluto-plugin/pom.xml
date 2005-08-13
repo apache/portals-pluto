@@ -2,7 +2,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-pluto-plugin</artifactId> 
-  <version>1.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <parent>
     <groupId>org.apache.pluto</groupId>

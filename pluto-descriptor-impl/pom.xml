@@ -3,7 +3,6 @@
   <groupId>org.apache.pluto</groupId>
   <artifactId>pluto-descriptor-impl</artifactId>
   <packaging>jar</packaging>
-  <version>1.1-SNAPSHOT</version>
   <name>Pluto Descriptor Service Implementation</name>
   <url>http://portals.apache.org/pluto</url>
   <parent>
@@ -25,7 +24,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptor>src/assemble/bin.xml</descriptor>
-          <finalName>pluto-descriptor-impl-1.1-SNAPSHOT</finalName>
+          <finalName>pluto-descriptor-impl-${pom.version}</finalName>
         </configuration>
       </plugin>
     </plugins>
@@ -35,7 +34,7 @@
     <dependency>
       <groupId>org.apache.pluto</groupId>
 	  <artifactId>pluto-descriptor-api</artifactId>
-	  <version>1.1-SNAPSHOT</version>
+	  <version>${pom.version}</version>
     </dependency>
     <dependency>
       <groupId>castor</groupId>
@@ -74,12 +73,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <id>snapshots</id>
-      <name>Snapshot Development Repository</name>
-      <url>http://daviddewolf.com/m2</url>
-    </repository>
-  </repositories>
-
 </project>

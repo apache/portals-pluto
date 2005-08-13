@@ -53,21 +53,40 @@
       <id>website</id>
       <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/</url>
     </site>
+	<!-- To set credentials, add m1 server to ${user.home}/.m2/settings.xml -->
     <repository>
-      <id>snapshots</id>
-      <name>Snapshot Repository</name>
-	  <url>scp://daviddewolf.com/www/daviddewolf.com/m2/</url>
+      <id>m1</id>
+      <name>Maven 1 Repository</name>
+	  <url>scp://cvs.apache.org/www/cvs.apache.org/repository</url>
+	  <snapshotPolicy>always</snapshotPolicy>
+	  <layout>legacy</layout>
+	  <checksumPolicy>warn</checksumPolicy>
+    </repository>
+	<!--
+	Deploying to multiple repos does not currently
+	work.  To deploy to this repo, comment out the
+    m1 repo and uncomment this.
+    <repository>
+      <id>m2</id>
+      <name>Maven 2 Repository</name>
+	  <url>scp://people.apache.org/home/ddewolf/public_html/m2</url>
 	  <snapshotPolicy>always</snapshotPolicy>
 	  <layout>default</layout>
 	  <checksumPolicy>warn</checksumPolicy>
     </repository>
+	-->
   </distributionManagement>
 
   <repositories>
     <repository>
-      <id>snapshots</id>
-      <name>Snapshot Development Repository</name>
-      <url>http://daviddewolf.com/m2</url>
+      <id>m1</id>
+      <name>Maven 1 Repository</name>
+	  <url>scp://cvs.apache.org/repository</url>
+    </repository>
+    <repository>
+      <id>m2</id>
+      <name>Maven 2 Repository</name>
+	  <url>scp://people.apache.org/home/ddewolf/public_html/m2</url>
     </repository>
   </repositories>
 
