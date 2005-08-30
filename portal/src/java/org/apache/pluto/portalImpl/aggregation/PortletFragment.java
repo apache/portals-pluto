@@ -81,8 +81,8 @@ import org.apache.pluto.services.log.Logger;
  */
 public class PortletFragment extends AbstractFragmentSingle {
     
-    private PortletWindow portletWindow = null;
-    private Logger log = null;
+    private PortletWindow portletWindow;
+    private Logger log;
 
     public static final String PORTLET_ERROR_MSG = "Error occurred in portlet!";
 

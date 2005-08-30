@@ -69,7 +69,7 @@ import org.exolab.castor.xml.Unmarshaller;
  * @deprecated this deployment utility has been deprecated in
  * favor of the one provided with the deploy subproject.
  *
- * @link org.apache.pluto.driver.deploy.CLI
+ * @see org.apache.pluto.driver.deploy.CLI
  *
  */
 public class Deploy {

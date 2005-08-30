@@ -29,7 +29,7 @@ import org.apache.pluto.om.window.PortletWindowListCtrl;
 public class PortletWindowListImpl implements PortletWindowList, PortletWindowListCtrl {
 
     
-    HashMap windows = null;
+    HashMap windows;
 
     public PortletWindowListImpl() {
         windows = new HashMap();

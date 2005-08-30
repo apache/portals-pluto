@@ -26,8 +26,8 @@ import org.apache.pluto.services.information.StaticInformationProvider;
 public interface InformationProviderFactory extends Factory
 {
  
-    public StaticInformationProvider getStaticProvider();
+    StaticInformationProvider getStaticProvider();
 
-    public DynamicInformationProvider getDynamicProvider(javax.servlet.http.HttpServletRequest request);
+    DynamicInformationProvider getDynamicProvider(javax.servlet.http.HttpServletRequest request);
     
 }

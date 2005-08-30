@@ -247,7 +247,6 @@ public class PageRegistryService extends BaseAdminObject {
 
 	/**
 	 * Gets the pages from pageregistry.xml for the View.
-	 * @param prPath
 	 * @param req
 	 */
 	public void getAllPages(RenderRequest req) {

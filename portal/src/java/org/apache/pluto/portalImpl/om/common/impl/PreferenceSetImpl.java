@@ -38,7 +38,7 @@ implements PreferenceSet, PreferenceSetCtrl, java.io.Serializable {
 
     private String castorPreferencesValidator; 
     private ClassLoader classLoader;
-    private Logger log = null;
+    private Logger log;
 
     public PreferenceSetImpl() {
         this.log = Log.getService().getLogger(getClass());

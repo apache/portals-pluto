@@ -49,42 +49,42 @@ public interface Fragment
      * 
      * @return the administrative name
      */
-    public String getName();
+    String getName();
 
     /**
      * binds an administrative name to this fragment.
      * 
      * @param name the administrative name
      */
-    public void setName(String name);
+    void setName(String name);
 
     /**
      * Returns the type of the class bound to this fragment.
      * 
      * @return the type
      */
-    public String getType();
+    String getType();
 
     /**
      * binds a type to this fragment.
      * 
      * @param type the type
      */
-    public void setType(String type);
+    void setType(String type);
 
     /**
      * Returns the classname of the class bound to this fragment.
      * 
      * @return the classname
      */
-    public String getClassname();
+    String getClassname();
 
     /**
      * binds a classname to this fragment.
      * 
      * @param classname the classname
      */
-    public void setClassname(String classname);
+    void setClassname(String classname);
 
     /**
      * Returns the navigational information linked with this fragment.
@@ -92,14 +92,14 @@ public interface Fragment
      * 
      * @return the navigational information
      */
-    public Navigation getNavigation();
+    Navigation getNavigation();
 
     /**
      * binds navigational information to this fragment.
      * 
      * @param navigation the navigational information
      */
-    public void setNavigation(Navigation navigation);
+    void setNavigation(Navigation navigation);
 
     /**
      * Returns all fragments used in this node. This may be
@@ -107,7 +107,7 @@ public interface Fragment
      * 
      * @return a collection containing Fragment objects
      */
-    public Collection getFragments();
+    Collection getFragments();
 
     /**
      * Returns all properties describing this fragment. Only the
@@ -116,6 +116,6 @@ public interface Fragment
      * 
      * @return a collection containing Property objects
      */
-    public Collection getProperties();
+    Collection getProperties();
 
 }

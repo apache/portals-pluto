@@ -33,7 +33,7 @@ public class PortalContextProviderImpl implements PortalContextProvider {
 
 
     /** Portal information */
-    private String info = null;
+    private String info;
 
     /** supported portlet modes by this portal */
     private Vector modes;

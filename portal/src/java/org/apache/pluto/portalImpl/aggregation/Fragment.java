@@ -43,7 +43,7 @@ public interface Fragment
      * @exception ServletException
      * @exception IOException
      */
-    public void service(HttpServletRequest request, HttpServletResponse response)
+    void service(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException;
 
     /**
@@ -52,7 +52,7 @@ public interface Fragment
      * 
      * @return the identifier of this fragment
      */
-    public String getId();
+    String getId();
 
     /**
      * Returns the parent fragment. If this fragment is the root fragment
@@ -60,28 +60,28 @@ public interface Fragment
      * 
      * @return the parent fragment or NULL if this is the root fragment
      */
-    public Fragment getParent();
+    Fragment getParent();
 
     /**
      * Returns the initialization parameters of this fragment
      * 
      * @return the init parameters
      */
-    public Parameters getInitParameters();
+    Parameters getInitParameters();
 
     /**
      * Returns a collection of all child fragments
      * 
      * @return a collection containing objects implementing the interface fragment
      */
-    public Collection getChildFragments();
+    Collection getChildFragments();
 
     /**
      * Adds an child to the fragment
      * 
      * @param child  the child fragment
      */
-    public void addChild(Fragment child);
+    void addChild(Fragment child);
 
     /**
      * Returns the navigational information linked with this fragment.
@@ -89,14 +89,14 @@ public interface Fragment
      * 
      * @return the navigational information
      */
-    public Navigation getNavigation();
+    Navigation getNavigation();
 
     /**
      * Creates an URL pointing to this fragment
      * 
      * @param url the PortalURL object used 
      */
-    public void createURL(PortalURL url);
+    void createURL(PortalURL url);
 
     /**
      * Returns true if the fragment is part of the URL
@@ -104,6 +104,6 @@ public interface Fragment
      * @param url    the PortalURL object used
      * @return true if the fragment is part of the URL
      */
-    public boolean isPartOfURL(PortalURL url);
+    boolean isPartOfURL(PortalURL url);
 
 }

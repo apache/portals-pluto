@@ -53,9 +53,9 @@ public class PortalControlParameter {
      * using {{@link #encodeRenderParamName(PortletWindow, String)}}
      * and {{@link #encodeRenderParamValues(String[])}}.
      */
-    private Map encodedStateFullControlParameter = null;
+    private Map encodedStateFullControlParameter;
     
-    private Map stateLessControlParameter = null;
+    private Map stateLessControlParameter;
     private PortalURL url;
 
     

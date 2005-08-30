@@ -48,27 +48,27 @@ public interface Navigation
      * 
      * @return the title as string
      */
-    public String getTitle();
+    String getTitle();
 
     /**
      * Sets the title
      * 
      * @param title   the title to be set
      */
-    public void setTitle(String title);
+    void setTitle(String title);
 
     /**
      * Returns the description of this property
      * 
      * @return the description as string
      */
-    public String getDescription();
+    String getDescription();
 
     /**
     * Sets the description of this property
     * 
     * @param description  the description to be set
     */
-    public void setDescription(String description);
+    void setDescription(String description);
     
 }

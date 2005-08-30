@@ -43,7 +43,7 @@ import org.apache.pluto.portlet.admin.bean.PortletTO;
  */
 public class PortletSelectTag extends TagSupport {
 
-	private Map portletMap = null;
+	private Map portletMap;
 	private int row = 1;
 	private int column = 1;
 

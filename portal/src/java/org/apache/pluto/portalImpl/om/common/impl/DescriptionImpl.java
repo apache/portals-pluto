@@ -27,9 +27,9 @@ import org.apache.pluto.util.StringUtils;
 
 public class DescriptionImpl implements Description, java.io.Serializable, Support {
 
-    private String description = null;
-    private Locale locale = null;  // default locale;
-    private String castorLocale = null;
+    private String description;
+    private Locale locale;  // default locale;
+    private String castorLocale;
 
     public DescriptionImpl()
     {

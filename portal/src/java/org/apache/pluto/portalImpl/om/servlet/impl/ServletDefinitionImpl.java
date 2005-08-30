@@ -48,20 +48,20 @@ implements ServletDefinition, ServletDefinitionCtrl, java.io.Serializable, Suppo
     private DisplayNameSet displayNames = new org.apache.pluto.portalImpl.om.common.impl.DisplayNameSetImpl();
 
     // not used variables - only for castor
-    public String icon = null;
+    public String icon;
     private String id = "";
     private ParameterSet initParams = new org.apache.pluto.portalImpl.om.common.impl.ParameterSetImpl();
     private SecurityRoleRefSet initSecurityRoleRefs = new org.apache.pluto.portalImpl.om.common.impl.SecurityRoleRefSetImpl();
-    public String jspFile = null;
-    public String loadOnStartup = null;
-    private ObjectID objectId = null;
-    public String securityRoleRef = null;
-    private String servletClass = null;
-    private ServletMappingImpl servletMapping = null;
-    private String servletName = null;
+    public String jspFile;
+    public String loadOnStartup;
+    private ObjectID objectId;
+    public String securityRoleRef;
+    private String servletClass;
+    private ServletMappingImpl servletMapping;
+    private String servletName;
     private long available = 0;
 
-    private WebApplicationDefinition webApplication = null;
+    private WebApplicationDefinition webApplication;
 
     // ServletDefinition implementation.
 

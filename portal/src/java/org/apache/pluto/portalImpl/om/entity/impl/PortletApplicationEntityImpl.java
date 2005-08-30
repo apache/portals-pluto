@@ -38,7 +38,7 @@ org.apache.pluto.portalImpl.om.common.Support {
     private String definitionId = ""; 
     private PortletEntityList portlets = new PortletEntityListImpl();
 
-    private ObjectID objectId = null;    
+    private ObjectID objectId;    
 
     // PortletApplicationEntity implementation.
 

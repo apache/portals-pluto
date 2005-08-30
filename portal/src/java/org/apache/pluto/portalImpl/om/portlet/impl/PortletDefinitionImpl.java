@@ -51,29 +51,29 @@ implements PortletDefinition, PortletDefinitionCtrl, java.io.Serializable,
 org.apache.pluto.portalImpl.om.common.Support {
 
 
-    private PortletApplicationDefinition application = null;
-    private LanguageSet castorResources = null;
+    private PortletApplicationDefinition application;
+    private LanguageSet castorResources;
 
     // contains String objects
     private ArrayList castorSupportedLocales = new ArrayList();
-    private ClassLoader classLoader = null;
-    private String className = null;
+    private ClassLoader classLoader;
+    private String className;
     private ContentTypeSet contentTypes = new ContentTypeSetImpl();
     private DescriptionSet descriptions = new org.apache.pluto.portalImpl.om.common.impl.DescriptionSetImpl();
 
     private DisplayNameSet displayNames = new org.apache.pluto.portalImpl.om.common.impl.DisplayNameSetImpl();
-    private String expirationCache = null;
+    private String expirationCache;
     public  String id = "";    
     private ParameterSet initParams = new org.apache.pluto.portalImpl.om.common.impl.ParameterSetImpl();
     private SecurityRoleRefSet initSecurityRoleRefs = new org.apache.pluto.portalImpl.om.common.impl.SecurityRoleRefSetImpl();
-    private String name = null;
+    private String name;
 
-    private ObjectID objectId = null;
+    private ObjectID objectId;
     private PreferenceSet preferences = new org.apache.pluto.portalImpl.om.common.impl.PreferenceSetImpl();
 
-    //    private PortletInfoImpl portletInfo = null;
-    private String resourceBundle = null;
-    private ServletDefinition servlet = null;
+    //    private PortletInfoImpl portletInfo;
+    private String resourceBundle;
+    private ServletDefinition servlet;
 
     // contains Locale objects
     private ArrayList supportedLocales = new ArrayList();

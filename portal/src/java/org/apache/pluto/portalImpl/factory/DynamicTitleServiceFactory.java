@@ -25,6 +25,6 @@ import org.apache.pluto.services.title.DynamicTitleService;
 public interface DynamicTitleServiceFactory extends Factory
 {
  
-    public DynamicTitleService getDynamicTitleService();
+    DynamicTitleService getDynamicTitleService();
     
 }

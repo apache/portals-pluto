@@ -40,10 +40,10 @@ public class PlutoAdminContext  {
 	private static final String CLASS_NAME = "PlutoAdminContext";
 	/** Home for the container (servlet engine) that Pluto sits inside of. In Tomcat, this is
 	 *  */
-	private static String _containerHome = null;
-	private static String _plutoHome = null;
-	private static String _plutoContext = null;
-	private static String _deploymentPath = null;
+	private static String _containerHome;
+	private static String _plutoHome;
+	private static String _plutoContext;
+	private static String _deploymentPath;
 	private static Map _cache = new HashMap();
 	private static PlutoAdminContext _instance = new PlutoAdminContext();
 

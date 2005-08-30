@@ -28,9 +28,9 @@ import org.apache.pluto.util.StringUtils;
 public class Navigation
 {
 
-    private org.apache.pluto.portalImpl.om.page.Navigation navigation = null;
-    private org.apache.pluto.portalImpl.aggregation.navigation.Navigation parent = null;
-    private org.apache.pluto.portalImpl.aggregation.Fragment linkedFragment = null;
+    private org.apache.pluto.portalImpl.om.page.Navigation navigation;
+    private org.apache.pluto.portalImpl.aggregation.navigation.Navigation parent;
+    private org.apache.pluto.portalImpl.aggregation.Fragment linkedFragment;
     private Collection children = new ArrayList();
 
     public Navigation(org.apache.pluto.portalImpl.aggregation.navigation.Navigation parent,

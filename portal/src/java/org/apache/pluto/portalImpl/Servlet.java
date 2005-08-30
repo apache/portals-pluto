@@ -57,7 +57,7 @@ public class Servlet extends HttpServlet
      */
     private static String CONTAINER_SUPPORTS_BUFFERING = "portletcontainer.supportsBuffering";
 
-    private Logger log = null;
+    private Logger log;
 
     public String getServletInfo()
     {

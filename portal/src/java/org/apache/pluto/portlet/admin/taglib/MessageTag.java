@@ -68,7 +68,7 @@ import org.apache.pluto.portlet.admin.bean.PortletMessageType;
  */
 public class MessageTag extends TagSupport {
 
-	private String message = null;
+	private String message;
 	private String messageType = "status";
 	/* User-defined CSS class */
 	private String cssClass = "portlet-msg-info";

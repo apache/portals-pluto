@@ -23,9 +23,9 @@ import org.apache.pluto.util.StringUtils;
 
 public class ServletMappingImpl implements java.io.Serializable {
 
-    private String id = null;
-    private String servletName = null;
-    private String urlPattern = null;
+    private String id;
+    private String servletName;
+    private String urlPattern;
 
     public ServletMappingImpl()
     {

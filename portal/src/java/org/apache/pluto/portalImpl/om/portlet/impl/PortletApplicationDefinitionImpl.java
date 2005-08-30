@@ -36,10 +36,10 @@ import org.apache.pluto.util.StringUtils;
 public class PortletApplicationDefinitionImpl 
 implements PortletApplicationDefinition, java.io.Serializable, Support {
 
-    private String GUID = null;
+    private String GUID;
 
-    private String appId = null;
-    private String version = null;
+    private String appId;
+    private String version;
 
     private ArrayList customPortletMode = new ArrayList();
     private ArrayList customPortletState = new ArrayList();
@@ -48,11 +48,11 @@ implements PortletApplicationDefinition, java.io.Serializable, Support {
 
     private PortletDefinitionList portlets = new PortletDefinitionListImpl();
 
-    private WebApplicationDefinition webApplication = null;
+    private WebApplicationDefinition webApplication;
 
-    private ObjectID objectId = null;
+    private ObjectID objectId;
 
-    private String contextPath = null;
+    private String contextPath;
 
     // PortletApplicationDefinition implementation.
 

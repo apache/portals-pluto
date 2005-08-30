@@ -49,28 +49,29 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
 
 
     // <not used variables - only for castor>
-    public String icon = null;
-    public String distributable = null;
-    public String sessionConfig = null;
-    public String mimeMapping = null;
-    public String welcomeFileList = null;
-    public String errorPage = null;
-    public String taglib = null;
-    public String resourceRef = null;
-    public String loginConfig = null;
-    public String securityRole = null;
-    public String envEntry = null;
-    public String ejbRef = null;
-    private Collection castorMimeMappings = new ArrayList();    // </not used variables - only for castor>
+    public String icon;
+    public String distributable;
+    public String sessionConfig;
+    public String mimeMapping;
+    public String welcomeFileList;
+    public String errorPage;
+    public String taglib;
+    public String resourceRef;
+    public String loginConfig;
+    public String securityRole;
+    public String envEntry;
+    public String ejbRef;
+    private Collection castorMimeMappings = new ArrayList();
+    // </not used variables - only for castor>
     private Collection securityConstraints = new ArrayList();
 
 
-    private String contextPath = null;        
+    private String contextPath;        
     private DescriptionSet descriptions = new org.apache.pluto.portalImpl.om.common.impl.DescriptionSetImpl();
     private DisplayNameSet displayNames =  new org.apache.pluto.portalImpl.om.common.impl.DisplayNameSetImpl();
     private String id = "";
     private ParameterSet initParams = new org.apache.pluto.portalImpl.om.common.impl.ParameterSetImpl();
-    private ObjectID objectId = null;
+    private ObjectID objectId;
     private Collection servletMappings = new ArrayList();
     private ServletDefinitionList servlets = new ServletDefinitionListImpl();
     private SecurityRoleSet securityRoles = new org.apache.pluto.portalImpl.om.common.impl.SecurityRoleSetImpl();
@@ -136,7 +137,6 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     {
         Vector structure = (Vector)parameter;
         PortletApplicationDefinition portletApplication = (PortletApplicationDefinition)structure.get(0);
-        String contextString = (String)structure.get(1);
 
         ((Support)portletApplication).postLoad(this);
 
@@ -179,7 +179,6 @@ implements WebApplicationDefinition, java.io.Serializable, Support {
     {
         Vector structure = (Vector)parameter;
         PortletApplicationDefinition portletApplication = (PortletApplicationDefinition)structure.get(0);
-        String contextString = (String)structure.get(1);
 
         ((Support)portletApplication).preStore(null);
 

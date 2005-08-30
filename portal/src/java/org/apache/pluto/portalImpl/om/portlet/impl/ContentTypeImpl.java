@@ -30,7 +30,7 @@ import org.apache.pluto.util.StringUtils;
 public class ContentTypeImpl
 implements ContentType, java.io.Serializable, Support {
 
-    private String contentType = null;
+    private String contentType;
     private Collection portletModes = new ArrayList();
 
     private Collection castorPortletModes = new ArrayList();

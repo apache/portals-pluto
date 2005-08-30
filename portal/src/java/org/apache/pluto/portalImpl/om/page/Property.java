@@ -24,12 +24,12 @@ public interface Property
 {
 
 
-    public String getName();
+    String getName();
 
-    public void setName(String name);
+    void setName(String name);
 
-    public String getValue();
+    String getValue();
 
-    public void setValue(String value);
+    void setValue(String value);
 
 }

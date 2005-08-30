@@ -84,7 +84,6 @@ public class DeployWarService extends BaseAdminObject {
 	 * 
 	 * @param request DeployWarService request object.
 	 * @param response DeployWarService response object.
-	 * @return
 	 */
   public String processFileUpload(ActionRequest request, ActionResponse response) {
   	final String METHOD_NAME = "processFileUpload(request,response)";
