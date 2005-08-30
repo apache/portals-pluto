@@ -41,7 +41,7 @@ public interface PortletAppDescriptorService {
 
     /**
      * Retrieve the PortletApp deployment descriptor
-     * (web.xml).
+     * (portlet.xml).
      * @return Object representation of the descriptor.
      * @throws IOException if an IO error occurs.
      */
@@ -49,7 +49,7 @@ public interface PortletAppDescriptorService {
 
     /**
      * Write the PortletApp deployment descriptor
-     * (web.xml).
+     * (portlet.xml).
      * @param pd
      * @throws IOException if an IO error occurs.
      */
