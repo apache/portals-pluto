@@ -21,7 +21,6 @@ package org.apache.pluto.core.impl;
 
 import java.util.Enumeration;
 import java.util.Vector;
-import java.util.ArrayList;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;

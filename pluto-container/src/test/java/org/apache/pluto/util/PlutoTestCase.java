@@ -18,7 +18,6 @@ package org.apache.pluto.util;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
-import junit.framework.TestCase;
 import org.jmock.MockObjectTestCase;
 
 /**

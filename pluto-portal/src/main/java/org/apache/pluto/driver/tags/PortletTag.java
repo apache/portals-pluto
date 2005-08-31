@@ -51,8 +51,7 @@ public class PortletTag extends BodyTagSupport {
         DriverConfiguration config = (DriverConfiguration)
             ctx.getAttribute(AttributeKeys.DRIVER_CONFIG);
 
-        PortletWindowConfig winConfig = (PortletWindowConfig)
-            config.getPortletWindowConfig(evaluatedPortletId);
+        PortletWindowConfig winConfig = config.getPortletWindowConfig(evaluatedPortletId);
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rendering Portlet Window: " + winConfig);

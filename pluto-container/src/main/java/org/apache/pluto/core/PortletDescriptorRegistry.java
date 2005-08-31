@@ -93,7 +93,7 @@ class PortletDescriptorRegistry {
      * not allready exist.
      *
      * @param context
-     * @return
+     * @return The portlet application deployment descriptor.
      * @throws PortletContainerException
      */
     public PortletAppDD getPortletAppDD(ServletContext context)

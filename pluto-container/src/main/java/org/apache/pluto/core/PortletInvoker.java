@@ -30,7 +30,6 @@ import org.apache.pluto.core.impl.PortletResponseImpl;
 import org.apache.pluto.core.impl.RenderRequestImpl;
 import org.apache.pluto.core.impl.RenderResponseImpl;
 import org.apache.pluto.util.StringManager;
-import org.apache.pluto.PortletContainerException;
 
 /**
  * Used internally to invoke/dispatch requests from the container to

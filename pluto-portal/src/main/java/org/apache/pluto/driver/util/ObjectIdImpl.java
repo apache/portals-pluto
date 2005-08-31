@@ -35,12 +35,6 @@ public class ObjectIdImpl implements org.apache.pluto.om.ObjectID,
     private String stringOID = null;
     private int intOID;
 
-    private ObjectIdImpl(int oid) {
-        stringOID = String.valueOf(oid);
-        intOID = oid;
-    }
-
-
     private ObjectIdImpl(int oid, String stringOID) {
         this.stringOID = stringOID;
         intOID = oid;
@@ -48,8 +42,7 @@ public class ObjectIdImpl implements org.apache.pluto.om.ObjectID,
 
     // internal methods.
     
-    private void readObject(ObjectInputStream stream) throws IOException,
-                                                             ClassNotFoundException {
+    private void readObject(ObjectInputStream stream) throws IOException {
         intOID = stream.readInt();
 
         stringOID = String.valueOf(intOID);

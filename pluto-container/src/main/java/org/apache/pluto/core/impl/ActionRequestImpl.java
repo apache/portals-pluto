@@ -75,7 +75,6 @@ public class ActionRequestImpl
     // PortletRequestImpl implementation ----------------------------------------------------------
     public PortletPreferences getPreferences() {
         if (this.portletPreferences == null) {
-            InternalPortletWindow window = getWindow();
             portletPreferences = new PortletPreferencesImpl(getContainer(),
                                                             getWindow(), this,
                                                             Constants.METHOD_ACTION);

@@ -15,17 +15,13 @@
  */
 package org.apache.pluto.core;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 import javax.portlet.PortletContext;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.util.StringManager;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.core.impl.PortletContextImpl;
 
 /**

@@ -3,7 +3,6 @@ package org.apache.pluto.util.impl;
 import org.apache.pluto.util.PlutoTestCase;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.om.ObjectID;
-import junit.framework.Assert;
 
 /**
  * Test Class

@@ -176,7 +176,7 @@ public abstract class PortletResponseImpl
 
     public String encodeRedirectUrl(String url) {
         return included
-               ? null : this._getHttpServletResponse().encodeRedirectUrl(url);
+               ? null : this._getHttpServletResponse().encodeRedirectURL(url);
     }
 
     public String encodeRedirectURL(String url) {

@@ -19,9 +19,6 @@
 
 package org.apache.pluto.driver.services.container;
 
-import java.util.HashSet;
-import java.util.Iterator;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;

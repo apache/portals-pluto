@@ -49,9 +49,9 @@ public interface PropertyConfigService extends DriverConfigurationService {
     /**
      * Set of unique Portlet Modes.
      * The set must include
-     * {@link javax.portlet.PortletMode.VIEW},
-     * {@link javax.portlet.PortletMode.EDIT}, and
-     * {@link javax.portlet.PortletMode.HELP}
+     * {@link javax.portlet.PortletMode#VIEW},
+     * {@link javax.portlet.PortletMode#EDIT}, and
+     * {@link javax.portlet.PortletMode#HELP}
      * @return set of unique portlet modes.
      */
     Set getSupportedPortletModes();
@@ -59,9 +59,9 @@ public interface PropertyConfigService extends DriverConfigurationService {
     /**
      * Set of unique Window States.
      * The set must include:
-     * {@link javax.portlet.WindowState.NORMAL},
-     * {@link javax.portlet.WindowState.MAXIMIZED}, and
-     * {@link javax.portlet.WindowState.MINIMIZED}
+     * {@link javax.portlet.WindowState#NORMAL},
+     * {@link javax.portlet.WindowState#MAXIMIZED}, and
+     * {@link javax.portlet.WindowState#MINIMIZED}
      * @return set of unique window states.
      */
     Set getSupportedWindowStates();

@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     private ServletConfig servletConfig;
     private PortletContext portletContext;
-    private PortletDD portletDD;
+    protected PortletDD portletDD;
 
     private ResourceBundleFactory bundles;
 

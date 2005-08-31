@@ -182,7 +182,7 @@ public abstract class AbstractAssembler implements Assembler {
         }
 
 
-        Element webAppNode = (Element)doc.getDocumentElement();
+        Element webAppNode = doc.getDocumentElement();
         NodeList nodes = webAppNode.getChildNodes();
 
         // Find the first node that shouldn't be before the servlet

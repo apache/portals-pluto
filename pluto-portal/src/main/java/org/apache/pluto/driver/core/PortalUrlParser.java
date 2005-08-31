@@ -137,7 +137,7 @@ class PortalUrlParser {
             if (url.getActionWindow() != null &&
                 url.getActionWindow().equals(param.getWindowId())) {
                 query.append("&").append(param.getName()).append("=").append(
-                    convert((String[]) param.getValues()));
+                    convert(param.getValues()));
             } else if (param.getValues() != null &&
                        param.getValues().length > 0) {
                 String valueString = encode(param.getValues());
