@@ -61,9 +61,9 @@ public class PortalDriverServlet extends HttpServlet {
     /**
      * Initialize the Portal Driver. Initialization completes the following
      * tasks: <ul><li>Retrieve and Cache the <code>PortletContainer</code></li>
-     * <li>Retrieve and Cache the <code>DriverConfiguration</code></li>
+     * <li>Retrieve and Cache the <code>DriverConfigurationImpl</code></li>
      * @see PortletContainer
-     * @see DriverConfiguration
+     * @see org.apache.pluto.driver.config.impl.DriverConfigurationImpl
      */
     public void init() {
         ServletContext ctx = getServletContext();

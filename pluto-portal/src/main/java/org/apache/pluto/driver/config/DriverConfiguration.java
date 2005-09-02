@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
+ * Copyright 2004 The Apache Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,112 +15,45 @@
  */
 package org.apache.pluto.driver.config;
 
-import org.apache.pluto.driver.services.PortletRegistryService;
-import org.apache.pluto.driver.services.PropertyConfigService;
-import org.apache.pluto.driver.services.RenderConfigService;
 import org.apache.pluto.driver.services.impl.resource.PortletApplicationConfig;
 import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
 import org.apache.pluto.driver.services.impl.resource.PageConfig;
 
+import javax.servlet.ServletContext;
 import java.util.Collection;
 
 /**
- * Encapsulation of the Pluto Driver Configuration.
- *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
- * @since Sep 23, 2004
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @todo Document
+ * @since Sep 2, 2005
  */
-public class DriverConfiguration {
-
-    private PropertyConfigService propertyService;
-    private PortletRegistryService registryService;
-    private RenderConfigService renderService;
-
-    public DriverConfiguration(PropertyConfigService propertyService,
-                               PortletRegistryService registryService,
-                               RenderConfigService renderService) {
-        this.propertyService = propertyService;
-        this.registryService = registryService;
-        this.renderService = renderService;
-    }
+public interface DriverConfiguration {
 
     /**
-     * Standard Getter.
-     * @return the name of the portal.
+     * Initialization method used to place the driver
+     * configuration into service.
+     *
+     * @param context
      */
-    public String getPortalName() {
-        return propertyService.getPortalName();
-    }
+    void init(ServletContext context);
 
-    /**
-     * Standard Getter.
-     * @return the portal version.
-     */
-    public String getPortalVersion() {
-        return propertyService.getPortalVersion();
-    }
+    String getPortalName();
 
-    /**
-     * Standard Getter.
-     * @return the name of the container.
-     */
-    public String getContainerName() {
-        return propertyService.getContainerName();
-    }
+    String getPortalVersion();
 
-    /**
-     * Standard Getter.
-     * @return the names of the supported portlet modes.
-     */
-    public Collection getSupportedPortletModes() {
-        return propertyService.getSupportedPortletModes();
-    }
+    String getContainerName();
 
-    /**
-     * Standard Getter.
-     * @return the names of the supported window states.
-     */
-    public Collection getSupportedWindowStates() {
-        return propertyService.getSupportedWindowStates();
-    }
+    Collection getSupportedPortletModes();
 
-    /**
-     * Standard Getter.
-     * @return the configuration data of all configured portlet applications.
-     */
-    public Collection getPortletApplications() {
-        return registryService.getPortletApplications();
-    }
+    Collection getSupportedWindowStates();
 
-   /**
-     * Retrieve the portlet application with the given id.
-     * @param id the id of the portlet application.
-     * @return the portlet application configuration data.
-     */
-    public PortletApplicationConfig getPortletApp(String id) {
-        return registryService.getPortletApplication(id);
-    }
+    Collection getPortletApplications();
 
-    /**
-     * Retrieve the window configuration associated with the given id.
-     * @param id the id of the portlet window.
-     * @return the portlet window configuration data.
-     */
-    public PortletWindowConfig getPortletWindowConfig(String id) {
-        return registryService.getPortlet(id);
-    }
+    PortletApplicationConfig getPortletApp(String id);
 
-    /**
-     * Standard Getter.
-     * @return the render configuration.
-     */
-    public Collection getPages() {
-        return renderService.getPages();
-    }
+    PortletWindowConfig getPortletWindowConfig(String id);
 
-    public PageConfig getPageConfig(String pageId) {
-        return renderService.getPage(pageId);
-    }
+    Collection getPages();
+
+    PageConfig getPageConfig(String pageId);
 }
-

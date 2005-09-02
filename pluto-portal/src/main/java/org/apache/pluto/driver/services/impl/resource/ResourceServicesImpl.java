@@ -16,9 +16,9 @@
 package org.apache.pluto.driver.services.impl.resource;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.services.PortletRegistryService;
-import org.apache.pluto.driver.services.PropertyConfigService;
-import org.apache.pluto.driver.services.RenderConfigService;
+import org.apache.pluto.driver.config.impl.PortletRegistryService;
+import org.apache.pluto.driver.config.impl.PropertyConfigService;
+import org.apache.pluto.driver.config.impl.RenderConfigService;
 
 import javax.servlet.ServletContext;
 import java.util.List;

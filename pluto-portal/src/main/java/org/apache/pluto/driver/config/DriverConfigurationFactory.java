@@ -17,9 +17,6 @@ package org.apache.pluto.driver.config;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.services.PortletRegistryService;
-import org.apache.pluto.driver.services.PropertyConfigService;
-import org.apache.pluto.driver.services.RenderConfigService;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 
 import javax.servlet.ServletContext;
@@ -62,29 +59,20 @@ public class DriverConfigurationFactory {
 
         XmlBeanFactory beanFactory = new XmlBeanFactory(in);
 
-        PropertyConfigService propService = (PropertyConfigService)
-            beanFactory.getBean("PropertyConfigService");
-        propService.init(context);
+        DriverConfiguration configuration = (DriverConfiguration)
+                beanFactory.getBean("DriverConfiguration");
 
-        PortletRegistryService registryService = (PortletRegistryService)
-            beanFactory.getBean("PortletRegistryService");
-        registryService.init(context);
+        configuration.init(context);
 
-        RenderConfigService renderService = (RenderConfigService)
-            beanFactory.getBean("RenderConfigService");
-        renderService.init(context);
 
         if(LOG.isDebugEnabled()) {
-            LOG.debug("PropertyConfigService Found: "+propService.getClass().getName());
-            LOG.debug("PortletRegistryService Found: "+registryService.getClass().getName());
-            LOG.debug("RenderConfigService Found: "+renderService.getClass().getName());
+            LOG.debug(
+                "Driver Configuration of type "+configuration.getClass() +
+                " Initialized and Ready For Service"
+            );
         }
 
-        return new DriverConfiguration(
-            propService,
-            registryService,
-            renderService
-        );
+        return configuration;
     }
 }
 

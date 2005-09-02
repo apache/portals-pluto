@@ -35,7 +35,7 @@ import org.apache.pluto.driver.config.DriverConfiguration;
 public class PortalContextImpl implements PortalContext {
 
     /**
-     * The <code>DriverConfiguration</code> from which this
+     * The <code>DriverConfigurationImpl</code> from which this
      * <code>PortalContext</code> recieves it's configuration information.
      */
     private DriverConfiguration config;

@@ -73,7 +73,7 @@ public class PortalEnvironment {
     {
         return navigationalInformation;
     }
-*/    
+*/
     public PortalURL getRequestedPortalURL() {
         return requestedPortalURL;
     }

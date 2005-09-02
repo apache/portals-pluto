@@ -20,9 +20,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletContainerFactory;
-import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.config.DriverConfigurationFactory;
+import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.container.ContainerServicesImpl;
 import org.apache.pluto.driver.services.container.PortalContextImpl;
 
