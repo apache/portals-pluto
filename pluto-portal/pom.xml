@@ -85,7 +85,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptor>src/assemble/bin.xml</descriptor>
-          <finalName>pluto-portal-1.0-SNAPSHOT</finalName>
+		  <finalName>pluto-portal-${pom.version}</finalName>
         </configuration>
       </plugin>
     </plugins>
