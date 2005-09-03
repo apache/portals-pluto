@@ -174,6 +174,18 @@ public class PortalURL {
     {
         return startLocalNavigation.contains(nav);
     }
+    
+    private String urlEncode(String value) {
+        value = URLEncoder.encode(value);
+        // java.net.URLEncoder encodes space (' ') as a plus sign ('+'),
+        // instead of %20 thus it will not be decoded properly by tomcat when the
+        // request is parsed. Therefore replace all '+' by '%20'.
+        // If there would have been any plus signs in the original string, they would
+        // have been encoded by URLEncoder.encode()
+        // control = control.replace("+", "%20");//only works with JDK 1.5
+        value = value.replaceAll("\\+", "%20");
+        return value;
+    }    
 
     public String getGlobalNavigationAsString()
     {
@@ -217,10 +229,10 @@ public class PortalURL {
             String encodedName = (String)iterator.next();
             String encodedValue = (String)encodedStateFullParams.get(encodedName);
             if(encodedValue != null) {
-            	// appends the prefix (currently "_") in front of the encoded parameter name
-            	result.append(PortalControlParameter.encodeParameterName(encodedName));
+                // appends the prefix (currently "_") in front of the encoded parameter name
+                result.append(PortalControlParameter.encodeParameterName(encodedName));
                 result.append("/");
-                result.append(encodedValue);
+                result.append(urlEncode(encodedValue));
             }
         }
 
@@ -244,14 +256,14 @@ public class PortalURL {
                 Object value = requestParams.get(name);
                 String[] values = value instanceof String ? new String[] {(String)value} : (String[])value;
 
-                result.append(name);
+                result.append(urlEncode(name));
                 result.append("=");
-                result.append(values[0]);
+                result.append(urlEncode(values[0]));
                 for (int i = 1; i < values.length; i++) {
                     result.append("&");
-                    result.append(name);
+                    result.append(urlEncode(name));
                     result.append("=");
-                    result.append(values[i]);
+                    result.append(urlEncode(values[i]));
                 }
 
                 hasNext=iterator.hasNext();
@@ -291,20 +303,9 @@ public class PortalURL {
             url += global;
         }
 
-
         String control = getControlParameterAsString(controlParam);
         if (control.length() > 0) {
-           	// parameter string should be x-www-form-urlencoded here! See jira 119
-      		// parameter string will be decoded by the tomcat container
-      		control = URLEncoder.encode(control);
-      		// java.net.URLEncoder encodes space (' ') as a plus sign ('+'),
-      		// instead of %20 thus it will not be decoded properly by tomcat when the
-      		// request is parsed. Therefore replace all '+' by '%20'.
-      		// If there would have been any plus signs in the original string, they would
-      		// have been encoded by URLEncoder.encode()
-//      		control = control.replace("+", "%20");//only works with JDK 1.5
-      		control = control.replaceAll("\\+", "%20");
-        	url += control;
+            url += control;
         }
 
         String requestParam = getRequestParameterAsString(controlParam);
