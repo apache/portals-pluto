@@ -13,68 +13,8 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.pluto</groupId>
-	  <artifactId>pluto-descriptor-api</artifactId>
+	  <artifactId>pluto-portal-driver</artifactId>
 	  <version>${pom.version}</version>
-	  <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-	  <artifactId>pluto-container</artifactId>
-	  <version>${pom.version}</version>
-	  <scope>provided</scope>
-    </dependency>
-	<dependency>
-      <groupId>commons-logging</groupId>
-	  <artifactId>commons-logging-api</artifactId>
-	  <version>1.0.4</version>
-	  <scope>provided</scope>
-    </dependency>
-	<dependency>
-      <groupId>commons-logging</groupId>
-	  <artifactId>commons-logging</artifactId>
-	  <version>1.0.4</version>
-	  <scope>test</scope>
-    </dependency>
-	<dependency>
-      <groupId>commons-digester</groupId>
-	  <artifactId>commons-digester</artifactId>
-	  <version>1.7</version>
-	  <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-	<dependency>
-      <groupId>portlet-api</groupId>
-	  <artifactId>portlet-api</artifactId>
-	  <version>1.0</version>
-	  <scope>provided</scope>
-    </dependency>
-	<dependency>
-      <groupId>servletapi</groupId>
-	  <artifactId>servletapi</artifactId>
-	  <version>2.3</version>
-	  <scope>provided</scope>
-    </dependency>
-	<dependency>
-      <groupId>jstl</groupId>
-	  <artifactId>jstl</artifactId>
-	  <version>1.1.2</version>
-	  <scope>compile</scope>
-    </dependency>
-	<dependency>
-      <groupId>taglibs</groupId>
-	  <artifactId>standard</artifactId>
-	  <version>1.0.4</version>
-	  <scope>compile</scope>
-    </dependency>
-	<dependency>
-      <groupId>spring</groupId>
-	  <artifactId>spring-core</artifactId>
-	  <version>1.0.2</version>
 	  <scope>compile</scope>
     </dependency>
   </dependencies>

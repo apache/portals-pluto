@@ -97,6 +97,7 @@
 	<module>pluto-deploy</module>
     <module>pluto-container</module>
     <module>pluto-util</module>
+	<module>pluto-portal-driver</module>
 	<module>pluto-portal</module>
 	<module>pluto-site</module>
 	<module>pluto-testsuite</module>
