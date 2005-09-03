@@ -66,13 +66,15 @@ public class PortletEntity {
         if(prefs == null) {
             PortletDD dd = getPortletDefinition();
             PortletPreferencesDD ppdd = dd.getPortletPreferences();
-            PortletPreference[] prefs = new PortletPreference[ppdd.getPortletPreferences().size()];
-            Iterator pds = ppdd.getPortletPreferences().iterator();
-            for(int i=0;pds.hasNext();i++) {
-                PortletPreferenceDD pd = (PortletPreferenceDD)pds.next();
-                prefs[i] = new PortletPreferenceImpl(
-                    pd.getName(), new String[] { pd.getValue()}
-                );
+            if (ppdd != null) {
+                prefs = new PortletPreference[ppdd.getPortletPreferences().size()];
+                Iterator pds = ppdd.getPortletPreferences().iterator();
+                for(int i=0;pds.hasNext();i++) {
+                    PortletPreferenceDD pd = (PortletPreferenceDD)pds.next();
+                    prefs[i] = new PortletPreferenceImpl(
+                        pd.getName(), new String[] { pd.getValue()}
+                    );
+                }
             }
         }
         return prefs;

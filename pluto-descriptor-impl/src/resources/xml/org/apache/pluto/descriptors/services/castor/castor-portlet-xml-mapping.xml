@@ -63,6 +63,10 @@
            collection="arraylist">
       <bind-xml name="supports" node="element"/>
     </field>
+
+    <field name="PortletPreferences" type="org.apache.pluto.descriptors.portlet.PortletPreferencesDD">
+      <bind-xml name="portlet-preferences" node="element" />
+    </field>
   </class>
 
   <class name="org.apache.pluto.descriptors.portlet.PortletInfoDD">
@@ -96,6 +100,28 @@
       <bind-xml name="name" node="element"/>
     </field>
     <field name="ParamValue">
+      <bind-xml name="value" node="element"/>
+    </field>
+  </class>
+
+  <class name="org.apache.pluto.descriptors.portlet.PortletPreferencesDD">
+    <map-to xml="portlet-preferences" />
+
+    <field name="PortletPreferences" type="org.apache.pluto.descriptors.portlet.PortletPreferenceDD"
+          collection="arraylist">
+      <bind-xml name="preference" node="element"/>
+    </field>
+
+    <field name="PreferencesValidator">
+      <bind-xml name="preferences-validator" node="element" />
+    </field>
+  </class>
+
+  <class name="org.apache.pluto.descriptors.portlet.PortletPreferenceDD">
+    <field name="Name">
+      <bind-xml name="name" node="element"/>
+    </field>
+    <field name="Value">
       <bind-xml name="value" node="element"/>
     </field>
   </class>
