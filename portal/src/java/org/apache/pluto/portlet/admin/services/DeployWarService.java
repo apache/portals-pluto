@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -39,6 +40,15 @@ import javax.portlet.ActionResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.PortletDiskFileUpload;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
+import org.apache.pluto.descriptors.services.WebAppDescriptorService;
+import org.apache.pluto.descriptors.services.impl.FilePortletAppDescriptorServiceImpl;
+import org.apache.pluto.descriptors.services.impl.FileWebAppDescriptorServiceImpl;
+import org.apache.pluto.driver.deploy.Deploy;
+import org.apache.pluto.driver.deploy.PortletApplicationExploder;
+import org.apache.pluto.driver.deploy.impl.ContextRegistryRegistrarService;
+import org.apache.pluto.driver.deploy.impl.PortletEntityRegistryRegistrarService;
 import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityImpl;
 import org.apache.pluto.portlet.admin.BaseAdminObject;
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
@@ -61,6 +71,9 @@ import org.apache.pluto.portlet.admin.util.PlutoAdminContext;
  */
 public class DeployWarService extends BaseAdminObject {
 
+    /** Used to log <code>Deploy</code> calls to stdout 
+     * @see Deploy*/
+    private static final boolean DEBUG = true;
     public static final String ERROR_NO_FILE = "ERROR_NO_FILE";
 	public static final String CLASS_NAME = "DeployWarService";
 
@@ -150,6 +163,8 @@ public class DeployWarService extends BaseAdminObject {
 						logDebug(METHOD_NAME, "args["+i+"]="+args[i]);
 					}
 		            org.apache.pluto.portalImpl.Deploy.main(args);
+		            //NEW: Update web.xml with new servlet elements
+		            updateWebXml(context);
 		            if (appExists) {
 		            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment of the new portlet app has been successful, but the portlet app record '" + context + "' already exists in portletentityregistry.xml. " +
 		            			"This may have occurred if the portlet was previously partially deployed. If that is the case, continue with this screen and the next to register the portlet in pageregistry.xml. " +
@@ -318,6 +333,7 @@ public class DeployWarService extends BaseAdminObject {
 //		logDebug(METHOD_NAME, "New page: " + page);
 		logMethodEnd(METHOD_NAME);
 	}
+
 	public void savePageLayout(ActionRequest req) {
 		final String METHOD_NAME = "savePageLayout(request)";
 		logMethodStart(METHOD_NAME);
@@ -576,5 +592,412 @@ public class DeployWarService extends BaseAdminObject {
 			}
 		}
   }
+
+	/**
+	 * Does the work of this service to deploy a portlet war file.
+	 * 
+	 * FIXME: This appears to loose track of the application's
+	 * portlets inside of org.apache.pluto.driver.deploy.Deploy.updateDescriptors()
+	 * 
+	 * <p>
+	 * NOTE: This is the new version to work with the new
+	 * deployer using org.apache.pluto.driver.deploy.Deploy. 
+	 * In addition to the new methods that are added below that are
+	 * called by this method, this method requires the following 
+	 * code modifications:<br/>
+	 * <ol>
+	 * <li>Change scope of Deploy.updateDescriptors() to public.</li>
+	 * <li>Change scope of Deploy.setRegistrars() to public.</li>
+	 * <li>Change scope of Deploy.setExploder() to public.</li>
+	 * <li>Change scope of org.apache.pluto.driver.deploy.PortletApplicationExploder.explode() 
+	 * 	to public.</li>
+	 * <li>Comment out line 95 in DeployWarPortlet that calls this.addToPortletContexts(). 
+	 * This work is now done by org.apache.pluto.driver.deploy.impl.ContextRegistryRegistrarService()</li>
+	 * </ol>
+	 * </p>
+	 * @param request ActionRequest object.
+	 * @param response ActionResponse object.
+	 * @return
+  public String processFileUpload(ActionRequest request, ActionResponse response) {
+	  	final String METHOD_NAME = "processFileUpload(request,response)";
+	    String fileName = null;
+	    String serverFileName = null;
+	    //set a default error message
+	    request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment unsuccessful", PortletMessageType.ERROR));
+	    // Check the request content type to see if it starts with multipart/
+	    if (PortletDiskFileUpload.isMultipartContent(request))
+	    {
+
+		    PortletDiskFileUpload dfu = new PortletDiskFileUpload();
+
+		    //maximum allowed file upload size (10 MB)
+		    dfu.setSizeMax(10 * 1000 * 1000);
+
+		    //maximum size in memory (vs disk) (100 KB)
+		    dfu.setSizeThreshold(100 * 1000);
+
+	        try
+	        {
+	            //get the FileItems
+	            List fileItems = dfu.parseRequest(request);
+	            Iterator iter = fileItems.iterator();
+	            while (iter.hasNext())
+	            {
+	                FileItem item = (FileItem) iter.next();
+	                if (item.isFormField())
+	                {
+	                    //pass along to render request
+	                    String fieldName = item.getFieldName();
+	                    String value = item.getString();
+	                    response.setRenderParameter(fieldName, value);
+	                }
+	                else
+	                {
+	                    //write the uploaded file to a new location
+	                    fileName = item.getName();
+	                    String contentType = item.getContentType();
+	                    long size = item.getSize();
+	                    response.setRenderParameter("size", Long.toString(size));
+	                    response.setRenderParameter("contentType", contentType);
+	                    String tempDir = System.getProperty("java.io.tmpdir");
+	                    serverFileName = getRootFilename(File.separatorChar, fileName);
+	                    File warFile = new File(tempDir, serverFileName);
+	                    item.write(warFile);
+	                    response.setRenderParameter("serverFileName",  serverFileName);
+
+	                    //Add to portletentityregistry.xml
+						int index = serverFileName.indexOf(".war");
+						String context = "";
+						if ( index != -1) {
+							context = serverFileName.substring(0, index);
+						} else {
+							context = serverFileName;
+						}
+						
+						//Check to see if a record exists
+	  		            PortletEntityRegistryXao xao = new PortletEntityRegistryXao();
+				        boolean appExists = xao.applicationExists(context);
+
+//						File portalFile = new File(PlutoAdminContext.getInstance().getPlutoHome());
+//						logDebug(METHOD_NAME, "Portal app path: " + portalFile.getAbsolutePath());
+//						File destinationDir = new File(PlutoAdminContext.getInstance().getDeploymentPath());
+//						logDebug(METHOD_NAME, "Destination dir path: " + destinationDir.getAbsolutePath());
+//				        deploy(warFile, context, portalFile, destinationDir);
+
+						ArrayList  argList = createDeploymentArgs(serverFileName, tempDir, request, appExists, context);
+						Map pmap = (HashMap) request.getPortletSession().getAttribute(PlutoAdminConstants.PORTLET_MAP_ATTR);
+						logDebug(METHOD_NAME, "Arguments for Deploy.main():");
+						String[] args = arrayListToStringArray(argList);
+						for (int i =0; i < args.length; i++) {
+							logDebug(METHOD_NAME, "args["+i+"]="+args[i]);
+						}
+			            org.apache.pluto.portalImpl.Deploy.main(args);
+			            if (appExists) {
+			            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment of the new portlet app has been successful, but the portlet app record '" + context + "' already exists in portletentityregistry.xml. " +
+			            			"This may have occurred if the portlet was previously partially deployed. If that is the case, continue with this screen and the next to register the portlet in pageregistry.xml. " +
+			            			"If you are deploying a previously deployed portlet app, you should be able to see your changes if you select the portlet from the navigation bar. " +
+			            			"However, caching of the old app may require that you restart Pluto to see the new changes.", PortletMessageType.INFO));
+			            } else {
+			            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment and addition to portletentityregistry.xml successful.", PortletMessageType.SUCCESS));
+			            }
+			         }
+	            }
+	        }
+	        catch (FileUploadException e){
+	            String msg = "File Upload Exception: " + e.getMessage();
+	            logError(METHOD_NAME, msg, e);
+	            throw new PlutoAdminException(e);
+	        } catch (Exception e) {
+	            String msg = "Exception: " + e.getMessage();
+	            logError(METHOD_NAME, msg, e);
+	            throw new PlutoAdminException(e);
+	        }
+	    } else {
+	        //set an error message
+	      	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("No file appears to have been selected.", PortletMessageType.ERROR));
+	    }
+	    logMethodEnd(METHOD_NAME, serverFileName);
+	    return serverFileName;
+	  }
+	 */
+
+		/**
+		 * Deploy the war file.
+		 * 
+		 * 
+	     * @param warFile The war file
+	     * @param context The current Tomcat web context being deployed to
+	     * @param portalFile The portal file
+	     * @param destinationDir The destination dir for the deployment
+	     * @throws IOException
+	     */
+	    public void deploy(File warFile, String context, File portalFile, File destinationDir) throws IOException {
+	        Deploy deploy = createDeployer(context, warFile, portalFile, destinationDir);
+	        deploy.deploy(warFile);
+	    }
+
+	  /**
+	   * Create a deployer from the parsed arguments.
+	   * @param oPortletApp portletApp File object in temp dir
+	   * @param oPortalApp portalApp File object
+	   * @param oDestinationDir Portlet destination Dir as a File object
+	   * @return an instance of the Deployer.
+	   */
+	  public Deploy createDeployer(String context, File oPortletApp, File oPortalApp, File oDestinationDir) {
+	      final String METHOD_NAME = "createDeployer(context, portletApp, portalApp, destinationDir)";
+	      logMethodStart(METHOD_NAME);
+	      logParam(METHOD_NAME, "warFile", oPortletApp.getAbsolutePath());
+	      logParam(METHOD_NAME, "portalApp", oPortalApp.getAbsolutePath());
+	      logParam(METHOD_NAME, "destinationDir", oDestinationDir.getAbsolutePath());
+	      ArrayList registrars = new ArrayList();
+	      PortletApplicationExploder exploder = null;
+	      WebAppDescriptorService webAppDescriptorService = null;
+	      PortletAppDescriptorService portletAppDescriptorService = null;
+	      File oNewDestinationDir = null;
+	      oDestinationDir.mkdirs();
+	      if(!oPortletApp.isDirectory()) {
+	          exploder = new PortletApplicationExploder(oDestinationDir);
+	      }
+
+	      if(oPortalApp!=null) {
+	          registrars.add(new PortletEntityRegistryRegistrarService(oPortalApp));
+	          registrars.add(new ContextRegistryRegistrarService(oPortalApp));
+	      }
+	      if (DEBUG) {
+	          System.out.println("<VERBOSE> Portal WebApp: "+ oPortalApp.getAbsolutePath());
+	      }
+
+
+	      int extLocation = oPortletApp.getName().indexOf(".");
+	      if(extLocation > 0) {
+	          oNewDestinationDir = new File(oDestinationDir, oPortletApp.getName().substring(0, extLocation));
+	      }
+	      else {
+	          oNewDestinationDir = new File(oDestinationDir, oPortletApp.getName());
+	      }
+
+	      if (DEBUG) {
+	          System.out.println("<VERBOSE> Portlet Context: "+ oNewDestinationDir.getAbsolutePath());
+	      }
+
+	      webAppDescriptorService = new FileWebAppDescriptorServiceImpl(oNewDestinationDir);
+	      portletAppDescriptorService = new FilePortletAppDescriptorServiceImpl(oNewDestinationDir);
+
+	      Deploy deploy = new Deploy(webAppDescriptorService, portletAppDescriptorService);
+	      deploy.setDebug(DEBUG);
+	      deploy.setExploder(exploder);
+	      deploy.setRegistrars(registrars);
+	      logMethodEnd(METHOD_NAME);      
+	      return deploy;
+	  }
+
+
+	  /**
+	   * Updates web.xml with servlet and servlet-mapping records
+	   * related to PortletServlet.
+	   * 
+	   * @param context
+	   */
+	  void updateWebXml(String context) {
+		  //These constants are used to place the
+		  //new record in web.xml in the proper place
+		  	//elements to check prior to servlet (if not found)
+		     final String[] PRIOR_ELEMENTS_SERVLET = 
+		     	{"servlet", "listener", "filter-mapping", "filter", "context-param", 
+		    		 "distributable", "description", "display-name", "icon", "web-app"};
+			  	//elements to check prior to servlet-mapping  (if not found)
+		     final String[] PRIOR_ELEMENTS_SERVLET_MAPPING = 
+		     	{"servlet-mapping", "servlet"};
+			String webapps = PlutoAdminContext.getInstance().getDeploymentPath();
+		     File webXml = new File(webapps + 
+	 		 		 PlutoAdminConstants.FS + 
+	 		 		 context + 
+	 		 		 PlutoAdminConstants.FS + 
+	 		 		 "WEB-INF" + 
+	 		 		 PlutoAdminConstants.FS + 
+	 		 		 "web.xml");
+		     DeployWarService svc = new DeployWarService();
+		     String contents = svc.readFileToString(webXml);
+		     File portletXml = new File(webapps + 
+	 		 		 PlutoAdminConstants.FS + 
+	 		 		 context + 
+	 		 		 PlutoAdminConstants.FS + 
+	 		 		 "WEB-INF" + 
+	 		 		 PlutoAdminConstants.FS + 
+	 		 		 "portlet.xml");
+		     ArrayList nameList = null;
+			ArrayList classNameList = null;
+			List plist = null;
+			try {
+				InputStream ins = new FileInputStream(portletXml);
+//				 PortletNameFinder finder = new PortletNameFinder(ins);
+//				 nameList = finder.getPortletNames();
+//				 classNameList = finder.getPortletClassNames();
+			     PortletConfigService pcsvc = new PortletConfigService(ins);
+			     plist = pcsvc.getPortletDDList();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 String newWebXml = svc.addRecordsToWebXml(context, contents, 
+					 PRIOR_ELEMENTS_SERVLET, plist); 
+			 contents = newWebXml;
+			 newWebXml = svc.addRecordsToWebXml(context, contents, 
+					 PRIOR_ELEMENTS_SERVLET_MAPPING, plist); 
+			 System.out.println(newWebXml);
+			 writeStringToFile(webXml, newWebXml);
+		}
+		  
+	  
+	  
+	 /**
+	  * Adds ServletPortlet servlet or servlet-mapping records to web.xml 
+	  * for new portlet deployment.
+	  * 
+	  * @param context Web context or directory under webapps
+	  * @param contents Current contents of the web.xml file
+	  * @param elements Elements in web.xml to search for. If found, new
+	  * elements will be inserted to the contents String. NOTE: First element
+	  * (elements[0] signals the kind of record to add (servlet or servlet-mapping).
+	  * @param nameList List of portlet names in order that they appear in 
+	  * portlet.xml
+	  * @param classNameList List of fully qualified portlet class names in 
+	  * order that they appear in portlet.xml
+	  * TODO: Add security-role-ref param for servlet record
+	  */
+		 String addRecordsToWebXml(String context, String contents, 
+				 	String[] elements, List portletData ) {
+			StringBuffer results = new StringBuffer(contents);
+			 int index = -1;//index indicating the start of the insertion point
+			 int len = portletData.size();
+			 int lenElements = elements.length;
+			 //string before a found element
+			 String before = null;
+			 //The new record to be added
+			 String newRecord = null;
+			 //The remainder of the string after the found element
+			 String remainder = null;
+			 //go through the list of portlets in ArrayLists 
+			 for (int i = 0; i < len; i++) {
+				 //check each element in web.xml contents
+				 for (int j = 0; j < lenElements; j++) {
+				     if ((index = results.lastIndexOf("</" + elements[j] + ">")) != -1) {
+					     //get the length of the closing element tag
+				    	 //	and add 3 to account for '</' and '>' 
+				    	 int elementLen = elements[j].length() + 3;
+				    	 //if the element is web-app (web.xml root node), then use the opening element tag
+				    	 if (i == 0 & elements[j].equals("web-app")) {
+				    		 index = results.indexOf("<" + elements[j] + ">");
+				    		 elementLen = elements[j].length() + 2;
+				    	 }
+				    	 //get everything before the found element including the tag
+				    	 before = results.substring(0, index + elementLen);
+				    	 //get everything after the found element starting at the end of the tag
+				    	 remainder = results.substring(index + elementLen);
+				        //add the new element with child elements
+				        //create the new element using the first item in the elements array
+				        if (elements[0].equals("servlet")) {
+				        	newRecord = getServletRecord(context, (PortletDD)portletData.get(i));
+				        } else if (elements[0].equals("servlet-mapping")) {
+				        	newRecord = getServletMappingRecord((PortletDD)portletData.get(i));
+				        }
+				        results = new StringBuffer();
+				        results.append(before);
+				        //start the new content with a newline
+				        results.append(PlutoAdminConstants.LS);
+				        results.append(newRecord);
+				        results.append(remainder);
+				        break;
+				     }
+				 }
+			 }
+			 return results.toString();
+		
+		}
+
+		/**
+	    * Gets the web.xml servlet record for PortletServlet
+	    * from portlet.xml data
+	    * 
+	    * @param context Context name
+	    * @param portletData Data from portlet.xml
+	    * @return
+	    */
+		 private String getServletRecord(String context, PortletDD portletData) {
+		     
+		     StringBuffer record = new StringBuffer();
+		     
+		     record.append("    <servlet>" + PlutoAdminConstants.LS);
+		     record.append("      <servlet-name>" + portletData.getPortletName() + "</servlet-name>" + PlutoAdminConstants.LS);
+		     record.append("      <display-name>" + portletData.getPortletName() + " Wrapper</display-name>" + PlutoAdminConstants.LS);
+		     record.append("      <description>Automated generated Portlet Wrapper</description>" + PlutoAdminConstants.LS);
+		     record.append("      <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>" + PlutoAdminConstants.LS);
+		     record.append("      <init-param>" + PlutoAdminConstants.LS);
+		     record.append("        <param-name>portlet-guid</param-name>" + PlutoAdminConstants.LS);
+		     record.append("        <param-value>" + context + "." + portletData.getPortletName() + "</param-value>" + PlutoAdminConstants.LS);
+		     record.append("      </init-param>" + PlutoAdminConstants.LS);
+		     record.append("      <init-param>" + PlutoAdminConstants.LS);
+		     record.append("        <param-name>portlet-class</param-name>" + PlutoAdminConstants.LS);
+		     record.append("        <param-value>" + portletData.getPortletClass() + "</param-value>" + PlutoAdminConstants.LS);
+		     record.append("      </init-param>" + PlutoAdminConstants.LS);
+		     //Add list of security-role-ref elements with 
+		     // corresponding role-name and role-link if there is one in portlet.xml
+		     String securityRef = getSecurityRoleRefRecord(context, portletData);
+		     if (securityRef != null && !securityRef.equals("")) {
+		    	 record.append(securityRef);
+		     }
+		     record.append("    </servlet>" + PlutoAdminConstants.LS);
+		  
+		     return record.toString();
+		 }
+
+			/**
+		    * Gets the web.xml security-role-ref record for PortletServlet
+		    * from portlet.xml data
+		    * 
+		    * @param context Context name
+		    * @param portletData Data from portlet.xml
+		    * @return
+		    */
+			 private String getSecurityRoleRefRecord(String context, PortletDD portletData) {
+			     
+			     StringBuffer record = new StringBuffer("");
+			     
+			     List refs = portletData.getSecurityRoleRefs();
+			     String link = null;
+			     for (Iterator iter = refs.iterator(); iter.hasNext();) {
+			    	 PortletConfigService.RoleRef ref = (PortletConfigService.RoleRef) iter.next();
+				     record.append("      <security-role-ref>" + PlutoAdminConstants.LS);
+				     record.append("        <role-name>"+ ref.roleName + "</role-name>" + PlutoAdminConstants.LS);
+				     //role-link is optional
+				     link = ref.roleLink;
+				     if (link != null && !link.equals("")) {
+				    	 record.append("        <role-link>" + link + "</role-link>" + PlutoAdminConstants.LS);
+				     }
+				     record.append("      </security-role-ref>" + PlutoAdminConstants.LS);
+				 } 
+			  
+			     return record.toString();
+			 }
+
+	  /**
+	    * Gets the web.xml servlet-mapping record for PortletServlet
+	    * from portlet.xml data
+	    * 
+	    * @param context Context name
+	    * @param portletData Data from portlet.xml
+	    * @return
+	    */
+	   private String getServletMappingRecord(PortletDD portletData) {
+	       
+	       StringBuffer record = new StringBuffer();
+	       
+	       record.append("    <servlet-mapping>" + PlutoAdminConstants.LS);
+	       record.append("      <servlet-name>" + portletData.getPortletName() + "</servlet-name>" + PlutoAdminConstants.LS);
+	       record.append("      <url-pattern>/" + portletData.getPortletName() + "/*</url-pattern>" + PlutoAdminConstants.LS);
+	       record.append("    </servlet-mapping>" + PlutoAdminConstants.LS);
+	    
+	       return record.toString();
+	   }
 
 }
