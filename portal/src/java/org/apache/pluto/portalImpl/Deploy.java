@@ -517,7 +517,7 @@ public class Deploy {
         try {
             deployArchive(webAppsDir, warFile);
 
-            prepareWebArchive(webAppsDir, warFile);
+//            prepareWebArchive(webAppsDir, warFile);
         } catch (PlutoAdminException e) {
             throw e;
         } catch (Exception e) {
