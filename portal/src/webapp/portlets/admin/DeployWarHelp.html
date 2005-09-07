@@ -95,10 +95,3 @@ In order for the XML Schema validation to occur correctly, the portlet.xml file 
 &lt;portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"/&gt;
 </p>
-<p class="portlet-font">
-There is a know bug in the Deploy War Portlet where certain elements are not properly transferred to the
-new web.xml file created with the ServletPortlet references. If your portlet is erroring out, check your original
-web.xml file (you'll find a copy of the war in the temp dir) and make sure the web.xml deploymed in
-webapps/[context]/WEB-INF carried over all the elements from the original web.xml. If not, manually move the
-missing elements from the original web.xml to the deployed one.
-</p>
