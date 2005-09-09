@@ -67,17 +67,28 @@ public class RenderResponseImpl extends PortletResponseImpl
     }
 
     public PortletURL createRenderURL() {
-        PortletURL url = createURL(false);
-        return url;
+        return createURL(false);
     }
 
     public PortletURL createActionURL() {
-        PortletURL url = createURL(true);
-        return url;
+        return createURL(true);
     }
 
     public String getNamespace() {
-        return mapper.encode(getInternalPortletWindow().getId(), "");
+         String namespace =
+            mapper.encode(getInternalPortletWindow().getId(), "");
+
+         StringBuffer validNamespace = new StringBuffer();
+         for (int i = 0; i < namespace.length(); i++) {
+         	char ch = namespace.charAt(i);
+         	if (Character.isJavaIdentifierPart(ch)) {
+         		validNamespace.append(ch);
+         	} else {
+         		validNamespace.append('_');
+         	}
+         }
+
+         return validNamespace.toString();
     }
 
     public void setTitle(String title) {
@@ -155,7 +166,6 @@ public class RenderResponseImpl extends PortletResponseImpl
                                                         java.lang.IllegalStateException {
         if (currentContentType == null) {
             String msg = EXCEPTIONS.getString("error.contenttype.null");
-
             //throw new java.lang.IllegalStateException(msg);
         }
         return getOutputStream();
