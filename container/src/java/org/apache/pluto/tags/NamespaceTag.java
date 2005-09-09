@@ -19,12 +19,11 @@
 
 package org.apache.pluto.tags;
 
-import java.io.IOException;
-
 import javax.portlet.RenderResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
+import java.io.IOException;
 
 /**
  * This tag produces a unique value for the current portlet.
@@ -41,17 +40,17 @@ public class NamespaceTag extends TagSupport
      * @see javax.servlet.jsp.tagext.Tag#doStartTag()
      */
     public int doStartTag() throws JspException {
-        RenderResponse renderResponse = (RenderResponse)pageContext.getRequest().getAttribute("javax.portlet.response");
+        RenderResponse renderResponse = (RenderResponse)
+                pageContext.getRequest().getAttribute("javax.portlet.response");
         String namespace = renderResponse.getNamespace();
         JspWriter writer = pageContext.getOut();
         try
         {
             writer.print(namespace);
-            writer.flush();
         }
         catch (IOException ioe)
         {
-            throw new JspException("namespace Tag Exception: cannot write to the output writer.");
+            throw new JspException("Error writing namespace", ioe);
         }
         return SKIP_BODY;
     }
