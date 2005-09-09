@@ -18,6 +18,7 @@
   <testsuite-config>
     <name>Simple Render Parameter Test</name>
     <class>org.apache.pluto.testsuite.test.SimpleRenderParameterTest</class>
+    <plt>1.1</plt>
     <display-uri>/jsp/test_results.jsp</display-uri>
     <action-param>
       <name>org.apache.pluto.testsuite.PARAM_TEST_KEY</name>
