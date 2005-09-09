@@ -52,7 +52,7 @@ public class PortletEntityRegistryXao extends BaseAdminObject {
     private Collection castorApplications = new ArrayList();
 
     // Castor mapping file
-    private Mapping mapping = null;
+    private Mapping mapping;
 
 	/**
 	 *

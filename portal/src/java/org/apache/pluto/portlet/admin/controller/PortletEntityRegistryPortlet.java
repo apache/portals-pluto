@@ -33,7 +33,7 @@ import org.apache.pluto.portlet.admin.services.PortletRegistryService;
  *
  */
 public class PortletEntityRegistryPortlet extends ControllerPortlet {
-	private PortletRegistryService service = null;
+	private PortletRegistryService service;
 	/* (non-Javadoc)
 	 * @see javax.portlet.GenericPortlet#doEdit(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
 	 */

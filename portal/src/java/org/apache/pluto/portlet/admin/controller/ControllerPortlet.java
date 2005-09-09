@@ -42,8 +42,8 @@ public class ControllerPortlet extends GenericPortlet {
 	protected String _incView = "/view.jsp";
 	protected String _incEdit = "/edit.jsp";
 	protected String _incHelp = "/help.jsp";
-	protected Properties _properties = null;
-	protected PortletContext _ctx = null;
+	protected Properties _properties;
+	protected PortletContext _ctx;
 
 	/* (non-Javadoc)
 	 * @see javax.portlet.GenericPortlet#doEdit(javax.portlet.RenderRequest, javax.portlet.RenderResponse)

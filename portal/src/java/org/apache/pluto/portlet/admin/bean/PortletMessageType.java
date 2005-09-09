@@ -29,8 +29,8 @@ public class PortletMessageType {
 	public static PortletMessageType ALERT = new PortletMessageType("alert", "portlet-msg-alert");
 	public static PortletMessageType SUCCESS = new PortletMessageType("success", "portlet-msg-success");
 
-	public String name = null;
-	public String CssClass = null;
+	public String name;
+	public String CssClass;
 
 	/**
 	 *
@@ -63,17 +63,15 @@ public class PortletMessageType {
 	public static boolean equals(PortletMessageType msgType, String testName) {
 		if (msgType == getTypeByName(testName)) {
 			return true;
-		} else {
-			return false;
 		}
+	    return false;
 	}
 
 	public boolean equals(Object obj) {
 		if (obj instanceof PortletMessageType) {
 			PortletMessageType comp = (PortletMessageType)obj;
 			return name.equals(comp.name);
-		} else {
-			return false;
 		}
+		return false;
 	}
 }

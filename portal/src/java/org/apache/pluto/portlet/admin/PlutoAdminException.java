@@ -24,7 +24,7 @@ package org.apache.pluto.portlet.admin;
  */
 public class PlutoAdminException extends RuntimeException {
 
-	private Throwable _cause = null;
+	private Throwable _cause;
 
 	/**
 	 *

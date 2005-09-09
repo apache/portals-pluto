@@ -56,8 +56,7 @@ public class PortletRegistryService extends BaseAdminObject {
 	}
 
 	public List getPageRegistryData(String prPath) {
-		List alist = null;
-		return alist;
+		return null;
 	}
 
 	/*

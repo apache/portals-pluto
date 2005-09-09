@@ -25,9 +25,7 @@ package org.apache.pluto.portlet.admin;
 public class BaseAdminObject {
 
 	//Name of the subclass
-	private String _className = null;
-	//Identifier for the logging record
-	private String _logId = null;
+	private String _className;
 
 	/**
 	 * Default constructor.
@@ -42,7 +40,6 @@ public class BaseAdminObject {
 
 	protected BaseAdminObject(String className, String logId) {
 		_className = className;
-		_logId = logId;
 	}
 
 	protected void logMethodStart(String methodName) {

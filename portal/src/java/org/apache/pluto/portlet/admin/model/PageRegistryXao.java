@@ -46,7 +46,7 @@ public class PageRegistryXao extends BaseAdminObject {
     public final static String DEFAULT_MAPPING          = "WEB-INF/data/xml/pageregistrymapping.xml";
     private final static String CLASS_NAME = "PageRegistryXao";
     // Castor mapping file
-    private Mapping mapping = null;
+    private Mapping mapping;
 
 	/**
 	 *

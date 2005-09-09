@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -41,13 +40,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.PortletDiskFileUpload;
 import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.services.impl.FilePortletAppDescriptorServiceImpl;
-import org.apache.pluto.descriptors.services.impl.FileWebAppDescriptorServiceImpl;
-import org.apache.pluto.driver.deploy.Deploy;
-import org.apache.pluto.driver.deploy.impl.ContextRegistryRegistrarService;
-import org.apache.pluto.driver.deploy.impl.PortletEntityRegistryRegistrarService;
 import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityImpl;
 import org.apache.pluto.portlet.admin.BaseAdminObject;
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
@@ -70,9 +62,6 @@ import org.apache.pluto.portlet.admin.util.PlutoAdminContext;
  */
 public class DeployWarService extends BaseAdminObject {
 
-    /** Used to log <code>Deploy</code> calls to stdout 
-     * @see Deploy*/
-    private static final boolean DEBUG = true;
     public static final String ERROR_NO_FILE = "ERROR_NO_FILE";
 	public static final String CLASS_NAME = "DeployWarService";
 
@@ -296,7 +285,7 @@ public class DeployWarService extends BaseAdminObject {
     sb.append("Number of entries: " +  es.size());
     for (int i = 0; i < es.size(); i++) {
         Map.Entry entry = (Map.Entry) it.next();
-        sb.append((String) entry.getKey().toString());
+        sb.append(entry.getKey().toString());
         sb.append(entry.getValue().toString());
         sb.append("\n");
     }
@@ -608,7 +597,7 @@ public class DeployWarService extends BaseAdminObject {
 			  	//elements to check prior to servlet-mapping  (if not found)
 		     final String[] PRIOR_ELEMENTS_SERVLET_MAPPING = 
 		     	{"servlet-mapping", "servlet"};
-			String webapps = PlutoAdminContext.getInstance().getDeploymentPath();
+			String webapps = PlutoAdminContext.getDeploymentPath();
 		     File webXml = new File(webapps + 
 	 		 		 PlutoAdminConstants.FS + 
 	 		 		 context + 
@@ -625,8 +614,6 @@ public class DeployWarService extends BaseAdminObject {
 	 		 		 "WEB-INF" + 
 	 		 		 PlutoAdminConstants.FS + 
 	 		 		 "portlet.xml");
-		     ArrayList nameList = null;
-			ArrayList classNameList = null;
 			List plist = null;
 			try {
 				InputStream ins = new FileInputStream(portletXml);
@@ -659,10 +646,8 @@ public class DeployWarService extends BaseAdminObject {
 	  * @param elements Elements in web.xml to search for. If found, new
 	  * elements will be inserted to the contents String. NOTE: First element
 	  * (elements[0] signals the kind of record to add (servlet or servlet-mapping).
-	  * @param nameList List of portlet names in order that they appear in 
+	  * @param portletData List of portlet names in order that they appear in 
 	  * portlet.xml
-	  * @param classNameList List of fully qualified portlet class names in 
-	  * order that they appear in portlet.xml
 	  * TODO: Add security-role-ref param for servlet record
 	  */
 		 String addRecordsToWebXml(String context, String contents, 
@@ -721,7 +706,7 @@ public class DeployWarService extends BaseAdminObject {
 	    * 
 	    * @param context Context name
 	    * @param portletData Data from portlet.xml
-	    * @return
+	    * @return The servlet record
 	    */
 		 private String getServletRecord(String context, PortletDD portletData) {
 		     
@@ -757,7 +742,6 @@ public class DeployWarService extends BaseAdminObject {
 		    * 
 		    * @param context Context name
 		    * @param portletData Data from portlet.xml
-		    * @return
 		    */
 			 private String getSecurityRoleRefRecord(String context, PortletDD portletData) {
 			     
@@ -784,9 +768,7 @@ public class DeployWarService extends BaseAdminObject {
 	    * Gets the web.xml servlet-mapping record for PortletServlet
 	    * from portlet.xml data
 	    * 
-	    * @param context Context name
 	    * @param portletData Data from portlet.xml
-	    * @return
 	    */
 	   private String getServletMappingRecord(PortletDD portletData) {
 	       

@@ -29,7 +29,7 @@ package org.apache.pluto.portalImpl.xml;
 public class XmlException extends java.lang.Exception
 {
 
-    private Throwable throwable = null;
+    private Throwable throwable;
 
     /**
      ** Constructs a new xml exception.

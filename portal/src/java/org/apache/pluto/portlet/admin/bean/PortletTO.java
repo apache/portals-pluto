@@ -29,7 +29,7 @@ public class PortletTO extends BaseAdminObject implements Comparable {
 	private static final String CLASS_NAME = "PortletTO";
 	private String _name = "";
 	//Value is appID.portletID
-	private String _value = null;
+	private String _value;
 	//row in column in the page layout
 	private int _row = 1;
 	private int _col = 1;

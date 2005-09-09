@@ -89,7 +89,7 @@ public class PlutoAdminContext  {
 	 * container is installed.
 	 */
 	public String getPlutoHome(){
-	    final String METHOD_NAME = "getPlutoHome()";
+//	    final String METHOD_NAME = "getPlutoHome()";
 //		String plutoHome = null;
 //		Properties props = getProperties();
 //		String plutoContext = props.getProperty("pluto-web-context");
@@ -127,8 +127,6 @@ public class PlutoAdminContext  {
 	 *
 	 * @param propFileName Name of the properties file.
 	 * @return Properties The filled properties object
-	 * @throws IOException If there is a problem loading the properties
-	 * from the file
 	 * @throws NullPointerException If the InputStream accessing the properties
 	 * file is null.
 	 */
@@ -147,7 +145,7 @@ public class PlutoAdminContext  {
 	    		PlutoAdminLogger.logError(CLASS_NAME, METHOD_NAME, e);
 				throw e;
 			}
-	    props = new Properties();
+	        props = new Properties();
 			try {
 				props.load(stream);
 			} catch (IOException e) {
@@ -156,10 +154,8 @@ public class PlutoAdminContext  {
 			}
 			//add props to the cache
 			_cache.put(propFileName, props);
-			return props;
-		} else {
-			return props;
 		}
+		return props;
 	}
 
 	public static Properties getProperties(){
@@ -173,7 +169,6 @@ public class PlutoAdminContext  {
 
 	/**
 	 * Accessor for the full path to the portletcontexts.txt file
-	 * @return
 	 */
 	public String getPortletContextsPath() {
 		String path = getPlutoHome() + PlutoAdminConstants.FS + getRelDataDir() + PlutoAdminConstants.FS + getProperties().getProperty("portletcontexts-file");
@@ -183,18 +178,17 @@ public class PlutoAdminContext  {
 	/**
 	 * Finds home directory of the container that holds Pluto (usually Tomcat)
 	 * 
-	 * @return
 	 */
 	public static String getContainerHome(){
-			final String METHOD_NAME = "getContainerHome()";
+//			final String METHOD_NAME = "getContainerHome()";
 			return _containerHome;
-		}
+	}
 
 	/** 
-		 * Parses out paths from the Pluto Home directory sent in from
-		 * PortletContext.getRealPath("") call in ControllerPortlet.init()
-		 * 
-     * @param home The _plutoHome to set.
+	 * Parses out paths from the Pluto Home directory sent in from
+	 * PortletContext.getRealPath("") call in ControllerPortlet.init()
+	 * 
+     * @param plutoHome The _plutoHome to set.
      */
     public static void parseDeploymentPaths(String plutoHome) {
   			final String METHOD_NAME = "parseDeploymentPaths(plutoHome)";
@@ -228,7 +222,6 @@ public class PlutoAdminContext  {
     
     /**
      * Accessor for the path to the portlet deployment directory (webapps in Tomcat container) 
-     * @return
      */
     public static String getDeploymentPath(){
         return _deploymentPath;        
@@ -236,7 +229,6 @@ public class PlutoAdminContext  {
     
     /**
      * Accessor for the web context for Pluto (default=pluto)
-     * @return
      */
     public static String getPlutoWebContext(){
         return _plutoContext;        

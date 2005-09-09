@@ -34,7 +34,7 @@ import org.apache.pluto.portlet.admin.services.PageRegistryService;
  */
 public class PageRegistryPortlet extends ControllerPortlet {
 
-	private PageRegistryService service = null;
+	private PageRegistryService service;
 
 	/* (non-Javadoc)
 	 * @see javax.portlet.GenericPortlet#doEdit(javax.portlet.RenderRequest, javax.portlet.RenderResponse)

@@ -46,8 +46,8 @@ import org.xml.sax.SAXParseException;
  *
  */
 public class PortletConfigService {
-	  private Document _doc = null;
-	  private List portletDDList = null;
+	  private Document _doc;
+	  private List portletDDList;
 	  
 	  public static final String CLASS_NAME = "PortletConfigService";
 
@@ -105,8 +105,6 @@ public class PortletConfigService {
 	
 	 /**
 	  * 
-	  * @return
-	  * @throws Exception
 	  */
 	 private void createPortletDDList()  {
 		final String METHOD_NAME = "createPortletDDList";

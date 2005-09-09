@@ -25,24 +25,24 @@ import java.io.File;
  */
 public interface PlutoAdminConstants {
 
-	public static final String ENCODING = "UTF-8";
-	public static final String FS = File.separator;
-	public static final String LS = System.getProperty("line.separator");
-	public static final String PROP_FILENAME = "pluto-admin.properties";
-	public static final String PAGE_ATTR = "page";
-	public static final String PORTLET_MAP_ATTR = "portlet-map";
-	public static final String PORTLET_APP_LIST_ATTR = "portlet-app-list";
+	String ENCODING = "UTF-8";
+	String FS = File.separator;
+	String LS = System.getProperty("line.separator");
+	String PROP_FILENAME = "pluto-admin.properties";
+	String PAGE_ATTR = "page";
+	String PORTLET_MAP_ATTR = "portlet-map";
+	String PORTLET_APP_LIST_ATTR = "portlet-app-list";
 
-	//for pageregistry
-  public static final String PAGE_LIST_ATTR = "pagelist";
+	// for pageregistry
+    String PAGE_LIST_ATTR = "pagelist";
 
-  //for portlet entity registry
-	public static final String PER_LIST_ATTR = "perlist";
-	public static final String APP_ATTR = "app";
-	public static final String PREF_LIST_ATTR = "preflist";
+    // for portlet entity registry
+	String PER_LIST_ATTR = "perlist";
+	String APP_ATTR = "app";
+	String PREF_LIST_ATTR = "preflist";
 
-  //  public static final String PAGE_ATTR = "portletpage";
-	//Used for messages
-	public static final String MESSAGE_ATTR = "message";
-	public static final String ERROR_ATTR = "error";
+    //  public static final String PAGE_ATTR = "portletpage";
+	// Used for messages
+	String MESSAGE_ATTR = "message";
+	String ERROR_ATTR = "error";
 }

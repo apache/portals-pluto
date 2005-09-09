@@ -34,7 +34,7 @@ public class PageTO extends BaseAdminObject {
 
 	public static final String CLASS_NAME = "PageTO";
 
-	private FragmentImpl _page = null;
+	private FragmentImpl _page;
 	//By default there will be one row and one col
 	private int _rows = 1;
 	private int _cols = 1;
@@ -153,7 +153,6 @@ public class PageTO extends BaseAdminObject {
 	 *
 	 * @param row
 	 * @param col
-	 * @return
 	 */
 	public PortletTO getPortlet(int row, int col) {
 		PortletTO portlet = null;
@@ -172,7 +171,6 @@ public class PageTO extends BaseAdminObject {
 	/**
 	 *
 	 * @param value
-	 * @return
 	 */
 	public PortletTO getPortlet(String value) {
 		final String METHOD_NAME = "getPortlet(value)";
@@ -193,8 +191,8 @@ public class PageTO extends BaseAdminObject {
 
 	/**
 	 *
-	 * @param value
-	 * @return
+	 * @param row
+     * @param col
 	 */
 	public PortletTO getPortletByCell(int row, int col) {
 		final String METHOD_NAME = "getPortletByCell(row,col)";

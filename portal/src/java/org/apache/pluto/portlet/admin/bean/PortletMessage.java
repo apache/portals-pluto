@@ -23,8 +23,8 @@ package org.apache.pluto.portlet.admin.bean;
  *@see org.apache.pluto.portlet.admin.taglib.MessageTag
  */
 public class PortletMessage {
-	private String message = null;
-	private PortletMessageType type = null;
+	private String message;
+	private PortletMessageType type;
 
 	/**
 	 *

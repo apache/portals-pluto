@@ -40,7 +40,7 @@ import org.apache.pluto.portlet.admin.services.DeployWarService;
  *
  */
 public class DeployWarPortlet extends ControllerPortlet {
-	private DeployWarService service = null;
+	private DeployWarService service;
 
 
 	protected void doEdit(RenderRequest request, RenderResponse response)
