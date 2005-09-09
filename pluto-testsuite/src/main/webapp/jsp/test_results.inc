@@ -14,8 +14,10 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+
+
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
+<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
 <%
     pageContext.setAttribute("passed", "Passed");
@@ -25,42 +27,80 @@ limitations under the License.
 
 <portlet:defineObjects/>
 
-<TABLE style="font-size: -1">
-<c:choose>
-<c:when test="${results.failed}">
-<TR><TH colspan="2" style="background-color:red;color:white">FAILED</TH></TR>
-</c:when>
-<c:when test="${results.inQuestion}">
-<TR><TH colspan="2" style="background-color:yellow">WARNING</TH></TR>
-</c:when>
-<c:otherwise>
-<TR><TH colspan="2" style="background-color:green;color:white">PASSED</FONT></c:otherwise>
-</c:choose>
+<table style="font-size: -1">
+  <c:choose>
+    <c:when test="${results == null}">
+      <tr>
+        <th colspan="2" style="background-color: red; color: white">RESULT NOT FOUND</th>
+      </tr>
+    </c:when>
+    <c:when test="${results.failed}">
+      <tr>
+        <th colspan="2" style="background-color: red; color: white">FAILED</th>
+      </tr>
+    </c:when>
+    <c:when test="${results.inQuestion}">
+      <tr>
+        <th colspan="2" style="background-color: yellow">WARNING</th>
+      </tr>
+    </c:when>
+    <c:otherwise>
+      <tr>
+        <th colspan="2" style="background-color: green; color: white">PASSED</th>
+      </tr>
+    </c:otherwise>
+  </c:choose>
+  
+  <tr>
+    <th />
+    <th><c:out value="${results.name}"/></th>
+  </tr>
+  
+  <c:forEach var="result" varStatus="status" items="${results.collection}">
+    <tr>
+      
+      <!-- Result Icon ===================================================== -->
+      <td valign="top">
+        <c:choose>
+          <c:when test="${result.returnCode == passed}">
+            <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/yes.gif") %>"
+                 border="0" />
+          </c:when>
+          <c:when test="${result.returnCode == failed}">
+            <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/no.gif") %>"
+                 border="0" />
+          </c:when>
+          <c:otherwise>
+            <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/question.gif") %>"
+                 border="0" />
+          </c:otherwise>
+        </c:choose>
+      </td>
+      
+      <td style="font-size:12px;" nowrap="true">
+        <c:out value="${result.name}"/>
+      </td>
+    </tr>
+    
+    <c:choose>
+      <c:when test="${result.returnCode == passed}">
+        <tr>
+          <td />
+          <td style="font-size:10px;">
+            <c:out value="${result.desc}"/>
+          </td>
+        </tr>
+      </c:when>
+      <c:otherwise>
+        <tr>
+          <td />
+          <td style="font-size:10px;">
+            <c:out value="${result.results}"/>
+          </td>
+        </tr>
+      </c:otherwise>
+    </c:choose>
+  </c:forEach>
+  
+</table>
 
-<TR><TH></TH>
-    <TH><c:out value="${results.name}"/></TH>
-<c:forEach var="result" varStatus="status" items="${results.collection}">
-<TR><TD valign="top">
-    <c:choose>
-    <c:when test="${result.returnCode==passed}">
-    <IMG src="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/images/yes.gif")%>" border="0">
-    </c:when>
-    <c:when test="${result.returnCode==failed}">
-    <IMG src="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/images/no.gif")%>" border="0">
-    </c:when>
-    <c:otherwise>
-    <IMG src="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/images/question.gif")%>" border="0">
-    </c:otherwise>
-    </c:choose>
-    </TD>
-    <TD style="font-size:12px;" nowrap="true"><c:out value="${result.name}"/></TD></TR>
-    <c:choose>
-    <c:when test="${result.returnCode==passed}">
-    <TR><TD></TD><TD style="font-size:10px;"><c:out value="${result.desc}"/></TD></TR>
-    </c:when>
-    <c:otherwise>
-    <TR><TD></TD><TD style="font-size:10px;"><c:out value="${result.results}"/></TD></TR>
-    </c:otherwise>
-    </c:choose>
-</c:forEach>
-</TABLE>

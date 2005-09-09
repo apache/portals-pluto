@@ -33,7 +33,8 @@ limitations under the License.
     <P>Please select one of the following tests:
     <TABLE>
     <c:forEach var="test" items="${tests}" varStatus="status">
-    <TR><TD><c:out value="${test.name}"/></TD>
+    <TR><TD><c:out value="${test.plt}"/></TD>
+        <TD><c:out value="${test.name}"/></TD>
         <portlet:actionURL secure='<%=renderRequest.isSecure()?"True":"False"%>' var="url">
     	<portlet:param name="testId" value='<%=((javax.servlet.jsp.jstl.core.LoopTagStatus)pageContext.getAttribute("status")).getIndex()+""%>'/>
         <c:forEach var="param" items="${test.actionParameters}">
@@ -43,7 +44,7 @@ limitations under the License.
           <portlet:param name="<%=parm.getKey().toString()%>" value="<%=parm.getValue().toString()%>"/>
         </c:forEach>
         </portlet:actionURL>
-        <TD><A href="<c:out value="${url}"/>">Test</A></TD>
+        <TD><A href="<c:out value="${url}"/>">Test</A></TD></TR>
     </c:forEach>
     </TABLE>
     </P>

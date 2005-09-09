@@ -15,7 +15,9 @@
  */
 package org.apache.pluto.testsuite;
 
+import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,14 +27,15 @@ import java.util.Map;
  * @version 1.0
  * @since Sep 15, 2004
  */
-public class TestConfig {
+public class TestConfig implements Serializable {
 
     private String testClassName;
     private String name;
+    private String plt;
     private String displayURI;
-    private Map initParams = new java.util.HashMap();
-    private Map actionParameters = new java.util.HashMap();
-    private Map renderParameters = new java.util.HashMap();
+    private Map initParams = new HashMap();
+    private Map actionParameters = new HashMap();
+    private Map renderParameters = new HashMap();
 
     public TestConfig() {
 
@@ -54,6 +57,14 @@ public class TestConfig {
         this.name = testName;
     }
 
+    public String getPlt() {
+    	return plt;
+    }
+    
+    public void setPlt(String plt) {
+    	this.plt = plt;
+    }
+    
     public String getDisplayURI() {
         return displayURI;
     }
@@ -87,7 +98,9 @@ public class TestConfig {
     }
 
     public String toString() {
-        return super.toString()+"<"+getName()+">";
+    	StringBuffer buffer = new StringBuffer(super.toString());
+    	buffer.append("<").append(getName()).append(">");
+    	return buffer.toString();
     }
 }
 

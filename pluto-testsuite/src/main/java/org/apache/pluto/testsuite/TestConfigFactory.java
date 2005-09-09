@@ -43,6 +43,9 @@ public class TestConfigFactory {
         digester.addBeanPropertySetter("testportlet-config/testsuite-config/name",
                                        "name");
 
+        digester.addBeanPropertySetter("testportlet-config/testsuite-config/plt",
+                                       "plt");
+
         digester.addBeanPropertySetter("testportlet-config/testsuite-config/class",
                                        "testClassName");
 
