@@ -16,11 +16,19 @@
 package org.apache.pluto.testsuite.test;
 
 import org.apache.pluto.testsuite.TestConfig;
+import org.apache.pluto.testsuite.PortletTest;
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestResults;
 
-import javax.portlet.*;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletSession;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -94,8 +102,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     }
 
     public Map getRenderParameters(PortletRequest req) {
-        Map map = new java.util.HashMap();
-        return map;
+        return new HashMap();
     }
 
     public Map getInitParameters() {

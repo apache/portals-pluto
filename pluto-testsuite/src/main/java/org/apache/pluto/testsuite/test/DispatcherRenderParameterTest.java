@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.TestResult;
+
 import java.io.IOException;
 
 import javax.portlet.PortletContext;

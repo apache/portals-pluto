@@ -24,6 +24,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.testsuite.ExpectedResults;
+import org.apache.pluto.testsuite.TestResult;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>

@@ -19,13 +19,6 @@
 
 package org.apache.pluto.testsuite;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -37,13 +30,12 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-
-import org.apache.pluto.testsuite.test.ActionTest;
-import org.apache.pluto.testsuite.test.NoOpTest;
-import org.apache.pluto.testsuite.test.PortletTest;
-import org.apache.pluto.testsuite.test.TestResults;
-import org.apache.pluto.testsuite.TestConfig;
-import org.apache.pluto.testsuite.TestConfigFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class TestPortlet extends GenericPortlet {
 

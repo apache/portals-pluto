@@ -16,6 +16,8 @@
 
 package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.TestResult;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;

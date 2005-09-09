@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.TestResult;
+
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;

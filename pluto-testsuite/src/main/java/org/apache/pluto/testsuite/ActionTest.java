@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.testsuite.test;
+package org.apache.pluto.testsuite;
+
+import org.apache.pluto.testsuite.PortletTest;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>

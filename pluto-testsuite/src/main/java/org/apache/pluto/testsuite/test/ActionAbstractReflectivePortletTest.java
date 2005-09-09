@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.ActionTest;
+
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */

@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.TestResult;
+
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import java.util.Enumeration;

@@ -15,6 +15,9 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.ActionTest;
+import org.apache.pluto.testsuite.TestResult;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
