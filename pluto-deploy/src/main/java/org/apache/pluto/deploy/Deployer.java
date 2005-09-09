@@ -34,7 +34,7 @@ public interface Deployer {
      * @param webapp
      * @throws IOException
      */
-    public void deploy(DeploymentConfig config, InputStream webapp)
+    void deploy(DeploymentConfig config, InputStream webapp)
         throws IOException, DeploymentException;
 
 }
