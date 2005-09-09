@@ -19,12 +19,11 @@
 
 package org.apache.pluto.tags;
 
-import java.io.IOException;
-
 import javax.portlet.RenderResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
+import java.io.IOException;
 
 /**
  * This tag produces a unique value for the current portlet.
@@ -45,10 +44,10 @@ public class NamespaceTag extends TagSupport {
         JspWriter writer = pageContext.getOut();
         try {
             writer.print(namespace);
-            writer.flush();
         } catch (IOException ioe) {
             throw new JspException(
-                "namespace Tag Exception: cannot write to the output writer.");
+                "Unable to write namespace", ioe
+            );
         }
         return SKIP_BODY;
     }
