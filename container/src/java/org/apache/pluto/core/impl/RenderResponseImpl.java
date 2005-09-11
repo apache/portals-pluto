@@ -43,6 +43,9 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
 
     private String currentContentType = null;   // needed as servlet 2.3 does not have a response.getContentType
 
+    private boolean usingWriter;
+    private boolean usingStream;
+
     public RenderResponseImpl(PortletWindow portletWindow,
                               javax.servlet.http.HttpServletRequest servletRequest,
                               javax.servlet.http.HttpServletResponse servletResponse,
@@ -104,8 +107,10 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
         if (!isValidContentType(mimeType)) {
             throw new IllegalArgumentException(mimeType);
         }
-        this._getHttpServletResponse().setContentType(mimeType);
-        currentContentType = mimeType;
+        if (!usingWriter && !usingStream) {
+        	this._getHttpServletResponse().setContentType(mimeType);
+        	currentContentType = mimeType;
+		}
     }
 
     public String getCharacterEncoding()
@@ -117,7 +122,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
         if (currentContentType == null) {
             throw new java.lang.IllegalStateException(illegalStateExceptionText);
         }
-
+		usingWriter = true;
         return super.getWriter();
     }
 
@@ -171,6 +176,7 @@ public class RenderResponseImpl extends PortletResponseImpl implements RenderRes
         if (currentContentType == null) {
             throw new java.lang.IllegalStateException(illegalStateExceptionText);
         }
+		usingStream = true;
         return getOutputStream();
     }
     // --------------------------------------------------------------------------------------------
