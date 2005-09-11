@@ -146,7 +146,8 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
         // load its portlet.xml
         InputStream stream = appContext.getResourceAsStream("/WEB-INF/portlet.xml");
         if (stream == null) {
-            throw new UnavailableException("No portlet.xml found in context " + appContext.getServletContextName());
+        	String contextName = appContext.getServletContextName();
+            throw new UnavailableException("The portlet.xml could not be found in context " + contextName + " (" + path + ")");
         }
         InputSource source = new InputSource(stream);
         Unmarshaller unmarshaller;
