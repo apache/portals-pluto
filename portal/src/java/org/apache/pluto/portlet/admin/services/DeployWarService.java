@@ -523,6 +523,13 @@ public class DeployWarService extends BaseAdminObject {
   	return exists;
   }
 
+  /**
+   * Puts the contents of a file into a String. This only works
+   * with text files.
+   * 
+   * @param file The File to read
+   * @return A String containing the contents of the file.
+   */
   public String readFileToString(File file){
   	final String METHOD_NAME = "readFileToString(path)";
   	String contents = null;
@@ -556,6 +563,12 @@ public class DeployWarService extends BaseAdminObject {
   	return contents;
   }
 
+  /**
+   * Writes the contents of a file into a String.
+   * 
+   * @param file Te File to write.
+   * @param contents The String to add to the file.
+   */
   public void writeStringToFile(File file, String contents){
   	final String METHOD_NAME = "addFileToStringToFile(contents)";
 		FileOutputStream fos = null;
@@ -588,6 +601,7 @@ public class DeployWarService extends BaseAdminObject {
 	   * @param context
 	   */
 	  void updateWebXml(String context) {
+		  String METHOD_NAME = "updateWebXml(context)";
 		  //These constants are used to place the
 		  //new record in web.xml in the proper place
 		  	//elements to check prior to servlet (if not found)
@@ -617,21 +631,17 @@ public class DeployWarService extends BaseAdminObject {
 			List plist = null;
 			try {
 				InputStream ins = new FileInputStream(portletXml);
-//				 PortletNameFinder finder = new PortletNameFinder(ins);
-//				 nameList = finder.getPortletNames();
-//				 classNameList = finder.getPortletClassNames();
 			     PortletConfigService pcsvc = new PortletConfigService(ins);
 			     plist = pcsvc.getPortletDDList();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logError(METHOD_NAME, e);
+				throw new PlutoAdminException(e);
 			}
 			 String newWebXml = svc.addRecordsToWebXml(context, contents, 
 					 PRIOR_ELEMENTS_SERVLET, plist); 
 			 contents = newWebXml;
 			 newWebXml = svc.addRecordsToWebXml(context, contents, 
 					 PRIOR_ELEMENTS_SERVLET_MAPPING, plist); 
-			 System.out.println(newWebXml);
 			 writeStringToFile(webXml, newWebXml);
 		}
 		  
@@ -646,12 +656,12 @@ public class DeployWarService extends BaseAdminObject {
 	  * @param elements Elements in web.xml to search for. If found, new
 	  * elements will be inserted to the contents String. NOTE: First element
 	  * (elements[0] signals the kind of record to add (servlet or servlet-mapping).
-	  * @param portletData List of portlet names in order that they appear in 
-	  * portlet.xml
-	  * TODO: Add security-role-ref param for servlet record
+	  * @param portletData A List of PortletDD items containing the data of 
+	  * portlets to be deployed.
 	  */
 		 String addRecordsToWebXml(String context, String contents, 
 				 	String[] elements, List portletData ) {
+			 String METHOD_NAME = "addRecordsToWebXml(context.contents,elements,portletData)";
 			StringBuffer results = new StringBuffer(contents);
 			 int index = -1;//index indicating the start of the insertion point
 			 int len = portletData.size();
@@ -660,21 +670,28 @@ public class DeployWarService extends BaseAdminObject {
 			 String before = null;
 			 //The new record to be added
 			 String newRecord = null;
-			 //The remainder of the string after the found element
+			 //The remainder of the string after the found element (tag)
 			 String remainder = null;
+			 //Rest of the string after the opening of the element
+			 String rest = null;
 			 //go through the list of portlets in ArrayLists 
 			 for (int i = 0; i < len; i++) {
 				 //check each element in web.xml contents
 				 for (int j = 0; j < lenElements; j++) {
-				     if ((index = results.lastIndexOf("</" + elements[j] + ">")) != -1) {
-					     //get the length of the closing element tag
-				    	 //	and add 3 to account for '</' and '>' 
-				    	 int elementLen = elements[j].length() + 3;
-				    	 //if the element is web-app (web.xml root node), then use the opening element tag
+				     if ((index = results.lastIndexOf("</" + elements[j])) != -1) {
+					     //get the length to the end of the element (>)
+				    	 rest = results.substring(index);
+				    	 int elementLen = rest.indexOf('>') + 1;
+				    	 //First portlet could have to deal with web-app element
+				    	 //so the new records will be put after the web-app start element.
+				    	 //Also account for web-app's attributes in calculating the element length
 				    	 if (i == 0 & elements[j].equals("web-app")) {
-				    		 index = results.indexOf("<" + elements[j] + ">");
-				    		 elementLen = elements[j].length() + 2;
+							 index = results.indexOf("<web-app");
+							 //Get the rest of the results String after <web-app
+							 rest = results.substring(index);//get string starting with <web-app
+							 elementLen = rest.indexOf('>') + 1;//end of starting web-app element
 				    	 }
+				    	 logDebug(METHOD_NAME, "Length of '" + elements[j] + "' tag = " + elementLen);
 				    	 //get everything before the found element including the tag
 				    	 before = results.substring(0, index + elementLen);
 				    	 //get everything after the found element starting at the end of the tag
@@ -706,7 +723,7 @@ public class DeployWarService extends BaseAdminObject {
 	    * 
 	    * @param context Context name
 	    * @param portletData Data from portlet.xml
-	    * @return The servlet record
+	    * @return
 	    */
 		 private String getServletRecord(String context, PortletDD portletData) {
 		     
@@ -742,6 +759,7 @@ public class DeployWarService extends BaseAdminObject {
 		    * 
 		    * @param context Context name
 		    * @param portletData Data from portlet.xml
+		    * @return
 		    */
 			 private String getSecurityRoleRefRecord(String context, PortletDD portletData) {
 			     
@@ -768,7 +786,9 @@ public class DeployWarService extends BaseAdminObject {
 	    * Gets the web.xml servlet-mapping record for PortletServlet
 	    * from portlet.xml data
 	    * 
+	    * @param context Context name
 	    * @param portletData Data from portlet.xml
+	    * @return
 	    */
 	   private String getServletMappingRecord(PortletDD portletData) {
 	       
@@ -776,6 +796,7 @@ public class DeployWarService extends BaseAdminObject {
 	       
 	       record.append("    <servlet-mapping>" + PlutoAdminConstants.LS);
 	       record.append("      <servlet-name>" + portletData.getPortletName() + "</servlet-name>" + PlutoAdminConstants.LS);
+	       //pattern = /PortletName/*
 	       record.append("      <url-pattern>/" + portletData.getPortletName() + "/*</url-pattern>" + PlutoAdminConstants.LS);
 	       record.append("    </servlet-mapping>" + PlutoAdminConstants.LS);
 	    
