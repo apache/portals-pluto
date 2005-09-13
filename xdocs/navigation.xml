@@ -24,6 +24,7 @@ limitations under the License.
   <links>
     <item name="JSR 168"  href="http://jcp.org/en/jsr/detail?id=168"/>
 	<item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh"/>
+  	<item name="Pluto 1.1"           href="/1.1/index.html"/>
   </links>
 
 <menu name="About Pluto">
@@ -57,6 +58,7 @@ limitations under the License.
   </item>
   <item name="FAQ"                 href="/faq.html"/>
   <item name="Resources"           href="/resources.html"/>
+  <item name="Pluto 1.1"           href="/1.1/index.html"/>
 </menu>
 
 <menu name="Community">
