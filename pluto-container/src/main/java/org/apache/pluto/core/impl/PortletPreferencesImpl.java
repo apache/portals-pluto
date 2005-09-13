@@ -219,9 +219,11 @@ public class PortletPreferencesImpl implements PortletPreferences {
                 .getPreferencesValidator();
 
         if (validatorClass != null) {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
             try {
+            	Class clazz = loader.loadClass(validatorClass);
                 PreferencesValidator validator =
-                    (PreferencesValidator) Class.forName(validatorClass).newInstance();
+                    (PreferencesValidator) clazz.newInstance();
                 validator.validate(this);
             } catch (InstantiationException e) {
                 throw new ValidatorException(e, null);
