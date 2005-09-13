@@ -24,21 +24,21 @@ limitations under the License.
     Which version of Pluto should I use?
   </b></question>
   <answer>
-    Pluto 1.0.1-RC4 is the most recent distribution.
+    Pluto 1.0.1 is the most recent distribution.
     This version of Pluto passes all of the TCK tests.
   </answer>
   </faq>
 
   <faq id="versions">
   <question><b>
-    I've seen references to both Pluto 1.0.x and Pluto
-    1.1.x.  It seems as though both are being developed
+    I've seen references to both Pluto 1.0.1 and Pluto
+    1.1.  It seems as though both are being developed
     at the same time.  What is the difference between
     the two versions?
   </b></question>
   <answer>
-    <p>You're right.  Pluto 1.0.x is currently going through
-    the release process.  Pluto 1.0.x is based off of the code
+    <p>You're right.  Pluto 1.0.1 is the current release.  
+    Pluto 1.0.x is based off of the code
     base which was originally donated to the ASF by IBM.
     The first release candidate in this series was published
     on October 8, 2004.</p>
@@ -50,7 +50,9 @@ limitations under the License.
     looking to embed Pluto into their portal to use Pluto.
     The 1.1.x series has made great progress and currently
     passes all of the tests available in the Pluto Testsuite.
-    </p>
+    See the <a href="1.1/index.html">Pluto 1.1 documentation</a>
+    for more details.
+	</p>    
   </answer>
   </faq>
 
