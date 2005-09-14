@@ -41,24 +41,28 @@ limitations under the License.
     Several people have suggested a revolutionary approach to
     Pluto's implementation.  The suggestion centers around the
     complexity of the current implementation and a desire to
-    make Pluto more "container like".  In the future, a 
-    second generation of pluto may be implemented to simplify
-    Pluto's implemetation and to use more standard design
-    patterns.  IoC has been mentioned as a possible container
-    design.
+    make Pluto more "container like". 
+    <a href="1.1/index.html">Pluto 1.1</a>, a second
+    generation implementation, is an attempt to do just that.
+    It uses the <a href="http://www.springframework.org/">Spring Framework</a>     
+    to make the portlet container and portal easier to set up,
+    modify and use.
   </p>
   </subsection>
 
   <subsection name="To Do List">
   <p>
     <ul>
-    <li>JavaDoc, JavaDoc, JavaDoc</li>
-    <li>Documentation, Documentation, Documentation</li>
+    <li>Add more Documentation, especially for the 1.1 branch</li>
     <li>Flush out the FAQ documentation.</li>
+    <li>Support User Information Attributes.</li>
+    <li>Enable user-specific Portlet Preferences as required by the spec</li>
+    <li>Add user registration to the admin portlet app to support the previous two items</li>    
     <li>Support custom portlet modes and window states.</li>
-    <li>Support User profile attributes.</li>
     <li>Enable PortletURL.setSecure</li>
     <li>Create Windows Installer</li>
+    <li>Enhance admin portlets to support hot deployment and allow runtime changes in portlet app layout</li>
+    <li>Support themes or skins for the Portal</a>
     </ul>
   </p>
   </subsection>
