@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven">
   <bannerLeft>
-    <name>Maven</name>
+    <name>Pluto</name>
     <src>http://portals.apache.org/pluto/images/apache-portals.gif</src>
     <href>http://maven.apache.org/</href>
   </bannerLeft>
@@ -11,11 +11,12 @@
   <body>
     <links>
       <item name="JSR 168" href="http://jcp.org/en/jsr/detail?id=168"/>
-      <item name="Chinese Translation" href="http://maven.apache.org/"/>
+      <item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh"/>
     </links>
 
-    <menu name="Developing">
-      <item name="Developing Plugins with Marmalade" href="/developers/developing-plugins-with-marmalade.html"/>
+    <menu name="Pluto 1.1">
+      <item name="Introduction" href="/index.html"/>
+      <item name="Getting Started" href="/getting-started.html"/>
     </menu>
 
     ${reports}

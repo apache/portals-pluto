@@ -1,0 +1,105 @@
+ ------
+ Getting Started
+ ------
+ David H. DeWolf
+ ------
+ 14 Sept 2005
+ ------
+
+Getting Started
+
+* Installing Pluto with Maven
+
+  Maven2 is utilized as the project management and build system
+  for Pluto 1.1.  The pluto-util subproject can be used to 
+  install pluto into the Tomcat servlet engine (Jetty and other
+  containers coming soon).
+
+---------------
+$> cd <PLUTO-1.1-HOME>
+$> m2 install
+$> cd ../pluto-util
+$> m2 pluto:install
+---------------
+
+  The m2 install goal is a built in Maven2 lifecycle which
+  builds the project artifacts and installs them into the
+  Maven repository.
+  
+  The pluto:install goal will take the resulting artifacts
+  and properly deploy them within the configured tomcat
+  installation.
+
+* Manually Installing Pluto
+
+    Step 1: 
+
+---------------
+$> cd <PLUTO-1.1-HOME>
+$> m2 install
+---------------
+
+  Step 2: Copy the following to <TOMCAT_HOME>/shared/lib
+
+    * castor-0.9.6
+
+    * portlet-api-1.0.jar
+
+    * pluto-container-1.1-SNAPSHOT.jar
+
+    * pluto-descriptor-api-1.1-SNAPSHOT.jar
+
+    * pluto-descriptor-impl-1.1-SNAPSHOT.jar
+
+  Step 3: Copy the following to <TOMCAT_HOME>/common/endorsed
+
+    * xercesImpl-2.6.2
+
+    * xmlParserAPIs-2.6.2
+
+  Step 4: Copy the following to <TOMCAT_HOME>/conf/Catalina/localhost
+
+    * <PLUTO_HOME>/pluto-portal/src/main/resources/pluto.xml
+
+    * <PLUTO_HOME>/pluto-testsuite/src/main/resources/testsuite.xml
+
+  Step 5: 
+
+    * pluto-portal.war
+
+    * pluto-testsuite.war
+
+* Installing Pluto with a Windows EXE
+
+  The NSIS Installer is not yet complete, but we hope to have a fully
+  functional one soon.  Anyone is more than welcome to assist us in this
+  process.
+
+Portlet Assembly and Deployment
+
+* Portlet Assembly
+
+  All portlet applications must be run through
+  the pluto assembler before being deployed. The
+  assembly process injects pluto specific information
+  for deployment.  Specifically, a servlet and servlet
+  mapping are added to the deployment descriptor.  This
+  servlet will be used to dispatch portlet requests to
+  the portlet application. 
+
+  Portlet assembly is accomplished through the 
+  pluto-util subproject.
+
+
+---------------
+$> cd pluto-util
+$> maven pluto:assemble -Dmaven.deploy.deployment=<path to war>
+---------------
+
+* Portlet Deployment:
+
+---------------
+$> cd pluto-install
+$> maven pluto:deploy -Dmaven.deploy.deployment=<path to war>
+---------------
+

@@ -1,0 +1,24 @@
+ ------
+ Pluto 1.1
+ ------
+ David H. DeWolf
+ ------
+ 14 Sept 2005
+ ------
+
+Pluto 1.1
+
+  Pluto 1.1 introduces a new container architecture.  If you
+  are embedding Pluto in your portal, realize that 1.1 is not
+  binarily compatible with Pluto 1.0.x.
+
+  Pluto 1.1 aims to simplify the architecture in order to make
+  it more user and developer friendly.  You should find Pluto 
+  1.1 easier to get started with, easier to understand, and
+  easier to embed with your portal.  Your feedback regarding
+  how far we've come is always welcome on the user and developer
+  mailing lists!
+
+  Pluto 1.1 is currently only available through subversion 
+  repository.  Once a GA release of Pluto 1.0.1 is finalized
+  we will consider an alpha level distribution.
