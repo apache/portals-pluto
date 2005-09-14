@@ -178,22 +178,22 @@ public class SimplePreferenceTest
         try {
             preferences.setValue("VALIDATION_TEST_KEY", " Spaces removed by trim ");
             preferences.store();
-        }
-        catch (ReadOnlyException roe) {
+        } catch (ReadOnlyException roe) {
 
-        }
-        catch (ValidatorException e) {
+        } catch (ValidatorException e) {
             exceptionThrown = true;
-            try { preferences.reset("VALIDATION_TEST_KEY"); }catch(Throwable t) {}
-        }
-        catch (IOException io) {
+            try {
+            	preferences.reset("VALIDATION_TEST_KEY");
+            } catch (Throwable t) {
+            	
+            }
+        } catch (IOException io) {
 
         }
 
-        if(exceptionThrown) {
+        if (exceptionThrown) {
             res.setReturnCode(TestResult.PASSED);
-        }
-        else {
+        } else {
             res.setReturnCode(TestResult.FAILED);
             res.setResults("Illegal value not caught by validator.");
         }
@@ -348,7 +348,12 @@ public class SimplePreferenceTest
         }
         return res;
     }
-
+    
+    /**
+     * Check PLT. 14.3: Read-only preference attributes could not be modifed.
+     * @param req  the portlet request.
+     * @return the test result.
+     */
     protected TestResult checkReadOnlyPreferences(PortletRequest req) {
         TestResult res = new TestResult();
         res.setName("Preference Read Only Test");
@@ -405,6 +410,37 @@ public class SimplePreferenceTest
             res.setResults("All names not found as preferences.");
         }
         return res;
+    }
+    
+    /**
+     * Check (xci) SPEC 91, PLT 14.1:
+     * Preferences values are not modified if the values in the Map are altered.
+     * @param req  the portlet request.
+     * @return the test result.
+     */
+    protected TestResult checkPreferencesValuesNotModified(PortletRequest req) {
+    	TestResult res = new TestResult();
+    	res.setName("Preferences Map Not Modifiable Test.");
+    	res.setDesc("Preferences values are not modified if the values " +
+    			"in the Map are altered.");
+    	PortletPreferences prefs = req.getPreferences();
+    	Map prefMap = prefs.getMap();
+    	String[] values = (String[]) prefMap.get("dummyName");
+    	String originalValue = null;
+    	String modifiedValue = "Dummy value modified in preferences map.";
+    	if (values != null && values.length == 1) {
+    		originalValue = values[0];
+    		values[0] = modifiedValue;
+    	}
+    	
+    	String newValue = prefs.getValue("dummyName", "");
+    	if (!newValue.equals(originalValue)) {
+    		res.setReturnCode(TestResult.FAILED);
+    		res.setResults("Preferences values modified.");
+    	} else {
+    		res.setReturnCode(TestResult.PASSED);
+    	}
+    	return res;
     }
 
 
