@@ -4,6 +4,15 @@
 </properties>
 <body>
 
+<release version="1.0.1" date="Sept 17, 2005" description="General Availability Release">
+  <action dev="cdoremus" type="fix">PLUTO 164: response contentType can change after getWriter()</action>
+  <action dev="ddewolf" type="fix">PLUTO 155: URL encoding in pluto 1.0.1-RC4 issue when using apache with jk2</action>
+  <action dev="ddewolf" type="fix">PLUTO 157: portlet.tld taglib is using jsp version 1.1. JSR168 spec requires JSP version 1.2</action>
+  <action dev="ddewolf" type="fix">PLUTO 152: Support maven deployment to a remote repository</action>
+  <action dev="ddewolf" type="fix">PLUTO 130: portlet:namespace fails inside JSTL c:set</action>
+  <action dev="cdoremus" type="fix">PLUTO-92: Deployer strips elements from web.xml (Deploy War Portlet)</action>
+</release>
+
 <release version="1.0.1-rc4" date="July 24, 2005" description="Release Candidate">
   <action dev="ddewolf" type="fix">Support Multiple Security Constrains in the portlet driver's web.xml processing</action>
   <action dev="ddewolf" type="fix">PLUTO-131: Login Link Broken</action>
