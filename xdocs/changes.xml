@@ -5,6 +5,7 @@
 <body>
 
 <release version="1.0.1" date="Sept 17, 2005" description="General Availability Release">
+  <action dev="cdoremus" type="update">Added Pluto 1.1 index page and basic documentation</action>
   <action dev="cdoremus" type="fix">PLUTO 164: response contentType can change after getWriter()</action>
   <action dev="ddewolf" type="fix">PLUTO 155: URL encoding in pluto 1.0.1-RC4 issue when using apache with jk2</action>
   <action dev="ddewolf" type="fix">PLUTO 157: portlet.tld taglib is using jsp version 1.1. JSR168 spec requires JSP version 1.2</action>
