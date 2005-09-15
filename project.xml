@@ -63,19 +63,19 @@ limitations under the License.
       <name>Pluto User List</name>
       <subscribe>pluto-user-subscribe@portals.apache.org</subscribe>
       <unsubscribe>pluto-user-unsubscribe@portals.apache.org</unsubscribe>
-      <archive>http://issues.apache.org/eyebrowse/SummarizeList?listName=pluto-user@portals.apache.org</archive>
+      <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-user/</archive>
     </mailingList>
     <mailingList>
       <name>Pluto Developer List</name>
       <subscribe>pluto-dev-subscribe@portals.apache.org</subscribe>
       <unsubscribe>pluto-dev-unsubscribe@portals.apache.org</unsubscribe>
-      <archive>http://issues.apache.org/eyebrowse/SummarizeList?listName=pluto-dev@portals.apache.org</archive>
+      <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-dev/</archive>
     </mailingList>
     <mailingList>
       <name>Pluto SCM List</name>
       <subscribe>pluto-scm-subscribe@portals.apache.org</subscribe>
       <unsubscribe>pluto-scm-unsubscribe@portals.apache.org</unsubscribe>
-      <archive>http://issues.apache.org/eyebrowse/SummarizeList?listName=pluto-scm@portals.apache.org</archive>
+      <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-scm/</archive>
     </mailingList>
   </mailingLists>
 
