@@ -18,6 +18,7 @@ limitations under the License.
 <document>
   <properties>
     <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <author email="cdoremus.AT.hannaford.DOT.com">Craig Doremus</author>
     <title>Pluto Project Roadmap</title>
   </properties>
 
@@ -62,7 +63,7 @@ limitations under the License.
     <li>Enable PortletURL.setSecure</li>
     <li>Create Windows Installer</li>
     <li>Enhance admin portlets to support hot deployment and allow runtime changes in portlet app layout</li>
-    <li>Support themes or skins for the Portal</a>
+    <li>Support themes or skins for the Portal</li>
     </ul>
   </p>
   </subsection>
