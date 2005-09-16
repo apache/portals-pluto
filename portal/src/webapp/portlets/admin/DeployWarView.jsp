@@ -20,11 +20,15 @@ limitations under the License.
 <%@ page import="javax.portlet.RenderResponse" %>
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page session="false" %>
+<%@ page import="org.apache.pluto.portlet.admin.bean.PageTO" %>
+<%@ page import="org.apache.pluto.portlet.admin.PlutoAdminConstants" %>
 <%@ taglib uri='http://java.sun.com/portlet' prefix='portlet'%>
 <%@ taglib uri="http://portals.apache.org/pluto/admin" prefix="pluto-admin" %>
 
 <portlet:defineObjects/>
-
+<%
+	PageTO ppage = (PageTO)renderRequest.getPortletSession().getAttribute(PlutoAdminConstants.PAGE_ATTR);
+%>
 <p class="portlet-section-header">Deploy War</p>
 <!--  'Post' method is required for portlet action -->
 <form action="<portlet:actionURL/>"
@@ -48,3 +52,13 @@ limitations under the License.
 </table>
 </form>
 <pluto-admin:portlet-message/>
+<%
+	if(ppage != null) {
+		String pcontext = ppage.getName();
+		String hotdeployUrl = "/pluto/portal/" + pcontext + "?hotDeploy=true";
+%>
+		<a href="<%= hotdeployUrl %>" class="portlet-msg-info">Hot deploy '<%= pcontext %>' portlet application</a>
+<%
+		renderRequest.getPortletSession().removeAttribute(PlutoAdminConstants.PAGE_ATTR);
+	}
+%>

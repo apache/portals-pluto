@@ -90,6 +90,7 @@ public class DeployWarService extends BaseAdminObject {
   	final String METHOD_NAME = "processFileUpload(request,response)";
     String fileName = null;
     String serverFileName = null;
+    boolean modifyWebXml = true;
     request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment unsuccessful", PortletMessageType.ERROR));
     // Check the request content type to see if it starts with multipart/
     if (PortletDiskFileUpload.isMultipartContent(request))
@@ -117,6 +118,13 @@ public class DeployWarService extends BaseAdminObject {
                     String fieldName = item.getFieldName();
                     String value = item.getString();
                     response.setRenderParameter(fieldName, value);
+                    if (fieldName.equalsIgnoreCase("NoWebXmlModification")) {
+                        String noWebXmlModification = item.getString();
+                        logWarn(METHOD_NAME, "Don't modify web.xml? " + noWebXmlModification);
+                        if (noWebXmlModification != null) {
+                        	modifyWebXml = false;
+                        }
+                    }
                 }
                 else
                 {
@@ -152,7 +160,9 @@ public class DeployWarService extends BaseAdminObject {
 					}
 		            org.apache.pluto.portalImpl.Deploy.main(args);
 		            //NEW: Update web.xml with new servlet elements
-		            updateWebXml(context);
+		            if (modifyWebXml) {
+		            	updateWebXml(context);
+		            }
 		            if (appExists) {
 		            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment of the new portlet app has been successful, but the portlet app record '" + context + "' already exists in portletentityregistry.xml. " +
 		            			"This may have occurred if the portlet was previously partially deployed. If that is the case, continue with this screen and the next to register the portlet in pageregistry.xml. " +
@@ -678,7 +688,7 @@ public class DeployWarService extends BaseAdminObject {
 			 for (int i = 0; i < len; i++) {
 				 //check each element in web.xml contents
 				 for (int j = 0; j < lenElements; j++) {
-				     if ((index = results.lastIndexOf("</" + elements[j])) != -1) {
+				     if ((index = results.lastIndexOf("</" + elements[j]+ ">")) != -1) {
 					     //get the length to the end of the element (>)
 				    	 rest = results.substring(index);
 				    	 int elementLen = rest.indexOf('>') + 1;

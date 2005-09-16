@@ -130,7 +130,7 @@ public class DeployWarPortlet extends ControllerPortlet {
 
 					service.savePageLayout(request);
 					//forward to first page
-          request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment successful. Please restart the Pluto portal.", PortletMessageType.SUCCESS));
+          request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment successful. Please restart the Pluto portal or click the hot deploy link below.", PortletMessageType.SUCCESS));
 					_incView = "/portlets/admin/DeployWarView.jsp";
 					response.setPortletMode(PortletMode.VIEW);
 				}
