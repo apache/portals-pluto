@@ -33,8 +33,8 @@ import org.apache.pluto.portalImpl.services.ServiceManager;
 public class PortletEntityRegistry
 {
 
-
-    private final static PortletEntityRegistryService cService = 
+	//removed final modifier for hot deploy
+    private static PortletEntityRegistryService cService = 
         (PortletEntityRegistryService) ServiceManager.getService (PortletEntityRegistryService.class);
 
     /**
@@ -71,4 +71,10 @@ public class PortletEntityRegistry
     public static void refresh(PortletEntity portletEntity) {
         cService.refresh(portletEntity);
     }
+    
+    //method added for hot deploy
+    public static void setPortletEntityRegistryService()
+     {
+      	cService = (PortletEntityRegistryService) ServiceManager.getService (PortletEntityRegistryService.class);
+     }
 }

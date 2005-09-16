@@ -33,8 +33,8 @@ import org.apache.pluto.portalImpl.services.ServiceManager;
 public class PortletDefinitionRegistry
 {
 
-
-    private final static PortletDefinitionRegistryService cService = 
+	//removed final modifier for hot deploy
+    private static PortletDefinitionRegistryService cService = 
         (PortletDefinitionRegistryService) ServiceManager.getService (PortletDefinitionRegistryService.class);
 
     /**
@@ -57,4 +57,9 @@ public class PortletDefinitionRegistry
         return cService.getPortletDefinition(id);
     }
 
+    //method added for hot deploy
+     public static void setPortletDefinitionRegistryService()
+     {
+         PortletDefinitionRegistryService cService = (PortletDefinitionRegistryService) ServiceManager.getService(PortletDefinitionRegistryService.class);
+     }    
 }

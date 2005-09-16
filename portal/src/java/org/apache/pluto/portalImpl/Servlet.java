@@ -174,6 +174,45 @@ public class Servlet extends HttpServlet
     {
         servletResponse.setContentType(CONTENT_TYPE);
 
+        //start hot deploy patch
+        String theService = servletRequest.getParameter("hotDeploy");
+     	if (theService != null) {
+            if(log.isInfoEnabled()) {
+                log.info("Hot deploying portlet. . .");
+            }
+
+     		//run registry services to load new portlet info from the registry files
+     		String[] svcs = {
+     				"org.apache.pluto.portalImpl.services.portletdefinitionregistry.PortletDefinitionRegistryService",
+     				"org.apache.pluto.portalImpl.services.portletentityregistry.PortletEntityRegistryService",
+     				"org.apache.pluto.portalImpl.services.pageregistry.PageRegistryService"};
+     		int len = svcs.length;
+     		for (int i = 0; i < len; i++) {				
+	 			try {
+					ServiceManager.hotInit(getServletConfig(), svcs[i]);
+	 			} catch (Throwable e) {
+	 				String svc = svcs[i].substring(svcs[i].lastIndexOf('.') + 1);
+	 				String msg = "Initialization of " + svc + " service for hot deployment failed!"; 
+	 				log.error(msg, e);
+	 				break;
+//	 				throw new javax.servlet.UnavailableException(msg);
+	 			}
+	 	
+	 			try {
+					ServiceManager.postHotInit(getServletConfig(), svcs[i]);
+	 			} catch (Throwable e) {
+	 				String svc = svcs[i].substring(svcs[i].lastIndexOf('.') + 1);
+	 				String msg = "Post initialization of " + svc + " service for hot deployment failed!"; 
+	 				log.error(msg, e);
+	 				break;
+//	 				throw new javax.servlet.UnavailableException(msg);
+	 			}
+			}
+//			servletResponse.getOutputStream().println("Service reloaded.");
+// 			return;
+ 		}
+        //end hot deploy patch
+        
         PortalEnvironment env =
             new PortalEnvironment(servletRequest,
                                   servletResponse,
@@ -193,17 +232,17 @@ public class Servlet extends HttpServlet
             }
             catch (PortletException e)
             {
-                e.printStackTrace(System.err);
+                log.error(e);
             }
             catch (PortletContainerException e)
             {
-                e.printStackTrace(System.err);
+                log.error(e);
             }
             // This catch block is for compliance
             // of TCK's Portlet.ProcessActionIOExceptionTest
             catch (Exception e)
             {
-                e.printStackTrace(System.err);
+                log.error(e);
             }
 
             return; // we issued an redirect, so return directly
@@ -216,6 +255,7 @@ public class Servlet extends HttpServlet
         }
         catch (Throwable t)
         {
+            log.error(t);
             // nothing to do
         }
    

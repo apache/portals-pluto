@@ -60,8 +60,8 @@ public class PageRegistryServiceFileImpl extends PageRegistryService
     private PortalImpl registry = null;
     private RootFragment root = null;
     private Logger log = null;
-
-    private HashMap fragments = new HashMap();
+    //added static modifyer for hot deploy
+    private static HashMap fragments = new HashMap();
 
     public void init (ServletConfig config, Properties properties) throws Exception
     {        
@@ -94,9 +94,12 @@ public class PageRegistryServiceFileImpl extends PageRegistryService
     }
 
     public void postInit(ServletConfig config) throws Exception {
-        
+    	//added for hot deploy
+    	fragments = new HashMap();
         root = registry.build(config);
-             
+        //added for hot deploy
+        PageRegistry.setRootFragment();
+        
         if (log.isDebugEnabled())
         {
             log.debug("Dumping complete navigation tree created of the object model...");

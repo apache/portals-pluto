@@ -63,11 +63,15 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
     private static final String CONFIG_MAPPING_PORTLETXML = "mapping.portletxml.configfile";
     private static final String CONFIG_MAPPING_WEBXML = "mapping.webxml.configfile";
 
-    private Mapping webXmlMapping;
-    private Mapping portletXmlMapping;
+    //static modifier for hot deploy
+    private static Mapping webXmlMapping;
+    //static modifier for hot deploy
+    private static Mapping portletXmlMapping;
 
-    private PortletApplicationDefinitionListImpl registry;
-    private Map definitions;
+    //static modifier for hot deploy
+    private static PortletApplicationDefinitionListImpl registry;
+    //static modifier for hot deploy
+    private static Map definitions;
 
     public PortletApplicationDefinitionList getPortletApplicationDefinitionList() {
         return registry;
@@ -145,8 +149,8 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
 
         // load its portlet.xml
         InputStream stream = appContext.getResourceAsStream("/WEB-INF/portlet.xml");
+    	String contextName = appContext.getServletContextName();
         if (stream == null) {
-        	String contextName = appContext.getServletContextName();
             throw new UnavailableException("The portlet.xml could not be found in context " + contextName + " (" + path + ")");
         }
         InputSource source = new InputSource(stream);
@@ -155,22 +159,22 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
             unmarshaller = new Unmarshaller(portletXmlMapping);
             unmarshaller.setEntityResolver(new EntityResolver(Constants.RES_PORTLET_DTDS, Constants.RES_PORTLET_DTD_NAMES));
         } catch (MappingException e) {
-            throw (UnavailableException) new UnavailableException("Unable to construct unmarshaller for portlet.xml").initCause(e);
+            throw (UnavailableException) new UnavailableException("Unable to construct unmarshaller for portlet.xml at context " + contextName).initCause(e);
         }
         unmarshaller.setIgnoreExtraElements(true);
         PortletApplicationDefinitionImpl portletApp;
         try {
             portletApp = (PortletApplicationDefinitionImpl) unmarshaller.unmarshal(source);
         } catch (MarshalException e) {
-            throw (UnavailableException) new UnavailableException("Unable to unmarshal portlet.xml from context " + appContext.getServletContextName()).initCause(e);
+            throw (UnavailableException) new UnavailableException("Unable to unmarshal portlet.xml from context " + contextName).initCause(e);
         } catch (ValidationException e) {
-            throw (UnavailableException) new UnavailableException("Unable to validate portlet.xml from context " + appContext.getServletContextName()).initCause(e);
+            throw (UnavailableException) new UnavailableException("Unable to validate portlet.xml from context " + contextName).initCause(e);
         }
 
         // load its web.xml
         stream = appContext.getResourceAsStream("/WEB-INF/web.xml");
         if (stream == null) {
-            throw new UnavailableException("No web.xml found in context " + appContext.getServletContextName());
+            throw new UnavailableException("No web.xml found in context " + contextName);
         }
         source = new InputSource(stream);
         try {
@@ -179,7 +183,7 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
                                                        Constants.RES_WEB_DTD,
                                                        Constants.RES_WEB_DTD_NAME));
         } catch (MappingException e) {
-            throw (UnavailableException) new UnavailableException("Unable to construct unmarshaller for web.xml").initCause(e);
+            throw (UnavailableException) new UnavailableException("Unable to construct unmarshaller for web.xml from context " + contextName + ". Error message: " + e.getMessage()).initCause(e);
         }
         unmarshaller.setIgnoreExtraElements(true);
 
@@ -187,9 +191,9 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
         try {
             webApp = (WebApplicationDefinitionImpl) unmarshaller.unmarshal(source);
         } catch (MarshalException e) {
-            throw (UnavailableException) new UnavailableException("Unable to unmarshal web.xml from context " + appContext.getServletContextName()).initCause(e);
+            throw (UnavailableException) new UnavailableException("Unable to unmarshal web.xml from context " + contextName + ". Error message: " + e.getMessage()).initCause(e);
         } catch (ValidationException e) {
-            throw (UnavailableException) new UnavailableException("Unable to validate web.xml from context " + appContext.getServletContextName()).initCause(e);
+            throw (UnavailableException) new UnavailableException("Unable to validate web.xml from context " + contextName + ". Error message: " + e.getMessage()).initCause(e);
         }
 
         Vector structure = new Vector();
@@ -201,9 +205,15 @@ public class PortletDefinitionRegistryServiceContextImpl extends PortletDefiniti
             webApp.preBuild(structure);
             webApp.postBuild(structure);
         } catch (Exception e) {
-            throw (UnavailableException) new UnavailableException(e.getMessage()).initCause(e);
+            throw (UnavailableException) new UnavailableException("Problem: " + e.getMessage() + ". Context = " + contextName).initCause(e);
         }
         return portletApp;
     }
+ 
+    //method added for hot deploy
+    public void postInit() throws Exception
+     {
+     	PortletDefinitionRegistry.setPortletDefinitionRegistryService();
+     }
 }
 

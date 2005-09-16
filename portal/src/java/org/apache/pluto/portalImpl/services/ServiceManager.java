@@ -400,6 +400,186 @@ public class ServiceManager
         return ((Service) cServicesMap.get (aClass));
     }
 
+    //Start hot deploy patch
+      
+      public static void hotInit (ServletConfig aConfig, String theService) throws Exception
+ 	    {
+ 	        hotInit (aConfig, SERVICES_CONFIG_FILE, SERVICES_CONFIG_DIR, theService);
+ 	    }     
+ 	    
+ 	    public static void hotInit(ServletConfig aConfig,
+ 				String aServiceConfigFile, String aServiceConfigDir, String theService)
+ 				throws Exception {
+ 			// avoid duplicate initialization of services
+ 
+ 			if (!cInitialized) {
+ 				synchronized (ServiceManager.class) {
+ 					if (!cInitialized) {
+ 						cInitialized = true;
+ 					} else {
+ 						return;
+ 					}
+ 				}
+ 			} else {
+ 				return;
+ 			}
+ 
+ 			ServletContext context = null;
+ 
+ 			if (aConfig != null)
+				context = aConfig.getServletContext();
+ 
+ 			if (context != null)
+ 				context.log("ServiceManager: HOTHOT Loading service: "+theService);
+ 
+ 			Properties props = new Properties();
+ 
+ 			try {
+				props.load(context.getResourceAsStream(aServiceConfigFile));
+ 			} catch (IOException exc) {
+ 				if (context != null)
+ 					context.log("ServiceManager: File \"" + aServiceConfigFile
+ 							+ "\" cannot be found or read.");
+ 				throw new Exception("ServiceManager: File \"" + aServiceConfigFile
+ 						+ "\" cannot be found or read.");
+ 			}
+ 
+ 			int numAll = 0;
+ 			int numSuccessful = 0;
+ 
+			for (Iterator iter = props.names(); iter.hasNext();) {
+ 				String serviceBaseName = (String) iter.next();
+ 
+ 				if (serviceBaseName.equals(theService)) {
+ 					context.log("ServiceManager: Service "+theService+" FOUND!!");
+ 					numAll++;
+ 
+ 					// ty to get hold of the base service
+ 					Class serviceBase;
+ 					try {
+ 						serviceBase = Class.forName(serviceBaseName);
+ 					} catch (ClassNotFoundException exc) {
+ 						if (context != null)
+							context.log("ServiceManager: A service with name "
+							+ serviceBaseName + " cannot be found.");
+ 						continue;
+ 					}
+ 
+ 					String serviceImplName = props.getString(serviceBaseName);
+ 					Class serviceImpl = null;
+ 					Service service = null;
+ 					try {
+ 						serviceImpl = Class.forName(serviceImplName);
+ 						service = (Service) serviceImpl.newInstance();
+ 						Properties serviceProps = new Properties();
+ 						try {
+ 							InputStream is = null;
+ 							is = context.getResourceAsStream(aServiceConfigDir
+							+ StringUtils.nameOf(serviceImpl)
+							+ ".properties");
+ 							if (is == null)
+ 								is = context.getResourceAsStream(aServiceConfigDir
+							+ StringUtils.nameOf(serviceBase)
+							+ ".properties");
+ 							if (is != null)
+								serviceProps.load(is);
+ 						} catch (IOException exc) {
+ 							// ignore -- we go without properties then
+ 						}
+ 						if (context != null)
+							context.log(StringUtils.nameOf(serviceBase)
+							+ " initializing...");
+ 
+ 						service.init(aConfig, serviceProps);
+ 
+ 						if (context != null)
+							context.log(StringUtils.nameOf(serviceBase) + " done.");
+ 					} catch (ClassNotFoundException exc) {
+ 						if (context != null)
+ 							context
+						.log(
+						"ServiceManager: A service implementation with name "
+						+ serviceImplName
+						+ " cannot be found.", exc);
+ 						continue;
+ 					} catch (ClassCastException exc) {
+
+ 						if (context != null)
+							context.log("ServiceManager: Service implementation "
+							+ serviceImplName
+							+ " is not a service of the required type.",
+							exc);
+ 						continue;
+ 					} catch (InstantiationException exc) {
+ 						if (context != null)
+						context.log("ServiceManager: Service implementation "
+						+ serviceImplName + " cannot be instantiated.",
+						exc);
+ 						continue;
+ 					} catch (Exception exc) {
+ 						if (context != null)
+ 							context
+							.log(
+							"ServiceManager: An unidentified error occurred",
+							exc);
+ 						service = null;
+ 					}
+ 
+ 					if (service != null) {
+ 						cServicesMap.put(serviceBase, service);
+ 						// build up list in reverse order for later destruction
+ 						cServicesList.add(0,service);
+ 						numSuccessful++;
+ 					}
+ 				}
+ 			}
+ 
+ 			if (context != null)
+ 				context.log("ServiceManager: Services initialized (" + numSuccessful + "/" + numAll + " successful).");
+ 			if (numSuccessful != numAll) {
+ 				throw new Exception("ServiceManager: Services initialized (" + numSuccessful + "/" + numAll + " successful).");
+ 			}
+ 		}
+ 
+ 	    public static void postHotInit(ServletConfig aConfig, String theService) {
+ 	        // avoid duplicate destruction of services
+ 
+ 	      if (cInitialized)
+ 	      {
+ 	          synchronized (ServiceManager.class)
+ 	          {
+ 	              if (cInitialized)
+ 	              {
+ 	                  cInitialized = false;
+ 	              }
+ 	              else
+ 	              {
+ 	                  return;
+ 	              }
+ 	          }
+ 	      }
+ 	      else
+ 	      {
+ 	          return;
+ 	      }
+ 
+ 	      ServletContext context = null;
+ 
+ 	      if (aConfig != null)
+ 	          context = aConfig.getServletContext ();
+ 
+ 	      // post init all services      	
+ 			try {
+ 				Service service = (Service)cServicesMap.get(Class.forName(theService));
+ 				service.postInit(aConfig);
+ 			} catch (Exception exc) {
+ 				if (context != null)
+ 					context.log("ServiceManager:Service couldn't be started (postInit) after init..",exc);
+ 	     }
+ 
+ 	   }
+   
+   //End hot deploy patch
     // --- PRIVATE MEMBERS --- //
 
     private static volatile boolean cInitialized = false;

@@ -234,4 +234,10 @@ public class PortletEntityRegistryServiceFileImpl extends PortletEntityRegistryS
     {
         return portletEntitiesKeyObjectID;
     }
+
+    //method added for hot deploy
+     public void postInit() throws Exception {
+       	PortletEntityRegistry.setPortletEntityRegistryService();
+     }
+
 }

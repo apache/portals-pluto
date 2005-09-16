@@ -32,8 +32,8 @@ import org.apache.pluto.portalImpl.services.ServiceManager;
 public class PageRegistry
 {
 
-
-    private final static PageRegistryService cService = 
+	//hot deploy patch removed final modifier
+    private static PageRegistryService cService = 
         (PageRegistryService) ServiceManager.getService (PageRegistryService.class);
 
     /**
@@ -63,4 +63,10 @@ public class PageRegistry
     public static void addFragment(Fragment fragment) throws Exception{
         cService.addFragment(fragment);
     }
+
+    //method added for hot deployment
+     public static void setRootFragment()
+     {
+        	cService = (PageRegistryService) ServiceManager.getService (PageRegistryService.class);
+     }
 }

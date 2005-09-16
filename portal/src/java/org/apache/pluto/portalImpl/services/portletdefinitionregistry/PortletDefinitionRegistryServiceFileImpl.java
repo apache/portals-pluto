@@ -320,4 +320,11 @@ public class PortletDefinitionRegistryServiceFileImpl extends PortletDefinitionR
         }
 
     }
+
+    //method added for hot deploy
+     public void postInit() throws Exception
+     {
+     	PortletDefinitionRegistry.setPortletDefinitionRegistryService();
+     }
+    
 }
