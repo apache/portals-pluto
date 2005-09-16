@@ -166,7 +166,7 @@ public class DeployWarService extends BaseAdminObject {
 		            if (appExists) {
 		            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment of the new portlet app has been successful, but the portlet app record '" + context + "' already exists in portletentityregistry.xml. " +
 		            			"This may have occurred if the portlet was previously partially deployed. If that is the case, continue with this screen and the next to register the portlet in pageregistry.xml. " +
-		            			"If you are deploying a previously deployed portlet app, you should be able to see your changes if you select the portlet from the navigation bar. " +
+		            			"If you are deploying a previously deployed portlet app, click on the 'Deploy War home' link below and then the 'Hot deploy . . .' link on the resulting page to see your redeployed portlet. " +
 		            			"However, caching of the old app may require that you restart Pluto to see the new changes.", PortletMessageType.INFO));
 		            } else {
 		            	request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment and addition to portletentityregistry.xml successful.", PortletMessageType.SUCCESS));
