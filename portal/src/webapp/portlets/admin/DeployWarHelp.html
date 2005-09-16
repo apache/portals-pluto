@@ -47,7 +47,7 @@ application. If the portlet app only contains one portlet, then keep the default
 one row, one column. The description field on that page is optional.
 JavaScript validation is done on this page to make sure that the layout
 (rows and columns) can accomodate the number of portlets in the portlet
-application that is being deployed
+application that is being deployed.
 </li>
 <li class="portlet-font">Click submit. The Define Page Layout page should be displayed next.
 </li>
@@ -56,8 +56,8 @@ application that is being deployed
 <li class="portlet-font">Click Submit. The pageregistry.xml file should be updated and the first
 page of the Deploy War portlet displayed. You will also notice new records in the Portlet Entity Registry and Page Registry portlets.
 </li>
-<li class="portlet-font">Restart Pluto and you will notice a link to the new portlet on Pluto's
-navigation bar.
+<li class="portlet-font">Click on the "Hot deploy 'myportlet' portlet application" link to hot deploy the portlet. 
+The new portlet and navigation link will then appear.
 </li>
 </ol>
 
@@ -72,11 +72,9 @@ porletentityregistry.xml or portletcontexts.txt. You should skip the following
 two pages that set page layout because they cannot be changed at this time.
 </p>
 <p class="portlet-font">
-Once the portlet has been redeployed, the Tomcat console (standard output) should show a 'Reloading context' message.
-This indicates that the deployment is done. If that does not occurr, we have found that clicking on the
-Admin link in Pluto's menu helps refresh the cache. Then you
-can click on the portlet's link in the Pluto portal. If the portlet is not refreshed, try
-clearing your browser cache and/or restarting Pluto. Pluto's
+Click the 'Deploy War home' link to return to the Deploy War start page. On that page click on the 'Hot deploy . . .' 
+link on the bottom of the portlet to be redirected to the redeployed portlet application. 
+If the portlet is not refreshed, try clearing your browser cache and/or restarting Pluto. Pluto's
 portal, which uses Tomcat, also contains a cache of the portlet contents
 within its 'work' directory. This can be deleted after the portal is shutdown
 to clear the old content.
