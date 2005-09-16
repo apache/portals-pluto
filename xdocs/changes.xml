@@ -11,6 +11,7 @@
   <action dev="ddewolf" type="fix">PLUTO 157: portlet.tld taglib is using jsp version 1.1. JSR168 spec requires JSP version 1.2</action>
   <action dev="ddewolf" type="fix">PLUTO 152: Support maven deployment to a remote repository</action>
   <action dev="ddewolf" type="fix">PLUTO 130: portlet:namespace fails inside JSTL c:set</action>
+  <action dev="cdoremus" type="fix">PLUTO-107: Admin portlet fails to add page. Hot deployment now supported.</action>
   <action dev="cdoremus" type="fix">PLUTO-92: Deployer strips elements from web.xml (Deploy War Portlet)</action>
 </release>
 
