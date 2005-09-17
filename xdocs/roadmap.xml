@@ -43,11 +43,10 @@ limitations under the License.
     Pluto's implementation.  The suggestion centers around the
     complexity of the current implementation and a desire to
     make Pluto more "container like". 
-    <a href="1.1/index.html">Pluto 1.1</a>, a second
-    generation implementation, is an attempt to do just that.
-    It uses the <a href="http://www.springframework.org/">Spring Framework</a>     
-    to make the portlet container and portal easier to set up,
-    modify and use.
+    Pluto 1.1, a second generation implementation, is an attempt
+    to do just that.
+    See the <a href="1.1/index.html">Pluto 1.1 section</a> of
+    the online documentation for more details.
   </p>
   </subsection>
 
@@ -62,7 +61,7 @@ limitations under the License.
     <li>Support custom portlet modes and window states.</li>
     <li>Enable PortletURL.setSecure</li>
     <li>Create Windows Installer</li>
-    <li>Enhance admin portlets to support hot deployment and allow runtime changes in portlet app layout</li>
+    <li>Enhance admin portlets to support runtime changes in portlet app layout</li>
     <li>Support themes or skins for the Portal</li>
     </ul>
   </p>
