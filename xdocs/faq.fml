@@ -58,7 +58,7 @@ limitations under the License.
 
   <faq id="matching">
   <question><b>
-    Do Pluto Versions corespond with Portlet Specification
+    Do Pluto Versions correspond with Portlet Specification
     Versions.
   </b></question>
   <answer>
@@ -97,11 +97,39 @@ limitations under the License.
       Portal implementation, try checking out
       <a href="http://portals.apache.org/jetspeed-2">Jetspeed</a>.</p>
    <p>Need more information about the difference between a Portal
-      and a Portlet Container?  Take a look at the
-      <A href="#container">next question.</A></p>
+      and a Portlet Container?  Take a look at
+      <A href="#container">this question.</A></p>
    </answer>
    </faq>
 
+  <faq id="admin-portlet-app">
+  <question><b>
+    How do I use the Admin Portlet Application to deploy custom portlets?
+  </b></question>
+  <answer>
+  <p>
+	Click on the Admin link on the Pluto navigation bar and select the Help mode (help link) in the Deploy
+	War Admin Portlet. The resulting page will display information on the deployment of custom portlets 
+	and troubleshooting issues with deployment. 
+  </p>
+  </answer>
+  </faq>
+  
+  <faq id="deployment-crash">
+  <question><b>
+    I deployed a custom portlet and Pluto crashed! What do I do?
+  </b></question>
+  <answer>
+  <p>
+	If deployment of a portlet causes an error that breaks Pluto, manually
+	undeploy the portlet by removing its record from portletentityregistry.xml, pageregistry.xml and 
+	portletcontexts.txt in the webapps/pluto/WEB-INF/data directory and restart Pluto.
+  </p>
+  <p>
+  	Also take a look at the <a href="#logs">log files</a>.
+  </p>
+  </answer>
+  </faq>
 </part>
 
 <part id="embed">
@@ -324,6 +352,16 @@ limitations under the License.
 
 	<part id="problems">
 		<title>Common Problems</title>
+		<faq id="logs">
+			<question><b>Pluto is driving me crazy! How do I find out what went wrong?</b></question>
+			<answer>
+				<p>
+				It's a good idea to check the date-stamped pluto.log file in the logs directory to help debug any problems 
+				you are having with Pluto. Other log files in that directory might also be helpful. Look at the timestamp 
+				of the log files and check them in reverse chronological order.
+				</p>
+			</answer>
+		</faq>
 		<faq id="NullPointerException">
 			<question><b>NullPointerException: org.apache.pluto.invoker.impl.PortletInvokerImpl.invoke</b></question>
 			<answer>
