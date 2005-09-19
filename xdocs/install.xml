@@ -219,9 +219,11 @@ portlets to their proper place and updates the registries.
   of rows and columns you desire for laying out the portlets. Click on Submit</li>
   <li>In the resulting page, select from the drop downs which portlet will be deployed 
   in a particular row and column. Click on Submit.</li>
-  <li>Restart Pluto. The Title you entered for your custom portlet app should appear
-  in Pluto's navigation. Clicking on this link should bring up your portlet app.</li>
+  <li>After returning to the Deploy War Portlet 'home page', click on the blue 'Hot deploy . . .' 
+  link to hot deploy the new portlet app and get redirected to its page.</li>
   </ul>
+  <p>Check out the Deploy War Portlet's help mode (help link) for information 
+  on redeploying and undeploying portlets and troubleshooting problems.</p>
 </subsection>
 </section>
 
