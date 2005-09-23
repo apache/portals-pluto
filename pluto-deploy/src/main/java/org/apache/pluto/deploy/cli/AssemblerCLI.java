@@ -91,8 +91,8 @@ public class AssemblerCLI {
 
     public void abort() {
         HelpFormatter help = new HelpFormatter();
-        help.setArgName("webapp");
-        help.setWidth(60);
+        help.defaultArgName = "webapp";
+        help.defaultWidth = 60;
         help.printHelp("assemble", options);
     }
 
