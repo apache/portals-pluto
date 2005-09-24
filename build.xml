@@ -17,10 +17,10 @@ limitations under the License.
 -->
 <project default="all" name="pluto-project" basedir=".">
 
-	<target name="all" depends="api, container, portal">
+	<target name="all" depends="api, descriptors, container, portal">
 	</target>
 
-	<target name="clean" depends="api-clean, container-clean, portal-clean">
+	<target name="clean" depends="api-clean, descriptors-clean, container-clean, portal-clean">
 	</target>
 
 	<target name="api">
@@ -31,7 +31,15 @@ limitations under the License.
 		<ant antfile="build.xml" dir="api" target="clean" inheritAll="false" />
 	</target>
 
-	<target name="container" depends="api">
+	<target name="descriptors" depends="api">
+		<ant antfile="build.xml" dir="descriptors" target="jar" inheritAll="false" />
+	</target>
+
+	<target name="descriptors-clean">
+		<ant antfile="build.xml" dir="descriptors" target="clean" inheritAll="false" />
+	</target>
+
+	<target name="container" depends="api, descriptors">
 		<ant antfile="build.xml" dir="container" target="jar" inheritAll="false" />
 	</target>
 
