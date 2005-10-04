@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!-- 
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+  <properties>
+    <author email="david.AT.daviddewolf.DOT.com">David H. DeWolf</author>
+    <author email="cdoremus.AT.hannaford.DOT.com">Craig Doremus</author>
+    <title>Pluto Project Roadmap</title>
+  </properties>
+
+<body>
+<section name="Roadmap">
+  <p>
+     Interested in getting involved?  Looking for a place to start? 
+     This document is inteded to assist you in figuring out what to do.
+  </p>
+
+  <subsection name="Where We're Headed">
+  <p>
+    Having recently graduated from the incubator, the first
+    goal of our community is the release a binary version of
+    the Pluto Container.  This binary release will be based
+    upon the initial Pluto contribution which was donated by
+    IBM.
+  </p>
+
+  <p>
+    Several people have suggested a revolutionary approach to
+    Pluto's implementation.  The suggestion centers around the
+    complexity of the current implementation and a desire to
+    make Pluto more "container like". 
+    Pluto 1.1, a second generation implementation, is an attempt
+    to do just that.
+    See the <a href="1.1/index.html">Pluto 1.1 section</a> of
+    the online documentation for more details.
+  </p>
+  </subsection>
+
+  <subsection name="To Do List">
+  <p>
+    <ul>
+    <li>Add more Documentation, especially for the 1.1 branch</li>
+    <li>Flush out the FAQ documentation.</li>
+    <li>Support User Information Attributes.</li>
+    <li>Enable user-specific Portlet Preferences as required by the spec</li>
+    <li>Add user registration to the admin portlet app to support the previous two items</li>    
+    <li>Support custom portlet modes and window states.</li>
+    <li>Enable PortletURL.setSecure</li>
+    <li>Create Windows Installer</li>
+    <li>Enhance admin portlets to support runtime changes in portlet app layout</li>
+    <li>Support themes or skins for the Portal</li>
+    </ul>
+  </p>
+  </subsection>
+  </section>
+
+</body>
+</document>
+

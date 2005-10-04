@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4" relativePaths="true" type="J2EE_WEB_MODULE" j2ee-integration="Generic Application Server">
+  <component name="ModuleRootManager" />
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/target/pluto-driver/WEB-INF/classes" />
+    <exclude-output />
+    <exploded url="file://$MODULE_DIR$/target/pluto-driver" />
+    <exclude-exploded />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="pluto-core" />
+    <orderEntry type="library" name="castor-0.9.5" level="application" />
+    <orderEntry type="library" name="xml-apis-2.0.2" level="application" />
+    <orderEntry type="library" name="xerces.2.4.0" level="application" />
+    <orderEntry type="library" name="commons-logging-1.0.3" level="application" />
+    <orderEntry type="library" name="servlet-api-2.3" level="application" />
+    <orderEntry type="module" module-name="descriptors" />
+    <orderEntry type="library" name="commons-cli-1.0" level="application" />
+    <orderEntry type="library" name="portlet-api-1.0" level="application" />
+    <orderEntryProperties />
+  </component>
+  <component name="WebModuleBuildComponent">
+    <setting name="EXPLODED_URL" value="file://$MODULE_DIR$/target/pluto-driver" />
+    <setting name="EXPLODED_ENABLED" value="true" />
+    <setting name="JAR_URL" value="file://" />
+    <setting name="JAR_ENABLED" value="false" />
+    <setting name="SYNC_EXPLODED_DIR" value="true" />
+    <setting name="BUILD_ON_FRAME_DEACTIVATION" value="false" />
+    <setting name="RUN_JASPER_VALIDATION" value="false" />
+  </component>
+  <component name="WebModuleProperties">
+    <containerElement type="module" name="descriptors">
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/classes" />
+    </containerElement>
+    <containerElement type="module" name="pluto-core">
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/classes" />
+    </containerElement>
+    <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/webapp/WEB-INF/web.xml" version="2.3" />
+    <webroots>
+      <root url="file://$MODULE_DIR$/src/webapp" relative="/" />
+      <root url="file://$MODULE_DIR$/src/webapp/WEB-INF" relative="/WEB-INF" />
+    </webroots>
+  </component>
+  <component name="WeblogicWebModuleProperties">
+    <option name="IS_RUN_APPC" value="false" />
+  </component>
+</module>
+

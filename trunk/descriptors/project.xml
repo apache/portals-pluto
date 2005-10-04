@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project>
+  <extend>${basedir}/../project.xml</extend>
+  <name>Pluto Descriptor Libraries</name>
+  <id>pluto-descriptors</id>
+
+  <organization>
+    <logo>/../../images/apache-portals.gif</logo>
+  </organization>
+  <logo>/../../images/pluto.png</logo>
+
+  <shortDescription>Libraries for read, writing and representing web.xml and portlet.xml descriptors.</shortDescription>
+
+  <description>
+    An object model representing the web.xml and portlet.xml
+    deployment descriptors.  Services for reading and writing
+    these entities.
+  </description>
+
+  <dependencies>
+     <dependency>
+      <id>castor</id>
+      <version>0.9.5.3</version>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+
+    <dependency>
+      <id>servletapi</id>
+      <version>2.3</version>
+      <properties>
+        <war.bundle>false</war.bundle>
+      </properties>
+    </dependency>
+  </dependencies>
+
+  <build>
+
+    <nagEmailAddress>pluto-dev@jakarta.apache.org</nagEmailAddress>
+
+    <sourceDirectory>src/java</sourceDirectory>
+    <aspectSourceDirectory/>
+
+    <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+      <resource>
+        <directory>${basedir}/src/resources</directory>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.dtd</include>
+          <include>**/*.xsd</include>
+        </includes>
+      </resource>
+
+      <resource>
+        <directory>${basedir}/src/test</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </unitTest>
+
+    <integrationUnitTestSourceDirectory>src/rttest</integrationUnitTestSourceDirectory>
+
+    <integrationUnitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+    </integrationUnitTest>
+
+
+    <resources>
+      <resource>
+        <directory>src/conf</directory>
+        <includes>
+            <include>**/*.properties</include>
+	        <include>**/*.xml</include>
+	        <include>**/*.xsd</include>
+	        <include>**/*.dtd</include>
+        </includes>
+      </resource>
+    </resources>
+    <jars/>
+  </build>
+
+</project>

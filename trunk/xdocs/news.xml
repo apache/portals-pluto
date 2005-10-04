@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<!--
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+  <properties>
+    <author email="ddewolf.aT.apache.D0t.org">David H. DeWolf</author>
+    <author email="cdoremus.aT.hannaford.D0t.com">Craig Doremus</author>
+    <title>Pluto Project News and Status</title>
+  </properties>
+
+<body>
+  <section name="News">
+    <subsection name="18 September 2005 - Portals Pluto 1.0.1 General Availability Released">
+    <p>
+      The Apache Pluto Community is proud to announce the
+	  General Availablility release of Pluto 1.0.1, the reference
+	  implementation of the Java Portlet Specification (JSR-168).
+	</p>  
+    <p>
+    	Nearly all the outstanding bugs have been fixed in this release.
+    	In addition, the Admin Portlet Application now supports
+    	hot deployment of custom portlets.
+    </p>
+	</subsection>
+    <subsection name="24 July 2005 - Portals Pluto 1.0.1-rc4 Released">
+
+	</subsection>
+    <subsection name="11 July 2005 - Portals Pluto 1.0.1-rc3 Released">
+     <p>
+      The Apache Pluto Community is proud to announce the release
+      of Apache Pluto 1.0.1-rc-2: the third binary release of the
+      reference implementation of the Java Portlet Specification.
+     </p>
+	 <p>
+      The third release candidate contains several bug fixes and 
+	  will be followed by a general availability of Pluto 1.0.1.
+	  In addition to bug fixes, the release contains a new administrative
+	  portlet which can be used to deploy portlets.
+     </p>
+    </subsection>
+    <subsection name="22 December 2004 - Portals Pluto 1.0.1-rc2 Released">
+     <p>
+      The Apache Pluto Community is proud to announce the release
+      of Apache Pluto 1.0.1-rc-2: the second binary release of the
+      reference implementation of the Java Portlet Specification.
+     </p>
+     <p>
+      Community feedback will decide if a further release candidate
+      is required before a final release.
+     </p>
+     <p>
+      The Java Portlet Specification defines a Portlet API
+      very similar to the Servlet API. The API provides a means
+      for aggregating disperate content sources.  The specification
+      addresses security and personalization considerations and
+      defines a standard with which these sources, or portlets
+      can be deployed.
+     </p>
+     <p>
+      Pluto is an embedable portlet container which will typically
+      be bundled within a fully functional Portal.  The Pluto
+      community has developed a simple portal driver implementation
+      which allows for the testing and development of portlets with
+      the container.  The Pluto testsuite is an implementation
+      agnostic portlet application which tests several basic
+      operations of the container in which it is deployed.
+     </p>
+     <p>
+      The distribution is organized into four releases:
+      <ul>
+       <li>
+        1. A binary distribution bundled with Tomcat. This distribution is the easiest to install.
+       </li>
+       <li>
+        2. A source distribution.
+       </li>
+       <li>
+        3. A binary distribution containing the container library.
+       </li>
+       <li>
+        4. A binary tools distribution with the portal driver and
+           testsuite.
+       </li>
+      </ul>
+     </p>
+    </subsection>
+    <subsection name="8 October 2004 - Portals Pluto 1.0.1-rc1 Released">
+     <p>
+      The Apache Pluto Community is proud to announce the release
+      of Apache Pluto 1.0.1-rc-1: the first binary release of the
+      reference implementation of the Java Portlet Specification.
+     </p>
+     <p>
+      Pluto 1.0.1-rc-1 is considered a release candidate.  The
+      promotion of this release candidate to general availability
+      is expected within the few weeks, pending feedback from
+      the community.
+     </p>
+     <p>
+      The Java Portlet Specification defines a Portlet API
+      very similar to the Servlet API. The API provides a means
+      for aggregating disperate content sources.  The specification
+      addresses security and personalization considerations and
+      defines a standard with which these sources, or portlets
+      can be deployed.
+     </p>
+     <p>
+      Pluto is an embedable portlet container which will typically
+      be bundled within a fully functional Portal.  The Pluto
+      community has developed a simple portal driver implementation
+      which allows for the testing and development of portlets with
+      the container.  The Pluto testsuite is an implementation
+      agnostic portlet application which tests several basic
+      operations of the container in which it is deployed.
+     </p>
+     <p>
+      The distribution is organized into four releases:
+      <ul>
+       <li>
+        1. A binary distribution bundled with Tomcat. This distribution is the easiest to install.
+       </li>
+       <li>
+        2. A source distribution.
+       </li>
+       <li>
+        3. A binary distribution containing the container library.
+       </li>
+       <li>
+        4. A binary tools distribution with the portal driver and
+           testsuite.
+       </li>
+      </ul>
+     </p>
+    </subsection>
+    <subsection name="September 2004 - Releasing Pluto">
+      <p>The Pluto Team is currently working on the first public release
+        which is expected by the end of September.
+      </p>
+    </subsection>
+    <subsection name="July/August 2004 - Pluto moved out of the Incubator">
+      <p>The Pluto Project is now a sub project under the portals PMC and
+       has moved out of the incubator. This move comes with some changes
+       regarding mailing addresses etc. In addition Pluto now uses Subversion
+       instead of CVS.
+      </p>
+    </subsection>
+    <subsection name="May 2004 - Pluto moved issues to JIRA">
+      <p>As most projects in the ASF, we are superseding Bugzilla and
+	using JIRA to manage project issues. New URL for
+	<a href="http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10560">Pluto issues</a>.</p>
+    </subsection>
+    <subsection name="21 March 2004 - Pluto Declaration of Intent Finalized">
+      <p>The Pluto Community has finalized a declaration of intent which
+         clarifies the direction with which Pluto development will
+         move forward.
+      </p>
+    </subsection>
+
+    <subsection name="27 February 2004 - Pluto SubProject Documentation Available">
+      <p>The maven subproject documentation is now being generated and included
+         in the Pluto documentation builds.</p>
+    </subsection>
+
+  <subsection name="10 November 2003 - Pluto Gets a Face Lift">
+  <p>Pluto is now managed by maven and it's website has subsequently recieved
+     a face lift. http://jakarta.apache.org/pluto now contains additional
+     information that should be helpfull in establishing this community.
+  </p>
+  </subsection>
+  <subsection name="9 November 2003 - Pluto added to Bugzilla">
+  <p>Pluto has been added to Bugzilla
+     <A href="http://issues.apache.org/bugzilla">(http://issues.apache.org/bugzilla)</A>.
+     Issues, bugs, and enhancements will now be managed through this
+     bug database.</p>
+  </subsection>
+</section>
+
+
+</body>
+</document>
+

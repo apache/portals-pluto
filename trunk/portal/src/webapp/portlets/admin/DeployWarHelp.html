@@ -1,0 +1,125 @@
+<!--
+Copyright 2004,2005 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<h2 align="center">Deploy War Portlet Help</h2>
+
+<h3>Contents</h3>
+<p class="portlet-font">
+<a href="#deploy">Deploying portlets</a><br>
+<a href="#redeploy">Redeploying portlets</a><br>
+<a href="#undeploy">Undeploying portlets</a><br>
+<a href="#troubleshooting">Troubleshooting</a><br>
+</p>
+
+<a name="deploy"><h3>Deploying portlets</h3></a>
+<p class="portlet-font">
+The Deploy War Portlet is used to deploy new portlet applications to Pluto packaged
+in a war file. Deployment involves unzippling the war file into
+Pluto's webapps directory and adding records to the
+registry files located in <CATALINA_HOME>/webapps/pluto/WEB-INF/data (
+portletentityregistry.xml, pageregistry.xml and portletcontexts.txt). Use the following steps to deploy
+a custom portlet:
+</p>
+
+<ol>
+</li>
+<li class="portlet-font">
+Build a valid war file containing the portlet application to be deployed including a portlet.xml and web.xml
+file in the WEB-INF directory. DO NOT modify web.xml to include a reference to the PortletServlet. The
+deployer will add servlet and servlet-mapping elements related to PortletServlet.
+</li>
+<li class="portlet-font">Select the war file using the Browse button in the Deploy War
+portlet.
+</li>
+<li class="portlet-font">Click submit. The war will be deployed to Pluto's webapps directory and
+a record added to portletentityregistry.xml and portletcontexts.txt in webapp/pluto/WEB-INF/data.
+</li>
+<li class="portlet-font">Fill in the portlet's title, which will be used as a navigation link in the portal,
+and the number of rows and columns needed to display all portlets in the
+application. If the portlet app only contains one portlet, then keep the default
+one row, one column. The description field on that page is optional.
+JavaScript validation is done on this page to make sure that the layout
+(rows and columns) can accomodate the number of portlets in the portlet
+application that is being deployed.
+</li>
+<li class="portlet-font">Click submit. The Define Page Layout page should be displayed next.
+</li>
+<li class="portlet-font">In each row/column cell, select the portlet that will be displayed there.
+</li>
+<li class="portlet-font">Click Submit. The pageregistry.xml file should be updated and the first
+page of the Deploy War portlet displayed. You will also notice new records in the Portlet Entity Registry and Page Registry portlets.
+</li>
+<li class="portlet-font">Click on the "Hot deploy 'myportlet' portlet application" link to hot deploy the portlet. 
+The new portlet and navigation link will then appear.
+</li>
+</ol>
+
+<a name="redeploy"><h3>Redeploying portlets</h3></a>
+<p class="portlet-font">
+Redeployment of previously deployed portlets can be done, but the results can be
+somewhat flaky due to caching of portlet content by the Pluto portal.
+To redeploy select the war file with its new contents using the Browse
+button and click Submit.
+The new war file will be uploaded, but no changes will be made to the
+porletentityregistry.xml or portletcontexts.txt. You should skip the following
+two pages that set page layout because they cannot be changed at this time.
+</p>
+<p class="portlet-font">
+Click the 'Deploy War home' link to return to the Deploy War start page. On that page click on the 'Hot deploy . . .' 
+link on the bottom of the portlet to be redirected to the redeployed portlet application. 
+If the portlet is not refreshed, try clearing your browser cache and/or restarting Pluto. Pluto's
+portal, which uses Tomcat, also contains a cache of the portlet contents
+within its 'work' directory. This can be deleted after the portal is shutdown
+to clear the old content.
+</p>
+
+<a name="undeploy"><h3>Undeploying portlets</h3></a>
+<p class="portlet-font">
+The admin portlet app does not currently support undeployment of portlets. To undeploy a portlet,
+manually remove the record for the portlet from portletentityregistry.xml, pageregistry.xml and 
+portletcontexts.txt in the webapps/pluto/WEB-INF/data directory and restart Pluto.
+</p>
+
+<a name="troubleshooting"><h3>Troubleshooting</h3></a>
+<p class="portlet-font">
+The date-stamped pluto.log file in the logs directory is the source of any error information when things go 
+wrong in Pluto. That is the first thing you should check out if you have a problem. Other log files in
+that directory might also be helpful. It's a good idea to look at the timestamp of the log files and check them
+in reverse chronological order.
+</p>
+<p class="portlet-font">
+The main problem with deployments using the Deploy War Portlet has to do with an improperly formatted portlet.xml file. 
+The deployment process validates portlet.xml against the official XML schema. This schema validation
+checks portlet.xml for the required XML elements and the order of those elements specified by the schema.
+See PLT.21.5 in the JSR-168 specification for details on the XML schema for portlet.xml.
+</p>
+<p class="portlet-font">
+In order for the XML Schema validation to occur correctly, the portlet.xml file must have a root element
+(web-app) with all the proper attributes. The following is an example of a correct web-app element:<br/>
+&lt;portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"/&gt;
+</p>
+<p class="portlet-font">
+If hot deployment of a portlet causes the new portlet to not appear in the Pluto portal, check the pluto log file and 
+the portlet's web.xml in webapps/&lt;myportlet&gt;/WEB-INF to make sure that the PortletServlet record has been 
+properly added to the file and it has not been corrupted. Manually <a href="#undeploy">undeploy</a> the portlet 
+and restart Pluto when you fix the problems. 
+</p>
+<p class="portlet-font">
+If deployment of a new portlet causes an error that breaks Pluto, manually <a href="#undeploy">undeploy</a> the portlet 
+and restart Pluto. Make sure that your web.xml and portlet.xml file is correct and retry the deployment after you
+fix any problems.
+</p>

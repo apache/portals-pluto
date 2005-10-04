@@ -1,0 +1,152 @@
+<!-- 
+Copyright 2004, 2005 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project default="deploy" name="portlet-deploy" basedir=".">
+
+  <property file="build.properties"/>
+
+  <property name="lib.dir" value="./target/lib"/>
+
+  <!-- Primary Dependencies -->
+  <property name="pluto-descriptors" value="pluto-descriptors-1.0.1-SNAPSHOT.jar"/>
+
+  <!-- Secondary Dependencies -->
+  <property name="castor" value="castor-0.9.5.3.jar"/>
+  <property name="xerces" value="xerces-2.4.0.jar" />
+  <property name="xml-apis" value="xml-apis-2.0.2.jar" />
+
+  <!-- Secondary Dependencies: Download URLs -->
+  <property name="castor.remote" value="http://www.ibiblio.org/maven/castor/jars/${castor}"/>
+  <property name="xerces.remote" value="http://www.ibiblio.org/maven/xerces/jars/${xerces}"/>
+  <property name="xml-apis.remote" value="http://www.ibiblio.org/maven/xml-apis/jars/${xml-apis}"/>
+
+  <path id="deploy.classpath">
+    <fileset dir="${lib.dir}">
+      <include name="*.*"/>
+    </fileset>
+    <pathelement path="${basedir}/target/classes"/>
+  </path>
+
+  <target name="init">
+    <available property="pluto-descriptors-exists" file="${lib.dir}/${pluto-descriptors}"/>
+    <fail unless="pluto-descriptors-exists">
+      Error:
+      =======================================================
+      The pluto-descriptors library is not available.  If
+      you are building from a source version of pluto, you
+      must run the maven build one time prior to deployment. 
+      If you have recieved this error from a binary distribution
+      something apparently has gone wrong in the installation 
+      process.
+      =======================================================
+    </fail>
+
+    <fail unless="destination">
+      Error:
+      =======================================================
+      A deployment directory must be specified.
+      To include the deployment directory on the command line
+      please include the parameter:
+      -Ddestination=/path/to/deployment/directory
+      =======================================================
+    </fail>
+
+    <fail unless="war">
+      Error:
+      =======================================================
+      The portlet application must be specified.
+      To include the portlet application path on
+      the command line please include the parameter:
+      -Dwar=/path/to/portlet/app
+      =======================================================
+    </fail>
+
+    <fail unless="portal">
+      Error:
+      =======================================================
+      The portal application must be specified.
+      To include the portlet application path on
+      the command line please include the parameter:
+      -Dportal=/path/to/portlet/app
+      =======================================================
+    </fail>
+
+    <mkdir dir="${lib.dir}" description="Dependencies"/>
+  </target>
+
+  <target name="download">
+    <antcall target="downloadfile">
+      <param name="sourcefile" value="${castor.remote}"/>
+      <param name="destfile" value="${lib.dir}/${castor}"/>
+    </antcall>
+
+    <antcall target="downloadfile">
+      <param name="sourcefile" value="${xerces.remote}"/>
+      <param name="destfile" value="${lib.dir}/${xerces}"/>
+    </antcall>
+
+    <antcall target="downloadfile">
+      <param name="sourcefile" value="${xml-apis.remote}"/>
+      <param name="destfile" value="${lib.dir}/${xml-apis}"/>
+    </antcall>
+  </target>
+
+
+  <!-- Deploy Requires the Following Properties -->
+  <!-- 
+       + ${destination}          - the directory where the app will be exploded
+       + ${war} - the portlet application war file being deployed
+       + ${portal}  - the directory in which the portal web application exists
+  -->
+  <target name="deploy" depends="init,download">
+    <echo>
+    Deploying portlet application: ${war}
+    to directory:                  ${destination}
+    </echo>
+    <java classname="org.apache.pluto.driver.deploy.CLI" fork="yes">
+      <classpath>
+        <path refid="deploy.classpath"/>
+      </classpath>
+      <arg value="-verbose"/>
+      <arg value="-p"/><arg value="${portal}"/>
+      <arg value="-d"/><arg value="${destination}"/>
+      <arg value="${war}" />
+    </java>     
+  </target>
+
+  <!--
+  =============================================
+  Download Utility Targets.
+  =============================================
+  -->
+
+  <target name="testexist">
+    <echo message="Testing for: ${destfile}"/>
+    <available property="exists" file="${destfile}"/>
+  </target>
+
+  <target name="downloadfile" unless="exists" depends="setproxy,testexist">
+    <get src="${sourcefile}" dest="${destfile}" />
+  </target>
+
+  <target name="setproxy" if="useproxy">
+    <taskdef name="setproxy"
+      classname="org.apache.tools.ant.taskdefs.optional.net.SetProxy" />
+    <setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}"/> 
+    <echo message="Using ${proxy.host}:${proxy.port} to download ${sourcefile}"/>
+  </target>
+
+</project>
