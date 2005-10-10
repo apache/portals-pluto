@@ -52,7 +52,7 @@ public class TestPortlet extends GenericPortlet {
         if( in !=null ) {
             TestConfigFactory fact = new TestConfigFactory();
             try {
-                configs = fact.createTests(in);
+                configs = fact.createTestConfigs(in);
                 tests = new HashMap();
                 Iterator it = configs.iterator();
                 int i = 0;

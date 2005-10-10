@@ -69,8 +69,8 @@ public class TestConfigFactory {
 
     }
 
-    public List createTests(InputStream in)
+    public List createTestConfigs(InputStream in)
     throws SAXException, IOException {
-        return (List)digester.parse(in);
+        return (List) digester.parse(in);
     }
 }
