@@ -53,7 +53,7 @@ Table of Contents
      - <PLUTO_HOME>/pluto-portal/src/main/resources/pluto.xml
      - <PLUTO_HOME>/pluto-testsuite/src/main/resources/testsuite.xml
 
-    Step 5: 
+    Step 5: Copy and rename the following to <TOMCAT_HOME>/webapps
 
     - pluto-portal.war
     - pluto-testsuite.war
