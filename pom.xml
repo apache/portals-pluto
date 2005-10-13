@@ -52,6 +52,10 @@
     </mailingList>
   </mailingLists>
 
+  <!-- Email format: [name]#a@T#[domain].d0t.[extension]
+       '@' and '.' characters are added because m2 seems to need them to
+       generate mailto links.
+    -->
   <developers>
     
     <developer>
@@ -280,6 +284,7 @@
     <module>pluto-testsuite</module>
   </modules>
   
+  <!-- These two repos may cause an authentication failure during the build. -->
   <repositories>
     <repository>
       <id>m1</id>
