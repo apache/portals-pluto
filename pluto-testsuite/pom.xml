@@ -1,15 +1,18 @@
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+    <artifactId>pluto</artifactId>
+    <version>1.1-SNAPSHOT</version>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.pluto</groupId>
   <artifactId>pluto-testsuite</artifactId>
   <packaging>war</packaging>
   <name>Pluto Testsuite Portlet</name>
   <url>http://portals.apache.org/pluto</url>
-  <parent>
-    <groupId>org.apache.pluto</groupId>
-	<artifactId>pluto</artifactId>
-	<version>1.1-SNAPSHOT</version>
-  </parent>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -17,35 +20,35 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-	<dependency>
+    <dependency>
       <groupId>commons-digester</groupId>
-	  <artifactId>commons-digester</artifactId>
-	  <version>1.7</version>
-	  <scope>compile</scope>
+      <artifactId>commons-digester</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
     </dependency>
-	<dependency>
-      <groupId>portlet-api</groupId>
-	  <artifactId>portlet-api</artifactId>
-	  <version>1.0</version>
-	  <scope>provided</scope>
+    <dependency>
+      <groupId>javax.portlet</groupId>
+      <artifactId>portlet-api</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
     </dependency>
-	<dependency>
-      <groupId>servletapi</groupId>
-	  <artifactId>servletapi</artifactId>
-	  <version>2.3</version>
-	  <scope>provided</scope>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
     </dependency>
-	<dependency>
+    <dependency>
       <groupId>jstl</groupId>
-	  <artifactId>jstl</artifactId>
-	  <version>1.1.2</version>
-	  <scope>compile</scope>
+      <artifactId>jstl</artifactId>
+      <version>1.1.2</version>
+      <scope>compile</scope>
     </dependency>
-	<dependency>
+    <dependency>
       <groupId>taglibs</groupId>
-	  <artifactId>standard</artifactId>
-	  <version>1.0.4</version>
-	  <scope>compile</scope>
+      <artifactId>standard</artifactId>
+      <version>1.0.4</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <build>
