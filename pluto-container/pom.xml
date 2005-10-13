@@ -67,11 +67,27 @@
       </resource>
     </resources>
     <plugins>
+
+      <!-- Assembly Plugin - Create Distributions -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptor>src/assemble/bin.xml</descriptor>
           <finalName>pluto-container-1.1.0-SNAPSHOT</finalName>
+        </configuration>
+      </plugin>
+
+      <!-- Surefire Plugin - Exec Tests -->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+	<version>2.0-beta-1</version>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/PlutoTestCase.java</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>
