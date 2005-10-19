@@ -24,17 +24,22 @@ limitations under the License.
 
 <body>
   <section name="News">
-    <subsection name="18 September 2005 - Portals Pluto 1.0.1 General Availability Released">
+    <subsection name="19 October 2005 - Portals Pluto 1.0.1 General Availability Released">
     <p>
       The Apache Pluto Community is proud to announce the
-	  General Availablility release of Pluto 1.0.1, the reference
-	  implementation of the Java Portlet Specification (JSR-168).
+	  first general availablility release of Apache Pluto - pluto 1.0.1.
+	  Pluto is the reference implementation of the Java Portlet 
+	  Specification (JSR-168).
 	</p>  
     <p>
-    	Nearly all the outstanding bugs have been fixed in this release.
-    	In addition, the Admin Portlet Application now supports
-    	hot deployment of custom portlets.
+		Pluto 1.0.1 contains fixes for nearly all reported bugs
+		and supports hot deployment of Portlets through the 
+		Administrative tools provided with the Portal Driver.
     </p>
+	<p>
+      Pluto 1.0.1 distributions can be accessed from:
+	  <a href="http://portals.apache.org/pluto/mirrors.cgi">http://portals.apache.org/pluto/mirrors.cgi</a>
+	</p>
 	</subsection>
     <subsection name="24 July 2005 - Portals Pluto 1.0.1-rc4 Released">
 
