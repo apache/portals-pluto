@@ -27,14 +27,14 @@ Table of Contents
 2a) Maven Installation:
 -----------------------------------------
 
-    Step 1: 'm2 install'
+    Step 1: 'mvn install'
     Step 2: 'cd ../pluto-installer'
-    Step 3: 'm2 pluto:install'
+    Step 3: 'mvn pluto:install'
 
 2b) Manual Installation:
 -----------------------------------------
 
-    Step 1: 'm2 install'
+    Step 1: 'mvn install'
     Step 2: Copy the following to <TOMCAT_HOME>/shared/lib
 
      - castor-0.9.6
