@@ -284,7 +284,7 @@
     <module>pluto-testsuite</module>
   </modules>
   
-  <!-- These two repos may cause an authentication failure during the build. -->
+  <!-- These two repos may cause an authentication failure during the build.
   <repositories>
     <repository>
       <id>m1</id>
@@ -297,22 +297,25 @@
       <url>scp://people.apache.org/home/ddewolf/public_html/m2</url>
     </repository>
   </repositories>
-  
+   -->
+   
   <distributionManagement>
     <site>
       <id>website</id>
       <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/</url>
     </site>
     <!-- To set credentials, add m1 server to ${user.home}/.m2/settings.xml -->
+<!--    
     <repository>
       <id>m1</id>
       <name>Maven 1 Repository</name>
       <url>scp://cvs.apache.org/www/cvs.apache.org/repository</url>
       <layout>legacy</layout>
+ -->      
       <!-- snapshotPolicy>always</snapshotPolicy -->
       <!-- checksumPolicy>warn</checksumPolicy -->
-    </repository>
     <!--
+    </repository>
     Deploying to multiple repos does not currently
     work.  To deploy to this repo, comment out the
         m1 repo and uncomment this.
