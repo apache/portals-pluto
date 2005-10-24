@@ -53,6 +53,7 @@
   </dependencies>
   <build>
     <finalName>pluto-testsuite</finalName>
+    <!--
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -63,5 +64,6 @@
         </configuration>
       </plugin>
     </plugins>
+    -->  
   </build>
 </project>
