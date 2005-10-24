@@ -35,6 +35,7 @@
     </notifiers>
   </ciManagement>
   <inceptionYear>2003</inceptionYear>
+
   <mailingLists>
     <mailingList>
       <name>Pluto User List</name>
@@ -50,6 +51,14 @@
       <post>pluto-dev@portals.apache.org</post>
       <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-dev</archive>
     </mailingList>
+
+    <mailingList>
+      <name>Pluto SCM List</name>
+      <subscribe>pluto-scm-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-scm-unsubscribe@portals.apache.org</unsubscribe>
+      <post>pluto-scm@portals.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-scm</archive>
+    </mailingList>
   </mailingLists>
 
   <!-- Email format: [name]#a@T#[domain].d0t.[extension]
@@ -57,148 +66,10 @@
        generate mailto links.
     -->
   <developers>
-    
-    <developer>
-      <name>Jeffrey D. Brekke</name>
-      <id/>
-      <email>ekkerbj#a@T#netscape.d0t.net</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Santiago Gala</name>
-      <id/>
-      <email>sgala#a@T#hisitech.d0t.com</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Raphael Luta</name>
-      <id/>
-      <email>raphael#a@T#apache.d0t.org</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Neeme Praks</name>
-      <id/>
-      <email>neeme#a@T#one.d0t.lv</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Jeff Prickett</name>
-      <id>prickett</id>
-      <email>jeffprickett#a@T#mindspring.d0t.com</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Ingo Schuster</name>
-      <id>ingo</id>
-      <email>ingo#a@T#raleigh.d0t.ibm.d0t.com</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Paul Spencer</name>
-      <id>paulsp</id>
-      <email>paulsp#a@T#apache.d0t.org</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>David S. Taylor</name>
-      <id>taylor</id>
-      <email>david#a@T#bluesunrise.d0t.com</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Kevin A. Burton</name>
-      <id>burton</id>
-      <email>burton#a@T#relativity.d0t.yi.d0t.org</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Chris Kimpton</name>
-      <id>kimptoc</id>
-      <email>kimptoc.d0t.mail#a@T#bigfoot.d0t.com</email>
-      <organization/>
-    </developer>
-    
-    <developer>
-      <name>Jason van Zyl</name>
-      <id>jvanzyl</id>
-      <email>jason#a@T#zenplex.d0t.com</email>
-      <organization>Zenplex</organization>
-    </developer>
-    
-    <developer>
-      <name>Mark Orciuch</name>
-      <id>morciuch</id>
-      <email>morciuch#a@T#apache.d0t.org</email>
-    </developer>
-    
-    <developer>
-      <name/>
-      <id>ggolden</id>
-      <email/>
-    </developer>
-    
-    <developer>
-      <name/>
-      <id>shesmer</id>
-      <email/>
-    </developer>
-    
-    <developer>
-      <name/>
-      <id>nacho</id>
-      <email/>
-    </developer>
-    
-    <developer>
-      <name/>
-      <id>akempf</id>
-      <email/>
-    </developer>
-    
-    <developer>
-      <name>Scott T. Weaver</name>
-      <id>weaver</id>
-      <email>weaver#a@T#apache.d0t.org</email>
-    </developer>
-    
-    <developer>
-      <name/>
-      <id>jford</id>
-      <email/>
-    </developer>
-
-    <developer>
-      <name/>
-      <id>aurelien</id>
-      <email/>
-    </developer>
-
-    <developer>
-      <name/>
-      <id>rubys</id>
-      <email/>
-    </developer>
-
     <developer>
       <name>Michael Blum</name>
       <id>blumm</id>
       <email>blumm#a@T#apache.d0t.org</email>
-    </developer>
-
-    <developer>
-      <name>Stefan Hepper</name>
-      <id>sthepper</id>
-      <email>sthepper#a@T#apache.d0t.org</email>
     </developer>
 
     <developer>
@@ -284,41 +155,20 @@
     <module>pluto-testsuite</module>
   </modules>
   
-  <!-- These two repos may cause an authentication failure during the build.
-  <repositories>
-    <repository>
-      <id>m1</id>
-      <name>Maven 1 Repository</name>
-      <url>scp://cvs.apache.org/repository</url>
-    </repository>
-    <repository>
-      <id>m2</id>
-      <name>Maven 2 Repository</name>
-      <url>scp://people.apache.org/home/ddewolf/public_html/m2</url>
-    </repository>
-  </repositories>
-   -->
-   
   <distributionManagement>
     <site>
       <id>website</id>
-      <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/</url>
+      <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/1.1</url>
     </site>
-    <!-- To set credentials, add m1 server to ${user.home}/.m2/settings.xml -->
-<!--    
+
     <repository>
       <id>m1</id>
       <name>Maven 1 Repository</name>
       <url>scp://cvs.apache.org/www/cvs.apache.org/repository</url>
       <layout>legacy</layout>
- -->      
-      <!-- snapshotPolicy>always</snapshotPolicy -->
-      <!-- checksumPolicy>warn</checksumPolicy -->
-    <!--
     </repository>
-    Deploying to multiple repos does not currently
-    work.  To deploy to this repo, comment out the
-        m1 repo and uncomment this.
+
+  <!--
     <repository>
       <id>m2</id>
       <name>Maven 2 Repository</name>
@@ -327,10 +177,31 @@
       <layout>default</layout>
       <checksumPolicy>warn</checksumPolicy>
     </repository>
-    -->
+   -->
   </distributionManagement>
 
 
-
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+      <!--
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clover-plugin</artifactId>
+      </plugin>
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 
 </project>
