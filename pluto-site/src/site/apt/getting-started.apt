@@ -17,12 +17,12 @@ Getting Started
 
 ---------------
 $> cd <PLUTO-1.1-HOME>
-$> m2 install
+$> mvn install
 $> cd ../pluto-util
-$> m2 pluto:install
+$> mvn pluto:install
 ---------------
 
-  The m2 install goal is a built in Maven2 lifecycle which
+  The mvn install goal is a built in Maven2 lifecycle which
   builds the project artifacts and installs them into the
   Maven repository.
   
@@ -36,7 +36,7 @@ $> m2 pluto:install
 
 ---------------
 $> cd <PLUTO-1.1-HOME>
-$> m2 install
+$> mvn install
 ---------------
 
   Step 2: Copy the following to <TOMCAT_HOME>/shared/lib
