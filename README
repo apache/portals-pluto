@@ -28,7 +28,7 @@ Table of Contents
 -----------------------------------------
 
     Step 1: 'mvn install'
-    Step 2: 'cd ../pluto-installer'
+    Step 2: 'cd ../pluto-util'
     Step 3: 'mvn pluto:install'
 
 2b) Manual Installation:
