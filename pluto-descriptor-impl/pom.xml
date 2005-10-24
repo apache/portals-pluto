@@ -18,11 +18,7 @@
     <resources>
       <resource>
         <directory>src/resources/xml</directory>
-        <includes>
-          <include>**/*.xml</include>
-          <include>**/*.dtd</include>
-          <include>**/*.xsd</include>
-        </includes>
+        <includes name="*"/>
       </resource>
     </resources>
     <testResources>
