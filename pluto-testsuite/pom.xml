@@ -52,7 +52,7 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>testsuite</finalName>
+    <finalName>pluto-testsuite</finalName>
     <!--
     <plugins>
       <plugin>
