@@ -17,7 +17,19 @@
     <menu name="Pluto 1.1">
       <item name="Introduction" href="/index.html"/>
       <item name="Getting Started" href="/getting-started.html"/>
+      <item name="Supported App Servers" href="/app-servers.html"/>
     </menu>
+
+	<menu name="Subprojects" collapsed="true">
+        <item name="Portlet Container" href="/pluto-container/index.html"/>
+        <item name="Pluto Portal Driver" href="/pluto-container/index.html"/>
+        <item name="Pluto Portal" href="/pluto-container/index.html"/>
+
+        <item name="Pluto Descriptor API" href="/pluto-descriptor-api/index.html"/>
+        <item name="Pluto Descriptor Impl" href="/pluto-descriptor-impl/index.html"/>
+        <item name="Pluto Deploy" href="/pluto-deploy/index.html"/>
+        <item name="Pluto Util" href="/pluto-container/index.html"/>
+	</menu>
 
     ${reports}
   </body>
