@@ -81,9 +81,11 @@
     <developer>
       <name>David DeWolf</name>
       <id>ddewolf</id>
-      <email>ddewolf#a@T#apache.d0t.org</email>
+      <email>ddewolf@apache.org</email>
       <timezone>-4</timezone>
+	  <url>http://www.daviddewolf.com</url>
       <organization>Digital Focus</organization>
+	  <organizationUrl>http://www.digitalfocus.com</organizationUrl>
       <roles><role>Java Developer</role></roles>
     </developer>
 
@@ -104,6 +106,40 @@
       <id>zheng</id>
       <email>zheng#a@T#apache.d0t.org</email>
     </developer>
+
+     <developer> 	 
+       <name>Santiago Gala</name> 	 
+       <id/> 	 
+       <email>sgala#a@T#hisitech.d0t.com</email> 	 
+       <organization/> 	 
+     </developer>
+
+     <developer> 	 
+       <name>Raphael Luta</name> 	 
+       <id/> 	 
+       <email>raphael#a@T#apache.d0t.org</email> 	 
+       <organization/> 	 
+     </developer>
+
+     <developer> 	 
+       <name>David S. Taylor</name> 	 
+       <id>taylor</id> 	 
+       <email>david#a@T#bluesunrise.d0t.com</email> 	 
+       <organization/> 	 
+     </developer>
+
+     <developer> 	 
+       <name>Scott T. Weaver</name> 	 
+       <id>weaver</id> 	 
+       <email>weaver#a@T#apache.d0t.org</email> 	 
+     </developer>
+
+	 <developer>
+       <name>Stefan Hepper</name> 	 
+       <id>sthepper</id> 	 
+       <email>sthepper#a@T#apache.d0t.org</email> 	 
+     </developer>
+	
   </developers>
 
   <contributors>
