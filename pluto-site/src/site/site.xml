@@ -3,7 +3,7 @@
   <bannerLeft>
     <name>Pluto</name>
     <src>http://portals.apache.org/pluto/images/apache-portals.gif</src>
-    <href>http://maven.apache.org/</href>
+    <href>http://portals.apache.org/pluto</href>
   </bannerLeft>
   <bannerRight>
     <src>http://portals.apache.org/pluto/images/pluto.png</src>
