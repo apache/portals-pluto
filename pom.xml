@@ -23,7 +23,7 @@
 
   <issueManagement>
     <system>jira</system>
-    <url>http://jira.codehaus.org/browse/PLUTO</url>
+    <url>http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10560</url>
   </issueManagement>
   <ciManagement>
     <system>continuum</system>
