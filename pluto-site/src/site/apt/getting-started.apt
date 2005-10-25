@@ -19,7 +19,7 @@ Getting Started
 $> cd <PLUTO-1.1-HOME>
 $> mvn install
 $> cd ../pluto-util
-$> mvn pluto:install
+$> mvn pluto:install -DinstallDir=path/to/appserver
 ---------------
 
   The mvn install goal is a built in Maven2 lifecycle which

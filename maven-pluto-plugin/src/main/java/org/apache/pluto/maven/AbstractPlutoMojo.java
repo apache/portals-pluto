@@ -27,11 +27,13 @@ import java.io.File;
  * @since Jul 30, 2005
  */
 public abstract class AbstractPlutoMojo extends org.apache.maven.plugin.AbstractMojo {
+
     /**
-     * @parameter expression="${pluto.installation.dir}"
+     * @parameter expression="${installDir}"
      * @required
      */
     protected File installationDirectory;
+
     /**
      * @parameter expression="${project}"
      * @required
@@ -41,7 +43,12 @@ public abstract class AbstractPlutoMojo extends org.apache.maven.plugin.Abstract
 
     public void execute() throws MojoExecutionException {
         if(!installationDirectory.exists() || !installationDirectory.isDirectory()) {
-            throw new MojoExecutionException("Installation Directory "+installationDirectory.getAbsolutePath()+" does not exist.");
+            StringBuffer sb = new StringBuffer();
+            sb.append("Installation directory ")
+                    .append(installationDirectory.getAbsolutePath())
+                    .append(" does not exist")
+                    .append(" Please specify your app server installation directory by using the -Dpluto.installation.dir property.");
+            throw new MojoExecutionException(sb.toString());
         }
 
         try {

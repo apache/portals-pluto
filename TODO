@@ -13,4 +13,12 @@
 4) Update NSIS and create installer
    plugin for NSIS.
 
-5) 
+5) Refactor Services
+  Combine 
+   Dynamic Info Provider,
+   PortalCallback,
+   and PropertyManager into
+
+   Single Portal Callback Service
+ 
+

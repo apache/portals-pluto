@@ -29,6 +29,7 @@ import java.util.Set;
 /**
  * @todo Enhancement.  Support installing release from repo
  * @goal install
+ * @description the pluto ApplicationServerHook goal installs the pluto portal into the specified application server
  * @requiresDependencyResolution runtime
  */
 public class InstallMojo extends AbstractInstallationMojo {
@@ -37,7 +38,15 @@ public class InstallMojo extends AbstractInstallationMojo {
 
     }
 
-    public InstallMojo(MavenProject project,
+    /**
+     * Constructor required by the ReinstallMojo
+     * @param project
+     * @param installationDirectory
+     * @param basedir
+     * @param host
+     * @param engine
+     */
+    protected InstallMojo(MavenProject project,
                        File installationDirectory,
                        File basedir,
                        String host, String engine) {
