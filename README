@@ -29,7 +29,7 @@ Table of Contents
 
     Step 1: 'mvn install'
     Step 2: 'cd ../pluto-util'
-    Step 3: 'mvn pluto:install'
+    Step 3: 'mvn pluto:install -DinstallDir=<PATH_TO_TOMCAT>'
 
 2b) Manual Installation:
 -----------------------------------------
