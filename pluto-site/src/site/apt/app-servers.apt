@@ -14,6 +14,7 @@ Supported App Servers
 |    App Server   |  Version   |   Status   | Notes             |
 *--           --+--        --*--        --*--                 --*
 |    Tomcat       |   5.5.9    |   WORKING  |Use pluto-util module to install the the container and portal into tomcat.   |
+|    Tomcat       |   5.5.12    |  MANUAL   |Tomcat contains a bug and does not recognize the context configuration.  Manual Installation and renaming will work.   |
 *--           --+--        --*--        --*--                 --*
 |    Jetty        |            |  UNTESTED  |                   |
 *--           --+--        --*--        --*--                 --*

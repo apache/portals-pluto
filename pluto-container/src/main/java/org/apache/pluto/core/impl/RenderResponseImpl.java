@@ -24,7 +24,7 @@ import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.PortletEntity;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.services.PortalCallbackProvider;
+import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
@@ -62,7 +62,7 @@ public class RenderResponseImpl extends PortletResponseImpl
 
     public String getContentType() {
         // in servlet 2.4 we could simply use this:
-        // return this._getHttpServletResponse().getContentType();
+        // return this.getHttpServletResponse().getContentType();
         return currentContentType;
     }
 
@@ -92,8 +92,8 @@ public class RenderResponseImpl extends PortletResponseImpl
     }
 
     public void setTitle(String title) {
-        PortalCallbackProvider callback =
-            container.getContainerServices().getPortalCallbackProvider();
+        PortalCallbackService callback =
+            container.getContainerServices().getPortalCallbackService();
 
         callback.setTitle(this.getHttpServletRequest(),
                           getInternalPortletWindow(),
@@ -105,12 +105,12 @@ public class RenderResponseImpl extends PortletResponseImpl
         if (!isValidContentType(mimeType)) {
             throw new IllegalArgumentException(mimeType);
         }
-        this._getHttpServletResponse().setContentType(mimeType);
+        this.getHttpServletResponse().setContentType(mimeType);
         currentContentType = mimeType;
     }
 
     public String getCharacterEncoding() {
-        return this._getHttpServletResponse().getCharacterEncoding();
+        return this.getHttpServletResponse().getCharacterEncoding();
     }
 
     /**
@@ -136,24 +136,24 @@ public class RenderResponseImpl extends PortletResponseImpl
     }
 
     public int getBufferSize() {
-        //return this._getHttpServletResponse().getBufferSize();
+        //return this.getHttpServletResponse().getBufferSize();
         return 0;
     }
 
     public void flushBuffer() throws java.io.IOException {
-        this._getHttpServletResponse().flushBuffer();
+        this.getHttpServletResponse().flushBuffer();
     }
 
     public void resetBuffer() {
-        this._getHttpServletResponse().resetBuffer();
+        this.getHttpServletResponse().resetBuffer();
     }
 
     public boolean isCommitted() {
-        return this._getHttpServletResponse().isCommitted();
+        return this.getHttpServletResponse().isCommitted();
     }
 
     public void reset() {
-        this._getHttpServletResponse().reset();
+        this.getHttpServletResponse().reset();
     }
 
     /**
@@ -182,7 +182,7 @@ public class RenderResponseImpl extends PortletResponseImpl
         return new PortletURLImpl(container,
                                   getInternalPortletWindow(),
                                   getHttpServletRequest(),
-                                  _getHttpServletResponse(),
+                                  getHttpServletResponse(),
                                   isAction);
 
     }

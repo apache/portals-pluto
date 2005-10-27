@@ -11,20 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface PortletContainerServices {
 
     /**
-     * Provider used to retrieve request-time services.
-     * @param req
-     * @return a DynamicInformationProvider implementation.
-     */
-    DynamicInformationProvider getDynamicInformationProvider(
-        HttpServletRequest req);
-
-    /**
-     * Return the PortletPreferencesFactory implementation.
-     * @return a PortletPreferencesFactory implementation.
-     */
-    PortletPreferencesFactory getPortletPreferencesFactory();
-
-    /**
      * Retrieve the PortalContext associated with this group of container
      * services.
      * @return a PortalContext implementation.
@@ -32,12 +18,8 @@ public interface PortletContainerServices {
     PortalContext getPortalContext();
 
     /**
-     * @return a PortalCallbackProvider implementation.
+     * @return a PortalCallbackService implementation.
      */
-    PortalCallbackProvider getPortalCallbackProvider();
+    PortalCallbackService getPortalCallbackService();
 
-    /**
-     * @return a PropertyManagerService implementation.
-     */
-    PropertyManagerService getPropertyManagerService();
 }

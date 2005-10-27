@@ -37,7 +37,7 @@ import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.PortletPreference;
 import org.apache.pluto.core.PortletEntity;
-import org.apache.pluto.services.PortletPreferencesFactory;
+import org.apache.pluto.services.PortletPreferencesService;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
@@ -45,7 +45,7 @@ import org.apache.commons.logging.Log;
 public class PortletPreferencesImpl implements PortletPreferences {
     private static final Log LOG = LogFactory.getLog(PortletPreferencesImpl.class);
 
-    private PortletPreferencesFactory factory;
+    private PortletPreferencesService factory;
 
     private InternalPortletWindow window;
 
@@ -63,7 +63,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
                                   InternalPortletRequest request,
                                   Integer methodId) {
         this.factory =
-        container.getContainerServices().getPortletPreferencesFactory();
+        container.getOptionalContainerServices().getPortletPreferencesService();
         this.window = window;
         this.request = request;
         this.methodId = methodId;
@@ -77,8 +77,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
             preferences.put(prefs[i].getName(), prefs[i]);
         }
 
-        PortletPreferencesFactory factory
-            = container.getContainerServices().getPortletPreferencesFactory();
+        PortletPreferencesService factory = container
+                .getOptionalContainerServices()
+                .getPortletPreferencesService();
 
         try {
             prefs = factory.getStoredPreferences(window, request);
@@ -99,7 +100,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
 
         PortletPreference pref = (PortletPreference) preferences.get(key);
-        return pref == null ? true : pref.isReadOnly();
+        return pref == null || pref.isReadOnly();
     }
 
     public String getValue(String key, String def) {
@@ -107,7 +108,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             throw new IllegalArgumentException("key == null");
         }
 
-        String[] value = null;
+        String[] value;
 
         PortletPreference pref = (PortletPreference) preferences.get(key);
         if (pref != null) {
@@ -123,7 +124,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             throw new IllegalArgumentException("key == null");
         }
 
-        String[] values = null;
+        String[] values;
         PortletPreference pref = (PortletPreference) preferences.get(key);
 
         if (pref != null) {

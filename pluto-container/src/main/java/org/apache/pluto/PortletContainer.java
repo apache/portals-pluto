@@ -16,6 +16,7 @@
 package org.apache.pluto;
 
 import org.apache.pluto.services.PortletContainerServices;
+import org.apache.pluto.services.OptionalPortletContainerServices;
 
 import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
@@ -130,4 +131,10 @@ public interface PortletContainer {
      * @return the container services associated with this container.
      */
     public PortletContainerServices getContainerServices();
+
+    /**
+     * Retrieve the optional container services associated with this contianer.
+     * @return the container services provided by either the portal or the defaults.
+     */
+    public OptionalPortletContainerServices getOptionalContainerServices();
 }

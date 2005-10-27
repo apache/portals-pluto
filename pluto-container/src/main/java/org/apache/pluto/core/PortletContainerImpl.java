@@ -34,6 +34,7 @@ import org.apache.pluto.core.impl.RenderRequestImpl;
 import org.apache.pluto.core.impl.RenderResponseImpl;
 import org.apache.pluto.services.PortletContainerServices;
 import org.apache.pluto.services.PortletURLProvider;
+import org.apache.pluto.services.OptionalPortletContainerServices;
 
 /**
  * Default Pluto Container implementation.
@@ -53,6 +54,7 @@ public class PortletContainerImpl implements PortletContainer {
 
     /** The PortletContainerServices associated with this container. */
     private PortletContainerServices containerServices;
+    private OptionalPortletContainerServices optionalContainerServices;
 
     /** The ServletContext associated with this container. */
     private ServletContext context;
@@ -67,9 +69,11 @@ public class PortletContainerImpl implements PortletContainer {
      * @param services the container services implementation.
      */
     public PortletContainerImpl(String name,
-                                PortletContainerServices services) {
+                                PortletContainerServices services,
+                                OptionalPortletContainerServices optionalServices) {
         this.name = name;
         this.containerServices = services;
+        this.optionalContainerServices = optionalServices;
     }
 
     /**
@@ -192,8 +196,8 @@ public class PortletContainerImpl implements PortletContainer {
             }
 
             PortletURLProvider redirectURL =
-                containerServices.getDynamicInformationProvider(request)
-                .getPortletURLProvider(window);
+                containerServices.getPortalCallbackService()
+                .getPortletURLProvider(request, window);
 
             if (res.getChangedPortletMode() != null) {
                 redirectURL.setPortletMode(res.getChangedPortletMode());
@@ -268,6 +272,10 @@ public class PortletContainerImpl implements PortletContainer {
 
     public PortletContainerServices getContainerServices() {
         return containerServices;
+    }
+
+    public OptionalPortletContainerServices getOptionalContainerServices() {
+        return optionalContainerServices;
     }
 }
 

@@ -22,18 +22,16 @@ package org.apache.pluto.core.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.portlet.PortletResponse;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.services.PortletContainerServices;
-import org.apache.pluto.services.PropertyManagerService;
 import org.apache.pluto.services.ResourceURLProvider;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 
@@ -49,13 +47,13 @@ public abstract class PortletResponseImpl
      * this variable holds the servlet request of the target/portlet's web
      * module
      */
-    private javax.servlet.http.HttpServletRequest webModuleServletRequest;
+    private HttpServletRequest httpServletRequest;
+    private HttpServletResponse httpServletResponse;
 
     private boolean usingWriter;
     private boolean usingStream;
 
     private ServletOutputStream wrappedWriter;
-    private Map properties;
 
     /**
      * true if we are in an include call
@@ -64,11 +62,12 @@ public abstract class PortletResponseImpl
 
     public PortletResponseImpl(PortletContainer container,
                                InternalPortletWindow internalPortletWindow,
-                               javax.servlet.http.HttpServletRequest servletRequest,
-                               javax.servlet.http.HttpServletResponse servletResponse) {
+                               HttpServletRequest servletRequest,
+                               HttpServletResponse servletResponse) {
         super(servletResponse);
         this.container = container;
-        this.webModuleServletRequest = servletRequest;
+        this.httpServletRequest = servletRequest;
+        this.httpServletResponse = servletResponse;
         this.internalPortletWindow = internalPortletWindow;
     }
 
@@ -78,26 +77,11 @@ public abstract class PortletResponseImpl
             throw new IllegalArgumentException("Property key == null");
         }
 
-        Map props = getProperties();
-
-        String[] oldValues = (String[]) props.get(key);
-        String[] newValues = null;
-        if (oldValues == null) {
-            newValues = new String[]{value};
-        } else {
-            int len = oldValues.length;
-            newValues = new String[len + 1];
-            System.arraycopy(oldValues, 0, newValues, 0, len);
-            newValues[len] = value;
-        }
-        props.put(key, newValues);
-
-        PropertyManagerService service = container.getContainerServices()
-            .getPropertyManagerService();
-        service.setResponseProperties(internalPortletWindow,
-                                      this.getHttpServletRequest(),
-                                      _getHttpServletResponse(), props);
-
+        container.getContainerServices()
+           .getPortalCallbackService()
+           .addResponseProperty(
+               getHttpServletRequest(), internalPortletWindow, key, value
+        );
     }
 
     public void setProperty(String key, String value) {
@@ -105,16 +89,11 @@ public abstract class PortletResponseImpl
             throw new IllegalArgumentException("Property key == null");
         }
 
-        Map props = getProperties();
-
-        String[] newValues = new String[]{value};
-        props.put(key, newValues);
-
-        PropertyManagerService service = container.getContainerServices()
-            .getPropertyManagerService();
-        service.setResponseProperties(internalPortletWindow,
-                                      this.getHttpServletRequest(),
-                                      _getHttpServletResponse(), props);
+        container.getContainerServices()
+                .getPortalCallbackService()
+                .setResponseProperty(
+                        getHttpServletRequest(), internalPortletWindow, key, value
+                );
     }
 
     public String encodeURL(String path) {
@@ -126,14 +105,14 @@ public abstract class PortletResponseImpl
         PortletContainerServices services = getContainer()
             .getContainerServices();
         ResourceURLProvider provider =
-            services.getDynamicInformationProvider(webModuleServletRequest)
-            .getResourceURLProvider(internalPortletWindow);
+            services.getPortalCallbackService()
+        .getResourceURLProvider(httpServletRequest,internalPortletWindow);
         if (path.indexOf("://") != -1) {
             provider.setAbsoluteURL(path);
         } else {
             provider.setFullPath(path);
         }
-        return this._getHttpServletResponse().encodeURL(provider.toString());
+        return getHttpServletResponse().encodeURL(provider.toString());
     }
     // --------------------------------------------------------------------------------------------
 
@@ -141,95 +120,87 @@ public abstract class PortletResponseImpl
     public void lateInit(
         javax.servlet.http.HttpServletRequest webModuleServletRequest,
         javax.servlet.http.HttpServletResponse webModuleServletResponse) {
-        this.webModuleServletRequest = webModuleServletRequest;
+        this.httpServletRequest = webModuleServletRequest;
         this.setResponse(webModuleServletResponse);
     }
     // --------------------------------------------------------------------------------------------
 
     // internal methods ---------------------------------------------------------------------------
-    protected javax.servlet.http.HttpServletResponse _getHttpServletResponse() {
-        return (javax.servlet.http.HttpServletResponse) super.getResponse();
+    public HttpServletResponse getHttpServletResponse() {
+        return httpServletResponse;
     }
 
-    protected javax.servlet.http.HttpServletRequest getHttpServletRequest() {
-        return webModuleServletRequest;
+    protected HttpServletRequest getHttpServletRequest() {
+        return httpServletRequest;
     }
-
-    private Map getProperties() {
-        if (properties == null) {
-            properties = new HashMap();
-        }
-        return properties;
-    }
-    // --------------------------------------------------------------------------------------------
 
     // additional methods -------------------------------------------------------------------------
     // servlet-only implementation 
     // (inherited from HttpServletResponseWrapper)
     public void addCookie(javax.servlet.http.Cookie cookie) {
-        this._getHttpServletResponse().addCookie(cookie);
+        getHttpServletResponse().addCookie(cookie);
     }
 
     public boolean containsHeader(String name) {
-        return this._getHttpServletResponse().containsHeader(name);
+        return getHttpServletResponse().containsHeader(name);
     }
 
     public String encodeRedirectUrl(String url) {
         return included
-               ? null : this._getHttpServletResponse().encodeRedirectURL(url);
+               ? null : getHttpServletResponse().encodeRedirectURL(url);
     }
 
     public String encodeRedirectURL(String url) {
         return included
-               ? null : this._getHttpServletResponse().encodeRedirectURL(url);
+               ? null : getHttpServletResponse().encodeRedirectURL(url);
     }
 
     public void sendRedirect(String location) throws java.io.IOException {
-        this._getHttpServletResponse().sendRedirect(location);
+        getHttpServletResponse().sendRedirect(location);
     }
 
     public void setDateHeader(String name, long date) {
-        this._getHttpServletResponse().setDateHeader(name, date);
+        getHttpServletResponse().setDateHeader(name, date);
     }
 
     public void sendError(int sc, String msg) throws java.io.IOException {
-        this._getHttpServletResponse().sendError(sc, msg);
+        getHttpServletResponse().sendError(sc, msg);
     }
 
     public void sendError(int sc) throws java.io.IOException {
-        this._getHttpServletResponse().sendError(sc);
+        getHttpServletResponse().sendError(sc);
     }
 
     public void addHeader(String name, String value) {
-        this._getHttpServletResponse().addHeader(name, value);
+        getHttpServletResponse().addHeader(name, value);
     }
 
     public void setIntHeader(String name, int value) {
-        this._getHttpServletResponse().setIntHeader(name, value);
+        getHttpServletResponse().setIntHeader(name, value);
     }
 
     public void addDateHeader(String name, long date) {
-        this._getHttpServletResponse().addDateHeader(name, date);
+        getHttpServletResponse().addDateHeader(name, date);
     }
 
     public void setHeader(String name, String value) {
-        this._getHttpServletResponse().setHeader(name, value);
+        getHttpServletResponse().setHeader(name, value);
     }
 
     public void setStatus(int sc) {
-        this._getHttpServletResponse().setStatus(sc);
+        getHttpServletResponse().setStatus(sc);
     }
 
     public void setStatus(int sc, String sm) {
-        this._getHttpServletResponse().setStatus(sc, sm);
+        getHttpServletResponse().setStatus(sc, sm);
     }
 
     public void addIntHeader(String name, int value) {
-        this._getHttpServletResponse().addIntHeader(name, value);
+        getHttpServletResponse().addIntHeader(name, value);
     }
 
     public void setContentLength(int len) {
-        this._getHttpServletResponse().setContentLength(len);
+        getHttpServletResponse().setContentLength(len);
     }
 
     public String encodeUrl(String url) {
@@ -237,7 +208,7 @@ public abstract class PortletResponseImpl
     }
 
     public void setLocale(java.util.Locale loc) {
-        this._getHttpServletResponse().setLocale(loc);
+        getHttpServletResponse().setLocale(loc);
     }
 
     public ServletOutputStream getOutputStream() throws IllegalStateException,
@@ -250,7 +221,7 @@ public abstract class PortletResponseImpl
         if (wrappedWriter == null) {
             wrappedWriter =
             new PrintWriterServletOutputStream(
-                _getHttpServletResponse().getWriter());
+                getHttpServletResponse().getWriter());
         }
 
         usingStream = true;
@@ -267,7 +238,7 @@ public abstract class PortletResponseImpl
 
         usingWriter = true;
 
-        return _getHttpServletResponse().getWriter();
+        return getHttpServletResponse().getWriter();
     }
 
     // other
@@ -278,7 +249,7 @@ public abstract class PortletResponseImpl
     // internal
     
     HttpServletRequest getHttpDServletRequest() {
-        return webModuleServletRequest;
+        return httpServletRequest;
     }
 
     public void setIncluded(boolean included) {
@@ -292,4 +263,5 @@ public abstract class PortletResponseImpl
     public PortletContainer getContainer() {
         return container;
     }
+
 }

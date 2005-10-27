@@ -28,21 +28,21 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.driver.services.container.PortletPreferenceImpl;
 import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.services.PortletPreferencesFactory;
+import org.apache.pluto.services.PortletPreferencesService;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 import org.xml.sax.SAXException;
 
 /**
- * The Portal Driver's PortletPreferencesFactory implementation. This
+ * The Portal Driver's PortletPreferencesService implementation. This
  * implementation makes use of the filesystem for writing portlet preferences.
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
 public class PortletPreferencesProviderImpl
-    implements PortletPreferencesFactory {
+    implements PortletPreferencesService {
     private static final Log LOG =
         LogFactory.getLog(PortletPreferencesProviderImpl.class);
 

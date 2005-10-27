@@ -139,8 +139,8 @@ public class PortletURLImpl implements PortletURL {
         StringBuffer url = new StringBuffer(200);
 
         PortletURLProvider urlProvider = container.getContainerServices()
-            .getDynamicInformationProvider(servletRequest)
-            .getPortletURLProvider(internalPortletWindow);
+            .getPortalCallbackService()
+            .getPortletURLProvider(servletRequest, internalPortletWindow);
 
         if (mode != null) {
             urlProvider.setPortletMode(mode);

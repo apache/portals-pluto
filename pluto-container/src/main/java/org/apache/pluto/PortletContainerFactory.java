@@ -18,7 +18,9 @@ package org.apache.pluto;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.core.PortletContainerImpl;
+import org.apache.pluto.core.DefaultOptionalServices;
 import org.apache.pluto.services.PortletContainerServices;
+import org.apache.pluto.services.OptionalPortletContainerServices;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**
@@ -65,23 +67,30 @@ public class PortletContainerFactory {
      * Create a container with the given containerName, initialized from the given
      * servlet config, and using the given container services.
      * @param containerName
-     * @param env
+     * @param services
      * @return newly created PortletContainer
      * @throws PortletContainerException
      */
     public PortletContainer createContainer(String containerName,
-                                            PortletContainerServices env)
+                                            PortletContainerServices services)
         throws PortletContainerException {
+        return createContainer(containerName, services, new DefaultOptionalServices());
+   }
 
-        ArgumentUtility.validateNotNull("environment", env);
+    public PortletContainer createContainer(String containerName,
+                                            PortletContainerServices services,
+                                            OptionalPortletContainerServices optionalServices) {
+
+        ArgumentUtility.validateNotNull("containerServices", services);
         ArgumentUtility.validateNotEmpty("containerName", containerName);
 
         PortletContainer container =
-            new PortletContainerImpl(containerName, env);
+                new PortletContainerImpl(containerName, services, optionalServices);
 
         if (LOG.isInfoEnabled()) {
             LOG.info("Portlet Container [" + containerName + "] created.");
         }
+
         return container;
     }
 }

@@ -22,7 +22,6 @@ import org.apache.pluto.core.PortletEntity;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.services.PropertyManagerService;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringUtils;
@@ -169,10 +168,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         String prop = this.getHttpServletRequest().getHeader(name);
         if (prop == null) {
             // get properties from PropertyManager
-            PropertyManagerService mgr = container.getContainerServices()
-                .getPropertyManagerService();
-            Map map = mgr.getRequestProperties(internalPortletWindow,
-                                               this.getHttpServletRequest());
+            Map map = container.getContainerServices()
+                .getPortalCallbackService()
+                .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
             if (map != null) {
                 String[] properties = (String[]) map.get(name);
                 if ((properties != null) && (properties.length > 0)) {
@@ -191,7 +189,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
         Set v = new HashSet();
 
-        // get properties from request header
         Enumeration props = this.getHttpServletRequest().getHeaders(name);
         if (props != null) {
             while (props.hasMoreElements()) {
@@ -200,10 +197,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         }
 
         // get properties from PropertyManager
-        PropertyManagerService mgr = container.getContainerServices()
-            .getPropertyManagerService();
-        Map map = mgr.getRequestProperties(internalPortletWindow,
-                                           this.getHttpServletRequest());
+        Map map = container.getContainerServices()
+            .getPortalCallbackService()
+            .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
+
         if (map != null) {
             String[] properties = (String[]) map.get(name);
 
@@ -222,10 +219,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         Set v = new HashSet();           
 
         // get properties from PropertyManager
-        PropertyManagerService mgr = container.getContainerServices()
-            .getPropertyManagerService();
-        Map map = mgr.getRequestProperties(internalPortletWindow,
-                                           this.getHttpServletRequest());
+        Map map = container.getContainerServices()
+                .getPortalCallbackService()
+                .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
+        
         if (map != null) {
             v.addAll(map.keySet());
         }
@@ -285,7 +282,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
             }
         }
 
-        String link = null;
+        String link;
         if (ref != null && ref.getRoleLink() != null) {
             link = ref.getRoleLink();
         } else {
@@ -594,8 +591,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
                 "This method must not be called after the HTTP-Body was accessed !");
         }
 
-        this.getHttpServletRequest().setCharacterEncoding(env);
-        return;
+        getHttpServletRequest().setCharacterEncoding(env);
     }
 
     public javax.servlet.ServletInputStream getInputStream()

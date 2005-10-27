@@ -18,7 +18,6 @@ package org.apache.pluto.driver.services.container;
 import org.apache.pluto.services.*;
 
 import javax.portlet.PortalContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * The Portal Driver's <code>PortletContainerServices</code> implementation. The
@@ -28,14 +27,14 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0
  * @since Sep 21, 2004
  */
-public class ContainerServicesImpl implements PortletContainerServices {
+public class ContainerServicesImpl
+    implements PortletContainerServices, OptionalPortletContainerServices {
 
 
     private PortalContextImpl context;
 
-    private PortletPreferencesFactory preferencesFactory;
-    private PortalCallbackProvider callback;
-    private PropertyManagerService propertyService;
+    private PortletPreferencesService preferencesFactory;
+    private PortalCallbackService callback;
 
     /**
      * Default Constructor.
@@ -44,7 +43,6 @@ public class ContainerServicesImpl implements PortletContainerServices {
         this.context = context;
         preferencesFactory = new PortletPreferencesProviderImpl();
         callback = new PortalCallbackProviderImpl();
-        propertyService = new PropertyManagerProviderImpl();
     }
 
     /**
@@ -56,43 +54,22 @@ public class ContainerServicesImpl implements PortletContainerServices {
     }
 
     /**
-     * The PortletPreferencesFactory provides access to the portal's
+     * The PortletPreferencesService provides access to the portal's
      * PortletPreference persistence mechanism.
-     * @return a PortletPreferencesFactory instance.
+     * @return a PortletPreferencesService instance.
      */
-    public PortletPreferencesFactory getPortletPreferencesFactory() {
+    public PortletPreferencesService getPortletPreferencesService() {
         return preferencesFactory;
     }
 
     /**
-     * The DynamicInformationProvider provides dynamic, runtime evaluated,
-     * information.
-     * @param req the HttpServletRequest identifying the request
-     * @return a DynamicInformationProvider implementation.
-     */
-    public DynamicInformationProvider getDynamicInformationProvider(
-        HttpServletRequest req) {
-        return new DynamicInformationProviderImpl(req);
-    }
-
-
-    /**
-     * The PortalCallbackProvider allows the container to communicate
+     * The PortalCallbackService allows the container to communicate
      * actions back to the portal.
-     * @return a PortalCallbackProvider implementation.
+     * @return a PortalCallbackService implementation.
      */
-    public PortalCallbackProvider getPortalCallbackProvider() {
+    public PortalCallbackService getPortalCallbackService() {
         return callback;
     }
-
-    /**
-     * The PropertyManagerService manages portal properties.
-     * @return a PropertyManagerService implemenatation.
-     */
-    public PropertyManagerService getPropertyManagerService() {
-        return this.propertyService;
-    }
-
 
 }
 

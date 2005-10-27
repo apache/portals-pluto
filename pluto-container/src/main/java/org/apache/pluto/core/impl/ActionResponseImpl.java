@@ -30,14 +30,16 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.core.InternalActionResponse;
 import org.apache.pluto.core.InternalPortletWindow;
-import org.apache.pluto.services.DynamicInformationProvider;
 import org.apache.pluto.services.ResourceURLProvider;
+import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.util.StringUtils;
 
 public class ActionResponseImpl extends PortletResponseImpl
@@ -55,7 +57,7 @@ public class ActionResponseImpl extends PortletResponseImpl
     private WindowState windowState = null;
     private PortletMode portletMode = null;
 
-    private DynamicInformationProvider provider;
+    private PortalCallbackService callback;
     private PortalContext context;
 
 
@@ -66,12 +68,12 @@ public class ActionResponseImpl extends PortletResponseImpl
         super(container, internalPortletWindow, servletRequest,
               servletResponse);
         context = container.getContainerServices().getPortalContext();
-        provider =
-        container.getContainerServices().getDynamicInformationProvider(
-            servletRequest);
+        callback = container.getContainerServices().getPortalCallbackService();
     }
 
-    // javax.portlet.ActionResponse ---------------------------------------------------------------
+//
+// javax.portlet.ActionResponse
+//
     public void setWindowState(WindowState windowState)
         throws WindowStateException {
         if (redirected) {
@@ -114,14 +116,17 @@ public class ActionResponseImpl extends PortletResponseImpl
     public void sendRedirect(String location) throws java.io.IOException {
         if (redirectAllowed) {
             if (location != null) {
-                javax.servlet.http.HttpServletResponse redirectResponse = _getHttpServletResponse();
-                while (redirectResponse instanceof javax.servlet.http.HttpServletResponseWrapper) {
-                    redirectResponse =
-                    (javax.servlet.http.HttpServletResponse)
-                        ((javax.servlet.http.HttpServletResponseWrapper) redirectResponse).getResponse();
+                HttpServletResponse redirectResponse = getHttpServletResponse();
+                while (redirectResponse instanceof HttpServletResponseWrapper) {
+                    redirectResponse = (HttpServletResponse)
+                        ((HttpServletResponseWrapper)redirectResponse).getResponse();
                 }
-                ResourceURLProvider provider = this.provider.getResourceURLProvider(
-                    getInternalPortletWindow());
+
+                ResourceURLProvider provider = callback.getResourceURLProvider(
+                                getHttpServletRequest(),
+                                getInternalPortletWindow()
+                );
+
                 if (location.indexOf("://") != -1) {
                     provider.setAbsoluteURL(location);
                 } else {

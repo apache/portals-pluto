@@ -18,14 +18,22 @@ package org.apache.pluto.driver.services.container;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.services.PortalCallbackProvider;
+import org.apache.pluto.driver.core.PortalEnvironment;
+import org.apache.pluto.driver.core.ResourceURLProviderImpl;
+import org.apache.pluto.services.PortalCallbackService;
+import org.apache.pluto.services.PortletURLProvider;
+import org.apache.pluto.services.ResourceURLProvider;
+
+import java.util.Map;
+import java.util.Collections;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
-public class PortalCallbackProviderImpl implements PortalCallbackProvider {
+public class PortalCallbackProviderImpl implements PortalCallbackService {
+
 
     public PortalCallbackProviderImpl() {
 
@@ -37,6 +45,26 @@ public class PortalCallbackProviderImpl implements PortalCallbackProvider {
         request.setAttribute("org.apache.pluto.dynamic_title", title);
     }
 
+    public PortletURLProvider getPortletURLProvider(
+        HttpServletRequest req, PortletWindow internalPortletWindow) {
+        return new PortletURLProviderImpl(req, internalPortletWindow);
+    }
 
+    public ResourceURLProvider getResourceURLProvider(
+        HttpServletRequest req, PortletWindow internalPortletWindow) {
+        return new ResourceURLProviderImpl(req, internalPortletWindow);
+    }
+
+    public Map getRequestProperties(HttpServletRequest req, PortletWindow portletWindow) {
+        return Collections.EMPTY_MAP;
+    }
+
+    public void setResponseProperty(HttpServletRequest req, PortletWindow window, String property, String value) {
+
+    }
+
+    public void addResponseProperty(HttpServletRequest req, PortletWindow window, String property, String value) {
+
+    }
 }
 

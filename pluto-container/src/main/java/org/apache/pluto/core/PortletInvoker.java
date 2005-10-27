@@ -20,6 +20,10 @@ import java.io.IOException;
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -142,9 +146,19 @@ class PortletInvoker {
                                      methodID);
                 request.setAttribute(
                     org.apache.pluto.Constants.PORTLET_REQUEST, request);
+
                 request.setAttribute(
                     org.apache.pluto.Constants.PORTLET_RESPONSE, response);
+
+                // TODO
+                // Tomcat does not like to properly include wrapped requests
+                // and responses. Thus we "unwrap" and then include.
+
+                //HttpServletRequest req = request.getHttpServletRequest();
+                //HttpServletResponse res = response.getHttpServletResponse();
+
                 dispatcher.include(request, response);
+
             } catch (javax.servlet.UnavailableException e) {
                 int seconds = e.isPermanent()?-1:e.getUnavailableSeconds();
                 String message =  EXCEPTIONS.getString(
