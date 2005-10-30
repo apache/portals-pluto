@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-           "http://java.sun.com/dtd/web-app_2_3.dtd">
+<!DOCTYPE web-app PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
 <!--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
@@ -20,72 +20,72 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <web-app>
+  
+  <display-name>Pluto Testsuite</display-name>
+  
+  <context-param>
+    <param-name>test-parameter-name</param-name>
+    <param-value>test-parameter-val</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>parameter-name</param-name>
+    <param-value>parameter-value</param-value>
+  </context-param>
+  
+  <servlet>
+    <servlet-name>TestPortlet1</servlet-name>
+    <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+    <init-param>
+      <param-name>portlet-name</param-name>
+      <param-value>TestPortlet1</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>TestPortlet2</servlet-name>
+    <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+    <init-param>
+      <param-name>portlet-name</param-name>
+      <param-value>TestPortlet2</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>extAppScopedTest</servlet-name>
+    <servlet-class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>includeTest</servlet-name>
+    <servlet-class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTest$TargetServlet</servlet-class>
+  </servlet>
 
-    <display-name>Pluto Testsuite</display-name>
-
-    <context-param>
-        <param-name>test-parameter-name</param-name>
-        <param-value>test-parameter-val</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>parameter-name</param-name>
-        <param-value>parameter-value</param-value>
-    </context-param>
-
-    <servlet>
-    	<servlet-name>TestPortlet1</servlet-name>
-        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
-		<init-param>
-		  <param-name>portlet-name</param-name>
-		  <param-value>TestPortlet1</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet>
-    	<servlet-name>TestPortlet2</servlet-name>
-        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
-		<init-param>
-		  <param-name>portlet-name</param-name>
-		  <param-value>TestPortlet2</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet>
-    	<servlet-name>extAppScopedTest</servlet-name>
-        <servlet-class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>includeTest</servlet-name>
-        <servlet-class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTestServlet</servlet-class>
-    </servlet>
-
-
-	<servlet-mapping>
-	  <servlet-name>TestPortlet1</servlet-name>
-	  <url-pattern>/PlutoInvoker/TestPortlet1</url-pattern>
-    </servlet-mapping>
-
-	<servlet-mapping>
-	  <servlet-name>TestPortlet2</servlet-name>
-	  <url-pattern>/PlutoInvoker/TestPortlet2</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>extAppScopedTest</servlet-name>
-        <url-pattern>/test/extAppScopedTest</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-      <servlet-name>includeTest</servlet-name>
-      <url-pattern>/tests/include</url-pattern>
-    </servlet-mapping>
-
-    <security-role>
-        <role-name>tomcat</role-name>
-    </security-role>
+  <servlet-mapping>
+    <servlet-name>TestPortlet1</servlet-name>
+    <url-pattern>/PlutoInvoker/TestPortlet1</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>TestPortlet2</servlet-name>
+    <url-pattern>/PlutoInvoker/TestPortlet2</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>extAppScopedTest</servlet-name>
+    <url-pattern>/test/extAppScopedTest</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>includeTest</servlet-name>
+    <url-pattern>/tests/include</url-pattern>
+  </servlet-mapping>
+  
+  <security-role>
+    <role-name>tomcat</role-name>
+  </security-role>
+  
 </web-app>
 
