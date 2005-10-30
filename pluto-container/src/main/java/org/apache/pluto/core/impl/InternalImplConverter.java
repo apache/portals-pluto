@@ -34,18 +34,27 @@ import javax.portlet.PortletResponse;
  *
  */
 class InternalImplConverter {
-
+	
+	/**
+	 * Private constructor that prevents instantiation.
+	 */
+	private InternalImplConverter() {
+		// Do nothing.
+	}
+	
+	
+	// Public Static Utility Methods -------------------------------------------
 
     /**
-     * The scary part about this is that there is not yet a
+     * The scary part about this is that there is not yet a 
      * PortletRequestWrapper defined by the spec.  Because of this, there's a
      * chance someone might implement their own wrapper and we won't be able to
      * get the real internal one!
-     * @param request the request to be converted.
+     * @param request the portlet request to be converted.
      * @return the internal request.
      */
     public static InternalPortletRequest getInternalRequest(
-        PortletRequest request) {
+    		PortletRequest request) {
         while (!(request instanceof InternalPortletRequest)) {
             request = ((PortletRequestWrapper) request).getPortletRequest();
             if (request == null) {
@@ -61,11 +70,11 @@ class InternalImplConverter {
      * PortletRequestWrapper defined by the spec.  Because of this, there's a
      * chance someone might implement their own wrapper and we won't be able to
      * get the real internal one!
-     * @param response the response being converted
+     * @param response the portlet response to be converted.
      * @return the internal response.
      */
     public static InternalPortletResponse getInternalResponse(
-        PortletResponse response) {
+    		PortletResponse response) {
         while (!(response instanceof InternalPortletResponse)) {
             response = ((PortletResponseWrapper) response).getPortletResponse();
             if (response == null) {
