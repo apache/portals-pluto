@@ -30,8 +30,8 @@ import java.io.InputStream;
  */
 class ConfigurationFactory {
 
-    private static final Log LOG =
-        LogFactory.getLog(ConfigurationFactory.class);
+    private static final Log LOG = LogFactory.getLog(
+    		ConfigurationFactory.class);
 
     private static ConfigurationFactory factory;
 
@@ -46,7 +46,7 @@ class ConfigurationFactory {
 
     private ConfigurationFactory() {
         digester = new Digester();
-        digester.setLogger(LOG);
+        // digester.setLogger(LOG);  // Too many log messages.
         digester.setClassLoader(Thread.currentThread().getContextClassLoader());
         init();
     }
@@ -60,6 +60,9 @@ class ConfigurationFactory {
 // Digester Setup
 
     private void init() {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Setting up digester...");
+    	}
         digester.addObjectCreate("pluto-portal-driver",
                                  Configuration.class);
         digester.addBeanPropertySetter("pluto-portal-driver/portal-name",
@@ -106,10 +109,7 @@ class ConfigurationFactory {
                             "addPage");
         digester.addSetNext("pluto-portal-driver/render-config",
                             "setRenderConfig");
-
-
     }
-
 
 }
 
