@@ -19,12 +19,13 @@
 
 package org.apache.pluto.core;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface InternalPortletResponse {
 
-    public void lateInit(
-        javax.servlet.http.HttpServletRequest webModuleServletRequest,
-        javax.servlet.http.HttpServletResponse webModuleServletResponse);
+    public void lateInit(HttpServletRequest webModuleServletRequest,
+                         HttpServletResponse webModuleServletResponse);
 
     public InternalPortletWindow getInternalPortletWindow();
 
