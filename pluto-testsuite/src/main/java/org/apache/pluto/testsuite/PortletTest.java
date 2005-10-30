@@ -26,20 +26,22 @@ import javax.portlet.PortletResponse;
 import org.apache.pluto.testsuite.TestConfig;
 
 /**
+ * Interface for pluto portlet test classes.
+ * 
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public interface PortletTest {
 
-    String getTestSuiteName();
+    public String getTestSuiteName();
 
-    Map getRenderParameters(PortletRequest req);
+    public Map getRenderParameters(PortletRequest req);
 
-    TestResults doTest(PortletConfig config,
-                       PortletContext context,
-                       PortletRequest req,
-                       PortletResponse res);
+    public TestResults doTest(PortletConfig config,
+                              PortletContext context,
+                              PortletRequest req,
+                              PortletResponse res);
 
-    void init(TestConfig config);
+    public void init(TestConfig config);
 
-    TestConfig getConfig();
+    public TestConfig getConfig();
 }
