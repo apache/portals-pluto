@@ -30,30 +30,35 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
  * Pluto's Portlet Context Implementation.
- * Implements the InternalPortletContext which provides container
- * specific information which is needed for processing.
- *
+ * <p>This class implements the <code>InternalPortletContext</code> which
+ * provides container specific information needed for processing.</p>
+ * 
  * @version 1.1
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- *
  */
 public class PortletContextImpl
-    implements PortletContext, InternalPortletContext {
-
-    private static final Log LOG =
-        LogFactory.getLog(PortletContextImpl.class);
+implements PortletContext, InternalPortletContext {
+	
+	/** Internal logger. */
+    private static final Log LOG = LogFactory.getLog(PortletContextImpl.class);
 
     /** Portlet Application Descriptor. */
-    private PortletAppDD portletAppDD;
+    private PortletAppDD portletAppDD = null;
 
     /** ServletContext in which we are contained. */
-    private ServletContext servletContext;
+    private ServletContext servletContext = null;
 
+    
+    // Constructor -------------------------------------------------------------
+    
     /**
      * Sole constructor.
      *
@@ -65,7 +70,10 @@ public class PortletContextImpl
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
     }
-
+    
+    
+    // javax.portlet.PortletContext Impl ---------------------------------------
+    
     /**
      * Retrieve the PortletContainer's server info.
      * @return the server info in the form of <i>Server/Version</i>
@@ -76,31 +84,38 @@ public class PortletContextImpl
     }
 
     public PortletRequestDispatcher getRequestDispatcher(String path) {
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Dispatcher Requested: "+path);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Portlet Dispatcher Requested: " + path);
         }
         try {
             Map params = parseQueryParams(path);
-            RequestDispatcher rd = servletContext.getRequestDispatcher(path);
-            if(rd != null) {
-                return new PortletRequestDispatcherImpl(rd, params);
+            RequestDispatcher dispatcher = servletContext
+            		.getRequestDispatcher(path);
+            if (dispatcher != null) {
+                return new PortletRequestDispatcherImpl(dispatcher, params);
+            } else {
+            	if (LOG.isInfoEnabled()) {
+            		LOG.info("No matching request dispatcher found for path: "
+            				+ path);
+            	}
             }
-            else if(LOG.isInfoEnabled()) {
-                LOG.info("No Matching Request Dispatcher not found.");
-            }
-        } catch (Exception e) {
+        } catch (Exception ex) {
             // need to catch exception because of tomcat 4.x bug
             // tomcat throws an exception instead of return null
             // if the path was not found
         }
-
         return null;
     }
-
+    
     public PortletRequestDispatcher getNamedDispatcher(String name) {
-        RequestDispatcher rd = servletContext.getNamedDispatcher(name);
-        if(rd != null) {
-            return new PortletRequestDispatcherImpl(rd);
+        RequestDispatcher dispatcher = servletContext.getNamedDispatcher(name);
+        if (dispatcher != null) {
+            return new PortletRequestDispatcherImpl(dispatcher);
+        } else {
+        	if (LOG.isInfoEnabled()) {
+        		LOG.info("No matching request dispatcher found for name: "
+        				+ name);
+        	}
         }
         return null;
     }
@@ -188,37 +203,60 @@ public class PortletContextImpl
     public String getPortletContextName() {
         return servletContext.getServletContextName();
     }
-    // --------------------------------------------------------------------------------------------
-
-    // org.apache.pluto.core.InternalPortletContext implementation --------------------------------
-    public javax.servlet.ServletContext getServletContext() {
+    
+    
+    // org.apache.pluto.core.InternalPortletContext Impl -----------------------
+    
+    public ServletContext getServletContext() {
         return servletContext;
     }
 
     public PortletAppDD getPortletApplicationDefinition() {
         return portletAppDD;
     }
-
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    /**
+     * Parse the query path and extract appended parameters. This method puts
+     * parameters into a map. The key is the parameter name as a string; the
+     * value is a string array holding parameter values.
+     * 
+     * @param path the query path to parse.
+     * @return parameter map, or null if no parameters are appended.
+     */
     private Map parseQueryParams(String path) {
-        Map map = new java.util.HashMap();
-        int idx = path.indexOf("?");
-        if(idx < 0) {
-            return null;
-        }
-        String parms = path.substring(idx+1);
-        StringTokenizer st = new StringTokenizer(parms, "&");
-        while(st.hasMoreTokens()) {
-            String pair = st.nextToken();
-            if(pair.indexOf("=")>0) {
-                String key = pair.substring(0,pair.indexOf("="));
-                String val = pair.substring(pair.indexOf("=")+1);
-                map.put(key, new String[] {val});
+    	int index = path.indexOf("?");
+    	if (index < 0 || index == path.length() - 1) {
+    		return null;
+    	}
+        Map params = new HashMap();
+        String paramsString = path.substring(index + 1);
+        StringTokenizer st = new StringTokenizer(paramsString, "&", false);
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken();
+            int equalIndex = token.indexOf("=");
+            if (equalIndex > 0 && equalIndex < token.length() - 1) {
+                String key = token.substring(0, equalIndex);
+                String value = token.substring(equalIndex + 1);
+                String[] values = (String[]) params.get(key);
+                if (values == null) {
+                	values = new String[] { value };
+                } else {
+                	List valueList = Arrays.asList(values);
+                	valueList.add(value);
+                	values = (String[]) valueList.toArray(
+                			new String[valueList.size()]);
+                }
+            	params.put(key, values);
             }
         }
-        if(LOG.isDebugEnabled()) {
-            LOG.debug(map.size() + " additional Query Parameters appended to original request.");
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(params.size() + " additional Query Parameters appended to original request.");
         }
-        return map;
+        return params;
     }
+    
 }
 
