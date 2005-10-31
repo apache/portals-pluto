@@ -22,58 +22,80 @@ package org.apache.pluto.driver.core;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.driver.config.DriverConfiguration;
-
+/**
+ * The portal environment of the incoming servlet request and response.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
 public class PortalEnvironment {
-
-    public final static String REQUEST_PORTALENV = "org.apache.pluto.driver.core.PortalEnvironment";
-
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private DriverConfiguration driverConfig;
-
-
-    private PortalURL requestedPortalURL;
-
+	
+	/** The attribute key of the portal environment instance. */
+    public final static String REQUEST_PORTALENV =
+    	PortalEnvironment.class.getName();
+    
+    /** The incoming servlet request. */
+    private HttpServletRequest request = null;
+    
+    /** The incoming servlet response. */
+    private HttpServletResponse response = null;
+    
+    /** The requested portal URL. */
+    private PortalURL requestedPortalURL = null;
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Create a PortalEnvironment instance.
+     * @param request  the incoming servlet request.
+     * @param response  the incoming servlet response.
+     */
     public PortalEnvironment(HttpServletRequest request,
                              HttpServletResponse response) {
         this.request = request;
         this.response = response;
         init();
-
-
     }
-
+    
     private void init() {
-
-        requestedPortalURL =
-        PortalUrlFactory.getFactory().createPortalUrl(request);
-
-
-        // set Environment in Request for later use
+        requestedPortalURL = PortalUrlFactory.getFactory()
+        		.createPortalUrl(request);
+        // Set Environment in servlet request scope for later use.
         this.request.setAttribute(REQUEST_PORTALENV, this);
     }
 
-
+    /**
+     * Returns the portal environment from the servlet request. The portal
+     * envirionment instance is saved in the request scope.
+     * @param request  the servlet request.
+     * @return the portal environment.
+     */
     public static PortalEnvironment getPortalEnvironment(
-        HttpServletRequest request) {
+    		HttpServletRequest request) {
         return (PortalEnvironment) request.getAttribute(REQUEST_PORTALENV);
     }
-
+    
+    /**
+     * Returns the servlet request.
+     * @return the servlet request.
+     */
     public HttpServletRequest getRequest() {
         return request;
     }
-
+    
+    /**
+     * Returns the servlet response.
+     * @return the servlet response.
+     */
     public HttpServletResponse getResponse() {
         return response;
     }
-
-/*
-    public List getNavigationalInformation()
-    {
-        return navigationalInformation;
-    }
-*/
+    
+    /**
+     * Returns the requested portal URL.
+     * @return the requested portal URL.
+     */
     public PortalURL getRequestedPortalURL() {
         return requestedPortalURL;
     }

@@ -48,98 +48,93 @@ public class PortalDriverServlet extends HttpServlet {
     /** Internal Logger. */
     private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);
 
-    /**
-     * The portlet container to which we will forward all portlet requests.
-     */
-    protected PortletContainer container;
+    /** The portlet container to which we will forward all portlet requests. */
+    protected PortletContainer container = null;
 
-    /**
-     * The driver configuration defining our configuraiton.
-     */
-    protected DriverConfiguration driverConfig;
+    /** The driver configuration defining our configuraiton. */
+    protected DriverConfiguration driverConfig = null;
 
     /**
      * Initialize the Portal Driver. Initialization completes the following
-     * tasks: <ul><li>Retrieve and Cache the <code>PortletContainer</code></li>
-     * <li>Retrieve and Cache the <code>DriverConfigurationImpl</code></li>
+     * tasks:
+     * <ul>
+     *   <li>Retrieve and cache the <code>PortletContainer</code>.</li>
+     *   <li>Retrieve and cache the <code>DriverConfigurationImpl</code>.</li>
+     * </ul>
      * @see PortletContainer
-     * @see org.apache.pluto.driver.config.impl.DriverConfigurationImpl
+     * @see DriverConfigurationImpl
      */
     public void init() {
-        ServletContext ctx = getServletContext();
-
-        String key = AttributeKeys.PORTLET_CONTAINER;
-        container = (PortletContainer) ctx.getAttribute(key);
-
-        key = AttributeKeys.DRIVER_CONFIG;
-        driverConfig = (DriverConfiguration) ctx.getAttribute(key);
+        ServletContext servletContext = getServletContext();
+        container = (PortletContainer) servletContext.getAttribute(
+        		AttributeKeys.PORTLET_CONTAINER);
+        driverConfig = (DriverConfiguration) servletContext.getAttribute(
+        		AttributeKeys.DRIVER_CONFIG);
     }
 
     /**
      * Handle all requests.
-     * @param req the HttpServletRequest
-     * @param res the HttpServletResponse
-     * @throws ServletException if an internal error occurs.
-     * @throws IOException      if an error occurs writing to the response.
+     * @param request  the incoming HttpServletRequest.
+     * @param response  the incoming HttpServletResponse.
+     * @throws ServletException  if an internal error occurs.
+     * @throws IOException  if an error occurs writing to the response.
      */
-    public void doGet(HttpServletRequest req,
-                      HttpServletResponse res)
-        throws ServletException, IOException {
+    public void doGet(HttpServletRequest request,
+                      HttpServletResponse response)
+    throws ServletException, IOException {
 
-        PortalEnvironment env = new PortalEnvironment(req, res);
-
-        PortalURL currentURL = env.getRequestedPortalURL();
-
+        PortalEnvironment environment = new PortalEnvironment(
+        		request, response);
+        PortalURL currentURL = environment.getRequestedPortalURL();
         String actionWindowId = currentURL.getActionWindow();
-        PortletWindowConfig winConfig =
-            driverConfig.getPortletWindowConfig(actionWindowId);
+        PortletWindowConfig windowConfig = driverConfig.getPortletWindowConfig(
+        		actionWindowId);
 
-        // Window will only exist if there's an action;
-        if (winConfig != null) {
-            PortletWindowImpl window = new PortletWindowImpl(winConfig,
-                                                             currentURL);
+        // Window will only exist if there's an action.
+        if (windowConfig != null) {
+            PortletWindowImpl portletWindow = new PortletWindowImpl(
+            		windowConfig, currentURL);
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Window Found: " + window.getId());
+                LOG.debug("Processing action request for window: "
+                		+ portletWindow.getId());
             }
             try {
-                container.doAction(window, req, res);
-
-            } catch (PortletContainerException exc) {
-                throw new ServletException(exc);
-            } catch (PortletException exc) {
-                throw new ServletException(exc);
+                container.doAction(portletWindow, request, response);
+            } catch (PortletContainerException ex) {
+                throw new ServletException(ex);
+            } catch (PortletException ex) {
+                throw new ServletException(ex);
             }
         } else {
-            PageConfig page = getPageConfig(currentURL);
-            req.setAttribute(AttributeKeys.CURRENT_PAGE, page);
-            String uri = page.getUri();
-            RequestDispatcher disp = req.getRequestDispatcher(uri);
-            disp.forward(req, res);
+            PageConfig pageConfig = getPageConfig(currentURL);
+            request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
+            String uri = pageConfig.getUri();
+            RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
+            dispatcher.forward(request, response);
         }
     }
 
     protected PageConfig getPageConfig(PortalURL currentURL) {
         String currentPage = currentURL.getRenderPath();
-
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rendering Portal: Requested Page: " + currentPage);
         }
-
         return driverConfig.getPageConfig(currentPage);
     }
 
 
     /**
-     * Pass all requests on to {@link #doPost(HttpServletRequest, HttpServletResponse)}.
-     * @param req the request
-     * @param res the response
+     * Pass all requests to {@link #doPost(HttpServletRequest, HttpServletResponse)}.
+     * @param request  the incoming servlet request.
+     * @param response  the incoming servlet response.
      * @throws ServletException if an exception occurs.
      * @throws IOException if an exception occurs writing to the response.
      */
-    public void doPost(HttpServletRequest req,
-                       HttpServletResponse res)
+    public void doPost(HttpServletRequest request,
+                       HttpServletResponse response)
     throws ServletException, IOException {
-        doGet(req, res);
+        doGet(request, response);
     }
+    
 }
 

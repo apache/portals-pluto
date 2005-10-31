@@ -19,19 +19,32 @@
 
 package org.apache.pluto.driver.core;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import java.util.*;
 
+/**
+ * The portal URL.
+ * TODO: detailed documentation of this class.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
 public class PortalURL implements Cloneable {
-
+	
+	/** Internal logger. */
     private static final Log LOG = LogFactory.getLog(PortalURL.class);
 
     /**
-     * The baseURL consists of the URI up to the servlet path.  The dynamic
+     * The baseURL consists of the URI up to the servlet path. The dynamic
      * portion of the PortalURL is the pathInfo;
      */
     private StringBuffer server;
@@ -39,39 +52,59 @@ public class PortalURL implements Cloneable {
     private String renderPath;
     private String actionWindow;
 
-    private Map windowStates;
-    private Map portletModes;
-    private Map parameters;
-
+    private Map windowStates = null;
+    private Map portletModes = null;
+    
+    /** Parameters of the windows. */
+    private Map parameters = null;
+    
+    
+    // Constructors ------------------------------------------------------------
+    
+    /**
+     * Create a PortalURL instance.
+     * @param protocol  the protocol.
+     * @param server  the server.
+     */
     public PortalURL(String protocol, String server) {
         this.server = new StringBuffer();
         this.server.append(protocol).append(server);
-        this.parameters = new java.util.HashMap();
-        this.windowStates = new java.util.HashMap();
-        this.portletModes = new java.util.HashMap();
+        this.parameters = new HashMap();
+        this.windowStates = new HashMap();
+        this.portletModes = new HashMap();
     }
-
-    private PortalURL() {
-
-    }
-
+    
     public PortalURL(String protocol, String server, int port) {
         this(protocol, server);
         this.server.append(":").append(port);
     }
 
-    public PortalURL(String protocol, String server, String contextPath,
+    public PortalURL(String protocol,
+                     String server,
+                     String contextPath,
                      String servletPath) {
         this(protocol, server);
         setControllerPath(contextPath, servletPath);
     }
 
-    public PortalURL(String protocol, String server, int port,
-                     String contextPath, String servletPath) {
+    public PortalURL(String protocol,
+                     String server,
+                     int port,
+                     String contextPath,
+                     String servletPath) {
         this(protocol, server, port);
         setControllerPath(contextPath, servletPath);
     }
-
+    
+    /**
+     * Internal private constructor used by method <code>clone()</code>.
+     */
+    private PortalURL() {
+    	// Do nothing.
+    }
+    
+    // Public Methods ----------------------------------------------------------
+    
     public void setControllerPath(String context, String servletPath) {
         this.servletPath = new StringBuffer();
         this.servletPath = this.servletPath.append(context).append(servletPath);
@@ -115,13 +148,18 @@ public class PortalURL implements Cloneable {
     }
 
     public void setPortletMode(String windowId, PortletMode portletMode) {
-        this.portletModes.put(windowId, portletMode);
+        portletModes.put(windowId, portletMode);
     }
 
     public Map getWindowStates() {
         return Collections.unmodifiableMap(windowStates);
     }
-
+    
+    /**
+     * Returns the window state of the specified window.
+     * @param windowId  the window ID.
+     * @return the window state. Default to NORMAL.
+     */
     public WindowState getWindowState(String windowId) {
         WindowState state = (WindowState) windowStates.get(windowId);
         if (state == null) {
@@ -130,17 +168,25 @@ public class PortalURL implements Cloneable {
         return state;
     }
 
+    /**
+     * Sets the window state of the specified window.
+     * @param windowId  the window ID.
+     * @param windowState  the window state.
+     */
     public void setWindowState(String windowId, WindowState windowState) {
         this.windowStates.put(windowId, windowState);
     }
-
-    public void clearParameters(String window) {
-        Iterator it = parameters.entrySet().iterator();
-        while (it.hasNext()) {
+    
+    /**
+     * Clear parameters of the specified window.
+     * @param windowId  the window ID.
+     */
+    public void clearParameters(String windowId) {
+    	for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();
-            if (((PortalUrlParameter) entry.getValue()).getWindowId().equals(
-                window)) {
-                it.remove();
+            PortalUrlParameter param = (PortalUrlParameter) entry.getValue();
+            if (param.getWindowId().equals(windowId)) {
+            	it.remove();
             }
         }
     }
