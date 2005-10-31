@@ -1,2 +1,0 @@
-/testsuite
-/pluto

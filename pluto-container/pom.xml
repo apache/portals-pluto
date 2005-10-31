@@ -1,0 +1,95 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.pluto</groupId>
+  <artifactId>pluto-container</artifactId>
+  <packaging>jar</packaging>
+  <name>Pluto Portlet Container</name>
+  <url>http://portals.apache.org/pluto</url>
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+	<artifactId>pluto</artifactId>
+	<version>1.1-SNAPSHOT</version>
+  </parent>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.pluto</groupId>
+	  <artifactId>pluto-descriptor-api</artifactId>
+	  <version>${pom.version}</version>
+	  <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+	  <artifactId>commons-logging</artifactId>
+	  <version>1.0.4</version>
+	  <scope>compile</scope>
+    </dependency>
+	<dependency>
+      <groupId>portlet-api</groupId>
+	  <artifactId>portlet-api</artifactId>
+	  <version>1.0</version>
+	  <scope>provided</scope>
+    </dependency>
+	<dependency>
+      <groupId>portlet-api</groupId>
+	  <artifactId>portlet-api</artifactId>
+	  <version>1.0</version>
+	  <scope>provided</scope>
+    </dependency>
+	<dependency>
+      <groupId>servletapi</groupId>
+	  <artifactId>servletapi</artifactId>
+	  <version>2.3</version>
+	  <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>jmock</groupId>
+      <artifactId>jmock</artifactId>
+      <version>1.0.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/resources/properties</directory>
+		<includes name="**/*.properties"/>
+      </resource>
+      <resource>
+	    <targetPath>META-INF</targetPath>
+        <directory>src/resources/tld</directory>
+		<includes name="**/*.tld"/>
+      </resource>
+    </resources>
+    <plugins>
+
+      <!-- Assembly Plugin - Create Distributions -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>src/assemble/bin.xml</descriptor>
+          <finalName>pluto-container-1.1.0-SNAPSHOT</finalName>
+        </configuration>
+      </plugin>
+
+      <!-- Surefire Plugin - Exec Tests -->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+	<version>2.0-beta-1</version>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/PlutoTestCase.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

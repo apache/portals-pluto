@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd"
+    elementFormDefault="qualified">
+
+<xs:element name="pluto-portal-driver">
+  <xs:complexType>
+    <xs:sequence>
+	<xs:element name="portal-name" type="xs:string" default="pluto-portal-driver"/>
+	<xs:element name="portal-version" type="xs:string"/>
+	<xs:element name="container-name" type="xs:string"/>
+
+    <xs:element name="supports">
+      <xs:complexType>
+        <xs:sequence>
+        <xs:element name="portlet-mode" type="xs:string"/>
+        <xs:element name="window-state" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+
+    <xs:element name="portlet-app">
+      <xs:complexType>
+
+        <xs:sequence>
+          <xs:element name="context-path" type="xs:string">
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:pattern value="/[a-zA-Z0-9_ /]*"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+
+          <xs:element name="portlets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="portlet">
+                  <xs:complexType><xs:attribute name="name" type="xs:string"/></xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+
+    <xs:element name="render-config">
+      <xs:complexType>
+        <xs:attribute name="default" type="xs:string"/>
+        <xs:sequence>
+          <xs:element name="page">
+            <xs:complexType>
+              <xs:attribute name="name" type="xs:string"/>
+              <xs:attribute name="uri" type="xs:string"/>
+              <xs:sequence>
+                <xs:element name="portlet">
+                  <xs:complexType>
+                    <xs:attribute name="context" type="xs:string"/>
+                    <xs:attribute name="name" type="xs:string"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>

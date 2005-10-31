@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- The DriverConfiguration Bean.  This is the only bean required -->
+    <bean name="DriverConfiguration"
+          class="org.apache.pluto.driver.config.impl.DriverConfigurationImpl">
+      <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
+      <constructor-arg><ref bean="PortletRegistryService"/></constructor-arg>
+      <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
+    </bean>
+
+    <bean name="PropertyConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+          singleton="true">
+    </bean>
+    <bean name="PortletRegistryService"
+          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+          singleton="true">
+    </bean>
+    <bean name="RenderConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+          singleton="true">
+    </bean>
+</beans>

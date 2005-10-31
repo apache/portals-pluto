@@ -1,0 +1,52 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.pluto</groupId>
+  <artifactId>pluto-portal</artifactId>
+  <packaging>war</packaging>
+  <name>Pluto Portal Driver</name>
+  <url>http://portals.apache.org/pluto</url>
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+	<artifactId>pluto</artifactId>
+	<version>1.1-SNAPSHOT</version>
+  </parent>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.pluto</groupId>
+	  <artifactId>pluto-portal-driver</artifactId>
+	  <version>${pom.version}</version>
+	  <scope>compile</scope>
+      <exclusions>
+          <exclusion>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.apache.xerces</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
+		  <exclusion>
+		    <groupId>commmons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+		  <exclusion>
+		    <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+          </exclusion>
+       </exclusions>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>pluto-portal</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>src/assemble/bin.xml</descriptor>
+		  <finalName>pluto-portal-${pom.version}</finalName>
+        </configuration>
+      </plugin>
+    </plugins>
+
+  </build>
+</project>

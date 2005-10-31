@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>pluto</artifactId>
+    <groupId>org.apache.pluto</groupId>
+    <version>1.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>pluto-site</artifactId>
+  <name>Pluto</name>
+  <url>http://portals.apache.org/pluto/pluto-1.1</url>
+  <inceptionYear>2001</inceptionYear>
+  <distributionManagement>
+    <site>
+      <id>website</id>
+	  <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/1.1</url>
+    </site>
+  </distributionManagement>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+ <!-- repeated here so that pluto-site is not appended -->
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/branches/pluto-1.1/</connection>
+	<developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/branches/pluto-1.1/</developerConnection>
+	<url>http://svn.apache.org/viewcvs.cgi/portals/pluto/branches/pluto-1.1/</url>
+  </scm>
+
+</project>
