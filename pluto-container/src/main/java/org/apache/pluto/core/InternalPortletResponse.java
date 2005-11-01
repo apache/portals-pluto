@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
-
- */
 
 package org.apache.pluto.core;
 
+import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface InternalPortletResponse {
+/**
+ * The internal portlet response interface extends PortletResponse and adds
+ * some methods used by Pluto.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
+public interface InternalPortletResponse extends PortletResponse {
 
     public void lateInit(HttpServletRequest webModuleServletRequest,
                          HttpServletResponse webModuleServletResponse);
