@@ -142,22 +142,20 @@ class PortletInvoker {
 
         if (dispatcher != null) {
             try {
-                request.setAttribute(org.apache.pluto.Constants.METHOD_ID,
-                                     methodID);
-                request.setAttribute(
-                    org.apache.pluto.Constants.PORTLET_REQUEST, request);
-
-                request.setAttribute(
-                    org.apache.pluto.Constants.PORTLET_RESPONSE, response);
-
-                // TODO
                 // Tomcat does not like to properly include wrapped requests
                 // and responses. Thus we "unwrap" and then include.
+                HttpServletRequest req = request.getHttpServletRequest();
+                HttpServletResponse res = response.getHttpServletResponse();
 
-                //HttpServletRequest req = request.getHttpServletRequest();
-                //HttpServletResponse res = response.getHttpServletResponse();
+                req.setAttribute(org.apache.pluto.Constants.METHOD_ID,
+                                     methodID);
+                req.setAttribute(
+                    org.apache.pluto.Constants.PORTLET_REQUEST, request);
 
-                dispatcher.include(request, response);
+                req.setAttribute(
+                    org.apache.pluto.Constants.PORTLET_RESPONSE, response);
+
+                dispatcher.include(req, res);
 
             } catch (javax.servlet.UnavailableException e) {
                 int seconds = e.isPermanent()?-1:e.getUnavailableSeconds();
