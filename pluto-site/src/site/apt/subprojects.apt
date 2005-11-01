@@ -1,0 +1,58 @@
+ ------
+ Pluto Subprojects
+ ------
+ David H. DeWolf
+ ------
+ 1 Nov 2005
+ ------
+
+Pluto Subprojects
+
+  Pluto 1.1 utilizes Maven 2 as it's project management and build
+  automation tool.  Pluto follows maven's best practices and is
+  organized into modules or subprojects.
+
+* Pluto Container
+
+  The Pluto Container is the core compontent of the Apache Pluto
+  project.  All other modules either support the development.  The
+  Pluto Container is the reference implementation of the Portlet 
+  Specification.
+
+* Pluto Descriptor API
+
+  A domain model which represents the deployment descriptors read
+  by the portlet container.  Contains service interfaces for reading
+  and writing portlet.xml and web.xml.
+
+* Pluto Descriptor Impl
+
+  The default implementation of the Pluto Descriptor API Subproject.
+  The default implementation utilzes castor for reading and writing
+  portlet and web application descriptors.
+
+* Pluto Portal Driver
+
+  A driver library for the Pluto Portlet Container.  Provides service 
+  implementations and utilities for implementing a portal which utilizes
+  the container.
+
+* Pluto Portal
+
+  The user interface components (web application) of the Pluto Portal.
+  The pluto portal is a simple portal application which embeds the portal.
+  The portal is not meant to be a full enterprise portal, but instead 
+  is meant to be an example of how to embed the container and a lightweight
+  environment for developing and testing portlets.
+
+* Pluto Deploy
+
+  Deployment Utilities for working with the Pluto Portal.
+
+* Pluto Testsuite
+
+  A test portlet which can be used to exercise and test any 
+  portlet container.
+
+
+
