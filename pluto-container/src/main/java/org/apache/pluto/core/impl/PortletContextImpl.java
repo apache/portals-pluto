@@ -30,6 +30,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,8 @@ import java.util.StringTokenizer;
  * provides container specific information needed for processing.</p>
  * 
  * @version 1.1
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletContextImpl
 implements PortletContext, InternalPortletContext {
@@ -84,27 +86,59 @@ implements PortletContext, InternalPortletContext {
     }
 
     public PortletRequestDispatcher getRequestDispatcher(String path) {
+    	
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Dispatcher Requested: " + path);
+            LOG.debug("PortletRequestDispatcher requested: " + path);
         }
+        
+        // Check if the path name is valid. A valid path name must not be null
+        // and must start with a slash '/' as defined by the portlet spec.
+        if (path == null || !path.startsWith("/")) {
+        	if (LOG.isInfoEnabled()) {
+        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
+        				+ "path name must begin with a slash '/'.");
+        	}
+        	return null;
+        }
+        
+        // Parse path name to base dispatching path and query parameters.
+        String dispatchingPath = null;
+        Map params = null;
+        int index = path.indexOf("?");
+        if (index > 0) {
+        	dispatchingPath = path.substring(0, index);
+        	if (index < path.length() - 1) {
+        		params = parseQueryParams(path.substring(index + 1));
+        	}
+        } else {
+        	dispatchingPath = path;
+        }
+        
+        // Construct PortletRequestDispatcher.
+        PortletRequestDispatcher portletRequestDispatcher = null;
         try {
-            Map params = parseQueryParams(path);
-            RequestDispatcher dispatcher = servletContext
-            		.getRequestDispatcher(path);
-            if (dispatcher != null) {
-                return new PortletRequestDispatcherImpl(dispatcher, params);
+            RequestDispatcher servletRequestDispatcher = servletContext
+            		.getRequestDispatcher(dispatchingPath);
+            if (servletRequestDispatcher != null) {
+            	portletRequestDispatcher = new PortletRequestDispatcherImpl(
+                		servletRequestDispatcher, params);
             } else {
             	if (LOG.isInfoEnabled()) {
             		LOG.info("No matching request dispatcher found for path: "
-            				+ path);
+            				+ dispatchingPath);
             	}
             }
         } catch (Exception ex) {
             // need to catch exception because of tomcat 4.x bug
             // tomcat throws an exception instead of return null
             // if the path was not found
+        	if (LOG.isInfoEnabled()) {
+        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
+        				+ ex.getMessage());
+        	}
+        	portletRequestDispatcher = null;
         }
-        return null;
+        return portletRequestDispatcher;
     }
     
     public PortletRequestDispatcher getNamedDispatcher(String name) {
@@ -219,41 +253,49 @@ implements PortletContext, InternalPortletContext {
     // Private Methods ---------------------------------------------------------
     
     /**
-     * Parse the query path and extract appended parameters. This method puts
+     * Parse the query path and extract appended parameters. Query parameters
+     * are name-value pairs separated by the character '&'. This method puts
      * parameters into a map. The key is the parameter name as a string; the
      * value is a string array holding parameter values.
      * 
-     * @param path the query path to parse.
+     * @param paramsString  the string containing parameters.
      * @return parameter map, or null if no parameters are appended.
      */
-    private Map parseQueryParams(String path) {
-    	int index = path.indexOf("?");
-    	if (index < 0 || index == path.length() - 1) {
-    		return null;
+    private Map parseQueryParams(String paramsString) {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Parsing query parameters string: " + paramsString);
     	}
         Map params = new HashMap();
-        String paramsString = path.substring(index + 1);
         StringTokenizer st = new StringTokenizer(paramsString, "&", false);
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
             int equalIndex = token.indexOf("=");
-            if (equalIndex > 0 && equalIndex < token.length() - 1) {
+            if (equalIndex > 0) {
                 String key = token.substring(0, equalIndex);
-                String value = token.substring(equalIndex + 1);
+                String value = null;
+                if (equalIndex < token.length() - 1) {
+                	value = token.substring(equalIndex + 1);
+                } else {
+                	value = "";
+                }
                 String[] values = (String[]) params.get(key);
                 if (values == null) {
                 	values = new String[] { value };
                 } else {
-                	List valueList = Arrays.asList(values);
-                	valueList.add(value);
-                	values = (String[]) valueList.toArray(
-                			new String[valueList.size()]);
+                	// Create a new list to avoid UnsupportedOperationException:
+                	// List returned by Arrays.asList() doesn't support add().
+            		List valueList = new ArrayList();
+            		valueList.addAll(Arrays.asList(values));
+            		valueList.add(value);
+            		values = (String[]) valueList.toArray(
+            				new String[valueList.size()]);
                 }
             	params.put(key, values);
             }
         }
         if (LOG.isDebugEnabled()) {
-            LOG.debug(params.size() + " additional Query Parameters appended to original request.");
+            LOG.debug(params.size() + " additional query parameters "
+            		+ "appended to original request.");
         }
         return params;
     }
