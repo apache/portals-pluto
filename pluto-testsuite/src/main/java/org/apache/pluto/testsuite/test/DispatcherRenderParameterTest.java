@@ -134,7 +134,7 @@ extends AbstractReflectivePortletTest {
     	dispatcher.include((RenderRequest) request, (RenderResponse) response);
     	
     	TestResult result = new TestResult();
-    	result.setName("Dispatcher Render Parameter Test");
+    	result.setName("Dispatcher Same Name Render Parameter Test");
     	result.setDesc("Ensure query parameters with the same name added "
     			+ "during dispatching are attached to the request.");
     	if (request.getAttribute(RESULT_KEY) != null
@@ -167,7 +167,7 @@ extends AbstractReflectivePortletTest {
     	dispatcher.include((RenderRequest) request, (RenderResponse) response);
     	
     	TestResult result = new TestResult();
-    	result.setName("Dispatcher Render Parameter Test");
+    	result.setName("Dispatcher Invalid Render Parameter Test");
     	result.setDesc("Ensure invalid query parameters added "
     			+ "during dispatching are ignored.");
     	if (request.getAttribute(RESULT_KEY) != null
