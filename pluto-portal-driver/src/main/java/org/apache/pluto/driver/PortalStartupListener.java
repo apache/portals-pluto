@@ -31,19 +31,19 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * Listener used to start up the Pluto Portal Driver upon
- * startup of the servlet context in which it resides.
- *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
+ * Listener used to start up / shut down the Pluto Portal Driver upon startup /
+ * showdown of the servlet context in which it resides.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @version $Revision$ $Date$
  * @since Sep 22, 2004
  */
 public class PortalStartupListener implements ServletContextListener {
-    /** Internal Logger. */
-    private static final Log LOG =
-        LogFactory.getLog(PortalStartupListener.class);
-
-    /**  The location of the portal driver configuration. */
+    
+    /** Internal logger. */
+    private static final Log LOG = LogFactory.getLog(
+            PortalStartupListener.class);
 
     /** The KEY with which the container is bound to the context. */
     private static final String CONTAINER_KEY = AttributeKeys.PORTLET_CONTAINER;
@@ -53,100 +53,102 @@ public class PortalStartupListener implements ServletContextListener {
 
 
     /**
-     * Receive the startup notification and subsequently start up
-     * the portal driver. The following are done in this order:
-     * <ol><li>Retrieve the Configuration File</li>
-     *     <li>Parse the Configuration File into Configuration Objects</li>
-     *     <li>Create a Portal Context</li>
-     *     <li>Create the ContainerServices implementation</li>
-     *     <li>Create the Portlet Container</li>
-     *     <li>Initialize the Container</li>
-     *     <li>Bind the configuration to the ServletContext</li>
-     *     <li>Bind the container to the ServletContext</li><ul>
+     * Receive the startup notification and subsequently start up the portal
+     * driver. The following are done in this order:
+     * <ol>
+     *   <li>Retrieve the Configuration File</li>
+     *   <li>Parse the Configuration File into Configuration Objects</li>
+     *   <li>Create a Portal Context</li>
+     *   <li>Create the ContainerServices implementation</li>
+     *   <li>Create the Portlet Container</li>
+     *   <li>Initialize the Container</li>
+     *   <li>Bind the configuration to the ServletContext</li>
+     *   <li>Bind the container to the ServletContext</li>
+     * <ol>
      *
-     * @param event the servlet context event.
+     * @param event  the servlet context event.
      */
     public void contextInitialized(ServletContextEvent event) {
-        ServletContext ctx = event.getServletContext();
+        ServletContext servletContext = event.getServletContext();
         try {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Starting Pluto Portal Driver . . .");
-                LOG.debug(" - Retreaving Driver Configuration . . .");
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Starting up Pluto Portal Driver...");
             }
-
-            DriverConfiguration config =
-                DriverConfigurationFactory.getFactory().getConfig(ctx);
-
+            
             if (LOG.isDebugEnabled()) {
-                LOG.debug(
-                    " - Creating Portal Context [" + config.getPortalName() +
-                    "/" +
-                    config.getPortalVersion() +
-                    "]. . .");
+                LOG.debug(" * Retreaving portal driver configuration...");
             }
-
-            PortalContextImpl context = new PortalContextImpl(config);
-
+            DriverConfiguration config = DriverConfigurationFactory
+                    .getFactory().getConfig(servletContext);
+            
             if (LOG.isDebugEnabled()) {
-                LOG.debug(" - Creating Container Services. . .");
+                LOG.debug(" * Creating portal context ["
+                        + config.getPortalName() + "/"
+                        + config.getPortalVersion() + "]...");
             }
-
-            ContainerServicesImpl impl = new ContainerServicesImpl(context);
-
+            PortalContextImpl portalContext = new PortalContextImpl(config);
+            
             if (LOG.isDebugEnabled()) {
-                LOG.debug(" - Creating Portlet Container. . .");
+                LOG.debug(" * Creating container services...");
             }
-
-            PortletContainerFactory factory = PortletContainerFactory.getInstance();
-            PortletContainer container =
-                factory.createContainer(
+            ContainerServicesImpl containerServices =
+                    new ContainerServicesImpl(portalContext);
+            
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(" * Creating portlet container...");
+            }
+            PortletContainerFactory factory =
+                    PortletContainerFactory.getInstance();
+            PortletContainer container = factory.createContainer(
                     config.getContainerName(),
-                    impl
-                );
+                    containerServices);
 
             if (LOG.isDebugEnabled()) {
-                LOG.debug(" - Starting Portlet Container");
+                LOG.debug(" * Initializing portlet container...");
             }
-
-            container.init(ctx);
-
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(" Pluto Portal Driver Started.");
+            container.init(servletContext);
+            
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Pluto Portal Driver started.");
             }
+            
+            servletContext.setAttribute(CONFIG_KEY, config);
+            servletContext.setAttribute(CONTAINER_KEY, container);
 
-            ctx.setAttribute(CONFIG_KEY, config);
-            ctx.setAttribute(CONTAINER_KEY, container);
-
-        } catch (DriverConfigurationException exception) {
-            LOG.error(
-                "Unable to retrieve driver configuration due to configuration error.",
-                exception
-            );
-        } catch (PortletContainerException exception) {
-            LOG.error(
-                "Unable to start portlet container due to configuration error.",
-                exception
-            );
+        } catch (DriverConfigurationException ex) {
+            LOG.error("Unable to retrieve driver configuration "
+                    + "due to configuration error: " + ex.getMessage(), ex);
+        } catch (PortletContainerException ex) {
+            LOG.error("Unable to start up portlet container: "
+                    + ex.getMessage(), ex);
         }
     }
 
     /**
-     * Recieve notification that the context is being shut down
-     * and subsequently destroy the container.
+     * Recieve notification that the context is being shut down and subsequently
+     * destroy the container.
      *
-     * @param event the destrubtion even.t
+     * @param event the destrubtion event.
      */
     public void contextDestroyed(ServletContextEvent event) {
-        ServletContext ctx = event.getServletContext();
-        PortletContainer container =
-            (PortletContainer) ctx.getAttribute(CONTAINER_KEY);
-
-        try {
-            container.destroy();
-        } catch (PortletContainerException exc) {
-            LOG.error("Unable to shutdown portlet container. ", exc);
-        } finally {
-            ctx.removeAttribute(CONTAINER_KEY);
+        ServletContext servletContext = event.getServletContext();
+        PortletContainer container = (PortletContainer)
+                servletContext.getAttribute(CONTAINER_KEY);
+        if (container != null) {
+            try {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Shutting down Pluto Portal Driver...");
+                }
+                container.destroy();
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Pluto Portal Driver shut down.");
+                }
+            } catch (PortletContainerException ex) {
+                LOG.error("Unable to shut down portlet container: "
+                        + ex.getMessage(), ex);
+            } finally {
+                servletContext.removeAttribute(CONTAINER_KEY);
+            }
         }
     }
 }
