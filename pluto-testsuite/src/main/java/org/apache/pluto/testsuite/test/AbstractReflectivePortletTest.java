@@ -33,7 +33,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class AbstractReflectivePortletTest implements PortletTest {
 	
@@ -82,13 +83,13 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
                                        context,
                                        request,
                                        response));
-                } catch (Exception ex) {
-                	LOG.error("Failed invoking " + methods[i].getName(), ex);
+                } catch (Throwable th) {
+                	LOG.error("Failed invoking " + methods[i].getName(), th);
                     TestResult result = new TestResult();
                     result.setName(methods[i].getName());
                     result.setDesc("Unknown");
                     result.setReturnCode(TestResult.FAILED);
-                    result.setResults(ex.getMessage());
+                    result.setResults(th.getMessage());
                     results.add(result);
                 }
             }
