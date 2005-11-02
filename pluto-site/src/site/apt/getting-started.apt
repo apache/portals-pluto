@@ -15,10 +15,13 @@ Getting Started
   install pluto into the Tomcat servlet engine (Jetty and other
   containers coming soon).
 
+  <PLUTO-1.1-HOME> is the local directory where the Pluto source 
+  distribution is located.
+  
 ---------------
 $> cd <PLUTO-1.1-HOME>
 $> mvn install
-$> cd ../pluto-util
+$> cd pluto-util
 $> mvn pluto:install -DinstallDir=path/to/appserver
 ---------------
 
@@ -92,6 +95,7 @@ Portlet Assembly and Deployment
 
 
 ---------------
+$> cd <PLUTO-1.1-HOME>
 $> cd pluto-util
 $> maven pluto:assemble -Dmaven.deploy.deployment=<path to war>
 ---------------
@@ -99,6 +103,7 @@ $> maven pluto:assemble -Dmaven.deploy.deployment=<path to war>
 * Portlet Deployment:
 
 ---------------
+$> cd <PLUTO-1.1-HOME>
 $> cd pluto-install
 $> maven pluto:deploy -Dmaven.deploy.deployment=<path to war>
 ---------------
