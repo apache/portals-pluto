@@ -168,9 +168,9 @@
   </licenses>
   
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/branches/pluto-1.1</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/branches/pluto-1.1</developerConnection>
-    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/branches/pluto-1.1</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/trunk</developerConnection>
+    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk</url>
   </scm>
 
   <organization>
@@ -194,7 +194,7 @@
   <distributionManagement>
     <site>
       <id>website</id>
-      <url>scp://minotaur.apache.org/www/portals.apache.org/pluto/1.1</url>
+      <url>scp://minotaur.apache.org/www/portals.apache.org/pluto</url>
     </site>
 
     <repository>
