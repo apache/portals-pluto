@@ -8,6 +8,13 @@
 
 Welcome to Pluto
 
+[http://apache.org/images/ac2005us_white_184x80.jpg] Join us in San Diego for ApacheCon US 2005
+
+  Join Apache Portals at {{{http://apachecon.com/2005/US}ApacheCon 2005}}.  Pluto committer David DeWolf will be
+  presenting 'Embedding Apache Pluto'.
+
+============================================================
+
   Pluto is the Reference Implementation of the Java Portlet 
   Specfication. The current version of this specification is 
   JSR 168.

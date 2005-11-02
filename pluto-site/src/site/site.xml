@@ -19,11 +19,22 @@
       <item name="Mission" href="/mission.html"/>
 	  <iten name="Download" href="/mirrors.html"/>
       <item name="News" href="/news.html"/>
+	  <item name="Powered By Pluto" href="/powered.html"/>
 	</menu>
 
 	<menu name="Pluto 1.0.1">
       <item name="Getting Started" href="/v101/install.html"/>
 	  <item name="Resources" href="/v101/resources.html"/>
+	  <menu name="User Guide" href="/v101/userguide/index.html">
+        <item name="Portal Guide" href="/v101/userguide/portal.html"/>
+        <item name="Testsuite Guide" href="/v101/userguide/testsuite.html"/>
+	  </menu>
+	  <menu name="Developer Guide" href="/v101/developer/index.html">
+        <item name="Architecture" href="/v101/developer/arch.html"/>
+        <item name="Obtaining Source" href="/v101/developer/subversion.html"/>
+        <item name="Building From Source" href="/v101/developer/build_source.html"/>
+		<item name="Integrating/Embedding" href="/v101/developer/integrate.html"/>
+	  </menu>
 	</menu>
 
     <menu name="Pluto 1.1">

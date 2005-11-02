@@ -24,33 +24,48 @@ limitations under the License.
 <body>
   <section name="Portal using Pluto">
     <p>
-	  The following portals use Pluto for their portlet
-      container:
-
+	  The following portals use Pluto for their portlet container:
 	  <table>
-      <tr><th>Portal</th><th>Website</th><th>License</th><th>Status</th></tr>
-	  <tr><td>Jetspeed 2</td>
+      <tr><th>Portal</th><th>Website</th><th>License</th><th>Status</th><th>Pluto Version</th></tr>
+	  <tr><td>Apache Jetspeed 2</td>
           <td><a href="http://portals.apache.org/jetspeed-2">http://portals.apache.org/jetspeed-2</a></td>
           <td>Apache 2.0</td>
-          <td></td></tr>
-	  <tr><td>Cocoon</td>
+          <td></td>
+          <td>1.0.1</td></tr>
+	  <tr><td>Apache Cocoon</td>
           <td><a href="http://cocoon.apache.org">http://cocoon.apache.org</a></td>
           <td>Apache 2.0</td>
-          <td></td></tr>
+          <td></td>
+          <td>1.0.1</td></tr>
       <tr><td>uPortal</td>
           <td><a href="http://www.uportal.org">http://www.uportal.org</a></td>
           <td>JA-SIG</td>
-          <td></td></tr>
+          <td></td>
+          <td>1.0.1</td></tr>
       <tr><td>InfoGlue</td>
           <td><a href="http://www.infoglue.org">http://www.infoglue.org</a></td>
           <td>GPL</td>
-          <td></td></tr>
+          <td></td>
+          <td>1.0.1</td></tr>
       <tr><td>Jahia</td>
           <td><a href="http://www.jahia.org">http://www.jahia.org</a></td>
           <td><a href="http://www.collaborativesource.org">Proprietary</a></td>
-          <td>(http://www.jahia.org/cvs), branch JAHIA_PLUTO_BRANCH</td></tr>
+          <td>(http://www.jahia.org/cvs), branch JAHIA_PLUTO_BRANCH</td>
+          <td>1.0.1</td></tr>
 	  </table>
     </p>
+
+	<p>
+    The following applications utilize Pluto for providing Plugin Extensibility:
+    <table>
+      <tr><th>Portal</th><th>Website</th><th>License</th><th>Status</th><th>Pluto Version</th></tr>
+	  <tr><td>Apache Geronimo </td>
+          <td><a href="http://geronimo.apache.org/">http://geronimo.apache.org</a></td>
+          <td>Apache 2.0</td>
+          <td>Web Management Console</td>
+          <td>1.0.1</td></tr>
+    </table>
+	</p>
   </section>
 </body>
 </document>
