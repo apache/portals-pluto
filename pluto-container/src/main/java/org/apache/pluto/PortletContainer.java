@@ -15,9 +15,6 @@
  */
 package org.apache.pluto;
 
-import org.apache.pluto.services.PortletContainerServices;
-import org.apache.pluto.services.OptionalPortletContainerServices;
-
 import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

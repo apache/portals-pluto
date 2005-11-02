@@ -15,7 +15,10 @@
  */
 package org.apache.pluto.driver.services.container;
 
-import org.apache.pluto.services.*;
+import org.apache.pluto.OptionalPortletContainerServices;
+import org.apache.pluto.services.PortalCallbackService;
+import org.apache.pluto.PortletContainerServices;
+import org.apache.pluto.services.PortletPreferencesService;
 
 import javax.portlet.PortalContext;
 

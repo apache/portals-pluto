@@ -29,9 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerServices;
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.core.InternalPortletWindow;
-import org.apache.pluto.services.PortletContainerServices;
 import org.apache.pluto.services.ResourceURLProvider;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 

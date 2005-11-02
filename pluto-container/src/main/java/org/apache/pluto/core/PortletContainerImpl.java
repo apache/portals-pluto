@@ -25,16 +25,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.*;
 import org.apache.pluto.core.impl.ActionRequestImpl;
 import org.apache.pluto.core.impl.ActionResponseImpl;
 import org.apache.pluto.core.impl.RenderRequestImpl;
 import org.apache.pluto.core.impl.RenderResponseImpl;
-import org.apache.pluto.services.PortletContainerServices;
 import org.apache.pluto.services.PortletURLProvider;
-import org.apache.pluto.services.OptionalPortletContainerServices;
+import org.apache.pluto.OptionalPortletContainerServices;
 
 /**
  * Default Pluto Container implementation.

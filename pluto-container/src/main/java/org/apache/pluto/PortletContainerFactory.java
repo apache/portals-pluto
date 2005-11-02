@@ -19,8 +19,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.core.DefaultOptionalServices;
-import org.apache.pluto.services.PortletContainerServices;
-import org.apache.pluto.services.OptionalPortletContainerServices;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**
