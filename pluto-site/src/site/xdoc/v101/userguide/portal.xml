@@ -19,11 +19,12 @@ limitations under the License.
 <properties>
   <author email="nlothian.AT.apache.DOT.org">Nick Lothian</author>
   <author email="ddewolf.AT.apache.DOT.org">David DeWolf</author>
+  <author email="cdoremus.AT.apache.DOT.org">Craig Doremus</author>
   <title>User Guide: Pluto Portal Driver</title>
 </properties>
 
 <body>
-<section name="User Guide: Pluto Portal Driver">
+<section name="User Guide: Pluto 1.0.1 Portal Driver">
   <p>
   <ul>
   <li><A href="#Limitations">Limitations</A></li>
@@ -54,11 +55,12 @@ limitations under the License.
 <section name="Configuration">
   <subsection name="Default Configuration">
     <p>
-      Upon installation of the binary distribution of Pluto, the portal
-      driver is made available at <code>http://localhost/pluto/portal</code>.
-      The default installation is configured with a single portal page which
-      contains two instances of the testsuite portlet.  This configuration 
-      is also the default for installations completed from the source distribution
+      Upon installation of the binary distribution of Pluto 1.0.1, the portal
+      driver is made available at <code>http://localhost:8080/pluto/portal</code>.
+      The default installation is configured with a portal page which
+      contains two instances of the testsuite portlet and an administration.
+      portlet for installing custom portlets and viewing the repositories.  
+      This configuration is also the default for installations completed from the source distribution
       (or Subversion repository) and deployed using the Pluto deploy tool.
     </p>
     <p>
@@ -105,23 +107,19 @@ limitations under the License.
           <td>${maven.tomcat.home}/bin/startup.bat</td>
           <td>The script used to startup the portal driver</td></tr>
       <tr><td>Context Configuration</td>
-          <td>Tomcat 5</td>
+          <td>Tomcat 5.5</td>
           <td>${maven.tomcat.home}/conf/Catalina/localhost/pluto.xml</td>
-          <td>The Tomcat Context Configuration file</td></tr>
-      <tr><td>Context Configuration</td>
-          <td>Tomcat 4</td>
-          <td>${maven.tomcat.home}/webapps/pluto.xml</td>
           <td>The Tomcat Context Configuration file</td></tr>
       </table>
     </p>
 
     <p>When the Pluto Portal is first installed, it is made available at 
-       the address http://localhost/pluto/portal/.</p>
+       the address http://localhost:8080/pluto/portal/.</p>
 
 				<p>This location can be customized, using standard Tomcat functionality. To modify the <i>pluto</i> part of the
 				location, alter the path mapping in pluto's context configuration file <i>pluto.xml</i></p>
 
-				<p>Under Tomcat 4.1, pluto.xml will be created in the ${TOMCAT_HOME}/webapps/ directory. Under Tomcat 5, pluto.xml will be created
+				<p>Under Tomcat 5.5, pluto.xml will be located
 				in the ${TOMCAT_HOME}/conf/Catalina/ directory. </p>
 
 				<p>In order to modify the context Pluto is running under, modify the <i>path</i> attribute:</p>
@@ -138,12 +136,15 @@ limitations under the License.
 	&lt;/Context&gt;
 				</source>
 				</p>
+				
+				<p>You might also need to modify host.name and portletcontainer.uniquename in 
+				${TOMCAT_HOME}/webapps/pluto/WEB-INF/config/services/ConfigService.properties.
+				</p>
 
 				<p>After this modification (and restarting Tomcat),
 				the Pluto Portal will be available at the address http://servername/newlocation/portal/.
 				Further information on customizing the context configuration is available for
-				<a href="http://jakarta.apache.org/tomcat/tomcat-4.1-doc/config/context.html">Tomcat 4.1</a>
-				and <a href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/config/context.html">Tomcat 5</a>.
+				<a href="http://jakarta.apache.org/tomcat/tomcat-5.5-doc/config/context.html">Tomcat 5.5</a>.
 				</p>
 
 				<p>To modify the <i>portal</i> part of the location, alter the <i>url-pattern</i> for the
@@ -167,7 +168,11 @@ limitations under the License.
     &lt;/servlet-mapping&gt;
 				</source>
 				</p>
-				<p>After this modification (and restarting Tomcat),
+				
+				<p>You will also need to modify servlet.insecure in ${TOMCAT_HOME}/webapps/pluto/WEB-INF/config/services/ConfigService.properties.
+				</p>
+				
+				<p>After these modifications (and restarting Tomcat),
 				the Pluto Portal will be available at the address http://servername/newlocation/app/
 				(assuming that the previous modification was also applied).
 				</p>
@@ -430,8 +435,8 @@ aggregation.base.dir=/WEB-INF/templates/
 			</subsection>
 			<subsection name="Further Information">
 				<p>
-				Further information can be found in the <a href="../faq.html">FAQ</a>, on the <a href="../mail-lists.html">Mailing Lists</a>
-				and on the <a href="../wiki.html">Wiki</a>
+				Further information can be found in the <a href="../faq.html">FAQ</a>, on the <a href="../../mail-lists.html">Mailing Lists</a>
+				and on the <a href="../../wiki.html">Wiki</a>
 				</p>
 			</subsection>
 		</section>
