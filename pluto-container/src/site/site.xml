@@ -2,11 +2,11 @@
 <project name="Maven">
   <bannerLeft>
     <name>Pluto</name>
-    <src>http://portals.apache.org/pluto/images/apache-portals.gif</src>
+    <src>http://portals.apache.org/pluto/images/pluto.png</src>
     <href>http://portals.apache.org/pluto</href>
   </bannerLeft>
   <bannerRight>
-    <src>http://portals.apache.org/pluto/images/pluto.png</src>
+    <src>http://portals.apache.org/pluto/images/pluto11.png</src>
   </bannerRight>
   <body>
     <links>
