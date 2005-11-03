@@ -97,7 +97,7 @@ Portlet Assembly and Deployment
 ---------------
 $> cd <PLUTO-1.1-HOME>
 $> cd pluto-util
-$> maven pluto:assemble -Dmaven.deploy.deployment=<path to war>
+$> maven pluto:assemble -DinstallDir=<path to war>
 ---------------
 
 * Portlet Deployment:
@@ -105,6 +105,6 @@ $> maven pluto:assemble -Dmaven.deploy.deployment=<path to war>
 ---------------
 $> cd <PLUTO-1.1-HOME>
 $> cd pluto-install
-$> maven pluto:deploy -Dmaven.deploy.deployment=<path to war>
+$> maven pluto:deploy -DinstallDir=<path to war>
 ---------------
 

@@ -31,8 +31,8 @@ limitations under the License.
 </p>
 				<div align="center">
 					<p>
-						<a href="../images/jw-0801-portal_arch.jpg">
-							<img src="../images/jw-0801-portal_arch-thumb.jpg" alt="Portal Architecture" border="0"/>
+							<a href="../../images/v101/jw-0801-portal_arch.jpg">
+								<img src="../../images/v101/jw-0801-portal_arch-thumb.jpg" alt="Portal Architecture" border="0"/>
 						</a>
 					</p>
 					<p>
@@ -51,8 +51,8 @@ Figure 1 depicts a portal's basic architecture. The portal’s web application p
 				<p>The portlet container provides the runtime environment for the portlets. It is a core component of each portal, requires knowledge about the portal itself and has a need to reuse common code of the portal. Due to these requirements the pluto portlet container is built in a manner that completely separates the container from every other portal component. Said that, the portlet container is a standalone component that can be embedded in any portal by complying with the requirements of the portlet container, such as implementing all SPIs. The interfaces of the portlet container and its internal components are described in more detail in the next paragraphs.</p>
 				<div align="center">
 					<p>
-						<a href="../images/jw-0801-pluto_arch.jpg">
-							<img src="../images/jw-0801-pluto_arch-thumb.jpg" alt="Pluto Architecture" height="144" width="250" border="0"/>
+							<a href="../../images/v101/jw-0801-pluto_arch.jpg">
+									<img src="../../images/v101/jw-0801-pluto_arch-thumb.jpg" alt="Pluto Architecture" height="144" width="250" border="0"/>
 						</a>
 					</p>
 					<p>
@@ -179,8 +179,8 @@ Figure 1 depicts a portal's basic architecture. The portal’s web application p
 						<p>Figure 3 depicts the relation between the different definitions and their hierarchical structure. The servlet definitions are embedded in the web application definition. From a web application definition several portlet application definitions can be created that may consist of portlet definitions based on the servlet definitions defined in the web application definition. Using the portlet application definition several portlet application entities can be created that include portlet entities that are based on the corresponding portlet definitions. Finally the portlet windows of a portlet entity are linked to their corresponding portlet entity.</p>
 						<div align="center">
 							<p>
-								<a href="../images/Relations.jpg">
-									<img src="../images/Relations.jpg" alt="Portal Architecture" height="144" width="250" border="0"/>
+									<a href="../../images/v101/Relations.jpg">
+										<img src="../../images/v101/Relations.jpg" alt="Portal Architecture" height="144" width="250" border="0"/>
 								</a>
 							</p>
 							<p>
