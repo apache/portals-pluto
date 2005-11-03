@@ -1,0 +1,58 @@
+ ------
+ Embedding the Pluto Container
+ ------
+ David H. DeWolf
+ ------
+ 03 Nov 2005
+ ------
+
+Embedding the Pluto Container
+
+  This document is currently *very* breif.  Please feel free
+  to submit patches.
+
+* Steps for Embedding Pluto
+
+  * Implement org.apache.pluto.PortletContainerServices
+
+  * Manage the Portlet Container Lifecycle
+
+    * Create an instance of the container
+
+---------------------------
+//
+// Step 1) Create and instance of the PortletContainerService
+//
+PortletContainerServices impl = . . .
+
+//
+// Step 2) Request a new container from the container factory
+//
+PortletContainerFactory factory =
+    PortletContainerFactory.getInstance();
+
+PortletContainer container = factory.createContainer(
+    "My Container Name", impl
+);
+
+//
+// Step 3) Initialize the Container with the embedding 
+//         application's ServletContext
+//
+container.init(ctx);
+--------------------------
+
+    * Destroy the Container during Shutdown
+
+  * Invoke the Container as necessary
+
+--------------------------
+// Load a portlet
+container.doLoad(portletWindow, request, response);
+// Process a Portlet Action
+container.doAction(portletWindow, request, response);
+// Render a portlet
+container.doRender(portletWindow, request, response);
+--------------------------
+
+
