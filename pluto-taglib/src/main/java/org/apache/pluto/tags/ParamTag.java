@@ -41,12 +41,14 @@ public class ParamTag extends TagSupport {
      * @return <CODE>SKIP_BODY</CODE>
      */
     public int doStartTag() throws JspException {
-        BasicURLTag urlTag = (BasicURLTag) findAncestorWithClass(this,
-                                                                 BasicURLTag.class);
+        BasicURLTag urlTag = (BasicURLTag)
+                findAncestorWithClass(this, BasicURLTag.class);
+
         if (urlTag == null) {
             throw new JspException(
                 "the 'param' Tag must have actionURL or renderURL as a parent");
         }
+
         PortletURL url = urlTag.getUrl();
 
         if (getName() != null) {
@@ -68,7 +70,7 @@ public class ParamTag extends TagSupport {
      * Returns the value.
      * @return String
      */
-    public String getValue() {
+    public String getValue() throws JspException {
         if (value == null) {
             value = "";
         }
