@@ -184,6 +184,7 @@
     <module>pluto-descriptor-impl</module>
     <module>pluto-deploy</module>
     <module>pluto-container</module>
+    <module>pluto-taglib</module>
     <module>pluto-util</module>
     <module>pluto-portal-driver</module>
     <module>pluto-portal</module>

@@ -1,0 +1,49 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.pluto</groupId>
+  <artifactId>pluto-taglib</artifactId>
+  <packaging>jar</packaging>
+  <name>Pluto Portlet Tag Library</name>
+  <description>
+  Pluto's Java Portlet Specification Tag Library implementation
+  </description>
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+	<artifactId>pluto</artifactId>
+	<version>1.1-SNAPSHOT</version>
+  </parent>
+  <dependencies>
+	<dependency>
+      <groupId>portlet-api</groupId>
+	  <artifactId>portlet-api</artifactId>
+	  <version>1.0</version>
+	  <scope>provided</scope>
+    </dependency>
+	<dependency>
+      <groupId>servletapi</groupId>
+	  <artifactId>servletapi</artifactId>
+	  <version>2.3</version>
+	  <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource>
+	    <targetPath>META-INF</targetPath>
+        <directory>src/resources/tld</directory>
+		<includes name="**/*.tld"/>
+      </resource>
+    </resources>
+    <plugins>
+
+      <!-- Assembly Plugin - Create Distributions -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>src/assemble/bin.xml</descriptor>
+		  <finalName>pluto-taglib-${pom.currentVersion}</finalName>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

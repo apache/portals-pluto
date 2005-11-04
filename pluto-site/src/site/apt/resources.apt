@@ -6,6 +6,7 @@
  24 Sept 2005
  ------
 
+
 The Java Portlet Specification
 
  * {{{http://jcp.org/en/jsr/detail?id=168}JSR-168 Portlet Specification Home Page}}
@@ -14,7 +15,11 @@ The Java Portlet Specification
 
   * Date
 
-Articles, Whitepapers, and Other Helpful Information
+Additional Pluto Documentation
+
+ * {{{http://wiki.apache.org/portals/Pluto}Official Pluto Wiki}}
+
+Articles, Whitepapers, and Presentations
 
  * {{{http://www.developer.com/java/web/article.php/3547186}Introduction to the Portlet Specification}}
 

@@ -29,9 +29,6 @@ import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.VariableInfo;
 
-import org.apache.pluto.Constants;
-
-
 /**
  * Supporting class for the <CODE>defineObjects</CODE> tag. Creates the
  * following variables to be used in the JSP: <UL> <LI><CODE>renderRequest</CODE>

@@ -40,6 +40,12 @@
 	  <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.apache.pluto</groupId>
+	  <artifactId>pluto-taglib</artifactId>
+	  <version>${pom.version}</version>
+	  <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>castor</groupId>
 	  <artifactId>castor</artifactId>
 	  <version>0.9.6</version>

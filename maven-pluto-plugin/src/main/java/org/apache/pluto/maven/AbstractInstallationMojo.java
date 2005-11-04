@@ -61,10 +61,11 @@ public abstract class AbstractInstallationMojo extends org.apache.pluto.maven.Ab
 
     protected List getSharedDependencies() {
         List list = new ArrayList();
-        list.add("pluto-container");
+        list.add("portlet-api");
         list.add("pluto-descriptor-api");
         list.add("pluto-descriptor-impl");
-        list.add("portlet-api");
+        list.add("pluto-container");
+        list.add("pluto-taglib");
         list.add("castor");
         return list;
     }
