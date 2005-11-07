@@ -61,5 +61,29 @@ public class PortletPreferenceImpl implements PortletPreference {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
+    
+    /**
+     * Override of toString() that prints out 
+     * name and values of fields.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString(){
+    	StringBuffer str = new StringBuffer();
+    	str.append(getClass().getName());
+    	str.append("[");
+    	str.append("name=" + name + "; ");
+    	for (int i = 0; i < values.length; i++) {
+        	str.append("value[" + i + "]=" + values[i]);
+        	if (i < values.length) {
+        		str.append(",");
+        	}
+		}
+    	str.append("; ");
+    	str.append("readOnly=" + readOnly);
+    	str.append("]");
+    	return str.toString();
+    }
+    
 }
 
