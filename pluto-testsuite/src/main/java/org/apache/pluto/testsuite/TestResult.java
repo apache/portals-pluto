@@ -64,4 +64,21 @@ public class TestResult implements Serializable {
         this.results = results;
     }
 
+    /**
+     * Override of toString() that prints out 
+     * name and results values.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString(){
+    	StringBuffer str = new StringBuffer();
+    	str.append(getClass().getName());
+    	str.append("[");
+    	str.append("name=" + name + "; ");
+    	str.append("returnCode=" + returnCode + "; ");
+    	str.append("results=" + results);    	
+    	str.append("]");
+    	return str.toString();
+    }
+    
 }

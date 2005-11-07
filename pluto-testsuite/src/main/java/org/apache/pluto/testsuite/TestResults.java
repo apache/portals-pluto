@@ -66,4 +66,21 @@ public class TestResults implements Serializable {
         return Collections.unmodifiableCollection(list);
     }
 
+    /**
+     * Override of toString() that prints out variable
+     * names and values.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString(){
+    	StringBuffer str = new StringBuffer();
+    	str.append(getClass().getName());
+    	str.append("[");
+    	str.append("name=" + name + "; ");
+    	str.append("failed=" + failed + "; ");
+    	str.append("inQuestion=" + inQuestion + "; ");
+    	str.append("results={" + list + " ");    	
+    	str.append("}]");
+    	return str.toString();
+    }
 }
