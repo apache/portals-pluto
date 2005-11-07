@@ -65,5 +65,31 @@ public class PortletPreferenceImpl implements PortletPreference {
     public void addValue(String value) {
         this.values.add(value);
     }
+
+
+    /**
+     * Override of toString() that prints out 
+     * name and values of fields.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString(){
+    	StringBuffer str = new StringBuffer();
+    	str.append(getClass().getName());
+    	str.append("[");
+    	str.append("name=" + name + "; ");
+    	String[] values = getValues();
+    	for (int i = 0; i < values.length; i++) {
+        	str.append("value[" + i + "]=" + values[i]);
+        	if (i < values.length) {
+        		str.append(",");
+        	}
+		}
+    	str.append("; ");
+    	str.append("readOnly=" + isReadOnly());
+    	str.append("]");
+    	return str.toString();
+    }
+
 }
 
