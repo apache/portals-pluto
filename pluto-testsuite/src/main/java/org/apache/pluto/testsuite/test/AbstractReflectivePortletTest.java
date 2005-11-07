@@ -78,11 +78,15 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
             		LOG.debug("Invoking test method: " + methods[i].getName());
             	}
                 try {
-                    results.add(invoke(methods[i],
-                                       config,
-                                       context,
-                                       request,
-                                       response));
+                	TestResult result = invoke(methods[i],
+                                       		config,
+                                       		context,
+                                       		request,
+                                            response);
+                	results.add(result);
+                	if (LOG.isDebugEnabled()) {
+                		LOG.debug("Test Result: " + result);
+                	}
                 } catch (Throwable th) {
                 	LOG.error("Failed invoking " + methods[i].getName(), th);
                     TestResult result = new TestResult();
@@ -137,4 +141,19 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         return result;
     }
 
+    /**
+     * Override of toString() that prints out 
+     * names and values of variables.
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString(){
+    	StringBuffer str = new StringBuffer();
+    	str.append(getClass().getName());
+    	str.append("[");
+    	str.append("initParameters=" + initParameters + "; ");
+    	str.append("config=" + config);    	
+    	str.append("]");
+    	return str.toString();
+    }
 }
