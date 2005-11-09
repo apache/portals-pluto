@@ -22,23 +22,15 @@ package org.apache.pluto.maven;
  * @goal reinstall
  * @requiresDependencyResolution runtime
  */
-public class ReinstallMojo extends AbstractInstallationMojo {
+public class ReinstallMojo extends AbstractManagementMojo {
 
     public ReinstallMojo() {
 
     }
 
     protected void doExecute() throws Exception {
-        getLog().info("Reinstalling Pluto to: "+installationDirectory.getAbsolutePath());
-
-        UninstallMojo uninstaller =
-                new UninstallMojo(project, installationDirectory, basedir, host, engine);
-
-        uninstaller.doExecute();
-
-        InstallMojo installer =
-                new InstallMojo(project, installationDirectory, basedir, host, engine);
-
-        installer.doExecute();
+        InstallationConfig config = createInstallationConfig();
+        getHandler().install(config);
+        getHandler().uninstall(config);
     }
 }

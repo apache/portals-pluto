@@ -42,15 +42,7 @@ public abstract class AbstractPlutoMojo extends org.apache.maven.plugin.Abstract
     protected MavenProject project;
 
     public void execute() throws MojoExecutionException {
-        if(!installationDirectory.exists() || !installationDirectory.isDirectory()) {
-            StringBuffer sb = new StringBuffer();
-            sb.append("Installation directory ")
-                    .append(installationDirectory.getAbsolutePath())
-                    .append(" does not exist")
-                    .append(" Please specify your app server installation directory by using the -Dpluto.installation.dir property.");
-            throw new MojoExecutionException(sb.toString());
-        }
-
+        // Validation of the installDir property is done by maven.
         try {
             doExecute();
         }

@@ -30,6 +30,7 @@ import java.util.Properties;
  * @since Jul 30, 2005
  *
  * @goal deploy
+ * @requiresDependencyResolution runtime
  */
 public class DeployMojo extends AbstractPortletMojo {
 
@@ -39,12 +40,12 @@ public class DeployMojo extends AbstractPortletMojo {
     private String deployerClass = Tomcat5FileSystemDeployer.class.getName();
 
     /**
-     * @parameter expression="${pluto.deploy.tomcat.service}"
+     * @parameter expression="${pluto.deploy.tomcat5.service}"
      */
     private String tomcatService = "Catalina";
 
     /**
-     * @parameter expression="${pluto.deploy.tomcat.host}"
+     * @parameter expression="${pluto.deploy.tomcat5.host}"
      */
     private String tomcatHost = "localhost";
 
@@ -73,9 +74,9 @@ public class DeployMojo extends AbstractPortletMojo {
 
         public DeploymentConfigImpl() {
             super(deployment.getName().substring(0, deployment.getName().lastIndexOf(".")));
-            props = new Properties(project.getProfileProperties());
+            props = new Properties(project.getProperties());
             props.putAll(System.getProperties());
-            props.setProperty("tomcat.home", installationDirectory.getAbsolutePath());
+            props.setProperty("tomcat5.home", installationDirectory.getAbsolutePath());
             props.setProperty("tomcat.service", tomcatService);
             props.setProperty("tomcat.host", tomcatHost);
         }
@@ -85,5 +86,4 @@ public class DeployMojo extends AbstractPortletMojo {
             return property;
         }
     }
-
 }
