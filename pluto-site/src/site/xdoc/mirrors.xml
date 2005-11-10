@@ -72,28 +72,28 @@ limitations under the License.
   <tr><th>Distribution</th><th>Format</th><th>Download</th></tr>
   <tr><td><a href="install.html#Binary_Distribution">Binary / Bundled</a></td>
       <td>tar/gzip (Unix Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/BINARIES/pluto-1.0.1-rc2.tar.gz">pluto-1.0.1-rc2.tar.gz</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-current.tar.gz">Pluto</a></td></tr>
   <tr><td><a href="install.html#Binary_Distribution">Binary / Bundled</a></td>
       <td>zip (Windows Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/BINARIES/pluto-1.0.1-rc2.zip">pluto-1.0.1-rc2.zip</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-current.zip">Pluto</a></td></tr>
   <tr><td><a href="install.html#Library_Distributions">Container Libraries</a></td>
       <td>tar/gzip (Unix Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/BINARIES/pluto-lib-core-1.0.1-rc2.tar.gz">pluto-lib-core-1.0.1-rc2.tar.gz</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-lib-core-current.tar.gz">Pluto Container</a></td></tr>
   <tr><td><a href="install.html#Library_Distributions">Container Libraries</a></td>
       <td>zip (Windows Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/BINARIES/pluto-lib-core-1.0.1-rc2.zip">pluto-lib-core-1.0.1-rc2.zip</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-lib-core-current.zip">Pluto Container</a></td></tr>
   <tr><td><a href="install.html#Library_Distributions">Tools Libraries</a></td>
       <td>tar/gzip (Unix Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/BINARIES/pluto-lib-tools-1.0.1-rc2.tar.gz">pluto-lib-tools-1.0.1-rc2.tar.gz</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-lib-tools-current.tar.gz">Pluto Utilities</a></td></tr>
   <tr><td><a href="install.html#Library_Distributions">Tools Libraries</a></td>
       <td>zip (Windows Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/BINARIES/pluto-lib-tools-1.0.1-rc2.zip">pluto-lib-tools-1.0.1-rc2.zip</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-lib-tools-current.zip">Pluto Utilities</a></td></tr>
   <tr><td><a href="install.html#Source_Distribution">Source Distribution</a></td>
       <td>tar/gzip (Unix Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/SOURCES/pluto-src-1.0.1-rc2.tar.gz">pluto-src-1.0.1-rc2.tar.gz</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-src-current.tar.gz">Pluto Source Distribution</a></td></tr>
   <tr><td><a href="install.html#Source_Distribution">Source Distribution</a></td>
       <td>zip (Windows Platforms)</td>
-	  <td><a href="[preferred]/portals/pluto/SOURCES/pluto-src-1.0.1-rc2.zip">pluto-src-1.0.1-rc2.zip</a></td></tr>
+	  <td><a href="[preferred]/portals/pluto/pluto-src-current.zip">Pluto Source Distribution</a></td></tr>
   </table>
 </p>
 </subsection>
@@ -116,5 +116,3 @@ limitations under the License.
 </section>
 </body>
 </document>
-
-
