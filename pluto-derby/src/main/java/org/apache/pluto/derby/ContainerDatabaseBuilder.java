@@ -50,7 +50,7 @@ public class ContainerDatabaseBuilder {
 		String scriptDirPath = args[0];
 		try {
 			builder.runIJ(scriptDirPath);
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			LOG.error(e);
 		}
@@ -64,7 +64,7 @@ public class ContainerDatabaseBuilder {
 	 * @param path The full path to the scripts directory. If
 	 * null, the working directory (user.dir) is used.
 	 */
-	public void runIJ(String path) throws FileNotFoundException {
+	public void runIJ(String path) throws IOException {
     	String userhome = System.getProperty("user.home");
     	File home = new File (userhome + "/.pluto/derby");
     	home.mkdirs();
@@ -89,12 +89,7 @@ public class ContainerDatabaseBuilder {
 				throw new FileNotFoundException("Script '" + script + "' does not exist.");
 			}
 			String[] args = {script};
-			try {
-				ij.main(args);
-			} catch (IOException e) {
-				e.printStackTrace();
-				LOG.error("Problem running ij.",e);
-			}
+			ij.main(args);
 		}
 	}
 }
