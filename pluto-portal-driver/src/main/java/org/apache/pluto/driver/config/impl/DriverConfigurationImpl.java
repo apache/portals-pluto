@@ -19,8 +19,11 @@ import org.apache.pluto.driver.services.impl.resource.PortletApplicationConfig;
 import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
 import org.apache.pluto.driver.services.impl.resource.PageConfig;
 import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.services.PortalCallbackService;
+import org.apache.pluto.services.PortletPreferencesService;
 
 import javax.servlet.ServletContext;
+import javax.portlet.PortalContext;
 import java.util.Collection;
 
 /**
@@ -36,12 +39,20 @@ public class DriverConfigurationImpl implements DriverConfiguration {
     private PortletRegistryService registryService;
     private RenderConfigService renderService;
 
+    // Container Services
+    private PortalCallbackService portalCallbackService;
+    private PortletPreferencesService portletPreferencesService;
+
     public DriverConfigurationImpl(PropertyConfigService propertyService,
                                    PortletRegistryService registryService,
-                                   RenderConfigService renderService) {
+                                   RenderConfigService renderService,
+                                   PortalCallbackService portalCallback,
+                                   PortletPreferencesService prefs) {
         this.propertyService = propertyService;
         this.registryService = registryService;
         this.renderService = renderService;
+        this.portalCallbackService = portalCallback;
+        this.portletPreferencesService = prefs;
     }
 
     /**
@@ -126,6 +137,26 @@ public class DriverConfigurationImpl implements DriverConfiguration {
         this.propertyService.init(context);
         this.registryService.init(context);
         this.renderService.init(context);
+    }
+
+
+//
+// Container Services
+//
+    public PortalCallbackService getPortalCallbackService() {
+        return portalCallbackService;
+    }
+
+    public void setPortalCallbackService(PortalCallbackService portalCallbackService) {
+        this.portalCallbackService = portalCallbackService;
+    }
+
+    public PortletPreferencesService getPortletPreferencesService() {
+        return portletPreferencesService;
+    }
+
+    public void setPortletPreferencesService(PortletPreferencesService portletPreferencesService) {
+        this.portletPreferencesService = portletPreferencesService;
     }
 }
 

@@ -18,8 +18,13 @@ package org.apache.pluto.driver.config;
 import org.apache.pluto.driver.services.impl.resource.PortletApplicationConfig;
 import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
 import org.apache.pluto.driver.services.impl.resource.PageConfig;
+import org.apache.pluto.services.PortalCallbackService;
+import org.apache.pluto.services.PortletPreferencesService;
+import org.apache.pluto.services.OptionalPortletContainerServices;
+import org.apache.pluto.PortletContainerServices;
 
 import javax.servlet.ServletContext;
+import javax.portlet.PortalContext;
 import java.util.Collection;
 
 /**
@@ -56,4 +61,11 @@ public interface DriverConfiguration {
     Collection getPages();
 
     PageConfig getPageConfig(String pageId);
+
+//
+// Utility methods for the container
+//
+    PortalCallbackService getPortalCallbackService();
+
+    PortletPreferencesService getPortletPreferencesService();
 }

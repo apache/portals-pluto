@@ -86,14 +86,18 @@ public class PortalStartupListener implements ServletContextListener {
                         + config.getPortalName() + "/"
                         + config.getPortalVersion() + "]...");
             }
+
             PortalContextImpl portalContext = new PortalContextImpl(config);
-            
+
             if (LOG.isDebugEnabled()) {
                 LOG.debug(" * Creating container services...");
             }
             ContainerServicesImpl containerServices =
-                    new ContainerServicesImpl(portalContext);
-            
+                    new ContainerServicesImpl(
+                            portalContext,
+                            config
+                    );
+
             if (LOG.isDebugEnabled()) {
                 LOG.debug(" * Creating portlet container...");
             }

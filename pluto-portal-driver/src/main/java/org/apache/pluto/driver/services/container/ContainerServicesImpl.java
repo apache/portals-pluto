@@ -18,6 +18,7 @@ package org.apache.pluto.driver.services.container;
 import org.apache.pluto.OptionalPortletContainerServices;
 import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.PortletContainerServices;
+import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.services.PortletPreferencesService;
 
 import javax.portlet.PortalContext;
@@ -35,17 +36,16 @@ public class ContainerServicesImpl
 
 
     private PortalContextImpl context;
+    private DriverConfiguration driverConfig;
 
-    private PortletPreferencesService preferencesFactory;
-    private PortalCallbackService callback;
 
     /**
      * Default Constructor.
      */
-    public ContainerServicesImpl(PortalContextImpl context) {
+    public ContainerServicesImpl(PortalContextImpl context,
+                                 DriverConfiguration driverConfig) {
         this.context = context;
-        preferencesFactory = new PortletPreferencesProviderImpl();
-        callback = new PortalCallbackProviderImpl();
+        this.driverConfig = driverConfig;
     }
 
     /**
@@ -62,7 +62,7 @@ public class ContainerServicesImpl
      * @return a PortletPreferencesService instance.
      */
     public PortletPreferencesService getPortletPreferencesService() {
-        return preferencesFactory;
+        return driverConfig.getPortletPreferencesService();
     }
 
     /**
@@ -71,7 +71,7 @@ public class ContainerServicesImpl
      * @return a PortalCallbackService implementation.
      */
     public PortalCallbackService getPortalCallbackService() {
-        return callback;
+        return driverConfig.getPortalCallbackService();
     }
 
 }
