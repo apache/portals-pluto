@@ -9,6 +9,10 @@
       <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
       <constructor-arg><ref bean="PortletRegistryService"/></constructor-arg>
       <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
+
+      <!-- Container Services -->
+      <constructor-arg><ref bean="PortalCallbackService"/></constructor-arg>
+      <constructor-arg><ref bean="PortletPreferencesService"/></constructor-arg>
     </bean>
 
     <bean name="PropertyConfigService"
@@ -23,4 +27,16 @@
           class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
           singleton="true">
     </bean>
+
+    <!-- Container Services -->
+    <bean name="PortalCallbackService"
+          class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
+          singleton="true">
+    </bean>
+
+    <bean name="PortletPreferencesService"
+          class="org.apache.pluto.driver.services.container.PortletPreferencesServiceImpl"
+          singleton="true">
+    </bean>
+
 </beans>
