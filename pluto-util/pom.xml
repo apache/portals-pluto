@@ -16,51 +16,9 @@
   -->
   <dependencies>
    <dependency>
-      <groupId>portlet-api</groupId>
-	  <artifactId>portlet-api</artifactId>
-	  <version>1.0</version>
-	  <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-	  <artifactId>pluto-descriptor-api</artifactId>
-	  <version>${pom.version}</version>
-	  <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-	  <artifactId>pluto-descriptor-impl</artifactId>
-	  <version>${pom.version}</version>
-	  <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-	  <artifactId>pluto-container</artifactId>
-	  <version>${pom.version}</version>
-	  <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-	  <artifactId>pluto-taglib</artifactId>
-	  <version>${pom.version}</version>
-	  <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>castor</groupId>
-	  <artifactId>castor</artifactId>
-	  <version>0.9.6</version>
-	  <scope>compile</scope>
-    </dependency>
-	<dependency>
-      <groupId>xerces</groupId>
-	  <artifactId>xercesImpl</artifactId>
-	  <version>2.6.2</version>
-	  <scope>compile</scope>
-    </dependency>
-	<dependency>
-      <groupId>xerces</groupId>
-	  <artifactId>xmlParserAPIs</artifactId>
-	  <version>2.6.2</version>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>1.0.4</version>
 	  <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -72,15 +30,6 @@
     </site>
   </distributionManagement>
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pluto-plugin</artifactId>
-        <version>1.1-SNAPSHOT</version>
-        <configuration>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
   <reporting>
     <plugins>
