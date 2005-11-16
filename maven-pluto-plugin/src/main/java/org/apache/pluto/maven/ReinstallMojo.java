@@ -16,6 +16,7 @@
 
 package org.apache.pluto.maven;
 
+import org.apache.pluto.util.install.InstallationConfig;
 
 
 /**
