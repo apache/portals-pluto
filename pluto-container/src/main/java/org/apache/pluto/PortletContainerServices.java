@@ -23,5 +23,4 @@ public interface PortletContainerServices {
      * @return a PortalCallbackService implementation.
      */
     PortalCallbackService getPortalCallbackService();
-
 }
