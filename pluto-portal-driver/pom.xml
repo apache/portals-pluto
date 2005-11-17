@@ -20,6 +20,14 @@
       <version>${pom.version}</version>
       <scope>provided</scope>
     </dependency>
+
+	<dependency>
+		<groupId>org.apache.derby</groupId>
+		<artifactId>derby</artifactId>
+		<version>10.1.1.0</version>
+		<scope>compile</scope>
+	</dependency>
+
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging-api</artifactId>
