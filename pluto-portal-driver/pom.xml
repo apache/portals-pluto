@@ -86,7 +86,12 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>pluto-portal</finalName>
+    <resources>
+      <resource>
+        <directory>src/resources</directory>
+		<includes name="**/*.sql"/>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
