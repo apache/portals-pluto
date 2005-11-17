@@ -34,13 +34,14 @@
           singleton="true">
     </bean>
 
+    <!--
     <bean name="PortletPreferencesService"
           class="org.apache.pluto.driver.services.container.MemoryPreferencesService"
           singleton="true">
     </bean>
+    -->
 
     <!-- Uncomment for Embedded Derby Service Implementations -->
-    <!--
     <bean name="PortletPreferencesService"
           class="org.apache.pluto.driver.services.container.db.DBPortletPreferencesService"
           singleton="true">
@@ -51,7 +52,6 @@
           class="org.apache.pluto.driver.services.container.db.EmbeddedDataSourceManager"
           singleton="true">
    </bean>
-    -->
 
     <!-- Uncomment to utilize a JNDI bound DataSource instead of
          the embedded database datasource.  You must ensure that
