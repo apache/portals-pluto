@@ -16,8 +16,15 @@
 package org.apache.pluto.driver.services.container.db;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.apache.pluto.PortletContainerException;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 /**
@@ -28,8 +35,10 @@ import javax.sql.DataSource;
  */
 public class EmbeddedDataSourceManager implements DataSourceManager {
 
-    private String connectionString;
+    private static final Log LOG =
+            LogFactory.getLog(EmbeddedDataSourceManager.class);
 
+    private String connectionString;
 
     private String shutdown =  "shutdownDatabase=true";
 
@@ -41,7 +50,7 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
 
         System.setProperty(
             "derby.system.home",
-            System.getProperty("user.home") + ".pluto/portal-driver/data"
+            System.getProperty("user.home") + "/.pluto/portal-driver/data"
         );
     }
 
@@ -50,13 +59,15 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
         System.setProperty("derby.system.home", systemDirectory);
     }
 
-    public void startup() {
+    public void startup() throws PortletContainerException {
         embeddedDataSource = new EmbeddedDataSource();
         embeddedDataSource.setConnectionAttributes(connectionString);
+        embeddedDataSource.setDatabaseName("PLUTO_PORTAL_DRIVER");
+        embeddedDataSource.setCreateDatabase("true");
         initDatabase();
     }
 
-    public void shutdown() {
+    public void shutdown() throws PortletContainerException {
         if(embeddedDataSource != null)
             embeddedDataSource.setConnectionAttributes(connectionString+shutdown);
         embeddedDataSource = null;
@@ -74,8 +85,11 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     /**
      * Eventually we should ensure pooling.
      */
-    private void initDatabase() {
+    private void initDatabase() throws PortletContainerException {
         if(!isDatabaseInitialized()) {
+            if(LOG.isInfoEnabled()) {
+                LOG.info("Pluto Database does not exist.  Creating database now.");
+            }
 
         }
             // 1) Read in the PORTABLE CREATE SQL Script
@@ -87,9 +101,44 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     /**
      * @return true if the database is valid
      */
-    private boolean isDatabaseInitialized() {
-        // 1) Test for Version Table
-        return false;
+    private boolean isDatabaseInitialized() throws PortletContainerException {
+        boolean found = false;
+        Connection conn = null;
+        Statement  stmt = null;
+        ResultSet  rs   = null;
+        try {
+            conn = embeddedDataSource.getConnection();
+            stmt = conn.createStatement();
+            rs   = stmt.executeQuery("SELECT count(*) FROM SYS.SYSTABLES WHERE TABLENAME = 'PPD_VERSION'");
+            if(rs.next()) {
+                found = rs.getInt(1) == 1;
+            }
+            else throw new SQLException("No results returned.  Should never happen for count(*)");
+        }
+        catch(SQLException sql) {
+            throw new PortletContainerException(sql);
+        }
+        finally {
+            cleanup(conn, stmt, rs);
+        }
+       return found;
+    }
+
+    private void cleanup(Connection conn, Statement stmt, ResultSet rs) {
+        if(rs != null)
+            try { rs.close(); } catch(SQLException sql) {
+                LOG.error("Unable to close result set.", sql);
+            }
+
+        if(stmt != null)
+            try { stmt.close(); } catch(SQLException sql) {
+                LOG.error("Unable to close result set.", sql);
+            }
+
+        if(conn != null)
+            try { conn.close(); } catch(SQLException sql) {
+                LOG.error("Unable to close result set.", sql);
+            }
     }
 
 
