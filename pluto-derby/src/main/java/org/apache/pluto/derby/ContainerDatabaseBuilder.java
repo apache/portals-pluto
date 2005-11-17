@@ -30,16 +30,11 @@ public class ContainerDatabaseBuilder {
     private static final Log LOG =
         LogFactory.getLog(ContainerDatabaseBuilder.class);
 
-    private static final String DATABASE = "PlutoDB";
-    private static final String PROTOCOL = "jdbc:derby:";
-    private static final String DB_USER = "container";
-    private static final String DB_PWD = "container";
     /** Build scripts to run */
     private static final String[] BUILD_SCRIPTS = {
     		"build-container.sql", //builds database
     		"insert-testsuite.sql" //populates testsuite data
     		};
-    
    /**
     * Runs the program.
     * 
@@ -49,7 +44,7 @@ public class ContainerDatabaseBuilder {
 		ContainerDatabaseBuilder builder = new ContainerDatabaseBuilder();
 		String scriptDirPath = args[0];
 		try {
-			builder.runIJ(scriptDirPath);
+			builder.runBuildScripts(scriptDirPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 			LOG.error(e);
@@ -64,15 +59,7 @@ public class ContainerDatabaseBuilder {
 	 * @param path The full path to the scripts directory. If
 	 * null, the working directory (user.dir) is used.
 	 */
-	public void runIJ(String path) throws IOException {
-    	String userhome = System.getProperty("user.home");
-    	File home = new File (userhome + "/.pluto/derby");
-    	home.mkdirs();
-		String dbhome = home.getAbsolutePath();
-    	System.setProperty("derby.system.home", dbhome);		 
-		//run ij for each script
-		System.setProperty("ij.protocol", PROTOCOL);	    			
-		System.setProperty("ij.database", DATABASE + ";create=true;name=" + DB_USER + ";password=" + DB_PWD);
+	public void runBuildScripts(String path) throws IOException {
 		//if path is null, set to working directory
 		if (path == null) {
 			path = System.getProperty("user.dir"); 
@@ -88,8 +75,7 @@ public class ContainerDatabaseBuilder {
 			if (!spath.exists()) {
 				throw new FileNotFoundException("Script '" + script + "' does not exist.");
 			}
-			String[] args = {script};
-			ij.main(args);
+			IjUtil.runScript(script);
 		}
 	}
 }
