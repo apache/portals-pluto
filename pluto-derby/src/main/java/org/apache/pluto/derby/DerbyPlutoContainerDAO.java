@@ -1,11 +1,14 @@
 package org.apache.pluto.derby;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.sql.SQLException;
 
 import org.apache.pluto.core.PortletEntity;
 import org.apache.pluto.core.PortletPreference;
+import org.apache.pluto.core.impl.PortletPreferenceImpl;
 
 /**
  * Data access object for the persistence of container-related
@@ -20,8 +23,8 @@ public class DerbyPlutoContainerDAO {
 	
 	private static final String FIND_PORTLET_PREF_ID_SQL = "select preference_id, preference_name, read_only from container.preference where portlet_id=? and preference_name=?";
 
-	private static final String FIND_PREFERENCE_LIST_SQL = "select preference_id, portlet_name, read_only from container.preference where portlet_id=?";
-	private static final String FIND_PREF_VALUES_SQL = "select portlet_value from container.preference_value where preference_id=?";
+	private static final String FIND_PREFERENCE_LIST_SQL = "select preference_id, preference_name, read_only from container.preference where portlet_id=?";
+	private static final String FIND_PREF_VALUES_SQL = "select preference_value from container.preference_value where preference_id=?";
 	
 	/* Cascading insert for a new portlet app */
 	private static final String INSERT_PORTLET_PREFS1 = "insert into container.portlet_app (app_context) values(?)";
@@ -35,14 +38,36 @@ public class DerbyPlutoContainerDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-    public static PortletPreference[] getStoredPreferences(String context) 
+    public static PortletPreference[] getStoredPreferences(String context, String portletName) 
     	throws SQLException {
-    	PortletPreference[] prefs = null;
-    	//TODO: implement this
-//    	List list = findPreferenceList();
+    	int id = findPortletId(context, portletName);
+    	List list = findPreferenceList(id);
+    	PortletPreference[] prefs = new PortletPreference[list.size()];
+    	int ind = 0;
+    	for (Iterator iter = list.iterator(); iter.hasNext();) {
+			Map element = (Map) iter.next();
+			PortletPreferenceImpl pref = new PortletPreferenceImpl();
+			String name = (String)element.get("PREFERENCE_NAME");
+			pref.setName(name);
+			String readonly = (String)element.get("READ_ONLY");
+			boolean ro = (readonly.equalsIgnoreCase("N") || readonly.equalsIgnoreCase("false") ? false : true );
+			pref.setReadOnly(ro);
+			Integer prefid = (Integer)element.get("PREFERENCE_ID");
+			List pvals = findPreferenceValues(prefid.intValue());
+			int len = pvals.size();
+			String[] vals = new String[len];
+			for (int i = 0; i < len; i++) {
+				Map map = (Map)pvals.get(i);
+				String val = (String)map.get("PREFERENCE_VALUE");
+				vals[i] = val;
+			}
+			pref.setValues(vals);
+			prefs[ind] = pref;
+			ind++;
+		}
     	return prefs;
     }
-	
+    
     public static int findPortletAppId(String context) throws SQLException {
     	int id = 0;
     	Integer oId = null;
@@ -116,13 +141,13 @@ public class DerbyPlutoContainerDAO {
     	}
     	return list;
     }
+
     
-    public static List findPreferenceValues(String context, String portletName, String prefName) throws SQLException {
-    	int prid = findPreferenceId(context, portletName, prefName);
+    public static List findPreferenceValues(int preferenceId) throws SQLException {
     	List list = null;
-    	if (prid != 0) {
+    	if (preferenceId != 0) {
 			Object[] params = new Object[]{
-					new Integer(prid)
+					new Integer(preferenceId)
 					}; 
 	    	DerbyDataStore ds = new DerbyDataStore();
 	    	list = ds.doSelect(FIND_PREF_VALUES_SQL, params);
