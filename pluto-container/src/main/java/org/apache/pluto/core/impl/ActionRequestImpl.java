@@ -58,7 +58,7 @@ public class ActionRequestImpl
      * @see org.apache.pluto.core.InternalActionResponse#getPortletInputStream()
      */
     public InputStream getPortletInputStream() throws java.io.IOException {
-        javax.servlet.http.HttpServletRequest servletRequest = (javax.servlet.http.HttpServletRequest) super.getRequest();
+        HttpServletRequest servletRequest = (HttpServletRequest) getRequest();
 
         if (servletRequest.getMethod().equals("POST")) {
             String contentType = servletRequest.getContentType();

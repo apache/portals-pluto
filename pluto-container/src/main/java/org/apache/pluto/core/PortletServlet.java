@@ -150,7 +150,7 @@ public class PortletServlet extends HttpServlet {
                 request.getAttribute(Constants.PORTLET_RESPONSE);
 
             pRequest.setPortletContext(portletContext);
-
+            pRequest.setServiceRequest(request);
 
             if (method_id == org.apache.pluto.Constants.METHOD_RENDER) {
                 RenderRequestImpl renderRequest =

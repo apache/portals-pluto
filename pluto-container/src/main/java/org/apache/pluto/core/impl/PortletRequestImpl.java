@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.core.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletWindow;
@@ -24,32 +26,59 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
+import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
-import javax.portlet.*;
+import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.WindowState;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
-import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+import java.util.Locale;
+import java.security.Principal;
 
 /**
  * Abstract <code>javax.portlet.PortletRequest</code> implementation.
  * This class also implements InternalPortletRequest.
- * 
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class PortletRequestImpl extends HttpServletRequestWrapper
-implements PortletRequest, InternalPortletRequest {
-	
-	// Private Member Variables ------------------------------------------------
-	
-    /** The parent container within which this request was created. */
+        implements PortletRequest, InternalPortletRequest {
+
+    private static final StringManager EXCEPTIONS =
+            StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
+
+    private static final Log LOG =
+            LogFactory.getLog(PortletRequestImpl.class);
+
+    /**
+     * The parent container within which this request was created.
+     */
     private PortletContainer container = null;
 
-    /** The portlet window which is the target of this portlet request. */
+    /**
+     * The portlet window which is the target of this portlet request.
+     */
     private InternalPortletWindow internalPortletWindow = null;
 
     /**
@@ -58,18 +87,26 @@ implements PortletRequest, InternalPortletRequest {
      */
     private PortletContext portletContext = null;
 
-    /** The PortalContext within which this request is occuring. */
+    /**
+     * The PortalContext within which this request is occuring.
+     */
     private PortalContext portalContext = null;
 
-    /** Holds the portlet session. */
+    /**
+     * Holds the portlet session.
+     */
     private PortletSession portletSession = null;
 
-    /** Response content types. */
+    /**
+     * Response content types.
+     */
     private Vector contentTypes = null;
 
     private NamespaceMapper mapper = new NamespaceMapperImpl();
 
-    /** Flag indicating if the HTTP-Body has been accessed. */
+    /**
+     * Flag indicating if the HTTP-Body has been accessed.
+     */
     private boolean bodyAccessed = false;
 
     /**
@@ -77,21 +114,21 @@ implements PortletRequest, InternalPortletRequest {
      * FIXME: the included flag should only exist for a render request.
      */
     private boolean included = false;
-    
-    
+
     // Constructors ------------------------------------------------------------
-    
+
     public PortletRequestImpl(InternalPortletRequest internalPortletRequest) {
         this(internalPortletRequest.getPortletContainer(),
-             internalPortletRequest.getInternalPortletWindow(),
-             internalPortletRequest.getHttpServletRequest());
+                internalPortletRequest.getInternalPortletWindow(),
+                internalPortletRequest.getHttpServletRequest());
     }
-    
+
     /**
      * Create a PortletRequestImpl instance.
-     * @param container  the portlet container.
-     * @param internalPortletWindow  the internal portlet window.
-     * @param servletRequest  the underlying servlet request.
+     *
+     * @param container             the portlet container.
+     * @param internalPortletWindow the internal portlet window.
+     * @param servletRequest        the underlying servlet request.
      */
     public PortletRequestImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
@@ -102,12 +139,12 @@ implements PortletRequest, InternalPortletRequest {
         this.portalContext = container.getContainerServices().getPortalContext();
     }
 
-    
     // javax.portlet.PortletRequest Impl ---------------------------------------
-    
+
     /**
      * Determine whether or not the specified WindowState is allowed for this
      * portlet.
+     *
      * @param state the state in question
      * @return true if the state is allowed.
      */
@@ -115,7 +152,7 @@ implements PortletRequest, InternalPortletRequest {
         Enumeration supportedStates = portalContext.getSupportedWindowStates();
         while (supportedStates.hasMoreElements()) {
             if (supportedStates.nextElement().toString().equals(
-            		state.toString())) {
+                    state.toString())) {
                 return true;
             }
         }
@@ -125,7 +162,7 @@ implements PortletRequest, InternalPortletRequest {
 
     public boolean isPortletModeAllowed(PortletMode mode) {
         return (isPortletModeAllowedByPortlet(mode)
-        		&& isPortletModeAllowedByPortal(mode));
+                && isPortletModeAllowedByPortal(mode));
     }
 
     public PortletMode getPortletMode() {
@@ -144,41 +181,47 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public PortletSession getPortletSession(boolean create) {
-        // check if the session was invalidated.
-        HttpSession httpSession = this.getHttpServletRequest()
-        	.getSession(false);
-
-        if (portletSession != null && httpSession == null) {
-            portletSession = null;
-        } else if (httpSession != null) {
-            create = true;
+        //
+        // It is critical that we don't retrieve the
+        //    portlet session until the cross context
+        //    dispatch has been completed.  If we do
+        //    then we risk having a cached version which
+        //    is invalid for the context within which it
+        //    exists.
+        //
+        if (portletContext == null) {
+            throw new IllegalStateException(
+                    EXCEPTIONS.getString("error.session.illegalState")
+            );
         }
 
-        if (create && portletSession == null) {
-            httpSession = this.getHttpServletRequest().getSession(create);
-            if (httpSession != null) {
-                portletSession = new PortletSessionImpl(portletContext,
-                                                        internalPortletWindow,
-                                                        httpSession);
-            }
+        HttpSession http = getHttpServletRequest().getSession(create);
+        if (http != null && portletSession == null) {
+            portletSession = new PortletSessionImpl(
+                    portletContext,
+                    internalPortletWindow,
+                    http
+            );
         }
-
         return portletSession;
     }
 
     public String getProperty(String name) throws IllegalArgumentException {
         if (name == null) {
-            throw new IllegalArgumentException("Property name cannot be null");
+            throw new IllegalArgumentException(
+                EXCEPTIONS.getString("error.propertyName.null")
+            );
         }
 
-        // Get property value from request header.
         String prop = this.getHttpServletRequest().getHeader(name);
         if (prop == null) {
-            // Get property value from PropertyManager
             Map propertyMap = container.getContainerServices()
-                .getPortalCallbackService()
-                .getRequestProperties(getHttpServletRequest(),
-                                      internalPortletWindow);
+                    .getPortalCallbackService()
+                    .getRequestProperties(
+                        getHttpServletRequest(),
+                        internalPortletWindow
+                    );
+
             if (propertyMap != null) {
                 String[] properties = (String[]) propertyMap.get(name);
                 if (properties != null && properties.length > 0) {
@@ -205,8 +248,8 @@ implements PortletRequest, InternalPortletRequest {
 
         // get properties from PropertyManager
         Map map = container.getContainerServices()
-            .getPortalCallbackService()
-            .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
+                .getPortalCallbackService()
+                .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
 
         if (map != null) {
             String[] properties = (String[]) map.get(name);
@@ -223,13 +266,13 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public Enumeration getPropertyNames() {
-        Set v = new HashSet();           
+        Set v = new HashSet();
 
         // get properties from PropertyManager
         Map map = container.getContainerServices()
                 .getPortalCallbackService()
                 .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
-        
+
         if (map != null) {
             v.addAll(map.keySet());
         }
@@ -262,7 +305,7 @@ implements PortletRequest, InternalPortletRequest {
         return this.getHttpServletRequest().getRemoteUser();
     }
 
-    public java.security.Principal getUserPrincipal() {
+    public Principal getUserPrincipal() {
         return this.getHttpServletRequest().getUserPrincipal();
     }
 
@@ -272,6 +315,7 @@ implements PortletRequest, InternalPortletRequest {
      * within the deployment descriptor. If no mapping is available, then, and
      * only then, do we check use the actual role name specified against the web
      * application deployment descriptor.
+     *
      * @param roleName the name of the role
      * @return true if it is determined the user has the given role.
      */
@@ -281,8 +325,8 @@ implements PortletRequest, InternalPortletRequest {
 
         SecurityRoleRefDD ref = null;
         Iterator refs = def.getSecurityRoleRefs().iterator();
-        while(refs.hasNext()) {
-            SecurityRoleRefDD r = (SecurityRoleRefDD)refs.next();
+        while (refs.hasNext()) {
+            SecurityRoleRefDD r = (SecurityRoleRefDD) refs.next();
             if (r.getRoleName().equals(roleName)) {
                 ref = r;
                 break;
@@ -301,21 +345,27 @@ implements PortletRequest, InternalPortletRequest {
 
     public Object getAttribute(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Attribute name == null");
+            throw new IllegalArgumentException(
+                    EXCEPTIONS.getString("error.attributeName.null")
+            );
         }
 
-        Object attribute = this.getHttpServletRequest().getAttribute(
-            mapper.encode(internalPortletWindow.getId(), name));
+        String encodedName = isNameReserved(name) ?
+                name :
+                mapper.encode(internalPortletWindow.getId(), name);
+
+        Object attribute = getHttpServletRequest()
+                .getAttribute(encodedName);
 
         if (attribute == null) {
-            attribute = this.getHttpServletRequest().getAttribute(name);
+            attribute = getHttpServletRequest().getAttribute(name);
         }
         return attribute;
     }
 
     public Enumeration getAttributeNames() {
         Enumeration attributes = this.getHttpServletRequest()
-            .getAttributeNames();
+                .getAttributeNames();
 
         Vector portletAttributes = new Vector();
 
@@ -323,7 +373,7 @@ implements PortletRequest, InternalPortletRequest {
             String attribute = (String) attributes.nextElement();
 
             String portletAttribute = mapper.decode(
-                internalPortletWindow.getId(), attribute);
+                    internalPortletWindow.getId(), attribute);
 
             if (portletAttribute != null) { // it is in the portlet's namespace
                 portletAttributes.add(portletAttribute);
@@ -348,7 +398,7 @@ implements PortletRequest, InternalPortletRequest {
         return null;
     }
 
-    public java.util.Enumeration getParameterNames() {
+    public Enumeration getParameterNames() {
         bodyAccessed = true;
 
         Map parameters = this.getHttpServletRequest().getParameterMap();
@@ -357,14 +407,16 @@ implements PortletRequest, InternalPortletRequest {
 
     public String[] getParameterValues(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Parameter name == null");
+            throw new IllegalArgumentException(
+                EXCEPTIONS.getString("error.null", "Parameter Name ")
+            );
         }
 
         bodyAccessed = true;
 
         String[] values = (String[]) this.getHttpServletRequest()
-            .getParameterMap()
-            .get(name);
+                .getParameterMap()
+                .get(name);
         if (values != null) {
             values = StringUtils.copy(values);
         }
@@ -374,42 +426,41 @@ implements PortletRequest, InternalPortletRequest {
     public Map getParameterMap() {
         bodyAccessed = true;
         return StringUtils.copyParameters(
-            this.getHttpServletRequest().getParameterMap());
+                this.getHttpServletRequest().getParameterMap());
     }
 
     public boolean isSecure() {
         return this.getHttpServletRequest().isSecure();
     }
 
-    public void setAttribute(String name, Object o) {
+    public void setAttribute(String name, Object value) {
         if (name == null) {
-            throw new IllegalArgumentException("Attribute name == null");
+            throw new IllegalArgumentException(
+                    EXCEPTIONS.getString("error.null", "Attribute Name ")
+            );
         }
 
-        if (o == null) {
-            this.removeAttribute(name);
-        } else if (isNameReserved(name)) {
-            // Reserved names go directly in the underlying request
-            getHttpServletRequest().setAttribute(name, o);
+        String encodedName = isNameReserved(name) ?
+                name : mapper.encode(internalPortletWindow.getId(), name);
+
+        if (value == null) {
+            removeAttribute(name);
         } else {
-            this.getHttpServletRequest().setAttribute(
-                mapper.encode(internalPortletWindow.getId(), name), o);
+            getHttpServletRequest().setAttribute(encodedName, value);
         }
     }
 
     public void removeAttribute(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Attribute name == null");
+            throw new IllegalArgumentException(
+                EXCEPTIONS.getString("error.null", "Attribute Name ")
+            );
         }
-        if (isNameReserved(name)) {
-            // Reserved names go directly in the underlying request.
-            getHttpServletRequest().removeAttribute(name);
-        } else {
 
-            this.getHttpServletRequest().
-                removeAttribute(
-                    mapper.encode(internalPortletWindow.getId(), name));
-        }
+        String encodedName = isNameReserved(name) ?
+                name : mapper.encode(internalPortletWindow.getId(), name);
+
+        getHttpServletRequest().removeAttribute(encodedName);
     }
 
     public String getRequestedSessionId() {
@@ -422,29 +473,29 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getResponseContentType() {
         Enumeration enumeration = getResponseContentTypes();
-        while(enumeration.hasMoreElements()) {
-            return (String)enumeration.nextElement();
+        while (enumeration.hasMoreElements()) {
+            return (String) enumeration.nextElement();
         }
         return "text/html";
     }
 
     public Enumeration getResponseContentTypes() {
-        if(contentTypes == null) {
+        if (contentTypes == null) {
             contentTypes = new Vector();
             PortletDD dd = internalPortletWindow.getPortletEntity().getPortletDefinition();
             Iterator supports = dd.getSupports().iterator();
-            while(supports.hasNext()) {
-                SupportsDD sup = (SupportsDD)supports.next();
+            while (supports.hasNext()) {
+                SupportsDD sup = (SupportsDD) supports.next();
                 contentTypes.add(sup.getMimeType());
             }
-            if(contentTypes.size() < 1) {
+            if (contentTypes.size() < 1) {
                 contentTypes.add("text/html");
             }
         }
         return contentTypes.elements();
     }
 
-    public java.util.Locale getLocale() {
+    public Locale getLocale() {
         return this.getHttpServletRequest().getLocale();
     }
 
@@ -520,7 +571,7 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public BufferedReader getReader()
-        throws java.io.UnsupportedEncodingException, java.io.IOException {
+            throws UnsupportedEncodingException, java.io.IOException {
         if (included) {
             return null;
         } else {
@@ -534,16 +585,16 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getPathInfo() {
         String attr = (String) super.getAttribute(
-            "javax.servlet.include.path_info");
+                "javax.servlet.include.path_info");
         return (attr != null) ? attr
-               : super.getPathInfo();
+                : super.getPathInfo();
     }
 
     public String getQueryString() {
         String attr = (String) super.getAttribute(
-            "javax.servlet.include.query_string");
+                "javax.servlet.include.query_string");
         return (attr != null) ? attr
-               : super.getQueryString();
+                : super.getQueryString();
     }
 
     public String getPathTranslated() {
@@ -552,9 +603,9 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getRequestURI() {
         String attr = (String) super.getAttribute(
-            "javax.servlet.include.request_uri");
+                "javax.servlet.include.request_uri");
         return (attr != null) ? attr
-               : super.getRequestURI();
+                : super.getRequestURI();
     }
 
     public StringBuffer getRequestURL() {
@@ -563,11 +614,10 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getServletPath() {
         String attr = (String) super.getAttribute(
-            "javax.servlet.include.servlet_path");
+                "javax.servlet.include.servlet_path");
         return (attr != null) ? attr
-               : super.getServletPath();
+                : super.getServletPath();
     }
-
 
     //
     //
@@ -592,31 +642,27 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public void setCharacterEncoding(String env)
-        throws java.io.UnsupportedEncodingException {
+            throws UnsupportedEncodingException {
         if (bodyAccessed) {
             throw new IllegalStateException(
-                "This method must not be called after the HTTP-Body was accessed !");
+                    "This method must not be called after the HTTP-Body was accessed !");
         }
 
         getHttpServletRequest().setCharacterEncoding(env);
     }
 
-    public javax.servlet.ServletInputStream getInputStream()
-        throws java.io.IOException {
+    public ServletInputStream getInputStream()
+    throws IOException {
         if (included) {
             return null;
         } else {
-            // the super class will ensure that a IllegalStateException is thrown if getReader() was called earlier
-            javax.servlet.ServletInputStream stream = getHttpServletRequest()
-                .getInputStream();
-
+            ServletInputStream stream = getHttpServletRequest().getInputStream();
             bodyAccessed = true;
-
             return stream;
         }
     }
 
-    public javax.servlet.RequestDispatcher getRequestDispatcher(String path) {
+    public RequestDispatcher getRequestDispatcher(String path) {
         return this.getHttpServletRequest().getRequestDispatcher(path);
     }
 
@@ -624,6 +670,10 @@ implements PortletRequest, InternalPortletRequest {
 
     public void setPortletContext(PortletContext portletContext) {
         this.portletContext = portletContext;
+    }
+
+    public void setServiceRequest(HttpServletRequest req) {
+        setRequest(req);
     }
 
     public PortletContainer getContainer() {
@@ -636,13 +686,13 @@ implements PortletRequest, InternalPortletRequest {
 
     private boolean isPortletModeAllowedByPortlet(PortletMode mode) {
         PortletDD dd = internalPortletWindow.getPortletEntity()
-            .getPortletDefinition();
+                .getPortletDefinition();
 
         Iterator mimes = dd.getSupports().iterator();
-        while(mimes.hasNext()) {
-            Iterator modes = ((SupportsDD)mimes.next()).getPortletModes().iterator();
-            while(modes.hasNext()) {
-                String m = (String)modes.next();
+        while (mimes.hasNext()) {
+            Iterator modes = ((SupportsDD) mimes.next()).getPortletModes().iterator();
+            while (modes.hasNext()) {
+                String m = (String) modes.next();
                 if (m.equals(mode.toString())) {
                     return true;
                 }
@@ -655,7 +705,7 @@ implements PortletRequest, InternalPortletRequest {
         Enumeration supportedModes = portalContext.getSupportedPortletModes();
         while (supportedModes.hasMoreElements()) {
             if (supportedModes.nextElement().toString().equals(
-                (mode.toString()))) {
+                    (mode.toString()))) {
                 return true;
             }
         }

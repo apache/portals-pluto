@@ -21,11 +21,8 @@ import org.apache.pluto.util.ManagementException;
 import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.List;
 import java.util.Collection;
 
 /**
@@ -41,6 +38,16 @@ public abstract class FileSystemInstaller implements PortalInstaller {
         while(it.hasNext()) {
             File from = (File)it.next();
             FileUtils.copyFileToDirectory(from, destination);
+        }
+    }
+
+    protected void removeFilesFromDirectory(Collection dependencies, File destination)
+            throws IOException {
+        Iterator it = dependencies.iterator();
+        while(it.hasNext()) {
+            File from = (File)it.next();
+            File delete = new File(destination, from.getName());
+            delete.delete();
         }
     }
 
@@ -100,8 +107,29 @@ public abstract class FileSystemInstaller implements PortalInstaller {
 
     protected abstract File getWebAppDir(InstallationConfig config);
 
-    public void uninstall(InstallationConfig config) {
-    }
+    public void uninstall(InstallationConfig config)
+    throws ManagementException {
+        File endorsedDir = getEndorsedDir(config);
+        File sharedDir = getSharedDir(config);
+        File domainDir = getWebAppDir(config);
+
+        endorsedDir.mkdirs();
+        sharedDir.mkdirs();
+        domainDir.mkdirs();
+
+        try {
+            removeFilesFromDirectory(config.getEndorsedDependencies(), endorsedDir);
+            removeFilesFromDirectory(config.getSharedDependencies(), sharedDir);
+            removeFilesFromDirectory(config.getPortletApplications().values(),  domainDir);
+
+            File delete = new File(domainDir, config.getPortalApplication().getName());
+            delete.delete();
+        }
+        catch(IOException io) {
+            throw new ManagementException("Unable to remove files. ", io, config.getInstallationDirectory());
+        }
+
+   }
 
     public abstract boolean isValidInstallationDirectory(File installDir);
 }

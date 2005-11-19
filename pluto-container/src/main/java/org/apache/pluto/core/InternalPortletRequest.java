@@ -29,6 +29,8 @@ public interface InternalPortletRequest extends PortletRequest {
 
     void setPortletContext(PortletContext context);
 
+    void setServiceRequest(HttpServletRequest req);
+
     InternalPortletWindow getInternalPortletWindow();
 
     PortletContainer getPortletContainer();
