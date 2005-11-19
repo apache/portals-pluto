@@ -70,7 +70,7 @@ limitations under the License.
                 <value>readonly</value>
                 <read-only>true</read-only>
             </preference>
-            <preferences-validator>org.apache.pluto.core.impl.PreferencesValidatorImpl</preferences-validator>
+            <preferences-validator>org.apache.pluto.testsuite.impl.PreferencesValidatorImpl</preferences-validator>
         </portlet-preferences>
         <security-role-ref>
             <role-name>plutoTestRole</role-name>
@@ -121,7 +121,7 @@ limitations under the License.
                 <value>readonly</value>
                 <read-only>true</read-only>
             </preference>
-            <preferences-validator>org.apache.pluto.core.impl.PreferencesValidatorImpl</preferences-validator>
+            <preferences-validator>org.apache.pluto.testsuite.impl.PreferencesValidatorImpl</preferences-validator>
         </portlet-preferences>
         <security-role-ref>
           <role-name>plutoTestRole</role-name>
