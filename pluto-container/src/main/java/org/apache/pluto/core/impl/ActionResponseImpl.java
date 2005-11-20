@@ -235,7 +235,7 @@ public class ActionResponseImpl extends PortletResponseImpl
             SupportsDD sup = (SupportsDD)supports.next();
             Iterator modes = sup.getPortletModes().iterator();
             while(modes.hasNext()) {
-                if (modes.next().equals(mode.toString())) {
+                if (modes.next().toString().equalsIgnoreCase(mode.toString())) {
                     return true;
                 }
             }
@@ -246,7 +246,7 @@ public class ActionResponseImpl extends PortletResponseImpl
     private boolean isPortletModeAllowedByPortal(PortletMode mode) {
         Enumeration supportedModes = context.getSupportedPortletModes();
         while (supportedModes.hasMoreElements()) {
-            if (supportedModes.nextElement().toString().equals(
+            if (supportedModes.nextElement().toString().equalsIgnoreCase(
                 (mode.toString()))) {
                 return true;
             }
@@ -257,7 +257,7 @@ public class ActionResponseImpl extends PortletResponseImpl
     private boolean isWindowStateAllowed(WindowState state) {
         Enumeration supportedStates = context.getSupportedWindowStates();
         while (supportedStates.hasMoreElements()) {
-            if (supportedStates.nextElement().toString().equals(
+            if (supportedStates.nextElement().toString().equalsIgnoreCase(
                 (state.toString()))) {
                 return true;
             }
