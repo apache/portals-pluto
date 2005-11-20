@@ -668,12 +668,16 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
 // Internal Implementation Detailes
 
-    public void setPortletContext(PortletContext portletContext) {
+    public void init(PortletContext portletContext, HttpServletRequest req) {
         this.portletContext = portletContext;
+        setRequest(req);
     }
 
-    public void setServiceRequest(HttpServletRequest req) {
-        setRequest(req);
+    /**
+     * @todo Implement this properly.  Not required now
+     */
+    public void release() {
+
     }
 
     public PortletContainer getContainer() {

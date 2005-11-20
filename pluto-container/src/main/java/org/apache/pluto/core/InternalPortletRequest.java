@@ -27,9 +27,22 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface InternalPortletRequest extends PortletRequest {
 
-    void setPortletContext(PortletContext context);
+    /**
+     * Initialize the portlet for use within the target context.
+     * This method ensures that the portlet utilizes resources
+     * from the *included* context, and not those from the
+     * intiating (portal) context.
+     * @param context
+     * @param req
+     */
+    void init(PortletContext context, HttpServletRequest req);
 
-    void setServiceRequest(HttpServletRequest req);
+    /**
+     * Recycle the request by rolling the underlying request
+     * back to the originating request.
+     */
+    void release();
+
 
     InternalPortletWindow getInternalPortletWindow();
 

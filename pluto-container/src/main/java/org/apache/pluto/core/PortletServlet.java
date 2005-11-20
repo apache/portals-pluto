@@ -135,6 +135,8 @@ public class PortletServlet extends HttpServlet {
     private void dispatch(HttpServletRequest request,
                           HttpServletResponse response)
         throws ServletException, IOException {
+        InternalPortletRequest pRequest = null;
+        InternalPortletResponse pResponse = null;
         try {
             request.setAttribute(org.apache.pluto.Constants.PORTLET_CONFIG,
                                  portletConfig);
@@ -143,14 +145,13 @@ public class PortletServlet extends HttpServlet {
                 (Integer) request.getAttribute(
                     org.apache.pluto.Constants.METHOD_ID);
 
-            InternalPortletRequest pRequest = (InternalPortletRequest)
+            pRequest = (InternalPortletRequest)
                 request.getAttribute(Constants.PORTLET_REQUEST);
 
-            InternalPortletResponse pResponse = (InternalPortletResponse)
+            pResponse = (InternalPortletResponse)
                 request.getAttribute(Constants.PORTLET_RESPONSE);
 
-            pRequest.setPortletContext(portletContext);
-            pRequest.setServiceRequest(request);
+            pRequest.init(portletContext, request);
 
             if (method_id == org.apache.pluto.Constants.METHOD_RENDER) {
                 RenderRequestImpl renderRequest =
@@ -195,6 +196,10 @@ public class PortletServlet extends HttpServlet {
             throw new ServletException(e);
         } finally {
             request.removeAttribute(org.apache.pluto.Constants.PORTLET_CONFIG);
+
+            if(pRequest != null)
+                pRequest.release();
+
         }
     }
 }
