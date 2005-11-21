@@ -1,17 +1,20 @@
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
 
 <pluto:portlet portletId="${portlet}">
-<TABLE class="portlet" border="1">
-<TR class="banner"><TD><pluto:title/></TD>
-    <TD><A href="<pluto:window windowState="minimized">">min</pluto:window></TD>
-    <TD><A href="<pluto:window windowState="maximized">">max</pluto:window></TD>
-    <TD><A href="<pluto:window windowState="normal">">nor</pluto:window></TD>
-    <TD><A href="<pluto:window portletMode="help">">help</pluto:window></TD>
-    <TD><A href="<pluto:window portletMode="edit">">edit</pluto:window></TD>
-    <TD><A href="<pluto:window portletMode="view">">view</pluto:window></TD></TR>
-<TR><TD colspan="7">
-    <pluto:render/>
-    </TD></TR>
-</TABLE>
+<div class="portlet" id='<c:out value="${portlet}"/>'>
+  <div class="header">
+     <a href="<pluto:window portletMode="help"/>"><span class="help"></span></a>
+     <a href="<pluto:window portletMode="edit"/>"><span class="edit"></span></a>
+     <a href="<pluto:window portletMode="view"/>"><span class="view"></span></a>
+
+     <a href="<pluto:window windowState="minimized"/>"><span class="max"></span></a>
+     <a href="<pluto:window windowState="maximized"/>"><span class="min"></span></a>
+     <a href="<pluto:window windowState="normal"/>"><span class="nor"></span></a>
+     <span class="title"><pluto:title/></span>
+  </div>
+  <p>
+      <pluto:render/>
+  </p>
+</div>
 </pluto:portlet>
 

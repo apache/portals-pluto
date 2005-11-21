@@ -1,44 +1,55 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
-<HTML>
-<HEAD>
-<TITLE>Pluto Portal Driver</TITLE>
-<link rel="stylesheet" href="<c:out value="${pageContext.request.contextPath}"/>/pluto_style.css" type="text/css"></link>
-</HEAD>
+<html>
+<head>
+  <title>Pluto Portal</title>
+    <style type="text/css" title="currentStyle" media="screen">
+        @import "<c:out value="${pageContext.request.contextPath}"/>//pluto.css";
+	</style>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>
+</head>
 
-<BODY>
+<body>
+ <div id="portal">
+  <div id="header">
+    Header
+  </div>
 
-<TABLE>
-<TR><TD><IMG src="<c:out value="${pageContext.request.contextPath}"/>/images/pluto.png"/></TD>
-    <TD style="align:right">Pluto Portal Driver</TD></TR>
-<TR><TD class="banner-highlight" colspan="2"></TD></TR>
-<TR><TD colspan="2"> &nbsp; </TD></TR>
-</TABLE>
+<div id="navigation">
+  <ul>
+  <c:forEach var="page" items="${driverConfig.pages}">
+  <c:choose>
+  <c:when test="${page == currentPage}">
+      <li class="selected"><a href="<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>"><c:out value="${page.name}"/></a>
+          <ul>
+              <li>Subpage One</li>
+              <li>Another Page</li>
+              <li>Three Strikes</li>
+          </ul>
+      </li>
+  </c:when>
 
-<TABLE>
-<TR class="tab">
-    <c:forEach var="page" items="${driverConfig.pages}">
-    <c:choose>
-    <c:when test="${page == currentPage}">
-    <TD nowrap="true" class="tab-selected">
-    </c:when>
-    <c:otherwise>
-    <TD nowrap="true">
-    </c:otherwise>
-    </c:choose>
-        <A href="<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>"><c:out value="${page.name}"/></A></TD>
-    <TD style="background-color:white"> &nbsp; </TD>
-    <c:set var="span" value="${span + 1}"/>
-    </c:forEach>
-    <TD style="background-color:white;width:100%;"> &nbsp; </TD></TR>
-    <TR><TD colspan="<c:out value="${span * 2}"/>"> &nbsp; </TD></TR>
-</TABLE>
+  <c:otherwise>
+      <li><a href="<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>"><c:out value="${page.name}"/></a>
+          <ul>
+              <li>One, Two, Three</li>
+              <li>Six, Five, Four</li>
+          </ul>
+      </li>
+  </c:otherwise>
+  </c:choose>
+  </c:forEach>
+  </ul>
+  </div>
 
-<TABLE>
-<TR><TD>
-    <%-- This could be dynamic.  At this point there's no need --%>
-    <jsp:include page='<%=(String)pageContext.findAttribute("include")%>'/>
-    </TD></TR>
-</TABLE>
-</BODY>
-</HTML>
+  <!-- The main content block -->
+  <div id="content">
+      <jsp:include page='<%=(String)pageContext.findAttribute("include")%>'/>
+  </div>
+
+  <div id="footer">
+    Footer
+  </div>
+ </div>
+</body>
+</html>
