@@ -67,6 +67,10 @@ body {
   float: left;
 }
 
+#portletgroupone.max {
+  width: auto;
+}
+
 #portletgrouptwo {
   margin: 0;
   width: 48%;

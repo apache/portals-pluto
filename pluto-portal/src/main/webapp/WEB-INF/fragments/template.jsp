@@ -12,7 +12,7 @@
 <body>
  <div id="portal">
   <div id="header">
-    Header
+    <span id="title">Apache Pluto</span>
   </div>
 
 <div id="navigation">
