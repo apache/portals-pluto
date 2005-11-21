@@ -12,7 +12,8 @@
 <body>
  <div id="portal">
   <div id="header">
-    <span id="title">Apache Pluto</span>
+    <h1><span>Apache Pluto</span></h1>
+    <h2><span>A Apache Portals Project</span></h2>
   </div>
 
 <div id="navigation">
@@ -48,7 +49,7 @@
   </div>
 
   <div id="footer">
-    Footer
+      &copy; 2003-2005 Apache Software Foundation
   </div>
  </div>
 </body>
