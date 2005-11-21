@@ -23,6 +23,7 @@ body {
 	background: transparent url(images/banner.png) no-repeat top left;
 	width: 450px;
 	height: 50px;
+    margin: 0px;
 }
 
 #header h1 span {
@@ -130,8 +131,9 @@ body {
   clear: both;
   margin: 0;
   padding: .5em;
+  height: 30px;
   font-size: .5em;
-  text-align: right;
+  text-align: center;
   border-top: 1px solid #2E6794;
   background: transparent url(images/powered-by.png) no-repeat right;
 }
