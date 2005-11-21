@@ -53,23 +53,28 @@ limitations under the License.
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name></web-resource-name>
-            <url-pattern>/login_success.jsp</url-pattern>
+            <web-resource-name>portal</web-resource-name>
+            <url-pattern>/portal</url-pattern>
+            <url-pattern>/portal/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>tomcat</role-name>
+            <role-name>pluto</role-name>
         </auth-constraint>
     </security-constraint>
 
     <login-config>
-        <auth-method>BASIC</auth-method>
+      <auth-method>FORM</auth-method>
+      <form-login-config>
+        <form-login-page>/login.jsp</form-login-page>
+        <form-error-page>/login.jsp?error=1</form-error-page>
+      </form-login-config>
     </login-config>
 
     <security-role>
-        <role-name>tomcat</role-name>
+        <role-name>pluto</role-name>
     </security-role>
 
     <taglib>

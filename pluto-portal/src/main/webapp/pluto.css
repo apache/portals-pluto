@@ -5,7 +5,7 @@ body {
 }
 
 #portal {
-  margin: 0px;
+  margin: 0px auto;
   background-color: white;
   border: 1px solid black;
 }
@@ -13,7 +13,6 @@ body {
 #header {
   background-color: #8DB7DF;
   border-bottom: 1px solid #2E6794;
-  border-top: 1px solid #2E6794;
   width: auto;
   height: 50px;
   vertical-align: top;
@@ -177,4 +176,35 @@ span.edit {
 
 span.help {
   background: url(images/controls/help.png) no-repeat;
+}
+
+/* Start look and feel -- end positioning */
+
+fieldset {
+  margin: .5em;
+  border: 1px solid #2E6794;
+}
+
+label {
+  float: left;
+  text-align: right;
+  margin: 0 1em 10px 0;
+  clear: both;
+  width: 40%;
+}
+
+input {
+  margin-bottom: 10px;
+  color: #2E6794;
+  background: #8DB7DF;
+  border: 1px solid #2E6794;
+}
+
+input.submit
+{
+  margin-left: 5em;
+  clear: both;
+  color: #2E6794;
+  background: #8DB7DF;
+  border: 1px solid #2E6794;
 }
