@@ -22,6 +22,7 @@ import org.apache.pluto.util.deploy.DeploymentConfig;
 import org.apache.pluto.util.deploy.file.Tomcat5FileSystemDeployer;
 
 import java.util.Properties;
+import java.io.File;
 
 
 /**
@@ -33,6 +34,11 @@ import java.util.Properties;
  * @requiresDependencyResolution runtime
  */
 public class DeployMojo extends AbstractPortletMojo {
+
+    /**
+     * @parameter expression="${project.build.outputDirectory}/${maven.final.name}
+     */
+    private File deployment;
 
     /**
      * @parameter expression="${pluto.deploy.file}"
@@ -55,8 +61,14 @@ public class DeployMojo extends AbstractPortletMojo {
         }
 
         Deployer deployer = createDeployer();
-        deployer.deploy(createConfig(), createInputStream());
+        //deployer.deploy(createConfig(), createInputStream());
 
+    }
+
+    protected void doValidate() throws MojoExecutionException {
+        if(deployment == null || !deployment.exists()) {
+            throw new MojoExecutionException("Deployment must be specified");
+        }
     }
 
     private DeploymentConfig createConfig() {

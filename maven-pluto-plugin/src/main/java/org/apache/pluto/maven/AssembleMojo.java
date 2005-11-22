@@ -17,11 +17,13 @@
 package org.apache.pluto.maven;
 
 import org.apache.pluto.util.assemble.Assembler;
-import org.apache.pluto.util.assemble.file.ArchivedFileAssembler;
+import org.apache.pluto.util.assemble.AssemblerConfig;
+import org.apache.pluto.util.assemble.file.FileAssembler;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 
 import java.io.IOException;
 import java.io.File;
-import java.util.jar.JarFile;
 
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -30,20 +32,59 @@ import java.util.jar.JarFile;
  * @since Jul 30, 2005
  * 
  * @goal assemble
+ * @description prepares a web application as a portlet application
+ * @phase process-resources
  */
 public class AssembleMojo extends AbstractPortletMojo {
 
+    /**
+     * @parameter expression="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
+     * @required
+     */
+    private File portletXml;
+
+    /**
+     *
+     * @parameter expression="${basedir}/src/main/webapp/WEB-INF/web.xml"
+     * @required
+     */
+    private File webXml;
+
+    /**
+     * @parameter expression="${project.build.directory}/pluto-resources/web.xml"
+     */
+    private File webXmlDestination;
+
     protected void doExecute() throws Exception {
-
+        Log log = getLog();
+        if(log.isInfoEnabled()) {
+            log.info("Reading web.xml from :"+webXml.getAbsolutePath());
+            log.info("Reading portlet.xml from: "+portletXml.getAbsolutePath());
+            log.info("Writing web.xml to: "+webXmlDestination.getAbsolutePath());
+        }
         Assembler assembler = createAssembler();
-        assembler.assemble();
-
+        assembler.assemble(createAssemblerConfig());
     }
 
     private Assembler createAssembler() throws IOException {
-        JarFile jar = new JarFile(deployment);
-        File destination = deployment;
-        Assembler assembler = new ArchivedFileAssembler(jar, destination);
-        return assembler;
+        return new FileAssembler();
+    }
+
+    private AssemblerConfig createAssemblerConfig() {
+        AssemblerConfig config = new AssemblerConfig();
+        config.setPortletDescriptor(portletXml);
+        config.setWebappDescriptor(webXml);
+        config.setDestination(webXmlDestination);
+        return config;
+    }
+
+    protected void doValidate() throws MojoExecutionException {
+        if(webXml == null || !webXml.exists()) {
+            throw new MojoExecutionException("Web application descriptor must be a valid web.xml");
+        }
+
+        if(portletXml == null || !portletXml.exists()) {
+            throw new MojoExecutionException("Portlet descriptor must be a valid portlet.xml");
+        }
     }
 }

@@ -16,6 +16,8 @@
 package org.apache.pluto.util.assemble.file;
 
 import org.apache.pluto.util.assemble.Assembler;
+import org.apache.pluto.util.assemble.AssemblerConfig;
+import org.apache.pluto.util.UtilityException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
@@ -36,6 +38,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.*;
 
 /**
@@ -44,56 +48,49 @@ import java.util.*;
  * @version 1.0
  * @since Nov 8, 2004
  */
-public abstract class AbstractAssembler implements Assembler {
+public class FileAssembler implements Assembler {
 
-    private static final String PORTLET_XML = "WEB-INF/portlet.xml";
+    private static final Properties PROPERTIES =
+        new Properties();
 
-    private static final String SERVLET_XML = "WEB-INF/web.xml";
-
-    private static final String[] CLASSES = new String[] { };
-
-    private Properties properties;
-
-    public AbstractAssembler() {
-        properties = new Properties();
-        properties.setProperty(OutputKeys.INDENT, "yes");
-        //properties.setProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+    static {
+        PROPERTIES.setProperty(OutputKeys.INDENT, "yes");
     }
 
-    public void assemble() throws IOException {
-        InputStream servletIn = getWebResource(SERVLET_XML);
-        InputStream portletIn = getWebResource(PORTLET_XML);
+    public FileAssembler() {
+   }
 
-        Document xml = updateWebXML(servletIn, portletIn);
-        setWebResource(SERVLET_XML, xml);
+    public void assemble(AssemblerConfig config)
+    throws UtilityException {
 
-        InputStream in = null;
-        for(int i = 0;i<CLASSES.length;i++) {
-            in = getClass().getClassLoader().getResourceAsStream(CLASSES[i]);
-            setWebResource("WEB-INF/classes/"+CLASSES[i], in);
+        try {
+            InputStream servletIn =
+                new FileInputStream(config.getWebappDescriptor());
+
+            InputStream portletIn =
+                new FileInputStream(config.getPortletDescriptor());
+
+            Document xml = updateWebXML(servletIn, portletIn);
+            servletIn.close();
+
+            FileOutputStream servletOut =
+                new FileOutputStream(config.getDestination());
+
+            save(xml, servletOut);
+        }
+        catch(IOException io) {
+            throw new UtilityException(io.getMessage(), io, null);
         }
 
-        close();
     }
 
-    protected abstract InputStream getWebResource(String resource)
-        throws IOException;
-
-    protected abstract void setWebResource(String name, InputStream in)
-        throws IOException;
-
-    protected abstract void setWebResource(String name, Document dom)
-    throws IOException;
-
-    protected abstract void close()
-        throws IOException;
 
     protected void save(Document doc, OutputStream out)
     throws IOException {
         try {
             TransformerFactory fact = TransformerFactory.newInstance();
             Transformer trans = fact.newTransformer();
-            trans.setOutputProperties(properties);
+            trans.setOutputProperties(PROPERTIES);
             trans.transform(new DOMSource(doc), new StreamResult(out));
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
@@ -107,20 +104,6 @@ public abstract class AbstractAssembler implements Assembler {
         }
     }
 
-    protected void save(InputStream in, OutputStream out)
-    throws IOException {
-        try {
-            int bytesRead = -1;
-            byte[] buffer = new byte[256];
-            while ((bytesRead = in.read(buffer)) != -1) {
-                out.write(buffer, 0, bytesRead);
-            }
-        }
-        finally {
-            out.flush();
-            out.close();
-        }
-    }
 
     /**
      * @todo currently we rely specifically on the castor implementation.
@@ -141,9 +124,12 @@ public abstract class AbstractAssembler implements Assembler {
 
         PortletAppDD portletAppDD = portletService.read(portletIn);
         List portlets = portletAppDD.getPortlets();
-        for(int i=0;i<portlets.size();i++) {
-            PortletDD portlet = (PortletDD)portlets.get(i);
+        Iterator it = portlets.iterator();
+
+        while(it.hasNext()) {
+            PortletDD portlet = (PortletDD)it.next();
             String name = portlet.getPortletName();
+
             Element servlet = doc.createElement("servlet");
 
             Element servletName = doc.createElement("servlet-name");
@@ -182,17 +168,18 @@ public abstract class AbstractAssembler implements Assembler {
         }
 
 
+
         Element webAppNode = doc.getDocumentElement();
         NodeList nodes = webAppNode.getChildNodes();
 
-        // Find the first node that shouldn't be before the servlet
-        // and start appending.  This is kind of ugly, but the hack
-        // works for now!
+//         Find the first node that shouldn't be before the servlet
+//         and start appending.  This is kind of ugly, but the hack
+//         works for now!
         for(int i=0;i<nodes.getLength();i++) {
             Node node = nodes.item(i);
             if(node.getNodeType() == Node.ELEMENT_NODE) {
                 if(!BEFORE_SERVLET_DEF.contains(node.getNodeName())) {
-                    Iterator it = servlets.iterator();
+                    it = servlets.iterator();
                     while(it.hasNext()) {
                         Node servlet = (Node)it.next();
                         webAppNode.insertBefore(servlet, node);
@@ -201,7 +188,7 @@ public abstract class AbstractAssembler implements Assembler {
                 }
 
                 if(!BEFORE_SERVLET_MAPPING_DEF.contains(node.getNodeName())) {
-                    Iterator it = mappings.iterator();
+                    it = mappings.iterator();
                     while(it.hasNext()) {
                         Node mapping = (Node)it.next();
                         webAppNode.insertBefore(mapping, node);
@@ -212,7 +199,7 @@ public abstract class AbstractAssembler implements Assembler {
         }
 
         // Now, in case there are not any nodes after the servlet def!
-        Iterator it = servlets.iterator();
+        it = servlets.iterator();
         while(it.hasNext()) {
             webAppNode.appendChild((Node)it.next());
         }

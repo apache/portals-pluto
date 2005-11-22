@@ -35,5 +35,4 @@ public class InstallMojo extends AbstractManagementMojo {
     protected void doExecute() throws Exception {
         getHandler().install(createInstallationConfig());
     }
-
 }

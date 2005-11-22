@@ -27,13 +27,6 @@ import java.io.File;
  * @since Jul 30, 2005
  */
 public abstract class AbstractPortletMojo extends AbstractPlutoMojo {
-    /**
-     * @parameter expression="${pluto.deploy.deployment}"
-     * @required
-     */
-    protected File deployment;
 
-    protected InputStream createInputStream() throws IOException {
-        return new FileInputStream(deployment);
-    }
+
 }

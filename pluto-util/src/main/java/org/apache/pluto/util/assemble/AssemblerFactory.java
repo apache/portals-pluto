@@ -15,13 +15,9 @@
  */
 package org.apache.pluto.util.assemble;
 
-import org.apache.pluto.util.assemble.file.ExplodedFileAssembler;
-import org.apache.pluto.util.assemble.Assembler;
-import org.apache.pluto.util.assemble.file.ArchivedFileAssembler;
+import org.apache.pluto.util.assemble.file.FileAssembler;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.jar.JarFile;
 
 /**
  * <B>TODO</B>: Document
@@ -45,19 +41,6 @@ public class AssemblerFactory {
     }
 
     public Assembler createAssembler(File webapp, File destination) {
-        if(webapp.isDirectory()) {
-            return new ExplodedFileAssembler(webapp, destination);
-        }
-        else {
-            try {
-                JarFile war = new JarFile(webapp);
-                return new ArchivedFileAssembler(war, destination);
-            }
-            catch(IOException io) {
-                return null;
-            }
-        }
-
+            return new FileAssembler();
     }
 }
-

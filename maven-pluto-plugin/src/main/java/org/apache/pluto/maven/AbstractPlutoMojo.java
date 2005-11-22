@@ -26,11 +26,10 @@ import java.io.File;
  * @todo Document
  * @since Jul 30, 2005
  */
-public abstract class AbstractPlutoMojo extends org.apache.maven.plugin.AbstractMojo {
+public abstract class AbstractPlutoMojo extends AbstractMojo {
 
     /**
      * @parameter expression="${installDir}"
-     * @required
      */
     protected File installationDirectory;
 
@@ -44,6 +43,7 @@ public abstract class AbstractPlutoMojo extends org.apache.maven.plugin.Abstract
     public void execute() throws MojoExecutionException {
         // Validation of the installDir property is done by maven.
         try {
+            doValidate();
             doExecute();
         }
         catch(MojoExecutionException mee) {
@@ -59,4 +59,6 @@ public abstract class AbstractPlutoMojo extends org.apache.maven.plugin.Abstract
      * @throws Exception
      */
     protected abstract void doExecute() throws Exception;
+
+    protected abstract void doValidate() throws Exception;
 }

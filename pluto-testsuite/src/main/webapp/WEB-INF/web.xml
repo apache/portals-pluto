@@ -34,26 +34,6 @@ limitations under the License.
   </context-param>
   
   <servlet>
-    <servlet-name>TestPortlet1</servlet-name>
-    <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
-    <init-param>
-      <param-name>portlet-name</param-name>
-      <param-value>TestPortlet1</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  
-  <servlet>
-    <servlet-name>TestPortlet2</servlet-name>
-    <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
-    <init-param>
-      <param-name>portlet-name</param-name>
-      <param-value>TestPortlet2</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  
-  <servlet>
     <servlet-name>extAppScopedTest</servlet-name>
     <servlet-class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
   </servlet>
@@ -62,16 +42,6 @@ limitations under the License.
     <servlet-name>includeTest</servlet-name>
     <servlet-class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTest$TargetServlet</servlet-class>
   </servlet>
-
-  <servlet-mapping>
-    <servlet-name>TestPortlet1</servlet-name>
-    <url-pattern>/PlutoInvoker/TestPortlet1</url-pattern>
-  </servlet-mapping>
-  
-  <servlet-mapping>
-    <servlet-name>TestPortlet2</servlet-name>
-    <url-pattern>/PlutoInvoker/TestPortlet2</url-pattern>
-  </servlet-mapping>
   
   <servlet-mapping>
     <servlet-name>extAppScopedTest</servlet-name>

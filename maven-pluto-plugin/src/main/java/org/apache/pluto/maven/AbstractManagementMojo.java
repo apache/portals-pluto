@@ -21,6 +21,7 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.pluto.util.install.ServerConfig;
 import org.apache.pluto.util.install.InstallationConfig;
 import org.apache.pluto.util.install.PortalInstallerFactory;
@@ -181,5 +182,12 @@ public abstract class AbstractManagementMojo extends org.apache.pluto.maven.Abst
         }
         */
         return files;
+    }
+
+    protected void doValidate() throws Exception {
+        if(installationDirectory == null || !installationDirectory.exists()) {
+            throw new MojoExecutionException("A valid installation directory must be provided in order to install pluto.");
+
+        }
     }
 }

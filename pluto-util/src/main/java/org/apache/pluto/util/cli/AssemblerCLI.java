@@ -27,6 +27,8 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerFactory;
+import org.apache.pluto.util.assemble.AssemblerConfig;
+import org.apache.pluto.util.UtilityException;
 
 /**
  * Command Line Interface to the Pluto Assembler.
@@ -54,7 +56,7 @@ public class AssemblerCLI {
         options.addOption(debug);
     }
 
-    public void run() throws ParseException, IOException {
+    public void run() throws ParseException, IOException, UtilityException {
         CommandLineParser parser = new PosixParser();
         CommandLine line = parser.parse(options, args);
 
@@ -82,9 +84,17 @@ public class AssemblerCLI {
         System.out.println("Assembling: "+source.getCanonicalPath());
         System.out.println("        to: "+result.getCanonicalPath());
 
+        File webXml = new File(args[0], Assembler.SERVLET_XML);
+        File portletXml = new File(args[0], Assembler.PORTLET_XML);
+
         Assembler assembler = AssemblerFactory.getFactory()
-            .createAssembler(new File(args[0]), new File(dest));
-        assembler.assemble();
+            .createAssembler(webXml, portletXml);
+
+        AssemblerConfig config = new AssemblerConfig();
+        config.setPortletDescriptor(portletXml);
+        config.setWebappDescriptor(webXml);
+
+        assembler.assemble(config);
 
         System.out.println("Complete!");
     }
@@ -97,7 +107,7 @@ public class AssemblerCLI {
     }
 
     public static void main(String[] args)
-    throws ParseException, IOException{
+    throws ParseException, IOException, UtilityException {
         new AssemblerCLI(args).run();
     }
 }

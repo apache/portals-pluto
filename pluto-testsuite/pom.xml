@@ -59,8 +59,28 @@
   </dependencies>
   <build>
     <finalName>pluto-testsuite</finalName>
+	<plugins>
+
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+		<configuration>
+          <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
+		</configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-pluto-plugin</artifactId>
+		<version>${pom.version}</version>
+        <executions>
+          <execution>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     <!--
-    <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>1.0-SNAPSHOT</version>
@@ -69,7 +89,7 @@
           <finalName>pluto-testsuite-${pom.version}</finalName>
         </configuration>
       </plugin>
-    </plugins>
     -->  
+    </plugins>
   </build>
 </project>

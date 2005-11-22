@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.util.assemble;
 
+import org.apache.pluto.util.UtilityException;
+
 import java.io.IOException;
 
 /**
@@ -41,7 +43,7 @@ public interface Assembler {
      * with the new application.
      *
      */
-    void assemble() throws IOException;
+    void assemble(AssemblerConfig config) throws IOException, UtilityException;
 
 }
 
