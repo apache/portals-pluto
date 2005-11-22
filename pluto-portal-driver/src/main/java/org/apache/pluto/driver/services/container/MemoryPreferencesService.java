@@ -15,26 +15,17 @@
  */
 package org.apache.pluto.driver.services.container;
 
-import java.util.Collection;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.io.File;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.driver.services.container.PortletPreferenceImpl;
 import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.services.PortletPreferencesService;
-import org.apache.commons.digester.Digester;
+import org.apache.pluto.services.optional.PortletPreferencesService;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
-import org.xml.sax.SAXException;
 
 /**
  * The Portal Driver's simple PortletPreferencesService implementation. This

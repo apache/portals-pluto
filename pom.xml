@@ -182,7 +182,6 @@
     <module>maven-pluto-plugin</module>
     <module>pluto-descriptor-api</module>
     <module>pluto-descriptor-impl</module>
-    <module>pluto-deploy</module>
     <module>pluto-container</module>
     <module>pluto-taglib</module>
     <module>pluto-util</module>

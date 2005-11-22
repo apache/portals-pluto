@@ -1,4 +1,4 @@
-package org.apache.pluto.util.install.impl.jetty;
+package org.apache.pluto.util.install.file.jetty;
 
 /**
  * Created by IntelliJ IDEA.

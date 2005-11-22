@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.deploy;
+package org.apache.pluto.util.deploy;
 
 /**
  * <B>TODO</B>: Document
@@ -35,7 +35,7 @@ public class DeployerFactory {
     public Deployer createFactory() {
         String className = System.getProperty(
             "org.apache.pluto.deploy.Deployer",
-            "org.apache.pluto.deploy.impl.FileSystemDeployer"
+            "org.apache.pluto.util.deploy.impl.FileSystemDeployer"
         );
 
         try {

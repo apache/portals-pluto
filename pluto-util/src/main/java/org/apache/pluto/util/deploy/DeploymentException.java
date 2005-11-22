@@ -13,29 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.deploy;
-
-import java.io.IOException;
-import java.io.InputStream;
+package org.apache.pluto.util.deploy;
 
 /**
- * Interface defining the methods necessary to deploy a portlet
- * application to a servlet container.
+ * Exception thrown if deployment fails due to a configuration
+ * or internal error.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
- * @since Oct 15, 2004
+ * @since Oct 28, 2004
  */
-public interface Deployer {
+public class DeploymentException extends Exception {
 
-    /**
-     * Deploy the specified web application
-     * @param config
-     * @param webapp
-     * @throws IOException
-     */
-    void deploy(DeploymentConfig config, InputStream webapp)
-        throws IOException, DeploymentException;
+    public DeploymentException(String message) {
+        super(message);
+    }
 
 }
 

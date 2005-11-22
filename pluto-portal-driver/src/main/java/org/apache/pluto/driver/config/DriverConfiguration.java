@@ -19,12 +19,9 @@ import org.apache.pluto.driver.services.impl.resource.PortletApplicationConfig;
 import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
 import org.apache.pluto.driver.services.impl.resource.PageConfig;
 import org.apache.pluto.services.PortalCallbackService;
-import org.apache.pluto.services.PortletPreferencesService;
-import org.apache.pluto.services.OptionalPortletContainerServices;
-import org.apache.pluto.PortletContainerServices;
+import org.apache.pluto.services.optional.PortletPreferencesService;
 
 import javax.servlet.ServletContext;
-import javax.portlet.PortalContext;
 import java.util.Collection;
 
 /**

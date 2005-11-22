@@ -17,9 +17,9 @@
 package org.apache.pluto.maven;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.pluto.deploy.Deployer;
-import org.apache.pluto.deploy.DeploymentConfig;
-import org.apache.pluto.deploy.impl.Tomcat5FileSystemDeployer;
+import org.apache.pluto.util.deploy.Deployer;
+import org.apache.pluto.util.deploy.DeploymentConfig;
+import org.apache.pluto.util.deploy.file.Tomcat5FileSystemDeployer;
 
 import java.util.Properties;
 
@@ -35,7 +35,7 @@ import java.util.Properties;
 public class DeployMojo extends AbstractPortletMojo {
 
     /**
-     * @parameter expression="${pluto.deploy.impl}"
+     * @parameter expression="${pluto.deploy.file}"
      */
     private String deployerClass = Tomcat5FileSystemDeployer.class.getName();
 

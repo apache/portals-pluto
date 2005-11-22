@@ -15,15 +15,15 @@
  */
 package org.apache.pluto.util.install;
 
-import org.apache.pluto.util.ManagementException;
+import org.apache.pluto.util.UtilityException;
 
 import java.io.File;
 
 public interface PortalInstaller {
 
-    void install(InstallationConfig config) throws ManagementException, ManagementException;
+    void install(InstallationConfig config) throws UtilityException, UtilityException;
 
-    void uninstall(InstallationConfig config) throws ManagementException;
+    void uninstall(InstallationConfig config) throws UtilityException;
 
     boolean isValidInstallationDirectory(File installDir);
 }

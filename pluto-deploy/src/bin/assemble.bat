@@ -24,4 +24,4 @@ set CLASSPATH=%CLASSPATH%../lib/commons-digester-1.6.jar;
 set CLASSPATH=%CLASSPATH%../lib/commons-beanutils-1.7.0.jar;
 set CLASSPATH=%CLASSPATH%../lib/commons-logging-1.0.4.jar;
 
-java -classpath %CLASSPATH%  org.apache.pluto.deploy.cli.AssemblerCLI %1
+java -classpath %CLASSPATH%  org.apache.pluto.util.cli.AssemblerCLI %1

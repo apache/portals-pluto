@@ -50,7 +50,6 @@
 
         <item name="Descriptor API" href="/pluto-descriptor-api/index.html"/>
         <item name="Descriptor Impl" href="/pluto-descriptor-impl/index.html"/>
-        <item name="Deploy" href="/pluto-deploy/index.html"/>
         <item name="Util" href="/pluto-container/index.html"/>
       </menu>
     </menu>

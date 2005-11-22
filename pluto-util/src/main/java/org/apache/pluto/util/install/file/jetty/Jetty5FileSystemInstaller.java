@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.util.install.impl;
+package org.apache.pluto.util.install.file.jetty;
 
 import org.apache.pluto.util.install.InstallationConfig;
-import org.apache.pluto.util.install.impl.FileSystemInstaller;
-import org.apache.pluto.util.ManagementException;
-import org.codehaus.plexus.util.FileUtils;
+import org.apache.pluto.util.install.file.FileSystemInstaller;
+import org.apache.pluto.util.UtilityException;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.util.Iterator;
-import java.util.Map;
 
 public class Jetty5FileSystemInstaller extends FileSystemInstaller {
 
@@ -76,9 +72,9 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
      * 6) Install the Portal Application
      * 7) Finally, install the configs
      * @param config
-     * @throws org.apache.pluto.util.ManagementException
+     * @throws org.apache.pluto.util.UtilityException
      */
-    public void install(InstallationConfig config) throws ManagementException {
+    public void install(InstallationConfig config) throws UtilityException {
         File endorsedDir = getEndorsedDir(config);
         File sharedDir = getSharedDir(config);
         File domainDir = getWebAppDir(config);

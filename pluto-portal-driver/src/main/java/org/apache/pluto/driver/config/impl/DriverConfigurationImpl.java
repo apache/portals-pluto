@@ -20,10 +20,9 @@ import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
 import org.apache.pluto.driver.services.impl.resource.PageConfig;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.services.PortalCallbackService;
-import org.apache.pluto.services.PortletPreferencesService;
+import org.apache.pluto.services.optional.PortletPreferencesService;
 
 import javax.servlet.ServletContext;
-import javax.portlet.PortalContext;
 import java.util.Collection;
 
 /**

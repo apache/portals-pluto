@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.util.install.impl;
+package org.apache.pluto.util.install.file;
 
 import org.apache.pluto.util.install.InstallationConfig;
 import org.apache.pluto.util.install.PortalInstaller;
-import org.apache.pluto.util.ManagementException;
+import org.apache.pluto.util.UtilityException;
 import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;
@@ -69,9 +69,9 @@ public abstract class FileSystemInstaller implements PortalInstaller {
      * 6) Install the Portal Application
      * 7) Finally, install the configs
      * @param config
-     * @throws org.apache.pluto.util.ManagementException
+     * @throws org.apache.pluto.util.UtilityException
      */
-    public void install(InstallationConfig config) throws ManagementException {
+    public void install(InstallationConfig config) throws UtilityException {
         File endorsedDir = getEndorsedDir(config);
         File sharedDir = getSharedDir(config);
         File domainDir = getWebAppDir(config);
@@ -90,7 +90,7 @@ public abstract class FileSystemInstaller implements PortalInstaller {
             writeConfiguration(config);
         }
         catch(IOException io) {
-            throw new ManagementException(
+            throw new UtilityException(
                 "Unable to install portal to Tomcat",
                 io,
                 config.getInstallationDirectory()
@@ -108,7 +108,7 @@ public abstract class FileSystemInstaller implements PortalInstaller {
     protected abstract File getWebAppDir(InstallationConfig config);
 
     public void uninstall(InstallationConfig config)
-    throws ManagementException {
+    throws UtilityException {
         File endorsedDir = getEndorsedDir(config);
         File sharedDir = getSharedDir(config);
         File domainDir = getWebAppDir(config);
@@ -126,7 +126,7 @@ public abstract class FileSystemInstaller implements PortalInstaller {
             delete.delete();
         }
         catch(IOException io) {
-            throw new ManagementException("Unable to remove files. ", io, config.getInstallationDirectory());
+            throw new UtilityException("Unable to remove files. ", io, config.getInstallationDirectory());
         }
 
    }

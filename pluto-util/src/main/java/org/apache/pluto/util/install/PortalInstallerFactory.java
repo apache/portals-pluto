@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.util.install;
 
-import org.apache.pluto.util.install.impl.Tomcat5FileSystemInstaller;
-import org.apache.pluto.util.install.impl.Jetty5FileSystemInstaller;
+import org.apache.pluto.util.install.file.tomcat5.Tomcat5FileSystemInstaller;
+import org.apache.pluto.util.install.file.jetty.Jetty5FileSystemInstaller;
 
 import java.io.File;
 import java.util.ArrayList;

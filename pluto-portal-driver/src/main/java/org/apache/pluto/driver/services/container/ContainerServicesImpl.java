@@ -18,8 +18,11 @@ package org.apache.pluto.driver.services.container;
 import org.apache.pluto.OptionalPortletContainerServices;
 import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.PortletContainerServices;
+import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.services.PortletPreferencesService;
+import org.apache.pluto.services.optional.PortletPreferencesService;
+import org.apache.pluto.services.optional.PortletEnvironmentService;
+import org.apache.pluto.services.optional.PortletInvokerService;
 
 import javax.portlet.PortalContext;
 
@@ -74,5 +77,12 @@ public class ContainerServicesImpl
         return driverConfig.getPortalCallbackService();
     }
 
+    public PortletEnvironmentService getPortletEnvironmentService() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public PortletInvokerService getPortletInvokerService(InternalPortletWindow window) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
 

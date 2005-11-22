@@ -13,35 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.deploy;
+package org.apache.pluto.util.deploy;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * Used to assemble a web application into a portlet application.
+ * Interface defining the methods necessary to deploy a portlet
+ * application to a servlet container.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
-public interface Assembler {
-
-    String PORTLET_XML = "WEB-INF/portlet.xml";
-
-    String SERVLET_XML = "WEB-INF/web.xml";
-    
-    String DISPATCH_SERVLET_CLASS =
-        "org.apache.pluto.core.PortletServlet";
+public interface Deployer {
 
     /**
-     * Assemble a web applicaiton into a portlet
-     * web application which is deployable into
-     * the pluto-1.1 portlet container.  The
-     * specified web application will be overwritten
-     * with the new application.
-     *
+     * Deploy the specified web application
+     * @param config
+     * @param webapp
+     * @throws IOException
      */
-    void assemble() throws IOException;
+    void deploy(DeploymentConfig config, InputStream webapp)
+        throws IOException, DeploymentException;
 
 }
 

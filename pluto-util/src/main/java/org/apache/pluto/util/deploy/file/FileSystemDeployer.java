@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.deploy.impl;
+package org.apache.pluto.util.deploy.file;
 
-import org.apache.pluto.deploy.Deployer;
-import org.apache.pluto.deploy.DeploymentConfig;
-import org.apache.pluto.deploy.DeploymentException;
+import org.apache.pluto.util.deploy.Deployer;
+import org.apache.pluto.util.deploy.DeploymentConfig;
+import org.apache.pluto.util.deploy.DeploymentException;
 
 import java.io.File;
 import java.io.FileOutputStream;

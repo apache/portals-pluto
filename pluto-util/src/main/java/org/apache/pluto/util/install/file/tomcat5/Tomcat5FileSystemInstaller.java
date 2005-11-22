@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.util.install.impl;
+package org.apache.pluto.util.install.file.tomcat5;
 
 import org.apache.pluto.util.install.InstallationConfig;
-import org.apache.pluto.util.ManagementException;
+import org.apache.pluto.util.install.file.FileSystemInstaller;
 
 import java.io.File;
 import java.io.FileWriter;

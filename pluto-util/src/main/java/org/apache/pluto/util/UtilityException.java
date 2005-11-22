@@ -13,21 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.deploy;
+package org.apache.pluto.util;
+
+import java.io.File;
+
 
 /**
- * Exception thrown if deployment fails due to a configuration
- * or internal error.
- *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version 1.0
- * @since Oct 28, 2004
+ * Exception thrown if an error occurs while managing
+ * a portal instance.
  */
-public class DeploymentException extends Exception {
+public class UtilityException extends Exception {
 
-    public DeploymentException(String message) {
-        super(message);
+    private File installDir;
+
+    public UtilityException(String message, Throwable cause, File installDir) {
+        super(message, cause);
+        this.installDir = installDir;
+    }
+
+    public File getInstallDir() {
+        return installDir;
     }
 
 }
-

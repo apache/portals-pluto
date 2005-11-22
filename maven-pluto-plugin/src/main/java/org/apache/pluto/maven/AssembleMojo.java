@@ -16,8 +16,8 @@
 
 package org.apache.pluto.maven;
 
-import org.apache.pluto.deploy.Assembler;
-import org.apache.pluto.deploy.impl.ArchivedFileAssembler;
+import org.apache.pluto.util.assemble.Assembler;
+import org.apache.pluto.util.assemble.file.ArchivedFileAssembler;
 
 import java.io.IOException;
 import java.io.File;

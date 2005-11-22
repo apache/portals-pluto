@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.deploy.cli;
+package org.apache.pluto.util.cli;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +25,8 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.pluto.deploy.Assembler;
-import org.apache.pluto.deploy.AssemblerFactory;
+import org.apache.pluto.util.assemble.Assembler;
+import org.apache.pluto.util.assemble.AssemblerFactory;
 
 /**
  * Command Line Interface to the Pluto Assembler.
