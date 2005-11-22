@@ -22,7 +22,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.OptionalPortletContainerServices;
-import org.apache.pluto.services.PortletPreferencesService;
+import org.apache.pluto.services.optional.PortletPreferencesService;
+import org.apache.pluto.services.optional.PortletEnvironmentService;
+import org.apache.pluto.services.optional.PortletInvokerService;
 
 /**
  * Default Optional Services implementation.
@@ -61,6 +63,15 @@ public class DefaultOptionalServices implements OptionalPortletContainerServices
                           PortletPreference[] preferences) throws PortletContainerException {
 
         }
+    }
+
+
+    public PortletEnvironmentService getPortletEnvironmentService() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public PortletInvokerService getPortletInvokerService(InternalPortletWindow window) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
 

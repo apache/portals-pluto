@@ -17,12 +17,13 @@
 
  */
 
-package org.apache.pluto.services;
+package org.apache.pluto.services.optional;
 
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.services.ContainerService;
 import org.apache.pluto.core.PortletPreference;
 
 public interface PortletPreferencesService extends ContainerService {

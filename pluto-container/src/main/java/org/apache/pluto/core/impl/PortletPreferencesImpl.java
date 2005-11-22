@@ -37,7 +37,7 @@ import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.PortletPreference;
 import org.apache.pluto.core.PortletEntity;
-import org.apache.pluto.services.PortletPreferencesService;
+import org.apache.pluto.services.optional.PortletPreferencesService;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
