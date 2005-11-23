@@ -1,7 +1,6 @@
 package org.apache.pluto.derby;
 
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +22,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Basic CRUD operations using Apache Derby.
+ * Basic CRUD operations using Apache Derby. Autocommit
+ * is set to true by default unless it is set to false using
+ * the single parameter constructor.
  * 
  * TODO: Add support for other schemas
  * 
@@ -58,7 +59,7 @@ public class DerbyDataStore {
 		}
 
 	 /**
-	  * 
+	  * Initialize Derby
 	  *
 	  */
 	 private static void init() {
@@ -81,14 +82,22 @@ public class DerbyDataStore {
 	    	}
     			    	
 	 }
-	 
+
+	/**
+	 * Do a standard SQL update using a PreparedStatement.
+	 * 
+	 * @param sql SQL in PreparedStatement format
+	 * @param parameters Array of parameters in proper order.
+	 * @return The number of rows updated
+	 * @throws SQLException
+	 */ 
 	public int doUpdate(String sql, Object[] parameters ) throws SQLException {
     	int rows = 0;
     	PreparedStatement ps = null;
     	try {
 			createConnection();
 			ps = conn.prepareStatement(sql);
-			populatePreparedStatement(parameters, ps);
+			bindPreparedStatement(parameters, ps);
 			rows = ps.executeUpdate();
 			if (autocommit) {
 				conn.commit();
@@ -113,15 +122,43 @@ public class DerbyDataStore {
 		return rows;
     }
 
-    public int doInsert(String sql, Object[] parameters ) throws SQLException {
+	public int doUpdate(String sql) throws SQLException {
+		return doUpdate(sql, null);
+	}
+
+	/**
+	 * Do a standard SQL insert using a PreparedStatement.
+	 * 
+	 * @param sql SQL in PreparedStatement format
+	 * @param parameters Array of parameters in proper order.
+	 * @return The new generated primary key
+	 * @throws SQLException
+	 */ 
+	public int doInsert(String sql, Object[] parameters ) throws SQLException {
     	doUpdate(sql, parameters);
     	return getGeneratedId();
     }    
 
+	/**
+	 * Do a standard SQL delete using a PreparedStatement.
+	 * 
+	 * @param sql SQL in PreparedStatement format
+	 * @param parameters Array of parameters in proper order.
+	 * @return The number of rows updated
+	 * @throws SQLException
+	 */ 
     public int doDelete(String sql, Object[] parameters ) throws SQLException {
     	return doUpdate(sql, parameters);
     }    
 
+	/**
+	 * Do a standard SQL delete using a PreparedStatement.
+	 * 
+	 * @param sql SQL in PreparedStatement format
+	 * @param id Key of the record(s) to be deleted.
+	 * @return The number of rows updated
+	 * @throws SQLException
+	 */ 
     public int doDelete(String sql, int id) throws SQLException {
     	return doUpdate(sql, new Object[]{new Integer(id)});
     }    
@@ -151,7 +188,7 @@ public class DerbyDataStore {
     	try {
 			createConnection();
 			ps = conn.prepareStatement(sql);
-			populatePreparedStatement(parameters, ps);
+			bindPreparedStatement(parameters, ps);
 			rs = ps.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
 			int len = md.getColumnCount();
@@ -227,12 +264,23 @@ public class DerbyDataStore {
     	}
 		return results;
     }
-
+    
+	/**
+	 * Do a standard SQL select using a PreparedStatement.
+	 * 
+	 * @param sql SQL in PreparedStatement format
+     * @return A <code>List</code> of <code>Map</code> objects.
+	 * @throws SQLException
+	 */ 
+    public List doSelect(String sql) throws SQLException {
+    	return doSelect(sql, null);
+    }
+    	
     /**
      * Gets the most recently generated primary key using the
      * IDENTITY_VAL_LOCAL() function. 
      * 
-     * @return
+     * @return The most recent generated key.
      * @throws SQLException
      */
     public int getGeneratedId() throws SQLException {
@@ -274,6 +322,8 @@ public class DerbyDataStore {
     }
 
 	/**
+	 * Closes <code>PreparedStatement</code> and <code>ResultSet</code>.
+	 * 
 	 * @param ps
 	 * @param rs
 	 * @throws SQLException
@@ -288,71 +338,72 @@ public class DerbyDataStore {
 	}
     	
     /**
+	 * Binds a PreparedStatement using appropraite
+	 * setXXX() methods.
 	 * 
-	 * 
-	 * @param parameters
+	 * @param parameters Parameters
 	 * @param ps
 	 * @throws SQLException
 	 */
-	private void populatePreparedStatement(Object[] parameters, PreparedStatement ps) throws SQLException {
+	private void bindPreparedStatement(Object[] parameters, PreparedStatement ps) throws SQLException {
 		//Loop through each value, determine it's corresponding SQL type,
 		//and stuff that value into the prepared statement.
-		Object value = null;
-		int len = parameters.length;
-		if (LOG.isTraceEnabled()) {
-			LOG.trace("Parameter count: " + parameters.length);
-		}
-		int colno = 0;
-		for (int i = 0; i < len; i++) {
-			colno = i + 1;
-			value = parameters[i];
-//			if (LOG.isTraceEnabled()) {
-//				LOG.trace("Parameter value=" + value);
-//			}
-			if (value instanceof String) {
-				if (LOG.isTraceEnabled()) {
-					LOG.trace("String Parameter [" + i + "]  value=" + value);
-				}
-				if(value == null) {
-					ps.setNull(colno, Types.VARCHAR);
+		//Skip everything if parameters are null or empty.
+		if (parameters != null && parameters.length > 0) {
+			Object value = null;
+			int len = parameters.length;
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("Parameter count: " + parameters.length);
+			}
+			int colno = 0;
+			for (int i = 0; i < len; i++) {
+				colno = i + 1;
+				value = parameters[i];
+				if (value instanceof String) {
+					if (LOG.isTraceEnabled()) {
+						LOG.trace("String Parameter [" + i + "]  value=" + value);
+					}
+					if(value == null) {
+						ps.setNull(colno, Types.VARCHAR);
+					} else {
+						ps.setString(i + 1, (String) value);					
+					}				
+				} else if (value instanceof Integer){
+					if (LOG.isTraceEnabled()) {
+						LOG.trace("Integer Parameter [" + i + "]  value=" + value);
+					}
+					if(value == null) {
+						ps.setNull(colno, Types.INTEGER);
+					} else {
+						int val = ((Integer)value).intValue();
+						ps.setInt(colno, val);
+					}
+				} else if (value instanceof Timestamp){
+					if (LOG.isTraceEnabled()) {
+						LOG.trace("Timestamp Parameter [" + i + "]  value=" + value);
+					}
+					if(value == null) {
+						ps.setNull(colno, Types.TIMESTAMP);
+					} else {
+						ps.setTimestamp(colno, (Timestamp)value);
+					}
 				} else {
-					ps.setString(i + 1, (String) value);					
-				}				
-			} else if (value instanceof Integer){
-				if (LOG.isTraceEnabled()) {
-					LOG.trace("Integer Parameter [" + i + "]  value=" + value);
-				}
-				if(value == null) {
-					ps.setNull(colno, Types.INTEGER);
-				} else {
-					int val = ((Integer)value).intValue();
-					ps.setInt(colno, val);
-				}
-			} else if (value instanceof Timestamp){
-				if (LOG.isTraceEnabled()) {
-					LOG.trace("Timestamp Parameter [" + i + "]  value=" + value);
-				}
-				if(value == null) {
-					ps.setNull(colno, Types.TIMESTAMP);
-				} else {
-					ps.setTimestamp(colno, (Timestamp)value);
-				}
-			} else {
-				if (LOG.isTraceEnabled()) {
-					LOG.trace("Object Parameter [" + i + "]  value=" + value);
-				}
-				if(value == null) {
-					ps.setNull(colno, Types.JAVA_OBJECT);
-				} else {
-					ps.setObject(colno, value);
+					if (LOG.isTraceEnabled()) {
+						LOG.trace("Object Parameter [" + i + "]  value=" + value);
+					}
+					if(value == null) {
+						ps.setNull(colno, Types.JAVA_OBJECT);
+					} else {
+						ps.setObject(colno, value);
+					}
 				}
 			}
 		}
 	}
 
 	/**
-	 * @param props
-	 * @return
+	 * Creates the Database connection.
+	 * 
 	 * @throws SQLException
 	 */
 	private void createConnection() throws SQLException {
@@ -438,6 +489,7 @@ public class DerbyDataStore {
 	}
 	
 	/**
+	 * 
 		   In embedded mode, an application should shut down Derby.
 		   If the application fails to shut down Derby explicitly,
 		   the Derby does not perform a checkpoint when the JVM shuts down, 
