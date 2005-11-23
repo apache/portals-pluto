@@ -40,7 +40,7 @@ public class AssemblerFactory {
         return factory;
     }
 
-    public Assembler createAssembler(File webapp, File destination) {
+    public Assembler createAssembler(AssemblerConfig config) {
             return new FileAssembler();
     }
 }

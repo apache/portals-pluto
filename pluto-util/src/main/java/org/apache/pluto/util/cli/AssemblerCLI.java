@@ -87,10 +87,14 @@ public class AssemblerCLI {
         File webXml = new File(args[0], Assembler.SERVLET_XML);
         File portletXml = new File(args[0], Assembler.PORTLET_XML);
 
-        Assembler assembler = AssemblerFactory.getFactory()
-            .createAssembler(webXml, portletXml);
-
         AssemblerConfig config = new AssemblerConfig();
+        config.setWebappDescriptor(webXml);
+        config.setPortletDescriptor(portletXml);
+        config.setDestination(webXml);
+        
+        Assembler assembler = AssemblerFactory.getFactory()
+            .createAssembler(config);
+
         config.setPortletDescriptor(portletXml);
         config.setWebappDescriptor(webXml);
 

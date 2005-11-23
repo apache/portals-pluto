@@ -18,6 +18,7 @@ package org.apache.pluto.maven;
 
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
+import org.apache.pluto.util.assemble.AssemblerFactory;
 import org.apache.pluto.util.assemble.file.FileAssembler;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
@@ -62,12 +63,12 @@ public class AssembleMojo extends AbstractPortletMojo {
             log.info("Reading portlet.xml from: "+portletXml.getAbsolutePath());
             log.info("Writing web.xml to: "+webXmlDestination.getAbsolutePath());
         }
-        Assembler assembler = createAssembler();
-        assembler.assemble(createAssemblerConfig());
-    }
+        AssemblerConfig config = createAssemblerConfig();
 
-    private Assembler createAssembler() throws IOException {
-        return new FileAssembler();
+        Assembler assembler =
+            AssemblerFactory.getFactory().createAssembler(config);
+
+        assembler.assemble(config);
     }
 
     private AssemblerConfig createAssemblerConfig() {

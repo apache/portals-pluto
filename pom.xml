@@ -179,16 +179,21 @@
   </organization>
 
   <modules>
-    <module>maven-pluto-plugin</module>
+	<!-- ==== Core ==== -->
     <module>pluto-descriptor-api</module>
     <module>pluto-descriptor-impl</module>
     <module>pluto-container</module>
     <module>pluto-taglib</module>
-    <module>pluto-util</module>
+	<!-- === Portal === -->
     <module>pluto-portal-driver</module>
     <module>pluto-portal</module>
-    <module>pluto-site</module>
     <module>pluto-testsuite</module>
+	<!-- == Utilities = -->
+    <module>pluto-util</module>
+    <module>maven-pluto-plugin</module>
+	<module>pluto-ant-tasks</module>
+	<!-- ==== Misc ==== -->
+    <module>pluto-site</module>
   </modules>
   
   <distributionManagement>

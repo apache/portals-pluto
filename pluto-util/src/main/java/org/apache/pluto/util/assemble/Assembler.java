@@ -43,7 +43,7 @@ public interface Assembler {
      * with the new application.
      *
      */
-    void assemble(AssemblerConfig config) throws IOException, UtilityException;
+    void assemble(AssemblerConfig config) throws UtilityException;
 
 }
 

@@ -1,0 +1,42 @@
+<project> 
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.pluto.ant</groupId>
+  <artifactId>pluto-ant-tasks</artifactId> 
+  <packaging>jar</packaging>
+  <name>Pluto Ant Tasks</name> 
+  <description>
+    The Pluto Ant Tasks are used to assemble, deploy, and publish
+	portlets to the Pluto Portal Driver.
+  </description>
+
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+	<artifactId>pluto</artifactId>
+	<version>1.1-SNAPSHOT</version>
+  </parent>
+
+   <dependencies>
+     <dependency>
+       <groupId>org.apache.pluto</groupId>
+       <artifactId>pluto-util</artifactId>
+	   <version>${pom.version}</version>
+       <scope>compile</scope>
+     </dependency>
+
+     <dependency>
+       <groupId>ant</groupId>
+       <artifactId>ant</artifactId>
+       <version>1.6.5</version>
+       <scope>compile</scope>
+     </dependency>
+
+   </dependencies>
+
+  <build> 
+    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> 
+    <resources>
+
+    </resources>
+  </build> 
+</project>
+

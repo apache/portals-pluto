@@ -3,7 +3,7 @@
   <groupId>org.apache.pluto</groupId>
   <artifactId>pluto-portal</artifactId>
   <packaging>war</packaging>
-  <name>Pluto Portal Driver</name>
+  <name>Pluto Portal</name>
   <url>http://portals.apache.org/pluto</url>
   <parent>
     <groupId>org.apache.pluto</groupId>
