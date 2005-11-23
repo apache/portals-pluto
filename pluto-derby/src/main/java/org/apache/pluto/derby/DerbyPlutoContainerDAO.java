@@ -43,11 +43,13 @@ public class DerbyPlutoContainerDAO {
 		"where preference_id=?";
 	
 	/* Cascading insert for a new portlet app */
-	private static final String INSERT_PORTLET_PREFS1 = "insert into container.portlet_app (app_context) values(?)";
-	private static final String INSERT_PORTLET_PREFS2 = "insert into container.portlet (portlet_app_id, portlet_name) values(IDENTITY_VAL_LOCAL(), ?)";
-	private static final String INSERT_PORTLET_PREFS3 = "insert into container.preference (portlet_id, preference_name, read_only) values(IDENTITY_VAL_LOCAL(), ?, ?)";
-	private static final String INSERT_PORTLET_PREFS4 = "insert into container.preference_value (preference_id, preference_value) values(IDENTITY_VAL_LOCAL(), ?)";
-	
+	private static final String INSERT_PORTLET_APP = "insert into container.portlet_app (app_context) values(?)";
+	private static final String INSERT_PORTLET = "insert into container.portlet (portlet_app_id, portlet_name) values(?, ?)";
+	private static final String UPDATE_PREF = "update container.preference set read_only=? where preference_id=?";
+	private static final String INSERT_PORTLET_PREF = "insert into container.preference (portlet_id, preference_name, read_only) values(?, ?, ?)";
+	private static final String INSERT_PREF_VALUES = "insert into container.preference_value (preference_id, preference_value) values(?, ?)";
+	private static final String DELETE_PREF_VALUES = "delete from container.preference_value where preference_id=?";
+
 	/**
 	 * Used by the container to get portlet preferences.
 	 * @param context Web context of the portlet application.
@@ -208,25 +210,71 @@ public class DerbyPlutoContainerDAO {
      * @param context
      * @param preferences
      */
-    public static void storePreferences(String context, String portletName, PortletPreference[] preferences) 
+    public static void storePreferences(String context, String portletName, PortletPreference[] preferences, String authUser) 
     	throws SQLException {
-    	DerbyDataStore ds = new DerbyDataStore();
-    	//TODO: implement this
-    	//find portlet app
-    	int id = findPortletAppId(context);
-    	if (id == 0) {
-    		//create new portlet app record
-    		
+    	DerbyDataStore ds = new DerbyDataStore(false);
+    	try {
+	    	//find portlet app
+	    	int appid = findPortletAppId(context);
+	    	if (appid == 0) {
+	    		//create new portlet app record
+				Object[] params = new Object[]{
+						context
+						}; 
+		    	appid = ds.doInsert(INSERT_PORTLET_APP, params);
+	    	}
+	    	int pid = 0;
+	    	pid = findPortletId(context, portletName);
+	    	if (pid == 0) {
+	    		//create new portlet record
+				Object[] params = new Object[]{
+						new Integer(appid),
+						context
+						}; 
+		    	pid = ds.doInsert(INSERT_PORTLET, params);
+	    	}
+	
+	    	int len = preferences.length;
+	    	for (int i = 0; i < len; i++) {
+	    		PortletPreference pref = preferences[i];
+	    		int prefid = findPreferenceId(context, portletName, pref.getName(),authUser);
+	    		boolean dRO = pref.isReadOnly();
+	    		String ro = dRO ? "Y" : "N";
+	     		if (prefid == 0) {
+	    			//insert preference
+	    			Object[] params = new Object[]{
+	    					new Integer(pid),
+	    					pref.getName(),
+	    					ro
+	    					};     			
+	    			prefid = ds.doInsert(INSERT_PORTLET_PREF, params);
+	    		} else {
+	    			//update preference
+	      			Object[] params = new Object[]{
+	    					ro,
+	    					new Integer(prefid)
+	    					};     			
+	    			ds.doUpdate(UPDATE_PREF, params);    			
+	    		}
+	    		//delete and insert pref vals
+				ds.doDelete(DELETE_PREF_VALUES, pid);
+				String[] vals = pref.getValues();
+				int vlen = vals.length;
+				for (int j = 0; j < vlen; j++) {
+	    			Object[] params2 = new Object[]{
+	    					new Integer(prefid),
+	    					vals[j]
+	    					}; 
+	    			ds.doUpdate(INSERT_PREF_VALUES, params2);
+				}
+	    	}
+	    	ds.commit();
+    	} catch (SQLException e) {
+    		ds.rollback();
+    		throw e;
+    	} finally {
+    		ds.closeConnection();
     	}
-    	id = findPortletId(context, portletName);
-    	if (id == 0) {
-    		
-    	}
-    	
-    	
     }
     
-    public static void insertPreference(PortletEntity entity, PortletPreference pref) {
-    	
-    }
 }
