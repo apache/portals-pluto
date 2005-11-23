@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.sql.SQLException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.core.PortletEntity;
 import org.apache.pluto.core.PortletPreference;
 import org.apache.pluto.core.impl.PortletPreferenceImpl;
@@ -18,13 +20,27 @@ import org.apache.pluto.core.impl.PortletPreferenceImpl;
  *
  */
 public class DerbyPlutoContainerDAO {
+    private static final Log LOG =
+        LogFactory.getLog(DerbyPlutoContainerDAO.class);
+    
 	private static final String FIND_PORTLET_APP_ID_SQL = "select portlet_app_id from container.portlet_app where app_context=?";
 	private static final String FIND_PORTLET_ID_SQL = "select portlet_id from container.portlet where portlet_app_id=? and portlet_name=?";
 	
-	private static final String FIND_PORTLET_PREF_ID_SQL = "select preference_id, preference_name, read_only from container.preference where portlet_id=? and preference_name=?";
+	private static final String FIND_PORTLET_PREF_ID_SQL = "select preference_id, preference_name, read_only from container.preference where portlet_id=? and preference_name=? and auth_user=?";
 
-	private static final String FIND_PREFERENCE_LIST_SQL = "select preference_id, preference_name, read_only from container.preference where portlet_id=?";
-	private static final String FIND_PREF_VALUES_SQL = "select preference_value from container.preference_value where preference_id=?";
+	private static final String FIND_PREFERENCE_LIST_SQL = 
+		"select pr.preference_id, pr.preference_name, pr.read_only " + 
+		"from container.preference pr, container.portlet plt, " +
+		"container.portlet_app pa " +
+		"where pa.portlet_app_id=plt.portlet_app_id " +
+		"and plt.portlet_id=pr.portlet_id " + 
+		"and pa.app_context=? " +
+		"and plt.portlet_name=? " + 
+		"and pr.auth_user=?";
+
+	private static final String FIND_PREF_VALUES_SQL = 
+		"select preference_value from container.preference_value " +
+		"where preference_id=?";
 	
 	/* Cascading insert for a new portlet app */
 	private static final String INSERT_PORTLET_PREFS1 = "insert into container.portlet_app (app_context) values(?)";
@@ -38,11 +54,19 @@ public class DerbyPlutoContainerDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-    public static PortletPreference[] getStoredPreferences(String context, String portletName) 
+    public static PortletPreference[] getStoredPreferences(String context, String portletName, String authUser) 
     	throws SQLException {
-    	int id = findPortletId(context, portletName);
-    	List list = findPreferenceList(id);
-    	PortletPreference[] prefs = new PortletPreference[list.size()];
+    	List list = findPreferenceList(context, portletName, authUser);
+    	if (list == null) {
+    		String msg = "Null preference list returned";
+    		LOG.error(msg);
+    		throw new IllegalStateException(msg);
+    	}
+    	int listSize = list.size();
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Preference list size=" + listSize);
+    	}
+    	PortletPreference[] prefs = new PortletPreference[listSize];
     	int ind = 0;
     	for (Iterator iter = list.iterator(); iter.hasNext();) {
 			Map element = (Map) iter.next();
@@ -86,59 +110,83 @@ public class DerbyPlutoContainerDAO {
     	return id;
     }
 
-    public static int findPortletId(String context, String portletName) throws SQLException {
+    public static int findPortletId(String context, String portletName) 
+    	throws SQLException {
     	int pid = 0;
     	Integer oId = null;
-    	int aid = findPortletAppId(context);
-		Object[] params = new Object[]{
-				new Integer(aid),
-				new String(portletName)
-				}; 
     	DerbyDataStore ds = new DerbyDataStore();
-    	List list = ds.doSelect(FIND_PORTLET_ID_SQL, params);
-    	if (list != null && !list.isEmpty()) {
-    		Map row1 = (Map)list.get(0);
-    		if (row1 != null) {
-        		oId = (Integer)row1.get("PORTLET_ID");    			
-    		}
-    	}
-    	if (oId != null) {
-    		pid = oId.intValue();
+    	try {
+	    	int aid = findPortletAppId(context);
+			Object[] params = new Object[]{
+					new Integer(aid),
+					new String(portletName)
+					}; 
+	    	List list = ds.doSelect(FIND_PORTLET_ID_SQL, params);
+	    	if (list != null && !list.isEmpty()) {
+	    		Map row1 = (Map)list.get(0);
+	    		if (row1 != null) {
+	        		oId = (Integer)row1.get("PORTLET_ID");    			
+	    		}
+	    	}
+	    	if (oId != null) {
+	    		pid = oId.intValue();
+	    	}
+	    	ds.commit();
+    	} catch (SQLException e) {
+    		ds.rollback();
+    		throw e;
     	}
     	return pid;
     }
 
-    public static int findPreferenceId(String context, String portletName, String prefName) throws SQLException {
-    	int pid = 0;
-    	Integer oId = null;
-    	int aid = findPortletId(context, portletName);
+    public static int findPreferenceId(String context, String portletName, 
+    		String prefName, String authUser) throws SQLException {
+    	int prid = 0;
+    	Integer oPrId = null;
+    	int pltid = findPortletId(context, portletName);
+    	System.out.println("PortletID:" + pltid);
+    	System.out.println("Pref name: " + prefName);
+    	System.out.println("User: " + authUser);
 		Object[] params = new Object[]{
-				new Integer(aid),
-				new String(prefName)
+				new Integer(pltid),
+				new String(prefName),
+				new String(authUser)
 				}; 
     	DerbyDataStore ds = new DerbyDataStore();
     	List list = ds.doSelect(FIND_PORTLET_PREF_ID_SQL, params);
+    	if (list == null) {
+    		String msg = "Null preference list returned";
+    		LOG.error(msg);
+    		throw new IllegalStateException(msg);
+    	}
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Preference list size=" + list.size());
+    	}
     	if (list != null && !list.isEmpty()) {
     		Map row1 = (Map)list.get(0);
     		if (row1 != null) {
-        		oId = (Integer)row1.get("PREFERENCE_ID");    			
+        		oPrId = (Integer)row1.get("PREFERENCE_ID");    			
     		}
     	}
-    	if (oId != null) {
-    		pid = oId.intValue();
+    	if (oPrId != null) {
+    		prid = oPrId.intValue();
     	}
-    	return pid;
+    	return prid;
     }
 
-    public static List findPreferenceList(int portletId) throws SQLException {
+    public static List findPreferenceList(String appContext, String portletName, String authUser) throws SQLException {
     	List list = null;
-    	if (portletId != 0) {
-			Object[] params = new Object[]{
-					new Integer(portletId),
-					}; 
-	    	DerbyDataStore ds = new DerbyDataStore();
-	    	list = ds.doSelect(FIND_PREFERENCE_LIST_SQL, params);
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("findPreferenceList() parameters: appContext='" + appContext + "'; portletName='" + portletName + "'; authUser='" + authUser + "'");
     	}
+    	System.out.println("");
+		Object[] params = new Object[]{
+				new String(appContext),
+				new String(portletName),
+				new String(authUser)
+				}; 
+    	DerbyDataStore ds = new DerbyDataStore();
+    	list = ds.doSelect(FIND_PREFERENCE_LIST_SQL, params);
     	return list;
     }
 
@@ -160,8 +208,21 @@ public class DerbyPlutoContainerDAO {
      * @param context
      * @param preferences
      */
-    public static void storePreferences(String context, PortletPreference[] preferences) {
+    public static void storePreferences(String context, String portletName, PortletPreference[] preferences) 
+    	throws SQLException {
+    	DerbyDataStore ds = new DerbyDataStore();
     	//TODO: implement this
+    	//find portlet app
+    	int id = findPortletAppId(context);
+    	if (id == 0) {
+    		//create new portlet app record
+    		
+    	}
+    	id = findPortletId(context, portletName);
+    	if (id == 0) {
+    		
+    	}
+    	
     	
     }
     
