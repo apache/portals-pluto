@@ -6,7 +6,7 @@
     <href>http://portals.apache.org/pluto</href>
   </bannerLeft>
   <bannerRight>
-    <src>http://portals.apache.org/pluto/images/pluto.png</src>
+    <src>https://svn.apache.org/repos/asf/portals/pluto/trunk/pluto-portal/src/main/webapp/images/banner.png</src>
   </bannerRight>
   <body>
     <links>

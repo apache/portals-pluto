@@ -8,20 +8,20 @@
 
 Getting Started
 
+  Maven2 is utilized as the project management and build system
+  for Pluto 1.1.  Pluto currently provides Maven plugins which
+  can be used to install the Pluto Portal, assemble
+  portlet applications, deploy applications, and publish 
+  portlet applications to the to Pluto Portal.
+
 * Installing Pluto with Maven
 
-  Maven2 is utilized as the project management and build system
-  for Pluto 1.1.  The pluto-util subproject can be used to 
-  install pluto into the Tomcat servlet engine (Jetty and other
-  containers coming soon).
-
-  <PLUTO-1.1-HOME> is the local directory where the Pluto source 
+  &lt;PLUTO-1.1-HOME&gt; is the local directory where the Pluto source 
   distribution is located.
   
 ---------------
 $> cd <PLUTO-1.1-HOME>
 $> mvn install
-$> cd pluto-util
 $> mvn pluto:install -DinstallDir=path/to/appserver
 ---------------
 
@@ -78,7 +78,7 @@ $> mvn install
   functional one soon.  Anyone is more than welcome to assist us in this
   process.
 
-Portlet Assembly and Deployment
+Deploying the Portlet to the Portal
 
 * Portlet Assembly
 
@@ -90,21 +90,56 @@ Portlet Assembly and Deployment
   servlet will be used to dispatch portlet requests to
   the portlet application. 
 
-  Portlet assembly is accomplished through the 
-  pluto-util subproject.
+  Portlet assembly is accomplished during war creation
+  by binding the pluto:assemble goal to the process-resources
+  lifecycle.  An example configuration follows
+  (taken from the pluto-testsuite application):
 
+-------------
+<plugin>
+  <artifactId>maven-pluto-plugin</artifactId>
+  <version>${pom.version}</version>
+  <executions>
+    <execution>
+      <phase>generate-resources</phase>
+      <goals>
+        <goal>assemble</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+-------------
 
----------------
-$> cd <PLUTO-1.1-HOME>
-$> cd pluto-util
-$> maven pluto:assemble -DinstallDir=<path to war>
----------------
+  Once configured within the portlet application's pom, 
+  the webapp and war artifacts created
+  by the project through Maven will include the appropriate
+  resources.
 
 * Portlet Deployment:
 
+  After portlet applications are assembled properly
+  they must be deployed to the servlet engine within
+  which the portal application is running.  This can
+  be acheived by using your favorite Maven appserver
+  plugin or by invoking the following:
+
 ---------------
-$> cd <PLUTO-1.1-HOME>
-$> cd pluto-install
-$> maven pluto:deploy -DinstallDir=<path to war>
+$> cd <PORTLET-APP-HOME>
+$> maven pluto:deploy
 ---------------
 
+  NOTE: The deployment plugin is currently undergoing modifications and may not be 100% functional.
+
+* Portlet Publishing
+
+  All portlet applications that are to be used within
+  the Pluto Portal must be published to the Portal.  
+  Publishing notifies the Portal Application that a
+  portlet application is bound (deployed) to a certain 
+  context within the app server.
+
+   Currently the only way to publish an application to
+   the portal is to manually update the Portal's
+   pluto-portal-driver-config.xml file. An automated
+   approach is in development and should be available
+   before the ALPHA-1 release.
