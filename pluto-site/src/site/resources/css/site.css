@@ -22,7 +22,9 @@ body {
 }
 
 #bannerLeft {
-  display: none;
+  position: absolute;
+  left: 8px;
+  bottom: 10px;
 }
 
 #bannerRight {
