@@ -37,7 +37,7 @@ public class DerbyDataStore {
     //TODO: We need to support other DB schemas
     public static final String DB_USER = "container";
     public static final String DB_PWD = "container";
-    private static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String DRIVER =  "org.apache.derby.jdbc.EmbeddedDriver";
     public static final String DATABASE_NAME = "PlutoDB";
     private static final String PROTOCOL = "jdbc:derby:" + DATABASE_NAME;
     private Connection conn = null;
@@ -90,13 +90,23 @@ public class DerbyDataStore {
 			ps = conn.prepareStatement(sql);
 			populatePreparedStatement(parameters, ps);
 			rows = ps.executeUpdate();
-			conn.commit();
+			if (autocommit) {
+				conn.commit();
+			}
     	} catch (SQLException e) {
 			LOG.error(e);
     		if (autocommit && conn != null) {
     			conn.rollback();
     		}
     		throw e;
+    	} catch (Throwable e) {
+			LOG.error(e);
+    		if (autocommit && conn != null) {
+    			conn.rollback();
+    		}
+    		SQLException e1 = new SQLException();
+    		e1.initCause(e);
+    		throw e1;
     	} finally {
     		cleanup(ps, null);
     	}
@@ -204,7 +214,7 @@ public class DerbyDataStore {
     			conn.rollback();
     		}
     		throw e;			
-    	} catch (Exception e) {
+    	} catch (Throwable e) {
     		LOG.error(e);
     		if (autocommit && conn != null) {
     			conn.rollback();
@@ -423,7 +433,7 @@ public class DerbyDataStore {
 			} catch (SQLException e) {
 				LOG.warn("Database connection could not be closed.", e);
 			}
-			shutdown();
+//			shutdown();
 		}
 	}
 	
@@ -436,7 +446,7 @@ public class DerbyDataStore {
 		   This style of shutdown will always throw an "exception".
 	 * 
 	 */
-	private void shutdown() {
+	public static void shutdown() {
 		
 		boolean gotSQLExc = false;
 
