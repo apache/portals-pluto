@@ -2,6 +2,7 @@ package org.apache.pluto.derby;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,10 +25,9 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Basic CRUD operations using Apache Derby.
  * 
- * TODO: transactional support 
- * TODO: support for other schemas
+ * TODO: Add support for other schemas
  * 
- * @author cdoremus
+ * @author <a href="mailto:cdoremus@apache.org">Craig Doremus</a>
  *
  */
 public class DerbyDataStore {
@@ -35,26 +35,26 @@ public class DerbyDataStore {
     private static final Log LOG =
         LogFactory.getLog(DerbyDataStore.class);
     //TODO: We need to support other DB schemas
-    private static final String DB_USER = "container";
-    private static final String DB_PWD = "container";
+    public static final String DB_USER = "container";
+    public static final String DB_PWD = "container";
     private static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-    private static final String DATABASE = "PlutoDB";
-    private static final String PROTOCOL = "jdbc:derby:" + DATABASE;
-
+    public static final String DATABASE_NAME = "PlutoDB";
+    private static final String PROTOCOL = "jdbc:derby:" + DATABASE_NAME;
+    private Connection conn = null;
+    private boolean autocommit = true;
+    
     static {
     	init();
     }
     
 	 public DerbyDataStore() {
 		super();
+		
 	}
 
 	 public DerbyDataStore(boolean autocommit) {
 			super();
-			// FIXME: Not yet implemented
-			// TODO: Add autocommit field and commit() method
-			//	for manual commits/ transactions.
-			throw new UnsupportedOperationException("Manual commit and transactional support needs to be implemented");
+			this.autocommit = autocommit ;
 		}
 
 	 /**
@@ -69,62 +69,36 @@ public class DerbyDataStore {
     			LOG.debug("Database home: " + dbhome);
     		}
 	    	System.setProperty("derby.system.home", dbhome);		 
-    		File dbdir = new File(home.getAbsolutePath() + "/" + DATABASE);
+    		File dbdir = new File(home.getAbsolutePath() + "/" + DATABASE_NAME);
 	    	if (!dbdir.exists()) {
 	    		StringBuffer msg = new StringBuffer();
 	    		msg.append("The Derby database needs to be created. ");
 	    		msg.append("Run the build-container.sql script to do this. ");	    		
 	    		msg.append("Make sure the settings for MAVEN_REPO in env.bat points to your local maven2 repository. ");
-    			throw new IllegalStateException(msg.toString());	    		
+	    		IllegalStateException e = new IllegalStateException(msg.toString());
+	    		LOG.error(e);
+	    		throw e;
 	    	}
-    		
-    		/* TODO: MOVE THIS INTO A MAVEN PLUGIN
-    		//Create derby database	    		
-	    	if (!home.exists()) {
-
-	    		if (!home.mkdirs()) {
-	    			throw new IllegalStateException("Data directories not properly created.");
-	    		}
-		    	//create the Database if not exist
-	    		File database = new File(home.getAbsolutePath() + "/" + DATABASE);
-	    		if (!database.exists()) {
-	    			//run ij to create the database
-	    			System.setProperty("ij.protocol", "jdbc:derby:");	    			
-	    			System.setProperty("ij.database", DATABASE + ";create=true;name=" + DB_USER + ";password=" + DB_PWD);
-	    			//set argument to script location
-	    			//FIXME: add proper script location
-	    			String[] args = {""};
-	    			try {
-						ij.main(args);
-					} catch (IOException e) {
-						LOG.error("Problem running ij.",e);
-					}
-	    		}
-	    	}
-*/	    		
-	    	
+    			    	
 	 }
 	 
 	public int doUpdate(String sql, Object[] parameters ) throws SQLException {
     	int rows = 0;
     	PreparedStatement ps = null;
-    	Connection conn = null;
     	try {
-			conn = getConnection();
+			createConnection();
 			ps = conn.prepareStatement(sql);
 			populatePreparedStatement(parameters, ps);
 			rows = ps.executeUpdate();
 			conn.commit();
     	} catch (SQLException e) {
-    		if (conn != null) {
+			LOG.error(e);
+    		if (autocommit && conn != null) {
     			conn.rollback();
     		}
     		throw e;
     	} finally {
-    		if (ps != null) {
-    			ps.close();
-    		}
-    		closeConnection(conn);
+    		cleanup(ps, null);
     	}
 		return rows;
     }
@@ -136,6 +110,10 @@ public class DerbyDataStore {
 
     public int doDelete(String sql, Object[] parameters ) throws SQLException {
     	return doUpdate(sql, parameters);
+    }    
+
+    public int doDelete(String sql, int id) throws SQLException {
+    	return doUpdate(sql, new Object[]{new Integer(id)});
     }    
     
     /**
@@ -159,41 +137,50 @@ public class DerbyDataStore {
     public List doSelect(String sql, Object[] parameters ) throws SQLException {
     	List results = new ArrayList();
     	PreparedStatement ps = null;
-    	Connection conn = null;
     	ResultSet rs = null;
     	try {
-			conn = getConnection();
+			createConnection();
 			ps = conn.prepareStatement(sql);
 			populatePreparedStatement(parameters, ps);
 			rs = ps.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
 			int len = md.getColumnCount();
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Number of columns in ResultSet=" + len);
+			}
 			Map row = null;
+			int rows = 0;
 			while (rs.next()) {
+				rows++;
 				row = new HashMap();
 				//go through each column
 				for (int i = 0; i < len; i++) {
 					int colno = i + 1;
 					int type = md.getColumnType(colno);
 					String name = md.getColumnName(colno);
-					if (LOG.isDebugEnabled()) {
-//						LOG.debug("Col " + colno + " name=" + name + " type=" + type);
+					if (LOG.isTraceEnabled()) {
+						LOG.trace("Col " + colno + " name=" + name + " type=" + type);
 					}
 					if (type == Types.VARCHAR ||
-							type == Types.CHAR) {				
+							type == Types.CHAR) {
 //						LOG.debug("String col" + colno + " name=" + name + " type=" + type);
-						row.put(name, rs.getString(colno));
+						String val = rs.getString(colno);
+						row.put(name, val);
 					} else if (type == Types.INTEGER) {
 //						LOG.debug("Int col" + colno + " name=" + name + " type=" + type);
-						row.put(name, new Integer(rs.getInt(colno)));
+						Integer val = new Integer(rs.getInt(colno));
+						row.put(name, val);
 					} else if (type == Types.DECIMAL  ||
 							type == Types.DOUBLE ||				
 							type == Types.FLOAT ) {				
-						row.put(name, rs.getBigDecimal(colno));
+						BigDecimal val = rs.getBigDecimal(colno);
+						row.put(name, val);
 					} else if (type == Types.TIMESTAMP) {
-						row.put(name, rs.getTimestamp(colno));
+						Timestamp val = rs.getTimestamp(colno);
+						row.put(name, val);
 					} else {
-						row.put(name, rs.getObject(colno));
+						Object val = rs.getObject(colno);
+						row.put(name, val);
 					}
 				}
 				if (LOG.isDebugEnabled()) {
@@ -207,65 +194,88 @@ public class DerbyDataStore {
 				}				
 				results.add(row);
 			}
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("Rows in ResultSet=" + rows);
+			}
+			conn.commit();
+    	} catch (SQLException e) {
+    		LOG.error(e);
+    		if (autocommit && conn != null) {
+    			conn.rollback();
+    		}
+    		throw e;			
+    	} catch (Exception e) {
+    		LOG.error(e);
+    		if (autocommit && conn != null) {
+    			conn.rollback();
+    		}
+    		SQLException e1 = new SQLException();
+    		e1.initCause(e);//add underlying cause
+    		throw e1;			
     	} finally {
-    		if (ps != null) {
-    			ps.close();
-    		}
-    		if (rs != null) {
-    			rs.close();
-    		}
-    		if (conn != null) {
-    			conn.commit();
-    		}
-    		closeConnection(conn);
+    		cleanup(ps, rs);
     	}
 		return results;
     }
 
-    private int getGeneratedId() throws SQLException {
+    /**
+     * Gets the most recently generated primary key using the
+     * IDENTITY_VAL_LOCAL() function. 
+     * 
+     * @return
+     * @throws SQLException
+     */
+    public int getGeneratedId() throws SQLException {
     	int id = 0;
-    	String sql = "values IDENTITY_VAL_LOCAL()";
+    	String sql = "select IDENTITY_VAL_LOCAL() from portlet";
     	PreparedStatement ps = null;
-    	Connection conn = null;
     	ResultSet rs = null;
     	try {
-			conn = getConnection();
+			createConnection();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			rs.next();
 			ResultSetMetaData md = rs.getMetaData();
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Col count=" + md.getColumnCount());
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("Col count=" + md.getColumnCount());
 			}
 			int type = md.getColumnType(1);
 			String name = md.getColumnName(1);
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Col name=" + name + "; Col type=" + type);
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("Col name=" + name + "; Col type=" + type);
 			}
-//			if (LOG.isDebugEnabled()) {
-//				LOG.debug("id: " + rs.getObject(1));
-//			}
 			
 			id = rs.getInt(1);
-			
+			conn.commit();
+    	} catch (SQLException e) {
+    		LOG.error(e);
+    		if (autocommit && conn != null) {
+    			conn.rollback();
+    		}
+    		throw e;			
     	} finally {
-    		if (ps != null) {
-    			ps.close();
-    		}
-    		if (rs != null) {
-    			rs.close();
-    		}
-    		if (conn != null) {
-    			conn.commit();
-    		}
-    		closeConnection(conn);
+    		cleanup(ps, rs);    		
     	}
 
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Id retreived=" + id);
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Id retreived=" + id);
 		}    	
     	return new Long(id).intValue();
     }
+
+	/**
+	 * @param ps
+	 * @param rs
+	 * @throws SQLException
+	 */
+	private void cleanup(PreparedStatement ps, ResultSet rs) throws SQLException {
+		if (ps != null) {
+			ps.close();
+		}
+		if (rs != null) {
+			rs.close();
+		}
+	}
     	
     /**
 	 * 
@@ -278,151 +288,134 @@ public class DerbyDataStore {
 		//Loop through each value, determine it's corresponding SQL type,
 		//and stuff that value into the prepared statement.
 		Object value = null;
-		for (int i = 0; i < parameters.length; i++) {
-			
+		int len = parameters.length;
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Parameter count: " + parameters.length);
+		}
+		int colno = 0;
+		for (int i = 0; i < len; i++) {
+			colno = i + 1;
 			value = parameters[i];
-			//FIXME: Need to handle null values
+//			if (LOG.isTraceEnabled()) {
+//				LOG.trace("Parameter value=" + value);
+//			}
 			if (value instanceof String) {
-				
-				ps.setString(i + 1, (String) value);
-				
+				if (LOG.isTraceEnabled()) {
+					LOG.trace("String Parameter [" + i + "]  value=" + value);
+				}
+				if(value == null) {
+					ps.setNull(colno, Types.VARCHAR);
+				} else {
+					ps.setString(i + 1, (String) value);					
+				}				
 			} else if (value instanceof Integer){
-				int val = ((Integer)value).intValue();
-				ps.setInt(i + 1, val);
+				if (LOG.isTraceEnabled()) {
+					LOG.trace("Integer Parameter [" + i + "]  value=" + value);
+				}
+				if(value == null) {
+					ps.setNull(colno, Types.INTEGER);
+				} else {
+					int val = ((Integer)value).intValue();
+					ps.setInt(colno, val);
+				}
 			} else if (value instanceof Timestamp){
-				ps.setTimestamp(i + 1, (Timestamp)value);
+				if (LOG.isTraceEnabled()) {
+					LOG.trace("Timestamp Parameter [" + i + "]  value=" + value);
+				}
+				if(value == null) {
+					ps.setNull(colno, Types.TIMESTAMP);
+				} else {
+					ps.setTimestamp(colno, (Timestamp)value);
+				}
 			} else {
-				ps.setObject(i + 1, value);
+				if (LOG.isTraceEnabled()) {
+					LOG.trace("Object Parameter [" + i + "]  value=" + value);
+				}
+				if(value == null) {
+					ps.setNull(colno, Types.JAVA_OBJECT);
+				} else {
+					ps.setObject(colno, value);
+				}
 			}
 		}
 	}
-
-/*	
-    private void go(String[] args)
-    {
-
-        Connection conn = null;
-
-        try
-        {
-
-            conn = getConnection();
-
-            Statement s = conn.createStatement();
-
-            s.execute("create table derbyDB(num int, addr varchar(40))");
-            System.out.println("Created table derbyDB");
-            s.execute("insert into derbyDB values (1956,'Webster St.')");
-            System.out.println("Inserted 1956 Webster");
-            s.execute("insert into derbyDB values (1910,'Union St.')");
-            System.out.println("Inserted 1910 Union");
-            s.execute(
-                "update derbyDB set num=180, addr='Grand Ave.' where num=1956");
-            System.out.println("Updated 1956 Webster to 180 Grand");
-
-            s.execute(
-                "update derbyDB set num=300, addr='Lakeshore Ave.' where num=180");
-            System.out.println("Updated 180 Grand to 300 Lakeshore");
-
-            ResultSet rs = s.executeQuery(
-                    "SELECT num, addr FROM derbyDB ORDER BY num");
-
-
-            if (!rs.next())
-            {
-                throw new Exception("Wrong number of rows");
-            }
-
-
-            rs.close();
-            s.close();
-            System.out.println("Closed result set and statement");
-
-			conn.commit();
-
-        }
-        catch (Throwable e)
-        {
-            System.out.println("exception thrown:");
-
-            if (e instanceof SQLException)
-            {
-                printSQLError((SQLException) e);
-            }
-            else
-            {
-                e.printStackTrace();
-            }
-        } finally {
-         try {
-			 conn.close();
-			 System.out.println("Committed transaction and closed connection");
-
-			 shutdown();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        	
-        }
-
-        System.out.println("SimpleApp finished");
-    }
-*/
 
 	/**
 	 * @param props
 	 * @return
 	 * @throws SQLException
 	 */
-	private Connection getConnection() throws SQLException {
-		Connection conn;
-        /*
-        The driver is installed by loading its class.
-        In an embedded environment, this will start up Derby, since it is not already running.
-      */
-		try {
-			Class.forName(DRIVER).newInstance();
-		} catch (InstantiationException e) {
-			SQLException se = new SQLException();
-			se.initCause(e);
-			throw se;
-		} catch (IllegalAccessException e) {
-			SQLException se = new SQLException();
-			se.initCause(e);
-			throw se;
-		} catch (ClassNotFoundException e) {
-			SQLException se = new SQLException();
-			se.initCause(e);
-			throw se;
+	private void createConnection() throws SQLException {
+		if (conn == null) {
+	        /*
+	        The driver is installed by loading its class.
+	        In an embedded environment, this will start up Derby, since it is not already running.
+	      */
+			try {
+				Class.forName(DRIVER).newInstance();
+			} catch (InstantiationException e) {
+				LOG.error(e);
+				SQLException se = new SQLException();
+				se.initCause(e);
+				throw se;
+			} catch (IllegalAccessException e) {
+				LOG.error(e);
+				SQLException se = new SQLException();
+				se.initCause(e);
+				throw se;
+			} catch (ClassNotFoundException e) {
+				LOG.error(e);
+				SQLException se = new SQLException();
+				se.initCause(e);
+				throw se;
+			}
+			
+	        Properties props = new Properties();
+	        props.put("user", DB_USER);
+	        props.put("password", DB_PWD);
+			/*
+			   The connection specifies create=true to cause
+			   the database to be created. To remove the database,
+			   remove the directory derbyDB and its contents.
+			   The directory derbyDB will be created under
+			   the directory that the system property
+			   derby.system.home points to, or the current
+			   directory if derby.system.home is not set.
+			 */
+			conn = DriverManager.getConnection(PROTOCOL, props);
+	
 		}
-		
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Loaded the appropriate driver");			
-		}
-		
-        Properties props = new Properties();
-        props.put("user", DB_USER);
-        props.put("password", DB_PWD);
-		/*
-		   The connection specifies create=true to cause
-		   the database to be created. To remove the database,
-		   remove the directory derbyDB and its contents.
-		   The directory derbyDB will be created under
-		   the directory that the system property
-		   derby.system.home points to, or the current
-		   directory if derby.system.home is not set.
-		 */
-		conn = DriverManager.getConnection(PROTOCOL, props);
-
-		if (LOG.isDebugEnabled()) {
-		    LOG.debug("Connected to database PlutoDB");
-		}
-		conn.setAutoCommit(false);
-		return conn;
+		conn.setAutoCommit(autocommit);
+		return ;
 	}
 
-	private void closeConnection(Connection conn) {
+	public void commit(){
+		if (conn != null) {
+			try {
+				conn.commit();
+			} catch (SQLException e) {
+				LOG.warn("Database connection could not be committed.", e);
+			}
+			if (autocommit) {
+				closeConnection();
+			}
+		}
+	}
+
+	public void rollback(){
+		if (conn != null) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				LOG.warn("Database connection could not be rollbacked.", e);
+			}
+			if (autocommit) {
+				closeConnection();
+			}
+		}
+	}
+	
+	public void closeConnection() {
 
 		if (conn != null) {
 			try {
@@ -433,6 +426,7 @@ public class DerbyDataStore {
 			shutdown();
 		}
 	}
+	
 	/**
 		   In embedded mode, an application should shut down Derby.
 		   If the application fails to shut down Derby explicitly,
@@ -459,21 +453,5 @@ public class DerbyDataStore {
 		    {
 		        LOG.warn("Database did not shut down normally");
 		    }
-		    else
-		    {
-		    	if (LOG.isDebugEnabled()) {
-			        LOG.debug("Database shut down normally");		    		
-		    	}
-		    }
 	}
-
-    static void printSQLError(SQLException e)
-    {
-        while (e != null)
-        {
-            System.out.println(e.toString());
-            e = e.getNextException();
-        }
-    }
-
 }
