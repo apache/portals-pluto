@@ -41,14 +41,13 @@ public class DBPortletPreferencesService
 
     private static final Log LOG =
         LogFactory.getLog(DBPortletPreferencesService.class);
+
+    private DataSourceManager dataSourceManager;
     
     public DBPortletPreferencesService() {
     	
     }
     
-/*    
-    private DataSourceManager dataSourceManager;
-
     public DBPortletPreferencesService(DataSourceManager dataSourceManager)
     throws InstantiationException {
         this.dataSourceManager = dataSourceManager;
@@ -60,14 +59,11 @@ public class DBPortletPreferencesService
                 String msg =
                    "Unable to startup portlet preferences service due to dataSourceManager error."+
                    pce.getMessage();
-                if(LOG.isErrorEnabled()) {
-                    LOG.error(msg, pce);
-                }
+                LOG.error(msg, pce);
                 throw new InstantiationException(msg);
             }
         }
     }
-*/
     
     public PortletPreference[] getStoredPreferences(PortletWindow window,
                                                     PortletRequest req)
