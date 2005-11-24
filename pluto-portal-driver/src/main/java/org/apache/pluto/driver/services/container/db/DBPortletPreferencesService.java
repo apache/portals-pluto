@@ -23,7 +23,7 @@ import javax.portlet.PortletRequest;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.derby.DerbyPlutoContainerDAO;
+//import org.apache.pluto.derby.DerbyPlutoContainerDAO;
 import org.apache.pluto.services.optional.PortletPreferencesService;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -69,9 +69,8 @@ public class DBPortletPreferencesService
                                                     PortletRequest req)
     throws PortletContainerException {
     	PortletPreference[] prefs = null;
-        try {
-//            Connection conn = getConnection();
-//            conn.close();
+//        try {
+
         	if (window == null) {
         		throw new PortletContainerException("Null PortletWindow");
         	}
@@ -86,15 +85,16 @@ public class DBPortletPreferencesService
         				"' at context '" + context +
         				"' for portlet '" + portlet + "'");
         	}
-        	prefs = DerbyPlutoContainerDAO.getStoredPreferences(
-        				context, 
-        				portlet, 
-        				user);
-        }
-        catch(SQLException e) {
-        	LOG.error(e);
-            throw new PortletContainerException(e);
-        }
+        	
+//        	prefs = DerbyPlutoContainerDAO.getStoredPreferences(
+//        				context, 
+//        				portlet, 
+//        				user);        				
+//        }
+//        catch(SQLException e) {
+//        	LOG.error(e);
+//            throw new PortletContainerException(e);
+//        }
         return prefs;
     }
 
@@ -102,10 +102,9 @@ public class DBPortletPreferencesService
                       PortletRequest request,
                       PortletPreference[] preferences)
         throws PortletContainerException {
-        try {
-//            Connection conn = getConnection();
-//            conn.close();
-        	if (window == null) {
+//        try {
+
+    	if (window == null) {
         		throw new PortletContainerException("Null PortletWindow");
         	}
         	if (preferences == null) {
@@ -125,16 +124,16 @@ public class DBPortletPreferencesService
         				"' at context '" + context +
         				"' for portlet '" + portlet + "'");
         	}
-        	DerbyPlutoContainerDAO.storePreferences(
-        			context, 
-        			portlet, 
-        			preferences, 
-        			user);
-        }
-        catch(SQLException e) {
-        	LOG.error(e);
-            throw new PortletContainerException(e);
-        }
+//        	DerbyPlutoContainerDAO.storePreferences(
+//        			context, 
+//        			portlet, 
+//        			preferences, 
+//        			user);
+//        }
+//        catch(SQLException e) {
+//        	LOG.error(e);
+//            throw new PortletContainerException(e);
+//        }
     }
 
 //    private Connection getConnection() throws SQLException {
