@@ -22,6 +22,7 @@ import org.apache.pluto.driver.services.impl.resource.ResourceConfig;
 import org.apache.pluto.driver.services.impl.resource.ResourceConfigReader;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.optional.db.support.DataSourceManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

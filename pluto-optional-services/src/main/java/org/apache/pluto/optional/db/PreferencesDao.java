@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.container.db;
+package org.apache.pluto.optional.db;
 
 import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.driver.services.impl.db.AbstractPreparedDao;
-import org.apache.pluto.driver.services.container.memory.PortletPreferenceImpl;
+import org.apache.pluto.core.impl.PortletPreferenceImpl;
+import org.apache.pluto.optional.db.support.AbstractPreparedDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -148,7 +148,7 @@ class PreferencesDao extends AbstractPreparedDao {
         String name  = rs.getString("preference_name");
         String value = rs.getString("preference_value");
         boolean readOnly = rs.getString("read_only").equals("Y");
-        return new PortletPreferenceImpl(name, value, readOnly);
+        return new PortletPreferenceImpl(name, new String[] { value }, readOnly);
     }
 
 }

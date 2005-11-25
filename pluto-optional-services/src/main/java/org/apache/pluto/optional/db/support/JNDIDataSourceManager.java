@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.impl.db;
+package org.apache.pluto.optional.db.support;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.driver.services.impl.db.DataSourceManager;
+import org.apache.pluto.optional.db.support.DataSourceManager;
 
 import javax.sql.DataSource;
 import javax.naming.Context;

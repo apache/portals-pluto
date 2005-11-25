@@ -54,13 +54,13 @@
 
     <!-- Uncomment for Embedded Derby Service Implementations -->
     <bean id="PortletPreferencesService"
-          class="org.apache.pluto.driver.services.container.db.DBPortletPreferencesService"
+          class="org.apache.pluto.optional.db.DBPortletPreferencesService"
           singleton="true">
         <constructor-arg><ref bean="DataSourceManager"/></constructor-arg>
     </bean>
 
     <bean id="DataSourceManager"
-          class="org.apache.pluto.driver.services.impl.db.EmbeddedDataSourceManager"
+          class="org.apache.pluto.optional.db.support.EmbeddedDataSourceManager"
           singleton="true">
    </bean>
 
@@ -71,7 +71,7 @@
     -->
     <!--
     <bean name="DataSourceManager"
-          class="org.apache.pluto.driver.services.impl.db.JNDIDataSourceManager"
+          class="org.apache.pluto.optional.db.support.JNDIDataSourceManager"
           singleton="true">
         <constructor-arg><value>plutoDB</value></constructor-arg>
     </bean>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.container.db;
+package org.apache.pluto.optional.db;
 
 //import java.sql.Connection;
 import org.apache.commons.logging.Log;
@@ -21,7 +21,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.driver.services.impl.db.DataSourceManager;
+import org.apache.pluto.optional.db.support.DataSourceManager;
 import org.apache.pluto.services.optional.PortletPreferencesService;
 
 import javax.portlet.PortletRequest;

@@ -1,4 +1,4 @@
-package org.apache.pluto.driver.services.impl.db;
+package org.apache.pluto.optional.db.support;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.optional.db.support.AbstractDao;
 
 import javax.sql.DataSource;
 

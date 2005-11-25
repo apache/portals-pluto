@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.container.db;
+package org.apache.pluto.optional.db;
 
 import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.driver.services.container.memory.PortletPreferenceImpl;
+import org.apache.pluto.core.impl.PortletPreferenceImpl;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -51,12 +51,16 @@ class PortletPreferenceContainer {
 
     public void add(String name, String value) {
         if(!preferences.containsKey(name)) {
-            preferences.put(name, new ArrayList());
+            preferences.put(name, new String[] { name });
         }
-
-        List list = (List)preferences.get(name);
-        list.add(value);
-    }
+        else {
+            String[] values = (String[])preferences.get(name);
+            String[] nw = new String[values.length+1];
+            System.arraycopy(values, 0, nw, 0, values.length);
+            nw[values.length] = value;
+            preferences.put(name, nw);
+        }
+   }
 
     public PortletPreference[] createPreferences() {
         PortletPreference[] prefs = new PortletPreference[preferences.size()];
@@ -67,7 +71,7 @@ class PortletPreferenceContainer {
             Map.Entry entry = (Map.Entry)it.next();
             prefs[i++] = new PortletPreferenceImpl(
                 entry.getKey().toString(),
-                (List)entry.getValue()
+                (String[])entry.getValue()
             );
         }
         return prefs;

@@ -38,6 +38,12 @@ public class PortletPreferenceImpl implements PortletPreference {
         this.values = values;
     }
 
+    public PortletPreferenceImpl(String name, String[] values, boolean readOnly) {
+        this.name = name;
+        this.values = values;
+        this.readOnly = readOnly;
+    }
+
     public String getName() {
         return name;
     }

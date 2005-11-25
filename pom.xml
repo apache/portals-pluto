@@ -194,6 +194,7 @@
 	<module>pluto-ant-tasks</module>
 	<!-- ==== Misc ==== -->
     <module>pluto-site</module>
+    <module>pluto-optional-services</module>
   </modules>
   
   <distributionManagement>

@@ -17,6 +17,7 @@ package org.apache.pluto.driver.services.impl.db;
 
 import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.optional.db.support.AbstractDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

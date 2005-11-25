@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.impl.db;
+package org.apache.pluto.optional.db.support;
 
 import org.apache.pluto.PortletContainerException;
 

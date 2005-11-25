@@ -4,9 +4,9 @@
   
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.pluto</groupId>
-  <artifactId>pluto-portal-driver</artifactId>
+  <artifactId>pluto-optional-services</artifactId>
   <packaging>jar</packaging>
-  <name>Pluto Portal Driver</name>
+  <name>Pluto Portal Optional Services</name>
   <url>http://portals.apache.org/pluto</url>
   <parent>
     <groupId>org.apache.pluto</groupId>
@@ -21,19 +21,24 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto-optional-services</artifactId>
-      <version>${pom.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
 	<dependency>
 		<groupId>org.apache.derby</groupId>
 		<artifactId>derby</artifactId>
 		<version>10.1.1.0</version>
 		<scope>compile</scope>
 	</dependency>
+    <dependency>
+      <groupId>javax.portlet</groupId>
+      <artifactId>portlet-api</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
       <groupId>commons-logging</groupId>
@@ -47,49 +52,12 @@
       <version>1.0.4</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>commons-digester</groupId>
-      <artifactId>commons-digester</artifactId>
-      <version>1.7</version>
-      <scope>compile</scope>
-    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-api</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.3</version>
-      <scope>provided</scope>
-    </dependency>
-    <!-- We should use groupId 'javax.servlet' here, but there seems to have
-         some bugs in the jstl 1.1.2 artifact from the javax.servlet group. -->
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.1.2</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>standard</artifactId>
-      <version>1.0.4</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>spring</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>1.0.2</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
   <build>
@@ -108,6 +76,5 @@
         </configuration>
       </plugin>
     </plugins>
-
   </build>
 </project>

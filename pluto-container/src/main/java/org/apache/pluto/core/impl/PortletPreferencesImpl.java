@@ -203,9 +203,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
             );
         }
 
-        PortletPreference pref = (PortletPreference)preferences.get(key);
 
-
+        preferences.clear();
         for(int i=0;i<defaultPreferences.length;i++) {
            if(key.equals(defaultPreferences[i].getName())) {
                preferences.put(key, defaultPreferences[i]);
