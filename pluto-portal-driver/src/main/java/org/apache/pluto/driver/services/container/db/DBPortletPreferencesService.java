@@ -16,17 +16,16 @@
 package org.apache.pluto.driver.services.container.db;
 
 //import java.sql.Connection;
-import java.sql.SQLException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.core.PortletPreference;
+import org.apache.pluto.driver.services.impl.db.DataSourceManager;
+import org.apache.pluto.services.optional.PortletPreferencesService;
 
 import javax.portlet.PortletRequest;
-
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.core.PortletPreference;
-//import org.apache.pluto.derby.DerbyPlutoContainerDAO;
-import org.apache.pluto.services.optional.PortletPreferencesService;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
+import java.sql.SQLException;
 
 /**
  * The Portal Driver's PortletPreferencesService implementation. This
@@ -43,11 +42,13 @@ public class DBPortletPreferencesService
         LogFactory.getLog(DBPortletPreferencesService.class);
 
     private DataSourceManager dataSourceManager;
-    
+
     public DBPortletPreferencesService() {
-    	
+
     }
-    
+
+    private PreferencesDao dao;
+
     public DBPortletPreferencesService(DataSourceManager dataSourceManager)
     throws InstantiationException {
         this.dataSourceManager = dataSourceManager;
@@ -63,38 +64,39 @@ public class DBPortletPreferencesService
                 throw new InstantiationException(msg);
             }
         }
+        dao = new PreferencesDao(dataSourceManager.getPortalDataSource());
     }
-    
+
     public PortletPreference[] getStoredPreferences(PortletWindow window,
                                                     PortletRequest req)
     throws PortletContainerException {
     	PortletPreference[] prefs = null;
-//        try {
+        try {
 
         	if (window == null) {
         		throw new PortletContainerException("Null PortletWindow");
         	}
-        	String user = req.getRemoteUser();
+
+            String user = req.getRemoteUser();
         	if (user == null) {
         		user = "ANONYMOUS";
         	}
-        	String context = window.getContextPath();
+
+            String context = window.getContextPath();
         	String portlet = window.getPortletName();
-        	if (LOG.isDebugEnabled()) {
+
+            if (LOG.isDebugEnabled()) {
         		LOG.debug("Retrieving preferences for user '" + user +
         				"' at context '" + context +
         				"' for portlet '" + portlet + "'");
         	}
-        	
-//        	prefs = DerbyPlutoContainerDAO.getStoredPreferences(
-//        				context, 
-//        				portlet, 
-//        				user);        				
-//        }
-//        catch(SQLException e) {
-//        	LOG.error(e);
-//            throw new PortletContainerException(e);
-//        }
+            prefs = dao.getPreferences(context, portlet, user);
+        }
+        catch(SQLException e) {
+        	LOG.error(e);
+            throw new PortletContainerException(e);
+        }
+
         return prefs;
     }
 
@@ -102,9 +104,9 @@ public class DBPortletPreferencesService
                       PortletRequest request,
                       PortletPreference[] preferences)
         throws PortletContainerException {
-//        try {
+        try {
+        	if (window == null) {
 
-    	if (window == null) {
         		throw new PortletContainerException("Null PortletWindow");
         	}
         	if (preferences == null) {
@@ -124,21 +126,12 @@ public class DBPortletPreferencesService
         				"' at context '" + context +
         				"' for portlet '" + portlet + "'");
         	}
-//        	DerbyPlutoContainerDAO.storePreferences(
-//        			context, 
-//        			portlet, 
-//        			preferences, 
-//        			user);
-//        }
-//        catch(SQLException e) {
-//        	LOG.error(e);
-//            throw new PortletContainerException(e);
-//        }
+            dao.storePreferences(context, portlet, user, preferences);
+       }
+        catch(SQLException e) {
+        	LOG.error(e);
+            throw new PortletContainerException(e);
+        }
     }
-
-//    private Connection getConnection() throws SQLException {
-//        return dataSourceManager.getPortalDataSource().getConnection();
-//    }
-
 }
 

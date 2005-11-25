@@ -19,11 +19,7 @@
 
 package org.apache.pluto.core.impl;
 
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PreferencesValidator;
@@ -33,6 +29,7 @@ import javax.portlet.ValidatorException;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.util.StringManager;
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.PortletPreference;
@@ -43,7 +40,12 @@ import org.apache.commons.logging.Log;
 
 
 public class PortletPreferencesImpl implements PortletPreferences {
-    private static final Log LOG = LogFactory.getLog(PortletPreferencesImpl.class);
+
+    private static final Log LOG =
+        LogFactory.getLog(PortletPreferencesImpl.class);
+
+    private static final StringManager EXCEPTIONS =
+        StringManager.getManager(PortletPreferencesImpl.class.getPackage().getName());
 
     private PortletPreferencesService factory;
 
@@ -51,8 +53,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
     private InternalPortletRequest request;
 
+    private PortletPreference[] defaultPreferences;
     private Map preferences;
-
 
     // current method used for managing these preferences
     private Integer methodId = null;
@@ -63,7 +65,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
                                   InternalPortletRequest request,
                                   Integer methodId) {
         this.factory =
-        container.getOptionalContainerServices().getPortletPreferencesService();
+            container.getOptionalContainerServices().getPortletPreferencesService();
+
         this.window = window;
         this.request = request;
         this.methodId = methodId;
@@ -71,41 +74,49 @@ public class PortletPreferencesImpl implements PortletPreferences {
         this.preferences = new java.util.HashMap();
 
         PortletEntity entity = window.getPortletEntity();
-        PortletPreference[] prefs = entity.getDefaultPreferences();
+        defaultPreferences = entity.getDefaultPreferences();
 
-        for (int i = 0; i < prefs.length; i++) {
-            preferences.put(prefs[i].getName(), prefs[i]);
+        for (int i = 0; i < defaultPreferences.length; i++) {
+            preferences.put(defaultPreferences[i].getName(), defaultPreferences[i]);
         }
 
         PortletPreferencesService factory = container
                 .getOptionalContainerServices()
                 .getPortletPreferencesService();
 
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("PreferencesService: "+factory.getClass().getName());
+        }
+
         try {
-            prefs = factory.getStoredPreferences(window, request);
+            PortletPreference[] prefs =
+                factory.getStoredPreferences(window, request);
+
+            for (int i = 0; i < prefs.length; i++) {
+                preferences.put(prefs[i].getName(), prefs[i]);
+            }
         }
         catch(PortletContainerException pe) {
             LOG.error("Error retrieving preferences.", pe);
         }
-
-        for (int i = 0; i < prefs.length; i++) {
-            preferences.put(prefs[i].getName(), prefs[i]);
-        }
-
     }
 
     public boolean isReadOnly(String key) {
         if (key == null) {
-            throw new IllegalArgumentException("key == null");
+            throw new IllegalArgumentException(
+                EXCEPTIONS.getString("error.null", "Preference key ")
+            );
         }
 
         PortletPreference pref = (PortletPreference) preferences.get(key);
-        return pref == null || pref.isReadOnly();
+        return pref != null && pref.isReadOnly();
     }
 
     public String getValue(String key, String def) {
         if (key == null) {
-            throw new IllegalArgumentException("key == null");
+            throw new IllegalArgumentException(
+                EXCEPTIONS.getString("error.null", "Preference key ")
+            );
         }
 
         String[] value;
@@ -121,7 +132,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
     public String[] getValues(String key, String[] def) {
         if (key == null) {
-            throw new IllegalArgumentException("key == null");
+            throw new IllegalArgumentException(
+                EXCEPTIONS.getString("error.null", "Preference key ")
+            );
         }
 
         String[] values;
@@ -136,16 +149,16 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
 
     public void setValue(String key, String value) throws ReadOnlyException {
-        if (key == null) {
-            throw new IllegalArgumentException("key == null");
+        if(isReadOnly(key)) {
+            throw new ReadOnlyException(EXCEPTIONS.getString("error.preference.readonly", key));
         }
+
 
         PortletPreference pref = (PortletPreference) preferences.get(key);
 
-        if (pref != null && pref.isReadOnly()) {
-            throw new ReadOnlyException("Preference [" + key + "] is read only");
-        } else if (pref != null) {
+         if (pref != null) {
             pref.setValues(new String[]{value});
+
         } else {
             pref = new PortletPreferenceImpl(key, new String[]{value});
             preferences.put(key, pref);
@@ -154,15 +167,14 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
     public void setValues(String key, String[] values)
         throws ReadOnlyException {
-        if (key == null) {
-            throw new IllegalArgumentException("key == null");
+
+        if(isReadOnly(key)) {
+            throw new ReadOnlyException(EXCEPTIONS.getString("error.preference.readonly"));
         }
 
         PortletPreference pref = (PortletPreference) preferences.get(key);
 
-        if (pref != null && pref.isReadOnly()) {
-            throw new ReadOnlyException("Preference [" + key + "] is read only");
-        } else if (pref != null) {
+        if (pref != null) {
             pref.setValues(values);
         } else {
             pref = new PortletPreferenceImpl(key, values);
@@ -175,7 +187,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
 
     public Map getMap() {
-        Map map = new java.util.HashMap();
+        Map map = new HashMap();
         Iterator it = preferences.keySet().iterator();
         while (it.hasNext()) {
             PortletPreference pref = (PortletPreference)preferences.get(it.next());
@@ -185,31 +197,26 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
 
     public void reset(String key) throws ReadOnlyException {
-        if (key == null) {
-            throw new IllegalArgumentException("key == null");
-        }
-
-        PortletPreference pref = (PortletPreference) preferences.get(key);
-        if (pref.isReadOnly()) {
+        if(isReadOnly(key)) {
             throw new ReadOnlyException(
-                "preference attribute called " + key + " may not be modified");
+                EXCEPTIONS.getString("error.preference.readonly", "Preference key ")
+            );
         }
 
-        // I think we should remove all preferences which are stored --
-        // NOT reset them to how they were stored before!
-        /*
-        PortletPreference[] preferences = factory.getStoredPreferences(window, request);
-        for(int i=0;i<preferences.length;i++) {
-            preferences.put(preference.getName(), preference);
-        }
-         */
+        PortletPreference pref = (PortletPreference)preferences.get(key);
 
+
+        for(int i=0;i<defaultPreferences.length;i++) {
+           if(key.equals(defaultPreferences[i].getName())) {
+               preferences.put(key, defaultPreferences[i]);
+           }
+        }
     }
 
     public void store() throws java.io.IOException, ValidatorException {
         // not allowed when not called in action
         if (!Constants.METHOD_ACTION.equals(methodId)) {
-            throw new java.lang.IllegalStateException(
+            throw new IllegalStateException(
                 "store is only allowed inside a processAction call");
         }
 
@@ -236,8 +243,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
 
         PortletPreference[] pref =
-            (PortletPreference[]) preferences.values().toArray(
-                new PortletPreference[preferences.size()]);
+            (PortletPreference[]) new ArrayList(preferences.values()).toArray(
+                new PortletPreference[preferences.size()]
+            );
 
         try {
             factory.store(window, request, pref);
@@ -246,7 +254,5 @@ public class PortletPreferencesImpl implements PortletPreferences {
             LOG.error("Error storing preferences.", pe);
         }
     }
-    // --------------------------------------------------------------------------------------------
-
 
 }

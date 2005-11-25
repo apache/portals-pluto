@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.container.db;
+package org.apache.pluto.driver.services.impl.db;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
 import org.apache.pluto.PortletContainerException;
@@ -21,10 +21,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -53,7 +50,7 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
 
     public EmbeddedDataSourceManager() {
         connectionString =
-            "databaseName=PLUTO_PORTAL_DRIVER;name=pluto;password=apachep0rtals;create=true";
+            "databaseName=PLUTO_PORTAL_DRIVER;name=pluto_portal_driver;password=apachep0rtals;create=true";
 
         System.setProperty(
             "derby.system.home",
@@ -67,11 +64,13 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     }
 
     public void startup() throws PortletContainerException {
-        embeddedDataSource = new EmbeddedDataSource();
-        embeddedDataSource.setConnectionAttributes(connectionString);
-        embeddedDataSource.setDatabaseName("PLUTO_PORTAL_DRIVER");
-        embeddedDataSource.setCreateDatabase("true");
-        initDatabase();
+        if(embeddedDataSource == null) {
+            embeddedDataSource = new EmbeddedDataSource();
+            embeddedDataSource.setConnectionAttributes(connectionString);
+            embeddedDataSource.setDatabaseName("PLUTO_PORTAL_DRIVER");
+            embeddedDataSource.setCreateDatabase("true");
+            initDatabase();
+        }
     }
 
     public void shutdown() throws PortletContainerException {
@@ -113,7 +112,7 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
                 while(it.hasNext()) {
                     String sql = it.next().toString();
                     if(sql.trim().length() > 0) {
-                       results += stmt.executeUpdate(sql);
+                       results = stmt.executeUpdate(sql);
                     }
                 }
                 conn.commit();
@@ -156,10 +155,16 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
                 cleanup(conn, stmt, null);
             }
         }
-            // 1) Read in the PORTABLE CREATE SQL Script
-            // 2) Execute the CREATE Script via JDBC
-            // 3) Retrieve default data
-            // 4) Insert default data via JDBC
+
+        if(LOG.isDebugEnabled()) {
+            try {
+                displaySchema();
+            }
+            catch(SQLException sql) {
+                LOG.error("Error debugging schema: ", sql);
+            }
+        }
+
     }
 
     /**
@@ -246,6 +251,46 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
             try { conn.close(); } catch(SQLException sql) {
                 LOG.error("Unable to close result set.", sql);
             }
+    }
+
+    private void displaySchema() throws SQLException {
+
+        Connection conn = null;
+        ResultSet  rs   = null;
+
+        ArrayList tbls = new ArrayList();
+
+        try {
+            conn = embeddedDataSource.getConnection();
+            DatabaseMetaData data = conn.getMetaData();
+
+            rs = data.getSchemas();
+            while(rs.next()) {
+                String schema = rs.getString("TABLE_SCHEM");
+                if(schema.startsWith("SYS")) {
+                    continue;
+                }
+                ResultSet tables = data.getTables(null, rs.getString(1), "%", null);
+                while(tables.next()) {
+                    tbls.add(schema + " --> " + tables.getString("TABLE_NAME"));
+                }
+                tables.close();
+            }
+            rs.close();
+        }
+        finally {
+            cleanup(conn, null, rs);
+
+            //Do this here so we spit out what we can. . .
+            Iterator it = tbls.iterator();
+            StringBuffer sb = new StringBuffer("Started up database with table structure: \n ");
+            sb.append("---------------------------------------------------------------\n");
+            while(it.hasNext()) {
+                sb.append("   - "+it.next()+"\n");
+            }
+            sb.append("---------------------------------------------------------------\n");
+            LOG.debug(sb.toString());
+        }
     }
 
 

@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalEnvironment;
 import org.apache.pluto.driver.core.PortalServletRequest;

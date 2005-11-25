@@ -56,8 +56,8 @@ public class PortalStartupListener implements ServletContextListener {
      * Receive the startup notification and subsequently start up the portal
      * driver. The following are done in this order:
      * <ol>
-     *   <li>Retrieve the Configuration File</li>
-     *   <li>Parse the Configuration File into Configuration Objects</li>
+     *   <li>Retrieve the ResourceConfig File</li>
+     *   <li>Parse the ResourceConfig File into ResourceConfig Objects</li>
      *   <li>Create a Portal Context</li>
      *   <li>Create the ContainerServices implementation</li>
      *   <li>Create the Portlet Container</li>
@@ -103,9 +103,18 @@ public class PortalStartupListener implements ServletContextListener {
             }
             PortletContainerFactory factory =
                     PortletContainerFactory.getInstance();
+
             PortletContainer container = factory.createContainer(
                     config.getContainerName(),
                     containerServices);
+
+            /*
+              Support Optional!  Not yet!
+            PortletContainer container = factory.createContainer(
+                    config.getContainerName(),
+                    containerServices,
+                    containerServices);
+            */
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug(" * Initializing portlet container...");

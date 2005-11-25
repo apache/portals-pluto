@@ -15,9 +15,12 @@
  */
 package org.apache.pluto.driver.config.impl;
 
-import org.apache.pluto.driver.services.impl.resource.PortletApplicationConfig;
-import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
-import org.apache.pluto.driver.services.impl.resource.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletRegistryService;
+import org.apache.pluto.driver.services.portal.PropertyConfigService;
+import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.services.optional.PortletPreferencesService;
@@ -26,7 +29,7 @@ import javax.servlet.ServletContext;
 import java.util.Collection;
 
 /**
- * Encapsulation of the Pluto Driver Configuration.
+ * Encapsulation of the Pluto Driver ResourceConfig.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0

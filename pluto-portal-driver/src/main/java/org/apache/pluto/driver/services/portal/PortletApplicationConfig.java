@@ -13,46 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.impl.resource;
+package org.apache.pluto.driver.services.portal;
+
+import java.util.Collection;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
-public class PortletWindowConfig {
+public class PortletApplicationConfig {
+    private static final Log LOG =
+        LogFactory.getLog(PortletApplicationConfig.class);
 
     private String contextPath;
-    private String portletName;
+    private Map portlets;
 
-    public PortletWindowConfig() {
-    }
-
-    public String getId() {
-        return createPortletId(contextPath, portletName);
+    public PortletApplicationConfig() {
+        portlets = new java.util.HashMap();
     }
 
     public String getContextPath() {
         return contextPath;
     }
 
-    /**
-     * Should only be set by the application upon being added.
-     * @param contextPath
-     */
-    void setContextPath(String contextPath) {
+    public void setContextPath(String contextPath) {
         this.contextPath = contextPath;
     }
 
-    public String getPortletName() {
-        return portletName;
+    public Collection getPortlets() {
+        return portlets.values();
     }
 
-    public void setPortletName(String portletName) {
-        this.portletName = portletName;
+    public PortletWindowConfig getPortlet(String portletName) {
+        return (PortletWindowConfig) portlets.get(portletName);
     }
 
-    public static String createPortletId(String contextPath,
-                                         String portletName) {
-        return contextPath + "." + portletName;
+    public void addPortlet(PortletWindowConfig portlet) {
+        portlet.setContextPath(getContextPath());
+        portlets.put(portlet.getPortletName(), portlet);
     }
 
 }

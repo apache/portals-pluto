@@ -26,6 +26,9 @@ import org.apache.pluto.services.optional.PortletPreferencesService;
 import org.apache.pluto.services.optional.PortletEnvironmentService;
 import org.apache.pluto.services.optional.PortletInvokerService;
 
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Default Optional Services implementation.
  *
@@ -44,6 +47,12 @@ public class DefaultOptionalServices implements OptionalPortletContainerServices
         this.preferenceService = new PortletPreferencesServiceImpl();
     }
 
+    public DefaultOptionalServices(OptionalPortletContainerServices rootServices) {
+        this();
+        if(rootServices.getPortletPreferencesService() != null)
+            this.preferenceService = rootServices.getPortletPreferencesService();
+    }
+
 
     public PortletPreferencesService getPortletPreferencesService() {
         return preferenceService;
@@ -51,18 +60,42 @@ public class DefaultOptionalServices implements OptionalPortletContainerServices
 
     public class PortletPreferencesServiceImpl
         implements PortletPreferencesService {
+    private Map storage;
 
-        public PortletPreference[] getStoredPreferences(PortletWindow window,
-                                                        PortletRequest req)
-        throws PortletContainerException {
+    public PortletPreferencesServiceImpl() {
+        storage = new HashMap();
+    }
+
+    public PortletPreference[] getStoredPreferences(PortletWindow window,
+                                                    PortletRequest req)
+    throws PortletContainerException {
+        String key = getFormattedKey(window, req.getRemoteUser());
+        PortletPreference[] prefs = (PortletPreference[])storage.get(key);
+        if(prefs == null) {
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("No portlet preferences found for: "+key);
+            }
             return new PortletPreference[0];
         }
+        return prefs;
+    }
 
-        public void store(PortletWindow window,
-                          PortletRequest req,
-                          PortletPreference[] preferences) throws PortletContainerException {
-
+    public void store(PortletWindow window,
+                      PortletRequest request,
+                      PortletPreference[] preferences)
+        throws PortletContainerException {
+        String key = getFormattedKey(window, request.getRemoteUser());
+        storage.put(key, preferences);
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Portlet preferences saved for: "+key);
         }
+
+    }
+
+    private String getFormattedKey(PortletWindow window, String user) {
+        return "user="+user+";"+"window="+window;
+    }
+
     }
 
 

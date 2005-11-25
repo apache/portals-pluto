@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.driver.config.impl;
+package org.apache.pluto.driver.services.portal;
 
 import java.util.Set;
 

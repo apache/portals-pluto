@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.impl.resource;
+package org.apache.pluto.driver.services.portal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.services.portal.PageConfig;
 
 import java.util.*;
 

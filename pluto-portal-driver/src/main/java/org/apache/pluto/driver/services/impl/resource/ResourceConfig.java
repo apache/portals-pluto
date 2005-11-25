@@ -17,20 +17,24 @@ package org.apache.pluto.driver.services.impl.resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.RenderConfig;
 
 import java.util.*;
 
 /**
- * Encapsulation of the Pluto Driver Configuration Info.
+ * Encapsulation of the Pluto Driver ResourceConfig Info.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 23, 2004
  */
-public class Configuration {
+public class ResourceConfig {
+
     /** Internal Logger. */
     private static final Log LOG =
-        LogFactory.getLog(Configuration.class);
+        LogFactory.getLog(ResourceConfig.class);
 
     /** The name of the portal. */
     private String portalName;
@@ -56,7 +60,7 @@ public class Configuration {
     /**
      * Default Constructor.
      */
-    public Configuration() {
+    public ResourceConfig() {
         this.supportedWindowStates = new HashSet();
         this.supportedPortletModes = new HashSet();
         this.portletApplications = new java.util.HashMap();
@@ -173,7 +177,7 @@ public class Configuration {
     public void addPortletApp(PortletApplicationConfig app) {
         if (LOG.isDebugEnabled()) {
             LOG.debug(
-                " - - Adding PortletApp Configuration for: " +
+                " - - Adding PortletApp ResourceConfig for: " +
                 app.getContextPath());
         }
         portletApplications.put(app.getContextPath(), app);

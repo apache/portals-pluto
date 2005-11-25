@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.driver.config.impl;
-
-import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
-import org.apache.pluto.driver.services.impl.resource.PortletApplicationConfig;
+package org.apache.pluto.driver.services.portal;
 
 import java.util.Set;
 

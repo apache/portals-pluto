@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.container;
+package org.apache.pluto.driver.services.container.memory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Collections;
 
 import org.apache.pluto.core.PortletPreference;
 
@@ -31,10 +33,25 @@ import org.apache.pluto.core.PortletPreference;
 public class PortletPreferenceImpl implements PortletPreference {
 
     private String name;
-    private ArrayList values;
+    private List values;
+    private boolean readOnly;
 
     public PortletPreferenceImpl() {
         this.values = new ArrayList();
+    }
+
+    public PortletPreferenceImpl(String name, String value) {
+        this(name,  Arrays.asList(new String[] { value }));
+    }
+
+    public PortletPreferenceImpl(String name, String value, boolean readOnly) {
+        this(name,  Arrays.asList(new String[] { value }));
+        this.readOnly = readOnly;
+    }
+
+    public PortletPreferenceImpl(String name, List values) {
+        this.name = name;
+        this.values = values;
     }
 
     public String getName() {
@@ -52,10 +69,9 @@ public class PortletPreferenceImpl implements PortletPreference {
     /**
      * Returns false.  Any PortletPreference retrieved by
      * the manager can't be read only.
-     * @return
      */
     public boolean isReadOnly() {
-        return false;
+        return readOnly;
     }
 
     public void setName(String name) {

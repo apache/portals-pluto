@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
+ * Copyright 2003,2004 The Apache Software Foundation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.container.db;
-
-import org.apache.pluto.PortletContainerException;
-
-import javax.sql.DataSource;
+package org.apache.pluto.driver.services.admin;
 
 /**
  *
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
+ * @version 1.0
+ * @since Nov 23, 2005
  */
-public interface DataSourceManager {
+public class PublishService {
 
-    void startup() throws PortletContainerException;
-
-    void shutdown() throws PortletContainerException;
-
-    boolean isRunning();
-
-    DataSource getPortalDataSource();
 }

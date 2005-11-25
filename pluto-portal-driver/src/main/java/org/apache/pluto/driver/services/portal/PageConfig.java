@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.impl.resource;
+package org.apache.pluto.driver.services.portal;
 
-import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.container.db;
+package org.apache.pluto.driver.services.impl.db;
 
-import org.apache.derby.jdbc.EmbeddedDataSource;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.driver.services.impl.db.DataSourceManager;
 
 import javax.sql.DataSource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.io.File;
 
 
 /**

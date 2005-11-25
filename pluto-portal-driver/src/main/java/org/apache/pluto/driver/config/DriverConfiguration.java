@@ -15,9 +15,9 @@
  */
 package org.apache.pluto.driver.config;
 
-import org.apache.pluto.driver.services.impl.resource.PortletApplicationConfig;
-import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
-import org.apache.pluto.driver.services.impl.resource.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.services.optional.PortletPreferencesService;
 

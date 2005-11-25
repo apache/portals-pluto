@@ -16,9 +16,7 @@
 package org.apache.pluto.driver.services.impl.resource;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.config.impl.PortletRegistryService;
-import org.apache.pluto.driver.config.impl.PropertyConfigService;
-import org.apache.pluto.driver.config.impl.RenderConfigService;
+import org.apache.pluto.driver.services.portal.*;
 
 import javax.servlet.ServletContext;
 import java.util.List;
@@ -27,34 +25,29 @@ import java.io.InputStream;
 
 /**
  * Default implementation of all of the portal Services.
+ * Utilizes resource configuration from
+ * <code>pluto-portal-driver-config.xml</code>
  *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
-public class ResourceServicesImpl implements
-    PropertyConfigService, PortletRegistryService, RenderConfigService {
+public class PropertyConfigServiceImpl implements
+    PropertyConfigService {
 
-    private static final String CONFIG_FILE =
-        "/WEB-INF/pluto-portal-driver-config.xml";
+    private ResourceConfig config;
 
-    private Configuration config;
+    public PropertyConfigServiceImpl() {
+        
+    }
 
-//
-// Lifecycle Methods
-//
     /**
      * Initialization Lifecycle Method
      * @param ctx
      */
     public void init(ServletContext ctx) {
-        // because we comprise 3 services, we must
-        // prevent reinitialization.
-        if(config != null)
-            return;
-
         try {
-            InputStream in = ctx.getResourceAsStream(CONFIG_FILE);
-            config = ConfigurationFactory.getFactory().parse(in);
+            InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
+            config = ResourceConfigReader.getFactory().parse(in);
         }
         catch(Exception e) {
             throw new DriverConfigurationException(e);
@@ -92,29 +85,4 @@ public class ResourceServicesImpl implements
     public Set getPortletApplications() {
         return config.getPortletApplications();
     }
-
-    public PortletApplicationConfig getPortletApplication(String id) {
-        return config.getPortletApp(id);
-    }
-
-    public PortletWindowConfig getPortletWindowConfig(String id) {
-        return config.getPortletWindowConfig(id);
-    }
-
-    public PortletWindowConfig getPortlet(String id) {
-        return config.getPortletWindowConfig(id);
-    }
-
-    public List getPages() {
-        return config.getRenderConfig().getPages();
-    }
-
-    public PageConfig getDefaultPage() {
-        return config.getRenderConfig().getPageConfig(null);
-    }
-
-    public PageConfig getPage(String id) {
-        return config.getRenderConfig().getPageConfig(id);
-    }
-
 }

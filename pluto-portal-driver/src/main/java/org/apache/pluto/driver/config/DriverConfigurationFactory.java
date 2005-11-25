@@ -67,7 +67,7 @@ public class DriverConfigurationFactory {
 
         if(LOG.isDebugEnabled()) {
             LOG.debug(
-                "Driver Configuration of type "+configuration.getClass() +
+                "Driver ResourceConfig of type "+configuration.getClass() +
                 " Initialized and Ready For Service"
             );
         }

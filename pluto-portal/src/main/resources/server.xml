@@ -1,4 +1,4 @@
-<!-- Pluto Configuration File -->
+<!-- Pluto ResourceConfig File -->
 
 <Server port="8005" shutdown="SHUTDOWN">
   <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />

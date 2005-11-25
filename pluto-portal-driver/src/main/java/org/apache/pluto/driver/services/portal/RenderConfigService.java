@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.config.impl;
-
-import org.apache.pluto.driver.services.impl.resource.PageConfig;
+package org.apache.pluto.driver.services.portal;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.config.impl;
+package org.apache.pluto.driver.services.portal;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
 

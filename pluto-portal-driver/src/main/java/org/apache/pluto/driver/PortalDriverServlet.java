@@ -23,8 +23,8 @@ import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalEnvironment;
 import org.apache.pluto.driver.core.PortalURL;
 import org.apache.pluto.driver.core.PortletWindowImpl;
-import org.apache.pluto.driver.services.impl.resource.PageConfig;
-import org.apache.pluto.driver.services.impl.resource.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -51,9 +51,6 @@ public class PortalDriverServlet extends HttpServlet {
     /** The portlet container to which we will forward all portlet requests. */
     protected PortletContainer container = null;
 
-    /** The driver configuration defining our configuraiton. */
-    protected DriverConfiguration driverConfig = null;
-
     /**
      * Initialize the Portal Driver. Initialization completes the following
      * tasks:
@@ -62,15 +59,19 @@ public class PortalDriverServlet extends HttpServlet {
      *   <li>Retrieve and cache the <code>DriverConfigurationImpl</code>.</li>
      * </ul>
      * @see PortletContainer
-     * @see DriverConfigurationImpl
+     * @see DriverConfiguration
      */
     public void init() {
         ServletContext servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
         		AttributeKeys.PORTLET_CONTAINER);
-        driverConfig = (DriverConfiguration) servletContext.getAttribute(
-        		AttributeKeys.DRIVER_CONFIG);
+   }
+
+    private DriverConfiguration getDriverConfiguration() {
+        return (DriverConfiguration) getServletContext()
+            .getAttribute(AttributeKeys.DRIVER_CONFIG);
     }
+
 
     /**
      * Handle all requests.
@@ -87,7 +88,7 @@ public class PortalDriverServlet extends HttpServlet {
         		request, response);
         PortalURL currentURL = environment.getRequestedPortalURL();
         String actionWindowId = currentURL.getActionWindow();
-        PortletWindowConfig windowConfig = driverConfig.getPortletWindowConfig(
+        PortletWindowConfig windowConfig = getDriverConfiguration().getPortletWindowConfig(
         		actionWindowId);
 
         // Window will only exist if there's an action.
@@ -119,7 +120,7 @@ public class PortalDriverServlet extends HttpServlet {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rendering Portal: Requested Page: " + currentPage);
         }
-        return driverConfig.getPageConfig(currentPage);
+        return getDriverConfiguration().getPageConfig(currentPage);
     }
 
 

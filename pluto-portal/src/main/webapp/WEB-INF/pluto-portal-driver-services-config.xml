@@ -4,52 +4,63 @@
 
 <beans>
     <!-- The DriverConfiguration Bean.  This is the only bean required -->
-    <bean name="DriverConfiguration"
+    <bean id="DriverConfiguration"
           class="org.apache.pluto.driver.config.impl.DriverConfigurationImpl">
-      <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
-      <constructor-arg><ref bean="PortletRegistryService"/></constructor-arg>
-      <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
+      <constructor-arg><ref local="PropertyConfigService"/></constructor-arg>
+      <constructor-arg><ref local="PortletRegistryConfig"/></constructor-arg>
+      <constructor-arg><ref local="RenderConfigService"/></constructor-arg>
 
       <!-- Container Services -->
-      <constructor-arg><ref bean="PortalCallbackService"/></constructor-arg>
-      <constructor-arg><ref bean="PortletPreferencesService"/></constructor-arg>
+      <constructor-arg><ref local="PortalCallbackService"/></constructor-arg>
+      <constructor-arg><ref local="PortletPreferencesService"/></constructor-arg>
     </bean>
 
-    <bean name="PropertyConfigService"
-          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+    <bean id="PropertyConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.PropertyConfigServiceImpl"
           singleton="true">
     </bean>
+
+    <!--
     <bean name="PortletRegistryService"
-          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+          class="org.apache.pluto.driver.services.impl.resource.PortletRegistryServiceImpl
           singleton="true">
     </bean>
-    <bean name="RenderConfigService"
-          class="org.apache.pluto.driver.services.impl.resource.ResourceServicesImpl"
+    -->
+
+    <bean id="PortletRegistryConfig"
+          class="org.apache.pluto.driver.services.impl.db.DBPortletRegistryService"
+          singleton="true">
+        <constructor-arg><ref bean="DataSourceManager"/></constructor-arg>
+    </bean>
+
+    <bean id="RenderConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.RenderConfigServiceImpl"
           singleton="true">
     </bean>
+
 
     <!-- Container Services -->
-    <bean name="PortalCallbackService"
+    <bean id="PortalCallbackService"
           class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
           singleton="true">
     </bean>
 
     <!--
     <bean name="PortletPreferencesService"
-          class="org.apache.pluto.driver.services.container.MemoryPreferencesService"
+          class="org.apache.pluto.driver.services.container.memory.MemoryPreferencesService"
           singleton="true">
     </bean>
     -->
 
     <!-- Uncomment for Embedded Derby Service Implementations -->
-    <bean name="PortletPreferencesService"
+    <bean id="PortletPreferencesService"
           class="org.apache.pluto.driver.services.container.db.DBPortletPreferencesService"
           singleton="true">
         <constructor-arg><ref bean="DataSourceManager"/></constructor-arg>
     </bean>
 
-    <bean name="DataSourceManager"
-          class="org.apache.pluto.driver.services.container.db.EmbeddedDataSourceManager"
+    <bean id="DataSourceManager"
+          class="org.apache.pluto.driver.services.impl.db.EmbeddedDataSourceManager"
           singleton="true">
    </bean>
 
@@ -60,7 +71,7 @@
     -->
     <!--
     <bean name="DataSourceManager"
-          class="org.apache.pluto.driver.services.container.db.JNDIDataSourceManager"
+          class="org.apache.pluto.driver.services.impl.db.JNDIDataSourceManager"
           singleton="true">
         <constructor-arg><value>plutoDB</value></constructor-arg>
     </bean>
