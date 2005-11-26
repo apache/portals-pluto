@@ -41,13 +41,14 @@ public class PortletRegistryDao extends AbstractDao {
         super(dataSource);
     }
 
-    public void createPortletApplications(Collection portletApplications)
+    public void seedPortletApplications(Collection portletApplications)
     throws SQLException {
 
         boolean autoCommit = false;
         Connection conn = null;
 
-        PreparedStatement testStmt = null;
+        PreparedStatement appTestStmt = null;
+        PreparedStatement portletTestStmt = null;
         PreparedStatement appStmt = null;
         PreparedStatement pStmt = null;
 
@@ -57,7 +58,9 @@ public class PortletRegistryDao extends AbstractDao {
             autoCommit = conn.getAutoCommit();
             conn.setAutoCommit(false);
 
-            testStmt = conn.prepareStatement(TEST_APP_SQL);
+            appTestStmt = conn.prepareStatement(TEST_APP_SQL);
+            portletTestStmt = conn.prepareStatement(TEST_PORTLET_SQL);
+
             appStmt = conn.prepareStatement(CREATE_APP_SQL);
             pStmt = conn.prepareStatement(CREATE_PORTLET_SQL);
 
@@ -65,21 +68,36 @@ public class PortletRegistryDao extends AbstractDao {
             while(it.hasNext()) {
                 PortletApplicationConfig app = (PortletApplicationConfig)it.next();
 
-                testStmt.setString(1, app.getContextPath());
-                ResultSet rs = testStmt.executeQuery();
-                if(rs.next() && rs.getInt(1) > 0) {
-                    continue;
+                appTestStmt.setString(1, app.getContextPath());
+                ResultSet rs = appTestStmt.executeQuery();
+
+                if(!rs.next() || rs.getInt(1) < 1) {
+                    if(LOG.isDebugEnabled()) {
+                        LOG.debug("Auto-Publishing Portlet Application: "+app.getContextPath());
+                    }
+                    appStmt.setString(1, app.getContextPath());
+                    appStmt.addBatch();
                 }
 
-                appStmt.setString(1, app.getContextPath());
-                appStmt.addBatch();
+                rs.close();
 
                 Iterator portlets = app.getPortlets().iterator();
                 while(portlets.hasNext()) {
                     PortletWindowConfig window = (PortletWindowConfig)portlets.next();
-                    pStmt.setString(1, window.getPortletName());
-                    pStmt.addBatch();
-                }
+                    portletTestStmt.setString(1, app.getContextPath());
+                    portletTestStmt.setString(2, window.getPortletName());
+                    rs = portletTestStmt.executeQuery();
+
+                    if(!rs.next() || rs.getInt(1) < 1) {
+                        if(LOG.isDebugEnabled()) {
+                            LOG.debug("Auto-Publishing Portlet: "+app.getContextPath() + " --> " + window.getPortletName());
+                        }
+
+                        pStmt.setString(1, app.getContextPath());
+                        pStmt.setString(2, window.getPortletName());
+                        pStmt.addBatch();
+                    }
+               }
 
                 appStmt.executeBatch();
                 pStmt.executeBatch();
@@ -95,7 +113,7 @@ public class PortletRegistryDao extends AbstractDao {
         finally {
             if(conn != null)
                 conn.setAutoCommit(autoCommit);
-            cleanup(null, testStmt, null);
+            cleanup(null, appTestStmt, null);
             cleanup(null, pStmt, null);
             cleanup(conn, appStmt, null);
         }
@@ -106,12 +124,20 @@ public class PortletRegistryDao extends AbstractDao {
     }
 
     private static final String TEST_APP_SQL =
-            "SELECT count(*) FROM portlet_app WHERE app_context = ?";
+        "SELECT count(*) FROM portlet_app WHERE app_context = ?";
 
+    private static final String TEST_PORTLET_SQL =
+        "SELECT count(*) " +
+        "  FROM portlet p, portlet_app pa " +
+        " WHERE pa.app_context = ? " +
+        "   AND p.portlet_app_id = pa.portlet_app_id " +
+        "   AND p.portlet_name = ? ";
 
     private static final String CREATE_APP_SQL =
         "INSERT INTO portlet_app (app_context) VALUES (?)";
 
     public static final String CREATE_PORTLET_SQL =
-        "INSERT INTO portlet (portlet_app_id, portlet_name) VALUES ((SELECT IDENTITY_VAL_LOCAL() FROM portlet_app), ?)";
+        "INSERT INTO portlet (portlet_app_id, portlet_name) VALUES (" +
+        "       (SELECT portlet_app_id FROM portlet_app WHERE app_context = ?), ?" +
+        ")";
 }

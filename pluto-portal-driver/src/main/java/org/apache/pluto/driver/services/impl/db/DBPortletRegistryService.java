@@ -28,7 +28,6 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import java.util.Set;
-import java.sql.SQLException;
 import java.io.InputStream;
 
 /**
@@ -78,7 +77,7 @@ public class DBPortletRegistryService implements PortletRegistryService {
             InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
             config = ResourceConfigReader.getFactory().parse(in);
 
-            dao.createPortletApplications(config.getPortletApplications());
+            dao.seedPortletApplications(config.getPortletApplications());
         }
         catch(Exception sql) {
             if(LOG.isErrorEnabled()) {

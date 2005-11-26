@@ -15,7 +15,7 @@
  */
 package org.apache.pluto.driver;
 
-import org.apache.pluto.driver.services.admin.AdminException;
+import org.apache.pluto.driver.services.portal.admin.AdminException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

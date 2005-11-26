@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.services.admin;
-
-import javax.servlet.ServletException;
+package org.apache.pluto.driver.services.portal.admin;
 
 /**
  *
@@ -23,11 +21,6 @@ import javax.servlet.ServletException;
  * @version 1.0
  * @since Nov 23, 2005
  */
-public class AdminException extends ServletException {
-
-    public AdminException(Throwable cause) {
-        super(cause);
-    }
-
+public class PublishService {
 
 }
