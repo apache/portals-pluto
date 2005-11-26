@@ -12,7 +12,9 @@
 
       <!-- Container Services -->
       <constructor-arg><ref local="PortalCallbackService"/></constructor-arg>
-      <constructor-arg><ref local="PortletPreferencesService"/></constructor-arg>
+
+      <!-- Optional Services which can be injected via properties -->
+      <!-- <property name="PortletPreferencesService"/> -->
     </bean>
 
     <bean id="PropertyConfigService"
@@ -39,30 +41,34 @@
     </bean>
 
 
+    <!-- ================== -->
     <!-- Container Services -->
+    <!-- ================== -->
     <bean id="PortalCallbackService"
           class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
           singleton="true">
     </bean>
 
-    <!--
-    <bean name="PortletPreferencesService"
-          class="org.apache.pluto.driver.services.container.memory.MemoryPreferencesService"
-          singleton="true">
-    </bean>
-    -->
 
-    <!-- Uncomment for Embedded Derby Service Implementations -->
+    <!-- =========================== -->
+    <!-- Optional Container Services -->
+    <!-- =========================== -->
+    <!--
     <bean id="PortletPreferencesService"
           class="org.apache.pluto.optional.db.DBPortletPreferencesService"
           singleton="true">
         <constructor-arg><ref bean="DataSourceManager"/></constructor-arg>
     </bean>
+   -->
 
+    <!-- =========================== -->
+    <!-- DataSourceManager:
+           used for DataSource Lookup in all db services
+    -->
     <bean id="DataSourceManager"
           class="org.apache.pluto.optional.db.support.EmbeddedDataSourceManager"
           singleton="true">
-   </bean>
+    </bean>
 
     <!-- Uncomment to utilize a JNDI bound DataSource instead of
          the embedded database datasource.  You must ensure that
@@ -76,4 +82,5 @@
         <constructor-arg><value>plutoDB</value></constructor-arg>
     </bean>
     -->
+
 </beans>

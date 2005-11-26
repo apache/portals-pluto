@@ -48,13 +48,11 @@ public class DriverConfigurationImpl implements DriverConfiguration {
     public DriverConfigurationImpl(PropertyConfigService propertyService,
                                    PortletRegistryService registryService,
                                    RenderConfigService renderService,
-                                   PortalCallbackService portalCallback,
-                                   PortletPreferencesService prefs) {
+                                   PortalCallbackService portalCallback) {
         this.propertyService = propertyService;
         this.registryService = registryService;
         this.renderService = renderService;
         this.portalCallbackService = portalCallback;
-        this.portletPreferencesService = prefs;
     }
 
     /**
