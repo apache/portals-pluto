@@ -69,6 +69,16 @@ class PreferencesDao extends AbstractPreparedDao {
         return container.createPreferences();
     }
 
+    private static final String TEST_PR_SQL =
+       "SELECT count(*)" +
+       "  FROM preference pr, portlet p, portlet_app pa" +
+       " WHERE pa.app_context = ? "+
+       "   AND p.portlet_app_id = pa.portlet_app_id "+
+       "   AND p.portlet_name = ? "+
+       "   AND pr.portlet_id = p.portlet_id "+
+       "   AND pr.preference_name = ?";
+
+
     private String createPreferenceSql(String context, String portletName) {
         StringBuffer sb = new StringBuffer();
         sb.append("INSERT INTO preference (portlet_id, preference_name, auth_user, read_only) ")
@@ -85,7 +95,15 @@ class PreferencesDao extends AbstractPreparedDao {
     private String createPreferenceValueSql() {
         StringBuffer sb = new StringBuffer();
         sb.append("INSERT INTO preference_value (preference_id, preference_value) ")
-                .append("     VALUES ( (SELECT IDENTITY_VAL_LOCAL() FROM preference), ?)");
+          .append("     VALUES ( " )
+          .append("             (SELECT preference_id " )
+          .append("                FROM preference pr, portlet plt, portlet_app pa ")
+          .append("               WHERE pa.app_context = ? ")
+          .append("                 AND plt.portlet_app_id = pa.portlet_app_id ")
+          .append("                 AND plt.portlet_name = ? ")
+          .append("                 AND pr.portlet_id = plt.portlet_id ")
+          .append("                 AND pr.preference_name = ?")
+          .append(        "), ?)");
         return sb.toString();
     }
 
@@ -98,34 +116,55 @@ class PreferencesDao extends AbstractPreparedDao {
        boolean autoCommit = false;
 
        Connection conn = null;
+
+       PreparedStatement testStmt = null;
+
        PreparedStatement stmt = null;
        PreparedStatement valueStmt = null;
+
+       ResultSet rs = null;
 
        try {
            conn = getConnection();
            autoCommit = conn.getAutoCommit();
            conn.setAutoCommit(false);
 
+           testStmt = conn.prepareStatement(TEST_PR_SQL);
            stmt = conn.prepareStatement(createPreferenceSql(context, portletName));
            valueStmt = conn.prepareStatement(createPreferenceValueSql());
 
 
            for(int i=0;i<preferences.length;i++) {
 
-               stmt.setString(1, preferences[i].getName());
-               stmt.setString(2, authUser);
-               stmt.setString(3, preferences[i].isReadOnly()?"Y":"N");
-               stmt.addBatch();
+               testStmt.setString(1, context);
+               testStmt.setString(2, portletName);
+               testStmt.setString(3, preferences[i].getName());
 
-               // Now, we add the values
-               String[] values = preferences[i].getValues();
-               for(int j=0;j<values.length;j++) {
-                   valueStmt.setString(1, values[j]);
-                   valueStmt.addBatch();
+               rs = testStmt.executeQuery();
+               if(rs.next() && rs.getInt(1) < 1) {
+                   if(LOG.isDebugEnabled()) {
+                       LOG.debug("Creating preference for user '"+authUser+"': "+context+"/"+portletName+"/"+preferences[i].getName());
+                   }
+                   stmt.setString(1, preferences[i].getName());
+                   stmt.setString(2, authUser);
+                   stmt.setString(3, preferences[i].isReadOnly()?"Y":"N");
+                   stmt.addBatch();
+
+                   // Now, we add the values
+                   String[] values = preferences[i].getValues();
+                   for(int j=0;j<values.length;j++) {
+                       valueStmt.setString(1, context);
+                       valueStmt.setString(2, portletName);
+                       valueStmt.setString(3, preferences[i].getName());
+                       valueStmt.setString(4, values[j]);
+                       valueStmt.addBatch();
+                   }
+
+                   stmt.executeBatch();
+                   valueStmt.executeBatch();
                }
 
-               stmt.executeBatch();
-               valueStmt.executeBatch();
+               rs.close();
            }
 
            conn.commit();

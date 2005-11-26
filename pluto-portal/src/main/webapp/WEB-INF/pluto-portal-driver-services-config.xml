@@ -2,37 +2,65 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
         "http://www.springframework.org/dtd/spring-beans.dtd">
 
+<!--
+
+  ************************************************************
+
+  NOTE:
+
+  The following configuration file contains the spring bean
+  configuration needed to run the pluto-portal with all the
+  bells and whistles.  This includes, but is not limited to,
+  database backed preferences and user-attributes.  Additionally
+  it supports advanced administration utilities (such as
+  portlet application publishing) to ease getting started
+  with pluto.
+
+  While these bells and whistles are nice, all of these functions
+  are not required.  A *very* lightweight implementation is provided
+  in comments below. This configuration provides memory based
+  services (instead of db ones).
+
+  In order to ease getting started, by default, the database
+  used is embedded within the portal and will be automatically
+  be created the FIRST TIME you startup pluto.  Once created,
+  your startup time should decreate significantly.
+
+  ************************************************************
+
+  -->
+
 <beans>
-    <!-- The DriverConfiguration Bean.  This is the only bean required -->
+
+    <!-- ================================================ -->
+    <!-- The single top element of the configuration tree -->
+    <!-- ================================================ -->
     <bean id="DriverConfiguration"
           class="org.apache.pluto.driver.config.impl.DriverConfigurationImpl">
+      <!-- ===== Portal Services ===== -->
       <constructor-arg><ref local="PropertyConfigService"/></constructor-arg>
       <constructor-arg><ref local="PortletRegistryConfig"/></constructor-arg>
       <constructor-arg><ref local="RenderConfigService"/></constructor-arg>
 
-      <!-- Container Services -->
+      <!-- === Container Services === -->
       <constructor-arg><ref local="PortalCallbackService"/></constructor-arg>
 
-      <!-- Optional Services which can be injected via properties -->
-      <!-- <property name="PortletPreferencesService"/> -->
+      <!--  Optional Container Services -->
+      <property name="portletPreferencesService"><ref local="PortletPreferencesService"/></property>
     </bean>
 
+    <!-- ================================================ -->
+    <!-- Portal Services injected into the Configuration  -->
+    <!-- ================================================ -->
     <bean id="PropertyConfigService"
           class="org.apache.pluto.driver.services.impl.resource.PropertyConfigServiceImpl"
           singleton="true">
     </bean>
 
-    <!--
-    <bean name="PortletRegistryService"
-          class="org.apache.pluto.driver.services.impl.resource.PortletRegistryServiceImpl
-          singleton="true">
-    </bean>
-    -->
-
     <bean id="PortletRegistryConfig"
           class="org.apache.pluto.driver.services.impl.db.DBPortletRegistryService"
           singleton="true">
-        <constructor-arg><ref bean="DataSourceManager"/></constructor-arg>
+        <constructor-arg><ref local="DataSourceManager"/></constructor-arg>
     </bean>
 
     <bean id="RenderConfigService"
@@ -41,30 +69,28 @@
     </bean>
 
 
-    <!-- ================== -->
-    <!-- Container Services -->
-    <!-- ================== -->
+    <!-- ================================================ -->
+    <!-- Container Services injected into  Configuration  -->
+    <!-- ================================================ -->
     <bean id="PortalCallbackService"
           class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
           singleton="true">
     </bean>
 
 
-    <!-- =========================== -->
-    <!-- Optional Container Services -->
-    <!-- =========================== -->
-    <!--
-    <bean id="PortletPreferencesService"
+    <!-- ================================================ -->
+    <!-- = Optional Services injected into Configuration  -->
+    <!-- ================================================ -->
+   <bean id="PortletPreferencesService"
           class="org.apache.pluto.optional.db.DBPortletPreferencesService"
           singleton="true">
-        <constructor-arg><ref bean="DataSourceManager"/></constructor-arg>
-    </bean>
-   -->
+        <constructor-arg><ref local="DataSourceManager"/></constructor-arg>
+   </bean>
 
-    <!-- =========================== -->
-    <!-- DataSourceManager:
-           used for DataSource Lookup in all db services
-    -->
+    <!-- ================================================ -->
+    <!-- = Nested Services needed for Portal and Container Services -->
+    <!-- ================================================ -->
+
     <bean id="DataSourceManager"
           class="org.apache.pluto.optional.db.support.EmbeddedDataSourceManager"
           singleton="true">
@@ -83,4 +109,44 @@
     </bean>
     -->
 
+
+
+
+
+
+
+
+
+
+
+    <!-- =========================================== -->
+    <!-- ====== LIGTHWEIGHT CONFIGURATION  ========= -->
+    <!-- =========================================== -->
+
+    <!--
+
+      To utilize the lightweight configuration, comment out
+      all services defined above and uncomment the following.
+
+      NOTE: make sure that you don't comment out the DriverConfiguration
+      (top element);
+
+     -->
+
+    <!--
+    <bean id="PropertyConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.PropertyConfigServiceImpl"
+          singleton="true">
+    </bean>
+
+    <bean name="PortletRegistryService"
+          class="org.apache.pluto.driver.services.impl.resource.PortletRegistryServiceImpl
+          singleton="true">
+    </bean>
+
+     <bean id="RenderConfigService"
+          class="org.apache.pluto.driver.services.impl.resource.RenderConfigServiceImpl"
+          singleton="true">
+    </bean>
+   -->
 </beans>

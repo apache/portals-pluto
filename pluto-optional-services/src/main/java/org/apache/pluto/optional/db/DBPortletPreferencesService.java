@@ -43,10 +43,6 @@ public class DBPortletPreferencesService
 
     private DataSourceManager dataSourceManager;
 
-    public DBPortletPreferencesService() {
-
-    }
-
     private PreferencesDao dao;
 
     public DBPortletPreferencesService(DataSourceManager dataSourceManager)

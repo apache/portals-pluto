@@ -3,6 +3,7 @@
 <!DOCTYPE web-app
     PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
            "http://java.sun.com/dtd/web-app_2_3.dtd">
+
 <!-- 
 Copyright 2004 The Apache Software Foundation.
 Licensed  under the  Apache License,  Version 2.0  (the "License");
@@ -19,6 +20,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+
 <web-app>
 
     <display-name>Pluto Reference Implementation</display-name>

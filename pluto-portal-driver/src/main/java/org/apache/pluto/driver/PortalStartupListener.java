@@ -106,15 +106,8 @@ public class PortalStartupListener implements ServletContextListener {
 
             PortletContainer container = factory.createContainer(
                     config.getContainerName(),
-                    containerServices);
-
-            /*
-              Support Optional!  Not yet!
-            PortletContainer container = factory.createContainer(
-                    config.getContainerName(),
                     containerServices,
                     containerServices);
-            */
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug(" * Initializing portlet container...");
