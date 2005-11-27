@@ -27,6 +27,12 @@
           <finalName>portals-pluto-1.0-SNAPSHOT</finalName>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+	    <configuration>
+          <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

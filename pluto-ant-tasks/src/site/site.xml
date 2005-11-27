@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven">
   <bannerLeft>
-    <name>Pluto</name>
+    <name>Pluto Ant Plugin</name>
     <src>http://portals.apache.org/pluto/images/pluto.png</src>
     <href>http://portals.apache.org/pluto</href>
   </bannerLeft>
   <bannerRight>
-    <src>http://portals.apache.org/pluto/images/pluto11.png</src>
+    <src>http://portals.apache.org/pluto/images/banner.png</src>
   </bannerRight>
   <body>
     <links>

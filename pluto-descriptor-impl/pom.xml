@@ -39,7 +39,13 @@
           <finalName>pluto-descriptor-impl-${pom.version}</finalName>
         </configuration>
       </plugin>
-    </plugins>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+	    <configuration>
+          <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
+        </configuration>
+      </plugin>
+	</plugins>
   </build>
   
   <dependencies>
