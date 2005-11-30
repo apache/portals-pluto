@@ -17,10 +17,17 @@ package org.apache.pluto.services.optional;
 
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.core.PortletPreference;
+import org.apache.pluto.core.UserInfoAttribute;
 import org.apache.pluto.services.ContainerService;
 
 /**
- * Used to access user information attribute as described in
+ * Used to access and persist user information attribute as described in
  * PLT.17.2 of the JSR-168 specificiation.
  * 
  * @author <a href="cdoremus@apache.org">Craig Doremus</a>
@@ -31,10 +38,20 @@ public interface UserInfoAttributesService extends ContainerService  {
 	 * To access user information attributes as defined in PLT.17
 	 * of JSR-168.
 	 * 
-	 * @param authUser The authenticated user name.
+	 * @param request Used to extract the authenticated user name.
 	 * @return A map of names and values of user information attributes
 	 * for a particular authenticated user.
 	 */
-    Map getAttributes(String authUser);
+    Map getAttributes(PortletRequest request);
+    
+	/**
+	 * Persists user information attributes. 
+	 * 
+	 * @param PortletRequesst request Used to extract the authenticated user name.
+	 * @param attributes The attributes to persist.
+	 */
+    void store(PortletRequest request,
+            UserInfoAttribute[] attributes)
+     throws PortletContainerException;
 
 }
