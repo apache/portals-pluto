@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.optional.db.support;
+package org.apache.pluto.optional.db.common;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

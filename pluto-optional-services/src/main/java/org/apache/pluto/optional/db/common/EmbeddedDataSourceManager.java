@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.optional.db.support;
+package org.apache.pluto.optional.db.common;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.optional.db.support.DataSourceManager;
+import org.apache.pluto.optional.db.common.DataSourceManager;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 

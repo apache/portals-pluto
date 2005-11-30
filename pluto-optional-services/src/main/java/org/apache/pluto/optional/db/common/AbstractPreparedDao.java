@@ -1,4 +1,4 @@
-package org.apache.pluto.optional.db.support;
+package org.apache.pluto.optional.db.common;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -12,18 +12,18 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.optional.db.support.AbstractDao;
+import org.apache.pluto.optional.db.common.AbstractDao;
 
 import javax.sql.DataSource;
 
 /**
- * Basic CRUD operations using Apache Derby. Autocommit
- * is set to true by default unless it is set to false using
- * the single parameter constructor.
+ * Basic CRUD operations. Autocommit is set to false by default; set
+ * to true using the two parameter constructor.
  * 
  * TODO: Add support for other schemas
  * 
  * @author <a href="mailto:cdoremus@apache.org">Craig Doremus</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  *
  */
 public abstract class AbstractPreparedDao extends AbstractDao {

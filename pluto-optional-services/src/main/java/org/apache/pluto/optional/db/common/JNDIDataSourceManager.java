@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.optional.db.support;
+package org.apache.pluto.optional.db.common;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.optional.db.support.DataSourceManager;
+import org.apache.pluto.optional.db.common.DataSourceManager;
 
 import javax.sql.DataSource;
 import javax.naming.Context;
