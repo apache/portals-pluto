@@ -42,16 +42,15 @@ public interface UserInfoAttributesService extends ContainerService  {
 	 * @return A map of names and values of user information attributes
 	 * for a particular authenticated user.
 	 */
-    Map getAttributes(PortletRequest request);
+    Map getAttributes(PortletRequest request) 
+    	throws PortletContainerException ;
     
 	/**
 	 * Persists user information attributes. 
 	 * 
-	 * @param PortletRequesst request Used to extract the authenticated user name.
 	 * @param attributes The attributes to persist.
 	 */
-    void store(PortletRequest request,
-            UserInfoAttribute[] attributes)
-     throws PortletContainerException;
+    void store(UserInfoAttribute[] attributes)
+    	throws PortletContainerException;
 
 }
