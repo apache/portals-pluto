@@ -110,8 +110,10 @@ public class PortletEntity {
                     dd = pd;
                 }
             }
-        } catch (PortletContainerException io) {
-            throw new NullPointerException("Unable to load the Portlet Application Deployment Descriptor: "+io.getMessage());
+        } catch (PortletContainerException e) {
+        	String msg = "Unable to load the Portlet Application Deployment Descriptor:";
+        	LOG.error(msg, e);
+            throw new NullPointerException(msg + e.getMessage());
         }
     }
 
