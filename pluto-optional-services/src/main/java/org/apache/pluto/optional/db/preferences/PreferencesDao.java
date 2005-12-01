@@ -92,7 +92,24 @@ class PreferencesDao extends AbstractPreparedDao {
         return sb.toString();
     }
 
-    private String createPreferenceValueSql() {
+    private String createPreferenceUpdateSql(String readOnly) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE preference ")
+          .append("     SET read_only = ").append(fmt(readOnly))
+          .append("     , mod_date = current_timestamp ")
+          .append("     WHERE preference_id = " )
+          .append("             (SELECT preference_id " )
+          .append("                FROM preference pr, portlet plt, portlet_app pa ")
+          .append("               WHERE pa.app_context = ? ")
+          .append("                 AND plt.portlet_app_id = pa.portlet_app_id ")
+          .append("                 AND plt.portlet_name = ? ")
+          .append("                 AND pr.portlet_id = plt.portlet_id ")
+          .append("                 AND pr.preference_name = ?")
+          .append(             ")");
+        return sb.toString();
+    }
+    
+    private String createPreferenceValueInsertSql() {
         StringBuffer sb = new StringBuffer();
         sb.append("INSERT INTO preference_value (preference_id, preference_value) ")
           .append("     VALUES ( " )
@@ -107,6 +124,21 @@ class PreferencesDao extends AbstractPreparedDao {
         return sb.toString();
     }
 
+    private String createPreferenceValueDeleteSql() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE FROM preference_value ")
+          .append("     WHERE preference_id = " )
+          .append("             (SELECT preference_id " )
+          .append("                FROM preference pr, portlet plt, portlet_app pa ")
+          .append("               WHERE pa.app_context = ? ")
+          .append("                 AND plt.portlet_app_id = pa.portlet_app_id ")
+          .append("                 AND plt.portlet_name = ? ")
+          .append("                 AND pr.portlet_id = plt.portlet_id ")
+          .append("                 AND pr.preference_name = ?")
+          .append(             ")");
+        return sb.toString();
+    }
+    
    void storePreferences(String context,
                           String portletName,
                           String authUser,
@@ -120,7 +152,9 @@ class PreferencesDao extends AbstractPreparedDao {
        PreparedStatement testStmt = null;
 
        PreparedStatement stmt = null;
+       PreparedStatement updateStmt = null;
        PreparedStatement valueStmt = null;
+       PreparedStatement valDelStmt = null;
 
        ResultSet rs = null;
 
@@ -129,11 +163,13 @@ class PreferencesDao extends AbstractPreparedDao {
            autoCommit = conn.getAutoCommit();
            conn.setAutoCommit(false);
 
+           //tests to see if record exists in preference table
            testStmt = conn.prepareStatement(TEST_PR_SQL);
            stmt = conn.prepareStatement(createPreferenceSql(context, portletName));
-           valueStmt = conn.prepareStatement(createPreferenceValueSql());
-
-
+           valueStmt = conn.prepareStatement(createPreferenceValueInsertSql());
+           valDelStmt = conn.prepareStatement(createPreferenceValueDeleteSql());
+           boolean insertNeeded = false;
+           boolean updateNeeded = false;
            for(int i=0;i<preferences.length;i++) {
 
                testStmt.setString(1, context);
@@ -141,7 +177,12 @@ class PreferencesDao extends AbstractPreparedDao {
                testStmt.setString(3, preferences[i].getName());
 
                rs = testStmt.executeQuery();
+               //insert/update preference table
                if(rs.next() && rs.getInt(1) < 1) {
+            	   //insert new preference
+            	   if (!insertNeeded) {
+            		   insertNeeded = true;
+            	   }
                    if(LOG.isDebugEnabled()) {
                        LOG.debug("Creating preference for user '"+authUser+"': "+context+"/"+portletName+"/"+preferences[i].getName());
                    }
@@ -150,35 +191,77 @@ class PreferencesDao extends AbstractPreparedDao {
                    stmt.setString(3, preferences[i].isReadOnly()?"Y":"N");
                    stmt.addBatch();
 
-                   // Now, we add the values
-                   String[] values = preferences[i].getValues();
-                   for(int j=0;j<values.length;j++) {
-                       valueStmt.setString(1, context);
-                       valueStmt.setString(2, portletName);
-                       valueStmt.setString(3, preferences[i].getName());
-                       valueStmt.setString(4, values[j]);
-                       valueStmt.addBatch();
+
+               } else {
+            	   //update preference
+            	   if (!updateNeeded) {
+            		   updateNeeded = true;
+            	   }
+                   if(LOG.isDebugEnabled()) {
+                       LOG.debug("Updating preference for user '"+authUser+"': "+context+"/"+portletName+"/"+preferences[i].getName());
                    }
-
-                   stmt.executeBatch();
-                   valueStmt.executeBatch();
+                   updateStmt = conn.prepareStatement(createPreferenceUpdateSql(preferences[i].isReadOnly()?"Y":"N"));
+                   updateStmt.addBatch();
                }
-
-               rs.close();
+               
+               //delete + insert into preference_value table
+               //delete old preference values
+               valDelStmt.setString(1, context);
+               valDelStmt.setString(2, portletName);
+               valDelStmt.setString(3, preferences[i].getName());
+               valDelStmt.addBatch();
+               
+               //insert new values
+               String[] values = preferences[i].getValues();
+               for(int j=0;j<values.length;j++) {
+                   valueStmt.setString(1, context);
+                   valueStmt.setString(2, portletName);
+                   valueStmt.setString(3, preferences[i].getName());
+                   valueStmt.setString(4, values[j]);
+                   valueStmt.addBatch();
+               }
+               
            }
-
+           //execute all batch updates
+           if (insertNeeded) {
+        	   stmt.executeBatch();
+           }
+           if (updateNeeded) {
+        	   updateStmt.executeBatch();
+           }
+           valDelStmt.executeBatch();
+           valueStmt.executeBatch();
+           //commit
            conn.commit();
        }
-       catch(SQLException sqle) {
+       catch(SQLException e) {
            if(LOG.isErrorEnabled()) {
-               LOG.error("Error saving preferences: ", sqle);
+               LOG.error("Error saving preferences: ", e);
            }
-           conn.rollback();
-           throw sqle;
-       }
+           if (conn != null) {
+        	   conn.rollback();
+           }
+           throw e;
+       } 
+       catch(Throwable e) {
+           if(LOG.isErrorEnabled()) {
+               LOG.error("Error saving preferences: ", e);
+           }
+           if (conn != null) {
+        	   conn.rollback();
+           }
+           //Make sure the client knows about problem
+           SQLException e1 = new SQLException();
+           e1.initCause(e);
+           throw e1;
+       } 
        finally {
-           conn.setAutoCommit(autoCommit);
+    	   cleanup(null, null, rs);
+           cleanup(null, testStmt, null);
            cleanup(null, stmt, null);
+           cleanup(null, updateStmt, null);
+           cleanup(null, valDelStmt, null);
+           conn.setAutoCommit(autoCommit);
            cleanup(conn, valueStmt, null);
        }
     }
