@@ -18,11 +18,8 @@ package org.apache.pluto.services.optional;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.core.PortletPreference;
 import org.apache.pluto.core.UserInfoAttribute;
 import org.apache.pluto.services.ContainerService;
 
