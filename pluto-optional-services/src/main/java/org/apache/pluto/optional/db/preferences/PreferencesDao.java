@@ -266,11 +266,13 @@ class PreferencesDao extends AbstractPreparedDao {
        }
     }
 
-    protected Object instantiate(ResultSet rs) throws SQLException {
+    protected InstantiationResult instantiate(ResultSet rs, InstantiationResult ir) throws SQLException {
         String name  = rs.getString("preference_name");
         String value = rs.getString("preference_value");
         boolean readOnly = rs.getString("read_only").equals("Y");
-        return new PortletPreferenceImpl(name, new String[] { value }, readOnly);
+        InstantiationResult result = new InstantiationResult();
+        result.setResult(new PortletPreferenceImpl(name, new String[] { value }, readOnly));
+        return result;
     }
 
 }

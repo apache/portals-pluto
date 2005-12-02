@@ -56,7 +56,7 @@ class UserInfoAttributesDao extends AbstractPreparedDao {
             LOG.debug("Executing SQL to retrieve user info attribs: \n"+sb.toString());
         }
 
-        List list = super.doSelect(sb.toString());
+        List list = super.doList(sb.toString());
 //        PortletPreferenceContainer container = new PortletPreferenceContainer();
 //        container.add(list);
 //        return container.createPreferences();
@@ -127,7 +127,7 @@ class UserInfoAttributesDao extends AbstractPreparedDao {
        }
     }
 
-    protected Object instantiate(ResultSet rs) throws SQLException {
+    protected InstantiationResult instantiate(ResultSet rs, InstantiationResult result) throws SQLException {
         String name  = rs.getString("attribute_name");
         String value = rs.getString("attribute_value");
         //TODO: finish impl

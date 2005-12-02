@@ -25,9 +25,15 @@ import javax.servlet.ServletContext;
 import java.util.Collection;
 
 /**
+ * Interface defining a means for retrieving driver services
+ * based upon configuration information. Within the portal,
+ * an implementation of this interface should be bound to
+ * the portal's ServletContext.
+ *
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @todo Document
  * @since Sep 2, 2005
+ *
  */
 public interface DriverConfiguration {
 
@@ -39,10 +45,27 @@ public interface DriverConfiguration {
      */
     void init(ServletContext context);
 
+    /**
+     * Retrieve the name of the portal
+     * as should be returned in
+     * {@link javax.portlet.PortalContext#getPortalInfo()}
+     * @return the name of the portal.
+     */
     String getPortalName();
 
+    /**
+     * Retrieve the version of the portal
+     * as should be returned in
+     * {@link javax.portlet.PortalContext#getPortalInfo()}
+     * @return the portal version.
+     */
     String getPortalVersion();
 
+    /**
+     * Retrieves the name of the container which
+     * pluto should create and embed.
+     * @return the container name.
+     */
     String getContainerName();
 
     Collection getSupportedPortletModes();

@@ -45,6 +45,8 @@ public class DriverConfigurationFactory {
         return factory;
     }
 
+    private XmlBeanFactory beanFactory;
+
     private DriverConfigurationFactory() {
 
     }
@@ -54,13 +56,8 @@ public class DriverConfigurationFactory {
             LOG.debug("Retrieving driver configuration from: "+DRIVER_CONFIG);
         }
 
-        InputStream in =
-            context.getResourceAsStream(DRIVER_CONFIG);
-
-        XmlBeanFactory beanFactory = new XmlBeanFactory(in);
-
         DriverConfiguration configuration = (DriverConfiguration)
-                beanFactory.getBean("DriverConfiguration");
+                getBeanFactory(context).getBean("DriverConfiguration");
 
         configuration.init(context);
 
@@ -74,5 +71,36 @@ public class DriverConfigurationFactory {
 
         return configuration;
     }
+
+
+    public AdminConfiguration getAdminConfig(ServletContext context) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Retrieving admin configuration from: "+DRIVER_CONFIG);
+        }
+
+        AdminConfiguration configuration = (AdminConfiguration)
+            getBeanFactory(context).getBean("AdminConfiguration");
+
+        configuration.init(context);
+
+        if(LOG.isDebugEnabled()) {
+            LOG.debug(
+              "Admin config of type "+configuration.getClass() +
+              "Initialized and ready for service."
+            );
+        }
+
+        return configuration;
+    }
+
+    private XmlBeanFactory getBeanFactory(ServletContext context) {
+        if(beanFactory == null) {
+            InputStream in =
+                    context.getResourceAsStream(DRIVER_CONFIG);
+            beanFactory = new XmlBeanFactory(in);
+        }
+        return beanFactory;
+    }
+
 }
 

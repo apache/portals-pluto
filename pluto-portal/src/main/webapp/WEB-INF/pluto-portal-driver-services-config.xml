@@ -82,7 +82,7 @@
     <!-- = Optional Services injected into Configuration  -->
     <!-- ================================================ -->
    <bean id="PortletPreferencesService"
-          class="org.apache.pluto.optional.db.DBPortletPreferencesService"
+          class="org.apache.pluto.optional.db.preferences.DBPortletPreferencesService"
           singleton="true">
         <constructor-arg><ref local="DataSourceManager"/></constructor-arg>
    </bean>
@@ -92,7 +92,7 @@
     <!-- ================================================ -->
 
     <bean id="DataSourceManager"
-          class="org.apache.pluto.optional.db.support.EmbeddedDataSourceManager"
+          class="org.apache.pluto.optional.db.common.EmbeddedDataSourceManager"
           singleton="true">
     </bean>
 

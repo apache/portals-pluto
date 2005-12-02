@@ -17,13 +17,15 @@ package org.apache.pluto.driver.services.impl.db;
 
 import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-import org.apache.pluto.optional.db.support.AbstractDao;
+import org.apache.pluto.optional.db.common.AbstractDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.HashSet;
 import java.sql.*;
 
 /**
@@ -33,7 +35,7 @@ import java.sql.*;
  * @version 1.0
  * @since Nov 24, 2005
  */
-public class PortletRegistryDao extends AbstractDao {
+class PortletRegistryDao extends AbstractDao {
 
     private static final Log LOG = LogFactory.getLog(PortletRegistryDao.class);
 
@@ -119,10 +121,6 @@ public class PortletRegistryDao extends AbstractDao {
         }
     }
 
-    protected Object instantiate(ResultSet rs) throws SQLException {
-        return new Object();
-    }
-
     private static final String TEST_APP_SQL =
         "SELECT count(*) FROM portlet_app WHERE app_context = ?";
 
@@ -140,4 +138,79 @@ public class PortletRegistryDao extends AbstractDao {
         "INSERT INTO portlet (portlet_app_id, portlet_name) VALUES (" +
         "       (SELECT portlet_app_id FROM portlet_app WHERE app_context = ?), ?" +
         ")";
+
+    public static final String LIST_PORTLET_APP_SQL = "SELECT * FROM portlet_app";
+
+
+    public Set getPortletApplications() throws SQLException {
+        return new HashSet(doList(LIST_PORTLET_APP_SQL));
+    }
+
+    public PortletApplicationConfig getPortletApp(String context) throws SQLException {
+        PortletApplicationConfig app = (PortletApplicationConfig)
+                doSelect(createPortletAppSQL(context));
+
+        return app;
+    }
+
+    private String createPortletAppSQL(String context) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT 'APP' as mode, app.portlet_app_id, app.app_context, ")
+          .append("       p.portlet_id, p.portlet_name")
+          .append("  FROM portlet_app app, portlet p ")
+          .append(" WHERE app.app_context = ").append(fmt(context)).append(" ")
+          .append("   AND portlet.portlet_ap_id = app.portlet_app_id");
+        return sb.toString();
+    }
+
+    protected InstantiationResult instantiate(ResultSet rs, InstantiationResult lastResult)
+    throws SQLException {
+        if("APP".equals(rs.getString("mode")))
+           return instantiateApp(rs, lastResult);
+        else {
+            return instantiatePortlet(rs);
+        }
+    }
+
+    private InstantiationResult instantiateApp(ResultSet rs, InstantiationResult lastResult) throws SQLException {
+        InstantiationResult result = lastResult;
+        PortletApplicationConfig appConfig = (PortletApplicationConfig) lastResult.getControl();
+        if(appConfig == null || !appConfig.getContextPath().equals(rs.getString("app_context"))) {
+            appConfig = new PortletApplicationConfig();
+            appConfig.setContextPath(rs.getString("app_context"));
+            result.setControl(appConfig);
+            result.setResult(appConfig);
+        }
+        appConfig.addPortlet((PortletWindowConfig)instantiatePortlet(rs).getResult());
+        return result;
+    }
+
+    private InstantiationResult instantiatePortlet(ResultSet rs) throws SQLException {
+        PortletWindowConfig config = new PortletWindowConfig();
+        config.setPortletName(rs.getString("portlet_name"));
+        config.setContextPath(rs.getString("app_context"));
+
+        InstantiationResult result = new InstantiationResult();
+        result.setResult(config);
+        return result;
+    }
+
+    public PortletWindowConfig getPortletWindowConfig(String context, String portletName)
+    throws SQLException {
+        return (PortletWindowConfig) doSelect(createSelectPortletSQL(context, portletName));
+    }
+
+    private String createSelectPortletSQL(String context, String portletName) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT 'PLT' as mode, portlet_id, portlet_name, a.app_context ")
+          .append("  FROM portlet p, portlet_app a ")
+          .append(" WHERE a.app_context = ").append(fmt(context))
+          .append("   AND p.portlet_app_id = a.portlet_app_id")
+          .append("   AND p.portlet_name = ").append(fmt(portletName));
+
+        if(LOG.isDebugEnabled()) {
+            LOG.debug(sb.toString());
+        }
+        return sb.toString();
+    }
 }

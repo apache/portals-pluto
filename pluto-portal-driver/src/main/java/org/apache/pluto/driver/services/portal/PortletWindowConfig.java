@@ -20,6 +20,7 @@ package org.apache.pluto.driver.services.portal;
  */
 public class PortletWindowConfig {
 
+    private String id;
     private String contextPath;
     private String portletName;
 
@@ -27,18 +28,17 @@ public class PortletWindowConfig {
     }
 
     public String getId() {
-        return createPortletId(contextPath, portletName);
+        if(id == null) {
+            return createPortletId(contextPath, portletName);
+        }
+        return id;
     }
 
     public String getContextPath() {
         return contextPath;
     }
 
-    /**
-     * Should only be set by the application upon being added.
-     * @param contextPath
-     */
-    void setContextPath(String contextPath) {
+   public void setContextPath(String contextPath) {
         this.contextPath = contextPath;
     }
 
@@ -55,4 +55,19 @@ public class PortletWindowConfig {
         return contextPath + "." + portletName;
     }
 
+    public static String parseContextPath(String portletId) {
+        int idx = portletId.indexOf('.');
+        if(idx < 1 || idx == portletId.length() -1) {
+            throw new IllegalArgumentException("Invalid Portlet Id: "+portletId);
+        }
+        return portletId.substring(0, idx);
+    }
+
+    public static String parsePortletName(String portletId) {
+        int idx = portletId.indexOf('.');
+        if(idx < 1 || idx == portletId.length() -1) {
+            throw new IllegalArgumentException("Invalid Portlet Id: "+portletId);
+        }
+        return portletId.substring(idx+1, portletId.length());
+    }
 }

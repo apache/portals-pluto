@@ -22,13 +22,14 @@ import org.apache.pluto.driver.services.impl.resource.ResourceConfig;
 import org.apache.pluto.driver.services.impl.resource.ResourceConfigReader;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.optional.db.support.DataSourceManager;
+import org.apache.pluto.optional.db.common.DataSourceManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import java.util.Set;
 import java.io.InputStream;
+import java.sql.SQLException;
 
 /**
  * TODO JavaDoc
@@ -93,14 +94,38 @@ public class DBPortletRegistryService implements PortletRegistryService {
     }
 
     public Set getPortletApplications() {
-        return config.getPortletApplications();
+        try {
+            return dao.getPortletApplications();
+        }
+        catch(SQLException sqle) {
+            throw new DriverConfigurationException(sqle);
+        }
     }
 
     public PortletApplicationConfig getPortletApplication(String id) {
-        return config.getPortletApp(id);
+        try {
+            return dao.getPortletApp(id);
+        }
+        catch(SQLException sqle) {
+            throw new DriverConfigurationException("Unable to find portlet app configuration for portlet : "+id+" / "+sqle.getMessage(), sqle);
+        }
     }
 
     public PortletWindowConfig getPortlet(String id) {
-        return config.getPortletWindowConfig(id);
+        if(id == null) {
+            return null;
+        }
+        try {
+            String appContext = PortletWindowConfig.parseContextPath(id);
+            String portletName = PortletWindowConfig.parsePortletName(id);
+            return dao.getPortletWindowConfig(appContext, portletName);
+        }
+        catch(SQLException sqle) {
+            throw new DriverConfigurationException("Unable to find portlet configuration for portlet : "+ id+" / "+sqle.getMessage(), sqle);
+        }
+    }
+
+    public void addPortletApplication(PortletApplicationConfig app) {
+
     }
 }

@@ -1,18 +1,11 @@
 package org.apache.pluto.optional.db.common;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.optional.db.common.AbstractDao;
 
 import javax.sql.DataSource;
 
@@ -126,7 +119,7 @@ public abstract class AbstractPreparedDao extends AbstractDao {
      * @return A <code>List</code> of <code>Map</code> objects.
      * @throws SQLException
      */
-    public List doSelect(String sql, Object[] parameters ) throws SQLException {
+    public List doList(String sql, Object[] parameters ) throws SQLException {
         List results = new ArrayList();
 
         Connection conn = null;
@@ -151,8 +144,8 @@ public abstract class AbstractPreparedDao extends AbstractDao {
      * @return A <code>List</code> of <code>Map</code> objects.
      * @throws SQLException
      */
-    public List doSelect(String sql) throws SQLException {
-        return doSelect(sql, null);
+    public List doList(String sql) throws SQLException {
+        return doList(sql, null);
     }
 
     /**
