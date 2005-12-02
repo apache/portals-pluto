@@ -45,7 +45,8 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
 
     private String connectionString;
 
-    private String shutdown =  "shutdownDatabase=true";
+//    private String shutdown =  "shutdownDatabase=true";
+    private String shutdown =  "shutdown=true";
 
     private EmbeddedDataSource embeddedDataSource;
 
@@ -53,15 +54,21 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
         connectionString =
             "databaseName=PLUTO_PORTAL_DRIVER;name=pluto_portal_driver;password=apachep0rtals;create=true";
 
+        String dbhome = System.getProperty("user.home") + "/.pluto/portal-driver/data";
+        
         System.setProperty(
-            "derby.system.home",
-            System.getProperty("user.home") + "/.pluto/portal-driver/data"
-        );
+            "derby.system.home", dbhome);
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Derby database home (derby.system.home)=" + dbhome);
+        }
     }
 
     public EmbeddedDataSourceManager(String connectionString, String systemDirectory) {
         this.connectionString = connectionString;
         System.setProperty("derby.system.home", systemDirectory);
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Derby database home (derby.system.home)=" + systemDirectory);
+        }
     }
 
     public void startup() throws PortletContainerException {
@@ -75,8 +82,21 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     }
 
     public void shutdown() throws PortletContainerException {
-        if(embeddedDataSource != null)
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Entering EmbeddedDataSource.shutdown() . . .");
+    	}
+        if(embeddedDataSource != null) {
             embeddedDataSource.setConnectionAttributes(connectionString+shutdown);
+            try {
+            	if (LOG.isDebugEnabled()) {
+            		LOG.debug("Shutting down database: " + connectionString);
+            	}
+				embeddedDataSource.getConnection();
+			} catch (SQLException e) {
+				LOG.error("Problem shutting down database", e);
+				throw new PortletContainerException(e);
+			}
+        }
         embeddedDataSource = null;
     }
 
