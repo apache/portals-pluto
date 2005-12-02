@@ -46,7 +46,7 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     private String connectionString;
 
 //    private String shutdown =  "shutdownDatabase=true";
-    private String shutdown =  "shutdown=true";
+    private String shutdown =  ";shutdown=true";
 
     private EmbeddedDataSource embeddedDataSource;
 
@@ -86,15 +86,18 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     		LOG.debug("Entering EmbeddedDataSource.shutdown() . . .");
     	}
         if(embeddedDataSource != null) {
-            embeddedDataSource.setConnectionAttributes(connectionString+shutdown);
+//        	String shutDown = connectionString+shutdown;
+        	String shutDown = "jdbc:derby:;shutdown=true";
+//        	embeddedDataSource.setConnectionAttributes(shutDown);
             try {
             	if (LOG.isDebugEnabled()) {
-            		LOG.debug("Shutting down database: " + connectionString);
+            		LOG.debug("Shutting down database: " + shutDown);
             	}
-				embeddedDataSource.getConnection();
+//				embeddedDataSource.getConnection();
+				DriverManager.getConnection(shutDown);
 			} catch (SQLException e) {
-				LOG.error("Problem shutting down database", e);
-				throw new PortletContainerException(e);
+				LOG.error("Database shut down: " + e.getMessage());
+//				throw new PortletContainerException(e);
 			}
         }
         embeddedDataSource = null;
