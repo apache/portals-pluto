@@ -43,6 +43,13 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     private static final Log LOG =
             LogFactory.getLog(EmbeddedDataSourceManager.class);
 
+    private static final String DEFAULT_SYS_DIR =
+        System.getProperty("user.home") + "/.pluto/portal-driver/data";
+
+    private static final String DEFAULT_CONNECTION_STRING =
+        "databaseName=PLUTO_PORTAL_DRIVER;name=pluto_portal_driver;password=apachep0rtals;create=true";
+
+
     private String connectionString;
 
 //    private String shutdown =  "shutdownDatabase=true";
@@ -51,19 +58,14 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
     private EmbeddedDataSource embeddedDataSource;
 
     public EmbeddedDataSourceManager() {
-        connectionString =
-            "databaseName=PLUTO_PORTAL_DRIVER;name=pluto_portal_driver;password=apachep0rtals;create=true";
-
-        String dbhome = System.getProperty("user.home") + "/.pluto/portal-driver/data";
-        
-        System.setProperty(
-            "derby.system.home", dbhome);
-        if (LOG.isDebugEnabled()) {
-        	LOG.debug("Derby database home (derby.system.home)=" + dbhome);
-        }
+        this(DEFAULT_SYS_DIR, DEFAULT_CONNECTION_STRING);
     }
 
-    public EmbeddedDataSourceManager(String connectionString, String systemDirectory) {
+    public EmbeddedDataSourceManager(String connectionString) {
+        this(DEFAULT_SYS_DIR, connectionString);
+    }
+
+    public EmbeddedDataSourceManager(String systemDirectory, String connectionString) {
         this.connectionString = connectionString;
         System.setProperty("derby.system.home", systemDirectory);
         if (LOG.isDebugEnabled()) {

@@ -94,6 +94,7 @@
     <bean id="DataSourceManager"
           class="org.apache.pluto.optional.db.common.EmbeddedDataSourceManager"
           singleton="true">
+        <constructor-arg><value>databaseName=PLUTO_PORTAL_DRIVER;name=pluto_portal_driver;password=apachep0rtals;create=true</value></constructor-arg>
     </bean>
 
     <!-- Uncomment to utilize a JNDI bound DataSource instead of
