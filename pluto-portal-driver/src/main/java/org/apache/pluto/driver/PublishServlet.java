@@ -16,6 +16,8 @@
 package org.apache.pluto.driver;
 
 import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
+import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
+import org.apache.pluto.driver.config.AdminConfiguration;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,12 +45,20 @@ public class PublishServlet extends HttpServlet {
         try {
             doPublish(context);
         }
-        catch(DriverAdministrationException driverAdministration) {
-            res.getWriter().println("Unable to publish portlet application bound to context '"+context+"'.");
+        catch(Throwable t) {
+            StringBuffer sb = new StringBuffer();
+            sb.append("Unable to publish portlet application bound to context '"+context+"'.");
+            sb.append("Reason: ").append(t.getMessage());
+            res.getWriter().println(sb.toString());
         }
     }
 
     private void doPublish(String context) throws DriverAdministrationException {
+        AdminConfiguration adminConfig = (AdminConfiguration)getServletContext()
+            .getAttribute(AttributeKeys.DRIVER_ADMIN_CONFIG);
 
+        PortletRegistryAdminService admin = adminConfig.getPortletRegistryAdminService();
+
+        admin.addPortletApplication(context);
     }
 }

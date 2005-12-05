@@ -25,6 +25,10 @@ import javax.servlet.ServletException;
  */
 public class DriverAdministrationException extends ServletException {
 
+    public DriverAdministrationException(String string) {
+        super(string);
+    }
+
     public DriverAdministrationException(String string, Throwable throwable) {
         super(string, throwable);
     }

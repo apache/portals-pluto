@@ -33,6 +33,13 @@ limitations under the License.
     </servlet>
 
     <servlet>
+        <servlet-name>portletApplicationPublisher</servlet-name>
+        <display-name>Portlet Application Publisher</display-name>
+        <description>Portlet Application Publisher Service</description>
+        <servlet-class>org.apache.pluto.driver.PublishServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>tckDriver</servlet-name>
         <display-name>Pluto TCK Driver</display-name>
         <description>Pluto TCK Driver Controller</description>
@@ -42,6 +49,11 @@ limitations under the License.
     <servlet-mapping>
         <servlet-name>plutoPortalDriver</servlet-name>
         <url-pattern>/portal/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portletApplicationPublisher</servlet-name>
+        <url-pattern>/admin/Publish</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

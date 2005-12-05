@@ -139,6 +139,17 @@ public class DriverConfigurationImpl implements DriverConfiguration {
         this.renderService.init(context);
     }
 
+    public void destroy() {
+        if(propertyService != null)
+            propertyService.destroy();
+
+        if(registryService != null)
+            registryService.destroy();
+
+        if(renderService != null)
+            renderService.destroy();
+    }
+
 
 //
 // Container Services

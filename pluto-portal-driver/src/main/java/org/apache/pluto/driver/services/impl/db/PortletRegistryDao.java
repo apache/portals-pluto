@@ -49,15 +49,78 @@ class PortletRegistryDao extends AbstractDao {
     }
 
     public PortletApplicationConfig getPortletApp(String context) throws SQLException {
-        PortletApplicationConfig app = (PortletApplicationConfig)
-                doSelect(createPortletAppSQL(context));
-
-        return app;
+        return (PortletApplicationConfig) doSelect(createPortletAppSQL(context));
     }
 
 
-    public void addPortletApplication(PortletApplicationConfig config)
+    public void addPortletApplication(PortletApplicationConfig app)
     throws SQLException {
+
+        boolean autoCommit = false;
+        Connection conn = null;
+        PreparedStatement appStmt = null;
+        PreparedStatement appTestStmt = null;
+        PreparedStatement portletTestStmt = null;
+        PreparedStatement pStmt = null;
+
+        try {
+            conn = getConnection();
+            autoCommit = conn.getAutoCommit();
+            conn.setAutoCommit(false);
+
+            appTestStmt = conn.prepareStatement(TEST_APP_SQL);
+            portletTestStmt = conn.prepareStatement(TEST_PORTLET_SQL);
+
+            appStmt = conn.prepareStatement(CREATE_APP_SQL);
+            pStmt = conn.prepareStatement(CREATE_PORTLET_SQL);
+
+            appTestStmt.setString(1, app.getContextPath());
+            ResultSet rs = appTestStmt.executeQuery();
+
+            if(!rs.next() || rs.getInt(1) < 1) {
+                if(LOG.isDebugEnabled()) {
+                    LOG.debug("Publishing Portlet Application: "+app.getContextPath());
+                }
+                appStmt.setString(1, app.getContextPath());
+                appStmt.addBatch();
+            }
+
+            rs.close();
+
+            Iterator portlets = app.getPortlets().iterator();
+            while(portlets.hasNext()) {
+                PortletWindowConfig window = (PortletWindowConfig)portlets.next();
+                portletTestStmt.setString(1, app.getContextPath());
+                portletTestStmt.setString(2, window.getPortletName());
+                rs = portletTestStmt.executeQuery();
+
+                if(!rs.next() || rs.getInt(1) < 1) {
+                    if(LOG.isDebugEnabled()) {
+                        LOG.debug("Publishing Portlet: "+app.getContextPath() + " --> " + window.getPortletName());
+                    }
+
+                    pStmt.setString(1, app.getContextPath());
+                    pStmt.setString(2, window.getPortletName());
+                    pStmt.addBatch();
+                }
+            }
+            appStmt.executeBatch();
+            pStmt.executeBatch();
+            conn.commit();
+        }
+        catch(SQLException sql) {
+            if(conn != null)
+                conn.rollback();
+            LOG.error("Unable to seed portlet application.", sql);
+            throw sql;
+        }
+        finally {
+            if(conn != null)
+                conn.setAutoCommit(autoCommit);
+            cleanup(null, appTestStmt, null);
+            cleanup(null, pStmt, null);
+            cleanup(conn, appStmt, null);
+        }
 
     }
 

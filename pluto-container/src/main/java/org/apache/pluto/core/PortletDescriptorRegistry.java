@@ -38,7 +38,7 @@ import java.util.Map;
  * @version 1.0
  * @since Nov 3, 2004
  */
-class PortletDescriptorRegistry {
+public class PortletDescriptorRegistry {
     /** Portlet deployment descriptor location. */
     private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 

@@ -24,13 +24,18 @@ import org.apache.pluto.driver.services.impl.resource.ResourceConfig;
 import org.apache.pluto.driver.services.impl.resource.ResourceConfigReader;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.core.PortletDescriptorRegistry;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.optional.db.common.DataSourceManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import java.util.Set;
+import java.util.Iterator;
 import java.io.InputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -44,6 +49,8 @@ public class DBPortletRegistryService
     implements PortletRegistryService, PortletRegistryAdminService {
 
     private static final Log LOG = LogFactory.getLog(DBPortletRegistryService.class);
+
+    private ServletContext servletContext;
 
     private DataSourceManager dataSourceManager;
 
@@ -70,6 +77,7 @@ public class DBPortletRegistryService
     }
 
     public void init(ServletContext ctx) throws DriverConfigurationException {
+        this.servletContext = ctx;
 
         if(LOG.isDebugEnabled()) {
             LOG.debug("Registering portlet applications. . .");
@@ -91,7 +99,14 @@ public class DBPortletRegistryService
     }
 
     public void destroy() throws DriverConfigurationException {
-
+        if(dataSourceManager != null) {
+            try {
+                dataSourceManager.shutdown();
+            }
+            catch(PortletContainerException pce) {
+                LOG.error("Unable to shutdown dataSourceManager: "+pce.getMessage(), pce);
+            }
+        }
     }
 
     public Set getPortletApplications() {
@@ -126,18 +141,43 @@ public class DBPortletRegistryService
         }
     }
 
-    public void addPortletApplication(PortletApplicationConfig app)
+    public void addPortletApplication(String contextPath)
     throws DriverAdministrationException {
-        if(app == null)
-            throw new IllegalArgumentException("Portal Application Config may not be null.");
+        if(contextPath == null)
+            throw new IllegalArgumentException("Can not add servlet context 'null'.");
 
         try {
+            PortletApplicationConfig app = new PortletApplicationConfig();
+            app.setContextPath(contextPath);
+
+            ServletContext portletContext = servletContext.getContext(contextPath);
+            if(portletContext == null) {
+                throw new DriverAdministrationException("Unable to locate context: "+contextPath+". Ensure that crossContext support is enabled and the portlet application has been deployed.");
+            }
+
+            PortletAppDD descriptor = getPortletDescriptor(portletContext);
+            Iterator it = descriptor.getPortlets().iterator();
+            while(it.hasNext()) {
+                PortletDD portlet = (PortletDD)it.next();
+                PortletWindowConfig config = new PortletWindowConfig();
+                config.setContextPath(contextPath);
+                config.setPortletName(portlet.getPortletName());
+                app.addPortlet(config);
+            }
             dao.addPortletApplication(app);
         }
 
-        catch(SQLException sqle) {
+        catch(PortletContainerException pce) {
+            throw new DriverAdministrationException("Unable to load descriptor. ", pce);
+        }
+       catch(SQLException sqle) {
             throw new DriverAdministrationException("Unable to add portlet application due to database error.", sqle);
         }
+    }
 
+
+    private PortletAppDD getPortletDescriptor(ServletContext context)
+    throws PortletContainerException {
+        return PortletDescriptorRegistry.getRegistry().getPortletAppDD(context);
     }
 }

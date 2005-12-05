@@ -49,6 +49,10 @@
       <property name="portletPreferencesService"><ref local="PortletPreferencesService"/></property>
     </bean>
 
+    <bean id="AdminConfiguration" class="org.apache.pluto.driver.config.impl.AdminConfigurationImpl">
+      <property name="portletRegistryAdminService"><ref local="PortletRegistryConfig"/></property>
+    </bean>
+
     <!-- ================================================ -->
     <!-- Portal Services injected into the Configuration  -->
     <!-- ================================================ -->
