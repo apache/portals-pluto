@@ -57,5 +57,6 @@ limitations under the License.
             <portlet context="/testsuite" name="TestPortlet2"/>
         </page>
         <page name="About Pluto" uri="/WEB-INF/fragments/about.jsp"/>
+        <page name="Admin" uri="/WEB-INF/fragments/admin/admin.jsp"/>
     </render-config>
 </pluto-portal-driver>

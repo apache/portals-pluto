@@ -45,7 +45,7 @@ class PortletRegistryDao extends AbstractDao {
     }
 
     public Set getPortletApplications() throws SQLException {
-        return new HashSet(doList(LIST_PORTLET_APP_SQL));
+        return new HashSet(doList(createPortletAppSQL(null)));
     }
 
     public PortletApplicationConfig getPortletApp(String context) throws SQLException {
@@ -157,16 +157,15 @@ class PortletRegistryDao extends AbstractDao {
         "       (SELECT portlet_app_id FROM portlet_app WHERE app_context = ?), ?" +
         ")";
 
-    public static final String LIST_PORTLET_APP_SQL = "SELECT * FROM portlet_app";
-
-
     private String createPortletAppSQL(String context) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT 'APP' as mode, app.portlet_app_id, app.app_context, ")
           .append("       p.portlet_id, p.portlet_name")
           .append("  FROM portlet_app app, portlet p ")
-          .append(" WHERE app.app_context = ").append(fmt(context)).append(" ")
-          .append("   AND portlet.portlet_ap_id = app.portlet_app_id");
+          .append(" WHERE p.portlet_app_id = app.portlet_app_id");
+        if(context != null) {
+          sb.append("   AND app.app_context = ").append(fmt(context)).append(" ");
+        }
         return sb.toString();
     }
 
@@ -180,8 +179,17 @@ class PortletRegistryDao extends AbstractDao {
     }
 
     private InstantiationResult instantiateApp(ResultSet rs, InstantiationResult lastResult) throws SQLException {
-        InstantiationResult result = lastResult;
-        PortletApplicationConfig appConfig = (PortletApplicationConfig) lastResult.getControl();
+        InstantiationResult result = null;
+        PortletApplicationConfig appConfig = null;
+
+        if(lastResult == null) {
+            result = new InstantiationResult();
+        }
+        else {
+            result = lastResult;
+            appConfig = (PortletApplicationConfig) lastResult.getControl();
+        }
+
         if(appConfig == null || !appConfig.getContextPath().equals(rs.getString("app_context"))) {
             appConfig = new PortletApplicationConfig();
             appConfig.setContextPath(rs.getString("app_context"));
