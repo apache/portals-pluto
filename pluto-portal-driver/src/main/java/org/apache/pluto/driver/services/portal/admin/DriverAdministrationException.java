@@ -23,9 +23,13 @@ import javax.servlet.ServletException;
  * @version 1.0
  * @since Nov 23, 2005
  */
-public class AdminException extends ServletException {
+public class DriverAdministrationException extends ServletException {
 
-    public AdminException(Throwable cause) {
+    public DriverAdministrationException(String string, Throwable throwable) {
+        super(string, throwable);
+    }
+
+    public DriverAdministrationException(Throwable cause) {
         super(cause);
     }
 

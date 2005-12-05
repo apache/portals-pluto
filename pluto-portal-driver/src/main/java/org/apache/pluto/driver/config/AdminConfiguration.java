@@ -19,10 +19,16 @@ import javax.servlet.ServletContext;
 public interface AdminConfiguration {
 
     /**
-     * Initialize the configuration
+     * Lifecyle method used to initialize the configuration
      * @param context
      */
-    void init(ServletContext context);
+    void init(ServletContext context) throws DriverConfigurationException;
+
+    /**
+     * Lifecylce method used to remove the configuration
+     * from service.
+     */
+    void destroy() throws DriverConfigurationException;
 
     /**
      * Retrieve the administrative service for managing the

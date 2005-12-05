@@ -29,7 +29,8 @@ import java.util.HashSet;
 import java.sql.*;
 
 /**
- * TODO JavaDoc
+ * Data Access object used for persisting PortletApplications
+ * and Portlets.
  *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
@@ -41,6 +42,23 @@ class PortletRegistryDao extends AbstractDao {
 
     public PortletRegistryDao(DataSource dataSource) {
         super(dataSource);
+    }
+
+    public Set getPortletApplications() throws SQLException {
+        return new HashSet(doList(LIST_PORTLET_APP_SQL));
+    }
+
+    public PortletApplicationConfig getPortletApp(String context) throws SQLException {
+        PortletApplicationConfig app = (PortletApplicationConfig)
+                doSelect(createPortletAppSQL(context));
+
+        return app;
+    }
+
+
+    public void addPortletApplication(PortletApplicationConfig config)
+    throws SQLException {
+
     }
 
     public void seedPortletApplications(Collection portletApplications)
@@ -141,17 +159,6 @@ class PortletRegistryDao extends AbstractDao {
 
     public static final String LIST_PORTLET_APP_SQL = "SELECT * FROM portlet_app";
 
-
-    public Set getPortletApplications() throws SQLException {
-        return new HashSet(doList(LIST_PORTLET_APP_SQL));
-    }
-
-    public PortletApplicationConfig getPortletApp(String context) throws SQLException {
-        PortletApplicationConfig app = (PortletApplicationConfig)
-                doSelect(createPortletAppSQL(context));
-
-        return app;
-    }
 
     private String createPortletAppSQL(String context) {
         StringBuffer sb = new StringBuffer();

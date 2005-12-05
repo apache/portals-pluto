@@ -11,6 +11,6 @@ import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
  */
 public interface PortletRegistryAdminService {
 
-    void addPortletApplication(PortletApplicationConfig app);
+    void addPortletApplication(PortletApplicationConfig app) throws DriverAdministrationException;
 
 }

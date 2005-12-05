@@ -24,14 +24,18 @@ package org.apache.pluto.driver;
  */
 public class AttributeKeys {
 
-    private AttributeKeys() {
-    }
 
     /**
-     * Attribute Key used to bind the applications driver config to the
+     * Attribute Key used to bind the application's driver config to the
      * ServletContext.
      */
     public static final String DRIVER_CONFIG = "driverConfig";
+
+    /**
+     * Attribute Key used to bind the application's driver admin config
+     * to the ServletContext.
+     */
+    public static final String DRIVER_ADMIN_CONFIG = "driverAdminConfig";
 
     /**
      * Attribute Key used to bind the application's portlet container to the
@@ -39,12 +43,13 @@ public class AttributeKeys {
      */
     public static final String PORTLET_CONTAINER = "portletContainer";
 
-
     /**
      * Attribute Key used to bind the current page to the request.
      */
     public static final String CURRENT_PAGE = "currentPage";
 
+    private AttributeKeys() {
 
+    }
 }
 

@@ -18,6 +18,8 @@ package org.apache.pluto.driver.services.impl.db;
 import org.apache.pluto.driver.services.portal.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
+import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
 import org.apache.pluto.driver.services.impl.resource.ResourceConfig;
 import org.apache.pluto.driver.services.impl.resource.ResourceConfigReader;
 import org.apache.pluto.driver.config.DriverConfigurationException;
@@ -38,11 +40,10 @@ import java.sql.SQLException;
  * @version 1.0
  * @since Nov 24, 2005
  */
-public class DBPortletRegistryService implements PortletRegistryService {
+public class DBPortletRegistryService
+    implements PortletRegistryService, PortletRegistryAdminService {
 
     private static final Log LOG = LogFactory.getLog(DBPortletRegistryService.class);
-
-    private ResourceConfig config;
 
     private DataSourceManager dataSourceManager;
 
@@ -76,7 +77,7 @@ public class DBPortletRegistryService implements PortletRegistryService {
 
         try {
             InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
-            config = ResourceConfigReader.getFactory().parse(in);
+            ResourceConfig config = ResourceConfigReader.getFactory().parse(in);
 
             dao.seedPortletApplications(config.getPortletApplications());
         }
@@ -125,7 +126,18 @@ public class DBPortletRegistryService implements PortletRegistryService {
         }
     }
 
-    public void addPortletApplication(PortletApplicationConfig app) {
+    public void addPortletApplication(PortletApplicationConfig app)
+    throws DriverAdministrationException {
+        if(app == null)
+            throw new IllegalArgumentException("Portal Application Config may not be null.");
+
+        try {
+            dao.addPortletApplication(app);
+        }
+
+        catch(SQLException sqle) {
+            throw new DriverAdministrationException("Unable to add portlet application due to database error.", sqle);
+        }
 
     }
 }

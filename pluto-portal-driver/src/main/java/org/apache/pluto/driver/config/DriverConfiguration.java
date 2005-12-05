@@ -37,13 +37,28 @@ import java.util.Collection;
  */
 public interface DriverConfiguration {
 
+//
+// Lifecycle Methods
+//
+
     /**
      * Initialization method used to place the driver
      * configuration into service.
-     *
+     * @throws DriverConfigurationException when an error occurs during startup.
      * @param context
      */
-    void init(ServletContext context);
+    void init(ServletContext context) throws DriverConfigurationException;
+
+    /**
+     * Shutdown method used to remove the driver
+     * configuration from service;
+     * @throws DriverConfigurationException when an error occurs during shutdown.
+     */
+    void destroy() throws DriverConfigurationException;
+
+//
+// Service / Configuration Methods
+//
 
     /**
      * Retrieve the name of the portal
@@ -88,4 +103,5 @@ public interface DriverConfiguration {
     PortalCallbackService getPortalCallbackService();
 
     PortletPreferencesService getPortletPreferencesService();
+
 }

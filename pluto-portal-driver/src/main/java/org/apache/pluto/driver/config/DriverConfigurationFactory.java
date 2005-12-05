@@ -18,6 +18,7 @@ package org.apache.pluto.driver.config;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import javax.servlet.ServletContext;
 import java.io.InputStream;
@@ -56,20 +57,25 @@ public class DriverConfigurationFactory {
             LOG.debug("Retrieving driver configuration from: "+DRIVER_CONFIG);
         }
 
-        DriverConfiguration configuration = (DriverConfiguration)
-                getBeanFactory(context).getBean("DriverConfiguration");
+        try {
+            DriverConfiguration configuration = (DriverConfiguration)
+                    getBeanFactory(context).getBean("DriverConfiguration");
 
-        configuration.init(context);
+            configuration.init(context);
 
 
-        if(LOG.isDebugEnabled()) {
-            LOG.debug(
-                "Driver ResourceConfig of type "+configuration.getClass() +
-                " Initialized and Ready For Service"
-            );
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(
+                        "Driver ResourceConfig of type "+configuration.getClass() +
+                                " Initialized and Ready For Service"
+                );
+            }
+            return configuration;
+        }
+        catch(NoSuchBeanDefinitionException nsbde) {
+            throw new DriverConfigurationException("Unable to find Driver Configuration.", nsbde);
         }
 
-        return configuration;
     }
 
 
@@ -78,19 +84,23 @@ public class DriverConfigurationFactory {
             LOG.debug("Retrieving admin configuration from: "+DRIVER_CONFIG);
         }
 
-        AdminConfiguration configuration = (AdminConfiguration)
-            getBeanFactory(context).getBean("AdminConfiguration");
+        try {
+            AdminConfiguration configuration = (AdminConfiguration)
+                    getBeanFactory(context).getBean("AdminConfiguration");
 
-        configuration.init(context);
-
-        if(LOG.isDebugEnabled()) {
-            LOG.debug(
-              "Admin config of type "+configuration.getClass() +
-              "Initialized and ready for service."
-            );
+            configuration.init(context);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(
+                        "Admin config of type "+configuration.getClass() +
+                                "Initialized and ready for service."
+                );
+            }
+            return configuration;
         }
 
-        return configuration;
+        catch(NoSuchBeanDefinitionException nsbde) {
+            return null;
+        }
     }
 
     private XmlBeanFactory getBeanFactory(ServletContext context) {
