@@ -66,7 +66,7 @@ public class PublishMojo extends AbstractMojo {
     protected String password = "pluto";
 
     /**
-     * @parameter expression="${maven.final.name}"
+     * @parameter expression="${project.build.finalName}"
      */
     protected String portletApplicationContext;
 
