@@ -1,5 +1,5 @@
 /*
- * Copyright 2004 The Apache Software Foundation
+ * Copyright 2003,2004 The Apache Software Foundation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,41 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.util;
+package org.apache.pluto.util.publish;
 
-import java.io.File;
-
+import org.apache.pluto.util.UtilityException;
 
 /**
- * Exception thrown if an error occurs while managing
- * a portal instance.
+ * TODO JavaDoc
+ *
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
+ * @version 1.0
+ * @since Dec 5, 2005
  */
-public class UtilityException extends Exception {
+public class PublishException extends UtilityException {
 
-    private File installDir;
-
-    public UtilityException() {
+    public PublishException() {
     }
 
-    public UtilityException(String message) {
+    public PublishException(String message) {
         super(message);
     }
 
-    public UtilityException(String message, Throwable cause) {
+    public PublishException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public UtilityException(Throwable cause) {
+    public PublishException(Throwable cause) {
         super(cause);
     }
-
-    public UtilityException(String message, Throwable cause, File installDir) {
-        super(message, cause);
-        this.installDir = installDir;
-    }
-
-    public File getInstallDir() {
-        return installDir;
-    }
-
 }

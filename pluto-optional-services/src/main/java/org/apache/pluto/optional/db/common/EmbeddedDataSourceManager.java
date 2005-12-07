@@ -23,10 +23,7 @@ import org.apache.commons.logging.Log;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -41,10 +38,10 @@ import java.util.Iterator;
 public class EmbeddedDataSourceManager implements DataSourceManager {
 
     private static final Log LOG =
-            LogFactory.getLog(EmbeddedDataSourceManager.class);
+        LogFactory.getLog(EmbeddedDataSourceManager.class);
 
-    private static final String DEFAULT_SYS_DIR =
-        System.getProperty("user.home") + "/.pluto/portal-driver/data";
+    private static final File DEFAULT_SYS_DIR =
+        new File(System.getProperty("user.home") + "/.pluto/portal-driver/data");
 
     private static final String DEFAULT_CONNECTION_STRING =
         "databaseName=PLUTO_PORTAL_DRIVER;name=pluto_portal_driver;password=apachep0rtals;create=true";
@@ -59,17 +56,24 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
 
     public EmbeddedDataSourceManager() {
         this(DEFAULT_SYS_DIR, DEFAULT_CONNECTION_STRING);
+        LOG.debug("Default Sys Dir: "+DEFAULT_SYS_DIR);
     }
 
     public EmbeddedDataSourceManager(String connectionString) {
         this(DEFAULT_SYS_DIR, connectionString);
+        LOG.debug("Default Sys Dir: "+DEFAULT_SYS_DIR);
     }
 
-    public EmbeddedDataSourceManager(String systemDirectory, String connectionString) {
+    public EmbeddedDataSourceManager(File systemDirectory, String connectionString) {
         this.connectionString = connectionString;
-        System.setProperty("derby.system.home", systemDirectory);
+        LOG.debug("2) Default Sys Dir: "+DEFAULT_SYS_DIR);
+        LOG.debug("2) Sys Dir: "+systemDirectory);
+        LOG.debug("2) ConStr : "+connectionString);
+        System.setProperty("derby.system.home", systemDirectory.getAbsolutePath());
         if (LOG.isDebugEnabled()) {
-        	LOG.debug("Derby database home (derby.system.home)=" + systemDirectory);
+            File sysDir = systemDirectory;
+            LOG.debug("User home is: "+System.getProperty("user.home"));
+            LOG.debug("Derby database home (derby.system.home) =" + sysDir.getAbsolutePath());
         }
     }
 
