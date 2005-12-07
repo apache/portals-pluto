@@ -1,16 +1,11 @@
-<%@ page import="org.apache.pluto.driver.config.DriverConfiguration" %>
-<%@ page import="org.apache.pluto.driver.AttributeKeys" %>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
 <TABLE>
 <TR><TH>About the Pluto Portal Driver</TH></TR>
-<%
-	DriverConfiguration dconfig = (DriverConfiguration) config.getServletContext()
-            .getAttribute(AttributeKeys.DRIVER_CONFIG);
-%>
 
 <td>
-Portal Name: <%= dconfig.getPortalName() %> <br>
-Portal Version: <%= dconfig.getPortalVersion() %> <br>
+Portal Name: <c:out value="${driverConfig.portalName}"/> <br>
+Portal Version: <c:out value="${driverConfig.portalVersion}"/> <br>
 Servlet Container: <%= config.getServletContext().getServerInfo() %> <br>
 </td>
 
