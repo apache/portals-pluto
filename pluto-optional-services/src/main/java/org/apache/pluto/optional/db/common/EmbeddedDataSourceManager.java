@@ -44,7 +44,8 @@ public class EmbeddedDataSourceManager implements DataSourceManager {
         new File(System.getProperty("user.home") + "/.pluto/portal-driver/data");
 
     private static final String DEFAULT_CONNECTION_STRING =
-        "databaseName=PLUTO_PORTAL_DRIVER;name=pluto_portal_driver;password=apachep0rtals;create=true";
+        "user=pluto_portal_driver;password=apachep0rtals;create=true";
+//        "databaseName=PLUTO_PORTAL_DRIVER;user=pluto_portal_driver;password=apachep0rtals;create=true";
 
 
     private String connectionString;

@@ -57,6 +57,11 @@ public class DBPortletPreferencesService
                    "Unable to startup portlet preferences service due to dataSourceManager error."+
                    pce.getMessage();
                 LOG.error(msg, pce);
+                try {
+					dataSourceManager.shutdown();
+				} catch (PortletContainerException e) {
+	                throw new InstantiationException(msg + e.getMessage());
+				}
                 throw new InstantiationException(msg);
             }
         }

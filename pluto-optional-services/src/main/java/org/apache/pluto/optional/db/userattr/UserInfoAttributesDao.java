@@ -114,13 +114,27 @@ class UserInfoAttributesDao extends AbstractPreparedDao {
            //TODO: finish impl
            throw new UnsupportedOperationException("Not yet implemented");
        }
-       catch(SQLException sqle) {
+       catch(SQLException e) {
            if(LOG.isErrorEnabled()) {
-               LOG.error("Error saving preferences: ", sqle);
+               LOG.error("Error saving preferences: ", e);
            }
-           conn.rollback();
-           throw sqle;
+           if (conn != null) {
+        	   conn.rollback();
+           }
+           throw e;
        }
+       catch(Throwable e) {
+           if(LOG.isErrorEnabled()) {
+               LOG.error("Error saving preferences: ", e);
+           }
+           if (conn != null) {
+        	   conn.rollback();
+           }
+           //Make sure the client knows about problem
+           SQLException e1 = new SQLException();
+           e1.initCause(e);
+           throw e1;
+       } 
        finally {
            conn.setAutoCommit(autoCommit);
            cleanup(null, stmt, null);

@@ -30,6 +30,10 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -39,6 +43,9 @@ import java.util.Map;
 
 public class TestPortlet extends GenericPortlet {
 
+	/** Internal logger. */
+	private static final Log LOG = LogFactory.getLog(TestPortlet.class);
+	
     private List configs;
     private Map tests;
 
@@ -72,10 +79,12 @@ public class TestPortlet extends GenericPortlet {
                 }
             }
             catch (Throwable t) {
+            	LOG.error(t);
                 throw new PortletException("Unable to read configuration", t);
             }
         }
         else {
+        	LOG.error("Configuration File Not Found");
             throw new IllegalStateException("Configuration File Not Found");
         }
     }
@@ -88,10 +97,17 @@ public class TestPortlet extends GenericPortlet {
         String testId = getTestId(request);
         PortletTest test = (PortletTest)tests.get(testId);
 
+//        if (LOG.isDebugEnabled()) {
+//    		LOG.debug("Processing Portlet Test method in processAction(): " + test);
+//    	}
+
         if(test!=null && test instanceof ActionTest) {
             TestResults results = test.doTest(getPortletConfig(),
                                               getPortletContext(),
                                               request, response);
+//        	if (LOG.isDebugEnabled()) {
+//        		LOG.debug("Action Test results in processAction(): " + results);
+//        	}
             request.getPortletSession().setAttribute(test.getClass().getName(), results);
         }
         Map renderParameters = null;
@@ -120,6 +136,9 @@ public class TestPortlet extends GenericPortlet {
         }
 
         PortletTest test = (PortletTest)tests.get(testId);
+//        if (LOG.isDebugEnabled()) {
+//    		LOG.debug("Processing Portlet Test method in doView(): " + test);
+//    	}
 
         WindowState state = request.getWindowState();
         if (!state.equals(WindowState.MINIMIZED)) {
@@ -129,11 +148,17 @@ public class TestPortlet extends GenericPortlet {
                 TestResults results = test.doTest(getPortletConfig(),
                                                   getPortletContext(),
                                                   request, response);
+//            	if (LOG.isDebugEnabled()) {
+//            		LOG.debug("Test results in doView(): " + results);
+//            	}                
                 request.setAttribute("results", results);
             }
             else if(test != null) {
                 PortletSession session = request.getPortletSession();
                 TestResults results = (TestResults)session.getAttribute(test.getClass().getName());
+//            	if (LOG.isDebugEnabled()) {
+//            		LOG.debug("Action Test results in doView(): " + results);
+//            	}                
                 request.setAttribute("results", results);
             }
 

@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.testsuite.ActionTest;
 import org.apache.pluto.testsuite.TestResult;
 
@@ -34,6 +36,9 @@ public class SimplePreferenceTest
  extends ActionAbstractReflectivePortletTest
  implements ActionTest {
 
+    private static final Log LOG =
+        LogFactory.getLog(SimplePreferenceTest.class);
+    
     private static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
 
     public String getTestSuiteName() {
@@ -178,17 +183,20 @@ public class SimplePreferenceTest
         try {
             preferences.setValue("VALIDATION_TEST_KEY", " Spaces removed by trim ");
             preferences.store();
-        } catch (ReadOnlyException roe) {
-
+        } catch (ReadOnlyException e) {
+        	LOG.error(e);
         } catch (ValidatorException e) {
+        	//We should get here.
             exceptionThrown = true;
             try {
+            	//get rid of spaces because it causes problems with reset() call.
+                preferences.setValue("VALIDATION_TEST_KEY", "OK");
             	preferences.reset("VALIDATION_TEST_KEY");
             } catch (Throwable t) {
-            	
+            	LOG.error(t);            	
             }
-        } catch (IOException io) {
-
+        } catch (IOException e) {
+        	LOG.error(e);
         }
 
         if (exceptionThrown) {
@@ -206,6 +214,9 @@ public class SimplePreferenceTest
         res.setDesc("Ensure storage works.");
 
         PortletPreferences preferences = req.getPreferences();
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Preferences to store: " + preferences);
+        }
         boolean setOccured = false;
         boolean storeOccured = false;
         try {
@@ -216,20 +227,21 @@ public class SimplePreferenceTest
             }
 
             preferences.store();
+            
             if("notTheOriginal".equals(preferences.getValue("dummyName", "Default"))) {
                 storeOccured = true;
             }
 
             preferences.reset("dummyName");
         }
-        catch(ReadOnlyException roe) {
-
+        catch(ReadOnlyException e) {
+        	LOG.error("ReadOnly problem: ", e);
         }
-        catch(ValidatorException ve) {
-
+        catch(ValidatorException e) {
+        	LOG.error("Validation problem: ",e);
         }
-        catch(IOException io) {
-
+        catch(IOException e) {
+        	LOG.error("IO problem: ", e);
         }
 
         if(setOccured && storeOccured) {

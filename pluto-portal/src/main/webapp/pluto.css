@@ -178,6 +178,49 @@ span.help {
   background: url(images/controls/help.png) no-repeat;
 }
 
+/* Portlet mode icons */
+img.min {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.max {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.norm {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.view {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.edit {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.help {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
 /* Start look and feel -- end positioning */
 
 fieldset {
