@@ -16,42 +16,76 @@
 	<version>1.1-SNAPSHOT</version>
   </parent>
   <dependencies>
+
+
+  <!-- ===== ======================= ===== -->
+  <!-- ===== Pluto Support Libraries ===== -->
+  <!-- ===== ======================= ===== -->
     <dependency>
       <groupId>org.apache.pluto</groupId>
 	  <artifactId>pluto-descriptor-api</artifactId>
 	  <version>${pom.version}</version>
 	  <scope>compile</scope>
     </dependency>
+
+    <dependency>
+       <groupId>org.apache.pluto</groupId>
+       <artifactId>pluto-descriptor-impl</artifactId>
+       <version>${pom.version}</version>
+       <scope>runtime</scope>
+    </dependency>
+
+  <!-- ===== ======================= ===== -->
+  <!-- ===== Other Support Libraries ===== -->
+  <!-- ===== ======================= ===== -->
     <dependency>
       <groupId>commons-logging</groupId>
 	  <artifactId>commons-logging</artifactId>
 	  <version>1.0.4</version>
 	  <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>avalon-framework</groupId>
+          <artifactId>avalon-framework</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>logkit</groupId>
+            <artifactId>logkit</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-	<dependency>
+
+    <!-- ===== ======================= ===== -->
+    <!-- ===== Specification Libraries ===== -->
+    <!-- ===== ======================= ===== -->
+    <dependency>
       <groupId>portlet-api</groupId>
 	  <artifactId>portlet-api</artifactId>
 	  <version>1.0</version>
-	  <scope>provided</scope>
+	  <scope>compile</scope>
     </dependency>
-	<dependency>
-      <groupId>portlet-api</groupId>
-	  <artifactId>portlet-api</artifactId>
-	  <version>1.0</version>
-	  <scope>provided</scope>
-    </dependency>
-	<dependency>
+
+    <dependency>
       <groupId>servletapi</groupId>
 	  <artifactId>servletapi</artifactId>
 	  <version>2.3</version>
 	  <scope>provided</scope>
     </dependency>
+
+    <!-- ===== ======================= ===== -->
+    <!-- ===== Testing       Libraries ===== -->
+    <!-- ===== ======================= ===== -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>jmock</groupId>
       <artifactId>jmock</artifactId>
@@ -59,6 +93,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <resources>
       <resource>

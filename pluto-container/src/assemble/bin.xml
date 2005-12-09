@@ -7,22 +7,33 @@
   </formats>
   <fileSets>
     <fileSet>
+      <directory>../</directory>
+      <outputDirectory>/</outputDirectory>
       <includes>
         <include>README*</include>
-        <include>LICENSE*</include>
-        <include>NOTICE*</include>
+		<include>LICENSE*</include>
+		<include>NOTICE*</include>
       </includes>
     </fileSet>
     <fileSet>
       <directory>target</directory>
-      <outputDirectory></outputDirectory>
+	  <outputDirectory>/</outputDirectory>
       <includes>
         <include>*.jar</include>
       </includes>
     </fileSet>
+    <fileSet>
+      <directory>target/site</directory>
+	  <outputDirectory>docs</outputDirectory>
+      <includes>
+        <include>**/*.*</include>
+      </includes>
+    </fileSet>
   </fileSets>
   <dependencySets>
-
+    <dependencySet>
+	  <outputDirectory>lib</outputDirectory>
+      <scope>runtime</scope>
+    </dependencySet>
   </dependencySets>
 </assembly>
-
