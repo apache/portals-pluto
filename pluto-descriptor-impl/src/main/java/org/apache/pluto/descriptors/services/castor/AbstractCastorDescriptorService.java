@@ -15,12 +15,11 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
+import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.*;
 
@@ -70,19 +69,13 @@ abstract class AbstractCastorDescriptorService {
      * @throws IOException
      */
     protected void writeInternal(Object object, OutputStream out) throws IOException {
-        OutputFormat of = new OutputFormat();
-        of.setIndenting(true);
-        of.setIndent(2);
-        of.setLineWidth(600);
-        of.setDoctype(getPublicId(), getDTDUri());
 
         OutputStreamWriter writer =
             new OutputStreamWriter(out);
-        XMLSerializer serializer = new XMLSerializer(writer, of);
 
         try {
             Marshaller marshaller =
-                new Marshaller(serializer.asDocumentHandler());
+                new Marshaller(new DefaultHandler()); //serializer.asDocumentHandler());
             marshaller.setMapping(getCastorMapping());
             marshaller.marshal(object);
         } catch(IOException io) {
