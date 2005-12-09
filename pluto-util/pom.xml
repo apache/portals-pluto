@@ -43,13 +43,13 @@
       <version>1.0</version>
     </dependency>
 
-      <dependency>
-          <groupId>commons-httpclient</groupId>
-          <artifactId>commons-httpclient</artifactId>
-          <version>3.0-rc4</version>
-      </dependency>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.0-rc4</version>
+    </dependency>
 
-      <dependency>
+    <dependency>
       <groupId>commons-digester</groupId>
       <artifactId>commons-digester</artifactId>
       <version>1.6</version>
@@ -68,8 +68,16 @@
 	  <exclusions>
         <exclusion>
           <groupId>avalon-framework</groupId>
-		  <artifactId>avalon-framework</artifactId>
-		</exclusion>
+          <artifactId>avalon-framework</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>logkit</groupId>
+            <artifactId>logkit</artifactId>
+        </exclusion>
 	  </exclusions>
     </dependency>
 

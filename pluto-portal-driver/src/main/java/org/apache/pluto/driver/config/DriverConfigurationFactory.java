@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.core.io.InputStreamResource;
 
 import javax.servlet.ServletContext;
 import java.io.InputStream;
@@ -107,7 +108,7 @@ public class DriverConfigurationFactory {
         if(beanFactory == null) {
             InputStream in =
                     context.getResourceAsStream(DRIVER_CONFIG);
-            beanFactory = new XmlBeanFactory(in);
+            beanFactory = new XmlBeanFactory(new InputStreamResource(in, "Driver Configuration"));
         }
         return beanFactory;
     }

@@ -25,12 +25,10 @@
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
           </exclusion>
-<!--
 		  <exclusion>
 		    <groupId>commmons-logging</groupId>
             <artifactId>commons-logging</artifactId>
           </exclusion>
--->          
 		  <exclusion>
 		    <groupId>junit</groupId>
             <artifactId>junit</artifactId>
