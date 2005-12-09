@@ -1,3 +1,11 @@
+<!--
+To manually build this distribution:
+	1. Download Tomcat 5.5.9 and unpack it into the root drive.
+	2. Run mvn clean followed by mvn install from the parent dir.
+	3. Run mvn pluto:install -DinstallDir=/jakarta-tomcat-5.5.9 from the parent dir.
+	4. Run mvn site:site to build web site from this dir.
+	5. Run mvn assembly:assembly from this dir to create the archives.
+-->
 <assembly>
   <id>bin</id>
   <formats>
@@ -8,6 +16,7 @@
   <fileSets>
     <fileSet>
       <directory>../</directory>	
+      <outputDirectory>PlutoDomain</outputDirectory>
       <includes>
         <include>README*</include>
         <include>LICENSE*</include>
@@ -15,21 +24,13 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>target</directory>
+      <directory>/jakarta-tomcat-5.5.9</directory>
       <outputDirectory></outputDirectory>
-      <includes>
-        <include>*.war</include>
-      </includes>
     </fileSet>
     <fileSet>
-      <directory>../pluto-testsuite/target</directory>
-      <outputDirectory></outputDirectory>
-      <includes>
-        <include>*.war</include>
-      </includes>
-    </fileSet>
-    <fileSet>
+    <!-- mvn site:site must be run first -->
       <directory>target/site</directory>
+      <outputDirectory>PlutoDomain/docs</outputDirectory>
     </fileSet>
   </fileSets>
   <dependencySets>
