@@ -243,6 +243,12 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
       </plugin>
+	  <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <tagBase>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags</tagBase>
+        </configuration>
+      </plugin>
     </plugins>
   </reporting>
 
