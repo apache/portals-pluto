@@ -21,7 +21,7 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>src/site</directory>
+      <directory>target/site</directory>
 	  <outputDirectory>docs</outputDirectory>
       <includes>
         <include>*.*</include>
