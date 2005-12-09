@@ -49,7 +49,6 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
     public void writeConfiguration(InstallationConfig config)
     throws IOException {
 
-        File domainDir = getWebAppDir(config);
         File contextConfigurationDirectory = getConfigurationDir(config);
 
         Iterator it = config.getPortletApplications().entrySet().iterator();
@@ -58,7 +57,8 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
             String context = entry.getKey().toString();
             File portletApp = (File)entry.getValue();
 
-            File deployed = new File(domainDir, portletApp.getName());
+            String deployed = ".."+File.separatorChar+config.getServerConfig().getDomain() +
+                    File.separatorChar +  portletApp.getName();
             String contents = getPortletApplicationConfig(context, deployed);
             FileWriter out = new FileWriter(
                     new File(contextConfigurationDirectory, context+".xml"));
@@ -107,16 +107,14 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
     }
 
     private String getPortalApplicationConfig(InstallationConfig config) {
-        File domainDir = this.getWebAppDir(config);
-        String war = domainDir.getAbsolutePath() + File.separatorChar +
-                config.getPortalApplication().getName();
+        String war = ".."+File.separatorChar+config.getServerConfig().getDomain() +
+                File.separatorChar +  config.getPortalApplication().getName();
         String contextPath = config.getPortalContextPath();
         return getConfigContents(war, contextPath);
     }
 
-    private String getPortletApplicationConfig(String contextPath, File file) {
-        String war = file.getAbsolutePath();
-        return getConfigContents(war, contextPath);
+    private String getPortletApplicationConfig(String contextPath, String file) {
+        return getConfigContents(file, contextPath);
     }
 
     private String getConfigContents(String war, String contextPath) {

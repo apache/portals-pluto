@@ -25,10 +25,20 @@ To manually build this distribution:
         <include>NOTICE*</include>
       </includes>
     </fileSet>
+
     <fileSet>
       <directory>/jakarta-tomcat-5.5.9</directory>
       <outputDirectory></outputDirectory>
     </fileSet>
+
+	<fileSet>
+      <directory>src/assemble/config</directory>
+	  <outputDirectory>conf/Catalina/localhost</outputDirectory>
+      <includes>
+        <include>pluto-docs.xml</include>
+      <includes>
+	</fileSet>
+
     <fileSet>
     <!-- mvn site:site must be run first -->
       <directory>target/site</directory>
