@@ -1,10 +1,12 @@
 <!--
 To manually build this distribution:
 	1. Download Tomcat 5.5.9 and unpack it into the root drive.
-	2. Run mvn clean followed by mvn install from the parent dir.
-	3. Run mvn pluto:install -DinstallDir=/jakarta-tomcat-5.5.9 from the parent dir.
-	4. Run mvn site:site to build web site from this dir.
-	5. Run mvn assembly:assembly from this dir to create the archives.
+	2. Add pluto user to Tomcat's conf/tomcat-users.xml
+	3. Add emptySessionPath="true" to Tomcat's conf/server.xml.
+	4. Run mvn clean followed by mvn install from the parent dir.
+	5. Run mvn pluto:install -DinstallDir=/jakarta-tomcat-5.5.9 from the parent dir.
+	6. Run mvn site:site to build web site from this dir.
+	7. Run mvn assembly:assembly from this dir to create the archives.
 -->
 <assembly>
   <id>bin</id>
