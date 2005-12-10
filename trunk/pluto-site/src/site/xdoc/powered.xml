@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!-- 
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+  <properties>
+    <author email="ddewolf.AT.apache.D0T.org">David H. DeWolf</author>
+    <title>Pluto Project | Declaration of Intent</title>
+  </properties>
+
+<body>
+  <section name="Portal using Pluto">
+    <p>
+	  The following portals use Pluto for their portlet container:
+	  <table>
+      <tr><th>Portal</th><th>Website</th><th>License</th><th>Status</th><th>Pluto Version</th></tr>
+	  <tr><td>Apache Jetspeed 2</td>
+          <td><a href="http://portals.apache.org/jetspeed-2">http://portals.apache.org/jetspeed-2</a></td>
+          <td>Apache 2.0</td>
+          <td></td>
+          <td>1.0.1</td></tr>
+	  <tr><td>Apache Cocoon</td>
+          <td><a href="http://cocoon.apache.org">http://cocoon.apache.org</a></td>
+          <td>Apache 2.0</td>
+          <td></td>
+          <td>1.0.1</td></tr>
+      <tr><td>uPortal</td>
+          <td><a href="http://www.uportal.org">http://www.uportal.org</a></td>
+          <td>JA-SIG</td>
+          <td></td>
+          <td>1.0.1</td></tr>
+      <tr><td>InfoGlue</td>
+          <td><a href="http://www.infoglue.org">http://www.infoglue.org</a></td>
+          <td>GPL</td>
+          <td></td>
+          <td>1.0.1</td></tr>
+      <tr><td>Jahia</td>
+          <td><a href="http://www.jahia.org">http://www.jahia.org</a></td>
+          <td><a href="http://www.collaborativesource.org">Proprietary</a></td>
+          <td>(http://www.jahia.org/cvs), branch JAHIA_PLUTO_BRANCH</td>
+          <td>1.0.1</td></tr>
+	  </table>
+    </p>
+
+	<p>
+    The following applications utilize Pluto for providing Plugin Extensibility:
+    <table>
+      <tr><th>Portal</th><th>Website</th><th>License</th><th>Status</th><th>Pluto Version</th></tr>
+	  <tr><td>Apache Geronimo </td>
+          <td><a href="http://geronimo.apache.org/">http://geronimo.apache.org</a></td>
+          <td>Apache 2.0</td>
+          <td>Web Management Console</td>
+          <td>1.0.1</td></tr>
+    </table>
+	</p>
+  </section>
+</body>
+</document>
+
+

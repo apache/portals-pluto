@@ -1,0 +1,75 @@
+<project> 
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.pluto.ant</groupId>
+  <artifactId>pluto-ant-tasks</artifactId> 
+  <packaging>jar</packaging>
+  <name>Pluto Ant Tasks</name> 
+  <description>
+    The Pluto Ant Tasks are used to assemble, deploy, and publish
+	portlets to the Pluto Portal Driver.
+  </description>
+
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+	<artifactId>pluto</artifactId>
+	<version>1.1.0-alpha1</version>
+  </parent>
+
+   <dependencies>
+     <dependency>
+       <groupId>org.apache.pluto</groupId>
+       <artifactId>pluto-util</artifactId>
+	   <version>${pom.version}</version>
+       <scope>compile</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>avalon-framework</groupId>
+            <artifactId>avalon-framework</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>logkit</groupId>
+            <artifactId>logkit</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+          </exclusion>
+      </exclusions>
+     </dependency>
+
+     <dependency>
+       <groupId>ant</groupId>
+       <artifactId>ant</artifactId>
+       <version>1.6.5</version>
+       <scope>provided</scope>
+     </dependency>
+
+   </dependencies>
+
+  <build> 
+    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> 
+    <resources>
+
+    </resources>
+	<plugins>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+	    <configuration>
+          <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
+        </configuration>
+      </plugin>
+    <plugin>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <configuration>
+        <descriptor>src/assemble/bin.xml</descriptor>
+      </configuration>
+    </plugin>
+	</plugins>
+
+  </build> 
+</project>
+

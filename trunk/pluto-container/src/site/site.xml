@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Maven">
+  <bannerLeft>
+    <name>Pluto</name>
+    <src>http://portals.apache.org/pluto/images/pluto.png</src>
+    <href>http://portals.apache.org/pluto</href>
+  </bannerLeft>
+  <bannerRight>
+    <src>http://portals.apache.org/pluto/images/banner.png</src>
+  </bannerRight>
+  <body>
+    <links>
+      <item name="Pluto Home" href="http://portals.apache.org/pluto"/>
+      <item name="JSR 168" href="http://jcp.org/en/jsr/detail?id=168"/>
+	  <item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh/pluto-container"/>
+    </links>
+
+	<menu name="Portlet Container">
+      <item name="Getting Started" href="/getting-started.html"/>
+      <item name="Embedding Pluto" href="/embed.html"/>
+	</menu>
+
+    ${reports}
+  </body>
+</project>

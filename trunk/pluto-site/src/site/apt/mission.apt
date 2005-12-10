@@ -1,0 +1,54 @@
+ ------
+ The Pluto Project Mission
+ ------
+ David H. DeWolf
+ ------
+ 01 Nov 2005
+ ------
+
+The Pluto Project Mission
+
+  The Pluto Portlet Container is the Reference Implementation of the 
+  Java Portlet Specification. As such, Pluto offers the development 
+  community a reference for interpretation of the specification, 
+  portlet developers a container with which compliant portlets can be 
+  tested, and portal developers a compliant container with which they 
+  can integrate.
+
+  The following document attempts to clarify the development priorities 
+  of the Apache Pluto project.
+
+  The primary concern of the pluto community is to ensure that the Pluto 
+  Container maintains compatibility with the most current Java Portlet 
+  Specification. Enhancements and bug fixes should be completed in a 
+  manner in which compatibility is maintained.
+
+  It is the responsibility of the pluto development team to ensure that 
+  no ambiguity is introduced into the reference implementation. No 
+  enhancements should be implemented which introduce questions about 
+  the specification.
+
+  It is desirable for Pluto to become a robust and easy to use portlet 
+  container. This will facilitate its wider acceptance and usage in 
+  the community. In order to accomplish these goals, it is assumed 
+  that enhancements which are above and beyond the specification will 
+  be introduced. These enhancements may be integrated with Pluto as long 
+  as they do not compromise the integrity of the reference implementation 
+  as described above.
+
+  Furthermore, functionality which is clearly beyond the scope of the 
+  specification should be documented as such and placed into a package 
+  which helps to distinguish it as such. The Pluto container should always 
+  remain fully specification compliant and in working state when these 
+  enhancements are removed. In most cases, this removal should be supported 
+  through configuration parameters.
+
+  Finally, while the pluto project contains several subprojects, it is important 
+  to realize that the container itself is the most important aspect of the 
+  project. It, in an of itself, is the Java Portlet reference implementation. 
+  The portal driver (Pluto Test Portal), testsuite, and deployer exist to simplfy 
+  the use and testing of the container. As such, any significant enhancements to 
+  these components (most especially the portal driver) should be scrutinized before 
+  implementation, as most likely, it is outside the scope of the pluto project and 
+  belong in a portal full implementation. 
+

@@ -1,0 +1,44 @@
+
+ ------
+ Getting Started
+ ------
+ David H. DeWolf
+ ------
+ 23 Nov 2005
+ ------
+
+Getting Started
+
+  The Pluto Ant Tasks have been created to assist those not using
+  maven with the assembly, deployment, and publishing of Maven.
+  A usage example is shown below:
+
+---------------
+
+  <path id="classes">
+    <!--
+      Pluto Ant Tasks depend upon the following libraries:
+        * pluto-ant-tasks-${version}.jar
+        * pluto-util-${version}.jar
+        * pluto-descriptor-api-${version}.jar
+        * pluto-descriptor-util-${version}.jar
+        * commons-logging-1.0.4.jar
+        * castor-0.9.6
+      -->
+    <fileset dir="/path/to/pluto-libraries" includes="**/*.jar"/>
+    <fileset dir="/path/to/commons-logging" includes="**/*.jar"/>
+    <fileset dir="/path/to/castor" includes="**/*.jar"/>
+  </path>
+
+  <typedef name="passemble" classname="org.apache.pluto.ant.AssembleTask"
+		  classpathref="classes"/>
+
+   <target name="passemble">
+     <passemble 
+       webxml="src/config/web.xml" 
+       portletxml="src/config/portlet.xml" 
+       destfile="src/webapp/WEB-INF/web.xml"/>
+   </target>
+
+---------------
+

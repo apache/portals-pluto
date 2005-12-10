@@ -1,0 +1,28 @@
+ ------
+ Supported App Servers
+ ------
+ David H. DeWolf
+ ------
+ 24 Sept 2005
+ ------
+
+Supported App Servers
+
+  The following application servers have been tested with Pluto 1.1.
+
+*--           --*--        --*--        --*--                 --*
+|    App Server   |  Version   |   Status   | Notes             |
+*--           --+--        --*--        --*--                 --*
+|    Tomcat       |   5.5.9    |   WORKING  |Use pluto-util module to install the the container and portal into tomcat.   |
+*--           --+--        --*--        --*--                 --*
+|    Tomcat       |   5.5.12    |  MANUAL   |Tomcat contains a bug and does not recognize the context configuration.  Manual Installation and renaming will work.   |
+*--           --+--        --*--        --*--                 --*
+|    Jetty        |   5.1.5rc2  |  BEING FIXED  | Deployment Descriptor Error.  See Issue Log  |
+*--           --+--        --*--        --*--                 --*
+|    WebLogic     |            |  UNTESTED  |                   |
+*--           --+--        --*--        --*--                 --*
+|    Websphere    |            |  UNTESTED  |                   |
+*--           --+--        --*--        --*--                 --*
+|    SunOne       |            |  UNTESTED  |                   |
+*--           --+--        --*--        --*--                 --*
+

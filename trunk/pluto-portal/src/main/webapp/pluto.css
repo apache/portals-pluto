@@ -1,0 +1,253 @@
+
+body {
+  font-family: helvetica, sans-serif;
+  background-color: #2E6794;
+}
+
+#portal {
+  margin: 0px auto;
+  background-color: white;
+  border: 1px solid black;
+}
+
+#header {
+  background-color: #8DB7DF;
+  border-bottom: 1px solid #2E6794;
+  width: auto;
+  height: 50px;
+  vertical-align: top;
+}
+
+#header h1 {
+	background: transparent url(images/banner.png) no-repeat top left;
+	width: 450px;
+	height: 50px;
+    margin: 0px;
+}
+
+#header h1 span {
+    display: none;
+}
+
+#header h2 {
+    display: none;
+}
+
+#navigation {
+    clear: both;
+}
+
+#navigation ul { /* all lists */
+    padding: 3;
+	margin: 0;
+	list-style: none;
+}
+
+#navigation li { /* all list items */
+	float: left;
+	position: relative;
+	width: 10em;
+}
+
+#navigation li ul { /* second-level lists */
+	display: none;
+	position: absolute;
+	top: 1em;
+	left: 0;
+}
+
+#navigation li>ul { /* to override top and left in browsers other than IE, which will position to the top right of the containing li, rather than bottom left */
+	top: auto;
+	left: auto;
+}
+
+#navigation li:hover ul, #navigation li.over ul { /* lists nested under hovered list items */
+	display: block;
+	border: 1px solid #8DB7DF;
+	background-color: white;
+}
+
+#navigation li:hover ul a, #navigation li.over ul a { /* lists nested under hovered list items */
+}
+
+
+#content {
+  margin: 0;
+  padding-top: .25em;
+  padding-left: 0;
+  padding-right: 0;
+  clear: both;
+}
+
+#portletgroupone {
+  margin: 0;
+  padding: 0;
+  width: 48%;
+  padding: .25em;
+  float: left;
+}
+
+#portletgroupone.max {
+  width: auto;
+}
+
+#portletgrouptwo {
+  margin: 0;
+  width: 48%;
+  padding: .25em;
+  float: right;
+}
+
+.portlet {
+  border: 1px solid #2E6794;
+  padding: .25em;
+  margin-bottom: .5em;
+}
+
+.portlet .header {
+  padding-left: .25em;
+  background-color: #8DB7DF;
+  color: white;
+  font-weight: bold;
+}
+
+.portlet table {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.portlet table th {
+  background-color: #2E6794;
+  color: white;
+}
+
+.portlet table td.abbr {
+  text-align: center;
+}
+
+
+#footer {
+  clear: both;
+  margin: 0;
+  padding: .5em;
+  height: 30px;
+  font-size: .5em;
+  text-align: center;
+  border-top: 1px solid #2E6794;
+  background: transparent url(images/powered-by.png) no-repeat right;
+}
+
+.portlet .header {
+   white-space: nowrap;
+   border: 2px solid #2E6794;
+}
+
+.portlet .header span {
+    width: 16px;
+    height: 16px;
+    float: right;
+}
+
+.portlet .header span.title {
+    width: auto;
+    height: auto;
+    float: none;
+}
+
+span.min {
+  background: url(images/controls/min.png) no-repeat;
+}
+
+span.max {
+  background: url(images/controls/max.png) no-repeat;
+}
+
+span.norm {
+  background: url(images/controls/norm.png) no-repeat;
+}
+
+span.view {
+  background: url(images/controls/view.png) no-repeat;
+}
+
+span.edit {
+  background: url(images/controls/edit.png) no-repeat;
+}
+
+span.help {
+  background: url(images/controls/help.png) no-repeat;
+}
+
+/* Portlet mode icons */
+img.min {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.max {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.norm {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.view {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.edit {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+img.help {
+  border: 0;
+  position: relative;
+  float: right;
+  padding-right:0.25em;
+}
+
+/* Start look and feel -- end positioning */
+
+fieldset {
+  margin: .5em;
+  border: 1px solid #2E6794;
+}
+
+label {
+  float: left;
+  text-align: right;
+  margin: 0 1em 10px 0;
+  clear: both;
+  width: 40%;
+}
+
+input {
+  margin-bottom: 10px;
+  color: #2E6794;
+  background: #8DB7DF;
+  border: 1px solid #2E6794;
+}
+
+input.submit
+{
+  margin-left: 5em;
+  clear: both;
+  color: #2E6794;
+  background: #8DB7DF;
+  border: 1px solid #2E6794;
+}
