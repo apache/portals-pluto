@@ -143,3 +143,14 @@ $> maven pluto:deploy
    pluto-portal-driver-config.xml file. An automated
    approach is in development and should be available
    before the ALPHA-1 release.
+
+* Starting the Portal
+
+  * Add a user in the 'pluto' role to conf/tomcat-users.xml in the conf directory of your Tomcat installation (<TOMCAT_HOME>).
+  
+  * Start up Tomcat as using by running startup.bat or startup.sh in the bin directory of <TOMCAT_HOME>.
+  
+  * Browse to http://localhost:8080/pluto/portal .
+  
+  * Login to Pluto using the user and password you just created in tomcat-users.xml.
+   
