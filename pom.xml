@@ -7,7 +7,7 @@
   <artifactId>pluto</artifactId>
   <packaging>pom</packaging>
   <name>Apache Pluto</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1.0-alpha1</version>
   <description>
     Pluto is the Reference Implementation of the Java Portlet Specfication.
     Portlets are designed to run in the context of a portal. They are written to

@@ -18,7 +18,7 @@ To manually build this distribution:
   <fileSets>
     <fileSet>
       <directory>../</directory>	
-      <outputDirectory>PlutoDomain</outputDirectory>
+	  <outputDirectory>/</outputDirectory>
       <includes>
         <include>README*</include>
         <include>LICENSE*</include>
@@ -31,18 +31,10 @@ To manually build this distribution:
       <outputDirectory></outputDirectory>
     </fileSet>
 
-	<fileSet>
-      <directory>src/assemble/config</directory>
-	  <outputDirectory>conf/Catalina/localhost</outputDirectory>
-      <includes>
-        <include>pluto-docs.xml</include>
-      <includes>
-	</fileSet>
-
     <fileSet>
     <!-- mvn site:site must be run first -->
-      <directory>target/site</directory>
-      <outputDirectory>PlutoDomain/docs</outputDirectory>
+      <directory>../pluto-site/target/site</directory>
+	  <outputDirectory>webapps/ROOT</outputDirectory>
     </fileSet>
   </fileSets>
   <dependencySets>

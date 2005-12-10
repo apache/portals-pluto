@@ -13,7 +13,7 @@
   <parent>
     <groupId>org.apache.pluto</groupId>
 	<artifactId>pluto</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.1.0-alpha1</version>
   </parent>
   <dependencies>
 
@@ -113,7 +113,6 @@
       <artifactId>maven-assembly-plugin</artifactId>
       <configuration>
         <descriptor>src/assemble/bin.xml</descriptor>
-        <finalName>pluto-container-1.1.0-SNAPSHOT</finalName>
       </configuration>
     </plugin>
 
