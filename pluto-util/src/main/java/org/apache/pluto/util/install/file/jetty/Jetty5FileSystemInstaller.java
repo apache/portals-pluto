@@ -18,12 +18,17 @@ package org.apache.pluto.util.install.file.jetty;
 import org.apache.pluto.util.install.InstallationConfig;
 import org.apache.pluto.util.install.file.FileSystemInstaller;
 import org.apache.pluto.util.UtilityException;
+import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Jetty5FileSystemInstaller extends FileSystemInstaller {
 
-    protected File getEndorsedDir(InstallationConfig config ) {
+    protected File getEndorsedDir(InstallationConfig config) {
         File installationDirectory = config.getInstallationDirectory();
         return new File(installationDirectory, "ext");
     }
@@ -36,15 +41,15 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
     protected File getWebAppDir(InstallationConfig config) {
         File installationDirectory = config.getInstallationDirectory();
         return new File(
-            installationDirectory, config.getServerConfig().getDomain()
+                installationDirectory, "webapps"
         );
     }
 
     protected File getConfigurationDir(InstallationConfig config) {
         File installationDirectory = config.getInstallationDirectory();
         String engine = "Catalina";
-        String host   = config.getServerConfig().getHost();
-        return new File(installationDirectory, "conf/"+engine+"/"+host);
+        String host = config.getServerConfig().getHost();
+        return new File(installationDirectory, "conf/" + engine + "/" + host);
     }
 
     public void uninstall(InstallationConfig config) {
@@ -61,18 +66,20 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
 
     /**
      * NOTE: Order is important.  If the server is running, we want to
-     *       make sure that the correct order is preserved
-     *
+     * make sure that the correct order is preserved
+     * <p/>
      * 1) Install endorsed dependencies
      * 2) Install shared dependencies
      * 4) Prep Time
-     *    -- Create a domain directory for the portal
-     *    -- Init the configs holder
+     * -- Create a domain directory for the portal
+     * -- Init the configs holder
      * 5) Install the Portlet Applications
      * 6) Install the Portal Application
      * 7) Finally, install the configs
+     *
      * @param config
      * @throws org.apache.pluto.util.UtilityException
+     *
      */
     public void install(InstallationConfig config) throws UtilityException {
         File endorsedDir = getEndorsedDir(config);
@@ -80,41 +87,47 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
         File domainDir = getWebAppDir(config);
         domainDir.mkdirs();
         File contextConfigurationDirectory = getConfigurationDir(config);
-        /*
-        (config.getEndorsedDependencies(), endorsedDir);
 
-        copyFilesToDirectory(config.getSharedDependencies(), sharedDir);
+        try {
 
-       Iterator it = config.getPortletApplications().values().iterator();
-        while(it.hasNext()) {
-            File portletApp = (File)it.next();
-            FileUtils.copyFileToDirectory(portletApp, domainDir);
+            // Jetty Doesn't need 'em
+            //copyFilesToDirectory(config.getEndorsedDependencies(), endorsedDir);
+            
+            copyFilesToDirectory(config.getSharedDependencies(), sharedDir);
+
+            Iterator it = config.getPortletApplications().values().iterator();
+            while (it.hasNext()) {
+                File portletApp = (File) it.next();
+                FileUtils.copyFileToDirectory(portletApp, domainDir);
+            }
+
+            FileUtils.copyFileToDirectory(config.getPortalApplication(), domainDir);
+
+
+//            it = config.getPortletApplications().entrySet().iterator();
+//            while (it.hasNext()) {
+//                Map.Entry entry = (Map.Entry) it.next();
+//                String context = entry.getKey().toString();
+//                File portletApp = (File) entry.getValue();
+//
+//                File deployed = new File(domainDir, portletApp.getName());
+//                String contents = getPortletApplicationConfig(context, deployed);
+//                //FileWriter out = new FileWriter(
+//                //        new File(contextConfigurationDirectory, context + ".xml"));
+//                out.write(contents);
+//                out.flush();
+//                out.close();
+//            }
+
+//            File xmlFile = new File(contextConfigurationDirectory, config.getPortalContextPath() + ".xml");
+//            FileWriter out = new FileWriter(xmlFile);
+//            out.write(getPortalApplicationConfig(config));
+//            out.flush();
+//            out.close();
         }
-
-       FileUtils.copyFileToDirectory(config.getPortalApplication(), domainDir);
-
-
-        it = config.getPortletApplications().entrySet().iterator();
-        while(it.hasNext()) {
-            Map.Entry entry = (Map.Entry)it.next();
-            String context = entry.getKey().toString();
-            File portletApp = (File)entry.getValue();
-
-            File deployed = new File(domainDir, portletApp.getName());
-            String contents = getPortletApplicationConfig(context, deployed);
-            FileWriter out = new FileWriter(
-                new File(contextConfigurationDirectory, context+".xml"));
-            out.write(contents);
-            out.flush();
-            out.close();
+        catch (IOException io) {
+            throw new UtilityException(io);
         }
-
-        File xmlFile =  new File(contextConfigurationDirectory, config.getPortalContextPath()+".xml");
-        FileWriter out = new FileWriter(xmlFile);
-        out.write(getPortalApplicationConfig(config));
-        out.flush();
-        out.close();
-        */
     }
 
     private String getPortalApplicationConfig(InstallationConfig config) {
@@ -135,11 +148,6 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
     }
 
     private String getConfigContents(String war, String contextPath) {
-        StringBuffer contents = new StringBuffer();
-        contents.append("<Context ")
-                .append("path=\"").append(contextPath).append("\" ")
-                .append("docBase=\"").append(war).append("\" ")
-                .append("crossContext=\"true\">").append("</Context>");
-       return contents.toString();
+        return "JettyConfigContents: war=" + war + "contextPath=" + contextPath;
     }
 }
