@@ -17,6 +17,7 @@ package org.apache.pluto.driver.services.impl.resource;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.*;
+import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
 
 import javax.servlet.ServletContext;
 import java.util.List;
@@ -31,7 +32,8 @@ import java.io.InputStream;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
-public class RenderConfigServiceImpl implements RenderConfigService {
+public class RenderConfigServiceImpl
+    implements RenderConfigService, RenderConfigAdminService {
 
 
     private ResourceConfig config;
@@ -109,4 +111,7 @@ public class RenderConfigServiceImpl implements RenderConfigService {
         return config.getRenderConfig().getPageConfig(id);
     }
 
+    public void addPage(PageConfig pageConfig) {
+        config.getRenderConfig().addPage(pageConfig);
+    }
 }

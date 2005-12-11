@@ -19,6 +19,8 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.config.AdminConfiguration;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +38,11 @@ import java.io.IOException;
  * @version 1.0
  * @since Dec 11, 2005
  */
-public class TckServlet extends PortalDriverServlet {
+public class TCKDriverServlet extends PortalDriverServlet {
+
+    private static final Log LOG = LogFactory.getLog( TCKDriverServlet.class );
 
     private int pageCounter = 0;
-
-    private String portalDriver = "/portal/";
 
     public String getServletInfo() {
         return "Pluto TCK Driver Servlet";
@@ -59,11 +61,17 @@ public class TckServlet extends PortalDriverServlet {
         //   create a new page.  This page must be setup and then
         //   redirected to the actual page.
         String[] portletNames = request.getParameterValues("portletName");
-        if(portletNames != null && portletNames.length < 0) {
+        if(portletNames != null && portletNames.length > 0) {
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("Initializing new TCK Page.");
+            }
             doSetup(request, response);
             return;
         }
 
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("TCK Test: No Portlet Names specified.  Continue as normal.");
+        }
         super.doGet(request, response);
     }
 
@@ -77,14 +85,14 @@ public class TckServlet extends PortalDriverServlet {
         String[] portletNames = request.getParameterValues("portletName");
         String pageName = request.getParameter("pageName");
         if(pageName == null) {
-            pageName = new java.text.DecimalFormat("TCK00000").format(pageCounter);
+            pageName = new java.text.DecimalFormat("TCK00000").format(pageCounter++);
             PageConfig config = new PageConfig();
             config.setName(pageName);
             config.setUri("/WEB-INF/fragments/portlet.jsp");
             for(int i = 0;i < portletNames.length; i++) {
                 int idx = portletNames[i].indexOf("/");
-                String context = portletNames[i].substring(0, idx);
-                String portletName = portletNames[i].substring(idx, portletNames.length);
+                String context = "/"+portletNames[i].substring(0, idx);
+                String portletName = portletNames[i].substring(idx + 1, portletNames[i].length());
                 config.addPortlet(context, portletName);
             }
 
@@ -95,10 +103,13 @@ public class TckServlet extends PortalDriverServlet {
                 throw new ServletException("Invalid Configuration.  An AdminConfiguration must be specified to run the TCK.");
             }
             adminConfig.getRenderConfigAdminService().addPage(config);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("Created TCK Page: "+pageName);
+            }
         }
 
         // The other possibility would be to redirect to the actual portal.
         // I'm not sure which is better at this point.
-        response.sendRedirect(request.getContextPath()+request.getRequestURL()+"/"+pageName);
+        response.sendRedirect(request.getRequestURL()+(request.getRequestURL().toString().endsWith("/")?"":"/")+pageName);
     }
 }

@@ -51,6 +51,7 @@
 
     <bean id="AdminConfiguration" class="org.apache.pluto.driver.config.impl.AdminConfigurationImpl">
       <property name="portletRegistryAdminService"><ref local="PortletRegistryConfig"/></property>
+      <property name="renderConfigAdminService"><ref local="RenderConfigService"/></property>
     </bean>
 
     <!-- ================================================ -->
