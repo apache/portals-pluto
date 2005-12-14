@@ -5,11 +5,7 @@
   <packaging>jar</packaging>
   <name>Pluto Portlet Container</name>
   <url>http://portals.apache.org/pluto</url>
-  <description>
-  The Pluto Portlet Container is the reference implementation of the
-  Java Portlet Specification.  The container aims to be lightweight,
-  flexible, and easy to embed.
-  </description>
+  <description>The pluto portlet container.</description>
   <parent>
     <groupId>org.apache.pluto</groupId>
 	<artifactId>pluto</artifactId>

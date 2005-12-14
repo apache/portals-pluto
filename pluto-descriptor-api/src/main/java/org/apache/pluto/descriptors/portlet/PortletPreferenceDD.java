@@ -15,6 +15,9 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * <B>TODO:</B> Document
  *
@@ -24,7 +27,7 @@ package org.apache.pluto.descriptors.portlet;
 public class PortletPreferenceDD {
 
     private String name;
-    private String value;
+    private List values;
 
     public String getName() {
         return name;
@@ -34,11 +37,11 @@ public class PortletPreferenceDD {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public List getValues() {
+        return values;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValues(List values) {
+        this.values = values;
     }
 }

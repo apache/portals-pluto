@@ -4,10 +4,7 @@
   <artifactId>pluto-ant-tasks</artifactId> 
   <packaging>jar</packaging>
   <name>Pluto Ant Tasks</name> 
-  <description>
-    The Pluto Ant Tasks are used to assemble, deploy, and publish
-	portlets to the Pluto Portal Driver.
-  </description>
+  <description>The Pluto Ant Tasks are used to assemble, deploy, and publish portlets to the Pluto Portal Driver.</description>
 
   <parent>
     <groupId>org.apache.pluto</groupId>

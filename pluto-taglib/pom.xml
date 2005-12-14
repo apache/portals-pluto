@@ -4,9 +4,7 @@
   <artifactId>pluto-taglib</artifactId>
   <packaging>jar</packaging>
   <name>Pluto Portlet Tag Library</name>
-  <description>
-  Pluto's Java Portlet Specification Tag Library implementation
-  </description>
+  <description>Pluto's Java Portlet Specification Tag Library implementation</description>
   <parent>
     <groupId>org.apache.pluto</groupId>
 	<artifactId>pluto</artifactId>

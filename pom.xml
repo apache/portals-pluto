@@ -8,17 +8,8 @@
   <packaging>pom</packaging>
   <name>Apache Pluto</name>
   <version>1.1.0-SNAPSHOT</version>
-  <description>
-    Pluto is the Reference Implementation of the Java Portlet Specfication.
-    Portlets are designed to run in the context of a portal. They are written to
-    the Portlet API which are similar to the Servlet API. A portlet container
-    provides a runtime environment for portlets implemented according to the
-    Portlet API. In this environment portlets can be instantiated, used and
-    finally destroyed. The portlet container is not a stand-alone container like
-    the servlet container; instead it is implemented as a thin layer on top of
-    the servlet container and reuses the functionality provided by the servlet
-    container.
-  </description>
+  <!-- Due to a bug in maven 2.0, the description must not container any line breaks or tabs -->
+  <description>Pluto is the Reference Implementation of the Java Portlet Specfication.</description>
   <url>http://portals.apache.org/pluto</url>
 
   <issueManagement>

@@ -71,8 +71,9 @@ public class PortletEntity {
                 Iterator pds = ppdd.getPortletPreferences().iterator();
                 for(int i=0;pds.hasNext();i++) {
                     PortletPreferenceDD pd = (PortletPreferenceDD)pds.next();
+                    String[] values = (String[]) pd.getValues().toArray(new String[pd.getValues().size()]);
                     prefs[i] = new PortletPreferenceImpl(
-                        pd.getName(), new String[] { pd.getValue()}
+                        pd.getName(), values
                     );
                 }
             }

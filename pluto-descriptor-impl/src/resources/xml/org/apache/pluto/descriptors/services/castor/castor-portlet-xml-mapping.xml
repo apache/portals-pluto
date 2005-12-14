@@ -121,7 +121,7 @@
     <field name="Name">
       <bind-xml name="name" node="element"/>
     </field>
-    <field name="Value">
+    <field name="Values" type="java.lang.String" collection="arraylist">
       <bind-xml name="value" node="element"/>
     </field>
   </class>

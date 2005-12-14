@@ -85,6 +85,10 @@ public class TCKDriverServlet extends PortalDriverServlet {
         String[] portletNames = request.getParameterValues("portletName");
         String pageName = request.getParameter("pageName");
         if(pageName == null) {
+
+            AdminConfiguration adminConfig = (AdminConfiguration)getServletContext()
+                    .getAttribute(AttributeKeys.DRIVER_ADMIN_CONFIG);
+
             pageName = new java.text.DecimalFormat("TCK00000").format(pageCounter++);
             PageConfig config = new PageConfig();
             config.setName(pageName);
@@ -94,10 +98,9 @@ public class TCKDriverServlet extends PortalDriverServlet {
                 String context = "/"+portletNames[i].substring(0, idx);
                 String portletName = portletNames[i].substring(idx + 1, portletNames[i].length());
                 config.addPortlet(context, portletName);
+                adminConfig.getPortletRegistryAdminService().addPortletApplication(context);
             }
 
-            AdminConfiguration adminConfig = (AdminConfiguration)getServletContext()
-                .getAttribute(AttributeKeys.DRIVER_ADMIN_CONFIG);
 
             if(adminConfig == null) {
                 throw new ServletException("Invalid Configuration.  An AdminConfiguration must be specified to run the TCK.");

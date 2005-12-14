@@ -42,6 +42,8 @@ public class AssembleTask extends Task {
     private File webapp;
 
     public File getPortletxml() {
+        if(webapp != null)
+            return new File(webapp, "WEB-INF/portlet.xml");
         return portletxml;
     }
 
@@ -50,6 +52,8 @@ public class AssembleTask extends Task {
     }
 
     public File getWebxml() {
+        if(webapp != null)
+            return new File(webapp, "WEB-INF/web.xml");
         return webxml;
     }
 
@@ -60,7 +64,7 @@ public class AssembleTask extends Task {
     public File getDestfile() {
         if(destfile != null)
             return destfile;
-        return webxml;
+        return getWebxml();
     }
 
     public void setDestfile(File destfile) {
