@@ -1,6 +1,7 @@
 package org.apache.pluto.driver.services.portal.admin;
 
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.config.DriverConfigurationException;
 
 /**
  *
@@ -11,7 +12,7 @@ import org.apache.pluto.driver.services.portal.PageConfig;
  */
 public interface RenderConfigAdminService {
 
-    public void addPage(PageConfig config);
-
+    public void addPage(PageConfig config)
+        throws DriverConfigurationException;
 
 }

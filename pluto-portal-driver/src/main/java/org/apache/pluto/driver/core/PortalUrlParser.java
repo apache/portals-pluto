@@ -18,6 +18,7 @@ package org.apache.pluto.driver.core;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.ArrayList;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -162,6 +163,7 @@ class PortalUrlParser {
     private static final String RENDER_PARAM = "rp";
     private static final String WINDOW_STATE = "ws";
     private static final String PORTLET_MODE = "pm";
+    private static final String VALUE_DELIM = "0x0";
 
     private static final String[][] ENCODINGS =
         new String[][]{
@@ -198,7 +200,7 @@ class PortalUrlParser {
      * Parse a control parameter into the porlet which it effects and it's
      * original value.
      * @param ctl
-     * @return
+     * @return values
      */
     private String[] decode(String ctl) {
         int length = (PREFIX + PORTLET_ID).length();
@@ -223,11 +225,18 @@ class PortalUrlParser {
         return vals;
     }
 
+    /**
+     * Decode a parameter
+     * @param name
+     * @param value
+     * @return url parameter
+     */
     private PortalUrlParameter decode(String name, String value) {
         String nopre = name.substring((PREFIX + PORTLET_ID).length());
         String windowId = nopre.substring(0, nopre.indexOf(DELIM));
         String param = nopre.substring(nopre.indexOf(DELIM) + 1);
 
+        ArrayList values = new ArrayList();
         for (int i = 0; i < ENCODINGS.length; i++) {
             windowId =
             StringUtils.replace(windowId, ENCODINGS[i][1], ENCODINGS[i][0]);
@@ -235,8 +244,14 @@ class PortalUrlParser {
                 value =
                 StringUtils.replace(value, ENCODINGS[i][1], ENCODINGS[i][0]);
             }
+            int idx, start = 0;
+            while( (idx = value.indexOf(VALUE_DELIM, start)) > 0) {
+                values.add(value.substring(start, idx));
+                start = idx;
+            }
         }
-        return new PortalUrlParameter(windowId, param, value);
+        String[] vals = values.size() > 0 ? (String[])values.toArray(new String[values.size()]) : new String[] { value };
+        return new PortalUrlParameter(windowId, param, vals);
     }
 
     private String encode(String string) {
@@ -252,7 +267,7 @@ class PortalUrlParser {
         for (int i = 0; i < strings.length; i++) {
             sb.append(strings[i]);
             if (i + 1 != strings.length) {
-                sb.append(",");
+                sb.append(VALUE_DELIM);
             }
         }
         return sb.toString();

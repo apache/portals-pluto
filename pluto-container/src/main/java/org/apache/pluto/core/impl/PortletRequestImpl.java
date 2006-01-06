@@ -181,6 +181,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public PortletSession getPortletSession(boolean create) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Retreiving portlet session (create="+create+")");
+        }
         //
         // It is critical that we don't retrieve the
         //    portlet session until the cross context
@@ -196,13 +199,26 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         }
 
         HttpSession http = getHttpServletRequest().getSession(create);
-        if (http != null && portletSession == null) {
+        // We must make sure that if the session
+        // has been invalidated (perhaps through setMaxIntervalTimeout())
+        // and the underlying request returns null that we no longer
+        // use the cached version.
+        //
+        if(http == null) {
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("Underlying Http session is null; No session will be returned.");
+            }
+            return null;
+        }
+
+        if (portletSession == null) {
             portletSession = new PortletSessionImpl(
                     portletContext,
                     internalPortletWindow,
                     http
             );
         }
+
         return portletSession;
     }
 

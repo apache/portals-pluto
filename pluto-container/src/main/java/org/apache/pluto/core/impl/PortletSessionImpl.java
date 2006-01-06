@@ -100,9 +100,11 @@ public class PortletSessionImpl implements PortletSession,
     }
 
     public void setMaxInactiveInterval(int interval) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Session timeout set to: "+interval);
+        }
         httpSession.setMaxInactiveInterval(interval);
     }
-
 
 //
 //

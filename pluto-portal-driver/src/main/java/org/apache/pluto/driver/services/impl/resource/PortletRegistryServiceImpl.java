@@ -17,10 +17,17 @@ package org.apache.pluto.driver.services.impl.resource;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.*;
+import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
+import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.core.PortletDescriptorRegistry;
 
 import javax.servlet.ServletContext;
 import java.util.List;
 import java.util.Set;
+import java.util.Iterator;
 import java.io.InputStream;
 
 /**
@@ -31,9 +38,11 @@ import java.io.InputStream;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
-public class PortletRegistryServiceImpl implements PortletRegistryService {
+public class PortletRegistryServiceImpl
+   implements PortletRegistryService, PortletRegistryAdminService {
 
     private ResourceConfig config;
+    private ServletContext servletContext;
 
     public PortletRegistryServiceImpl() {
         
@@ -45,6 +54,7 @@ public class PortletRegistryServiceImpl implements PortletRegistryService {
      */
     public void init(ServletContext ctx) {
         try {
+            servletContext = ctx;
             InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
             config = ResourceConfigReader.getFactory().parse(in);
         }
@@ -55,6 +65,7 @@ public class PortletRegistryServiceImpl implements PortletRegistryService {
 
     public void destroy() throws DriverConfigurationException {
         config = null;
+        servletContext = null;
     }
 
 
@@ -74,4 +85,40 @@ public class PortletRegistryServiceImpl implements PortletRegistryService {
         return config.getPortletWindowConfig(id);
     }
 
+    public void addPortletApplication(String contextPath)
+    throws DriverAdministrationException {
+        if(contextPath == null)
+            throw new IllegalArgumentException("Can not add servlet context 'null'.");
+
+        try {
+            PortletApplicationConfig app = new PortletApplicationConfig();
+            app.setContextPath(contextPath);
+
+            ServletContext portletContext = servletContext.getContext(contextPath);
+            if(portletContext == null) {
+                throw new DriverAdministrationException(
+                    "Unable to locate context: "+contextPath+
+                    ". Ensure that crossContext support is enabled and the portlet application has been deployed.");
+            }
+
+            PortletAppDD descriptor = getPortletDescriptor(portletContext);
+            Iterator it = descriptor.getPortlets().iterator();
+            while(it.hasNext()) {
+                PortletDD portlet = (PortletDD)it.next();
+                PortletWindowConfig config = new PortletWindowConfig();
+                config.setContextPath(contextPath);
+                config.setPortletName(portlet.getPortletName());
+                app.addPortlet(config);
+            }
+            config.addPortletApp(app);
+        }
+        catch(PortletContainerException pce) {
+            throw new DriverAdministrationException("Unable to retrieve portlet descriptor from new context location", pce);
+        }
+    }
+
+    private PortletAppDD getPortletDescriptor(ServletContext context)
+    throws PortletContainerException {
+        return PortletDescriptorRegistry.getRegistry().getPortletAppDD(context);
+    }
 }

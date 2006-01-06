@@ -27,12 +27,11 @@ To manually build this distribution:
     </fileSet>
 
     <fileSet>
-      <directory>/jakarta-tomcat-5.5.9</directory>
+      <directory>target/tomcat</directory>
       <outputDirectory></outputDirectory>
     </fileSet>
 
     <fileSet>
-    <!-- mvn site:site must be run first -->
       <directory>../pluto-site/target/site</directory>
 	  <outputDirectory>webapps/ROOT</outputDirectory>
     </fileSet>
