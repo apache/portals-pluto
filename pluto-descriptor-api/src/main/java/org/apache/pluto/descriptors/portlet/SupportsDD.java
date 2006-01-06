@@ -16,18 +16,16 @@
 package org.apache.pluto.descriptors.portlet;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by IntelliJ IDEA.
- * User: David
- * Date: Jun 29, 2005
- * Time: 9:07:38 PM
- * To change this template use File | Settings | File Templates.
+ * Representation of the supports element within the portlet.xml
+ * 
  */
 public class SupportsDD {
 
     private String mimeType;
-    private List portletModes;
+    private List portletModes = new ArrayList();
 
     public String getMimeType() {
         return mimeType;

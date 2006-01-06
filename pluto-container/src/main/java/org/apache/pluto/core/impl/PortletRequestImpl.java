@@ -705,6 +705,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     private boolean isPortletModeAllowedByPortlet(PortletMode mode) {
+        if(isPortletModeMandatory(mode)) {
+            return true;
+        }
+
         PortletDD dd = internalPortletWindow.getPortletEntity()
                 .getPortletDefinition();
 
@@ -730,6 +734,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
             }
         }
         return false;
+    }
+
+    private boolean isPortletModeMandatory(PortletMode mode) {
+        return PortletMode.VIEW.equals(mode) || PortletMode.EDIT.equals(mode) || PortletMode.HELP.equals(mode);
     }
 
 
