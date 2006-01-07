@@ -25,6 +25,8 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.util.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -35,6 +37,8 @@ class PortalUrlParser {
 
     private static PortalUrlParser parser;
 
+    private static final Log LOG = LogFactory.getLog(PortalUrlParser.class);
+
 
     public static PortalUrlParser getParser() {
         if (parser == null) {
@@ -44,6 +48,9 @@ class PortalUrlParser {
     }
 
     public PortalURL parse(HttpServletRequest req) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Parsing url: "+req.getRequestURI());
+        }
 
         String protocol = req.isSecure() ? "https://" : "http://";
         String server = req.getServerName();
@@ -59,11 +66,15 @@ class PortalUrlParser {
 
         url.setControllerPath(req.getContextPath(), req.getServletPath());
 
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Parsing parameters for request: "+req.getPathInfo());
+        }
         StringBuffer renderPath = new StringBuffer();
         if (req.getPathInfo() == null) {
             return url;
         }
-        StringTokenizer st = new StringTokenizer(req.getPathInfo(), "/", false);
+
+       StringTokenizer st = new StringTokenizer(req.getPathInfo(), "/", false);
 
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
@@ -137,8 +148,9 @@ class PortalUrlParser {
             PortalUrlParameter param = (PortalUrlParameter) it.next();
             if (url.getActionWindow() != null &&
                 url.getActionWindow().equals(param.getWindowId())) {
-                query.append("&").append(param.getName()).append("=").append(
-                    convert(param.getValues()));
+                for(int i=0;i<param.getValues().length;i++) {
+                    query.append("&").append(param.getName()).append("=").append(param.getValues()[i]);
+                }
             } else if (param.getValues() != null &&
                        param.getValues().length > 0) {
                 String valueString = encode(param.getValues());
@@ -232,6 +244,10 @@ class PortalUrlParser {
      * @return url parameter
      */
     private PortalUrlParameter decode(String name, String value) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Decoding parameter (name="+name+" : value="+value+")");
+        }
+
         String nopre = name.substring((PREFIX + PORTLET_ID).length());
         String windowId = nopre.substring(0, nopre.indexOf(DELIM));
         String param = nopre.substring(nopre.indexOf(DELIM) + 1);
@@ -244,13 +260,20 @@ class PortalUrlParser {
                 value =
                 StringUtils.replace(value, ENCODINGS[i][1], ENCODINGS[i][0]);
             }
+
+           StringTokenizer st = new StringTokenizer(value, VALUE_DELIM, false);
+            while(st.hasMoreTokens()) {
+                values.add(st.nextToken());
+            }
+            /*
             int idx, start = 0;
-            while( (idx = value.indexOf(VALUE_DELIM, start)) > 0) {
+            while( (idx = value.indexOf(VALUE_DELIM, start)) > -1) {
                 values.add(value.substring(start, idx));
                 start = idx;
             }
+            */
         }
-        String[] vals = values.size() > 0 ? (String[])values.toArray(new String[values.size()]) : new String[] { value };
+        String[] vals = (String[])values.toArray(new String[values.size()]);
         return new PortalUrlParameter(windowId, param, vals);
     }
 

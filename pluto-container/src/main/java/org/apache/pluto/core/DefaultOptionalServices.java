@@ -49,8 +49,10 @@ public class DefaultOptionalServices implements OptionalPortletContainerServices
 
     public DefaultOptionalServices(OptionalPortletContainerServices rootServices) {
         this();
+
         if(rootServices.getPortletPreferencesService() != null)
             this.preferenceService = rootServices.getPortletPreferencesService();
+
     }
 
 

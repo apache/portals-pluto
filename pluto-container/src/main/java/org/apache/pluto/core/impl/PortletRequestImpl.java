@@ -484,7 +484,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public boolean isRequestedSessionIdValid() {
-        return this.getHttpServletRequest().isRequestedSessionIdValid();
+        return getHttpServletRequest().isRequestedSessionIdValid();
     }
 
     public String getResponseContentType() {

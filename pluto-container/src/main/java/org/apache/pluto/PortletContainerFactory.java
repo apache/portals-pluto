@@ -82,8 +82,10 @@ public class PortletContainerFactory {
         ArgumentUtility.validateNotNull("containerServices", services);
         ArgumentUtility.validateNotEmpty("containerName", containerName);
 
+        DefaultOptionalServices optional = new DefaultOptionalServices(optionalServices);
+
         PortletContainer container =
-                new PortletContainerImpl(containerName, services, optionalServices);
+                new PortletContainerImpl(containerName, services, optional);
 
         if (LOG.isInfoEnabled()) {
             LOG.info("Portlet Container [" + containerName + "] created.");
