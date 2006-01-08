@@ -484,6 +484,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public boolean isRequestedSessionIdValid() {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug(" ***** IsRequestedSessionIdValid? "+getHttpServletRequest().isRequestedSessionIdValid());
+        }
         return getHttpServletRequest().isRequestedSessionIdValid();
     }
 
