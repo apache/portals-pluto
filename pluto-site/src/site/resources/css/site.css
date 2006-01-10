@@ -39,6 +39,20 @@ body {
   border-bottom: 0px;
 }
 
+.jsr286box {
+  float: right;
+  clear: right;
+  margin: 0 5px 5px 5px;
+  padding: 0px 2px 2px 2px;
+  border: 1px solid #999;
+  background-color: #eee;
+}
+
+.jsr286text {
+  font-size: x-small;
+  line-height:125%;
+}
+
 .highlightbox {
   float: right;
   clear: right;
