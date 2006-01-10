@@ -260,21 +260,9 @@ class PortalUrlParser {
                 value =
                 StringUtils.replace(value, ENCODINGS[i][1], ENCODINGS[i][0]);
             }
+       }
 
-           /*
-            int idx, start = 0;
-            while( (idx = value.indexOf(VALUE_DELIM, start)) > -1) {
-                values.add(value.substring(start, idx));
-                start = idx;
-            }
-            */
-        }
-        StringTokenizer st = new StringTokenizer(value, VALUE_DELIM, false);
-        while(st.hasMoreTokens()) {
-            values.add(st.nextToken());
-        }
-
-        String[] vals = (String[])values.toArray(new String[values.size()]);
+        String[] vals = value.split(VALUE_DELIM);
         return new PortalUrlParameter(windowId, param, vals);
     }
 
