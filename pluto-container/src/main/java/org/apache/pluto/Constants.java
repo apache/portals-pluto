@@ -45,6 +45,21 @@ public class Constants {
     public final static String PORTLET_CONFIG = "javax.portlet.config";
 
     /**
+     *
+     */
+    public final static String TITLE_KEY = "javax.portlet.title";
+
+    /**
+     *
+     */
+    public final static String SHORT_TITLE_KEY = "javax.portlet.short-title";
+
+    /**
+     * 
+     */
+    public final static String KEYWORDS_KEY = "javax.portlet.keywords";
+
+    /**
      * The key used to bind the method of processing being requested by the
      * container to the underlying <code>PortletRquest</code>.
      */
@@ -73,5 +88,6 @@ public class Constants {
      * method.
      */
     public final static Integer METHOD_NOOP = new Integer(5);
+
 
 }

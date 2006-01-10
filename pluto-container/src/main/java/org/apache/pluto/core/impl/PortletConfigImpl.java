@@ -22,18 +22,31 @@ package org.apache.pluto.core.impl;
 import org.apache.pluto.core.InternalPortletConfig;
 import org.apache.pluto.descriptors.common.InitParamDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.servlet.ServletConfig;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
+
+    private static final Log LOG = LogFactory.getLog(PortletConfigImpl.class);
+
+    /**
+     * The servlet config for which we exist.
+     */
     private ServletConfig servletConfig;
+
+    /**
+     * The Portlet Application Context within which we exist.
+     */
     private PortletContext portletContext;
+
+    /**
+     * The portlet descriptor.
+     */
     protected PortletDD portletDD;
 
     private ResourceBundleFactory bundles;
@@ -54,7 +67,10 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return portletContext;
     }
 
-    public ResourceBundle getResourceBundle(java.util.Locale locale) {
+    public ResourceBundle getResourceBundle(Locale locale) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Resource Bundle requested: "+locale);
+        }
         if (bundles == null) {
             bundles = new ResourceBundleFactory(portletDD);
         }

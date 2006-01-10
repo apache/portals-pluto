@@ -16,6 +16,7 @@
 package org.apache.pluto.descriptors.portlet;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * <B>TODO:</B> Document
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class PortletPreferencesDD {
 
-    private List portletPreferences;
+    private List portletPreferences = new ArrayList();
     private String preferencesValidator;
 
     public List getPortletPreferences() {

@@ -39,7 +39,7 @@ public class PortletDD {
 
     private PortletInfoDD portletInfo;
 
-    private PortletPreferencesDD portletPreferences;
+    private PortletPreferencesDD portletPreferences = new PortletPreferencesDD();
 
     private List initParams = new ArrayList();
 

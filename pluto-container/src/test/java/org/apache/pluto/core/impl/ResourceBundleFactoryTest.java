@@ -58,7 +58,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
         Assert.assertEquals("Bundle Title", bundle.getString("javax.portlet.title"));
-        Assert.assertEquals("Bundle Short Title", bundle.getString("javax.portlet.shorttitle"));
+        Assert.assertEquals("Bundle Short Title", bundle.getString("javax.portlet.short-title"));
         Assert.assertEquals("Bundle Keywords", bundle.getString("javax.portlet.keywords"));
     }
 
@@ -68,7 +68,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
         Assert.assertEquals("Info Title", bundle.getString("javax.portlet.title"));
-        Assert.assertEquals("Info Short Title", bundle.getString("javax.portlet.shorttitle"));
+        Assert.assertEquals("Info Short Title", bundle.getString("javax.portlet.short-title"));
         Assert.assertEquals("Info Keywords", bundle.getString("javax.portlet.keywords"));
     }
 
@@ -78,7 +78,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
         Assert.assertEquals("Bundle Title", bundle.getString("javax.portlet.title"));
-        Assert.assertEquals("Bundle Short Title", bundle.getString("javax.portlet.shorttitle"));
+        Assert.assertEquals("Bundle Short Title", bundle.getString("javax.portlet.short-title"));
         Assert.assertEquals("Bundle Keywords", bundle.getString("javax.portlet.keywords"));
     }
 
@@ -90,9 +90,29 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
         ResourceBundleFactory factory = new ResourceBundleFactory(validDD);
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
-        Assert.assertEquals("N/A", bundle.getString("javax.portlet.title"));
-        Assert.assertEquals("N/A", bundle.getString("javax.portlet.shorttitle"));
-        Assert.assertEquals("N/A", bundle.getString("javax.portlet.keywords"));
+        try {
+            Assert.assertEquals(null, bundle.getString("javax.portlet.title"));
+            fail("Exception should have been thrown.");
+        }
+        catch(Throwable t) {
+
+        }
+
+        try {
+            Assert.assertEquals(null, bundle.getString("javax.portlet.short-title"));
+            fail("Exception should have been throw.");
+        }
+        catch(Throwable t) {
+
+        }
+
+        try {
+            Assert.assertEquals(null, bundle.getString("javax.portlet.keywords"));
+            fail("Exception should have been thrown.");
+        }
+        catch(Throwable t) {
+
+        }
     }
 
 
@@ -100,7 +120,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
         
         private Object[][] contents = {
             {"javax.portlet.title", "Bundle Title"},
-            {"javax.portlet.shorttitle", "Bundle Short Title"},
+            {"javax.portlet.short-title", "Bundle Short Title"},
             {"javax.portlet.keywords", "Bundle Keywords"}
         };
 

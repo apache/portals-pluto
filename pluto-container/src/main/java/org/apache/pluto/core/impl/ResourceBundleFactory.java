@@ -38,30 +38,15 @@ class ResourceBundleFactory {
         StringManager.getManager(ResourceBundleFactory.class.getPackage().getName());
 
     /**
-     * The String value utilized for missing keys.
-     * Specifically, whenever <code>javax.portlet.title</code>,
-     * <code>javax.portlet.shorttitle</code>, or <code>javax.portlet.keywords</code>
-     * are null, this value will be returned.
-     */
-    private static final String NA = "N/A";
-
-    /**
-     * The default resource bundle which is utilized when
-     * the info is not set in the PortletInfo OR in the
-     * actual resource bundle.
-     */
-    private static final ResourceBundle EMPTY_BUNDLE = createDefaultBundle(null, null, null);
-
-    /**
      * The default (no local) resources bundle for
      * this bundle.
      */
-    private ResourceBundle defaultBundle;
+    private InlinePortletResourceBundle defaultBundle;
 
     /**
      * All of the previously loaded bundles.
      */
-    private Map bundles = new java.util.HashMap();
+    private Map bundles = new HashMap();
 
     /**
      * The name of the bundle.
@@ -70,21 +55,25 @@ class ResourceBundleFactory {
 
     public ResourceBundleFactory(PortletDD dd) {
         bundleName = dd.getResourceBundle();
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Resource Bundle Created: "+bundleName);
+        }
 
         PortletInfoDD info = dd.getPortletInfo();
         if(info != null) {
-            defaultBundle = createDefaultBundle(
-                    info.getTitle(),
-                    info.getShortTitle(),
-                    info.getKeywords()
+            defaultBundle = new InlinePortletResourceBundle(
+                info.getTitle(), info.getShortTitle(), info.getKeywords()
             );
         }
         else {
-            defaultBundle = EMPTY_BUNDLE;
+            defaultBundle = new InlinePortletResourceBundle(new Object[][] { {"a", "b"} });
         }
-    }
+   }
 
     public ResourceBundle getResourceBundle(Locale locale) {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Resource Bundle: "+bundleName+" : "+locale+" requested. ");
+        }
 
         // If allready loaded for this local, return immediately!
         if (bundles.containsKey(locale)) {
@@ -92,44 +81,25 @@ class ResourceBundleFactory {
         }
 
         try {
-            if (bundleName != null) {
-                ClassLoader loader = Thread.currentThread()
-                    .getContextClassLoader();
-                ResourceBundle bundle = ResourceBundle.getBundle(bundleName,
-                                                                 locale,
-                                                                 loader);
-                if (bundle != null) {
-                    bundles.put(locale, bundle);
-                    return bundle;
-                }
+            ResourceBundle bundle = null;
+            if(bundleName != null) {
+                ClassLoader loader =
+                        Thread.currentThread().getContextClassLoader();
+                bundle = ResourceBundle.getBundle(bundleName, locale, loader);
+                bundles.put(locale, new CombinedPortletResourceBundle(defaultBundle, bundle));
             }
-        } catch (MissingResourceException mre) {
-            LOG.info(
-                EXCEPTIONS.getString("warning.resourcebundle.notfound",bundleName, mre.getMessage())
-            );
-            // intentionally swallow.  Allow the default Bundle.
+            else {
+                bundles.put(locale, defaultBundle);
+            }
+       } catch (MissingResourceException mre) {
+            if(bundleName != null && LOG.isWarnEnabled()) {
+                LOG.info(EXCEPTIONS.getString("warning.resourcebundle.notfound",bundleName, mre.getMessage()));
+            }
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("Using default bundle for locale ("+locale+").");
+            }
+            bundles.put(locale, defaultBundle);
         }
-
-        bundles.put(locale, defaultBundle);
-        return defaultBundle;
-    }
-
-    private static ResourceBundle createDefaultBundle(String title, String shortTitle, String keywords) {
-        String titleValue = title == null ? NA : title;
-        String shortValue = shortTitle == null ? NA : shortTitle;
-        String keysValue = keywords == null ? NA : keywords;
-
-        final String[] a = new String[] {"javax.portlet.title", titleValue};
-        final String[] b = new String[] {"javax.portlet.shorttitle", shortValue};
-        final String[] c = new String[] {"javax.portlet.keywords", keysValue };
-
-        ResourceBundle defaultBundle = new ListResourceBundle() {
-            Object[][] contents =  new String[][]{a, b, c};
-            public Object[][] getContents() {
-                return contents;
-            }
-        };
-
-        return defaultBundle;
+       return (ResourceBundle)bundles.get(locale);
     }
 }
