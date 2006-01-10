@@ -146,11 +146,15 @@ $> maven pluto:deploy
 
 * Starting the Portal
 
-  * Add a user in the 'pluto' role to conf/tomcat-users.xml in the conf directory of your Tomcat installation (<TOMCAT_HOME>).
+  * Add a user in the 'pluto' role to conf/tomcat-users.xml in the conf directory of your 
+  	Tomcat installation (<TOMCAT_HOME>). The simplest way to do this is to add the 'pluto' role to
+  	the tomcat user's record.
   
   * Start up Tomcat as using by running startup.bat or startup.sh in the bin directory of <TOMCAT_HOME>.
   
   * Browse to http://localhost:8080/pluto/portal .
   
-  * Login to Pluto using the user and password you just created in tomcat-users.xml.
+  * Login to Pluto using the user and password you just created in tomcat-users.xml. If you added the
+  'pluto' role to the tomcat user's record in tomcat-user.xml, you can log in as tomcat/tomcat (This is
+   required to successfully run the Security Mapping Test in the testsuite portlet).
    
