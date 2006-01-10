@@ -7,19 +7,42 @@
   <body>
     <section name="Welcome to Pluto">
 
-	  <div class="highlightbox">
+	  <div class="jsr286box">
+<!--	  
 		<p>
-          <a href="http://www.apachecon.com/2005/US/index.html"><img src="http://www.apache.org/images/ac2005us_white_184x80.jpg" width="184" height="80" border="0" title="ApacheCon US 2005" /></a>
+          <img src="http://www.jcp.org/common/images/logo_jcp.gif" width="50" height="50" border="0" title="Java Community Process" />
         </p>
+-->
+	    <h5>JSR-286 - The Java Portlet API version 2.0</h5>
+	    <span class="jsr286text">
+	    The Java Portlet API version 2.0 <br/> 
+	    specification is now under development by <br/>
+	    the JSR-286 Expert Group under the <br/>
+	    auspices of the <a href="http://www.jcp.org">Java Community Process</a>. <br/>
+	    JSR-286 builds on JSR-168. Details on the <br/>
+	    specification work can be found at the  <br/> 
+	    <a href="http://jcp.org/en/jsr/detail?id=286">JSR-286 web site</a>. 
+	    The Expert Group is very <br/> 
+	    interested in feedback from the community. <br/>
+	    Send your comments to <a href="mailto:jsr-286-comments@jcp.org">jsr-286-comments@jcp.org</a>  <br/> 
+	    or post to the <a href="http://wiki.apache.org/portals/Pluto/IdeasAndCommentsForJSR286">
+	    CommentsAndIdeasForJSR286</a>  <br/> 
+	    wiki page. <br/> 
+	    
+<!--		
 		<p>
-	    <h5>Pluto Speakers</h5>
+		Apache-Portals committers who are members of the JSR-286 Expert Group include:
 		<ul>
-				<li>David H. DeWolf <br/>
-						<small><a href="http://apachecon.com/2005/US/html/sessions.html#1578">Embedding Apache Pluto</a></small></li>
-				<li>Carsten Ziegeler - <br/>
-						<small><a href="http://apachecon.com/2005/US/html/sessions.html#1450">Portals@Apache: Standards <br/> and the Portals Projects</a></small></li>
+				<li>David H. DeWolf</li>
+				<li>Craig Doremus</li>
+				<li>Ate Duoma</li>
+				<li>Stefan Hepper</li>
+				<li>David Sean Taylor</li>
+				<li>Carsten Ziegeler</li>
         </ul>
         </p>
+-->
+		</span>
       </div>
 
      <div class="highlightbox">
