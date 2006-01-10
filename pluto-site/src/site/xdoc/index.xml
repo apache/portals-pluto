@@ -14,7 +14,7 @@
         </p>
 -->
 	    <h5>JSR-286 - The Java Portlet API version 2.0</h5>
-	    <span class="jsr286text">
+	    <div class="jsr286text">
 	    The Java Portlet API version 2.0 <br/> 
 	    specification is now under development by <br/>
 	    the JSR-286 Expert Group under the <br/>
@@ -42,7 +42,7 @@
         </ul>
         </p>
 -->
-		</span>
+		</div>
       </div>
 
      <div class="highlightbox">
