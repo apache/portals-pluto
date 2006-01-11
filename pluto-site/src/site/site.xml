@@ -17,7 +17,7 @@
 	<menu name="The Pluto Project">
       <item name="About Pluto" href="/index.html"/>
       <item name="Mission" href="/mission.html"/>
-	  <iten name="Download" href="/mirrors.html"/>
+	  <iten name="Download" href="http://www.apache.org/dyn/closer.cgi/portals/pluto/"/>
       <item name="News" href="/news.html"/>
 	  <item name="FAQ" href="/faq.html"/>
 	  <item name="Powered By Pluto" href="/powered.html"/>

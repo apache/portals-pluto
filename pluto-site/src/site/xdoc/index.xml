@@ -8,11 +8,6 @@
     <section name="Welcome to Pluto">
 
 	  <div class="jsr286box">
-<!--	  
-		<p>
-          <img src="http://www.jcp.org/common/images/logo_jcp.gif" width="50" height="50" border="0" title="Java Community Process" />
-        </p>
--->
 	    <h5>JSR-286 - The Java Portlet API version 2.0</h5>
 	    <div class="jsr286text">
 	    The Java Portlet API version 2.0 <br/> 
@@ -29,26 +24,13 @@
 	    CommentsAndIdeasForJSR286</a>  <br/> 
 	    wiki page. <br/> 
 	    
-<!--		
-		<p>
-		Apache-Portals committers who are members of the JSR-286 Expert Group include:
-		<ul>
-				<li>David H. DeWolf</li>
-				<li>Craig Doremus</li>
-				<li>Ate Duoma</li>
-				<li>Stefan Hepper</li>
-				<li>David Sean Taylor</li>
-				<li>Carsten Ziegeler</li>
-        </ul>
-        </p>
--->
 		</div>
       </div>
 
      <div class="highlightbox">
         <h5>Get Pluto 1.0.1</h5>
         <p>
-          <a href="mirrors.html">
+          <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">
             <img valign="top" src="http://maven.apache.org/images/folder-open.gif" border="0" alt="" title="download"/>
             Download
           </a>
