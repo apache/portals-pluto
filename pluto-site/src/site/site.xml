@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <project name="Maven">
   <bannerLeft>
     <name>Pluto</name>
@@ -11,7 +12,8 @@
   <body>
     <links>
       <item name="JSR 168" href="http://jcp.org/en/jsr/detail?id=168"/>
-      <item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh"/>
+      <item name="JSR 286" href="http://jcp.org/en/jsr/detail?id=286"/>
+      <item name="Chinese Translation" href="http://people.apache.org/~zheng/pluto/chinese/"/>
     </links>
 
 	<menu name="The Pluto Project">
