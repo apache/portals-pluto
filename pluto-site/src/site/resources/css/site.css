@@ -1,103 +1,143 @@
+/**
+ * =============================================================================
+ * Customized stylesheet for maven-generated site.
+ * =============================================================================
+ */
+
+
 html {
-  border: 8px solid #2E6794;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #2E6794;
 }
 
 body {
-  font-family: helvetica, sans-serif;
+    /** font-family: helvetica, sans-serif; **/
 }
-
 
 .composite {
-  margin: 0px auto;
-  background-color: white;
-  border: 1px solid black;
+    background-color: #FFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
 }
 
+/**
+ * The top banner, which contains the apache portals logo and pluto logo.
+ */
 #banner {
-  background-color: #8DB7DF;
-  border-bottom: 1px solid black;
-  width: auto;
-  height: 50px;
-  vertical-align: top;
+    background-color: #8DB7DF;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #000000;
+    vertical-align: top;
 }
 
+/**
+ * The left part of the top banner, which is the apache portals logo.
+ */
 #bannerLeft {
-  position: absolute;
-  left: 8px;
-  bottom: 10px;
+    display: none;
 }
 
+/**
+ * The right part of the top banner.
+ */
 #bannerRight {
-  width: 450px;
-  height: 50px;
-  margin: 0px;
-  float: left;
+    width: 450px;
+    margin: 0px;
+    float: left;
 }
 
+/**
+ * Breadcrumbs under the top banner: last published date and quick links.
+ */
 #breadcrumbs {
-  border-top: 0px;
-  border-bottom: 0px;
+	background-image: url(../images/breadcrumbs.jpg);
+	padding: 5px 10px 14px 20px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
 }
 
-.jsr286box {
-  float: right;
-  clear: right;
-  margin: 0 5px 5px 5px;
-  padding: 0px 2px 2px 2px;
-  border: 1px solid #999;
-  background-color: #eee;
+.highlightBox {
+    width: 240px;
+    float: right;
+    clear: right;
+    background-color: #EEEEEE;
+    margin: 0px 0px 20px 20px;
+    padding: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #909090;
 }
 
-.jsr286text {
-  font-size: x-small;
-  line-height:125%;
+.highlightBox h5 {
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    font-size: smaller;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: #909090;
 }
 
-.highlightbox {
-  float: right;
-  clear: right;
-  margin: 0 10px 20px 20px;
-  padding: 5px;
-  border: 1px solid #999;
-  background-color: #eee;
+.highlightBox p {
+    margin: 1em 0 0.5em 0;
+    padding: 0;
+    font-size: smaller;
+}
+
+.highlightBox ul {
+    margin-top: 0;
+    margin-bottom: 1em;
+    list-style-type: square;
+}
+
+.highlightBox li {  
+    margin: 0;
+    padding: 0;
+    font-size: smaller;
 }
 
 #leftColumn {
-
+    margin: 10px 0 10px 0;
+    padding: 0px 5px 0px 5px;
+    background-color: #FFFFFF;
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: #CCCCCC;
 }
 
 
 #bodyColumn {
-
+    
 }
 
 .section h2 {
-  padding-left: .25em;
-  background-color: #8DB7DF;
-  color: white;
-  font-weight: bold;
-  white-space: nowrap;
-  border: 2px solid #2E6794;
+    padding-left: 0.25em;
+    background-color: #8DB7DF;
+    color: #FFFFFF;
+    font-weight: bold;
+    white-space: nowrap;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #2E6794;
 }
 
 .section h3 {
-  padding-left: .25em;
-  background-color: #cccccc;
-  color: white;
-  font-weight: bold;
-  white-space: nowrap;
-  border: 2px solid #2E6794;
+    padding-left: 0.25em;
+    background-color: #CCCCCC;
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #2E6794;
 }
 
-
 #footer {
-  clear: both;
-  margin: 0;
-  padding: .5em;
-  height: 30px;
-  font-size: .5em;
-  text-align: center;
-  border-top: 1px solid #2E6794;
-  background: transparent url(images/powered-by.png) no-repeat right;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #2E6794;
 }
 

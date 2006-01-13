@@ -1,33 +1,32 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <document>
+  
   <properties>
     <title>Welcome to Pluto</title>
     <author email="ddewolf@apache.org">David DeWolf</author>
   </properties>
+  
   <body>
+    
     <section name="Welcome to Pluto">
 
-	  <div class="jsr286box">
-	    <h5>JSR-286 - The Java Portlet API version 2.0</h5>
-	    <div class="jsr286text">
-	    The Java Portlet API version 2.0 <br/> 
-	    specification is now under development by <br/>
-	    the JSR-286 Expert Group under the <br/>
-	    auspices of the <a href="http://www.jcp.org">Java Community Process</a>. <br/>
-	    JSR-286 builds on JSR-168. Details on the <br/>
-	    specification work can be found at the  <br/> 
-	    <a href="http://jcp.org/en/jsr/detail?id=286">JSR-286 web site</a>. 
-	    The Expert Group is very <br/> 
-	    interested in feedback from the community. <br/>
-	    Send your comments to <a href="mailto:jsr-286-comments@jcp.org">jsr-286-comments@jcp.org</a>  <br/> 
-	    or post to the <a href="http://wiki.apache.org/portals/Pluto/IdeasAndCommentsForJSR286">
-	    CommentsAndIdeasForJSR286</a>  <br/> 
-	    wiki page. <br/> 
-	    
-		</div>
+	  <div class="highlightBox">
+	    <h5>JSR-286 - The Java Portlet API 2.0</h5>
+	    <p>
+	      The Java Portlet API version 2.0 specification is now under
+	      development by the JSR-286 Expert Group under the auspices of the
+	      <a href="http://www.jcp.org">Java Community Process</a>.
+	      JSR-286 builds on JSR-168. Details on the specification work can be
+	      found at the <a href="http://jcp.org/en/jsr/detail?id=286">JSR-286 web site</a>.
+	      The Expert Group is very interested in feedback from the community.
+	      Send your comments to <a href="mailto:jsr-286-comments@jcp.org">
+	      jsr-286-comments@jcp.org</a> or post to the
+	      <a href="http://wiki.apache.org/portals/Pluto/IdeasAndCommentsForJSR286">
+          'Comments and ideas for JSR286'</a> wiki page.
+		</p>
       </div>
 
-     <div class="highlightbox">
+     <div class="highlightBox">
         <h5>Get Pluto 1.0.1</h5>
         <p>
           <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">
@@ -35,15 +34,11 @@
             Download
           </a>
           Pluto 1.0.1
-          <small>(12Mb)</small>
+          (12Mb)
         </p>
         <ul>
-          <li>
-            <a href="install.html">Installation Guide</a>
-          </li>
-          <li>
-            <a href="resources.html">Installation Instructions</a>
-          </li>
+          <li><a href="install.html">Installation Guide</a></li>
+          <li><a href="resources.html">Installation Instructions</a></li>
         </ul>
       </div>
 
