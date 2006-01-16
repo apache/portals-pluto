@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<document>
+  
+  <properties>
+    <title>Getting Started With Pluto</title>
+    <author email="ddewolf@apache.org">David DeWolf</author>
+  </properties>
+  
+  <body>
+    
+    <section name="Installing Pluto">
+      
+      <p>
+        Maven2 is utilized as the project management and build system for
+        Pluto 1.1. Pluto currently provides Maven plugins which can be used to
+        install the Pluto Portal, assemble portlet applications, deploy
+        applications, and publish portlet applications to the to Pluto Portal.
+      </p>
+      
+      <subsection name="Installing Pluto with Maven 2">
+        <p>
+          <code>&lt;PLUTO-1.1-HOME&gt;</code> is the local directory where the
+          Pluto 1.1 source distribution is located.
+        </p>
+        <p>
+          <source><![CDATA[
+$> cd <PLUTO-1.1-HOME>
+$> mvn install
+$> mvn pluto:install -DinstallDir=path/to/appserver
+          ]]></source>
+        </p>
+        <p>
+          The <code>install</code> goal is a built in Maven 2 lifecycle
+          which builds the project artifacts and installs them into the Maven
+          repository.
+        </p>
+        <p>
+          The <code>pluto:install</code> goal will take the resulting artifacts
+          and properly deploy them within the configured tomcat installation.
+        </p>
+      </subsection>
+      
+      <subsection name="Installing Pluto Manually">
+        <p>
+          <b>Step 1:</b>
+          <source><![CDATA[
+$> cd <PLUTO-1.1-HOME>
+$> mvn install
+          ]]></source>
+        </p>
+        <p>
+          <b>Step 2:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/shared/lib</code>:
+          <ul>
+            <li>castor-0.9.6.jar</li>
+            <li>portlet-api-1.0.jar</li>
+            <li>pluto-container-1.1-SNAPSHOT.jar</li>
+            <li>pluto-descriptor-api-1.1-SNAPSHOT.jar</li>
+            <li>pluto-descriptor-impl-1.1-SNAPSHOT.jar</li>
+          </ul>
+        </p>
+        <p>
+          <b>Step 3:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/common/endorsed</code>:
+          <ul>
+            <li>xercesImpl-2.6.2.jar</li>
+            <li>xmlParserAPIs-2.6.2.jar</li>
+          </ul>
+        </p>
+        <p>
+          <b>Step 4:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/conf/Catalina/localhost</code>:
+          <ul>
+            <li>&lt;PLUTO_HOME&gt;/pluto-portal/src/main/resources/pluto.xml</li>
+            <li>&lt;PLUTO_HOME&gt;/pluto-testsuite/src/main/resources/testsuite.xml</li>
+          </ul>
+        </p>
+        <p>
+          <b>Step 5:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/webapps</code>:
+          <ul>
+            <li>pluto-portal.war</li>
+            <li>pluto-testsuite.war</li>
+          </ul>
+        </p>
+      </subsection>
+      
+      <subsection name="Installing Pluto with a Windows EXE">
+        <p>
+          The NSIS Installer is not yet complete, but we hope to have a fully
+          functional one soon.  Anyone is more than welcome to assist us in
+          this process.
+        </p>
+      </subsection>
+      
+    </section>
+    
+    <section name="Deploying the Portlet to the Portal">
+      
+      <subsection name="Portlet Assembly">
+        <p>
+          All portlet applications must be run through the pluto assembler
+          before being deployed. The assembly process injects pluto specific
+          information for deployment.  Specifically, a servlet and servlet
+          mapping are added to the deployment descriptor. This servlet will be
+          used to dispatch portlet requests to the portlet application.
+        </p>
+        <p>
+          Portlet assembly is accomplished during war creation by binding the
+          <code>pluto:assemble</code> goal to the process-resources lifecycle.
+          An example configuration follows (taken from the pluto-testsuite
+          application):
+        </p>
+        <p>
+          <source><![CDATA[
+<plugin>
+  <artifactId>maven-pluto-plugin</artifactId>
+  <version>${pom.version}</version>
+  <executions>
+    <execution>
+      <phase>generate-resources</phase>
+      <goals>
+        <goal>assemble</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+          ]]></source>
+        </p>
+        <p>
+          Once configured within the portlet application's pom, the webapp and
+          war artifacts created by the project through Maven will include the
+          appropriate resources.
+        </p>
+      </subsection>
+      
+      <subsection name="Portlet Deployment">
+        <p>
+          After portlet applications are assembled properly they must be
+          deployed to the servlet engine within which the portal application
+          is running. This can be acheived by using your favorite Maven
+          appserver plugin or by invoking the following:
+        </p>
+        <p>
+          <source><![CDATA[
+$> cd <PORTLET-APP-HOME>
+$> maven pluto:deploy
+          ]]></source>
+        </p>
+        <p>
+          NOTE: The deployment plugin is currently undergoing modifications
+          and may not be 100% functional.
+        </p>
+      </subsection>
+      
+      <subsection name="Portlet Publishing">
+        <p>
+          All portlet applications that are to be used within the Pluto Portal
+          must be published to the Portal. Publishing notifies the Portal
+          Application that a portlet application is bound (deployed) to a
+          certain context within the app server.
+        </p>
+        <p>
+          Currently the only way to publish an application to the portal is to
+          manually update the Portal's pluto-portal-driver-config.xml file.
+          An automated approach is in development and should be available before
+          the ALPHA-1 release.
+        </p>
+      </subsection>
+      
+      <subsection name="Starting the Portal">
+        <p>
+          <ul>
+            <li>
+              Add a user in the 'pluto' role to conf/tomcat-users.xml in the
+              conf directory of your Tomcat installation (&lt;TOMCAT_HOME&gt;).
+              The simplest way to do this is to add the 'pluto' role to the
+              tomcat user's record.
+            </li>
+            <li>
+              Start up Tomcat as using by running startup.bat or startup.sh in
+              the bin directory of &lt;TOMCAT_HOME&gt;.
+            </li>
+            <li>
+              Browse to http://localhost:8080/pluto/portal
+            </li>
+            <li>
+              Login to Pluto using the user and password you just created in
+              tomcat-users.xml. If you added the 'pluto' role to the tomcat
+              user's record in tomcat-user.xml, you can log in as tomcat/tomcat
+              (This is required to successfully run the Security Mapping Test
+              in the testsuite portlet).
+            </li>
+          </ul>
+        </p>
+      </subsection>
+    </section>
+    
+  </body>
+  
+</document>
+
