@@ -21,7 +21,7 @@ limitations under the License.
   <bannerLeft>
     <name>Pluto</name>
     <src>http://portals.apache.org/pluto/images/apache-portals.gif</src>
-    <href>http://portals.apache.org/pluto</href>
+    <href>http://portals.apache.org/pluto/</href>
   </bannerLeft>
   <bannerRight>
     <src>http://portals.apache.org/pluto/images/banner.png</src>
@@ -38,7 +38,7 @@ limitations under the License.
     <menu name="The Pluto Project">
       <item name="About Pluto" href="/index.html"/>
       <item name="Mission" href="/mission.html"/>
-      <iten name="Download" href="http://www.apache.org/dyn/closer.cgi/portals/pluto/"/>
+      <iten name="Download" href="/download.html"/>
       <item name="News" href="/news.html"/>
       <item name="FAQ" href="/faq.html"/>
       <item name="Powered By Pluto" href="/powered.html"/>
@@ -55,7 +55,7 @@ limitations under the License.
         <item name="Architecture" href="/v101/developer/arch.html"/>
         <item name="Obtaining Source" href="/v101/developer/subversion.html"/>
         <item name="Building From Source" href="/v101/developer/build_source.html"/>
-        <item name="Integrating/Embedding" href="/v101/developer/integrate.html"/>
+        <item name="Integrating" href="/v101/developer/integrate.html"/>
       </menu>
     </menu>
     

@@ -100,10 +100,8 @@ body {
 }
 
 #leftColumn {
-    margin: 10px 0 10px 0;
-    padding: 0px 5px 0px 5px;
     background-color: #FFFFFF;
-    border-width: 1px 1px 1px 0px;
+    border-width: 1px;
     border-style: solid;
     border-color: #CCCCCC;
 }
@@ -124,7 +122,9 @@ body {
     font-family: "Trebuchet MS", Trebuchet, Arial, Verdana, Sans-serif;
     font-weight: bold;
     white-space: nowrap;
-    border-width: 0px;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: #8DB7DF;
 }
 
 /**
