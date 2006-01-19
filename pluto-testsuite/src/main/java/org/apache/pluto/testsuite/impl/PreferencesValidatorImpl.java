@@ -22,6 +22,11 @@ package org.apache.pluto.testsuite.impl;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.testsuite.test.SimplePreferenceTest;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -29,6 +34,9 @@ import java.util.Enumeration;
 public class PreferencesValidatorImpl implements PreferencesValidator
 {
 
+    private static final Log LOG =
+        LogFactory.getLog(PreferencesValidatorImpl.class);
+	
     public PreferencesValidatorImpl()
     {
     }
@@ -44,7 +52,7 @@ public class PreferencesValidatorImpl implements PreferencesValidator
       // spec requirement, and fix it so that we don't have issues
       // anymore.  When enabled, all preferences fail in testsuite
 
-      /*
+
       String[] values = null;
       String key = null;
 
@@ -62,6 +70,9 @@ public class PreferencesValidatorImpl implements PreferencesValidator
                       //validates that the preferences do not start or end with white space
                       if (!values[i].equalsIgnoreCase(values[i].trim()))
                       {
+                    	  if (LOG.isDebugEnabled()) {
+                    		  LOG.debug("Value has white space (validation fails): key=" + key + " value=" + values[i]);
+                    	  }
                           failedKeys.add(key);
                           i=values.length;
                       }
@@ -69,7 +80,6 @@ public class PreferencesValidatorImpl implements PreferencesValidator
               }
           }
       }
-      */
 
       if (!failedKeys.isEmpty())
       {
