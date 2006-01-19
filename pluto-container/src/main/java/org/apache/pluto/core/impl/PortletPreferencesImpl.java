@@ -19,6 +19,7 @@
 
 package org.apache.pluto.core.impl;
 
+import java.io.IOException;
 import java.util.*;
 
 import javax.portlet.PortletPreferences;
@@ -89,6 +90,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
 
         try {
+        	//Store the preferences from portlet.xml
+        	store();
             PortletPreference[] prefs =
                 factory.getStoredPreferences(window, request);
 
@@ -96,8 +99,17 @@ public class PortletPreferencesImpl implements PortletPreferences {
                 preferences.put(prefs[i].getName(), prefs[i]);
             }
         }
-        catch(PortletContainerException pe) {
-            LOG.error("Error retrieving preferences.", pe);
+        catch(PortletContainerException e) {
+            LOG.error("Error retrieving preferences.", e);
+            //TODO: Rethrow up the stack????
+        } 
+        catch (IOException e) {
+            LOG.error("Error retrieving preferences.", e);        	
+            //TODO: Rethrow up the stack????
+        }
+        catch (ValidatorException e) {
+            LOG.warn("ValidatorException initializing portlet preferences. " +
+            		"This is not illegal at this point since we are just retreiving from portlet.xml.", e);    	
         }
     }
 
@@ -204,7 +216,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
 
 
-        preferences.clear();
+//        preferences.clear();
         for(int i=0;i<defaultPreferences.length;i++) {
            if(key.equals(defaultPreferences[i].getName())) {
                preferences.put(key, defaultPreferences[i]);
@@ -233,11 +245,14 @@ public class PortletPreferencesImpl implements PortletPreferences {
                     (PreferencesValidator) clazz.newInstance();
                 validator.validate(this);
             } catch (InstantiationException e) {
+            	LOG.error("Problem instantiating validator: " + e.toString());
                 throw new ValidatorException(e, null);
             } catch (IllegalAccessException e) {
+            	LOG.error("Problem instantiating validator: " + e.toString());
                 throw new ValidatorException(e, null);
-            } catch (ClassNotFoundException t) {
-                throw new ValidatorException(t, null);
+            } catch (ClassNotFoundException e) {
+            	LOG.error("Problem instantiating validator: " + e.toString());
+                throw new ValidatorException(e, null);
             }
         }
 
@@ -254,4 +269,31 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
     }
 
+    public String toString() {
+    	StringBuffer sb = new StringBuffer("PortletPreferencesImpl[");
+    	Enumeration names = getNames();
+    	while(names.hasMoreElements()) {
+    		String name = (String)names.nextElement();
+    		sb.append(name);
+    		sb.append("=");
+    		String[] vals = getValues(name, new String[]{"Default"});
+    		if (vals != null) {
+	    		int len = vals.length;
+	    		for (int i = 0; i < len; i++) {
+					sb.append(vals[i]);
+					sb.append(",");
+				}
+	    		if (len == 0) {
+					sb.append(",");    			
+	    		}
+    		} else {
+    			sb.append("NULL,");
+    		}
+    		sb.append("readonly=");
+        	sb.append(isReadOnly(name));    		
+    		sb.append(";");
+    	}
+    	sb.append("]");
+    	return sb.toString();
+    }
 }
