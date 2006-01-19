@@ -22,7 +22,9 @@ import org.apache.pluto.testsuite.TestResult;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -179,9 +181,17 @@ public class SimplePreferenceTest
         res.setDesc("Check to make sure that the validator catches invalid preferences.");
 
         PortletPreferences preferences = req.getPreferences();
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Original preferences:");
+        	logPreferences(preferences);
+        }
         boolean exceptionThrown = false;
         try {
             preferences.setValue("VALIDATION_TEST_KEY", " Spaces removed by trim ");
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Modified VALIDATION_TEST_KEY preference:");
+            	logPreferences(preferences);
+            }
             preferences.store();
         } catch (ReadOnlyException e) {
         	LOG.error(e);
@@ -272,27 +282,34 @@ public class SimplePreferenceTest
             if("notTheOriginal".equals(pref)) {
                 setOccured = true;
             }
-
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Original preferences:");
+            	logPreferences(preferences);
+            }
             preferences.store();
             if("notTheOriginal".equals(preferences.getValue("dummyName", "Default"))) {
                 storeOccured = true;
             }
 
             preferences.reset("dummyName");
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Preferences after dummyName reset:");
+            	logPreferences(preferences);
+            }
 
             String preference =  preferences.getValue("dummyName", "defaultValue");
             if(preference.equals("dummyValue")) {
                 resetOccured = true;
             }
         }
-        catch(ReadOnlyException roe) {
-            roe.printStackTrace();
+        catch(ReadOnlyException e) {
+        	LOG.error(e);
         }
-        catch(ValidatorException ve) {
-            ve.printStackTrace();
+        catch(ValidatorException e) {
+        	LOG.error(e);
         }
-        catch(IOException io) {
-            io.printStackTrace();
+        catch(IOException e) {
+        	LOG.error(e);
         }
 
         if(setOccured && storeOccured && resetOccured) {
@@ -321,6 +338,10 @@ public class SimplePreferenceTest
         try {
             preferences.setValue(BOGUS_KEY, "notTheOriginal");
             String pref = preferences.getValue(BOGUS_KEY, "Default");
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Original preferences:");
+            	logPreferences(preferences);
+            }
             if("notTheOriginal".equals(pref)) {
                 setOccured = true;
             }
@@ -331,6 +352,10 @@ public class SimplePreferenceTest
             }
 
             preferences.reset(BOGUS_KEY);
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Preferences after BOGUS_KEY reset:");
+            	logPreferences(preferences);
+            }
 
             String preference =  preferences.getValue(BOGUS_KEY, "defaultValue");
             if("defaultValue".equals(preference)) {
@@ -375,6 +400,9 @@ public class SimplePreferenceTest
         boolean exceptionThrown = false;
         try {
             preferences.setValue("readonly", "written");
+            if (LOG.isDebugEnabled()) {
+            	logPreferences(preferences);
+            }
         }
         catch (ReadOnlyException roe) {
             exceptionThrown = true;
@@ -436,6 +464,10 @@ public class SimplePreferenceTest
     	res.setDesc("Preferences values are not modified if the values " +
     			"in the Map are altered.");
     	PortletPreferences prefs = req.getPreferences();
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Original Preferences:");
+        	logPreferences(prefs);
+        }
     	Map prefMap = prefs.getMap();
     	String[] values = (String[]) prefMap.get("dummyName");
     	String originalValue = null;
@@ -446,6 +478,10 @@ public class SimplePreferenceTest
     	}
     	
     	String newValue = prefs.getValue("dummyName", "");
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Modified Preferences:");
+        	logPreferences(prefs);
+        }
     	if (!newValue.equals(originalValue)) {
     		res.setReturnCode(TestResult.FAILED);
     		res.setResults("Preferences values modified.");
@@ -455,5 +491,37 @@ public class SimplePreferenceTest
     	return res;
     }
 
+    
+    /**
+     * For DEBUG logging.
+     * 
+     * @param prefs PortletPreferences to log.
+     */
+    private void logPreferences(PortletPreferences prefs) {
+    	StringBuffer pairs = new StringBuffer();
+    	Map map = prefs.getMap();
+    	Set keys = map.keySet();
+    	Iterator iter = keys.iterator();
+    	while(iter.hasNext()) {
+    		String key = (String) iter.next();
+    		String[] vals = (String[])map.get(key);
+    		pairs.append(key);
+    		pairs.append("=");
+    		int len = vals.length;
+    		if (vals != null) {
+    			for (int i = 0; i < len; i++) {
+					pairs.append(vals[i]);
+					if (i < len - 1) {
+						pairs.append(",");
+					}
+				}
+    		} else {
+    			//spec allows null values
+    			pairs.append("NULL");
+    		}
+			pairs.append(";");    		
+    	}
+    	LOG.debug("PortletPreferences: " + pairs.toString());
+    }
 
 }
