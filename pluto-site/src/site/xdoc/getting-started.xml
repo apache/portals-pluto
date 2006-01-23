@@ -74,6 +74,7 @@ $> mvn install
             <li>pluto-container-1.1-SNAPSHOT.jar</li>
             <li>pluto-descriptor-api-1.1-SNAPSHOT.jar</li>
             <li>pluto-descriptor-impl-1.1-SNAPSHOT.jar</li>
+            <li>pluto-taglib-1.1.0-SNAPSHOT.jar</li>
           </ul>
         </p>
         <p>
@@ -96,8 +97,8 @@ $> mvn install
           <b>Step 5:</b> Copy the following to
           <code>&lt;TOMCAT_HOME&gt;/webapps</code>:
           <ul>
-            <li>pluto-portal.war</li>
-            <li>pluto-testsuite.war</li>
+            <li>&lt;PLUTO_HOME&gt;/pluto-portal/target/pluto-portal.war</li>
+            <li>&lt;PLUTO_HOME&gt;/pluto-testsuite/target/pluto-testsuite.war</li>
           </ul>
         </p>
       </subsection>
@@ -189,14 +190,25 @@ $> maven pluto:deploy
         <p>
           <ul>
             <li>
-              Add a user in the 'pluto' role to conf/tomcat-users.xml in the
-              conf directory of your Tomcat installation (&lt;TOMCAT_HOME&gt;).
-              The simplest way to do this is to add the 'pluto' role to the
-              tomcat user's record.
+              Add a role 'pluto' to &lt;TOMCAT_HOME&gt;/conf/tomcat-users.xml,
+              and add a user in the 'pluto' role. The simplest way to do this is
+              to add the 'pluto' role to the 'tomcat' user's record. Here is a
+              sample tomcat-users.xml file:
+              <source><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<tomcat-users>
+  <role rolename="pluto"/>
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <user username="tomcat" password="tomcat" roles="tomcat,pluto"/>
+  <user username="role1" password="tomcat" roles="role1"/>
+  <user username="both" password="tomcat" roles="tomcat,role1"/>
+</tomcat-users>
+              ]]></source>
             </li>
             <li>
-              Start up Tomcat as using by running startup.bat or startup.sh in
-              the bin directory of &lt;TOMCAT_HOME&gt;.
+              Start up Tomcat by running startup.bat or startup.sh in
+              &lt;TOMCAT_HOME&gt;/bin.
             </li>
             <li>
               Browse to http://localhost:8080/pluto/portal
