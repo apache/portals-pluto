@@ -55,14 +55,11 @@ public class PortalEnvironment {
                              HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        init();
-    }
-    
-    private void init() {
-        requestedPortalURL = PortalUrlFactory.getFactory()
+        // Parse servlet request and construct portal URL.
+        this.requestedPortalURL = PortalUrlFactory.getFactory()
         		.createPortalUrl(request);
         // Set Environment in servlet request scope for later use.
-        this.request.setAttribute(REQUEST_PORTALENV, this);
+        request.setAttribute(REQUEST_PORTALENV, this);
     }
 
     /**

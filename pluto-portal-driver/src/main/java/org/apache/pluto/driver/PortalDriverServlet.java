@@ -39,7 +39,8 @@ import java.io.IOException;
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
  * 
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
@@ -50,51 +51,47 @@ public class PortalDriverServlet extends HttpServlet {
 
     /** The portlet container to which we will forward all portlet requests. */
     protected PortletContainer container = null;
-
+    
+    
+    // HttpServlet Impl --------------------------------------------------------
+    
+    public String getServletInfo() {
+        return "Pluto Portal Driver Servlet";
+    }
+    
     /**
-     * Initialize the Portal Driver. Initialization completes the following
-     * tasks:
-     * <ul>
-     *   <li>Retrieve and cache the <code>PortletContainer</code>.</li>
-     *   <li>Retrieve and cache the <code>DriverConfigurationImpl</code>.</li>
-     * </ul>
+     * Initialize the Portal Driver. This method retrieves the portlet container
+     * instance from the servlet context scope.
      * @see PortletContainer
-     * @see DriverConfiguration
      */
     public void init() {
         ServletContext servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
         		AttributeKeys.PORTLET_CONTAINER);
-   }
-
-    private DriverConfiguration getDriverConfiguration() {
-        return (DriverConfiguration) getServletContext()
-            .getAttribute(AttributeKeys.DRIVER_CONFIG);
     }
-
+    
 
     /**
-     * Handle all requests.
+     * Handle all requests. All POST requests are passed to this method.
      * @param request  the incoming HttpServletRequest.
      * @param response  the incoming HttpServletResponse.
      * @throws ServletException  if an internal error occurs.
      * @throws IOException  if an error occurs writing to the response.
      */
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-        PortalEnvironment environment = new PortalEnvironment(
+        PortalEnvironment portalEnvironment = new PortalEnvironment(
         		request, response);
-        PortalURL currentURL = environment.getRequestedPortalURL();
+        PortalURL currentURL = portalEnvironment.getRequestedPortalURL();
         String actionWindowId = currentURL.getActionWindow();
-        PortletWindowConfig windowConfig = getDriverConfiguration().getPortletWindowConfig(
-        		actionWindowId);
+        PortletWindowConfig actionWindowConfig = getDriverConfiguration()
+        		.getPortletWindowConfig(actionWindowId);
 
-        // Window will only exist if there's an action.
-        if (windowConfig != null) {
+        // Action window config will only exist if there is an action request.
+        if (actionWindowConfig != null) {
             PortletWindowImpl portletWindow = new PortletWindowImpl(
-            		windowConfig, currentURL);
+            		actionWindowConfig, currentURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing action request for window: "
                 		+ portletWindow.getId());
@@ -106,7 +103,10 @@ public class PortalDriverServlet extends HttpServlet {
             } catch (PortletException ex) {
                 throw new ServletException(ex);
             }
-        } else {
+        }
+        
+        // Otherwise, handle the render request.
+        else {
             PageConfig pageConfig = getPageConfig(currentURL);
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = pageConfig.getUri();
@@ -115,27 +115,39 @@ public class PortalDriverServlet extends HttpServlet {
         }
     }
 
-    protected PageConfig getPageConfig(PortalURL currentURL) {
+    /**
+     * Pass all POST requests to {@link #doGet(HttpServletRequest, HttpServletResponse)}.
+     * @param request  the incoming servlet request.
+     * @param response  the incoming servlet response.
+     * @throws ServletException if an exception occurs.
+     * @throws IOException if an exception occurs writing to the response.
+     */
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        doGet(request, response);
+    }
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    private PageConfig getPageConfig(PortalURL currentURL) {
         String currentPage = currentURL.getRenderPath();
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rendering Portal: Requested Page: " + currentPage);
         }
         return getDriverConfiguration().getPageConfig(currentPage);
     }
-
-
+    
     /**
-     * Pass all requests to {@link #doPost(HttpServletRequest, HttpServletResponse)}.
-     * @param request  the incoming servlet request.
-     * @param response  the incoming servlet response.
-     * @throws ServletException if an exception occurs.
-     * @throws IOException if an exception occurs writing to the response.
+     * Returns the portal driver configuration object.
+     * @return the portal driver configuration object.
      */
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response)
-    throws ServletException, IOException {
-        doGet(request, response);
+    private DriverConfiguration getDriverConfiguration() {
+        return (DriverConfiguration) getServletContext().getAttribute(
+        		AttributeKeys.DRIVER_CONFIG);
     }
+
+    
     
 }
 

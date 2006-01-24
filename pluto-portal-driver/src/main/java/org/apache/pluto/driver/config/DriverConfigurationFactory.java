@@ -25,90 +25,103 @@ import javax.servlet.ServletContext;
 import java.io.InputStream;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * 
+ * @see DriverConfiguration
+ * @see AdminConfiguration
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 23, 2004
  */
 public class DriverConfigurationFactory {
-
-    private static final Log LOG =
-        LogFactory.getLog(DriverConfigurationFactory.class);
-
-    private static final String DRIVER_CONFIG =
-        "/WEB-INF/pluto-portal-driver-services-config.xml";
-
-
-    private static DriverConfigurationFactory factory;
-
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(
+    		DriverConfigurationFactory.class);
+    
+    /** Portal driver services configuration file name. */
+    private static final String DRIVER_CONFIG_FILE =
+        	"/WEB-INF/pluto-portal-driver-services-config.xml";
+    
+    /** The singleton factory instance. */
+    private static final DriverConfigurationFactory factory =
+    		new DriverConfigurationFactory();
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    private XmlBeanFactory beanFactory = null;
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Private constructor that prevents external instantiation.
+     */
+    private DriverConfigurationFactory() {
+    	// Do nothing.
+    }
+    
+    /**
+     * Returns the singleton factory instance.
+     * @return the singleton factory instance.
+     */
     public static DriverConfigurationFactory getFactory() {
-        if (factory == null) {
-            factory = new DriverConfigurationFactory();
-        }
         return factory;
     }
-
-    private XmlBeanFactory beanFactory;
-
-    private DriverConfigurationFactory() {
-
-    }
-
-    public DriverConfiguration getConfig(ServletContext context) {
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Retrieving driver configuration from: "+DRIVER_CONFIG);
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
+    public DriverConfiguration getConfig(ServletContext servletContext) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Retrieving driver config from: " + DRIVER_CONFIG_FILE);
         }
-
         try {
-            DriverConfiguration configuration = (DriverConfiguration)
-                    getBeanFactory(context).getBean("DriverConfiguration");
-
-            configuration.init(context);
-
-
+            DriverConfiguration driverConfig = (DriverConfiguration)
+                    getBeanFactory(servletContext).getBean(
+                    		"DriverConfiguration");
+            driverConfig.init(servletContext);
             if(LOG.isDebugEnabled()) {
-                LOG.debug(
-                        "Driver ResourceConfig of type "+configuration.getClass() +
-                                " Initialized and Ready For Service"
-                );
+                LOG.debug("Driver config of type " + driverConfig.getClass()
+                		+ " Initialized and Ready For Service.");
             }
-            return configuration;
+            return driverConfig;
+        } catch(NoSuchBeanDefinitionException ex) {
+            throw new DriverConfigurationException(
+            		"Unable to find Driver Configuration.", ex);
         }
-        catch(NoSuchBeanDefinitionException nsbde) {
-            throw new DriverConfigurationException("Unable to find Driver Configuration.", nsbde);
-        }
-
     }
-
-
-    public AdminConfiguration getAdminConfig(ServletContext context) {
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Retrieving admin configuration from: "+DRIVER_CONFIG);
+    
+    
+    public AdminConfiguration getAdminConfig(ServletContext servletContext) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Retrieving admin config from: " + DRIVER_CONFIG_FILE);
         }
-
         try {
-            AdminConfiguration configuration = (AdminConfiguration)
-                    getBeanFactory(context).getBean("AdminConfiguration");
-
-            configuration.init(context);
+            AdminConfiguration adminConfig = (AdminConfiguration)
+                    getBeanFactory(servletContext).getBean(
+                    		"AdminConfiguration");
+            adminConfig.init(servletContext);
             if(LOG.isDebugEnabled()) {
-                LOG.debug(
-                        "Admin config of type "+configuration.getClass() +
-                                "Initialized and ready for service."
-                );
+                LOG.debug("Admin config of type " + adminConfig.getClass()
+                		+ "Initialized and ready for service.");
             }
-            return configuration;
-        }
-
-        catch(NoSuchBeanDefinitionException nsbde) {
+            return adminConfig;
+        } catch (NoSuchBeanDefinitionException ex) {
             return null;
         }
     }
-
-    private XmlBeanFactory getBeanFactory(ServletContext context) {
-        if(beanFactory == null) {
-            InputStream in =
-                    context.getResourceAsStream(DRIVER_CONFIG);
-            beanFactory = new XmlBeanFactory(new InputStreamResource(in, "Driver Configuration"));
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    private XmlBeanFactory getBeanFactory(ServletContext servletContext) {
+        if (beanFactory == null) {
+            InputStream is = servletContext.getResourceAsStream(
+            		DRIVER_CONFIG_FILE);
+            beanFactory = new XmlBeanFactory(new InputStreamResource(
+            		is, "Driver Configuration"));
         }
         return beanFactory;
     }

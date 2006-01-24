@@ -49,13 +49,17 @@ public class PortalStartupListener implements ServletContextListener {
     /** The KEY with which the container is bound to the context. */
     private static final String CONTAINER_KEY = AttributeKeys.PORTLET_CONTAINER;
 
-    /** The KEY with which the configuration is bound to the context. */
-    private static final String CONFIG_KEY = AttributeKeys.DRIVER_CONFIG;
+    /** The KEY with which the driver configuration is bound to the context. */
+    private static final String DRIVER_CONFIG_KEY = AttributeKeys.DRIVER_CONFIG;
 
-    private static final String ADMIN_KEY = AttributeKeys.DRIVER_ADMIN_CONFIG;
-
+    /** The KEY with which the admin configuration is bound to the context. */
+    private static final String ADMIN_CONFIG_KEY = AttributeKeys.DRIVER_ADMIN_CONFIG;
+    
+    
+    // ServletContextListener Impl ---------------------------------------------
+    
     /**
-     * Receive the startup notification and subsequently start up the portal
+     * Receives the startup notification and subsequently starts up the portal
      * driver. The following are done in this order:
      * <ol>
      *   <li>Retrieve the ResourceConfig File</li>
@@ -72,15 +76,12 @@ public class PortalStartupListener implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent event) {
         ServletContext servletContext = event.getServletContext();
-
         if (LOG.isInfoEnabled()) {
             LOG.info("Starting up Pluto Portal Driver...");
         }
-
         initDriverConfiguration(servletContext);
         initAdminConfiguration(servletContext);
         initContainer(servletContext);
-
     }
 
     /**
@@ -96,126 +97,131 @@ public class PortalStartupListener implements ServletContextListener {
         destroyDriverConfiguration(servletContext);
 
     }
-
-
+    
+    
+    // Private Initialization Methods ------------------------------------------
+    
     /**
-     * Initialized the Portal Driver Configuration.
-     *
-     * @param servletContext
+     * Initializes the Portal Driver Configuration. This method loads the driver
+     * configuration object and saves it to the servlet context scope.
+     * @param servletContext  the servlet context.
      */
     private void initDriverConfiguration(ServletContext servletContext) {
+    	if (LOG.isDebugEnabled()) {
+            LOG.debug("Initializing Portal Driver Configuration...");
+        }
+        DriverConfiguration driverConfig = DriverConfigurationFactory
+        		.getFactory().getConfig(servletContext);
+        if (driverConfig == null) {
+             LOG.error("Unable to locate Portal Driver Configuration.");
+        } else {
+            servletContext.setAttribute(DRIVER_CONFIG_KEY, driverConfig);
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Driver Configuration initialized to: "
+                		+ driverConfig.getClass().getName());
+            }
+        }
+    }
+
+    /**
+     * Initializes the Admin Configuration if available. This method tries to
+     * load the admin configuration object. If it is not available,
+     * administration will not be allowed. Otherwise, saves it to the servlet
+     * context scope.
+     * @param servletContext  the servlet context.
+     */
+    private void initAdminConfiguration(ServletContext servletContext) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(" * Initializing Portal Driver Configuration...");
+            LOG.debug("Initializing Portal Admin Configuration...");
         }
-
-        DriverConfiguration config = DriverConfigurationFactory
-            .getFactory().getConfig(servletContext);
-
-        if(config == null && LOG.isErrorEnabled()) {
-             LOG.error("* Unable to locate Portal Driver Configuration.");
-        }
-        else if(config != null) {
-            servletContext.setAttribute(CONFIG_KEY, config);
-            if(LOG.isInfoEnabled()) {
-                LOG.info("* Driver Configuration initialized to: "+config.getClass().getName());
+        AdminConfiguration adminConfig = DriverConfigurationFactory
+        		.getFactory().getAdminConfig(servletContext);
+        if (adminConfig == null) {
+            LOG.warn("Admin Configuration not available. "
+            		+ "Administration will not be allowed.");
+        } else {
+        	servletContext.setAttribute(ADMIN_CONFIG_KEY, adminConfig);
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Admin Configuration initialized to: "
+                		+ adminConfig.getClass().getName());
             }
         }
     }
 
     /**
-     * Initialize the Admin Configuration if available.
-     * @param context
+     * Initializes the portlet container. This method constructs and initializes
+     * the portlet container, and saves it to the servlet context scope.
+     * @param servletContext  the servlet context.
      */
-    private void initAdminConfiguration(ServletContext context) {
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("* Initializing Portal Admin Configuration. . .");
-        }
-
-        AdminConfiguration config = DriverConfigurationFactory.getFactory()
-                .getAdminConfig(context);
-
-        if(config == null && LOG.isWarnEnabled()) {
-            LOG.warn("* Admin Configuration not available.  Administration will not be allowed.");
-        }
-        else if(config != null) {
-            context.setAttribute(ADMIN_KEY, config);
-            if(LOG.isInfoEnabled()) {
-                LOG.info("* Admin Configuration initialized to: "+config.getClass().getName());
-            }
-        }
-    }
-
-    /**
-     * Initialize the Container.
-     * @param context
-     */
-    private void initContainer(ServletContext context) {
-        DriverConfiguration config = (DriverConfiguration)
-            context.getAttribute(CONFIG_KEY);
-
+    private void initContainer(ServletContext servletContext) {
+        
+    	// Retrieve the driver configuration from servlet context.
+    	DriverConfiguration driverConfig = (DriverConfiguration)
+        		servletContext.getAttribute(DRIVER_CONFIG_KEY);
+        
         try {
+        	
+        	// Create portal context.
             if (LOG.isDebugEnabled()) {
-                LOG.debug(" * Creating portal context ["
-                        + config.getPortalName() + "/"
-                        + config.getPortalVersion() + "]...");
+                LOG.debug("Creating portal context ["
+                		+ driverConfig.getPortalName() + "/"
+                        + driverConfig.getPortalVersion() + "]...");
             }
-
-            PortalContextImpl portalContext = new PortalContextImpl(config);
-
+            PortalContextImpl portalContext =
+            		new PortalContextImpl(driverConfig);
+            
+            // Create container services.
             if (LOG.isDebugEnabled()) {
-                LOG.debug(" * Creating container services...");
+                LOG.debug("Creating container services...");
             }
             ContainerServicesImpl containerServices =
-                new ContainerServicesImpl(
-                        portalContext,
-                        config
-                );
-
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(" * Creating portlet container...");
-            }
-
-            PortletContainerFactory factory =
-                    PortletContainerFactory.getInstance();
-
-            PortletContainer container = factory.createContainer(
-                    config.getContainerName(),
-                    containerServices,
-                    containerServices
-            );
-
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(" * Initializing portlet container...");
-            }
-
-            container.init(context);
+            		new ContainerServicesImpl(portalContext, driverConfig);
             
+            // Create portlet container.
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Creating portlet container...");
+            }
+            PortletContainerFactory factory =
+            		PortletContainerFactory.getInstance();
+            PortletContainer container = factory.createContainer(
+            		driverConfig.getContainerName(),
+                    containerServices,
+                    containerServices);
+            
+            // Initialize portlet container.
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Initializing portlet container...");
+            }
+            container.init(servletContext);
+            
+            // Save portlet container to the servlet context scope.
+            servletContext.setAttribute(CONTAINER_KEY, container);
             if (LOG.isInfoEnabled()) {
                 LOG.info("Pluto Portal Driver started.");
             }
             
-            context.setAttribute(CONTAINER_KEY, container);
-
         } catch (DriverConfigurationException ex) {
             LOG.error("Unable to retrieve driver configuration "
-                    + "due to configuration error: " + ex.getMessage(), ex
-            );
+                    + "due to configuration error: " + ex.getMessage(), ex);
         } catch (PortletContainerException ex) {
             LOG.error("Unable to start up portlet container: "
-                    + ex.getMessage(), ex
-            );
+            		+ ex.getMessage(), ex);
         }
     }
-
-
+    
+    
+    // Private Destruction Methods ---------------------------------------------
+    
+    /**
+     * Destroyes the portlet container and removes it from servlet context.
+     * @param servletContext  the servlet context.
+     */
     private void destroyContainer(ServletContext servletContext) {
         if (LOG.isInfoEnabled()) {
             LOG.info("Shutting down Pluto Portal Driver...");
         }
-
         PortletContainer container = (PortletContainer)
                 servletContext.getAttribute(CONTAINER_KEY);
-
         if (container != null) {
             try {
                 container.destroy();
@@ -230,44 +236,50 @@ public class PortalStartupListener implements ServletContextListener {
             }
         }
     }
-
+    
+    /**
+     * Destroyes the portal driver config and removes it from servlet context.
+     * @param servletContext  the servlet context.
+     */
     private void destroyDriverConfiguration(ServletContext servletContext) {
-        DriverConfiguration config = (DriverConfiguration)
-                servletContext.getAttribute(CONFIG_KEY);
-
-        if(config != null) {
+        DriverConfiguration driverConfig = (DriverConfiguration)
+                servletContext.getAttribute(DRIVER_CONFIG_KEY);
+        if (driverConfig != null) {
             try {
-                config.destroy();
-                if(LOG.isInfoEnabled()) {
-                    LOG.info("Pluto Portal Driver Config shutdown.");
+            	driverConfig.destroy();
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Pluto Portal Driver Config destroyed.");
                 }
-            }
-            catch(DriverConfigurationException dce) {
-
-            }
-            finally {
-                servletContext.removeAttribute(CONFIG_KEY);
+            } catch (DriverConfigurationException ex) {
+            	LOG.error("Unable to destroy portal driver config: "
+            			+ ex.getMessage(), ex);
+            } finally {
+                servletContext.removeAttribute(DRIVER_CONFIG_KEY);
             }
         }
     }
+    
+    /**
+     * Destroyes the portal admin config and removes it from servlet context.
+     * @param servletContext  the servlet context.
+     */
     private void destroyAdminConfiguration(ServletContext servletContext) {
-        AdminConfiguration config = (AdminConfiguration)
-                servletContext.getAttribute(ADMIN_KEY);
-
-        if(config != null) {
+        AdminConfiguration adminConfig = (AdminConfiguration)
+                servletContext.getAttribute(ADMIN_CONFIG_KEY);
+        if (adminConfig != null) {
             try {
-                config.destroy();
-                if(LOG.isInfoEnabled()) {
-                    LOG.info("Pluto Portal Admin Config shutdown.");
+            	adminConfig.destroy();
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Pluto Portal Admin Config destroyed.");
                 }
-            }
-            catch(DriverConfigurationException dce) {
-
-            }
-            finally {
-                servletContext.removeAttribute(ADMIN_KEY);
+            } catch(DriverConfigurationException ex) {
+            	LOG.error("Unable to destroy portal admin config: "
+            			+ ex.getMessage(), ex);
+            } finally {
+                servletContext.removeAttribute(ADMIN_CONFIG_KEY);
             }
         }
     }
+    
 }
 

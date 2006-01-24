@@ -16,22 +16,35 @@
 package org.apache.pluto.driver.services.portal;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * Configuration of a portlet window on the portal page.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletWindowConfig {
-
-    private String id;
-    private String contextPath;
-    private String portletName;
-
+	
+	// Private Member Variables ------------------------------------------------
+	
+    /** The context path of the associated portlet. */
+    private String contextPath = null;
+    
+    /** The portlet name. */
+    private String portletName = null;
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * No-arg constructor.
+     */
     public PortletWindowConfig() {
+    	// Do nothing.
     }
-
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
     public String getId() {
-        if(id == null) {
-            return createPortletId(contextPath, portletName);
-        }
-        return id;
+    	return createPortletId(contextPath, portletName);
     }
 
     public String getContextPath() {
@@ -49,25 +62,65 @@ public class PortletWindowConfig {
     public void setPortletName(String portletName) {
         this.portletName = portletName;
     }
-
+    
+    
+    // Public Static Methods ---------------------------------------------------
+    
+    /**
+     * Creates the portlet ID from context path and portlet name. The portlet ID
+     * is constructed by concatinating the context path and the portlet name
+     * using a dot ('.').
+     * @param contextPath  the portlet context path.
+     * @param portletName  the portlet name.
+     */
     public static String createPortletId(String contextPath,
                                          String portletName) {
         return contextPath + "." + portletName;
     }
-
+    
+    /**
+     * Parses out the portlet context path from the portlet ID.
+     * @param portletId  the portlet ID to parse.
+     * @return the portlet context path.
+     */
     public static String parseContextPath(String portletId) {
-        int idx = portletId.indexOf('.');
-        if(idx < 1 || idx == portletId.length() -1) {
-            throw new IllegalArgumentException("Invalid Portlet Id: "+portletId);
-        }
-        return portletId.substring(0, idx);
+    	int index = getSeparatorIndex(portletId);
+        return portletId.substring(0, index);
     }
-
+    
+    /**
+     * Parses out the portlet context path from the portlet ID.
+     * @param portletId  the portlet ID to parse.
+     * @return the portlet context path.
+     * @throws IllegalArgumentException  if portlet ID is invalid.
+     */
     public static String parsePortletName(String portletId) {
-        int idx = portletId.indexOf('.');
-        if(idx < 1 || idx == portletId.length() -1) {
-            throw new IllegalArgumentException("Invalid Portlet Id: "+portletId);
-        }
-        return portletId.substring(idx+1, portletId.length());
+    	int index = getSeparatorIndex(portletId);
+        return portletId.substring(index + 1);
     }
+    
+    
+    // Private Static Method ---------------------------------------------------
+    
+    /**
+     * Parses the portlet ID and returns the separator (".") index. The portlet
+     * ID passed in should be a valid ID: not null, not starts with ".",
+     * not ends with ".", and contains ".".
+     * @param portletId  the portlet ID to parse.
+     * @return the separator index.
+     * @throws IllegalArgumentException  if portlet ID is null or invalid.
+     */
+    private static int getSeparatorIndex(String portletId)
+    throws IllegalArgumentException {
+    	if (portletId == null) {
+    		throw new IllegalArgumentException("Invalid portlet ID: null");
+    	}
+    	int index = portletId.indexOf(".");
+    	if (index <= 0 || index == portletId.length() - 1) {
+    		throw new IllegalArgumentException("Invalid portlet ID: " + portletId);
+    	}
+    	return index;
+    }
+    
 }
+
