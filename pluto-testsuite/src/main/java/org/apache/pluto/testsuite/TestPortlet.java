@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
-
- */
 
 package org.apache.pluto.testsuite;
 
@@ -29,7 +26,6 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,213 +37,258 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Pluto testsuite's test portlet.
+ * 
+ * @see TestConfig
+ * @see PortletTest
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @version 1.0
+ */
 public class TestPortlet extends GenericPortlet {
 
 	/** Internal logger. */
 	private static final Log LOG = LogFactory.getLog(TestPortlet.class);
 	
-    private List configs;
-    private Map tests;
-
+	
+	// Private Member Variables ------------------------------------------------
+	
+	/** List of test configurations. */
+    private List testConfigs = null;
+    
+    /**
+     * Map of test instances: key is an integer ID (as a string), and value is
+     * the <code>PortletTest</code> instances.
+     */
+    private Map tests = null;
+    
+    
+    // GenericPortlet Impl -----------------------------------------------------
+    
+    /**
+     * Initialize the test portlet. This method reads the testsuite's config
+     * files, constructs and initializes all <code>PortletTest</code> instances.
+     * @throws PortletException if fail to read the configuration file.
+     */
     public void init() throws PortletException {
+    	
+    	// Get configuration file name.
         String configFile = getInitParameter("config");
-        if(configFile==null) {
+        if (configFile == null) {
             configFile = "/WEB-INF/testsuite-config.xml";
         }
-
-        InputStream in = getPortletContext().getResourceAsStream(configFile);
-        if( in !=null ) {
-            TestConfigFactory fact = new TestConfigFactory();
-            try {
-                configs = fact.createTestConfigs(in);
-                tests = new HashMap();
-                Iterator it = configs.iterator();
-                int i = 0;
-                while(it.hasNext()) {
-                    TestConfig config = (TestConfig)it.next();
-                    String name=  config.getTestClassName();
-                    PortletTest test = null;
-                    if(name != null) {
-                        Class cl = Class.forName(config.getTestClassName());
-                        test = (PortletTest)cl.newInstance();
-                    }
-                    else {
-                        test = new NoOpTest();
-                    }
-                    test.init(config);
-                    tests.put(String.valueOf(i++), test);
-                }
-            }
-            catch (Throwable t) {
-            	LOG.error(t);
-                throw new PortletException("Unable to read configuration", t);
-            }
+        
+        // Get configuration file as an input stream.
+        InputStream is = getPortletContext().getResourceAsStream(configFile);
+        if (is == null) {
+        	String message = "Testsuite configuration file not found.";
+        	LOG.error(message);
+        	throw new PortletException(message);
         }
-        else {
-        	LOG.error("Configuration File Not Found");
-            throw new IllegalStateException("Configuration File Not Found");
+        
+        // Load PortletTest instances: constructing and initializing.
+        TestConfigFactory factory = new TestConfigFactory();
+        try {
+        	testConfigs = factory.createTestConfigs(is);
+            tests = new HashMap();
+            int i = 0;
+            for (Iterator it = testConfigs.iterator(); it.hasNext(); ) {
+                TestConfig testConfig = (TestConfig) it.next();
+                String name = testConfig.getTestClassName();
+                PortletTest test = null;
+                if (name != null) {
+                	if (LOG.isDebugEnabled()) {
+                		LOG.debug("Loading test: " + name);
+                	}
+                    Class clazz = Class.forName(testConfig.getTestClassName());
+                    test = (PortletTest) clazz.newInstance();
+                } else {
+                	if (LOG.isDebugEnabled()) {
+                		LOG.debug("Loading NoOpTest (test with no name).");
+                	}
+                    test = new NoOpTest();
+                }
+                test.init(testConfig);
+                tests.put(String.valueOf(i++), test);
+            }
+        } catch (Throwable th) {
+        	String message = "Unable to read testsuite configuration.";
+        	LOG.error(message, th);
+            throw new PortletException(message, th);
         }
     }
-
-
-    public void processAction (ActionRequest request,
-                               ActionResponse response)
-    throws PortletException, java.io.IOException {
-
+    
+    
+    public void processAction(ActionRequest request, ActionResponse response)
+    throws PortletException, IOException {
+    	
         String testId = getTestId(request);
-        PortletTest test = (PortletTest)tests.get(testId);
-
-//        if (LOG.isDebugEnabled()) {
-//    		LOG.debug("Processing Portlet Test method in processAction(): " + test);
-//    	}
-
-        if(test!=null && test instanceof ActionTest) {
+        PortletTest test = (PortletTest) tests.get(testId);
+        
+        // For ActionTest, run test and save results in session.
+        if (test != null && test instanceof ActionTest) {
             TestResults results = test.doTest(getPortletConfig(),
                                               getPortletContext(),
-                                              request, response);
-//        	if (LOG.isDebugEnabled()) {
-//        		LOG.debug("Action Test results in processAction(): " + results);
-//        	}
-            request.getPortletSession().setAttribute(test.getClass().getName(), results);
+                                              request,
+                                              response);
+            PortletSession session = request.getPortletSession();
+            session.setAttribute(test.getClass().getName(), results);
         }
+        
         Map renderParameters = null;
-
-        if(test!=null) {
+        if (test != null) {
             renderParameters = test.getRenderParameters(request);
         }
-
-        if(renderParameters==null) {
-            renderParameters = new java.util.HashMap();
+        if (renderParameters == null) {
+            renderParameters = new HashMap();
         }
-
-        renderParameters.put("testId", new String[] {testId});
+        renderParameters.put("testId", new String[] { testId });
         response.setRenderParameters(renderParameters);
     }
-
-    public void doView(RenderRequest request,
-                       RenderResponse response)
+    
+    /**
+     * Serves up the <code>view</code> mode.
+     * TODO: more javadoc.
+     * 
+     * @param request  the protlet request.
+     * @param response  the portlet response.
+     */
+    public void doView(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
-
+    	
+    	// Get the current test ID, the test instance and its config.
         String testId = getTestId(request);
-
-        TestConfig config = null;
-        if(testId != null) {
-            config = (TestConfig)configs.get(Integer.parseInt(testId));
+        TestConfig testConfig = null;
+        PortletTest test = null;
+        if (testId != null) {
+        	testConfig = (TestConfig) testConfigs.get(Integer.parseInt(testId));
+        	test = (PortletTest) tests.get(testId);
         }
-
-        PortletTest test = (PortletTest)tests.get(testId);
-//        if (LOG.isDebugEnabled()) {
-//    		LOG.debug("Processing Portlet Test method in doView(): " + test);
-//    	}
-
-        WindowState state = request.getWindowState();
-        if (!state.equals(WindowState.MINIMIZED)) {
-            response.setContentType("text/html");
-
-            if(test != null && !(test instanceof ActionTest) ) {
-                TestResults results = test.doTest(getPortletConfig(),
-                                                  getPortletContext(),
-                                                  request, response);
-//            	if (LOG.isDebugEnabled()) {
-//            		LOG.debug("Test results in doView(): " + results);
-//            	}                
-                request.setAttribute("results", results);
-            }
-            else if(test != null) {
-                PortletSession session = request.getPortletSession();
-                TestResults results = (TestResults)session.getAttribute(test.getClass().getName());
-//            	if (LOG.isDebugEnabled()) {
-//            		LOG.debug("Action Test results in doView(): " + results);
-//            	}                
-                request.setAttribute("results", results);
-            }
-
-            if(testId == null) {
-                request.setAttribute("tests", configs);
-            }
-            else {
-                TestConfig next = null;
-                TestConfig prev = null;
-                int index = configs.indexOf(test.getConfig());
-                if(index==0) {
-                    prev = (TestConfig)configs.get(configs.size()-1);
-                    next = (TestConfig)configs.get(index+1);
-                }
-                else if(index == configs.size()-1) {
-                    prev = (TestConfig)configs.get(index-1);
-                    next = (TestConfig)configs.get(0);
-                }
-                else {
-                    prev = (TestConfig)configs.get(index-1);
-                    next = (TestConfig)configs.get(index+1);
-                }
-                request.setAttribute("prevTest", prev);
-                request.setAttribute("nextTest", next);
-            }
-
-            PortletContext context = getPortletContext();
-            PortletRequestDispatcher rd = null;
-            if(config != null) {
-                rd = context.getRequestDispatcher(config.getDisplayURI());
-            }
-            else {
-                rd = context.getRequestDispatcher("/jsp/introduction.jsp");
-            }
-            rd.include(request,response);
+        
+        // Set content type (text/html) to the portlet response.
+        response.setContentType("text/html");
+        
+        // For non-ActionTest, run test and save results in request.
+        if (test != null && !(test instanceof ActionTest)) {
+            TestResults results = test.doTest(getPortletConfig(),
+                                              getPortletContext(),
+                                              request,
+                                              response);
+            request.setAttribute("results", results);
         }
+        // For ActionTest, retrieve results from session and save in request.
+        else if (test != null) {
+            PortletSession session = request.getPortletSession();
+            TestResults results = (TestResults) session.getAttribute(
+            		test.getClass().getName());
+            request.setAttribute("results", results);
+        }
+        
+        
+        if (testId == null) {
+            request.setAttribute("tests", testConfigs);
+        } else {
+            TestConfig nextTestConfig = null;
+            TestConfig prevTestConfig = null;
+            int index = testConfigs.indexOf(test.getConfig());
+            if (index == 0) {
+            	prevTestConfig = (TestConfig) testConfigs.get(testConfigs.size() - 1);
+                nextTestConfig = (TestConfig) testConfigs.get(index + 1);
+            } else if (index == testConfigs.size() - 1) {
+            	prevTestConfig = (TestConfig) testConfigs.get(index - 1);
+                nextTestConfig = (TestConfig) testConfigs.get(0);
+            } else {
+            	prevTestConfig = (TestConfig) testConfigs.get(index - 1);
+                nextTestConfig = (TestConfig) testConfigs.get(index + 1);
+            }
+            request.setAttribute("prevTest", prevTestConfig);
+            request.setAttribute("nextTest", nextTestConfig);
+        }
+        
+        // Get display URI and dispatch.
+        String displayUri = null;
+        if (testConfig != null) {
+        	displayUri = testConfig.getDisplayURI();
+        } else {
+        	displayUri = "/jsp/introduction.jsp";
+        }
+        PortletContext context = getPortletContext();
+        PortletRequestDispatcher requestDispatcher =
+        		context.getRequestDispatcher(displayUri);
+        requestDispatcher.include(request, response);
     }
 
-
-    protected void doEdit(RenderRequest req, RenderResponse res)
+    /**
+     * Serves up the <code>edit</code> mode. This method dispatches the request
+     * and response to the edit JSP page (<code>/jsp/edit.jsp</code>).
+     * @param request  the portlet request.
+     * @param response  the portlet response.
+     */
+    protected void doEdit(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
-        WindowState state = req.getWindowState();
-        if(!state.equals(WindowState.MINIMIZED)) {
-            PortletContext context = getPortletContext();
-            PortletRequestDispatcher rd = context.getRequestDispatcher("/jsp/edit.jsp");
-            rd.include(req,res);
-        }
+        PortletContext context = getPortletContext();
+        PortletRequestDispatcher requestDispatcher =
+        		context.getRequestDispatcher("/jsp/edit.jsp");
+        requestDispatcher.include(request, response);
     }
-
-    protected void doHelp(RenderRequest req, RenderResponse res)
+    
+    /**
+     * Serves up the <code>help</code> mode. This method dispatches the request
+     * and response to the help JSP page (<code>/jsp/help.jsp</code>).
+     * @param request  the portlet request.
+     * @param response  the portlet response.
+     */
+    protected void doHelp(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
-        WindowState state = req.getWindowState();
-        if(!state.equals(WindowState.MINIMIZED)) {
-            PortletContext context = getPortletContext();
-            PortletRequestDispatcher rd = context.getRequestDispatcher("/jsp/help.jsp");
-            rd.include(req,res);
-        }
+    	PortletContext context = getPortletContext();
+    	PortletRequestDispatcher requestDispatcher =
+    			context.getRequestDispatcher("/jsp/help.jsp");
+    	requestDispatcher.include(request, response);
     }
-
-    private String getTestId(PortletRequest req) {
-        String testId =   req.getParameter("testId");
-        String previous = req.getParameter("previousTestId");
-        String next     = req.getParameter("nextTestId");
-
-        if((testId == null || testId.trim().length()==0)
-           && next == null && previous == null && tests.size() > 0) {
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    /**
+     * Returns the current test ID.
+     * @param request  the portlet request.
+     * @return the current test ID.
+     */
+    private String getTestId(PortletRequest request) {
+        
+    	String testId = request.getParameter("testId");
+        String prevTestId = request.getParameter("previousTestId");
+        String nextTestId = request.getParameter("nextTestId");
+        
+        // If none of the parameters are available, return null.
+        if ((testId == null || testId.trim().length() == 0)
+        		&& nextTestId == null && prevTestId == null
+        		&& tests.size() > 0) {
             return null;
         }
-        // Retrieve the test which is next to the previous
-        else if(testId == null && previous !=null) {
-            int pId = Integer.parseInt(previous);
-            if(pId >= configs.size()-1) {
+        
+        // Retrieve the test which is next to the previous test.
+        else if (testId == null && prevTestId != null) {
+            int previousTestIdInt = Integer.parseInt(prevTestId);
+            if (previousTestIdInt >= testConfigs.size() - 1) {
                 testId = "0";
-            }
-            else {
-                testId = String.valueOf(pId+1);
-            }
-        }
-        // Retrieve the test which is previous to the next
-        else if(testId == null && next !=null) {
-            int nId = Integer.parseInt(next);
-            if(nId <= 0) {
-                testId = String.valueOf(configs.size()-1);
-            }
-            else {
-                testId = String.valueOf(nId - 1);
+            } else {
+                testId = String.valueOf(previousTestIdInt + 1);
             }
         }
-
+        
+        // Retrieve the test which is previous to the next test.
+        else if (testId == null && nextTestId != null) {
+            int nextTestIdInt = Integer.parseInt(nextTestId);
+            if (nextTestIdInt <= 0) {
+                testId = String.valueOf(testConfigs.size()-1);
+            } else {
+                testId = String.valueOf(nextTestIdInt - 1);
+            }
+        }
+        
+        // Return the current test ID.
         return testId;
     }
 }

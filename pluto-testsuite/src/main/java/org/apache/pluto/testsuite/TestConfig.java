@@ -21,26 +21,47 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TestPortlet Configuration.
- *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * Configuration for <code>PortletTest</code>.
+ * 
+ * @see PortletTest
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 15, 2004
  */
 public class TestConfig implements Serializable {
-
-    private String testClassName;
-    private String name;
-    private String plt;
-    private String displayURI;
+	
+	// Private Member Variables ------------------------------------------------
+	
+	/** PortletTest class name. */
+    private String testClassName = null;
+    
+    /** Test name. */
+    private String name = null;
+    
+    /** Specification PLT No. tested by the PortletTest. */
+    private String plt = null;
+    
+    private String displayURI = null;
+    
     private Map initParams = new HashMap();
+    
     private Map actionParameters = new HashMap();
+    
     private Map renderParameters = new HashMap();
-
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Default constructor required by Digester.
+     */
     public TestConfig() {
-
+    	// Do nothing.
     }
-
+    
+    // Public Methods ----------------------------------------------------------
+    
     public String getTestClassName() {
         return testClassName;
     }

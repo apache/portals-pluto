@@ -25,7 +25,6 @@ import javax.portlet.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.testsuite.test.SimplePreferenceTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
