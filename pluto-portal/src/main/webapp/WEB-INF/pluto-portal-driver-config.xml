@@ -1,12 +1,4 @@
-<?xml version="1.0"?>
-
-<pluto-portal-driver
-  xmlns="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://portals.apache.org/pluto/xsd/pluto-portal-driver.config.xsd
-                      http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd"
-  version="1.1">
-
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright 2004 The Apache Software Foundation.
 Licensed  under the  Apache License,  Version 2.0  (the "License");
@@ -23,6 +15,14 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+
+<pluto-portal-driver
+    xmlns="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd
+                        http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd"
+    version="1.1">
+
 
     <portal-name>pluto-portal-driver</portal-name>
     <portal-version>1.1.0-ALPHA</portal-version>
