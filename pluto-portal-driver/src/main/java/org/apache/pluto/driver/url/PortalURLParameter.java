@@ -13,27 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.driver.core;
+package org.apache.pluto.driver.url;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * The portal URL parameter.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 30, 2004
  */
-public class PortalUrlParameter {
+public class PortalURLParameter {
 
 
     private String window;
     private String name;
     private String[] values;
 
-    public PortalUrlParameter(String window, String name, String value) {
+    public PortalURLParameter(String window, String name, String value) {
         this.window = window;
         this.name = name;
         this.values = new String[]{value};
     }
 
-    public PortalUrlParameter(String window, String name, String[] values) {
+    public PortalURLParameter(String window, String name, String[] values) {
         this.window = window;
         this.name = name;
         this.values = values;

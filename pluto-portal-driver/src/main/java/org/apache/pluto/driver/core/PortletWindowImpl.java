@@ -24,11 +24,14 @@ import javax.portlet.WindowState;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.util.ObjectIdImpl;
 import org.apache.pluto.om.ObjectID;
 
 /**
- * Implementation of javax.portlet.PortletWindow interface.
+ * Implementation of <code>javax.portlet.PortletWindow</code> interface.
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public class PortletWindowImpl implements PortletWindow {
 	

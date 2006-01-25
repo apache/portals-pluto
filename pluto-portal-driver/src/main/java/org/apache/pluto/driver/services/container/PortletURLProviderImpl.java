@@ -29,22 +29,26 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.core.PortalURL;
-import org.apache.pluto.driver.core.PortalUrlFactory;
-import org.apache.pluto.driver.core.PortalUrlParameter;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLFactory;
+import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.services.PortletURLProvider;
 
+/**
+ * 
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ */
 public class PortletURLProviderImpl implements PortletURLProvider {
 
-    private static final Log LOG =
-        LogFactory.getLog(PortletURLProviderImpl.class);
+    private static final Log LOG = LogFactory.getLog(PortletURLProviderImpl.class);
 
     private PortalURL url;
     private String window;
 
     public PortletURLProviderImpl(HttpServletRequest request,
                                   PortletWindow internalPortletWindow) {
-        url = PortalUrlFactory.getFactory().createPortalUrl(request);
+        url = PortalURLFactory.getFactory().createPortalURL(request);
         this.window = internalPortletWindow.getId().toString();
     }
 
@@ -76,9 +80,10 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         Iterator it = parameters.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            PortalUrlParameter param = new PortalUrlParameter(window,
-                                                              (String) entry.getKey(),
-                                                              (String[]) entry.getValue());
+            PortalURLParameter param = new PortalURLParameter(
+            		window,
+            		(String) entry.getKey(),
+            		(String[]) entry.getValue());
             url.addParameter(param);
         }
     }

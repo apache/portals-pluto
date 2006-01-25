@@ -17,7 +17,10 @@
 
  */
 
-package org.apache.pluto.driver.core;
+package org.apache.pluto.driver.url;
+
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,79 +28,74 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
-
 /**
  * The portal URL.
- * TODO: detailed documentation of this class.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @since 1.0
  */
 public class PortalURL implements Cloneable {
 	
-	/** Internal logger. */
-    private static final Log LOG = LogFactory.getLog(PortalURL.class);
-
-    /**
-     * The baseURL consists of the URI up to the servlet path. The dynamic
-     * portion of the PortalURL is the pathInfo;
-     */
-    private StringBuffer server;
-    private StringBuffer servletPath;
-    private String renderPath;
-    private String actionWindow;
-
-    private Map windowStates = null;
-    private Map portletModes = null;
+	/** Server URI contains protocol, host name, and (optional) port. */
+    private String serverURI = null;
     
-    /** Parameters of the windows. */
-    private Map parameters = null;
+    private String servletPath = null;
+    private String renderPath = null;
+    private String actionWindow = null;
+
+    private Map windowStates = new HashMap();
+    private Map portletModes = new HashMap();
+    
+    /** Parameters of the portlet windows. */
+    private Map parameters = new HashMap();
     
     
     // Constructors ------------------------------------------------------------
     
     /**
-     * Create a PortalURL instance.
+     * Constructs a PortalURL instance using default port.
      * @param protocol  the protocol.
-     * @param server  the server.
+     * @param hostName  the host name.
+     * @param contextPath  the servlet context path.
+     * @param servletName  the servlet name.
      */
-    public PortalURL(String protocol, String server) {
-        this.server = new StringBuffer();
-        this.server.append(protocol).append(server);
-        this.parameters = new HashMap();
-        this.windowStates = new HashMap();
-        this.portletModes = new HashMap();
+    public PortalURL(String protocol,
+                     String hostName,
+                     String contextPath,
+                     String servletName) {
+    	this(protocol, hostName, -1, contextPath, servletName);
     }
     
-    public PortalURL(String protocol, String server, int port) {
-        this(protocol, server);
-        this.server.append(":").append(port);
-    }
-
+    /**
+     * Constructs a PortalURL instance using customized port.
+     * @param protocol  the protocol.
+     * @param hostName  the host name.
+     * @param port  the port number: 0 or negative means using default port.
+     * @param contextPath  the servlet context path.
+     * @param servletName  the servlet name.
+     */
     public PortalURL(String protocol,
-                     String server,
-                     String contextPath,
-                     String servletPath) {
-        this(protocol, server);
-        setControllerPath(contextPath, servletPath);
-    }
-
-    public PortalURL(String protocol,
-                     String server,
+                     String hostName,
                      int port,
                      String contextPath,
-                     String servletPath) {
-        this(protocol, server, port);
-        setControllerPath(contextPath, servletPath);
+                     String servletName) {
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(protocol);
+    	buffer.append(hostName);
+    	if (port > 0) {
+    		buffer.append(":").append(port);
+    	}
+    	serverURI = buffer.toString();
+    	
+    	buffer = new StringBuffer();
+    	buffer.append(contextPath);
+    	buffer.append(servletName);
+        servletPath = buffer.toString();
     }
     
     /**
      * Internal private constructor used by method <code>clone()</code>.
+     * @see #clone()
      */
     private PortalURL() {
     	// Do nothing.
@@ -105,12 +103,6 @@ public class PortalURL implements Cloneable {
     
     // Public Methods ----------------------------------------------------------
     
-    public void setControllerPath(String context, String servletPath) {
-        this.servletPath = new StringBuffer();
-        this.servletPath = this.servletPath.append(context).append(servletPath);
-    }
-
-    // BasePortalURL
     public void setRenderPath(String renderPath) {
         this.renderPath = renderPath;
     }
@@ -119,7 +111,7 @@ public class PortalURL implements Cloneable {
         return renderPath;
     }
 
-    public void addParameter(PortalUrlParameter param) {
+    public void addParameter(PortalURLParameter param) {
         parameters.put(param.getWindowId() + param.getName(), param);
     }
 
@@ -127,8 +119,8 @@ public class PortalURL implements Cloneable {
         return parameters.values();
     }
 
-    public void setActionWindow(String window) {
-        this.actionWindow = window;
+    public void setActionWindow(String actionWindow) {
+        this.actionWindow = actionWindow;
     }
 
     public String getActionWindow() {
@@ -184,39 +176,52 @@ public class PortalURL implements Cloneable {
     public void clearParameters(String windowId) {
     	for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();
-            PortalUrlParameter param = (PortalUrlParameter) entry.getValue();
+            PortalURLParameter param = (PortalURLParameter) entry.getValue();
             if (param.getWindowId().equals(windowId)) {
             	it.remove();
             }
         }
     }
-
+    
+    /**
+     * Converts to a string representing the portal URL.
+     * @return a string representing the portal URL.
+     * @see org.apache.pluto.driver.url.PortalURLParser#toString(PortalURL)
+     */
     public String toString() {
-        return PortalUrlParser.getParser().toString(this);
+        return PortalURLParser.getParser().toString(this);
     }
 
 
     /**
-     * Retrieve the server uri, (protocol, name, port).
-     * @return the server uri portion of the url.
+     * Returns the server URI (protocol, name, port).
+     * @return the server URI portion of the portal URL.
      */
-    public String getServerUri() {
-        return server.toString();
+    public String getServerURI() {
+        return serverURI;
     }
-
-    public String getControllerPath() {
-        return servletPath.toString();
+    
+    /**
+     * Returns the servlet path (context path + servlet name).
+     * @return the servlet path.
+     */
+    public String getServletPath() {
+        return servletPath;
     }
-
+    
+    /**
+     * Clone a copy of itself.
+     * @return a copy of itself.
+     */
     public Object clone() {
-        PortalURL url = new PortalURL();
-        url.portletModes = new HashMap(portletModes);
-        url.windowStates = new HashMap(windowStates);
-        url.parameters = new HashMap(parameters);
-        url.server = new StringBuffer(server.toString());
-        url.servletPath = new StringBuffer(servletPath.toString());
-        url.renderPath = renderPath;
-        url.actionWindow = actionWindow;
-        return url;
+    	PortalURL portalURL = new PortalURL();
+    	portalURL.serverURI = this.serverURI;
+    	portalURL.servletPath = this.servletPath;
+    	portalURL.parameters = new HashMap(parameters);
+    	portalURL.portletModes = new HashMap(portletModes);
+    	portalURL.windowStates = new HashMap(windowStates);
+    	portalURL.renderPath = renderPath;
+    	portalURL.actionWindow = actionWindow;
+        return portalURL;
     }
 }

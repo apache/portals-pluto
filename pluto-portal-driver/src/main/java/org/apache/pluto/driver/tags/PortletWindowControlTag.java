@@ -24,8 +24,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.pluto.driver.core.PortalURL;
-import org.apache.pluto.driver.core.PortalUrlFactory;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLFactory;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -50,7 +50,7 @@ public class PortletWindowControlTag extends BodyTagSupport {
 
         String id = parent.getEvaluatedPortletId();
         HttpServletRequest req = (HttpServletRequest) pageContext.getRequest();
-        PortalURL url = PortalUrlFactory.getFactory().createPortalUrl(req);
+        PortalURL url = PortalURLFactory.getFactory().createPortalURL(req);
 
         if (windowState != null) {
             WindowState state = new WindowState(windowState);

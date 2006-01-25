@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.driver.url.PortalURLFactory;
 import org.apache.pluto.services.ResourceURLProvider;
 
 public class ResourceURLProviderImpl implements ResourceURLProvider {
@@ -37,7 +38,7 @@ public class ResourceURLProviderImpl implements ResourceURLProvider {
     public ResourceURLProviderImpl(HttpServletRequest req,
                                    PortletWindow internalPortletWindow) {
         this.base =
-        PortalUrlFactory.getFactory().createPortalUrl(req).getServerUri();
+        PortalURLFactory.getFactory().createPortalURL(req).getServerURI();
         if (LOG.isDebugEnabled()) {
             LOG.debug("Resource URL Created with base: " + base);
         }

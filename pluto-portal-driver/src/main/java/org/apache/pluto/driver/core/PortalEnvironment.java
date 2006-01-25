@@ -22,6 +22,9 @@ package org.apache.pluto.driver.core;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLFactory;
+
 /**
  * The portal environment of the incoming servlet request and response.
  * 
@@ -56,8 +59,8 @@ public class PortalEnvironment {
         this.request = request;
         this.response = response;
         // Parse servlet request and construct portal URL.
-        this.requestedPortalURL = PortalUrlFactory.getFactory()
-        		.createPortalUrl(request);
+        this.requestedPortalURL = PortalURLFactory.getFactory()
+        		.createPortalURL(request);
         // Set Environment in servlet request scope for later use.
         request.setAttribute(REQUEST_PORTALENV, this);
     }

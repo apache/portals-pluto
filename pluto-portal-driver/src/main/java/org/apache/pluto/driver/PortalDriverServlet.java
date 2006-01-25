@@ -21,10 +21,10 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalEnvironment;
-import org.apache.pluto.driver.core.PortalURL;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.url.PortalURL;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -130,6 +130,11 @@ public class PortalDriverServlet extends HttpServlet {
     
     // Private Methods ---------------------------------------------------------
     
+    /**
+     * Returns the config of the portal page to be rendered.
+     * @param currentURL  the current portal URL.
+     * @return the config of the portal page to be rendered.
+     */
     private PageConfig getPageConfig(PortalURL currentURL) {
         String currentPage = currentURL.getRenderPath();
         if (LOG.isDebugEnabled()) {

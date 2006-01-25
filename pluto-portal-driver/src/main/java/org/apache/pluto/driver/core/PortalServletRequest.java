@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
 
 public class PortalServletRequest extends HttpServletRequestWrapper {
 
@@ -82,7 +84,7 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
 
         Iterator iterator = url.getParameters().iterator();
         while (iterator.hasNext()) {
-            PortalUrlParameter param = (PortalUrlParameter) iterator.next();
+            PortalURLParameter param = (PortalURLParameter) iterator.next();
             String name = param.getName();
             String[] values = param.getValues();
             if (param.getWindowId().equals(portletWindow.getId().toString())) {

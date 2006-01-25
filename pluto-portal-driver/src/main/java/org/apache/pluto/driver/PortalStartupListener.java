@@ -82,6 +82,9 @@ public class PortalStartupListener implements ServletContextListener {
         initDriverConfiguration(servletContext);
         initAdminConfiguration(servletContext);
         initContainer(servletContext);
+        if (LOG.isInfoEnabled()) {
+        	LOG.info("********** Pluto Portal Driver Started **********");
+        }
     }
 
     /**
@@ -92,10 +95,15 @@ public class PortalStartupListener implements ServletContextListener {
      */
     public void contextDestroyed(ServletContextEvent event) {
         ServletContext servletContext = event.getServletContext();
+        if (LOG.isInfoEnabled()) {
+        	LOG.info("Shutting down Pluto Portal Driver...");
+        }
         destroyContainer(servletContext);
         destroyAdminConfiguration(servletContext);
         destroyDriverConfiguration(servletContext);
-
+        if (LOG.isInfoEnabled()) {
+        	LOG.info("********** Pluto Portal Driver Shut Down **********");
+        }
     }
     
     
@@ -197,7 +205,7 @@ public class PortalStartupListener implements ServletContextListener {
             // Save portlet container to the servlet context scope.
             servletContext.setAttribute(CONTAINER_KEY, container);
             if (LOG.isInfoEnabled()) {
-                LOG.info("Pluto Portal Driver started.");
+                LOG.info("Pluto portlet container started.");
             }
             
         } catch (DriverConfigurationException ex) {
