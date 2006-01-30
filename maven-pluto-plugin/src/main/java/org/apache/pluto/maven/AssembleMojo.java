@@ -19,11 +19,9 @@ package org.apache.pluto.maven;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
 import org.apache.pluto.util.assemble.AssemblerFactory;
-import org.apache.pluto.util.assemble.file.FileAssembler;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 
-import java.io.IOException;
 import java.io.File;
 
 /**

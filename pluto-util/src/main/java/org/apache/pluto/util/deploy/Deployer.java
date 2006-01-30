@@ -19,23 +19,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Interface defining the methods necessary to deploy a portlet
- * application to a servlet container.
+ * Interface defining the methods necessary to deploy a portlet application to
+ * a servlet container.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
 public interface Deployer {
 
     /**
-     * Deploy the specified web application
-     * @param config
-     * @param webapp
-     * @throws IOException
+     * Deploy the specified portlet application to pluto.
+     * @param config  the deployment configuration of the portlet app.
+     * @param webappInputStream  the input stream to the WAR file.
+     * @throws IOException  if an IO error occurs.
+     * @throws DeploymentException  if a deployment error occurs.
      */
-    void deploy(DeploymentConfig config, InputStream webapp)
-        throws IOException, DeploymentException;
+    public void deploy(DeploymentConfig config, InputStream webappInputStream)
+    throws IOException, DeploymentException;
 
 }
 

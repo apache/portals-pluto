@@ -28,7 +28,7 @@ import java.io.File;
  * the ${tomcat.home}/conf/${tomcat.service}/${tomcat.host}
  * directory.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 28, 2004
  */

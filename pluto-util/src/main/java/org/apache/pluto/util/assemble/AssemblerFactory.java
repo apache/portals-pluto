@@ -17,30 +17,44 @@ package org.apache.pluto.util.assemble;
 
 import org.apache.pluto.util.assemble.file.FileAssembler;
 
-import java.io.File;
-
 /**
- * <B>TODO</B>: Document
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * The pluto assembler factory that creates an assembler. 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Nov 8, 2004
  */
 public class AssemblerFactory {
-
-    private static AssemblerFactory factory;
-
+	
+	/** The singleton factory instance. */
+    private static final AssemblerFactory FACTORY = new AssemblerFactory();
+    
+    /**
+     * Private constructor that prevents external instantiation.
+     */
     private AssemblerFactory() {
-
+    	// Do nothing.
     }
-
+    
+    /**
+     * Returns the singleton factory instance.
+     * @return the singleton factory instance.
+     */
     public static AssemblerFactory getFactory() {
-        if(factory == null) {
-            factory = new AssemblerFactory();
-        }
-        return factory;
+        return FACTORY;
     }
-
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
+    /**
+     * Creates an assembler to assemble a portlet app WAR file to a web app WAR
+     * file deployable to pluto.
+     * @param config  the assembler configuration.
+     * @return an assembler instance.
+     */
     public Assembler createAssembler(AssemblerConfig config) {
-            return new FileAssembler();
+    	return new FileAssembler();
     }
+    
 }

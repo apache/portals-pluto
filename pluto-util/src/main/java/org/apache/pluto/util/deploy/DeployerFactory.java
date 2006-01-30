@@ -16,34 +16,61 @@
 package org.apache.pluto.util.deploy;
 
 /**
- * <B>TODO</B>: Document
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * The pluto deployer factory that creates a deployer instance to deploy portlet
+ * applications to pluto.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Oct 28, 2004
  */
 public class DeployerFactory {
-
-    private static DeployerFactory factory;
-
-    public static DeployerFactory getFactory() {
-        if(factory == null) {
-            factory = new DeployerFactory();
-        }
-        return factory;
+	
+    /** The property key to the deployer class name. */
+    private static final String DEPLOYER_KEY = Deployer.class.getName();
+    
+    /** FIXME: abstract class! The default deployer class name. */
+    private static final String DEFAULT_DEPLOYER_CLASS =
+    		"org.apache.pluto.util.deploy.impl.FileSystemDeployer";
+    
+	/** The singleton factory instance. */
+    private static final DeployerFactory FACTORY = new DeployerFactory();
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Private constructor that prevents external instantiation.
+     */
+    private DeployerFactory() {
+    	// Do nothing.
     }
-
+    
+    /**
+     * Returns the singleton factory instance.
+     * @return the singleton factory instance.
+     */
+    public static DeployerFactory getFactory() {
+        return FACTORY;
+    }
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
+    /**
+     * Creates a pluto deployer to deploy portlet applications to pluto.
+     * @return a pluto deployer.
+     */
     public Deployer createFactory() {
-        String className = System.getProperty(
-            "org.apache.pluto.deploy.Deployer",
-            "org.apache.pluto.util.deploy.impl.FileSystemDeployer"
-        );
-
-        try {
-            Class cl = Class.forName(className);
-            return (Deployer)cl.newInstance();
+        String className = System.getProperty(DEPLOYER_KEY);
+        if (className == null || className.trim().length() == 0) {
+        	className = DEFAULT_DEPLOYER_CLASS;
         }
-        catch(Throwable t) {
-            t.printStackTrace();
+        try {
+            Class clazz = Class.forName(className);
+            return (Deployer) clazz.newInstance();
+        } catch (Throwable th) {
+        	System.err.println("Unable to create deployer from: " + className);
+            th.printStackTrace();
             return null;
         }
     }

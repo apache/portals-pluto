@@ -44,179 +44,26 @@ import java.util.*;
 
 /**
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Nov 8, 2004
  */
 public class FileAssembler implements Assembler {
-
-    private static final Properties PROPERTIES =
-        new Properties();
-
-    static {
-        PROPERTIES.setProperty(OutputKeys.INDENT, "yes");
-    }
-
-    public FileAssembler() {
-   }
-
-    public void assemble(AssemblerConfig config)
-    throws UtilityException {
-
-        try {
-            InputStream servletIn =
-                new FileInputStream(config.getWebappDescriptor());
-
-            InputStream portletIn =
-                new FileInputStream(config.getPortletDescriptor());
-
-            Document xml = updateWebXML(servletIn, portletIn);
-            servletIn.close();
-
-            FileOutputStream servletOut =
-                new FileOutputStream(config.getDestination());
-
-            save(xml, servletOut);
-        }
-        catch(IOException io) {
-            throw new UtilityException(io.getMessage(), io, null);
-        }
-
-    }
-
-
-    protected void save(Document doc, OutputStream out)
-    throws IOException {
-        try {
-            TransformerFactory fact = TransformerFactory.newInstance();
-            Transformer trans = fact.newTransformer();
-            trans.setOutputProperties(PROPERTIES);
-            trans.transform(new DOMSource(doc), new StreamResult(out));
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-            throw new IOException(e.getMessage());
-        } catch (TransformerException e) {
-            e.printStackTrace();
-            throw new IOException(e.getMessage());
-        } finally {
-            out.flush();
-            out.close();
-        }
-    }
-
-
-    /**
-     * @todo currently we rely specifically on the castor implementation.
-     * @param servletIn
-     * @param portletIn
-     * @return
-     * @throws IOException
-     */
-    protected Document updateWebXML(InputStream servletIn, InputStream portletIn)
-    throws IOException {
-        PortletAppDescriptorService portletService =
-                new PortletAppDescriptorServiceImpl();
-
-        Document doc = parse(servletIn);
-
-        Collection servlets = new ArrayList();
-        Collection mappings = new ArrayList();
-
-        PortletAppDD portletAppDD = portletService.read(portletIn);
-        List portlets = portletAppDD.getPortlets();
-        Iterator it = portlets.iterator();
-
-        while(it.hasNext()) {
-            PortletDD portlet = (PortletDD)it.next();
-            String name = portlet.getPortletName();
-
-            Element servlet = doc.createElement("servlet");
-
-            Element servletName = doc.createElement("servlet-name");
-            servletName.appendChild(doc.createTextNode(name));
-            servlet.appendChild(servletName);
-
-            Element servletClass = doc.createElement("servlet-class");
-            servletClass.appendChild(doc.createTextNode(DISPATCH_SERVLET_CLASS));
-            servlet.appendChild(servletClass);
-
-            Element initParam = doc.createElement("init-param");
-            Element paramName = doc.createElement("param-name");
-            paramName.appendChild(doc.createTextNode("portlet-name"));
-
-            Element paramValue = doc.createElement("param-value");
-            paramValue.appendChild(doc.createTextNode(name));
-
-            initParam.appendChild(paramName);
-            initParam.appendChild(paramValue);
-            servlet.appendChild(initParam);
-
-            Element load = doc.createElement("load-on-startup");
-            load.appendChild(doc.createTextNode("1"));
-            servlet.appendChild(load);
-
-            Element mapping = doc.createElement("servlet-mapping");
-            servletName = doc.createElement("servlet-name");
-            servletName.appendChild(doc.createTextNode(name));
-            Element uri = doc.createElement("url-pattern");
-            uri.appendChild(doc.createTextNode("/PlutoInvoker/"+name));
-            mapping.appendChild(servletName);
-            mapping.appendChild(uri);
-
-            servlets.add(servlet);
-            mappings.add(mapping);
-        }
-
-
-
-        Element webAppNode = doc.getDocumentElement();
-        NodeList nodes = webAppNode.getChildNodes();
-
-//         Find the first node that shouldn't be before the servlet
-//         and start appending.  This is kind of ugly, but the hack
-//         works for now!
-        for(int i=0;i<nodes.getLength();i++) {
-            Node node = nodes.item(i);
-            if(node.getNodeType() == Node.ELEMENT_NODE) {
-                if(!BEFORE_SERVLET_DEF.contains(node.getNodeName())) {
-                    it = servlets.iterator();
-                    while(it.hasNext()) {
-                        Node servlet = (Node)it.next();
-                        webAppNode.insertBefore(servlet, node);
-                        it.remove();
-                    }
-                }
-
-                if(!BEFORE_SERVLET_MAPPING_DEF.contains(node.getNodeName())) {
-                    it = mappings.iterator();
-                    while(it.hasNext()) {
-                        Node mapping = (Node)it.next();
-                        webAppNode.insertBefore(mapping, node);
-                        it.remove();
-                    }
-                }
-            }
-        }
-
-        // Now, in case there are not any nodes after the servlet def!
-        it = servlets.iterator();
-        while(it.hasNext()) {
-            webAppNode.appendChild((Node)it.next());
-        }
-
-        it = mappings.iterator();
-        while(it.hasNext()) {
-            webAppNode.appendChild((Node)it.next());
-        }
-
-        return doc;
-    }
-
+	
+	/** The XML output properties. */
+    private static final Properties PROPERTIES = new Properties();
+    
+    /** Element tagnames that may appear before servlet elements. */
     private static final Collection BEFORE_SERVLET_DEF = new ArrayList();
-
-    private static final Collection BEFORE_SERVLET_MAPPING_DEF = new ArrayList();
+    
+    /** Element tagnames that may appear before servlet-mapping elements. */
+    private static final Collection BEFORE_MAPPING_DEF = new ArrayList();
 
     static {
+    	// Initialize xml output properties.
+        PROPERTIES.setProperty(OutputKeys.INDENT, "yes");
+        
+        // Initialize BEFORE_SERVLET_DEF collection.
         BEFORE_SERVLET_DEF.add("icon");
         BEFORE_SERVLET_DEF.add("display-name");
         BEFORE_SERVLET_DEF.add("description");
@@ -225,25 +72,200 @@ public class FileAssembler implements Assembler {
         BEFORE_SERVLET_DEF.add("filter");
         BEFORE_SERVLET_DEF.add("filter-mapping");
         BEFORE_SERVLET_DEF.add("listener");
-
-        BEFORE_SERVLET_MAPPING_DEF.addAll(BEFORE_SERVLET_DEF);
-        BEFORE_SERVLET_MAPPING_DEF.add("servlet");
+        
+        // initialize BEFORE_MAPPING_DEF collection.
+        BEFORE_MAPPING_DEF.addAll(BEFORE_SERVLET_DEF);
+        BEFORE_MAPPING_DEF.add("servlet");
     }
-
-    private Document parse(InputStream in)
-    throws IOException {
-        Document doc = null;
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Default no-arg constructor.
+     */
+    public FileAssembler() {
+    	// Do nothing.
+    }
+    
+    
+    // Assembler Impl ----------------------------------------------------------
+    
+    public void assemble(AssemblerConfig config) throws UtilityException {
         try {
-            DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = fact.newDocumentBuilder();
-            builder.setEntityResolver(new EntityResolverImpl());
-            doc = builder.parse(in);
-        } catch (ParserConfigurationException e) {
-            throw new IOException(e.getMessage());
-        } catch (SAXException e) {
-            throw new IOException(e.getMessage());
+            InputStream webXmlIn = new FileInputStream(
+            		config.getWebappDescriptor());
+            InputStream portletXmlIn = new FileInputStream(
+            		config.getPortletDescriptor());
+            Document xmlDoc = updateWebappDescriptor(webXmlIn, portletXmlIn);
+            webXmlIn.close();
+            FileOutputStream webXmlOut = new FileOutputStream(
+            		config.getDestination());
+            save(xmlDoc, webXmlOut);
+        } catch (IOException ex) {
+            throw new UtilityException(ex.getMessage(), ex, null);
         }
-        return doc;
     }
+    
+    
+    // Protected Methods -------------------------------------------------------
+    
+    /**
+     * Saves the XML document to the specified output stream.
+     * @param xmlDoc  the XML document.
+     * @param out  the output stream.
+     * @throws IOException  if an error occurs.
+     */
+    protected void save(Document xmlDoc, OutputStream out)
+    throws IOException {
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+            transformer.setOutputProperties(PROPERTIES);
+            transformer.transform(new DOMSource(xmlDoc),
+                                  new StreamResult(out));
+        } catch (TransformerConfigurationException ex) {
+            ex.printStackTrace();
+            throw new IOException(ex.getMessage());
+        } catch (TransformerException ex) {
+            ex.printStackTrace();
+            throw new IOException(ex.getMessage());
+        } finally {
+            out.flush();
+            out.close();
+        }
+    }
+
+
+    /**
+     * Updates the webapp descriptor by injecting portlet wrapper servlet
+     * definitions and mappings.
+     * 
+     * TODO: currently we rely specifically on the castor implementation.
+     * 
+     * @param webXmlIn  input stream to the webapp descriptor.
+     * @param portletXmlIn  input stream to the portlet app descriptor.
+     * @return the updated webapp descriptor XML document.
+     * @throws IOException
+     */
+    protected Document updateWebappDescriptor(InputStream webXmlIn,
+                                              InputStream portletXmlIn)
+    throws IOException {
+    	
+        Document webXmlDoc = parse(webXmlIn);
+        Collection servletElements = new ArrayList();
+        Collection mappingElements = new ArrayList();
+
+        PortletAppDescriptorService portletAppDescriptorService =
+            	new PortletAppDescriptorServiceImpl();
+        PortletAppDD portletAppDD = portletAppDescriptorService.read(portletXmlIn);
+        
+        for (Iterator it = portletAppDD.getPortlets().iterator();
+        		it.hasNext(); ) {
+            
+        	// Read portlet definition.
+        	PortletDD portlet = (PortletDD) it.next();
+            String name = portlet.getPortletName();
+            
+            // Create servlet definition element.
+            Element servlet = webXmlDoc.createElement("servlet");
+            Element servletName = webXmlDoc.createElement("servlet-name");
+            servletName.appendChild(webXmlDoc.createTextNode(name));
+            servlet.appendChild(servletName);
+            
+            Element servletClass = webXmlDoc.createElement("servlet-class");
+            servletClass.appendChild(webXmlDoc.createTextNode(DISPATCH_SERVLET_CLASS));
+            servlet.appendChild(servletClass);
+            
+            Element initParam = webXmlDoc.createElement("init-param");
+            Element paramName = webXmlDoc.createElement("param-name");
+            paramName.appendChild(webXmlDoc.createTextNode("portlet-name"));
+            
+            Element paramValue = webXmlDoc.createElement("param-value");
+            paramValue.appendChild(webXmlDoc.createTextNode(name));
+            
+            initParam.appendChild(paramName);
+            initParam.appendChild(paramValue);
+            servlet.appendChild(initParam);
+            
+            Element load = webXmlDoc.createElement("load-on-startup");
+            load.appendChild(webXmlDoc.createTextNode("1"));
+            servlet.appendChild(load);
+            
+            // Create servlet mapping element.
+            Element mapping = webXmlDoc.createElement("servlet-mapping");
+            servletName = webXmlDoc.createElement("servlet-name");
+            servletName.appendChild(webXmlDoc.createTextNode(name));
+            Element uri = webXmlDoc.createElement("url-pattern");
+            uri.appendChild(webXmlDoc.createTextNode("/PlutoInvoker/"+name));
+            mapping.appendChild(servletName);
+            mapping.appendChild(uri);
+            
+            // Save servlet definition and servlet mapping.
+            servletElements.add(servlet);
+            mappingElements.add(mapping);
+        }
+
+        Element webAppNode = webXmlDoc.getDocumentElement();
+        NodeList nodes = webAppNode.getChildNodes();
+        
+        // Find the first node that shouldn't be before the servlet and start
+        // appending. This is kind of ugly, but the hack works for now!
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                
+            	if (!BEFORE_SERVLET_DEF.contains(node.getNodeName())) {
+                	for (Iterator it = servletElements.iterator();
+                			it.hasNext(); ) {
+                        Node servlet = (Node) it.next();
+                        webAppNode.insertBefore(servlet, node);
+                        it.remove();
+                    }
+                }
+                
+                if(!BEFORE_MAPPING_DEF.contains(node.getNodeName())) {
+                	for (Iterator it = mappingElements.iterator();
+                			it.hasNext(); ) {
+                        Node mapping = (Node) it.next();
+                        webAppNode.insertBefore(mapping, node);
+                        it.remove();
+                    }
+                }
+            }
+        }
+
+        // Now, in case there are not any nodes after the servlet def!
+        for (Iterator it = servletElements.iterator(); it.hasNext(); ) {
+            webAppNode.appendChild((Node)it.next());
+        }
+        for (Iterator it = mappingElements.iterator(); it.hasNext(); ) {
+            webAppNode.appendChild((Node)it.next());
+        }
+        
+        // Return the updated web.xml document.
+        return webXmlDoc;
+    }
+    
+    /**
+     * Parses an input stream of an XML file to an XML document.
+     * @param xmlIn  the input stream of an XML file.
+     * @return the XML document.
+     * @throws IOException  if an error occurs.
+     */
+    private Document parse(InputStream xmlIn) throws IOException {
+        Document xmlDoc = null;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            builder.setEntityResolver(new EntityResolverImpl());
+            xmlDoc = builder.parse(xmlIn);
+        } catch (ParserConfigurationException ex) {
+            throw new IOException(ex.getMessage());
+        } catch (SAXException ex) {
+            throw new IOException(ex.getMessage());
+        }
+        return xmlDoc;
+    }
+    
 }
 

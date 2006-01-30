@@ -15,45 +15,51 @@
  */
 package org.apache.pluto.util.assemble;
 
-import org.apache.pluto.util.install.ServerConfig;
-
-import java.util.List;
-import java.util.Map;
 import java.io.File;
 
 /**
- *
+ * The pluto assembler configuration.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public class AssemblerConfig {
-
-    private File portletDescriptor;
-
-    private File webappDescriptor;
-
-    private File destination;
-
+	
+	// Private Member Variables ------------------------------------------------
+	
+	/** The portlet app descriptor, which is usually WEB-INF/portlet.xml. */
+    private File portletDescriptor = null;
+    
+    /** The webapp descriptor, which is usually WEB-INF/web.xml. */
+    private File webappDescriptor = null;
+    
+    /** The assemble destination, which points to the assembled WAR file. */
+    private File destination = null;
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
     public File getPortletDescriptor() {
         return portletDescriptor;
     }
-
+    
     public void setPortletDescriptor(File portletDescriptor) {
         this.portletDescriptor = portletDescriptor;
     }
-
+    
     public File getWebappDescriptor() {
         return webappDescriptor;
     }
-
+    
     public void setWebappDescriptor(File webappDescriptor) {
         this.webappDescriptor = webappDescriptor;
     }
-
+    
     public File getDestination() {
         return destination;
     }
-
+    
     public void setDestination(File destination) {
         this.destination = destination;
         this.destination.getParentFile().mkdirs();
     }
+    
 }

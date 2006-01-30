@@ -16,15 +16,6 @@
 
 package org.apache.pluto.maven;
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.project.MavenProject;
-
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 /**
  * @goal uninstall
  * @requiresDependencyResolution runtime

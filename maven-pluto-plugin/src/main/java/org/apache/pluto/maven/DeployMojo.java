@@ -34,11 +34,13 @@ import java.io.File;
  * @requiresDependencyResolution runtime
  */
 public class DeployMojo extends AbstractPortletMojo {
-
+	
+	// Private Member Variables ------------------------------------------------
+	
     /**
      * @parameter expression="${project.build.outputDirectory}/${maven.final.name}
      */
-    private File deployment;
+    private File deployment = null;
 
     /**
      * @parameter expression="${pluto.deploy.file}"
@@ -49,15 +51,33 @@ public class DeployMojo extends AbstractPortletMojo {
      * @parameter expression="${pluto.deploy.tomcat5.service}"
      */
     private String tomcatService = "Catalina";
-
+    
     /**
      * @parameter expression="${pluto.deploy.tomcat5.host}"
      */
     private String tomcatHost = "localhost";
-
+    
+    
+    // AbstractPlutoMojo Impl --------------------------------------------------
+    
+    protected void doValidate() throws MojoExecutionException {
+    	System.err.println("installationDirectory: " + installationDirectory);
+    	if (deployment != null) {
+    		System.err.println("deployment: " + deployment.getAbsolutePath());
+    	} else {
+    		System.err.println("deployment: null");
+    	}
+    	System.err.println("DeployerClass: " + deployerClass);
+    	
+        if (deployment == null || !deployment.exists()) {
+            throw new MojoExecutionException("Deployment must be specified.");
+        }
+    }
+    
     protected void doExecute() throws Exception {
-        if(!deployment.getName().endsWith(".war")) {
-            throw new MojoExecutionException(deployment.getName()+" is an invalid deployment.  Please specify a war.");
+        if (!deployment.getName().endsWith(".war")) {
+            throw new MojoExecutionException(deployment.getName()
+            		+ " is not a valid deployment. Please specify a war.");
         }
 
         Deployer deployer = createDeployer();
@@ -65,11 +85,6 @@ public class DeployMojo extends AbstractPortletMojo {
 
     }
 
-    protected void doValidate() throws MojoExecutionException {
-        if(deployment == null || !deployment.exists()) {
-            throw new MojoExecutionException("Deployment must be specified");
-        }
-    }
 
     private DeploymentConfig createConfig() {
         return new DeploymentConfigImpl();
@@ -77,8 +92,8 @@ public class DeployMojo extends AbstractPortletMojo {
 
 
     private Deployer createDeployer() throws Exception {
-        Class cl = Class.forName(deployerClass);
-        return (Deployer)cl.newInstance();
+        Class clazz = Class.forName(deployerClass);
+        return (Deployer) clazz.newInstance();
     }
 
     private class DeploymentConfigImpl extends DeploymentConfig {

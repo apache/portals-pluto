@@ -16,18 +16,17 @@
 package org.apache.pluto.util.deploy;
 
 /**
- * Encapsulation of deployment configuration info.
- * Implementations must provide a way to retrieved
- * context specific deployment properties.
+ * Encapsulation of deployment configuration info. Implementations must provide
+ * a way to retrieved context specific deployment properties.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
 public abstract class DeploymentConfig {
 
     /** The deployment name. */
-    private String deploymentName;
+    private String deploymentName = null;
 
     /**
      * Default Constructor.

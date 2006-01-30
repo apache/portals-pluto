@@ -41,7 +41,7 @@ import java.util.HashMap;
  * @since 07/29/2005
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
-public abstract class AbstractManagementMojo extends org.apache.pluto.maven.AbstractPlutoMojo {
+public abstract class AbstractManagementMojo extends AbstractPlutoMojo {
 
     /**
      * @parameter expression="${domain}"
@@ -100,7 +100,7 @@ public abstract class AbstractManagementMojo extends org.apache.pluto.maven.Abst
     protected Map portletApps = new HashMap();
 
     protected AbstractManagementMojo() {
-
+    	// Do nothing.
     }
 
     protected List getSharedDependencies() throws ArtifactNotFoundException, ArtifactResolutionException {

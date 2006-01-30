@@ -16,14 +16,6 @@
 
 package org.apache.pluto.maven;
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.plugin.MojoExecutionException;
-
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-
 /**
  * @goal install
  * @description the pluto ApplicationServerHook goal installs the pluto portal into the specified application server

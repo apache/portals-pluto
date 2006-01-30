@@ -16,11 +16,6 @@
 
 package org.apache.pluto.maven;
 
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.File;
-
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @todo Document

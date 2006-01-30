@@ -25,52 +25,57 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
 public abstract class FileSystemDeployer implements Deployer {
-
-    public FileSystemDeployer() {
-
+	
+	// Constructor -------------------------------------------------------------
+	
+	/**
+	 * Protected no-arg constructor.
+	 */
+    protected FileSystemDeployer() {
+    	// Do nothing.
     }
-
-    public void deploy(DeploymentConfig config, InputStream webapp)
-        throws IOException, DeploymentException {
+    
+    
+    // Deployer Impl -----------------------------------------------------------
+    
+    public void deploy(DeploymentConfig config, InputStream webappInputStream)
+    throws IOException, DeploymentException {
 
         File dir = getWebApplicationDirectory(config);
-        File file = new File(dir, config.getDeploymentName()+".war");
-
+        File file = new File(dir, config.getDeploymentName() + ".war");
         FileOutputStream out = new FileOutputStream(file);
 
         int read = -1;
         byte[] bits = new byte[256];
-        while( (read = webapp.read(bits)) != -1) {
+        while ((read = webappInputStream.read(bits)) != -1) {
             out.write(bits, 0, read);
         }
-        
         out.flush();
         out.close();
-
         configure(config);
-
     }
-
-
+    
+    
+    // Protected Abstract Methods ----------------------------------------------
+    
     /**
-     * Retrieve the directory to which the webapp
-     * should be deployed.
+     * Retrieves the directory to which the portlet app should be deployed.
      * @return
      */
     protected abstract File getWebApplicationDirectory(DeploymentConfig config)
-        throws DeploymentException;
-
+    throws DeploymentException;
+    
     /**
-     * Configure the deployment.
+     * Configures the deployment.
      * @param config
      */
     protected abstract void configure(DeploymentConfig config)
-        throws DeploymentException, IOException;
+    throws DeploymentException, IOException;
 
 }
 

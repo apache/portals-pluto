@@ -16,7 +16,8 @@
 
 package org.apache.pluto.maven;
 
-import org.apache.maven.plugin.*;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
@@ -31,26 +32,24 @@ public abstract class AbstractPlutoMojo extends AbstractMojo {
     /**
      * @parameter expression="${installDir}"
      */
-    protected File installationDirectory;
+    protected File installationDirectory = null;
 
     /**
      * @parameter expression="${project}"
      * @required
      * @readonly
      */
-    protected MavenProject project;
+    protected MavenProject project = null;
 
     public void execute() throws MojoExecutionException {
         // Validation of the installDir property is done by maven.
         try {
             doValidate();
             doExecute();
-        }
-        catch(MojoExecutionException mee) {
-            throw mee;
-        }
-        catch(Exception e) {
-            throw new MojoExecutionException("Error Installing Pluto", e);
+        } catch (MojoExecutionException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new MojoExecutionException("Error Installing Pluto", ex);
         }
     }
 
