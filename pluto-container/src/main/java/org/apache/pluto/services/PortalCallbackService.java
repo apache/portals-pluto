@@ -23,7 +23,9 @@ import org.apache.pluto.PortletWindow;
 import java.util.Map;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * The callback service interface defining callback methods that will be invoked
+ * by the portlet container when necessary.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 21, 2004
  */
@@ -31,40 +33,44 @@ public interface PortalCallbackService extends ContainerService {
 
     /**
      * Set the title to be used for this portlet.
-     * @param request
-     * @param window
-     * @param title
+     * @param request  the servlet request.
+     * @param portletWindow  the portlet window.
+     * @param title  the title to set.
      */
     public void setTitle(HttpServletRequest request,
-                         PortletWindow window,
+                         PortletWindow portletWindow,
                          String title);
 
     /**
-     * Returns an URL pointing to the given portlet window
-     * @param portletWindow the portlet Window
-     * @return the URL to the given portlet
+     * Returns a URL provider used to constuct a URL to the given portlet.
+     * @param request  the servlet request.
+     * @param portletWindow  the portlet window.
+     * @return the URL provider used to construct a URL to the given portlet.
      */
-    public PortletURLProvider getPortletURLProvider(HttpServletRequest req,
+    public PortletURLProvider getPortletURLProvider(HttpServletRequest request,
                                                     PortletWindow portletWindow);
 
     /**
-     * Returns the ResourceURLProvider to create URLs pointing to a resource in
-     * a web application.
-     * @param portletWindow the portlet Window
-     * @return the URL to a resource
+     * Returns a URL provider used to construct a URL to a resource in the web
+     * application.
+     * @param request  the servlet request.
+     * @param portletWindow  the portlet window.
+     * @return the URL provider used to construct a URL to a resource.
      */
-    public ResourceURLProvider getResourceURLProvider(HttpServletRequest req,
+    public ResourceURLProvider getResourceURLProvider(HttpServletRequest request,
                                                       PortletWindow portletWindow);
 
-    public Map getRequestProperties(HttpServletRequest req,
+    public Map getRequestProperties(HttpServletRequest request,
                                     PortletWindow portletWindow);
 
-    public void setResponseProperty(HttpServletRequest req,
-                                    PortletWindow window,
-                                    String property, String value);
+    public void setResponseProperty(HttpServletRequest request,
+                                    PortletWindow portletWindow,
+                                    String property,
+                                    String value);
 
-    public void addResponseProperty(HttpServletRequest req,
-                                    PortletWindow window,
-                                    String property, String value);
+    public void addResponseProperty(HttpServletRequest request,
+                                    PortletWindow portletWindow,
+                                    String property,
+                                    String value);
 
 }

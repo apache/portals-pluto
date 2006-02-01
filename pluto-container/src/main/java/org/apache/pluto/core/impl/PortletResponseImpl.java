@@ -27,6 +27,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerServices;
@@ -35,9 +36,8 @@ import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.services.ResourceURLProvider;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 
-public abstract class PortletResponseImpl
-    extends javax.servlet.http.HttpServletResponseWrapper
-    implements InternalPortletResponse, PortletResponse {
+public abstract class PortletResponseImpl extends HttpServletResponseWrapper
+implements InternalPortletResponse, PortletResponse {
 
     PortletContainer container;
 

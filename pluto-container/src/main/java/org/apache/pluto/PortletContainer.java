@@ -48,16 +48,16 @@ import java.io.IOException;
 public interface PortletContainer {
 
     /**
-     * Initializes the portlet container.
-     * @param context the servlet configuration
-     * @throws PortletContainerException if an error occurs while initializing
-     *                                   the container
+     * Initializes the container for use within the given servlet context.
+     * @param servletContext  the servlet context.
+     * @throws PortletContainerException if an error occurs.
      */
-    public void init(ServletContext context) throws PortletContainerException;
+    public void init(ServletContext servletContext)
+    throws PortletContainerException;
 
     /**
-     * Shuts down the portlet container. After calling this method it is no
-     * longer valid to call any method on the portlet container.
+     * Shuts down the container. After calling this method it is no longer valid
+     * to call any method on the portlet container.
      * @throws PortletContainerException if an error occurs while shutting down
      *                                   the container
      */

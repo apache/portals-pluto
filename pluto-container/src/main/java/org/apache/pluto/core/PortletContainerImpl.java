@@ -36,54 +36,69 @@ import org.apache.pluto.OptionalPortletContainerServices;
 /**
  * Default Pluto Container implementation.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
 public class PortletContainerImpl implements PortletContainer {
 
     /** Internal logger. */
-    private static final Log LOG =
-        LogFactory.getLog(PortletContainerImpl.class);
-
+    private static final Log LOG = LogFactory.getLog(PortletContainerImpl.class);
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
     /** The portlet container name. */
-    private String name;
-
-    /** The PortletContainerServices associated with this container. */
-    private PortletContainerServices containerServices;
-    private OptionalPortletContainerServices optionalContainerServices;
-
-    /** The ServletContext associated with this container. */
-    private ServletContext context;
+    private String name = null;
+    
+    /** The required container services associated with this container. */
+    private PortletContainerServices containerServices = null;
+    
+    /** The optional container services associated with this container. */
+    private OptionalPortletContainerServices optionalContainerServices = null;
+    
+    /** The servlet context associated with this container. */
+    private ServletContext servletContext = null;
 
     /** Flag indicating whether or not we've been initialized. */
-    private boolean initialized;
-
+    private boolean initialized = false;
+    
+    
+    // Constructor -------------------------------------------------------------
+    
     /** Default Constructor.  Create a container implementation
      *  whith the given name and given services.
      *
-     * @param name the name of the container.
-     * @param services the container services implementation.
+     * @param name  the name of the container.
+     * @param requiredServices  the required container services implementation.
+     * @param optionalServices  the optional container services implementation.
      */
     public PortletContainerImpl(String name,
-                                PortletContainerServices services,
+                                PortletContainerServices requiredServices,
                                 OptionalPortletContainerServices optionalServices) {
         this.name = name;
-        this.containerServices = services;
+        this.containerServices = requiredServices;
         this.optionalContainerServices = optionalServices;
     }
-
+    
+    
+    // PortletContainer Impl ---------------------------------------------------
+    
     /**
      * Initialize the container for use within the given configuration scope.
-     * @param context
+     * @param servletContext  the servlet context of the portal webapp.
      */
-    public void init(ServletContext context) {
-        this.context = context;
-        initialized = true;
-        if (LOG.isInfoEnabled()) {
-            LOG.debug("Portlet Container [" + name +
-                      "] successfully initialized.");
-        }
+    public void init(ServletContext servletContext)
+    throws PortletContainerException {
+    	if (servletContext == null) {
+    		throw new PortletContainerException(
+    				"Unable to initialize portlet container [" + name + "]: "
+    				+ "servlet context is null.");
+    	}
+        this.servletContext = servletContext;
+        this.initialized = true;
+        info("Container initialized successfully.");
     }
 
     /**
@@ -98,169 +113,150 @@ public class PortletContainerImpl implements PortletContainer {
      * Destroy this container.
      */
     public void destroy() {
-        this.context = null;
-        initialized = false;
+        this.servletContext = null;
+        this.initialized = false;
+        info("Container destroyed.");
     }
 
 
     /**
-     * Render the portlet associated with the specified window.
-     * @param pWindow
-     * @param request
-     * @param response
+     * Renders the portlet associated with the specified portlet window.
+     * @param portletWindow  the portlet window.
+     * @param request  the servlet request.
+     * @param response  the servlet response.
+     * @throws IllegalStateException  if the container is not initialized.
      * @throws PortletException
      * @throws IOException
      * @throws PortletContainerException
+     * 
+     * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
      */
-    public void doRender(PortletWindow pWindow,
+    public void doRender(PortletWindow portletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
-        throws PortletException, IOException, PortletContainerException {
+    throws PortletException, IOException, PortletContainerException {
+    	
+    	ensureInitialized();
+    	
+        InternalPortletWindow internalPortletWindow =
+        		new InternalPortletWindow(servletContext, portletWindow);
+        debug("Render request received.");
+        
+        RenderRequestImpl renderRequest = new RenderRequestImpl(
+        		this, internalPortletWindow, request);
+        RenderResponseImpl renderResponse = new RenderResponseImpl(
+        		this, internalPortletWindow, request, response);
 
-        InternalPortletWindow window = new InternalPortletWindow(context, pWindow);
-
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name +
-                      "]: Render request recieved.");
-        }
-
-        RenderRequestImpl req =
-            new RenderRequestImpl(this, window, request);
-
-        RenderResponseImpl res =
-            new RenderResponseImpl(this, window, request, response);
-
-        PortletInvoker invoker = new PortletInvoker(window);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "]: Invoker Created.");
-        }
-
-        invoker.render(req, res);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "]: Portlet rendered.");
-        }
+        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
+        invoker.render(renderRequest, renderResponse);
+        debug("Portlet rendered.");
     }
 
     /**
-     * Process the action for the portlet associated with the given action.
-     * @param pWindow
-     * @param request
-     * @param response
+     * Process action for the portlet associated with the given portlet window.
+     * @param portletWindow  the portlet window.
+     * @param request  the servlet request.
+     * @param response  the servlet response.
      * @throws PortletException
      * @throws IOException
      * @throws PortletContainerException
+     * 
+     * @see javax.portlet.Portlet#processAction(ActionRequest, ActionResponse)
      */
-    public void doAction(PortletWindow pWindow,
+    public void doAction(PortletWindow portletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
-        throws PortletException, IOException, PortletContainerException {
-
-        InternalPortletWindow window =
-            new InternalPortletWindow(context, pWindow);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "] Action request recieved");
-        }
-
-        ActionRequestImpl req =
-            new ActionRequestImpl(this, window, request);
-
-        ActionResponseImpl res =
-            new ActionResponseImpl(this, window, request, response);
-
-        PortletInvoker invoker = new PortletInvoker(window);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "]: Invoker Created.");
-        }
-        invoker.action(req, res);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(
-                "Portlet Container [" + name + "]: Portlet Action performed.");
-        }
-
-        String location = res.getRedirectLocation();
+    throws PortletException, IOException, PortletContainerException {
+    	
+    	ensureInitialized();
+    	
+        InternalPortletWindow internalPortletWindow =
+            	new InternalPortletWindow(servletContext, portletWindow);
+    	debug("Action request received.");
+    	
+        ActionRequestImpl actionRequest = new ActionRequestImpl(
+        		this, internalPortletWindow, request);
+        ActionResponseImpl actionResponse = new ActionResponseImpl(
+        		this, internalPortletWindow, request, response);
+        
+        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
+        invoker.action(actionRequest, actionResponse);
+        debug("Portlet action processed.");
+        
+        // After processing action, send a redirect URL for rendering.
+        String location = actionResponse.getRedirectLocation();
 
         if (location == null) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(
-                    "Portlet Container [" + name +
-                    "]:  No redirect location specified.");
+        	
+        	// Create portlet URL provider to encode redirect URL.
+        	debug("No redirect location specified.");
+            PortletURLProvider redirectURL = containerServices
+            		.getPortalCallbackService()
+            		.getPortletURLProvider(request, internalPortletWindow);
+            
+            // Encode portlet mode if it is changed.
+            if (actionResponse.getChangedPortletMode() != null) {
+                redirectURL.setPortletMode(
+                		actionResponse.getChangedPortletMode());
             }
-
-            PortletURLProvider redirectURL =
-                containerServices.getPortalCallbackService()
-                .getPortletURLProvider(request, window);
-
-            if (res.getChangedPortletMode() != null) {
-                redirectURL.setPortletMode(res.getChangedPortletMode());
+            
+            // Encode window state if it is changed.
+            if (actionResponse.getChangedWindowState() != null) {
+                redirectURL.setWindowState(
+                		actionResponse.getChangedWindowState());
             }
-
-            if (res.getChangedWindowState() != null) {
-                redirectURL.setWindowState(res.getChangedWindowState());
-            }
-
-            Map renderParameters = res.getRenderParameters();
+            
+            // Encode render parameters retrieved from action response.
+            Map renderParameters = actionResponse.getRenderParameters();
             redirectURL.clearParameters();
             redirectURL.setParameters(renderParameters);
+            
+            // Encode redirect URL as a render URL.
             redirectURL.setAction(false);
-
-            if (req.isSecure()) {
+            
+            // Set secure of the redirect URL if necessary.
+            if (actionRequest.isSecure()) {
                 redirectURL.setSecure();
             }
-            location = res.encodeRedirectURL(redirectURL.toString());
+            
+            // Encode the redirect URL to a string.
+            location = actionResponse.encodeRedirectURL(redirectURL.toString());
         }
 
         // Here we intentionally use the original response
         // instead of the wrapped internal response.
         response.sendRedirect(location);
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "]: Redirect sent.");
-        }
-
+        debug("Redirect URL sent.");
     }
 
     /**
-     * Load the portlet associated with the specified window.
-     * @param pWindow
-     * @param request
-     * @param response
+     * Loads the portlet associated with the specified portlet window.
+     * @param portletWindow  the portlet window.
+     * @param request  the servlet request.
+     * @param response  the servlet response.
      * @throws PortletException
+     * @throws IOException
      * @throws PortletContainerException
      */
-    public void doLoad(PortletWindow pWindow,
+    public void doLoad(PortletWindow portletWindow,
                        HttpServletRequest request,
                        HttpServletResponse response)
-        throws PortletException, IOException, PortletContainerException {
-
-        InternalPortletWindow window = new InternalPortletWindow(context, pWindow);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "]: Load request recieved.");
-        }
-
-        RenderRequestImpl req =
-            new RenderRequestImpl(this, window, request);
-
-        RenderResponseImpl res =
-            new RenderResponseImpl(this, window, request, response);
-
-        PortletInvoker invoker = new PortletInvoker(window);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "]: Invoker Created.");
-        }
-
-        invoker.load(req, res);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Portlet Container [" + name + "]: Portlet loaded.");
-        }
-
+    throws PortletException, IOException, PortletContainerException {
+    	
+    	ensureInitialized();
+    	
+        InternalPortletWindow internalPortletWindow =
+        		new InternalPortletWindow(servletContext, portletWindow);
+        debug("Load request received.");
+        
+        RenderRequestImpl renderRequest = new RenderRequestImpl(
+        		this, internalPortletWindow, request);
+        RenderResponseImpl renderResponse = new RenderResponseImpl(
+        		this, internalPortletWindow, request, response);
+        
+        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
+        invoker.load(renderRequest, renderResponse);
+        debug("Portlet loaded.");
     }
 
     public String getName() {
@@ -274,5 +270,40 @@ public class PortletContainerImpl implements PortletContainer {
     public OptionalPortletContainerServices getOptionalContainerServices() {
         return optionalContainerServices;
     }
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    /**
+     * Ensures that the portlet container is initialized.
+     * @throws IllegalStateException  if the container is not initialized.
+     */
+    private void ensureInitialized() throws IllegalStateException {
+    	if (!isInitialized()) {
+    		throw new IllegalStateException(
+    				"Portlet container [" + name + "] is not initialized.");
+    	}
+    }
+    
+    /**
+     * Prints a message at DEBUG level with the container name prefix.
+     * @param message  log message.
+     */
+    private void debug(String message) {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Portlet Container [" + name + "]: " + message);
+    	}
+    }
+    
+    /**
+     * Prints a message at INFO level with the container name prefix.
+     * @param message  log message.
+     */
+    private void info(String message) {
+    	if (LOG.isInfoEnabled()) {
+    		LOG.info("Portlet Container [" + name + "]: " + message);
+    	}
+    }
+    
 }
 

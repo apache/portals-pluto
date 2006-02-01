@@ -15,6 +15,7 @@
  */
 package org.apache.pluto.core;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletContext;
@@ -28,51 +29,62 @@ import org.apache.pluto.core.impl.PortletContextImpl;
  * Manager used to cache the portlet configurations which have
  * been previously parsed.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 20, 2004
  */
 public class PortletContextManager {
 
-    /** Singleton instance. */
-    private static PortletContextManager manager;
+    /** The singleton manager instance. */
+    private static final PortletContextManager MANAGER = new PortletContextManager();
+
+    // Private Member Variables ------------------------------------------------
+    
+    /**
+     * The PortletContext cache map: key is servlet context, and value is the
+     * associated portlet context.
+     */
+    private Map portletContexts = new HashMap();
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Private constructor that prevents external instantiation.
+     */
+    private PortletContextManager() {
+    	// Do nothing.
+    }
 
     /**
-     * Singleton accessor method.
-     * @return the PortletContextManager implementation.
+     * Returns the singleton manager instance.
+     * @return the singleton manager instance.
      */
     public static PortletContextManager getManager() {
-        if (manager == null) {
-            manager = new PortletContextManager();
-        }
-        return manager;
+        return MANAGER;
     }
-
-    /** The PortletContext cache. */
-    private Map contexts;
-
-    /** Singleton Constructor. */
-    private PortletContextManager() {
-        contexts = new java.util.HashMap();
-    }
-
-
+    
+    
+    // Public Methods ----------------------------------------------------------
 
     /**
-     * Retrieve the PortletContext associated with the given ServletContext.
+     * Retrieves the PortletContext associated with the given ServletContext.
      * If one does not exist, it is created.
      *
-     * @param context the servlet context
-     * @return the portlet context existing within the ServletContext.
+     * @param servletContext  the servlet context.
+     * @return the InternalPortletContext associated with the ServletContext.
      * @throws PortletContainerException
      */
-    public InternalPortletContext getContext(ServletContext context)
-        throws PortletContainerException {
-        if (!contexts.containsKey(context)) {
-            PortletAppDD def = PortletDescriptorRegistry.getRegistry().getPortletAppDD(context);
-            PortletContext pc = new PortletContextImpl(context, def);
-            contexts.put(context, pc);
+    public InternalPortletContext getPortletContext(ServletContext servletContext)
+    throws PortletContainerException {
+        if (!portletContexts.containsKey(servletContext)) {
+            PortletAppDD portletAppDD = PortletDescriptorRegistry.getRegistry()
+            		.getPortletAppDD(servletContext);
+            PortletContext portletContext = new PortletContextImpl(
+            		servletContext, portletAppDD);
+            portletContexts.put(servletContext, portletContext);
         }
-        return (InternalPortletContext) contexts.get(context);
+        return (InternalPortletContext) portletContexts.get(servletContext);
     }
 }

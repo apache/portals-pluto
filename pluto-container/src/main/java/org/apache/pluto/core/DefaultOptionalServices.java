@@ -37,9 +37,9 @@ import java.util.HashMap;
  * @since Sep 18, 2004
  */
 public class DefaultOptionalServices implements OptionalPortletContainerServices {
-
-    private static final Log LOG =
-        LogFactory.getLog(DefaultOptionalServices.class);
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(DefaultOptionalServices.class);
 
     private PortletPreferencesService preferenceService;
 

@@ -40,30 +40,30 @@ public interface PortletWindow {
      *  used to communicate back to the referencing portal.
      * @return unique id.
      */
-    ObjectID getId();
+    public ObjectID getId();
 
     /**
      * Retrieve the context path in which the Portlet resides.
      * @return context path
      */
-    String getContextPath();
+    public String getContextPath();
 
     /**
      * Retrieve the name of the portlet as configured in the
      * <code>portlet.xml</code>.
      * @return the name of the portlet.
      */
-    String getPortletName();
+    public String getPortletName();
 
     /**
      * Retrieve the current window state for this window.
      * @return the current window state.
      */
-    WindowState getWindowState();
+    public WindowState getWindowState();
 
     /**
      * Retrieve the current portlet mode for this window.
      * @return the current portlet mode.
      */
-    PortletMode getPortletMode();
+    public PortletMode getPortletMode();
 }
