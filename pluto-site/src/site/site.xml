@@ -60,11 +60,11 @@ limitations under the License.
     </menu>
     
     <menu name="Pluto 1.1">
-      <item name="Getting Started" href="/getting-started.html"/>
-      <item name="Deploying" href="/deploying.html"/>
-      <item name="App Servers" href="/app-servers.html"/>
-      <item name="Resources" href="/resources.html"/>
-      <menu name="Subprojects" href="subprojects.html" collapsed="true">
+      <item name="Getting Started" href="/v11/getting-started.html"/>
+      <item name="Deploying" href="/v11/deploying.html"/>
+      <item name="App Servers" href="/v11/app-servers.html"/>
+      <item name="Resources" href="/v11/resources.html"/>
+      <menu name="Subprojects" href="/v11/subprojects.html" collapsed="true">
         <item name="Portlet Container" href="/pluto-container/index.html"/>
         <item name="Portlet Tags" href="/pluto-taglib/index.html"/>
         <item name="Portal Driver" href="/pluto-portal-driver/index.html"/>
