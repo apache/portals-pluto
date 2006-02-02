@@ -23,40 +23,43 @@ limitations under the License.
                         http://portals.apache.org/pluto/xsd/pluto-portal-driver-config.xsd"
     version="1.1">
 
+  <portal-name>pluto-portal-driver</portal-name>
+  <portal-version>1.1.0-ALPHA</portal-version>
+  <container-name>Pluto Portal Driver</container-name>
 
-    <portal-name>pluto-portal-driver</portal-name>
-    <portal-version>1.1.0-ALPHA</portal-version>
-    <container-name>Pluto Portal Driver</container-name>
+  <supports>
+    <portlet-mode>view</portlet-mode>
+    <portlet-mode>edit</portlet-mode>
+    <portlet-mode>help</portlet-mode>
+    <portlet-mode>config</portlet-mode>
 
-    <supports>
-        <portlet-mode>view</portlet-mode>
-        <portlet-mode>edit</portlet-mode>
-        <portlet-mode>help</portlet-mode>
-        <portlet-mode>config</portlet-mode>
+    <window-state>normal</window-state>
+    <window-state>maximized</window-state>
+    <window-state>minimized</window-state>
+  </supports>
 
-        <window-state>normal</window-state>
-        <window-state>maximized</window-state>
-        <window-state>minimized</window-state>
-    </supports>
-
-    <portlet-app>
-        <context-path>/testsuite</context-path>
-        <portlets>
-            <portlet name="TestPortlet1"/>
-            <portlet name="TestPortlet2"/>
-        </portlets>
-    </portlet-app>
-
-    <render-config default="Test Page">
-        <page name="Test Page" uri="/WEB-INF/fragments/portlet.jsp">
-            <portlet context="/testsuite" name="TestPortlet1"/>
-            <portlet context="/testsuite" name="TestPortlet2"/>
-        </page>
-        <page name="Secondary Page" uri="/WEB-INF/fragments/portlet.jsp">
-            <portlet context="/testsuite" name="TestPortlet1"/>
-            <portlet context="/testsuite" name="TestPortlet2"/>
-        </page>
-        <page name="About Pluto" uri="/WEB-INF/fragments/about.jsp"/>
-        <page name="Admin" uri="/WEB-INF/fragments/admin/admin.jsp"/>
-    </render-config>
+  <portlet-app>
+    <context-path>/testsuite</context-path>
+    <portlets>
+      <portlet name="TestPortlet1"/>
+      <portlet name="TestPortlet2"/>
+    </portlets>
+  </portlet-app>
+  
+  <!-- Render configuration which defines the portal pages. -->
+  <render-config default="Test Page">
+    <page name="Test Page" uri="/WEB-INF/fragments/portlet.jsp">
+      <portlet context="/testsuite" name="TestPortlet1"/>
+      <portlet context="/testsuite" name="TestPortlet2"/>
+    </page>
+    <page name="Secondary Page" uri="/WEB-INF/fragments/portlet.jsp">
+      <portlet context="/testsuite" name="TestPortlet1"/>
+      <portlet context="/testsuite" name="TestPortlet2"/>
+    </page>
+    <page name="About Pluto" uri="/WEB-INF/fragments/about.jsp"/>
+    <page name="Admin" uri="/WEB-INF/fragments/admin/admin.jsp"/>
+  </render-config>
+  
 </pluto-portal-driver>
+
+

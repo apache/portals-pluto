@@ -42,8 +42,10 @@ public class PortalURL implements Cloneable {
     private String servletPath = null;
     private String renderPath = null;
     private String actionWindow = null;
-
+    
+    /** The window states: key is the window ID, value is WindowState. */
     private Map windowStates = new HashMap();
+    
     private Map portletModes = new HashMap();
     
     /** Parameters of the portlet windows. */

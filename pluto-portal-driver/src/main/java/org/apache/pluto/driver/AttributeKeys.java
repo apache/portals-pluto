@@ -16,14 +16,15 @@
 package org.apache.pluto.driver;
 
 /**
- * Constants used as attribute keys.
+ * Constants used as attribute keys to bind values to servlet context or servlet
+ * request.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 25, 2004
  */
 public class AttributeKeys {
-
 
     /**
      * Attribute Key used to bind the application's driver config to the
@@ -42,12 +43,20 @@ public class AttributeKeys {
      * ServletContext.
      */
     public static final String PORTLET_CONTAINER = "portletContainer";
-
-    /**
-     * Attribute Key used to bind the current page to the request.
-     */
+    
+    /** Attribute key used to bind the current page to servlet request. */
     public static final String CURRENT_PAGE = "currentPage";
-
+    
+    /** Attribute key used to bind the portlet title to servlet request. */ 
+    public static final String PORTLET_TITLE =
+    		"org.apache.pluto.driver.DynamicPortletTitle";
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Private constructor that prevents external instantiation.
+     */
     private AttributeKeys() {
 
     }

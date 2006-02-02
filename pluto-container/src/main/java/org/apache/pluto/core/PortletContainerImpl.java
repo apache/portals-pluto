@@ -98,7 +98,7 @@ public class PortletContainerImpl implements PortletContainer {
     	}
         this.servletContext = servletContext;
         this.initialized = true;
-        info("Container initialized successfully.");
+        infoWithName("Container initialized successfully.");
     }
 
     /**
@@ -115,7 +115,7 @@ public class PortletContainerImpl implements PortletContainer {
     public void destroy() {
         this.servletContext = null;
         this.initialized = false;
-        info("Container destroyed.");
+        infoWithName("Container destroyed.");
     }
 
 
@@ -140,7 +140,7 @@ public class PortletContainerImpl implements PortletContainer {
     	
         InternalPortletWindow internalPortletWindow =
         		new InternalPortletWindow(servletContext, portletWindow);
-        debug("Render request received.");
+        debugWithName("Render request received.");
         
         RenderRequestImpl renderRequest = new RenderRequestImpl(
         		this, internalPortletWindow, request);
@@ -149,7 +149,7 @@ public class PortletContainerImpl implements PortletContainer {
 
         PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
         invoker.render(renderRequest, renderResponse);
-        debug("Portlet rendered.");
+        debugWithName("Portlet rendered.");
     }
 
     /**
@@ -172,7 +172,7 @@ public class PortletContainerImpl implements PortletContainer {
     	
         InternalPortletWindow internalPortletWindow =
             	new InternalPortletWindow(servletContext, portletWindow);
-    	debug("Action request received.");
+    	debugWithName("Action request received.");
     	
         ActionRequestImpl actionRequest = new ActionRequestImpl(
         		this, internalPortletWindow, request);
@@ -181,7 +181,7 @@ public class PortletContainerImpl implements PortletContainer {
         
         PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
         invoker.action(actionRequest, actionResponse);
-        debug("Portlet action processed.");
+        debugWithName("Portlet action processed.");
         
         // After processing action, send a redirect URL for rendering.
         String location = actionResponse.getRedirectLocation();
@@ -189,7 +189,7 @@ public class PortletContainerImpl implements PortletContainer {
         if (location == null) {
         	
         	// Create portlet URL provider to encode redirect URL.
-        	debug("No redirect location specified.");
+        	debugWithName("No redirect location specified.");
             PortletURLProvider redirectURL = containerServices
             		.getPortalCallbackService()
             		.getPortletURLProvider(request, internalPortletWindow);
@@ -226,7 +226,7 @@ public class PortletContainerImpl implements PortletContainer {
         // Here we intentionally use the original response
         // instead of the wrapped internal response.
         response.sendRedirect(location);
-        debug("Redirect URL sent.");
+        debugWithName("Redirect URL sent.");
     }
 
     /**
@@ -247,7 +247,7 @@ public class PortletContainerImpl implements PortletContainer {
     	
         InternalPortletWindow internalPortletWindow =
         		new InternalPortletWindow(servletContext, portletWindow);
-        debug("Load request received.");
+        debugWithName("Load request received.");
         
         RenderRequestImpl renderRequest = new RenderRequestImpl(
         		this, internalPortletWindow, request);
@@ -256,7 +256,7 @@ public class PortletContainerImpl implements PortletContainer {
         
         PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
         invoker.load(renderRequest, renderResponse);
-        debug("Portlet loaded.");
+        debugWithName("Portlet loaded.");
     }
 
     public String getName() {
@@ -289,7 +289,7 @@ public class PortletContainerImpl implements PortletContainer {
      * Prints a message at DEBUG level with the container name prefix.
      * @param message  log message.
      */
-    private void debug(String message) {
+    private void debugWithName(String message) {
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("Portlet Container [" + name + "]: " + message);
     	}
@@ -299,7 +299,7 @@ public class PortletContainerImpl implements PortletContainer {
      * Prints a message at INFO level with the container name prefix.
      * @param message  log message.
      */
-    private void info(String message) {
+    private void infoWithName(String message) {
     	if (LOG.isInfoEnabled()) {
     		LOG.info("Portlet Container [" + name + "]: " + message);
     	}

@@ -80,18 +80,18 @@ public class PortalDriverServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-
+    	
         PortalEnvironment portalEnvironment = new PortalEnvironment(
         		request, response);
-        PortalURL currentURL = portalEnvironment.getRequestedPortalURL();
-        String actionWindowId = currentURL.getActionWindow();
+        PortalURL portalURL = portalEnvironment.getRequestedPortalURL();
+        String actionWindowId = portalURL.getActionWindow();
         PortletWindowConfig actionWindowConfig = getDriverConfiguration()
         		.getPortletWindowConfig(actionWindowId);
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
             PortletWindowImpl portletWindow = new PortletWindowImpl(
-            		actionWindowConfig, currentURL);
+            		actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing action request for window: "
                 		+ portletWindow.getId());
@@ -103,15 +103,27 @@ public class PortalDriverServlet extends HttpServlet {
             } catch (PortletException ex) {
                 throw new ServletException(ex);
             }
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Action request processed.\n\n");
+            }
         }
         
-        // Otherwise, handle the render request.
+        // Otherwise (actionWindowConfig == null), handle the render request.
         else {
-            PageConfig pageConfig = getPageConfig(currentURL);
+        	if (LOG.isDebugEnabled()) {
+        		LOG.debug("Processing render request.");
+        	}
+            PageConfig pageConfig = getPageConfig(portalURL);
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = pageConfig.getUri();
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Dispatching to: " + uri);
+            }
             RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
             dispatcher.forward(request, response);
+            if (LOG.isDebugEnabled()) {
+            	LOG.debug("Render request processed.\n\n");
+            }
         }
     }
 
@@ -136,11 +148,11 @@ public class PortalDriverServlet extends HttpServlet {
      * @return the config of the portal page to be rendered.
      */
     private PageConfig getPageConfig(PortalURL currentURL) {
-        String currentPage = currentURL.getRenderPath();
+        String requestedPageId = currentURL.getRenderPath();
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Rendering Portal: Requested Page: " + currentPage);
+            LOG.debug("Rendering Portal: Requested Page: " + requestedPageId);
         }
-        return getDriverConfiguration().getPageConfig(currentPage);
+        return getDriverConfiguration().getPageConfig(requestedPageId);
     }
     
     /**

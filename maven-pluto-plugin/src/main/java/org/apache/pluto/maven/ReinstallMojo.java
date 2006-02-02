@@ -31,7 +31,7 @@ public class ReinstallMojo extends AbstractManagementMojo {
 
     protected void doExecute() throws Exception {
         InstallationConfig config = createInstallationConfig();
-        getHandler().install(config);
         getHandler().uninstall(config);
+        getHandler().install(config);
     }
 }

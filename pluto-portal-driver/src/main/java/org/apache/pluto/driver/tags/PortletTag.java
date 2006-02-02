@@ -25,115 +25,180 @@ import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id$
+ * The portlet tag is used to render a portlet specified by the portlet ID.
+ * 
+ * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
+ * @see org.apache.pluto.PortletContainer#doRender(PortletWindow, HttpServletRequest, HttpServletResponse)
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletTag extends BodyTagSupport {
-
-    private static final Log LOG =
-        LogFactory.getLog(PortletTag.class);
-
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(PortletTag.class);
+    
+    /** Status constant for failed rendering. */
     public static final int FAILED = 0;
+    
+    /** Status constant for successful rendering. */
     public static final int SUCCESS = 1;
-
-    private String portletId;
-    private String evaluatedPortletId;
-
-    // Cached Results!
-    private PortalServletResponse response;
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    /** The portlet ID attribute passed into this tag. */
+    private String portletId = null;
+    
+    /** The evaluated value of the portlet ID attribute. */
+    private String evaluatedPortletId = null;
+    
+    /** The cached portal servlet response holding rendering result. */
+    private PortalServletResponse response = null;
+    
+    /** The cached rendering status: SUCCESS or FAILED. */
     private int status;
-    private Throwable throwable;
-
-
+    
+    /** The cached Throwable instance when fail to render the portlet. */
+    private Throwable throwable = null;
+    
+    
+    // Tag Attribute Accessors -------------------------------------------------
+    
+    /**
+     * Returns the portlet ID attribute.
+     * @return the portlet ID attribute.
+     */
+    public String getPortletId() {
+        return portletId;
+    }
+    
+    /**
+     * Sets the portlet ID attribute.
+     * @param portletId  the portlet ID attribute.
+     */
+    public void setPortletId(String portletId) {
+        this.portletId = portletId;
+    }
+    
+    
+    // BodyTagSupport Impl -----------------------------------------------------
+    
+    /**
+     * Method invoked when the start tag is encountered.
+     * @throws JspException  if an error occurs.
+     */
     public int doStartTag() throws JspException {
-        evaluateExpressions();
-        ServletContext ctx = pageContext.getServletContext();
-        DriverConfiguration config = (DriverConfiguration)
-            ctx.getAttribute(AttributeKeys.DRIVER_CONFIG);
-
-        PortletWindowConfig winConfig = config.getPortletWindowConfig(evaluatedPortletId);
-
+        
+    	// Evaluate portlet ID attribute.
+    	evaluatePortletId();
+        
+    	// Retrieve the portlet window config for the evaluated portlet ID.
+        ServletContext servletContext = pageContext.getServletContext();
+        DriverConfiguration driverConfig = (DriverConfiguration)
+            	servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
+        PortletWindowConfig windowConfig = driverConfig
+        		.getPortletWindowConfig(evaluatedPortletId);
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Rendering Portlet Window: " + winConfig);
+            LOG.debug("Rendering Portlet Window: " + windowConfig);
         }
-
-
-        PortalEnvironment env = (PortalEnvironment) pageContext.getRequest()
-            .getAttribute(PortalEnvironment.REQUEST_PORTALENV);
-
-        PortalURL thisURL = env.getRequestedPortalURL();
-
-        PortletWindow window = new PortletWindowImpl(winConfig, thisURL);
-
-        Map states = thisURL.getWindowStates();
-        Iterator it = states.keySet().iterator();
-        while (it.hasNext()) {
-            String wdw = (String) it.next();
-            WindowState state = (WindowState) states.get(wdw);
-            if (WindowState.MAXIMIZED.equals(state) &&
-                !window.getId().equals(wdw)) {
-                // Someone else is maximized, don't show my content.
+        
+        // Retrieve the current portal URL.
+        PortalEnvironment portalEnv = PortalEnvironment.getPortalEnvironment(
+        		(HttpServletRequest) pageContext.getRequest());
+        PortalURL portalURL = portalEnv.getRequestedPortalURL();
+        
+        // Create the portlet window to render.
+        PortletWindow window = new PortletWindowImpl(windowConfig, portalURL);
+        
+        // Check if someone else is maximized. If yes, don't show content.
+        Map windowStates = portalURL.getWindowStates();
+        for (Iterator it = windowStates.keySet().iterator(); it.hasNext(); ) {
+            String windowId = (String) it.next();
+            WindowState windowState = (WindowState) windowStates.get(windowId);
+            if (WindowState.MAXIMIZED.equals(windowState)
+            		&& !window.getId().equals(windowId)) {
                 return SKIP_BODY;
             }
         }
-
-        HttpServletRequest request = (HttpServletRequest)
-            pageContext.getRequest();
-
-        PortalServletRequest req =
-            new PortalServletRequest(request, window);
-
-        PortalServletResponse res =
-            new PortalServletResponse(
+        
+        // Create portal servlet request and response to wrap the original
+        // HTTP servlet request and response.
+        PortalServletRequest portalRequest = new PortalServletRequest(
+        		(HttpServletRequest) pageContext.getRequest(), window);
+        PortalServletResponse portalResponse = new PortalServletResponse(
                 (HttpServletResponse) pageContext.getResponse());
-
+        
+        // Retrieve the portlet container from servlet context.
         PortletContainer container = (PortletContainer)
-            ctx.getAttribute(AttributeKeys.PORTLET_CONTAINER);
-
+            	servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
+        
+        // Render the portlet and cache the response.
         try {
-            container.doRender(window, req, res);
-            response = res;
+            container.doRender(window, portalRequest, portalResponse);
+            response = portalResponse;
             status = SUCCESS;
-        } catch (Throwable e) {
+        } catch (Throwable th) {
             status = FAILED;
-            throwable = e;
+            throwable = th;
         }
+        
+        // Continue to evaluate the tag body.
         return EVAL_BODY_INCLUDE;
     }
-
+    
+    
+    // Package Methods ---------------------------------------------------------
+    
+    /**
+     * Returns the rendering status.
+     * @return the rendering status.
+     */
     int getStatus() {
         return status;
     }
-
+    
+    /**
+     * Returns the portal servlet response holding rendering result. 
+     * @return the portal servlet response holding rendering result.
+     */
     PortalServletResponse getPortalServletResponse() {
         return response;
     }
-
+    
+    /**
+     * Returns the error that has occurred when rendering portlet.
+     * @return the error that has occurred when rendering portlet.
+     */
     Throwable getThrowable() {
         return throwable;
     }
-
+    
+    /**
+     * Returns the evaluated portlet ID.
+     * @return the evaluated portlet ID.
+     */
     String getEvaluatedPortletId() {
         return evaluatedPortletId;
     }
 
-    public String getPortletId() {
-        return portletId;
-    }
-
-    public void setPortletId(String portletId) {
-        this.portletId = portletId;
-    }
-
-    private void evaluateExpressions()
-        throws JspException {
-        Object obj = ExpressionEvaluatorManager.evaluate("portletId",
-                                                         portletId,
-                                                         String.class, this,
-                                                         pageContext);
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    /**
+     * Evaluates the portlet ID attribute passed into this tag. This method
+     * evaluates the member variable <code>portletId</code> and saves the
+     * evaluated result to <code>evaluatedPortletId</code>
+     * @throws JspException  if an error occurs.
+     */
+    private void evaluatePortletId() throws JspException {
+        Object obj = ExpressionEvaluatorManager.evaluate(
+        		"portletId", portletId, String.class, this, pageContext);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Evaluated portletId to: " + obj);
         }
         evaluatedPortletId = (String) obj;
     }
+    
 }

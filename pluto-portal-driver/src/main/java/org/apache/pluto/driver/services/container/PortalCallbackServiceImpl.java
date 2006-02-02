@@ -18,7 +18,7 @@ package org.apache.pluto.driver.services.container;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.core.PortalEnvironment;
+import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.ResourceURLProviderImpl;
 import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.services.PortletURLProvider;
@@ -28,43 +28,66 @@ import java.util.Map;
 import java.util.Collections;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
 public class PortalCallbackServiceImpl implements PortalCallbackService {
 
-
+	// Constructor -------------------------------------------------------------
+	
+	/**
+	 * Default no-arg constructor.
+	 */
     public PortalCallbackServiceImpl() {
-
+    	// Do nothing.
     }
-
+    
+    
+    // PortalCallbackService Impl ----------------------------------------------
+    
+    /**
+     * Method invoked by the container when the portlet sets its title. This
+     * method binds the dynamic portlet title to the servlet request for later
+     * use.
+     */
     public void setTitle(HttpServletRequest request,
-                         PortletWindow window,
+                         PortletWindow portletWindow,
                          String title) {
-        request.setAttribute("org.apache.pluto.dynamic_title", title);
+        request.setAttribute(AttributeKeys.PORTLET_TITLE, title);
     }
 
     public PortletURLProvider getPortletURLProvider(
-        HttpServletRequest req, PortletWindow internalPortletWindow) {
-        return new PortletURLProviderImpl(req, internalPortletWindow);
+    		HttpServletRequest request,
+    		PortletWindow portletWindow) {
+        return new PortletURLProviderImpl(request, portletWindow);
     }
 
     public ResourceURLProvider getResourceURLProvider(
-        HttpServletRequest req, PortletWindow internalPortletWindow) {
-        return new ResourceURLProviderImpl(req, internalPortletWindow);
+    		HttpServletRequest request,
+    		PortletWindow portletWindow) {
+        return new ResourceURLProviderImpl(request, portletWindow);
     }
 
-    public Map getRequestProperties(HttpServletRequest req, PortletWindow portletWindow) {
+    public Map getRequestProperties(HttpServletRequest request,
+                                    PortletWindow portletWindow) {
+    	// TODO: currently this method returns an empty map.
         return Collections.EMPTY_MAP;
     }
 
-    public void setResponseProperty(HttpServletRequest req, PortletWindow window, String property, String value) {
-
+    public void setResponseProperty(HttpServletRequest request,
+                                    PortletWindow portletWindow,
+                                    String property,
+                                    String value) {
+    	// TODO: currently this method does nothing.
     }
 
-    public void addResponseProperty(HttpServletRequest req, PortletWindow window, String property, String value) {
-
+    public void addResponseProperty(HttpServletRequest request,
+                                    PortletWindow portletWindow,
+                                    String property,
+                                    String value) {
+    	// TODO: currently this method does nothing.
     }
 }
 

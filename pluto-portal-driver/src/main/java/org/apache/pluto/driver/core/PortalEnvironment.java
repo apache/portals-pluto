@@ -33,9 +33,12 @@ import org.apache.pluto.driver.url.PortalURLFactory;
  */
 public class PortalEnvironment {
 	
-	/** The attribute key of the portal environment instance. */
+	/**
+	 * The attribute key to bind the portal environment instance to servlet
+	 * request.
+	 */
     public final static String REQUEST_PORTALENV =
-    	PortalEnvironment.class.getName();
+    		PortalEnvironment.class.getName();
     
     /** The incoming servlet request. */
     private HttpServletRequest request = null;
@@ -50,7 +53,7 @@ public class PortalEnvironment {
     // Constructor -------------------------------------------------------------
     
     /**
-     * Create a PortalEnvironment instance.
+     * Creates a PortalEnvironment instance.
      * @param request  the incoming servlet request.
      * @param response  the incoming servlet response.
      */
@@ -61,7 +64,7 @@ public class PortalEnvironment {
         // Parse servlet request and construct portal URL.
         this.requestedPortalURL = PortalURLFactory.getFactory()
         		.createPortalURL(request);
-        // Set Environment in servlet request scope for later use.
+        // Bind the instance to servlet request for later use.
         request.setAttribute(REQUEST_PORTALENV, this);
     }
 

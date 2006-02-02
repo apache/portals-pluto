@@ -83,7 +83,7 @@ public class PortalStartupListener implements ServletContextListener {
         initAdminConfiguration(servletContext);
         initContainer(servletContext);
         if (LOG.isInfoEnabled()) {
-        	LOG.info("********** Pluto Portal Driver Started **********");
+        	LOG.info("********** Pluto Portal Driver Started **********\n\n");
         }
     }
 
@@ -102,7 +102,7 @@ public class PortalStartupListener implements ServletContextListener {
         destroyAdminConfiguration(servletContext);
         destroyDriverConfiguration(servletContext);
         if (LOG.isInfoEnabled()) {
-        	LOG.info("********** Pluto Portal Driver Shut Down **********");
+        	LOG.info("********** Pluto Portal Driver Shut Down **********\n\n");
         }
     }
     

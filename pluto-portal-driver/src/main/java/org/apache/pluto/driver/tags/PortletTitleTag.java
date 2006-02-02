@@ -20,31 +20,44 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.pluto.driver.AttributeKeys;
+
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * The portlet title tag is used to print the dynamic portlet title to the page.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Oct 4, 2004
  */
 public class PortletTitleTag extends TagSupport {
-
-
-    public int doStartTag()
-        throws JspException {
-        PortletTag parent =
-            (PortletTag) TagSupport
-            .findAncestorWithClass(this, PortletTag.class);
-
-        if (parent == null) {
-            throw new JspException(
-                "Portlet Window Controls may only reside within a pluto:portlet tag.");
+	
+	// TagSupport Impl ---------------------------------------------------------
+	
+	/**
+     * Method invoked when the start tag is encountered. This method retrieves
+     * the portlet title and print it to the page.
+     * 
+	 * @see org.apache.pluto.services.PortalCallbackService#setTitle(HttpServletRequest, PortletWindow, String)
+	 * @see org.apache.pluto.driver.services.container.PortalCallbackServiceImpl#setTitle(HttpServletRequest, PortletWindow, String)
+	 * 
+	 * @throws JspException
+	 */
+    public int doStartTag() throws JspException {
+    	
+    	// Ensure that the portlet title tag resides within a portlet tag.
+        PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
+        		this, PortletTag.class);
+        if (parentTag == null) {
+            throw new JspException("Portlet title tag may only reside "
+            		+ "within a pluto:portlet tag.");
         }
-
+        
+        // Print out the portlet title to page.
         try {
-            pageContext.getOut().print(
-                pageContext.getRequest().getAttribute(
-                    "org.apache.pluto.dynamic_title"));
-        } catch (IOException io) {
-            throw new JspException(io);
+            pageContext.getOut().print(pageContext.getRequest().getAttribute(
+            		AttributeKeys.PORTLET_TITLE));
+        } catch (IOException ex) {
+            throw new JspException(ex);
         }
         return SKIP_BODY;
     }

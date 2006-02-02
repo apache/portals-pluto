@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE taglib PUBLIC
   "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
   "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
@@ -18,51 +19,53 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+
 <taglib>
-    <tlibversion>1.0</tlibversion>
-    <jspversion>1.1</jspversion>
-    <shortname>pluto</shortname>
-    <uri>http://portals.apache.org/pluto</uri>
+  
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>pluto</shortname>
+  <uri>http://portals.apache.org/pluto</uri>
 
-    <!-- Insert the rendering of a portlet -->
-    <tag>
-        <name>portlet</name>
-        <tagclass>org.apache.pluto.driver.tags.PortletTag</tagclass>
-        <bodycontent>JSP</bodycontent>
-        <attribute>
-            <name>portletId</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-    </tag>
+  <!-- Insert the rendering of a portlet -->
+  <tag>
+    <name>portlet</name>
+    <tagclass>org.apache.pluto.driver.tags.PortletTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>portletId</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
 
-    <tag>
-        <name>title</name>
-        <tagclass>org.apache.pluto.driver.tags.PortletTitleTag</tagclass>
-        <bodycontent>empty</bodycontent>
-    </tag>
+  <tag>
+    <name>title</name>
+    <tagclass>org.apache.pluto.driver.tags.PortletTitleTag</tagclass>
+    <bodycontent>empty</bodycontent>
+  </tag>
 
-    <tag>
-        <name>window</name>
-        <tagclass>org.apache.pluto.driver.tags.PortletWindowControlTag</tagclass>
-        <bodycontent>JSP</bodycontent>
-        <attribute>
-            <name>portletMode</name>
-            <required>false</required>
-            <rtexprvalue>false</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>windowState</name>
-            <required>false</required>
-            <rtexprvalue>false</rtexprvalue>
-        </attribute>
-    </tag>
+  <tag>
+    <name>url</name>
+    <tagclass>org.apache.pluto.driver.tags.PortletURLTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>portletMode</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>windowState</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
 
-    <tag>
-        <name>render</name>
-        <tagclass>org.apache.pluto.driver.tags.PortletRenderTag</tagclass>
-        <bodycontent>empty</bodycontent>
-    </tag>
-
+  <tag>
+    <name>render</name>
+    <tagclass>org.apache.pluto.driver.tags.PortletRenderTag</tagclass>
+    <bodycontent>empty</bodycontent>
+  </tag>
 
 </taglib>
+

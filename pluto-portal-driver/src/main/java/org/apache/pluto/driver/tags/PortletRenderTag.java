@@ -22,45 +22,55 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * The portlet render tag is used to print portlet rendering result (or error
+ * details) to the page.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 4, 2004
  */
 public class PortletRenderTag extends TagSupport {
-
-    public int doEndTag()
-        throws JspException {
-        PortletTag parent =
-            (PortletTag) TagSupport
-            .findAncestorWithClass(this, PortletTag.class);
-
-        if (parent == null) {
-            throw new JspException(
-                "Portlet Window Controls may only reside within a pluto:portlet tag.");
+	
+	// TagSupport Impl ---------------------------------------------------------
+	
+	/**
+	 * 
+	 * @see PortletTag
+	 */
+    public int doEndTag() throws JspException {
+    	
+    	// Ensure that the portlet render tag resides within a portlet tag.
+        PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
+        		this, PortletTag.class);
+        if (parentTag == null) {
+            throw new JspException("Portlet render tag may only reside "
+            		+ "within a pluto:portlet tag.");
         }
-
-        if (parent.getStatus() == PortletTag.SUCCESS) {
+        
+        // If the portlet is rendered successfully, print the rendering result.
+        if (parentTag.getStatus() == PortletTag.SUCCESS) {
             try {
-                StringBuffer sb =
-                    parent.getPortalServletResponse()
-                    .getInternalBuffer().getBuffer();
-
-                pageContext.getOut().print(sb.toString());
-            } catch (IOException io) {
-                throw new JspException(io);
+                StringBuffer buffer = parentTag.getPortalServletResponse()
+                		.getInternalBuffer().getBuffer();
+                pageContext.getOut().print(buffer.toString());
+            } catch (IOException ex) {
+                throw new JspException(ex);
             }
-        } else {
+        }
+        // Otherwise, print the error stack trace.
+        else {
             try {
                 pageContext.getOut().print("Error rendering portlet.");
                 pageContext.getOut().print("<pre>");
-                parent.getThrowable().printStackTrace(
-                    new PrintWriter(pageContext.getOut()));
+                parentTag.getThrowable().printStackTrace(
+                		new PrintWriter(pageContext.getOut()));
                 pageContext.getOut().print("</pre>");
-            } catch (IOException io) {
-                throw new JspException(io);
+            } catch (IOException ex) {
+                throw new JspException(ex);
             }
         }
-
+        
+        // Return.
         return SKIP_BODY;
     }
 

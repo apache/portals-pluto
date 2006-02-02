@@ -22,7 +22,7 @@ import java.util.Map;
 import java.io.File;
 
 /**
- *
+ * The installation configuration used to install Pluto to servlet container.
  */
 public class InstallationConfig {
 
