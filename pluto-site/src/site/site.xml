@@ -61,6 +61,7 @@ limitations under the License.
     
     <menu name="Pluto 1.1">
       <item name="Getting Started" href="/getting-started.html"/>
+      <item name="Deploying" href="/deploying.html"/>
       <item name="App Servers" href="/app-servers.html"/>
       <item name="Resources" href="/resources.html"/>
       <menu name="Subprojects" href="subprojects.html" collapsed="true">

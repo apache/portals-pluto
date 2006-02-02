@@ -21,6 +21,7 @@ limitations under the License.
   <properties>
     <title>Getting Started With Pluto</title>
     <author email="ddewolf@apache.org">David DeWolf</author>
+    <author email="zheng.at.apache.D0T.org">ZHENG Zhong</author>
   </properties>
   
   <body>
@@ -113,88 +114,17 @@ $> mvn install
       
     </section>
     
-    <section name="Deploying the Portlet to the Portal">
-      
-      <subsection name="Portlet Assembly">
-        <p>
-          All portlet applications must be run through the pluto assembler
-          before being deployed. The assembly process injects pluto specific
-          information for deployment.  Specifically, a servlet and servlet
-          mapping are added to the deployment descriptor. This servlet will be
-          used to dispatch portlet requests to the portlet application.
-        </p>
-        <p>
-          Portlet assembly is accomplished during war creation by binding the
-          <code>pluto:assemble</code> goal to the process-resources lifecycle.
-          An example configuration follows (taken from the pluto-testsuite
-          application):
-        </p>
-        <p>
-          <source><![CDATA[
-<plugin>
-  <artifactId>maven-pluto-plugin</artifactId>
-  <version>${pom.version}</version>
-  <executions>
-    <execution>
-      <phase>generate-resources</phase>
-      <goals>
-        <goal>assemble</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
-          ]]></source>
-        </p>
-        <p>
-          Once configured within the portlet application's pom, the webapp and
-          war artifacts created by the project through Maven will include the
-          appropriate resources.
-        </p>
-      </subsection>
-      
-      <subsection name="Portlet Deployment">
-        <p>
-          After portlet applications are assembled properly they must be
-          deployed to the servlet engine within which the portal application
-          is running. This can be acheived by using your favorite Maven
-          appserver plugin or by invoking the following:
-        </p>
-        <p>
-          <source><![CDATA[
-$> cd <PORTLET-APP-HOME>
-$> maven pluto:deploy
-          ]]></source>
-        </p>
-        <p>
-          NOTE: The deployment plugin is currently undergoing modifications
-          and may not be 100% functional.
-        </p>
-      </subsection>
-      
-      <subsection name="Portlet Publishing">
-        <p>
-          All portlet applications that are to be used within the Pluto Portal
-          must be published to the Portal. Publishing notifies the Portal
-          Application that a portlet application is bound (deployed) to a
-          certain context within the app server.
-        </p>
-        <p>
-          Currently the only way to publish an application to the portal is to
-          manually update the Portal's pluto-portal-driver-config.xml file.
-          An automated approach is in development and should be available before
-          the ALPHA-1 release.
-        </p>
-      </subsection>
-      
-      <subsection name="Starting the Portal">
-        <p>
-          <ul>
-            <li>
-              Add a role 'pluto' to &lt;TOMCAT_HOME&gt;/conf/tomcat-users.xml,
-              and add a user in the 'pluto' role. The simplest way to do this is
-              to add the 'pluto' role to the 'tomcat' user's record. Here is a
-              sample tomcat-users.xml file:
-              <source><![CDATA[
+    
+    <section name="Configuring User and Role for Pluto">
+      <p>
+        The Pluto Testsuite portlet application needs the role '<code>pluto</code>'
+        to run the Security Mapping Test. So before starting tomcat, you should
+        edit <code>&lt;TOMCAT_HOME&gt;/conf/tomcat-users.xml</code>, add the
+        role '<code>pluto</code>', and add a user in that role. The simplest way
+        to do this is to edit add the '<code>pluto</code>' role to the
+        '<code>tomcat</code>' user's record. Here is a sample
+        <code>tomcat-users.xml</code> file:
+        <source><![CDATA[
 <?xml version="1.0" encoding="utf-8"?>
 <tomcat-users>
   <role rolename="pluto"/>
@@ -204,25 +134,21 @@ $> maven pluto:deploy
   <user username="role1" password="tomcat" roles="role1"/>
   <user username="both" password="tomcat" roles="tomcat,role1"/>
 </tomcat-users>
-              ]]></source>
-            </li>
-            <li>
-              Start up Tomcat by running startup.bat or startup.sh in
-              &lt;TOMCAT_HOME&gt;/bin.
-            </li>
-            <li>
-              Browse to http://localhost:8080/pluto/portal
-            </li>
-            <li>
-              Login to Pluto using the user and password you just created in
-              tomcat-users.xml. If you added the 'pluto' role to the tomcat
-              user's record in tomcat-user.xml, you can log in as tomcat/tomcat
-              (This is required to successfully run the Security Mapping Test
-              in the testsuite portlet).
-            </li>
-          </ul>
-        </p>
-      </subsection>
+        ]]></source>
+      </p>
+    </section>
+    
+    
+    <section name="Starting the Portal">
+      <p>
+        Now you are ready to use Pluto Portal. Start up tomcat by running
+        <code>startup.bat</code> (for windows) or <code>startup.sh</code> (for
+        *nix) in <code>&lt;TOMCAT_HOME&gt;/bin</code>, and browse to
+        <code>http://localhost:8080/pluto/portal</code>. Login to Pluto using
+        the user and password you just created in <code>tomcat-users.xml</code>.
+        If you added the 'pluto' role to the 'tomcat' user's record, you can
+        login as 'tomcat/tomcat'.
+      </p>
     </section>
     
   </body>

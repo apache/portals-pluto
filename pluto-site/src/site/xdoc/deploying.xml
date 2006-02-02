@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<document>
+  
+  <properties>
+    <title>Deploying Portlet to Pluto Portal</title>
+    <author email="zheng.at.apache.D0T.org">ZHENG Zhong</author>
+    <author email="ddewolf@apache.org">David DeWolf</author>
+  </properties>
+  
+  <body>
+    
+    <section name="Deploying Portlet to Pluto Portal">
+      
+      <p>
+        There are 3 steps of dpeloyment:
+        <ul>
+          <li>
+            <b>Assembly</b>: All portlet applications must be run through the
+            pluto assembler before being deployed. The assembly process injects
+            pluto specific information for deployment. Specifically, a servlet
+            and servlet mapping are added to the deployment descriptor. This
+            servlet will be used to dispatch portlet requests to the portlet
+            application.
+          </li>
+          <li>
+            <b>Deployment</b>: After portlet applications are assembled properly
+            they must be deployed to the servlet engine within which the portal
+            application is running.
+          </li>
+          <li>
+            <b>Publishing</b>: All portlet applications that are to be used
+            within the Pluto Portal must be published to the Portal. Publishing
+            notifies the Portal Application that a portlet application is bound
+            (deployed) to a certain context within the appserver.
+          </li>
+        </ul>
+      </p>
+      
+      <subsection name="Portlet Assembly using Maven">
+        <p>
+          Portlet assembly is accomplished during war creation by binding the
+          <code>pluto:assemble</code> goal to the process-resources lifecycle.
+          An example configuration follows (taken from the pluto-testsuite
+          application):
+        </p>
+        <p>
+          <source><![CDATA[
+<plugin>
+  <artifactId>maven-pluto-plugin</artifactId>
+  <version>${pom.version}</version>
+  <executions>
+    <execution>
+      <phase>generate-resources</phase>
+      <goals>
+        <goal>assemble</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+          ]]></source>
+        </p>
+        <p>
+          Once configured within the portlet application's pom, the webapp and
+          war artifacts created by the project through Maven will include the
+          appropriate resources.
+        </p>
+      </subsection>
+      
+      <subsection name="Portlet Assembly using Ant Task">
+        <p>TBD</p>
+      </subsection>
+      
+      <subsection name="Portlet Deployment using Maven">
+        <p>
+          You may deploy your proper-assembled portlet application to appserver
+          by using your favorite Maven appserver plugin or by invoking the
+          following:
+          <source><![CDATA[
+$> cd <PORTLET-APP-HOME>
+$> maven pluto:deploy
+          ]]></source>
+        </p>
+        <p>
+          NOTE: The deployment plugin is currently undergoing modifications
+          and may not be 100% functional.
+        </p>
+      </subsection>
+      
+      <subsection name="Portlet Publishing">
+        <p>
+          NOTE: Currently the only way to publish an application to the portal
+          is to manually update the Portal's configuration file. An automated
+          approach is in development and should be available before the ALPHA-1
+          release.
+        </p>
+        <p>
+          To publish your portlets to Pluto Portal, you should manually update
+          the Portal's configuration file <code>pluto-portal-driver-config.xml</code>.
+        </p>
+        
+        <p><b>Step 1: Portlet App Config</b></p>
+        <p>
+          You should firstly add a <code>portlet-app</code> config element to
+          notify the Portal which portlet application is deployed to the
+          appserver. In this element, you should specify the context path of
+          your portlet app, as well as the names of portlets deployed. Here is
+          an example:
+          <source><![CDATA[
+<portlet-app>
+  <context-path>/your_portlet_app_context_path</context-path>
+  <portlets>
+    <portlet name="your_portlet_1"/>
+    <portlet name="your_portlet_2"/>
+    ... ...
+  </portlets>
+</portlet-app>
+          ]]></source>
+        </p>
+        
+        <p><b>Step 2: Portal Page Config</b></p>
+        <p>
+          You should then configure a portal page within which your portlets
+          will be displayed. You may do this by adding a <code>page</code>
+          element in the <code>render-config</code> element, like this:
+          <source><![CDATA[
+<render-config default="Test Page">
+  ... ...
+  <page name="Your Portal Page Name" uri="/WEB-INF/fragments/portlet.jsp">
+    <portlet context="/your_portlet_app_context_path"
+             name="your_portlet_1"/>
+    <portlet context="/your_portlet_app_context_path"
+             name="your_portlet_2"/>
+  </page>
+</render-config>
+          ]]></source>
+        </p>
+        <p>
+          The <code>uri</code> attribute defines the theme of your portal page.
+          If you use <code>/WEB-INF/fragments/portlet.jsp</code> (which is the
+          default theme of Pluto Testsuite portlet app), your portlets will be
+          displayed in two columns.
+        </p>
+      </subsection>
+      
+    </section>
+    
+  </body>
+  
+</document>
+
