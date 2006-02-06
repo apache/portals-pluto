@@ -100,6 +100,7 @@
         <scope>compile</scope>
     </dependency>
   </dependencies>
+  
   <build>
     <resources>
       <resource>
@@ -119,11 +120,14 @@
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-	    <configuration>
+        <configuration>
           <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
         </configuration>
       </plugin>
     </plugins>
-
   </build>
+  
 </project>
+
+
+

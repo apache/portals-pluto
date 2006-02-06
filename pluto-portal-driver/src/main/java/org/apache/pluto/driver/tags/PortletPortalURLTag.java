@@ -36,7 +36,7 @@ import org.apache.pluto.driver.url.PortalURLFactory;
  * @version 1.0
  * @since Oct 4, 2004
  */
-public class PortletURLTag extends BodyTagSupport {
+public class PortletPortalURLTag extends BodyTagSupport {
 	
 	// Private Member Variables ------------------------------------------------
 	
