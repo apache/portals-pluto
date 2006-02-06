@@ -9,14 +9,16 @@
   -->
 
 <div id="portletgroupone">
-  <c:forEach var="portlet" varStatus="status" items="${currentPage.portletIds}" step="2">
+  <c:forEach var="portlet" varStatus="status"
+             items="${currentPage.portletIds}" step="2">
     <c:set var="portlet" value="${portlet}" scope="request"/>
     <jsp:include page="portlet-skin.jsp"/>
   </c:forEach>
 </div>
 
 <div id="portletgrouptwo">
-  <c:forEach var="portlet" varStatus="status" items="${currentPage.portletIds}" begin="1">
+  <c:forEach var="portlet" varStatus="status"
+             items="${currentPage.portletIds}" begin="1" step="2">
     <c:set var="portlet" value="${portlet}" scope="request"/>
     <jsp:include page="portlet-skin.jsp"/>
   </c:forEach>
