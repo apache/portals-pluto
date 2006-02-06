@@ -4,12 +4,9 @@
   
   <head>
     <title>Pluto Portal</title>
-      <style type="text/css" title="currentStyle" media="screen">
-        @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
-      </style>
-      <script type="text/javascript"
-              src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
-      </script>
+    <style type="text/css" title="currentStyle" media="screen">
+      @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
+    </style>
   </head>
 
   <body>
@@ -29,9 +26,18 @@
         <form method="POST" action="j_security_check">
           <fieldset>
             <legend>Login to Pluto</legend>
-            <div><label for="j_username">User Name</label><input type="text" name="j_username" id="j_username"/></div>
-            <div><label for="j_password">Password</label><input type="text" name="j_password" id="j_password"/></div>
-            <div><label for="j_login"></label><input type="submit" value="Login" name="login" id="j_login"/></div>
+            <div>
+              <label for="j_username">User Name</label>
+              <input type="text" name="j_username" id="j_username"/>
+            </div>
+            <div>
+              <label for="j_password">Password</label>
+              <input type="password" name="j_password" id="j_password"/>
+            </div>
+            <div>
+              <label for="j_login"></label>
+              <input type="submit" value="Login" name="login" id="j_login"/>
+            </div>
           </fieldset>
         </form>
       </div>
@@ -45,3 +51,5 @@
   </body>
   
 </html>
+
+
