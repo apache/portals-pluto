@@ -15,9 +15,9 @@
  */
 package org.apache.pluto.driver.services.container;
 
-import org.apache.pluto.OptionalPortletContainerServices;
+import org.apache.pluto.OptionalContainerServices;
+import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.services.PortalCallbackService;
-import org.apache.pluto.PortletContainerServices;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.services.optional.PortletPreferencesService;
@@ -35,7 +35,7 @@ import javax.portlet.PortalContext;
  * @since Sep 21, 2004
  */
 public class ContainerServicesImpl
-    implements PortletContainerServices, OptionalPortletContainerServices {
+implements RequiredContainerServices, OptionalContainerServices {
 
 
     private PortalContextImpl context;
