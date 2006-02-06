@@ -18,10 +18,10 @@ package org.apache.pluto.testsuite.test;
 import org.apache.pluto.testsuite.ActionTest;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public abstract class ActionAbstractReflectivePortletTest
- extends AbstractReflectivePortletTest
- implements ActionTest {
+extends AbstractReflectivePortletTest
+implements ActionTest {
 
 }

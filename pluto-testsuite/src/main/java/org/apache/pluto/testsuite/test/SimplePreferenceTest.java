@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -32,21 +31,23 @@ import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
-public class SimplePreferenceTest
- extends ActionAbstractReflectivePortletTest
- implements ActionTest {
-
-    private static final Log LOG =
-        LogFactory.getLog(SimplePreferenceTest.class);
+public class SimplePreferenceTest extends ActionAbstractReflectivePortletTest
+implements ActionTest {
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(SimplePreferenceTest.class);
     
     private static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
 
     public String getTestSuiteName() {
         return "Simple Preferences Test";
     }
-
+    
+    
+    // Test Methods ------------------------------------------------------------
+    
     protected TestResult checkGetEmptyPreference(PortletRequest req) {
         TestResult res = new TestResult();
         res.setName("Get Empty Preference Test");
@@ -267,19 +268,22 @@ public class SimplePreferenceTest
         }
         return res;
     }
-
-    protected TestResult checkResetPreferences(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Reset Preference Test");
-        res.setDesc("Tests that preferences are properly reset.");
-        PortletPreferences preferences = req.getPreferences();
+    
+    protected TestResult checkResetPreferences(PortletRequest request) {
+        
+    	TestResult result = new TestResult();
+    	result.setName("Reset Preference Test");
+    	result.setDesc("Tests that preferences are properly reset.");
+        
+        PortletPreferences preferences = request.getPreferences();
+        LOG.warn("PortletPreferences impl: " + preferences.getClass().getName());
         boolean setOccured = false;
         boolean storeOccured = false;
         boolean resetOccured = false;
         try {
             preferences.setValue("dummyName", "notTheOriginal");
             String pref = preferences.getValue("dummyName", "Default");
-            if("notTheOriginal".equals(pref)) {
+            if ("notTheOriginal".equals(pref)) {
                 setOccured = true;
             }
             if (LOG.isDebugEnabled()) {
@@ -287,7 +291,7 @@ public class SimplePreferenceTest
             	logPreferences(preferences);
             }
             preferences.store();
-            if("notTheOriginal".equals(preferences.getValue("dummyName", "Default"))) {
+            if ("notTheOriginal".equals(preferences.getValue("dummyName", "Default"))) {
                 storeOccured = true;
             }
 
@@ -298,40 +302,43 @@ public class SimplePreferenceTest
             }
 
             String preference =  preferences.getValue("dummyName", "defaultValue");
-            if(preference.equals("dummyValue")) {
+            if ("dummyValue".equals(preference)) {
                 resetOccured = true;
             }
-        }
-        catch(ReadOnlyException e) {
-        	LOG.error(e);
-        }
-        catch(ValidatorException e) {
-        	LOG.error(e);
-        }
-        catch(IOException e) {
-        	LOG.error(e);
+        } catch (ReadOnlyException ex) {
+        	LOG.error(ex);
+        } catch (ValidatorException ex) {
+        	LOG.error(ex);
+        } catch (IOException ex) {
+        	LOG.error(ex);
         }
 
-        if(setOccured && storeOccured && resetOccured) {
-            res.setReturnCode(TestResult.PASSED);
+        if (setOccured && storeOccured && resetOccured) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else if (!setOccured || !storeOccured) {
+        	result.setReturnCode(TestResult.WARNING);
+        	result.setResults("A function upon which the reset test depends "
+        			+ "failed to execute as expected. "
+        			+ "Check the other test results in this test suite.");
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResults("Preferences value was not successfully reset after store");
         }
-        else if(!setOccured || !storeOccured) {
-            res.setReturnCode(TestResult.WARNING);
-            res.setResults("A function upon which the reset test depends failed to execute as expected. Check the other test results in this test suite.");
-        }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Preferences value was not successfully reset after store");
-        }
-
-        return res;
+        return result;
     }
-
-    protected TestResult checkResetToNullPreferences(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Reset to Null Preference Test");
-        res.setDesc("Tests that preferences are properly reset when originally null.");
-        PortletPreferences preferences = req.getPreferences();
+    
+    /**
+     * 
+     * @param request  the portlet request.
+     * @return
+     */
+    protected TestResult checkResetToNullPreferences(PortletRequest request) {
+        
+    	TestResult result = new TestResult();
+        result.setName("Reset to Null Preference Test");
+        result.setDesc("Tests that preferences are properly reset when originally null.");
+        
+        PortletPreferences preferences = request.getPreferences();
         boolean setOccured = false;
         boolean storeOccured = false;
         boolean resetOccured = false;
@@ -342,12 +349,12 @@ public class SimplePreferenceTest
             	LOG.debug("Original preferences:");
             	logPreferences(preferences);
             }
-            if("notTheOriginal".equals(pref)) {
+            if ("notTheOriginal".equals(pref)) {
                 setOccured = true;
             }
 
             preferences.store();
-            if("notTheOriginal".equals(preferences.getValue(BOGUS_KEY, "Default"))) {
+            if ("notTheOriginal".equals(preferences.getValue(BOGUS_KEY, "Default"))) {
                 storeOccured = true;
             }
 
@@ -358,32 +365,27 @@ public class SimplePreferenceTest
             }
 
             String preference =  preferences.getValue(BOGUS_KEY, "defaultValue");
-            if("defaultValue".equals(preference)) {
+            if ("defaultValue".equals(preference)) {
                 resetOccured = true;
             }
-        }
-        catch(ReadOnlyException roe) {
-            roe.printStackTrace();
-        }
-        catch(ValidatorException ve) {
-            ve.printStackTrace();
-        }
-        catch(IOException io) {
-            io.printStackTrace();
+        } catch (ReadOnlyException ex) {
+        	LOG.error(ex);
+        } catch (ValidatorException ex) {
+        	LOG.error(ex);
+        } catch (IOException ex) {
+        	LOG.error(ex);
         }
 
-        if(setOccured && storeOccured && resetOccured) {
-            res.setReturnCode(TestResult.PASSED);
+        if (setOccured && storeOccured && resetOccured) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else if (!setOccured || !storeOccured) {
+        	result.setReturnCode(TestResult.WARNING);
+        	result.setResults("A function upon which the reset test depends failed to execute as expected. Check the other test results in this test suite.");
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResults("Preferences value was not successfully reset after store.");
         }
-        else if(!setOccured || !storeOccured) {
-            res.setReturnCode(TestResult.WARNING);
-            res.setResults("A function upon which the reset test depends failed to execute as expected. Check the other test results in this test suite.");
-        }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Preferences value was not successfully reset after store.");
-        }
-        return res;
+        return result;
     }
     
     /**
@@ -493,35 +495,32 @@ public class SimplePreferenceTest
 
     
     /**
-     * For DEBUG logging.
-     * 
-     * @param prefs PortletPreferences to log.
+     * Logs out the portlet preferences.
+     * @param preferences  PortletPreferences to log.
      */
-    private void logPreferences(PortletPreferences prefs) {
-    	StringBuffer pairs = new StringBuffer();
-    	Map map = prefs.getMap();
-    	Set keys = map.keySet();
-    	Iterator iter = keys.iterator();
-    	while(iter.hasNext()) {
-    		String key = (String) iter.next();
-    		String[] vals = (String[])map.get(key);
-    		pairs.append(key);
-    		pairs.append("=");
-    		int len = vals.length;
-    		if (vals != null) {
-    			for (int i = 0; i < len; i++) {
-					pairs.append(vals[i]);
-					if (i < len - 1) {
-						pairs.append(",");
-					}
-				}
+    private void logPreferences(PortletPreferences preferences) {
+    	StringBuffer buffer = new StringBuffer();
+    	Map map = preferences.getMap();
+    	for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
+    		String key = (String) it.next();
+    		String[] values = (String[]) map.get(key);
+    		buffer.append(key).append("=");
+    		if (values != null) {
+    			buffer.append("{");
+    			for (int i = 0; i < values.length; i++) {
+    				buffer.append(values[i]);
+    				if (i < values.length - 1) {
+    					buffer.append(",");
+    				}
+    			}
+    			buffer.append("}");
     		} else {
-    			//spec allows null values
-    			pairs.append("NULL");
+    			// Spec allows null values.
+    			buffer.append("NULL");
     		}
-			pairs.append(";");    		
+    		buffer.append(";");    		
     	}
-    	LOG.debug("PortletPreferences: " + pairs.toString());
+    	LOG.debug("PortletPreferences: " + buffer.toString());
     }
 
 }
