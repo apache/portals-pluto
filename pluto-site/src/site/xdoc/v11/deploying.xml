@@ -57,29 +57,62 @@ limitations under the License.
         <p>
           Portlet assembly is accomplished during war creation by binding the
           <code>pluto:assemble</code> goal to the process-resources lifecycle.
-          An example configuration follows (taken from the pluto-testsuite
-          application):
+          This may be done by adding a <code>plug-in</code> element to the
+          <code>build</code> element in your portlet application pom. An example
+          configuration follows:
         </p>
         <p>
           <source><![CDATA[
-<plugin>
-  <artifactId>maven-pluto-plugin</artifactId>
-  <version>${pom.version}</version>
-  <executions>
-    <execution>
-      <phase>generate-resources</phase>
-      <goals>
-        <goal>assemble</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
+<build>
+  ... ...
+  <plugins>
+    ... ...
+    <plugin>
+      <artifactId>maven-pluto-plugin</artifactId>
+      <version>1.1.0-SNAPSHOT</version>
+      <executions>
+        <execution>
+          <phase>generate-resources</phase>
+          <goals>
+            <goal>assemble</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ... ...
+  <plugins>
+  ... ...
+</build> 
           ]]></source>
         </p>
         <p>
-          Once configured within the portlet application's pom, the webapp and
-          war artifacts created by the project through Maven will include the
-          appropriate resources.
+          The <code>pluto:assemble</code> goal will parse your portlet
+          application's <code>portlet.xml</code> and update <code>web.xml</code>
+          to include the appropriate resources. The updated <code>web.xml</code>
+          will reside in your project's <code>target/pluto-resources</code>
+          directory.
+        </p>
+        <p>
+          To include the updated <code>web.xml</code> in the final war artifact,
+          you should also configure the <code>maven-war-plugin</code> by telling
+          it where to find the webapp descriptor. An example configuration
+          follows:
+          <source><![CDATA[
+<build>
+  ... ...
+  <plugins>
+    ... ...
+    <plugin>
+      <artifactId>maven-war-plugin</artifactId>
+      <configuration>
+        <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
+      </configuration>
+    </plugin>
+    ... ...
+  <plugins>
+  ... ...
+</build> 
+          ]]></source>
         </p>
       </subsection>
       
