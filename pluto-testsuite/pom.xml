@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -13,6 +15,7 @@
   <packaging>war</packaging>
   <name>Pluto Testsuite Portlet</name>
   <url>http://portals.apache.org/pluto</url>
+  
   <dependencies>
     <dependency>
       <groupId>commons-logging</groupId>
@@ -69,20 +72,23 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  
+  
+  <!-- Build configuration -->
   <build>
     <finalName>pluto-testsuite</finalName>
-	<plugins>
-
+    <plugins>
+      <!-- configure maven-war-plugin to use updated web.xml -->
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
-		<configuration>
+        <configuration>
           <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
-		</configuration>
+        </configuration>
       </plugin>
-
+      <!-- bind 'pluto:assemble' goal to 'process-resources' lifecycle -->
       <plugin>
         <artifactId>maven-pluto-plugin</artifactId>
-		<version>${pom.version}</version>
+        <version>${pom.version}</version>
         <executions>
           <execution>
             <phase>generate-resources</phase>
@@ -94,20 +100,21 @@
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-	    <configuration>
+        <configuration>
           <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
         </configuration>
       </plugin>
-    <!--
-      <plugin>
+      <!--plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>1.0-SNAPSHOT</version>
         <configuration>
           <descriptor>src/assemble/bin.xml</descriptor>
           <finalName>pluto-testsuite-${pom.version}</finalName>
         </configuration>
-      </plugin>
-    -->  
+      </plugin-->
     </plugins>
   </build>
+  
 </project>
+
+
