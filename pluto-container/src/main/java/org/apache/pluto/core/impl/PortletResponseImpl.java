@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerServices;
+import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.services.ResourceURLProvider;
@@ -76,24 +76,24 @@ implements InternalPortletResponse, PortletResponse {
         if (key == null) {
             throw new IllegalArgumentException("Property key == null");
         }
-
-        container.getContainerServices()
-           .getPortalCallbackService()
-           .addResponseProperty(
-               getHttpServletRequest(), internalPortletWindow, key, value
-        );
+        container.getRequiredContainerServices()
+        		.getPortalCallbackService()
+        		.addResponseProperty(
+        				getHttpServletRequest(),
+        				internalPortletWindow,
+        				key, value);
     }
 
     public void setProperty(String key, String value) {
         if (key == null) {
             throw new IllegalArgumentException("Property key == null");
         }
-
-        container.getContainerServices()
+        container.getRequiredContainerServices()
                 .getPortalCallbackService()
                 .setResponseProperty(
-                        getHttpServletRequest(), internalPortletWindow, key, value
-                );
+                        getHttpServletRequest(),
+                        internalPortletWindow,
+                        key, value);
     }
 
     public String encodeURL(String path) {
@@ -101,12 +101,13 @@ implements InternalPortletResponse, PortletResponse {
             throw new IllegalArgumentException(
                 "only absolute URLs or full path URIs are allowed");
         }
-
-        PortletContainerServices services = getContainer()
-            .getContainerServices();
-        ResourceURLProvider provider =
-            services.getPortalCallbackService()
-        .getResourceURLProvider(httpServletRequest,internalPortletWindow);
+        
+        ResourceURLProvider provider = getContainer()
+        		.getRequiredContainerServices()
+        		.getPortalCallbackService()
+        		.getResourceURLProvider(
+        				httpServletRequest,
+        				internalPortletWindow);
         if (path.indexOf("://") != -1) {
             provider.setAbsoluteURL(path);
         } else {

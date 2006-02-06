@@ -39,7 +39,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class RenderResponseImpl extends PortletResponseImpl
-    implements RenderResponse {
+implements RenderResponse {
     
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(RenderResponseImpl.class.getPackage().getName());
@@ -92,9 +92,9 @@ public class RenderResponseImpl extends PortletResponseImpl
     }
 
     public void setTitle(String title) {
-        PortalCallbackService callback =
-            container.getContainerServices().getPortalCallbackService();
-
+        PortalCallbackService callback = container
+        		.getRequiredContainerServices()
+        		.getPortalCallbackService();
         callback.setTitle(this.getHttpServletRequest(),
                           getInternalPortletWindow(),
                           title);

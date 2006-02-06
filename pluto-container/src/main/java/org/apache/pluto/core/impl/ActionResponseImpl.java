@@ -30,6 +30,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -63,12 +64,12 @@ public class ActionResponseImpl extends PortletResponseImpl
 
     public ActionResponseImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
-                              javax.servlet.http.HttpServletRequest servletRequest,
-                              javax.servlet.http.HttpServletResponse servletResponse) {
+                              HttpServletRequest servletRequest,
+                              HttpServletResponse servletResponse) {
         super(container, internalPortletWindow, servletRequest,
               servletResponse);
-        context = container.getContainerServices().getPortalContext();
-        callback = container.getContainerServices().getPortalCallbackService();
+        context = container.getRequiredContainerServices().getPortalContext();
+        callback = container.getRequiredContainerServices().getPortalCallbackService();
     }
 
 //

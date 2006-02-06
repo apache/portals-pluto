@@ -19,7 +19,10 @@
 
 package org.apache.pluto.core.impl;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
@@ -69,7 +72,7 @@ public class PortletURLImpl implements PortletURL {
         this.servletResponse = servletResponse;
         secure = servletRequest.isSecure();
         this.isAction = isAction;
-        this.context = container.getContainerServices().getPortalContext();
+        this.context = container.getRequiredContainerServices().getPortalContext();
     }
 
     // javax.portlet.PortletURL -------------------------------------------------------------------
@@ -116,8 +119,8 @@ public class PortletURLImpl implements PortletURL {
         if (parameters == null) {
             throw new IllegalArgumentException("Parameters must not be null.");
         }
-        for (Iterator iter = parameters.entrySet().iterator(); iter.hasNext();) {
-            Map.Entry entry = (Map.Entry) iter.next();
+        for (Iterator it = parameters.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
             if (!(entry.getKey() instanceof String)) {
                 throw new IllegalArgumentException(
                     "Key must not be null and of type java.lang.String.");
@@ -138,9 +141,10 @@ public class PortletURLImpl implements PortletURL {
     public String toString() {
         StringBuffer url = new StringBuffer(200);
 
-        PortletURLProvider urlProvider = container.getContainerServices()
-            .getPortalCallbackService()
-            .getPortletURLProvider(servletRequest, internalPortletWindow);
+        PortletURLProvider urlProvider = container
+        		.getRequiredContainerServices()
+        		.getPortalCallbackService()
+        		.getPortletURLProvider(servletRequest, internalPortletWindow);
 
         if (mode != null) {
             urlProvider.setPortletMode(mode);

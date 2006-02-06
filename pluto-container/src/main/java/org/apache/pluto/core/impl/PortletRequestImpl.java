@@ -136,7 +136,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         super(servletRequest);
         this.container = container;
         this.internalPortletWindow = internalPortletWindow;
-        this.portalContext = container.getContainerServices().getPortalContext();
+        this.portalContext = container.getRequiredContainerServices().getPortalContext();
     }
 
     // javax.portlet.PortletRequest Impl ---------------------------------------
@@ -231,12 +231,11 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
         String prop = this.getHttpServletRequest().getHeader(name);
         if (prop == null) {
-            Map propertyMap = container.getContainerServices()
+            Map propertyMap = container.getRequiredContainerServices()
                     .getPortalCallbackService()
                     .getRequestProperties(
-                        getHttpServletRequest(),
-                        internalPortletWindow
-                    );
+                    		getHttpServletRequest(),
+                    		internalPortletWindow);
 
             if (propertyMap != null) {
                 String[] properties = (String[]) propertyMap.get(name);
@@ -263,9 +262,11 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         }
 
         // get properties from PropertyManager
-        Map map = container.getContainerServices()
+        Map map = container.getRequiredContainerServices()
                 .getPortalCallbackService()
-                .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
+                .getRequestProperties(
+                		getHttpServletRequest(),
+                		internalPortletWindow);
 
         if (map != null) {
             String[] properties = (String[]) map.get(name);
@@ -285,7 +286,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         Set v = new HashSet();
 
         // get properties from PropertyManager
-        Map map = container.getContainerServices()
+        Map map = container.getRequiredContainerServices()
                 .getPortalCallbackService()
                 .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
 
@@ -305,7 +306,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public PortalContext getPortalContext() {
-        return container.getContainerServices().getPortalContext();
+        return container.getRequiredContainerServices().getPortalContext();
     }
 
     public String getAuthType() {

@@ -25,7 +25,7 @@ import org.apache.pluto.core.InternalPortletWindow;
  * and a Portal.
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
-public interface OptionalPortletContainerServices {
+public interface OptionalContainerServices {
 
     PortletEnvironmentService getPortletEnvironmentService();
 

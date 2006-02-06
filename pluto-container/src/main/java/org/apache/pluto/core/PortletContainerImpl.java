@@ -25,13 +25,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.*;
+
 import org.apache.pluto.core.impl.ActionRequestImpl;
 import org.apache.pluto.core.impl.ActionResponseImpl;
 import org.apache.pluto.core.impl.RenderRequestImpl;
 import org.apache.pluto.core.impl.RenderResponseImpl;
 import org.apache.pluto.services.PortletURLProvider;
-import org.apache.pluto.OptionalPortletContainerServices;
+import org.apache.pluto.OptionalContainerServices;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.RequiredContainerServices;
 
 /**
  * Default Pluto Container implementation.
@@ -53,10 +57,10 @@ public class PortletContainerImpl implements PortletContainer {
     private String name = null;
     
     /** The required container services associated with this container. */
-    private PortletContainerServices containerServices = null;
+    private RequiredContainerServices requiredContainerServices = null;
     
     /** The optional container services associated with this container. */
-    private OptionalPortletContainerServices optionalContainerServices = null;
+    private OptionalContainerServices optionalContainerServices = null;
     
     /** The servlet context associated with this container. */
     private ServletContext servletContext = null;
@@ -75,10 +79,10 @@ public class PortletContainerImpl implements PortletContainer {
      * @param optionalServices  the optional container services implementation.
      */
     public PortletContainerImpl(String name,
-                                PortletContainerServices requiredServices,
-                                OptionalPortletContainerServices optionalServices) {
+                                RequiredContainerServices requiredServices,
+                                OptionalContainerServices optionalServices) {
         this.name = name;
-        this.containerServices = requiredServices;
+        this.requiredContainerServices = requiredServices;
         this.optionalContainerServices = optionalServices;
     }
     
@@ -190,7 +194,7 @@ public class PortletContainerImpl implements PortletContainer {
         	
         	// Create portlet URL provider to encode redirect URL.
         	debugWithName("No redirect location specified.");
-            PortletURLProvider redirectURL = containerServices
+            PortletURLProvider redirectURL = requiredContainerServices
             		.getPortalCallbackService()
             		.getPortletURLProvider(request, internalPortletWindow);
             
@@ -263,11 +267,11 @@ public class PortletContainerImpl implements PortletContainer {
         return name;
     }
 
-    public PortletContainerServices getContainerServices() {
-        return containerServices;
+    public RequiredContainerServices getRequiredContainerServices() {
+        return requiredContainerServices;
     }
 
-    public OptionalPortletContainerServices getOptionalContainerServices() {
+    public OptionalContainerServices getOptionalContainerServices() {
         return optionalContainerServices;
     }
     

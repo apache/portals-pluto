@@ -19,9 +19,9 @@ import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.OptionalPortletContainerServices;
 import org.apache.pluto.services.optional.PortletPreferencesService;
 import org.apache.pluto.services.optional.PortletEnvironmentService;
 import org.apache.pluto.services.optional.PortletInvokerService;
@@ -30,29 +30,30 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * Default Optional Services implementation.
+ * Default Optional Container Services implementation.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
-public class DefaultOptionalServices implements OptionalPortletContainerServices {
+public class DefaultOptionalContainerServices
+implements OptionalContainerServices {
 	
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(DefaultOptionalServices.class);
+    private static final Log LOG = LogFactory.getLog(
+    		DefaultOptionalContainerServices.class);
 
     private PortletPreferencesService preferenceService;
 
-    public DefaultOptionalServices() {
+    public DefaultOptionalContainerServices() {
         this.preferenceService = new PortletPreferencesServiceImpl();
     }
-
-    public DefaultOptionalServices(OptionalPortletContainerServices rootServices) {
+    
+    public DefaultOptionalContainerServices(OptionalContainerServices root) {
         this();
-
-        if(rootServices.getPortletPreferencesService() != null)
-            this.preferenceService = rootServices.getPortletPreferencesService();
-
+        if (root.getPortletPreferencesService() != null) {
+            this.preferenceService = root.getPortletPreferencesService();
+        }
     }
 
 
