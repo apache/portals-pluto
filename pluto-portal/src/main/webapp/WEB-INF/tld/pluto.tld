@@ -47,7 +47,7 @@ limitations under the License.
 
   <tag>
     <name>url</name>
-    <tagclass>org.apache.pluto.driver.tags.PortletURLTag</tagclass>
+    <tagclass>org.apache.pluto.driver.tags.PortletPortalURLTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
       <name>portletMode</name>
