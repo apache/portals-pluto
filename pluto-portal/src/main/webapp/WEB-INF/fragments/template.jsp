@@ -12,12 +12,12 @@
   
   <head>
     <title>Pluto Portal</title>
-      <style type="text/css" title="currentStyle" media="screen">
-        @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
-      </style>
-      <script type="text/javascript"
-              src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
-      </script>
+    <style type="text/css" title="currentStyle" media="screen">
+      @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
+    </style>
+    <script type="text/javascript"
+            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+    </script>
   </head>
 
   <body>
@@ -26,30 +26,28 @@
       
       <!-- Header block: the Apache Pluto banner image and description -->
       <div id="header">
-        <h1><span>Apache Pluto</span></h1>
-        <h2><span>A Apache Portals Project</span></h2>
+        <h1>Apache Pluto</h1>
+        <p>An Apache Portals Project</p>
       </div>
       
-      <!-- Navigation block: -->
+      <!-- Navigation block: links to portal pages -->
       <div id="navigation">
+        <h2>Navigation:</h2>
         <ul>
           <c:forEach var="page" items="${driverConfig.pages}">
             <c:choose>
               <c:when test="${page == currentPage}">
-                <li class="selected"><a href="<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>"><c:out value="${page.name}"/></a>
-                <ul>
-                  <li>Subpage One</li>
-                  <li>Another Page</li>
-                  <li>Three Strikes</li>
-                </ul>
+                <li class="selected">
+                  <a href='<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>'>
+                    <c:out value="${page.name}"/>
+                  </a>
                 </li>
               </c:when>
               <c:otherwise>
-                <li><a href="<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>"><c:out value="${page.name}"/></a>
-                <ul>
-                  <li>One, Two, Three</li>
-                  <li>Six, Five, Four</li>
-                </ul>
+                <li>
+                  <a href='<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>'>
+                    <c:out value="${page.name}"/>
+                  </a>
                 </li>
               </c:otherwise>
             </c:choose>

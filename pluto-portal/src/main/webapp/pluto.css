@@ -1,253 +1,227 @@
-
-body {
-  font-family: helvetica, sans-serif;
-  background-color: #2E6794;
+body, th, td {
+  background-color: #FFFFFF;
+  font-family: Arial, Helvetica, Sans-serif;
+  font-size: 95%;
 }
+
+/** 'portal' block **/
 
 #portal {
-  margin: 0px auto;
-  background-color: white;
-  border: 1px solid black;
+
 }
 
+/** 'header' block **/
+
 #header {
-  background-color: #8DB7DF;
+  background: #8DB7DF url('images/banner.png') no-repeat top left;;
   border-bottom: 1px solid #2E6794;
   width: auto;
   height: 50px;
+  margin: 0px;
   vertical-align: top;
 }
 
 #header h1 {
-	background: transparent url(images/banner.png) no-repeat top left;
-	width: 450px;
-	height: 50px;
-    margin: 0px;
+  display: none;
+  margin: 5px 10px 5px 10px;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
+  font-size: 200%;
 }
 
-#header h1 span {
-    display: none;
+#header p {
+  display: none;
+  margin: 0px 10px 0px 10px;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
+  font-size: smaller;
 }
 
-#header h2 {
-    display: none;
-}
+
+/** 'navigation' block **/
 
 #navigation {
-    clear: both;
-}
-
-#navigation ul { /* all lists */
-    padding: 3;
-	margin: 0;
-	list-style: none;
-}
-
-#navigation li { /* all list items */
-	float: left;
-	position: relative;
-	width: 10em;
-}
-
-#navigation li ul { /* second-level lists */
-	display: none;
-	position: absolute;
-	top: 1em;
-	left: 0;
-}
-
-#navigation li>ul { /* to override top and left in browsers other than IE, which will position to the top right of the containing li, rather than bottom left */
-	top: auto;
-	left: auto;
-}
-
-#navigation li:hover ul, #navigation li.over ul { /* lists nested under hovered list items */
-	display: block;
-	border: 1px solid #8DB7DF;
-	background-color: white;
-}
-
-#navigation li:hover ul a, #navigation li.over ul a { /* lists nested under hovered list items */
-}
-
-
-#content {
-  margin: 0;
-  padding-top: .25em;
-  padding-left: 0;
-  padding-right: 0;
   clear: both;
 }
 
-#portletgroupone {
+#navigation h2 {
+  padding: 5px 10px 5px 10px;
+  margin: 0px;
+  color: #6D97BF;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
+  font-size: 100%;
+}
+
+#navigation ul {
+  margin: 0px;
+  padding: 5px 10px 5px 10px;
+  list-style: none;
+  position: absolute;
+  background-color: #F0F0F0;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #000000;
+}
+
+#navigation ul li {
+  color: #888888;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
+  font-size: smaller;
+}
+
+#navigation ul li a {
+  color: #888888;
+  text-decoration: none;
+}
+
+#navigation ul li a:hover {
+  color: #6D97BF;
+  text-decoration: underline;
+}
+
+#navigation .selected, #navigation .selected a {
+  color: #6D97BF;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+/** 'content' block **/
+
+#content {
+
+}
+
+/** 'portlet' block **/
+
+#portlets-left-column {
   margin: 0;
   padding: 0;
-  width: 48%;
-  padding: .25em;
+  width: 49%;
   float: left;
 }
 
-#portletgroupone.max {
-  width: auto;
-}
-
-#portletgrouptwo {
+#portlets-right-column {
   margin: 0;
-  width: 48%;
-  padding: .25em;
+  padding: 0;
+  width: 49%;
   float: right;
 }
 
 .portlet {
+  margin: 10px 0px 10px 0px;
+  padding: 0px;
   border: 1px solid #2E6794;
-  padding: .25em;
-  margin-bottom: .5em;
 }
 
 .portlet .header {
-  padding-left: .25em;
+  white-space: nowrap;
+  padding-left: 0.25em;
   background-color: #8DB7DF;
-  color: white;
+  color: #FFFFFF;
   font-weight: bold;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #2E6794;
 }
 
-.portlet table {
-  width: 90%;
-  margin: 0 auto;
-}
-
-.portlet table th {
-  background-color: #2E6794;
-  color: white;
-}
-
-.portlet table td.abbr {
-  text-align: center;
-}
-
-
-#footer {
-  clear: both;
-  margin: 0;
-  padding: .5em;
-  height: 30px;
-  font-size: .5em;
-  text-align: center;
-  border-top: 1px solid #2E6794;
-  background: transparent url(images/powered-by.png) no-repeat right;
-}
-
-.portlet .header {
-   white-space: nowrap;
-   border: 2px solid #2E6794;
+.portlet .header h2 {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
+  font-size: 100%;
+  float: none;
 }
 
 .portlet .header span {
-    width: 16px;
-    height: 16px;
-    float: right;
+  width: 16px;
+  height: 16px;
+  float: right;
 }
 
-.portlet .header span.title {
-    width: auto;
-    height: auto;
-    float: none;
-}
 
-span.min {
+/** 'portlet' block: portlet mode and window state controls **/
+
+.portlet .header span.min {
   background: url(images/controls/min.png) no-repeat;
 }
 
-span.max {
+.portlet .header span.max {
   background: url(images/controls/max.png) no-repeat;
 }
 
-span.norm {
+.portlet .header span.norm {
   background: url(images/controls/norm.png) no-repeat;
 }
 
-span.view {
+.portlet .header span.view {
   background: url(images/controls/view.png) no-repeat;
 }
 
-span.edit {
+.portlet .header span.edit {
   background: url(images/controls/edit.png) no-repeat;
 }
 
-span.help {
+.portlet .header span.help {
   background: url(images/controls/help.png) no-repeat;
 }
 
-/* Portlet mode icons */
-img.min {
-  border: 0;
-  position: relative;
-  float: right;
-  padding-right:0.25em;
+.portlet .body {
+  padding: 10px;
 }
 
-img.max {
-  border: 0;
-  position: relative;
-  float: right;
-  padding-right:0.25em;
+
+/** 'footer' block **/
+
+#footer {
+  clear: both;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
+  font-size: smaller;
+  color: #808080;
+  text-align: center;
+  margin: 0px;
+  padding: 4px 20px 4px 20px;
+  border-top-width: 1px;
+  border-top-color: #888888;
+  border-top-style: dotted;
 }
 
-img.norm {
-  border: 0;
-  position: relative;
-  float: right;
-  padding-right:0.25em;
-}
 
-img.view {
-  border: 0;
-  position: relative;
-  float: right;
-  padding-right:0.25em;
-}
-
-img.edit {
-  border: 0;
-  position: relative;
-  float: right;
-  padding-right:0.25em;
-}
-
-img.help {
-  border: 0;
-  position: relative;
-  float: right;
-  padding-right:0.25em;
-}
-
-/* Start look and feel -- end positioning */
+/** Login page styles **/
 
 fieldset {
-  margin: .5em;
-  border: 1px solid #2E6794;
+  margin: 0.5em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #2E6794;
+}
+
+legend {
+  color: #2E6794;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, Sans-serif;
+  font-weight: bold;
 }
 
 label {
-  float: left;
-  text-align: right;
-  margin: 0 1em 10px 0;
   clear: both;
   width: 40%;
+  float: left;
+  text-align: right;
+  margin: 0px 5px 10px 0px;
 }
 
 input {
-  margin-bottom: 10px;
   color: #2E6794;
-  background: #8DB7DF;
-  border: 1px solid #2E6794;
+  background-color: #8DB7DF;
+  margin: 0px 0px 10px 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #2E6794;
 }
 
-input.submit
-{
-  margin-left: 5em;
-  clear: both;
-  color: #2E6794;
-  background: #8DB7DF;
-  border: 1px solid #2E6794;
-}
+
+
+
+

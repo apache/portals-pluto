@@ -7,16 +7,17 @@
     <style type="text/css" title="currentStyle" media="screen">
       @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
     </style>
+    <script type="text/javascript"
+            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+    </script>
   </head>
 
   <body>
-    <div id="portal" style="width: 500px;">
-      
+    <div id="portal" style="width: 600px;">
       <div id="header">
-        <h1><span>Apache Pluto</span></h1>
-        <h2><span>A Apache Portals Project</span></h2>
+        <h1>Apache Pluto</h1>
+        <p>A Apache Portals Project</p>
       </div>
-      
       <div id="content">
         <c:if test='${param.error == "1"}'>
           <p style="color:red;text-align:center">

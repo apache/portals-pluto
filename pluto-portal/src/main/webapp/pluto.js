@@ -1,15 +1,23 @@
-    startList = function() {
-      if (document.all && document.getElementById) {
-        navRoot = document.getElementById("navigation");
-        for (i=0; i<navRoot.childNodes.length; i++) {
-          for(j=0; j<navRoot.childNodes[i].childNodes.length; j++) {
-            node = navRoot.childNodes[i].childNodes[j];
-            if (node.nodeName=="LI") {
-              node.onmouseover=function() { this.className+=" over"; }
-              node.onmouseout=function() { this.className=this.className.replace(" over", ""); }
+
+toggleNavigation = function() {
+    if (document.getElementById) {
+        navigationRoot = document.getElementById("navigation");
+        if (navigationRoot) {
+            navigationList = navigationRoot.getElementsByTagName("ul")[0];
+            if (navigationList) {
+                navigationList.style.visibility = "hidden";
+                navigationRoot.onmouseover = function() {
+                    navigationList.style.visibility = "visible";
+                }
+                navigationRoot.onmouseout = function() {
+                    navigationList.style.visibility = "hidden";
+                }
             }
-          }
         }
-      }
     }
-    window.onload=startList;
+}
+
+window.onload = toggleNavigation;
+
+
+

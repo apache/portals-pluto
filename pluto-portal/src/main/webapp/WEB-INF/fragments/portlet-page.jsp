@@ -8,7 +8,7 @@
    * currentPage: 
   -->
 
-<div id="portletgroupone">
+<div id="portlets-left-column">
   <c:forEach var="portlet" varStatus="status"
              items="${currentPage.portletIds}" step="2">
     <c:set var="portlet" value="${portlet}" scope="request"/>
@@ -16,7 +16,7 @@
   </c:forEach>
 </div>
 
-<div id="portletgrouptwo">
+<div id="portlets-right-column">
   <c:forEach var="portlet" varStatus="status"
              items="${currentPage.portletIds}" begin="1" step="2">
     <c:set var="portlet" value="${portlet}" scope="request"/>
