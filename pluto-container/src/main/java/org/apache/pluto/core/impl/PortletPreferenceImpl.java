@@ -24,26 +24,45 @@ import org.apache.pluto.core.PortletPreference;
  * @since Sep 20, 2004
  */
 public class PortletPreferenceImpl implements PortletPreference {
-
-    private String name;
-    private String[] values;
-    private boolean readOnly;
-
-    public PortletPreferenceImpl() {
-
-    }
-
+	
+	// Private Member Variables ------------------------------------------------
+	
+	/** The preference name. */
+    private String name = null;
+    
+    /** The preference values. */
+    private String[] values = null;
+    
+    /** Flag indicating if this preference is read-only. */
+    private boolean readOnly = false;
+    
+    
+    // Constructors ------------------------------------------------------------
+    
     public PortletPreferenceImpl(String name, String[] values) {
         this.name = name;
         this.values = values;
+        this.readOnly = false;
     }
-
-    public PortletPreferenceImpl(String name, String[] values, boolean readOnly) {
+    
+    public PortletPreferenceImpl(String name,
+                                 String[] values,
+                                 boolean readOnly) {
         this.name = name;
         this.values = values;
         this.readOnly = readOnly;
     }
-
+    
+    /**
+     * FIXME: change to private!
+     */
+    public PortletPreferenceImpl() {
+    	// Do nothing.
+    }
+    
+    
+    // PortletPreference Impl --------------------------------------------------
+    
     public String getName() {
         return name;
     }
@@ -88,20 +107,17 @@ public class PortletPreferenceImpl implements PortletPreference {
      * @see java.lang.Object#toString()
      */
     public String toString(){
-    	StringBuffer str = new StringBuffer();
-    	str.append(getClass().getName());
-    	str.append("[");
-    	str.append("name=" + name + "; ");
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(getClass().getName());
+    	buffer.append("[");
+    	buffer.append("name=" + name + "; ");
     	for (int i = 0; i < values.length; i++) {
-        	str.append("value[" + i + "]=" + values[i]);
-        	if (i < values.length) {
-        		str.append(",");
-        	}
+    		buffer.append("value[" + i + "]=" + values[i]);
 		}
-    	str.append("; ");
-    	str.append("readOnly=" + readOnly);
-    	str.append("]");
-    	return str.toString();
+    	buffer.append("; ");
+    	buffer.append("readOnly=" + readOnly);
+    	buffer.append("]");
+    	return buffer.toString();
     }
     
 }

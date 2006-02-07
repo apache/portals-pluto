@@ -147,8 +147,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     public boolean isReadOnly(String key) {
         if (key == null) {
             throw new IllegalArgumentException(
-                EXCEPTIONS.getString("error.null", "Preference key ")
-            );
+            		EXCEPTIONS.getString("error.null", "Preference key "));
         }
         PortletPreference pref = (PortletPreference) preferences.get(key);
         return (pref != null && pref.isReadOnly());
@@ -191,31 +190,25 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
 
     public void setValue(String key, String value) throws ReadOnlyException {
-        if(isReadOnly(key)) {
+        if (isReadOnly(key)) {
             throw new ReadOnlyException(EXCEPTIONS.getString("error.preference.readonly", key));
         }
-
-
+        
         PortletPreference pref = (PortletPreference) preferences.get(key);
-
-         if (pref != null) {
+        if (pref != null) {
             pref.setValues(new String[]{value});
-
         } else {
             pref = new PortletPreferenceImpl(key, new String[]{value});
             preferences.put(key, pref);
         }
     }
 
-    public void setValues(String key, String[] values)
-        throws ReadOnlyException {
-
-        if(isReadOnly(key)) {
+    public void setValues(String key, String[] values) throws ReadOnlyException {
+        if (isReadOnly(key)) {
             throw new ReadOnlyException(EXCEPTIONS.getString("error.preference.readonly"));
         }
 
         PortletPreference pref = (PortletPreference) preferences.get(key);
-
         if (pref != null) {
             pref.setValues(values);
         } else {
@@ -239,22 +232,31 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
     
     public void reset(String key) throws ReadOnlyException {
+    	// Read-only preferences cannot be reset.
         if (isReadOnly(key)) {
             throw new ReadOnlyException(EXCEPTIONS.getString(
             		"error.preference.readonly", "Preference key "));
         }
-        for (int i = 0; i < defaultPreferences.length; i++) {
+        // Try to reset preference to the default values.
+        boolean resetDone = false;
+        for (int i = 0; !resetDone && i < defaultPreferences.length; i++) {
         	if (key.equals(defaultPreferences[i].getName())) {
         		if (LOG.isDebugEnabled()) {
         			LOG.debug("Resetting preference for key: " + key);
         		}
-        		preferences.put(key, defaultPreferences[i]);
-        		return;
+        		preferences.put(key,
+        				(PortletPreference) defaultPreferences[i].clone());
+        		resetDone = true;
         	}
         }
-        // TODO: what to do if no default values defined?
-        if (LOG.isDebugEnabled()) {
-        	LOG.debug("No default values defined for key: " + key);
+        // Reset preference to null if default values are not defined.
+        // TODO: should we remove the preference or set its value to null?
+        // Should getNames() return this key?
+        if (!resetDone) {
+        	if (LOG.isDebugEnabled()) {
+        		LOG.debug("Resetting preference to null for key: " + key);
+        	}
+        	preferences.remove(key);
         }
     }
     
@@ -320,7 +322,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * @return the string representation of this object.
      */
     public String toString() {
-    	StringBuffer buffer = new StringBuffer("PortletPreferencesImpl[");
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(getClass().getName()).append("[");
     	for (Enumeration en = getNames(); en.hasMoreElements(); ) {
     		String name = (String) en.nextElement();
     		buffer.append(name).append("=");
