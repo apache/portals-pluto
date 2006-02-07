@@ -57,8 +57,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletPreferencesImpl.class);
     
-    private static final StringManager EXCEPTIONS =
-        StringManager.getManager(PortletPreferencesImpl.class.getPackage().getName());
+    private static final StringManager EXCEPTIONS = StringManager.getManager(
+    		PortletPreferencesImpl.class.getPackage().getName());
     
     
     // Private Member Variables ------------------------------------------------
@@ -69,9 +69,14 @@ public class PortletPreferencesImpl implements PortletPreferences {
     private InternalPortletWindow window = null;
 
     private InternalPortletRequest request = null;
-
+    
+    /**
+     * Default portlet preferences retrieved from portlet.xml, and used for
+     * resetting portlet preferences.
+     */
     private PortletPreference[] defaultPreferences = null;
     
+    /** Current portlet preferences. */
     private Map preferences = new HashMap();
 
     /** Current method used for managing these preferences. */
@@ -79,7 +84,14 @@ public class PortletPreferencesImpl implements PortletPreferences {
     
     
     // Constructor -------------------------------------------------------------
-
+    
+    /**
+     * Constructs an instance.
+     * @param container  the portlet container.
+     * @param portletWindow  the internal portlet window.
+     * @param request  the internal portlet request.
+     * @param methodId  the request method ID: render request or action request.
+     */
     public PortletPreferencesImpl(PortletContainer container,
                                   InternalPortletWindow window,
                                   InternalPortletRequest request,
@@ -92,16 +104,19 @@ public class PortletPreferencesImpl implements PortletPreferences {
         preferencesService = container.getOptionalContainerServices()
         		.getPortletPreferencesService();
         if (LOG.isDebugEnabled()) {
-            LOG.debug("PreferencesService: "
+            LOG.debug("Using PortletPreferencesService: "
             		+ preferencesService.getClass().getName());
         }
         
-        // Put default preferences into preferences map.
+        // Put default portlet preferences into preferences map.
         PortletEntity entity = window.getPortletEntity();
         defaultPreferences = entity.getDefaultPreferences();
         for (int i = 0; i < defaultPreferences.length; i++) {
             preferences.put(defaultPreferences[i].getName(),
-                            defaultPreferences[i]);
+                            (PortletPreference) defaultPreferences[i].clone());
+        }
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Loaded default preferences: " + toString());
         }
         
         try {
@@ -136,7 +151,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             );
         }
         PortletPreference pref = (PortletPreference) preferences.get(key);
-        return pref != null && pref.isReadOnly();
+        return (pref != null && pref.isReadOnly());
     }
 
     public String getValue(String key, String def) {
@@ -222,30 +237,41 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
         return Collections.unmodifiableMap(map);
     }
-
+    
     public void reset(String key) throws ReadOnlyException {
-        if(isReadOnly(key)) {
-            throw new ReadOnlyException(
-                EXCEPTIONS.getString("error.preference.readonly", "Preference key ")
-            );
+        if (isReadOnly(key)) {
+            throw new ReadOnlyException(EXCEPTIONS.getString(
+            		"error.preference.readonly", "Preference key "));
         }
-
-
-//        preferences.clear();
-        for(int i=0;i<defaultPreferences.length;i++) {
-           if(key.equals(defaultPreferences[i].getName())) {
-               preferences.put(key, defaultPreferences[i]);
-           }
+        for (int i = 0; i < defaultPreferences.length; i++) {
+        	if (key.equals(defaultPreferences[i].getName())) {
+        		if (LOG.isDebugEnabled()) {
+        			LOG.debug("Resetting preference for key: " + key);
+        		}
+        		preferences.put(key, defaultPreferences[i]);
+        		return;
+        	}
+        }
+        // TODO: what to do if no default values defined?
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("No default values defined for key: " + key);
         }
     }
     
+    /**
+     * Stores the portlet preferences to a persistent storage.
+     * @throws ValidatorException  if the portlet preferences are not valid.
+     * @throws IOException  if an error occurs with the persistence mechanism.
+     */
     public void store() throws IOException, ValidatorException {
+    	
         // Not allowed when not called in action.
         if (!Constants.METHOD_ACTION.equals(methodId)) {
             throw new IllegalStateException(
                 	"store is only allowed inside a processAction call.");
         }
-
+        
+        // Validate the preferences before storing, if a validator is defined.
         String validatorClass = window.getPortletEntity()
                 .getPortletDefinition()
                 .getPortletPreferences()
@@ -258,55 +284,60 @@ public class PortletPreferencesImpl implements PortletPreferences {
                 		clazz.newInstance();
                 validator.validate(this);
             } catch (InstantiationException ex) {
-            	LOG.error("Problem instantiating validator: " + ex.toString());
+            	LOG.error("Error instantiating validator.", ex);
                 throw new ValidatorException(ex, null);
             } catch (IllegalAccessException ex) {
-            	LOG.error("Problem instantiating validator: " + ex.toString());
+            	LOG.error("Error instantiating validator.", ex);
                 throw new ValidatorException(ex, null);
             } catch (ClassNotFoundException ex) {
-            	LOG.error("Problem instantiating validator: " + ex.toString());
+            	LOG.error("Error instantiating validator.", ex);
                 throw new ValidatorException(ex, null);
+            } catch (ValidatorException ex) {
+            	LOG.error("Error validating preferences: " + ex.getMessage());
+            	throw ex;
             }
         }
-
-        PortletPreference[] pref = (PortletPreference[]) 
+        
+        // Store the portlet preferences.
+        PortletPreference[] prefs = (PortletPreference[]) 
         		new ArrayList(preferences.values()).toArray(
         				new PortletPreference[preferences.size()]);
         try {
-        	preferencesService.store(window, request, pref);
+        	preferencesService.store(window, request, prefs);
         } catch (PortletContainerException ex) {
             LOG.error("Error storing preferences.", ex);
+            throw new IOException("Error storing perferences: " + ex.getMessage());
         }
     }
     
     
     // Object Methods ----------------------------------------------------------
     
+    /**
+     * Returns the string representation of this object. Preferences are
+     * separated by ';' character, while values in one preference are separated
+     * by ',' character.
+     * @return the string representation of this object.
+     */
     public String toString() {
-    	StringBuffer sb = new StringBuffer("PortletPreferencesImpl[");
-    	Enumeration names = getNames();
-    	while(names.hasMoreElements()) {
-    		String name = (String)names.nextElement();
-    		sb.append(name);
-    		sb.append("=");
-    		String[] vals = getValues(name, new String[]{"Default"});
-    		if (vals != null) {
-	    		int len = vals.length;
-	    		for (int i = 0; i < len; i++) {
-					sb.append(vals[i]);
-					sb.append(",");
+    	StringBuffer buffer = new StringBuffer("PortletPreferencesImpl[");
+    	for (Enumeration en = getNames(); en.hasMoreElements(); ) {
+    		String name = (String) en.nextElement();
+    		buffer.append(name).append("=");
+    		String[] values = getValues(name, null);
+    		if (values != null) {
+	    		for (int i = 0; i < values.length; i++) {
+	    			buffer.append(values[i]).append(",");
 				}
-	    		if (len == 0) {
-					sb.append(",");    			
-	    		}
     		} else {
-    			sb.append("NULL,");
+    			buffer.append("NULL,");
     		}
-    		sb.append("readonly=");
-        	sb.append(isReadOnly(name));    		
-    		sb.append(";");
+    		buffer.append("readonly=");
+    		buffer.append(isReadOnly(name));    		
+    		buffer.append(";");
     	}
-    	sb.append("]");
-    	return sb.toString();
+    	buffer.append("]");
+    	return buffer.toString();
     }
+    
 }

@@ -19,6 +19,7 @@
 
 package org.apache.pluto.core.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
@@ -32,54 +33,67 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
 /**
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates. To enable and disable the creation of type
- * comments go to Window>Preferences>Java>Code Generation.
+ * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
-public class ActionRequestImpl
-    extends PortletRequestImpl implements ActionRequest {
-
+public class ActionRequestImpl extends PortletRequestImpl
+implements ActionRequest {
+	
+	/** Logger. */
     private static final Log LOG = LogFactory.getLog(ActionRequestImpl.class);
-    /**
-     * Holds the portlet preferences
-     */
-    private PortletPreferences portletPreferences;
-
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    /** FIXME: The portlet preferences. */
+    private PortletPreferences portletPreferences = null;
+    
+    
+    // Constructor -------------------------------------------------------------
+    
     public ActionRequestImpl(PortletContainer container,
                              InternalPortletWindow internalPortletWindow,
                              HttpServletRequest servletRequest) {
         super(container, internalPortletWindow, servletRequest);
-        LOG.debug("Created action request for: "+internalPortletWindow);
-
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Created action request for: " + internalPortletWindow);
+        }
     }
 
-    // javax.portlet.ActionRequest implementation -------------------------------------------------
+    // ActionRequest impl ------------------------------------------------------
+    
     /* (non-Javadoc)
      * @see org.apache.pluto.core.InternalActionResponse#getPortletInputStream()
      */
-    public InputStream getPortletInputStream() throws java.io.IOException {
+    public InputStream getPortletInputStream() throws IOException {
         HttpServletRequest servletRequest = (HttpServletRequest) getRequest();
-
         if (servletRequest.getMethod().equals("POST")) {
             String contentType = servletRequest.getContentType();
             if (contentType == null ||
                 contentType.equals("application/x-www-form-urlencoded")) {
-                throw new java.lang.IllegalStateException(
-                    "User request HTTP POST data is of type application/x-www-form-urlencoded. This data has been already processed by the portal/portlet-container and is available as request parameters.");
+                throw new IllegalStateException(
+                		"User request HTTP POST data is of type "
+                		+ "application/x-www-form-urlencoded. "
+                		+ "This data has been already processed "
+                		+ "by the portal/portlet-container and is available "
+                		+ "as request parameters.");
             }
         }
         return servletRequest.getInputStream();
     }
 
-    // --------------------------------------------------------------------------------------------
-    // PortletRequestImpl implementation ----------------------------------------------------------
+    // PortletRequestImpl impl -------------------------------------------------
+    
+    /**
+     * FIXME: 
+     */
     public PortletPreferences getPreferences() {
-        if (this.portletPreferences == null) {
-            portletPreferences = new PortletPreferencesImpl(getContainer(),
-                                                            getWindow(), this,
-                                                            Constants.METHOD_ACTION);
+        if (portletPreferences == null) {
+            portletPreferences = new PortletPreferencesImpl(
+            		getContainer(), getWindow(), this, Constants.METHOD_ACTION);
         }
-        return this.portletPreferences;
+        return portletPreferences;
     }
-    // --------------------------------------------------------------------------------------------
+    
 }

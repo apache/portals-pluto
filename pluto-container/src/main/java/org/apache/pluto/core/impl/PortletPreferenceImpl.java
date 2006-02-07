@@ -68,6 +68,19 @@ public class PortletPreferenceImpl implements PortletPreference {
         this.readOnly = readOnly;
     }
     
+    public Object clone() {
+    	PortletPreferenceImpl copy = new PortletPreferenceImpl();
+    	copy.name = this.name;
+    	if (this.values != null) {
+    		copy.values = (String[]) this.values.clone();
+    	}
+    	copy.readOnly = this.readOnly;
+    	return copy;
+    }
+    
+    
+    // Object Methods ----------------------------------------------------------
+    
     /**
      * Override of toString() that prints out 
      * name and values of fields.

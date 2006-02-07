@@ -28,13 +28,13 @@ import org.apache.pluto.core.PortletPreference;
 
 public interface PortletPreferencesService extends ContainerService {
 
-    PortletPreference[] getStoredPreferences(PortletWindow window,
-                                             PortletRequest req)
-        throws PortletContainerException;
-
-    void store(PortletWindow window,
-               PortletRequest req,
-               PortletPreference[] preferences)
-        throws PortletContainerException;
+    public PortletPreference[] getStoredPreferences(PortletWindow portletWindow,
+                                                    PortletRequest request)
+    throws PortletContainerException;
+    
+    public void store(PortletWindow portletWindow,
+                      PortletRequest request,
+                      PortletPreference[] preferences)
+    throws PortletContainerException;
 
 }

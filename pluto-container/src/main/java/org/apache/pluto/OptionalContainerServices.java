@@ -28,15 +28,18 @@ import org.apache.pluto.core.InternalPortletWindow;
 public interface OptionalContainerServices {
 
     PortletEnvironmentService getPortletEnvironmentService();
-
+    
+    /**
+     * Returns the portlet preferences service implementation.
+     * @return the portlet preferences service implementation.
+     */
     PortletPreferencesService getPortletPreferencesService();
 
     /**
-     * Retrieve an invoker for the specified PortletWindow.
-     *
-     * @param window the InternalPortletWindow used for invocation
-     * @return an invoker which can be used to service the indicated portlet
+     * Returns an invoker for the specified PortletWindow.
+     * @param portletWindow  the InternalPortletWindow used for invocation.
+     * @return an invoker which can be used to service the indicated portlet.
      */
-    PortletInvokerService getPortletInvokerService(InternalPortletWindow window);
+    PortletInvokerService getPortletInvokerService(InternalPortletWindow portletWindow);
 
 }

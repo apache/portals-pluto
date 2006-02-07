@@ -25,61 +25,66 @@ import org.apache.pluto.core.InternalPortletRequest;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Enumeration;
 
 /**
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates. To enable and disable the creation of type
- * comments go to Window>Preferences>Java>Code Generation.
+ * Implementation of the <code>javax.portlet.PortletRequest</code> interface.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class RenderRequestImpl extends PortletRequestImpl
-    implements RenderRequest {
+implements RenderRequest {
+	
+	/** Logger. */
     private static final Log LOG = LogFactory.getLog(RenderRequestImpl.class);
-    /**
-     * Holds the portlet preferences
-     */
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    /** FIXME: The portlet preferences. */
     private PortletPreferences portletPreferences = null;
-
+    
+    
+    // Constructors ------------------------------------------------------------
+    
     public RenderRequestImpl(InternalPortletRequest request) {
         super(request);    
     }
 
     public RenderRequestImpl(PortletContainer container,
                              InternalPortletWindow internalPortletWindow,
-                             javax.servlet.http.HttpServletRequest servletRequest) {
+                             HttpServletRequest servletRequest) {
         super(container, internalPortletWindow, servletRequest);
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Created render request for: " + internalPortletWindow);
+        }
     }
-
-    // additional methods -------------------------------------------------------------------------
+    
+    
+    // RenderRequest Impl ------------------------------------------------------
+    
+    /**
+     * FIXME: portlet preference method ID!
+     */
+    public PortletPreferences getPreferences() {
+        if (portletPreferences == null) {
+            portletPreferences = new PortletPreferencesImpl(
+            		getContainer(), getWindow(), this, Constants.METHOD_ACTION);
+        }
+        return portletPreferences;
+    }
+    
+    
+    // ServletRequest Methods --------------------------------------------------
+    
     /**
      * @see javax.servlet.ServletRequest#getReader()
      */
     public BufferedReader getReader() throws IOException {
         return super.getReader();
     }
-
-    public PortletPreferences getPreferences() {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Getting Preferences: " + portletPreferences);
-        }
-
-        if (portletPreferences == null) {
-            portletPreferences = new PortletPreferencesImpl(getContainer(),
-                                                            getWindow(), this,
-                                                            Constants.METHOD_ACTION);
-        }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Returning Preferences: " + portletPreferences);
-            Enumeration e = portletPreferences.getNames();
-            while (e.hasMoreElements()) {
-                String name = (String) e.nextElement();
-                LOG.debug(" - Preference: name = " + name);
-            }
-        }
-
-        return portletPreferences;
-    }
-    // --------------------------------------------------------------------------------------------
+    
 }
