@@ -44,16 +44,26 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
 	
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletSessionImpl.class);
-
-    private final int DEFAULT_SCOPE = PortletSession.PORTLET_SCOPE;
+    
+    /** The default scope (<code>PORTLET_SCOPE</code>) for storing objects. */
+    private static final int DEFAULT_SCOPE = PortletSession.PORTLET_SCOPE;
+    
+    /** The portlet scope namespace as defined in PLT. 15.3. */
+    private static final String PORTLET_SCOPE_NAMESPACE = "javax.portlet.p.";
+    
+    /** The portlet window ID / attribute name separator as defined in PLT. 15.3. */
+    private static final char ID_NAME_SEPARATOR = '?';
 
     
     // Private Member Variables ------------------------------------------------
     
+    /** The wrapped HttpSession object. */
     private HttpSession httpSession = null;
-
+    
+    /** The portlet context. */
     private PortletContext portletContext = null;
-
+    
+    /** The internal portlet window. */
     private InternalPortletWindow internalPortletWindow = null;
     
     
@@ -77,6 +87,13 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
         return getAttribute(name, DEFAULT_SCOPE);
     }
     
+    /**
+     * Returns the attribute of the specified name under the given scope.
+     * 
+     * @param name  the attribute name.
+     * @param scope  the scope under which the attribute object is stored.
+     * @return the attribute object.
+     */
     public Object getAttribute(String name, int scope) {
     	ArgumentUtility.validateNotNull("attributeName", name);
     	if (scope == PortletSession.APPLICATION_SCOPE) {
@@ -84,17 +101,15 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     	} else {
             String key = createPortletScopedId(name);
             Object attribute = httpSession.getAttribute(key);
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Key = " + key);
-                LOG.debug("Value = " + attribute);
-                Enumeration enumer = httpSession.getAttributeNames();
-                while (enumer.hasMoreElements()) {
-                    LOG.debug("All has: " + enumer.nextElement());
-                }
-            }
-            if (attribute == null) {
-               attribute = httpSession.getAttribute(name);
-            }
+            //
+            // FIXME: if no attribute is found under portlet scope,
+            //   what should we return? we should just return null,
+            //   as defined by the portlet javadoc, or we should search
+            //   for that attribute in application scope?
+            //
+            // if (attribute == null) {
+            //    attribute = httpSession.getAttribute(name);
+            // }
             return attribute;
         }
     }
@@ -104,26 +119,22 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
     
     public Enumeration getAttributeNames(int scope) {
+    	// Return all attribute names in the nested HttpSession object.
         if (scope == PortletSession.APPLICATION_SCOPE) {
             return httpSession.getAttributeNames();
-        } else {
-            Enumeration attributes = httpSession.getAttributeNames();
-            Vector portletAttributes = new Vector();
-
-            while (attributes.hasMoreElements()) {
-            	String attribute = (String) attributes.nextElement();
-                int scp =  PortletSessionUtil.decodeScope(attribute);
-                if (LOG.isDebugEnabled()) {
-                	LOG.debug("Found attribute: "+attribute);
-                    LOG.debug("Scope Determined Portlet?" + (scp == PortletSession.PORTLET_SCOPE));
-                }
-                
-                if(scp == PortletSession.PORTLET_SCOPE) {
-                	portletAttributes.add(
-                			PortletSessionUtil.decodeAttributeName(attribute));
+        }
+        // Return attribute names with the portlet-scoped prefix.
+        else {
+            Vector portletScopedNames = new Vector();
+            for (Enumeration en = httpSession.getAttributeNames();
+            		en.hasMoreElements(); ) {
+            	String name = (String) en.nextElement();
+                if (isInCurrentPortletScope(name)) {
+                	portletScopedNames.add(
+                			PortletSessionUtil.decodeAttributeName(name));
                 }
            }
-            return portletAttributes.elements();
+            return portletScopedNames.elements();
         }
     }
     
@@ -196,15 +207,46 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     
     /**
      * Creates portlet-scoped ID for the specified attribute name.
+     * Portlet-scoped ID for a given attribute name has the following form:
+     * <code>javax.portlet.p.&lt;ID&gt;?&lt;name&gt;</code>
+     * where <code>ID</code> is a unique identification for the portlet window
+     * (assigned by the portal/portlet-container) that must not contain a '?'
+     * character. <code>name</code> is the attribute name.
+     * <p>
+     * Refer to Portlet Specification PLT. 15.3 for more details.
+     * </p>
      * @param name  the attribute name.
      * @return portlet-scoped ID for the attribute name.
      */
     private String createPortletScopedId(String name) {
     	StringBuffer buffer = new StringBuffer();
-    	buffer.append("javax.portlet.p.");
-    	buffer.append(internalPortletWindow.getId()).append("?");
+    	buffer.append(PORTLET_SCOPE_NAMESPACE);
+    	buffer.append(internalPortletWindow.getId());
+    	buffer.append(ID_NAME_SEPARATOR);
     	buffer.append(name);
     	return buffer.toString();
+    }
+    
+    /**
+     * Checks if the attribute name in APPLICATION_SCOPE is in the current
+     * portlet scope. 
+     * @param name  the attribute name to check.
+     * @return true if the attribute name is in the current portlet scope.
+     * @see #createPortletScopedId(String)
+     */
+    private boolean isInCurrentPortletScope(String name) {
+    	// Portlet-scoped attribute names MUST start with "javax.portlet.p.",
+    	//   and contain the ID-name separator '?'.
+    	if (name.startsWith(PORTLET_SCOPE_NAMESPACE)
+    			&& name.indexOf(ID_NAME_SEPARATOR) > -1) {
+        	String id = name.substring(PORTLET_SCOPE_NAMESPACE.length(),
+        	                           name.indexOf(ID_NAME_SEPARATOR));
+        	return (id.equals(internalPortletWindow.getId().toString()));
+        }
+    	// Application-scoped attribute names are not in portlet scope.
+    	else {
+        	return false;
+        }
     }
     
     
