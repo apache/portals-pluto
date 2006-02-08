@@ -24,6 +24,7 @@ import org.apache.pluto.core.PortletEntity;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
+import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringManager;
@@ -63,22 +64,21 @@ import java.security.Principal;
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class PortletRequestImpl extends HttpServletRequestWrapper
-        implements PortletRequest, InternalPortletRequest {
-
+implements PortletRequest, InternalPortletRequest {
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(PortletRequestImpl.class);
+    
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
-
-    private static final Log LOG =
-            LogFactory.getLog(PortletRequestImpl.class);
-
-    /**
-     * The parent container within which this request was created.
-     */
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    /** The parent container within which this request was created. */
     private PortletContainer container = null;
-
-    /**
-     * The portlet window which is the target of this portlet request.
-     */
+    
+    /** The portlet window which is the target of this portlet request. */
     private InternalPortletWindow internalPortletWindow = null;
 
     /**
@@ -87,26 +87,19 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      */
     private PortletContext portletContext = null;
 
-    /**
-     * The PortalContext within which this request is occuring.
-     */
+    /** The PortalContext within which this request is occuring. */
     private PortalContext portalContext = null;
 
-    /**
-     * Holds the portlet session.
-     */
+    /** The portlet session. */
     private PortletSession portletSession = null;
 
-    /**
-     * Response content types.
-     */
+    /** Response content types. */
     private Vector contentTypes = null;
-
+    
+    /** TODO: javadoc */
     private NamespaceMapper mapper = new NamespaceMapperImpl();
 
-    /**
-     * Flag indicating if the HTTP-Body has been accessed.
-     */
+    /** Flag indicating if the HTTP-Body has been accessed. */
     private boolean bodyAccessed = false;
 
     /**
@@ -114,21 +107,21 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      * FIXME: the included flag should only exist for a render request.
      */
     private boolean included = false;
+    
 
     // Constructors ------------------------------------------------------------
 
     public PortletRequestImpl(InternalPortletRequest internalPortletRequest) {
         this(internalPortletRequest.getPortletContainer(),
-                internalPortletRequest.getInternalPortletWindow(),
-                internalPortletRequest.getHttpServletRequest());
+             internalPortletRequest.getInternalPortletWindow(),
+             internalPortletRequest.getHttpServletRequest());
     }
 
     /**
-     * Create a PortletRequestImpl instance.
-     *
-     * @param container             the portlet container.
-     * @param internalPortletWindow the internal portlet window.
-     * @param servletRequest        the underlying servlet request.
+     * Creates a PortletRequestImpl instance.
+     * @param container  the portlet container.
+     * @param internalPortletWindow  the internal portlet window.
+     * @param servletRequest  the underlying servlet request.
      */
     public PortletRequestImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
@@ -138,8 +131,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         this.internalPortletWindow = internalPortletWindow;
         this.portalContext = container.getRequiredContainerServices().getPortalContext();
     }
-
-    // javax.portlet.PortletRequest Impl ---------------------------------------
+    
+    
+    // PortletRequest Impl -----------------------------------------------------
 
     /**
      * Determine whether or not the specified WindowState is allowed for this
@@ -149,48 +143,47 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      * @return true if the state is allowed.
      */
     public boolean isWindowStateAllowed(WindowState state) {
-        Enumeration supportedStates = portalContext.getSupportedWindowStates();
-        while (supportedStates.hasMoreElements()) {
-            if (supportedStates.nextElement().toString().equals(
-                    state.toString())) {
+    	for (Enumeration en = portalContext.getSupportedWindowStates();
+    			en.hasMoreElements(); ) {
+            if (en.nextElement().toString().equals(state.toString())) {
                 return true;
             }
         }
         return false;
     }
-
-
+    
     public boolean isPortletModeAllowed(PortletMode mode) {
         return (isPortletModeAllowedByPortlet(mode)
                 && isPortletModeAllowedByPortal(mode));
     }
-
+    
     public PortletMode getPortletMode() {
         return internalPortletWindow.getPortletMode();
     }
-
+    
     public WindowState getWindowState() {
         return internalPortletWindow.getWindowState();
     }
-
-    // needs to be implemented in each subclass
+    
+    /**
+     * FIXME: implement here?
+     * needs to be implemented in each subclass
+     */
     public abstract PortletPreferences getPreferences();
-
+    
     public PortletSession getPortletSession() {
         return getPortletSession(true);
     }
-
+    
     public PortletSession getPortletSession(boolean create) {
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Retreiving portlet session (create="+create+")");
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Retreiving portlet session (create=" + create + ")");
         }
         //
-        // It is critical that we don't retrieve the
-        //    portlet session until the cross context
-        //    dispatch has been completed.  If we do
-        //    then we risk having a cached version which
-        //    is invalid for the context within which it
-        //    exists.
+        // It is critical that we don't retrieve the portlet session until the
+        //   cross context dispatch has been completed.  If we do then we risk
+        //   having a cached version which is invalid for the context within
+        //   which it exists.
         //
         if (portletContext == null) {
             throw new IllegalStateException(
@@ -198,15 +191,15 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
             );
         }
 
-        HttpSession http = getHttpServletRequest().getSession(create);
-        // We must make sure that if the session
-        // has been invalidated (perhaps through setMaxIntervalTimeout())
-        // and the underlying request returns null that we no longer
-        // use the cached version.
+        HttpSession httpSession = getHttpServletRequest().getSession(create);
         //
-        if(http == null) {
-            if(LOG.isDebugEnabled()) {
-                LOG.debug("Underlying Http session is null; No session will be returned.");
+        // We must make sure that if the session has been invalidated (perhaps
+        //   through setMaxIntervalTimeout()) and the underlying request returns
+        //   null that we no longer use the cached version.
+        //
+        if (httpSession == null) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Underlying HttpSession is null: No session will be returned.");
             }
             return null;
         }
@@ -215,22 +208,15 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
             portletSession = new PortletSessionImpl(
                     portletContext,
                     internalPortletWindow,
-                    http
-            );
+                    httpSession);
         }
-
         return portletSession;
     }
-
+    
     public String getProperty(String name) throws IllegalArgumentException {
-        if (name == null) {
-            throw new IllegalArgumentException(
-                EXCEPTIONS.getString("error.propertyName.null")
-            );
-        }
-
-        String prop = this.getHttpServletRequest().getHeader(name);
-        if (prop == null) {
+    	ArgumentUtility.validateNotNull("propertyName", name);
+        String property = this.getHttpServletRequest().getHeader(name);
+        if (property == null) {
             Map propertyMap = container.getRequiredContainerServices()
                     .getPortalCallbackService()
                     .getRequestProperties(
@@ -240,20 +226,16 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
             if (propertyMap != null) {
                 String[] properties = (String[]) propertyMap.get(name);
                 if (properties != null && properties.length > 0) {
-                    prop = properties[0];
+                	property = properties[0];
                 }
             }
         }
-        return prop;
+        return property;
     }
 
     public Enumeration getProperties(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Property name cannot be null");
-        }
-
+    	ArgumentUtility.validateNotNull("propertyName", name);
         Set v = new HashSet();
-
         Enumeration props = this.getHttpServletRequest().getHeaders(name);
         if (props != null) {
             while (props.hasMoreElements()) {
@@ -361,12 +343,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public Object getAttribute(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException(
-                    EXCEPTIONS.getString("error.attributeName.null")
-            );
-        }
-
+    	ArgumentUtility.validateNotNull("attributeName", name);
+    	
         String encodedName = isNameReserved(name) ?
                 name :
                 mapper.encode(internalPortletWindow.getId(), name);
@@ -401,12 +379,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public String getParameter(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Parameter name == null");
-        }
-
+    	ArgumentUtility.validateNotNull("parameterName", name);
         bodyAccessed = true;
-
         Map parameters = this.getHttpServletRequest().getParameterMap();
         String[] values = (String[]) parameters.get(name);
         if (values != null) {
@@ -423,14 +397,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public String[] getParameterValues(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException(
-                EXCEPTIONS.getString("error.null", "Parameter Name ")
-            );
-        }
-
+    	ArgumentUtility.validateNotNull("parameterName", name);
         bodyAccessed = true;
-
         String[] values = (String[]) this.getHttpServletRequest()
                 .getParameterMap()
                 .get(name);
@@ -451,15 +419,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public void setAttribute(String name, Object value) {
-        if (name == null) {
-            throw new IllegalArgumentException(
-                    EXCEPTIONS.getString("error.null", "Attribute Name ")
-            );
-        }
-
+    	ArgumentUtility.validateNotNull("attributeName", name);
         String encodedName = isNameReserved(name) ?
                 name : mapper.encode(internalPortletWindow.getId(), name);
-
         if (value == null) {
             removeAttribute(name);
         } else {
@@ -468,15 +430,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public void removeAttribute(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException(
-                EXCEPTIONS.getString("error.null", "Attribute Name ")
-            );
-        }
-
+    	ArgumentUtility.validateNotNull("attributeName", name);
         String encodedName = isNameReserved(name) ?
                 name : mapper.encode(internalPortletWindow.getId(), name);
-
         getHttpServletRequest().removeAttribute(encodedName);
     }
 
@@ -485,7 +441,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     }
 
     public boolean isRequestedSessionIdValid() {
-        if(LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
             LOG.debug(" ***** IsRequestedSessionIdValid? "+getHttpServletRequest().isRequestedSessionIdValid());
         }
         return getHttpServletRequest().isRequestedSessionIdValid();

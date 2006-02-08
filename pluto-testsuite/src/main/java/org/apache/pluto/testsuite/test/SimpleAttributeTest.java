@@ -28,12 +28,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
 /**
- * Tests basic attribute retrieval and storage functions within
- * the portlet request, session, and context objects.
+ * Tests basic attribute retrieval and storage functions within the portlet
+ * request, session, and context objects.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class SimpleAttributeTest extends AbstractReflectivePortletTest {
+	
     private static final String KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
     private static final String VAL = "! TEST VAL !";
 
@@ -46,9 +48,10 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         return new HashMap();
 
     }
-//
-// Begin Request Tests
-//
+    
+    
+    // Protected Test Methods --------------------------------------------------
+    
     protected TestResult checkGetNullAttribute(PortletRequest req) {
         TestResult res = new TestResult();
         res.setName("Retrieve Missing Request Attribute Test");
@@ -190,32 +193,38 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         return res;
     }
 
-    protected TestResult checkEnumerateAttributes(PortletSession req) {
-        TestResult res = new TestResult();
-        res.setName("Enumerate Session Attribute Names Test");
-        res.setDesc("Sets request attributes and enumerates over them.");
-
+    protected TestResult checkEnumerateAttributes(PortletSession session) {
+    	
+        TestResult result = new TestResult();
+        result.setName("Enumerate Session Attribute Names Test");
+        result.setDesc("Sets request attributes and enumerates over them.");
+        
         int count = 5;
-        for(int i=0;i<count;i++) {
-            req.setAttribute(KEY+"."+i,VAL);
+        for (int i = 0; i < count; i++) {
+        	session.setAttribute(KEY + "." + i, VAL);
         }
 
         int found = 0;
-        Enumeration enumerator= req.getAttributeNames();
-        while(enumerator.hasMoreElements()) {
-            if(enumerator.nextElement().toString().startsWith(KEY)) {
+        for (Enumeration en = session.getAttributeNames();
+        		en.hasMoreElements(); ) {
+        	String name = (String) en.nextElement();
+            if (name.startsWith(KEY)) {
                 found++;
             }
+            // FIXME:
+            System.err.println("\n\n\n\n");
+            System.err.println("Got attribute name in session: " + name);
+            System.err.println("\n\n\n\n");
         }
-
-        if(count != found) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected "+count+" attributes.  Found "+found);
+        
+        if (count != found) {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResults("Expected " + count + " attributes. "
+        			+ "Found " + found);
+        } else {
+        	result.setReturnCode(TestResult.PASSED);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 
 //
