@@ -124,6 +124,9 @@
     <field name="Values" type="java.lang.String" collection="arraylist">
       <bind-xml name="value" node="element"/>
     </field>
+    <field name="ReadOnly" type="boolean">
+      <bind-xml name="read-only" node="element"/>
+    </field>
   </class>
 
 </mapping>

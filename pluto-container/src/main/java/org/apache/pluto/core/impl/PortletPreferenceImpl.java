@@ -18,8 +18,9 @@ package org.apache.pluto.core.impl;
 import org.apache.pluto.core.PortletPreference;
 
 /**
- * <B>TODO</B>: Document
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * TODO: javadoc
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 20, 2004
  */
@@ -101,22 +102,22 @@ public class PortletPreferenceImpl implements PortletPreference {
     // Object Methods ----------------------------------------------------------
     
     /**
-     * Override of toString() that prints out 
-     * name and values of fields.
-     * 
+     * Override of toString() that prints out name and values of fields.
      * @see java.lang.Object#toString()
      */
     public String toString(){
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(getClass().getName());
-    	buffer.append("[");
-    	buffer.append("name=" + name + "; ");
-    	for (int i = 0; i < values.length; i++) {
-    		buffer.append("value[" + i + "]=" + values[i]);
-		}
-    	buffer.append("; ");
-    	buffer.append("readOnly=" + readOnly);
-    	buffer.append("]");
+    	buffer.append("[name=").append(name).append(";");
+    	if (values != null) {
+    		for (int i = 0; i < values.length; i++) {
+    			buffer.append("value[").append(i).append("]=")
+    					.append(values[i]).append(";");
+    		}
+    	} else {
+    		buffer.append("values=NULL;");
+    	}
+    	buffer.append("readOnly=").append(readOnly).append("]");
     	return buffer.toString();
     }
     

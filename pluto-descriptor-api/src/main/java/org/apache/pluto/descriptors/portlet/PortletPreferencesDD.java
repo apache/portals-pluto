@@ -19,14 +19,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * <B>TODO:</B> Document
+ * Portlet preferences definition in portlet.xml.
  *
- * @author ddewolf@apache.org
+ * @see PortletPreferenceDD
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @since Jun 29, 2005
  */
 public class PortletPreferencesDD {
-
+	
+	/** List of portlet preferences. */
     private List portletPreferences = new ArrayList();
+    
+    /** Portlet preferences validator class name. */
     private String preferencesValidator;
 
     public List getPortletPreferences() {

@@ -49,6 +49,9 @@ import org.apache.commons.logging.Log;
  * Implementation of the <code>javax.portlet.PortletPreferences</code>
  * interface.
  * 
+ * @see org.apache.pluto.core.PortletPreference
+ * @see org.apache.pluto.core.impl.PortletPreferenceImpl
+ * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
@@ -320,23 +323,26 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * separated by ';' character, while values in one preference are separated
      * by ',' character.
      * @return the string representation of this object.
+     * @see java.lang.Object#toString()
      */
     public String toString() {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(getClass().getName()).append("[");
     	for (Enumeration en = getNames(); en.hasMoreElements(); ) {
     		String name = (String) en.nextElement();
-    		buffer.append(name).append("=");
+    		buffer.append(name);
+    		buffer.append("(readOnly:").append(isReadOnly(name)).append(")=");
     		String[] values = getValues(name, null);
     		if (values != null) {
 	    		for (int i = 0; i < values.length; i++) {
-	    			buffer.append(values[i]).append(",");
+	    			buffer.append(values[i]);
+	    			if (i < values.length - 1) {
+	    				buffer.append(",");
+	    			}
 				}
     		} else {
-    			buffer.append("NULL,");
+    			buffer.append("NULL");
     		}
-    		buffer.append("readonly=");
-    		buffer.append(isReadOnly(name));    		
     		buffer.append(";");
     	}
     	buffer.append("]");
