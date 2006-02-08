@@ -363,16 +363,12 @@ public class DerbyContainerDAOTest extends TestCase {
 		 final String authUser = "TestUserSp";
 		 
 		 //create and load PortletPreference objects
-		 PortletPreferenceImpl pref1 = new PortletPreferenceImpl();
-		 pref1.setName(prefName1);
-		 pref1.setReadOnly(false);
 		 String[] vals = {prefVal1a, prefVal1b};
-		 pref1.setValues(vals);
-		 PortletPreferenceImpl pref2 = new PortletPreferenceImpl();
-		 pref2.setName(prefName2);
-		 pref2.setReadOnly(true);
+		 PortletPreferenceImpl pref1 = new PortletPreferenceImpl(
+				 prefName1, vals, false);
 		 String[] vals2 = {prefVal2};
-		 pref2.setValues(vals2);
+		 PortletPreferenceImpl pref2 = new PortletPreferenceImpl(
+				 prefName2, vals2, true);
 		 //fill pref array
 		 PortletPreference[] prefs = {pref1, pref2};
 		 

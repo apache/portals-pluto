@@ -28,7 +28,10 @@
     </notifiers>
   </ciManagement>
   <inceptionYear>2003</inceptionYear>
-
+  
+  
+  <!-- Mailing Lists ======================================================= -->
+  
   <mailingLists>
     <mailingList>
       <name>Pluto User List</name>
@@ -44,7 +47,6 @@
       <post>pluto-dev@portals.apache.org</post>
       <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-dev</archive>
     </mailingList>
-
     <mailingList>
       <name>Pluto SCM List</name>
       <subscribe>pluto-scm-subscribe@portals.apache.org</subscribe>
@@ -53,12 +55,16 @@
       <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-scm</archive>
     </mailingList>
   </mailingLists>
-
+  
+  
+  <!-- Pluto Committers ==================================================== -->
+  
   <!-- Email format: [name]#a@T#[domain].d0t.[extension]
        '@' and '.' characters are added because m2 seems to need them to
-       generate mailto links.
-    -->
+       generate mailto links. -->
+  
   <developers>
+    
     <developer>
       <name>Michael Blum</name>
       <id>blumm</id>
@@ -76,9 +82,9 @@
       <id>ddewolf</id>
       <email>ddewolf@apache.org</email>
       <timezone>-4</timezone>
-	  <url>http://www.daviddewolf.com</url>
+      <url>http://www.daviddewolf.com</url>
       <organization>Digital Focus</organization>
-	  <organizationUrl>http://www.digitalfocus.com</organizationUrl>
+      <organizationUrl>http://www.digitalfocus.com</organizationUrl>
       <roles><role>Java Developer</role></roles>
     </developer>
 
@@ -98,54 +104,58 @@
       <name>Zhong Zheng</name>
       <id>zheng</id>
       <email>zheng#a@T#apache.d0t.org</email>
+      <timezone>+1</timezone>
+      <organization/>
+      <roles><role>Java Developer</role></roles>
     </developer>
-
-     <developer> 	 
-       <name>Santiago Gala</name> 	 
-       <id/> 	 
-       <email>sgala#a@T#hisitech.d0t.com</email> 	 
-       <organization/> 	 
-     </developer>
-
-     <developer> 	 
-       <name>Raphael Luta</name> 	 
-       <id/> 	 
-       <email>raphael#a@T#apache.d0t.org</email> 	 
-       <organization/> 	 
-     </developer>
-
-     <developer> 	 
-       <name>David S. Taylor</name> 	 
-       <id>taylor</id> 	 
-       <email>david#a@T#bluesunrise.d0t.com</email> 	 
-       <organization/> 	 
-     </developer>
-
-     <developer> 	 
-       <name>Scott T. Weaver</name> 	 
-       <id>weaver</id> 	 
-       <email>weaver#a@T#apache.d0t.org</email> 	 
-     </developer>
-
-	 <developer>
-       <name>Stefan Hepper</name> 	 
-       <id>sthepper</id> 	 
-       <email>sthepper#a@T#apache.d0t.org</email> 	 
-     </developer>
-	
+    
+    <developer>
+      <name>Santiago Gala</name>
+      <id>sgala</id>
+      <email>sgala#a@T#hisitech.d0t.com</email>
+      <organization/>
+    </developer>
+    
+    <developer>
+      <name>Raphael Luta</name>
+      <id>raphael</id>
+      <email>raphael#a@T#apache.d0t.org</email>
+      <organization/>
+    </developer>
+    
+    <developer>
+      <name>David S. Taylor</name>
+      <id>taylor</id>
+      <email>david#a@T#bluesunrise.d0t.com</email>
+      <organization/>
+    </developer>
+    
+    <developer>
+      <name>Scott T. Weaver</name>
+      <id>weaver</id>
+      <email>weaver#a@T#apache.d0t.org</email>
+    </developer>
+    
+    <developer>
+      <name>Stefan Hepper</name>
+      <id>sthepper</id>
+      <email>sthepper#a@T#apache.d0t.org</email>
+    </developer>
+    
   </developers>
+  
+  
+  <!-- Pluto Contributors ================================================== -->
 
   <contributors>
     <contributor>
       <name>Michael Westbay</name>
       <email>westbay#a@T#users.d0t.sourceforge.d0t.net</email>
     </contributor>
-
     <contributor>
       <name>Ken Weiner</name>
       <email>kweiner#a@T#unicon.d0t.net</email>
     </contributor>
-
     <contributor>
       <name>Ken Atherton</name>
       <email>katherto#a@T#visa.d0t.com</email>
@@ -170,22 +180,25 @@
     <name>Apache Software Foundation</name>
     <url>http://www.apache.org/</url>
   </organization>
-
+  
+  
+  <!-- Pluto Modules ======================================================= -->
+  
   <modules>
-	<!-- ==== Core ==== -->
+    <!-- Pluto Core Modules -->
     <module>pluto-descriptor-api</module>
     <module>pluto-descriptor-impl</module>
     <module>pluto-container</module>
     <module>pluto-taglib</module>
-	<!-- === Portal === -->
+    <!-- Pluto Portal and Testsuite Modules -->
     <module>pluto-portal-driver</module>
     <module>pluto-portal</module>
     <module>pluto-testsuite</module>
-	<!-- == Utilities = -->
+    <!-- Pluto Utilities, Maven Plugins and Ant Tasks -->
     <module>pluto-util</module>
     <module>maven-pluto-plugin</module>
-	<module>pluto-ant-tasks</module>
-	<!-- ==== Misc ==== -->
+    <module>pluto-ant-tasks</module>
+    <!-- Misc -->
     <module>pluto-site</module>
     <module>pluto-optional-services</module>
   </modules>
@@ -195,23 +208,21 @@
       <id>website</id>
       <url>scp://minotaur.apache.org/www/portals.apache.org/pluto</url>
     </site>
-
+    
     <repository>
       <id>m1</id>
       <name>Maven 1 Repository</name>
       <url>scp://cvs.apache.org/www/cvs.apache.org/repository</url>
     </repository>
-
-  <!--
-    <repository>
+    
+    <!--repository>
       <id>m2</id>
       <name>Maven 2 Repository</name>
       <url>scp://people.apache.org/home/ddewolf/public_html/m2</url>
       <snapshotPolicy>always</snapshotPolicy>
       <layout>default</layout>
       <checksumPolicy>warn</checksumPolicy>
-    </repository>
-   -->
+    </repository-->
   </distributionManagement>
 
 
@@ -221,21 +232,24 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
       </plugin>
-      <plugin>
+      
+      <!-- Commented checkstyle plugin: too many logs! -->
+      <!--plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-      <!--
-      <plugin>
+      </plugin-->
+      
+      <!--plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clover-plugin</artifactId>
-      </plugin>
-      -->
+      </plugin-->
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
       </plugin>
-	  <plugin>
+      
+      <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <tagBase>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags</tagBase>
@@ -245,3 +259,5 @@
   </reporting>
 
 </project>
+
+

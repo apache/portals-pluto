@@ -55,9 +55,11 @@ public class PortletPreferenceImpl implements PortletPreference {
     }
     
     /**
-     * FIXME: change to private!
+     * Private constructor that is used only within the <code>clone()</code>
+     * method.
+     * @see #clone()
      */
-    public PortletPreferenceImpl() {
+    private PortletPreferenceImpl() {
     	// Do nothing.
     }
     

@@ -72,12 +72,9 @@ public class DerbyPlutoContainerDAO {
     	int ind = 0;
     	for (Iterator iter = list.iterator(); iter.hasNext();) {
 			Map element = (Map) iter.next();
-			PortletPreferenceImpl pref = new PortletPreferenceImpl();
 			String name = (String)element.get("PREFERENCE_NAME");
-			pref.setName(name);
 			String readonly = (String)element.get("READ_ONLY");
 			boolean ro = (readonly.equalsIgnoreCase("N") || readonly.equalsIgnoreCase("false") ? false : true );
-			pref.setReadOnly(ro);
 			Integer prefid = (Integer)element.get("PREFERENCE_ID");
 			List pvals = findPreferenceValues(prefid.intValue());
 			int len = pvals.size();
@@ -87,7 +84,8 @@ public class DerbyPlutoContainerDAO {
 				String val = (String)map.get("PREFERENCE_VALUE");
 				vals[i] = val;
 			}
-			pref.setValues(vals);
+			PortletPreferenceImpl pref = new PortletPreferenceImpl(
+					name, vals, ro);
 			prefs[ind] = pref;
 			ind++;
 		}
