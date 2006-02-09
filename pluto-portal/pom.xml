@@ -1,85 +1,103 @@
-<project>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+    <artifactId>pluto</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+  </parent>
+  
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.pluto</groupId>
   <artifactId>pluto-portal</artifactId>
   <packaging>war</packaging>
   <name>Pluto Portal</name>
   <url>http://portals.apache.org/pluto</url>
-  <parent>
-    <groupId>org.apache.pluto</groupId>
-	<artifactId>pluto</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
-  </parent>
+  
   <dependencies>
+    
     <dependency>
       <groupId>org.apache.pluto</groupId>
-	  <artifactId>pluto-portal-driver</artifactId>
-	  <version>${pom.version}</version>
-	  <scope>compile</scope>
+      <artifactId>pluto-portal-driver</artifactId>
+      <version>${pom.version}</version>
+      <scope>compile</scope>
       <exclusions>
-          <exclusion>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-          </exclusion>
-		  <exclusion>
-		    <groupId>commmons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-          </exclusion>
-		  <exclusion>
-		    <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-          </exclusion>
-       </exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>jsp-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-	<!-- For Derby -->
-	<dependency>
-		<groupId>org.apache.derby</groupId>
-		<artifactId>derby</artifactId>
-		<version>10.1.1.0</version>
-		<scope>runtime</scope>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.derby</groupId>
-		<artifactId>derbytools</artifactId>
-		<version>10.1.1.0</version>
-		<scope>runtime</scope>
-	</dependency>
+    
+    <!-- Log4j as the underlying logging impl for commons-logging -->
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.9</version>
+      <scope>runtime</scope>
+    </dependency>
+    
+    <!-- Derby Dependencies -->
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.1.1.0</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derbytools</artifactId>
+      <version>10.1.1.0</version>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
+  
+  
   <build>
     <finalName>pluto-portal</finalName>
+    
     <plugins>
-
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-		<configuration>
+        <configuration>
           <tasks>
             <get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v5.5.9/bin/jakarta-tomcat-5.5.9.tar.gz" 
                  dest="target/tomcat.tar.gz"/>
             <gunzip src="target/tomcat.tar.gz"/>
             <untar src="target/tomcat.tar"/>
-		  </tasks>
-		</configuration>
+          </tasks>
+        </configuration>
       </plugin>
-
+      
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptor>src/assemble/bin.xml</descriptor>
-		  <finalName>pluto-portal-${pom.version}</finalName>
+          <finalName>pluto-portal-${pom.version}</finalName>
         </configuration>
       </plugin>
-
+      
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-	    <configuration>
+        <configuration>
           <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
         </configuration>
       </plugin>
     </plugins>
-
+    
   </build>
+  
 </project>
+
+

@@ -4,17 +4,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+    <artifactId>pluto</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.pluto</groupId>
   <artifactId>pluto-portal-driver</artifactId>
   <packaging>jar</packaging>
   <name>Pluto Portal Driver</name>
   <url>http://portals.apache.org/pluto</url>
-  <parent>
-    <groupId>org.apache.pluto</groupId>
-    <artifactId>pluto</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
-  </parent>
+  
   <dependencies>
     <dependency>
       <groupId>org.apache.pluto</groupId>
@@ -29,13 +30,13 @@
       <version>${pom.version}</version>
       <scope>compile</scope>
     </dependency>
-
-	<dependency>
-		<groupId>org.apache.derby</groupId>
-		<artifactId>derby</artifactId>
-		<version>10.1.1.0</version>
-		<scope>compile</scope>
-	</dependency>
+    
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.1.1.0</version>
+      <scope>compile</scope>
+    </dependency>
 
     <dependency>
       <groupId>commons-logging</groupId>

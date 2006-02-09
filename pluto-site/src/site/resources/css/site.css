@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    /** font-family: helvetica, sans-serif; **/
+    
 }
 
 .composite {
@@ -53,10 +53,7 @@ body {
  * Breadcrumbs under the top banner: last published date and quick links.
  */
 #breadcrumbs {
-	background-image: url(../images/breadcrumbs.jpg);
-	padding: 5px 10px 14px 20px;
-    border-top-width: 0px;
-    border-bottom-width: 0px;
+    background-color: #F0F0F0;
 }
 
 .highlightBox {
