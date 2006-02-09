@@ -30,42 +30,53 @@ import org.apache.pluto.om.ObjectID;
 
 
 /**
- * <P> The <CODE>InternalPortletWindow</CODE> interface represents a single
- * window of a portlet instance as it can be shown only once on a single page.
- * There is a one-to-one relation between portlet windows and portlet entities.
- * Adding the same portlet e.g. twice on a page results in two different
- * windows. </P> <P> This interface defines the model as known from the MVC
- * pattern. Its purpose is to provide read access to the data stored in the
- * model. </P>
+ * The internal portlet window represents a single window of a portlet instance
+ * as it can be shown only once on a single page. There is a one-to-one relation
+ * between portlet windows and portlet entities. Adding the same portlet e.g.
+ * twice on a page results in two different windows.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class InternalPortletWindow implements PortletWindow {
 
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(InternalPortletWindow.class.getPackage().getName());
-
-    private PortletWindow window;
-    private ServletContext context;
-
-    private ObjectID id;
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    /** The underlying portlet window instance. */
+    private PortletWindow portletWindow = null;
+    
+    /** The servlet context of the portlet. */
+    private ServletContext servletContext = null;
+    
+    /** The portlet entity associated with the portlet window. */
     private PortletEntity entity;
-
+    
+    
+    // Constructor -------------------------------------------------------------
+    
     /**
-     * @param ctx    the ServletContext from which this window is being
-     *               invoked.
-     * @param window the underlying window instance.
+     * @param context  the servlet context from which this window is
+     *        being invoked.
+     * @param portletWindow  the underlying portlet window instance.
      */
-    public InternalPortletWindow(ServletContext ctx, PortletWindow window) {
-        this.context = ctx.getContext(window.getContextPath());
-        if(context == null) {
+    public InternalPortletWindow(ServletContext context,
+                                 PortletWindow portletWindow) {
+        this.servletContext = context.getContext(
+        		portletWindow.getContextPath());
+        if (servletContext == null) {
             throw new PortletContainerRuntimeException(
                 EXCEPTIONS.getString(
                     "error.config.context.null",
-                    window.getPortletName(),
-                    window.getContextPath()
+                    portletWindow.getPortletName(),
+                    portletWindow.getContextPath()
                 )
             );
         }
-        this.window = window;
+        this.portletWindow = portletWindow;
     }
 
     /**
@@ -73,7 +84,7 @@ public class InternalPortletWindow implements PortletWindow {
      * @return the context path.
      */
     public String getContextPath() {
-        return window.getContextPath();
+        return portletWindow.getContextPath();
     }
 
     /**
@@ -81,7 +92,7 @@ public class InternalPortletWindow implements PortletWindow {
      * @return the portlet name as defined in the deployment descriptor.
      */
     public String getPortletName() {
-        return window.getPortletName();
+        return portletWindow.getPortletName();
     }
 
     /**
@@ -89,7 +100,7 @@ public class InternalPortletWindow implements PortletWindow {
      * @return the window state.
      */
     public WindowState getWindowState() {
-        return window.getWindowState();
+        return portletWindow.getWindowState();
     }
 
     /**
@@ -97,7 +108,7 @@ public class InternalPortletWindow implements PortletWindow {
      * @return the portlet mode the portlet mode
      */
     public PortletMode getPortletMode() {
-        return window.getPortletMode();
+        return portletWindow.getPortletMode();
     }
 
 
@@ -107,7 +118,7 @@ public class InternalPortletWindow implements PortletWindow {
      * @return the object identifier
      */
     public ObjectID getId() {
-        return window.getId();
+        return portletWindow.getId();
     }
 
     /**
@@ -115,7 +126,7 @@ public class InternalPortletWindow implements PortletWindow {
      * @return the associated servlet context.
      */
     public ServletContext getServletContext() {
-        return context;
+        return servletContext;
     }
 
     /**
@@ -124,7 +135,7 @@ public class InternalPortletWindow implements PortletWindow {
      */
     public PortletEntity getPortletEntity() {
         if (entity == null) {
-            entity = new PortletEntity(context, this);
+            entity = new PortletEntity(servletContext, this);
         }
         return entity;
     }

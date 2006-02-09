@@ -144,7 +144,8 @@ public class PortletContainerImpl implements PortletContainer {
     	
         InternalPortletWindow internalPortletWindow =
         		new InternalPortletWindow(servletContext, portletWindow);
-        debugWithName("Render request received.");
+        debugWithName("Render request received for portlet: "
+        		+ portletWindow.getPortletName());
         
         RenderRequestImpl renderRequest = new RenderRequestImpl(
         		this, internalPortletWindow, request);
@@ -153,7 +154,8 @@ public class PortletContainerImpl implements PortletContainer {
 
         PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
         invoker.render(renderRequest, renderResponse);
-        debugWithName("Portlet rendered.");
+        debugWithName("Portlet rendered for: "
+        		+ portletWindow.getPortletName());
     }
 
     /**
@@ -176,7 +178,8 @@ public class PortletContainerImpl implements PortletContainer {
     	
         InternalPortletWindow internalPortletWindow =
             	new InternalPortletWindow(servletContext, portletWindow);
-    	debugWithName("Action request received.");
+    	debugWithName("Action request received for portlet: "
+    			+ portletWindow.getPortletName());
     	
         ActionRequestImpl actionRequest = new ActionRequestImpl(
         		this, internalPortletWindow, request);
@@ -185,7 +188,8 @@ public class PortletContainerImpl implements PortletContainer {
         
         PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
         invoker.action(actionRequest, actionResponse);
-        debugWithName("Portlet action processed.");
+        debugWithName("Portlet action processed for: "
+        		+ portletWindow.getPortletName());
         
         // After processing action, send a redirect URL for rendering.
         String location = actionResponse.getRedirectLocation();
@@ -251,7 +255,8 @@ public class PortletContainerImpl implements PortletContainer {
     	
         InternalPortletWindow internalPortletWindow =
         		new InternalPortletWindow(servletContext, portletWindow);
-        debugWithName("Load request received.");
+        debugWithName("Load request received for portlet: "
+        		+ portletWindow.getPortletName());
         
         RenderRequestImpl renderRequest = new RenderRequestImpl(
         		this, internalPortletWindow, request);
@@ -260,7 +265,7 @@ public class PortletContainerImpl implements PortletContainer {
         
         PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
         invoker.load(renderRequest, renderResponse);
-        debugWithName("Portlet loaded.");
+        debugWithName("Portlet loaded for: " + portletWindow.getPortletName());
     }
 
     public String getName() {

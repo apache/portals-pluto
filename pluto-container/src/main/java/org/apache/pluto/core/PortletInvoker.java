@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.Constants;
 import org.apache.pluto.core.impl.ActionRequestImpl;
 import org.apache.pluto.core.impl.ActionResponseImpl;
 import org.apache.pluto.core.impl.PortletRequestImpl;
@@ -37,34 +38,40 @@ import org.apache.pluto.util.StringManager;
  * Used internally to invoke/dispatch requests from the container to
  * the portlet application.
  *
- * @version $Id$
- *
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 class PortletInvoker {
 
-    /** Internal Logger.  */
+    /** Logger.  */
     private static final Log LOG = LogFactory.getLog(PortletInvoker.class);
 
     /** Exception Messages. */
-    private static final StringManager EXCEPTIONS =
-        StringManager.getManager(PortletInvoker.class.getPackage().getName());
-
-    /**
-     * Portlet Window for which we are invoking
-     * the portlet.
-     */
-    private InternalPortletWindow window;
-
+    private static final StringManager EXCEPTIONS = StringManager.getManager(
+    		PortletInvoker.class.getPackage().getName());
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    /** Portlet Window for which we are invoking the portlet. */
+    private InternalPortletWindow portletWindow = null;
+    
+    
+    // Constructor -------------------------------------------------------------
+    
     /**
      * Default Constructor.  Create a new invoker which
      * is initialized for the given <code>InternalPortletWindow</code>.
      *
-     * @param window portlet window.
+     * @param portletWindow  the portlet window.
      */
-    public PortletInvoker(InternalPortletWindow window) {
-        this.window = window;
+    public PortletInvoker(InternalPortletWindow portletWindow) {
+        this.portletWindow = portletWindow;
     }
-
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
     /**
      * Invoke the portlet with an action request.
      *
@@ -77,11 +84,11 @@ class PortletInvoker {
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
     public void action(ActionRequestImpl request, ActionResponseImpl response)
-        throws PortletException, IOException {
+    throws PortletException, IOException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Action Invocation");
         }
-        invoke(request, response, org.apache.pluto.Constants.METHOD_ACTION);
+        invoke(request, response, Constants.METHOD_ACTION);
     }
 
     /**
@@ -96,11 +103,11 @@ class PortletInvoker {
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
     public void render(RenderRequestImpl request, RenderResponseImpl response)
-        throws PortletException, IOException {
+    throws PortletException, IOException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");
         }
-        invoke(request, response, org.apache.pluto.Constants.METHOD_RENDER);
+        invoke(request, response, Constants.METHOD_RENDER);
     }
 
     /**
@@ -113,13 +120,16 @@ class PortletInvoker {
      * @see PortletServlet
      */
     public void load(PortletRequestImpl request, PortletResponseImpl response)
-        throws PortletException, IOException {
+    throws PortletException, IOException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Load Invocation");
         }
-        invoke(request, response, org.apache.pluto.Constants.METHOD_NOOP);
+        invoke(request, response, Constants.METHOD_NOOP);
     }
-
+    
+    
+    // Private Invoke Method ---------------------------------------------------
+    
     /**
      * Perform the invocation.
      *
@@ -132,57 +142,60 @@ class PortletInvoker {
     private void invoke(PortletRequestImpl request,
                         PortletResponseImpl response,
                         Integer methodID)
-        throws PortletException, IOException {
+    throws PortletException, IOException {
 
-        String uri = window.getPortletEntity().getControllerServletUri();
-        ServletContext servletContext = window.getServletContext();
+        String uri = portletWindow.getPortletEntity().getControllerServletUri();
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Dispatching to portlet servlet at: " + uri);
+        }
+        
+        ServletContext servletContext = portletWindow.getServletContext();
         RequestDispatcher dispatcher = servletContext.getRequestDispatcher(uri);
 
         if (dispatcher != null) {
             try {
                 // Tomcat does not like to properly include wrapped requests
                 // and responses. Thus we "unwrap" and then include.
-                HttpServletRequest req = request.getHttpServletRequest();
-                HttpServletResponse res = response.getHttpServletResponse();
+                HttpServletRequest servletRequest =
+                		request.getHttpServletRequest();
+                HttpServletResponse servletResponse =
+                		response.getHttpServletResponse();
+                
+                servletRequest.setAttribute(Constants.METHOD_ID, methodID);
+                servletRequest.setAttribute(Constants.PORTLET_REQUEST, request);
+                servletRequest.setAttribute(Constants.PORTLET_RESPONSE, response);
+                
+                dispatcher.include(servletRequest, servletResponse);
 
-                req.setAttribute(org.apache.pluto.Constants.METHOD_ID,
-                                     methodID);
-                req.setAttribute(
-                    org.apache.pluto.Constants.PORTLET_REQUEST, request);
-
-                req.setAttribute(
-                    org.apache.pluto.Constants.PORTLET_RESPONSE, response);
-
-                dispatcher.include(req, res);
-
-            } catch (javax.servlet.UnavailableException e) {
-                int seconds = e.isPermanent()?-1:e.getUnavailableSeconds();
+            } catch (javax.servlet.UnavailableException ex) {
+                int seconds = ex.isPermanent()?-1:ex.getUnavailableSeconds();
                 String message =  EXCEPTIONS.getString(
                     "error.portlet.unavailable",
                     new String[] {String.valueOf(seconds)}
                 );
-                if(LOG.isErrorEnabled()) {
-                    LOG.error(message, e);
+                if (LOG.isErrorEnabled()) {
+                    LOG.error(message, ex);
                 }
                 throw new javax.portlet.UnavailableException(
-                        message, seconds
-                );
-            } catch (javax.servlet.ServletException e) {
+                        message, seconds);
+                
+            } catch (javax.servlet.ServletException ex) {
                 String message = EXCEPTIONS.getString("error.portlet.invoke");
                 if(LOG.isErrorEnabled()) {
                     LOG.error(message);
                 }
 
-                if (e.getRootCause() != null &&
-                    e.getRootCause() instanceof PortletException) {
-                        throw (PortletException) e.getRootCause();
+                if (ex.getRootCause() != null &&
+                    ex.getRootCause() instanceof PortletException) {
+                        throw (PortletException) ex.getRootCause();
                 }
-                else if(e.getRootCause() != null) {
-                    throw new PortletException(e.getRootCause());
+                else if(ex.getRootCause() != null) {
+                    throw new PortletException(ex.getRootCause());
                 }
                 else {
-                    throw new PortletException(e);
+                    throw new PortletException(ex);
                 }
+                
             } finally {
                 request.removeAttribute(org.apache.pluto.Constants.METHOD_ID);
                 request.removeAttribute(org.apache.pluto.Constants.PORTLET_REQUEST);
@@ -193,7 +206,7 @@ class PortletInvoker {
                 "error.portlet.invoker.dispatcher",
                 new String[] {servletContext.getServletContextName(), uri}
             );
-            if(LOG.isErrorEnabled()) {
+            if (LOG.isErrorEnabled()) {
                 LOG.error(msg);
             }
             throw new PortletException(msg);
