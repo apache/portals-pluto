@@ -97,7 +97,7 @@ implements PortletPreferencesService {
                                    String user) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append("user=").append(user).append(";");
-    	buffer.append("portletWindow=").append(portletWindow);
+    	buffer.append("portletWindow=").append(portletWindow.getPortletName());
     	return buffer.toString();
     }
     

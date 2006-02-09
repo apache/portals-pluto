@@ -123,14 +123,13 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
         
         try {
-        	// Store the preferences retrieved from portlet.xml.
-        	store();
             PortletPreference[] prefs =
             	preferencesService.getStoredPreferences(window, request);
-
             for (int i = 0; i < prefs.length; i++) {
                 preferences.put(prefs[i].getName(), prefs[i]);
             }
+        	// Store the preferences retrieved from portlet.xml.
+        	store();
         } catch (PortletContainerException ex) {
             LOG.error("Error retrieving preferences.", ex);
             //TODO: Rethrow up the stack????
