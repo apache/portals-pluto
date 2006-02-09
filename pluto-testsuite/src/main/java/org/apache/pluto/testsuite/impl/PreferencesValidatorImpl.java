@@ -29,60 +29,107 @@ import org.apache.commons.logging.LogFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
-public class PreferencesValidatorImpl implements PreferencesValidator
-{
-
-    private static final Log LOG =
-        LogFactory.getLog(PreferencesValidatorImpl.class);
+/**
+ * Implementation of the portlet preferences validator.
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
+public class PreferencesValidatorImpl implements PreferencesValidator {
 	
-    public PreferencesValidatorImpl()
-    {
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(PreferencesValidatorImpl.class);
+	
+    public static final String CHECK_VALIDATOR_COUNT = "checkValidatorCount";
+    
+    /** Count of instances created. */
+    private static final Map INSTANCE_COUNTER = new HashMap();
+    
+    /** Count of invocation number of method <code>validate()</code>. */
+    private int validateInvoked = 0;
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Default no-arg constructor.
+     */
+    public PreferencesValidatorImpl() {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Creating validator instance: " + getClass().getName());
+    	}
+    	Integer count = (Integer) INSTANCE_COUNTER.get(getClass().getName());
+    	if (count == null) {
+    		count = new Integer(1);
+    	} else {
+    		count = new Integer(count.intValue() + 1);
+    	}
+    	INSTANCE_COUNTER.put(getClass().getName(), count);
     }
-
+    
+    
+    // PreferencesValidator Impl -----------------------------------------------
+    
     public void validate(PortletPreferences preferences)
-        throws ValidatorException
-    {
-      Collection failedKeys = new ArrayList();
-      Enumeration names = preferences.getNames();
-
-      String[] defValues = {"no values"};
-      // TODO: Determine why we use this - I seem to remember it's a
-      // spec requirement, and fix it so that we don't have issues
-      // anymore.  When enabled, all preferences fail in testsuite
-
-
-      String[] values = null;
-      String key = null;
-
-      while (names.hasMoreElements())
-      {
-          key = names.nextElement().toString();
-          values = preferences.getValues(key, defValues);
-
-          if (values != null) // null values are allowed
-          {
-              for (int i=0; i<values.length;i++)
-              {
-                  if (values[i] != null) // null values are allowed
-                  {
-                      //validates that the preferences do not start or end with white space
-                      if (!values[i].equalsIgnoreCase(values[i].trim()))
-                      {
-                    	  if (LOG.isDebugEnabled()) {
-                    		  LOG.debug("Value has white space (validation fails): key=" + key + " value=" + values[i]);
-                    	  }
-                          failedKeys.add(key);
-                          i=values.length;
-                      }
-                  }
-              }
-          }
-      }
-
-      if (!failedKeys.isEmpty())
-      {
-          throw new ValidatorException("One or more preferences do not comply with the validation criteria",failedKeys);
-      }
+    throws ValidatorException {
+    	validateInvoked++;
+    	String value = preferences.getValue(CHECK_VALIDATOR_COUNT, null);
+    	if (value != null && value.equalsIgnoreCase("true")) {
+    		checkValidatorCount();
+    	}
+    	
+        //
+        // TODO: Determine why we use this - I seem to remember it's a
+        //   spec requirement, and fix it so that we don't have issues
+        //   anymore.  When enabled, all preferences fail in testsuite.
+        //
+        final String[] DEFAULT_VALUES = new String[] { "no values" };
+    	Collection failedNames = new ArrayList();
+        for (Enumeration en = preferences.getNames(); en.hasMoreElements(); ) {
+            String name = (String) en.nextElement();
+            String[] values = preferences.getValues(name, DEFAULT_VALUES);
+            if (values != null) { // null values are allowed
+                for (int i = 0; i < values.length; i++) {
+                    if (values[i] != null) { // null values are allowed
+                        // Validate that the preferences do not
+                    	//   start or end with white spaces.
+                        if (!values[i].equals(values[i].trim())) {
+                        	if (LOG.isDebugEnabled()) {
+                        		LOG.debug("Validation failed: "
+                        				+ "value has white spaces: "
+                        				+ "name=" + name
+                        				+ "; value=|" + values[i] + "|");
+                        	}
+                        	failedNames.add(name);
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (!failedNames.isEmpty()) {
+            throw new ValidatorException(
+            		"One or more preferences do not pass the validation.",
+            		failedNames);
+        }
     }
+    
+    private void checkValidatorCount() throws ValidatorException {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Checking validator count...");
+    	}
+    	Integer instanceCreated = (Integer) INSTANCE_COUNTER.get(
+    			getClass().getName());
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Method validate() invoked " + validateInvoked + " times.");
+    		LOG.debug("Validator created " + instanceCreated.intValue() + " times.");
+    	}
+    	if (instanceCreated.intValue() != 1) {
+    		throw new ValidatorException(instanceCreated.toString()
+    				+ " validator instances were created, "
+    				+ "expected 1 validator instance per portlet definition.",
+    				null);
+    	}
+    }
+    
 }
