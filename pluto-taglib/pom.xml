@@ -1,43 +1,54 @@
-<project>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+    <artifactId>pluto</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.pluto</groupId>
   <artifactId>pluto-taglib</artifactId>
   <packaging>jar</packaging>
   <name>Pluto Portlet Tag Library</name>
   <description>Pluto's Java Portlet Specification Tag Library implementation</description>
-  <parent>
-    <groupId>org.apache.pluto</groupId>
-	<artifactId>pluto</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
-  </parent>
+  
   <dependencies>
-	<dependency>
+    <dependency>
       <groupId>portlet-api</groupId>
-	  <artifactId>portlet-api</artifactId>
-	  <version>1.0</version>
-	  <scope>provided</scope>
+      <artifactId>portlet-api</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
     </dependency>
-	<dependency>
+    <dependency>
       <groupId>javax.servlet</groupId>
-	  <artifactId>servlet-api</artifactId>
-	  <version>2.3</version>
-	  <scope>provided</scope>
+      <artifactId>servlet-api</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
     </dependency>
-	<dependency>
+    <dependency>
       <groupId>javax.servlet</groupId>
-	  <artifactId>jsp-api</artifactId>
-	  <version>2.0</version>
-	  <scope>provided</scope>
+      <artifactId>jsp-api</artifactId>
+      <version>2.0</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
+  
   <build>
-    <resources>
+    <!--resources>
       <resource>
-	    <targetPath>META-INF</targetPath>
-        <directory>src/resources/tld</directory>
-		<includes name="**/*.tld"/>
+        <targetPath>META-INF</targetPath>
+        <includes><include>**/*.tld</include></includes>
       </resource>
-    </resources>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <directory>src/resources/tld</directory>
+        <includes name="**/*.tld"/>
+      </resource>
+    </resources-->
     <plugins>
 
       <!-- Assembly Plugin - Create Distributions -->
@@ -45,12 +56,12 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptor>src/assemble/bin.xml</descriptor>
-		  <finalName>pluto-taglib-${pom.currentVersion}</finalName>
+          <finalName>pluto-taglib-${pom.currentVersion}</finalName>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-	    <configuration>
+        <configuration>
           <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
         </configuration>
       </plugin>

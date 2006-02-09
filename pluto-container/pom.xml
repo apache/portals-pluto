@@ -66,16 +66,16 @@
     <!-- ===== ======================= ===== -->
     <dependency>
       <groupId>portlet-api</groupId>
-	  <artifactId>portlet-api</artifactId>
-	  <version>1.0</version>
-	  <scope>compile</scope>
+      <artifactId>portlet-api</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>servletapi</groupId>
-	  <artifactId>servletapi</artifactId>
-	  <version>2.3</version>
-	  <scope>provided</scope>
+      <artifactId>servletapi</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- ===== ======================= ===== -->
@@ -97,47 +97,32 @@
   </dependencies>
 
   <build>
-    <resources>
-      <resource>
-        <directory>src/resources/properties</directory>
-		<includes name="**/*.properties"/>
-      </resource>
-      <resource>
-	    <targetPath>META-INF</targetPath>
-        <directory>src/resources/tld</directory>
-		<includes name="**/*.tld"/>
-      </resource>
-    </resources>
     <plugins>
-
-    <!-- Assembly Plugin - Create Distributions -->
-    <plugin>
-      <artifactId>maven-assembly-plugin</artifactId>
-      <configuration>
-        <descriptor>src/assemble/bin.xml</descriptor>
-      </configuration>
-    </plugin>
-
-    <!-- Surefire Plugin - Exec Tests -->
-    <plugin>
-      <artifactId>maven-surefire-plugin</artifactId>
-      <configuration>
-        <includes>
-          <include>**/*Test.java</include>
-        </includes>
-        <excludes>
-          <exclude>**/PlutoTestCase.java</exclude>
-        </excludes>
-      </configuration>
-    </plugin>
-
-	<plugin>
-      <artifactId>maven-site-plugin</artifactId>
-	  <configuration>
-        <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
-      </configuration>
-    </plugin>
-
-  </plugins>
+      <!-- Assembly Plugin - Create Distributions -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>src/assemble/bin.xml</descriptor>
+        </configuration>
+      </plugin>
+      <!-- Surefire Plugin - Exec Tests -->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/PlutoTestCase.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
