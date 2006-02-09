@@ -96,22 +96,9 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
      */
     public Object getAttribute(String name, int scope) {
     	ArgumentUtility.validateNotNull("attributeName", name);
-    	if (scope == PortletSession.APPLICATION_SCOPE) {
-    		return httpSession.getAttribute(name);
-    	} else {
-            String key = createPortletScopedId(name);
-            Object attribute = httpSession.getAttribute(key);
-            //
-            // FIXME: if no attribute is found under portlet scope,
-            //   what should we return? we should just return null,
-            //   as defined by the portlet javadoc, or we should search
-            //   for that attribute in application scope?
-            //
-            // if (attribute == null) {
-            //    attribute = httpSession.getAttribute(name);
-            // }
-            return attribute;
-        }
+    	String key = (scope == PortletSession.APPLICATION_SCOPE)
+    			? name : createPortletScopedId(name);
+    	return httpSession.getAttribute(key);
     }
     
     public Enumeration getAttributeNames() {

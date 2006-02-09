@@ -56,22 +56,20 @@ limitations under the License.
   
   <!-- Render configuration which defines the portal pages. -->
   <render-config default="Test Page">
-    <page name="Test Page" uri="/WEB-INF/fragments/portlet.jsp">
+    <page name="Test Page" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/testsuite" name="TestPortlet1"/>
       <portlet context="/testsuite" name="TestPortlet2"/>
     </page>
-    <page name="Secondary Page" uri="/WEB-INF/fragments/portlet.jsp">
+    <page name="Secondary Page" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/testsuite" name="TestPortlet1"/>
       <portlet context="/testsuite" name="TestPortlet2"/>
     </page>
-    <page name="About Pluto" uri="/WEB-INF/fragments/portlet.jsp">
+    <page name="About Pluto" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/pluto" name="AboutPortlet"/>
     </page>
-    <page name="Pluto Admin" uri="/WEB-INF/fragments/portlet.jsp">
+    <page name="Pluto Admin" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/pluto" name="AdminPortlet"/>
     </page>
-    <!--page name="About Pluto" uri="/WEB-INF/fragments/about.jsp"/>
-    <page name="Admin" uri="/WEB-INF/fragments/admin/admin.jsp"/-->
   </render-config>
   
 </pluto-portal-driver>

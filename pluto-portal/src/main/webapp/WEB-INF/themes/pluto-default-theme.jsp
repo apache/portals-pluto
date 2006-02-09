@@ -1,11 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
 <!--
-  Portal page template JSP used by the Pluto Portal Driver.
-  This JSP requires that the following attributes are set:
-   * driverConfig: org.apache.pluto.driver.config.DriverConfiguration
-   * 
-   * TODO:
+  Portal page template for default theme used by the Pluto Portal Driver.
+  This template divides all portlets into two groups (div blocks): the first
+  group (the left column) displays portlets with odd IDs, while the second group
+  (the right column) displays portlets with even IDs.
   -->
 
 <html>
@@ -55,9 +54,27 @@
         </ul>
       </div>
       
-      <!-- Content block: we include another page to display portlets -->
+      <!-- Content block: portlets are divided into two columns/groups -->
       <div id="content">
-        <jsp:include page='<%= (String) pageContext.findAttribute("include") %>'/>
+        
+        <!-- Left column -->
+        <div id="portlets-left-column">
+          <c:forEach var="portlet" varStatus="status"
+                     items="${currentPage.portletIds}" step="2">
+            <c:set var="portlet" value="${portlet}" scope="request"/>
+            <jsp:include page="portlet-skin.jsp"/>
+          </c:forEach>
+        </div>
+        
+        <!-- Right column -->
+        <div id="portlets-right-column">
+          <c:forEach var="portlet" varStatus="status"
+                     items="${currentPage.portletIds}" begin="1" step="2">
+            <c:set var="portlet" value="${portlet}" scope="request"/>
+            <jsp:include page="portlet-skin.jsp"/>
+          </c:forEach>
+        </div>
+        
       </div>
       
       <!-- Footer block: copyright -->
