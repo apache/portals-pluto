@@ -268,40 +268,19 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * @throws IOException  if an error occurs with the persistence mechanism.
      */
     public void store() throws IOException, ValidatorException {
-    	
         // Not allowed when not called in action.
         if (!Constants.METHOD_ACTION.equals(methodId)) {
             throw new IllegalStateException(
                 	"store is only allowed inside a processAction call.");
         }
-        
         // Validate the preferences before storing, if a validator is defined.
-        String validatorClass = window.getPortletEntity()
-                .getPortletDefinition()
-                .getPortletPreferences()
-                .getPreferencesValidator();
-        if (validatorClass != null) {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            try {
-            	Class clazz = loader.loadClass(validatorClass);
-                PreferencesValidator validator = (PreferencesValidator)
-                		clazz.newInstance();
-                validator.validate(this);
-            } catch (InstantiationException ex) {
-            	LOG.error("Error instantiating validator.", ex);
-                throw new ValidatorException(ex, null);
-            } catch (IllegalAccessException ex) {
-            	LOG.error("Error instantiating validator.", ex);
-                throw new ValidatorException(ex, null);
-            } catch (ClassNotFoundException ex) {
-            	LOG.error("Error instantiating validator.", ex);
-                throw new ValidatorException(ex, null);
-            } catch (ValidatorException ex) {
-            	LOG.error("Error validating preferences: " + ex.getMessage());
-            	throw ex;
-            }
+        //   If the preferences cannot pass the validation,
+        //   an ValidatorException will be thrown out.
+        PreferencesValidator validator = window.getPortletEntity()
+        		.getPreferencesValidator();
+        if (validator != null) {
+        	validator.validate(this);
         }
-        
         // Store the portlet preferences.
         PortletPreference[] prefs = (PortletPreference[]) 
         		new ArrayList(preferences.values()).toArray(

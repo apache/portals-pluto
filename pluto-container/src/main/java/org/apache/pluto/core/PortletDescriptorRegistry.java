@@ -25,59 +25,38 @@ import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
- * Simple caching mechanism used to manage
- * portlet descriptors.  This mechanism takes
- * special considerations to make sure that the
- * cache is invalidated for any ServletContext that
- * is destroyed, thus allowing for a the context
- * to be redeployed.
+ * Simple caching mechanism used to manage portlet descriptors. This mechanism
+ * takes special considerations to make sure that the cache is invalidated for
+ * any ServletContext that is destroyed, thus allowing for a the context to be
+ * redeployed.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Nov 3, 2004
  */
 public class PortletDescriptorRegistry {
+	
     /** Portlet deployment descriptor location. */
     private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 
     /** Exception Messages. */
-    private static final StringManager EXCEPTIONS =
-        StringManager.getManager(
-            PortletDescriptorRegistry.class.getPackage().getName()
-        );
-
-    private PortletAppDescriptorService portletDDService;
-
-    public static PortletDescriptorRegistry instance;
-
-    public static PortletDescriptorRegistry getRegistry() {
-        if(instance == null) {
-            instance = new PortletDescriptorRegistry();
-        }
-        return instance;
-    }
-
-    /**
-     * We must modify the context class loader in order for
-     * the Configuration utility to find the properties file.
-     */
-    private PortletDescriptorRegistry() {
-        String className = Configuration.getPortletAppDescriptorServiceImpl();
-        try {
-            Class cl = Class.forName(className);
-            Object instance = cl.newInstance();
-            portletDDService = (PortletAppDescriptorService)instance;
-        } catch (ClassNotFoundException e) {
-            throw new PlutoConfigurationException("ClassLoader configuration error: Unable to load class "+className, e);
-        } catch (InstantiationException e) {
-            throw new PlutoConfigurationException("Configuration Error: Unable to instantiate class "+className, e);
-        } catch (IllegalAccessException e) {
-            throw new PlutoConfigurationException("Security Error: Unable to access class "+className, e);
-        }
-    }
-
+    private static final StringManager EXCEPTIONS = StringManager.getManager(
+            PortletDescriptorRegistry.class.getPackage().getName());
+    
+    /** The static singleton registry instance. */
+    private static final PortletDescriptorRegistry REGISTRY =
+    		new PortletDescriptorRegistry();
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    /** The portlet application descriptor service. */
+    private PortletAppDescriptorService portletDDService = null;
+    
     /**
      * Cache of descriptors.  WeakHashMap is used so that
      * once the context is destroyed (kinda), the cache is eliminated.
@@ -85,48 +64,89 @@ public class PortletDescriptorRegistry {
      * point I'm wondering if we really want to add another
      * config requirement in the servlet xml? Hmm. . .
      */
-    private Map cache = new java.util.WeakHashMap();
+    private Map cache = new WeakHashMap();
+
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Returns the singleton registry instance.
+     * @return the singleton registry instance.
+     */
+    public static PortletDescriptorRegistry getRegistry() {
+        return REGISTRY;
+    }
 
     /**
-     * Retrieve the Portlet Application Deployment Descriptor
-     * for the given servlet context.  Create it if it does
-     * not allready exist.
+     * Private constructor that prevents external instantiation.
+     * We must modify the context class loader in order for
+     * the Configuration utility to find the properties file.
+     * @throws PlutoConfigurationException  if fail to instantiate portlet
+     *         application descriptor service.
+     */
+    private PortletDescriptorRegistry()
+    throws PlutoConfigurationException {
+        String className = Configuration.getPortletAppDescriptorServiceImpl();
+        try {
+            Class clazz = Class.forName(className);
+            portletDDService = (PortletAppDescriptorService) clazz.newInstance();
+        } catch (ClassNotFoundException ex) {
+            throw new PlutoConfigurationException(
+            		"Unable to find class " + className, ex);
+        } catch (InstantiationException ex) {
+            throw new PlutoConfigurationException(
+            		"Unable to instantiate class " + className, ex);
+        } catch (IllegalAccessException ex) {
+            throw new PlutoConfigurationException(
+            		"Unable to access class " + className, ex);
+        }
+    }
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
+    /**
+     * Retrieve the Portlet Application Deployment Descriptor for the given
+     * servlet context.  Create it if it does not allready exist.
      *
-     * @param context
+     * @param servletContext  the servlet context.
      * @return The portlet application deployment descriptor.
      * @throws PortletContainerException
      */
-    public PortletAppDD getPortletAppDD(ServletContext context)
+    public PortletAppDD getPortletAppDD(ServletContext servletContext)
     throws PortletContainerException {
-        PortletAppDD dd = (PortletAppDD)cache.get(context);
-        if(dd == null) {
-            dd = createDefinition(context);
-            cache.put(context, dd);
+        PortletAppDD portletAppDD = (PortletAppDD) cache.get(servletContext);
+        if (portletAppDD == null) {
+        	portletAppDD = createDefinition(servletContext);
+            cache.put(servletContext, portletAppDD);
         }
-        return dd;
+        return portletAppDD;
     }
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
     /**
-     * Create the portlet.xml deployment descriptor representation.
+     * Creates the portlet.xml deployment descriptor representation.
      *
-     * @param ctx the servlet context for which the DD is requested.
-     * @return the Portlet Application Deployment Descriptor info.
-     * @throws org.apache.pluto.PortletContainerException
+     * @param servletContext  the servlet context for which the DD is requested.
+     * @return the Portlet Application Deployment Descriptor.
+     * @throws PortletContainerException
      */
-    private PortletAppDD createDefinition(ServletContext ctx)
+    private PortletAppDD createDefinition(ServletContext servletContext)
     throws PortletContainerException {
-        PortletAppDD app = null;
+        PortletAppDD portletAppDD = null;
         try {
-            InputStream in = ctx.getResourceAsStream(PORTLET_XML);
-            app = this.portletDDService.read(in);
-        } catch (IOException io) {
-            throw new PortletContainerException(
-                EXCEPTIONS.getString(
+            InputStream in = servletContext.getResourceAsStream(PORTLET_XML);
+            portletAppDD = portletDDService.read(in);
+        } catch (IOException ex) {
+            throw new PortletContainerException(EXCEPTIONS.getString(
                     "error.context.descriptor.load",
-                    new String[] {ctx.getServletContextName()}
-                ),
-                io);
+                    new String[] { servletContext.getServletContextName() }),
+                    ex);
         }
-        return app;
+        return portletAppDD;
     }
+    
 }
 

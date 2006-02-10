@@ -20,24 +20,29 @@ import java.util.ArrayList;
 
 /**
  * Bare bones implementation of the Portlet descriptor.
- * Eventually this should be flushed out :), but for the sake
- * of timing I'll be lazy for now.
+ * 
+ * FIXME: Hmmm... What do you mean, David?  --ZHENG Zhong
+ * 
+ * Eventually this should be flushed out :), but for the sake of timing I'll be lazy for now.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
- * @version $Id: PortletDD.java 157475 2005-03-14 22:13:18Z ddewolf $
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * 
  * @since Mar 6, 2005
  */
 public class PortletDD {
-
+	
+	// Private Member Variables ------------------------------------------------
+	
     /** The unique name of the portlet. */
-    private String portletName;
+    private String portletName = null;
 
     /** The class which implements the portlet interface. */
-    private String portletClass;
+    private String portletClass = null;
 
-    private String resourceBundle;
+    private String resourceBundle = null;
 
-    private PortletInfoDD portletInfo;
+    private PortletInfoDD portletInfo = null;
 
     private PortletPreferencesDD portletPreferences = new PortletPreferencesDD();
 
@@ -47,15 +52,20 @@ public class PortletDD {
 
     /** All security role references. */
     private List securityRoleRefs = new ArrayList();
-
-
+    
+    
+    // Constructor -------------------------------------------------------------
+    
     /**
-     * Default Constructor.
+     * Default no-arg constructor.
      */
     public PortletDD() {
-
+    	// Do nothing.
     }
-
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
     /**
      * Retrieve the unique name of the portlet.
      * @return
@@ -143,5 +153,31 @@ public class PortletDD {
     public void setSecurityRoleRefs(List securityRoleRefs) {
         this.securityRoleRefs = securityRoleRefs;
     }
+    
+    
+    // Object Methods ----------------------------------------------------------
+    
+    /**
+     * Returns a string representation of this instance.
+     * FIXME: more info!
+     * @return a string representation of this instance.
+     */
+    public String toString() {
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(getClass().getName());
+    	buffer.append("[portletName=").append(portletName);
+    	buffer.append(",portletClass=").append(portletClass);
+    	// TODO:
+    	return buffer.toString();
+    }
+    
+    /**
+     * Returns the hash code for this instance.
+     * @return the hash code for this instance.
+     */
+    public int hashCode() {
+    	return toString().hashCode();
+    }
+    
 }
 

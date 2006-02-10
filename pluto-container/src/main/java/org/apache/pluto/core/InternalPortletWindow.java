@@ -59,6 +59,11 @@ public class InternalPortletWindow implements PortletWindow {
     // Constructor -------------------------------------------------------------
     
     /**
+     * Constructs an internal portlet window that wraps a portlet window.
+     * An internal portlet window instance is created everytime when the portlet
+     * container's <code>doRender()</code> or <code>doAction()</code> method is
+     * invoked.
+     * 
      * @param context  the servlet context from which this window is
      *        being invoked.
      * @param portletWindow  the underlying portlet window instance.

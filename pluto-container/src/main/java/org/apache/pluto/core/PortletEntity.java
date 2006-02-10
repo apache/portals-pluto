@@ -30,6 +30,8 @@ import org.apache.pluto.descriptors.portlet.PortletPreferenceDD;
 import org.apache.pluto.descriptors.portlet.PortletPreferencesDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
 
+import javax.portlet.PreferencesValidator;
+import javax.portlet.ValidatorException;
 import javax.servlet.ServletContext;
 
 import java.util.ArrayList;
@@ -50,7 +52,8 @@ public class PortletEntity {
 	
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletEntity.class);
-
+    
+    /** URI prefix of the portlet invoker servlet. */
     private static final String PREFIX = "/PlutoInvoker/";
     
     
@@ -120,7 +123,20 @@ public class PortletEntity {
         }
         return portletDefinition;
     }
-
+    
+    /**
+     * Returns the preferences validator instance for this portlet.
+     * One validator instance is created per portlet definition.
+     * @return the preferences validator instance for this portlet.
+     * @throws ValidatorException  if fail to instantiate the validator.
+     */
+    public PreferencesValidator getPreferencesValidator()
+    throws ValidatorException {
+    	PreferencesValidator validator = PreferencesValidatorRegistry
+    			.getRegistry()
+    			.getPreferencesValidator(getPortletDefinition());
+    	return validator;
+    }
     
     
     // Private Methods ---------------------------------------------------------
