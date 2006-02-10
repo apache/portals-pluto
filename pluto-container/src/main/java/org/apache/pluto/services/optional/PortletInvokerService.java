@@ -25,14 +25,15 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * Service used to invoke portlets
- *
+ * Service used to invoke portlets.
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public interface PortletInvokerService {
+	
+    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window);
 
-    void action(ActionRequest req, ActionResponse res, InternalPortletWindow window);
+    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window);
 
-    void render(RenderRequest req, RenderResponse res, InternalPortletWindow window);
-
-    void load(PortletRequest req, PortletResponse res, InternalPortletWindow window);
+    public void load(PortletRequest req, PortletResponse res, InternalPortletWindow window);
+	
 }

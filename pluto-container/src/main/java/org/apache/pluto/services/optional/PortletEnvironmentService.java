@@ -25,26 +25,28 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Factory Service for creating Portlet request and responses.
- *
+ * <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public interface PortletEnvironmentService {
-
-   InternalPortletRequest createActionRequest(HttpServletRequest req,
-                                               HttpServletResponse res,
-                                               InternalPortletWindow window);
-
-   InternalActionResponse createActionRespose(HttpServletRequest req,
-                                               HttpServletResponse res,
-                                               InternalPortletWindow window);
-
-    InternalPortletRequest createRenderRequest(HttpServletRequest req,
-                                               HttpServletResponse res,
-                                               InternalPortletWindow window);
-
-    InternalPortletResponse createRenderRespose(HttpServletRequest req,
-                                                HttpServletResponse res,
-                                                InternalPortletWindow window);
-
-
-
+	
+	public InternalPortletRequest createActionRequest(
+			HttpServletRequest servletRequest,
+			HttpServletResponse servletResponse,
+			InternalPortletWindow internalPortletWindow);
+	
+	public InternalActionResponse createActionRespose(
+			HttpServletRequest servletRequest,
+			HttpServletResponse servletResponse,
+			InternalPortletWindow internalPortletWindow);
+	
+	public InternalPortletRequest createRenderRequest(
+			HttpServletRequest servletRequest,
+			HttpServletResponse servletResponse,
+			InternalPortletWindow internalPortletWindow);
+	
+	public InternalPortletResponse createRenderRespose(
+			HttpServletRequest servletRequest,
+			HttpServletResponse servletResponse,
+			InternalPortletWindow internalPortletWindow);
+	
 }

@@ -26,12 +26,32 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.services.ContainerService;
 import org.apache.pluto.core.PortletPreference;
 
+/**
+ * Portlet preferences service that should be implemented by the portal.
+ * This is an optional container service.
+ * 
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
 public interface PortletPreferencesService extends ContainerService {
-
+	
+	/**
+	 * Returns the stored portlet preferences.
+	 * @param portletWindow  the portlet window.
+	 * @param request  the portlet request.
+	 * @return the stored portlet preferences.
+	 * @throws PortletContainerException  if fail to get stored preferences.
+	 */
     public PortletPreference[] getStoredPreferences(PortletWindow portletWindow,
                                                     PortletRequest request)
     throws PortletContainerException;
     
+    /**
+     * Stores the portlet references to the persistent storage.
+     * @param portletWindow  the portlet window.
+     * @param request  the portlet request.
+     * @param preferences  the portlet preferences to store.
+     * @throws PortletContainerException  if fail to store preferences.
+     */
     public void store(PortletWindow portletWindow,
                       PortletRequest request,
                       PortletPreference[] preferences)
