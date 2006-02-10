@@ -197,9 +197,9 @@ class PortletInvoker {
                 }
                 
             } finally {
-                request.removeAttribute(org.apache.pluto.Constants.METHOD_ID);
-                request.removeAttribute(org.apache.pluto.Constants.PORTLET_REQUEST);
-                request.removeAttribute(org.apache.pluto.Constants.PORTLET_RESPONSE);
+                request.removeAttribute(Constants.METHOD_ID);
+                request.removeAttribute(Constants.PORTLET_REQUEST);
+                request.removeAttribute(Constants.PORTLET_RESPONSE);
             }
         } else {
             String msg = EXCEPTIONS.getString(
