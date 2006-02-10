@@ -50,8 +50,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     
     protected TestResult checkGetNullAttribute(PortletRequest req) {
         TestResult res = new TestResult();
-        res.setName("Retrieve Missing Request Attribute Test");
-        res.setDesc("Retrieves an attribute bound to an invalid key set are retrieved as null");
+        res.setDescription("Retrieves an attribute bound to an invalid key set are retrieved as null");
 
         Object val = req.getAttribute(KEY);
         if(val != null) {
@@ -192,8 +191,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     protected TestResult checkEnumerateAttributes(PortletSession session) {
     	
         TestResult result = new TestResult();
-        result.setName("Enumerate Session Attribute Names Test");
-        result.setDesc("Sets request attributes and enumerates over them.");
+        result.setDesc("Sets session attributes and enumerates over them.");
         
         int count = 5;
         for (int i = 0; i < count; i++) {
@@ -207,10 +205,6 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
             if (name.startsWith(KEY)) {
                 found++;
             }
-            // FIXME:
-            System.err.println("\n\n\n\n");
-            System.err.println("Got attribute name in session: " + name);
-            System.err.println("\n\n\n\n");
         }
         
         if (count != found) {
@@ -281,32 +275,33 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         return res;
     }
 
-    protected TestResult checkEnumerateAttributes(PortletContext req) {
-        TestResult res = new TestResult();
-        res.setName("Enumerate Context Attribute Names Test");
-        res.setDesc("Sets request attributes and enumerates over them.");
-
+    protected TestResult checkEnumerateAttributesInContext(
+    		PortletContext context) {
+        TestResult result = new TestResult();
+        result.setDescription("Sets attributes in portlet context "
+        		+ "and enumerates over them.");
+        
         int count = 5;
-        for(int i=0;i<count;i++) {
-            req.setAttribute(KEY+"."+i,VAL);
+        for (int i = 0; i < count; i++) {
+        	context.setAttribute(KEY + "." + i, VAL);
         }
-
+        
         int found = 0;
-        Enumeration enumerator= req.getAttributeNames();
-        while(enumerator.hasMoreElements()) {
-            if(enumerator.nextElement().toString().startsWith(KEY)) {
+        for (Enumeration en = context.getAttributeNames();
+        		en.hasMoreElements(); ) {
+            if (en.nextElement().toString().startsWith(KEY)) {
                 found++;
             }
         }
-
-        if(count != found) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected "+count+" attributes.  Found "+found);
+        
+        if (count == found) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("Expected " + count + " attributes. "
+        			+ "Found " + found);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 
 }
