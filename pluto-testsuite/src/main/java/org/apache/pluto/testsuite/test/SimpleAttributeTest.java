@@ -39,10 +39,6 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     private static final String KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
     private static final String VAL = "! TEST VAL !";
 
-    public String getTestSuiteName() {
-        return "Simple Attribute Test";
-    }
-
     public Map doPrerequisiteAction(PortletContext context, ActionRequest req,
                                     ActionResponse res) {
         return new HashMap();

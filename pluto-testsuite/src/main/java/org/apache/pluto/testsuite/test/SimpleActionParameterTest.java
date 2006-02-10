@@ -31,10 +31,6 @@ public class SimpleActionParameterTest
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
     public static final String VALUE = "org.apache.pluto.testsuite.PARAM_TEST_VALUE";
 
-    public String getTestSuiteName() {
-        return "Simple Action Parameter Test";
-    }
-
     protected TestResult checkSentActionParameter(PortletRequest req) {
         TestResult res = new TestResult();
         res.setName("Sent Action Parameter Test");

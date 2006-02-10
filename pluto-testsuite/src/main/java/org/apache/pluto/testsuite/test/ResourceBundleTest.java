@@ -28,10 +28,6 @@ import java.util.*;
  */
 public class ResourceBundleTest extends AbstractReflectivePortletTest {
 
-    public String getTestSuiteName() {
-        return "Resource Bundle Test";
-    }
-
     public Map doPrerequisiteAction(PortletContext context, ActionRequest req,
                                     ActionResponse res) {
         return new HashMap();

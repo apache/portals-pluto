@@ -31,13 +31,6 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
     private static final String TEST_PARAM_NAME = "test-parameter-name";
     private static final String TEST_PARAM_VAL = "test-parameter-val";
 
-    public ContextInitParameterTest() {
-
-    }
-
-    public String getTestSuiteName() {
-        return "Context Init Parameter Test";
-    }
 
     protected TestResult checkEnumerationContainsElements(PortletContext ctx) {
         TestResult res = new TestResult();

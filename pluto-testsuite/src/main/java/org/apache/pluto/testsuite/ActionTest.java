@@ -19,10 +19,14 @@ package org.apache.pluto.testsuite;
 import org.apache.pluto.testsuite.PortletTest;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * Empty interface that marks a PortletTest class that has test code which
+ * should be run in the <code>Portlet.processAction()</code> method.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public interface ActionTest extends PortletTest {
-
-
-
+	
+	// Empty interface.
+	
 }

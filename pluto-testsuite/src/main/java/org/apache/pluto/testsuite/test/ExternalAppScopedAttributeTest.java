@@ -29,11 +29,7 @@ public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTes
     public static final String EXT_KEY = "org.apache.pluto.testsuite.EXTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
     public static final String VALUE = "Should be visible to all Portlets and Web Resources.";
 
-    public String getTestSuiteName() {
-        return "External Application Scoped Attribute Test";
-    }
-
-    public TestResult checkSetHereSeenElsewhere(PortletSession session) {
+    protected TestResult checkSetHereSeenElsewhere(PortletSession session) {
         TestResult res = new TestResult();
         res.setName("Session Visibility Test");
         res.setDesc("Ensure application scoped attributes set here can be seen elsewhere.");
@@ -44,7 +40,7 @@ public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTes
         return res;
     }
 
-    public TestResult checkSetElsewhereSeenHere(PortletSession session) {
+    protected TestResult checkSetElsewhereSeenHere(PortletSession session) {
         TestResult res = new TestResult();
         res.setName("Session Visibility Test");
         res.setDesc("Ensure application scoped attributes set elsewhere can be seen here.");

@@ -24,7 +24,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class SimpleRenderParameterTest extends AbstractReflectivePortletTest {
 
@@ -32,92 +33,84 @@ public class SimpleRenderParameterTest extends AbstractReflectivePortletTest {
     public static final String VALUE = "org.apache.pluto.testsuite.PARAM_TEST_VALUE";
 
     private static final String IKEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY_I";
-
-    public String getTestSuiteName() {
-        return "Simple Parameter Test";
-    }
-
+    
     // Unlike other tests, we DON'T want to include anything but the test id.
     public Map getRenderParameters(PortletRequest req) {
         Map map = new HashMap();
         map.put(IKEY, new String[] {VALUE});
         return map;
     }
-
+    
+    
+    // Test Methods ------------------------------------------------------------
+    
     protected TestResult checkActionParametersNotHere(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("No Action Parameters Test");
-        res.setDesc("Ensure that parameters sent through the action query stream have NOT made it.");
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that parameters sent through "
+        		+ "the action query stream have NOT made it.");
 
         String val = req.getParameter(KEY);
-        if(val != null) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved action parameter ("+KEY+"="+VALUE+" inappropriately");
+        if (val != null) {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResults("Retrieved action parameter ("+KEY+"="+VALUE+" inappropriately");
+        } else {
+        	result.setReturnCode(TestResult.PASSED);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 
 
     protected TestResult checkInternalRenderParameter(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Render Parameter Test");
-        res.setDesc("Validate the appropriate render parameters");
-
+        TestResult result = new TestResult();
+        result.setDescription("Validate the appropriate render parameters.");
         String val = req.getParameter(IKEY);
-        if(val == null || !VALUE.equals(val)) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected : "+VALUE+" retrieved "+val);
+        if (val == null || !VALUE.equals(val)) {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResults("Expected : "+VALUE+" retrieved "+val);
+        } else {
+        	result.setReturnCode(TestResult.PASSED);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 
     protected TestResult checkInternalRenderParameterValues(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Render Parameter Values Test");
-        res.setDesc("Validate the appropriate render parameter values");
+        TestResult result = new TestResult();
+        result.setDescription("Validate the appropriate render parameter values.");
 
         String[] val = req.getParameterValues(IKEY);
         if(val == null || val.length<1 || !VALUE.equals(val[0])) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected : "+VALUE+" retrieved "+val);
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResults("Expected : "+VALUE+" retrieved "+val);
         }
         else {
-            res.setReturnCode(TestResult.PASSED);
+        	result.setReturnCode(TestResult.PASSED);
         }
-        return res;
+        return result;
     }
 
     protected TestResult checkParameterMap(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Render Parameter Map Test");
-        res.setName("Check the contents of the render parameter map");
+        TestResult result = new TestResult();
+        result.setDescription("Check the contents of the render parameter map.");
 
         Map map = req.getParameterMap();
         String[] val = (String[])map.get(IKEY);
         if(map.containsKey(KEY) || val==null || val.length < 1 || !VALUE.equals(val[0])) {
-            res.setReturnCode(TestResult.FAILED);
+        	result.setReturnCode(TestResult.FAILED);
             if(map.containsKey(KEY)) {
-                res.setResults("Found Action Parameter: "+KEY+"="+map.get(KEY));
+            	result.setResults("Found Action Parameter: "+KEY+"="+map.get(KEY));
             }
             if(!map.containsKey(IKEY) || val.length <1 || !VALUE.equals(val[0])) {
-                res.setResults("Render Parameter: "+IKEY+"="+(val.length<1?"null":val[0])+" does not contain the expected value: "+VALUE);
+            	result.setResults("Render Parameter: "+IKEY+"="+(val.length<1?"null":val[0])+" does not contain the expected value: "+VALUE);
             }
-            return res;
+            return result;
         }
-        res.setReturnCode(TestResult.PASSED);
-        return res;
+        result.setReturnCode(TestResult.PASSED);
+        return result;
     }
 
     protected TestResult checkParameterNames(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Test Parameter Names Enumeration.");
-        res.setDesc("Enumerate through all expected names.");
+        TestResult result = new TestResult();
+        result.setDescription("Enumerate through all expected names.");
 
         boolean hasExternal = false;
         boolean hasInternal = false;
@@ -132,7 +125,7 @@ public class SimpleRenderParameterTest extends AbstractReflectivePortletTest {
             }
         }
         if(!hasInternal || hasExternal) {
-            res.setReturnCode(TestResult.FAILED);
+        	result.setReturnCode(TestResult.FAILED);
             StringBuffer sb = new StringBuffer();
             if(!hasInternal) {
                 sb.append("Render Parameter Not Found. ");
@@ -140,11 +133,11 @@ public class SimpleRenderParameterTest extends AbstractReflectivePortletTest {
             if(!hasExternal) {
                 sb.append("Action Parameter Found. ");
             }
-            res.setResults(sb.toString());
+            result.setResults(sb.toString());
         }
         else {
-            res.setReturnCode(TestResult.PASSED);
+        	result.setReturnCode(TestResult.PASSED);
         }
-        return res;
+        return result;
     }
 }

@@ -33,9 +33,6 @@ public class ComplexAttributeTest extends AbstractReflectivePortletTest {
     private static final String KEY = "org.apache.pluto.testsuite.KEY";
     private static final String VAL = "VALUE";
 
-    public String getTestSuiteName() {
-        return "Complex Attribute Test";
-    }
 
     public Map doPrerequisiteAction(PortletContext context, ActionRequest req,
                                     ActionResponse res) {

@@ -19,7 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.testsuite.ActionTest;
 import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.impl.PreferencesValidatorImpl;
+import org.apache.pluto.testsuite.validator.PreferencesValidatorImpl;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -49,18 +49,12 @@ implements ActionTest {
     private static final String NEW_VALUE = "notTheOriginal";
     
     
-    public String getTestSuiteName() {
-        return "Simple Preferences Test";
-    }
-    
-    
     // Test Methods ------------------------------------------------------------
     
     protected TestResult checkGetEmptyPreference(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkGetEmptyPreference");
-        result.setDesc("Ensure proper default is returned when a non-existing "
-        		+ "preference is requested.");
+        result.setDescription("Ensure proper default is returned "
+        		+ "when a non-existing preference is requested.");
         
         PortletPreferences preferences = request.getPreferences();
         String value =  preferences.getValue("nonexistence!", DEF_VALUE);
@@ -68,7 +62,7 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else {
         	result.setReturnCode(TestResult.FAILED);
-            result.setResults("Preferences value was '" + value + "', "
+            result.setResultMessage("Preferences value was '" + value + "', "
             		+ "expected '" + DEF_VALUE + "'.");
         }
         return result;
@@ -76,8 +70,7 @@ implements ActionTest {
 
     protected TestResult checkGetEmptyPreferences(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkGetEmptyPreferences");
-        result.setDesc("Ensure proper defaults are returned when "
+        result.setDescription("Ensure proper defaults are returned when "
         		+ "a non-existent preference set is requested.");
         
         PortletPreferences preferences = request.getPreferences();
@@ -88,15 +81,15 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else if (values == null) {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preference values were NULL, "
+        	result.setResultMessage("Preference values were NULL, "
         			+ "expected '" + DEF_VALUE + "'.");
         } else if (values.length != 1) {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preference has " + values.length + " values, "
+        	result.setResultMessage("Preference has " + values.length + " values, "
         			+ "expected 1 value.");
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preferences value was '" + values[0] + "', "
+        	result.setResultMessage("Preferences value was '" + values[0] + "', "
         			+ "expected '" + DEF_VALUE + "'.");
         }
         return result;
@@ -105,9 +98,8 @@ implements ActionTest {
 
     protected TestResult checkGetPreferences(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkGetPreferences");
-        result.setDesc("Tests that preferences defined in the deployment "
-        		+ "descriptor may be retrieved.");
+        result.setDescription("Tests that preferences defined "
+        		+ "in the deployment descriptor may be retrieved.");
         
         PortletPreferences preferences = request.getPreferences();
         String value =  preferences.getValue(PREF_NAME, DEF_VALUE);
@@ -115,7 +107,7 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preferences value was '"+ value +"', "
+        	result.setResultMessage("Preferences value was '"+ value +"', "
         			+ "expected '" + PREF_VALUE + "'.");
         }
         return result;
@@ -123,8 +115,7 @@ implements ActionTest {
     
     protected TestResult checkSetPreferenceSingleValue(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkSetPreferenceSingleValue");
-        result.setDesc("Ensure a single preference value can be set.");
+        result.setDescription("Ensure a single preference value can be set.");
 
         PortletPreferences preferences = request.getPreferences();
         try {
@@ -134,7 +125,7 @@ implements ActionTest {
         			+ ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
             return result;
         }
         
@@ -143,7 +134,7 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preferences value was '" + value + "', "
+        	result.setResultMessage("Preferences value was '" + value + "', "
         			+ "expected 'TEST_VALUE'.");
         }
         return result;
@@ -151,8 +142,7 @@ implements ActionTest {
 
     protected TestResult checkSetPreferenceMultiValues(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkSetPreferenceMultiValues");
-        result.setDesc("Ensure multiple preference values can be set.");
+        result.setDescription("Ensure multiple preference values can be set.");
 
         PortletPreferences preferences = request.getPreferences();
         try {
@@ -162,7 +152,7 @@ implements ActionTest {
         			+ ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
         	return result;
         }
 
@@ -173,25 +163,25 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else if (values == null) {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preference values were NULL, "
+        	result.setResultMessage("Preference values were NULL, "
         			+ "expected 'ONE' and 'ANOTHER'.");
         } else if (values.length != 2) {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preference has " + values.length + " values, "
-        			+ "expected 2 values.");
+        	result.setResultMessage("Preference has " + values.length
+        			+ " values, expected 2 values.");
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preference values were '" + values[0] +"' and '"
-        			+ values[1] + "' ,expected 'ONE' and 'ANOTHER'.");
+        	result.setResultMessage("Preference values were '"
+        			+ values[0] + "' and '" + values[1] + "' ,"
+        	        + "expected 'ONE' and 'ANOTHER'.");
         }
         return result;
     }
 
     protected TestResult checkSetPreferencesReturnsFirst(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkSetPreferencesReturnsFirst");
-        result.setDesc("Ensure the first value set to a given preference "
-        		+ "is returned first by PortletPreferences.getValue().");
+        result.setDescription("Ensure the first value set to a given "
+        		+ "preference is returned first by PortletPreferences.getValue().");
 
         PortletPreferences preferences = request.getPreferences();
         try {
@@ -201,7 +191,7 @@ implements ActionTest {
     			+ ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
         	return result;
         }
 
@@ -210,7 +200,7 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preference value was '" + value + "', "
+        	result.setResultMessage("Preference value was '" + value + "', "
         			+ "expected 'FIRST'.");
         }
         return result;
@@ -218,8 +208,7 @@ implements ActionTest {
     
     protected TestResult checkPreferenceValidator(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkPreferenceValidator");
-        result.setDesc("Ensure the validator catches invalid preferences.");
+        result.setDescription("Ensure the validator catches invalid preferences.");
         
         PortletPreferences preferences = request.getPreferences();
         if (LOG.isDebugEnabled()) {
@@ -241,7 +230,7 @@ implements ActionTest {
     			+ ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
         	return result;
         	
         } catch (IOException ex) {
@@ -249,7 +238,7 @@ implements ActionTest {
     			+ ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
         	return result;
         	
         } catch (ValidatorException ex) {
@@ -269,7 +258,7 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Illegal value not caught by validator.");
+        	result.setResultMessage("Illegal value not caught by validator.");
         }
         return result;
     }
@@ -277,8 +266,7 @@ implements ActionTest {
     protected TestResult checkOnePreferenceValidatorPerPortletDefinition(
     		PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkOnePreferenceValidatorPerPortletDefinition");
-        result.setDesc("Ensure only one validator instance is created "
+        result.setDescription("Ensure only one validator instance is created "
         		+ "per portlet definition.");
         
         PortletPreferences preferences = request.getPreferences();
@@ -294,21 +282,21 @@ implements ActionTest {
     			+ ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
         	
         } catch (IOException ex) {
         	String message = "Unable to store preference value (IO error): "
     			+ ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
         	
         } catch (ValidatorException ex) {
         	String message = "Unable to store preference value "
         		+ "(Validation error): " + ex.getMessage();
         	LOG.error(message);
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(message);
+        	result.setResultMessage(message);
         	
         } finally {
         	try {
@@ -325,8 +313,7 @@ implements ActionTest {
 
     protected TestResult checkStorePreferences(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setName("checkStorePreference");
-        result.setDesc("Ensure storage works for portlet preferences.");
+        result.setDescription("Ensure storage works for portlet preferences.");
         
         PortletPreferences preferences = request.getPreferences();
         if (LOG.isDebugEnabled()) {
@@ -371,15 +358,15 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else if (errorOccured) {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults(errorMessage);
+        	result.setResultMessage(errorMessage);
         } else if (!setOccured) {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("A function upon which the reset test depends "
-        			+ "failed to execute as expected. "
+        	result.setResultMessage("A function upon which the reset test "
+        			+ "depends failed to execute as expected. "
         			+ "Check the other test results in this test suite.");
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preferences not successfully stored.");
+        	result.setResultMessage("Preferences not successfully stored.");
         }
         return result;
     }
@@ -387,8 +374,7 @@ implements ActionTest {
     protected TestResult checkResetPreferences(PortletRequest request) {
         
     	TestResult result = new TestResult();
-    	result.setName("Reset Preference Test");
-    	result.setDesc("Tests that preferences are properly reset.");
+    	result.setDescription("Tests that preferences are properly reset.");
         
         PortletPreferences preferences = request.getPreferences();
         LOG.warn("PortletPreferences impl: " + preferences.getClass().getName());
@@ -432,12 +418,12 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else if (!setOccured || !storeOccured) {
         	result.setReturnCode(TestResult.WARNING);
-        	result.setResults("A function upon which the reset test depends "
-        			+ "failed to execute as expected. "
+        	result.setResultMessage("A function upon which the reset test "
+        			+ "depends failed to execute as expected. "
         			+ "Check the other test results in this test suite.");
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preferences value was not successfully reset after store");
+        	result.setResultMessage("Preferences value was not successfully reset after store");
         }
         return result;
     }
@@ -450,8 +436,8 @@ implements ActionTest {
     protected TestResult checkResetToNullPreferences(PortletRequest request) {
         
     	TestResult result = new TestResult();
-        result.setName("Reset to Null Preference Test");
-        result.setDesc("Tests that preferences are properly reset when originally null.");
+        result.setDescription("Tests that preferences are properly reset "
+        		+ "when originally null.");
         
         PortletPreferences preferences = request.getPreferences();
         boolean setOccured = false;
@@ -495,10 +481,13 @@ implements ActionTest {
         	result.setReturnCode(TestResult.PASSED);
         } else if (!setOccured || !storeOccured) {
         	result.setReturnCode(TestResult.WARNING);
-        	result.setResults("A function upon which the reset test depends failed to execute as expected. Check the other test results in this test suite.");
+        	result.setResultMessage("A function upon which the reset test "
+        			+ "depends failed to execute as expected. "
+        			+ "Check the other test results in this test suite.");
         } else {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Preferences value was not successfully reset after store.");
+        	result.setResultMessage("Preferences value was not successfully "
+        			+ "reset after store.");
         }
         return result;
     }
@@ -510,8 +499,7 @@ implements ActionTest {
      */
     protected TestResult checkReadOnlyPreferences(PortletRequest req) {
         TestResult res = new TestResult();
-        res.setName("Preference Read Only Test");
-        res.setDesc("Check to make sure that read only preferences may not be set.");
+        res.setDescription("Ensure that read only preferences may not be set.");
 
         PortletPreferences preferences = req.getPreferences();
         boolean exceptionThrown = false;
@@ -530,23 +518,26 @@ implements ActionTest {
         }
         else {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Read Only Preference was written.");
+            res.setResultMessage("Read Only Preference was written.");
         }
 
         return res;
     }
-
-    protected TestResult checkGetPreferenceMap(PortletRequest req) {
-        TestResult res = checkGetPreferenceNames(req);
-        res.setName("Preference Map Test.");
-        res.setDesc("Ensure returned map is valid");
-        return res;
+    
+    /**
+     * FIXME:
+     * @param req
+     * @return
+     */
+    protected TestResult checkGetPreferenceMap(PortletRequest request) {
+        TestResult result = checkGetPreferenceNames(request);
+        result.setDescription("Ensure returned map is valid");
+        return result;
     }
 
     protected TestResult checkGetPreferenceNames(PortletRequest req) {
         TestResult res = new TestResult();
-        res.setName("Preference Names Enumeration Test.");
-        res.setDesc("Ensure returned enumeration is valid");
+        res.setDescription("Ensure returned enumeration is valid");
 
         PortletPreferences prefs = req.getPreferences();
         Map map = prefs.getMap();
@@ -564,7 +555,7 @@ implements ActionTest {
         }
         else {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("All names not found as preferences.");
+            res.setResultMessage("All names not found as preferences.");
         }
         return res;
     }
@@ -577,9 +568,8 @@ implements ActionTest {
      */
     protected TestResult checkPreferencesValuesNotModified(PortletRequest req) {
     	TestResult res = new TestResult();
-    	res.setName("Preferences Map Not Modifiable Test.");
-    	res.setDesc("Preferences values are not modified if the values " +
-    			"in the Map are altered.");
+    	res.setDescription("Preferences values are not modified "
+    			+ "if the values in the Map are altered.");
     	PortletPreferences prefs = req.getPreferences();
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Original Preferences:");
@@ -601,7 +591,7 @@ implements ActionTest {
         }
     	if (!newValue.equals(originalValue)) {
     		res.setReturnCode(TestResult.FAILED);
-    		res.setResults("Preferences values modified.");
+    		res.setResultMessage("Preferences values modified.");
     	} else {
     		res.setReturnCode(TestResult.PASSED);
     	}

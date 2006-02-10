@@ -24,44 +24,43 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class SimpleParameterTest extends AbstractReflectivePortletTest {
+	
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
     public static final String VALUE = "org.apache.pluto.testsuite.PARAM_TEST_VALUE";
 
     private static final String IKEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY_I";
-
-    public String getTestSuiteName() {
-        return "Simple Parameter Test";
-    }
 
     public Map getRenderParameters(PortletRequest req) {
         Map map = new HashMap(req.getParameterMap());
         map.put(IKEY, new String[] {VALUE});
         return map;
     }
+    
+    
+    // Test Methods ------------------------------------------------------------
+    
+    protected TestResult checkSentParameters(PortletRequest request) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that parameters sent through "
+        		+ "the action query stream have made it all the way through.");
 
-    protected TestResult checkSentParameters(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Sent Parameter Test");
-        res.setDesc("Ensure that parameters sent through the action query stream have made it all the way through");
-
-        String val = req.getParameter(KEY);
-        if(val == null || !VALUE.equals(val)) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected : "+VALUE+" retrieved "+val);
+        String val = request.getParameter(KEY);
+        if (val == null || !VALUE.equals(val)) {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("Expected : "+VALUE+" retrieved "+val);
+        } else {
+        	result.setReturnCode(TestResult.PASSED);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 
 
     protected TestResult checkInternalRenderParameters(PortletRequest req) {
         TestResult res = new TestResult();
-        res.setName("Render Parameters Test");
         res.setDesc("Enumerate through all render parameters sent in the action");
 
         String val = req.getParameter(IKEY);

@@ -31,10 +31,6 @@ import org.apache.pluto.testsuite.TestResult;
  */
 public class SecurityMappingTest extends AbstractReflectivePortletTest {
 
-    public String getTestSuiteName() {
-        return "Security Mapping Tests";
-    }
-
     public Map doPrerequisiteAction(PortletContext context, ActionRequest req,
                                     ActionResponse res) {
         return new java.util.HashMap();

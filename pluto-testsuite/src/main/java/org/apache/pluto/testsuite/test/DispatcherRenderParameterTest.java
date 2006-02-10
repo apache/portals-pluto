@@ -77,10 +77,6 @@ extends AbstractReflectivePortletTest {
     	// Do nothing.
     }
 
-    public String getTestSuiteName() {
-        return "Dispatcher Render Parameter Test";
-    }
-    
     
     // Protected Test/Check Methods --------------------------------------------
     

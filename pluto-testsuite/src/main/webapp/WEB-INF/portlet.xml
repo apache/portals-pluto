@@ -73,7 +73,7 @@ limitations under the License.
         <value>readonly</value>
         <read-only>true</read-only>
       </preference>
-      <preferences-validator>org.apache.pluto.testsuite.impl.PreferencesValidatorImpl</preferences-validator>
+      <preferences-validator>org.apache.pluto.testsuite.validator.PreferencesValidatorImpl</preferences-validator>
     </portlet-preferences>
     
     <security-role-ref>
@@ -131,7 +131,7 @@ limitations under the License.
         <value>readonly</value>
         <read-only>true</read-only>
       </preference>
-      <preferences-validator>org.apache.pluto.testsuite.impl.PreferencesValidatorImpl2</preferences-validator>
+      <preferences-validator>org.apache.pluto.testsuite.validator.PreferencesValidatorImpl2</preferences-validator>
     </portlet-preferences>
     
     <security-role-ref>

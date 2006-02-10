@@ -17,7 +17,7 @@
 
  */
 
-package org.apache.pluto.testsuite.impl;
+package org.apache.pluto.testsuite.validator;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PreferencesValidator;

@@ -32,10 +32,6 @@ import org.apache.pluto.testsuite.TestResult;
 public class MiscTest extends AbstractReflectivePortletTest {
 
 
-    public String getTestSuiteName() {
-        return "Misc Test";
-    }
-
     protected TestResult checkContextMajorVersion(PortletContext ctx) {
         TestResult res = new TestResult();
         res.setName("Major Version Test");

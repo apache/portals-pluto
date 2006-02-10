@@ -28,20 +28,48 @@ import org.apache.pluto.testsuite.TestConfig;
 /**
  * Interface for pluto portlet test classes.
  * 
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public interface PortletTest {
-
+	
+	/**
+	 * Returns the test suite name.
+	 * @return the test suite name.
+	 */
     public String getTestSuiteName();
-
-    public Map getRenderParameters(PortletRequest req);
-
+    
+    /**
+     * Initializes the portlet test using test configuration.
+     * @param config  the test configuration.
+     */
+    public void init(TestConfig config);
+    
+    /**
+     * 
+     * @param request  the portlet request.
+     * @return
+     */
+    public Map getRenderParameters(PortletRequest request);
+    
+    /**
+     * Runs the test.
+     * @param config  the portlet config.
+     * @param context  the portlet context.
+     * @param request  the portlet request.
+     * @param response  the portlet response.
+     * @return the results of the test.
+     */
     public TestResults doTest(PortletConfig config,
                               PortletContext context,
-                              PortletRequest req,
-                              PortletResponse res);
-
-    public void init(TestConfig config);
-
+                              PortletRequest request,
+                              PortletResponse response);
+    
+    /**
+     * Returns the test configuration.
+     * @return the test configuration.
+     */
     public TestConfig getConfig();
+    
 }
+
