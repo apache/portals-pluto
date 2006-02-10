@@ -34,9 +34,9 @@ public class SimpleParameterTest extends AbstractReflectivePortletTest {
 
     private static final String IKEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY_I";
 
-    public Map getRenderParameters(PortletRequest req) {
-        Map map = new HashMap(req.getParameterMap());
-        map.put(IKEY, new String[] {VALUE});
+    public Map getRenderParameters(PortletRequest request) {
+        Map map = new HashMap(request.getParameterMap());
+        map.put(IKEY, new String[] { VALUE });
         return map;
     }
     
@@ -47,23 +47,24 @@ public class SimpleParameterTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure that parameters sent through "
         		+ "the action query stream have made it all the way through.");
-
-        String val = request.getParameter(KEY);
-        if (val == null || !VALUE.equals(val)) {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Expected : "+VALUE+" retrieved "+val);
-        } else {
+        
+        String value = request.getParameter(KEY);
+        if (value != null && value.equals(VALUE)) {
         	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("Expected: " + VALUE
+        			+ ", retrieved: " + value);
         }
         return result;
     }
-
-
-    protected TestResult checkInternalRenderParameters(PortletRequest req) {
+    
+    
+    protected TestResult checkInternalRenderParameters(PortletRequest request) {
         TestResult res = new TestResult();
-        res.setDesc("Enumerate through all render parameters sent in the action");
+        res.setDescription("Enumerate through all render parameters sent in the action");
 
-        String val = req.getParameter(IKEY);
+        String val = request.getParameter(IKEY);
         if(val == null || !VALUE.equals(val)) {
             res.setReturnCode(TestResult.FAILED);
             res.setResults("Expected : "+VALUE+" retrieved "+val);

@@ -1,5 +1,4 @@
-<%@ page import="java.util.Map"%>
- <%--
+<%--
 Copyright 2004 The Apache Software Foundation
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
@@ -15,38 +14,49 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+
+<%@ page import="java.util.Map" %>
+<%@ page import="javax.servlet.jsp.jstl.core.LoopTagStatus" %>
+
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
 
 <portlet:defineObjects/>
 
-<TABLE>
-<TR><TD>
-    <P>
-    This portlet is a portlet specification compatibility test portlet.
-    It provides several tests of verying complexities which will assist
-    in evaluating compliance with the portlet specification. It was originally
-    developed for testing Apache Pluto, however, it does not utilize any
-    proprietary APIs and should work with all compliant portlet containers.
-    </P>
+<p>
+  This portlet is a portlet specification compatibility test portlet.
+  It provides several tests of verying complexities which will assist in
+  evaluating compliance with the portlet specification. It was originally
+  developed for testing Apache Pluto, however, it does not utilize any
+  proprietary APIs and should work with all compliant portlet containers.
+</p>
 
-    <P>Please select one of the following tests:
-    <TABLE>
+<p>
+  Please select one of the following tests:
+  <table>
     <c:forEach var="test" items="${tests}" varStatus="status">
-    <TR><TD><c:out value="${test.plt}"/></TD>
-        <TD><c:out value="${test.name}"/></TD>
-        <portlet:actionURL secure='<%=renderRequest.isSecure()?"True":"False"%>' var="url">
-    	<portlet:param name="testId" value='<%=((javax.servlet.jsp.jstl.core.LoopTagStatus)pageContext.getAttribute("status")).getIndex()+""%>'/>
-        <c:forEach var="param" items="${test.actionParameters}">
-        <%
-            Map.Entry parm = ((Map.Entry)pageContext.findAttribute("param"));
-        %>
-          <portlet:param name="<%=parm.getKey().toString()%>" value="<%=parm.getValue().toString()%>"/>
-        </c:forEach>
+      <tr>
+        <td><c:out value="${test.plt}"/></td>
+        <td><c:out value="${test.name}"/></td>
+        <portlet:actionURL secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
+                           var="url">
+          <portlet:param name="testId"
+                         value='<%=((LoopTagStatus) pageContext.getAttribute("status")).getIndex()+""%>'/>
+          <c:forEach var="param" items="${test.actionParameters}">
+            <%
+              Map.Entry parm = (Map.Entry) pageContext.findAttribute("param");
+            %>
+            <portlet:param name="<%=parm.getKey().toString()%>"
+                           value="<%=parm.getValue().toString()%>"/>
+          </c:forEach>
         </portlet:actionURL>
-        <TD><A href="<c:out value="${url}"/>">Test</A></TD></TR>
+        <td>
+          <a href="<c:out value="${url}"/>">Test</a>
+        </td>
+      </tr>
     </c:forEach>
-    </TABLE>
-    </P>
-    </TD></TR>
-</TABLE>
+  </table>
+</p>
+
+
+

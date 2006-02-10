@@ -23,75 +23,84 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class SimpleActionParameterTest
-    extends ActionAbstractReflectivePortletTest {
-
+extends ActionAbstractReflectivePortletTest {
+	
+	/** Parameter key encoded in the action URL. */
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
+    
+    /** Parameter value encoded in the action URL. */
     public static final String VALUE = "org.apache.pluto.testsuite.PARAM_TEST_VALUE";
+    
+    
+    // Test Methods ------------------------------------------------------------
+    
+    protected TestResult checkSentActionParameter(PortletRequest request) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that parameters encoded in "
+        		+ "the action URL are available in the action request.");
 
-    protected TestResult checkSentActionParameter(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Sent Action Parameter Test");
-        res.setDesc("Ensure that parameters sent through the action query stream have made it to the action reqest.");
-
-        String val = req.getParameter(KEY);
-        if(val == null || !VALUE.equals(val)) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected : "+VALUE+" retrieved "+val);
+        String value = request.getParameter(KEY);
+        if (value != null && value.equals(VALUE)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("Got value : " + value
+        			+ ", expected: " + VALUE);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 
-    protected TestResult checkSentActionParamerMap(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Sent Action Parameter Map");
-        res.setDesc("Ensure that parameters sent through the action query stream have made it to the action parameter map");
-
-        Map map = req.getParameterMap();
-        String[] val = (String[])map.get(KEY);
-        if(val!=null) {
-            for(int i=0;i<val.length;i++) {
-                if(val[i].equals(VALUE)) {
-                    res.setReturnCode(TestResult.PASSED);
-                    return res;
-                }
-            }
+    protected TestResult checkSentActionParamerMap(PortletRequest request) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that parameters encoded in "
+        		+ "the action URL are available in the action request "
+        		+ "parameter map.");
+        
+        Map parameterMap = request.getParameterMap();
+        String[] values = (String[]) parameterMap.get(KEY);
+        if (values != null && values.length == 1 && VALUE.equals(values[0])) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	String message = null;
+        	if (values == null) {
+        		message = "Unable to retrieve parameter from parameter map.";
+        	} else if (values.length != 1) {
+        		message = "Got " + values.length + " parameter values, "
+        				+ "expected: 1";
+        	} else {
+        		message = "Got value: " + values[0] + ", expected: " + VALUE;
+        	}
+        	result.setResultMessage(message);
         }
-
-        res.setReturnCode(TestResult.FAILED);
-        res.setResults("Unable to retrieve key "+KEY+" with value of "+VALUE);
-        return res;
+        return result;
     }
+    
+    protected TestResult checkParameterNames(PortletRequest request) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure the parameter name encoded in "
+        		+ "the action URL exists in the parameter name enumeration.");
 
-    protected TestResult checkParameterNames(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Test Parameter Names Enumeration.");
-        res.setDesc("Enumerate through all expected names.");
-
-        boolean hasExternal = false;
-        Enumeration enumerator= req.getParameterNames();
-        while(enumerator.hasMoreElements()) {
-            String val = enumerator.nextElement().toString();
-            if(KEY.equals(val)) {
-                hasExternal = true;
-            }
+        boolean nameFound = false;
+        for (Enumeration en = request.getParameterNames();
+        		!nameFound && en.hasMoreElements(); ) {
+        	String name = (String) en.nextElement();
+        	if (KEY.equals(name)) {
+        		nameFound = true;
+        	}
         }
-        if(!hasExternal) {
-            res.setReturnCode(TestResult.FAILED);
-            StringBuffer sb = new StringBuffer();
-            if(!hasExternal) {
-                sb.append("External Parameter Not Found. ");
-            }
-            res.setResults(sb.toString());
+        
+        if (nameFound) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("Parameter name " + KEY
+        			+ " not found in parameter name enumeration.");
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 }

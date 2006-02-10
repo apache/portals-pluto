@@ -46,9 +46,13 @@ public interface PortletTest {
     public void init(TestConfig config);
     
     /**
+     * Returns the render parameters. This method will be invoked in
+     * <code>Portlet.processAction()</code> method. All parameters returned
+     * by this method will be set as render parameters.
      * 
      * @param request  the portlet request.
-     * @return
+     * @return a map of render parameters, key is the string name of the
+     *         parameter, value is a string array.
      */
     public Map getRenderParameters(PortletRequest request);
     
