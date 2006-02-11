@@ -1,5 +1,5 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
+ * Copyright 2003-2006 The Apache Software Foundation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.core.UserInfoAttribute;
 import org.apache.pluto.services.ContainerService;
 
 /**
- * Used to access and persist user information attribute as described in
- * PLT.17.2 of the JSR-168 specificiation.
+ * Used to access user information attributes as described in
+ * PLT.17.2 of the JSR-168 specificiation. Attribute persistence is
+ * not covered by the spec so it is not done here.
  * 
  * @author <a href="cdoremus@apache.org">Craig Doremus</a>
  */
@@ -44,10 +44,10 @@ public interface UserInfoAttributesService extends ContainerService  {
     
 	/**
 	 * Persists user information attributes. 
-	 * 
+	 *  
 	 * @param attributes The attributes to persist.
-	 */
     void store(UserInfoAttribute[] attributes)
     	throws PortletContainerException;
+	 */
 
 }
