@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.testsuite.ActionTest;
 import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 import org.apache.pluto.testsuite.validator.PreferencesValidatorImpl;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ import javax.portlet.ValidatorException;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public class SimplePreferenceTest extends ActionAbstractReflectivePortletTest
+public class SimplePreferenceTest extends AbstractReflectivePortletTest
 implements ActionTest {
 	
 	/** Logger. */
@@ -53,17 +54,15 @@ implements ActionTest {
     
     protected TestResult checkGetEmptyPreference(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setDescription("Ensure proper default is returned "
-        		+ "when a non-existing preference is requested.");
+        result.setDescription("Ensure proper default is returned when "
+        		+ "a non-existing preference is requested.");
         
         PortletPreferences preferences = request.getPreferences();
         String value =  preferences.getValue("nonexistence!", DEF_VALUE);
         if (value.equals(DEF_VALUE)) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-            result.setResultMessage("Preferences value was '" + value + "', "
-            		+ "expected '" + DEF_VALUE + "'.");
+        	TestUtils.failOnAssertion("preference value", value, DEF_VALUE, result);
         }
         return result;
     }
@@ -80,25 +79,27 @@ implements ActionTest {
         		&& values[0].equals(DEF_VALUE)) {
         	result.setReturnCode(TestResult.PASSED);
         } else if (values == null) {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preference values were NULL, "
-        			+ "expected '" + DEF_VALUE + "'.");
+        	TestUtils.failOnAssertion("preference values",
+        	                          values,
+        	                          new String[] { DEF_VALUE },
+        	                          result);
         } else if (values.length != 1) {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preference has " + values.length + " values, "
-        			+ "expected 1 value.");
+        	TestUtils.failOnAssertion("length of preference values",
+        	                          String.valueOf(values.length),
+        	                          String.valueOf(1),
+        	                          result);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preferences value was '" + values[0] + "', "
-        			+ "expected '" + DEF_VALUE + "'.");
+        	TestUtils.failOnAssertion("preference values",
+        	                          values,
+        	                          new String[] { DEF_VALUE },
+        	                          result);
         }
         return result;
     }
 
-
     protected TestResult checkGetPreferences(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setDescription("Tests that preferences defined "
+        result.setDescription("Ensure that preferences defined "
         		+ "in the deployment descriptor may be retrieved.");
         
         PortletPreferences preferences = request.getPreferences();
@@ -106,9 +107,7 @@ implements ActionTest {
         if (value != null && value.equals(PREF_VALUE)) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preferences value was '"+ value +"', "
-        			+ "expected '" + PREF_VALUE + "'.");
+        	TestUtils.failOnAssertion("preference value", value, PREF_VALUE, result);
         }
         return result;
     }
@@ -121,11 +120,7 @@ implements ActionTest {
         try {
             preferences.setValue("TEST", "TEST_VALUE");
         } catch (ReadOnlyException ex) {
-        	String message = "Unable to set preference value (ReadOnly error): "
-        			+ ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
+        	TestUtils.failOnException("Unable to set preference value.", ex, result);
             return result;
         }
         
@@ -133,9 +128,7 @@ implements ActionTest {
         if (value != null && value.equals("TEST_VALUE")) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preferences value was '" + value + "', "
-        			+ "expected 'TEST_VALUE'.");
+        	TestUtils.failOnAssertion("preference value", value, "TEST_VALUE", result);
         }
         return result;
     }
@@ -148,36 +141,33 @@ implements ActionTest {
         try {
             preferences.setValues("TEST", new String[] {"ONE", "ANOTHER"});
         } catch (ReadOnlyException ex) {
-        	String message = "Unable to set preference value (ReadOnly error): "
-        			+ ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
+        	TestUtils.failOnException("Unable to set preference values.", ex, result);
         	return result;
         }
 
-        String[] values = preferences.getValues(
-        		"TEST", new String[] { DEF_VALUE });
+        String[] values = preferences.getValues("TEST", new String[] { DEF_VALUE });
         if (values != null && values.length == 2
         		&& values[0].equals("ONE") && values[1].equals("ANOTHER")) {
         	result.setReturnCode(TestResult.PASSED);
         } else if (values == null) {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preference values were NULL, "
-        			+ "expected 'ONE' and 'ANOTHER'.");
+        	TestUtils.failOnAssertion("preference values",
+        	                          values,
+        	                          new String[] { "ONE", "ANOTHER" },
+        	                          result);
         } else if (values.length != 2) {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preference has " + values.length
-        			+ " values, expected 2 values.");
+        	TestUtils.failOnAssertion("length of preference values",
+        	                          String.valueOf(values.length),
+        	                          String.valueOf(2),
+        	                          result);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preference values were '"
-        			+ values[0] + "' and '" + values[1] + "' ,"
-        	        + "expected 'ONE' and 'ANOTHER'.");
+        	TestUtils.failOnAssertion("preference values",
+        	                          values,
+        	                          new String[] { "ONE", "ANOTHER" },
+        	                          result);
         }
         return result;
     }
-
+    
     protected TestResult checkSetPreferencesReturnsFirst(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure the first value set to a given "
@@ -187,11 +177,7 @@ implements ActionTest {
         try {
             preferences.setValues("TEST", new String[] { "FIRST", "SECOND" });
         } catch (ReadOnlyException ex) {
-        	String message = "Unable to set preference value (ReadOnly error): "
-    			+ ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
+        	TestUtils.failOnException("Unable to set preference values.", ex, result);
         	return result;
         }
 
@@ -199,9 +185,7 @@ implements ActionTest {
         if (value != null && value.equals("FIRST")) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Preference value was '" + value + "', "
-        			+ "expected 'FIRST'.");
+        	TestUtils.failOnAssertion("preference value", value, "FIRST", result);
         }
         return result;
     }
@@ -226,19 +210,11 @@ implements ActionTest {
             preferences.store();
             
         } catch (ReadOnlyException ex) {
-        	String message = "Unable to set preference value (ReadOnly error): "
-    			+ ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
+        	TestUtils.failOnException("Unable to set preference value.", ex, result);
         	return result;
         	
         } catch (IOException ex) {
-        	String message = "Unable to store preference value (IO error): "
-    			+ ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
+        	TestUtils.failOnException("Unable to store preference value.", ex, result);
         	return result;
         	
         } catch (ValidatorException ex) {
@@ -271,43 +247,27 @@ implements ActionTest {
         
         PortletPreferences preferences = request.getPreferences();
         try {
-            preferences.setValue(PreferencesValidatorImpl.CHECK_VALIDATOR_COUNT,
+            preferences.setValue(
+            		PreferencesValidatorImpl.CHECK_VALIDATOR_COUNT,
             		"true");
             // Call store() method to invoke the validator.
             preferences.store();
             result.setReturnCode(TestResult.PASSED);
-            
         } catch (ReadOnlyException ex) {
-        	String message = "Unable to set preference value (ReadOnly error): "
-    			+ ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
-        	
+        	TestUtils.failOnException("Unable to set preference value.", ex, result);
         } catch (IOException ex) {
-        	String message = "Unable to store preference value (IO error): "
-    			+ ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
-        	
+        	TestUtils.failOnException("Unable to store preference value.", ex, result);
         } catch (ValidatorException ex) {
-        	String message = "Unable to store preference value "
-        		+ "(Validation error): " + ex.getMessage();
-        	LOG.error(message);
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(message);
-        	
+        	TestUtils.failOnException("Unable to store preference value.", ex, result);
         } finally {
         	try {
         		preferences.reset(PreferencesValidatorImpl.CHECK_VALIDATOR_COUNT);
         	} catch (ReadOnlyException ex) {
-        		LOG.error("Unable to reset preference value for: "
-        				+ PreferencesValidatorImpl.CHECK_VALIDATOR_COUNT
-        				+ " (ReadOnly error)");
+        		TestUtils.failOnException("Unable to reset preference value for "
+        				+ PreferencesValidatorImpl.CHECK_VALIDATOR_COUNT,
+        				ex, result);
         	}
         }
-        
         return result;
     }
 
@@ -322,49 +282,49 @@ implements ActionTest {
         
         boolean setOccured = false;
         boolean storeOccured = false;
-        boolean errorOccured = false;
-        String errorMessage = null;
         
         try {
-            preferences.setValue("dummyName", "notTheOriginal");
-            String value = preferences.getValue("dummyName", "Default");
-            if ("notTheOriginal".equals(value)) {
+        	// Set new value for preference "dummyName".
+            preferences.setValue(PREF_NAME, NEW_VALUE);
+            String value = preferences.getValue(PREF_NAME, DEF_VALUE);
+            if (NEW_VALUE.equals(value)) {
                 setOccured = true;
             }
             
+            // Store the preference and get value.
             preferences.store();
-            value = preferences.getValue("dummyName", "Default");
-            if ("notTheOriginal".equals(value)) {
+            value = preferences.getValue(PREF_NAME, DEF_VALUE);
+            if (NEW_VALUE.equals(value)) {
                 storeOccured = true;
             }
             
-            preferences.reset("dummyName");
+            // Reset preference to default value.
+            preferences.reset(PREF_NAME);
             
         } catch (ReadOnlyException ex) {
-        	errorOccured = true;
-        	errorMessage = "ReadOnly error: " + ex.getMessage();
-        	LOG.error(errorMessage, ex);
+        	TestUtils.failOnException("Unable to set preference value.", ex, result);
+        	return result;
         } catch (ValidatorException ex) {
-        	errorOccured = true;
-        	errorMessage = "Validation error: " + ex.getMessage();
-        	LOG.error(errorMessage, ex);
+        	TestUtils.failOnException("Unable to store preference value.", ex, result);
+        	return result;
         } catch(IOException ex) {
-        	errorOccured = true;
-        	errorMessage = "IO error: " + ex.getMessage();
-        	LOG.error(errorMessage, ex);
+        	TestUtils.failOnException("Unable to store preference value.", ex, result);
+        	return result;
         }
-
-        if (!errorOccured && setOccured && storeOccured) {
+        
+        // Everything is OK.
+        if (setOccured && storeOccured) {
         	result.setReturnCode(TestResult.PASSED);
-        } else if (errorOccured) {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage(errorMessage);
-        } else if (!setOccured) {
-        	result.setReturnCode(TestResult.FAILED);
+        }
+        // Error occurred when setting preference value.
+        else if (!setOccured) {
+        	result.setReturnCode(TestResult.WARNING);
         	result.setResultMessage("A function upon which the reset test "
         			+ "depends failed to execute as expected. "
         			+ "Check the other test results in this test suite.");
-        } else {
+        }
+        // Error occurred when storing preference value.
+        else {
         	result.setReturnCode(TestResult.FAILED);
         	result.setResultMessage("Preferences not successfully stored.");
         }
@@ -374,117 +334,119 @@ implements ActionTest {
     protected TestResult checkResetPreferences(PortletRequest request) {
         
     	TestResult result = new TestResult();
-    	result.setDescription("Tests that preferences are properly reset.");
+    	result.setDescription("Ensure preferences are properly reset.");
         
         PortletPreferences preferences = request.getPreferences();
-        LOG.warn("PortletPreferences impl: " + preferences.getClass().getName());
         boolean setOccured = false;
         boolean storeOccured = false;
         boolean resetOccured = false;
+        
         try {
-            preferences.setValue("dummyName", "notTheOriginal");
-            String pref = preferences.getValue("dummyName", "Default");
-            if ("notTheOriginal".equals(pref)) {
+        	// Set new value to overwrite the default value.
+            preferences.setValue(PREF_NAME, NEW_VALUE);
+            String value = preferences.getValue(PREF_NAME, DEF_VALUE);
+            if (NEW_VALUE.equals(value)) {
                 setOccured = true;
             }
-            if (LOG.isDebugEnabled()) {
-            	LOG.debug("Original preferences:");
-            	logPreferences(preferences);
-            }
+            
+            // Store the preferences.
             preferences.store();
-            if ("notTheOriginal".equals(preferences.getValue("dummyName", "Default"))) {
+            value = preferences.getValue(PREF_NAME, DEF_VALUE);
+            if (NEW_VALUE.equals(value)) {
                 storeOccured = true;
             }
-
-            preferences.reset("dummyName");
-            if (LOG.isDebugEnabled()) {
-            	LOG.debug("Preferences after dummyName reset:");
-            	logPreferences(preferences);
-            }
-
-            String preference =  preferences.getValue("dummyName", "defaultValue");
-            if ("dummyValue".equals(preference)) {
+            
+            // Reset the preference so that default value is restored.
+            preferences.reset(PREF_NAME);
+            value =  preferences.getValue(PREF_NAME, DEF_VALUE);
+            if (PREF_VALUE.equals(value)) {
                 resetOccured = true;
             }
         } catch (ReadOnlyException ex) {
-        	LOG.error(ex);
+        	TestUtils.failOnException("Unable to set preference value.", ex, result);
+        	return result;
         } catch (ValidatorException ex) {
-        	LOG.error(ex);
+        	TestUtils.failOnException("Unable to store preferences.", ex, result);
+        	return result;
         } catch (IOException ex) {
-        	LOG.error(ex);
+        	TestUtils.failOnException("Unable to store preferences.", ex, result);
+        	return result;
         }
-
+        
+        // Everything is OK.
         if (setOccured && storeOccured && resetOccured) {
         	result.setReturnCode(TestResult.PASSED);
-        } else if (!setOccured || !storeOccured) {
+        }
+        // Error occurred when setting or storing preferences.
+        else if (!setOccured || !storeOccured) {
         	result.setReturnCode(TestResult.WARNING);
         	result.setResultMessage("A function upon which the reset test "
         			+ "depends failed to execute as expected. "
         			+ "Check the other test results in this test suite.");
-        } else {
+        }
+        // Error occurred when resetting preference.
+        else {
         	result.setReturnCode(TestResult.FAILED);
         	result.setResultMessage("Preferences value was not successfully reset after store");
         }
         return result;
     }
     
-    /**
-     * 
-     * @param request  the portlet request.
-     * @return
-     */
     protected TestResult checkResetToNullPreferences(PortletRequest request) {
         
     	TestResult result = new TestResult();
-        result.setDescription("Tests that preferences are properly reset "
-        		+ "when originally null.");
+        result.setDescription("Ensure preferences are properly reset when originally null.");
         
         PortletPreferences preferences = request.getPreferences();
         boolean setOccured = false;
         boolean storeOccured = false;
         boolean resetOccured = false;
+        
         try {
-            preferences.setValue(BOGUS_KEY, "notTheOriginal");
-            String pref = preferences.getValue(BOGUS_KEY, "Default");
-            if (LOG.isDebugEnabled()) {
-            	LOG.debug("Original preferences:");
-            	logPreferences(preferences);
-            }
-            if ("notTheOriginal".equals(pref)) {
+        	// Set preference value to overwrite the original (null).
+            preferences.setValue(BOGUS_KEY, NEW_VALUE);
+            String value = preferences.getValue(BOGUS_KEY, DEF_VALUE);
+            if (NEW_VALUE.equals(value)) {
                 setOccured = true;
             }
-
+            
+            // Store the preferences.
             preferences.store();
-            if ("notTheOriginal".equals(preferences.getValue(BOGUS_KEY, "Default"))) {
+            value = preferences.getValue(BOGUS_KEY, DEF_VALUE);
+            if (NEW_VALUE.equals(value)) {
                 storeOccured = true;
             }
-
+            
+            // Reset preference value to null.
             preferences.reset(BOGUS_KEY);
-            if (LOG.isDebugEnabled()) {
-            	LOG.debug("Preferences after BOGUS_KEY reset:");
-            	logPreferences(preferences);
-            }
-
-            String preference =  preferences.getValue(BOGUS_KEY, "defaultValue");
-            if ("defaultValue".equals(preference)) {
+            value =  preferences.getValue(BOGUS_KEY, DEF_VALUE);
+            if (DEF_VALUE.equals(value)) {
                 resetOccured = true;
             }
         } catch (ReadOnlyException ex) {
-        	LOG.error(ex);
+        	TestUtils.failOnException("Unable to set preference value.", ex, result);
+        	return result;
         } catch (ValidatorException ex) {
-        	LOG.error(ex);
+        	TestUtils.failOnException("Unable to store preferences.", ex, result);
+        	return result;
         } catch (IOException ex) {
-        	LOG.error(ex);
+        	TestUtils.failOnException("Unable to store preferences.", ex, result);
+        	return result;
         }
-
+        
+        // Everything is OK.
         if (setOccured && storeOccured && resetOccured) {
         	result.setReturnCode(TestResult.PASSED);
-        } else if (!setOccured || !storeOccured) {
+        }
+        // Error occurred when setting or storing preferences.
+        else if (!setOccured || !storeOccured) {
         	result.setReturnCode(TestResult.WARNING);
         	result.setResultMessage("A function upon which the reset test "
         			+ "depends failed to execute as expected. "
         			+ "Check the other test results in this test suite.");
-        } else {
+        }
+        // Error occurred when resetting preference value.
+        else {
         	result.setReturnCode(TestResult.FAILED);
         	result.setResultMessage("Preferences value was not successfully "
         			+ "reset after store.");
@@ -529,8 +491,8 @@ implements ActionTest {
      * @param req
      * @return
      */
-    protected TestResult checkGetPreferenceMap(PortletRequest request) {
-        TestResult result = checkGetPreferenceNames(request);
+    protected TestResult checkGetPreferenceMap(PortletRequest req) {
+        TestResult result = checkGetPreferenceNames(req);
         result.setDescription("Ensure returned map is valid");
         return result;
     }
@@ -597,7 +559,9 @@ implements ActionTest {
     	}
     	return res;
     }
-
+    
+    
+    // Private Methods ---------------------------------------------------------
     
     /**
      * Logs out the portlet preferences.

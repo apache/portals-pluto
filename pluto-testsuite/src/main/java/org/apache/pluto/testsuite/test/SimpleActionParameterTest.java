@@ -15,7 +15,9 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import org.apache.pluto.testsuite.ActionTest;
 import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -26,8 +28,8 @@ import javax.portlet.PortletRequest;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public class SimpleActionParameterTest
-extends ActionAbstractReflectivePortletTest {
+public class SimpleActionParameterTest extends AbstractReflectivePortletTest
+implements ActionTest {
 	
 	/** Parameter key encoded in the action URL. */
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
@@ -38,52 +40,52 @@ extends ActionAbstractReflectivePortletTest {
     
     // Test Methods ------------------------------------------------------------
     
-    protected TestResult checkSentActionParameter(PortletRequest request) {
+    protected TestResult checkGetActionParameterInActionURL(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setDescription("Ensure that parameters encoded in "
-        		+ "the action URL are available in the action request.");
+        result.setDescription("Ensure parameters encoded in action URL are "
+        		+ "available in the action request.");
 
         String value = request.getParameter(KEY);
         if (value != null && value.equals(VALUE)) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-        	result.setResultMessage("Got value : " + value
-        			+ ", expected: " + VALUE);
+        	TestUtils.failOnAssertion("actionParameter", value, VALUE, result);
         }
         return result;
     }
 
-    protected TestResult checkSentActionParamerMap(PortletRequest request) {
+    protected TestResult checkGetActionParamerMap(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setDescription("Ensure that parameters encoded in "
-        		+ "the action URL are available in the action request "
-        		+ "parameter map.");
+        result.setDescription("Ensure parameters encoded in action URL are "
+        		+ "available in the action request parameter map;");
         
         Map parameterMap = request.getParameterMap();
         String[] values = (String[]) parameterMap.get(KEY);
         if (values != null && values.length == 1 && VALUE.equals(values[0])) {
         	result.setReturnCode(TestResult.PASSED);
+        } else if (values == null) {
+        	TestUtils.failOnAssertion("action parameter values",
+        	                          values,
+        	                          new String[] { VALUE },
+        	                          result);
+        } else if (values.length != 1) {
+        	TestUtils.failOnAssertion("length of action parameter values",
+        	                          String.valueOf(values.length),
+        	                          String.valueOf(1),
+        	                          result);
         } else {
-        	result.setReturnCode(TestResult.FAILED);
-        	String message = null;
-        	if (values == null) {
-        		message = "Unable to retrieve parameter from parameter map.";
-        	} else if (values.length != 1) {
-        		message = "Got " + values.length + " parameter values, "
-        				+ "expected: 1";
-        	} else {
-        		message = "Got value: " + values[0] + ", expected: " + VALUE;
-        	}
-        	result.setResultMessage(message);
+        	TestUtils.failOnAssertion("action parameter values",
+        	                          values,
+        	                          new String[] { VALUE },
+        	                          result);
         }
         return result;
     }
     
     protected TestResult checkParameterNames(PortletRequest request) {
         TestResult result = new TestResult();
-        result.setDescription("Ensure the parameter name encoded in "
-        		+ "the action URL exists in the parameter name enumeration.");
+        result.setDescription("Ensure parameters encoded in action URL "
+        		+ "exists in the parameter name enumeration.");
 
         boolean nameFound = false;
         for (Enumeration en = request.getParameterNames();
@@ -103,4 +105,5 @@ extends ActionAbstractReflectivePortletTest {
         }
         return result;
     }
+    
 }
