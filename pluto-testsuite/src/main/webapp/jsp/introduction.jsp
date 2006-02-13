@@ -38,6 +38,9 @@ limitations under the License.
     <c:forEach var="testConfig" items="${tests}" varStatus="status">
       <tr>
         <td>
+          # <c:out value="${status.index}"/>.
+        </td>
+        <td>
           <c:out value="${testConfig.name}"/>
         </td>
         
