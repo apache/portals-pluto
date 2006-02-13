@@ -38,6 +38,9 @@ public class TestResult implements Serializable {
     /** The description of the test. */
     private String description = "[unknown]";
     
+    /** The PLT number in the spec that is tested. */
+    private String specPLT = "[unknown]";
+    
     /** The return code of the test result: PASSED, WARNING, FAILED. */
     private String returnCode;
     
@@ -61,6 +64,14 @@ public class TestResult implements Serializable {
     
     public void setDescription(String description) {
     	this.description = description;
+    }
+    
+    public String getSpecPLT() {
+    	return specPLT;
+    }
+    
+    public void setSpecPLT(String specPLT) {
+    	this.specPLT = specPLT;
     }
     
     /**

@@ -16,14 +16,18 @@
 package org.apache.pluto.testsuite;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Configuration for <code>PortletTest</code>.
  * 
+ * @see TestConfigFactory
  * @see PortletTest
+ * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
@@ -39,16 +43,25 @@ public class TestConfig implements Serializable {
     /** Test name. */
     private String name = null;
     
-    /** Specification PLT No. tested by the PortletTest. */
-    private String plt = null;
-    
     private String displayURI = null;
     
-    private Map initParams = new HashMap();
+    private Map initParameters = new HashMap();
     
-    private Map actionParameters = new HashMap();
+    /**
+     * The action parameters list holding TestConfig.Parameter objects.
+     * We are not using Map to hold action parameters because parameters with
+     * the same name are allowed.
+     */
+    private List actionParameters = new ArrayList();
     
-    private Map renderParameters = new HashMap();
+    /**
+     * The render parameters list holding TestConfig.Parameter objects.
+     * We are not using Map to hold render parameters because parameters with
+     * the same name are allowed.
+     * 
+     * FIXME: when is this field used?
+     */
+    private List renderParameters = new ArrayList();
     
     
     // Constructor -------------------------------------------------------------
@@ -78,14 +91,6 @@ public class TestConfig implements Serializable {
         this.name = testName;
     }
 
-    public String getPlt() {
-    	return plt;
-    }
-    
-    public void setPlt(String plt) {
-    	this.plt = plt;
-    }
-    
     public String getDisplayURI() {
         return displayURI;
     }
@@ -95,27 +100,33 @@ public class TestConfig implements Serializable {
     }
 
     public void addInitParameter(String parameter, String value) {
-        this.initParams.put(parameter, value);
+        initParameters.put(parameter, value);
     }
 
     public Map getInitParameters() {
-        return Collections.unmodifiableMap(initParams);
+        return Collections.unmodifiableMap(initParameters);
     }
 
-    public void addActionParameter(String parameter, String value) {
-        this.actionParameters.put(parameter, value);
+    public void addActionParameter(String name, String value) {
+    	actionParameters.add(new Parameter(name, value));
     }
-
-    public Map getActionParameters() {
-        return Collections.unmodifiableMap(actionParameters);
+    
+    public List getActionParameters() {
+    	return actionParameters;
     }
-
-    public void addRenderParameter(String parameter, String value) {
-        this.renderParameters.put(parameter, value);
+    
+    /**
+     * FIXME: why is this method required?
+     */
+    public void addRenderParameter(String name, String value) {
+    	renderParameters.add(new Parameter(name, value));
     }
-
-    public Map getRenderParameters() {
-        return Collections.unmodifiableMap(renderParameters);
+    
+    /**
+     * FIXME: when is this method used?
+     */
+    public List getRenderParameters() {
+    	return renderParameters;
     }
 
     public String toString() {
@@ -124,5 +135,22 @@ public class TestConfig implements Serializable {
     	buffer.append("[").append(getName()).append("]");
     	return buffer.toString();
     }
+    
+    public static class Parameter {
+    	private String name = null;
+    	private String value = null;
+    	public Parameter(String name, String value) {
+    		this.name = name;
+    		this.value = value;
+    	}
+    	
+    	public String getName() {
+    		return name;
+    	}
+    	public String getValue() {
+    		return value;
+    	}
+    }
+    
 }
 

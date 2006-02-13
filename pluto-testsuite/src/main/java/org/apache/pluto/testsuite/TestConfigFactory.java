@@ -17,6 +17,7 @@ package org.apache.pluto.testsuite;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.digester.Digester;
@@ -24,17 +25,28 @@ import org.apache.pluto.testsuite.TestConfig;
 import org.xml.sax.SAXException;
 
 /**
- * @author <a href="ddewolf@apache.com">David H. DeWolf</a>
- *
+ * Test configuration factory that reads and parses testsuite config file using
+ * Digester and constructs <code>TestConfig</code> objects.
+ * 
+ * @see TestConfig
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class TestConfigFactory {
-
+	
+	/** Digester instance used to parse testsuite config file. */
     private Digester digester = new Digester();
-
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Creates a factory instance.
+     */
     public TestConfigFactory() {
         digester = new Digester();
-        digester.addObjectCreate("testportlet-config",
-                                 java.util.ArrayList.class);
+        digester.addObjectCreate("testportlet-config", ArrayList.class);
 
 
         digester.addObjectCreate("testportlet-config/testsuite-config",
@@ -42,13 +54,8 @@ public class TestConfigFactory {
 
         digester.addBeanPropertySetter("testportlet-config/testsuite-config/name",
                                        "name");
-
-        digester.addBeanPropertySetter("testportlet-config/testsuite-config/plt",
-                                       "plt");
-
         digester.addBeanPropertySetter("testportlet-config/testsuite-config/class",
                                        "testClassName");
-
         digester.addBeanPropertySetter("testportlet-config/testsuite-config/display-uri",
                                        "displayURI");
 
@@ -64,13 +71,26 @@ public class TestConfigFactory {
         digester.addCallParam("testportlet-config/testsuite-config/render-param/name", 0);
         digester.addCallParam("testportlet-config/testsuite-config/render-param/value", 1);
 
-        digester.addSetRoot("testportlet-config/testsuite-config",
-                            "add");
+        digester.addSetRoot("testportlet-config/testsuite-config", "add");
 
     }
-
+    
+    
+    // Public Methods ----------------------------------------------------------
+    
+    /**
+     * Reads and parses testsuite config file, creates a list of
+     * <code>TestConfig</code> objects.
+     * 
+     * @param in  the input stream of the testsuite config file.
+     * @return a list of <code>TestConfig</code> objects.
+     * @throws SAXException  if a parsing error occurs.
+     * @throws IOException  if an IO error occurs.
+     * @see TestConfig
+     */
     public List createTestConfigs(InputStream in)
     throws SAXException, IOException {
         return (List) digester.parse(in);
     }
+    
 }

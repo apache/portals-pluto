@@ -34,6 +34,14 @@
       <name>org.apache.pluto.testsuite.PARAM_TEST_KEY</name>
       <value>org.apache.pluto.testsuite.PARAM_TEST_VALUE</value>
     </action-param>
+    <action-param>
+      <name>org.apache.pluto.testsuite.PARAM_TEST_KEY_2</name>
+      <value>FIRST VALUE</value>
+    </action-param>
+    <action-param>
+      <name>org.apache.pluto.testsuite.PARAM_TEST_KEY_2</name>
+      <value>SECOND VALUE</value>
+    </action-param>
   </testsuite-config>
 
   <testsuite-config>
@@ -107,7 +115,7 @@
       <value>Test Portlet #1</value>
     </init-param>
     <init-param>
-      <name>shorttitle</name>
+      <name>short-title</name>
       <value>Test #1</value>
     </init-param>
     <init-param>

@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 
-
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
@@ -27,11 +26,11 @@ limitations under the License.
 
 <portlet:defineObjects/>
 
-<table style="font-size: -1">
+<table>
   <c:choose>
     <c:when test="${results == null}">
       <tr>
-        <th colspan="2" style="background-color: red; color: white">RESULT NOT FOUND</th>
+        <th colspan="2" style="background-color: red; color: white;">RESULT NOT FOUND</th>
       </tr>
     </c:when>
     <c:when test="${results.failed}">
@@ -77,8 +76,8 @@ limitations under the License.
         </c:choose>
       </td>
       
-      <td style="font-size:12px;" nowrap="true">
-        <c:out value="${result.name}"/>
+      <td style="white-space:nowrap;">
+        PLT <c:out value="${result.specPLT}"/> - <c:out value="${result.name}"/>
       </td>
     </tr>
     
@@ -86,16 +85,20 @@ limitations under the License.
       <c:when test="${result.returnCode == passed}">
         <tr>
           <td />
-          <td style="font-size:10px;">
-            <c:out value="${result.desc}"/>
+          <td style="font-size:smaller;">
+            <c:out value="${result.description}"/>
           </td>
         </tr>
       </c:when>
       <c:otherwise>
         <tr>
           <td />
-          <td style="font-size:10px;">
-            <c:out value="${result.results}"/>
+          <td style="font-size:smaller;">
+            <c:out value="${result.description}"/>
+            <br/>
+            <span style="color:#FF0000;">
+              <c:out value="${result.resultMessage}"/>
+            </span>
           </td>
         </tr>
       </c:otherwise>

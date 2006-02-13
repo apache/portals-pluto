@@ -100,41 +100,39 @@
     <class>org.apache.pluto.testsuite.test.ResourceBundleTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
     <init-param>
-        <name>resource-bundle</name>
-        <value>true</value>
+      <name>resource-bundle</name>
+      <value>true</value>
     </init-param>
     <init-param>
       <name>title_en</name>
       <value>Test Portlet 2 (en)</value>
     </init-param>
     <init-param>
-      <name>shorttitle_en</name>
+      <name>short-title_en</name>
       <value>Test 2 (en)</value>
     </init-param>
     <init-param>
       <name>keywords_en</name>
       <value>Test,Testing</value>
     </init-param>
-
     <init-param>
       <name>title_de</name>
       <value>Test Portlet 2 (de)</value>
     </init-param>
     <init-param>
-      <name>shorttitle_de</name>
+      <name>short-title_de</name>
       <value>Test 2 (de)</value>
     </init-param>
     <init-param>
         <name>keywords_de</name>
         <value>Test,Testen</value>
     </init-param>
-
     <init-param>
       <name>title_dflt</name>
       <value>Test Portlet 2 (dflt)</value>
     </init-param>
     <init-param>
-      <name>shorttitle_dflt</name>
+      <name>short-title_dflt</name>
       <value>Test 2 (dflt)</value>
     </init-param>
     <init-param>

@@ -17,6 +17,7 @@ limitations under the License.
 
 <%@ page import="java.util.Map" %>
 <%@ page import="javax.servlet.jsp.jstl.core.LoopTagStatus" %>
+<%@ page import="org.apache.pluto.testsuite.TestConfig" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
@@ -36,17 +37,28 @@ limitations under the License.
   <table>
     <c:forEach var="testConfig" items="${tests}" varStatus="status">
       <tr>
-        <td><c:out value="${testConfig.name}"/></td>
+        <td>
+          <c:out value="${testConfig.name}"/>
+        </td>
+        
+        <%-- Generate portlet action URL: Start =========================== --%>
         <portlet:actionURL secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
                            var="url">
           <portlet:param name="testId"
                          value='<%= ((LoopTagStatus) pageContext.getAttribute("status")).getIndex() + "" %>'/>
           <c:forEach var="param" items="${testConfig.actionParameters}">
-            <% Map.Entry paramEntry = (Map.Entry) pageContext.findAttribute("param"); %>
-            <portlet:param name="<%= paramEntry.getKey().toString() %>"
-                           value="<%= paramEntry.getValue().toString() %>"/>
+            <%
+                TestConfig.Parameter parameter = (TestConfig.Parameter)
+                        pageContext.findAttribute("param");
+                String paramName = parameter.getName();
+                String paramValue = parameter.getValue();
+            %>
+            <portlet:param name="<%= paramName %>"
+                           value="<%= paramValue %>"/>
           </c:forEach>
         </portlet:actionURL>
+        <%-- Generate portlet action URL: End ============================= --%>
+        
         <td>
           <a href="<c:out value="${url}"/>">Test</a>
         </td>

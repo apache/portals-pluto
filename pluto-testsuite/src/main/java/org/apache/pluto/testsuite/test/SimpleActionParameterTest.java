@@ -57,7 +57,7 @@ implements ActionTest {
     protected TestResult checkGetActionParamerMap(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL are "
-        		+ "available in the action request parameter map;");
+        		+ "available in the action request parameter map.");
         
         Map parameterMap = request.getParameterMap();
         String[] values = (String[]) parameterMap.get(KEY);
@@ -81,6 +81,40 @@ implements ActionTest {
         }
         return result;
     }
+    
+    /*
+     * TODO:
+     *
+    protected TestResult checkGetActionParameterMap_2(PortletRequest request) {
+    	TestResult result = new TestResult();
+    	result.setDescription("Ensure parameters encoded in action URL are "
+    			+ "available in the action request parameter map.");
+    	
+    	Map parameterMap = request.getParameterMap();
+    	String[] values = (String[]) parameterMap.get(KEY + "_2");
+    	
+    	
+    	
+    	if (values != null) {
+    		System.err.println("\n\nLog parameter values...\n");
+    		for (int i = 0; i < values.length; i++) {
+    			System.err.println("values[" + i + "] = " + values[i]);
+    		}
+    	}
+    	
+    	if (values != null && values.length == 2
+    			&& "FIRST VALUE".equals(values[0])
+    			&& "SECOND VALUE".equals(values[1])) {
+    		result.setReturnCode(TestResult.PASSED);
+    	} else {
+    		TestUtils.failOnAssertion("action parameter values",
+    		                          values,
+    		                          new String[] { "FIRST VALUE", "SECOND VALUE" },
+    		                          result);
+    	}
+    	return result;
+    }
+    */
     
     protected TestResult checkParameterNames(PortletRequest request) {
         TestResult result = new TestResult();
