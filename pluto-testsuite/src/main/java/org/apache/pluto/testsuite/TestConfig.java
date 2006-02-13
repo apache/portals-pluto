@@ -119,8 +119,9 @@ public class TestConfig implements Serializable {
     }
 
     public String toString() {
-    	StringBuffer buffer = new StringBuffer(super.toString());
-    	buffer.append("<").append(getName()).append(">");
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(getClass().getName());
+    	buffer.append("[").append(getName()).append("]");
     	return buffer.toString();
     }
 }
