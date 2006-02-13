@@ -34,20 +34,17 @@ limitations under the License.
 <p>
   Please select one of the following tests:
   <table>
-    <c:forEach var="test" items="${tests}" varStatus="status">
+    <c:forEach var="testConfig" items="${tests}" varStatus="status">
       <tr>
-        <td><c:out value="${test.plt}"/></td>
-        <td><c:out value="${test.name}"/></td>
+        <td><c:out value="${testConfig.name}"/></td>
         <portlet:actionURL secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
                            var="url">
           <portlet:param name="testId"
-                         value='<%=((LoopTagStatus) pageContext.getAttribute("status")).getIndex()+""%>'/>
-          <c:forEach var="param" items="${test.actionParameters}">
-            <%
-              Map.Entry parm = (Map.Entry) pageContext.findAttribute("param");
-            %>
-            <portlet:param name="<%=parm.getKey().toString()%>"
-                           value="<%=parm.getValue().toString()%>"/>
+                         value='<%= ((LoopTagStatus) pageContext.getAttribute("status")).getIndex() + "" %>'/>
+          <c:forEach var="param" items="${testConfig.actionParameters}">
+            <% Map.Entry paramEntry = (Map.Entry) pageContext.findAttribute("param"); %>
+            <portlet:param name="<%= paramEntry.getKey().toString() %>"
+                           value="<%= paramEntry.getValue().toString() %>"/>
           </c:forEach>
         </portlet:actionURL>
         <td>
