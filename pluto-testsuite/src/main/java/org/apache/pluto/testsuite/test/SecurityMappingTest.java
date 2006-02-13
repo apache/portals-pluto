@@ -15,98 +15,82 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import java.util.Map;
-import java.util.Properties;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 
-import org.apache.pluto.testsuite.ExpectedResults;
 import org.apache.pluto.testsuite.TestResult;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class SecurityMappingTest extends AbstractReflectivePortletTest {
-
-    public Map doPrerequisiteAction(PortletContext context, ActionRequest req,
-                                    ActionResponse res) {
-        return new java.util.HashMap();
+	
+    // Test Methods ------------------------------------------------------------
+    
+    protected TestResult checkIsUserInMappedRole(PortletRequest request) {
+        TestResult result = isUserLoggedIn(request);
+        result.setDescription("Test if user is in mapped role");
+        if (TestResult.WARNING.equals(result.getReturnCode())) {
+            return result;
+        }
+        
+        ExpectedResults expectedResults = ExpectedResults.getInstance();
+        String role = expectedResults.getMappedSecurityRole();
+        if (request.isUserInRole(role)) {
+            result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.WARNING);
+        	result.setResultMessage("User is not in the expected role: " + role
+        			+ ". This may be due to misconfiuration.");
+        }
+        return result;
     }
-
-    protected TestResult checkIsUserInMappedRole(PortletRequest req) {
-        TestResult res = isUserLoggedIn(req);
-        res.setName("User In Mapped Role Test");
-        res.setDesc("Test if user is in mapped role");
-        if(TestResult.WARNING.equals(res.getReturnCode())) {
-            return res;
+    
+    protected TestResult checkIsUserInUnmappedRole(PortletRequest request) {
+        TestResult result = isUserLoggedIn(request);
+        result.setDescription("Test if user is in unmapped role");
+        if (TestResult.WARNING.equals(result.getReturnCode())) {
+            return result;
         }
-
-        Properties props = ExpectedResults.getExpectedProperties();
-        String role = props.getProperty("expected.security.role.mapped");
-
-        if(req.isUserInRole(role)) {
-            res.setReturnCode(TestResult.PASSED);
+        
+        ExpectedResults expectedResults = ExpectedResults.getInstance();
+        String role = expectedResults.getUnmappedSecurityRole();
+        if (request.isUserInRole(role)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.WARNING);
+        	result.setResultMessage("User is not in the expected role: " + role
+        			+ ". This may be due to misconfiuration.");
         }
-        else {
-            res.setReturnCode(TestResult.WARNING);
-            res.setReturnCode("User is not in the expected '"+role+"' role.  This may be due to misconfiuration.");
-        }
-
-        return res;
+        return result;
     }
-
-    protected TestResult checkIsUserInUnmappedRole(PortletRequest req) {
-        TestResult res = isUserLoggedIn(req);
-        res.setName("User In Unmapped Role Test");
-        res.setDesc("Test if user is in unmapped role");
-        if(TestResult.WARNING.equals(res.getReturnCode())) {
-            return res;
+    
+    protected TestResult checkIsUserIndUndeclaredRole(PortletRequest request) {
+        TestResult result = isUserLoggedIn(request);
+        result.setDescription("Test if user is in undeclared role");
+        if (TestResult.WARNING.equals(result.getReturnCode())) {
+            return result;
         }
-
-        Properties props = ExpectedResults.getExpectedProperties();
-        String role = props.getProperty("expected.security.role");
-
-        if(req.isUserInRole(role)) {
-            res.setReturnCode(TestResult.PASSED);
+        
+        String fakeRole = "fakeTestRoleFooBar";
+        if (!request.isUserInRole(fakeRole)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("User is in the fake role named " + fakeRole);
         }
-        else {
-            res.setReturnCode(TestResult.WARNING);
-            res.setReturnCode("User is not in the expected '"+role+"' role.  This may be due to misconfiuration.");
-        }
-
-        return res;
+        return result;
     }
-
-    protected TestResult checkIsUserIndUndeclaredRole(PortletRequest req) {
-        TestResult res = isUserLoggedIn(req);
-        res.setName("User In Undeclared Role Test");
-        res.setDesc("Test if user is in undeclared role");
-        if(TestResult.WARNING.equals(res.getReturnCode())) {
-            return res;
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    private TestResult isUserLoggedIn(PortletRequest request) {
+    	TestResult result = new TestResult();
+        if (request.getRemoteUser() == null) {
+            result.setReturnCode(TestResult.WARNING);
+            result.setResultMessage("User is not logged in.");
         }
-
-        if(!req.isUserInRole("fakeTestRoleFooBar")) {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setReturnCode("User is in the fake role named 'fakeTestRoleFooBar'");
-        }
-
-        return res;
-    }
-
-
-    private TestResult isUserLoggedIn(PortletRequest req) {
-        if (req.getRemoteUser()==null) {
-            TestResult res = new TestResult();
-            res.setReturnCode(TestResult.WARNING);
-            res.setResults("User is not logged in.");
-            return res;
-        }
-        return new TestResult();
+        return result;
     }
 }

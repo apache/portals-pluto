@@ -15,85 +15,85 @@
  */
 package org.apache.pluto.testsuite.test;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Properties;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
-import org.apache.pluto.testsuite.ExpectedResults;
 import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class MiscTest extends AbstractReflectivePortletTest {
 
-
-    protected TestResult checkContextMajorVersion(PortletContext ctx) {
-        TestResult res = new TestResult();
-        res.setName("Major Version Test");
-        res.setDesc("Make sure that the expected major version number is returned.");
-        Properties props = ExpectedResults.getExpectedProperties();
-        String major = String.valueOf(ctx.getMajorVersion());
-        if(major.equals(props.getProperty("expected.version.major"))) {
-            res.setReturnCode(TestResult.PASSED);
+	// Test Methods ------------------------------------------------------------
+	
+    protected TestResult checkContextMajorVersion(PortletContext context) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure the expected major version number is returned.");
+        
+        String majorVersion = String.valueOf(context.getMajorVersion());
+        ExpectedResults expectedResults = ExpectedResults.getInstance();
+        String expected = expectedResults.getMajorVersion();
+        if (majorVersion != null && majorVersion.equals(expected)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("major version", majorVersion, expected, result);
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Major Version: "+major+". Expected: "+props.getProperty("expected.version.major"));
-        }
-        return res;
+        return result;
     }
 
-    protected TestResult checkContextMinorVersion(PortletContext ctx) {
-        TestResult res = new TestResult();
-        res.setName("Minor Version Test");
-        res.setDesc("Make sure that the expected minor version number is returned.");
-        Properties props = ExpectedResults.getExpectedProperties();
-        String minor = String.valueOf(ctx.getMinorVersion());
-        if(minor.equals(props.getProperty("expected.version.minor"))) {
-            res.setReturnCode(TestResult.PASSED);
+    protected TestResult checkContextMinorVersion(PortletContext context) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure the expected minor version number is returned.");
+        
+        String minorVersion = String.valueOf(context.getMinorVersion());
+        ExpectedResults expectedResults = ExpectedResults.getInstance();
+        String expected = expectedResults.getMinorVersion();
+        if (minorVersion != null && minorVersion.equals(expected)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("minor version", minorVersion, expected, result);
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Minor Version: "+minor+". Expected: "+props.getProperty("expected.version.minor"));
+        return result;
+    }
+    
+    protected TestResult checkContextServerInfo(PortletContext context) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure the expected server info is returned.");
+        
+        String serverInfo = context.getServerInfo();
+        ExpectedResults expectedResults = ExpectedResults.getInstance();
+        String expected = expectedResults.getServerInfo();
+        if (serverInfo != null && serverInfo.equals(expected)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("server info", serverInfo, expected, result);
         }
-        return res;
+        return result;
     }
 
-
-
-    protected TestResult checkContextServerInfo(PortletContext ctx) {
-        TestResult res = new TestResult();
-        res.setName("Server Info Test");
-        res.setDesc("Make sure that the expected server info is returned.");
-        Properties props = ExpectedResults.getExpectedProperties();
-        if(ctx.getServerInfo().equals(props.getProperty("expected.serverInfo"))) {
-            res.setReturnCode(TestResult.PASSED);
+    protected TestResult checkPortalInfo(PortletRequest request) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure the expected portal info is returned.");
+        
+        String portalInfo = request.getPortalContext().getPortalInfo();
+        ExpectedResults expectedResults = ExpectedResults.getInstance();
+        String expected = expectedResults.getPortalInfo();
+        if (portalInfo != null && portalInfo.equals(expected)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("portal info", portalInfo, expected, result);
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Server info: "+ctx.getServerInfo()+". Expected: "+props.getProperty("expected.serverInfo"));
-        }
-        return res;
-    }
-
-    protected TestResult checkPortalInfo(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Portal Info Test");
-        res.setDesc("Make sure that the expected portal info is returned.");
-        Properties props = ExpectedResults.getExpectedProperties();
-        if(req.getPortalContext().getPortalInfo().equals(props.getProperty("expected.portalInfo"))) {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Portal info: "+req.getPortalContext().getPortalInfo()+". Expected: "+props.getProperty("expected.portalInfo"));
-        }
-        return res;
+        return result;
     }
 
     /**
@@ -102,88 +102,64 @@ public class MiscTest extends AbstractReflectivePortletTest {
      * @param req
      * @return
      */
-    protected TestResult checkSupportedModes(PortletRequest req)  {
-        TestResult res = new TestResult();
-        res.setName("Supported Modes Test");
-        res.setDesc("Make sure that the expected modes are returned.");
+    protected TestResult checkSupportedModes(PortletRequest request)  {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure the expected portlet modes are returned.");
+        
+        List requiredPortletModes = new ArrayList();
+        requiredPortletModes.add(PortletMode.VIEW);
+        requiredPortletModes.add(PortletMode.EDIT);
+        requiredPortletModes.add(PortletMode.HELP);
 
-        boolean hasView = false;
-        boolean hasEdit = false;
-        boolean hasHelp = false;
-
-        Enumeration enumerator= req.getPortalContext().getSupportedPortletModes();
-        while(enumerator.hasMoreElements()) {
-            PortletMode mode = (PortletMode)enumerator.nextElement();
-            if(mode.equals(PortletMode.VIEW)) {
-                hasView  = true;
-            }
-            else if(mode.equals(PortletMode.EDIT)) {
-                hasEdit  = true;
-            }
-            else if(mode.equals(PortletMode.HELP)) {
-                hasHelp  = true;
-            }
+        for (Enumeration en = request.getPortalContext().getSupportedPortletModes();
+        		en.hasMoreElements(); ) {
+            PortletMode portletMode = (PortletMode) en.nextElement();
+            requiredPortletModes.remove(portletMode);
         }
-
-        if(hasView && hasEdit &&  hasHelp) {
-            res.setReturnCode(TestResult.PASSED);
+        
+        if (requiredPortletModes.isEmpty()) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	StringBuffer buffer = new StringBuffer();
+        	for (Iterator it = requiredPortletModes.iterator();
+        			it.hasNext(); ) {
+        		buffer.append(it.next()).append(", ");
+        	}
+        	result.setResultMessage("Required portlet modes ["
+        			+ buffer.toString() + "] are not supported.");
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            StringBuffer sb = new StringBuffer();
-            if(!hasView) {
-                sb.append("'View' mode not found. ");
-            }
-            if(!hasEdit) {
-                sb.append("'Edit' mode not found. ");
-            }
-            if(!hasHelp) {
-                sb.append("'Help' mode not found. ");
-            }
-        }
-        return res;
+        return result;
     }
 
-    protected TestResult checkSupportedWindowSates(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Supported Window States Test");
-        res.setDesc("Make sure that the expected states are returned.");
-
-        boolean hasMin = false;
-        boolean hasMax = false;
-        boolean hasNor = false;
-
-        Enumeration enumerator= req.getPortalContext().getSupportedWindowStates();
-        while(enumerator.hasMoreElements()) {
-            WindowState mode = (WindowState)enumerator.nextElement();
-            if(mode.equals(WindowState.MINIMIZED)) {
-                hasMin  = true;
-            }
-            else if(mode.equals(WindowState.MAXIMIZED)) {
-                hasMax  = true;
-            }
-            else if(mode.equals(WindowState.NORMAL)) {
-                hasNor  = true;
-            }
+    protected TestResult checkSupportedWindowSates(PortletRequest request) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure the expected window states are returned.");
+        
+        List requiredWindowStates = new ArrayList();
+        requiredWindowStates.add(WindowState.MINIMIZED);
+        requiredWindowStates.add(WindowState.MAXIMIZED);
+        requiredWindowStates.add(WindowState.NORMAL);
+        
+        for (Enumeration en = request.getPortalContext().getSupportedWindowStates();
+        		en.hasMoreElements(); ) {
+            WindowState windowState = (WindowState) en.nextElement();
+            requiredWindowStates.remove(windowState);
         }
-
-        if(hasMin && hasMax &&  hasNor) {
-            res.setReturnCode(TestResult.PASSED);
+        
+        if (requiredWindowStates.isEmpty()) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+            StringBuffer buffer = new StringBuffer();
+            for (Iterator it = requiredWindowStates.iterator();
+            		it.hasNext(); ) {
+            	buffer.append(it.next()).append(", ");
+            }
+            result.setResultMessage("Required window states ["
+            		+ buffer.toString() + "] are not supported.");
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            StringBuffer sb = new StringBuffer();
-            if(!hasMin) {
-                sb.append("'Minimized' state not found. ");
-            }
-            if(!hasMax) {
-                sb.append("'Maximized' state not found. ");
-            }
-            if(!hasNor) {
-                sb.append("'Normal' state not found. ");
-            }
-        }
-        return res;
+        return result;
     }
 
 }
