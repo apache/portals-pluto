@@ -135,7 +135,11 @@ public class PortletPreferencesImpl implements PortletPreferences {
                                 storedPreferences[i]);
             }
         	// Store the preferences retrieved from portlet.xml.
-        	store();
+            //   Portlet preferences are stored everytime when a
+            //   PortletPreferencesImpl instance is created.
+            //   So here we do not check the portlet request method ID.
+        	internalStore();
+        	
         } catch (PortletContainerException ex) {
             LOG.error("Error retrieving preferences.", ex);
             //TODO: Rethrow up the stack????
@@ -270,18 +274,39 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
     
     /**
-     * Stores the portlet preferences to a persistent storage. If a preferences
-     * validator is defined for this portlet, this method firstly validates the
-     * portlet preferences.
+     * Stores the portlet preferences to a persistent storage. This method
+     * should only be invoked within <code>processAction()</code> method.
+     * 
+     * @see #internalStore()
+     * 
+     * @throws IllegalStateException  if this method is not invoked within
+     *         <code>processAction()</code> method.
      * @throws ValidatorException  if the portlet preferences are not valid.
      * @throws IOException  if an error occurs with the persistence mechanism.
      */
     public void store() throws IOException, ValidatorException {
-        // Not allowed when not called in action.
         if (!Constants.METHOD_ACTION.equals(methodId)) {
             throw new IllegalStateException(
                 	"store is only allowed inside a processAction call.");
         }
+        internalStore();
+    }
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    /**
+     * Stores the portlet preferences to a persistent storage. If a preferences
+     * validator is defined for this portlet, this method firstly validates the
+     * portlet preferences.
+     * <p>
+     * This method is invoked internally, thus it does not check the portlet
+     * request method ID (METHOD_RENDER or METHOD_ACTION).
+     * </p>
+     * @throws ValidatorException  if the portlet preferences are not valid.
+     * @throws IOException  if an error occurs with the persistence mechanism.
+     */
+    private void internalStore() throws IOException, ValidatorException {
         // Validate the preferences before storing, if a validator is defined.
         //   If the preferences cannot pass the validation,
         //   an ValidatorException will be thrown out.

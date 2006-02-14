@@ -72,7 +72,7 @@ implements RenderRequest {
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
-            		getContainer(), getWindow(), this, Constants.METHOD_ACTION);
+            		getContainer(), getWindow(), this, Constants.METHOD_RENDER);
         }
         return portletPreferences;
     }
