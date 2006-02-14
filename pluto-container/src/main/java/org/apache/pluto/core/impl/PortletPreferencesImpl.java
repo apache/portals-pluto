@@ -236,7 +236,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         Map map = new HashMap();
         Iterator it = preferences.keySet().iterator();
         while (it.hasNext()) {
-            PortletPreference pref = (PortletPreference)preferences.get(it.next());
+            PortletPreference pref = (PortletPreference) preferences.get(it.next());
             map.put(pref.getName(), pref.getValues().clone());
         }
         return Collections.unmodifiableMap(map);
