@@ -29,6 +29,10 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletSession;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -90,31 +94,30 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
                               PortletRequest request,
                               PortletResponse response) {
         TestResults results = new TestResults(getTestSuiteName());
-        Method[] methods = getClass().getDeclaredMethods();
-        for (int i = 0; i < methods.length; i++) {
-            if (methods[i].getName().startsWith("check")) {
-            	debugWithName("Invoking test method: " + methods[i].getName());
-                try {
-                	TestResult result = invoke(methods[i],
-                			config, context, request, response);
-                	if (result.getName() == null) {
-                		result.setName(methods[i].getName());
-                	}
-                	results.add(result);
-                	debugWithName("Test Result: " + result);
-                } catch (Throwable th) {
-                	String message = "Error invoking " + methods[i].getName()
-                			+ " (" + th.getClass().getName() + "): "
-                			+ th.getMessage();
-                	errorWithName(message, th);
-                    TestResult result = new TestResult();
-                    result.setName(methods[i].getName());
-                    result.setReturnCode(TestResult.FAILED);
-                    result.setResultMessage(message);
-                    results.add(result);
-                }
+        
+        for (Iterator it = getCheckMethods().iterator(); it.hasNext(); ) {
+        	Method method = (Method) it.next();
+        	debugWithName("Invoking test method: " + method.getName());
+        	try {
+        		TestResult result = invoke(method, config, context, request, response);
+        		if (result.getName() == null) {
+        			result.setName(method.getName());
+        		}
+        		results.add(result);
+        		debugWithName("Test Result: " + result);
+        	} catch (Throwable th) {
+        		String message = "Error invoking " + method.getName()
+        				+ " (" + th.getClass().getName() + "): "
+        				+ th.getMessage();
+        		errorWithName(message, th);
+        		TestResult result = new TestResult();
+        		result.setName(method.getName());
+        		result.setReturnCode(TestResult.FAILED);
+        		result.setResultMessage(message);
+        		results.add(result);
             }
         }
+        
         return results;
     }
     
@@ -124,7 +127,8 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     protected Map getInitParameters() {
         return initParameters;
     }
-
+    
+    
     // Private Methods ---------------------------------------------------------
     
     private void debugWithName(String message) {
@@ -137,6 +141,36 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     	if (LOG.isErrorEnabled()) {
     		LOG.error("Test [" + getClass().getName() + "]: " + message, cause);
     	}
+    }
+    
+    /**
+     * Returns check methods to run as tests using java reflection.
+     * The following rules are applied to select check methods:
+     * <ul>
+     *   <li>methods declared in this class or inherited from super class</li>
+     *   <li>methods with modifier 'public' or 'protected', but not 'abstract'</li>
+     *   <li>methods that starts with <code>check</code></li> 
+     * </ul>
+     * @return a list of check methods.
+     */
+    private List getCheckMethods() {
+    	List checkMethods = new ArrayList();
+    	for (Class clazz = getClass();
+    			clazz != null && AbstractReflectivePortletTest.class.isAssignableFrom(clazz);
+    			clazz = clazz.getSuperclass()) {
+    		// debugWithName("Checking class: " + clazz.getName());
+    		Method[] methods = clazz.getDeclaredMethods();
+    		for (int i = 0; i < methods.length; i++) {
+    			int mod = methods[i].getModifiers();
+    			if ((Modifier.isPublic(mod) || Modifier.isProtected(mod))
+    					&& !Modifier.isAbstract(mod)
+    					&& methods[i].getName().startsWith("check")) {
+    				// debugWithName(" - got check method: " + methods[i].getName());
+    				checkMethods.add(methods[i]);
+    			}
+    		}
+    	}
+        return checkMethods;
     }
     
     /**

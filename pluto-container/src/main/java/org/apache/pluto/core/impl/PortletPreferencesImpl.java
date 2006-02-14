@@ -122,11 +122,17 @@ public class PortletPreferencesImpl implements PortletPreferences {
         	LOG.debug("Loaded default preferences: " + toString());
         }
         
+        // Merge stored portlet preferences into preferences map.
         try {
-            PortletPreference[] prefs =
-            	preferencesService.getStoredPreferences(window, request);
-            for (int i = 0; i < prefs.length; i++) {
-                preferences.put(prefs[i].getName(), prefs[i]);
+            PortletPreference[] storedPreferences = preferencesService
+            		.getStoredPreferences(window, request);
+            for (int i = 0; i < storedPreferences.length; i++) {
+            	if (LOG.isDebugEnabled()) {
+            		LOG.debug("Merging stored preference: "
+            				+ storedPreferences[i].getName());
+            	}
+                preferences.put(storedPreferences[i].getName(),
+                                storedPreferences[i]);
             }
         	// Store the preferences retrieved from portlet.xml.
         	store();
@@ -140,6 +146,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
             LOG.warn("ValidatorException initializing portlet preferences. "
             		+ "This is not illegal at this point "
             		+ "since we are just retreiving from portlet.xml.", ex);    	
+        }
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Merged stored preferences: " + toString());
         }
     }
     
@@ -193,9 +202,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
     public void setValue(String key, String value) throws ReadOnlyException {
         if (isReadOnly(key)) {
-            throw new ReadOnlyException(EXCEPTIONS.getString("error.preference.readonly", key));
+            throw new ReadOnlyException(EXCEPTIONS.getString(
+            		"error.preference.readonly", key));
         }
-        
         PortletPreference pref = (PortletPreference) preferences.get(key);
         if (pref != null) {
             pref.setValues(new String[]{value});
@@ -251,9 +260,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         		resetDone = true;
         	}
         }
-        // Reset preference to null if default values are not defined.
-        // TODO: should we remove the preference or set its value to null?
-        // Should getNames() return this key?
+        // Remove preference if default values are not defined (PLT.14.1).
         if (!resetDone) {
         	if (LOG.isDebugEnabled()) {
         		LOG.debug("Resetting preference to null for key: " + key);
@@ -263,7 +270,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
     
     /**
-     * Stores the portlet preferences to a persistent storage.
+     * Stores the portlet preferences to a persistent storage. If a preferences
+     * validator is defined for this portlet, this method firstly validates the
+     * portlet preferences.
      * @throws ValidatorException  if the portlet preferences are not valid.
      * @throws IOException  if an error occurs with the persistence mechanism.
      */
@@ -283,7 +292,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
         // Store the portlet preferences.
         PortletPreference[] prefs = (PortletPreference[]) 
-        		new ArrayList(preferences.values()).toArray(
+        		(new ArrayList(preferences.values())).toArray(
         				new PortletPreference[preferences.size()]);
         try {
         	preferencesService.store(window, request, prefs);
