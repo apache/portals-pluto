@@ -152,6 +152,38 @@ body {
     border-width: 0px;
 }
 
+/**
+ * The FAQ.
+ */
+
+.section dl {
+    background-color: #FFFFFF;
+    border-width: 0px;
+}
+
+.section dt {
+    padding: 10px 0px 5px 0px;
+}
+
+.section dt b {
+    font-family: "Trebuchet MS", Trebuchet, Arial, Verdana, Sans-serif;
+    font-size: 120%;
+}
+
+.section dd {
+    border-width: 0px 0px 1px 0px;
+    border-color: #808080;
+    border-style: dotted;
+}
+
+.section dd hr {
+    visibility: hidden;
+}
+
+/**
+ * The footer.
+ */
+
 #footer {
     border-top-width: 1px;
     border-top-style: solid;
