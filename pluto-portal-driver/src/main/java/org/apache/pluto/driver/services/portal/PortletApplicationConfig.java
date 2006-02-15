@@ -18,15 +18,11 @@ package org.apache.pluto.driver.services.portal;
 import java.util.Collection;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletApplicationConfig {
-    private static final Log LOG =
-        LogFactory.getLog(PortletApplicationConfig.class);
 
     private String contextPath;
     private Map portlets;

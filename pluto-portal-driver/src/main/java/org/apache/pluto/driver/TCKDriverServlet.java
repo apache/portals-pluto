@@ -26,20 +26,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 /**
- * TCK Driver Servlet
+ * TCK Driver Servlet.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Dec 11, 2005
  */
 public class TCKDriverServlet extends PortalDriverServlet {
-
-    private static final Log LOG = LogFactory.getLog( TCKDriverServlet.class );
-
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(TCKDriverServlet.class);
+    
     private int pageCounter = 0;
-
+    
     public String getServletInfo() {
         return "Pluto TCK Driver Servlet";
     }
@@ -49,66 +52,94 @@ public class TCKDriverServlet extends PortalDriverServlet {
         container = (PortletContainer) servletContext.getAttribute(
                 AttributeKeys.PORTLET_CONTAINER);
     }
-
+    
+    /**
+     * Overwrites <code>super.doGet(..)</code>. If <code>portletName</code>
+     * (multiple occurrences) parameter is received, the driver is attempting
+     * to create a new page. This page must be setup and then redirected to the
+     * actual page. Otherwise, the driver calls <code>super.doGet(..)</code>
+     * to continue as normal.
+     * @param request  the incoming servlet request.
+     * @param response  the incoming servlet response.
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
-
-        // If portletNames are defined, the driver is attempting to
-        //   create a new page.  This page must be setup and then
-        //   redirected to the actual page.
         String[] portletNames = request.getParameterValues("portletName");
-        if(portletNames != null && portletNames.length > 0) {
-            if(LOG.isDebugEnabled()) {
-                LOG.debug("Initializing new TCK Page.");
-            }
+        if (portletNames != null && portletNames.length > 0) {
+        	debugWithName("Initializing new TCK page...");
             doSetup(request, response);
-            return;
+        } else {
+        	debugWithName("No portlet names specified. Continue as normal.");
+        	super.doGet(request, response);
         }
-
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("TCK Test: No Portlet Names specified.  Continue as normal.");
-        }
-        super.doGet(request, response);
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse response)
     throws IOException, ServletException {
         super.doGet(req, response);
     }
-
-    public void doSetup(HttpServletRequest request, HttpServletResponse response)
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    private void doSetup(HttpServletRequest request,
+                         HttpServletResponse response)
     throws IOException, ServletException {
         String[] portletNames = request.getParameterValues("portletName");
         String pageName = request.getParameter("pageName");
-        if(pageName == null) {
-
-            AdminConfiguration adminConfig = (AdminConfiguration)getServletContext()
-                    .getAttribute(AttributeKeys.DRIVER_ADMIN_CONFIG);
-
-            pageName = new java.text.DecimalFormat("TCK00000").format(pageCounter++);
-            PageConfig config = new PageConfig();
-            config.setName(pageName);
-            config.setUri("/WEB-INF/fragments/portlet.jsp");
-            for(int i = 0;i < portletNames.length; i++) {
-                int idx = portletNames[i].indexOf("/");
-                String context = "/"+portletNames[i].substring(0, idx);
-                String portletName = portletNames[i].substring(idx + 1, portletNames[i].length());
-                config.addPortlet(context, portletName);
-                adminConfig.getPortletRegistryAdminService().addPortletApplication(context);
+        if (pageName != null) {
+        	debugWithName("Retrieved page name from request: " + pageName);
+        } else {
+        	debugWithName("Creating page name...");
+        	AdminConfiguration adminConfig = (AdminConfiguration)
+            		getServletContext()
+            		.getAttribute(AttributeKeys.DRIVER_ADMIN_CONFIG);
+            if (adminConfig == null) {
+                throw new ServletException("Invalid configuration: "
+                		+ "an AdminConfiguration must be specified "
+                		+ "to run the TCK.");
+            }
+            
+            pageName = (new DecimalFormat("TCK00000")).format(pageCounter++);
+            PageConfig pageConfig = new PageConfig();
+            pageConfig.setName(pageName);
+            pageConfig.setUri(DEFAULT_PAGE_URI);
+            for (int i = 0; i < portletNames.length; i++) {
+            	debugWithName("Processing portlet name: " + portletNames[i]);
+                int index = portletNames[i].indexOf("/");
+                String contextPath = "/" + portletNames[i].substring(0, index);
+                String portletName = portletNames[i].substring(index + 1);
+                pageConfig.addPortlet(contextPath, portletName);
+                adminConfig.getPortletRegistryAdminService()
+                		.addPortletApplication(contextPath);
             }
 
-
-            if(adminConfig == null) {
-                throw new ServletException("Invalid Configuration.  An AdminConfiguration must be specified to run the TCK.");
-            }
-            adminConfig.getRenderConfigAdminService().addPage(config);
-            if(LOG.isDebugEnabled()) {
-                LOG.debug("Created TCK Page: "+pageName);
-            }
+            adminConfig.getRenderConfigAdminService().addPage(pageConfig);
+            debugWithName("Created TCK Page: " + pageName);
         }
 
         // The other possibility would be to redirect to the actual portal.
-        // I'm not sure which is better at this point.
-        response.sendRedirect(request.getRequestURL()+(request.getRequestURL().toString().endsWith("/")?"":"/")+pageName);
+        //   I'm not sure which is better at this point.
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(request.getRequestURL().toString());
+        if (!request.getRequestURL().toString().endsWith("/")) {
+        	buffer.append("/");
+        }
+        buffer.append(pageName);
+        debugWithName("Sending redirect to: " + buffer.toString());
+        response.sendRedirect(buffer.toString());
     }
+    
+    /**
+     * Prints debug message with a <code>[Pluto TCK Driver]</code> prefix.
+     * @param message  message to debug.
+     */
+    private void debugWithName(String message) {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("[Pluto TCK Driver] " + message);
+    	}
+    }
+    
 }

@@ -26,8 +26,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLFactory;
@@ -40,8 +38,6 @@ import org.apache.pluto.services.PortletURLProvider;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public class PortletURLProviderImpl implements PortletURLProvider {
-
-    private static final Log LOG = LogFactory.getLog(PortletURLProviderImpl.class);
 
     private PortalURL url;
     private String window;

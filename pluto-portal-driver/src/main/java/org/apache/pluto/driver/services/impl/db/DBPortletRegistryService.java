@@ -35,7 +35,6 @@ import javax.servlet.ServletContext;
 import java.util.Set;
 import java.util.Iterator;
 import java.io.InputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 
 /**

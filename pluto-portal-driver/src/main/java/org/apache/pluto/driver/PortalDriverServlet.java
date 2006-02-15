@@ -48,7 +48,10 @@ public class PortalDriverServlet extends HttpServlet {
 
     /** Internal Logger. */
     private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);
-
+    
+    protected static final String DEFAULT_PAGE_URI =
+    		"/WEB-INF/themes/pluto-default-theme.jsp";
+    
     /** The portlet container to which we will forward all portlet requests. */
     protected PortletContainer container = null;
     
@@ -115,7 +118,8 @@ public class PortalDriverServlet extends HttpServlet {
         	}
             PageConfig pageConfig = getPageConfig(portalURL);
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
-            String uri = pageConfig.getUri();
+            String uri = (pageConfig.getUri() != null)
+            		? pageConfig.getUri() : DEFAULT_PAGE_URI;
             if (LOG.isDebugEnabled()) {
             	LOG.debug("Dispatching to: " + uri);
             }

@@ -19,7 +19,6 @@ import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.*;
 
 import javax.servlet.ServletContext;
-import java.util.List;
 import java.util.Set;
 import java.io.InputStream;
 
