@@ -78,12 +78,14 @@ extends AbstractReflectivePortletTest {
     }
 
     
-    // Protected Test/Check Methods --------------------------------------------
+    // Test Methods ------------------------------------------------------------
     
     protected TestResult checkIncludedParameters(PortletContext context,
                                                  PortletRequest request,
                                                  PortletResponse response)
     throws IOException, PortletException {
+    	
+    	// Dispatch to the companion servlet: call checkParameters().
     	StringBuffer buffer = new StringBuffer();
     	buffer.append("/tests/include?")
     			.append(KEY_TARGET).append("=").append(TARGET_PARAMS)
@@ -95,17 +97,16 @@ extends AbstractReflectivePortletTest {
         PortletRequestDispatcher dispatcher = context.getRequestDispatcher(
         		buffer.toString());
         dispatcher.include((RenderRequest) request, (RenderResponse) response);
-
+        
         TestResult result = new TestResult();
-        result.setName("Dispatcher Render Parameter Test");
-        result.setDesc("Ensure query parameters added "
-        		+ "during dispatching are attached to the request.");
+        result.setDescription("Ensure query parameters added during "
+        		+ "dispatching are attached to the request.");
         if (request.getAttribute(RESULT_KEY) != null
         		&& Boolean.TRUE.equals(request.getAttribute(RESULT_KEY))) {
             result.setReturnCode(TestResult.PASSED);
         } else {
             result.setReturnCode(TestResult.FAILED);
-            result.setResults("Unable to find expected parameter");
+            result.setResultMessage("Unable to find expected parameter.");
         }
         request.removeAttribute(RESULT_KEY);
         return result;
@@ -116,6 +117,8 @@ extends AbstractReflectivePortletTest {
                                                 PortletRequest request,
                                                 PortletResponse response)
     throws IOException, PortletException {
+    	
+    	// Dispatch to the companion servlet: call checkSameNameParameter().
     	StringBuffer buffer = new StringBuffer();
     	buffer.append("/tests/include?")
     			.append(KEY_TARGET).append("=").append(TARGET_SAME_NAME_PARAM)
@@ -130,15 +133,14 @@ extends AbstractReflectivePortletTest {
     	dispatcher.include((RenderRequest) request, (RenderResponse) response);
     	
     	TestResult result = new TestResult();
-    	result.setName("Dispatcher Same Name Render Parameter Test");
-    	result.setDesc("Ensure query parameters with the same name added "
-    			+ "during dispatching are attached to the request.");
+    	result.setDescription("Ensure query parameters with the same name "
+    			+ "added during dispatching are attached to the request.");
     	if (request.getAttribute(RESULT_KEY) != null
     			&& Boolean.TRUE.equals(request.getAttribute(RESULT_KEY))) {
     		result.setReturnCode(TestResult.PASSED);
     	} else {
     		result.setReturnCode(TestResult.FAILED);
-    		result.setResults("Unable to find expected parameter");
+    		result.setResultMessage("Unable to find expected parameter.");
     	}
     	request.removeAttribute(RESULT_KEY);
     	return result;
@@ -149,6 +151,8 @@ extends AbstractReflectivePortletTest {
                                                 PortletRequest request,
                                                 PortletResponse response)
     throws IOException, PortletException {
+    	
+    	// Dispatch to the companion servlet: call checkInvalidParameters().
     	StringBuffer buffer = new StringBuffer();
     	buffer.append("/tests/include?")
     			.append(KEY_TARGET).append("=").append(TARGET_INVALID_PARAMS)
@@ -163,15 +167,14 @@ extends AbstractReflectivePortletTest {
     	dispatcher.include((RenderRequest) request, (RenderResponse) response);
     	
     	TestResult result = new TestResult();
-    	result.setName("Dispatcher Invalid Render Parameter Test");
-    	result.setDesc("Ensure invalid query parameters added "
-    			+ "during dispatching are ignored.");
+    	result.setDescription("Ensure invalid query parameters added during "
+    			+ "dispatching are ignored.");
     	if (request.getAttribute(RESULT_KEY) != null
     			&& Boolean.TRUE.equals(request.getAttribute(RESULT_KEY))) {
     		result.setReturnCode(TestResult.PASSED);
     	} else {
     		result.setReturnCode(TestResult.FAILED);
-    		result.setResults("Unable to find expected parameter");
+    		result.setResultMessage("Unable to find expected parameter.");
     	}
     	request.removeAttribute(RESULT_KEY);
     	return result;

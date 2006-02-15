@@ -14,6 +14,7 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
 
@@ -30,23 +31,38 @@ function openCompanionWindow() {
 </script>
 
 <c:choose>
-<c:when test="${results.inQuestion}">
-<TABLE>
-<TR><TH colspan="2" style="background-color:blue;color:white;">MANUAL TEST</TH></TR>
-<TR><TH colspan="2">Application Scoped Session Attributes Test</TH></TR>
-<TR><TD>
-    <P>This test is to validate that application scoped attributes can be viewed
-    by resources outside of the portlet.  Additionally, it tests to make sure that
-    session attributes set by other resources may be viewed by the portlet as an
-    application scoped session attribute.</P>
-    This test requires manual intervention.  Click
-    <A href="<%=renderResponse.encodeURL(renderRequest.getContextPath() + "/test/extAppScopedTest?sessionId="+request.getSession().getId())%>" target="companionWindow" onclick="openCompanionWindow()">here</A>
-    </TD></TR>
-<TABLE>
-</c:when>
-<c:otherwise>
-<%@ include file="test_results.inc" %>
-</c:otherwise>
+  <c:when test="${results.inQuestion}">
+    <table>
+      <tr>
+        <th colspan="2" style="background-color:blue;color:white;">MANUAL TEST</th>
+      </tr>
+      <tr>
+        <th colspan="2">Application Scoped Session Attributes Test</th>
+      </tr>
+      <tr>
+        <td>
+          <p>
+            This test is to validate that application scoped attributes can be
+            viewed by resources outside of the portlet. Additionally, it tests
+            to make sure that session attributes set by other resources may be
+            viewed by the portlet as an application scoped session attribute.
+          </p>
+          <p>
+            This test requires manual intervention. Click
+            <a href="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/test/extAppScopedTest?sessionId=" + request.getSession().getId()) %>"
+               target="companionWindow" onclick="openCompanionWindow()">
+              here
+            </a>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </c:when>
+  <c:otherwise>
+    <%@ include file="test_results.inc" %>
+  </c:otherwise>
 </c:choose>
 
 <%@ include file="navigation.inc" %>
+
+

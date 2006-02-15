@@ -16,93 +16,83 @@
 package org.apache.pluto.testsuite.test;
 
 import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import java.util.Enumeration;
 
 /**
- * <B>TODO</B>: Document
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 15, 2004
  */
 public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
+	
     private static final String TEST_PARAM_NAME = "test-parameter-name";
-    private static final String TEST_PARAM_VAL = "test-parameter-val";
-
-
-    protected TestResult checkEnumerationContainsElements(PortletContext ctx) {
-        TestResult res = new TestResult();
-        res.setName("Get Init Parameter Enumeration Test");
-        res.setDesc("Test the initialization parameter enumeration.");
-
-        Enumeration enumerator= ctx.getInitParameterNames();
-        if (enumerator.hasMoreElements()) {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("No init parameters found.");
-        }
-        return res;
-    }
-
-    protected TestResult checkEnumerationContainsNames(PortletContext ctx) {
-        TestResult res = new TestResult();
-        res.setName("Init Parameter Names in Enumeration Test");
-        res.setDesc("Test to make sure that the expected init parameters exist.");
-
+    private static final String TEST_PARAM_VALUE = "test-parameter-val";
+    
+    
+    // Test Methods ------------------------------------------------------------
+    
+    protected TestResult checkEnumerationContainsNames(
+    		PortletContext context) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that the expected init parameter name "
+        		+ "exists in the portlet context's init parameters.");
+        result.setSpecPLT("10.3.1");
+        
         boolean found = false;
-        Enumeration enumerator= ctx.getInitParameterNames();
-        while(enumerator.hasMoreElements()) {
-            String name = (String)enumerator.nextElement();
-            if(TEST_PARAM_NAME.equals(name)) {
+        for (Enumeration en = context.getInitParameterNames();
+        		!found && en.hasMoreElements(); ) {
+            String name = (String) en.nextElement();
+            if (TEST_PARAM_NAME.equals(name)) {
                 found = true;
             }
         }
 
-        if(found) {
-            res.setReturnCode(TestResult.PASSED);
+        if (found) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("Expected init parameter '"
+        			+ TEST_PARAM_NAME + "' not found in portlet context.");
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected init parameter '"+TEST_PARAM_NAME+"' no found.");
-        }
-
-        return res;
+        return result;
     }
-
+    
     protected TestResult checkGetInitParameter(PortletContext context) {
-        TestResult res = new TestResult();
-        res.setName("Init Parameter Retrieved Test");
-        res.setDesc("Test to make sure that init parameters are successfully retrieved.");
-
-        String val = context.getInitParameter(TEST_PARAM_NAME);
-        if(TEST_PARAM_VAL.equals(val)) {
-            res.setReturnCode(TestResult.PASSED);
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that init parameters are retrieveable.");
+        result.setSpecPLT("10.3.1");
+        
+        String value = context.getInitParameter(TEST_PARAM_NAME);
+        if (TEST_PARAM_VALUE.equals(value)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("init parameter", value, TEST_PARAM_VALUE, result);
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected value not found for key '"+TEST_PARAM_NAME+"'.  Found '"+TEST_PARAM_VAL+"'");
-        }
-        return res;
+        return result;
     }
-
+    
+    /**
+     * FIXME: should this test reside in this class?  -- ZHENG Zhong
+     */
     protected TestResult checkGetContextFromSession(PortletSession session) {
-        TestResult res = new TestResult();
-        res.setName("PortletContext Retrieved From Session Test");
-        res.setDesc("Test ensures that the PortletContext can be retrieved from the session.");
-
-        PortletContext ctx = session.getPortletContext();
-        if(ctx != null) {
-            res.setReturnCode(TestResult.PASSED);
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that the PortletContext can be retrieved "
+        		+ "from the portlet session.");
+        
+        PortletContext context = session.getPortletContext();
+        if (context != null) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.FAILED);
+        	result.setResultMessage("Fail to retrieve PortletContext from "
+        			+ "PortletSession: null returned.");
         }
-        else {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Portlet Context is Null");
-        }
-        return res;
+        return result;
     }
 }
 

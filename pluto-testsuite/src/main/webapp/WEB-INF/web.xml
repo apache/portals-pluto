@@ -35,7 +35,7 @@ limitations under the License.
   
   <servlet>
     <servlet-name>extAppScopedTest</servlet-name>
-    <servlet-class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTestCompanionServlet</servlet-class>
+    <servlet-class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTest$CompanionServlet</servlet-class>
   </servlet>
   
   <servlet>

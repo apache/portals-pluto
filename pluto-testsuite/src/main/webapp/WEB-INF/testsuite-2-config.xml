@@ -50,15 +50,15 @@
   </testsuite-config>
     
   <testsuite-config>
-    <name>Complex Attribute Test</name>
-    <class>org.apache.pluto.testsuite.test.ComplexAttributeTest</class>
+    <name>Application Scoped Session Attribute Test</name>
+    <class>org.apache.pluto.testsuite.test.AppScopedSessionAttributeTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
     
   <testsuite-config>
-    <name>External App Scoped Attribute Test</name>
+    <name>External Application Scoped Attribute Test</name>
     <class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTest</class>
-    <display-uri>/jsp/ext_app_scoped_attr_test.jsp</display-uri>
+    <display-uri>/jsp/ExternalAppScopedAttributeTest.jsp</display-uri>
   </testsuite-config>
 
   <testsuite-config>

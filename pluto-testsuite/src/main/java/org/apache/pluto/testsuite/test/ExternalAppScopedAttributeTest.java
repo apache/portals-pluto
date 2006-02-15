@@ -16,43 +16,88 @@
 
 package org.apache.pluto.testsuite.test;
 
+import java.io.IOException;
+
 import org.apache.pluto.testsuite.TestResult;
 
 import javax.portlet.PortletSession;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * 
+ * @see ExternalAppScopedAttributeTestCompanionServlet
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTest {
+public class ExternalAppScopedAttributeTest
+extends AbstractReflectivePortletTest {
 
     public static final String INT_KEY = "org.apache.pluto.testsuite.INTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
     public static final String EXT_KEY = "org.apache.pluto.testsuite.EXTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
     public static final String VALUE = "Should be visible to all Portlets and Web Resources.";
-
-    protected TestResult checkSetHereSeenElsewhere(PortletSession session) {
-        TestResult res = new TestResult();
-        res.setName("Session Visibility Test");
-        res.setDesc("Ensure application scoped attributes set here can be seen elsewhere.");
-        res.setReturnCode(TestResult.WARNING);
-        res.setResults("Click the provided link to validate test.");
-
+    
+    
+    // Test Methods ------------------------------------------------------------
+    
+    protected TestResult checkSetAppScopedAttributeHereSeenElsewhere(
+    		PortletSession session) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure application scoped attributes set here "
+        		+ "in portlet session can be seen elsewhere.");
+        
         session.setAttribute(INT_KEY, VALUE, PortletSession.APPLICATION_SCOPE);
-        return res;
+        result.setReturnCode(TestResult.WARNING);
+        result.setResultMessage("Click the provided link to validate test.");
+        return result;
     }
 
-    protected TestResult checkSetElsewhereSeenHere(PortletSession session) {
-        TestResult res = new TestResult();
-        res.setName("Session Visibility Test");
-        res.setDesc("Ensure application scoped attributes set elsewhere can be seen here.");
-
-        Object val = session.getAttribute(EXT_KEY, PortletSession.APPLICATION_SCOPE);
-        if(VALUE.equals(val)) {
-            res.setReturnCode(TestResult.PASSED);
+    protected TestResult checkSetAppScopedAttributeElsewhereSeenHere(
+    		PortletSession session) {
+        TestResult result = new TestResult();
+        result.setDescription("Ensure application scoped attributes set "
+        		+ "elsewhere in portlet session can be seen here.");
+        
+        Object value = session.getAttribute(EXT_KEY,
+                                            PortletSession.APPLICATION_SCOPE);
+        if (VALUE.equals(value)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	result.setReturnCode(TestResult.WARNING);
+        	result.setResultMessage("This test will not pass until you have "
+        			+ "opened the external resource using the link provided below.");
         }
-        else {
-            res.setReturnCode(TestResult.WARNING);
-            res.setResults("This test will not pass until you have opened the external resource using the link provided below.");
-        }
-        return res;
+        return result;
     }
+    
+    
+    // Nested Servlet Class ----------------------------------------------------
+    
+    /**
+     * The companion servlet that cooperates with this portlet test.
+     */
+    public static class CompanionServlet extends HttpServlet {
+
+        public void doGet(HttpServletRequest request,
+                          HttpServletResponse response)
+        throws ServletException, IOException {
+            HttpSession session = request.getSession();
+            String value = (String) session.getAttribute(INT_KEY);
+            if (ExternalAppScopedAttributeTest.VALUE.equals(value)) {
+            	request.setAttribute("passed", new Boolean(true));
+                session.setAttribute(EXT_KEY, VALUE);
+            }
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher(
+            		"/jsp/ExternalAppScopedAttributeTest_companion.jsp");
+            dispatcher.forward(request, response);
+        }
+        
+    }
+    
 }

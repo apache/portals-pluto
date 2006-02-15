@@ -48,13 +48,13 @@ public class TestUtils {
 	 * Sets the test result return code to <code>FAILED</code>, and reports
 	 * assertion details by specifying value got and value expected.
 	 * @param valueName  the name of the value to assert.
-	 * @param valueGot  the value got.
-	 * @param valueExpected  the value expected.
+	 * @param valueGot  the value object got.
+	 * @param valueExpected  the value object expected.
 	 * @param result  the test result.
 	 */
 	public static void failOnAssertion(String valueName,
-	                                   String valueGot,
-	                                   String valueExpected,
+	                                   Object valueGot,
+	                                   Object valueExpected,
 	                                   TestResult result) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Assertion failed: ");

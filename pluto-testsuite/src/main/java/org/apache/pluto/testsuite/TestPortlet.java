@@ -19,7 +19,6 @@ package org.apache.pluto.testsuite;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
@@ -187,6 +186,7 @@ public class TestPortlet extends GenericPortlet {
         
         
         if (testId == null) {
+        	// FIXME:
             request.setAttribute("tests", testConfigs);
         } else {
             TestConfig nextTestConfig = null;
@@ -213,10 +213,9 @@ public class TestPortlet extends GenericPortlet {
         } else {
         	displayUri = "/jsp/introduction.jsp";
         }
-        PortletContext context = getPortletContext();
-        PortletRequestDispatcher requestDispatcher =
-        		context.getRequestDispatcher(displayUri);
-        requestDispatcher.include(request, response);
+        PortletRequestDispatcher dispatcher = getPortletContext()
+        		.getRequestDispatcher(displayUri);
+        dispatcher.include(request, response);
     }
 
     /**
@@ -227,10 +226,9 @@ public class TestPortlet extends GenericPortlet {
      */
     protected void doEdit(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
-        PortletContext context = getPortletContext();
-        PortletRequestDispatcher requestDispatcher =
-        		context.getRequestDispatcher("/jsp/edit.jsp");
-        requestDispatcher.include(request, response);
+        PortletRequestDispatcher dispatcher = getPortletContext()
+        		.getRequestDispatcher("/jsp/edit.jsp");
+        dispatcher.include(request, response);
     }
     
     /**
@@ -241,10 +239,9 @@ public class TestPortlet extends GenericPortlet {
      */
     protected void doHelp(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
-    	PortletContext context = getPortletContext();
-    	PortletRequestDispatcher requestDispatcher =
-    			context.getRequestDispatcher("/jsp/help.jsp");
-    	requestDispatcher.include(request, response);
+    	PortletRequestDispatcher dispatcher = getPortletContext()
+    			.getRequestDispatcher("/jsp/help.jsp");
+    	dispatcher.include(request, response);
     }
     
     

@@ -57,6 +57,10 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         this.initParameters = config.getInitParameters();
     }
     
+    /**
+     * TODO: should this method be implemented by retrieving render params
+     * from testsuite config file?
+     */
     public Map getRenderParameters(PortletRequest request) {
         return new HashMap();
     }
