@@ -29,9 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 
- * @see ExternalAppScopedAttributeTestCompanionServlet
- * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
