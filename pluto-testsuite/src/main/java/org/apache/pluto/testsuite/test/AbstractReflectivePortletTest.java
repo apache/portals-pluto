@@ -58,13 +58,17 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     }
     
     /**
-     * TODO: should this method be implemented by retrieving render params
-     * from testsuite config file?
+     * Returns the render parameters that will be set into the render request.
+     * The default implementation just returns an empty Map object. This method
+     * may be overwritten by some concrete test to provide test-specific render
+     * parameters.
+     * @param request  the portlet request.
+     * @return an empty Map object.
      */
     public Map getRenderParameters(PortletRequest request) {
         return new HashMap();
     }
-
+    
     public TestConfig getConfig() {
         return config;
     }
@@ -108,7 +112,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         			result.setName(method.getName());
         		}
         		results.add(result);
-        		debugWithName("Test Result: " + result);
+        		debugWithName("Result: " + result.getReturnCodeAsString());
         	} catch (Throwable th) {
         		String message = "Error invoking " + method.getName()
         				+ " (" + th.getClass().getName() + "): "
@@ -137,13 +141,13 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     
     private void debugWithName(String message) {
     	if (LOG.isDebugEnabled()) {
-    		LOG.debug("Test [" + getClass().getName() + "]: " + message);
+    		LOG.debug("Test [" + getTestSuiteName() + "]: " + message);
     	}
     }
     
     private void errorWithName(String message, Throwable cause) {
     	if (LOG.isErrorEnabled()) {
-    		LOG.error("Test [" + getClass().getName() + "]: " + message, cause);
+    		LOG.error("Test [" + getTestSuiteName() + "]: " + message, cause);
     	}
     }
     

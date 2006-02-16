@@ -29,8 +29,8 @@ public class SecurityMappingTest extends AbstractReflectivePortletTest {
     
     protected TestResult checkIsUserInMappedRole(PortletRequest request) {
         TestResult result = isUserLoggedIn(request);
-        result.setDescription("Test if user is in mapped role");
-        if (TestResult.WARNING.equals(result.getReturnCode())) {
+        result.setDescription("Test if user is in mapped role.");
+        if (result.getReturnCode() == TestResult.WARNING) {
             return result;
         }
         
@@ -49,7 +49,7 @@ public class SecurityMappingTest extends AbstractReflectivePortletTest {
     protected TestResult checkIsUserInUnmappedRole(PortletRequest request) {
         TestResult result = isUserLoggedIn(request);
         result.setDescription("Test if user is in unmapped role");
-        if (TestResult.WARNING.equals(result.getReturnCode())) {
+        if (result.getReturnCode() == TestResult.WARNING) {
             return result;
         }
         
@@ -68,7 +68,7 @@ public class SecurityMappingTest extends AbstractReflectivePortletTest {
     protected TestResult checkIsUserIndUndeclaredRole(PortletRequest request) {
         TestResult result = isUserLoggedIn(request);
         result.setDescription("Test if user is in undeclared role");
-        if (TestResult.WARNING.equals(result.getReturnCode())) {
+        if (result.getReturnCode() == TestResult.WARNING) {
             return result;
         }
         

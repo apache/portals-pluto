@@ -32,8 +32,7 @@ import javax.servlet.http.HttpSession;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public class ExternalAppScopedAttributeTest
-extends AbstractReflectivePortletTest {
+public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTest {
 
     public static final String INT_KEY = "org.apache.pluto.testsuite.INTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
     public static final String EXT_KEY = "org.apache.pluto.testsuite.EXTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";

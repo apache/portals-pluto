@@ -165,9 +165,6 @@ public class TestPortlet extends GenericPortlet {
         	test = (PortletTest) tests.get(testId);
         }
         
-        // Set content type (text/html) to the portlet response.
-        response.setContentType("text/html");
-        
         // For non-ActionTest, run test and save results in request.
         if (test != null && !(test instanceof ActionTest)) {
             TestResults results = test.doTest(getPortletConfig(),
@@ -186,7 +183,7 @@ public class TestPortlet extends GenericPortlet {
         
         
         if (testId == null) {
-        	// FIXME:
+        	// FIXME: update attribute name from tests to testConfigs.
             request.setAttribute("tests", testConfigs);
         } else {
             TestConfig nextTestConfig = null;
@@ -206,7 +203,8 @@ public class TestPortlet extends GenericPortlet {
             request.setAttribute("nextTest", nextTestConfig);
         }
         
-        // Get display URI and dispatch.
+        // Set content type for render response, and dispatch to JSP.
+        response.setContentType("text/html");
         String displayUri = null;
         if (testConfig != null) {
         	displayUri = testConfig.getDisplayURI();

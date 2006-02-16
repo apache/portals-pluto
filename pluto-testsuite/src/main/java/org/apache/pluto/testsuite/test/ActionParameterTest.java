@@ -28,19 +28,19 @@ import javax.portlet.PortletRequest;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public class SimpleActionParameterTest extends AbstractReflectivePortletTest
+public class ActionParameterTest extends AbstractReflectivePortletTest
 implements ActionTest {
 	
 	/** Parameter key encoded in the action URL. */
-    public static final String KEY = "org.apache.pluto.testsuite.PARAM_TEST_KEY";
+    public static final String KEY = "org.apache.pluto.testsuite.PARAM_ACTION_KEY";
     
     /** Parameter value encoded in the action URL. */
-    public static final String VALUE = "org.apache.pluto.testsuite.PARAM_TEST_VALUE";
+    public static final String VALUE = "org.apache.pluto.testsuite.ACTION_VALUE";
     
     
     // Test Methods ------------------------------------------------------------
     
-    protected TestResult checkGetActionParameterInActionURL(PortletRequest request) {
+    protected TestResult checkGetActionParameter(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL are "
         		+ "available in the action request.");
@@ -49,7 +49,7 @@ implements ActionTest {
         if (value != null && value.equals(VALUE)) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
-        	TestUtils.failOnAssertion("actionParameter", value, VALUE, result);
+        	TestUtils.failOnAssertion("parameter", value, VALUE, result);
         }
         return result;
     }
@@ -63,74 +63,28 @@ implements ActionTest {
         String[] values = (String[]) parameterMap.get(KEY);
         if (values != null && values.length == 1 && VALUE.equals(values[0])) {
         	result.setReturnCode(TestResult.PASSED);
-        } else if (values == null) {
-        	TestUtils.failOnAssertion("action parameter values",
-        	                          values,
-        	                          new String[] { VALUE },
-        	                          result);
-        } else if (values.length != 1) {
-        	TestUtils.failOnAssertion("length of action parameter values",
-        	                          String.valueOf(values.length),
-        	                          String.valueOf(1),
-        	                          result);
         } else {
-        	TestUtils.failOnAssertion("action parameter values",
-        	                          values,
-        	                          new String[] { VALUE },
-        	                          result);
+        	TestUtils.failOnAssertion("parameter values",
+        			values, new String[] { VALUE }, result);
         }
         return result;
     }
-    
-    /*
-     * TODO:
-     *
-    protected TestResult checkGetActionParameterMap_2(PortletRequest request) {
-    	TestResult result = new TestResult();
-    	result.setDescription("Ensure parameters encoded in action URL are "
-    			+ "available in the action request parameter map.");
-    	
-    	Map parameterMap = request.getParameterMap();
-    	String[] values = (String[]) parameterMap.get(KEY + "_2");
-    	
-    	
-    	
-    	if (values != null) {
-    		System.err.println("\n\nLog parameter values...\n");
-    		for (int i = 0; i < values.length; i++) {
-    			System.err.println("values[" + i + "] = " + values[i]);
-    		}
-    	}
-    	
-    	if (values != null && values.length == 2
-    			&& "FIRST VALUE".equals(values[0])
-    			&& "SECOND VALUE".equals(values[1])) {
-    		result.setReturnCode(TestResult.PASSED);
-    	} else {
-    		TestUtils.failOnAssertion("action parameter values",
-    		                          values,
-    		                          new String[] { "FIRST VALUE", "SECOND VALUE" },
-    		                          result);
-    	}
-    	return result;
-    }
-    */
     
     protected TestResult checkParameterNames(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL "
         		+ "exists in the parameter name enumeration.");
-
-        boolean nameFound = false;
+        
+        boolean hasParameterName = false;
         for (Enumeration en = request.getParameterNames();
-        		!nameFound && en.hasMoreElements(); ) {
+        		!hasParameterName && en.hasMoreElements(); ) {
         	String name = (String) en.nextElement();
         	if (KEY.equals(name)) {
-        		nameFound = true;
+        		hasParameterName = true;
         	}
         }
         
-        if (nameFound) {
+        if (hasParameterName) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
         	result.setReturnCode(TestResult.FAILED);

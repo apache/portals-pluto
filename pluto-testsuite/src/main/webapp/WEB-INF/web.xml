@@ -33,24 +33,39 @@ limitations under the License.
     <param-value>parameter-value</param-value>
   </context-param>
   
+  <!-- Companion Servlet Definitions ======================================= -->
+  
   <servlet>
-    <servlet-name>extAppScopedTest</servlet-name>
+    <servlet-name>ExternalAppScopedAttributeTest_Servlet</servlet-name>
     <servlet-class>org.apache.pluto.testsuite.test.ExternalAppScopedAttributeTest$CompanionServlet</servlet-class>
   </servlet>
   
   <servlet>
-    <servlet-name>includeTest</servlet-name>
-    <servlet-class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTest$TargetServlet</servlet-class>
+    <servlet-name>DispatcherRenderParameterTest_Servlet</servlet-name>
+    <servlet-class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTest$CompanionServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>DispatcherRequestTest_Servlet</servlet-name>
+    <servlet-class>org.apache.pluto.testsuite.test.DispatcherRequestTest$CompanionServlet</servlet-class>
+  </servlet>
+  
+  
+  <!-- Companion Servlet Mappings ========================================== -->
+  
   <servlet-mapping>
-    <servlet-name>extAppScopedTest</servlet-name>
-    <url-pattern>/test/extAppScopedTest</url-pattern>
+    <servlet-name>ExternalAppScopedAttributeTest_Servlet</servlet-name>
+    <url-pattern>/test/ExternalAppScopedAttributeTest_Servlet</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
-    <servlet-name>includeTest</servlet-name>
-    <url-pattern>/tests/include</url-pattern>
+    <servlet-name>DispatcherRenderParameterTest_Servlet</servlet-name>
+    <url-pattern>/test/DispatcherRenderParameterTest_Servlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DispatcherRequestTest_Servlet</servlet-name>
+    <url-pattern>/test/DispatcherRequestTest_Servlet/*</url-pattern>
   </servlet-mapping>
   
   <security-role>

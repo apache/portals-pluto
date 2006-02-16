@@ -15,13 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 
+<%@ page import="org.apache.pluto.testsuite.TestResult" %>
+
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
 <%
-    pageContext.setAttribute("passed", "Passed");
-    pageContext.setAttribute("failed", "Failed");
-    pageContext.setAttribute("warning", "Warning");
+    pageContext.setAttribute("PASSED_CODE", new Integer(TestResult.PASSED));
+    pageContext.setAttribute("FAILED_CODE", new Integer(TestResult.FAILED));
+    pageContext.setAttribute("WARNING_CODE", new Integer(TestResult.WARNING));
 %>
 
 <portlet:defineObjects/>
@@ -30,22 +32,30 @@ limitations under the License.
   <c:choose>
     <c:when test="${results == null}">
       <tr>
-        <th colspan="2" style="background-color: red; color: white;">RESULT NOT FOUND</th>
+        <th colspan="2" style="background-color:red; color:white;">
+          TEST RESULT NOT FOUND
+        </th>
       </tr>
     </c:when>
     <c:when test="${results.failed}">
       <tr>
-        <th colspan="2" style="background-color: red; color: white">FAILED</th>
+        <th colspan="2" style="background-color:red; color:white;">
+          TEST FAILED
+        </th>
       </tr>
     </c:when>
     <c:when test="${results.inQuestion}">
       <tr>
-        <th colspan="2" style="background-color: yellow">WARNING</th>
+        <th colspan="2" style="background-color:yellow;">
+          WARNING
+        </th>
       </tr>
     </c:when>
     <c:otherwise>
       <tr>
-        <th colspan="2" style="background-color: green; color: white">PASSED</th>
+        <th colspan="2" style="background-color:green; color:white;">
+          TEST PASSED
+        </th>
       </tr>
     </c:otherwise>
   </c:choose>
@@ -61,11 +71,11 @@ limitations under the License.
       <!-- Result Icon ===================================================== -->
       <td valign="top">
         <c:choose>
-          <c:when test="${result.returnCode == passed}">
+          <c:when test="${result.returnCode == PASSED_CODE}">
             <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/yes.gif") %>"
                  border="0" />
           </c:when>
-          <c:when test="${result.returnCode == failed}">
+          <c:when test="${result.returnCode == FAILED_CODE}">
             <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/no.gif") %>"
                  border="0" />
           </c:when>
@@ -82,7 +92,7 @@ limitations under the License.
     </tr>
     
     <c:choose>
-      <c:when test="${result.returnCode == passed}">
+      <c:when test="${result.returnCode == PASSED_CODE}">
         <tr>
           <td />
           <td style="font-size:smaller;">

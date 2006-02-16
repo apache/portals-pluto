@@ -16,13 +16,10 @@
 package org.apache.pluto.testsuite.test;
 
 import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -38,111 +35,97 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
 	
     private static final String KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
     private static final String VAL = "! TEST VAL !";
-
-    public Map doPrerequisiteAction(PortletContext context, ActionRequest req,
-                                    ActionResponse res) {
-        return new HashMap();
-
-    }
     
     
-    // Protected Test Methods --------------------------------------------------
+    // Test Methods ------------------------------------------------------------
     
     protected TestResult checkGetNullAttribute(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setDescription("Retrieves an attribute bound to an invalid key set are retrieved as null");
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that if an attribute bound to an invalid "
+        		+ "key is retrieved, null is returned.");
 
         Object val = req.getAttribute(KEY);
-        if(val != null) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' for attribute '"+KEY+"'");
+        if (val == null) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("unbound attribute", val, null, result);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
 
 
     protected TestResult checkSetAttribute(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Set Request Attribute Test");
-        res.setDesc("Sets and retrieves portlet request attribute.");
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that attributes can be set to "
+        		+ "portlet request.");
 
         req.setAttribute(KEY, VAL);
         Object val = req.getAttribute(KEY);
-        if(!VAL.equals(val)) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
-        }
-        else {
-            res.setReturnCode(TestResult.PASSED);
+        if (VAL.equals(val)) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("attribute", val, VAL, result);
         }
 
         req.removeAttribute(KEY);
-        return res;
+        return result;
     }
 
     protected TestResult checkRemoveAttribute(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Remove Request Attribute Test");
-        res.setDesc("Sets, removes and retrieves portlet request attribute.");
-
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that attributes can be removed from "
+        		+ "portlet request.");
+        
         req.setAttribute(KEY, VAL);
         req.removeAttribute(KEY);
         Object val = req.getAttribute(KEY);
-        if(val!=null) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
+        if (val == null) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("removed attribute", val, null, result);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-
-        return res;
+        return result;
     }
 
     protected TestResult checkEnumerateAttributes(PortletRequest req) {
-        TestResult res = new TestResult();
-        res.setName("Enumerate Request Attribute Names Test");
-        res.setDesc("Sets request attributes and enumerates over them.");
-
+        TestResult result = new TestResult();
+        result.setDescription("Ensure that all attribute names appear in the "
+        		+ "attribute name enumeration returned by portlet request.");
+        
         int count = 5;
-        for(int i=0;i<count;i++) {
-            req.setAttribute(KEY+"."+i,VAL);
+        for (int i = 0; i < count; i++) {
+            req.setAttribute(KEY + "." + i, VAL);
         }
-
+        
         int found = 0;
-        Enumeration enumerator= req.getAttributeNames();
-        while(enumerator.hasMoreElements()) {
-            if(enumerator.nextElement().toString().startsWith(KEY)) {
+        for (Enumeration en = req.getAttributeNames();
+        		en.hasMoreElements(); ) {
+            if (en.nextElement().toString().startsWith(KEY)) {
                 found++;
             }
         }
 
-        if(count != found) {
-            res.setReturnCode(TestResult.FAILED);
-            res.setResults("Expected "+count+" attributes.  Found "+found);
+        if (count == found) {
+        	result.setReturnCode(TestResult.PASSED);
+        } else {
+        	TestUtils.failOnAssertion("count of attribute names",
+        			String.valueOf(found), String.valueOf(count), result);
         }
-        else {
-            res.setReturnCode(TestResult.PASSED);
-        }
-        return res;
+        return result;
     }
-
-//
-// Begin Session Tests
-//
-
+    
+    
+    // Test Methods for Session Attributes -------------------------------------
+    
     protected TestResult checkGetNullAttribute(PortletSession session) {
         TestResult res = new TestResult();
         res.setName("Retrieve Missing Session Attribute Test");
-        res.setDesc("Retrieves an attribute bound to an invalid key set are retrieved as null");
+        res.setDescription("Retrieves an attribute bound to an invalid key set are retrieved as null");
 
         Object val = session.getAttribute(KEY);
         if(val != null) {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' for attribute '"+KEY+"'");
+            res.setResultMessage("Retrieved value: '"+val+"' for attribute '"+KEY+"'");
         }
         else {
             res.setReturnCode(TestResult.PASSED);
@@ -153,13 +136,13 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     protected TestResult checkSetAttribute(PortletSession session) {
         TestResult res = new TestResult();
         res.setName("Set Attribute Test");
-        res.setDesc("Sets and retrieves portlet sessionuest attribute.");
+        res.setDescription("Sets and retrieves portlet sessionuest attribute.");
 
         session.setAttribute(KEY, VAL);
         Object val = session.getAttribute(KEY);
         if(!VAL.equals(val)) {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
+            res.setResultMessage("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
         }
         else {
             res.setReturnCode(TestResult.PASSED);
@@ -172,14 +155,14 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     protected TestResult checkRemoveAttribute(PortletSession session) {
         TestResult res = new TestResult();
         res.setName("Remove Session Attribute Test");
-        res.setDesc("Sets, removes and retrieves portlet request attribute.");
+        res.setDescription("Sets, removes and retrieves portlet request attribute.");
 
         session.setAttribute(KEY, VAL);
         session.removeAttribute(KEY);
         Object val = session.getAttribute(KEY);
         if(val!=null) {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
+            res.setResultMessage("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
         }
         else {
             res.setReturnCode(TestResult.PASSED);
@@ -191,7 +174,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     protected TestResult checkEnumerateAttributes(PortletSession session) {
     	
         TestResult result = new TestResult();
-        result.setDesc("Sets session attributes and enumerates over them.");
+        result.setDescription("Sets session attributes and enumerates over them.");
         
         int count = 5;
         for (int i = 0; i < count; i++) {
@@ -209,7 +192,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         
         if (count != found) {
         	result.setReturnCode(TestResult.FAILED);
-        	result.setResults("Expected " + count + " attributes. "
+        	result.setResultMessage("Expected " + count + " attributes. "
         			+ "Found " + found);
         } else {
         	result.setReturnCode(TestResult.PASSED);
@@ -224,12 +207,12 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     protected TestResult checkGetNullAttribute(PortletContext context) {
         TestResult res = new TestResult();
         res.setName("Retrieve Missing Context Attribute Test");
-        res.setDesc("Retrieves an attribute bound to an invalid key set are retrieved as null");
+        res.setDescription("Retrieves an attribute bound to an invalid key set are retrieved as null");
 
         Object val = context.getAttribute(KEY);
         if(val != null) {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' for attribute '"+KEY+"'");
+            res.setResultMessage("Retrieved value: '"+val+"' for attribute '"+KEY+"'");
         }
         else {
             res.setReturnCode(TestResult.PASSED);
@@ -240,13 +223,13 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     protected TestResult checkSetAttribute(PortletContext context) {
         TestResult res = new TestResult();
         res.setName("Set Attribute Test");
-        res.setDesc("Sets and retrieves portlet contextuest attribute.");
+        res.setDescription("Sets and retrieves portlet contextuest attribute.");
 
         context.setAttribute(KEY, VAL);
         Object val = context.getAttribute(KEY);
         if(!VAL.equals(val)) {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
+            res.setResultMessage("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
         }
         else {
             res.setReturnCode(TestResult.PASSED);
@@ -259,14 +242,14 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     protected TestResult checkRemoveAttribute(PortletContext context) {
         TestResult res = new TestResult();
         res.setName("Remove Context Attribute Test");
-        res.setDesc("Sets, removes and retrieves portlet request attribute.");
+        res.setDescription("Sets, removes and retrieves portlet request attribute.");
 
         context.setAttribute(KEY, VAL);
         context.removeAttribute(KEY);
         Object val = context.getAttribute(KEY);
         if(val!=null) {
             res.setReturnCode(TestResult.FAILED);
-            res.setResults("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
+            res.setResultMessage("Retrieved value: '"+val+"' - Expected '"+VAL+"'");
         }
         else {
             res.setReturnCode(TestResult.PASSED);

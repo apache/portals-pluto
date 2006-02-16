@@ -20,39 +20,36 @@ limitations under the License.
 
 <portlet:defineObjects/>
 
-<script name="JavaScript">
-function openCompanionWindow() {
-	w = 500;
-	h = 400;
-	x = (screen.width - w) / 2;
-	y = (screen.height - h) / 2;
-	window.open('<HTML><BODY><CENTER><FONT color=red>Testing Session Attributes</FONT></CENTER></BODY></HTML>', 'companionWindow', 'resizable=yes,scrollbars=yes,status=yes,width=' + w + ',height=' + h + ',screenX=' + x + ',screenY=' + y + ',left=' + x + ',top=' + y);
-}
-</script>
-
 <c:choose>
   <c:when test="${results.inQuestion}">
+    
+    <%-- Generate portlet render URL: Start =============================== --%>
+    <portlet:renderURL secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
+                       var="url">
+      <portlet:param name="maxInactiveIntervalSet" value="<%= Boolean.TRUE.toString() %>"/>
+      <portlet:param name="testId" value="<%= renderRequest.getParameter("testId") %>"/>
+    </portlet:renderURL>
+    <%-- Generate portlet action URL: End ================================= --%>
+  
+  
+  
     <table>
       <tr>
         <th colspan="2" style="background-color:blue;color:white;">MANUAL TEST</th>
       </tr>
       <tr>
-        <th colspan="2">Application Scoped Session Attributes Test</th>
+        <th colspan="2">Session Timeout Test</th>
       </tr>
       <tr>
         <td>
           <p>
-            This test is to validate that application scoped attributes can be
-            viewed by resources outside of the portlet. Additionally, it tests
-            to make sure that session attributes set by other resources may be
-            viewed by the portlet as an application scoped session attribute.
+            This test is to validate that portlet session will expire and be
+            invalidated by the portlet container after its max inactive interval
+            is passed.
           </p>
           <p>
-            This test requires manual intervention. Click
-            <a href="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/test/ExternalAppScopedAttributeTest_Servlet?sessionId=" + request.getSession().getId()) %>"
-               target="companionWindow" onclick="openCompanionWindow()">
-              here
-            </a>
+            This test requires manual intervention. Please wait for at least
+            5 seconds and click <a href="<c:out value="${url}"/>">here</a>.
           </p>
         </td>
       </tr>

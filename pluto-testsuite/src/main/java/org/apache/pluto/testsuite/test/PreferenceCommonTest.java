@@ -40,8 +40,12 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     protected static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
     
     protected static final String READ_ONLY_PREF_NAME = "readonly";
+    
+    protected static final String NO_VALUE_PREF_NAME = "nameWithNoValue";
+    
     protected static final String PREF_NAME = "dummyName";
     protected static final String PREF_VALUE = "dummyValue";
+    
     protected static final String DEF_VALUE = "Default";
     protected static final String NEW_VALUE = "notTheOriginal";
     
@@ -49,51 +53,47 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     // Test Methods ------------------------------------------------------------
     
     protected TestResult checkGetEmptyPreference(PortletRequest request) {
-        TestResult result = new TestResult();
-        result.setDescription("Ensure proper default is returned when "
-        		+ "a non-existing preference is requested.");
-        result.setSpecPLT("14.1");
-        
-        PortletPreferences preferences = request.getPreferences();
-        String value =  preferences.getValue("nonexistence!", DEF_VALUE);
-        if (value.equals(DEF_VALUE)) {
-        	result.setReturnCode(TestResult.PASSED);
-        } else {
-        	TestUtils.failOnAssertion("preference value", value, DEF_VALUE, result);
-        }
-        return result;
+    	return doCheckDefaultPreference(request, "nonexistence!");
     }
     
-    protected TestResult checkGetEmptyPreferences(PortletRequest request) {
-        TestResult result = new TestResult();
-        result.setDescription("Ensure proper defaults are returned when "
-        		+ "a non-existent preference set is requested.");
-        result.setSpecPLT("14.1");
-        
-        PortletPreferences preferences = request.getPreferences();
-        String[] values = preferences.getValues("nonexistence!",
-        		                                new String[] { DEF_VALUE });
-        if (values != null && values.length == 1
-        		&& values[0].equals(DEF_VALUE)) {
-        	result.setReturnCode(TestResult.PASSED);
-        } else if (values == null) {
-        	TestUtils.failOnAssertion("preference values",
-        	                          values,
-        	                          new String[] { DEF_VALUE },
-        	                          result);
-        } else if (values.length != 1) {
-        	TestUtils.failOnAssertion("length of preference values",
-        	                          String.valueOf(values.length),
-        	                          String.valueOf(1),
-        	                          result);
-        } else {
-        	TestUtils.failOnAssertion("preference values",
-        	                          values,
-        	                          new String[] { DEF_VALUE },
-        	                          result);
-        }
-        return result;
+    protected TestResult checkGetNoValuePreference(PortletRequest request) {
+    	return doCheckDefaultPreference(request, NO_VALUE_PREF_NAME);
     }
+    
+    /**
+     * Private method that checks if a preference is not defined or has no
+     * value in <code>portlet.xml</code>, the default values are returned.
+     * @param request  the portlet request.
+     * @param preferenceName  the preference name which is not defined or has no
+     *        value in <code>portlet.xml</code>.
+     * @return the test result.
+     */
+    private TestResult doCheckDefaultPreference(PortletRequest request,
+                                                String preferenceName) {
+    	TestResult result = new TestResult();
+    	result.setDescription("Ensure proper default is returned when "
+    			+ "a non-existing/value-undefined preference is requested.");
+    	result.setSpecPLT("14.1");
+    	
+    	PortletPreferences preferences = request.getPreferences();
+    	String value =  preferences.getValue(preferenceName, DEF_VALUE);
+    	String[] values = preferences.getValues(preferenceName,
+    	                                        new String[] { DEF_VALUE });
+    	if (DEF_VALUE.equals(value)
+    			&& values != null && values.length == 1
+    			&& DEF_VALUE.equals(values[0])) {
+    		result.setReturnCode(TestResult.PASSED);
+    	} else if (!DEF_VALUE.equals(value)) {
+    		TestUtils.failOnAssertion("preference value", value, DEF_VALUE, result);
+    	} else {
+    		TestUtils.failOnAssertion("preference values",
+    		                          values,
+    		                          new String[] { DEF_VALUE },
+    		                          result);
+    	}
+    	return result;
+    }
+
 
     protected TestResult checkGetPreferences(PortletRequest request) {
         TestResult result = new TestResult();
@@ -449,6 +449,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     
     
     // Debug Methods -----------------------------------------------------------
+    
     
     /**
      * Logs out the portlet preferences.

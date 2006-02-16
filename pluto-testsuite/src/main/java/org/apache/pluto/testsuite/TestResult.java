@@ -24,12 +24,20 @@ import java.io.Serializable;
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class TestResult implements Serializable {
-
-    public static final String PASSED = "Passed";
-    public static final String FAILED = "Failed";
-    public static final String WARNING = "Warning";
-    
-    
+	
+	/** The undefined return code. */
+	public static final int UNDEFINED = -1;
+	
+	/** The warning return code. */
+	public static final int WARNING = 0;
+	
+	/** The failed return code. */
+	public static final int FAILED = 1;
+	
+	/** The passed return code. */
+	public static final int PASSED = 2;
+	
+	
     // Private Member Variables ------------------------------------------------
     
     /** The name of the test. */
@@ -42,7 +50,7 @@ public class TestResult implements Serializable {
     private String specPLT = "[unknown]";
     
     /** The return code of the test result: PASSED, WARNING, FAILED. */
-    private String returnCode;
+    private int returnCode = UNDEFINED;
     
     /** The message of the test result. */
     private String resultMessage ="[unknown]";
@@ -74,25 +82,23 @@ public class TestResult implements Serializable {
     	this.specPLT = specPLT;
     }
     
-    /**
-     * @deprecated use getDescription()
-     */
-    public String getDesc() {
-        return getDescription();
-    }
-    
-    /**
-     * @deprecated use setDescription(String)
-     */
-    public void setDesc(String desc) {
-    	setDescription(desc);
-    }
-
-    public String getReturnCode() {
+    public int getReturnCode() {
         return returnCode;
     }
+    
+    public String getReturnCodeAsString() {
+    	if (returnCode == WARNING) {
+    		return "WARNING";
+    	} else if (returnCode == FAILED) {
+    		return "FAILED";
+    	} else if (returnCode == PASSED) {
+    		return "PASSED";
+    	} else {
+    		return "UNKNOWN RETURN CODE";
+    	}
+    }
 
-    public void setReturnCode(String returnCode) {
+    public void setReturnCode(int returnCode) {
         this.returnCode = returnCode;
     }
     
@@ -102,20 +108,6 @@ public class TestResult implements Serializable {
     
     public void setResultMessage(String resultMessage) {
     	this.resultMessage = resultMessage;
-    }
-    
-    /**
-     * @deprecated use getResultMessage()
-     */
-    public String getResults() {
-        return getResultMessage();
-    }
-    
-    /**
-     * @deprecated use setResultMessage(String)
-     */
-    public void setResults(String results) {
-        setResultMessage(results);
     }
     
     

@@ -19,30 +19,46 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Mar 9, 2005
  */
 public class NoOpTest implements PortletTest {
-    private TestConfig config;
-
+	
+	/** The test configuration. */
+    private TestConfig config = null;
+    
+    
+    // Constructor -------------------------------------------------------------
+    
+    /**
+     * Default no-arg constructor.
+     */
     public NoOpTest() {
-
+    	// Do nothing.
     }
-
+    
+    
+    // PortletTest Impl --------------------------------------------------------
+    
     public String getTestSuiteName() {
         return "NoOpTest";
     }
 
-    public Map getRenderParameters(PortletRequest req) {
-        return new java.util.HashMap();
+    public Map getRenderParameters(PortletRequest request) {
+        return new HashMap();
     }
-
-    public TestResults doTest(PortletConfig config, PortletContext context,
-                              PortletRequest req, PortletResponse res) {
+    
+    public TestResults doTest(PortletConfig config,
+                              PortletContext context,
+                              PortletRequest request,
+                              PortletResponse response) {
         return new TestResults("None");
     }
 
@@ -53,5 +69,6 @@ public class NoOpTest implements PortletTest {
     public TestConfig getConfig() {
         return config;
     }
+    
 }
 

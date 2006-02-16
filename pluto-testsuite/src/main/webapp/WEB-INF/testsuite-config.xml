@@ -17,36 +17,34 @@
 <testportlet-config>
   
   <testsuite-config>
-    <name>Simple Render Parameter Test</name>
-    <class>org.apache.pluto.testsuite.test.SimpleRenderParameterTest</class>
+    <name>Render Parameter Test</name>
+    <class>org.apache.pluto.testsuite.test.RenderParameterTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
     <action-param>
-      <name>org.apache.pluto.testsuite.PARAM_TEST_KEY</name>
-      <value>org.apache.pluto.testsuite.PARAM_TEST_VALUE</value>
+      <name>org.apache.pluto.testsuite.PARAM_ACTION_KEY</name>
+      <value>org.apache.pluto.testsuite.ACTION_VALUE</value>
     </action-param>
   </testsuite-config>
 
   <testsuite-config>
-    <name>Simple Action Parameter Test</name>
-    <class>org.apache.pluto.testsuite.test.SimpleActionParameterTest</class>
+    <name>Action Parameter Test</name>
+    <class>org.apache.pluto.testsuite.test.ActionParameterTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
     <action-param>
-      <name>org.apache.pluto.testsuite.PARAM_TEST_KEY</name>
-      <value>org.apache.pluto.testsuite.PARAM_TEST_VALUE</value>
-    </action-param>
-    <action-param>
-      <name>org.apache.pluto.testsuite.PARAM_TEST_KEY_2</name>
-      <value>FIRST VALUE</value>
-    </action-param>
-    <action-param>
-      <name>org.apache.pluto.testsuite.PARAM_TEST_KEY_2</name>
-      <value>SECOND VALUE</value>
+      <name>org.apache.pluto.testsuite.PARAM_ACTION_KEY</name>
+      <value>org.apache.pluto.testsuite.ACTION_VALUE</value>
     </action-param>
   </testsuite-config>
 
   <testsuite-config>
-    <name>Dispatcher Parameter Test</name>
+    <name>Dispatcher Render Parameter Test</name>
     <class>org.apache.pluto.testsuite.test.DispatcherRenderParameterTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+
+  <testsuite-config>
+    <name>Dispatcher Request Test</name>
+    <class>org.apache.pluto.testsuite.test.DispatcherRequestTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
@@ -86,6 +84,18 @@
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
 
+  <testsuite-config>
+    <name>Session Timeout Test</name>
+    <class>org.apache.pluto.testsuite.test.SessionTimeoutTest</class>
+    <display-uri>/jsp/SessionTimeoutTest.jsp</display-uri>
+  </testsuite-config>
+  
+  <!--testsuite-config>
+    <name>Render Response No Content Type Test</name>
+    <class>org.apache.pluto.testsuite.test.RenderResponseNoContentTypeTest</class>
+    <display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config-->
+  
   <testsuite-config>
     <name>Portlet Mode Test</name>
     <display-uri>/jsp/portlet_mode_test.jsp</display-uri>

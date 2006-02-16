@@ -23,14 +23,19 @@ import java.util.Collections;
 import java.io.Serializable;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * This class contains one or more test results.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class TestResults implements Serializable {
-
-    private String name;
+	
+	
+    private String name = null;
+    
     private ArrayList list = new ArrayList();
-    private boolean failed;
-    private boolean inQuestion;
+    
+    private boolean failed = false;
+    private boolean inQuestion = false;
 
     public TestResults(String name) {
         this.name = name;
@@ -44,14 +49,13 @@ public class TestResults implements Serializable {
         this.name = name;
     }
 
-    public void add(TestResult res) {
-        if(TestResult.FAILED.equals(res.getReturnCode())) {
+    public void add(TestResult result) {
+        if (result.getReturnCode() == TestResult.FAILED) {
             failed = true;
-        }
-        if(TestResult.WARNING.equals(res.getReturnCode())) {
+        } else if (result.getReturnCode() == TestResult.WARNING) {
             inQuestion = true;
         }
-        list.add(res);
+        list.add(result);
     }
 
     public boolean isFailed() {
@@ -73,14 +77,12 @@ public class TestResults implements Serializable {
      * @see java.lang.Object#toString()
      */
     public String toString(){
-    	StringBuffer str = new StringBuffer();
-    	str.append(getClass().getName());
-    	str.append("[");
-    	str.append("name=" + name + "; ");
-    	str.append("failed=" + failed + "; ");
-    	str.append("inQuestion=" + inQuestion + "; ");
-    	str.append("results={" + list + " ");    	
-    	str.append("}]");
-    	return str.toString();
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(getClass().getName());
+    	buffer.append("[name=").append(name);
+    	buffer.append(";failed=").append(failed);
+    	buffer.append(";inQuestion=").append(inQuestion);
+    	buffer.append(";results={").append(list).append("}]");    	
+    	return buffer.toString();
     }
 }
