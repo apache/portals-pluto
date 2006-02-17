@@ -168,38 +168,22 @@ public class PortletPreferencesImpl implements PortletPreferences {
         return (pref != null && pref.isReadOnly());
     }
 
-    public String getValue(String key, String def) {
-        if (key == null) {
-            throw new IllegalArgumentException(
-                EXCEPTIONS.getString("error.null", "Preference key ")
-            );
-        }
-
-        String[] value;
-
-        PortletPreference pref = (PortletPreference) preferences.get(key);
-        if (pref != null) {
-            value = pref.getValues();
-        } else {
-            value = new String[]{def};
-        }
-        return value.length > 0 ? value[0] : null;
+    public String getValue(String key, String defaultValue) {
+        String[] values = getValues(key, new String[] { defaultValue });
+        return (values != null && values.length > 0) ? values[0] : null;
     }
 
-    public String[] getValues(String key, String[] def) {
+    public String[] getValues(String key, String[] defaultValues) {
         if (key == null) {
             throw new IllegalArgumentException(
-                EXCEPTIONS.getString("error.null", "Preference key ")
-            );
+            		EXCEPTIONS.getString("error.null", "Preference key "));
         }
-
-        String[] values;
+        String[] values = null;
         PortletPreference pref = (PortletPreference) preferences.get(key);
-
         if (pref != null) {
             values = pref.getValues();
         } else {
-            values = def;
+            values = defaultValues;
         }
         return values;
     }
