@@ -36,6 +36,23 @@ limitations under the License.
           TEST RESULT NOT FOUND
         </th>
       </tr>
+      <tr>
+        <td valign="top">
+          <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/question.gif") %>"
+               border="0" />
+        </td>
+        <td>
+          <p>
+            The test results could not be found in the request scope. If this
+            is an ActionTest (test logic resides in the processAction() method),
+            one possible reason may be that the original portlet session where
+            the test results reside was invalidated by another portlet.
+          </p>
+          <p>
+            Please return to the introduction page and retry.
+          </p>
+        </td>
+      </tr>
     </c:when>
     <c:when test="${results.failed}">
       <tr>

@@ -50,7 +50,9 @@ public class SessionTimeoutTest extends AbstractReflectivePortletTest {
             } else {
             	result.setReturnCode(TestResult.FAILED);
             	result.setResultMessage("PortletSession should have expired "
-            			+ "and have been invalidated, but is still available.");
+            			+ "and have been invalidated, but is still available. "
+            			+ "Make sure that other portlets did not create a new "
+            			+ "portlet session.");
             }
         }
         

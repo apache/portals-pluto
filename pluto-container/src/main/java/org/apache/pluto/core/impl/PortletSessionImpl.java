@@ -152,7 +152,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
 
     
-    // PortletSession Impl -----------------------------------------------------
+    // PortletSession Impl: Other Methods --------------------------------------
     
     public PortletContext getPortletContext() {
         return portletContext;
@@ -181,7 +181,18 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     public boolean isNew() throws IllegalStateException {
         return httpSession.isNew();
     }
-
+    
+    /**
+     * Specifies the time, in seconds, between client requests, before the
+     * portlet container invalidates this session. A negative time indicates
+     * the session should never timeout.
+     * <p>
+     * [Portlet Spec. PLT. 15.4.] If the PortletSession object is invalidated
+     * by a portlet, the portlet container must invalidate the associated
+     * HttpSession object.
+     * </p>
+     * @param interval  an integer specifying the number of seconds.
+     */ 
     public void setMaxInactiveInterval(int interval) {
         httpSession.setMaxInactiveInterval(interval);
         if (LOG.isDebugEnabled()) {
