@@ -33,12 +33,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * Implementation of the <code>javax.portlet.RenderRequest</code> interface.
@@ -148,43 +146,15 @@ implements RenderRequest, InternalRenderRequest {
     
     // PortletRequestImpl Overwriting ------------------------------------------
     
-    public Map getParameterMap() {
+    protected Map baseGetParameterMap() {
     	if (included && parameters != null) {
+    		super.setBodyAccessed();
     		return parameters;
     	} else {
-    		return super.getParameterMap();
+    		return super.baseGetParameterMap();
     	}
     }
-
-    public String getParameter(String name) {
-    	if (included && parameters != null) {
-    		String[] values = (String[]) parameters.get(name);
-    		if (values != null && values.length > 0) {
-    			return values[0];
-    		} else {
-    			return null;
-    		}
-    	} else {
-    		return super.getParameter(name);
-    	}
-    }
-
-    public Enumeration getParameterNames() {
-    	if (included && parameters != null) {
-    		return new Vector(parameters.keySet()).elements();
-    	} else {
-    		return super.getParameterNames();
-    	}
-    }
-
-    public String[] getParameterValues(String name) {
-    	if (included && parameters != null) {
-    		return (String[]) parameters.get(name);
-    	} else {
-    		return super.getParameterValues(name);
-    	}
-    }
-
+    
     
     // InternalRenderRequest Impl ----------------------------------------------
     

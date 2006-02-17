@@ -65,6 +65,7 @@ implements ActionRequest, InternalActionRequest {
     // ActionRequest impl ------------------------------------------------------
     
     /* (non-Javadoc)
+     * FIXME: should we set the bodyAccessed flag?
      * @see org.apache.pluto.core.InternalActionResponse#getPortletInputStream()
      */
     public InputStream getPortletInputStream() throws IOException {

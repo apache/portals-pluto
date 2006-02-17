@@ -98,7 +98,8 @@ implements PortletRequest, InternalPortletRequest {
     /** TODO: javadoc */
     private NamespaceMapper mapper = new NamespaceMapperImpl();
 
-    /** Flag indicating if the HTTP-Body has been accessed. */
+    /** FIXME: do we really need this?
+     * Flag indicating if the HTTP-Body has been accessed. */
     private boolean bodyAccessed = false;
 
 
@@ -367,10 +368,8 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-        bodyAccessed = true;
-        Map parameters = this.getHttpServletRequest().getParameterMap();
-        String[] values = (String[]) parameters.get(name);
-        if (values != null) {
+        String[] values = (String[]) baseGetParameterMap().get(name);
+        if (values != null && values.length > 0) {
             return values[0];
         } else {
         	return null;
@@ -378,27 +377,20 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public Enumeration getParameterNames() {
-        bodyAccessed = true;
-        Map parameters = this.getHttpServletRequest().getParameterMap();
-        return Collections.enumeration(parameters.keySet());
+        return Collections.enumeration(baseGetParameterMap().keySet());
     }
 
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-        bodyAccessed = true;
-        String[] values = (String[]) this.getHttpServletRequest()
-                .getParameterMap()
-                .get(name);
+    	String[] values = (String[]) baseGetParameterMap().get(name);
         if (values != null) {
             values = StringUtils.copy(values);
         }
         return values;
     }
-
+    
     public Map getParameterMap() {
-        bodyAccessed = true;
-        return StringUtils.copyParameters(
-                this.getHttpServletRequest().getParameterMap());
+    	return StringUtils.copyParameters(baseGetParameterMap());
     }
 
     public boolean isSecure() {
@@ -476,6 +468,25 @@ implements PortletRequest, InternalPortletRequest {
 
     public int getServerPort() {
         return this.getHttpServletRequest().getServerPort();
+    }
+    
+    
+    // Protected Methods -------------------------------------------------------
+    
+    /**
+     * The base method that returns the parameter map in this portlet request.
+     * All parameter-related methods call this base method. Subclasses may just
+     * overwrite this protected method to change behavior of all parameter-
+     * related methods.
+     * @return the base parameter map from which parameters are retrieved.
+     */
+    protected Map baseGetParameterMap() {
+        bodyAccessed = true;
+        return this.getHttpServletRequest().getParameterMap();
+    }
+
+    protected void setBodyAccessed() {
+    	bodyAccessed = true;
     }
     
     
@@ -594,14 +605,13 @@ implements PortletRequest, InternalPortletRequest {
         return null;
     }
 
-    public void setCharacterEncoding(String env)
-            throws UnsupportedEncodingException {
+    public void setCharacterEncoding(String encoding)
+    throws UnsupportedEncodingException {
         if (bodyAccessed) {
-            throw new IllegalStateException(
-                    "This method must not be called after the HTTP-Body was accessed !");
+            throw new IllegalStateException("This method must not be called "
+            		+ "after the HTTP-Body was accessed!");
         }
-
-        getHttpServletRequest().setCharacterEncoding(env);
+        getHttpServletRequest().setCharacterEncoding(encoding);
     }
 
 
