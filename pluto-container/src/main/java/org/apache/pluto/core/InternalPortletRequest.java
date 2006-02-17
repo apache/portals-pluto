@@ -25,34 +25,38 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletContext;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The internal portlet request interface extends PortletRequest and adds
+ * some methods used by Pluto.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
 public interface InternalPortletRequest extends PortletRequest {
 
     /**
-     * Initialize the portlet for use within the target context.
-     * This method ensures that the portlet utilizes resources
-     * from the *included* context, and not those from the
-     * intiating (portal) context.
-     * @param context
-     * @param req
+     * Initializes the portlet request for use within the target context.
+     * This method ensures that the portlet utilizes resources from the
+     * <b>included</b> context, and not those from the intiating (portal)
+     * context.
+     * 
+     * @param context  the target portlet context.
+     * @param request  the servlet request.
      */
-    void init(PortletContext context, HttpServletRequest req);
+    public void init(PortletContext context, HttpServletRequest req);
 
     /**
      * Recycle the request by rolling the underlying request
      * back to the originating request.
      */
-    void release();
+    public void release();
 
+    public InternalPortletWindow getInternalPortletWindow();
 
-    InternalPortletWindow getInternalPortletWindow();
+    public PortletContainer getPortletContainer();
 
-    PortletContainer getPortletContainer();
-
-    void setIncluded(boolean included);
-
-    boolean isIncluded();
-
-    HttpServletRequest getHttpServletRequest();
+    public HttpServletRequest getHttpServletRequest();
+    
 }
 
 

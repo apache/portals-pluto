@@ -38,9 +38,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
- * Pluto's Portlet Context Implementation.
- * <p>This class implements the <code>InternalPortletContext</code> which
- * provides container specific information needed for processing.</p>
+ * Pluto's Portlet Context Implementation. This class implements the
+ * <code>InternalPortletContext</code> which provides container specific
+ * information needed for processing.
  * 
  * @version 1.1
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -49,9 +49,12 @@ import java.util.StringTokenizer;
 public class PortletContextImpl
 implements PortletContext, InternalPortletContext {
 	
-	/** Internal logger. */
+	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletContextImpl.class);
-
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
     /** Portlet Application Descriptor. */
     private PortletAppDD portletAppDD = null;
 
@@ -62,10 +65,9 @@ implements PortletContext, InternalPortletContext {
     // Constructor -------------------------------------------------------------
     
     /**
-     * Sole constructor.
-     *
-     * @param servletContext the servlet context in which we are contained.
-     * @param portletAppDD the application descriptor.
+     * Constructs an instance.
+     * @param servletContext  the servlet context in which we are contained.
+     * @param portletAppDD  the portlet application descriptor.
      */
     public PortletContextImpl(ServletContext servletContext,
                               PortletAppDD portletAppDD) {
@@ -74,7 +76,7 @@ implements PortletContext, InternalPortletContext {
     }
     
     
-    // javax.portlet.PortletContext Impl ---------------------------------------
+    // PortletContext Impl -----------------------------------------------------
     
     /**
      * Retrieve the PortletContainer's server info.
@@ -92,7 +94,7 @@ implements PortletContext, InternalPortletContext {
         }
         
         // Check if the path name is valid. A valid path name must not be null
-        // and must start with a slash '/' as defined by the portlet spec.
+        //   and must start with a slash '/' as defined by the portlet spec.
         if (path == null || !path.startsWith("/")) {
         	if (LOG.isInfoEnabled()) {
         		LOG.info("Failed to retrieve PortletRequestDispatcher: "

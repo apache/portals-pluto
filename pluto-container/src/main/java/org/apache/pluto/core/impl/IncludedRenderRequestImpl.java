@@ -27,12 +27,13 @@ import java.util.Vector;
 
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @todo Document
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @since Aug 3, 2005
  */
 public class IncludedRenderRequestImpl extends RenderRequestImpl {
-    private static final Log LOG =
-        LogFactory.getLog(IncludedRenderRequestImpl.class);
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(IncludedRenderRequestImpl.class);
 
     private Map map;
 

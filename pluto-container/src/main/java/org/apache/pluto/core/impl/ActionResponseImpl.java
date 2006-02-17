@@ -44,7 +44,7 @@ import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.util.StringUtils;
 
 public class ActionResponseImpl extends PortletResponseImpl
-    implements ActionResponse, InternalActionResponse {
+implements ActionResponse, InternalActionResponse {
 
     /**
      * Is it still allowed to invoke the method sendRedirect() ?
@@ -228,7 +228,7 @@ public class ActionResponseImpl extends PortletResponseImpl
     }
 
     private boolean isPortletModeAllowedByPortlet(PortletMode mode) {
-        PortletDD dd = internalPortletWindow.getPortletEntity()
+        PortletDD dd = getInternalPortletWindow().getPortletEntity()
             .getPortletDefinition();
 
         Iterator supports = dd.getSupports().iterator();

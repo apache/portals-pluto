@@ -19,8 +19,11 @@
 
 package org.apache.pluto.core.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.core.InternalPortletWindow;
+import org.apache.pluto.core.InternalRenderResponse;
 import org.apache.pluto.core.PortletEntity;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
@@ -37,21 +40,34 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class RenderResponseImpl extends PortletResponseImpl
-implements RenderResponse {
+implements RenderResponse, InternalRenderResponse {
     
+	/** Logger. */
+	private static final Log LOG = LogFactory.getLog(RenderResponseImpl.class);
+	
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(RenderResponseImpl.class.getPackage().getName());
-
+    
+    
+    // Private Member Variables ------------------------------------------------
+    
+    /** True if we are in an include call. */
+    private boolean included = false;
+    
     /**
      * The current content type.
-     * @todo This should be made dynamic
+     * TODO: This should be made dynamic
      */
     private String currentContentType = null;
-
+    
     private NamespaceMapper mapper = new NamespaceMapperImpl();
-
+    
+    
+    // Constructor -------------------------------------------------------------
+    
     public RenderResponseImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
                               javax.servlet.http.HttpServletRequest servletRequest,
@@ -59,10 +75,13 @@ implements RenderResponse {
         super(container, internalPortletWindow, servletRequest,
               servletResponse);
     }
-
+    
+    
+    // RenderResponse Impl -----------------------------------------------------
+    
     public String getContentType() {
-        // in servlet 2.4 we could simply use this:
-        // return this.getHttpServletResponse().getContentType();
+        // NOTE: in servlet 2.4 we could simply use this:
+        //   return this.getHttpServletResponse().getContentType();
         return currentContentType;
     }
 
@@ -75,9 +94,7 @@ implements RenderResponse {
     }
 
     public String getNamespace() {
-         String namespace =
-            mapper.encode(getInternalPortletWindow().getId(), "");
-
+         String namespace = mapper.encode(getInternalPortletWindow().getId(), "");
          StringBuffer validNamespace = new StringBuffer();
          for (int i = 0; i < namespace.length(); i++) {
          	char ch = namespace.charAt(i);
@@ -87,12 +104,11 @@ implements RenderResponse {
          		validNamespace.append('_');
          	}
          }
-
          return validNamespace.toString();
     }
 
     public void setTitle(String title) {
-        PortalCallbackService callback = container
+        PortalCallbackService callback = getContainer()
         		.getRequiredContainerServices()
         		.getPortalCallbackService();
         callback.setTitle(this.getHttpServletRequest(),
@@ -114,33 +130,35 @@ implements RenderResponse {
     }
 
     /**
-     * @todo is it appropriate to throw an illegal state if content type is not set.  how do we set automatically
+     * TODO: is it appropriate to throw an illegal state if content type is not set.  how do we set automatically
      */ 
     public PrintWriter getWriter() throws IOException, IllegalStateException {
         if (currentContentType == null) {
-            String msg = EXCEPTIONS.getString("error.contenttype.null");
-            //throw new java.lang.IllegalStateException(msg);
+            String message = EXCEPTIONS.getString("error.contenttype.null");
+            if (LOG.isWarnEnabled()) {
+            	LOG.warn("Current content type is not set: " + message);
+            }
+            // TODO: throw new java.lang.IllegalStateException(msg);
         }
-
         return super.getWriter();
     }
 
-    public java.util.Locale getLocale() {
+    public Locale getLocale() {
         return this.getHttpServletRequest().getLocale();
     }
 
-    //@todo port 1.0.1 setBufferSize fix to 1.1
+    // TODO: port 1.0.1 setBufferSize fix to 1.1
     public void setBufferSize(int size) {
         throw new IllegalStateException(
             "portlet container does not support buffering");
     }
 
     public int getBufferSize() {
-        //return this.getHttpServletResponse().getBufferSize();
+        // TODO: return this.getHttpServletResponse().getBufferSize();
         return 0;
     }
 
-    public void flushBuffer() throws java.io.IOException {
+    public void flushBuffer() throws IOException {
         this.getHttpServletResponse().flushBuffer();
     }
 
@@ -159,27 +177,64 @@ implements RenderResponse {
     /**
      * @todo is it appropriate to throw an illegal state if content type is not set.  how do we set automatically
      * @return
-     * @throws java.io.IOException
-     * @throws java.lang.IllegalStateException
+     * @throws IOException
+     * @throws IllegalStateException
      */
-    public OutputStream getPortletOutputStream() throws java.io.IOException,
-                                                        java.lang.IllegalStateException {
+    public OutputStream getPortletOutputStream()
+    throws IOException, IllegalStateException {
         if (currentContentType == null) {
-            String msg = EXCEPTIONS.getString("error.contenttype.null");
-            //throw new java.lang.IllegalStateException(msg);
+            String message = EXCEPTIONS.getString("error.contenttype.null");
+            if (LOG.isWarnEnabled()) {
+            	LOG.warn(message);
+            }
+            // TODO: throw new java.lang.IllegalStateException(msg);
         }
         return getOutputStream();
     }
-    // --------------------------------------------------------------------------------------------
+    
+    
+    // InternalRenderResponse Impl ---------------------------------------------
+    
+    public void setIncluded(boolean included) {
+        this.included = included;
+    }
 
-    // internal methods ---------------------------------------------------------------------------
+    public boolean isIncluded() {
+        return included;
+    }
+    
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * TODO
+     */
+    public String encodeRedirectUrl(String url) {
+    	if (included) {
+    		return null;
+    	} else {
+    		return super.encodeRedirectUrl(url);
+    	}
+    }
+    
+    /**
+     * TODO
+     */
+    public String encodeRedirectURL(String url) {
+    	if (included) {
+    		return null;
+    	} else {
+    		return super.encodeRedirectURL(url);
+    	}
+    }
+
     /**
      * @param isAction
      * @return
      * @todo make dynamic? as service?
      */
     private PortletURL createURL(boolean isAction) {
-        return new PortletURLImpl(container,
+        return new PortletURLImpl(getContainer(),
                                   getInternalPortletWindow(),
                                   getHttpServletRequest(),
                                   getHttpServletResponse(),

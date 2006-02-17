@@ -28,15 +28,16 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * Utility used to convert a generic PortletRequest or
- * PortletResponse object into an Internal respresentation
+ * Static class that provides utility methods to convert a generic
+ * PortletRequest or PortletResponse object into an Internal respresentation
  * of the same object.
- *
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 class InternalImplConverter {
 	
 	/**
-	 * Private constructor that prevents instantiation.
+	 * Private constructor that prevents external instantiation.
 	 */
 	private InternalImplConverter() {
 		// Do nothing.
@@ -59,7 +60,7 @@ class InternalImplConverter {
             request = ((PortletRequestWrapper) request).getPortletRequest();
             if (request == null) {
                 throw new IllegalStateException(
-                    "The internal portlet request cannot be found.");
+                		"The internal portlet request cannot be found.");
             }
         }
         return (InternalPortletRequest) request;
@@ -79,9 +80,10 @@ class InternalImplConverter {
             response = ((PortletResponseWrapper) response).getPortletResponse();
             if (response == null) {
                 throw new IllegalStateException(
-                    "The internal portlet response cannot be found.");
+                		"The internal portlet response cannot be found.");
             }
         }
         return (InternalPortletResponse) response;
     }
+    
 }

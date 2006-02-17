@@ -34,7 +34,4 @@ public interface InternalPortletResponse extends PortletResponse {
 
     public InternalPortletWindow getInternalPortletWindow();
 
-    public void setIncluded(boolean included);
-
-    public boolean isIncluded();
 }

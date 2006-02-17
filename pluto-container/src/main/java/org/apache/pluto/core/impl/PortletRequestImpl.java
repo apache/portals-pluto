@@ -34,7 +34,6 @@ import org.apache.pluto.util.impl.NamespaceMapperImpl;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
@@ -73,7 +72,7 @@ implements PortletRequest, InternalPortletRequest {
             StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
     
     
-    // Private Methods ---------------------------------------------------------
+    // Private Member Variables ------------------------------------------------
     
     /** The parent container within which this request was created. */
     private PortletContainer container = null;
@@ -102,12 +101,6 @@ implements PortletRequest, InternalPortletRequest {
     /** Flag indicating if the HTTP-Body has been accessed. */
     private boolean bodyAccessed = false;
 
-    /**
-     * true if we are in an include call.
-     * FIXME: the included flag should only exist for a render request.
-     */
-    private boolean included = false;
-    
 
     // Constructors ------------------------------------------------------------
 
@@ -164,12 +157,6 @@ implements PortletRequest, InternalPortletRequest {
     public WindowState getWindowState() {
         return internalPortletWindow.getWindowState();
     }
-    
-    /**
-     * FIXME: implement here?
-     * needs to be implemented in each subclass
-     */
-    public abstract PortletPreferences getPreferences();
     
     public PortletSession getPortletSession() {
         return getPortletSession(true);
@@ -490,72 +477,62 @@ implements PortletRequest, InternalPortletRequest {
     public int getServerPort() {
         return this.getHttpServletRequest().getServerPort();
     }
-
-    // --------------------------------------------------------------------------------------------
+    
+    
+    // InternalPortletRequest Impl ---------------------------------------------
 
     public InternalPortletWindow getInternalPortletWindow() {
         return internalPortletWindow;
     }
 
     public PortletContainer getPortletContainer() {
-        return this.container;
+        return container;
     }
 
-    public void setIncluded(boolean included) {
-        this.included = included;
-    }
-
-    public boolean isIncluded() {
-        return included;
-    }
-    // --------------------------------------------------------------------------------------------
-
-    // internal methods ---------------------------------------------------------------------------
     public HttpServletRequest getHttpServletRequest() {
         return (HttpServletRequest) super.getRequest();
     }
+    
+    public void init(PortletContext portletContext, HttpServletRequest req) {
+        this.portletContext = portletContext;
+        setRequest(req);
+    }
 
     /**
-     * Is this attribute name a reserved name (by the J2EE spec)?. Reserved
-     * names begin with "java." or "javax.".
+     * TODO: Implement this properly.  Not required now
      */
-    private boolean isNameReserved(String name) {
-        return name.startsWith("java.") || name.startsWith("javax.");
+    public void release() {
+    	// TODO:
     }
-    // --------------------------------------------------------------------------------------------
-
-    // additional methods
-    // .HttpServletRequestWrapper
-    public java.lang.String getCharacterEncoding() {
+    
+    
+    // Additional Methods of HttpServletRequestWrapper -------------------------
+    
+    public String getCharacterEncoding() {
         return this.getHttpServletRequest().getCharacterEncoding();
     }
 
-    public java.lang.String getContentType() {
-        if (included) {
-            return null;
-        } else {
-            return this.getHttpServletRequest().getContentType();
-        }
+    public String getContentType() {
+    	return this.getHttpServletRequest().getContentType();
     }
 
     public int getContentLength() {
-        if (included) {
-            return 0;
-        } else {
-            return getHttpServletRequest().getContentLength();
-        }
+    	return getHttpServletRequest().getContentLength();
     }
 
     public BufferedReader getReader()
-            throws UnsupportedEncodingException, java.io.IOException {
-        if (included) {
-            return null;
-        } else {
-            // the super class will ensure that a IllegalStateException is thrown if getInputStream() was called earlier
-            BufferedReader reader = getHttpServletRequest().getReader();
-            bodyAccessed = true;
-            return reader;
-        }
+    throws UnsupportedEncodingException, IOException {
+    	// the super class will ensure that a IllegalStateException is thrown
+    	//   if getInputStream() was called earlier
+    	BufferedReader reader = getHttpServletRequest().getReader();
+    	bodyAccessed = true;
+    	return reader;
+    }
+    
+    public ServletInputStream getInputStream() throws IOException {
+    	ServletInputStream stream = getHttpServletRequest().getInputStream();
+    	bodyAccessed = true;
+    	return stream;
     }
 
 
@@ -627,43 +604,22 @@ implements PortletRequest, InternalPortletRequest {
         getHttpServletRequest().setCharacterEncoding(env);
     }
 
-    public ServletInputStream getInputStream()
-    throws IOException {
-        if (included) {
-            return null;
-        } else {
-            ServletInputStream stream = getHttpServletRequest().getInputStream();
-            bodyAccessed = true;
-            return stream;
-        }
-    }
 
     public RequestDispatcher getRequestDispatcher(String path) {
         return this.getHttpServletRequest().getRequestDispatcher(path);
     }
-
-// Internal Implementation Detailes
-
-    public void init(PortletContext portletContext, HttpServletRequest req) {
-        this.portletContext = portletContext;
-        setRequest(req);
-    }
-
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
     /**
-     * @todo Implement this properly.  Not required now
+     * Is this attribute name a reserved name (by the J2EE spec)?. Reserved
+     * names begin with "java." or "javax.".
      */
-    public void release() {
-
+    private boolean isNameReserved(String name) {
+        return name.startsWith("java.") || name.startsWith("javax.");
     }
-
-    public PortletContainer getContainer() {
-        return container;
-    }
-
-    public InternalPortletWindow getWindow() {
-        return internalPortletWindow;
-    }
-
+    
     private boolean isPortletModeAllowedByPortlet(PortletMode mode) {
         if(isPortletModeMandatory(mode)) {
             return true;

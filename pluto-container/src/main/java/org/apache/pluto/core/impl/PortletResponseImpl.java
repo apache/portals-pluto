@@ -30,18 +30,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.services.ResourceURLProvider;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 
 public abstract class PortletResponseImpl extends HttpServletResponseWrapper
-implements InternalPortletResponse, PortletResponse {
+implements PortletResponse, InternalPortletResponse {
+	
+	// Private Member Variables ------------------------------------------------
 
-    PortletContainer container;
-
-    InternalPortletWindow internalPortletWindow;
+    private PortletContainer container = null;
+    
+    private InternalPortletWindow internalPortletWindow = null;
 
     /**
      * this variable holds the servlet request of the target/portlet's web
@@ -54,12 +55,10 @@ implements InternalPortletResponse, PortletResponse {
     private boolean usingStream;
 
     private ServletOutputStream wrappedWriter;
-
-    /**
-     * true if we are in an include call
-     */
-    private boolean included;
-
+    
+    
+    // Constructor -------------------------------------------------------------
+    
     public PortletResponseImpl(PortletContainer container,
                                InternalPortletWindow internalPortletWindow,
                                HttpServletRequest servletRequest,
@@ -71,7 +70,8 @@ implements InternalPortletResponse, PortletResponse {
         this.internalPortletWindow = internalPortletWindow;
     }
 
-    // javax.portlet.PortletResponse --------------------------------------------------------------
+    // PortletResponse Impl ----------------------------------------------------
+    
     public void addProperty(String key, String value) {
         if (key == null) {
             throw new IllegalArgumentException("Property key == null");
@@ -147,13 +147,11 @@ implements InternalPortletResponse, PortletResponse {
     }
 
     public String encodeRedirectUrl(String url) {
-        return included
-               ? null : getHttpServletResponse().encodeRedirectURL(url);
+        return getHttpServletResponse().encodeRedirectURL(url);
     }
 
     public String encodeRedirectURL(String url) {
-        return included
-               ? null : getHttpServletResponse().encodeRedirectURL(url);
+        return getHttpServletResponse().encodeRedirectURL(url);
     }
 
     public void sendRedirect(String location) throws java.io.IOException {
@@ -188,12 +186,12 @@ implements InternalPortletResponse, PortletResponse {
         getHttpServletResponse().setHeader(name, value);
     }
 
-    public void setStatus(int sc) {
-        getHttpServletResponse().setStatus(sc);
+    public void setStatus(int statusCode) {
+        getHttpServletResponse().setStatus(statusCode);
     }
 
-    public void setStatus(int sc, String sm) {
-        getHttpServletResponse().setStatus(sc, sm);
+    public void setStatus(int statusCode, String message) {
+        getHttpServletResponse().setStatus(statusCode, message);
     }
 
     public void addIntHeader(String name, int value) {
@@ -212,8 +210,8 @@ implements InternalPortletResponse, PortletResponse {
         getHttpServletResponse().setLocale(loc);
     }
 
-    public ServletOutputStream getOutputStream() throws IllegalStateException,
-                                                        IOException {
+    public ServletOutputStream getOutputStream()
+    throws IllegalStateException, IOException {
         if (usingWriter) {
             throw new IllegalStateException(
                 "getPortletOutputStream can't be used after getWriter was invoked");
@@ -230,8 +228,8 @@ implements InternalPortletResponse, PortletResponse {
         return wrappedWriter;
     }
 
-    public PrintWriter getWriter() throws UnsupportedEncodingException,
-                                          IllegalStateException, IOException {
+    public PrintWriter getWriter()
+    throws UnsupportedEncodingException, IllegalStateException, IOException {
         if (usingStream) {
             throw new IllegalStateException(
                 "getWriter can't be used after getOutputStream was invoked");
@@ -251,14 +249,6 @@ implements InternalPortletResponse, PortletResponse {
     
     HttpServletRequest getHttpDServletRequest() {
         return httpServletRequest;
-    }
-
-    public void setIncluded(boolean included) {
-        this.included = included;
-    }
-
-    public boolean isIncluded() {
-        return included;
     }
 
     public PortletContainer getContainer() {
