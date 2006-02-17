@@ -103,37 +103,30 @@ implements PortletContext, InternalPortletContext {
         	return null;
         }
         
-        // Parse path name to base dispatching path and query parameters.
-        String dispatchingPath = null;
-        Map params = null;
+        // Extract query string which contains appended parameters.
+        Map appendedParameters = null;
         int index = path.indexOf("?");
-        if (index > 0) {
-        	dispatchingPath = path.substring(0, index);
-        	if (index < path.length() - 1) {
-        		params = parseQueryParams(path.substring(index + 1));
-        	}
-        } else {
-        	dispatchingPath = path;
+        if (index > 0 && index < path.length() - 1) {
+        	appendedParameters = parseQueryString(path.substring(index + 1));
         }
         
         // Construct PortletRequestDispatcher.
         PortletRequestDispatcher portletRequestDispatcher = null;
         try {
             RequestDispatcher servletRequestDispatcher = servletContext
-            		.getRequestDispatcher(dispatchingPath);
+            		.getRequestDispatcher(path);
             if (servletRequestDispatcher != null) {
             	portletRequestDispatcher = new PortletRequestDispatcherImpl(
-                		servletRequestDispatcher, params);
+                		servletRequestDispatcher, appendedParameters);
             } else {
             	if (LOG.isInfoEnabled()) {
-            		LOG.info("No matching request dispatcher found for path: "
-            				+ dispatchingPath);
+            		LOG.info("No matching request dispatcher found for: " + path);
             	}
             }
         } catch (Exception ex) {
-            // need to catch exception because of tomcat 4.x bug
-            // tomcat throws an exception instead of return null
-            // if the path was not found
+            // We need to catch exception because of a Tomcat 4.x bug.
+            //   Tomcat throws an exception instead of return null if the path
+        	//   was not found.
         	if (LOG.isInfoEnabled()) {
         		LOG.info("Failed to retrieve PortletRequestDispatcher: "
         				+ ex.getMessage());
@@ -263,12 +256,12 @@ implements PortletContext, InternalPortletContext {
      * @param paramsString  the string containing parameters.
      * @return parameter map, or null if no parameters are appended.
      */
-    private Map parseQueryParams(String paramsString) {
+    private Map parseQueryString(String queryString) {
     	if (LOG.isDebugEnabled()) {
-    		LOG.debug("Parsing query parameters string: " + paramsString);
+    		LOG.debug("Parsing query string: " + queryString);
     	}
         Map params = new HashMap();
-        StringTokenizer st = new StringTokenizer(paramsString, "&", false);
+        StringTokenizer st = new StringTokenizer(queryString, "&", false);
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
             int equalIndex = token.indexOf("=");

@@ -372,13 +372,13 @@ implements PortletRequest, InternalPortletRequest {
         String[] values = (String[]) parameters.get(name);
         if (values != null) {
             return values[0];
+        } else {
+        	return null;
         }
-        return null;
     }
 
     public Enumeration getParameterNames() {
         bodyAccessed = true;
-
         Map parameters = this.getHttpServletRequest().getParameterMap();
         return Collections.enumeration(parameters.keySet());
     }

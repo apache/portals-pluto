@@ -61,14 +61,33 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     
     // Constructors ------------------------------------------------------------
     
+    /**
+     * Creates an instance. This constructor should be called to construct a
+     * named dispatcher.
+     * @param requestDispatcher  the servlet request dispatcher.
+     * @see javax.portlet.PortletContext#getNamedDispatcher(String)
+     */
     public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher) {
         this.requestDispatcher = requestDispatcher;
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Named dispatcher created.");
+        }
     }
-
+    
+    /**
+     * Creates an instance. This constructor should be called to construct a
+     * portlet request dispatcher.
+     * @param requestDispatcher  the servlet request dispatcher.
+     * @param queryParams  the appended query parameters.
+     * @see javax.portlet.PortletContext#getRequestDispatcher(String)
+     */
     public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher,
                                         Map queryParams) {
         this(requestDispatcher);
         this.queryParams = queryParams;
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Request dispatcher created.");
+        }
     }
     
     
@@ -81,18 +100,12 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
                 InternalImplConverter.getInternalRequest(request);
         InternalRenderResponse internalResponse = (InternalRenderResponse)
                 InternalImplConverter.getInternalResponse(response);
-
-        if (queryParams != null) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Creating Included Render Request to override query parameters.");
-            }
-            internalRequest = new IncludedRenderRequestImpl(
-            		internalRequest, queryParams);
-        }
+        
         boolean isIncluded = (internalRequest.isIncluded()
         		|| internalResponse.isIncluded());
         try {
         	internalRequest.setIncluded(true);
+        	internalRequest.setAppendedParameters(queryParams);
         	internalResponse.setIncluded(true);
 
             requestDispatcher.include(

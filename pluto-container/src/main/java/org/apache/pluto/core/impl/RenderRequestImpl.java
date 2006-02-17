@@ -32,6 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * Implementation of the <code>javax.portlet.RenderRequest</code> interface.
@@ -50,6 +57,9 @@ implements RenderRequest, InternalRenderRequest {
     
     /** True if we are in an include call. */
     private boolean included = false;
+    
+    /** The parameters including parameters appended to the dispatching URI. */
+    private Map parameters = null;
     
     /** The portlet preferences. */
     private PortletPreferences portletPreferences = null;
@@ -73,9 +83,6 @@ implements RenderRequest, InternalRenderRequest {
     
     // RenderRequest Impl ------------------------------------------------------
     
-    /**
-     * FIXME: portlet preference method ID!
-     */
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
@@ -139,14 +146,124 @@ implements RenderRequest, InternalRenderRequest {
     }
     
     
+    // PortletRequestImpl Overwriting ------------------------------------------
+    
+    public Map getParameterMap() {
+    	if (included && parameters != null) {
+    		return parameters;
+    	} else {
+    		return super.getParameterMap();
+    	}
+    }
+
+    public String getParameter(String name) {
+    	if (included && parameters != null) {
+    		String[] values = (String[]) parameters.get(name);
+    		if (values != null && values.length > 0) {
+    			return values[0];
+    		} else {
+    			return null;
+    		}
+    	} else {
+    		return super.getParameter(name);
+    	}
+    }
+
+    public Enumeration getParameterNames() {
+    	if (included && parameters != null) {
+    		return new Vector(parameters.keySet()).elements();
+    	} else {
+    		return super.getParameterNames();
+    	}
+    }
+
+    public String[] getParameterValues(String name) {
+    	if (included && parameters != null) {
+    		return (String[]) parameters.get(name);
+    	} else {
+    		return super.getParameterValues(name);
+    	}
+    }
+
+    
     // InternalRenderRequest Impl ----------------------------------------------
     
     public void setIncluded(boolean included) {
-        this.included = included;
+    	this.included = included;
+        if (!included) {
+        	this.parameters = null;
+        }
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Render request's included mode: " + included);
+        }
     }
 
     public boolean isIncluded() {
         return included;
+    }
+    
+    public void setAppendedParameters(Map appendedParameters)
+    throws IllegalStateException {
+    	if (!included) {
+    		throw new IllegalStateException("Parameters cannot be appended to "
+    				+ "render request which is not included in a dispatch.");
+    	}
+    	if (appendedParameters != null && !appendedParameters.isEmpty()) {
+    		// Copy all the original render parameters.
+    		parameters = new HashMap(super.getParameterMap());
+    		// Put appended parameters to the render parameter map.
+    		// The original render parameters should not be overwritten.
+    		appendParameters(parameters, appendedParameters);
+    		// Log the new render parameter map.
+    		if (LOG.isDebugEnabled()) {
+    			LOG.debug("New parameter map: " + parameters.toString());
+    		}
+    	} else {
+    		if (LOG.isDebugEnabled()) {
+    			LOG.debug("No parameters appended to the included request.");
+    		}
+    	}
+    }
+    
+    
+    // Private Methods ---------------------------------------------------------
+    
+    /**
+     * Appends key-value pairs in one parameter map (A) to another parameter
+     * map (B). If a key from map A does not exist in map B, the key-value pair
+     * is added to map B directly. Otherwise, value from map A and value from
+     * map B are merged into a single string array, and added to map B.
+     * @param parameters  the target parameter map (map B).
+     * @param appended  the appended parameter map (map A).
+     */
+    private void appendParameters(Map parameters, Map appended) {
+    	for (Iterator it = appended.keySet().iterator(); it.hasNext(); ) {
+    		String key = (String) it.next();
+    		// If the parameter name (key) does not exist, put it to map.
+    		if (!parameters.containsKey(key)) {
+    			parameters.put(key, appended.get(key));
+    		}
+    		// Otherwise, merge the two value arrays.
+    		else {
+    			String[] originalValues = (String[]) parameters.get(key);
+    			String[] appendedValues = (String[]) appended.get(key);
+    			List values = new ArrayList();
+    			// Appended parameter values first.
+    			if (appendedValues != null) {
+    				for (int i = 0; i < appendedValues.length; i++) {
+    					values.add(appendedValues[i]);
+    				}
+    			}
+    			// Then original parameter values.
+    			if (originalValues != null) {
+    				for (int i = 0; i < originalValues.length; i++) {
+    					values.add(originalValues[i]);
+    				}
+    			}
+    			parameters.put(key,
+    					(String[]) values.toArray(new String[values.size()]));
+    		}
+    	}
     }
     
 }
