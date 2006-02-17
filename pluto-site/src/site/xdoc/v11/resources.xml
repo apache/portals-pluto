@@ -37,8 +37,13 @@ limitations under the License.
     <section name="Additional Pluto Documentation">
       <p>
         <ul>
-          <li><a href="http://wiki.apache.org/portals/Pluto">Official Pluto Wiki</a></li>
-          <li><a href="http://people.apache.org/~zheng/pluto/chinese/">Pluto Site, Chinese Translation</a></li>
+          <li>
+            <a href="http://wiki.apache.org/portals/Pluto">Official Pluto Wiki</a>
+          </li>
+          <li>
+            <a href="http://people.apache.org/~zheng/pluto/chinese/">Pluto
+            Website, Chinese Translation</a> maintained by ZHENG Zhong
+          </li>
         </ul>
       </p>
     </section>

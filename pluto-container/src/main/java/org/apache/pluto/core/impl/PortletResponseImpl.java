@@ -22,6 +22,7 @@ package org.apache.pluto.core.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 
 import javax.portlet.PortletResponse;
 import javax.servlet.ServletOutputStream;
@@ -206,8 +207,8 @@ implements PortletResponse, InternalPortletResponse {
         return this.encodeURL(url);
     }
 
-    public void setLocale(java.util.Locale loc) {
-        getHttpServletResponse().setLocale(loc);
+    public void setLocale(Locale locale) {
+        getHttpServletResponse().setLocale(locale);
     }
 
     public ServletOutputStream getOutputStream()

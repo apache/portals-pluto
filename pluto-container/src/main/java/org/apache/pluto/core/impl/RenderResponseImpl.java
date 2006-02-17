@@ -122,23 +122,32 @@ implements RenderResponse, InternalRenderResponse {
             throw new IllegalArgumentException(mimeType);
         }
         this.getHttpServletResponse().setContentType(mimeType);
-        currentContentType = mimeType;
+        this.currentContentType = mimeType;
     }
 
     public String getCharacterEncoding() {
         return this.getHttpServletResponse().getCharacterEncoding();
     }
 
-    /**
-     * TODO: is it appropriate to throw an illegal state if content type is not set.  how do we set automatically
-     */ 
+    public OutputStream getPortletOutputStream()
+    throws IOException, IllegalStateException {
+        if (currentContentType == null) {
+            String message = EXCEPTIONS.getString("error.contenttype.null");
+            if (LOG.isWarnEnabled()) {
+            	LOG.warn("Current content type is not set.");
+            }
+            throw new IllegalStateException(message);
+        }
+        return getOutputStream();
+    }
+    
     public PrintWriter getWriter() throws IOException, IllegalStateException {
         if (currentContentType == null) {
             String message = EXCEPTIONS.getString("error.contenttype.null");
             if (LOG.isWarnEnabled()) {
-            	LOG.warn("Current content type is not set: " + message);
+            	LOG.warn("Current content type is not set.");
             }
-            // TODO: throw new java.lang.IllegalStateException(msg);
+            throw new IllegalStateException(message);
         }
         return super.getWriter();
     }
@@ -174,24 +183,6 @@ implements RenderResponse, InternalRenderResponse {
         this.getHttpServletResponse().reset();
     }
 
-    /**
-     * @todo is it appropriate to throw an illegal state if content type is not set.  how do we set automatically
-     * @return
-     * @throws IOException
-     * @throws IllegalStateException
-     */
-    public OutputStream getPortletOutputStream()
-    throws IOException, IllegalStateException {
-        if (currentContentType == null) {
-            String message = EXCEPTIONS.getString("error.contenttype.null");
-            if (LOG.isWarnEnabled()) {
-            	LOG.warn(message);
-            }
-            // TODO: throw new java.lang.IllegalStateException(msg);
-        }
-        return getOutputStream();
-    }
-    
     
     // InternalRenderResponse Impl ---------------------------------------------
     
