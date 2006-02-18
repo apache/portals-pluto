@@ -170,7 +170,14 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
     public String getValue(String key, String defaultValue) {
         String[] values = getValues(key, new String[] { defaultValue });
-        return (values != null && values.length > 0) ? values[0] : null;
+        String value = null;
+        if (values != null && values.length > 0) {
+        	value = values[0];
+        }
+        if (value == null) {
+        	value = defaultValue;
+        }
+        return value;
     }
 
     public String[] getValues(String key, String[] defaultValues) {
@@ -182,7 +189,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
         PortletPreference pref = (PortletPreference) preferences.get(key);
         if (pref != null) {
             values = pref.getValues();
-        } else {
+        }
+        if (values == null) {
             values = defaultValues;
         }
         return values;

@@ -88,8 +88,25 @@ public class PortletEntity {
     }
     
     /**
-     * Returns all preferences of this portlet The return value cannot be NULL.
+     * Returns an array of default preferences of this portlet. The default
+     * preferences are retrieved from the portlet application descriptor.
+     * <p>
+     * Data retrieved from <code>portlet.xml</code> are injected into the domain
+     * object <code>PortletPreferenceDD</code>. This method converts the domain
+     * objects into <code>PortletPreference</code> objects.
+     * </p>
+     * <p>
+     * Note that if no value is bound to a given preference key,
+     * <code>PortletPreferenceDD.getValues()</code> will return an empty string
+     * list, but the value array of <code>PortletPreference</code> should be set
+     * to null (instead of an empty array).
+     * </p>
+     * <p>
+     * This method never returns null.
+     * </p>
      * @return the preference set
+     * 
+     * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
      */
     public PortletPreference[] getDefaultPreferences() {
         if (defaultPreferences == null) {
@@ -100,8 +117,11 @@ public class PortletEntity {
             	for (Iterator it = prefsDD.getPortletPreferences().iterator();
             			it.hasNext(); ) {
             		PortletPreferenceDD prefDD = (PortletPreferenceDD) it.next();
-            		String[] values = (String[]) prefDD.getValues().toArray(
-            				new String[prefDD.getValues().size()]);
+            		String[] values = null;
+            		if (prefDD.getValues().size() > 0) {
+            			values = (String[]) prefDD.getValues().toArray(
+            					new String[prefDD.getValues().size()]);
+            		}
             		PortletPreferenceImpl pref = new PortletPreferenceImpl(
             				prefDD.getName(), values, prefDD.isReadOnly());
             		prefs.add(pref);
