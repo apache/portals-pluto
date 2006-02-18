@@ -59,10 +59,13 @@ public class PortletEntity {
     
     // Private Member Variables ------------------------------------------------
     
+    /** The servlet context. */
     private ServletContext servletContext = null;
+    
+    /** The portlet window. */
     private PortletWindow portletWindow = null;
 
-    //  Looked up and Cached
+    /** The cached PortletDD retrieved from the portlet descriptor registry. */
     private PortletDD portletDefinition = null;
     
     /** Default portlet preferences defined for this portlet. */
