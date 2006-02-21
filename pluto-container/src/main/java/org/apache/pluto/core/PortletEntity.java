@@ -105,7 +105,8 @@ public class PortletEntity {
      * to null (instead of an empty array).
      * </p>
      * <p>
-     * This method never returns null.
+     * This method never returns null, but the values held by PortletPreference
+     * may be null.
      * </p>
      * @return the preference set
      * 

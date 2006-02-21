@@ -79,7 +79,10 @@ public class PortletPreferencesImpl implements PortletPreferences {
      */
     private PortletPreference[] defaultPreferences = null;
     
-    /** Current portlet preferences. */
+    /**
+     * Current portlet preferences: key is the preference name as a string,
+     * value is the PortletPreference instance.
+     */
     private Map preferences = new HashMap();
 
     /** Current method used for managing these preferences. */
@@ -203,18 +206,18 @@ public class PortletPreferencesImpl implements PortletPreferences {
         }
         PortletPreference pref = (PortletPreference) preferences.get(key);
         if (pref != null) {
-            pref.setValues(new String[]{value});
+            pref.setValues(new String[] { value });
         } else {
-            pref = new PortletPreferenceImpl(key, new String[]{value});
+            pref = new PortletPreferenceImpl(key, new String[] { value });
             preferences.put(key, pref);
         }
     }
 
     public void setValues(String key, String[] values) throws ReadOnlyException {
         if (isReadOnly(key)) {
-            throw new ReadOnlyException(EXCEPTIONS.getString("error.preference.readonly"));
+            throw new ReadOnlyException(EXCEPTIONS.getString(
+            		"error.preference.readonly"));
         }
-
         PortletPreference pref = (PortletPreference) preferences.get(key);
         if (pref != null) {
             pref.setValues(values);
@@ -233,7 +236,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
         Iterator it = preferences.keySet().iterator();
         while (it.hasNext()) {
             PortletPreference pref = (PortletPreference) preferences.get(it.next());
-            map.put(pref.getName(), pref.getValues().clone());
+            map.put(pref.getName(),
+                    pref.getValues() != null ? pref.getValues().clone() : null);
         }
         return Collections.unmodifiableMap(map);
     }
