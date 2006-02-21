@@ -183,10 +183,10 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         
         String value = preferences.getValue("TEST", DEF_VALUE);
-        if (value == null) {
+        if (DEF_VALUE.equals(value)) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
-        	TestUtils.failOnAssertion("preference value", value, null, result);
+        	TestUtils.failOnAssertion("preference value", value, DEF_VALUE, result);
         }
         return result;
     }
