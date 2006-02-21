@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * Implementation of the <code>javax.portlet.RenderRequest</code> interface.
@@ -98,11 +99,7 @@ implements RenderRequest, InternalRenderRequest {
      * flag is set to true, this method returns null.
      */
     public String getContentType() {
-        if (included) {
-            return null;
-        } else {
-        	return super.getContentType();
-        }
+        return included ? null : super.getContentType();
     }
     
     /**
@@ -110,11 +107,7 @@ implements RenderRequest, InternalRenderRequest {
      * flag is set to true, this method returns 0.
      */
     public int getContentLength() {
-        if (included) {
-            return 0;
-        } else {
-        	return super.getContentLength();
-        }
+        return included ? 0 : super.getContentLength();
     }
     
     /**
@@ -123,24 +116,15 @@ implements RenderRequest, InternalRenderRequest {
      */
     public BufferedReader getReader()
     throws UnsupportedEncodingException, IOException {
-        if (included) {
-            return null;
-        } else {
-        	return super.getReader();
-        }
+        return included ? null : super.getReader();
     }
     
     /**
      * Checks the included flag and returns the input stream to this render
      * response. If the included flag is set to true, this method returns null.
      */
-    public ServletInputStream getInputStream()
-    throws IOException {
-        if (included) {
-            return null;
-        } else {
-        	return super.getInputStream();
-        }
+    public ServletInputStream getInputStream() throws IOException {
+        return included ? null : super.getInputStream();
     }
     
     
@@ -172,67 +156,212 @@ implements RenderRequest, InternalRenderRequest {
         return included;
     }
     
-    public void setAppendedParameters(Map appendedParameters)
+    public void setIncludedQueryString(String queryString)
     throws IllegalStateException {
     	if (!included) {
     		throw new IllegalStateException("Parameters cannot be appended to "
     				+ "render request which is not included in a dispatch.");
     	}
-    	if (appendedParameters != null && !appendedParameters.isEmpty()) {
+    	if (queryString != null && queryString.trim().length() > 0) {
     		// Copy all the original render parameters.
     		parameters = new HashMap(super.getParameterMap());
-    		// Put appended parameters to the render parameter map.
+    		// Merge the appended parameters to the render parameter map.
     		// The original render parameters should not be overwritten.
-    		appendParameters(parameters, appendedParameters);
+    		mergeQueryString(parameters, queryString);
     		// Log the new render parameter map.
     		if (LOG.isDebugEnabled()) {
-    			LOG.debug("New parameter map: " + parameters.toString());
+    			LOG.debug("Merged parameters: " + parameters.toString());
     		}
     	} else {
     		if (LOG.isDebugEnabled()) {
-    			LOG.debug("No parameters appended to the included request.");
+    			LOG.debug("No query string appended to the included request.");
     		}
     	}
+    }
+    
+    
+    // Included HttpServletRequest (Limited) Impl ------------------------------
+    
+    /*
+     * -------------------------------------------------------------------------
+     * (non-javadoc)
+     * Portlet Spec. PLT. 16.3.3.
+     * The following methods of the HttpServletRequest must return the path and
+     * query string information used to obtain the PortletRequestDispatcher
+     * object:
+     *   getPathInfo
+     *   getPathTranslated
+     *   getQueryString
+     *   getRequestURI
+     *   getServletPath
+     * -------------------------------------------------------------------------
+     */
+    
+    public String getPathInfo() {
+    	String attr = (String) super.getAttribute(
+    			"javax.servlet.include.path_info");
+    	return (included && attr != null) ? attr : super.getPathInfo();
+    }
+
+    public String getQueryString() {
+    	String attr = (String) super.getAttribute(
+    			"javax.servlet.include.query_string");
+    	return (included && attr != null) ? attr : super.getQueryString();
+    }
+    
+    /**
+     * TODO: check PLT.16.3.3. page 67, line 10.
+     */
+    public String getPathTranslated() {
+    	// TODO:
+        return null;
+    }
+    
+    public String getRequestURI() {
+    	String attr = (String) super.getAttribute(
+    			"javax.servlet.include.request_uri");
+        return (included && attr != null) ? attr : super.getRequestURI();
+    }
+    
+    public String getServletPath() {
+        String attr = (String) super.getAttribute(
+                "javax.servlet.include.servlet_path");
+        return (included && attr != null) ? attr : super.getServletPath();
+    }
+    
+    /*
+     * -------------------------------------------------------------------------
+     * (non-Javadoc)
+     * Portlet Spec. PLT. 16.3.3.
+     * The following methods of the HttpServletRequest must return null:
+     *   getProtocol
+     *   getRemoteAddr
+     *   getRemoteHost
+     *   getRealPath
+     *   getRequestURL
+     * -------------------------------------------------------------------------
+     */
+    
+    public String getProtocol() {
+        return included ? null : super.getProtocol();
+    }
+
+    public String getRemoteAddr() {
+        return included ? null : super.getRemoteAddr();
+    }
+
+    public String getRemoteHost() {
+        return included ? null : super.getRemoteHost();
+    }
+
+    public String getRealPath(String path) {
+        return included ? null : super.getRealPath(path);
+    }
+
+    public StringBuffer getRequestURL() {
+        return included ? null : super.getRequestURL();
+    }
+    
+    /*
+     * -------------------------------------------------------------------------
+     * (non-Javadoc)
+     * Portlet Spec. PLT. 16.3.3.
+     * The following methods of the HttpServletRequest must do no operations
+     * and return null:
+     *   getCharacterEncoding
+     *   setCharacterEncoding
+     *   getContentType
+     *   getInputStream
+     *   getReader
+     * The getContentLength method of the HttpServletRequest must return 0.
+     * -------------------------------------------------------------------------
+     */
+    
+    public String getCharacterEncoding() {
+        return included ? null : super.getCharacterEncoding();
+    }
+    
+    public void setCharacterEncoding(String encoding)
+    throws UnsupportedEncodingException {
+        if (!included) {
+        	super.setCharacterEncoding(encoding);
+        }
+    }
+    
+    /*
+     * -------------------------------------------------------------------------
+     * (non-javadoc)
+     * Portlet Spec. PLT. 16.3.3.
+     * The getMethod method of the HttpServletRequest must always return 'GET'.
+     * -------------------------------------------------------------------------
+     */
+    
+    public String getMethod() {
+    	return "GET";
     }
     
     
     // Private Methods ---------------------------------------------------------
     
     /**
-     * Appends key-value pairs in one parameter map (A) to another parameter
-     * map (B). If a key from map A does not exist in map B, the key-value pair
-     * is added to map B directly. Otherwise, value from map A and value from
-     * map B are merged into a single string array, and added to map B.
-     * @param parameters  the target parameter map (map B).
-     * @param appended  the appended parameter map (map A).
+     * Parses the appended query string and merges the appended parameters to
+     * the original parameters. Query parameters are name-value pairs separated
+     * by the '<code>&amp;</code>' character.
+     * @param parameters  the original parameters map.
+     * @param queryString  the appended query string.
      */
-    private void appendParameters(Map parameters, Map appended) {
-    	for (Iterator it = appended.keySet().iterator(); it.hasNext(); ) {
+    private void mergeQueryString(Map parameters, String queryString) {
+    	
+    	// Create the appended parameters map:
+    	//   key is the parameter name as a string,
+    	//   value is a List of parameter values (List of String).
+        Map appendedParameters = new HashMap();
+        
+        // Parse the appended query string.
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Parsing appended query string: " + queryString);
+    	}
+        StringTokenizer st = new StringTokenizer(queryString, "&", false);
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken();
+            int equalIndex = token.indexOf("=");
+            if (equalIndex > 0) {
+                String key = token.substring(0, equalIndex);
+                String value = null;
+                if (equalIndex < token.length() - 1) {
+                	value = token.substring(equalIndex + 1);
+                } else {                	value = "";
+                }
+                List values = (List) appendedParameters.get(key);
+                if (values == null) {
+                	values = new ArrayList();
+                }
+                values.add(value);
+                appendedParameters.put(key, values);
+            }
+        }
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(appendedParameters.size() + " parameters appended.");
+        }
+        
+        // Merge the appended parameters and the original parameters.
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Merging appended parameters and original parameters...");
+        }
+    	for (Iterator it = appendedParameters.keySet().iterator();
+    			it.hasNext(); ) {
     		String key = (String) it.next();
-    		// If the parameter name (key) does not exist, put it to map.
-    		if (!parameters.containsKey(key)) {
-    			parameters.put(key, appended.get(key));
-    		}
-    		// Otherwise, merge the two value arrays.
-    		else {
+    		List values = (List) appendedParameters.get(key);
+    		// If the parameter name (key) exists, merge parameter values.
+    		if (parameters.containsKey(key)) {
     			String[] originalValues = (String[]) parameters.get(key);
-    			String[] appendedValues = (String[]) appended.get(key);
-    			List values = new ArrayList();
-    			// Appended parameter values first.
-    			if (appendedValues != null) {
-    				for (int i = 0; i < appendedValues.length; i++) {
-    					values.add(appendedValues[i]);
-    				}
-    			}
-    			// Then original parameter values.
     			if (originalValues != null) {
     				for (int i = 0; i < originalValues.length; i++) {
     					values.add(originalValues[i]);
     				}
     			}
-    			parameters.put(key,
-    					(String[]) values.toArray(new String[values.size()]));
     		}
+    		parameters.put(key, (String[]) values.toArray(new String[values.size()]));
     	}
     }
     

@@ -30,12 +30,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
@@ -104,10 +98,10 @@ implements PortletContext, InternalPortletContext {
         }
         
         // Extract query string which contains appended parameters.
-        Map appendedParameters = null;
+        String queryString = null;
         int index = path.indexOf("?");
         if (index > 0 && index < path.length() - 1) {
-        	appendedParameters = parseQueryString(path.substring(index + 1));
+        	queryString = path.substring(index + 1);
         }
         
         // Construct PortletRequestDispatcher.
@@ -117,7 +111,7 @@ implements PortletContext, InternalPortletContext {
             		.getRequestDispatcher(path);
             if (servletRequestDispatcher != null) {
             	portletRequestDispatcher = new PortletRequestDispatcherImpl(
-                		servletRequestDispatcher, appendedParameters);
+                		servletRequestDispatcher, queryString);
             } else {
             	if (LOG.isInfoEnabled()) {
             		LOG.info("No matching request dispatcher found for: " + path);
@@ -242,57 +236,6 @@ implements PortletContext, InternalPortletContext {
 
     public PortletAppDD getPortletApplicationDefinition() {
         return portletAppDD;
-    }
-    
-    
-    // Private Methods ---------------------------------------------------------
-    
-    /**
-     * Parse the query path and extract appended parameters. Query parameters
-     * are name-value pairs separated by the character '&'. This method puts
-     * parameters into a map. The key is the parameter name as a string; the
-     * value is a string array holding parameter values.
-     * 
-     * @param paramsString  the string containing parameters.
-     * @return parameter map, or null if no parameters are appended.
-     */
-    private Map parseQueryString(String queryString) {
-    	if (LOG.isDebugEnabled()) {
-    		LOG.debug("Parsing query string: " + queryString);
-    	}
-        Map params = new HashMap();
-        StringTokenizer st = new StringTokenizer(queryString, "&", false);
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            int equalIndex = token.indexOf("=");
-            if (equalIndex > 0) {
-                String key = token.substring(0, equalIndex);
-                String value = null;
-                if (equalIndex < token.length() - 1) {
-                	value = token.substring(equalIndex + 1);
-                } else {
-                	value = "";
-                }
-                String[] values = (String[]) params.get(key);
-                if (values == null) {
-                	values = new String[] { value };
-                } else {
-                	// Create a new list to avoid UnsupportedOperationException:
-                	// List returned by Arrays.asList() doesn't support add().
-            		List valueList = new ArrayList();
-            		valueList.addAll(Arrays.asList(values));
-            		valueList.add(value);
-            		values = (String[]) valueList.toArray(
-            				new String[valueList.size()]);
-                }
-            	params.put(key, values);
-            }
-        }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(params.size() + " additional query parameters "
-            		+ "appended to original request.");
-        }
-        return params;
     }
     
 }

@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Implementation of the <code>PortletRequestDispatcher</code> interface.
@@ -55,8 +54,8 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     /** The nested servlet request dispatcher instance. */
     private RequestDispatcher requestDispatcher = null;
     
-    /** The appended query parameters. */
-    private Map queryParams = null;
+    /** The included query string. */
+    private String queryString = null;
     
     
     // Constructors ------------------------------------------------------------
@@ -78,13 +77,13 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
      * Creates an instance. This constructor should be called to construct a
      * portlet request dispatcher.
      * @param requestDispatcher  the servlet request dispatcher.
-     * @param queryParams  the appended query parameters.
+     * @param queryString  the included query string.
      * @see javax.portlet.PortletContext#getRequestDispatcher(String)
      */
     public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher,
-                                        Map queryParams) {
+                                        String queryString) {
         this(requestDispatcher);
-        this.queryParams = queryParams;
+        this.queryString = queryString;
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Request dispatcher created.");
         }
@@ -105,7 +104,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         		|| internalResponse.isIncluded());
         try {
         	internalRequest.setIncluded(true);
-        	internalRequest.setAppendedParameters(queryParams);
+        	internalRequest.setIncludedQueryString(queryString);
         	internalResponse.setIncluded(true);
 
             requestDispatcher.include(

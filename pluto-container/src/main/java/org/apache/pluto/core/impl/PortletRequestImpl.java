@@ -550,20 +550,8 @@ implements PortletRequest, InternalPortletRequest {
     }
     
     
-    // Additional Methods of HttpServletRequestWrapper -------------------------
+    // TODO: Additional Methods of HttpServletRequestWrapper -------------------
     
-    public String getCharacterEncoding() {
-        return this.getHttpServletRequest().getCharacterEncoding();
-    }
-
-    public String getContentType() {
-    	return this.getHttpServletRequest().getContentType();
-    }
-
-    public int getContentLength() {
-    	return getHttpServletRequest().getContentLength();
-    }
-
     public BufferedReader getReader()
     throws UnsupportedEncodingException, IOException {
     	// the super class will ensure that a IllegalStateException is thrown
@@ -579,77 +567,20 @@ implements PortletRequest, InternalPortletRequest {
     	return stream;
     }
 
-
-    public String getPathInfo() {
-        String attr = (String) super.getAttribute(
-                "javax.servlet.include.path_info");
-        return (attr != null) ? attr
-                : super.getPathInfo();
+    public RequestDispatcher getRequestDispatcher(String path) {
+        return getHttpServletRequest().getRequestDispatcher(path);
     }
-
-    public String getQueryString() {
-        String attr = (String) super.getAttribute(
-                "javax.servlet.include.query_string");
-        return (attr != null) ? attr
-                : super.getQueryString();
-    }
-
-    public String getPathTranslated() {
-        return null;
-    }
-
-    public String getRequestURI() {
-        String attr = (String) super.getAttribute(
-                "javax.servlet.include.request_uri");
-        return (attr != null) ? attr
-                : super.getRequestURI();
-    }
-
-    public StringBuffer getRequestURL() {
-        return null;
-    }
-
-    public String getServletPath() {
-        String attr = (String) super.getAttribute(
-                "javax.servlet.include.servlet_path");
-        return (attr != null) ? attr
-                : super.getServletPath();
-    }
-
-    //
-    //
-    // @todo WHY? Do we return null to these emthods?
-    //
-    //
-
-    public String getProtocol() {
-        return null;
-    }
-
-    public String getRemoteAddr() {
-        return null;
-    }
-
-    public String getRemoteHost() {
-        return null;
-    }
-
-    public String getRealPath(String path) {
-        return null;
-    }
-
+    
+    /**
+     * TODO: why check bodyAccessed?
+     */
     public void setCharacterEncoding(String encoding)
     throws UnsupportedEncodingException {
         if (bodyAccessed) {
-            throw new IllegalStateException("This method must not be called "
-            		+ "after the HTTP-Body was accessed!");
+        	throw new IllegalStateException("Cannot set character encoding "
+        			+ "after HTTP body is accessed.");
         }
-        getHttpServletRequest().setCharacterEncoding(encoding);
-    }
-
-
-    public RequestDispatcher getRequestDispatcher(String path) {
-        return this.getHttpServletRequest().getRequestDispatcher(path);
+        super.setCharacterEncoding(encoding);
     }
     
     
@@ -664,7 +595,7 @@ implements PortletRequest, InternalPortletRequest {
     }
     
     private boolean isPortletModeAllowedByPortlet(PortletMode mode) {
-        if(isPortletModeMandatory(mode)) {
+        if (isPortletModeMandatory(mode)) {
             return true;
         }
 

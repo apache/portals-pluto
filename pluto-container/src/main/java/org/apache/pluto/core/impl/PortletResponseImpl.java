@@ -34,15 +34,25 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.services.ResourceURLProvider;
+import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 
+/**
+ * Abstract <code>javax.portlet.PortletResponse</code> implementation.
+ * This class also implements InternalPortletResponse.
+ *
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
 public abstract class PortletResponseImpl extends HttpServletResponseWrapper
 implements PortletResponse, InternalPortletResponse {
 	
 	// Private Member Variables ------------------------------------------------
-
+	
+	/** The portlet container. */
     private PortletContainer container = null;
     
+    /** The internal portlet window. */
     private InternalPortletWindow internalPortletWindow = null;
 
     /**
@@ -50,6 +60,7 @@ implements PortletResponse, InternalPortletResponse {
      * module
      */
     private HttpServletRequest httpServletRequest;
+    
     private HttpServletResponse httpServletResponse;
 
     private boolean usingWriter;
@@ -70,31 +81,28 @@ implements PortletResponse, InternalPortletResponse {
         this.httpServletResponse = servletResponse;
         this.internalPortletWindow = internalPortletWindow;
     }
-
+    
+    
     // PortletResponse Impl ----------------------------------------------------
     
-    public void addProperty(String key, String value) {
-        if (key == null) {
-            throw new IllegalArgumentException("Property key == null");
-        }
+    public void addProperty(String name, String value) {
+    	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
         		.getPortalCallbackService()
         		.addResponseProperty(
         				getHttpServletRequest(),
         				internalPortletWindow,
-        				key, value);
+        				name, value);
     }
 
-    public void setProperty(String key, String value) {
-        if (key == null) {
-            throw new IllegalArgumentException("Property key == null");
-        }
+    public void setProperty(String name, String value) {
+    	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
                 .getPortalCallbackService()
                 .setResponseProperty(
                         getHttpServletRequest(),
                         internalPortletWindow,
-                        key, value);
+                        name, value);
     }
 
     public String encodeURL(String path) {
@@ -116,29 +124,51 @@ implements PortletResponse, InternalPortletResponse {
         }
         return getHttpServletResponse().encodeURL(provider.toString());
     }
-    // --------------------------------------------------------------------------------------------
-
-    // org.apache.pluto.core.InternalPortletResponse implementation -------------------------------
-    public void lateInit(
-        javax.servlet.http.HttpServletRequest webModuleServletRequest,
-        javax.servlet.http.HttpServletResponse webModuleServletResponse) {
-        this.httpServletRequest = webModuleServletRequest;
-        this.setResponse(webModuleServletResponse);
+    
+    
+    // InternalPortletResponse impl --------------------------------------------
+    
+    public void lateInit(HttpServletRequest httpServletRequest,
+                         HttpServletResponse httpServletResponse) {
+        this.httpServletRequest = httpServletRequest;
+        this.setResponse(httpServletResponse);
     }
-    // --------------------------------------------------------------------------------------------
-
-    // internal methods ---------------------------------------------------------------------------
-    public HttpServletResponse getHttpServletResponse() {
-        return httpServletResponse;
+    
+    public InternalPortletWindow getInternalPortletWindow() {
+        return internalPortletWindow;
     }
-
+    
+    
+    // Internal Methods --------------------------------------------------------
+    
+    /**
+     * Returns the portlet container.
+     * @return the portlet container.
+     */
+    protected PortletContainer getContainer() {
+        return container;
+    }
+    
+    /**
+     * Returns the nested HttpServletRequest instance.
+     * @return the nested HttpServletRequest instance.
+     */
     protected HttpServletRequest getHttpServletRequest() {
         return httpServletRequest;
     }
-
-    // additional methods -------------------------------------------------------------------------
-    // servlet-only implementation 
-    // (inherited from HttpServletResponseWrapper)
+    
+    /**
+     * Returns the nested HttpServletResponse instance.
+     * @return the nested HttpServletResponse instance.
+     */
+    public HttpServletResponse getHttpServletResponse() {
+        return httpServletResponse;
+    }
+    
+    
+    // HttpServletResponse Methods ---------------------------------------------
+    // TODO: should we just use super impl?
+    
     public void addCookie(javax.servlet.http.Cookie cookie) {
         getHttpServletResponse().addCookie(cookie);
     }
@@ -210,7 +240,10 @@ implements PortletResponse, InternalPortletResponse {
     public void setLocale(Locale locale) {
         getHttpServletResponse().setLocale(locale);
     }
-
+    
+    
+    // -------------------------------------------------------------------------
+    
     public ServletOutputStream getOutputStream()
     throws IllegalStateException, IOException {
         if (usingWriter) {
@@ -239,21 +272,6 @@ implements PortletResponse, InternalPortletResponse {
         usingWriter = true;
 
         return getHttpServletResponse().getWriter();
-    }
-
-    // other
-    public InternalPortletWindow getInternalPortletWindow() {
-        return internalPortletWindow;
-    }
-    
-    // internal
-    
-    HttpServletRequest getHttpDServletRequest() {
-        return httpServletRequest;
-    }
-
-    public PortletContainer getContainer() {
-        return container;
     }
 
 }

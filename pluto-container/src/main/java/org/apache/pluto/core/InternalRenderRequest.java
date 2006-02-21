@@ -1,7 +1,5 @@
 package org.apache.pluto.core;
 
-import java.util.Map;
-
 /**
  * The internal render request interface extends the internal portlet request
  * interface and provides some render-specific methods.
@@ -14,6 +12,6 @@ public interface InternalRenderRequest extends InternalPortletRequest {
     
     public boolean isIncluded();
     
-    public void setAppendedParameters(Map appendedParameters);
+    public void setIncludedQueryString(String queryString);
     
 }
