@@ -17,8 +17,6 @@
 package org.apache.pluto.core;
 
 import javax.portlet.PortletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * The internal portlet response interface extends PortletResponse and adds
@@ -28,9 +26,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public interface InternalPortletResponse extends PortletResponse {
-
-    public void lateInit(HttpServletRequest webModuleServletRequest,
-                         HttpServletResponse webModuleServletResponse);
 
     public InternalPortletWindow getInternalPortletWindow();
 

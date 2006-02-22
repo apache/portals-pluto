@@ -24,23 +24,35 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * <CODE>StringUtils</CODE> hosts a couple of utility methods around
- * strings.
+ * Static class hosting a couple of utility methods around strings.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class StringUtils {
-
-
+	
+	// Private Constructor -----------------------------------------------------
+	
+	/**
+	 * Private constructor that prevents external instantiation.
+	 */
+	private StringUtils() {
+		// Do nothing.
+	}
+	
+	
+	// Static Utility Methods --------------------------------------------------
+	
     /**
-     * Replace all occurrences of a pattern within a string by a replacement
-     * @param source  The string that should be searched
-     * @param pattern The pattern that should be replaced
-     * @param replace The replacement that should be inserted instead of the
-     *                pattern
-     * @return The updated source string
+     * Replaces all occurrences of a pattern within a string by a replacement.
+     * @param source  the string that should be searched.
+     * @param pattern  the pattern that should be replaced.
+     * @param replace  the replacement that should be inserted instead of the
+     *        pattern.
+     * @return The updated source string.
      */
     public static String replace(String source, String pattern, String replace) {
-        if (source == null || source.length() == 0 ||
-            pattern == null || pattern.length() == 0) {
+        if (source == null || source.length() == 0
+        		|| pattern == null || pattern.length() == 0) {
             return source;
         }
 
@@ -66,7 +78,12 @@ public class StringUtils {
         out.append(source.substring(i));
         return out.toString();
     }
-
+    
+    /**
+     * TODO: can't we just use String[].clone()?
+     * @param source
+     * @return
+     */
     public static String[] copy(String[] source) {
         if (source == null) {
             return null;
@@ -76,7 +93,13 @@ public class StringUtils {
         System.arraycopy(source, 0, result, 0, length);
         return result;
     }
-
+    
+    /**
+     * Deep-clones a parameter map. The key is the parameter name as a String
+     * instance, while the value is a String array (String[]) instance.
+     * @param parameters  the parameter map to deep-clone.
+     * @return the deep-cloned parameter map.
+     */
     public static Map copyParameters(Map parameters) {
         Map result = new HashMap(parameters);
         for (Iterator it = result.entrySet().iterator(); it.hasNext();) {
@@ -94,14 +117,22 @@ public class StringUtils {
         }
         return result;
     }
-
-    public static String stringCharacterEncoding(String mimeType) {
-        int xs = mimeType.indexOf(';');
-        String strippedType;
-        if (xs == -1) {
+    
+    /**
+     * Strips the specified mime type by removing the character encoding
+     * specified at the end of the mime type (all characters after the ';').
+     * The stripped mime type is trimmed string which contains no white 
+     * spaces at the beginning and the end.
+     * @param mimeType  the mime type to strip.
+     * @return the stripped mime type.
+     */
+    public static String getMimeTypeWithoutEncoding(String mimeType) {
+        int index = mimeType.indexOf(';');
+        String strippedType = null;
+        if (index == -1) {
             strippedType = mimeType;
         } else {
-            strippedType = mimeType.substring(0,xs);
+            strippedType = mimeType.substring(0, index);
         }
         return strippedType.trim();
     }

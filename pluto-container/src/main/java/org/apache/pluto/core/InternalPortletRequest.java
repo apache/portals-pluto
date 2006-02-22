@@ -43,7 +43,7 @@ public interface InternalPortletRequest extends PortletRequest {
      * @param context  the target portlet context.
      * @param request  the servlet request.
      */
-    public void init(PortletContext context, HttpServletRequest req);
+    public void init(PortletContext context, HttpServletRequest request);
 
     /**
      * Recycle the request by rolling the underlying request

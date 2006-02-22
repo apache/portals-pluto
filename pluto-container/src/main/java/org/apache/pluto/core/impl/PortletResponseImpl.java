@@ -21,8 +21,6 @@ package org.apache.pluto.core.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Locale;
 
 import javax.portlet.PortletResponse;
 import javax.servlet.ServletOutputStream;
@@ -55,14 +53,9 @@ implements PortletResponse, InternalPortletResponse {
     /** The internal portlet window. */
     private InternalPortletWindow internalPortletWindow = null;
 
-    /**
-     * this variable holds the servlet request of the target/portlet's web
-     * module
-     */
-    private HttpServletRequest httpServletRequest;
+    /** The servlet request of the target/portlet's web module. */
+    private HttpServletRequest httpServletRequest = null;
     
-    private HttpServletResponse httpServletResponse;
-
     private boolean usingWriter;
     private boolean usingStream;
 
@@ -78,7 +71,6 @@ implements PortletResponse, InternalPortletResponse {
         super(servletResponse);
         this.container = container;
         this.httpServletRequest = servletRequest;
-        this.httpServletResponse = servletResponse;
         this.internalPortletWindow = internalPortletWindow;
     }
     
@@ -128,12 +120,6 @@ implements PortletResponse, InternalPortletResponse {
     
     // InternalPortletResponse impl --------------------------------------------
     
-    public void lateInit(HttpServletRequest httpServletRequest,
-                         HttpServletResponse httpServletResponse) {
-        this.httpServletRequest = httpServletRequest;
-        this.setResponse(httpServletResponse);
-    }
-    
     public InternalPortletWindow getInternalPortletWindow() {
         return internalPortletWindow;
     }
@@ -162,115 +148,43 @@ implements PortletResponse, InternalPortletResponse {
      * @return the nested HttpServletResponse instance.
      */
     public HttpServletResponse getHttpServletResponse() {
-        return httpServletResponse;
+        return (HttpServletResponse) super.getResponse();
     }
     
     
     // HttpServletResponse Methods ---------------------------------------------
-    // TODO: should we just use super impl?
     
-    public void addCookie(javax.servlet.http.Cookie cookie) {
-        getHttpServletResponse().addCookie(cookie);
-    }
-
-    public boolean containsHeader(String name) {
-        return getHttpServletResponse().containsHeader(name);
-    }
-
-    public String encodeRedirectUrl(String url) {
-        return getHttpServletResponse().encodeRedirectURL(url);
-    }
-
-    public String encodeRedirectURL(String url) {
-        return getHttpServletResponse().encodeRedirectURL(url);
-    }
-
-    public void sendRedirect(String location) throws java.io.IOException {
-        getHttpServletResponse().sendRedirect(location);
-    }
-
-    public void setDateHeader(String name, long date) {
-        getHttpServletResponse().setDateHeader(name, date);
-    }
-
-    public void sendError(int sc, String msg) throws java.io.IOException {
-        getHttpServletResponse().sendError(sc, msg);
-    }
-
-    public void sendError(int sc) throws java.io.IOException {
-        getHttpServletResponse().sendError(sc);
-    }
-
-    public void addHeader(String name, String value) {
-        getHttpServletResponse().addHeader(name, value);
-    }
-
-    public void setIntHeader(String name, int value) {
-        getHttpServletResponse().setIntHeader(name, value);
-    }
-
-    public void addDateHeader(String name, long date) {
-        getHttpServletResponse().addDateHeader(name, date);
-    }
-
-    public void setHeader(String name, String value) {
-        getHttpServletResponse().setHeader(name, value);
-    }
-
-    public void setStatus(int statusCode) {
-        getHttpServletResponse().setStatus(statusCode);
-    }
-
-    public void setStatus(int statusCode, String message) {
-        getHttpServletResponse().setStatus(statusCode, message);
-    }
-
-    public void addIntHeader(String name, int value) {
-        getHttpServletResponse().addIntHeader(name, value);
-    }
-
-    public void setContentLength(int len) {
-        getHttpServletResponse().setContentLength(len);
-    }
-
     public String encodeUrl(String url) {
         return this.encodeURL(url);
     }
-
-    public void setLocale(Locale locale) {
-        getHttpServletResponse().setLocale(locale);
-    }
     
-    
-    // -------------------------------------------------------------------------
-    
+    /**
+     * TODO: javadoc about why we are using a wrapped writer here.
+     * @see org.apache.pluto.util.PrintWriterServletOutputStream
+     */
     public ServletOutputStream getOutputStream()
     throws IllegalStateException, IOException {
         if (usingWriter) {
             throw new IllegalStateException(
-                "getPortletOutputStream can't be used after getWriter was invoked");
+            		"getPortletOutputStream can't be used "
+            		+ "after getWriter was invoked.");
         }
-
         if (wrappedWriter == null) {
-            wrappedWriter =
-            new PrintWriterServletOutputStream(
-                getHttpServletResponse().getWriter());
+            wrappedWriter = new PrintWriterServletOutputStream(
+            		getHttpServletResponse().getWriter());
         }
-
         usingStream = true;
-
         return wrappedWriter;
     }
-
+    
     public PrintWriter getWriter()
-    throws UnsupportedEncodingException, IllegalStateException, IOException {
+    throws IllegalStateException, IOException {
         if (usingStream) {
             throw new IllegalStateException(
-                "getWriter can't be used after getOutputStream was invoked");
+            		"getWriter can't be used "
+            		+ "after getOutputStream was invoked.");
         }
-
         usingWriter = true;
-
         return getHttpServletResponse().getWriter();
     }
 
