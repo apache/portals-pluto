@@ -21,10 +21,8 @@ import org.apache.pluto.util.UtilityException;
 import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
 
 public class Jetty5FileSystemInstaller extends FileSystemInstaller {
 

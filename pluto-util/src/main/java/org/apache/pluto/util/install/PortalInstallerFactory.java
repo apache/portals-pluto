@@ -37,11 +37,13 @@ public abstract class PortalInstallerFactory {
 
     public static PortalInstaller getAppServerHandler(File installDir) {
         String className = System.getProperty(PortalInstallerFactory.class.getName());
-        PortalInstaller ash;
-        if(className != null)
-            return getHandler(className, installDir);
-        else
-            return findHandler(installDir);
+        PortalInstaller installer = null;
+        if (className != null) {
+            installer = getHandler(className, installDir);
+        } else {
+            installer = findHandler(installDir);
+        }
+        return installer;
     }
 
     private static PortalInstaller getHandler(String className, File installDir) {
