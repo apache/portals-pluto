@@ -22,7 +22,7 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.PortletPreference;
 import org.apache.pluto.optional.db.common.DataSourceManager;
-import org.apache.pluto.services.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
 
 import javax.portlet.PortletRequest;
 import java.sql.SQLException;

@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.services;
+package org.apache.pluto.spi;
 
+/**
+ *
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @version 1.0
+ */
 public interface ResourceURLProvider {
-
-
+	
     /**
      * Sets the absolute URL to be returned by the provider. E.g.
      * http://host/wps/portal/hello.gif
@@ -39,4 +44,5 @@ public interface ResourceURLProvider {
      * @return the URL as string
      */
     public String toString();
+    
 }

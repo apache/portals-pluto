@@ -26,7 +26,7 @@ import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.InternalRenderResponse;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.services.PortalCallbackService;
+import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringManager;

@@ -15,9 +15,9 @@
  */
 package org.apache.pluto;
 
-import org.apache.pluto.services.optional.PortletPreferencesService;
-import org.apache.pluto.services.optional.PortletEnvironmentService;
-import org.apache.pluto.services.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.core.InternalPortletWindow;
 
 /**

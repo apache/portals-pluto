@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.services.optional;
+package org.apache.pluto.spi.optional;
 
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.core.InternalPortletRequest;

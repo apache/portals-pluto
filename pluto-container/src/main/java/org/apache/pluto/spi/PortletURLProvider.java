@@ -17,7 +17,7 @@
 
  */
 
-package org.apache.pluto.services;
+package org.apache.pluto.spi;
 
 import java.util.Map;
 
@@ -28,6 +28,10 @@ import javax.portlet.WindowState;
  * Defines the interface used by the portlet container to create Portal URLs.
  * This provider must be implemented by the Portal and provided via the
  * container services upon initialization of the container.
+ * 
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @version 1.0
  */
 public interface PortletURLProvider {
 

@@ -1,6 +1,6 @@
 package org.apache.pluto;
 
-import org.apache.pluto.services.PortalCallbackService;
+import org.apache.pluto.spi.PortalCallbackService;
 
 import javax.portlet.PortalContext;
 

@@ -17,12 +17,12 @@ package org.apache.pluto.driver.services.container;
 
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.RequiredContainerServices;
-import org.apache.pluto.services.PortalCallbackService;
 import org.apache.pluto.core.InternalPortletWindow;
 import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.services.optional.PortletPreferencesService;
-import org.apache.pluto.services.optional.PortletEnvironmentService;
-import org.apache.pluto.services.optional.PortletInvokerService;
+import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.spi.optional.PortletInvokerService;
 
 import javax.portlet.PortalContext;
 

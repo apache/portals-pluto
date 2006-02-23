@@ -16,9 +16,9 @@
 package org.apache.pluto.core;
 
 import org.apache.pluto.OptionalContainerServices;
-import org.apache.pluto.services.optional.PortletPreferencesService;
-import org.apache.pluto.services.optional.PortletEnvironmentService;
-import org.apache.pluto.services.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.spi.optional.PortletInvokerService;
 
 /**
  * Default Optional Container Services implementation.

@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.services;
+package org.apache.pluto.spi;
 
 /**
- * Defines a service and needs to be implemented by all
- * PortletContainerServices
+ * Defines a service and needs to be implemented by all PortletContainerServices.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public interface ContainerService {
 

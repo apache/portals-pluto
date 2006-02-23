@@ -39,8 +39,8 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.core.InternalActionResponse;
 import org.apache.pluto.core.InternalPortletWindow;
-import org.apache.pluto.services.ResourceURLProvider;
-import org.apache.pluto.services.PortalCallbackService;
+import org.apache.pluto.spi.ResourceURLProvider;
+import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.StringUtils;
 
 public class ActionResponseImpl extends PortletResponseImpl

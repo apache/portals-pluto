@@ -30,7 +30,7 @@ import org.apache.pluto.core.impl.ActionRequestImpl;
 import org.apache.pluto.core.impl.ActionResponseImpl;
 import org.apache.pluto.core.impl.RenderRequestImpl;
 import org.apache.pluto.core.impl.RenderResponseImpl;
-import org.apache.pluto.services.PortletURLProvider;
+import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;

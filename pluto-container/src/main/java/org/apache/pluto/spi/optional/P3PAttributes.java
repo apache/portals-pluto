@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.services.optional;
+package org.apache.pluto.spi.optional;
 
 /**
  * As defined in PLT.D of the JSR-168 specification, this class defines a set of 

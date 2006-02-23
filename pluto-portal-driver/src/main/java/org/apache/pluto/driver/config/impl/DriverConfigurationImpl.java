@@ -22,8 +22,8 @@ import org.apache.pluto.driver.services.portal.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.services.PortalCallbackService;
-import org.apache.pluto.services.optional.PortletPreferencesService;
+import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
 
 import javax.servlet.ServletContext;
 import java.util.Collection;

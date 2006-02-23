@@ -36,7 +36,7 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.core.InternalPortletWindow;
-import org.apache.pluto.services.PortletURLProvider;
+import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 

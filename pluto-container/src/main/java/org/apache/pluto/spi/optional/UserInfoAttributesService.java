@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.services.optional;
+package org.apache.pluto.spi.optional;
 
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.services.ContainerService;
+import org.apache.pluto.spi.ContainerService;
 
 /**
  * Used to access user information attributes as described in

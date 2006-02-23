@@ -25,7 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.url.PortalURLFactory;
-import org.apache.pluto.services.ResourceURLProvider;
+import org.apache.pluto.spi.ResourceURLProvider;
 
 public class ResourceURLProviderImpl implements ResourceURLProvider {
 

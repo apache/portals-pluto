@@ -30,7 +30,7 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLFactory;
 import org.apache.pluto.driver.url.PortalURLParameter;
-import org.apache.pluto.services.PortletURLProvider;
+import org.apache.pluto.spi.PortletURLProvider;
 
 /**
  * 

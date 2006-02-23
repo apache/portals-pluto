@@ -1,4 +1,4 @@
-package org.apache.pluto.services.optional;
+package org.apache.pluto.spi.optional;
 
 import java.io.IOException;
 import java.security.Principal;

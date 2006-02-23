@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.core.InternalPortletResponse;
 import org.apache.pluto.core.InternalPortletWindow;
-import org.apache.pluto.services.ResourceURLProvider;
+import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 
