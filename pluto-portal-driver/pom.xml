@@ -10,13 +10,12 @@
     <version>1.1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.pluto</groupId>
   <artifactId>pluto-portal-driver</artifactId>
   <packaging>jar</packaging>
   <name>Pluto Portal Driver</name>
-  <url>http://portals.apache.org/pluto</url>
   
   <dependencies>
+    
     <dependency>
       <groupId>org.apache.pluto</groupId>
       <artifactId>pluto-container</artifactId>
@@ -34,44 +33,44 @@
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
-      <version>10.1.1.0</version>
+      <version>${derby.version}</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging-api</artifactId>
-      <version>1.0.4</version>
+      <version>${commons-logging.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
-      <version>1.0.4</version>
+      <version>${commons-logging.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>commons-digester</groupId>
       <artifactId>commons-digester</artifactId>
-      <version>1.7</version>
+      <version>${commons-digester.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
-      <version>1.0</version>
+      <version>${portlet-api.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
-      <version>2.3</version>
+      <version>${servlet-api.version}</version>
       <scope>provided</scope>
     </dependency>
     <!-- We should use groupId 'javax.servlet' here, but there seems to have
@@ -79,38 +78,30 @@
     <dependency>
       <groupId>jstl</groupId>
       <artifactId>jstl</artifactId>
-      <version>1.1.2</version>
+      <version>${jstl.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
-      <version>1.0.4</version>
+      <version>${taglibs.standard.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>1.2.5</version>
+      <version>${springframework.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-beans</artifactId>
-        <version>1.2.5</version>
+        <version>${springframework.version}</version>
         <scope>compile</scope>
     </dependency>
   </dependencies>
   
   <build>
-    <resources>
-      <resource>
-        <directory>src/resources</directory>
-        <includes>
-          <include>**/*.sql</include>
-        </includes>
-      </resource>
-    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>

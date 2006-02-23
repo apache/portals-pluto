@@ -9,8 +9,8 @@
     <artifactId>pluto</artifactId>
     <version>1.1.0-SNAPSHOT</version>
   </parent>
-  
   <modelVersion>4.0.0</modelVersion>
+  <!-- Put into maven default plugins group -->
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-pluto-plugin</artifactId> 
   <packaging>maven-plugin</packaging>
@@ -26,40 +26,39 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-artifact</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-model</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-project</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     
     <!-- Do not remove this dep: See MNG-1178 -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     
   </dependencies>
   
-
   <build> 
     <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> 
     <resources>
@@ -78,6 +77,9 @@
         </configuration>
       </plugin>
     </plugins>
-  </build> 
+  </build>
+  
 </project>
+
+
 
