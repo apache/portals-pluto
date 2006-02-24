@@ -19,17 +19,16 @@ package org.apache.pluto;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import org.apache.pluto.om.ObjectID;
-
 /**
  * Thin representation of the portlet window for which the container
  * request should be processed.  The PortletWindow is used internally
  * to map the request to the configured Portlet Application and Portlet.
  *
- * @see org.apache.pluto.core.InternalPortletWindow
+ * @see org.apache.pluto.core.PortletWindowImpl
  * @see org.apache.pluto.descriptors.portlet.PortletDD
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
@@ -40,7 +39,7 @@ public interface PortletWindow {
      *  used to communicate back to the referencing portal.
      * @return unique id.
      */
-    public ObjectID getId();
+    public PortletWindowID getId();
 
     /**
      * Retrieve the context path in which the Portlet resides.
@@ -66,4 +65,5 @@ public interface PortletWindow {
      * @return the current portlet mode.
      */
     public PortletMode getPortletMode();
+    
 }

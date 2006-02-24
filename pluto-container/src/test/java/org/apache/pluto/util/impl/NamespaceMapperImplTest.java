@@ -1,8 +1,8 @@
 package org.apache.pluto.util.impl;
 
+import org.apache.pluto.PortletWindowID;
 import org.apache.pluto.util.PlutoTestCase;
 import org.apache.pluto.util.NamespaceMapper;
-import org.apache.pluto.om.ObjectID;
 
 /**
  * Test Class
@@ -14,13 +14,13 @@ import org.apache.pluto.om.ObjectID;
 public class NamespaceMapperImplTest extends PlutoTestCase {
 
     private NamespaceMapper mapper = new NamespaceMapperImpl();
-    private ObjectID id1;
-    private ObjectID id2;
+    private PortletWindowID id1;
+    private PortletWindowID id2;
 
     public void setUp() throws Exception {
         super.setUp();
-        id1 = new InternalObjectID();
-        id2 = new InternalObjectID();
+        id1 = new InternalPortletWindowID();
+        id2 = new InternalPortletWindowID();
     }
 
     public void testEncodeUniquenessWithSameName() {
@@ -46,10 +46,13 @@ public class NamespaceMapperImplTest extends PlutoTestCase {
     }
 
     private static int objectIDCounter = 1;
-    private class InternalObjectID implements ObjectID {
+    
+    
+    private class InternalPortletWindowID implements PortletWindowID {
+    	
         private int id;
 
-        public InternalObjectID() {
+        public InternalPortletWindowID() {
             id = objectIDCounter++;
         }
 

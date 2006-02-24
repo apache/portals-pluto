@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.impl.ActionRequestImpl;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
+import org.apache.pluto.internal.impl.PortletWindowImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.spi.PortletURLProvider;
@@ -144,7 +145,7 @@ public class PortletContainerImpl implements PortletContainer {
     	ensureInitialized();
     	
         InternalPortletWindow internalPortletWindow =
-        		new InternalPortletWindow(servletContext, portletWindow);
+        		new PortletWindowImpl(servletContext, portletWindow);
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletName());
         
@@ -178,7 +179,7 @@ public class PortletContainerImpl implements PortletContainer {
     	ensureInitialized();
     	
         InternalPortletWindow internalPortletWindow =
-            	new InternalPortletWindow(servletContext, portletWindow);
+            	new PortletWindowImpl(servletContext, portletWindow);
     	debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletName());
     	
@@ -255,7 +256,7 @@ public class PortletContainerImpl implements PortletContainer {
     	ensureInitialized();
     	
         InternalPortletWindow internalPortletWindow =
-        		new InternalPortletWindow(servletContext, portletWindow);
+        		new PortletWindowImpl(servletContext, portletWindow);
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletName());
         

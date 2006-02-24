@@ -19,18 +19,24 @@
 
 package org.apache.pluto.util.impl;
 
-import org.apache.pluto.om.ObjectID;
+import org.apache.pluto.PortletWindowID;
 import org.apache.pluto.util.NamespaceMapper;
 
 /**
- **/
-
+ * Default implementation of <code>NamespaceMapper</code> interface.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ */
 public class NamespaceMapperImpl implements NamespaceMapper {
+	
     public NamespaceMapperImpl() {
+    	// Do nothing.
     }
-
-    // org.apache.pluto.util.NamespaceMapper implementation ---------------------------------------
-    public String encode(ObjectID ns, String name) {
+    
+    
+    // NamespaceMapper Impl ----------------------------------------------------
+    
+    public String encode(PortletWindowID ns, String name) {
         StringBuffer buffer = new StringBuffer(50);
         buffer.append("Pluto_");
         buffer.append(ns);
@@ -39,7 +45,7 @@ public class NamespaceMapperImpl implements NamespaceMapper {
         return buffer.toString();
     }
 
-    public String encode(ObjectID ns1, ObjectID ns2, String name) {
+    public String encode(PortletWindowID ns1, PortletWindowID ns2, String name) {
         StringBuffer buffer = new StringBuffer(50);
         buffer.append("Pluto_");
         buffer.append(ns1);
@@ -50,7 +56,7 @@ public class NamespaceMapperImpl implements NamespaceMapper {
         return buffer.toString();
     }
 
-    public String decode(ObjectID ns, String name) {
+    public String decode(PortletWindowID ns, String name) {
         if (!name.startsWith("Pluto_")) {
             return null;
         }
@@ -63,5 +69,5 @@ public class NamespaceMapperImpl implements NamespaceMapper {
         }
         return name.substring(buffer.length());
     }
-    // --------------------------------------------------------------------------------------------
+    
 }

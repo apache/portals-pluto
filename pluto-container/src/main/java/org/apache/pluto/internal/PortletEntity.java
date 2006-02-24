@@ -19,25 +19,12 @@
 
 package org.apache.pluto.internal;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
-import org.apache.pluto.internal.impl.PortletPreferenceImpl;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletPreferenceDD;
-import org.apache.pluto.descriptors.portlet.PortletPreferencesDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
 
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
-import javax.servlet.ServletContext;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -46,50 +33,16 @@ import java.util.List;
  * Definition as defined by the {@link PortletDD} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
  * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
-public class PortletEntity {
+public interface PortletEntity {
 	
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletEntity.class);
-    
-    /** URI prefix of the portlet invoker servlet. */
-    private static final String PREFIX = "/PlutoInvoker/";
-    
-    
-    // Private Member Variables ------------------------------------------------
-    
-    /** The servlet context. */
-    private ServletContext servletContext = null;
-    
-    /** The portlet window. */
-    private PortletWindow portletWindow = null;
-
-    /** The cached PortletDD retrieved from the portlet descriptor registry. */
-    private PortletDD portletDefinition = null;
-    
-    /** Default portlet preferences defined for this portlet. */
-    private InternalPortletPreference[] defaultPreferences = null;
-    
-    
-    // Constructor -------------------------------------------------------------
-    
-    PortletEntity(ServletContext servletContext, PortletWindow portletWindow) {
-        this.servletContext = servletContext;
-        this.portletWindow = portletWindow;
-    }
-    
-    
-    // Public Methods ----------------------------------------------------------
-    
     /**
      * Returns the URI to the controller servlet that wraps this portlet.
      * @return the URI to the controller servlet that wraps this portlet.
      */
-    public String getControllerServletUri() {
-        return PREFIX + portletWindow.getPortletName();
-    }
+    public String getControllerServletUri();
     
     /**
      * Returns an array of default preferences of this portlet. The default
@@ -113,41 +66,13 @@ public class PortletEntity {
      * 
      * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
      */
-    public InternalPortletPreference[] getDefaultPreferences() {
-        if (defaultPreferences == null) {
-            PortletDD portletDD = getPortletDefinition();
-            PortletPreferencesDD prefsDD = portletDD.getPortletPreferences();
-            if (prefsDD != null) {
-            	List prefs = new ArrayList();
-            	for (Iterator it = prefsDD.getPortletPreferences().iterator();
-            			it.hasNext(); ) {
-            		PortletPreferenceDD prefDD = (PortletPreferenceDD) it.next();
-            		String[] values = null;
-            		if (prefDD.getValues().size() > 0) {
-            			values = (String[]) prefDD.getValues().toArray(
-            					new String[prefDD.getValues().size()]);
-            		}
-            		PortletPreferenceImpl pref = new PortletPreferenceImpl(
-            				prefDD.getName(), values, prefDD.isReadOnly());
-            		prefs.add(pref);
-            	}
-            	defaultPreferences = (InternalPortletPreference[])
-            			prefs.toArray(new InternalPortletPreference[prefs.size()]);
-            }
-        }
-        return defaultPreferences;
-    }
+    public InternalPortletPreference[] getDefaultPreferences();
 
     /**
      * Returns the portlet description. The return value cannot be NULL.
      * @return the portlet description.
      */
-    public PortletDD getPortletDefinition() {
-        if (portletDefinition == null) {
-            load();
-        }
-        return portletDefinition;
-    }
+    public PortletDD getPortletDefinition();
     
     /**
      * Returns the preferences validator instance for this portlet.
@@ -156,50 +81,9 @@ public class PortletEntity {
      * @throws ValidatorException  if fail to instantiate the validator.
      */
     public PreferencesValidator getPreferencesValidator()
-    throws ValidatorException {
-    	PreferencesValidator validator = PreferencesValidatorRegistry
-    			.getRegistry()
-    			.getPreferencesValidator(getPortletDefinition());
-    	return validator;
-    }
+    throws ValidatorException;
     
-    
-    // Private Methods ---------------------------------------------------------
-    
-    /**
-     * Loads the portlet definition.
-     */
-    private void load() {
-    	
-    	// Retrieve the cross servlet context for the portlet.
-        String contextPath = portletWindow.getContextPath();
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Loading portlet definition for context: " + contextPath);
-        }
-        ServletContext crossContext = servletContext.getContext(contextPath);
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Retrieved cross context: " + crossContext);
-        }
-        
-        // Load PortletAppDD and find out the portlet definition.
-        try {
-            PortletAppDD appDD = PortletDescriptorRegistry.getRegistry()
-            		.getPortletAppDD(crossContext);
-            for (Iterator it = appDD.getPortlets().iterator(); it.hasNext(); ) {
-                PortletDD portletDD = (PortletDD) it.next();
-                if (portletDD.getPortletName().equals(
-                		portletWindow.getPortletName())) {
-                	portletDefinition = portletDD;
-                	break;
-                }
-            }
-        } catch (PortletContainerException ex) {
-        	String message = "Unable to load Portlet App Deployment Descriptor:"
-        			+ ex.getMessage();
-        	LOG.error(message, ex);
-        	// FIXME: should this be a NullPointerException?
-            throw new NullPointerException(message);
-        }
-    }
-
 }
+
+
+

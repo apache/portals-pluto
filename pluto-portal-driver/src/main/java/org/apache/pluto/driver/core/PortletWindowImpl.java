@@ -23,10 +23,10 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.PortletWindowID;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.util.ObjectIdImpl;
-import org.apache.pluto.om.ObjectID;
 
 /**
  * Implementation of <code>PortletWindow</code> interface.
@@ -73,7 +73,7 @@ public class PortletWindowImpl implements PortletWindow {
         return portalURL.getPortletMode(getId().toString());
     }
 
-    public ObjectID getId() {
+    public PortletWindowID getId() {
         if (objectIdImpl == null) {
             objectIdImpl = ObjectIdImpl.createFromString(config.getId());
         }

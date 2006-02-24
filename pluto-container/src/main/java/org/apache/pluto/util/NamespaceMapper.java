@@ -19,17 +19,17 @@
 
 package org.apache.pluto.util;
 
-import org.apache.pluto.om.ObjectID;
+import org.apache.pluto.PortletWindowID;
 
 /**
  **/
 public interface NamespaceMapper {
 
 
-    public String encode(ObjectID namespace, String name);
+    public String encode(PortletWindowID namespace, String name);
 
-    public String encode(ObjectID ns1, ObjectID ns2, String name);
+    public String encode(PortletWindowID ns1, PortletWindowID ns2, String name);
 
-    public String decode(ObjectID ns, String name);
+    public String decode(PortletWindowID ns, String name);
 
 }

@@ -22,15 +22,18 @@ package org.apache.pluto.driver.util;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import org.apache.pluto.PortletWindowID;
 
 /**
- * * Wraps around the internal Object IDs. By holding both * the string and the
- * integer version of an Object ID this class * helps speed up the internal
+ * Wraps around the internal Object IDs. By holding both the string and the
+ * integer version of an Object ID this class helps speed up the internal
  * processing.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-
-public class ObjectIdImpl implements org.apache.pluto.om.ObjectID,
-                                     java.io.Serializable {
+public class ObjectIdImpl implements PortletWindowID, Serializable {
 
     private String stringOID = null;
     private int intOID;
