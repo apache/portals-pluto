@@ -21,8 +21,8 @@ package org.apache.pluto.core.impl;
 
 import org.apache.pluto.core.InternalPortletRequest;
 import org.apache.pluto.core.InternalPortletResponse;
-import org.apache.pluto.portlet.PortletRequestWrapper;
-import org.apache.pluto.portlet.PortletResponseWrapper;
+import org.apache.pluto.wrappers.PortletRequestWrapper;
+import org.apache.pluto.wrappers.PortletResponseWrapper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

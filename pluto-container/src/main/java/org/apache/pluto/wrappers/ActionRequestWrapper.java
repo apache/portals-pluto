@@ -17,7 +17,7 @@
 
  */
 
-package org.apache.pluto.portlet;
+package org.apache.pluto.wrappers;
 
 import javax.portlet.ActionRequest;
 
