@@ -21,8 +21,8 @@ import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService
 import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.core.PortletDescriptorRegistry;
 
 import javax.servlet.ServletContext;
 import java.util.Set;

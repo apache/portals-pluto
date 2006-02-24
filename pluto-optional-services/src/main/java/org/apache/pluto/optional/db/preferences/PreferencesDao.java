@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.optional.db.preferences;
 
-import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.core.impl.PortletPreferenceImpl;
+import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.internal.impl.PortletPreferenceImpl;
 import org.apache.pluto.optional.db.common.AbstractPreparedDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,9 +41,9 @@ class PreferencesDao extends AbstractPreparedDao {
         super(dataSource);
     }
 
-    PortletPreference[] getPreferences(String context,
-                                       String portletName,
-                                       String authUser)
+    InternalPortletPreference[] getPreferences(String context,
+                                               String portletName,
+                                               String authUser)
     throws SQLException {
         if(LOG.isDebugEnabled()) {
             LOG.debug("Retrieving preferences for: "+context+" / "+portletName+" / "+authUser);
@@ -142,7 +142,7 @@ class PreferencesDao extends AbstractPreparedDao {
    void storePreferences(String context,
                           String portletName,
                           String authUser,
-                          PortletPreference[] preferences)
+                          InternalPortletPreference[] preferences)
     throws SQLException {
 
        boolean autoCommit = false;

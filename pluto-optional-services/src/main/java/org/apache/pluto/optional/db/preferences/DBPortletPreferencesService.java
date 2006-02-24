@@ -20,7 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.core.PortletPreference;
+import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.optional.db.common.DataSourceManager;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 
@@ -68,10 +68,11 @@ public class DBPortletPreferencesService
         dao = new PreferencesDao(dataSourceManager.getPortalDataSource());
     }
 
-    public PortletPreference[] getStoredPreferences(PortletWindow window,
-                                                    PortletRequest req)
+    public InternalPortletPreference[] getStoredPreferences(
+    		PortletWindow window,
+    		PortletRequest req)
     throws PortletContainerException {
-    	PortletPreference[] prefs = null;
+    	InternalPortletPreference[] prefs = null;
         try {
 
         	if (window == null) {
@@ -103,7 +104,7 @@ public class DBPortletPreferencesService
 
     public void store(PortletWindow window,
                       PortletRequest request,
-                      PortletPreference[] preferences)
+                      InternalPortletPreference[] preferences)
         throws PortletContainerException {
         try {
         	if (window == null) {

@@ -15,12 +15,11 @@
  */
 package org.apache.pluto.optional.db.preferences;
 
-import org.apache.pluto.core.PortletPreference;
-import org.apache.pluto.core.impl.PortletPreferenceImpl;
+import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.internal.impl.PortletPreferenceImpl;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -38,7 +37,7 @@ class PortletPreferenceContainer {
     public void add(List preferences) {
         Iterator it = preferences.iterator();
         while(it.hasNext()) {
-            PortletPreference p = (PortletPreference)it.next();
+        	InternalPortletPreference p = (InternalPortletPreference)it.next();
             add(p.getName(), p.getValues());
         }
     }
@@ -62,8 +61,8 @@ class PortletPreferenceContainer {
         }
    }
 
-    public PortletPreference[] createPreferences() {
-        PortletPreference[] prefs = new PortletPreference[preferences.size()];
+    public InternalPortletPreference[] createPreferences() {
+    	InternalPortletPreference[] prefs = new InternalPortletPreference[preferences.size()];
 
         Iterator it = preferences.entrySet().iterator();
         int i = 0;

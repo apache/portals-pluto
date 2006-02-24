@@ -15,7 +15,7 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.core.InternalPortletWindow;
+import org.apache.pluto.internal.InternalPortletWindow;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

@@ -18,7 +18,7 @@ package org.apache.pluto;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
-import org.apache.pluto.core.InternalPortletWindow;
+import org.apache.pluto.internal.InternalPortletWindow;
 
 /**
  * Defines the services necessary for integration between the Pluto Container

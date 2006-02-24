@@ -26,10 +26,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.apache.pluto.core.impl.ActionRequestImpl;
-import org.apache.pluto.core.impl.ActionResponseImpl;
-import org.apache.pluto.core.impl.RenderRequestImpl;
-import org.apache.pluto.core.impl.RenderResponseImpl;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.impl.ActionRequestImpl;
+import org.apache.pluto.internal.impl.ActionResponseImpl;
+import org.apache.pluto.internal.impl.RenderRequestImpl;
+import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;

@@ -16,6 +16,7 @@
 package org.apache.pluto.core;
 
 import org.apache.pluto.OptionalContainerServices;
+import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -78,7 +79,8 @@ implements OptionalContainerServices {
     /**
      * TODO:
      */
-    public PortletInvokerService getPortletInvokerService(InternalPortletWindow window) {
+    public PortletInvokerService getPortletInvokerService(
+    		InternalPortletWindow window) {
         return null;
     }
     

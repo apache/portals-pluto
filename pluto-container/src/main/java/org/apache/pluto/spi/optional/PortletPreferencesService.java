@@ -23,8 +23,8 @@ import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.spi.ContainerService;
-import org.apache.pluto.core.PortletPreference;
 
 /**
  * Portlet preferences service that should be implemented by the portal.
@@ -41,8 +41,9 @@ public interface PortletPreferencesService extends ContainerService {
 	 * @return the stored portlet preferences.
 	 * @throws PortletContainerException  if fail to get stored preferences.
 	 */
-    public PortletPreference[] getStoredPreferences(PortletWindow portletWindow,
-                                                    PortletRequest request)
+    public InternalPortletPreference[] getStoredPreferences(
+    		PortletWindow portletWindow,
+    		PortletRequest request)
     throws PortletContainerException;
     
     /**
@@ -54,7 +55,7 @@ public interface PortletPreferencesService extends ContainerService {
      */
     public void store(PortletWindow portletWindow,
                       PortletRequest request,
-                      PortletPreference[] preferences)
+                      InternalPortletPreference[] preferences)
     throws PortletContainerException;
 
 }

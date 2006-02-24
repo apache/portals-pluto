@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 
 /**
@@ -62,16 +63,18 @@ implements PortletPreferencesService {
 	 * @return a copy of the stored portlet preferences array.
 	 * @throws PortletContainerException
 	 */
-	public PortletPreference[] getStoredPreferences(PortletWindow portletWindow,
-	                                                PortletRequest request)
+	public InternalPortletPreference[] getStoredPreferences(
+			PortletWindow portletWindow,
+			PortletRequest request)
 	throws PortletContainerException {
         String key = getFormattedKey(portletWindow, request);
-        PortletPreference[] preferences = (PortletPreference[]) storage.get(key);
+        InternalPortletPreference[] preferences = (InternalPortletPreference[])
+        		storage.get(key);
         if (preferences == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("No portlet preferences found for: " + key);
             }
-            return new PortletPreference[0];
+            return new InternalPortletPreference[0];
         } else {
         	if (LOG.isDebugEnabled()) {
         		LOG.debug("Got " + preferences.length + " stored preferences.");
@@ -100,7 +103,7 @@ implements PortletPreferencesService {
 	 */
     public void store(PortletWindow portletWindow,
                       PortletRequest request,
-                      PortletPreference[] preferences)
+                      InternalPortletPreference[] preferences)
     throws PortletContainerException {
         String key = getFormattedKey(portletWindow, request);
         storage.put(key, clonePreferences(preferences));
@@ -137,14 +140,16 @@ implements PortletPreferencesService {
      * @param preferences  the portlet preferences array to clone.
      * @return a deep-cloned copy of the portlet preferences array.
      */
-    private PortletPreference[] clonePreferences(PortletPreference[] preferences) {
+    private InternalPortletPreference[] clonePreferences(
+    		InternalPortletPreference[] preferences) {
     	if (preferences == null) {
     		return null;
     	}
-    	PortletPreference[] copy = new PortletPreference[preferences.length];
+    	InternalPortletPreference[] copy =
+    			new InternalPortletPreference[preferences.length];
     	for (int i = 0; i < preferences.length; i++) {
     		if (preferences[i] != null) {
-    			copy[i] = (PortletPreference) preferences[i].clone();
+    			copy[i] = (InternalPortletPreference) preferences[i].clone();
     		} else {
     			copy[i] = null;
     		}

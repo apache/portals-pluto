@@ -15,10 +15,10 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.core.InternalPortletWindow;
-import org.apache.pluto.core.InternalPortletRequest;
-import org.apache.pluto.core.InternalPortletResponse;
-import org.apache.pluto.core.InternalActionResponse;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletResponse;
+import org.apache.pluto.internal.InternalActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

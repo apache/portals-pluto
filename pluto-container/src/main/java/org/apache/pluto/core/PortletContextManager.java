@@ -23,7 +23,9 @@ import javax.servlet.ServletContext;
 
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.core.impl.PortletContextImpl;
+import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.internal.PortletDescriptorRegistry;
+import org.apache.pluto.internal.impl.PortletContextImpl;
 
 /**
  * Manager used to cache the portlet configurations which have

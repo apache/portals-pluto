@@ -21,9 +21,17 @@ package org.apache.pluto.core;
 
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.core.impl.*;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.internal.InternalPortletConfig;
+import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletResponse;
+import org.apache.pluto.internal.impl.ActionRequestImpl;
+import org.apache.pluto.internal.impl.ActionResponseImpl;
+import org.apache.pluto.internal.impl.PortletConfigImpl;
+import org.apache.pluto.internal.impl.RenderRequestImpl;
+import org.apache.pluto.internal.impl.RenderResponseImpl;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -40,6 +48,7 @@ import java.util.Iterator;
  * the the container and services the portlet request for the specified method.
  * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.1
  * @since 09/22/2004
  */
