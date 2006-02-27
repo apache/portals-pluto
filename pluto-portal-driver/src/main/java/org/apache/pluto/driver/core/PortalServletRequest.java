@@ -87,13 +87,13 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
             PortalURLParameter param = (PortalURLParameter) iterator.next();
             String name = param.getName();
             String[] values = param.getValues();
-            if (param.getWindowId().equals(portletWindow.getId().toString())) {
+            if (param.getWindowId().equals(portletWindow.getId().getStringId())) {
                 portletParameters.put(name, values);
             }
         }
 
-        String id = portletWindow.getId().toString();
-        if (portletWindow.getId().toString().equals(id)) {
+        String id = portletWindow.getId().getStringId();
+        if (portletWindow.getId().getStringId().equals(id)) {
             Enumeration params = super.getParameterNames();
             while (params.hasMoreElements()) {
                 String name = params.nextElement().toString();

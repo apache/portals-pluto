@@ -56,7 +56,7 @@ public class NamespaceMapperImplTest extends PlutoTestCase {
             id = objectIDCounter++;
         }
 
-        public String toString() {
+        public String getStringId() {
             return "uniqueId"+id;
         }
     }

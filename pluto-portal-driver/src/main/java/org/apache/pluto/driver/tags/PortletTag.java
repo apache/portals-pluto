@@ -117,7 +117,7 @@ public class PortletTag extends BodyTagSupport {
             String windowId = (String) it.next();
             WindowState windowState = (WindowState) windowStates.get(windowId);
             if (WindowState.MAXIMIZED.equals(windowState)
-            		&& !window.getId().equals(windowId)) {
+            		&& !window.getId().getStringId().equals(windowId)) {
                 return SKIP_BODY;
             }
         }

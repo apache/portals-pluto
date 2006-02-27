@@ -219,7 +219,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     private String createPortletScopedId(String name) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(PORTLET_SCOPE_NAMESPACE);
-    	buffer.append(internalPortletWindow.getId());
+    	buffer.append(internalPortletWindow.getId().getStringId());
     	buffer.append(ID_NAME_SEPARATOR);
     	buffer.append(name);
     	return buffer.toString();
@@ -239,7 +239,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     			&& name.indexOf(ID_NAME_SEPARATOR) > -1) {
         	String id = name.substring(PORTLET_SCOPE_NAMESPACE.length(),
         	                           name.indexOf(ID_NAME_SEPARATOR));
-        	return (id.equals(internalPortletWindow.getId().toString()));
+        	return (id.equals(internalPortletWindow.getId().getStringId()));
         }
     	// Application-scoped attribute names are not in portlet scope.
     	else {

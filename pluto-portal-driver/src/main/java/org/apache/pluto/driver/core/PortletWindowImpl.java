@@ -26,7 +26,6 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletWindowID;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.util.ObjectIdImpl;
 
 /**
  * Implementation of <code>PortletWindow</code> interface.
@@ -39,7 +38,7 @@ public class PortletWindowImpl implements PortletWindow {
 	
     private PortletWindowConfig config = null;
     private PortalURL portalURL = null;
-    private ObjectIdImpl objectIdImpl = null;
+    private PortletWindowIDImpl objectIdImpl = null;
     
     
     // Constructor -------------------------------------------------------------
@@ -66,16 +65,16 @@ public class PortletWindowImpl implements PortletWindow {
     }
 
     public WindowState getWindowState() {
-        return portalURL.getWindowState(getId().toString());
+        return portalURL.getWindowState(getId().getStringId());
     }
 
     public PortletMode getPortletMode() {
-        return portalURL.getPortletMode(getId().toString());
+        return portalURL.getPortletMode(getId().getStringId());
     }
 
     public PortletWindowID getId() {
         if (objectIdImpl == null) {
-            objectIdImpl = ObjectIdImpl.createFromString(config.getId());
+            objectIdImpl = PortletWindowIDImpl.createFromString(config.getId());
         }
         return objectIdImpl;
     }

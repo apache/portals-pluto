@@ -36,33 +36,35 @@ public class NamespaceMapperImpl implements NamespaceMapper {
     
     // NamespaceMapper Impl ----------------------------------------------------
     
-    public String encode(PortletWindowID ns, String name) {
+    public String encode(PortletWindowID portletWindowId, String name) {
         StringBuffer buffer = new StringBuffer(50);
         buffer.append("Pluto_");
-        buffer.append(ns);
+        buffer.append(portletWindowId.getStringId());
         buffer.append('_');
         buffer.append(name);
         return buffer.toString();
     }
 
-    public String encode(PortletWindowID ns1, PortletWindowID ns2, String name) {
+    public String encode(PortletWindowID portletWindowId1,
+                         PortletWindowID portletWindowId2,
+                         String name) {
         StringBuffer buffer = new StringBuffer(50);
         buffer.append("Pluto_");
-        buffer.append(ns1);
+        buffer.append(portletWindowId1.getStringId());
         buffer.append('_');
-        buffer.append(ns2);
+        buffer.append(portletWindowId2.getStringId());
         buffer.append('_');
         buffer.append(name);
         return buffer.toString();
     }
 
-    public String decode(PortletWindowID ns, String name) {
+    public String decode(PortletWindowID portletWindowId, String name) {
         if (!name.startsWith("Pluto_")) {
             return null;
         }
         StringBuffer buffer = new StringBuffer(50);
         buffer.append("Pluto_");
-        buffer.append(ns);
+        buffer.append(portletWindowId.getStringId());
         buffer.append('_');
         if (!name.startsWith(buffer.toString())) {
             return null;

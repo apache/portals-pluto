@@ -45,7 +45,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     public PortletURLProviderImpl(HttpServletRequest request,
                                   PortletWindow internalPortletWindow) {
         url = PortalURLFactory.getFactory().createPortalURL(request);
-        this.window = internalPortletWindow.getId().toString();
+        this.window = internalPortletWindow.getId().getStringId();
     }
 
     public void setPortletMode(PortletMode mode) {

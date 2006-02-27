@@ -97,7 +97,7 @@ public class PortalDriverServlet extends HttpServlet {
             		actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing action request for window: "
-                		+ portletWindow.getId());
+                		+ portletWindow.getId().getStringId());
             }
             try {
                 container.doAction(portletWindow, request, response);
