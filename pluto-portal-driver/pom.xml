@@ -73,10 +73,8 @@
       <version>${servlet-api.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!-- We should use groupId 'javax.servlet' here, but there seems to have
-         some bugs in the jstl 1.1.2 artifact from the javax.servlet group. -->
     <dependency>
-      <groupId>jstl</groupId>
+      <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>${jstl.version}</version>
       <scope>compile</scope>
