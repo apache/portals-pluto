@@ -225,7 +225,7 @@
     <module>pluto-util</module>
     <module>maven-pluto-plugin</module>
     <module>pluto-ant-tasks</module>
-    <!-- Misc -->
+    <!-- Misc. -->
     <module>pluto-site</module>
     <module>pluto-optional-services</module>
   </modules>
@@ -255,6 +255,7 @@
 
   <reporting>
     <plugins>
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -277,11 +278,25 @@
       </plugin>
       
       <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/src.xml</descriptor>
+            <descriptor>src/main/assembly/bin.xml</descriptor>
+            <!--descriptor>src/main/assembly/bin-with-tomcat.xml</descriptor-->
+            <!--descriptor>src/main/assembly/bin-container.xml</descriptor-->
+          </descriptors>
+          <outputDirectory>target/dist</outputDirectory>
+        </configuration>
+      </plugin>      
+      
+      <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <tagBase>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags</tagBase>
         </configuration>
       </plugin>
+      
     </plugins>
   </reporting>
 
