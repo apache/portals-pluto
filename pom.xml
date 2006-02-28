@@ -198,7 +198,6 @@
     <commons-beanutils.version>1.7.0</commons-beanutils.version>
     <commons-logging.version>1.0.4</commons-logging.version>
     <log4j.version>1.2.9</log4j.version>
-    <derby.version>10.1.1.0</derby.version>
     <springframework.version>1.2.5</springframework.version>
     <plexus.version>1.0.4</plexus.version>
     <maven.version>2.0</maven.version>
@@ -225,9 +224,8 @@
     <module>pluto-util</module>
     <module>maven-pluto-plugin</module>
     <module>pluto-ant-tasks</module>
-    <!-- Misc. -->
+    <!-- Pluto Documentations -->
     <module>pluto-site</module>
-    <module>pluto-optional-services</module>
   </modules>
   
   <distributionManagement>

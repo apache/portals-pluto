@@ -24,20 +24,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto-optional-services</artifactId>
-      <version>${pom.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    
-    <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derby</artifactId>
-      <version>${derby.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging-api</artifactId>
       <version>${commons-logging.version}</version>
