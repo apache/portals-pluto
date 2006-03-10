@@ -24,6 +24,7 @@
 	<property name="pluto.name" value="pluto-${pluto.version}"/>
 	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
 	<property name="unzip.file" value="${dist.basedir}/${base.name}.tar.gz"/>
+	<property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
 
 	<target name="create-dist" depends="prepare-dist,run-maven">
 		<zip destfile="${dist.basedir}/${pluto.name}-bin.zip">
@@ -48,7 +49,7 @@
 			description="Creates tar from tar.gz tomcat dist"
 		/>
 		
-		<untar src="${dist.basedir}/${base.name}.tar"
+		<untar src="${tar.file}.tar"
 			dest="${dist.basedir}"
 			description="Untars tomcat dist"
 		/>		
@@ -85,6 +86,8 @@
 	</target>
 	
 	<target name="clean">
-		<delete dir="${dist.dir}"/>	
+		<delete dir="${dist.dir}"/>
+		<delete file="${unzip.file}"/>	
+		<delete file="${tar.file}"/>	
 	</target>
 </project>
