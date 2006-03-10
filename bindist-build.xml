@@ -1,0 +1,90 @@
+<!--
+	Builds a binary distribution of Pluto 1.1, bundling it into a zip and gzip file.
+	This build:
+	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
+		build:
+		a. Adds emptySessionPath="true" to server.xml.
+		b. Adds a pluto user with pluto role to tomcat-users.xml.
+		c. Adds a pluto role to the tomcat user in tomcat-users.xml.
+	2. Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
+		and installs them into the Tomcat dist in the working directory.
+	3. Bundles up the altered Tomcat dist with Pluto into a zip and gzip file.
+	
+	Run this build using the command line:
+		ant -f bindist-build.xml	
+-->
+<project name="BinaryDist" default="create-dist">
+
+	<property name="pluto.version" value="1.1.0-beta1" description="Version of Pluto 1.1 to build"/>
+	<property name="tomcat.version" value="5.5.9" description="Version of Tomcat to deploy Pluto"/>
+
+	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
+	<property name="base.name" value="jakarta-tomcat-${tomcat.version}"/>
+	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
+	<property name="pluto.name" value="pluto-${pluto.version}"/>
+	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
+	<property name="unzip.file" value="${dist.basedir}/${base.name}.tar.gz"/>
+
+	<target name="create-dist" depends="prepare-dist,run-maven">
+		<zip destfile="${dist.basedir}/${pluto.name}-bin.zip">
+			<zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
+		</zip>
+
+		<tar destfile="${dist.basedir}/${pluto.name}-bin.tar.gz" compression="gzip">
+			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
+		</tar>	
+		<antcall target="clean"/>	
+	</target>
+
+	<target name="prepare-dist">
+		<mkdir dir="${dist.basedir}"/>
+		
+		<get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v${tomcat.version}/bin/${base.name}.tar.gz"
+		     dest="${unzip.file}"
+		/>
+		
+		<gunzip src="${unzip.file}"
+			dest="${dist.basedir}"
+			description="Creates tar from tar.gz tomcat dist"
+		/>
+		
+		<untar src="${dist.basedir}/${base.name}.tar"
+			dest="${dist.basedir}"
+			description="Untars tomcat dist"
+		/>		
+	
+		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
+		<replace file="${dist.dir}/conf/server.xml"
+			token="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;" 
+			value="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; emptySessionPath=&quot;true&quot; /&gt;" 
+			summary="true"
+		/>
+
+		<!-- Put tomcat user in 'pluto' role in tomcat-users.xml -->
+		<replace file="${dist.dir}/conf/tomcat-users.xml"
+			token="roles=&quot;tomcat&quot;" 
+			value="roles=&quot;tomcat,pluto&quot;" 
+			summary="true"
+		/>
+		
+		<!-- Add 'pluto' user to tomcat-users.xml -->
+		<replace file="${dist.dir}/conf/tomcat-users.xml"
+			token="&lt;/tomcat-users&gt;" 
+			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
+			summary="true"
+		/>
+	</target>
+
+	<target name="run-maven">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="install"/>
+		</exec>
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="pluto:install -DinstallDir=${user.dir}/${dist.dir}"/>
+		</exec>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${dist.dir}"/>	
+	</target>
+</project>
