@@ -48,6 +48,14 @@ limitations under the License.
             <td><a href="http://people.apache.org/~zheng/pluto/chinese/">Chinese translation of Pluto website</a></td>
             <td>Documentation</td>
           </tr>
+          <tr>
+            <td><a href="http://today.java.net/pub/a/today/2005/02/18/josso.html">Integrating Java Open Single Sign-On in Pluto</a></td>
+            <td>Documentation</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.theserverside.com/articles/article.tss?l=ClusteringTomcat">Clustering JSR-168 Portlet Applications in Tomcat</a></td>
+            <td>Documentation</td>
+          </tr>
         </table>
       </p>
     </section>
