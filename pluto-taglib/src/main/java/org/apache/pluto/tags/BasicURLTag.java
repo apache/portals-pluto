@@ -128,7 +128,6 @@ public abstract class BasicURLTag extends TagSupport {
             try {
                 JspWriter writer = pageContext.getOut();
                 writer.print(url);
-                writer.flush();
             } catch (IOException ioe) {
                 throw new JspException(
                     "actionURL/renderURL Tag Exception: cannot write to the output writer.");
