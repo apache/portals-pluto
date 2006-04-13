@@ -1,0 +1,122 @@
+<!--
+	Builds a source distribution of Pluto 1.1, bundling it into a zip and gzip file.
+	
+	Run this build using the command line:
+		ant -f srcdist-build.xml	
+-->
+<project name="Dist" default="src-dist">
+
+	<property name="pluto.version" value="1.1.0-beta1" description="Version of Pluto 1.1 to build"/>
+	<property name="tomcat.version" value="5.5.9" description="Version of Tomcat to deploy Pluto"/>
+
+	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
+	<property name="base.name" value="jakarta-tomcat-${tomcat.version}"/>
+	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
+	<property name="pluto.name" value="pluto-${pluto.version}"/>
+	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
+	<property name="unzip.file" value="${dist.basedir}/${base.name}.tar.gz"/>
+	<property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
+
+	<fileset dir="." id="src.fileset">
+		<include name="**/*"/>
+		<exclude name="**/*.class"/>
+		<exclude name="**/*.zip"/>
+		<exclude name="**/*.tar.gz"/>
+		<exclude name="**/target/**/*"/>
+		<exclude name="**/.svn/*"/>
+		<exclude name="bin/**/*"/>
+		<exclude name=".classpath"/>
+		<exclude name=".project"/>
+	</fileset>					
+	
+	<target name="src-dist" depends="prepare-src-dist">
+		<zip destfile="${dist.basedir}/${pluto.name}-src.zip">
+			<zipfileset refid="src.fileset"/>							
+		</zip>
+
+		<tar destfile="${dist.basedir}/${pluto.name}-src.tar.gz" compression="gzip">
+			<tarfileset dir=".">
+				<include name="**/*"/>
+				<exclude name="**/*.class"/>
+				<exclude name="**/*.zip"/>
+				<exclude name="**/*.tar.gz"/>
+				<exclude name="**/target/**/*"/>
+				<exclude name="**/.svn/*"/>
+				<exclude name="bin/**/*"/>
+				<exclude name=".classpath"/>
+				<exclude name=".project"/>
+			</tarfileset>	
+		</tar>	
+		<antcall target="clean"/>	
+	</target>
+
+	<target name="prepare-src-dist">
+		<mkdir dir="${dist.basedir}"/>		
+	</target>
+
+	<target name="bin-dist" depends="prepare-bin-dist,run-maven">
+		<zip destfile="${dist.basedir}/${pluto.name}-bin.zip">
+			<zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
+		</zip>
+
+		<tar destfile="${dist.basedir}/${pluto.name}-bin.tar.gz" compression="gzip">
+			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
+		</tar>	
+		<antcall target="clean"/>	
+	</target>
+
+	<target name="prepare-bin-dist">
+		<mkdir dir="${dist.basedir}"/>
+		
+		<get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v${tomcat.version}/bin/${base.name}.tar.gz"
+		     dest="${unzip.file}"
+		/>
+		
+		<gunzip src="${unzip.file}"
+			dest="${dist.basedir}"
+			description="Creates tar from tar.gz tomcat dist"
+		/>
+		
+		<untar src="${tar.file}"
+			dest="${dist.basedir}"
+			description="Untars tomcat dist"
+		/>		
+	
+		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
+		<replace file="${dist.dir}/conf/server.xml"
+			token="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;" 
+			value="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; emptySessionPath=&quot;true&quot; /&gt;" 
+			summary="true"
+		/>
+
+		<!-- Put tomcat user in 'pluto' role in tomcat-users.xml -->
+		<replace file="${dist.dir}/conf/tomcat-users.xml"
+			token="roles=&quot;tomcat&quot;" 
+			value="roles=&quot;tomcat,pluto&quot;" 
+			summary="true"
+		/>
+		
+		<!-- Add 'pluto' user to tomcat-users.xml -->
+		<replace file="${dist.dir}/conf/tomcat-users.xml"
+			token="&lt;/tomcat-users&gt;" 
+			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
+			summary="true"
+		/>
+	</target>
+
+	<target name="run-maven">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="install"/>
+		</exec>
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="pluto:install -DinstallDir=${user.dir}/${dist.dir}"/>
+		</exec>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${dist.dir}"/>
+		<delete file="${unzip.file}"/>	
+		<delete file="${tar.file}"/>	
+	</target>
+
+</project>
