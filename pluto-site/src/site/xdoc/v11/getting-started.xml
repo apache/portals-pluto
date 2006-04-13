@@ -113,8 +113,12 @@ $> mvn install
       </subsection>
       
     </section>
-    
-    
+    <section name="Configuring Pluto for Application Scope PortletSession Attributes">
+    <p>To be able to use application-scoped <code>PortletSession</code> attributes in Pluto, modify
+    the Connector element for port 8080 in <code>&lt;TOMCAT_HOME&gt;/conf/server.xml</code> by
+    adding the following attribute and value: emptySessionPath="true".
+    </p>
+    </section>    
     <section name="Configuring User and Role for Pluto">
       <p>
         The Pluto Testsuite portlet application needs the role '<code>pluto</code>'
