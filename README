@@ -1,6 +1,18 @@
-For the most up to date information please see: 
-  http://portals.apache.org/pluto
+README for Pluto 1.1-beta1
 
+To run the Pluto Portal Driver deployed in Tomcat 5.5.9:
+1. Unzip the binary distribution into a directory.
+	a. <PLUTO-HOME> will be the pluto-1.1.0-beta1 subdirectory.
+2. Execute startup.bat (Windows) or startup.sh (Unix)
+in <PLUTO-HOME>/bin.
+	a. Use shutdown.bat/shutdown.sh to stop the portal
+3. Browse to http://localhost:8080/pluto/portal
+4. Login as tomcat user (password=tomcat).
+
+For information on deploying portlets, building the portal from source
+ and for the most up to date documentation please go to: 
+  http://portals.apache.org/pluto
+  
 ***********************************************************
 * RELEASE NOTES: 1.1.0-beta1 April 15, 2006               *
 ***********************************************************
@@ -73,6 +85,7 @@ For the most up to date information please see:
     * [PLUTO-124] - POST Data gets truncated due to internal redirect by pluto
     * [PLUTO-191] - Dynamic Inclusion of dependencies in Maven Plugin
     * [PLUTO-200] - Missing Resource Exception from PortletConfig.getResourceBundle
+    * [PLUTO-232] - Maximize window state does not work properly
     
 ** New Feature
     * [PLUTO-38] - user profile attribute support
