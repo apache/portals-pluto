@@ -41,6 +41,7 @@ limitations under the License.
       <iten name="Download" href="/download.html"/>
       <item name="News" href="/news.html"/>
       <item name="FAQ" href="/faq.html"/>
+      <item name="Wiki" href="http://wiki.apache.org/portals/Pluto"/>
       <item name="Powered By Pluto" href="/powered.html"/>
       <item name="Get Involved" href="/get-involved.html"/>
     </menu>
