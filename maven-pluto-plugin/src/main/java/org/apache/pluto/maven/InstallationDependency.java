@@ -10,26 +10,28 @@ import java.util.Collection;
  */
 class InstallationDependency {
 
+	public static final String VERSION = "1.1.0-beta1";
+
     public static final InstallationDependency PORTLET_API =
         new InstallationDependency("javax.portlet", "portlet-api", "1.0");
 
     public static final InstallationDependency  DESCRIPTOR_API =
-        new InstallationDependency("org.apache.pluto", "pluto-descriptor-api", "1.1.0-SNAPSHOT");
+        new InstallationDependency("org.apache.pluto", "pluto-descriptor-api", VERSION);
 
     public static final InstallationDependency  DESCRIPTOR_IMPL =
-            new InstallationDependency("org.apache.pluto", "pluto-descriptor-impl", "1.1.0-SNAPSHOT");
+            new InstallationDependency("org.apache.pluto", "pluto-descriptor-impl", VERSION);
 
     public static final InstallationDependency  CONTAINER =
-            new InstallationDependency("org.apache.pluto", "pluto-container", "1.1.0-SNAPSHOT");
+            new InstallationDependency("org.apache.pluto", "pluto-container", VERSION);
 
     public static final InstallationDependency  TAGLIB =
-            new InstallationDependency("org.apache.pluto", "pluto-taglib", "1.1.0-SNAPSHOT");
+            new InstallationDependency("org.apache.pluto", "pluto-taglib", VERSION);
 
     public static final InstallationDependency  PORTAL =
-            new InstallationDependency("org.apache.pluto", "pluto-portal", "1.1.0-SNAPSHOT", "war");
+            new InstallationDependency("org.apache.pluto", "pluto-portal", VERSION, "war");
 
     public static final InstallationDependency  TESTSUITE =
-            new InstallationDependency("org.apache.pluto", "pluto-testsuite", "1.1.0-SNAPSHOT", "war");
+            new InstallationDependency("org.apache.pluto", "pluto-testsuite", VERSION, "war");
 
     public static final InstallationDependency  CASTOR =
             new InstallationDependency("castor", "castor", "0.9.6");
