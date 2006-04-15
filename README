@@ -1,13 +1,11 @@
 For the most up to date information please see: 
   http://portals.apache.org/pluto
 
-
 ***********************************************************
-* RELEASE NOTES: 1.1.0-alpha1 Dec 10, 2005                *
+* RELEASE NOTES: 1.1.0-beta1 April 15, 2006               *
 ***********************************************************
-* Resolved Issues                                         *
+* Fixed or Resolved Issues                                         *
 ***********************************************************
-
 ** Bug
     * [PLUTO-78] - Pluto 1.1: portlet info not initialized when defined in resource external to portlet.xml
     * [PLUTO-79] - Pluto 1.1: portal driver servlet's doPost() method calls itself
@@ -21,25 +19,50 @@ For the most up to date information please see:
     * [PLUTO-150] - In version 1.1-ALPHA, RenderResponseImpl.getNamespace() should be updated
     * [PLUTO-159] - ClassNotFoundException when using testsuites Simple Preference Test
     * [PLUTO-162] - Some suggestions to the Pluto testsuite, and a bug report.
+    * [PLUTO-166] - Creation of PreferencesValidator breaks the portlet spec.
     * [PLUTO-167] - PortletPreferencesImpl.getMap() breaks the spec: PLT 14.1 (xci)
     * [PLUTO-168] - Portlet session binding problem
     * [PLUTO-173] - Build (mvn install) fails
     * [PLUTO-175] - [1.1] Testsuite Simple Action Parameter Test fails
     * [PLUTO-176] - [1.1] Testsuite Simple Preference Test fails
+    * [PLUTO-177] - [1.1] Multiple failures in Testsuite Resource Bundle Test
     * [PLUTO-178] - [1.1] Testsuite Security Mapping Test cannot be run
     * [PLUTO-179] - [1.1] Testsuite Application Scoped Session Attributes Test fails
     * [PLUTO-180] - [1.1] Testsuite Misc Test: Portal Info Test fails
     * [PLUTO-185] - EmbeddedDataSourceManager not properly connecting to Derby database
-
-** New Feature
-    * [PLUTO-156] - Support for PortletPreferences
-    * [PLUTO-160] - New Pluto Admin for version 1.1
+    * [PLUTO-188] - [1.1] Four failures in the testsuite's Simple Preference Test
+    * [PLUTO-189] - [1.1] Three failures in the testsuite's Resource Bundle Test on Test Portlet #1
+    * [PLUTO-190] - [1.1] Two problems in the testsuite's Security Mapping Test
+    * [PLUTO-192] - ActionRequest.isPortletModeAllowed Fails
+    * [PLUTO-193] - ActionRequest.GetParameterMap
+    * [PLUTO-194] - ActionResponse.SetPortletMode IllegalStateException not thrown
+    * [PLUTO-197] - ActionRequest.GetParameterMap
+    * [PLUTO-198] - ActionRequest.GetPreferences NullPointerException
+    * [PLUTO-199] - ActionResponse.setRenderParameter
+    * [PLUTO-205] - PortletPreferences.store() does not throw IllegalStateException when called within render()
+    * [PLUTO-207] - Request did not return correct query string when dispatched
+    * [PLUTO-208] - Render parameters are lost when dispatching request
+    * [PLUTO-209] - RenderResponse: getWriter() and getPortletOutputStream() should have thrown IllegalStateException if content-type is not set
+    * [PLUTO-210] - Default preference value not returned correctly
+    * [PLUTO-213] - PortletSession not invalidated after max inactive interval.
+    * [PLUTO-220] - flush causing problem in doEndTag() in BasicURLTag.java
+    * [PLUTO-221-231] - Sub-project descriptors referencing basedir break multi-project build
 
 ** Improvement
+    * [PLUTO-151] - New class hierarchy to implement portlet request and response, and resolve the dispatching parameters problem.
+    * [PLUTO-195] - Validate Container Startup / init before servicing requests
+    * [PLUTO-204] - Add spec PLT number to TestResult in portlet tests
+    * [PLUTO-211] - Too many methods overwritten in RenderRequestImpl
+    * [PLUTO-212] - Merge methods in RenderRequestImpl and PortletContextImpl
+
+** New Feature
     * [PLUTO-108] - Use CSS Positioning for Portal
     * [PLUTO-144] - Class PlutoTestCase does not compile under JDK1.4 (in container/src/test)
     * [PLUTO-158] - Sperate pluto-portal-driver from pluto-portal subprojects.
+    * [PLUTO-156] - Support for PortletPreferences
     * [PLUTO-165] - EL support for portlet:param tag
+    * [PLUTO-181] - Install Pluto Portal from Repository
+    * [PLUTO-183] - pluto 1.1 portal-driver and Spring
 
 ***********************************************************
 * Open Issues                                             *
@@ -48,19 +71,25 @@ For the most up to date information please see:
 ** Bug
     * [PLUTO-122] - Portlet Preferences need to be user specific
     * [PLUTO-124] - POST Data gets truncated due to internal redirect by pluto
-    * [PLUTO-166] - Creation of PreferencesValidator breaks the portlet spec.
-    * [PLUTO-177] - [1.1] Multiple failures in Testsuite Resource Bundle Test
-
+    * [PLUTO-191] - Dynamic Inclusion of dependencies in Maven Plugin
+    * [PLUTO-200] - Missing Resource Exception from PortletConfig.getResourceBundle
+    
 ** New Feature
     * [PLUTO-38] - user profile attribute support
     * [PLUTO-182] - [1.1] Add assembly plugin to create distributions
     * [PLUTO-186] - ToolTips to Portlet Controls
-
+    * [PLUTO-214] - Add logout link to portal page.
+    
 ** Improvement
-    * [PLUTO-151] - New class hierarchy to implement portlet request and response, and resolve the dispatching parameters problem.
-    * [PLUTO-183] - pluto 1.1 portal-driver and Spring
+    * [PLUTO-215] - Create admin portlet for Pluto portal driver
+    * [PLUTO-204] - Add spec PLT number to TestResult in portlet tests
+    
+** Task
+    * [PLUTO-217] - [1.1] Script to package binary release
+    * [PLUTO-218] - [1.1] Script to package source release
 
-
+** Test
+    * [PLUTO-206] - Improve pluto-testsuite to test more aspects
+    
 ** Wish
     * [PLUTO-153] - Jetty Deployment Support
-
