@@ -19,7 +19,7 @@
 		
 	All built distributions end up in target/dist.				
 -->
-<project name="Dist" default="src-dist">
+<project name="Dist" default="bin-dist">
 
 	<property name="pluto.version" value="1.1.0-beta1" description="Version of Pluto 1.1 to build"/>
 	<property name="tomcat.version" value="5.5.9" description="Version of Tomcat to deploy Pluto"/>
@@ -96,7 +96,10 @@
 			dest="${dist.basedir}"
 			description="Untars tomcat dist"
 		/>		
-	
+
+		<!-- Copy over README -->
+		<copy file="README" todir="${dist.dir}"/>
+		
 		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
 		<replace file="${dist.dir}/conf/server.xml"
 			token="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;" 
