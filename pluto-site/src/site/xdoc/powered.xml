@@ -64,6 +64,11 @@ limitations under the License.
           <td>Apache 2.0</td>
           <td>Web Management Console</td>
           <td>1.0.1</td></tr>
+	  <tr><td>Java Studio Creator 2.0</td>
+          <td><a href="http://developers.sun.com/prodtech/javatools/jscreator/">http://developers.sun.com/prodtech/javatools/jscreator/</a></td>
+          <td>Sun Microsystems Inc.</td>
+          <td>Development Portal Server</td>
+          <td>1.0.1</td></tr>
     </table>
 	</p>
   </section>
