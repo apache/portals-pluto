@@ -29,7 +29,7 @@ limitations under the License.
     <section name="Deploying Portlet to Pluto Portal">
       
       <p>
-        There are 3 steps of dpeloyment:
+        There are 3 steps of deployment:
         <ul>
           <li>
             <b>Assembly</b>: All portlet applications must be run through the
