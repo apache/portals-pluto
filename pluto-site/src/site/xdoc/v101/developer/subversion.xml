@@ -73,7 +73,7 @@ limitations under the License.
 		</p>
 
 		<h2>Normal Subversion Access</h2>
-		<p>Anyone can check code out of Subversion.  You only need to specify a
+		<p>Anyone can check code out of Subversion anonymously.  However, you need to specify a
 		username and password in order to update the Subversion repository, and only
 		Pluto committers have the permissions to do that.  We run Subversion
 		over standard HTTPS, so hopefully you won't have problems with intervening
