@@ -86,6 +86,7 @@ For information on deploying portlets, building the portal from source
     * [PLUTO-191] - Dynamic Inclusion of dependencies in Maven Plugin
     * [PLUTO-200] - Missing Resource Exception from PortletConfig.getResourceBundle
     * [PLUTO-232] - Maximize window state does not work properly
+    * [PLUTO-233] - Exception thrown if edit or help mode is not supported by portlet
     
 ** New Feature
     * [PLUTO-38] - user profile attribute support
