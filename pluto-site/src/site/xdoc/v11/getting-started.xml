@@ -27,14 +27,14 @@ limitations under the License.
   
   <body>
 
-    <section name="Installing the Pluto Binary Build">
+    <section name="Installing the Pluto 1.1 Binary Build">
       
       <ol>
-        <li>Download a Pluto binary distribution from 
-        a <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">distribution mirror</a>.</li>
+        <li>Download a Pluto 1.1 binary distribution from 
+        a <a href="http://cvs.apache.org/dist/portals/pluto/v1.1.0-beta1/">distribution site</a>.</li>
         <li>Unzip the binary distribution into a directory.</li>
         	<ol>
-        		<li>&lt;PLUTO-1.1-HOME&gt; will be the pluto-1.1.0-beta1 subdirectory.</li>
+        		<li>&lt;PLUTO-1.1-HOME&gt; will be the top level directory.</li>
         	</ol>	
         <li>Execute startup.bat (Windows) or startup.sh (Unix)
 in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
