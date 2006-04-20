@@ -30,7 +30,7 @@ limitations under the License.
     <section name="Deploying Portlet to Pluto Portal">
       
       <p>
-        There are 3 steps for deployment a portlet to Pluto 1.1:
+        There are 3 steps to deploy a portlet to Pluto 1.1:
         <ul>
           <li>
             <b>Assembly</b>: All portlet applications must be run through the
@@ -43,7 +43,8 @@ limitations under the License.
           <li>
             <b>Deployment</b>: After portlet applications are assembled properly
             they must be deployed to the servlet engine within which the portal
-            application is running.
+            application is running. The current binary distribution uses
+            Tomcat 5.5 as the servlet engine.
           </li>
           <li>
             <b>Publishing</b>: All portlet applications that are to be used
@@ -55,7 +56,7 @@ limitations under the License.
         </ul>
       </p>
       
-      <subsection name="Portlet Assembly and Deployment using Maven">
+      <subsection name="Portlet Assembly and Deployment using Maven 2">
         <p>
         As of the first beta release of Pluto 1.1, the Maven 2 plugins for assembly and 
         deployment are partially completed.
