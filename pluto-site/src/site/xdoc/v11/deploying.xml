@@ -57,30 +57,33 @@ limitations under the License.
       
       <subsection name="Portlet Assembly and Deployment using Maven">
         <p>
-        As of the first beta release of Pluto 1.1, the plugins for assembly and 
-        deploment are partially completed.
+        As of the first beta release of Pluto 1.1, the Maven 2 plugins for assembly and 
+        deployment are partially completed.
           Right now the maven-pluto-plugin correctly assembles the war with
           the proper <code>PortletServlet</code> records to web.xml, but the 
           deployment plugin is not yet completed. We have created an example
-          pom.xml below that correctly assembles and deploys the portlet. 
+          Maven 2 pom.xml below that correctly assembles and deploys the portlet. 
           This script requires
           that you have installed the pluto-util, pluto-descriptor-api and
-          pluto-descriptor-impl into your local Maven repository. You can do this by
+          pluto-descriptor-impl into your local Maven 2 repository. You can do this by
           building Pluto from source or installing the files that come with the 
-          binary build and using the install:install-file goal (see the 
-          <a href="http://docs.codehaus.org/display/MAVENUSER/FAQs-1">Maven FAQ</a>).
-          
-          The custom Maven build shown below also deploys
+          binary build (in PlutoDomain subdirectory) and running the install:install-file goal (see the 
+          <a href="http://docs.codehaus.org/display/MAVENUSER/FAQs-1">Maven FAQ</a>,
+          using groupId="org.apache.pluto", artifactId="pluto-util or pluto-descriptor-api or pluto-descriptor-impl"
+          and version="1.1.0-beta1" when running the install:install-file goal).
+        </p>
+        <p>          
+          The custom Maven 2 build shown below also deploys
           a Tomcat context deployment descriptor that has the same name as your
-          artifactId with an xml extension (e.g. HelloWorldPortlet.xml)
+          artifactId with an xml extension (e.g. HelloWorldPortlet.xml).
         </p>
         <p>
-          To properly assemble and deploy your portlet using the Maven script (pom.xml) below, 
+          To properly assemble and deploy your portlet using the Maven 2 script (pom.xml) below, 
           your project's directory structure and artifact placement must conform to Maven's standard:
         </p>
         <p>
           <source><![CDATA[
-	MyPortlet (top level directory)
+	HelloWorldPortlet (top level directory)
 	|- pom.xml (the pom file)
 	|- src (Subdir containing main subdirectory)
 	    |- main (Subdir containing java, resource and webapp subdirs)
@@ -88,13 +91,13 @@ limitations under the License.
 		    |       `- com
 		    |           `- mycompany
 		    |               `- portlet
-		    |                   `- MyPortlet.java (portlet source)
+		    |                   `- HelloWorldPortlet.java (portlet source)
 		    |- resource
-		    |	`- MyPortlet.xml (Tomcat context DD)
+		    |	`- HelloWorldPortlet.xml (Tomcat context deployment descriptor)
 		    |- webapp  (webapp resources (jsp, css, images) go under here)
 		    	`- jsp 
-		    		`- MyPortletView.jsp (for view mode)		    			    
-		    		`- MyPortletEdit.jsp (for edit mode)		    			    
+		    		`- HelloWorldPortletView.jsp (for view mode)		    			    
+		    		`- HelloWorldPortletEdit.jsp (for edit mode)		    			    
 		    	`- WEB-INF
 			    	`- portlet.xml (JSR-168 deployment descriptor)
 			    	`- web.xml (This will be modified by maven-pluto-plugin)
@@ -102,7 +105,7 @@ limitations under the License.
         </p>
 
         <p>
-        This is an example of what the Tomcat context DD will contain:
+        This is an example of what the Tomcat context deployment descriptor will contain:
           <source><![CDATA[
 		<Context path="HelloWorldPortlet" 
 			docBase="..\PlutoDomain\HelloWorldPortlet.war" 
@@ -110,9 +113,10 @@ limitations under the License.
           ]]></source>
         </p>
         <p>
-        The Maven pom file (pom.xml) is what defines the build. Our example overrides
+        The Maven 2 pom file (pom.xml) is what defines the build. Our example overrides
         the integration-test lifecycle phase in addition to using the maven-pluto-plugin
-        to assemble the war:
+        to assemble the war. Use this as you pom file, changing the groupId, artifactId and version
+        to values appropriate to your custom portlet.
           <source><![CDATA[
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -127,7 +131,6 @@ limitations under the License.
   <artifactId>HelloWorldPortlet</artifactId>
   <packaging>war</packaging>
   <name>${pom.artifactId}</name>
-  
   <!-- Dependency Version Properties ======================================= -->
   <properties>
   	<!-- Change this for a new Pluto version -->
@@ -136,14 +139,13 @@ limitations under the License.
     <servlet-api.version>2.3</servlet-api.version>
     <jsp-api.version>2.0</jsp-api.version>
     <junit.version>3.8.1</junit.version>
-  </properties>
-  
+  </properties>  
   <dependencies>
     <dependency>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
       <version>${portlet-api.version}</version>
-      <scope>provided</scope>
+      <scope>provided</scope><!-- Prevents addition to war file -->
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -233,6 +235,20 @@ limitations under the License.
   
 </project>
           ]]></source>
+        </p>        
+        <p>
+			Run the Maven 2 pom.xml script using 'mvn integration-test -Dpluto.home=/path/to/pluto1.1install' 
+			from the command line to create the war with web.xml modified for deployment to 
+			Pluto-1.1 and deploy it to a local install of Pluto-1.1. 
+			The embedded Ant script in the pom.xml was created to use the environmental variable 
+			CATALINA_HOME as the value of pluto.home.
+			If you have set CATALINA_HOME to your Pluto-1.1 install, then you can just run
+			the command 'mvn integration-test'.
+        </p>        
+        <p>
+			Run 'mvn package' to just create the war, which ends up in the target directory.
+			If you do this, you need to manually deploy the war file and Tomcat context
+			deployment descriptor to your Pluto-1.1 install.        
         </p>
       </subsection>
             
