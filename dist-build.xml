@@ -101,6 +101,11 @@
 
 		<!-- Copy over README -->
 		<copy file="README" todir="${dist.dir}"/>
+
+		<!-- Copy over jars needed to deploy custom portlets -->
+		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+		<copy file="pluto-descriptor-api/target/pluto-descriptor-api-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+		<copy file="pluto-descriptor-impl/target/pluto-descriptor-impl-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
 		
 		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
 		<replace file="${dist.dir}/conf/server.xml"
