@@ -44,6 +44,20 @@ limitations under the License.
       </div>
       
       <div class="highlightBox">
+        <h5>Get Pluto 1.1.0</h5>
+        <p>
+          <a href="http://cvs.apache.org/dist/portals/pluto/v1.1.0-beta1/">
+            <img valign="top" src="images/download.gif" border="0" title="download"/>
+            Download
+          </a>
+          Pluto 1.1.0-beta1 (12Mb)
+        </p>
+        <ul>
+          <li><a href="v11/getting-started.html">Installation Guide</a></li>
+        </ul>
+      </div>
+
+      <div class="highlightBox">
         <h5>Get Pluto 1.0.1</h5>
         <p>
           <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">
@@ -53,8 +67,7 @@ limitations under the License.
           Pluto 1.0.1 (12Mb)
         </p>
         <ul>
-          <li><a href="install.html">Installation Guide</a></li>
-          <li><a href="resources.html">Installation Instructions</a></li>
+          <li><a href="v101/install.html">Installation Guide</a></li>
         </ul>
       </div>
       
@@ -122,10 +135,6 @@ limitations under the License.
           started with, easier to understand, and easier to embed with your
           portal. Your feedback regarding how far we've come is always welcome
           on the user and developer mailing lists!
-        </p>
-        <p>
-          Pluto 1.1 is currently only available through subversion repository.
-          An alpha release is currently being considered.
         </p>
       </subsection>
     </section>
