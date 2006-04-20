@@ -37,6 +37,7 @@
 		<exclude name="**/*.class"/>
 		<exclude name="**/*.zip"/>
 		<exclude name="**/*.tar.gz"/>
+		<exclude name="**/*.bzip2"/>
 		<exclude name="**/target/**/*"/>
 		<exclude name="**/.svn/*"/>
 		<exclude name="bin/**/*"/>
@@ -55,12 +56,29 @@
 				<exclude name="**/*.class"/>
 				<exclude name="**/*.zip"/>
 				<exclude name="**/*.tar.gz"/>
+				<exclude name="**/*.bzip2"/>
 				<exclude name="**/target/**/*"/>
 				<exclude name="**/.svn/*"/>
 				<exclude name="bin/**/*"/>
 				<exclude name=".classpath"/>
 				<exclude name=".project"/>
 			</tarfileset>	
+		</tar>
+		
+		<tar destfile="${dist.basedir}/${pluto.name}-src.bzip2" compression="bzip2">
+				<tarfileset dir=".">
+					<include name="**/*"/>
+					<exclude name="**/*.class"/>
+					<exclude name="**/*.zip"/>
+					<exclude name="**/*.tar.gz"/>
+					<exclude name="**/*.bzip2"/>
+					<exclude name="**/target/**/*"/>
+					<exclude name="**/.svn/*"/>
+					<exclude name="bin/**/*"/>
+					<exclude name=".classpath"/>
+					<exclude name=".project"/>
+				</tarfileset>	
+
 		</tar>	
 		<antcall target="clean"/>	
 	</target>
@@ -70,6 +88,12 @@
 	</target>
 
 	<target name="bin-dist" depends="prepare-bin-dist,run-maven" description="Creates zip, gzip, and bzip2 distributions">
+		<!-- Copy over jars needed to deploy custom portlets -->
+		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+		<copy file="pluto-descriptor-api/target/pluto-descriptor-api-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+		<copy file="pluto-descriptor-impl/target/pluto-descriptor-impl-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+
+		<!-- Zip everything up -->
 		<zip destfile="${dist.basedir}/${pluto.name}-bin.zip">
 			<zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
 		</zip>
@@ -79,6 +103,7 @@
 		<tar destfile="${dist.basedir}/${pluto.name}-bin.bzip2" compression="bzip2">
 			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
 		</tar>	
+		
 		<antcall target="clean"/>	
 	</target>
 
@@ -102,11 +127,6 @@
 		<!-- Copy over README -->
 		<copy file="README" todir="${dist.dir}"/>
 
-		<!-- Copy over jars needed to deploy custom portlets -->
-		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
-		<copy file="pluto-descriptor-api/target/pluto-descriptor-api-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
-		<copy file="pluto-descriptor-impl/target/pluto-descriptor-impl-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
-		
 		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
 		<replace file="${dist.dir}/conf/server.xml"
 			token="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;" 
@@ -137,7 +157,7 @@
 			<arg line="pluto:install -DinstallDir=${user.dir}/${dist.dir}"/>
 		</exec>
 	</target>
-	
+		
 	<target name="clean">
 		<delete dir="${dist.dir}"/>
 		<delete file="${unzip.file}"/>	
