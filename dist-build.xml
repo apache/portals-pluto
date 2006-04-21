@@ -52,7 +52,7 @@
 		<exclude name="**/*.class"/>
 		<exclude name="**/*.zip"/>
 		<exclude name="**/*.tar.gz"/>
-		<exclude name="**/*.bzip2"/>
+		<exclude name="**/*.tar.b2"/>
 		<exclude name="**/target/**/*"/>
 		<exclude name="**/.svn/*"/>
 		<exclude name="bin/**/*"/>
@@ -65,37 +65,32 @@
 			<zipfileset refid="src.fileset"/>							
 		</zip>
 
-		<tar destfile="${dist.basedir}/${pluto.name}-src.tar.gz" compression="gzip">
-			<tarfileset dir=".">
-				<include name="**/*"/>
-				<exclude name="**/*.class"/>
-				<exclude name="**/*.zip"/>
-				<exclude name="**/*.tar.gz"/>
-				<exclude name="**/*.bzip2"/>
-				<exclude name="**/target/**/*"/>
-				<exclude name="**/.svn/*"/>
-				<exclude name="bin/**/*"/>
-				<exclude name=".classpath"/>
-				<exclude name=".project"/>
-			</tarfileset>	
-		</tar>
+		<antcall target="srctar-nocompress"/>
 		
-		<tar destfile="${dist.basedir}/${pluto.name}-src.bzip2" compression="bzip2">
-				<tarfileset dir=".">
+		<gzip src="${dist.basedir}/${pluto.name}-src.tar" 
+			destfile="${dist.basedir}/${pluto.name}-src.tar.gz"/>
+		
+		<bzip2 src="${dist.basedir}/${pluto.name}-src.tar" 
+			destfile="${dist.basedir}/${pluto.name}-src.tar.bz2"/>
+		
+		<antcall target="clean"/>	
+	</target>
+
+	<target name="srctar-nocompress" description="Creates tar source distributions">
+		<tar destfile="${dist.basedir}/${pluto.name}-src.tar">
+				<tarfileset dir="."> <!-- refid does not work -->
 					<include name="**/*"/>
 					<exclude name="**/*.class"/>
 					<exclude name="**/*.zip"/>
 					<exclude name="**/*.tar.gz"/>
-					<exclude name="**/*.bzip2"/>
+					<exclude name="**/*.tar.bz2"/>
 					<exclude name="**/target/**/*"/>
 					<exclude name="**/.svn/*"/>
 					<exclude name="bin/**/*"/>
 					<exclude name=".classpath"/>
 					<exclude name=".project"/>
 				</tarfileset>	
-
 		</tar>	
-		<antcall target="clean"/>	
 	</target>
 
 	<target name="prepare-src-dist">
@@ -112,16 +107,30 @@
 		<zip destfile="${dist.basedir}/${pluto.name}-bin.zip">
 			<zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
 		</zip>
-		<tar destfile="${dist.basedir}/${pluto.name}-bin.tar.gz" compression="gzip">
-			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
-		</tar>	
-		<tar destfile="${dist.basedir}/${pluto.name}-bin.bzip2" compression="bzip2">
-			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
-		</tar>	
+
+		<antcall target="tar-nocompress"/>
 		
+		<gzip src="${dist.basedir}/${pluto.name}-bin.tar" 
+			destfile="${dist.basedir}/${pluto.name}-bin.tar.gz"/>
+		
+		<bzip2 src="${dist.basedir}/${pluto.name}-bin.tar" 
+			destfile="${dist.basedir}/${pluto.name}-bin.tar.bz2"/>
+				
 		<antcall target="clean"/>	
 	</target>
-
+	
+	<target name="tar-nocompress" description="Creates tar binary distributions">
+		<tar destfile="${dist.basedir}/${pluto.name}-bin.tar">
+			<tarfileset prefix="${pluto.name}" dir="${dist.dir}/bin" mode="755" username="pluto" group="pluto">
+		    	<include name="*.sh"/>
+			</tarfileset>
+			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" username="pluto" group="pluto">
+				<include name="**/*"/>
+				<exclude name="bin/*.sh"/>
+			</tarfileset>
+		</tar>		
+	</target>
+	
 	<target name="prepare-bin-dist">
 		<mkdir dir="${dist.basedir}"/>
 		
@@ -177,6 +186,8 @@
 		<delete dir="${dist.dir}"/>
 		<delete file="${unzip.file}"/>	
 		<delete file="${tar.file}"/>	
+   	    <delete file="${dist.basedir}/${pluto.name}-src.tar"/>
+   	    <delete file="${dist.basedir}/${pluto.name}-bin.tar"/>
 	</target>
 
 </project>
