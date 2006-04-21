@@ -57,8 +57,8 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
             String context = entry.getKey().toString();
             File portletApp = (File)entry.getValue();
 
-            String deployed = ".."+File.separatorChar+config.getServerConfig().getDomain() +
-                    File.separatorChar +  portletApp.getName();
+            String deployed = "../"+config.getServerConfig().getDomain() +
+                    "/" +  portletApp.getName();
             String contents = getPortletApplicationConfig(context, deployed);
             FileWriter out = new FileWriter(
                     new File(contextConfigurationDirectory, context+".xml"));
@@ -107,8 +107,8 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
     }
 
     private String getPortalApplicationConfig(InstallationConfig config) {
-        String war = ".."+File.separatorChar+config.getServerConfig().getDomain() +
-                File.separatorChar +  config.getPortalApplication().getName();
+        String war = "../"+config.getServerConfig().getDomain() +
+                "/" +  config.getPortalApplication().getName();
         String contextPath = config.getPortalContextPath();
         return getConfigContents(war, contextPath);
     }
