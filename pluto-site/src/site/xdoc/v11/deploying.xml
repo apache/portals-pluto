@@ -109,7 +109,7 @@ limitations under the License.
         This is an example of what the Tomcat context deployment descriptor will contain:
           <source><![CDATA[
 		<Context path="HelloWorldPortlet" 
-			docBase="..\PlutoDomain\HelloWorldPortlet.war" 
+			docBase="../PlutoDomain/HelloWorldPortlet.war" 
 			crossContext="true"/>        
           ]]></source>
         </p>
