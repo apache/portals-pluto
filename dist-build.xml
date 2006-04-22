@@ -121,8 +121,8 @@
 	
 	<target name="tar-nocompress" description="Creates tar binary distributions">
 		<tar destfile="${dist.basedir}/${pluto.name}-bin.tar">
-			<tarfileset prefix="${pluto.name}" dir="${dist.dir}/bin" mode="755" username="pluto" group="pluto">
-		    	<include name="*.sh"/>
+			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" mode="755" username="pluto" group="pluto">
+		    	<include name="bin/*.sh"/>
 			</tarfileset>
 			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" username="pluto" group="pluto">
 				<include name="**/*"/>
