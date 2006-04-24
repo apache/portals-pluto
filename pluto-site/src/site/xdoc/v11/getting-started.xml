@@ -123,6 +123,16 @@ $> mvn pluto:install -DinstallDir=path/to/appserver
           Currently, the Pluto 1.1 install has been tested on Tomcat 5.5.9.
           The Tomcat 5 archive can be found <a href="http://archive.apache.org/dist/tomcat/tomcat-5/archive">here</a>.
         </p>
+        <p>
+          If installing to a directory that contains spaces,  <code>installDir</code>
+          needs to be enclosed within quotes:
+        </p>
+        <p>
+          <source><![CDATA[
+C:\pluto> mvn pluto:install -DinstallDir="C:\Program Files\Apache Software Foundation\Tomcat 5.5"
+          ]]></source>
+        </p>
+        
       </subsection>
       
       <subsection name="Installing Pluto Manually">
