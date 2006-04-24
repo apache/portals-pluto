@@ -11,6 +11,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License
+
 README for Pluto 1.1-beta1
 
 To run the Pluto Portal Driver deployed in Tomcat 5.5.9:
@@ -72,6 +73,7 @@ For information on deploying portlets, building the portal from source
     * [PLUTO-213] - PortletSession not invalidated after max inactive interval.
     * [PLUTO-220] - flush causing problem in doEndTag() in BasicURLTag.java
     * [PLUTO-221-231] - Sub-project descriptors referencing basedir break multi-project build
+    * [PLUTO-235] - Add example of installing Pluto on Windows
 
 ** Improvement
     * [PLUTO-151] - New class hierarchy to implement portlet request and response, and resolve the dispatching parameters problem.
@@ -100,6 +102,7 @@ For information on deploying portlets, building the portal from source
     * [PLUTO-200] - Missing Resource Exception from PortletConfig.getResourceBundle
     * [PLUTO-232] - Maximize window state does not work properly
     * [PLUTO-233] - Exception thrown if edit or help mode is not supported by portlet
+    * [PLUTO-234] - Session Timeout Test in testsuite fails
     
 ** New Feature
     * [PLUTO-38] - user profile attribute support
