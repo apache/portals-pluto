@@ -74,6 +74,7 @@ For information on deploying portlets, building the portal from source
     * [PLUTO-220] - flush causing problem in doEndTag() in BasicURLTag.java
     * [PLUTO-221-231] - Sub-project descriptors referencing basedir break multi-project build
     * [PLUTO-235] - Add example of installing Pluto on Windows
+    * [PLUTO-237] - org.apache.pluto.internal package missing LocalStrings.properties
 
 ** Improvement
     * [PLUTO-151] - New class hierarchy to implement portlet request and response, and resolve the dispatching parameters problem.
