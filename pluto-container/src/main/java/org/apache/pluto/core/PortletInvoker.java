@@ -171,8 +171,8 @@ class PortletInvoker {
             } catch (javax.servlet.UnavailableException ex) {
                 int seconds = ex.isPermanent()?-1:ex.getUnavailableSeconds();
                 String message =  EXCEPTIONS.getString(
-                    "error.portlet.unavailable",
-                    new String[] {String.valueOf(seconds)}
+                    "error.portlet.invoker.unavailable",
+                    uri, new String[] {String.valueOf(seconds)}
                 );
                 if (LOG.isErrorEnabled()) {
                     LOG.error(message, ex);
@@ -181,7 +181,7 @@ class PortletInvoker {
                         message, seconds);
                 
             } catch (javax.servlet.ServletException ex) {
-                String message = EXCEPTIONS.getString("error.portlet.invoke");
+                String message = EXCEPTIONS.getString("error.portlet.invoker");
                 if(LOG.isErrorEnabled()) {
                     LOG.error(message);
                 }
