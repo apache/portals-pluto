@@ -198,16 +198,30 @@ implements PortletRequest, InternalPortletRequest {
         HttpSession httpSession = getHttpServletRequest().getSession(create);
         if (httpSession != null) {
         	// HttpSession is not null does NOT mean that it is valid.
-            long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
-            long currentInactiveTime = System.currentTimeMillis()
-            		- httpSession.getLastAccessedTime();
-            if (currentInactiveTime > maxInactiveTime) {
-            	if (LOG.isDebugEnabled()) {
-            		LOG.debug("The underlying HttpSession is expired and "
-            				+ "should be invalidated.");
+//START PATCH - Jira Issue PLUTO-242 contriuted by David Garcia
+//            long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
+//            long currentInactiveTime = System.currentTimeMillis()
+//            		- httpSession.getLastAccessedTime();
+//            if (currentInactiveTime > maxInactiveTime) {
+//            	if (LOG.isDebugEnabled()) {
+//            		LOG.debug("The underlying HttpSession is expired and "
+//            				+ "should be invalidated.");
+            int maxInactiveInterval = httpSession.getMaxInactiveInterval();
+            if (maxInactiveInterval >= 0) {    // < 0 => Never expires.
+            	long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
+            	long currentInactiveTime = System.currentTimeMillis()
+            			- httpSession.getLastAccessedTime();
+            	if (currentInactiveTime > maxInactiveTime) {
+            		if (LOG.isDebugEnabled()) {
+            			LOG.debug("The underlying HttpSession is expired and "
+            					+ "should be invalidated.");
+            		}
+            		httpSession.invalidate();
+            		httpSession = getHttpServletRequest().getSession(create);
             	}
-            	httpSession.invalidate();
-            	httpSession = getHttpServletRequest().getSession(create);
+//            	httpSession.invalidate();
+//            	httpSession = getHttpServletRequest().getSession(create);
+//END PATCH 
             }
         }
         if (httpSession == null) {
