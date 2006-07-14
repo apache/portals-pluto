@@ -164,6 +164,16 @@
       <id>sthepper</id>
       <email>sthepper#a@T#apache.d0t.org</email>
     </developer>
+
+    <developer>
+      <name>Elliot Metsger</name>
+      <id>esm</id>
+      <email>esm#a@T#apache.d0t.org</email>
+      <timezone>-4</timezone>
+      <url>http://uppertank.net/blog</url>
+      <organization>Johns Hopkins University, Sheridan Libraries</organization>
+      <organizationUrl>http://www.library.jhu.edu</organizationUrl>
+    </developer>
     
   </developers>
   
