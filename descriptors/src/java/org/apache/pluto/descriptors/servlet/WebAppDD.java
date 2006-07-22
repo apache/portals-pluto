@@ -34,7 +34,7 @@ public class WebAppDD {
     private IconDD icon;
     private String displayName;
     private String description;
-    private boolean distributable;
+    private DistributableDD distributable = new DistributableDD();
     private List contextParams = new ArrayList();
     private List filters = new ArrayList();
     private List filterMappings = new ArrayList();
@@ -81,15 +81,11 @@ public class WebAppDD {
         this.description = description;
     }
 
-    public boolean isDistributable() {
+    public DistributableDD getDistributable() {
         return distributable;
     }
 
-    public void setDistributable() {
-        this.distributable = true;
-    }
-
-    public void setDistributable(boolean distributable) {
+    public void setDistributable(DistributableDD distributable) {
         this.distributable = distributable;
     }
 

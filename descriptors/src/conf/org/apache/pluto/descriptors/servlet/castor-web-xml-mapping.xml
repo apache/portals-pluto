@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Object Mapping DTD Version 1.0//EN"
-                         "http://castor.exolab.org/mapping.dtd">
+                         "http://castor.org/mapping.dtd">
 <!-- 
   Copyright 2004 The Apache Software Foundation
 
@@ -61,8 +61,10 @@
       <bind-xml name="description" node="element"/>
     </field>
 
-    <field name="Distributable" get-method="isDistributable">
-      <bind-xml name="distributable" node="element"/>
+    <field name="Distributable"
+           type="org.apache.pluto.descriptors.servlet.DistributableDD"
+           handler="org.apache.pluto.descriptors.servlet.DistributableDDCastorFieldHandler">
+       <bind-xml name="distributable" node="element"/>
     </field>
 
     <field name="ContextParams"
@@ -318,6 +320,13 @@
         </field>
     </class>
 
+    <class name="org.apache.pluto.descriptors.servlet.DistributableDD">
+      <field name="Distributable" 
+             type="java.lang.Boolean"
+             handler="org.apache.pluto.descriptors.servlet.DistributableCastorFieldHandler">
+        <bind-xml name="distributable" node="element"/>
+      </field>
+    </class>
 
 </mapping>
 

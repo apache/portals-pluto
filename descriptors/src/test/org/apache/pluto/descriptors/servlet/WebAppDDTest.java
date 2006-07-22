@@ -45,6 +45,7 @@ public class WebAppDDTest extends TestCase {
         assertNotNull(dd.getContextParams());
         assertNotNull(dd.getEjbRefs());
         assertNotNull(dd.getEnvEntrys());
+        assertNotNull(dd.getDistributable());
         assertNotNull(dd.getErrorPages());
         assertNotNull(dd.getFilterMappings());
         assertNotNull(dd.getFilters());

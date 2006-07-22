@@ -213,6 +213,11 @@ public class DeployWarService extends BaseAdminObject {
 	            ZipEntry ze = zf.getEntry(filename);
 	            if (null != ze) {
 	                ins = zf.getInputStream(ze);
+ 	            } else {
+                      String MSG = "InputStream for " + filename + " is null.  " +
+                         "Unable to extract " + filename + " from " + zipfilename + ".  " +
+                         "Check if " + zipfilename + " contains " + filename + ".  ";
+ 	                throw new PlutoAdminException( MSG ); 
 	            }
 	        }
 	    }
@@ -688,7 +693,9 @@ public class DeployWarService extends BaseAdminObject {
 			 for (int i = 0; i < len; i++) {
 				 //check each element in web.xml contents
 				 for (int j = 0; j < lenElements; j++) {
-				     if ((index = results.lastIndexOf("</" + elements[j]+ ">")) != -1) {
+				     if ((index = results.lastIndexOf("</" + elements[j]+ ">")) != -1 ||
+                                      // Added for PLUTO-219: <distributable/> is an empty element according to servlet spec 2.3 (and 2.4)
+                                      (index = results.lastIndexOf("<" + elements[j] + "/>")) != -1 ) {
 					     //get the length to the end of the element (>)
 				    	 rest = results.substring(index);
 				    	 int elementLen = rest.indexOf('>') + 1;
