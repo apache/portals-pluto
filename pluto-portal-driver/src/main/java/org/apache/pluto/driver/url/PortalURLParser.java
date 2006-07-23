@@ -126,7 +126,9 @@ class PortalURLParser {
         	
         	// Part of the render path: append to renderPath.
         	if (!token.startsWith(PREFIX)) {
-        		renderPath.append(token);
+//        		renderPath.append(token);
+        		//Fix for PLUTO-243
+        		renderPath.append('/').append(token);
         	}
         	// Action window definition: portalURL.setActionWindow().
         	else if (token.startsWith(PREFIX + ACTION)) {
