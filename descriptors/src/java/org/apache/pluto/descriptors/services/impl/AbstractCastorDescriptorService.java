@@ -34,6 +34,7 @@ import org.exolab.castor.xml.Unmarshaller;
  * and writing deployment descriptors using Castor.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="esm@apache.org">Elliot Metsger</a>
  * @version $Id$
  * @since Mar 5, 2005
  */
@@ -95,24 +96,36 @@ abstract class AbstractCastorDescriptorService {
         of.setLineWidth(600);
         of.setDoctype(getPublicId(), getDTDUri());
 
-        OutputStreamWriter writer =
-            new OutputStreamWriter(getOutputStream());
-        XMLSerializer serializer = new XMLSerializer(writer, of);
+	writeInternal(object, of);
+    }
 
-        try {
-            Marshaller marshaller =
-                new Marshaller(serializer.asDocumentHandler());
-            marshaller.setMapping(getCastorMapping());
-            marshaller.marshal(object);
-        } catch(IOException io) {
-            throw io;
-        } catch (Exception e) {
-            throw new IOException(e.getMessage());
-        }
-        finally {
+    /**
+     * Write the object graph to its descriptor, using the supplied <code>OutputFormat</code>
+     * @param object
+     * @param outputFormat
+     * @throws IOException
+     * @since Aug 5, 2006
+     */
+    protected void writeInternal(Object object, OutputFormat outputFormat) throws IOException {
+       OutputStream os = getOutputStream();
+       if (os == null)
+           System.out.println("outputstream is null");
+       OutputStreamWriter writer =  new OutputStreamWriter(os);
+       XMLSerializer serializer = new XMLSerializer(writer, outputFormat);
+
+       try {
+           Marshaller marshaller =
+               new Marshaller(serializer.asDocumentHandler());
+           marshaller.setMapping(getCastorMapping());
+           marshaller.marshal(object);
+       } catch(IOException io) {
+           throw io;
+       } catch (Exception e) {
+           throw new IOException(e.getMessage());
+       } finally {
             writer.flush();
             writer.close();
-        }
+       }
     }
 
     protected boolean getIgnoreExtraElements() {

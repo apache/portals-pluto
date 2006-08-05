@@ -25,6 +25,7 @@ import java.io.OutputStream;
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="esm@apache.org">Elliot Metsger</a>
  * @version $Id$
  * @since Mar 5, 2005
  */
@@ -37,6 +38,22 @@ public class FileWebAppDescriptorServiceImpl extends AbstractWebAppDescriptorSer
     public FileWebAppDescriptorServiceImpl(File file) {
         super(file.getName());
         this.file = new File(file, WEB_XML_FILE);
+    }
+     
+    /**
+     * A constructor which allows the client to specify a context and the path
+     * to the web application deployment descriptor (web.xml).
+     * 
+     * This constructer was created to facilitate testing.
+     * 
+     * @param context the context path
+     * @param webXml the path to the web application deployment descriptor
+     * @see org.apache.pluto.descriptor.services.impl.FileWebAppDescriptorServiceImplTest
+     * @since Aug 5, 2006
+     */
+    public FileWebAppDescriptorServiceImpl(String context, String webXml) {
+        super(context);
+        this.file = new File(webXml);
     }
 
     protected InputStream getInputStream() throws IOException {

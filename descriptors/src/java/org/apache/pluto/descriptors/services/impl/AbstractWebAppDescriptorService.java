@@ -21,6 +21,7 @@ import java.net.URL;
 import org.apache.pluto.descriptors.services.Constants;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.xml.serialize.OutputFormat;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
 
@@ -88,7 +89,16 @@ public abstract class AbstractWebAppDescriptorService
      * @throws IOException
      */
     public void write(WebAppDD webApp) throws IOException {
-        writeInternal(webApp);
+        String servletVersion = webApp.getServletVersion();
+        if (servletVersion != null && servletVersion.equals("2.4")) {
+            OutputFormat of = new OutputFormat( );
+            of.setIndenting(true);
+            of.setIndent(2);
+            of.setLineWidth(600);
+            writeInternal(webApp,of);
+        } else {
+            writeInternal(webApp);
+        }
     }
 
     /**

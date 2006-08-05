@@ -49,6 +49,12 @@
     -->
   <class name="org.apache.pluto.descriptors.servlet.WebAppDD">
     <map-to xml="web-app"/>
+     
+    <field name="ServletVersion" 
+           handler="org.apache.pluto.descriptors.servlet.ServletVersionCastorFieldHandler" 
+           type="java.lang.String">
+        <bind-xml name="version" node="attribute"/>
+    </field>
       
     <field name="Icon"
            type="org.apache.pluto.descriptors.common.IconDD"/>

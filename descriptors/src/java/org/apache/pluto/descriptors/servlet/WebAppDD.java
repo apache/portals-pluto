@@ -31,6 +31,8 @@ import org.apache.pluto.descriptors.common.IconDD;
  */
 public class WebAppDD {
 
+    // default to 2.3
+    private String servletVersion = "2.3";
     private IconDD icon;
     private String displayName;
     private String description;
@@ -269,6 +271,14 @@ public class WebAppDD {
             }
         }
         return null;
+    }
+
+    public String getServletVersion( ) {
+        return servletVersion;
+    }
+
+    public void setServletVersion( String servletVersion ) {
+        this.servletVersion = servletVersion;
     }
 }
 
