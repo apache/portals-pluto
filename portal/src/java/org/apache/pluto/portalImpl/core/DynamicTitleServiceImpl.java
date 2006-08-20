@@ -35,13 +35,13 @@ public class DynamicTitleServiceImpl implements DynamicTitleService
                                 HttpServletRequest request,
                                 String dynamicTitle)
     {
-        request.setAttribute("org.apache.pluto.dynamic_title", dynamicTitle);
+        request.setAttribute("org.apache.pluto.dynamic_title"+window.getId(), dynamicTitle);
     }
                                 
     public String getDynamicTitle(PortletWindow window,
                                   HttpServletRequest request)
     {
-        return (String)request.getAttribute("org.apache.pluto.dynamic_title");
+        return (String)request.getAttribute("org.apache.pluto.dynamic_title"+window.getId());
     }
 
 
