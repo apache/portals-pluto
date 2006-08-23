@@ -64,6 +64,7 @@ class PortalURLParser {
             new String[] { "<",  "0x6" },
             new String[] { ">",  "0x7" },
             new String[] { " ",  "0x8" },
+            new String[] { "#",  "0x9" },
     };
     
     // Constructor -------------------------------------------------------------
