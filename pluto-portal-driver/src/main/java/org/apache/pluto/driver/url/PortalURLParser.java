@@ -18,6 +18,8 @@ package org.apache.pluto.driver.url;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -216,8 +218,8 @@ class PortalURLParser {
             if (portalURL.getActionWindow() != null
             		&& portalURL.getActionWindow().equals(param.getWindowId())) {
                 for (int i = 0; i < param.getValues().length; i++) {
-                    query.append("&").append(param.getName()).append("=")
-                    		.append(param.getValues()[i]);
+                    query.append("&").append(encodeQueryParam(param.getName())).append("=")
+                    		.append(encodeQueryParam(param.getValues()[i]));
                 }
             }
             
@@ -237,8 +239,17 @@ class PortalURLParser {
         // Construct the string representing the portal URL.
         return buffer.append(query).toString();
     }
-    
-    
+
+    private String encodeQueryParam(String param) {
+        try {
+            return URLEncoder.encode(param, "UTF-8");
+        }
+        catch (UnsupportedEncodingException e) {
+            // If this happens, we've got bigger problems.
+            throw new RuntimeException(e);
+        }
+    }
+
     // Private Encoding/Decoding Methods ---------------------------------------
     
     /**
