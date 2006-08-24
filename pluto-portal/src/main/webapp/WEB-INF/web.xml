@@ -23,8 +23,8 @@ limitations under the License.
 <web-app>
   
   <display-name>Apache Pluto Portal Driver</display-name>
-  
-  <listener>
+
+   <listener>
     <listener-class>org.apache.pluto.driver.PortalStartupListener</listener-class>
   </listener>
   
