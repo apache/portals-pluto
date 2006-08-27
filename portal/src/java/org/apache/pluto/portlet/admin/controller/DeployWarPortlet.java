@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSession;
@@ -37,10 +38,13 @@ import org.apache.pluto.portlet.admin.services.DeployWarService;
  * record to portletentityregistry.xml and pageregistry.xml.
  *
  * @author Ken Atherton
+ * @author <a href="mailto:cdoremus@apache.org">Craig Doremus</a>
  *
  */
 public class DeployWarPortlet extends ControllerPortlet {
 	private DeployWarService service;
+	private static final String MAX_FILE_UPLOAD_SIZE_PARAM = "maxuploadsize"; 
+	private static int MAX_FILE_UPLOAD_SIZE = 10;//default max upload size in MB 
 
 
 	protected void doEdit(RenderRequest request, RenderResponse response)
@@ -59,9 +63,19 @@ public class DeployWarPortlet extends ControllerPortlet {
 	/* (non-Javadoc)
 	 * @see javax.portlet.GenericPortlet#init()
 	 */
-	public void init() throws PortletException {
-		super.init();
+	public void init(PortletConfig config) throws PortletException {
+		super.init(config);
 		service = new DeployWarService();
+		String tmp = config.getInitParameter(MAX_FILE_UPLOAD_SIZE_PARAM);
+		if (tmp != null && !tmp.equals("")) {
+			try {
+				int size = Integer.parseInt(tmp);
+				MAX_FILE_UPLOAD_SIZE = size;				
+			} catch (NumberFormatException e) {
+				String msg = "WARNING! Problem converting " + MAX_FILE_UPLOAD_SIZE_PARAM + " init-param to integer. Ignoring value.";
+				log(msg, e);
+			}
+		}
 	}
 
 	/* (non-Javadoc)
@@ -81,9 +95,10 @@ public class DeployWarPortlet extends ControllerPortlet {
 
 				if (action == null) {
 					//process file upload
- 	  		  String fileName = service.processFileUpload(request,response);
-
- 	  		  //Remove .war from the name
+					String fileName = service.processFileUpload(request,response, MAX_FILE_UPLOAD_SIZE);
+					log("File upload done with max file size: " + MAX_FILE_UPLOAD_SIZE);
+					
+					//Remove .war from the name
 					int index = fileName.indexOf(".war");
 					String name = null;
 					if ( index != -1) {

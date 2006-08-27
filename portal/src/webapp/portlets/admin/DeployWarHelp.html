@@ -123,3 +123,8 @@ If deployment of a new portlet causes an error that breaks Pluto, manually <a hr
 and restart Pluto. Make sure that your web.xml and portlet.xml file is correct and retry the deployment after you
 fix any problems.
 </p>
+<p class="portlet-font">
+If deployment of a new portlet is prevented because the size of the portlet war is greater than the maximum size allowed (10 MB by default),
+change the 'maxuploadsize' init-param in Pluto's portlet.xml in <CATALINA_HOME>/webapps/pluto/WEB-INF to a size that encompasses your
+war file. The value needs to be in megabytes. Also, you need to restart the server in order for this new value to take effect.
+</p>

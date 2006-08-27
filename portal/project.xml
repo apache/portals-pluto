@@ -100,8 +100,17 @@ limitations under the License.
 
     <dependency>
         <id>commons-fileupload</id>
-        <version>1.0</version>
+        <version>1.1</version>
         <url>http://jakarta.apache.org/commons/fileupload</url>
+        <properties>
+            <war.bundle>true</war.bundle>
+        </properties>
+    </dependency>
+
+    <dependency>
+        <id>commons-io</id>
+        <version>1.1</version>
+        <url>http://jakarta.apache.org/commons/io</url>
         <properties>
             <war.bundle>true</war.bundle>
         </properties>

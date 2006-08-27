@@ -37,9 +37,13 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.PortletDiskFileUpload;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.portlet.PortletFileUpload;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+//import org.apache.pluto.driver.portlets.admin.FileUploadPortlet;
 import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityImpl;
 import org.apache.pluto.portlet.admin.BaseAdminObject;
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
@@ -86,8 +90,9 @@ public class DeployWarService extends BaseAdminObject {
 	 * @param request DeployWarService request object.
 	 * @param response DeployWarService response object.
 	 */
-  public String processFileUpload(ActionRequest request, ActionResponse response) {
+  public String processFileUpload(ActionRequest request, ActionResponse response, int mbMaxSize) {
   	final String METHOD_NAME = "processFileUpload(request,response)";
+    logDebug(METHOD_NAME, "Doing file upload with max upload size = " + mbMaxSize);
     String fileName = null;
     String serverFileName = null;
     boolean modifyWebXml = true;
@@ -96,18 +101,19 @@ public class DeployWarService extends BaseAdminObject {
     if (PortletDiskFileUpload.isMultipartContent(request))
     {
 
-	    PortletDiskFileUpload dfu = new PortletDiskFileUpload();
+    	//Create a factory for disk-based file items
+    	FileItemFactory factory = new DiskFileItemFactory();
 
-	    //maximum allowed file upload size (10 MB)
-	    dfu.setSizeMax(10 * 1000 * 1000);
+    	//Create a new file upload handler
+    	PortletFileUpload pfu = new PortletFileUpload(factory);
 
-	    //maximum size in memory (vs disk) (100 KB)
-	    dfu.setSizeThreshold(100 * 1000);
+    	//Set overall request size constraint
+    	pfu.setSizeMax(mbMaxSize * 1000 * 1000);
 
-        try
+    	try
         {
             //get the FileItems
-            List fileItems = dfu.parseRequest(request);
+            List fileItems = pfu.parseRequest(request);
             Iterator iter = fileItems.iterator();
             while (iter.hasNext())
             {

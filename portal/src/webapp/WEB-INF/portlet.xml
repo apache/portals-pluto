@@ -6,6 +6,11 @@
 		<display-name>Deploy War Portlet</display-name>
 		<portlet-class>org.apache.pluto.portlet.admin.controller.DeployWarPortlet</portlet-class>
         <init-param>
+            <description>Maximum file upload size in megabytes</description>
+            <name>maxuploadsize</name>
+            <value>10</value>
+        </init-param>
+        <init-param>
             <name>view_include</name>
             <value>/portlets/admin/DeployWarView.jsp</value>
         </init-param>
