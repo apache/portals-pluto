@@ -39,11 +39,9 @@ import javax.portlet.ActionResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.PortletDiskFileUpload;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.portlet.PortletFileUpload;
 import org.apache.pluto.descriptors.portlet.PortletDD;
-//import org.apache.pluto.driver.portlets.admin.FileUploadPortlet;
 import org.apache.pluto.portalImpl.om.entity.impl.PortletApplicationEntityImpl;
 import org.apache.pluto.portlet.admin.BaseAdminObject;
 import org.apache.pluto.portlet.admin.PlutoAdminConstants;
@@ -98,7 +96,7 @@ public class DeployWarService extends BaseAdminObject {
     boolean modifyWebXml = true;
     request.getPortletSession().setAttribute(PlutoAdminConstants.MESSAGE_ATTR, new PortletMessage("Deployment unsuccessful", PortletMessageType.ERROR));
     // Check the request content type to see if it starts with multipart/
-    if (PortletDiskFileUpload.isMultipartContent(request))
+    if (PortletFileUpload.isMultipartContent(request))
     {
 
     	//Create a factory for disk-based file items
