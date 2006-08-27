@@ -147,7 +147,7 @@ limitations under the License.
   <goal name="distribute:binary" prereqs="distribute:init,multiproject:install,multiproject:site">
     <!-- Set Some Default Properties -->
     <j:set var="dist.tomcat"
-           value="http://www.apache.org/dist/jakarta/tomcat-5/v5.5.9/bin/jakarta-tomcat-5.5.9.tar.gz"/>
+           value="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v5.5.9/bin/jakarta-tomcat-5.5.9.tar.gz"/>
     <j:set var="plutobin.dist.name" value="pluto-${pom.currentVersion}"/>
 
     <j:set var="plutobin.tomcatgz" value="${maven.dist.dir}/plutobin-tomcat.tar.gz"/>
