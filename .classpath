@@ -15,6 +15,6 @@
 	<classpathentry kind="var" path="MAVEN_REPO/castor/jars/castor-0.9.5.3.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/commons-digester/jars/commons-digester-1.6.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/junit/jars/junit-3.8.1.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-fileupload/jars/commons-fileupload-1.0.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-fileupload/jars/commons-fileupload-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
