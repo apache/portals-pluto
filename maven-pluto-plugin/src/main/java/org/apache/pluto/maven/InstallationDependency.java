@@ -15,47 +15,71 @@
  */
 package org.apache.pluto.maven;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
 
 /**
  *
  */
-class InstallationDependency {
-
-	public static final String VERSION = "1.1.0-SNAPSHOT";
+class InstallationDependency {    
+    
+    private static final Properties VERSION_PROPERTIES = new Properties();
+    private static final String PROPERTIES_FILE = "/versions.properties";
+    static
+    {
+        try 
+        {
+            VERSION_PROPERTIES.load(InstallationDependency.class.getResourceAsStream(PROPERTIES_FILE));
+        } 
+        catch (IOException e) 
+        {
+            throw new RuntimeException("Cannot load " + PROPERTIES_FILE + " from the classpath!", e);
+        }
+    }
 
     public static final InstallationDependency PORTLET_API =
-        new InstallationDependency("javax.portlet", "portlet-api", "1.0");
+        new InstallationDependency("javax.portlet", "portlet-api", 
+                VERSION_PROPERTIES.getProperty("portlet-api.version"));
 
     public static final InstallationDependency  DESCRIPTOR_API =
-        new InstallationDependency("org.apache.pluto", "pluto-descriptor-api", VERSION);
+        new InstallationDependency("org.apache.pluto", "pluto-descriptor-api", 
+                VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  DESCRIPTOR_IMPL =
-            new InstallationDependency("org.apache.pluto", "pluto-descriptor-impl", VERSION);
+            new InstallationDependency("org.apache.pluto", "pluto-descriptor-impl", 
+                    VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  CONTAINER =
-            new InstallationDependency("org.apache.pluto", "pluto-container", VERSION);
+            new InstallationDependency("org.apache.pluto", "pluto-container", 
+                    VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  TAGLIB =
-            new InstallationDependency("org.apache.pluto", "pluto-taglib", VERSION);
+            new InstallationDependency("org.apache.pluto", "pluto-taglib", 
+                    VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  PORTAL =
-            new InstallationDependency("org.apache.pluto", "pluto-portal", VERSION, "war");
+            new InstallationDependency("org.apache.pluto", "pluto-portal", 
+                    VERSION_PROPERTIES.getProperty("pluto.version"), "war");
 
     public static final InstallationDependency  TESTSUITE =
-            new InstallationDependency("org.apache.pluto", "pluto-testsuite", VERSION, "war");
+            new InstallationDependency("org.apache.pluto", "pluto-testsuite", 
+                    VERSION_PROPERTIES.getProperty("pluto.version"), "war");
 
     public static final InstallationDependency  CASTOR =
-            new InstallationDependency("castor", "castor", "0.9.6");
+            new InstallationDependency("castor", "castor", 
+                    VERSION_PROPERTIES.getProperty("castor.version"));
 
     public static final InstallationDependency  XERCES =
-            new InstallationDependency("xerces", "xercesImpl", "2.6.2");
+            new InstallationDependency("xerces", "xercesImpl", 
+                    VERSION_PROPERTIES.getProperty("xercesImpl.version"));
 
     public static final InstallationDependency  XML_PARSER_APIS =
-            new InstallationDependency("xerces", "xmlParserAPIs", "2.6.2");
+            new InstallationDependency("xerces", "xmlParserAPIs", 
+                    VERSION_PROPERTIES.getProperty("xmlParserAPIs.version"));
 
     private static final List ENDORSED = new ArrayList();
     private static final List SHARED = new ArrayList();
@@ -87,13 +111,16 @@ class InstallationDependency {
     private String type;
 
     public InstallationDependency(String groupId, String artifactId, String version) {
-        this.groupId = groupId;
-        this.artifactId = artifactId;
-        this.version = version;
-        this.type = "jar";
+        this(groupId, artifactId, version, "jar");
     }
 
     public InstallationDependency(String groupId, String artifactId, String version, String type) {
+        if (version == null || version.trim().equalsIgnoreCase(""))
+        {
+            throw new RuntimeException("Missing or invalid property for artifact " + 
+                    artifactId + " in " + PROPERTIES_FILE + "!");
+        }
+        
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
@@ -132,4 +159,5 @@ class InstallationDependency {
     public void setType(String type) {
         this.type = type;
     }
+    
 }

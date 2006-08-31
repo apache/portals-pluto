@@ -216,7 +216,11 @@
   
   
   <!-- Dependency Version Properties ======================================= -->
-  
+ 
+  <!-- 
+    When adding, removing, or renaming a property, please remember to modify
+    maven-pluto-plugin/src/main/resources/versions.properties as well!
+  -->
   <properties>
     <portlet-api.version>1.0</portlet-api.version>
     <servlet-api.version>2.3</servlet-api.version>
@@ -236,7 +240,7 @@
     <maven.version>2.0</maven.version>
     <ant.version>1.6.5</ant.version>
     <junit.version>3.8.1</junit.version>
-    <jmock.version>1.0.1</jmock.version>
+    <jmock.version>1.0.1</jmock.version>    
   </properties>
 
   

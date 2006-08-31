@@ -74,13 +74,17 @@
   </dependencies>
   
   <build> 
-    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> 
+    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>    
     <resources>
       <resource>
         <directory>src/main/scripts</directory>
         <includes>
           <include>**/*.mmld</include>
         </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>        
+        <filtering>true</filtering>
       </resource>
     </resources>
     <plugins>
