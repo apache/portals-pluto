@@ -44,7 +44,12 @@ limitations under the License.
         <h1>Apache Pluto</h1>
         <p>An Apache Portals Project</p>
       </div>
-      
+	      
+      <!-- Logout link -->
+       <div id="logout">
+        <a href="<c:url value='/Logout'/>">Logout</a>
+       </div>
+
       <!-- Navigation block: links to portal pages -->
       <div id="navigation">
         <h2>Navigation:</h2>

@@ -36,6 +36,13 @@ limitations under the License.
   </servlet>
   
   <servlet>
+    <servlet-name>plutoPortalDriverLogout</servlet-name>
+    <display-name>Pluto Portal Driver</display-name>
+    <description>Pluto Portal Driver Logout</description>
+    <servlet-class>org.apache.pluto.driver.PortalDriverLogoutServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>portletApplicationPublisher</servlet-name>
     <display-name>Portlet Application Publisher</display-name>
     <description>Portlet Application Publisher Service</description>
@@ -75,6 +82,11 @@ limitations under the License.
     <url-pattern>/portal/*</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>plutoPortalDriverLogout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>portletApplicationPublisher</servlet-name>
     <url-pattern>/admin/Publish</url-pattern>

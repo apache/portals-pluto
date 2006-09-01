@@ -50,6 +50,10 @@ body, th, td {
   font-size: smaller;
 }
 
+#logout {
+  float:right;
+  font-size:smaller;
+}
 
 /** 'navigation' block **/
 
