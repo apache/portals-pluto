@@ -117,6 +117,10 @@ public class PortalDriverServlet extends HttpServlet {
         		LOG.debug("Processing render request.");
         	}
             PageConfig pageConfig = getPageConfig(portalURL);
+            if (pageConfig == null)
+            {
+                LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
+            }
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = (pageConfig.getUri() != null)
             		? pageConfig.getUri() : DEFAULT_PAGE_URI;

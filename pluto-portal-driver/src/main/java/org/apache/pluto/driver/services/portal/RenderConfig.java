@@ -94,7 +94,24 @@ public class RenderConfig {
          
          if ( retval == null && pageId.startsWith("/") && pageId.length() > 2 ) { 
         	 retval = (PageConfig) pages.get(pageId.substring(1)); 
-         } 
+         }
+
+         
+         if (retval == null)
+         {             
+             LOG.warn("Couldn't find a PageConfig for page ID: [" + pageId + "]");
+             if ((retval = (PageConfig)pages.get(defaultPageId)) != null)
+             {
+                 if (LOG.isDebugEnabled())
+                 {                                      
+                     LOG.debug("Returning default page ID: [" + defaultPageId + "]");
+                 }
+             }
+             else
+             {
+                 LOG.error("Could not find default page Id for render config!");                 
+             }             
+         }
          return retval; 
     }
 
