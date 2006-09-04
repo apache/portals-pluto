@@ -42,23 +42,38 @@ limitations under the License.
 
 <beans>
 
+    <bean id="RequiredContainerServices"
+          name="OptionalContainerServices"
+          class="org.apache.pluto.driver.services.container.ContainerServicesImpl"
+          singleton="true">
+      <constructor-arg><ref bean="PortalContext"/></constructor-arg>
+      <constructor-arg><ref bean="DriverConfiguration"/></constructor-arg>
+    </bean>
+
+    <bean id="PortalContext"
+          class="org.apache.pluto.driver.services.container.PortalContextImpl">
+        <constructor-arg><ref bean="DriverConfiguration"/></constructor-arg>
+    </bean>
+
+
+
     <!-- ================================================ -->
     <!-- The single top element of the configuration tree -->
     <!-- ================================================ -->
     <bean id="DriverConfiguration"
           class="org.apache.pluto.driver.config.impl.DriverConfigurationImpl">
       <!-- ===== Portal Services ===== -->
-      <constructor-arg><ref local="PropertyConfigService"/></constructor-arg>
-      <constructor-arg><ref local="PortletRegistryConfig"/></constructor-arg>
-      <constructor-arg><ref local="RenderConfigService"/></constructor-arg>
+      <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
+      <constructor-arg><ref bean="PortletRegistryConfig"/></constructor-arg>
+      <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
 
       <!-- === Container Services === -->
-      <constructor-arg><ref local="PortalCallbackService"/></constructor-arg>
+      <constructor-arg><ref bean="PortalCallbackService"/></constructor-arg>
 
       <!--  Optional Container Services -->
       <!--
-      <property name="portletPreferencesService"><ref local="PortletPreferencesService"/></property>
-      <property name="userAttributeService"><ref local="UserAttributeService"/></property>
+      <property name="portletPreferencesService"><ref bean="PortletPreferencesService"/></property>
+      <property name="userAttributeService"><ref bean="UserAttributeService"/></property>
       -->
     </bean>
 
@@ -66,8 +81,8 @@ limitations under the License.
     <!-- The single top element of the administration tree -->
     <!-- ================================================ -->
     <bean id="AdminConfiguration" class="org.apache.pluto.driver.config.impl.AdminConfigurationImpl">
-      <property name="portletRegistryAdminService"><ref local="PortletRegistryConfig"/></property>
-      <property name="renderConfigAdminService"><ref local="RenderConfigService"/></property>
+      <property name="portletRegistryAdminService"><ref bean="PortletRegistryConfig"/></property>
+      <property name="renderConfigAdminService"><ref bean="RenderConfigService"/></property>
     </bean>
 
 
@@ -96,22 +111,5 @@ limitations under the License.
           class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
           singleton="true">
     </bean>
-
-   <!-- ================================================ -->
-   <!-- = Optional Services injected into Configuration  -->
-   <!-- ================================================ -->
-   <!--
-   <bean id="PortletPreferencesService"
-          class="org.apache.pluto.optional.db.preferences.DBPortletPreferencesService"
-          singleton="true">
-        <constructor-arg><ref local="DataSourceManager"/></constructor-arg>
-   </bean>
-
-   <bean id="UserAttributeService"
-         class="org.apache.pluto.optional.resource.preferences.DBPortletPreferencesService"
-         singleton="true">
-       <constructor-arg><ref local="DataSourceManager"/></constructor-arg>
-   </bean>
-   -->
 
 </beans>

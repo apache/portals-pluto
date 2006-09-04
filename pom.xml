@@ -235,7 +235,7 @@
     <commons-beanutils.version>1.7.0</commons-beanutils.version>
     <commons-logging.version>1.0.4</commons-logging.version>
     <log4j.version>1.2.9</log4j.version>
-    <springframework.version>1.2.5</springframework.version>
+    <springframework.version>2.0-m2</springframework.version>
     <plexus.version>1.0.4</plexus.version>
     <maven.version>2.0</maven.version>
     <ant.version>1.6.5</ant.version>
@@ -252,14 +252,18 @@
     <module>pluto-descriptor-impl</module>
     <module>pluto-container</module>
     <module>pluto-taglib</module>
+
     <!-- Pluto Portal and Testsuite Modules -->
     <module>pluto-portal-driver</module>
+    <module>pluto-portal-driver-impl</module>
     <module>pluto-portal</module>
     <module>pluto-testsuite</module>
+
     <!-- Pluto Utilities, Maven Plugins and Ant Tasks -->
     <module>pluto-util</module>
     <module>maven-pluto-plugin</module>
     <module>pluto-ant-tasks</module>
+
     <!-- Pluto Documentations -->
     <module>pluto-site</module>
   </modules>
