@@ -38,7 +38,7 @@ limitations under the License.
     <menu name="The Pluto Project">
       <item name="About Pluto" href="/index.html"/>
       <item name="Mission" href="/mission.html"/>
-      <iten name="Download" href="/download.html"/>
+      <item name="Download" href="/download.html"/>
       <item name="News" href="/news.html"/>
       <item name="FAQ" href="/faq.html"/>
       <item name="Wiki" href="http://wiki.apache.org/portals/Pluto"/>
@@ -49,24 +49,25 @@ limitations under the License.
     <menu name="Pluto 1.0.1">
       <item name="Getting Started" href="/v101/install.html"/>
       <item name="Resources" href="/v101/resources.html"/>
-      <menu name="User Guide" href="/v101/userguide/index.html">
+      <item name="User Guide" href="/v101/userguide/index.html">
         <item name="Portal Guide" href="/v101/userguide/portal.html"/>
         <item name="Testsuite Guide" href="/v101/userguide/testsuite.html"/>
-      </menu>
-      <menu name="Developer Guide" href="/v101/developer/index.html">
+      </item>
+      <item name="Developer Guide" href="/v101/developer/index.html">
         <item name="Architecture" href="/v101/developer/arch.html"/>
         <item name="Obtaining Source" href="/v101/developer/subversion.html"/>
         <item name="Building From Source" href="/v101/developer/build_source.html"/>
         <item name="Integrating" href="/v101/developer/integrate.html"/>
-      </menu>
+      </item>
     </menu>
     
     <menu name="Pluto 1.1">
       <item name="Getting Started" href="/v11/getting-started.html"/>
       <item name="Deploying" href="/v11/deploying.html"/>
       <item name="App Servers" href="/v11/app-servers.html"/>
+      <item name="Architecture" href="/v11/architecture.html"/>
       <item name="Resources" href="/v11/resources.html"/>
-      <menu name="Subprojects" href="/v11/subprojects.html" collapsed="true">
+      <item name="Subprojects" href="/v11/subprojects.html" collapsed="true">
         <item name="Portlet Container" href="/pluto-container/index.html"/>
         <item name="Portlet Tags" href="/pluto-taglib/index.html"/>
         <item name="Portal Driver" href="/pluto-portal-driver/index.html"/>
@@ -78,7 +79,7 @@ limitations under the License.
         <item name="Maven Plugin" href="/maven-pluto-plugin/index.html"/>
         <item name="Ant Tasks" href="/pluto-ant-tasks/index.html"/>
         <item name="Util" href="/pluto-util/index.html"/>
-      </menu>
+      </item>
     </menu>
     
     ${reports}
