@@ -18,6 +18,7 @@ package org.apache.pluto.driver.config;
 import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 
@@ -104,4 +105,5 @@ public interface DriverConfiguration {
 
     PortletPreferencesService getPortletPreferencesService();
 
+    PortalURLParser getPortalUrlParser();
 }

@@ -29,16 +29,16 @@ import org.apache.pluto.driver.url.PortalURL;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public class PortletWindowImpl implements PortletWindow {
-	
-	// Private Member Variables ------------------------------------------------
-	
+
+    // Private Member Variables ------------------------------------------------
+
     private PortletWindowConfig config = null;
     private PortalURL portalURL = null;
     private PortletWindowIDImpl objectIdImpl = null;
-    
-    
+
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Constructs an instance.
      * @param config  the portlet window configuration.
@@ -48,10 +48,10 @@ public class PortletWindowImpl implements PortletWindow {
         this.config = config;
         this.portalURL = portalURL;
     }
-    
-    
+
+
     // PortletWindow Impl ------------------------------------------------------
-    
+
     public String getContextPath() {
         return config.getContextPath();
     }

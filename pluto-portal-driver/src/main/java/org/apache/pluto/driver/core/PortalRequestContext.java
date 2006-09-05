@@ -17,9 +17,12 @@ package org.apache.pluto.driver.core;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletContext;
 
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLFactory;
+import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
 
 /**
  * The portal environment of the incoming servlet request and response.
@@ -27,41 +30,44 @@ import org.apache.pluto.driver.url.PortalURLFactory;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public class PortalEnvironment {
-	
-	/**
-	 * The attribute key to bind the portal environment instance to servlet
-	 * request.
-	 */
-    public final static String REQUEST_PORTALENV =
-    		PortalEnvironment.class.getName();
-    
+public class PortalRequestContext {
+
+    /**
+     * The attribute key to bind the portal environment instance to servlet
+     * request.
+     */
+    public final static String REQUEST_KEY =
+            PortalRequestContext.class.getName();
+
+    /** The servletContext of execution. **/
+    private ServletContext servletContext = null;
+
     /** The incoming servlet request. */
     private HttpServletRequest request = null;
-    
+
     /** The incoming servlet response. */
     private HttpServletResponse response = null;
-    
+
     /** The requested portal URL. */
     private PortalURL requestedPortalURL = null;
-    
-    
+
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
-     * Creates a PortalEnvironment instance.
+     * Creates a PortalRequestContext instance.
      * @param request  the incoming servlet request.
      * @param response  the incoming servlet response.
      */
-    public PortalEnvironment(HttpServletRequest request,
-                             HttpServletResponse response) {
+    public PortalRequestContext(ServletContext servletContext,
+                                HttpServletRequest request,
+                                HttpServletResponse response) {
+        this.servletContext = servletContext;
         this.request = request;
         this.response = response;
-        // Parse servlet request and construct portal URL.
-        this.requestedPortalURL = PortalURLFactory.getFactory()
-        		.createPortalURL(request);
+
         // Bind the instance to servlet request for later use.
-        request.setAttribute(REQUEST_PORTALENV, this);
+        request.setAttribute(REQUEST_KEY, this);
     }
 
     /**
@@ -70,11 +76,11 @@ public class PortalEnvironment {
      * @param request  the servlet request.
      * @return the portal environment.
      */
-    public static PortalEnvironment getPortalEnvironment(
-    		HttpServletRequest request) {
-        return (PortalEnvironment) request.getAttribute(REQUEST_PORTALENV);
+    public static PortalRequestContext getPortalEnvironment(
+            HttpServletRequest request) {
+        return (PortalRequestContext) request.getAttribute(REQUEST_KEY);
     }
-    
+
     /**
      * Returns the servlet request.
      * @return the servlet request.
@@ -82,7 +88,7 @@ public class PortalEnvironment {
     public HttpServletRequest getRequest() {
         return request;
     }
-    
+
     /**
      * Returns the servlet response.
      * @return the servlet response.
@@ -90,12 +96,22 @@ public class PortalEnvironment {
     public HttpServletResponse getResponse() {
         return response;
     }
-    
+
     /**
      * Returns the requested portal URL.
      * @return the requested portal URL.
      */
     public PortalURL getRequestedPortalURL() {
+        if(requestedPortalURL == null) {
+            DriverConfiguration config = (DriverConfiguration)
+                servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
+            PortalURLParser parser = config.getPortalUrlParser();
+            requestedPortalURL = parser.parse(request);
+        }
         return requestedPortalURL;
+    }
+
+    public PortalURL createPortalURL() {
+        return (PortalURL)getRequestedPortalURL().clone();
     }
 }

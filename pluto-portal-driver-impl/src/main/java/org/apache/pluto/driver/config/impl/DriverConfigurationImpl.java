@@ -22,6 +22,7 @@ import org.apache.pluto.driver.services.portal.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 
@@ -38,6 +39,7 @@ import java.util.Collection;
 public class DriverConfigurationImpl
     implements DriverConfiguration {
 
+    private PortalURLParser portalUrlParser;
     private PropertyConfigService propertyService;
     private PortletRegistryService registryService;
     private RenderConfigService renderService;
@@ -46,10 +48,12 @@ public class DriverConfigurationImpl
     private PortalCallbackService portalCallbackService;
     private PortletPreferencesService portletPreferencesService;
 
-    public DriverConfigurationImpl(PropertyConfigService propertyService,
+    public DriverConfigurationImpl(PortalURLParser portalUrlParser,
+                                   PropertyConfigService propertyService,
                                    PortletRegistryService registryService,
                                    RenderConfigService renderService,
                                    PortalCallbackService portalCallback) {
+        this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
         this.registryService = registryService;
         this.renderService = renderService;
@@ -151,6 +155,17 @@ public class DriverConfigurationImpl
             renderService.destroy();
     }
 
+//
+// Portal Driver Services
+//
+
+    public PortalURLParser getPortalUrlParser() {
+        return portalUrlParser;
+    }
+
+    public void setPortalUrlParser(PortalURLParser portalUrlParser) {
+        this.portalUrlParser = portalUrlParser;
+    }
 
 //
 // Container Services

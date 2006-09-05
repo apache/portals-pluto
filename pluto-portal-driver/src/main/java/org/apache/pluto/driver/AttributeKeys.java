@@ -50,8 +50,9 @@ public class AttributeKeys {
     /** Attribute key used to bind the portlet title to servlet request. */ 
     public static final String PORTLET_TITLE =
     		"org.apache.pluto.driver.DynamicPortletTitle";
-    
-    
+
+    public static final String PORTAL_URL_PARSER = "PORTAL_URL_PARSER";
+
     // Constructor -------------------------------------------------------------
     
     /**

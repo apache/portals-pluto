@@ -23,9 +23,9 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLFactory;
 import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.spi.PortletURLProvider;
 
 /**
@@ -40,7 +40,10 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
     public PortletURLProviderImpl(HttpServletRequest request,
                                   PortletWindow internalPortletWindow) {
-        url = PortalURLFactory.getFactory().createPortalURL(request);
+        PortalRequestContext ctx = (PortalRequestContext)
+            request.getAttribute(PortalRequestContext.REQUEST_KEY);
+        url = ctx.createPortalURL();
+
         this.window = internalPortletWindow.getId().getStringId();
     }
 

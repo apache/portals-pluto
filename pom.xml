@@ -106,8 +106,8 @@
       <email>ddewolf@apache.org</email>
       <timezone>-4</timezone>
       <url>http://www.daviddewolf.com</url>
-      <organization>Digital Focus</organization>
-      <organizationUrl>http://www.digitalfocus.com</organizationUrl>
+      <organization>Three Pillar Software, Inc.</organization>
+      <organizationUrl>http://www.threepillarsoftware.com</organizationUrl>
       <roles><role>Java Developer</role></roles>
     </developer>
 
@@ -243,7 +243,7 @@
     <plexus.version>1.0.4</plexus.version>
     <maven.version>2.0</maven.version>
     <ant.version>1.6.5</ant.version>
-    <junit.version>3.8.1</junit.version>
+    <junit.version>4.0</junit.version>
     <jmock.version>1.0.1</jmock.version>    
   </properties>
 

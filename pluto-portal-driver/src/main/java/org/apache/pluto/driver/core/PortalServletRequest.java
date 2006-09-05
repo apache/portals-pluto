@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURL;
 
 public class PortalServletRequest extends HttpServletRequestWrapper {
 
@@ -41,12 +41,12 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
         this.portletWindow = window;
 
         url =
-        PortalEnvironment.getPortalEnvironment(request).getRequestedPortalURL();
+        PortalRequestContext.getPortalEnvironment(request).getRequestedPortalURL();
     }
 
 
 // HttpServletRequestWrapper overlay
-          
+
     public java.lang.String getContentType() {
         String contentType = super.getContentType();
         return contentType;

@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.driver.core.PortalEnvironment;
+import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
@@ -84,9 +84,13 @@ public class PortalDriverServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     	
-        PortalEnvironment portalEnvironment = new PortalEnvironment(
-        		request, response);
-        PortalURL portalURL = portalEnvironment.getRequestedPortalURL();
+        PortalRequestContext portalRequestContext =
+            new PortalRequestContext(getServletContext(), request, response);
+
+
+
+
+        PortalURL portalURL = portalRequestContext.getRequestedPortalURL();
         String actionWindowId = portalURL.getActionWindow();
         PortletWindowConfig actionWindowConfig = getDriverConfiguration()
         		.getPortletWindowConfig(actionWindowId);

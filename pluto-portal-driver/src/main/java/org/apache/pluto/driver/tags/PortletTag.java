@@ -33,7 +33,7 @@ import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.driver.core.PortalEnvironment;
+import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.driver.core.PortalServletResponse;
 import org.apache.pluto.driver.core.PortletWindowImpl;
@@ -119,7 +119,7 @@ public class PortletTag extends BodyTagSupport {
         }
         
         // Retrieve the current portal URL.
-        PortalEnvironment portalEnv = PortalEnvironment.getPortalEnvironment(
+        PortalRequestContext portalEnv = PortalRequestContext.getPortalEnvironment(
         		(HttpServletRequest) pageContext.getRequest());
         PortalURL portalURL = portalEnv.getRequestedPortalURL();
         

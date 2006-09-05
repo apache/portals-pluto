@@ -25,7 +25,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLFactory;
+import org.apache.pluto.driver.core.PortalRequestContext;
 
 /**
  * The portlet URL tag is used to generate portal URL pointing to the current
@@ -37,18 +37,18 @@ import org.apache.pluto.driver.url.PortalURLFactory;
  * @since Oct 4, 2004
  */
 public class PortletPortalURLTag extends BodyTagSupport {
-	
-	// Private Member Variables ------------------------------------------------
-	
-	/** The window state to be encoded in the portal URL. */
+
+    // Private Member Variables ------------------------------------------------
+
+    /** The window state to be encoded in the portal URL. */
     private String windowState = null;
-    
+
     /** The portlet mode to be encoded in the portal URL. */
     private String portletMode = null;
-    
-    
+
+
     // Tag Attribute Accessors -------------------------------------------------
-    
+
     public String getWindowState() {
         return windowState;
     }
@@ -64,49 +64,52 @@ public class PortletPortalURLTag extends BodyTagSupport {
     public void setPortletMode(String portletMode) {
         this.portletMode = portletMode;
     }
-    
-    
+
+
     // BodyTagSupport Impl -----------------------------------------------------
-    
+
     /**
      * Creates the portal URL pointing to the current portlet with specified
      * portlet mode and window state, and print the URL to the page.
      * @see PortletTag
      */
     public int doStartTag() throws JspException {
-    	
-    	// Ensure that the portlet render tag resides within a portlet tag.
+
+        // Ensure that the portlet render tag resides within a portlet tag.
         PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
-        		this, PortletTag.class);
+                this, PortletTag.class);
         if (parentTag == null) {
             throw new JspException("Portlet window controls may only reside "
-            		+ "within a pluto:portlet tag.");
+                    + "within a pluto:portlet tag.");
         }
-        
+
         // Create portal URL.
         HttpServletRequest request = (HttpServletRequest)
-        		pageContext.getRequest();
-        PortalURL portalUrl = PortalURLFactory.getFactory()
-        		.createPortalURL(request);
-        
+                pageContext.getRequest();
+
+        PortalRequestContext ctx = (PortalRequestContext)
+            request.getAttribute(PortalRequestContext.REQUEST_KEY);
+
+        PortalURL portalUrl =  ctx.createPortalURL();
+
         // Encode window state of the current portlet in the portal URL.
         String portletId = parentTag.getEvaluatedPortletId();
         if (windowState != null) {
             portalUrl.setWindowState(portletId, new WindowState(windowState));
         }
-        
+
         // Encode portlet mode of the current portlet in the portal URL.
         if (portletMode != null) {
             portalUrl.setPortletMode(portletId, new PortletMode(portletMode));
         }
-        
+
         // Print the portal URL as a string to the page.
         try {
             pageContext.getOut().print(portalUrl.toString());
         } catch (IOException ex) {
             throw new JspException(ex);
         }
-        
+
         // Skip the tag body.
         return SKIP_BODY;
     }

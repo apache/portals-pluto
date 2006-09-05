@@ -62,7 +62,9 @@ limitations under the License.
     <!-- ================================================ -->
     <bean id="DriverConfiguration"
           class="org.apache.pluto.driver.config.impl.DriverConfigurationImpl">
+
       <!-- ===== Portal Services ===== -->
+      <constructor-arg><ref bean="PortalURLParser"/></constructor-arg>
       <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
       <constructor-arg><ref bean="PortletRegistryConfig"/></constructor-arg>
       <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
@@ -89,6 +91,12 @@ limitations under the License.
     <!-- ================================================ -->
     <!-- Portal Services injected into the Configuration  -->
     <!-- ================================================ -->
+    <bean id="PortalURLParser"
+          class="org.apache.pluto.driver.url.impl.PortalURLParserImpl"
+          factory-method="getParser"
+          singleton="true">
+    </bean>
+
     <bean id="PropertyConfigService"
           class="org.apache.pluto.driver.services.impl.resource.PropertyConfigServiceImpl"
           singleton="true">
