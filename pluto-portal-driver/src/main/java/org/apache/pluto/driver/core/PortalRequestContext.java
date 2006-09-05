@@ -25,7 +25,12 @@ import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 
 /**
- * The portal environment of the incoming servlet request and response.
+ * Defines the context of the currentl portal request.
+ * Allows for the retrieval of the original request
+ * and response throughout the lifetime of the request.
+ *
+ * Provides a consistent interface for parsing/creating
+ * PortalURLs to the outside world.
  * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
