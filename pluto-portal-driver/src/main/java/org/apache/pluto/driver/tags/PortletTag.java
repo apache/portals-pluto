@@ -119,8 +119,8 @@ public class PortletTag extends BodyTagSupport {
         }
         
         // Retrieve the current portal URL.
-        PortalRequestContext portalEnv = PortalRequestContext.getPortalEnvironment(
-        		(HttpServletRequest) pageContext.getRequest());
+        PortalRequestContext portalEnv = PortalRequestContext.getContext(
+                (HttpServletRequest) pageContext.getRequest());
         PortalURL portalURL = portalEnv.getRequestedPortalURL();
         
         // Create the portlet window to render.

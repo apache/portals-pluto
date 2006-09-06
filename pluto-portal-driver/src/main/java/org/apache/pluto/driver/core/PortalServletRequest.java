@@ -41,7 +41,7 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
         this.portletWindow = window;
 
         url =
-        PortalRequestContext.getPortalEnvironment(request).getRequestedPortalURL();
+        PortalRequestContext.getContext(request).getRequestedPortalURL();
     }
 
 

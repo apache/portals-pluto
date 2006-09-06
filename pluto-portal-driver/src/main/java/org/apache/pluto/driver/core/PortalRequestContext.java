@@ -81,7 +81,7 @@ public class PortalRequestContext {
      * @param request  the servlet request.
      * @return the portal environment.
      */
-    public static PortalRequestContext getPortalEnvironment(
+    public static PortalRequestContext getContext(
             HttpServletRequest request) {
         return (PortalRequestContext) request.getAttribute(REQUEST_KEY);
     }

@@ -67,5 +67,16 @@ limitations under the License.
     <bodycontent>empty</bodycontent>
   </tag>
 
+    <tag>
+        <name>isMaximized</name>
+        <tagclass>org.apache.pluto.driver.tags.IsMaximizedTag</tagclass>
+        <bodycontent>empty</bodycontent>
+        <attribute>
+            <name>var</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+
 </taglib>
 
