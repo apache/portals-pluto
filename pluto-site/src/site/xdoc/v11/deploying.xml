@@ -87,13 +87,13 @@ limitations under the License.
 	HelloWorldPortlet (top level directory)
 	|- pom.xml (the pom file)
 	|- src (Subdir containing main subdirectory)
-	    |- main (Subdir containing java, resource and webapp subdirs)
+	    |- main (Subdir containing java, resources and webapp subdirs)
 	    	|- java (java source code goes under here)
 		    |       `- com
 		    |           `- mycompany
 		    |               `- portlet
 		    |                   `- HelloWorldPortlet.java (portlet source)
-		    |- resource
+		    |- resources
 		    |	`- HelloWorldPortlet.xml (Tomcat context deployment descriptor)
 		    |- webapp  (webapp resources (jsp, css, images) go under here)
 		    	`- jsp 
@@ -219,7 +219,7 @@ limitations under the License.
                 />
               	<!-- Deploy context deployment descriptor for Tomcat -->
                 <copy
-                  file="${basedir}/src/main/resource/${pom.name}.xml"		
+                  file="${basedir}/src/main/resources/${pom.name}.xml"		
                   todir="${pluto.home}/conf/Catalina/localhost"
                   overwrite="false"
                 />
