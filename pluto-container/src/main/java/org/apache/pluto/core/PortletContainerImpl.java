@@ -26,7 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.impl.ActionRequestImpl;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.PortletWindowImpl;
@@ -44,6 +46,7 @@ import org.apache.pluto.RequiredContainerServices;
  *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
@@ -282,6 +285,46 @@ public class PortletContainerImpl implements PortletContainer {
         return optionalContainerServices;
     }
     
+    public PortletAppDD getPortletApplicationDescriptor(String context) 
+        throws PortletContainerException {
+        
+        // make sure the container has initialized
+        ensureInitialized();
+        
+        // sanity check
+        if (context == null || context.trim().equals("")) {
+            final String msg = "Context was null or the empty string.";
+            errorWithName(msg);
+            throw new PortletContainerException(msg);
+        }
+        
+        // obtain the context of the portlet
+        ServletContext portletCtx = servletContext.getContext(context);
+        if (portletCtx == null) {
+            final String msg = "Unable to obtain the servlet context for " +
+                "portlet context [" + context + "].  Ensure the portlet has " +
+                "been deployed and that cross context support is enabled.";
+            errorWithName(msg);
+            throw new PortletContainerException(msg);
+        }
+        
+        // obtain the portlet application descriptor for the portlet
+        // context.
+        PortletAppDD portletAppDD = PortletDescriptorRegistry
+                                        .getRegistry()
+                                        .getPortletAppDD(portletCtx);
+        
+        // we can't return null
+        if (portletAppDD == null) {
+            final String msg = "Obtained a null portlet application description for " +
+                "portlet context [" + context + "]";
+            errorWithName(msg);
+            throw new PortletContainerException(msg);
+        }
+        
+        return portletAppDD;        
+    }
+    
     
     // Private Methods ---------------------------------------------------------
     
@@ -314,6 +357,16 @@ public class PortletContainerImpl implements PortletContainer {
     	if (LOG.isInfoEnabled()) {
     		LOG.info("Portlet Container [" + name + "]: " + message);
     	}
+    }
+    
+    /**
+     * Prints a message at ERROR level with the container name prefix.
+     * @param message  log message.
+     */
+    private void errorWithName(String message) {
+        if (LOG.isErrorEnabled()) {
+            LOG.info("Portlet Container [" + name + "]: " + message);
+        }
     }
     
 }

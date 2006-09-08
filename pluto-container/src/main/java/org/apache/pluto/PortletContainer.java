@@ -15,11 +15,14 @@
  */
 package org.apache.pluto;
 
+import java.io.IOException;
+
 import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 /**
  * The publicized entry point into Pluto. The base functionality of the portlet
@@ -43,6 +46,8 @@ import java.io.IOException;
  * <p/>
  * <TR><TD>{@link #destroy()}</TD> <TD>Destroy and remove container from
  * service.</TD> <TD>Performed only once per container lifecylce</TD></TR>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version $Id: PortletContainer.java 36010 2004-07-30 14:16:06Z ddewolf $
  */
 public interface PortletContainer {
@@ -134,4 +139,20 @@ public interface PortletContainer {
      * @return the container services provided by either the portal or the defaults.
      */
     public OptionalContainerServices getOptionalContainerServices();
+    
+    /**
+     * Retrieve the {@link PortletAppDD} for the portlet
+     * located at the supplied context.
+     * 
+     * Must not return null.
+     * 
+     * @param context the context of the portlet
+     * @return the portlet application descriptor
+     * @throws PortletContainerException if the container has trouble obtaining
+     *                                   the context of the portlet, or retrieving
+     *                                   the <code>PortletAppDD</code>
+     */    
+    public PortletAppDD getPortletApplicationDescriptor(String context)
+        throws PortletContainerException;
+    
 }
