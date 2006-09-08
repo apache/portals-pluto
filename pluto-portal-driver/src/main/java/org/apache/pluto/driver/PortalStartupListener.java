@@ -112,7 +112,7 @@ public class PortalStartupListener implements ServletContextListener {
 
         if (adminConfiguration != null) {
             LOG.debug(" [2b] Registering Optional AdminConfiguration");
-            servletContext.setAttribute(ADMIN_CONFIG_KEY, driverConfiguration);
+            servletContext.setAttribute(ADMIN_CONFIG_KEY, adminConfiguration);
         } else {
             LOG.info("Optional AdminConfiguration not found. Ignoring.");
         }
