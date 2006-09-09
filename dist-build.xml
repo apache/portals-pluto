@@ -37,10 +37,10 @@
 <project name="PlutoDistributions" default="bin-dist">
 
 	<property name="pluto.version" value="1.1.0-SNAPSHOT" description="Version of Pluto 1.1 to build"/>
-	<property name="tomcat.version" value="5.5.9" description="Version of Tomcat to deploy Pluto"/>
+	<property name="tomcat.version" value="5.5.15" description="Version of Tomcat to deploy Pluto"/>
 
 	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
-	<property name="base.name" value="jakarta-tomcat-${tomcat.version}"/>
+	<property name="base.name" value="apache-tomcat-${tomcat.version}"/>
 	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
 	<property name="pluto.name" value="pluto-${pluto.version}"/>
 	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
@@ -132,6 +132,9 @@
 	</target>
 	
 	<target name="prepare-bin-dist">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="clean:clean"/>
+		</exec>
 		<mkdir dir="${dist.basedir}"/>
 		
 		<get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v${tomcat.version}/bin/${base.name}.tar.gz"
