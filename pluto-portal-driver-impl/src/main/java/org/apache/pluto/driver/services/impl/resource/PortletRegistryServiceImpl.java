@@ -15,19 +15,25 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
-import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.services.portal.*;
-import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
-import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
-import org.apache.pluto.PortletContainerException;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
-import java.util.Set;
-import java.util.Iterator;
-import java.io.InputStream;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
+import org.apache.pluto.driver.services.portal.PortletRegistryService;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
+import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
 
 /**
  * Implementation of <code>PortletRegistryService</code> and
@@ -40,9 +46,10 @@ import java.io.InputStream;
 public class PortletRegistryServiceImpl
 implements PortletRegistryService, PortletRegistryAdminService {
 
+    private static final Log LOG = LogFactory.getLog(PortletRegistryServiceImpl.class);
     private ResourceConfig config;
     private ServletContext servletContext;
-    
+    private PortletContainer container;
     
     // Constructor -------------------------------------------------------------
     
@@ -70,6 +77,7 @@ implements PortletRegistryService, PortletRegistryAdminService {
         } catch (Exception ex) {
             throw new DriverConfigurationException(ex);
         }
+
     }
 
     public void destroy() throws DriverConfigurationException {
@@ -108,19 +116,23 @@ implements PortletRegistryService, PortletRegistryAdminService {
 
             ServletContext portletAppServletContext = servletContext.getContext(contextPath);
             if (portletAppServletContext == null) {
-                throw new DriverAdministrationException(
-                		"Unable to locate servlet context: " + contextPath
-                		+ ": ensure that crossContext support is enabled "
-                		+ "and the portlet application has been deployed.");
+                final String msg = "Unable to locate servlet context: " + contextPath                    
+                    + ": ensure that crossContext support is enabled "
+                    + "and the portlet application has been deployed.";
+                LOG.error(msg);
+                throw new DriverAdministrationException(msg);
             }
-
-            PortletAppDD portletAppDD = getPortletDescriptor(
-            		portletAppServletContext);
+            
+            PortletContainer container = (PortletContainer)servletContext
+                .getAttribute(AttributeKeys.PORTLET_CONTAINER);
+            PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(contextPath);
+            
             if (portletAppDD == null) {
-            	throw new DriverAdministrationException(
-            			"Unable to retrieve portlet application descriptor from "
-            			+ contextPath + ": ensure that the portlet application "
-            			+ "has been deployed.");
+                final String msg = "Unable to retrieve portlet application descriptor from "
+                    + contextPath + ": ensure that the portlet application "
+                    + "has been deployed.";
+                LOG.error(msg);
+            	throw new DriverAdministrationException(msg);
             }
             for (Iterator it = portletAppDD.getPortlets().iterator();
             		it.hasNext(); ) {
@@ -133,8 +145,9 @@ implements PortletRegistryService, PortletRegistryAdminService {
             config.addPortletApp(portletAppConfig);
             
         } catch (PortletContainerException ex) {
-            throw new DriverAdministrationException(
-            		"Unable to add portlet application from " + contextPath, ex);
+            final String msg = "Unable to add portlet application from " + contextPath;
+            LOG.error(msg);
+            throw new DriverAdministrationException(msg, ex);
         }
     }
     
@@ -144,13 +157,5 @@ implements PortletRegistryService, PortletRegistryAdminService {
     public PortletWindowConfig getPortletWindowConfig(String id) {
         return config.getPortletWindowConfig(id);
     }
-    
-    
-    // Private Methods ---------------------------------------------------------
-    
-    private PortletAppDD getPortletDescriptor(ServletContext context)
-    throws PortletContainerException {
-        return PortletDescriptorRegistry.getRegistry().getPortletAppDD(context);
-    }
-    
+            
 }
