@@ -73,14 +73,6 @@
             </exclusions>
         </dependency>
 
-        <!-- Log4j as the underlying logging impl for commons-logging -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
         <dependency>
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
