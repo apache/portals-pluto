@@ -15,19 +15,21 @@
  */
 package org.apache.pluto.driver.config.impl;
 
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import java.util.Collection;
+
+import javax.servlet.ServletContext;
+
+import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletRegistryService;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
-import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
-
-import javax.servlet.ServletContext;
-import java.util.Collection;
 
 /**
  * Encapsulation of the Pluto Driver ResourceConfig.
@@ -43,6 +45,7 @@ public class DriverConfigurationImpl
     private PropertyConfigService propertyService;
     private PortletRegistryService registryService;
     private RenderConfigService renderService;
+    private SupportedModesService supportedModesService;
 
     // Container Services
     private PortalCallbackService portalCallbackService;
@@ -52,12 +55,14 @@ public class DriverConfigurationImpl
                                    PropertyConfigService propertyService,
                                    PortletRegistryService registryService,
                                    RenderConfigService renderService,
-                                   PortalCallbackService portalCallback) {
+                                   PortalCallbackService portalCallback,
+                                   SupportedModesService supportedModesService) {
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
         this.registryService = registryService;
         this.renderService = renderService;
         this.portalCallbackService = portalCallback;
+        this.supportedModesService = supportedModesService;
     }
 
     /**
@@ -137,6 +142,18 @@ public class DriverConfigurationImpl
     public PageConfig getPageConfig(String pageId) {
         return renderService.getPage(pageId);
     }
+    
+    public boolean isPortletModeSupportedByPortal(String mode) {
+        return supportedModesService.isPortletModeSupportedByPortal(mode);
+    }
+    
+    public boolean isPortletModeSupportedByPortlet(String portletId, String mode) {
+        return supportedModesService.isPortletModeSupportedByPortlet(portletId, mode);
+    }
+    
+    public boolean isPortletModeSupported(String portletId, String mode) {
+        return supportedModesService.isPortletModeSupported(portletId, mode);
+    }
 
     public void init(ServletContext context) {
         this.propertyService.init(context);
@@ -165,7 +182,7 @@ public class DriverConfigurationImpl
 
     public void setPortalUrlParser(PortalURLParser portalUrlParser) {
         this.portalUrlParser = portalUrlParser;
-    }
+    }       
 
 //
 // Container Services

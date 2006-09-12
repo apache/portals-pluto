@@ -40,6 +40,17 @@ limitations under the License.
   </tag>
 
   <tag>
+    <name>modeAnchor</name>
+    <tagclass>org.apache.pluto.driver.tags.PortletModeAnchorTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>portletMode</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+     
+  <tag>
     <name>title</name>
     <tagclass>org.apache.pluto.driver.tags.PortletTitleTag</tagclass>
     <bodycontent>empty</bodycontent>

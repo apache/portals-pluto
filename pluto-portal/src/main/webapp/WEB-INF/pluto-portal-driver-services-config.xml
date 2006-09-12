@@ -68,6 +68,7 @@ limitations under the License.
       <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
       <constructor-arg><ref bean="PortletRegistryConfig"/></constructor-arg>
       <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
+      <constructor-arg><ref bean="SupportedModesService"/></constructor-arg>
 
       <!-- === Container Services === -->
       <constructor-arg><ref bean="PortalCallbackService"/></constructor-arg>
@@ -110,6 +111,13 @@ limitations under the License.
     <bean id="RenderConfigService"
           class="org.apache.pluto.driver.services.impl.resource.RenderConfigServiceImpl"
           singleton="true">
+    </bean>
+    
+    <bean id="SupportedModesService"
+          class="org.apache.pluto.driver.services.impl.resource.SupportedModesServiceImpl"
+          singleton="true">
+          <constructor-arg><ref bean="PortletRegistryConfig"/></constructor-arg>
+          <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>          
     </bean>
 
     <!-- ================================================ -->

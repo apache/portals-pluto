@@ -15,6 +15,16 @@
  */
 package org.apache.pluto.driver;
 
+import java.io.IOException;
+
+import javax.portlet.PortletException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
@@ -24,16 +34,10 @@ import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
-
-import javax.portlet.PortletException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -41,19 +45,28 @@ import java.io.IOException;
  * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
 public class PortalDriverServlet extends HttpServlet {
 
     /** Internal Logger. */
-    private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);
+    private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);    
     
+    /** The Portal Driver sServlet Context */
+    private ServletContext servletContext = null;
+    
+    /** Is the SupportedModesService initialized? */
+    private boolean isSupportedModesServiceInitialized = false;
+        
     protected static final String DEFAULT_PAGE_URI =
     		"/WEB-INF/themes/pluto-default-theme.jsp";
     
     /** The portlet container to which we will forward all portlet requests. */
     protected PortletContainer container = null;
+    
+    
     
     
     // HttpServlet Impl --------------------------------------------------------
@@ -68,9 +81,9 @@ public class PortalDriverServlet extends HttpServlet {
      * @see PortletContainer
      */
     public void init() {
-        ServletContext servletContext = getServletContext();
+        servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
-        		AttributeKeys.PORTLET_CONTAINER);
+        		AttributeKeys.PORTLET_CONTAINER);        
     }
     
 
@@ -83,12 +96,11 @@ public class PortalDriverServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    	
+
+        initSupportedModesService();
+        
         PortalRequestContext portalRequestContext =
             new PortalRequestContext(getServletContext(), request, response);
-
-
-
 
         PortalURL portalURL = portalRequestContext.getRequestedPortalURL();
         String actionWindowId = portalURL.getActionWindow();
@@ -125,6 +137,7 @@ public class PortalDriverServlet extends HttpServlet {
             {
                 LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
             }
+            
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = (pageConfig.getUri() != null)
             		? pageConfig.getUri() : DEFAULT_PAGE_URI;
@@ -174,9 +187,22 @@ public class PortalDriverServlet extends HttpServlet {
     private DriverConfiguration getDriverConfiguration() {
         return (DriverConfiguration) getServletContext().getAttribute(
         		AttributeKeys.DRIVER_CONFIG);
-    }
-
+    }    
     
+    private void initSupportedModesService()
+    {
+        if (isSupportedModesServiceInitialized)
+        {
+            return;
+        }
+
+        ApplicationContext springContext = (ApplicationContext)servletContext.getAttribute(
+                WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        SupportedModesService service = (SupportedModesService)springContext.getBean("SupportedModesService");
+        service.init(servletContext);
+        
+        isSupportedModesServiceInitialized = true;
+    }
     
 }
 

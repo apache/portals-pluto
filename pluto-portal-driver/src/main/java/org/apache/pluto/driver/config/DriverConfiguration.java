@@ -97,6 +97,12 @@ public interface DriverConfiguration {
     Collection getPages();
 
     PageConfig getPageConfig(String pageId);
+    
+    boolean isPortletModeSupportedByPortal(String mode);
+    
+    boolean isPortletModeSupportedByPortlet(String portletId, String mode);
+    
+    boolean isPortletModeSupported(String portletId, String mode);
 
 //
 // Utility methods for the container
