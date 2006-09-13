@@ -48,6 +48,7 @@ public class TCKDriverServlet extends PortalDriverServlet {
     }
 
     public void init() {
+        super.init();
         ServletContext servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
                 AttributeKeys.PORTLET_CONTAINER);
