@@ -36,8 +36,8 @@
 -->
 <project name="PlutoDistributions" default="bin-dist">
 
-	<property name="pluto.version" value="1.1.0-SNAPSHOT" description="Version of Pluto 1.1 to build"/>
-	<property name="tomcat.version" value="5.5.15" description="Version of Tomcat to deploy Pluto"/>
+	<property name="pluto.version" value="1.1.0-beta2" description="Version of Pluto 1.1 to build"/>
+	<property name="tomcat.version" value="5.5.17" description="Version of Tomcat to deploy Pluto"/>
 
 	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
 	<property name="base.name" value="apache-tomcat-${tomcat.version}"/>
@@ -137,7 +137,8 @@
 		</exec>
 		<mkdir dir="${dist.basedir}"/>
 		
-		<get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v${tomcat.version}/bin/${base.name}.tar.gz"
+		<!-- get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v${tomcat.version}/bin/${base.name}.tar.gz" -->
+		<get src="http://archive.apache.org/dist/tomcat/tomcat-5/v${tomcat.version}/bin/${base.name}.tar.gz"
 		     dest="${unzip.file}"
 		/>
 		
