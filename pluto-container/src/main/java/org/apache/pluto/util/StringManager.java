@@ -52,6 +52,11 @@ public class StringManager {
      */
 
     private ResourceBundle bundle;
+    
+    /** 
+     * The package this StringManager belongs to.
+     */
+    private String packageName = null;
 
     /**
      * Creates a new StringManager for a given package. This is a private method
@@ -64,6 +69,7 @@ public class StringManager {
         if(LOG.isDebugEnabled()) {
             LOG.debug("String Manager Created for package: "+packageName);
         }
+        this.packageName = packageName;
         String bundleName = packageName + ".LocalStrings";
         try {
             bundle = ResourceBundle.getBundle(bundleName);
@@ -116,7 +122,15 @@ public class StringManager {
         try {
             str = bundle.getString(key);
         } catch (MissingResourceException mre) {
-            str = "Cannot find message associated with key '" + key + "'";
+            String name = null;
+            if (packageName == null) {
+                name = "unknown";
+            } else {
+                name = packageName;
+            }
+            str = "Cannot find message in the ResourceBundle associated with key '" + key + "' " +
+                    "(package " + name + ")";
+            LOG.warn(str, mre);
         }
 
         return str;
