@@ -58,20 +58,13 @@ limitations under the License.
       
       <subsection name="Portlet Assembly and Deployment using Maven 2">
         <p>
-        As of the first beta release of Pluto 1.1, the Maven 2 plugins for assembly and 
+        As of the second beta release of Pluto 1.1, the Maven 2 plugins for assembly and 
         deployment are partially completed.
           Right now the maven-pluto-plugin correctly assembles the war with
           the proper <code>PortletServlet</code> records to web.xml, but the 
           deployment plugin is not yet completed. We have created an example
-          Maven 2 pom.xml below that correctly assembles and deploys the portlet. 
-          This script requires
-          that you have installed the pluto-util, pluto-descriptor-api and
-          pluto-descriptor-impl into your local Maven 2 repository. You can do this by
-          building Pluto from source or installing the files that come with the 
-          binary build (in PlutoDomain subdirectory) and running the install:install-file goal (see the 
-          <a href="http://docs.codehaus.org/display/MAVENUSER/FAQs-1">Maven FAQ</a>,
-          using groupId="org.apache.pluto", artifactId="pluto-util or pluto-descriptor-api or pluto-descriptor-impl"
-          and version="1.1.0-beta1" when running the install:install-file goal).
+          <!-- TODO: Review use of the word deploys -->
+          Maven 2 pom.xml below that correctly assembles and deploys the portlet.
         </p>
         <p>          
           The custom Maven 2 build shown below also deploys
@@ -135,7 +128,7 @@ limitations under the License.
   <!-- Dependency Version Properties ======================================= -->
   <properties>
   	<!-- Change this for a new Pluto version -->
-    <pluto.version>1.1.0-beta1</pluto.version>
+    <pluto.version>1.1.0-beta2</pluto.version>
     <portlet-api.version>1.0</portlet-api.version>
     <servlet-api.version>2.3</servlet-api.version>
     <jsp-api.version>2.0</jsp-api.version>
@@ -180,6 +173,7 @@ limitations under the License.
       </plugin>
       <!-- bind 'pluto:assemble' goal to 'process-resources' lifecycle -->
       <plugin>
+        <groupId>org.apache.pluto</groupId>
         <artifactId>maven-pluto-plugin</artifactId>
         <version>${pluto.version}</version>
         <executions>
@@ -247,15 +241,15 @@ limitations under the License.
 			the command 'mvn integration-test'.
         </p>        
         <p>
-			Run 'mvn package' to just create the war, which ends up in the target directory.
-			If you do this, you need to manually deploy the war file and Tomcat context
-			deployment descriptor to your Pluto-1.1 install.        
+			If you prefer to manually deploy the war to Tomcat, run 'mvn package' which will
+			create the war file in the <code>target/</code> directory.  Then manually deploy
+			the war file and Tomcat context deployment descriptor to your Pluto-1.1 install.        
         </p>
       </subsection>
             
       <subsection name="Portlet Publishing">
         <p>
-          Currently, as of Pluto-1.1-beta1, the only way to publish an application to the portal
+          Currently, as of Pluto-1.1-beta2, the only way to publish an application to the portal
           is to manually update the Portal's configuration file <code>pluto-portal-driver-config.xml</code>
           located in the WEB-INF directory of the pluto webapp.
           Here's how to do it: 
