@@ -31,7 +31,7 @@ limitations under the License.
       
       <ol>
         <li>Download a Pluto 1.1 binary distribution from 
-        a <a href="http://cvs.apache.org/dist/portals/pluto/v1.1.0-beta1/">distribution site</a>.</li>
+        a <a href="http://cvs.apache.org/dist/portals/pluto/v1.1.0-beta2/">distribution site</a>.</li>
         <li>Unzip the binary distribution into a directory.</li>
         	<ol>
         		<li>&lt;PLUTO-1.1-HOME&gt; will be the top level directory.</li>
@@ -42,7 +42,7 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 	        	<li>Use shutdown.bat/shutdown.sh to stop the portal</li>
 			</ol>
         <li>Browse to <a href="http://localhost:8080/pluto/portal">http://localhost:8080/pluto/portal</a></li>
-        <li>Login as tomcat user (password=tomcat).</li>
+        <li>Login as the user pluto (password=pluto).</li>
       </ol>
 
 	</section>
@@ -54,8 +54,6 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
         Pluto 1.1. Pluto currently provides Maven plugins which can be used to
         install the Pluto Portal, assemble portlet applications, deploy
         applications, and publish portlet applications to the Pluto Portal.
-        Currently, the source distribution is required to deploy custom portlets 
-        to Pluto 1.1.
       </p>
 
       <subsection name="Obtaining Pluto 1.1 Source Code">
@@ -63,8 +61,8 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 		<a href="http://subversion.tigris.org/">Subversion</a> version control
 		system.  If you're new to Subversion, you can check out the
 		<a href="http://svnbook.red-bean.com/">online book</a> about Subversion.
-		Note that we are currently using Subversion 1.1.x (there are separate
-		versions of the book covering 1.0 and 1.1).
+		Note that we are currently using Subversion 1.3.x (there are separate
+		versions of the book covering the different versions of Subversion). 
 		</p>
 
     	<p><b>Web Access to Subversion</b></p>
@@ -89,8 +87,8 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/trunk/ pluto</pre>
 		</p>
 
-		<p>To check out Pluto 1.1.0-beta1 source to the 'pluto' directory use this command:
-		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/release-1.1.0-beta1/ pluto</pre>
+		<p>To check out Pluto 1.1.0-beta2 source to the 'pluto' directory use this command:
+		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/release-1.1.0-beta2/ pluto</pre>
 		</p>
 
         <p>
@@ -120,11 +118,11 @@ $> mvn pluto:install -DinstallDir=path/to/appserver
         <p>
           The <code>pluto:install</code> goal will take the resulting artifacts
           and properly deploy them within the configured Tomcat installation.
-          Currently, the Pluto 1.1 install has been tested on Tomcat 5.5.9.
+          Currently, the Pluto 1.1 install has been tested on Tomcat 5.5.9 and Tomcat 5.5.17.
           The Tomcat 5 archive can be found <a href="http://archive.apache.org/dist/tomcat/tomcat-5/archive">here</a>.
         </p>
         <p>
-          If installing to a directory that contains spaces,  <code>installDir</code>
+          If installing to a directory that contains spaces, <code>installDir</code>
           needs to be enclosed within quotes:
         </p>
         <p>
@@ -137,8 +135,9 @@ C:\pluto> mvn pluto:install -DinstallDir="C:\Program Files\Apache Software Found
       
       <subsection name="Installing Pluto Manually">
         <p>
-        This section documents the manual installation of Pluto into Tomcat. It replaces
-        the pluto:install goal, but requires that the built-in Maven 2 install goal has been run.
+        This section documents the manual installation of Pluto into Tomcat. It replaces 
+        the pluto:install goal, but requires that the built-in Maven 2 install goal 
+        (<code>mvn install</code>) be run from <code>&lt;PLUTO-1.1-SRCHOME&gt;</code>.
         </p>
         <p>
           <b>Step 1:</b>
@@ -151,12 +150,12 @@ $> mvn install
           <b>Step 2:</b> Copy the following to
           <code>&lt;TOMCAT_HOME&gt;/shared/lib</code>:
           <ul>
-            <li>castor-0.9.6.jar</li>
+            <li>castor-1.0.jar</li>
             <li>portlet-api-1.0.jar</li>
-            <li>pluto-container-1.1-beta1.jar</li>
-            <li>pluto-descriptor-api-1.1-beta1.jar</li>
-            <li>pluto-descriptor-impl-1.1-beta1.jar</li>
-            <li>pluto-taglib-1.1.0-beta1.jar</li>
+            <li>pluto-container-1.1-beta2.jar</li>
+            <li>pluto-descriptor-api-1.1-beta2.jar</li>
+            <li>pluto-descriptor-impl-1.1-beta2.jar</li>
+            <li>pluto-taglib-1.1.0-beta2.jar</li>
           </ul>
         </p>
         <p>
@@ -192,7 +191,7 @@ $> mvn install
           this process.
         </p>
       </subsection>
-      
+          
     <subsection name="Configuring Source-Built Pluto for Application Scope PortletSession Attributes">
     <p>To be able to use application-scoped <code>PortletSession</code> attributes in Pluto, modify
     the Connector element for port 8080 in <code>&lt;TOMCAT_HOME&gt;/conf/server.xml</code> by
