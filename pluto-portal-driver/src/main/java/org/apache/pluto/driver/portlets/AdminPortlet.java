@@ -23,6 +23,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 public class AdminPortlet extends GenericPortlet {
 
@@ -55,5 +57,10 @@ public class AdminPortlet extends GenericPortlet {
     			context.getRequestDispatcher(HELP_PAGE);
     	requestDispatcher.include(request, response);
     }
+
+	public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");		
+	}
     
 }

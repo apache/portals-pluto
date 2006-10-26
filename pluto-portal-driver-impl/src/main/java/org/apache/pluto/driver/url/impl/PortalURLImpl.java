@@ -41,6 +41,7 @@ public class PortalURLImpl implements PortalURL {
     private String servletPath = null;
     private String renderPath = null;
     private String actionWindow = null;
+    private String resourceWindow = null;
     
     /** The window states: key is the window ID, value is WindowState. */
     private Map windowStates = new HashMap();
@@ -127,6 +128,14 @@ public class PortalURLImpl implements PortalURL {
     public String getActionWindow() {
         return actionWindow;
     }
+    
+    public String getResourceWindow() {
+		return resourceWindow;
+	}
+
+	public void setResourceWindow(String resourceWindow) {
+		this.resourceWindow = resourceWindow;
+	}
 
     public Map getPortletModes() {
         return Collections.unmodifiableMap(portletModes);

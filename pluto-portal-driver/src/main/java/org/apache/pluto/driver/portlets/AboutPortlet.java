@@ -23,6 +23,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * The pluto portal driver about portlet.
@@ -60,6 +62,12 @@ public class AboutPortlet extends GenericPortlet {
     			context.getRequestDispatcher(HELP_PAGE);
     	requestDispatcher.include(request, response);
     }
+
+	public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+		
+	}
     
     	
 }

@@ -24,6 +24,8 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -285,4 +287,9 @@ public class TestPortlet extends GenericPortlet {
         // Return the current test ID.
         return testId;
     }
+
+	public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }

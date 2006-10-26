@@ -54,6 +54,14 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     public void setWindowState(WindowState state) {
         url.setWindowState(window, state);
     }
+    
+    public void setResourceServing(boolean resourceServing) {
+        if (resourceServing) {
+            url.setResourceWindow(window);
+        } else {
+            url.setResourceWindow(null);
+        }
+    }
 
     public void setAction(boolean action) {
         if (action) {
