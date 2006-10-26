@@ -259,5 +259,10 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 			return 0;
 		}
 
+		public String getWindowId() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 }
