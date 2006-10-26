@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +31,9 @@ import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
+import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 /**
  * Abstract <code>javax.portlet.PortletResponse</code> implementation.
@@ -57,6 +61,8 @@ implements PortletResponse, InternalPortletResponse {
 
     private ServletOutputStream wrappedWriter;
     
+    private NamespaceMapper mapper = new NamespaceMapperImpl();
+    
     
     // Constructor -------------------------------------------------------------
     
@@ -82,8 +88,30 @@ implements PortletResponse, InternalPortletResponse {
         				internalPortletWindow,
         				name, value);
     }
+    
+    public void addProperty(String name, String value, int scope) {
+    	// FIXME: What should this do? (scope seems to be new)
+    	ArgumentUtility.validateNotNull("propertyName", name);
+        container.getRequiredContainerServices()
+        		.getPortalCallbackService()
+        		.addResponseProperty(
+        				getHttpServletRequest(),
+        				internalPortletWindow,
+        				name, value);
+    }
 
     public void setProperty(String name, String value) {
+    	ArgumentUtility.validateNotNull("propertyName", name);
+        container.getRequiredContainerServices()
+                .getPortalCallbackService()
+                .setResponseProperty(
+                        getHttpServletRequest(),
+                        internalPortletWindow,
+                        name, value);
+    }
+    
+    public void setProperty(String name, String value, int scope) {
+    	// FIXME: What should this do? (scope seems to be new)
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
                 .getPortalCallbackService()
@@ -183,5 +211,53 @@ implements PortletResponse, InternalPortletResponse {
         usingWriter = true;
         return getHttpServletResponse().getWriter();
     }
+
+    public PortletURL createRenderURL() {
+	    return createURL(false,false);
+	}
+
+
+	public PortletURL createActionURL() {
+	    return createURL(true,false);
+	}
+	
+	public ResourceURL createResourceURL(){
+		//FIXME: Add right parameters
+		
+		return new ResourceURLImpl(getContainer(),
+	                              getInternalPortletWindow(),
+	                              getHttpServletRequest(),
+	                              getHttpServletResponse());
+	}
+
+
+	/**
+	 * Creates a portlet URL.
+	 * TODO: make dynamic? as service?
+	 * @param isAction  true for an action URL, false for a render URL.
+	 * @return the created portlet (action/render) URL.
+	 */
+	private PortletURL createURL(boolean isAction, boolean isResourceServing) {
+	    return new PortletURLImpl(getContainer(),
+	                              getInternalPortletWindow(),
+	                              getHttpServletRequest(),
+	                              getHttpServletResponse(),
+	                              isAction);
+	}
+
+
+	public String getNamespace() {
+	     String namespace = mapper.encode(getInternalPortletWindow().getId(), "");
+	     StringBuffer validNamespace = new StringBuffer();
+	     for (int i = 0; i < namespace.length(); i++) {
+	     	char ch = namespace.charAt(i);
+	     	if (Character.isJavaIdentifierPart(ch)) {
+	     		validNamespace.append(ch);
+	     	} else {
+	     		validNamespace.append('_');
+	     	}
+	     }
+	     return validNamespace.toString();
+	}
 
 }

@@ -177,6 +177,10 @@ public class PortletRequestWrapper
     public int getServerPort() {
         return this.getPortletRequest().getServerPort();
     }
+    
+    public String getWindowId() {
+    	return this.getPortletRequest().getWindowId();
+	}
 
     // --------------------------------------------------------------------------------------------
     

@@ -29,6 +29,7 @@ import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
+import javax.portlet.CacheControl;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -62,10 +63,7 @@ implements RenderResponse, InternalRenderResponse {
     private boolean included = false;
     
     /** The current content type. */
-    private String currentContentType = null;
-    
-    private NamespaceMapper mapper = new NamespaceMapperImpl();
-    
+    private String currentContentType = null;    
     
     // Constructor -------------------------------------------------------------
     
@@ -83,28 +81,6 @@ implements RenderResponse, InternalRenderResponse {
         // NOTE: in servlet 2.4 we could simply use this:
         //   return super.getHttpServletResponse().getContentType();
         return currentContentType;
-    }
-
-    public PortletURL createRenderURL() {
-        return createURL(false);
-    }
-
-    public PortletURL createActionURL() {
-        return createURL(true);
-    }
-
-    public String getNamespace() {
-         String namespace = mapper.encode(getInternalPortletWindow().getId(), "");
-         StringBuffer validNamespace = new StringBuffer();
-         for (int i = 0; i < namespace.length(); i++) {
-         	char ch = namespace.charAt(i);
-         	if (Character.isJavaIdentifierPart(ch)) {
-         		validNamespace.append(ch);
-         	} else {
-         		validNamespace.append('_');
-         	}
-         }
-         return validNamespace.toString();
     }
 
     public void setTitle(String title) {
@@ -175,7 +151,8 @@ implements RenderResponse, InternalRenderResponse {
 
     public int getBufferSize() {
         // TODO: return this.getHttpServletResponse().getBufferSize();
-        return 0;
+//        return 0;
+        throw new UnsupportedOperationException("portlet container does not support buffering");
     }
 
     public void flushBuffer() throws IOException {
@@ -234,20 +211,6 @@ implements RenderResponse, InternalRenderResponse {
     // Private Methods ---------------------------------------------------------
     
     /**
-     * Creates a portlet URL.
-     * TODO: make dynamic? as service?
-     * @param isAction  true for an action URL, false for a render URL.
-     * @return the created portlet (action/render) URL.
-     */
-    private PortletURL createURL(boolean isAction) {
-        return new PortletURLImpl(getContainer(),
-                                  getInternalPortletWindow(),
-                                  getHttpServletRequest(),
-                                  getHttpServletResponse(),
-                                  isAction);
-    }
-    
-    /**
      * Checks if the specified content type is valid (supported by the portlet).
      * The specified content type should be a tripped mime type without any
      * character encoding suffix.
@@ -291,5 +254,15 @@ implements RenderResponse, InternalRenderResponse {
         // Return the check result.
         return valid;
     }
+
+    /**
+     * Gets implementation of JSR-286 <code>CacheControl</code>.
+     *
+     * @since 2.0
+     */
+	public CacheControl getCacheControl() {
+		// TODO Auto-generated method stub
+		return new CacheControlImpl();
+	}
 
 }

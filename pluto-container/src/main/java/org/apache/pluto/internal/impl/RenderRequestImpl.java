@@ -213,7 +213,8 @@ implements RenderRequest, InternalRenderRequest {
      */
     public String getPathTranslated() {
     	// TODO:
-        return null;
+//        return null;
+		throw new UnsupportedOperationException("This method needs to be implemented.");
     }
     
     public String getRequestURI() {
@@ -363,5 +364,11 @@ implements RenderRequest, InternalRenderRequest {
     		parameters.put(key, (String[]) values.toArray(new String[values.size()]));
     	}
     }
+
+	public String getETag() {
+		// TODO Auto-generated method stub
+//		return null;
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
     
 }

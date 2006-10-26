@@ -54,6 +54,13 @@ public interface PortletURLProvider {
     public void setAction(boolean action);
 
     /**
+     * Specifies whether or not this request should be considered an resource Serving
+     * request. 
+     * @since 2.0
+     */
+    public void setResourceServing(boolean action);
+    
+    /**
      * By calling this method the URL is defined as a secure URL.
      */
     public void setSecure();

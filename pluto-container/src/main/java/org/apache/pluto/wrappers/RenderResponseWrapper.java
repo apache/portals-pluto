@@ -15,6 +15,7 @@
  */
 package org.apache.pluto.wrappers;
 
+import javax.portlet.CacheControl;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import java.io.IOException;
@@ -101,6 +102,15 @@ public class RenderResponseWrapper extends PortletResponseWrapper
     }
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Returns an implementation of JSR-286 <code>CacheContol</code>.
+     *
+     * @since 2.0
+     */
+    public CacheControl getCacheControl() {
+    	return this.getRenderResponse().getCacheControl();
+	}
+    
     // additional methods -------------------------------------------------------------------------
     /**
      * Return the wrapped ServletResponse object.

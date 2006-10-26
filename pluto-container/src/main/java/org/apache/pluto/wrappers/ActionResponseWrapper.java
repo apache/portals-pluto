@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
+import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -76,6 +77,17 @@ public class ActionResponseWrapper extends PortletResponseWrapper
         return (ActionResponse) getPortletResponse();
     }
 
+    public StateAwareResponse getStateAwareResponse(){
+    	return (StateAwareResponse) getPortletResponse();
+    }
+
+	public void setEvent(String name, Object value) {
+		this.getStateAwareResponse().setEvent(name, value);
+	}
+
+	public void setEvents(Map events) {
+		this.getStateAwareResponse().setEvents(events);		
+	}
     // --------------------------------------------------------------------------------------------
 }
 

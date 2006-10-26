@@ -39,7 +39,7 @@ import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.StringUtils;
 
-public class ActionResponseImpl extends PortletResponseImpl
+public class ActionResponseImpl extends StateAwareResponseImpl
 implements ActionResponse, InternalActionResponse {
 
     /**

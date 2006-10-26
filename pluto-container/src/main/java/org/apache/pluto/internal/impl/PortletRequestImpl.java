@@ -129,6 +129,13 @@ implements PortletRequest, InternalPortletRequest {
     
     // PortletRequest Impl -----------------------------------------------------
 
+    /* (non-Javadoc)
+	 * @see javax.portlet.PortletRequest#getWindowId()
+	 */
+	public String getWindowId() {
+		return internalPortletWindow.getId().getStringId();
+	}
+    
     /**
      * Determine whether or not the specified WindowState is allowed for this
      * portlet.
@@ -561,6 +568,7 @@ implements PortletRequest, InternalPortletRequest {
      */
     public void release() {
     	// TODO:
+		throw new UnsupportedOperationException("This method needs to be implemented.");
     }
     
     

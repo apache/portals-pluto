@@ -16,6 +16,8 @@
 package org.apache.pluto.wrappers;
 
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 public class PortletResponseWrapper
     extends javax.servlet.http.HttpServletResponseWrapper
@@ -46,6 +48,31 @@ public class PortletResponseWrapper
     public String encodeURL(String path) {
         return this.getPortletResponse().encodeURL(path);
     }
+    
+    public void addProperty(String arg0, String arg1, int arg2) {
+		this.getPortletResponse().addProperty(arg0, arg1, arg2);
+	}
+
+	public PortletURL createActionURL() {
+		return this.getPortletResponse().createActionURL();
+	}
+
+	public PortletURL createRenderURL() {
+		return this.getPortletResponse().createRenderURL();
+	}
+
+	public ResourceURL createResourceURL() {
+		return this.getPortletResponse().createResourceURL(); 
+	}
+
+	public String getNamespace() {
+		return this.getPortletResponse().getNamespace();
+	}
+
+	public void setProperty(String arg0, String arg1, int arg2) {
+		this.getPortletResponse().setProperty(arg0, arg1, arg2);
+	}
+	
     // --------------------------------------------------------------------------------------------
 
     // additional methods -------------------------------------------------------------------------
