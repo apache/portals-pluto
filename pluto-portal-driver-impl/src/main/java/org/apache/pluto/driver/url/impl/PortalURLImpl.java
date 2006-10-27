@@ -232,6 +232,7 @@ public class PortalURLImpl implements PortalURL {
     	portalURL.windowStates = new HashMap(windowStates);
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
+    	portalURL.resourceWindow = resourceWindow;
         return portalURL;
     }
 }

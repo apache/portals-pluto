@@ -222,8 +222,6 @@ implements PortletResponse, InternalPortletResponse {
 	}
 	
 	public ResourceURL createResourceURL(){
-		//FIXME: Add right parameters
-		
 		return new ResourceURLImpl(getContainer(),
 	                              getInternalPortletWindow(),
 	                              getHttpServletRequest(),

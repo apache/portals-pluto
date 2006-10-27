@@ -33,6 +33,8 @@ import org.apache.pluto.internal.impl.PortletRequestImpl;
 import org.apache.pluto.internal.impl.PortletResponseImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.apache.pluto.internal.impl.ResourceRequestImpl;
+import org.apache.pluto.internal.impl.ResourceResponseImpl;
 import org.apache.pluto.util.StringManager;
 
 /**
@@ -92,6 +94,26 @@ class PortletInvoker {
         invoke(request, response, Constants.METHOD_ACTION);
     }
 
+        
+    /**
+     * Invoke the portlet with an resource request.
+     *
+     * @param request resource request used for the invocation.
+     * @param response resource response used for the invocation.
+     * @throws PortletException if a error occurs within the portlet.
+     * @throws IOException if an IO error occurs writing the response.
+     *
+     * @see PortletServlet
+     * @see javax.portlet.Portlet#processresource(javax.portlet.ResourceRequest, javax.portlet.ActionResponse)
+     */
+    public void resource(ResourceRequestImpl request, ResourceResponseImpl response)
+    throws PortletException, IOException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Performing Resource Invocation");
+        }
+        invoke(request, response, Constants.METHOD_RESOURCE);
+    }
+    
     /**
      * Invoke the portlet with a render request.
      *

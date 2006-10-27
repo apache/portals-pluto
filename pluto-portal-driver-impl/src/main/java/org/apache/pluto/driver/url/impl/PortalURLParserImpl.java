@@ -54,6 +54,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String DELIM = "_";
     private static final String PORTLET_ID = "pd";
     private static final String ACTION = "ac";
+    private static final String RESOURCE = "rs";
     private static final String RENDER_PARAM = "rp";
     private static final String WINDOW_STATE = "ws";
     private static final String PORTLET_MODE = "pm";
@@ -137,6 +138,10 @@ public class PortalURLParserImpl implements PortalURLParser {
         		//Fix for PLUTO-243
         		renderPath.append('/').append(token);
         	}
+//        	 Resource window definition: portalURL.setResourceWindow().
+           else if (token.startsWith(PREFIX + RESOURCE)) {
+               portalURL.setResourceWindow(decodeControlParameter(token)[0]);
+           }
         	// Action window definition: portalURL.setActionWindow().
         	else if (token.startsWith(PREFIX + ACTION)) {
         		portalURL.setActionWindow(decodeControlParameter(token)[0]);
@@ -186,7 +191,12 @@ public class PortalURLParserImpl implements PortalURLParser {
         if (portalURL.getRenderPath() != null) {
         	buffer.append("/").append(portalURL.getRenderPath());
         }
-
+        //Append the resource window definition, if it exists.        
+        if (portalURL.getResourceWindow() != null){
+               buffer.append("/");
+               buffer.append(PREFIX).append(RESOURCE)
+                               .append(encodeCharacters(portalURL.getResourceWindow()));
+        }
         // Append the action window definition, if it exists.
         if (portalURL.getActionWindow() != null) {
         	buffer.append("/");

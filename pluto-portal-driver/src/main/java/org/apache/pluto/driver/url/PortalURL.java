@@ -63,5 +63,7 @@ public interface PortalURL extends Cloneable {
 
     Object clone();
 
+    String getResourceWindow();
+    
 	void setResourceWindow(String window);
 }

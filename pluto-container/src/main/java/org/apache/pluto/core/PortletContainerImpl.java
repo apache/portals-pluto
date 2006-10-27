@@ -34,6 +34,8 @@ import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.PortletWindowImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.apache.pluto.internal.impl.ResourceRequestImpl;
+import org.apache.pluto.internal.impl.ResourceResponseImpl;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
@@ -164,6 +166,40 @@ public class PortletContainerImpl implements PortletContainer {
     }
 
     /**
+     * Indicates that a portlet resource Serving occured in the current request and calls
+     * the processServeResource method of this portlet.
+     * @param internalPortletWindow the portlet Window
+     * @param request               the servlet request
+     * @param response              the servlet response
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
+     */
+    public void doServeResource(PortletWindow portletWindow,
+    							HttpServletRequest request,
+    							HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException {
+		
+    	ensureInitialized();
+    	
+        InternalPortletWindow internalPortletWindow =
+        		new PortletWindowImpl(servletContext, portletWindow);
+        debugWithName("Resource request received for portlet: "
+        		+ portletWindow.getPortletName());
+        
+        ResourceRequestImpl renderRequest = new ResourceRequestImpl(
+        		this, internalPortletWindow, request);
+        ResourceResponseImpl renderResponse = new ResourceResponseImpl(
+        		this, internalPortletWindow, request, response);
+
+        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
+        invoker.resource(renderRequest, renderResponse);
+        debugWithName("Portlet resource for: "
+        		+ portletWindow.getPortletName());
+	}
+    
+    /**
      * Process action for the portlet associated with the given portlet window.
      * @param portletWindow  the portlet window.
      * @param request  the servlet request.
@@ -254,7 +290,7 @@ public class PortletContainerImpl implements PortletContainer {
     public void doLoad(PortletWindow portletWindow,
                        HttpServletRequest request,
                        HttpServletResponse response)
-    throws PortletException, IOException, PortletContainerException {
+    	throws PortletException, IOException, PortletContainerException {
     	
     	ensureInitialized();
     	

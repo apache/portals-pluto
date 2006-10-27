@@ -85,5 +85,12 @@ public class Constants {
      */
     public final static Integer METHOD_NOOP = new Integer(5);
 
+    /**
+     * The unique method identifier for resource Serving requests.  Resource requests are
+     * requested through a call to the {@link PortletContainer#doServeResource(PortletWindow,
+     *  javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+     * method.
+     */
+    public final static Integer METHOD_RESOURCE = new Integer(7);
 
 }

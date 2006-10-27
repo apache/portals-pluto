@@ -58,7 +58,7 @@ public interface PortletURLProvider {
      * request. 
      * @since 2.0
      */
-    public void setResourceServing(boolean action);
+    public void setResourceServing(boolean resource);
     
     /**
      * By calling this method the URL is defined as a secure URL.

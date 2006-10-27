@@ -28,9 +28,13 @@ import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.apache.pluto.internal.impl.ResourceRequestImpl;
+import org.apache.pluto.internal.impl.ResourceResponseImpl;
 
+import javax.portlet.EventPortlet;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.ResourceServingPortlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,6 +61,12 @@ public class PortletServlet extends HttpServlet {
     
     /** The portlet instance wrapped by this servlet. */
     private Portlet portlet = null;
+    
+    /** The Event Portlet instance (the same object as portlet) wrapped by this servlet. */
+    private EventPortlet eventPortlet = null;
+    
+    /** The resource serving portlet instance wrapped by this servlet. */
+    private ResourceServingPortlet resourceServingPortlet = null;
     
     /** The internal portlet context instance. */
     private InternalPortletContext portletContext = null;
@@ -118,6 +128,8 @@ public class PortletServlet extends HttpServlet {
             Class clazz = loader.loadClass((portletDD.getPortletClass()));
             portlet = (Portlet) clazz.newInstance();
             portlet.init(portletConfig);
+            initializeEventPortlet();
+            initializeResourceServingPortlet();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
             throw new ServletException(ex);
@@ -204,6 +216,15 @@ public class PortletServlet extends HttpServlet {
                 portlet.render(renderRequest, renderResponse);
                 
             }
+
+            //The requested method is RESOURCE: call ResourceServingPortlet.serveResource(..)
+            else if (methodId == Constants.METHOD_RESOURCE) {
+            	ResourceRequestImpl resourceRequest =
+                    	(ResourceRequestImpl) portletRequest;
+            	ResourceResponseImpl resourceResponse =
+                    	(ResourceResponseImpl) portletResponse;
+            	resourceServingPortlet.serveResource(resourceRequest, resourceResponse);
+            }
             
             // The requested method is ACTION: call Portlet.processAction(..)
             else if (methodId == Constants.METHOD_ACTION) {
@@ -249,4 +270,21 @@ public class PortletServlet extends HttpServlet {
             }
         }
     }
+    private void initializeEventPortlet() {
+       if (portlet instanceof EventPortlet) {
+               eventPortlet = (EventPortlet) portlet;
+       }
+       else{
+    	   eventPortlet = new NullPortlet();
+       }
+    }
+    
+    private void initializeResourceServingPortlet() {
+       if (portlet instanceof ResourceServingPortlet) {
+               resourceServingPortlet = (ResourceServingPortlet) portlet;
+       }
+       else{
+    	   resourceServingPortlet = new NullPortlet();
+       }
+    }       
 }

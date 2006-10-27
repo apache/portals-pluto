@@ -104,8 +104,19 @@ public class PortalDriverServlet extends HttpServlet {
 
         PortalURL portalURL = portalRequestContext.getRequestedPortalURL();
         String actionWindowId = portalURL.getActionWindow();
-        PortletWindowConfig actionWindowConfig = getDriverConfiguration()
-        		.getPortletWindowConfig(actionWindowId);
+        String resourceWindowId = portalURL.getResourceWindow();
+                
+        PortletWindowConfig resourceWindowConfig = null;
+        PortletWindowConfig actionWindowConfig = null;
+        if (resourceWindowId != null){
+               resourceWindowConfig = getDriverConfiguration()
+                               .getPortletWindowConfig(resourceWindowId);
+        }
+        else{
+               actionWindowConfig = getDriverConfiguration()
+               .getPortletWindowConfig(actionWindowId);
+ 
+        }
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
@@ -126,7 +137,24 @@ public class PortalDriverServlet extends HttpServlet {
             	LOG.debug("Action request processed.\n\n");
             }
         }
-        
+        if (resourceWindowConfig != null) {
+               PortletWindowImpl portletWindow = new PortletWindowImpl(
+                               resourceWindowConfig, portalURL);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Processing resource Serving request for window: "
+                               + portletWindow.getId().getStringId());
+            }
+            try {
+                container.doServeResource(portletWindow, request, response);
+            } catch (PortletContainerException ex) {
+                throw new ServletException(ex);
+            } catch (PortletException ex) {
+                throw new ServletException(ex);
+            }
+            if (LOG.isDebugEnabled()) {
+               LOG.debug("Action request processed.\n\n");
+            }
+        }
         // Otherwise (actionWindowConfig == null), handle the render request.
         else {
         	if (LOG.isDebugEnabled()) {

@@ -84,6 +84,21 @@ public interface PortletContainer {
                          HttpServletResponse response)
         throws PortletException, IOException, PortletContainerException;
 
+    /**
+     * Indicates that a portlet resource Serving occured in the current request and calls
+     * the processServeResource method of this portlet.
+     * @param internalPortletWindow the portlet Window
+     * @param request               the servlet request
+     * @param response              the servlet response
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
+     */
+    public void doServeResource(PortletWindow internalPortletWindow,
+                         HttpServletRequest request,
+                         HttpServletResponse response)
+        throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that a portlet action occured in the current request and calls
