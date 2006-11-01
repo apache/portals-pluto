@@ -567,8 +567,7 @@ implements PortletRequest, InternalPortletRequest {
      * TODO: Implement this properly.  Not required now
      */
     public void release() {
-    	// TODO:
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+    	// FIXME: This needs to be implemented
     }
     
     
