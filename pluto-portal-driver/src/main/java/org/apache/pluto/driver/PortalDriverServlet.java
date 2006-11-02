@@ -137,7 +137,7 @@ public class PortalDriverServlet extends HttpServlet {
             	LOG.debug("Action request processed.\n\n");
             }
         }
-        if (resourceWindowConfig != null) {
+        else if (resourceWindowConfig != null) {
                PortletWindowImpl portletWindow = new PortletWindowImpl(
                                resourceWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
