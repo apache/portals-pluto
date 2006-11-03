@@ -30,6 +30,12 @@ public class PortletAppDD {
     /** The defined portlets within the system. */
     private List portlets = new ArrayList();
 
+    /** The defined Portlet Events within the system. */
+    private List<EventDefinitionDD> events = new ArrayList<EventDefinitionDD>();
+    
+    /** The defined Shared Render Parameter within the system. */
+    private List<SharedRenderParamDD> render = new ArrayList<SharedRenderParamDD>();
+
     /**
      * Default Constructor.
      */
@@ -51,7 +57,33 @@ public class PortletAppDD {
     public void setPortlets(List portlets) {
         this.portlets = portlets;
     }
+    
+    /**
+	 * @return Returns the events.
+	 */
+	public List<EventDefinitionDD> getEvents() {
+		return events;
+	}
 
+	/**
+	 * @param events The events to set.
+	 */
+	public void setEvents(List<EventDefinitionDD> events) {
+		this.events = events;
+	}
 
+	/**
+	 * @return Returns the shared render parameter.
+	 */
+	public List<SharedRenderParamDD> getRender() {
+		return render;
+	}
+
+	/**
+	 * @param render The shared render parameter to set.
+	 */
+	public void setRender(List<SharedRenderParamDD> render) {
+		this.render = render;
+	}
 }
 

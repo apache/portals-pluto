@@ -53,6 +53,18 @@ public class PortletDD {
     /** All security role references. */
     private List securityRoleRefs = new ArrayList();
     
+    /** the Sharing Parameter */    
+    private List sharingParams = new ArrayList();
+    
+    /** the supported processing Events */
+    private List<EventDD> processingEvents = new ArrayList<EventDD>();
+    
+    /** the supported publishing Events */
+    private List<EventDD> publishingEvents = new ArrayList<EventDD>();
+    
+    /** the supported shared render parameter */
+    private List<RenderDD> renderParameter = new ArrayList<RenderDD>();
+    
     
     // Constructor -------------------------------------------------------------
     
@@ -153,6 +165,61 @@ public class PortletDD {
     public void setSecurityRoleRefs(List securityRoleRefs) {
         this.securityRoleRefs = securityRoleRefs;
     }
+    
+    public List getSharingParams() {
+    	return sharingParams;
+    }
+    
+    public void setSharingParams(List sharingParams){
+    	this.sharingParams = sharingParams;
+    }
+    
+    /**
+	 * @return Returns the processingEvents.
+	 */
+	public List<EventDD> getProcessingEvents() {
+		return processingEvents;
+	}
+
+
+	/**
+	 * @param processingEvents The processingEvents to set.
+	 */
+	public void setProcessingEvents(List<EventDD> processingEvents) {
+		this.processingEvents = processingEvents;
+	}
+
+
+	/**
+	 * @return Returns the publishingEvents.
+	 */
+	public List<EventDD> getPublishingEvents() {
+		return publishingEvents;
+	}
+
+
+	/**
+	 * @param publishingEvents The publishingEvents to set.
+	 */
+	public void setPublishingEvents(List<EventDD> publishingEvents) {
+		this.publishingEvents = publishingEvents;
+	}
+
+
+	/**
+	 * @return Returns the render parameter.
+	 */
+	public List<RenderDD> getRenderParameter() {
+		return renderParameter;
+	}
+
+
+	/**
+	 * @param renderParameter The render parameter to set.
+	 */
+	public void setRenderParameter(List<RenderDD> renderParameter) {
+		this.renderParameter = renderParameter;
+	}
     
     
     // Object Methods ----------------------------------------------------------

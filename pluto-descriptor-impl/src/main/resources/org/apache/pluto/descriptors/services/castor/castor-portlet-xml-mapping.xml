@@ -23,14 +23,24 @@
    Bare Bones for now!
    -->
 
-  <class name="org.apache.pluto.descriptors.portlet.PortletAppDD">
-    <map-to xml="portlet-app"/>
-    <field name="Portlets"
-           type="org.apache.pluto.descriptors.portlet.PortletDD"
-           collection="arraylist">
-      <bind-xml name="portlet" node="element"/>
-    </field>
-  </class>
+	<class name="org.apache.pluto.descriptors.portlet.PortletAppDD">
+		<map-to xml="portlet-app"/>
+		<field name="Portlets"
+			type="org.apache.pluto.descriptors.portlet.PortletDD"
+			collection="arraylist">
+			<bind-xml name="portlet" node="element"/>
+		</field>
+		<field name="Events"
+			type="org.apache.pluto.descriptors.portlet.EventDefinitionDD"
+			collection="arraylist">
+			<bind-xml name="event-definition" node="element"/>
+		</field>
+		<field name="Render"
+			type="org.apache.pluto.descriptors.portlet.SharedRenderParamDD"
+			collection="arraylist">
+			<bind-xml name="shared-render-parameter" node="element"/>
+		</field>
+	</class>
 
   <class name="org.apache.pluto.descriptors.portlet.PortletDD">
     <field name="PortletName">
@@ -48,6 +58,26 @@
     <field name="InitParams" type="org.apache.pluto.descriptors.common.InitParamDD" collection="arraylist">
       <bind-xml name="init-param" node="element" />
     </field>
+    
+    <!-- Session Sharing -->
+    <field name="SharingParams" type="org.apache.pluto.descriptors.portlet.SharingParamDD" collection="arraylist">
+      <bind-xml name="shared-session-attribute" node="element" />
+    </field>
+		
+		<!-- processing Events -->
+		<field name="ProcessingEvents" type="org.apache.pluto.descriptors.portlet.EventDD" collection="arraylist">
+			<bind-xml name="supported-processing-event" node="element" />
+	  </field>
+		
+		<!-- publishing Events -->
+		<field name="PublishingEvents" type="org.apache.pluto.descriptors.portlet.EventDD"  collection="arraylist">
+			<bind-xml name="supported-publishing-event" node="element" />
+	  </field>	
+	  	
+	  <!-- Shared-Render-Parameter -->
+		<field name="RenderParameter" type="org.apache.pluto.descriptors.portlet.RenderDD"  collection="arraylist">
+			<bind-xml name="supported-shared-render-parameter" node="element" />
+	  </field>	
       
     <field name="ResourceBundle">
       <bind-xml name="resource-bundle" node="element"/>
@@ -68,7 +98,49 @@
       <bind-xml name="portlet-preferences" node="element" />
     </field>
   </class>
-
+	
+	<class name="org.apache.pluto.descriptors.portlet.EventDefinitionDD">
+		<field name="Description">
+			<bind-xml name="description" node="element" />
+		</field>
+    <field name="Name">
+      <bind-xml name="name" node="element"/>
+    </field>
+		<field name="JavaType">
+			<bind-xml name="java-type" node="element" />
+		</field>
+		<field name="XmlType">
+			<bind-xml name="xml-type" node="element" />
+		</field>			
+		<field name="Alias" type="java.lang.String" collection="arraylist">
+			<bind-xml name="alias" node="element" />
+		</field>
+		<field name="ID">
+			<bind-xml name="id" node="element" />
+		</field>
+  </class>
+	
+	<class name="org.apache.pluto.descriptors.portlet.SharedRenderParamDD">
+		<field name="Description">
+			<bind-xml name="description" node="element" />
+		</field>
+	    <field name="Name">
+	      <bind-xml name="name" node="element"/>
+	    </field>			
+		<field name="Alias" type="java.lang.String" collection="arraylist">
+			<bind-xml name="alias" node="element" />
+		</field>
+		<field name="ID">
+			<bind-xml name="id" node="element" />
+		</field>
+  </class>
+	
+	<class name="org.apache.pluto.descriptors.portlet.EventDD">
+    <field name="Name">
+      <bind-xml name="name" node="element"/>
+    </field>
+	</class>
+	
   <class name="org.apache.pluto.descriptors.portlet.PortletInfoDD">
     <map-to xml="portlet-info"/>
     <field name="Title">
@@ -102,6 +174,27 @@
     <field name="ParamValue">
       <bind-xml name="value" node="element"/>
     </field>
+  </class>
+  
+  <class name="org.apache.pluto.descriptors.portlet.SharingParamDD">
+		<field name="Description">
+			<bind-xml name="description" node="element" />
+		</field>
+    <field name="Name">
+      <bind-xml name="name" node="element"/>
+    </field>
+		<field name="JavaType">
+			<bind-xml name="java-type" node="element" />
+		</field>
+		<field name="XmlType">
+			<bind-xml name="xml-type" node="element" />
+		</field>			
+		<field name="Alias" type="java.lang.String" collection="arraylist">
+			<bind-xml name="alias" node="element" />
+		</field>
+		<field name="ID">
+			<bind-xml name="id" node="element" />
+		</field>
   </class>
 
   <class name="org.apache.pluto.descriptors.portlet.PortletPreferencesDD">
