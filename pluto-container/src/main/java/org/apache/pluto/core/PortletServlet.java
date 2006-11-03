@@ -15,21 +15,8 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.pluto.Constants;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletResponse;
-import org.apache.pluto.internal.impl.ActionRequestImpl;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
-import org.apache.pluto.internal.impl.PortletConfigImpl;
-import org.apache.pluto.internal.impl.RenderRequestImpl;
-import org.apache.pluto.internal.impl.RenderResponseImpl;
-import org.apache.pluto.internal.impl.ResourceRequestImpl;
-import org.apache.pluto.internal.impl.ResourceResponseImpl;
+import java.io.IOException;
+import java.util.Iterator;
 
 import javax.portlet.EventPortlet;
 import javax.portlet.Portlet;
@@ -40,8 +27,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Iterator;
+
+import org.apache.pluto.Constants;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.internal.InternalPortletConfig;
+import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletResponse;
+import org.apache.pluto.internal.impl.ActionRequestImpl;
+import org.apache.pluto.internal.impl.ActionResponseImpl;
+import org.apache.pluto.internal.impl.EventRequestImpl;
+import org.apache.pluto.internal.impl.EventResponseImpl;
+import org.apache.pluto.internal.impl.PortletConfigImpl;
+import org.apache.pluto.internal.impl.RenderRequestImpl;
+import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.apache.pluto.internal.impl.ResourceRequestImpl;
+import org.apache.pluto.internal.impl.ResourceResponseImpl;
 
 /**
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
@@ -233,6 +236,15 @@ public class PortletServlet extends HttpServlet {
                 ActionResponseImpl actionResponse =
                     	(ActionResponseImpl) portletResponse;
                 portlet.processAction(actionRequest, actionResponse);
+            }
+            
+            //The request methode is Event: call Portlet.processEvent(..)
+            else if (methodId == Constants.METHOD_EVENT){
+            	EventRequestImpl eventRequest =
+                	(EventRequestImpl) portletRequest;
+            	EventResponseImpl eventResponse =
+                	(EventResponseImpl) portletResponse;
+            	eventPortlet.processEvent(eventRequest, eventResponse);
             }
             
             // The requested method is NOOP: do nothing.

@@ -92,5 +92,19 @@ public class Constants {
      * method.
      */
     public final static Integer METHOD_RESOURCE = new Integer(7);
+    
+    /**
+     * The unique method identifier for render requests.  Render requests are
+     * requested through a call to the {@link PortletContainer#doEvent(org.apache.pluto.PortletWindow,
+     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+     * method.
+     */
+    public final static Integer METHOD_EVENT = new Integer(9);
+    
+    /**
+    * The key used to bind the <code>PortletEvent</code> to the underlying
+    * <code>HttpServletRequest</code>.
+    */
+   public final static String PORTLET_EVENT = "javax.portlet.event";
 
 }

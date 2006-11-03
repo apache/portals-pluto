@@ -18,30 +18,37 @@ package org.apache.pluto.core;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
-import org.apache.pluto.internal.impl.ActionRequestImpl;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
-import org.apache.pluto.internal.impl.PortletWindowImpl;
-import org.apache.pluto.internal.impl.RenderRequestImpl;
-import org.apache.pluto.internal.impl.RenderResponseImpl;
-import org.apache.pluto.internal.impl.ResourceRequestImpl;
-import org.apache.pluto.internal.impl.ResourceResponseImpl;
-import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.EventContainer;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.RequiredContainerServices;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.PortletDescriptorRegistry;
+import org.apache.pluto.internal.impl.ActionRequestImpl;
+import org.apache.pluto.internal.impl.ActionResponseImpl;
+import org.apache.pluto.internal.impl.EventRequestImpl;
+import org.apache.pluto.internal.impl.EventResponseImpl;
+import org.apache.pluto.internal.impl.PortletWindowImpl;
+import org.apache.pluto.internal.impl.RenderRequestImpl;
+import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.apache.pluto.internal.impl.ResourceRequestImpl;
+import org.apache.pluto.internal.impl.ResourceResponseImpl;
+import org.apache.pluto.spi.EventProvider;
+import org.apache.pluto.spi.PortletURLProvider;
 
 /**
  * Default Pluto Container implementation.
@@ -52,7 +59,8 @@ import org.apache.pluto.RequiredContainerServices;
  * @version 1.0
  * @since Sep 18, 2004
  */
-public class PortletContainerImpl implements PortletContainer {
+public class PortletContainerImpl implements PortletContainer,
+	EventContainer {
 
     /** Internal logger. */
     private static final Log LOG = LogFactory.getLog(PortletContainerImpl.class);
@@ -232,6 +240,10 @@ public class PortletContainerImpl implements PortletContainer {
         debugWithName("Portlet action processed for: "
         		+ portletWindow.getPortletName());
         
+        EventProvider provider = this.getRequiredContainerServices().getPortalCallbackService().
+			getEventProvider(request,response);
+        provider.fireEvents(this);
+        
         // After processing action, send a redirect URL for rendering.
         String location = actionResponse.getRedirectLocation();
 
@@ -404,6 +416,78 @@ public class PortletContainerImpl implements PortletContainer {
             LOG.info("Portlet Container [" + name + "]: " + message);
         }
     }
+
+
+    public void fireEvent(HttpServletRequest request, HttpServletResponse response,
+    		PortletWindow window) 
+    throws PortletException, IOException {
+
+    	ensureInitialized();
+
+    	InternalPortletWindow internalPortletWindow =
+    		new PortletWindowImpl(servletContext, window);
+    	debugWithName("Event request received for portlet: "
+    			+ window.getPortletName());
+
+    	EventRequestImpl eventRequest = new EventRequestImpl(
+    			this, internalPortletWindow, request);
+    	EventResponseImpl eventResponse = new EventResponseImpl(
+    			this, internalPortletWindow, request, response);
+
+    	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
+    	invoker.event(eventRequest, eventResponse);
+
+    	debugWithName("Portlet event processed for: "
+    			+ window.getPortletName());
+
+//  	After processing event, change the redirect URL for rendering.
+    	String location = eventResponse.getRedirectLocation();
+
+    	if (location == null) {
+
+//  		Create portlet URL provider to encode redirect URL.
+    		debugWithName("No redirect location specified.");
+    		PortletURLProvider redirectURL = requiredContainerServices
+    		.getPortalCallbackService()
+    		.getPortletURLProvider(request, internalPortletWindow);
+
+//  		Encode portlet mode if it is changed.
+    		if (eventResponse.getChangedPortletMode() != null) {
+    			redirectURL.setPortletMode(
+    					eventResponse.getChangedPortletMode());
+    		}
+
+//  		Encode window state if it is changed.
+    		if (eventResponse.getChangedWindowState() != null) {
+    			redirectURL.setWindowState(
+    					eventResponse.getChangedWindowState());
+    		}
+
+//  		Encode render parameters retrieved from action response.
+    		Map renderParameters = eventResponse.getRenderParameters();
+    		redirectURL.clearParameters();
+    		redirectURL.setParameters(renderParameters);
+
+//  		Encode redirect URL as a render URL.
+    		redirectURL.setAction(false);
+
+//  		Set secure of the redirect URL if necessary.
+    		if (eventRequest.isSecure()) {
+    			redirectURL.setSecure();
+    		}
+
+//  		save redirectURL in request
+    		redirectURL.savePortalURL(request);
+
+//  		Encode the redirect URL to a string.
+    		location = eventResponse.encodeRedirectURL(redirectURL.toString());
+    	}
+    }
+
+
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
     
 }
 

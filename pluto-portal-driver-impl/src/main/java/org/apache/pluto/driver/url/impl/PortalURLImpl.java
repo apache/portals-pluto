@@ -15,17 +15,25 @@
  */
 package org.apache.pluto.driver.url.impl;
 
-import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLParameter;
-
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.services.container.EventProviderImpl;
+import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
 
 /**
  * The portal URL.
@@ -50,6 +58,11 @@ public class PortalURLImpl implements PortalURL {
     
     /** Parameters of the portlet windows. */
     private Map parameters = new HashMap();
+    
+    /** Logger. */
+    private static final Log LOG = LogFactory.getLog(PortalURLImpl.class);
+
+	private static final String KEY = PortalURL.class.getName();
     
     
     // Constructors ------------------------------------------------------------
@@ -235,4 +248,13 @@ public class PortalURLImpl implements PortalURL {
     	portalURL.resourceWindow = resourceWindow;
         return portalURL;
     }
+
+	public PageConfig getPageConfig(ServletContext servletContext) {
+		String requestedPageId = getRenderPath();
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Requested Page: " + requestedPageId);
+        }
+        return ((DriverConfiguration) servletContext.getAttribute(
+        		AttributeKeys.DRIVER_CONFIG)).getPageConfig(requestedPageId);
+	}
 }

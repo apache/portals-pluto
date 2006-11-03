@@ -150,6 +150,22 @@ class PortletInvoker {
         invoke(request, response, Constants.METHOD_NOOP);
     }
     
+    /**
+     * Invoke the portlet with an event request.
+     * 
+     * @param request
+     * @param response
+     * @throws PortletException
+     * @throws IOException
+     */
+    public void event(PortletRequestImpl request, PortletResponseImpl response)
+    throws PortletException, IOException {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Performing Event Invocation");
+    	}
+    	invoke(request, response, Constants.METHOD_EVENT);
+    }
+    
     
     // Private Invoke Method ---------------------------------------------------
     

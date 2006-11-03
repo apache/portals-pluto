@@ -123,19 +123,30 @@
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptor>src/assemble/bin.xml</descriptor>
-                    <finalName>pluto-portal-${pom.version}</finalName>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <configuration>
-                    <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
-                </configuration>
-            </plugin>
+        	<plugin>
+        		<artifactId>maven-assembly-plugin</artifactId>
+        		<configuration>
+        			<descriptor>src/assemble/bin.xml</descriptor>
+        			<finalName>pluto-portal-${pom.version}</finalName>
+        		</configuration>
+        	</plugin>
+        	<plugin>
+        		<artifactId>maven-site-plugin</artifactId>
+        		<configuration>
+        			<resourcesDirectory>
+        				${basedir}/../pluto-site/src/site/resources
+        			</resourcesDirectory>
+        		</configuration>
+        	</plugin>
+        	<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-compiler-plugin</artifactId>
+        		<!-- best lock down version of the plugin too -->
+        		<configuration>
+        			<source>1.5</source>
+        			<target>1.5</target>
+        		</configuration>
+        	</plugin>
         </plugins>
     </build>
 

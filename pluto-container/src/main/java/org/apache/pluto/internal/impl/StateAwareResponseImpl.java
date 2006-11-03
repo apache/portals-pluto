@@ -15,25 +15,31 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortalContext;
+import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.StringUtils;
@@ -67,11 +73,46 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		callback = container.getRequiredContainerServices().getPortalCallbackService();
 	}
 	public void setEvent(String name, Object value) {
-		
+		EventProvider provider = callback.getEventProvider(
+				getHttpServletRequest(),getHttpServletResponse());
+		try {
+			provider.registerToFireEvent(new EventImpl(name,value));
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortletContainerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void setEvents(Map events) {
-		
+		EventProvider provider = callback.getEventProvider(
+				getHttpServletRequest(),getHttpServletResponse());
+		Set keys = events.keySet();
+		try {
+			for (Object key : keys) {
+				provider.registerToFireEvent(new EventImpl((String)key,events.get(key)));
+			}
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortletContainerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void sendRedirect(String location) throws java.io.IOException {

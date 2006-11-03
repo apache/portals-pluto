@@ -23,9 +23,10 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.url.PortalURLParameter;
-import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.apache.pluto.spi.PortletURLProvider;
 
 /**
@@ -37,12 +38,22 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
     private PortalURL url;
     private String window;
+    
+    private static final String KEY = PortalURL.class.getName();
 
     public PortletURLProviderImpl(HttpServletRequest request,
                                   PortletWindow internalPortletWindow) {
-        PortalRequestContext ctx = (PortalRequestContext)
-            request.getAttribute(PortalRequestContext.REQUEST_KEY);
-        url = ctx.createPortalURL();
+    	PortalURL portalURL = (PortalURL) request.getAttribute(KEY);
+        if (portalURL == null) {
+        	PortalRequestContext ctx = (PortalRequestContext)
+    			request.getAttribute(PortalRequestContext.REQUEST_KEY);
+        	url = ctx.createPortalURL();
+            request.setAttribute(KEY, portalURL);
+            
+        }
+        else {
+        	url = (PortalURL) portalURL.clone();
+        }
 
         this.window = internalPortletWindow.getId().getStringId();
     }
@@ -94,5 +105,11 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     public String toString() {
         return url.toString();
     }
+
+	public void savePortalURL(HttpServletRequest request) {
+		PortalRequestContext ctx = (PortalRequestContext)
+			request.getAttribute(PortalRequestContext.REQUEST_KEY);
+		ctx.setPortalURL(url);		
+	}
 
 }

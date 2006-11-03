@@ -19,6 +19,7 @@ import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Defines the interface used by the portlet container to create Portal URLs.
@@ -85,4 +86,6 @@ public interface PortletURLProvider {
      * @return the URL
      */
     public String toString();
+    
+    public void savePortalURL(HttpServletRequest request);
 }

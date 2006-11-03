@@ -15,11 +15,12 @@
  */
 package org.apache.pluto.spi;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletWindow;
-
-import java.util.Map;
 
 /**
  * The callback service interface defining callback methods that will be invoked
@@ -72,5 +73,9 @@ public interface PortalCallbackService extends ContainerService {
                                     PortletWindow portletWindow,
                                     String property,
                                     String value);
+    
+    public EventProvider getEventProvider(HttpServletRequest request, HttpServletResponse response);
+    
+    public EventProvider getEventProvider();
 
 }

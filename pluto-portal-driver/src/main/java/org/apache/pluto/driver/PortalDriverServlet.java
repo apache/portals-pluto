@@ -16,6 +16,7 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -29,6 +30,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.core.PortletContextManager;
+import org.apache.pluto.descriptors.portlet.EventDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.RenderDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
@@ -36,6 +42,9 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.EventProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -166,6 +175,8 @@ public class PortalDriverServlet extends HttpServlet {
                 LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
             }
             
+            registerPortlets(pageConfig, portalURL);
+            
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = (pageConfig.getUri() != null)
             		? pageConfig.getUri() : DEFAULT_PAGE_URI;
@@ -194,6 +205,40 @@ public class PortalDriverServlet extends HttpServlet {
     
     
     // Private Methods ---------------------------------------------------------
+    
+    private void registerPortlets(PageConfig pageConfig, PortalURL portalURL) throws ServletException {
+    	// Retrieve the associated internal portlet context.
+		try {
+			InternalPortletContext portletContext = PortletContextManager.getManager()
+				.getPortletContext(getServletContext());
+			portletContext.getPortletApplicationDefinition();
+		} catch (PortletContainerException ex) {
+			ex.printStackTrace();
+            throw new ServletException(ex);
+		}
+		
+		// iterate all portlets on the page
+        for (Object object : pageConfig.getPortletIds()) {
+        	String portletId = (String) object;
+        	DriverConfiguration driverConfig = (DriverConfiguration)
+			getServletContext().getAttribute(AttributeKeys.DRIVER_CONFIG);
+        	PortletWindowConfig windowConfig = driverConfig
+        			.getPortletWindowConfig(portletId);
+            PortletWindow window = new PortletWindowImpl(windowConfig, portalURL);
+            InternalPortletWindow win = new org.apache.pluto.internal.impl.PortletWindowImpl(
+            		getServletContext(),window);
+            PortletDD portletDD = win.getPortletEntity().getPortletDefinition();
+            
+            // register Events
+            EventProvider eventProvider = container.getRequiredContainerServices()
+            	.getPortalCallbackService().getEventProvider();
+            List<EventDD> events = portletDD.getProcessingEvents();
+            for (EventDD eventDD : events) {
+				eventProvider.registerEvent(eventDD.getName(),window.getId().getStringId());
+				LOG.debug(eventDD.getName()+" erfolgreich registriert!");
+			}
+		}
+	}
     
     /**
      * Returns the config of the portal page to be rendered.

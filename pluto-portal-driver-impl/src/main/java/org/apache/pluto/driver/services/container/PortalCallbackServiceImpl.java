@@ -15,17 +15,19 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import java.util.Collections;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.ResourceURLProviderImpl;
+import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
-
-import java.util.Map;
-import java.util.Collections;
 
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -89,5 +91,15 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
                                     String value) {
     	// TODO: currently this method does nothing.
     }
+    
+    public EventProvider getEventProvider(
+			HttpServletRequest request,HttpServletResponse response) {
+		return EventProviderImpl.getEventProviderImpl(request,response);
+	}
+
+
+	public EventProvider getEventProvider() {
+		return EventProviderImpl.getEventProviderImpl();
+	}
 }
 

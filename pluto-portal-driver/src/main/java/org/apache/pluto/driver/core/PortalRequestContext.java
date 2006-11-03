@@ -119,4 +119,8 @@ public class PortalRequestContext {
     public PortalURL createPortalURL() {
         return (PortalURL)getRequestedPortalURL().clone();
     }
+    
+    public void setPortalURL(PortalURL portalURL){
+    	requestedPortalURL = portalURL;
+    }
 }

@@ -16,10 +16,15 @@
 
 package org.apache.pluto.driver.url;
 
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
 import java.util.Collection;
 import java.util.Map;
+
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.pluto.driver.services.portal.PageConfig;
 
 /**
  * Created by IntelliJ IDEA.
@@ -66,4 +71,6 @@ public interface PortalURL extends Cloneable {
     String getResourceWindow();
     
 	void setResourceWindow(String window);
+	
+	PageConfig getPageConfig(ServletContext servletContext);
 }
