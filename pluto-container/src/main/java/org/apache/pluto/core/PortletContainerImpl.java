@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.ServletContext;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.Constants;
 import org.apache.pluto.EventContainer;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
@@ -47,6 +49,7 @@ import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.internal.impl.ResourceRequestImpl;
 import org.apache.pluto.internal.impl.ResourceResponseImpl;
+import org.apache.pluto.internal.impl.StateAwareResponseImpl;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortletURLProvider;
 
@@ -56,6 +59,7 @@ import org.apache.pluto.spi.PortletURLProvider;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
+ * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
@@ -255,30 +259,7 @@ public class PortletContainerImpl implements PortletContainer,
             		.getPortalCallbackService()
             		.getPortletURLProvider(request, internalPortletWindow);
             
-            // Encode portlet mode if it is changed.
-            if (actionResponse.getChangedPortletMode() != null) {
-                redirectURL.setPortletMode(
-                		actionResponse.getChangedPortletMode());
-            }
-            
-            // Encode window state if it is changed.
-            if (actionResponse.getChangedWindowState() != null) {
-                redirectURL.setWindowState(
-                		actionResponse.getChangedWindowState());
-            }
-            
-            // Encode render parameters retrieved from action response.
-            Map renderParameters = actionResponse.getRenderParameters();
-            redirectURL.clearParameters();
-            redirectURL.setParameters(renderParameters);
-            
-            // Encode redirect URL as a render URL.
-            redirectURL.setAction(false);
-            
-            // Set secure of the redirect URL if necessary.
-            if (actionRequest.isSecure()) {
-                redirectURL.setSecure();
-            }
+            saveChangedParameters(actionRequest, actionResponse, redirectURL);
             
             // Encode the redirect URL to a string.
             location = actionResponse.encodeRedirectURL(redirectURL.toString());
@@ -373,6 +354,65 @@ public class PortletContainerImpl implements PortletContainer,
         return portletAppDD;        
     }
     
+    public ServletContext getServletContext() {
+		return servletContext;
+	}
+    
+    /**
+     * Fire Event for the portlet associated with the given portlet window and eventName
+     * @param portletWindow  the portlet window.
+     * @param request  the servlet request.
+     * @param response  the servlet response.
+     * @param eventName the event name
+     * @throws PortletException
+     * @throws IOException
+     * @throws PortletContainerException
+     * 
+     * @see {@link javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest, javax.portlet.EventResponse)
+     */
+    public void fireEvent(HttpServletRequest request, HttpServletResponse response,
+    		PortletWindow window, String eventName) 
+    throws PortletException, IOException {
+
+    	ensureInitialized();
+
+    	InternalPortletWindow internalPortletWindow =
+    		new PortletWindowImpl(servletContext, window);
+    	debugWithName("Event request received for portlet: "
+    			+ window.getPortletName());
+
+    	EventRequestImpl eventRequest = new EventRequestImpl(
+    			this, internalPortletWindow, request);
+    	EventResponseImpl eventResponse = new EventResponseImpl(
+    			this, internalPortletWindow, request, response);
+    	
+    	// Save the name of the actual event to fire in the Request
+    	eventRequest.setAttribute(Constants.EVENT_NAME, eventName);
+
+    	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
+    	invoker.event(eventRequest, eventResponse);
+
+    	debugWithName("Portlet event processed for: "
+    			+ window.getPortletName());
+
+    	// After processing event, change the redirect URL for rendering.
+    	String location = eventResponse.getRedirectLocation();
+
+    	if (location == null) {
+
+    		// Create portlet URL provider to encode redirect URL.
+    		debugWithName("No redirect location specified.");
+    		PortletURLProvider redirectURL = requiredContainerServices
+    		.getPortalCallbackService()
+    		.getPortletURLProvider(request, internalPortletWindow);
+
+    		saveChangedParameters(eventRequest, eventResponse, redirectURL);
+
+    		// save redirectURL in request
+    		redirectURL.savePortalURL(request);
+    	}
+    }
+    
     
     // Private Methods ---------------------------------------------------------
     
@@ -417,77 +457,40 @@ public class PortletContainerImpl implements PortletContainer,
         }
     }
 
+	/**
+	 * @param request
+	 * @param response
+	 * @param redirectURL
+	 */
+	private void saveChangedParameters(PortletRequest request, StateAwareResponseImpl response, PortletURLProvider redirectURL) {
+		// Encode portlet mode if it is changed.
+		if (response.getChangedPortletMode() != null) {
+			redirectURL.setPortletMode(
+					response.getChangedPortletMode());
+		}
 
-    public void fireEvent(HttpServletRequest request, HttpServletResponse response,
-    		PortletWindow window) 
-    throws PortletException, IOException {
+		// Encode window state if it is changed.
+		if (response.getChangedWindowState() != null) {
+			redirectURL.setWindowState(
+					response.getChangedWindowState());
+		}
 
-    	ensureInitialized();
+		// Encode render parameters retrieved from action response.
+		Map renderParameters = response.getRenderParameters();
+		redirectURL.clearParameters();
+		redirectURL.setParameters(renderParameters);
 
-    	InternalPortletWindow internalPortletWindow =
-    		new PortletWindowImpl(servletContext, window);
-    	debugWithName("Event request received for portlet: "
-    			+ window.getPortletName());
+		// Encode redirect URL as a render URL.
+		redirectURL.setAction(false);
 
-    	EventRequestImpl eventRequest = new EventRequestImpl(
-    			this, internalPortletWindow, request);
-    	EventResponseImpl eventResponse = new EventResponseImpl(
-    			this, internalPortletWindow, request, response);
-
-    	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-    	invoker.event(eventRequest, eventResponse);
-
-    	debugWithName("Portlet event processed for: "
-    			+ window.getPortletName());
-
-//  	After processing event, change the redirect URL for rendering.
-    	String location = eventResponse.getRedirectLocation();
-
-    	if (location == null) {
-
-//  		Create portlet URL provider to encode redirect URL.
-    		debugWithName("No redirect location specified.");
-    		PortletURLProvider redirectURL = requiredContainerServices
-    		.getPortalCallbackService()
-    		.getPortletURLProvider(request, internalPortletWindow);
-
-//  		Encode portlet mode if it is changed.
-    		if (eventResponse.getChangedPortletMode() != null) {
-    			redirectURL.setPortletMode(
-    					eventResponse.getChangedPortletMode());
-    		}
-
-//  		Encode window state if it is changed.
-    		if (eventResponse.getChangedWindowState() != null) {
-    			redirectURL.setWindowState(
-    					eventResponse.getChangedWindowState());
-    		}
-
-//  		Encode render parameters retrieved from action response.
-    		Map renderParameters = eventResponse.getRenderParameters();
-    		redirectURL.clearParameters();
-    		redirectURL.setParameters(renderParameters);
-
-//  		Encode redirect URL as a render URL.
-    		redirectURL.setAction(false);
-
-//  		Set secure of the redirect URL if necessary.
-    		if (eventRequest.isSecure()) {
-    			redirectURL.setSecure();
-    		}
-
-//  		save redirectURL in request
-    		redirectURL.savePortalURL(request);
-
-//  		Encode the redirect URL to a string.
-    		location = eventResponse.encodeRedirectURL(redirectURL.toString());
-    	}
-    }
-
-
-	public ServletContext getServletContext() {
-		return servletContext;
+		// Set secure of the redirect URL if necessary.
+		if (request.isSecure()) {
+			redirectURL.setSecure();
+		}
 	}
+
+
+	
     
 }
 

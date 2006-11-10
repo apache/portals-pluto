@@ -15,6 +15,7 @@
  */
 package org.apache.pluto;
 
+
 import java.io.IOException;
 
 import javax.portlet.PortletException;
@@ -22,7 +23,25 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * The publicized entry point into Pluto for firing events
+ * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
+ */
 public interface EventContainer {
+	
+	/**
+     * Indicates that an event should be fired in the current request and calls
+     * the processEvent method of this portlet.
+     * @param internalPortletWindow the portlet Window
+     * @param request               the servlet request
+     * @param response              the servlet response
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
+     */
+	public void fireEvent(HttpServletRequest request, HttpServletResponse response, 
+			PortletWindow window, String eventName) throws PortletException, IOException;
+	
 	public ServletContext getServletContext();
-	public void fireEvent(HttpServletRequest request, HttpServletResponse response, PortletWindow window) throws PortletException, IOException;
 }

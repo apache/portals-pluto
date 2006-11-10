@@ -104,7 +104,7 @@ public interface EventProvider {
 
 	/**
 	 * 
-	 * @return ArrayList containing all events
+	 * @return String list containing all events
 	 */
 	public abstract List<String> getAllEventLabelsList();
 

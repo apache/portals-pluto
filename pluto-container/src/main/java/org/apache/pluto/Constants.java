@@ -101,10 +101,14 @@ public class Constants {
      */
     public final static Integer METHOD_EVENT = new Integer(9);
     
-    /**
-    * The key used to bind the <code>PortletEvent</code> to the underlying
-    * <code>HttpServletRequest</code>.
-    */
-   public final static String PORTLET_EVENT = "javax.portlet.event";
+	/**
+	 * the public key, to store the EventProvider in the Request
+	 */
+	public static final String PROVIDER = "EventProvider";
+	
+	/**
+	 * The public key, to store the event name in the request 
+	 */
+	public static final String EVENT_NAME = "EventName";
 
 }

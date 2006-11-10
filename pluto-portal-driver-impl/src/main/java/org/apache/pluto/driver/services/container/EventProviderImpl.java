@@ -36,16 +36,14 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.core.PortletContextManager;
+import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
-import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.spi.EventProvider;
 
 /**
@@ -63,15 +61,8 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     private HttpServletResponse response;
     
     /**
-     * the public key, to store the EventProvider in the Request
-     */
-    public static final String PROVIDER = EventProviderImpl.class.getName();
-
-	private static final String KEY = PortalURL.class.getName();
-    
-    /**
      * Map that contains our events. The key is a string with the name of the event. 
-     * The value is an ArrayList with all associated PortletWindows.
+     * The value is a List with all associated PortletWindows.
      * FIXME: should be in another class
      */
     private static Map<String, List<String>> portalEvts = 
@@ -81,19 +72,29 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     	
     /**
      * factory method
+     * gets the EventProvider out of the Request, or sets a new one
+     * @param request The {@link HttpServletRequest} of the EventProvider
+     * @param response The {@link HttpServletResponse} of the EventProvider
+     * @return The corresponding EventProvierImpl instance
      */
     public static EventProviderImpl getEventProviderImpl(HttpServletRequest request,
     		HttpServletResponse response) {
-    	EventProviderImpl event = (EventProviderImpl) request.getAttribute(PROVIDER);
+    	EventProviderImpl event = (EventProviderImpl) request.getAttribute(Constants.PROVIDER);
     	if (event == null) {
     		event = new EventProviderImpl();
     		event.request = request;
     		event.response = response;
-    		request.setAttribute(PROVIDER, event);
+    		request.setAttribute(Constants.PROVIDER, event);
     	}
     	return event;
     }
     
+    /**
+     * factory method, for accessing the static elements without a
+     * request / response
+     * FIXME: bad idea 
+     * @return The EventProvider for accessing the static elements
+     */
     public static EventProvider getEventProviderImpl() {
 		return new EventProviderImpl();
 	}
@@ -106,7 +107,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     }
     
     /**
-     * Register an event, which should be fired
+     * Register an event, which should be fired within that request
      * @param event
      * @throws {@link IOException} 
      * @throws {@link ServletException} 
@@ -115,18 +116,13 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
      */
     public void registerToFireEvent(Event event) 
     throws ServletException, IOException, PortletException, PortletContainerException {
-    	
-    	includeEventInRequest(event);
     	savedEvents.add(event);	
-    }
-    
-    private void includeEventInRequest(Event event){
-    	this.request.setAttribute(Constants.PORTLET_EVENT, event);
     }
 
 	/**
+	 * Get all Portlets, which are registered to this event
      * @param evtLabel	- the name of the event
-     * @return ArrayList of associated InternalPortletWindows
+     * @return String list of associated InternalPortletWindows
      */
     public List<String> getAllPortletNames(String evtLabel) {
     	return portalEvts.get(evtLabel);
@@ -209,7 +205,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 
     /**
      * 
-     * @return Enumeration containing all events
+     * @return String enumeration containing all events
      */
     public Enumeration<String> getAllEventLabelsEnumeration () {
     	Vector<String> v = new Vector<String>();
@@ -222,7 +218,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     
     /**
      * 
-     * @return ArrayList containing all events
+     * @return String list containing all events
      */
     public List<String> getAllEventLabelsList () {
     	List<String> l = new ArrayList<String>();
@@ -262,6 +258,11 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 		this.savedEvents = savedEvents;
 	}
 
+	/**
+	 * Fire all saved events
+	 * Note, that the order isn't important @see PLT14.3.2 
+	 * @param eventContainer The {@link PortletContainerImpl} to fire the events
+	 */
 	public void fireEvents(EventContainer eventContainer) {
 		ServletContext servletContext = eventContainer.getServletContext();
 		DriverConfiguration driverConfig = (DriverConfiguration) servletContext.getAttribute(
@@ -269,15 +270,8 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 
 		PortalURL portalURL = PortalURLParserImpl.getParser().parse(request);
 
-		try {
-			InternalPortletContext portletContext = PortletContextManager.getManager()
-				.getPortletContext(servletContext);
-			portletContext.getPortletApplicationDefinition();
-		} catch (PortletContainerException ex) {
-			ex.printStackTrace();
-		}
-		
 		PageConfig pageConfig = portalURL.getPageConfig(servletContext); 
+		
 		// iterate all portlets on the page
         for (Object object : pageConfig.getPortletIds()) {
         	String portletId = (String) object;
@@ -293,7 +287,8 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
             	for (String portlet : portletNames) {
             		if (portlet.equals(portletId)){
             			try {
-							eventContainer.fireEvent(this.request,this.response,window);
+							eventContainer.fireEvent(this.request,this.response,
+									window,event.getName());
 						} catch (PortletException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

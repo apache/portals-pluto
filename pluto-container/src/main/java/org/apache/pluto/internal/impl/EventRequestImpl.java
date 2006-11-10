@@ -15,6 +15,9 @@
  */
 package org.apache.pluto.internal.impl;
 
+
+import java.util.List;
+
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletPreferences;
@@ -26,7 +29,14 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalEventRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.EventProvider;
 
+/**
+ * <code>javax.portlet.EventRequest</code> implementation.
+ * This class also implements InternalEventRequest.
+ *
+ * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
+ */
 public class EventRequestImpl extends PortletRequestImpl 
 		implements EventRequest, InternalEventRequest {
 
@@ -36,7 +46,7 @@ public class EventRequestImpl extends PortletRequestImpl
 	//	 Private Member Variables ------------------------------------------------	
     
 	/** FIXME: The portlet preferences. 
-	 * see (ActionRequestImpl) 
+	 * @see (ActionRequestImpl) 
 	 */
 	private PortletPreferences portletPreferences = null;
 	
@@ -58,9 +68,18 @@ public class EventRequestImpl extends PortletRequestImpl
     //  EventRequest impl -------------------------------------------------------
     
     public Event getEvent(){
-        Event event = (Event) request.getAttribute(
-        		Constants.PORTLET_EVENT);
-    	return event;
+        EventProvider provider = 
+        	(EventProvider) request.getAttribute(Constants.PROVIDER);
+        String eventName = (String) this.getAttribute(Constants.EVENT_NAME);
+        List<Event> events = provider.getAllSavedEvents();
+        for (Event event : events) {
+        	if (eventName.contains(event.getName())){
+				return event;
+			}
+		}
+        
+        // should not be
+        throw new UnsupportedOperationException();
     }
     
     //  PortletRequestImpl impl -------------------------------------------------
