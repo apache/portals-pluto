@@ -70,11 +70,27 @@ public class PortletWindowConfig {
      * Creates the portlet ID from context path and portlet name. The portlet ID
      * is constructed by concatinating the context path and the portlet name
      * using a dot ('.').
+     * 
+     * The method checks that the portlet name parameter does not have a dot. This check
+     * is not done for the portlet ID.
+     * 
      * @param contextPath  the portlet context path.
      * @param portletName  the portlet name.
+     * @throws IllegalArgumentException if the portletName has a dot
+     * @throws NullPointerException if the portlet Name or context path is null.
      */
-    public static String createPortletId(String contextPath,
-                                         String portletName) {
+    public static String createPortletId(String contextPath, String portletName) 
+    	throws NullPointerException, IllegalArgumentException {
+    	
+    	if (contextPath == null) {
+    		throw new NullPointerException("Context path must not be null.");    		
+    	}
+    	if (portletName == null) {
+    		throw new NullPointerException("Portlet name must not be null.");    		    		
+    	}
+    	if (portletName.indexOf('.') != -1) {
+    		throw new IllegalArgumentException("Portlet name must not have a dot(period). Please remove the dot from the value of the portlet-name element ("+ portletName + ") in portlet.xml");
+    	}
         return contextPath + "." + portletName;
     }
     
@@ -92,7 +108,6 @@ public class PortletWindowConfig {
      * Parses out the portlet context path from the portlet ID.
      * @param portletId  the portlet ID to parse.
      * @return the portlet context path.
-     * @throws IllegalArgumentException  if portlet ID is invalid.
      */
     public static String parsePortletName(String portletId) {
     	int index = getSeparatorIndex(portletId);
@@ -105,19 +120,23 @@ public class PortletWindowConfig {
     /**
      * Parses the portlet ID and returns the separator (".") index. The portlet
      * ID passed in should be a valid ID: not null, not starts with ".",
-     * not ends with ".", and contains ".".
+     * not ends with ".", and contains ".". The portlet ID can have more than
+     * one dot, but the last one is taken to be the separator.
+     * 
      * @param portletId  the portlet ID to parse.
      * @return the separator index.
-     * @throws IllegalArgumentException  if portlet ID is null or invalid.
+     * @throws IllegalArgumentException if portlet ID does not contain a dot or the dot is the first or last character.
+     * @throws NullPointerException if the portlet ID is null
      */
     private static int getSeparatorIndex(String portletId)
-    throws IllegalArgumentException {
+    	throws NullPointerException, IllegalArgumentException {
+    	
     	if (portletId == null) {
-    		throw new IllegalArgumentException("Invalid portlet ID: null");
+    		throw new NullPointerException("Portlet ID is null");
     	}
-    	int index = portletId.indexOf(".");
+    	int index = portletId.lastIndexOf(".");
     	if (index <= 0 || index == portletId.length() - 1) {
-    		throw new IllegalArgumentException("Invalid portlet ID: " + portletId);
+    		throw new IllegalArgumentException("Portlet ID '" + portletId + "' does not contain a dot or the dot is the first or last character");
     	}
     	return index;
     }

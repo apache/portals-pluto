@@ -76,9 +76,16 @@ public class PortletDD {
 
     /**
      * Set the unique name of the portlet.
-     * @param portletName
+     * @param portletName Value of the portlet-name element for this portlet in portlet.xml.
+     * @throws IllegalArgumentException if the name has a period since it is used
+     * to create the portlet ID in <code>PortletWindowConfig.createPortletId()</code>
+     * using a dot to separate the context path from the portlet name.
+     * @see PortletWindowConfig#createPortletId(String, String)
      */
     public void setPortletName(String portletName) {
+    	if (portletName.indexOf('.') != -1) {
+    		throw new IllegalArgumentException("Portlet name must not have a dot(period). Please remove the dot from the value of the portlet-name element ("+ portletName + ") in portlet.xml");
+    	}
         this.portletName = portletName;
     }
 
