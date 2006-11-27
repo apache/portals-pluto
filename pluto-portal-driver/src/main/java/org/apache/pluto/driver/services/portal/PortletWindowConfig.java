@@ -70,11 +70,27 @@ public class PortletWindowConfig {
      * Creates the portlet ID from context path and portlet name. The portlet ID
      * is constructed by concatinating the context path and the portlet name
      * using a dot ('.').
+     * 
+     * The method checks that the portlet name parameter does not have a dot. This check
+     * is not done for the portlet ID.
+     * 
      * @param contextPath  the portlet context path.
      * @param portletName  the portlet name.
+     * @throws IllegalArgumentException if the portletName has a dot
+     * @throws NullPointerException if the portlet Name or context path is null.
      */
-    public static String createPortletId(String contextPath,
-                                         String portletName) {
+    public static String createPortletId(String contextPath, String portletName) 
+    	throws NullPointerException, IllegalArgumentException {
+        	
+        	if (contextPath == null) {
+        		throw new NullPointerException("Context path must not be null.");    		
+        	}
+        	if (portletName == null) {
+        		throw new NullPointerException("Portlet name must not be null.");    		    		
+        	}
+        	if (portletName.indexOf('.') != -1) {
+        		throw new IllegalArgumentException("Portlet name must not have a dot(period). Please remove the dot from the value of the portlet-name element ("+ portletName + ") in portlet.xml");
+        	}
         return contextPath + "." + portletName;
     }
     

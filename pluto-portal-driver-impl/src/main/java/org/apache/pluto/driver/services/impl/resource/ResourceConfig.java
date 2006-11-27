@@ -236,9 +236,12 @@ public class ResourceConfig {
      * @return the context, derived from the portlet id.
      */
     private String getContextFromPortletId(String portletId) {
-        int idx = portletId.indexOf(".");
+    	if (portletId == null) {
+    		throw new NullPointerException("Portlet ID must not be null.");
+    	}
+        int idx = portletId.lastIndexOf(".");
         if (idx < 0) {
-            return null;
+        	throw new IllegalArgumentException("Portlet ID does not contain a dot.");
         }
         return portletId.substring(0, idx);
     }
@@ -249,9 +252,12 @@ public class ResourceConfig {
      * @return the name of the portlet.
      */
     private String getPortletNameFromPortletId(String portletId) {
-        int idx = portletId.indexOf(".");
+    	if (portletId == null) {
+    		throw new NullPointerException("Portlet ID must not be null.");
+    	}
+        int idx = portletId.lastIndexOf(".");
         if (idx < 0) {
-            return null;
+        	throw new IllegalArgumentException("Portlet ID does not contain a dot.");
         }
         return portletId.substring(idx + 1);
     }
