@@ -32,8 +32,8 @@ import org.apache.pluto.spi.optional.PortletPreferencesService;
  * preferences service is a singleton held by the pluto portlet container.
  * 
  * @see javax.portlet.PortletPreferences
- * @see org.apache.pluto.core.impl.PortletPreferencesImpl
- * @see org.apache.pluto.core.PortletPreference
+ * @see org.apache.pluto.internal.impl.PortletPreferencesImpl
+ * @see javax.portlet.PortletPreferences
  * 
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
@@ -71,8 +71,6 @@ implements PortletPreferencesService {
 	 * this service should be protected from being directly accessed, so this
 	 * method returns a cloned copy of the stored preferences.
 	 * 
-	 * @see org.apache.pluto.core.PortletPreference#clone()
-	 * 
 	 * @param portletWindow  the portlet window.
 	 * @param request  the portlet request from which the remote user is retrieved.
 	 * @return a copy of the stored portlet preferences array.
@@ -109,8 +107,7 @@ implements PortletPreferencesService {
 	 * </p>
 	 * 
 	 * @see javax.portlet.PortletPreferences#store()
-	 * @see org.apache.pluto.core.PortletPreference#clone()
-	 * 
+	 *
 	 * @param portletWindow  the portlet window
 	 * @param request  the portlet request from which the remote user is retrieved.
 	 * @param preferences  the portlet preferences to store.
@@ -134,7 +131,7 @@ implements PortletPreferencesService {
      * Formats the preference key for the portlet preference using specified
      * portlet window and remote user.
      * @param portletWindow  the portlet window.
-     * @param user  the remote user.
+     * @param request  the remote request.
      */
     private String getFormattedKey(PortletWindow portletWindow,
                                    PortletRequest request) {
@@ -149,8 +146,6 @@ implements PortletPreferencesService {
      * the passed-in portlet preferences array. Every PortletPreference object
      * in the array are cloned (via the <code>PortletPreference.clone()</code>
      * method) and injected into the new array.
-     * 
-     * @see org.apache.pluto.core.PortletPreference#clone()
      * 
      * @param preferences  the portlet preferences array to clone.
      * @return a deep-cloned copy of the portlet preferences array.

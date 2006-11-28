@@ -22,7 +22,7 @@ package org.apache.pluto.driver.services.portal;
  * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version $Id$
  * @since September 9, 2006
- * @see PortletMode
+ * @see javax.portlet.PortletMode
  */
 public interface SupportedModesService extends DriverConfigurationService {
     

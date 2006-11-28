@@ -23,6 +23,7 @@ import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 
 import javax.portlet.PortalContext;
 
@@ -77,12 +78,21 @@ implements RequiredContainerServices, OptionalContainerServices {
         return driverConfig.getPortalCallbackService();
     }
 
+
+    /**
+     * Returns null to use pluto's default 
+     * @return
+     */
+    public PortletRegistryService getPortletRegistryService() {
+        return null;
+    }
+
     public PortletEnvironmentService getPortletEnvironmentService() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     public PortletInvokerService getPortletInvokerService(InternalPortletWindow window) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 }
 

@@ -16,6 +16,7 @@
 package org.apache.pluto;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
@@ -154,5 +155,7 @@ public interface PortletContainer {
      */    
     public PortletAppDD getPortletApplicationDescriptor(String context)
         throws PortletContainerException;
+
+
     
 }

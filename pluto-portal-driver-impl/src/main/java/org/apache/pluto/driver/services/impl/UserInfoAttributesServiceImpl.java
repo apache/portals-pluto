@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.spi.optional;
+package org.apache.pluto.driver.services.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +26,8 @@ import javax.portlet.PortletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.spi.optional.UserInfoAttributesService;
+import org.apache.pluto.spi.optional.P3PAttributes;
 
 /**
  * TODO: Add a cache keyed by logged-in username.
@@ -65,7 +67,7 @@ public class UserInfoAttributesServiceImpl implements UserInfoAttributesService 
 	/**
 	 * Implementation of PLT.17.2 used to access user information attributes.
 	 * 
-	 * @see org.apache.pluto.services.optional.UserInfoAttributesService#getAttributes(javax.portlet.PortletRequest)
+	 * @see UserInfoAttributesService#getAttributes(javax.portlet.PortletRequest)
 	 * @return As per the spec, return null if the user is not authenticated or an empty Map if there are
 	 * no attributes in the properties file or a Map containing only those attributes found in the attribute 
 	 * data store (properties file).

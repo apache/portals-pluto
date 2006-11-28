@@ -234,6 +234,7 @@
     <xerces.version>2.6.2</xerces.version>
     <castor.version>1.0</castor.version>
     <commons-digester.version>1.7</commons-digester.version>
+    <commons-collections.version>3.2</commons-collections.version>
     <commons-cli.version>1.0</commons-cli.version>
     <commons-httpclient.version>3.0</commons-httpclient.version>
     <commons-beanutils.version>1.7.0</commons-beanutils.version>

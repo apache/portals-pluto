@@ -125,7 +125,10 @@ implements PortletRegistryService, PortletRegistryAdminService {
             
             PortletContainer container = (PortletContainer)servletContext
                 .getAttribute(AttributeKeys.PORTLET_CONTAINER);
-            PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(contextPath);
+            
+            PortletAppDD portletAppDD = container.getOptionalContainerServices()
+                .getPortletRegistryService()
+                .getPortletApplicationDescriptor(contextPath);
             
             if (portletAppDD == null) {
                 final String msg = "Unable to retrieve portlet application descriptor from "

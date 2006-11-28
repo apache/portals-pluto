@@ -138,7 +138,7 @@ public class PortletContainerImpl implements PortletContainer {
      * @throws IOException
      * @throws PortletContainerException
      * 
-     * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
+     * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
     public void doRender(PortletWindow portletWindow,
                          HttpServletRequest request,
@@ -172,7 +172,7 @@ public class PortletContainerImpl implements PortletContainer {
      * @throws IOException
      * @throws PortletContainerException
      * 
-     * @see javax.portlet.Portlet#processAction(ActionRequest, ActionResponse)
+     * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,javax.portlet.ActionResponse)
      */
     public void doAction(PortletWindow portletWindow,
                          HttpServletRequest request,
@@ -281,6 +281,13 @@ public class PortletContainerImpl implements PortletContainer {
         return requiredContainerServices;
     }
 
+    /**
+     * Retrieve the optional container services used by the container.
+     * If no implementation was provided during construction, the default
+     * instance will be returned.
+     *
+     * @return services used by the container.
+     */
     public OptionalContainerServices getOptionalContainerServices() {
         return optionalContainerServices;
     }

@@ -18,29 +18,49 @@ package org.apache.pluto;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.internal.InternalPortletWindow;
 
 /**
  * Defines the services necessary for integration between the Pluto Container
  * and a Portal.
+ *
+ * @since 1.1.0
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public interface OptionalContainerServices {
 
     /**
-     * Returns the portlet preferences service implementation.
-     * @return the portlet preferences service implementation.
+     * Returns the portlet preferences service implementation
+     * used by the container.
+     *
+     * @return portlet preferences service implementation.
      */
-    public PortletPreferencesService getPortletPreferencesService();
+    PortletPreferencesService getPortletPreferencesService();
 
-    public PortletEnvironmentService getPortletEnvironmentService();
+    /**
+     * Returns the environment services implementation
+     * used by the container.
+     *
+     * @return portlet environment services implementation.
+     */
+    PortletEnvironmentService getPortletEnvironmentService();
+
+    /**
+     * Returns the portlet registry services implementation
+     * used by the container.
+     *
+     * @return registry service implementation
+     */
+    PortletRegistryService getPortletRegistryService();
+
     
     /**
      * Returns an invoker for the specified PortletWindow.
+     *
      * @param portletWindow  the InternalPortletWindow used for invocation.
      * @return an invoker which can be used to service the indicated portlet.
      */
-    public PortletInvokerService getPortletInvokerService(
-    		InternalPortletWindow portletWindow);
+    PortletInvokerService getPortletInvokerService(InternalPortletWindow portletWindow);
 
 }

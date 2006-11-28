@@ -185,6 +185,8 @@ public class SupportedModesServiceImpl implements SupportedModesService
             PortletAppDD portletAppDD;
             try {
                 portletAppDD = container
+                    .getOptionalContainerServices()
+                    .getPortletRegistryService()
                     .getPortletApplicationDescriptor(app.getContextPath());
             } catch (PortletContainerException e) {
                 LOG.warn(e);

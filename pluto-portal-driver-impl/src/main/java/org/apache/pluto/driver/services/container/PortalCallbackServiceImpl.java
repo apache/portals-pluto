@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.core.ResourceURLProviderImpl;
+import org.apache.pluto.driver.services.container.ResourceURLProviderImpl;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.ResourceURLProvider;

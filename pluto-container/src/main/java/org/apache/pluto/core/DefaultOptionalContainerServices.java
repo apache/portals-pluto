@@ -20,6 +20,7 @@ import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 
 /**
  * Default Optional Container Services implementation.
@@ -29,16 +30,11 @@ import org.apache.pluto.spi.optional.PortletInvokerService;
  * @version 1.0
  * @since Sep 18, 2004
  */
-public class DefaultOptionalContainerServices
-implements OptionalContainerServices {
-	
-	// Private Member Variables ------------------------------------------------
-	
-    /** The portlet preferences service implementation. */
-    private PortletPreferencesService preferenceService = null;
+public class DefaultOptionalContainerServices implements OptionalContainerServices {
+
+    private PortletPreferencesService preferenceService;
+    private PortletRegistryService portletRegistryService;
     
-    
-    // Constructors ------------------------------------------------------------
     
     /**
      * Constructs an instance using the default portlet preferences service
@@ -46,6 +42,7 @@ implements OptionalContainerServices {
      */
     public DefaultOptionalContainerServices() {
         preferenceService = new DefaultPortletPreferencesService();
+        portletRegistryService = DefaultPortletRegistryService.getInstance();
     }
     
     /**
@@ -55,10 +52,13 @@ implements OptionalContainerServices {
      * @param root  the root optional container services implementation.
      */
     public DefaultOptionalContainerServices(OptionalContainerServices root) {
+        this();
         if (root.getPortletPreferencesService() != null) {
             preferenceService = root.getPortletPreferencesService();
-        } else {
-        	preferenceService = new DefaultPortletPreferencesService();
+        }
+
+        if (root.getPortletRegistryService() != null) {
+            portletRegistryService = root.getPortletRegistryService();
         }
     }
     
@@ -68,7 +68,12 @@ implements OptionalContainerServices {
     public PortletPreferencesService getPortletPreferencesService() {
         return preferenceService;
     }
-    
+
+
+    public PortletRegistryService getPortletRegistryService() {
+        return portletRegistryService;
+    }
+
     /**
      * TODO:
      */
