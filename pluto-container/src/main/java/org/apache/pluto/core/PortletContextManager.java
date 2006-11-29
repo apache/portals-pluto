@@ -15,7 +15,6 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.commons.collections.map.CompositeMap;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalPortletContext;
@@ -30,8 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Collection;
 
 /**
  * Manager used to cache the portlet configurations which have
@@ -156,33 +153,23 @@ public class PortletContextManager implements PortletRegistryService {
         }
     }
 
-    class MultiKeyedMap extends CompositeMap {
-
-        private Map named = new HashMap();
-        private Map pathed = new HashMap();
-        private Map contexted = new HashMap();
-
-        public MultiKeyedMap() {
-            addComposited(named);
-            addComposited(pathed);
-            addComposited(contexted);
-        }
+    class MultiKeyedMap extends HashMap {
 
         public void put(PortletContextImpl context) {
-            named.put(context.getApplicationId(),context);
-            contexted.put(context.getServletContext(), context);
+            put(context.getApplicationId(),context);
+            put(context.getServletContext(), context);
 
             String contextPath = context.getContextPath();
 
             if (contextPath != null) {
-                pathed.put(contextPath, context);
+                put(contextPath, context);
             }
         }
 
         public PortletAppDD remove(PortletContextImpl context) {
-            PortletAppDD dd = (PortletAppDD) named.remove(context.getApplicationId());
-            pathed.remove(context.getContextPath());
-            contexted.remove(context.getServletContext());
+            PortletAppDD dd = (PortletAppDD) remove(context.getApplicationId());
+            remove(context.getContextPath());
+            remove(context.getServletContext());
             return dd;
         }
     }
