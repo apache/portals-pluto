@@ -42,76 +42,85 @@ import java.util.Iterator;
 /**
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
  * the the container and services the portlet request for the specified method.
- * 
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.1
  * @since 09/22/2004
  */
 public class PortletServlet extends HttpServlet {
-	
-	// Private Member Variables ------------------------------------------------
-	
-	/** The portlet name as defined in the portlet app descriptor. */
+
+    // Private Member Variables ------------------------------------------------
+
+    /**
+     * The portlet name as defined in the portlet app descriptor.
+     */
     private String portletName = null;
-    
-    /** The portlet instance wrapped by this servlet. */
+
+    /**
+     * The portlet instance wrapped by this servlet.
+     */
     private Portlet portlet = null;
-    
-    /** The internal portlet context instance. */
+
+    /**
+     * The internal portlet context instance.
+     */
     private InternalPortletContext portletContext = null;
-    
-    /** The internal portlet config instance. */
+
+    /**
+     * The internal portlet config instance.
+     */
     private InternalPortletConfig portletConfig = null;
-    
-    
+
     // HttpServlet Impl --------------------------------------------------------
-    
+
     public String getServletInfo() {
         return "Pluto PortletServlet [" + portletName + "]";
     }
-    
+
     /**
      * Initialize the portlet invocation servlet.
-     * @throws ServletException  if an error occurs while loading portlet.
+     *
+     * @throws ServletException if an error occurs while loading portlet.
      */
     public void init() throws ServletException {
-    	
-    	// Call the super initialization method.
-    	super.init();
-    	
-    	// Retrieve portlet name as defined as an initialization parameter.
+
+        // Call the super initialization method.
+        super.init();
+
+        // Retrieve portlet name as defined as an initialization parameter.
         portletName = getInitParameter("portlet-name");
-        
+
         // Retrieve the associated internal portlet context.
         ServletContext servletContext = getServletContext();
         try {
             portletContext = PortletContextManager.getManager()
-            		.getPortletContext(servletContext);
+                .register(servletContext);
+
         } catch (PortletContainerException ex) {
             throw new ServletException(ex);
         }
-        
+
         // Retrieve the portletDD and create portlet config.
         PortletDD portletDD = null;
         PortletAppDD portletAppDD =
-        		portletContext.getPortletApplicationDefinition();
+            portletContext.getPortletApplicationDefinition();
         for (Iterator it = portletAppDD.getPortlets().iterator();
-        		it.hasNext(); ) {
-        	PortletDD currentDD = (PortletDD) it.next();
-        	if (currentDD.getPortletName().equals(portletName)) {
-        		portletDD = currentDD;
-        		break;
-        	}
+             it.hasNext();) {
+            PortletDD currentDD = (PortletDD) it.next();
+            if (currentDD.getPortletName().equals(portletName)) {
+                portletDD = currentDD;
+                break;
+            }
         }
         if (portletDD == null) {
             throw new ServletException("Unable to resolve portlet '"
-            		+ portletName + "'");
+                + portletName + "'");
         }
         portletConfig = new PortletConfigImpl(getServletConfig(),
-                                              portletContext,
-                                              portletDD);
-        
+            portletContext,
+            portletDD);
+
         // Create and initialize the portlet wrapped in the servlet.
         try {
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -133,87 +142,87 @@ public class PortletServlet extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-    throws ServletException, IOException {
-        dispatch(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
-    throws ServletException, IOException {
-        dispatch(request, response);
-    }
-
-    protected void doPut(HttpServletRequest request,
-                         HttpServletResponse response)
-    throws ServletException, IOException {
-        dispatch(request, response);
-    }
-
     public void destroy() {
+        PortletContextManager.getManager().remove(portletContext);
         if (portlet != null) {
             portlet.destroy();
         }
         super.destroy();
     }
-    
-    
+
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+        throws ServletException, IOException {
+        dispatch(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+        throws ServletException, IOException {
+        dispatch(request, response);
+    }
+
+    protected void doPut(HttpServletRequest request,
+                         HttpServletResponse response)
+        throws ServletException, IOException {
+        dispatch(request, response);
+    }
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Dispatch the request to the appropriate portlet methods. This method
      * assumes that the following attributes are set in the servlet request
      * scope:
      * <ul>
-     *   <li>METHOD_ID: indicating which method to dispatch.</li>
-     *   <li>PORTLET_REQUEST: the internal portlet request.</li>
-     *   <li>PORTLET_RESPONSE: the internal portlet response.</li>
+     * <li>METHOD_ID: indicating which method to dispatch.</li>
+     * <li>PORTLET_REQUEST: the internal portlet request.</li>
+     * <li>PORTLET_RESPONSE: the internal portlet response.</li>
      * </ul>
-     * 
+     *
      * @param request  the servlet request.
-     * @param response  the servlet response.
+     * @param response the servlet response.
      * @throws ServletException
      * @throws IOException
      */
     private void dispatch(HttpServletRequest request,
                           HttpServletResponse response)
-    throws ServletException, IOException {
+        throws ServletException, IOException {
         InternalPortletRequest portletRequest = null;
         InternalPortletResponse portletResponse = null;
         try {
-        	
-        	// Save portlet config into servlet request.
+
+            // Save portlet config into servlet request.
             request.setAttribute(Constants.PORTLET_CONFIG, portletConfig);
-            
+
             // Retrieve attributes from the servlet request.
             Integer methodId = (Integer) request.getAttribute(
-            		Constants.METHOD_ID);
+                Constants.METHOD_ID);
             portletRequest = (InternalPortletRequest) request.getAttribute(
-            		Constants.PORTLET_REQUEST);
+                Constants.PORTLET_REQUEST);
             portletResponse = (InternalPortletResponse) request.getAttribute(
-            		Constants.PORTLET_RESPONSE);
+                Constants.PORTLET_RESPONSE);
             portletRequest.init(portletContext, request);
-            
+
             // The requested method is RENDER: call Portlet.render(..)
             if (methodId == Constants.METHOD_RENDER) {
                 RenderRequestImpl renderRequest =
-                		(RenderRequestImpl) portletRequest;
+                    (RenderRequestImpl) portletRequest;
                 RenderResponseImpl renderResponse =
-                    	(RenderResponseImpl) portletResponse;
+                    (RenderResponseImpl) portletResponse;
                 portlet.render(renderRequest, renderResponse);
-                
+
             }
-            
+
             // The requested method is ACTION: call Portlet.processAction(..)
             else if (methodId == Constants.METHOD_ACTION) {
                 ActionRequestImpl actionRequest =
-                    	(ActionRequestImpl) portletRequest;
+                    (ActionRequestImpl) portletRequest;
                 ActionResponseImpl actionResponse =
-                    	(ActionResponseImpl) portletResponse;
+                    (ActionResponseImpl) portletResponse;
                 portlet.processAction(actionRequest, actionResponse);
             }
-            
+
             // The requested method is NOOP: do nothing.
             else if (methodId == Constants.METHOD_NOOP) {
                 // Do nothing.
@@ -234,18 +243,18 @@ public class PortletServlet extends HttpServlet {
             } catch (Throwable th) {
                 // Don't care for Exception
             }
-            
+
             // TODO: Handle everything as permanently for now.
             throw new javax.servlet.UnavailableException(ex.getMessage());
-            
+
         } catch (PortletException ex) {
             ex.printStackTrace();
             throw new ServletException(ex);
-            
+
         } finally {
             request.removeAttribute(Constants.PORTLET_CONFIG);
             if (portletRequest != null) {
-            	portletRequest.release();
+                portletRequest.release();
             }
         }
     }

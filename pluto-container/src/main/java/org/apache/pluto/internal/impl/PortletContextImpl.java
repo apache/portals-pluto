@@ -15,61 +15,127 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.internal.InternalPortletContext;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
  * <code>InternalPortletContext</code> which provides container specific
  * information needed for processing.
- * 
- * @version 1.1
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @version 1.1
  */
 public class PortletContextImpl
-implements PortletContext, InternalPortletContext {
-	
-	/** Logger. */
+    implements PortletContext, InternalPortletContext {
+
+    /**
+     * Logger.
+     */
     private static final Log LOG = LogFactory.getLog(PortletContextImpl.class);
-    
-    
+
+    /**
+     * Attribute key used to bind the servletContext to the application.
+     */
+    private static final String CONTEXT_PATH =
+        "org.apache.pluto.PORTLET_APP_CONTEXT_PATH";
+
+    /**
+     * Servlet 2.5 ServletContext.getContextPath() method.
+     */
+    private static Method contextPathGetter;
+
+    static {
+        try {
+            contextPathGetter = ServletContext.class.getMethod("getContextPath", new Class[0]);
+        }
+        catch (NoSuchMethodException e) {
+            LOG.warn("Servlet 2.4 or below detected.  Unable to find getContextPath on ServletContext.");
+        }
+    }
+
     // Private Member Variables ------------------------------------------------
-    
-    /** Portlet Application Descriptor. */
+
+    /**
+     * Portlet Application Descriptor.
+     */
     private PortletAppDD portletAppDD = null;
 
-    /** ServletContext in which we are contained. */
+    /**
+     * ServletContext in which we are contained.
+     */
     private ServletContext servletContext = null;
 
-    
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Constructs an instance.
-     * @param servletContext  the servlet context in which we are contained.
-     * @param portletAppDD  the portlet application descriptor.
+     *
+     * @param servletContext the servlet context in which we are contained.
+     * @param portletAppDD   the portlet application descriptor.
      */
     public PortletContextImpl(ServletContext servletContext,
                               PortletAppDD portletAppDD) {
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
     }
-    
-    
+
+    /**
+     * Retrieves the public applicationId published for this context.
+     * The algorithm for creating the applicationId is:
+     * <li>Attempt to retrieve the contextPath property value from the ServletContext if it exists (Servlet 2.5)</li>
+     * <li>Attempt to retrieve the org.apache.pluto.CONTEXT_PATH attribute from the ServletContext</li>
+     * <li>If all else fails, use the SerlvetContext.getServletContextName() value</li>
+     *
+     * @return the published application Id for this context.
+     */
+    public String getApplicationId() {
+        String applicationId =  getContextPath();
+        if(applicationId == null) {
+            applicationId = RandomStringUtils.randomAlphanumeric(8);
+        }
+        
+        return applicationId;
+    }
+
+    /**
+     * Retrieve the contextPath of the SerlvetContext
+     *
+     * @return
+     */
+    public String getContextPath() {
+        String contextPath = null;
+        if (contextPathGetter != null) {
+            try {
+                contextPath = (String) contextPathGetter.invoke(servletContext, new Class[0]);
+            } catch (Exception e) {
+                LOG.warn("Unable to directly retrieve context path from ServletContext.");
+            }
+        }
+
+        if (contextPath == null) {
+            contextPath = (String) servletContext.getAttribute(CONTEXT_PATH);
+        }
+        
+        return contextPath;
+    }
+
     // PortletContext Impl -----------------------------------------------------
-    
+
     /**
      * Retrieve the PortletContainer's server info.
+     *
      * @return the server info in the form of <i>Server/Version</i>
      * @see Environment#getServerInfo()
      */
@@ -78,63 +144,63 @@ implements PortletContext, InternalPortletContext {
     }
 
     public PortletRequestDispatcher getRequestDispatcher(String path) {
-    	
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("PortletRequestDispatcher requested: " + path);
         }
-        
+
         // Check if the path name is valid. A valid path name must not be null
         //   and must start with a slash '/' as defined by the portlet spec.
         if (path == null || !path.startsWith("/")) {
-        	if (LOG.isInfoEnabled()) {
-        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
-        				+ "path name must begin with a slash '/'.");
-        	}
-        	return null;
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Failed to retrieve PortletRequestDispatcher: "
+                    + "path name must begin with a slash '/'.");
+            }
+            return null;
         }
-        
+
         // Extract query string which contains appended parameters.
         String queryString = null;
         int index = path.indexOf("?");
         if (index > 0 && index < path.length() - 1) {
-        	queryString = path.substring(index + 1);
+            queryString = path.substring(index + 1);
         }
-        
+
         // Construct PortletRequestDispatcher.
         PortletRequestDispatcher portletRequestDispatcher = null;
         try {
             RequestDispatcher servletRequestDispatcher = servletContext
-            		.getRequestDispatcher(path);
+                .getRequestDispatcher(path);
             if (servletRequestDispatcher != null) {
-            	portletRequestDispatcher = new PortletRequestDispatcherImpl(
-                		servletRequestDispatcher, queryString);
+                portletRequestDispatcher = new PortletRequestDispatcherImpl(
+                    servletRequestDispatcher, queryString);
             } else {
-            	if (LOG.isInfoEnabled()) {
-            		LOG.info("No matching request dispatcher found for: " + path);
-            	}
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("No matching request dispatcher found for: " + path);
+                }
             }
         } catch (Exception ex) {
             // We need to catch exception because of a Tomcat 4.x bug.
             //   Tomcat throws an exception instead of return null if the path
-        	//   was not found.
-        	if (LOG.isInfoEnabled()) {
-        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
-        				+ ex.getMessage());
-        	}
-        	portletRequestDispatcher = null;
+            //   was not found.
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Failed to retrieve PortletRequestDispatcher: "
+                    + ex.getMessage());
+            }
+            portletRequestDispatcher = null;
         }
         return portletRequestDispatcher;
     }
-    
+
     public PortletRequestDispatcher getNamedDispatcher(String name) {
         RequestDispatcher dispatcher = servletContext.getNamedDispatcher(name);
         if (dispatcher != null) {
             return new PortletRequestDispatcherImpl(dispatcher);
         } else {
-        	if (LOG.isInfoEnabled()) {
-        		LOG.info("No matching request dispatcher found for name: "
-        				+ name);
-        	}
+            if (LOG.isInfoEnabled()) {
+                LOG.info("No matching request dispatcher found for name: "
+                    + name);
+            }
         }
         return null;
     }
@@ -222,10 +288,9 @@ implements PortletContext, InternalPortletContext {
     public String getPortletContextName() {
         return servletContext.getServletContextName();
     }
-    
-    
+
     // org.apache.pluto.core.InternalPortletContext Impl -----------------------
-    
+
     public ServletContext getServletContext() {
         return servletContext;
     }
@@ -233,6 +298,6 @@ implements PortletContext, InternalPortletContext {
     public PortletAppDD getPortletApplicationDefinition() {
         return portletAppDD;
     }
-    
+
 }
 

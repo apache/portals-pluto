@@ -42,7 +42,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
      */
     public DefaultOptionalContainerServices() {
         preferenceService = new DefaultPortletPreferencesService();
-        portletRegistryService = DefaultPortletRegistryService.getInstance();
+        portletRegistryService = PortletContextManager.getManager();
     }
     
     /**

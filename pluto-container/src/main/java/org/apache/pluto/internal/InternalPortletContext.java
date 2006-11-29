@@ -22,8 +22,22 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 public interface InternalPortletContext extends PortletContext {
 
+    /**
+     * Retrieve the unique identifier for the portlet context.
+     * @return unique identifier.
+     */
+    public String getApplicationId();
+
+    /**
+     *
+     * @return servlet context within which we belong
+     */
     public ServletContext getServletContext();
 
+    /**
+     *
+     * @return application config
+     */
     public PortletAppDD getPortletApplicationDefinition();
 }
 

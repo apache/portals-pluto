@@ -19,6 +19,7 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.PortletContainerException;
 
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Interface defining the services used by the container

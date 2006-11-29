@@ -25,15 +25,16 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
  */
 public class PortletRegistryEvent {
 
-    private String contextPath;
+    private String applicationId;
     private PortletAppDD portletApplicationDescriptor;
 
-    public String getContextPath() {
-        return contextPath;
+
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 
     public PortletAppDD getPortletApplicationDescriptor() {

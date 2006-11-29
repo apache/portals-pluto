@@ -15,17 +15,23 @@
  */
 package org.apache.pluto.core;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.portlet.PortletContext;
-import javax.servlet.ServletContext;
-
+import org.apache.commons.collections.map.CompositeMap;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.impl.PortletContextImpl;
+import org.apache.pluto.spi.optional.PortletRegistryEvent;
+import org.apache.pluto.spi.optional.PortletRegistryListener;
+import org.apache.pluto.spi.optional.PortletRegistryService;
+
+import javax.servlet.ServletContext;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Collection;
 
 /**
  * Manager used to cache the portlet configurations which have
@@ -36,57 +42,148 @@ import org.apache.pluto.internal.impl.PortletContextImpl;
  * @version 1.0
  * @since Sep 20, 2004
  */
-public class PortletContextManager {
+public class PortletContextManager implements PortletRegistryService {
 
-    /** The singleton manager instance. */
+    /**
+     * The singleton manager instance.
+     */
     private static final PortletContextManager MANAGER = new PortletContextManager();
 
     // Private Member Variables ------------------------------------------------
-    
+
     /**
      * The PortletContext cache map: key is servlet context, and value is the
      * associated portlet context.
      */
-    private Map portletContexts = new HashMap();
-    
-    
+    private MultiKeyedMap portletContexts = new MultiKeyedMap();
+
+    /**
+     * The registered listeners that should be notified upon
+     * registry events.
+     */
+    private List registryListeners = new ArrayList();
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Private constructor that prevents external instantiation.
      */
     private PortletContextManager() {
-    	// Do nothing.
+        // Do nothing.
     }
 
     /**
      * Returns the singleton manager instance.
+     *
      * @return the singleton manager instance.
      */
     public static PortletContextManager getManager() {
         return MANAGER;
     }
-    
-    
+
     // Public Methods ----------------------------------------------------------
 
     /**
      * Retrieves the PortletContext associated with the given ServletContext.
      * If one does not exist, it is created.
      *
-     * @param servletContext  the servlet context.
+     * @param servletContext the servlet context.
      * @return the InternalPortletContext associated with the ServletContext.
      * @throws PortletContainerException
      */
-    public InternalPortletContext getPortletContext(ServletContext servletContext)
-    throws PortletContainerException {
+    public InternalPortletContext register(ServletContext servletContext)
+        throws PortletContainerException {
         if (!portletContexts.containsKey(servletContext)) {
             PortletAppDD portletAppDD = PortletDescriptorRegistry.getRegistry()
-            		.getPortletAppDD(servletContext);
-            PortletContext portletContext = new PortletContextImpl(
-            		servletContext, portletAppDD);
+                .getPortletAppDD(servletContext);
+            PortletContextImpl portletContext = new PortletContextImpl(
+                servletContext, portletAppDD);
+
+            if (portletContext.getApplicationId() == null) {
+                throw new IllegalStateException("Unable to resolve unique identifier for portletContext.");
+            }
             portletContexts.put(servletContext, portletContext);
+            fireRegistered(portletContext);
         }
         return (InternalPortletContext) portletContexts.get(servletContext);
+    }
+
+    public void remove(InternalPortletContext context) {
+        portletContexts.remove(context);
+        fireRemoved(context);
+    }
+
+
+    public Iterator getRegisteredPortletApplications() throws PortletContainerException {
+        return portletContexts.keySet().iterator();
+    }
+
+    public PortletAppDD getPortletApplicationDescriptor(String name) throws PortletContainerException {
+        InternalPortletContext ipc = (InternalPortletContext)portletContexts.get(name);
+        if(ipc != null) {
+            return ipc.getPortletApplicationDefinition();
+        }
+        return null;
+    }
+
+    public void addPortletRegistryListener(PortletRegistryListener listener) {
+        registryListeners.add(listener);
+    }
+
+    public void removePortletRegistryListener(PortletRegistryListener listener) {
+        registryListeners.remove(listener);
+    }
+
+    private void fireRegistered(InternalPortletContext context) {
+        PortletRegistryEvent event = new PortletRegistryEvent();
+        event.setApplicationId(context.getApplicationId());
+        event.setPortletApplicationDescriptor(context.getPortletApplicationDefinition());
+
+        Iterator i = registryListeners.iterator();
+        while (i.hasNext()) {
+            ((PortletRegistryListener) i.next()).portletApplicationRegistered(event);
+        }
+    }
+
+    private void fireRemoved(InternalPortletContext context) {
+        PortletRegistryEvent event = new PortletRegistryEvent();
+        event.setApplicationId(context.getApplicationId());
+        event.setPortletApplicationDescriptor(context.getPortletApplicationDefinition());
+
+        Iterator i = registryListeners.iterator();
+        while (i.hasNext()) {
+            ((PortletRegistryListener) i.next()).portletApplicationRemoved(event);
+        }
+    }
+
+    class MultiKeyedMap extends CompositeMap {
+
+        private Map named = new HashMap();
+        private Map pathed = new HashMap();
+        private Map contexted = new HashMap();
+
+        public MultiKeyedMap() {
+            addComposited(named);
+            addComposited(pathed);
+            addComposited(contexted);
+        }
+
+        public void put(PortletContextImpl context) {
+            named.put(context.getApplicationId(),context);
+            contexted.put(context.getServletContext(), context);
+
+            String contextPath = context.getContextPath();
+
+            if (contextPath != null) {
+                pathed.put(contextPath, context);
+            }
+        }
+
+        public PortletAppDD remove(PortletContextImpl context) {
+            PortletAppDD dd = (PortletAppDD) named.remove(context.getApplicationId());
+            pathed.remove(context.getContextPath());
+            contexted.remove(context.getServletContext());
+            return dd;
+        }
     }
 }
