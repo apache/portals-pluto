@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.HashSet;
 
 /**
  * Manager used to cache the portlet configurations which have
@@ -117,7 +118,7 @@ public class PortletContextManager implements PortletRegistryService {
 
 
     public Iterator getRegisteredPortletApplications() throws PortletContainerException {
-        return portletContexts.values().iterator();
+        return new HashSet(portletContexts.values()).iterator();
     }
 
     public PortletAppDD getPortletApplicationDescriptor(String name) throws PortletContainerException {

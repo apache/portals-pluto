@@ -105,6 +105,9 @@ public class PortletContextImpl
         String applicationId =  getContextPath();
         if(applicationId == null) {
             applicationId = servletContext.getServletContextName();
+            if(applicationId != null) {
+                applicationId = Integer.toHexString(applicationId.hashCode());
+            }
         }
 
         if(applicationId == null) {
@@ -112,6 +115,20 @@ public class PortletContextImpl
         }
 
         return applicationId;
+    }
+
+    public String getApplicationName() {
+        String applicationName = servletContext.getServletContextName();
+
+        if(applicationName == null) {
+            applicationName = getContextPath();
+        }
+
+        if(applicationName == null) {
+            applicationName = getApplicationId();
+        }
+
+        return applicationName;
     }
 
     /**

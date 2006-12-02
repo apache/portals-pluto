@@ -25,21 +25,58 @@ limitations under the License.
     </c:forEach>
     </select>
   </p>
-  </div>
+</div>
 
 <div>
   <h2>Portlet Applications</h2>
   <p>
-    <select name="apps" onChange="alert('Once Implemented, you will be able to add this portlet to this page.');">
-    <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
-        <optgroup label="<c:out value="${app.applicationId}"/>">
-            <c:forEach items="${app.portletApplicationDefinition.portlets}" var="portlet">
-                <option value="<c:out value="${portlet.portletName}"/>"><c:out value="${portlet.portletName}"/></option>
-            </c:forEach>
-        </optgroup>
+    <!-- TODO: Should be namespaced! -->
+    <form name="adminForm" action="#">
+
+    <script type="text/javascript">
+        var portlets = new Array();
+        <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
+            var i = 0;
+            portlets['<c:out value="${app.applicationId}"/>'] = new Array();
+            portlets['<c:out value="${app.applicationId}"/>'][i++] = 'Select. . .';
+          <c:forEach items="${app.portletApplicationDefinition.portlets}" var="portlet">
+            portlets['<c:out value="${app.applicationId}"/>'][i++] = '<c:out value="${portlet.portletName}"/>';
+          </c:forEach>
+        </c:forEach>
+
+        function doSwitch(select) {
+            var portletsSelectBox = document.forms['adminForm'].elements['portlets'];
+            if (select.value == '-') {
+                document.forms['adminForm'].elements['portlets'].disabled = true;
+            } else {
+                portletsSelectBox.disabled = false;
+                var pList = portlets[select.value];
+                for (i = 0; i < pList.length; i++) {
+                    portletsSelectBox.options[i] = new Option(pList[i], pList[i]);
+                }
+            }
+            doSwitchButton(portletsSelectBox);
+        }
+
+        function doSwitchButton(select) {
+            document.forms['adminForm'].elements['submitButton'].disabled = (select.value == 'Select. . .' || select.disabled);
+        }
+    </script>
+
+        <select name="applications" onChange="doSwitch(this)">
+            <option value='-'>Select. . .</option>
+            <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
+        <option value="<c:out value="${app.applicationId}"/>"><c:out value="${app.applicationName}"/></option>
     </c:forEach>
     </select>
+
+    <select name="portlets" disabled="true" onChange='doSwitchButton(this)'>
+
+    </select>
+
+    <button onClick="alert('Sorry, this feature has not yet been implemented'); return false;" name="submitButton" disabled="true">
+        Add Portlet
+    </button>
+    </form>
   </p>
 </div>
-
-
