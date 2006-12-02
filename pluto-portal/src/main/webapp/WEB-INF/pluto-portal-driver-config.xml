@@ -37,12 +37,21 @@ limitations under the License.
     <window-state>maximized</window-state>
     <window-state>minimized</window-state>
   </supports>
-  
+
+
+    <!--
+
+    NOTE: Once all of the services are re-implemented correctly, we will
+    remove this registry from the config. This is because it is no longer
+    necessary, as each portlet registers itself as it starts up!
+    -->
+    
   <portlet-app>
     <context-path>/pluto</context-path>
     <portlets>
       <portlet name="AboutPortlet"/>
       <portlet name="AdminPortlet"/>
+      <portlet name="PlutoPageAdmin"/>
     </portlets>
   </portlet-app>
   
@@ -53,7 +62,7 @@ limitations under the License.
       <portlet name="TestPortlet2"/>
     </portlets>
   </portlet-app>
-  
+
   <!-- Render configuration which defines the portal pages. -->
   <render-config default="Test Page">
     <page name="Test Page" uri="/WEB-INF/themes/pluto-default-theme.jsp">
@@ -69,6 +78,7 @@ limitations under the License.
     </page>
     <page name="Pluto Admin" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/pluto" name="AdminPortlet"/>
+      <portlet context="/pluto" name="PlutoPageAdmin"/>
     </page>
   </render-config>
   

@@ -85,6 +85,15 @@ limitations under the License.
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>PlutoPageAdmin</servlet-name>
+        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+        <init-param>
+            <param-name>portlet-name</param-name>
+            <param-value>PlutoPageAdmin</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>plutoPortalDriver</servlet-name>
@@ -116,7 +125,10 @@ limitations under the License.
         <url-pattern>/PlutoInvoker/AdminPortlet</url-pattern>
     </servlet-mapping>
 
-
+    <servlet-mapping>
+        <servlet-name>PlutoPageAdmin</servlet-name>
+        <url-pattern>/PlutoInvoker/PlutoPageAdmin</url-pattern>
+    </servlet-mapping>
     <taglib>
         <taglib-uri>http://java.sun.com/portlet</taglib-uri>
         <taglib-location>/WEB-INF/tld/portlet.tld</taglib-location>

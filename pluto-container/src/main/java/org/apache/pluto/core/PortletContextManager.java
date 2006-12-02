@@ -23,6 +23,8 @@ import org.apache.pluto.internal.impl.PortletContextImpl;
 import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
@@ -40,6 +42,9 @@ import java.util.List;
  * @since Sep 20, 2004
  */
 public class PortletContextManager implements PortletRegistryService {
+
+    /** Log Instance */
+    private static final Log LOG = LogFactory.getLog(PortletContextManager.class);
 
     /**
      * The singleton manager instance.
@@ -112,7 +117,7 @@ public class PortletContextManager implements PortletRegistryService {
 
 
     public Iterator getRegisteredPortletApplications() throws PortletContainerException {
-        return portletContexts.keySet().iterator();
+        return portletContexts.values().iterator();
     }
 
     public PortletAppDD getPortletApplicationDescriptor(String name) throws PortletContainerException {
@@ -140,6 +145,8 @@ public class PortletContextManager implements PortletRegistryService {
         while (i.hasNext()) {
             ((PortletRegistryListener) i.next()).portletApplicationRegistered(event);
         }
+
+        LOG.info("Portlet Context '"+context.getApplicationId()+"' registered.");
     }
 
     private void fireRemoved(InternalPortletContext context) {
@@ -151,6 +158,8 @@ public class PortletContextManager implements PortletRegistryService {
         while (i.hasNext()) {
             ((PortletRegistryListener) i.next()).portletApplicationRemoved(event);
         }
+
+        LOG.info("Portlet Context '"+context.getApplicationId()+"' removed.");
     }
 
     class MultiKeyedMap extends HashMap {

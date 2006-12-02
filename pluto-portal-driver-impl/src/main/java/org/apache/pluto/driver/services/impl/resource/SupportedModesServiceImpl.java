@@ -90,6 +90,14 @@ public class SupportedModesServiceImpl implements SupportedModesService
     public boolean isPortletModeSupportedByPortlet(String portletId, String mode) 
     {
         LOG.debug("Is mode [" + mode + "] for portlet [" + portletId + "] supported by the portlet?");
+
+        // hack? or required, can't remember?
+        if(PortletMode.EDIT.toString().equalsIgnoreCase(mode)
+            || PortletMode.HELP.toString().equalsIgnoreCase(mode)
+            || PortletMode.VIEW.toString().equalsIgnoreCase(mode)) {
+            return true;
+        }
+        
         Set supportedModes = (Set)supportedPortletModesByPortlet.get(portletId);
         if (supportedModes == null)
         {
@@ -192,6 +200,10 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 LOG.warn(e);
                 continue;
             }
+
+            if(portletAppDD == null) {
+                continue;
+            }
                         
             // for each portletAppDD, retrieve the portletDD and the supported modes
             Iterator portlets = portletAppDD.getPortlets().iterator();
@@ -217,8 +229,9 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 supportedPortletModesByPortlet.put(
                         PortletWindowConfig.createPortletId(app.getContextPath(), portlet.getPortletName()), 
                         pModes);                     
-            } 
+            }
         }
+
     }
     
     /**

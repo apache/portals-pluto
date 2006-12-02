@@ -97,15 +97,20 @@ public class PortletContextImpl
      * <li>Attempt to retrieve the contextPath property value from the ServletContext if it exists (Servlet 2.5)</li>
      * <li>Attempt to retrieve the org.apache.pluto.CONTEXT_PATH attribute from the ServletContext</li>
      * <li>If all else fails, use the SerlvetContext.getServletContextName() value</li>
+     * <li>Generate a random string</li>
      *
      * @return the published application Id for this context.
      */
     public String getApplicationId() {
         String applicationId =  getContextPath();
         if(applicationId == null) {
+            applicationId = servletContext.getServletContextName();
+        }
+
+        if(applicationId == null) {
             applicationId = RandomStringUtils.randomAlphanumeric(8);
         }
-        
+
         return applicationId;
     }
 
