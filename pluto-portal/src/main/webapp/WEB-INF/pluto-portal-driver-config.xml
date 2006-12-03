@@ -51,6 +51,7 @@ limitations under the License.
     <portlets>
       <portlet name="AboutPortlet"/>
       <portlet name="AdminPortlet"/>
+      <portlet name="AdminDeploymentPortlet"/>
       <portlet name="PlutoPageAdmin"/>
     </portlets>
   </portlet-app>
@@ -77,6 +78,7 @@ limitations under the License.
       <portlet context="/pluto" name="AboutPortlet"/>
     </page>
     <page name="Pluto Admin" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/pluto" name="AdminDeploymentPortlet"/>
       <portlet context="/pluto" name="AdminPortlet"/>
       <portlet context="/pluto" name="PlutoPageAdmin"/>
     </page>

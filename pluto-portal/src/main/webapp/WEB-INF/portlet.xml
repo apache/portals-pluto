@@ -21,7 +21,7 @@ limitations under the License.
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
                         http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
-
+                        
     <portlet>
         <description>AboutPortletDescription</description>
         <portlet-name>AboutPortlet</portlet-name>
@@ -54,6 +54,24 @@ limitations under the License.
         </portlet-info>
     </portlet>
 
+	<portlet>
+    	<description>Admin portlet to deploy admin war files</description>
+		<portlet-name>AdminDeploymentPortlet</portlet-name>
+	    <display-name>Admin Deploy Portlet</display-name>
+		<portlet-class>org.apache.pluto.driver.portlets.AdminDeploymentPortlet</portlet-class>
+		<supports>
+			<mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
+        	<portlet-mode>HELP</portlet-mode>
+		</supports>
+	    <supported-locale>en</supported-locale>
+    	<resource-bundle>AdminDeploymentPortlet</resource-bundle>
+	    <portlet-info>
+			<title>Admin Deploy Portlet</title>
+	    </portlet-info>
+	</portlet>  
+
     <portlet>
         <description>Used to administer pluto pages</description>
         <portlet-name>PlutoPageAdmin</portlet-name>
@@ -69,6 +87,7 @@ limitations under the License.
             <title>Pluto Page Administrator</title>
         </portlet-info>
     </portlet>
+>>>>>>> .r481784
 </portlet-app>
 
 
