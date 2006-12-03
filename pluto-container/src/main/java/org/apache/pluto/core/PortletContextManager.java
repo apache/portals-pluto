@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.core;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalPortletContext;
@@ -23,15 +25,17 @@ import org.apache.pluto.internal.impl.PortletContextImpl;
 import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Manager used to cache the portlet configurations which have
@@ -44,7 +48,9 @@ import java.util.HashSet;
  */
 public class PortletContextManager implements PortletRegistryService {
 
-    /** Log Instance */
+    /**
+     * Log Instance
+     */
     private static final Log LOG = LogFactory.getLog(PortletContextManager.class);
 
     /**
@@ -58,7 +64,7 @@ public class PortletContextManager implements PortletRegistryService {
      * The PortletContext cache map: key is servlet context, and value is the
      * associated portlet context.
      */
-    private MultiKeyedMap portletContexts = new MultiKeyedMap();
+    private Map portletContexts = new HashMap();
 
     /**
      * The registered listeners that should be notified upon
@@ -96,19 +102,22 @@ public class PortletContextManager implements PortletRegistryService {
      */
     public InternalPortletContext register(ServletContext servletContext)
         throws PortletContainerException {
+        String applicationId = getContextPath(servletContext);
         if (!portletContexts.containsKey(servletContext)) {
+
             PortletAppDD portletAppDD = PortletDescriptorRegistry.getRegistry()
                 .getPortletAppDD(servletContext);
+
             PortletContextImpl portletContext = new PortletContextImpl(
-                servletContext, portletAppDD);
+                applicationId,  servletContext, portletAppDD);
 
             if (portletContext.getApplicationId() == null) {
                 throw new IllegalStateException("Unable to resolve unique identifier for portletContext.");
             }
-            portletContexts.put(servletContext, portletContext);
+            portletContexts.put(applicationId, portletContext);
             fireRegistered(portletContext);
         }
-        return (InternalPortletContext) portletContexts.get(servletContext);
+        return (InternalPortletContext)portletContexts.get(applicationId);
     }
 
     public void remove(InternalPortletContext context) {
@@ -122,8 +131,8 @@ public class PortletContextManager implements PortletRegistryService {
     }
 
     public PortletAppDD getPortletApplicationDescriptor(String name) throws PortletContainerException {
-        InternalPortletContext ipc = (InternalPortletContext)portletContexts.get(name);
-        if(ipc != null) {
+        InternalPortletContext ipc = (InternalPortletContext) portletContexts.get(name);
+        if (ipc != null) {
             return ipc.getPortletApplicationDefinition();
         }
         return null;
@@ -147,7 +156,7 @@ public class PortletContextManager implements PortletRegistryService {
             ((PortletRegistryListener) i.next()).portletApplicationRegistered(event);
         }
 
-        LOG.info("Portlet Context '"+context.getApplicationId()+"' registered.");
+        LOG.info("Portlet Context '" + context.getApplicationId() + "' registered.");
     }
 
     private void fireRemoved(InternalPortletContext context) {
@@ -160,27 +169,62 @@ public class PortletContextManager implements PortletRegistryService {
             ((PortletRegistryListener) i.next()).portletApplicationRemoved(event);
         }
 
-        LOG.info("Portlet Context '"+context.getApplicationId()+"' removed.");
+        LOG.info("Portlet Context '" + context.getApplicationId() + "' removed.");
     }
 
-    class MultiKeyedMap extends HashMap {
 
-        public void put(PortletContextImpl context) {
-            put(context.getApplicationId(),context);
-            put(context.getServletContext(), context);
+//
+// Utility
 
-            String contextPath = context.getContextPath();
+    /**
+     * Servlet 2.5 ServletContext.getContextPath() method.
+     */
+    private static Method contextPathGetter;
 
-            if (contextPath != null) {
-                put(contextPath, context);
+    static {
+        try {
+            contextPathGetter = ServletContext.class.getMethod("getContextPath", new Class[0]);
+        }
+        catch (NoSuchMethodException e) {
+            LOG.warn("Servlet 2.4 or below detected.  Unable to find getContextPath on ServletContext.");
+        }
+    }
+
+    protected String getContextPath(ServletContext context) {
+        String contextPath = null;
+        if (contextPathGetter != null) {
+            try {
+                contextPath = (String) contextPathGetter.invoke(context, new Class[0]);
+            } catch (Exception e) {
+                LOG.warn("Unable to directly retrieve context path from ServletContext. Computing. . . ");
             }
         }
 
-        public PortletAppDD remove(PortletContextImpl context) {
-            PortletAppDD dd = (PortletAppDD) remove(context.getApplicationId());
-            remove(context.getContextPath());
-            remove(context.getServletContext());
-            return dd;
+        if(contextPath == null) {
+            contextPath = computeContextPath(context);
+        }
+
+        return contextPath;
+    }
+
+    private static final String WEB_XML = "/WEB-INF/web.xml";
+
+    protected String computeContextPath(ServletContext context) {
+        try {
+            URL webXmlUrl = context.getResource(WEB_XML);
+            String path = webXmlUrl.toExternalForm();
+            path = path.substring(0, path.indexOf(WEB_XML));
+            path = path.substring(path.lastIndexOf("/"));
+
+            int id = path.indexOf(".war");
+            if(id > 0) {
+                path = path.substring(0, id);
+            }
+
+            return path;
+        } catch (MalformedURLException e) {
+            LOG.warn("Erorr retrieving web.xml from ServletContext. Unable to derive contextPath.");
+            return null;
         }
     }
 }

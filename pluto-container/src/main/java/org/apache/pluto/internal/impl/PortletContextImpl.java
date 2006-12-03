@@ -51,30 +51,13 @@ public class PortletContextImpl
     private static final String CONTEXT_PATH =
         "org.apache.pluto.PORTLET_APP_CONTEXT_PATH";
 
-    /**
-     * Servlet 2.5 ServletContext.getContextPath() method.
-     */
-    private static Method contextPathGetter;
 
-    static {
-        try {
-            contextPathGetter = ServletContext.class.getMethod("getContextPath", new Class[0]);
-        }
-        catch (NoSuchMethodException e) {
-            LOG.warn("Servlet 2.4 or below detected.  Unable to find getContextPath on ServletContext.");
-        }
-    }
 
     // Private Member Variables ------------------------------------------------
 
-    /**
-     * Portlet Application Descriptor.
-     */
+    private String applicationId;
+    private String applicationName;
     private PortletAppDD portletAppDD = null;
-
-    /**
-     * ServletContext in which we are contained.
-     */
     private ServletContext servletContext = null;
 
     // Constructor -------------------------------------------------------------
@@ -85,72 +68,24 @@ public class PortletContextImpl
      * @param servletContext the servlet context in which we are contained.
      * @param portletAppDD   the portlet application descriptor.
      */
-    public PortletContextImpl(ServletContext servletContext,
+    public PortletContextImpl(String portletApplicationId,
+                              ServletContext servletContext,
                               PortletAppDD portletAppDD) {
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
+        this.applicationId = portletApplicationId;
+        this.applicationName = servletContext.getServletContextName();
+        if(applicationName == null) {
+            applicationName = applicationId;
+        }
     }
 
-    /**
-     * Retrieves the public applicationId published for this context.
-     * The algorithm for creating the applicationId is:
-     * <li>Attempt to retrieve the contextPath property value from the ServletContext if it exists (Servlet 2.5)</li>
-     * <li>Attempt to retrieve the org.apache.pluto.CONTEXT_PATH attribute from the ServletContext</li>
-     * <li>If all else fails, use the SerlvetContext.getServletContextName() value</li>
-     * <li>Generate a random string</li>
-     *
-     * @return the published application Id for this context.
-     */
     public String getApplicationId() {
-        String applicationId =  getContextPath();
-        if(applicationId == null) {
-            applicationId = servletContext.getServletContextName();
-            if(applicationId != null) {
-                applicationId = Integer.toHexString(applicationId.hashCode());
-            }
-        }
-
-        if(applicationId == null) {
-            applicationId = RandomStringUtils.randomAlphanumeric(8);
-        }
-
         return applicationId;
     }
 
     public String getApplicationName() {
-        String applicationName = servletContext.getServletContextName();
-
-        if(applicationName == null) {
-            applicationName = getContextPath();
-        }
-
-        if(applicationName == null) {
-            applicationName = getApplicationId();
-        }
-
         return applicationName;
-    }
-
-    /**
-     * Retrieve the contextPath of the SerlvetContext
-     *
-     * @return
-     */
-    public String getContextPath() {
-        String contextPath = null;
-        if (contextPathGetter != null) {
-            try {
-                contextPath = (String) contextPathGetter.invoke(servletContext, new Class[0]);
-            } catch (Exception e) {
-                LOG.warn("Unable to directly retrieve context path from ServletContext.");
-            }
-        }
-
-        if (contextPath == null) {
-            contextPath = (String) servletContext.getAttribute(CONTEXT_PATH);
-        }
-        
-        return contextPath;
     }
 
     // PortletContext Impl -----------------------------------------------------

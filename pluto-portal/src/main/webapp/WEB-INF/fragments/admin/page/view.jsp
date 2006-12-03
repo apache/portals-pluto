@@ -21,7 +21,7 @@ limitations under the License.
   <p>
     <select name="page">
     <c:forEach items="${driverConfig.pages}" var="page">
-      <option value="<c:out value="${page.name}"/>"><c:out value="${page.name}"/> (<c:out value="${page.uri}"/>)</option>
+      <option value="<c:out value="${page.name}"/>"><c:out value="${page.name}"/></option>
     </c:forEach>
     </select>
   </p>
