@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<document>
+  
+  <properties>
+    <title>Welcome to Pluto</title>
+    <author email="ddewolf@apache.org">David DeWolf</author>
+  </properties>
+  
+  <body>
+    
+    <section name="Welcome to Pluto">
+      
+      <div class="highlightBox">
+        <h5>JSR-286 - The Java Portlet API 2.0</h5>
+        <p>
+          The Java Portlet API version 2.0 specification is now under
+          development by the JSR-286 Expert Group under the auspices of the
+          <a href="http://www.jcp.org">Java Community Process</a>.
+          JSR-286 builds on JSR-168. Details on the specification work can be
+          found at the <a href="http://jcp.org/en/jsr/detail?id=286">JSR-286 web
+          site</a>. The Expert Group is very interested in feedback from the
+          community. Send your comments to <a href="mailto:jsr-286-comments@jcp.org">
+          jsr-286-comments@jcp.org</a> or post to the
+          <a href="http://wiki.apache.org/portals/Pluto/IdeasAndCommentsForJSR286">
+          'Comments and ideas for JSR286'</a> wiki page.
+        </p>
+      </div>
+      
+      <div class="highlightBox">
+        <h5>Get Pluto 1.1.0</h5>
+        <p>
+          <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">
+            <img valign="top" src="images/download.gif" border="0" title="download"/>
+            Download
+          </a>
+          Pluto 1.1.0-beta2 (19Mb)
+        </p>
+        <ul>
+          <li><a href="v11/getting-started.html">Installation Guide</a></li>
+        </ul>
+      </div>
+
+      <div class="highlightBox">
+        <h5>Get Pluto 1.0.1</h5>
+        <p>
+          <a href="http://archive.apache.org/dist/portals/pluto/">
+            <img valign="top" src="images/download.gif" border="0" title="download"/>
+            Download
+          </a>
+          Pluto 1.0.1 (12Mb)
+        </p>
+        <ul>
+          <li><a href="v101/install.html">Installation Guide</a></li>
+        </ul>
+      </div>
+      
+      <p>
+        Pluto is the Reference Implementation of the Java Portlet Specfication.
+        The current version of this specification is JSR 168.
+      </p>
+      <p>
+        Portlets are designed to run in the context of a portal. They are
+        written to the Portlet API which are similar to the Servlet API.
+      </p>
+      <p>
+        In contrast to servlets, portlets may not do things like sending
+        redirects or errors to browsers directly, forwarding requests or writing
+        arbitrary markup to the output stream to assure that they don?t distract
+        the portal web application which uses them. Another difference compared
+        to servlets is that portlets rely on portal specific infrastructure
+        functions such as access to user profile information, standard interface
+        for storing/retrieving persistent settings, getting client information,
+        etc. Generally, portlets are administrated more dynamically than
+        servlets typically are.
+      </p>
+      <p>
+        A portlet container provides a runtime environment for portlets
+        implemented according to the Portlet API. In this environment portlets
+        can be instantiated, used and finally destroyed. The portlet container
+        is not a stand-alone container like the servlet container; instead it is
+        implemented as a thin layer on top of the servlet container and reuses
+        the functionality provided by the servlet container.
+      </p>
+      <p>
+        Pluto serves as portlet container that implements the Portlet API and
+        offers developers a working example platform from which they can test
+        their portlets. However, it's cumbersome to execute and test the portlet
+        container without a driver, in this case, the portal. Pluto's simple
+        portal component is built only on the portlet container's and the JSR
+        168's requirements. (In contrast, the more sophisticated, Jetspeed
+        project concentrates on the portal itself rather than the portlet
+        container, and considers requirements from other groups.)
+      </p>
+    </section>
+
+    <section name="Project Status">
+      <p>
+        Apache Pluto is a subproject of the Apache Portals Project. The current
+        stable release of Apache Pluto is version 1.0.1. The current version
+        actively being developed is version 1.1.
+      </p>
+      <subsection name="Pluto 1.0.1">
+        <p>
+          Pluto 1.0.1 is the current stable release of Pluto. This version of
+          pluto is utilized as the portlet container for Jetspeed and other
+          portals. In addition, Pluto 1.0.1 is embeded within Apache Geronimo.
+        </p>
+      </subsection>
+      <subsection name="Pluto 1.1">
+        <p>
+          Pluto 1.1 introduces a new container architecture. If you are
+          embedding Pluto in your portal, realize that 1.1 is not binarily
+          compatible with Pluto 1.0.x.
+        </p>
+        <p>
+          Pluto 1.1 aims to simplify the architecture in order to make it more
+          user and developer friendly. You should find Pluto 1.1 easier to get
+          started with, easier to understand, and easier to embed with your
+          portal. Your feedback regarding how far we've come is always welcome
+          on the user and developer mailing lists!
+        </p>
+      </subsection>
+    </section>
+    
+  </body>
+  
+</document>
+

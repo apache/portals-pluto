@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2004 The Apache Software Foundation
+Licensed  under the  Apache License,  Version 2.0  (the "License");
+you may not use  this file  except in  compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<document>
+  
+  <properties>
+    <title>Supported Application Servers</title>
+    <author email="ddewolf@apache.org">David DeWolf</author>
+  </properties>
+  
+  <body>
+    <section name="Supported Application Servers">
+      <p>The following application servers have been tested with Pluto 1.1:</p>
+      <p>
+        <table>
+          <tr>
+            <th>App Server</th>
+            <th>Version</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+          <tr>
+            <td>Tomcat</td>
+            <td>5.5.9</td>
+            <td>WORKING</td>
+            <td>
+              Use <code>mvn pluto:install -DinstallDir=/path/to/tomcat</code> 
+              to install the container and portal into Tomcat.
+            </td>
+          </tr>
+          <tr>
+            <td>Tomcat</td>
+            <td>5.5.12</td>
+            <td>MANUAL</td>
+            <td>
+              Tomcat contains a bug and does not recognize the context
+              configuration.  Manual Installation and renaming will work.
+            </td>
+          </tr>
+          <tr>
+            <td>Tomcat</td>
+            <td>5.5.17</td>
+            <td>Working</td>
+            <td>
+              Use <code>mvn pluto:install -DinstallDir=/path/to/tomcat</code> 
+              to install the container and portal into Tomcat.
+            </td>
+          </tr>
+          <tr>
+            <td>Jetty</td>
+            <td>5.1.5rc2</td>
+            <td>BEING FIXED</td>
+            <td>Deployment Descriptor Error. See Issue Log.</td>
+          </tr>
+          <tr>
+            <td>WebLogic</td>
+            <td></td>
+            <td>UNTESTED</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>WebSphere</td>
+            <td></td>
+            <td>UNTESTED</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>SunOne</td>
+            <td></td>
+            <td>UNTESTED</td>
+            <td></td>
+          </tr>
+        </table>
+      </p>
+    </section>
+  </body>
+  
+</document>
+

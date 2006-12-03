@@ -1,0 +1,90 @@
+#  Copyright 2006 The Apache Software Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License
+
+README for Pluto 1.1-beta2
+
+To run the Pluto Portal Driver deployed in Tomcat 5.5.17:
+1. Unzip the binary distribution into a directory.
+	a. <PLUTO-HOME> will be the pluto-1.1.0-beta2 subdirectory.
+2. Execute startup.bat (Windows) or startup.sh (Unix)
+in <PLUTO-HOME>/bin.
+	a. Use shutdown.bat/shutdown.sh to stop the portal
+3. Browse to http://localhost:8080/pluto/portal
+4. Login as tomcat user (password=tomcat).
+
+For information on deploying portlets, building the portal from source
+ and for the most up to date documentation please go to: 
+  http://portals.apache.org/pluto
+  
+***********************************************************
+* RELEASE NOTES: 1.1.0-beta2 Sept 26, 2006                *
+***********************************************************
+* Fixed or Resolved Issues                                *
+***********************************************************
+** Bug ****************************************************
+ PLUTO-191  Dynamic Inclusion of dependencies in Maven Plugin
+ PLUTO-232  Maximize window state does not work properly
+ PLUTO-233  Exception thrown if edit or help mode is not supported by portlet
+ PLUTO-242  Portlet session is invalidated when maxInactiveInterval < 0
+ PLUTO-243  PortalURLParser drops '/' characters when building render path
+ PLUTO-245  Parsing of portlet.xml strips space from init-param values
+ PLUTO-246  PortalURLParser should URLEncode query string parameters 
+ PLUTO-248  PortalUrlParser should encode '#' character
+ PLUTO-251  Pluto fails when navigating between pages using the drop-downs
+ PLUTO-254  NPE in PortalDriverServlet when requesting a resource that doesn't exist 
+***********************************************************
+
+** New Feature ********************************************
+ PLUTO-214  Add logout link to portal page.
+ PLUTO-255   Seperate portal-driver into portal-driver-api and portal-driver-impl
+***********************************************************
+***********************************************************
+
+***********************************************************
+***********************************************************
+* Open Issues                                             *
+***********************************************************
+
+** Bug ****************************************************
+ PLUTO-124  POST Data gets truncated due to internal redirect by pluto
+ PLUTO-122  Portlet Preferences need to be user specific
+ PLUTO-257  Pluto 1.1 plugin for the deployment of custom portlets does not work
+ PLUTO-200  Missing Resource Exception from PortletConfig.getResourceBundle
+ PLUTO-234  Session Timeout Test in testsuite fails
+***********************************************************
+    
+** New Feature ********************************************
+ PLUTO-215  Create admin portlet for Pluto portal driver
+ PLUTO-252  Custom Tags with response.encodeUrl( url ) and Render hidden portlet mode.
+ PLUTO-38   user profile attribute support
+ PLUTO-186  ToolTips to Portlet Controls
+***********************************************************
+    
+** Improvement ********************************************
+ PLUTO-204  Add spec PLT number to TestResult in portlet tests
+ PLUTO-247  PortalURLParser: Avoid putting '?' and '&' characters in query string if unnecessary
+***********************************************************
+    
+** Task ***************************************************
+ PLUTO-218  [1.1] Script to package source release
+ PLUTO-217  [1.1] Script to package binary release
+***********************************************************
+
+** Test ***************************************************
+ PLUTO-206  Improve pluto-testsuite to test more aspects
+***********************************************************
+    
+** Wish ***************************************************
+ PLUTO-153  Jetty Deployment Support
+***********************************************************

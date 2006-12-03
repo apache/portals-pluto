@@ -1,0 +1,196 @@
+<!--
+  Copyright 2005-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!--
+	Builds a binary and source distribution of Pluto 1.1, bundling it into zip, gzip and bzip2 files.
+	
+	Run the binary build using the command line:
+		ant -f dist-build.xml
+				
+	The binary distribution is done in the following way:
+	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
+		build:
+		a. Adds emptySessionPath="true" to server.xml.
+		b. Adds a pluto user with pluto role to tomcat-users.xml.
+		c. Adds a pluto role to the tomcat user in tomcat-users.xml.
+	2. Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
+		and installs them into the Tomcat dist in the working directory.
+	3. Bundles up the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
+	
+	Run the source build using the command line:
+		ant -f dist-build.xml src-dist	
+
+	All built distributions end up in target/dist.				
+-->
+<project name="PlutoDistributions" default="bin-dist">
+
+	<property name="pluto.version" value="1.1.0-SNAPSHOT" description="Version of Pluto 1.1 to build"/>
+	<property name="tomcat.version" value="5.5.17" description="Version of Tomcat to deploy Pluto"/>
+
+	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
+	<property name="base.name" value="apache-tomcat-${tomcat.version}"/>
+	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
+	<property name="pluto.name" value="pluto-${pluto.version}"/>
+	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
+	<property name="unzip.file" value="${dist.basedir}/${base.name}.tar.gz"/>
+	<property name="tar.file" value="${dist.basedir}/${base.name}.tar"/>
+
+	<fileset dir="." id="src.fileset">
+		<include name="**/*"/>
+		<exclude name="**/*.class"/>
+		<exclude name="**/*.zip"/>
+		<exclude name="**/*.tar.gz"/>
+		<exclude name="**/*.tar.b2"/>
+		<exclude name="**/target/**/*"/>
+		<exclude name="**/.svn/*"/>
+		<exclude name="bin/**/*"/>
+		<exclude name=".classpath"/>
+		<exclude name=".project"/>
+	</fileset>					
+	
+	<target name="src-dist" depends="prepare-src-dist">
+		<zip destfile="${dist.basedir}/${pluto.name}-src.zip">
+			<zipfileset refid="src.fileset"/>							
+		</zip>
+
+		<antcall target="srctar-nocompress"/>
+		
+		<gzip src="${dist.basedir}/${pluto.name}-src.tar" 
+			destfile="${dist.basedir}/${pluto.name}-src.tar.gz"/>
+		
+		<bzip2 src="${dist.basedir}/${pluto.name}-src.tar" 
+			destfile="${dist.basedir}/${pluto.name}-src.tar.bz2"/>
+		
+		<antcall target="clean"/>	
+	</target>
+
+	<target name="srctar-nocompress" description="Creates tar source distributions">
+		<tar destfile="${dist.basedir}/${pluto.name}-src.tar">
+				<tarfileset dir="."> <!-- refid does not work -->
+					<include name="**/*"/>
+					<exclude name="**/*.class"/>
+					<exclude name="**/*.zip"/>
+					<exclude name="**/*.tar.gz"/>
+					<exclude name="**/*.tar.bz2"/>
+					<exclude name="**/target/**/*"/>
+					<exclude name="**/.svn/*"/>
+					<exclude name="bin/**/*"/>
+					<exclude name=".classpath"/>
+					<exclude name=".project"/>
+				</tarfileset>	
+		</tar>	
+	</target>
+
+	<target name="prepare-src-dist">
+		<mkdir dir="${dist.basedir}"/>		
+	</target>
+
+	<target name="bin-dist" depends="prepare-bin-dist,run-maven" description="Creates zip, gzip, and bzip2 distributions">
+		<!-- Copy over jars needed to deploy custom portlets -->
+		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+		<copy file="pluto-descriptor-api/target/pluto-descriptor-api-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+		<copy file="pluto-descriptor-impl/target/pluto-descriptor-impl-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
+
+		<!-- Zip everything up -->
+		<zip destfile="${dist.basedir}/${pluto.name}-bin.zip">
+			<zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
+		</zip>
+
+		<antcall target="tar-nocompress"/>
+		
+		<gzip src="${dist.basedir}/${pluto.name}-bin.tar" 
+			destfile="${dist.basedir}/${pluto.name}-bin.tar.gz"/>
+		
+		<bzip2 src="${dist.basedir}/${pluto.name}-bin.tar" 
+			destfile="${dist.basedir}/${pluto.name}-bin.tar.bz2"/>
+				
+		<antcall target="clean"/>	
+	</target>
+	
+	<target name="tar-nocompress" description="Creates tar binary distributions">
+		<tar destfile="${dist.basedir}/${pluto.name}-bin.tar">
+			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" mode="755" username="pluto" group="pluto">
+		    	<include name="bin/*.sh"/>
+			</tarfileset>
+			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" username="pluto" group="pluto">
+				<include name="**/*"/>
+				<exclude name="bin/*.sh"/>
+			</tarfileset>
+		</tar>		
+	</target>
+	
+	<target name="prepare-bin-dist">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="clean:clean"/>
+		</exec>
+		<mkdir dir="${dist.basedir}"/>
+		
+		<get src="http://archive.apache.org/dist/tomcat/tomcat-5/v${tomcat.version}/bin/${base.name}.tar.gz"
+		     dest="${unzip.file}"
+		/>
+		
+		<gunzip src="${unzip.file}"
+			dest="${dist.basedir}"
+			description="Creates tar from tar.gz tomcat dist"
+		/>
+		
+		<untar src="${tar.file}"
+			dest="${dist.basedir}"
+			description="Untars tomcat dist"
+		/>		
+
+		<!-- Copy over README -->
+		<copy file="README" todir="${dist.dir}"/>
+
+		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
+		<replace file="${dist.dir}/conf/server.xml"
+			token="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;" 
+			value="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; emptySessionPath=&quot;true&quot; /&gt;" 
+			summary="true"
+		/>
+
+		<!-- Put tomcat user in 'pluto' role in tomcat-users.xml -->
+		<replace file="${dist.dir}/conf/tomcat-users.xml"
+			token="roles=&quot;tomcat&quot;" 
+			value="roles=&quot;tomcat,pluto&quot;" 
+			summary="true"
+		/>
+		
+		<!-- Add 'pluto' user to tomcat-users.xml -->
+		<replace file="${dist.dir}/conf/tomcat-users.xml"
+			token="&lt;/tomcat-users&gt;" 
+			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
+			summary="true"
+		/>
+	</target>
+
+	<target name="run-maven" description="Runs maven2 goals">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="install"/>
+		</exec>
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+			<arg line="pluto:install -DinstallDir=${user.dir}/${dist.dir}"/>
+		</exec>
+	</target>
+		
+	<target name="clean">
+		<delete dir="${dist.dir}"/>
+		<delete file="${unzip.file}"/>	
+		<delete file="${tar.file}"/>	
+   	    <delete file="${dist.basedir}/${pluto.name}-src.tar"/>
+   	    <delete file="${dist.basedir}/${pluto.name}-bin.tar"/>
+	</target>
+
+</project>
