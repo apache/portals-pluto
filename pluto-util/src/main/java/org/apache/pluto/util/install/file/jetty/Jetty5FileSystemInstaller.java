@@ -15,10 +15,11 @@
  */
 package org.apache.pluto.util.install.file.jetty;
 
+import org.apache.commons.io.FileUtils;
+
 import org.apache.pluto.util.install.InstallationConfig;
 import org.apache.pluto.util.install.file.FileSystemInstaller;
 import org.apache.pluto.util.UtilityException;
-import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
