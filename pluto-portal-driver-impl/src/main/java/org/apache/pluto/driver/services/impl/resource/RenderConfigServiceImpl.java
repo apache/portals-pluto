@@ -19,6 +19,7 @@ import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.*;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
 
+import javax.portlet.PortletContext;
 import javax.servlet.ServletContext;
 import java.util.List;
 import java.util.Set;
@@ -48,13 +49,36 @@ public class RenderConfigServiceImpl
     public void init(ServletContext ctx) {
         try {
             InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
-            config = ResourceConfigReader.getFactory().parse(in);
+            initializeConfig(in);
+        }
+        catch(Exception e) {
+            throw new DriverConfigurationException(e);
+        }
+    }
+    
+    /**
+     * Used by the admin portlet
+     * @param ctx
+     */
+    public void init(PortletContext ctx) {
+        try {
+            InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
+            initializeConfig(in);
         }
         catch(Exception e) {
             throw new DriverConfigurationException(e);
         }
     }
 
+    private void initializeConfig(InputStream in) {
+        try {
+            config = ResourceConfigReader.getFactory().parse(in);
+        }
+        catch(Exception e) {
+            throw new DriverConfigurationException(e);
+        }
+    	
+    }
     /**
      * Shutdown the ResourceService.
      */

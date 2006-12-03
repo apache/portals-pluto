@@ -15,8 +15,11 @@
  */
 package org.apache.pluto.driver.config.impl;
 
+import org.apache.pluto.driver.services.portal.admin.DeployWarAdminService;
+import org.apache.pluto.driver.services.portal.admin.ReassembleWarAdminService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
 import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
+import org.apache.pluto.driver.services.portal.admin.WarUploadAdminService;
 import org.apache.pluto.driver.config.AdminConfiguration;
 
 import javax.servlet.ServletContext;
@@ -31,7 +34,10 @@ public class AdminConfigurationImpl implements AdminConfiguration {
 
     private PortletRegistryAdminService portletRegistryAdminService;
     private RenderConfigAdminService renderConfigAdminService;
-
+    private WarUploadAdminService warUploadAdminService;
+    private ReassembleWarAdminService reassembleWarAdminService;
+    private DeployWarAdminService deployWarAdminService;
+    
     public void init(ServletContext context) {
         
     }
@@ -55,6 +61,31 @@ public class AdminConfigurationImpl implements AdminConfiguration {
     public void setRenderConfigAdminService(RenderConfigAdminService renderConfigAdminService) {
         this.renderConfigAdminService = renderConfigAdminService;
     }
+
+	public DeployWarAdminService getDeployWarAdminService() {
+		return deployWarAdminService;
+	}
+
+	public ReassembleWarAdminService getReassembleWarAdminService() {
+		return reassembleWarAdminService;
+	}
+
+	public WarUploadAdminService getWarUploadAdminService() {
+		return warUploadAdminService;
+	}
+
+	public void setDeployWarAdminService(DeployWarAdminService deployWarAdminService) {
+		this.deployWarAdminService = deployWarAdminService;
+	}
+
+	public void setReassembleWarAdminService(
+			ReassembleWarAdminService reassembleWarAdminService) {
+		this.reassembleWarAdminService = reassembleWarAdminService;
+	}
+
+	public void setWarUploadAdminService(WarUploadAdminService warUploadAdminService) {
+		this.warUploadAdminService = warUploadAdminService;
+	}
 
 
 }

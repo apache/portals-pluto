@@ -15,8 +15,11 @@
  */
 package org.apache.pluto.driver.config;
 
+import org.apache.pluto.driver.services.portal.admin.DeployWarAdminService;
 import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
+import org.apache.pluto.driver.services.portal.admin.ReassembleWarAdminService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
+import org.apache.pluto.driver.services.portal.admin.WarUploadAdminService;
 
 import javax.servlet.ServletContext;
 
@@ -60,5 +63,10 @@ public interface AdminConfiguration {
      */
     RenderConfigAdminService getRenderConfigAdminService();
 
+    public WarUploadAdminService getWarUploadAdminService();
+    
+    public ReassembleWarAdminService getReassembleWarAdminService();
+    
+    public DeployWarAdminService getDeployWarAdminService();
 
 }
