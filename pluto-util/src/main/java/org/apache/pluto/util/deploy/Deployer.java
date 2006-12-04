@@ -15,7 +15,6 @@
  */
 package org.apache.pluto.util.deploy;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -36,9 +35,8 @@ public interface Deployer {
      * @throws IOException  if an IO error occurs.
      * @throws DeploymentException  if a deployment error occurs.
      */
-//    public void deploy(DeploymentConfig config, InputStream webappInputStream)
-    public void deploy(DeploymentConfig config, File webappFile)
-    	throws IOException, DeploymentException;
+    public void deploy(DeploymentConfig config, InputStream webappInputStream)
+    throws IOException, DeploymentException;
 
 }
 

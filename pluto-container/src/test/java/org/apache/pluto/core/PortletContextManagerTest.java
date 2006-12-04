@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 import javax.servlet.ServletContext;
 
-//import org.easymock.EasyMock;
+import org.easymock.EasyMock;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -37,7 +37,8 @@
 					</xs:complexType>
 				</xs:element>
 
-				<xs:element name="portlet-app" minOccurs="1"
+                <!-- Deprecated?  Not needed any more -->
+                <xs:element name="portlet-app" minOccurs="0"
 					maxOccurs="unbounded">
 					<xs:complexType>
 

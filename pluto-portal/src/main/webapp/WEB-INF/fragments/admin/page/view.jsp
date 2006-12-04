@@ -15,7 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
+<portlet:actionURL var="formActionUrl"/>
+<form name="adminForm" action="<c:out value="${formActionUrl}"/>" method="POST">
 <div>
   <h2>Portal Pages</h2>
   <p>
@@ -31,7 +34,6 @@ limitations under the License.
   <h2>Portlet Applications</h2>
   <p>
     <!-- TODO: Should be namespaced! -->
-    <form name="adminForm" action="#">
 
     <script type="text/javascript">
         var portlets = new Array();
@@ -66,7 +68,7 @@ limitations under the License.
         <select name="applications" onChange="doSwitch(this)">
             <option value='-'>Select. . .</option>
             <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
-        <option value="<c:out value="${app.applicationId}"/>"><c:out value="${app.applicationName}"/></option>
+            <option value="<c:out value="${app.applicationId}"/>"><c:out value="${app.applicationName}"/></option>
     </c:forEach>
     </select>
 
@@ -74,9 +76,9 @@ limitations under the License.
 
     </select>
 
-    <button onClick="alert('Sorry, this feature has not yet been implemented'); return false;" name="submitButton" disabled="true">
+    <button name="submitButton" disabled="true">
         Add Portlet
     </button>
-    </form>
   </p>
 </div>
+</form>

@@ -84,50 +84,11 @@ limitations under the License.
     <!-- The single top element of the administration tree -->
     <!-- ================================================ -->
     <bean id="AdminConfiguration" class="org.apache.pluto.driver.config.impl.AdminConfigurationImpl">
-    	<!-- Upload the war -->
-      <property name="warUploadAdminService"><ref bean="WarUploadAdminService"/></property>
-    	<!-- Modify web.xml and reassemble the war in its proper deployment location -->
-      <property name="reassembleWarAdminService"><ref bean="ReassemblerWarAdminService"/></property>
-      	<!-- Create the deployment descriptor and deploy it -->
-      <property name="deployWarAdminService"><ref bean="DeployWarAdminService"/></property>
-      	<!-- Register the war in pluto-portal-driver-config file by adding a portlet-app element -->
-      <!--  property name="portletRegistryAdminService"><ref bean="PortletRegistryConfig"/></property -->
-      	<!-- Add the war in pluto-portal-driver-config file to render-config section -->
-      <!-- property name="renderConfigAdminService"><ref bean="RenderConfigService"/></property -->
+      <property name="portletRegistryAdminService"><ref bean="PortletRegistryConfig"/></property>
+      <property name="renderConfigAdminService"><ref bean="RenderConfigService"/></property>
     </bean>
 
-	<bean id="WarUploadAdminService" class="org.apache.pluto.driver.services.portal.admin.impl.WarUploadAdminServiceImpl">
-		<property name="fileUploader"><ref bean="FileUploader"/></property>
-		<property name="maxUploadSize"><value>10</value></property>
-		<property name="uploadDir"><value>${user.home}/.pluto</value></property>
-	</bean>
-	
-	<bean id="ReassemblerWarAdminService" class="org.apache.pluto.driver.services.portal.admin.impl.ReassembleWarAdminServiceImpl">
-		<property name="reassembler"><ref bean="WarReassembler"/></property>
-		<property name="unzipBaseDir"><value>${user.home}/.pluto</value></property>
-		<property name="destination"><value>${catalina.home}/PlutoDomain</value></property>		
-	</bean>
 
-	<bean id="DeployWarAdminService" class="org.apache.pluto.driver.services.portal.admin.impl.Tomcat5DeployWarAdminServiceImpl">
-		<property name="deployer"><ref bean="FileSystemDeployer"/></property>
-		<property name="undeployer"><ref bean="HttpTomcatDeployer"/></property>
-		<property name="tomcatService"><value>Catalina</value></property>
-		<property name="host"><value>localhost</value></property>
-		<property name="port"><value>8080</value></property>
-		<property name="protocol"><value>http</value></property>
-	</bean>
-	
-	<bean id="FileUploader" class="org.apache.pluto.util.fileupload.http.PortletFileUploader">
-	</bean>
-
-	<bean id="WarReassembler" class="org.apache.pluto.util.assemble.file.WarFileReassembler">
-	</bean>
-	
-	<bean id="FileSystemDeployer" class="org.apache.pluto.util.deploy.file.Tomcat5FileSystemDeployer">
-	</bean>
-	
-	<bean id="HttpTomcatDeployer" class="org.apache.pluto.util.deploy.http.HttpTomcatDeployer">
-	</bean>
     <!-- ================================================ -->
     <!-- Portal Services injected into the Configuration  -->
     <!-- ================================================ -->
@@ -155,8 +116,7 @@ limitations under the License.
     <bean id="SupportedModesService"
           class="org.apache.pluto.driver.services.impl.resource.SupportedModesServiceImpl"
           singleton="true">
-          <constructor-arg><ref bean="PortletRegistryConfig"/></constructor-arg>
-          <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>          
+          <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
     </bean>
 
     <!-- ================================================ -->

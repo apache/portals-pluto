@@ -40,22 +40,20 @@ limitations under the License.
 
 
     <!--
-
     NOTE: Once all of the services are re-implemented correctly, we will
     remove this registry from the config. This is because it is no longer
     necessary, as each portlet registers itself as it starts up!
     -->
-    
+
   <portlet-app>
     <context-path>/pluto</context-path>
     <portlets>
       <portlet name="AboutPortlet"/>
       <portlet name="AdminPortlet"/>
-      <portlet name="AdminDeploymentPortlet"/>
       <portlet name="PlutoPageAdmin"/>
     </portlets>
   </portlet-app>
-  
+
   <portlet-app>
     <context-path>/testsuite</context-path>
     <portlets>
@@ -78,7 +76,6 @@ limitations under the License.
       <portlet context="/pluto" name="AboutPortlet"/>
     </page>
     <page name="Pluto Admin" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/pluto" name="AdminDeploymentPortlet"/>
       <portlet context="/pluto" name="AdminPortlet"/>
       <portlet context="/pluto" name="PlutoPageAdmin"/>
     </page>

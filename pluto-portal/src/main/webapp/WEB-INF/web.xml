@@ -86,16 +86,6 @@ limitations under the License.
     </servlet>
 
     <servlet>
-        <servlet-name>AdminDeploymentPortlet</servlet-name>
-        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
-        <init-param>
-            <param-name>portlet-name</param-name>
-            <param-value>AdminDeploymentPortlet</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet>
         <servlet-name>PlutoPageAdmin</servlet-name>
         <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
         <init-param>
@@ -136,15 +126,9 @@ limitations under the License.
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>AdminDeploymentPortlet</servlet-name>
-        <url-pattern>/PlutoInvoker/AdminDeploymentPortlet</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
         <servlet-name>PlutoPageAdmin</servlet-name>
         <url-pattern>/PlutoInvoker/PlutoPageAdmin</url-pattern>
     </servlet-mapping>
-
     <taglib>
         <taglib-uri>http://java.sun.com/portlet</taglib-uri>
         <taglib-location>/WEB-INF/tld/portlet.tld</taglib-location>

@@ -53,9 +53,6 @@ public class AttributeKeys {
 
     public static final String PORTAL_URL_PARSER = "PORTAL_URL_PARSER";
 
-    /** Attribute to hold a message to be displayed by the portlet */
-	public static final String PORTLET_MSG = "portlet_msg";
-
     // Constructor -------------------------------------------------------------
     
     /**

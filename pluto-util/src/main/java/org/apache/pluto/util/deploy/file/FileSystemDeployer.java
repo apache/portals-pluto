@@ -20,7 +20,6 @@ import org.apache.pluto.util.deploy.DeploymentConfig;
 import org.apache.pluto.util.deploy.DeploymentException;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,36 +43,21 @@ public abstract class FileSystemDeployer implements Deployer {
     
     // Deployer Impl -----------------------------------------------------------
     
-    public void deploy(DeploymentConfig config, File webappFile)
+    public void deploy(DeploymentConfig config, InputStream webappInputStream)
     throws IOException, DeploymentException {
 
         File dir = getWebApplicationDirectory(config);
         File file = new File(dir, config.getDeploymentName() + ".war");
-        FileOutputStream out = null;
-        FileInputStream webappInputStream = null;
-        try {
-            out = new FileOutputStream(file);
-            webappInputStream = new FileInputStream(webappFile);
-            
-            int read = -1;
-            byte[] bits = new byte[256];
-            while ((read = webappInputStream.read(bits)) != -1) {
-                out.write(bits, 0, read);
-            }        	
-        } finally {
-            if (out != null) {
-            	out.flush();
-                out.close();            	
-            }
-            
-            if (webappInputStream != null) {
-                webappInputStream.close();            	
-            }
+        FileOutputStream out = new FileOutputStream(file);
+
+        int read = -1;
+        byte[] bits = new byte[256];
+        while ((read = webappInputStream.read(bits)) != -1) {
+            out.write(bits, 0, read);
         }
-        
-        if (!config.isConfigured()) {
-            configure(config);        	
-        }
+        out.flush();
+        out.close();
+        configure(config);
     }
     
     

@@ -27,11 +27,7 @@ public abstract class DeploymentConfig {
 
     /** The deployment name. */
     private String deploymentName = null;
-    /**
-     * Is the war already configured?
-     */
-    private boolean isConfigured = false;
-    
+
     /**
      * Default Constructor.
      * @param deploymentName the name of the deployment.
@@ -62,17 +58,5 @@ public abstract class DeploymentConfig {
      * @return
      */
     public abstract String getDeploymentProperty(String key);
-
-    /**
-     * Is the war already configured?
-     * @return
-     */
-    public boolean isConfigured() {
-    	return isConfigured;
-    }
-
-	public void setConfigured(boolean isConfigured) {
-		this.isConfigured = isConfigured;
-	}
 
 }

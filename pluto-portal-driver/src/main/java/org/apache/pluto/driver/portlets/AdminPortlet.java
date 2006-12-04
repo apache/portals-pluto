@@ -29,7 +29,7 @@ public class AdminPortlet extends GenericPlutoPortlet {
 	private static final String VIEW_PAGE = "/WEB-INF/fragments/admin/view.jsp";
 	private static final String EDIT_PAGE = "/WEB-INF/fragments/admin/edit.jsp";
 	private static final String HELP_PAGE = "/WEB-INF/fragments/admin/help.jsp";
-	
+
 	// GenericPortlet Impl -----------------------------------------------------
 
 

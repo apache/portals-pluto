@@ -4,7 +4,7 @@
   "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
   "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
 <!-- 
-Copyright 2004-2006 The Apache Software Foundation.
+Copyright 2004 The Apache Software Foundation.
 Licensed  under the  Apache License,  Version 2.0  (the "License");
 you may not use  this file  except in  compliance with the License.
 You may obtain a copy of the License at 
@@ -88,40 +88,6 @@ limitations under the License.
             <rtexprvalue>false</rtexprvalue>
         </attribute>
     </tag>
-
-  <tag>
-    <name>message</name>
-    <tagclass>org.apache.pluto.driver.tags.PortletUiMessageTag</tagclass>
-    <bodycontent>empty</bodycontent>
-    <info>
-    	Displays a message or one in a resource bundle (properties file) or a message 
-    	encapsulated into the PortletUiMessage class and held in a portlet session attribute
-    	called 'portlet_msg' (org.apache.pluto.driver.AttributeKeys.PORTLET_MSG).
-    	Attributes include:
-    	1. message: the message.
-    	2. cssClass: the Cascading Stylesheet class name
-    	3. bundle: the resource bundle as defined in the java.util.ResourceBundle class
-    	The message and cssClass attributes should not be used if the message is in
-    	the portlet_msg portlet session attribute.
-    </info>
-    <attribute>
-    	<!-- Message can be a ResourceBundle key, but specify the bundle attribute value too -->
-      <name>message</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>cssClass</name>
-      <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
-    </attribute>
-    <attribute>
-    	<!-- ResourceBundle name -->
-      <name>bundle</name>
-      <required>false</required>
-      <rtexprvalue>false</rtexprvalue>
-    </attribute>
-  </tag>
 
 </taglib>
 
