@@ -18,7 +18,6 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
@@ -61,7 +60,6 @@ public class SupportedModesServiceImpl implements SupportedModesService
     /**
      * Constructs a SupportedModesService with its dependencies.
      * 
-     * @param portletRegistry the PortletRegistryService
      * @param propertySvc the PropertyConfigService
      */
     public SupportedModesServiceImpl(PropertyConfigService propertySvc) {
@@ -70,9 +68,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
     
     //  SupportedModesService Implementation -----------------
     
-    public boolean isPortletModeSupported(String portletId, String mode) 
-    {
-
+    public boolean isPortletModeSupported(String portletId, String mode)  {
         return isPortletModeSupportedByPortal(mode) &&
             isPortletModeSupportedByPortlet(portletId, mode);
     }
@@ -107,6 +103,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
         } catch (PortletContainerException e) {
             LOG.error("Error determining mode support.", e);
         }
+        LOG.info("Portlet mode '"+mode+"' not found for portletId: '"+portletId+"'");
         return false;
     }
 
@@ -126,7 +123,22 @@ public class SupportedModesServiceImpl implements SupportedModesService
         container = (PortletContainer)ctx.getAttribute(AttributeKeys.PORTLET_CONTAINER);
         OptionalContainerServices services = container.getOptionalContainerServices();
         portletRegistry = services.getPortletRegistryService();
+        loadPortalModes();
+    }
 
+        /** Populates the supportedPortletModesByPortal set. */
+    private void loadPortalModes()
+    {
+        // Add the PortletModes supported by the portal to the
+        // supportedPortletModesByPortal set.
+        LOG.debug("Loading supported portal modes...");
+        Iterator modes = propertySvc.getSupportedPortletModes().iterator();
+        while (modes.hasNext()) {
+            String mode = (String) modes.next();
+            LOG.debug("Loading mode [" + mode + "]");
+            supportedPortletModesByPortal.add(new PortletMode(mode));
+        }
+        LOG.debug("Loaded [" + supportedPortletModesByPortal.size() + "] supported portal modes");
     }
 
 
