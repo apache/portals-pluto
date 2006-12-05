@@ -244,7 +244,7 @@
     <plexus.version>1.0.4</plexus.version>
     <maven.version>2.0</maven.version>
     <ant.version>1.6.5</ant.version>
-    <junit.version>4.0</junit.version>
+    <junit.version>3.8</junit.version>
     <jmock.version>1.0.1</jmock.version>    
   </properties>
 
