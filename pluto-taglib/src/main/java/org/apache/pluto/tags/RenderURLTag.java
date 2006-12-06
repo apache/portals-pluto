@@ -21,6 +21,7 @@ import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.portlet.PortletURL;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -32,45 +33,10 @@ import javax.servlet.jsp.PageContext;
 public class RenderURLTag extends BasicURLTag {
 
 
-    /* (non-Javadoc)
-         * @see javax.servlet.jsp.tagext.Tag#doStartTag()
-         */
-    public int doStartTag() throws JspException {
-        if (var != null) {
-            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
-        }
+    protected PortletURL createPortletURL() {
         RenderResponse renderResponse = (RenderResponse) pageContext.getRequest()
             .getAttribute("javax.portlet.response");
-
-        if (renderResponse != null) {
-            setUrl(renderResponse.createRenderURL());
-            if (portletMode != null) {
-                try {
-                    url.setPortletMode(
-                        (PortletMode) TEI.portletModes.get(
-                            portletMode.toUpperCase()));
-                } catch (PortletModeException e) {
-                    throw new JspException(e);
-                }
-            }
-            if (windowState != null) {
-                try {
-                    url.setWindowState(
-                        (WindowState) TEI.definedWindowStates.get(
-                            windowState.toUpperCase()));
-                } catch (WindowStateException e) {
-                    throw new JspException(e);
-                }
-            }
-            if (secure != null) {
-                try {
-                    url.setSecure(getSecureBoolean());
-                } catch (PortletSecurityException e) {
-                    throw new JspException(e);
-                }
-            }
-        }
-        return EVAL_PAGE;
+        return renderResponse.createRenderURL();
     }
 }
 

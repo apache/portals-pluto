@@ -15,13 +15,12 @@
  */
 package org.apache.pluto.tags;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Hashtable;
-
 import javax.portlet.PortletMode;
+import javax.portlet.PortletModeException;
+import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -29,6 +28,9 @@ import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.VariableInfo;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Hashtable;
 
 /**
  * Supporting class for the <CODE>actionURL</CODE> and <CODE>renderURL</CODE>
@@ -44,6 +46,7 @@ public abstract class BasicURLTag extends TagSupport {
         /**
          * Provides a list of all static PortletMode available in the
          * specifications by using introspection
+         *
          * @return Hashtable
          */
         private static Hashtable getDefinedPortletModes() {
@@ -68,6 +71,7 @@ public abstract class BasicURLTag extends TagSupport {
         /**
          * Provides a list of all static WindowsStates available in the
          * specifications by using introspection
+         *
          * @return Hashtable
          */
         private static Hashtable getDefinedWindowStates() {
@@ -95,8 +99,8 @@ public abstract class BasicURLTag extends TagSupport {
             if (var != null) {
                 vi = new VariableInfo[1];
                 vi[0] =
-                new VariableInfo(var, "java.lang.String", true,
-                                 VariableInfo.AT_BEGIN);
+                    new VariableInfo(var, "java.lang.String", true,
+                        VariableInfo.AT_BEGIN);
             }
             return vi;
         }
@@ -112,9 +116,56 @@ public abstract class BasicURLTag extends TagSupport {
 
     /**
      * Processes the <CODE>actionURL</CODE> or <CODE>renderURL</CODE> tag.
+     *
      * @return int
      */
-    public abstract int doStartTag() throws JspException;
+
+    /* (non-Javadoc)
+    * @see javax.servlet.jsp.tagext.Tag#doStartTag()
+    */
+    public int doStartTag() throws JspException {
+        if (var != null) {
+            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
+        }
+
+        url = createPortletURL();
+
+        if (portletMode != null) {
+            try {
+                PortletMode mode = (PortletMode)
+                    TEI.portletModes.get(portletMode.toUpperCase());
+                if (mode == null) {
+                    mode = new PortletMode(portletMode);
+                }
+                url.setPortletMode(mode);
+            } catch (PortletModeException e) {
+                throw new JspException(e);
+            }
+        }
+        if (windowState != null) {
+            try {
+                WindowState state = (WindowState)
+                    TEI.definedWindowStates.get(windowState.toUpperCase());
+                if (state == null) {
+                    state = new WindowState(windowState);
+                }
+                url.setWindowState(state);
+            } catch (WindowStateException e) {
+                throw new JspException(e);
+            }
+        }
+        if (secure != null) {
+            try {
+                url.setSecure(getSecureBoolean());
+            } catch (PortletSecurityException e) {
+                throw new JspException(e);
+            }
+        }
+
+        return EVAL_PAGE;
+    }
+
+    protected abstract PortletURL createPortletURL();
 
     /**
      * @return int
@@ -130,13 +181,14 @@ public abstract class BasicURLTag extends TagSupport {
             }
         } else {
             pageContext.setAttribute(var, url.toString(),
-                                     PageContext.PAGE_SCOPE);
+                PageContext.PAGE_SCOPE);
         }
         return EVAL_PAGE;
     }
 
     /**
      * Returns the portletMode.
+     *
      * @return String
      */
     public String getPortletMode() {
@@ -159,6 +211,7 @@ public abstract class BasicURLTag extends TagSupport {
 
     /**
      * Returns the windowState.
+     *
      * @return String
      */
     public String getWindowState() {
@@ -174,6 +227,7 @@ public abstract class BasicURLTag extends TagSupport {
 
     /**
      * Returns the var.
+     *
      * @return String
      */
     public String getVar() {
@@ -182,6 +236,7 @@ public abstract class BasicURLTag extends TagSupport {
 
     /**
      * Sets the portletMode.
+     *
      * @param portletMode The portletMode to set
      */
     public void setPortletMode(String portletMode) {
@@ -190,6 +245,7 @@ public abstract class BasicURLTag extends TagSupport {
 
     /**
      * Sets secure to boolean value of the string
+     *
      * @param secure
      */
     public void setSecure(String secure) {
@@ -199,6 +255,7 @@ public abstract class BasicURLTag extends TagSupport {
 
     /**
      * Sets the windowState.
+     *
      * @param windowState The windowState to set
      */
     public void setWindowState(String windowState) {
@@ -206,15 +263,8 @@ public abstract class BasicURLTag extends TagSupport {
     }
 
     /**
-     * Sets the url.
-     * @param url The url to set
-     */
-    public void setUrl(PortletURL url) {
-        this.url = url;
-    }
-
-    /**
      * Sets the var.
+     *
      * @param var The var to set
      */
     public void setVar(String var) {
