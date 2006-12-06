@@ -15,13 +15,13 @@
  */
 package org.apache.pluto.maven;
 
+import java.io.File;
+
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
 import org.apache.pluto.util.assemble.AssemblerFactory;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.logging.Log;
-
-import java.io.File;
 
 /**
  * TODO: Document
@@ -58,8 +58,13 @@ public class AssembleMojo extends AbstractPortletMojo {
      * @parameter expression="${project.build.directory}/pluto-resources/web.xml"
      */
     private File webXmlDestination = null;
-    
-    
+
+    /**
+     * The name of the dispatch servlet class to use
+     * @parameter
+     */
+    private String dispatchServletClass = null;
+
     // AbstractPlutoMojo Impl --------------------------------------------------
     
     protected void doExecute() throws Exception {
@@ -93,6 +98,7 @@ public class AssembleMojo extends AbstractPortletMojo {
         config.setPortletDescriptor(portletXml);
         config.setWebappDescriptor(webXml);
         config.setDestination(webXmlDestination);
+        config.setDispatchServletClass(dispatchServletClass);
         return config;
     }
     

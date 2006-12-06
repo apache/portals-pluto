@@ -15,32 +15,39 @@
  */
 package org.apache.pluto.util.assemble.file;
 
-import org.apache.pluto.util.assemble.Assembler;
-import org.apache.pluto.util.assemble.AssemblerConfig;
-import org.apache.pluto.util.UtilityException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Properties;
+
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.castor.EntityResolverImpl;
 import org.apache.pluto.descriptors.services.castor.PortletAppDescriptorServiceImpl;
+import org.apache.pluto.util.UtilityException;
+import org.apache.pluto.util.assemble.Assembler;
+import org.apache.pluto.util.assemble.AssemblerConfig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.*;
 
 /**
  *
@@ -96,7 +103,8 @@ public class FileAssembler implements Assembler {
             		config.getWebappDescriptor());
             InputStream portletXmlIn = new FileInputStream(
             		config.getPortletDescriptor());
-            Document xmlDoc = updateWebappDescriptor(webXmlIn, portletXmlIn);
+            Document xmlDoc = updateWebappDescriptor(webXmlIn, portletXmlIn,
+                                                     config.getDispatchServletClass());
             webXmlIn.close();
             FileOutputStream webXmlOut = new FileOutputStream(
             		config.getDestination());
@@ -144,12 +152,21 @@ public class FileAssembler implements Assembler {
      * 
      * @param webXmlIn  input stream to the webapp descriptor.
      * @param portletXmlIn  input stream to the portlet app descriptor.
+     * @param dispatchServletClass The name of the servlet class to use for
+     *                         handling portlet requests
      * @return the updated webapp descriptor XML document.
      * @throws IOException
      */
     protected Document updateWebappDescriptor(InputStream webXmlIn,
-                                              InputStream portletXmlIn)
+                                              InputStream portletXmlIn,
+                                              String dispatchServletClass)
     throws IOException {
+
+        if (dispatchServletClass == null ||
+            dispatchServletClass.length() == 0 ||
+            dispatchServletClass.trim().length() == 0) {
+            dispatchServletClass = DISPATCH_SERVLET_CLASS;
+        }
     	
         Document webXmlDoc = parse(webXmlIn);
         Collection servletElements = new ArrayList();
@@ -173,7 +190,7 @@ public class FileAssembler implements Assembler {
             servlet.appendChild(servletName);
             
             Element servletClass = webXmlDoc.createElement("servlet-class");
-            servletClass.appendChild(webXmlDoc.createTextNode(DISPATCH_SERVLET_CLASS));
+            servletClass.appendChild(webXmlDoc.createTextNode(dispatchServletClass));
             servlet.appendChild(servletClass);
             
             Element initParam = webXmlDoc.createElement("init-param");

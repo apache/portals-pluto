@@ -33,7 +33,9 @@ public class AssemblerConfig {
     
     /** The assemble destination, which points to the assembled WAR file. */
     private File destination = null;
-    
+
+    /** The class of the servlet that will handle portlet requests */
+    private String dispatchServletClass = null;
     
     // Public Methods ----------------------------------------------------------
     
@@ -61,5 +63,12 @@ public class AssemblerConfig {
         this.destination = destination;
         this.destination.getParentFile().mkdirs();
     }
-    
+
+    public String getDispatchServletClass() {
+        return dispatchServletClass;
+    }
+
+    public void setDispatchServletClass(String dispatchServletClass) {
+        this.dispatchServletClass = dispatchServletClass;
+    }
 }
