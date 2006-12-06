@@ -91,7 +91,7 @@ implements RequiredContainerServices, OptionalContainerServices {
         return null;
     }
 
-    public PortletInvokerService getPortletInvokerService(InternalPortletWindow window) {
+    public PortletInvokerService getPortletInvokerService() {
         return null;
     }
 }

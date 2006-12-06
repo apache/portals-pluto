@@ -15,25 +15,27 @@
  */
 package org.apache.pluto.core;
 
-import java.io.IOException;
-
-import javax.portlet.PortletException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.impl.ActionRequestImpl;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.PortletRequestImpl;
 import org.apache.pluto.internal.impl.PortletResponseImpl;
-import org.apache.pluto.internal.impl.RenderRequestImpl;
-import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.util.StringManager;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Used internally to invoke/dispatch requests from the container to
@@ -42,21 +44,18 @@ import org.apache.pluto.util.StringManager;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-class PortletInvoker {
+public class DefaultPortletInvokerService implements PortletInvokerService {
 
     /** Logger.  */
-    private static final Log LOG = LogFactory.getLog(PortletInvoker.class);
+    private static final Log LOG = LogFactory.getLog(DefaultPortletInvokerService.class);
 
     /** Exception Messages. */
     private static final StringManager EXCEPTIONS = StringManager.getManager(
-    		PortletInvoker.class.getPackage().getName());
+    		DefaultPortletInvokerService.class.getPackage().getName());
     
     
     // Private Member Variables ------------------------------------------------
-    
-    /** Portlet Window for which we are invoking the portlet. */
-    private InternalPortletWindow portletWindow = null;
-    
+
     
     // Constructor -------------------------------------------------------------
     
@@ -64,10 +63,8 @@ class PortletInvoker {
      * Default Constructor.  Create a new invoker which
      * is initialized for the given <code>InternalPortletWindow</code>.
      *
-     * @param portletWindow  the portlet window.
      */
-    public PortletInvoker(InternalPortletWindow portletWindow) {
-        this.portletWindow = portletWindow;
+    public DefaultPortletInvokerService() {
     }
     
     
@@ -78,18 +75,16 @@ class PortletInvoker {
      *
      * @param request action request used for the invocation.
      * @param response action response used for the invocation.
-     * @throws PortletException if a error occurs within the portlet.
-     * @throws IOException if an IO error occurs writing the response.
      *
      * @see PortletServlet
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
-    public void action(ActionRequestImpl request, ActionResponseImpl response)
-    throws PortletException, IOException {
+    public void action(ActionRequest request, ActionResponse response, InternalPortletWindow window)
+    throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Action Invocation");
         }
-        invoke(request, response, Constants.METHOD_ACTION);
+        invoke(request, response, window, Constants.METHOD_ACTION);
     }
 
     /**
@@ -97,18 +92,16 @@ class PortletInvoker {
      *
      * @param request action request used for the invocation.
      * @param response action response used for the invocation.
-     * @throws PortletException if a error occurs within the portlet.
-     * @throws IOException if an IO error occurs writing the response.
      *
      * @see PortletServlet
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
-    public void render(RenderRequestImpl request, RenderResponseImpl response)
-    throws PortletException, IOException {
+    public void render(RenderRequest request, RenderResponse response, InternalPortletWindow window)
+    throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");
         }
-        invoke(request, response, Constants.METHOD_RENDER);
+        invoke(request, response, window, Constants.METHOD_RENDER);
     }
 
     /**
@@ -116,16 +109,15 @@ class PortletInvoker {
      *
      * @param request action request used for the invocation.
      * @param response action response used for the invocation.
-     * @throws PortletException if a error occurs within the portlet.
      *
      * @see PortletServlet
      */
-    public void load(PortletRequestImpl request, PortletResponseImpl response)
-    throws PortletException, IOException {
+    public void load(PortletRequest request, PortletResponse response, InternalPortletWindow window)
+    throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Load Invocation");
         }
-        invoke(request, response, Constants.METHOD_NOOP);
+        invoke(request, response, window, Constants.METHOD_NOOP);
     }
     
     
@@ -136,12 +128,14 @@ class PortletInvoker {
      *
      * @param request portlet request
      * @param response portlet response
+     * @param portletWindow internal portlet window
      * @param methodID method identifier
      * @throws PortletException if a portlet exception occurs.
      * @throws IOException if an error occurs writing to the response.
      */
-    private void invoke(PortletRequestImpl request,
-                        PortletResponseImpl response,
+    private void invoke(PortletRequest request,
+                        PortletResponse response,
+                        InternalPortletWindow portletWindow,
                         Integer methodID)
     throws PortletException, IOException {
 
@@ -158,9 +152,9 @@ class PortletInvoker {
                 // Tomcat does not like to properly include wrapped requests
                 // and responses. Thus we "unwrap" and then include.
                 HttpServletRequest servletRequest =
-                		request.getHttpServletRequest();
+                		((PortletRequestImpl)request).getHttpServletRequest();
                 HttpServletResponse servletResponse =
-                		response.getHttpServletResponse();
+                		((PortletResponseImpl)response).getHttpServletResponse();
                 
                 servletRequest.setAttribute(Constants.METHOD_ID, methodID);
                 servletRequest.setAttribute(Constants.PORTLET_REQUEST, request);

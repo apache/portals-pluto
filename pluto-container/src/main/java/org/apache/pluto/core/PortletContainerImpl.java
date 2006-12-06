@@ -35,6 +35,7 @@ import org.apache.pluto.internal.impl.PortletWindowImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
@@ -157,8 +158,8 @@ public class PortletContainerImpl implements PortletContainer {
         RenderResponseImpl renderResponse = new RenderResponseImpl(
         		this, internalPortletWindow, request, response);
 
-        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-        invoker.render(renderRequest, renderResponse);
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        invoker.render(renderRequest, renderResponse, internalPortletWindow);
         debugWithName("Portlet rendered for: "
         		+ portletWindow.getPortletName());
     }
@@ -191,8 +192,8 @@ public class PortletContainerImpl implements PortletContainer {
         ActionResponseImpl actionResponse = new ActionResponseImpl(
         		this, internalPortletWindow, request, response);
         
-        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-        invoker.action(actionRequest, actionResponse);
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        invoker.action(actionRequest, actionResponse, internalPortletWindow);
         debugWithName("Portlet action processed for: "
         		+ portletWindow.getPortletName());
         
@@ -268,8 +269,8 @@ public class PortletContainerImpl implements PortletContainer {
         RenderResponseImpl renderResponse = new RenderResponseImpl(
         		this, internalPortletWindow, request, response);
         
-        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-        invoker.load(renderRequest, renderResponse);
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        invoker.load(renderRequest, renderResponse, internalPortletWindow);
         debugWithName("Portlet loaded for: " + portletWindow.getPortletName());
     }
 

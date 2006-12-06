@@ -23,6 +23,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletException;
+import java.io.IOException;
 
 /**
  * Service used to invoke portlets.
@@ -30,10 +32,13 @@ import javax.portlet.PortletResponse;
  */
 public interface PortletInvokerService {
 	
-    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window);
+    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window)
+    throws IOException, PortletException;
 
-    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window);
+    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window)
+    throws IOException, PortletException;
 
-    public void load(PortletRequest req, PortletResponse res, InternalPortletWindow window);
+    public void load(PortletRequest req, PortletResponse res, InternalPortletWindow window)
+    throws IOException, PortletException;
 	
 }

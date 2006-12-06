@@ -16,7 +16,6 @@
 package org.apache.pluto.core;
 
 import org.apache.pluto.OptionalContainerServices;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -32,8 +31,10 @@ import org.apache.pluto.spi.optional.PortletRegistryService;
  */
 public class DefaultOptionalContainerServices implements OptionalContainerServices {
 
-    private PortletPreferencesService preferenceService;
+    private PortletPreferencesService portletPreferencesService;
     private PortletRegistryService portletRegistryService;
+    private PortletInvokerService portletInvokerService;
+    private PortletEnvironmentService portletEnvironmentService;
     
     
     /**
@@ -41,8 +42,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
      * implementation.
      */
     public DefaultOptionalContainerServices() {
-        preferenceService = new DefaultPortletPreferencesService();
+        portletPreferencesService = new DefaultPortletPreferencesService();
         portletRegistryService = PortletContextManager.getManager();
+        portletInvokerService = new DefaultPortletInvokerService();
+        portletEnvironmentService = null;
     }
     
     /**
@@ -54,11 +57,19 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public DefaultOptionalContainerServices(OptionalContainerServices root) {
         this();
         if (root.getPortletPreferencesService() != null) {
-            preferenceService = root.getPortletPreferencesService();
+            portletPreferencesService = root.getPortletPreferencesService();
         }
 
         if (root.getPortletRegistryService() != null) {
             portletRegistryService = root.getPortletRegistryService();
+        }
+
+        if(root.getPortletEnvironmentService() != null) {
+            portletEnvironmentService = root.getPortletEnvironmentService();
+        }
+
+        if(root.getPortletInvokerService() != null) {
+            portletInvokerService = root.getPortletInvokerService();
         }
     }
     
@@ -66,7 +77,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     // OptionalContainerServices Impl ------------------------------------------
     
     public PortletPreferencesService getPortletPreferencesService() {
-        return preferenceService;
+        return portletPreferencesService;
     }
 
 
@@ -74,19 +85,12 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         return portletRegistryService;
     }
 
-    /**
-     * TODO:
-     */
     public PortletEnvironmentService getPortletEnvironmentService() {
-        return null;
+        return portletEnvironmentService;
     }
     
-    /**
-     * TODO:
-     */
-    public PortletInvokerService getPortletInvokerService(
-    		InternalPortletWindow window) {
-        return null;
+    public PortletInvokerService getPortletInvokerService() {
+        return portletInvokerService;
     }
     
 }

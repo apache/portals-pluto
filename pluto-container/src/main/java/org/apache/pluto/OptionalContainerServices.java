@@ -58,9 +58,8 @@ public interface OptionalContainerServices {
     /**
      * Returns an invoker for the specified PortletWindow.
      *
-     * @param portletWindow  the InternalPortletWindow used for invocation.
      * @return an invoker which can be used to service the indicated portlet.
      */
-    PortletInvokerService getPortletInvokerService(InternalPortletWindow portletWindow);
+    PortletInvokerService getPortletInvokerService();
 
 }
