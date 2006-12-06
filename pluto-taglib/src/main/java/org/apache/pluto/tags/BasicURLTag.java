@@ -28,6 +28,7 @@ import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.VariableInfo;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Hashtable;
@@ -171,16 +172,17 @@ public abstract class BasicURLTag extends TagSupport {
      * @return int
      */
     public int doEndTag() throws JspException {
+        HttpServletResponse response = (HttpServletResponse)pageContext.getResponse();
         if (var == null) {
             try {
                 JspWriter writer = pageContext.getOut();
-                writer.print(url);
+                writer.print(response.encodeURL(url.toString()));
             } catch (IOException ioe) {
                 throw new JspException(
                     "actionURL/renderURL Tag Exception: cannot write to the output writer.");
             }
         } else {
-            pageContext.setAttribute(var, url.toString(),
+            pageContext.setAttribute(var, response.encodeURL(url.toString()),
                 PageContext.PAGE_SCOPE);
         }
         return EVAL_PAGE;

@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -87,6 +88,9 @@ public class PortletPortalURLTag extends BodyTagSupport {
         HttpServletRequest request = (HttpServletRequest)
                 pageContext.getRequest();
 
+        HttpServletResponse response = (HttpServletResponse)
+                pageContext.getResponse();
+
         PortalRequestContext ctx = (PortalRequestContext)
             request.getAttribute(PortalRequestContext.REQUEST_KEY);
 
@@ -105,7 +109,7 @@ public class PortletPortalURLTag extends BodyTagSupport {
 
         // Print the portal URL as a string to the page.
         try {
-            pageContext.getOut().print(portalUrl.toString());
+            pageContext.getOut().print(response.encodeURL(portalUrl.toString()));
         } catch (IOException ex) {
             throw new JspException(ex);
         }
