@@ -27,8 +27,12 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class PortalServletRequest extends HttpServletRequestWrapper {
+
+    private static final Log LOG = LogFactory.getLog(PortalServletRequest.class);
 
     private PortletWindow portletWindow = null;
 
@@ -92,7 +96,11 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
             }
         }
 
-        String id = portletWindow.getId().getStringId();
+        // Currently this request is only used for rendering.
+        // Because of that, this will never be used, however, it's
+        // being left in since this request's scope may expand at some
+        // point!
+        String id = url.getActionWindow();
         if (portletWindow.getId().getStringId().equals(id)) {
             Enumeration params = super.getParameterNames();
             while (params.hasMoreElements()) {
@@ -106,6 +114,11 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
                 }
                 portletParameters.put(name, values);
             }
+        }
+
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Initialized request parameter map for window: '"
+                +portletWindow.getId().getStringId()+"'");
         }
     }
 
