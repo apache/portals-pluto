@@ -53,12 +53,6 @@
           <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptor>src/assemble/bin.xml</descriptor>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   
