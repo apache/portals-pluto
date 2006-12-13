@@ -19,13 +19,52 @@ limitations under the License.
 
 <portlet:actionURL var="formActionUrl"/>
 <form name="adminForm" action="<c:out value="${formActionUrl}"/>" method="POST">
+<script type="text/javascript">
+
+
+</script>
+
 <div>
   <h2>Portal Pages</h2>
   <p>
-    <select name="page">
+      <script type="text/javascript">
+          var placedPortlets = new Array();
+          <c:forEach items="${availablePages}" var="page">
+              placedPortlets['<c:out value="${page.id}"/>'] = new Array();
+              var i = 0;
+              <c:forEach items="${page.portlets}" var="portlet">
+              placedPortlets['<c:out value="${page.id}"/>'][i] = new Array();
+              placedPortlets['<c:out value="${page.id}"/>'][i][0] = '<c:out value="${portlet.id}"/>';
+              placedPortlets['<c:out value="${page.id}"/>'][i++][1] = '<c:out value="${portlet.portletName}"/>';
+              </c:forEach>
+          </c:forEach>
+
+          function doSwitchPage(select) {
+              var placePortletsSelect = document.forms['adminForm'].elements['placedPortlets'];
+              for(var i=0;i<placePortletsSelect.options.length;i++) {
+                  placePortletsSelect.options[i] = null;
+              }
+
+
+              for(var i=0;i<placedPortlets[select.value].length;i++) {
+                  placePortletsSelect[i] = new Option(placedPortlets[select.value][i][1], placedPortlets[select.value][i][0]);
+              }
+          }
+      </script>
+
+
+
+
+
+    <select name="page" onChange="doSwitchPage(this)">
+      <option>Select. . .</option>
     <c:forEach items="${driverConfig.pages}" var="page">
       <option value="<c:out value="${page.name}"/>"><c:out value="${page.name}"/></option>
     </c:forEach>
+    </select>
+
+    <select name="placedPortlets" size="5">
+
     </select>
   </p>
 </div>
@@ -47,9 +86,12 @@ limitations under the License.
         </c:forEach>
 
         function doSwitch(select) {
-            var portletsSelectBox = document.forms['adminForm'].elements['portlets'];
+            var portletsSelectBox = document.forms['adminForm'].elements['availablePortlets'];
+            for(i = 0; i< portletsSelectBox.options.length;i++) {
+                portletsSelectBox.options[i] = null;
+            }
             if (select.value == '-') {
-                document.forms['adminForm'].elements['portlets'].disabled = true;
+                document.forms['adminForm'].elements['availablePortlets'].disabled = true;
             } else {
                 portletsSelectBox.disabled = false;
                 var pList = portlets[select.value];
@@ -65,14 +107,14 @@ limitations under the License.
         }
     </script>
 
-        <select name="applications" onChange="doSwitch(this)">
-            <option value='-'>Select. . .</option>
-            <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
-            <option value="<c:out value="${app.applicationId}"/>"><c:out value="${app.applicationName}"/></option>
-    </c:forEach>
+    <select name="applications" onChange="doSwitch(this)">
+      <option value='-'>Select. . .</option>
+      <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
+      <option value="<c:out value="${app.applicationId}"/>"><c:out value="${app.applicationName}"/></option>
+      </c:forEach>
     </select>
 
-    <select name="portlets" disabled="true" onChange='doSwitchButton(this)'>
+    <select name="availablePortlets" disabled="true" onChange='doSwitchButton(this)'>
 
     </select>
 

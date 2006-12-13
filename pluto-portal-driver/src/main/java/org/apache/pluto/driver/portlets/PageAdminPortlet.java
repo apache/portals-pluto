@@ -20,10 +20,17 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import java.util.Map;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.PortletException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.io.IOException;
 
 
 public class PageAdminPortlet extends GenericPlutoPortlet {
@@ -38,7 +45,7 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
     public void processAction(ActionRequest request, ActionResponse response) {
         String page = request.getParameter("page");
         String applicationId = request.getParameter("applications");
-        String portletId = request.getParameter("portlets");
+        String portletId = request.getParameter("availablePortlets");
 
         LOG.info("Request: Add [applicationId="+applicationId+":portletId="+portletId+"] to page '"+page+"'");
 
@@ -51,7 +58,10 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
         response.setRenderParameter("portlets", portletId);
     }
 
-
+    public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+        request.setAttribute("availablePages", getAvailablePages());
+        super.doView(request, response);
+    }
 
     public String getViewPage() {
         return VIEW_PAGE;
@@ -64,4 +74,90 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
     public String getHelpPage() {
         return HELP_PAGE;
     }
+
+    public Collection getAvailablePages() {
+        DriverConfiguration configuration =
+            (DriverConfiguration) getPortletContext().getAttribute(AttributeKeys.DRIVER_CONFIG);
+
+        ArrayList list = new ArrayList();
+        Iterator it = configuration.getPages().iterator();
+        while(it.hasNext()) {
+            PageConfig config = (PageConfig)it.next();
+            ArrayList portlets = new ArrayList();
+            Iterator pids = config.getPortletIds().iterator();
+            while(pids.hasNext()) {
+                String pid = pids.next().toString();
+                String name = PortletWindowConfig.parsePortletName(pid);
+                portlets.add(new Placement(pid, name));
+            }
+            list.add(new Page(config.getName(), config.getName(), portlets));
+        }
+
+        return list;
+    }
+
+    public class Page {
+        private String id;
+        private String name;
+        private Collection portlets;
+
+
+        public Page(String pageId, String pageName, Collection portlets) {
+            this.id = pageId;
+            this.name = pageName;
+            this.portlets = portlets;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public Collection getPortlets() {
+            return portlets;
+        }
+
+        public void setPortlets(Collection portlets) {
+            this.portlets = portlets;
+        }
+    }
+
+    public class Placement {
+        private String id;
+        private String portletName;
+
+        public Placement(String id, String portletName) {
+            this.id = id;
+            this.portletName = portletName;
+        }
+
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getPortletName() {
+            return portletName;
+        }
+
+        public void setPortletName(String portletName) {
+            this.portletName = portletName;
+        }
+    }
+
 }
