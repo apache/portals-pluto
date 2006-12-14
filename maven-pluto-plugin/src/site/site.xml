@@ -30,7 +30,7 @@
 	  <item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh/pluto-container"/>
     </links>
 
-	<menu name="Pluto Ant Tasks">
+	<menu name="Pluto Maven Goals">
       <item name="Getting Started" href="/getting-started.html"/>
 	</menu>
 
