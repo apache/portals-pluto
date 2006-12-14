@@ -77,5 +77,12 @@ public interface PortalCallbackService extends ContainerService {
     public EventProvider getEventProvider(HttpServletRequest request, HttpServletResponse response);
     
     public EventProvider getEventProvider();
+    
+    /**
+     * Returns a Shared Render Provider, this is used to register get and set all shared-render-parameter.
+     * @param request This is the request where the provider is stored in.
+     * @return the SharedRenderProvider.
+     */
+    public SharedRenderProvider getSharedRenderProvider(HttpServletRequest request);
 
 }

@@ -24,6 +24,8 @@ import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.SharedRenderProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
@@ -32,10 +34,12 @@ import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 import javax.portlet.PortalContext;
+import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
@@ -422,7 +426,18 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-        String[] values = (String[]) baseGetParameterMap().get(name);
+    	SharedRenderProvider provider = container
+    		.getRequiredContainerServices()
+    		.getPortalCallbackService()
+    		.getSharedRenderProvider(getHttpServletRequest());
+    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    	String[] values = null;
+    	if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+    		values = urlProvider.getSharedRenderParameter(name);
+    	}
+    	else{
+    		values = (String[]) baseGetParameterMap().get(name);
+    	}
         if (values != null && values.length > 0) {
             return values[0];
         } else {

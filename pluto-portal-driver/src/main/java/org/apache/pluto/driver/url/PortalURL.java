@@ -39,8 +39,14 @@ public interface PortalURL extends Cloneable {
     String getRenderPath();
 
     void addParameter(PortalURLParameter param);
+    
+    void addSharedRenderParametersNew(Map parameters);
 
     Collection getParameters();
+    
+    public void addSharedParameterCurrent(String name, String[] values);
+    
+    public Map<String, String[]> getSharedParameters();
 
     void setActionWindow(String actionWindow);
 
@@ -59,7 +65,7 @@ public interface PortalURL extends Cloneable {
     void setWindowState(String windowId, WindowState windowState);
 
     void clearParameters(String windowId);
-
+    
     String toString();
 
     String getServerURI();

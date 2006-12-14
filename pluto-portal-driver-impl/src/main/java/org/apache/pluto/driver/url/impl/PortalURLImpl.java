@@ -19,6 +19,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
@@ -34,6 +36,7 @@ import org.apache.pluto.driver.services.container.EventProviderImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURLParser;
 
 /**
  * The portal URL.
@@ -58,6 +61,10 @@ public class PortalURLImpl implements PortalURL {
     
     /** Parameters of the portlet windows. */
     private Map parameters = new HashMap();
+    
+    private Map<String, String[]> sharedParameterCurrent = new HashMap<String, String[]>();
+    
+    private Map<String, String[]> sharedParameterNew = new HashMap<String, String[]>();
     
     /** Logger. */
     private static final Log LOG = LogFactory.getLog(PortalURLImpl.class);
@@ -129,9 +136,46 @@ public class PortalURLImpl implements PortalURL {
     public void addParameter(PortalURLParameter param) {
         parameters.put(param.getWindowId() + param.getName(), param);
     }
+    
+    public void addSharedRenderParametersNew(Map parameters){
+    	for (Iterator iter=parameters.keySet().iterator(); iter.hasNext();) {
+			String key = (String) iter.next();
+			if (sharedParameterNew.containsKey(key)){
+				sharedParameterNew.remove(key);
+			}
+			String[] values = (String[])parameters.get(key);
+			if (values[0]!= null){
+				sharedParameterNew.put(key, values);
+			}
+		}
+    }
 
     public Collection getParameters() {
         return parameters.values();
+    }
+    
+    public void addSharedParameterCurrent(String name, String[] values){
+    	sharedParameterCurrent.put(name, values);
+    }
+    
+    public Map<String, String[]> getSharedParameters() {
+    	Map<String,String[]> tmp = new HashMap<String, String[]>();
+		
+		for (Iterator iter = sharedParameterCurrent.keySet().iterator(); iter.hasNext();) {
+           String paramname = (String) iter.next();
+           if (!sharedParameterNew.containsKey(paramname)){
+               String[] paramvalue = sharedParameterCurrent.get(paramname);
+               tmp.put(paramname, paramvalue);
+           }
+        }
+		for (Iterator iter = sharedParameterNew.keySet().iterator();iter.hasNext();){
+			String paramname = (String) iter.next();
+			String[] paramvalue = sharedParameterNew.get(paramname);
+			if (paramvalue[0]!=null){
+				tmp.put(paramname, paramvalue);
+			}
+		}
+		return tmp;
     }
 
     public void setActionWindow(String actionWindow) {
@@ -210,9 +254,9 @@ public class PortalURLImpl implements PortalURL {
      * Converts to a string representing the portal URL.
      * @return a string representing the portal URL.
      * @see org.apache.pluto.driver.url.impl.PortalURLParserImpl#toString(PortalURL)
-     */
-    public String toString() {
-        return PortalURLParserImpl.getParser().toString(this);
+     */ 
+    public String toString(){
+    	return PortalURLParserImpl.getParser().toString(this); 
     }
 
 
@@ -246,6 +290,7 @@ public class PortalURLImpl implements PortalURL {
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
     	portalURL.resourceWindow = resourceWindow;
+    	portalURL.sharedParameterCurrent = sharedParameterCurrent;
         return portalURL;
     }
 

@@ -28,6 +28,7 @@ import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
+import org.apache.pluto.spi.SharedRenderProvider;
 
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -100,6 +101,11 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
 
 	public EventProvider getEventProvider() {
 		return EventProviderImpl.getEventProviderImpl();
+	}
+
+
+	public SharedRenderProvider getSharedRenderProvider(HttpServletRequest request) {
+		return SharedRenderProviderImpl.getSharedRenderProviderImpl();
 	}
 }
 

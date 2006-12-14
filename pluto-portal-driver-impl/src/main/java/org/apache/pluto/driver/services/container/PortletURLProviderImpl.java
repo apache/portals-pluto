@@ -90,6 +90,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         url.clearParameters(window);
     }
 
+    
     public void setParameters(Map parameters) {
         Iterator it = parameters.entrySet().iterator();
         while (it.hasNext()) {
@@ -101,6 +102,22 @@ public class PortletURLProviderImpl implements PortletURLProvider {
             url.addParameter(param);
         }
     }
+    
+    public String[] getSharedRenderParameter(String name){
+    	Map sharedRenderParaMap = url.getSharedParameters();
+    	String[] values = null;
+    	for (Iterator it=sharedRenderParaMap.keySet().iterator();it.hasNext();){
+    		String tmp = (String) it.next();
+    		if (tmp.equals(name)){
+    			values = (String[])sharedRenderParaMap.get(tmp);
+    		}
+    	}
+    	return values;
+    }
+    
+    public void setSharedRenderParameters(Map parameters) {
+		url.addSharedRenderParametersNew(parameters);
+	}
 
     public String toString() {
         return url.toString();
@@ -111,5 +128,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 			request.getAttribute(PortalRequestContext.REQUEST_KEY);
 		ctx.setPortalURL(url);		
 	}
+
+	
 
 }

@@ -79,6 +79,12 @@ public interface PortletURLProvider {
      */
     public void setParameters(Map parameters);
 
+    /**
+     * Sets the given shared-render-parameters as parameters into the URL.
+     * @param parameters a map containing the name [java.lang.String] and value
+     *                   [java.lang.String[]] of the parameters.
+     */
+    public void setSharedRenderParameters(Map parameters);
 
     /**
      * Returns the URL in string format. This method should only be called
@@ -88,4 +94,11 @@ public interface PortletURLProvider {
     public String toString();
     
     public void savePortalURL(HttpServletRequest request);
+    
+    /**
+     * Gets the values from the current shared-render-parameter from this request.
+     * @param name Parametername
+     * @return the values for the Parameter, can be null, if there is no Parameter with this name.
+     */
+    public String[] getSharedRenderParameter(String name);
 }

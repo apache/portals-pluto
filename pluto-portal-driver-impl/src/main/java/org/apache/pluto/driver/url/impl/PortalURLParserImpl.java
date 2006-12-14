@@ -25,7 +25,9 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.pluto.spi.SharedRenderProvider;
 import org.apache.pluto.util.StringUtils;
+import org.apache.pluto.driver.services.container.SharedRenderProviderImpl;
 import org.apache.pluto.driver.url.impl.PortalURLImpl;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.driver.url.PortalURL;
@@ -56,6 +58,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String ACTION = "ac";
     private static final String RESOURCE = "rs";
     private static final String RENDER_PARAM = "rp";
+    private static final String SHARED_RENDER_PARAM = "sp";
     private static final String WINDOW_STATE = "ws";
     private static final String PORTLET_MODE = "pm";
     private static final String VALUE_DELIM = "0x0";
@@ -157,12 +160,28 @@ public class PortalURLParserImpl implements PortalURLParser {
         		portalURL.setPortletMode(decoded[0], new PortletMode(decoded[1]));
         	}
         	// Portal URL parameter: portalURL.addParameter().
-        	else {
+        	else if(token.startsWith(PREFIX + RENDER_PARAM)) {
         		String value = null;
         		if (st.hasMoreTokens()) {
         			value = st.nextToken();
         		}
-        		portalURL.addParameter(decodeParameter(token, value));
+        		//set the 
+        		PortalURLParameter param = decodeParameter(token, value);
+        		portalURL.addParameter(param);
+        		
+        		
+        	}
+        	else{ // besser if PREFIX + SHARED_PARAM
+        		String value = null;
+        		if (st.hasMoreTokens()) {
+        			value = st.nextToken();
+        		}
+        		PortalURLParameter param = decodeSharedParameter(token, value);
+        		SharedRenderProvider provider = SharedRenderProviderImpl
+    				.getSharedRenderProviderImpl();
+	    		
+	    		// set shared parameter in portalURL
+	    		portalURL.addSharedParameterCurrent(param.getName(), param.getValues());
         	}
         }
         if (renderPath.length() > 0) {
@@ -180,7 +199,6 @@ public class PortalURLParserImpl implements PortalURLParser {
      * @return a URL string representing the portal URL.
      */
     public String toString(PortalURL portalURL) {
-    	
     	StringBuffer buffer = new StringBuffer();
     	
         // Append the server URI and the servlet path.
@@ -251,6 +269,19 @@ public class PortalURLParserImpl implements PortalURLParser {
             }
         }
         
+        Map<String, String[]> sharedParamList = portalURL.getSharedParameters();
+        if (sharedParamList!=null){
+	        for (Iterator iter = sharedParamList.keySet().iterator();iter.hasNext();){
+	        	String paramname = (String)iter.next();
+	        	String[] tmp = (String[])sharedParamList.get(paramname);
+	        	String valueString = encodeMultiValues(tmp);
+	        	if (valueString.length()>0){
+	        		buffer.append("/").append(encodeSharedParamname(SHARED_RENDER_PARAM, paramname));
+	        		buffer.append("/").append(valueString);
+	        	}
+	        }
+        }
+        
         // Construct the string representing the portal URL.
         return buffer.append(query).toString();
     }
@@ -281,6 +312,13 @@ public class PortalURLParserImpl implements PortalURLParser {
     	buffer.append(PREFIX).append(type)
     			.append(encodeCharacters(windowId))
     			.append(DELIM).append(name);
+    	return buffer.toString();
+    }
+    
+    private String encodeSharedParamname(String type, String name){
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append(PREFIX).append(type)
+    	.append(DELIM).append(name);
     	return buffer.toString();
     }
     
@@ -369,6 +407,30 @@ public class PortalURLParserImpl implements PortalURLParser {
         
         // Construct portal URL parameter and return.
         return new PortalURLParameter(windowId, paramName, paramValues);
+    }
+    
+    private PortalURLParameter decodeSharedParameter(String name, String value) {
+    	
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Decoding parameter: name=" + name
+            		+ ", value=" + value);
+        }
+    	
+//    	// Decode the name into window ID and parameter name.
+        String noPrefix = name.substring((PREFIX + PORTLET_ID).length());
+        String paramName = noPrefix.substring(noPrefix.indexOf(DELIM) + 1);
+        
+        // Decode special characters in parameter value.
+
+        if (value != null) {
+        	value = decodeCharacters(value);
+        }
+        
+        // Split multiple values into a value array.
+        String[] paramValues = value.split(VALUE_DELIM);
+        
+        // Construct portal URL parameter and return.
+        return new PortalURLParameter(null, paramName, paramValues);
     }
     
     /**

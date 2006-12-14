@@ -33,6 +33,7 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.SharedRenderProvider;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 
@@ -46,6 +47,7 @@ public class BaseURLImpl implements BaseURL {
 
 	private static final StringManager EXCEPTIONS = StringManager.getManager(PortletURLImpl.class.getPackage().getName());
 	protected Map parameters = new HashMap();
+	protected Map<String, String[]> sharedRenderParameter = new HashMap<String, String[]>();
 	protected boolean secure;
 	protected PortletContainer container;
 	protected PortletMode mode = null;
@@ -73,21 +75,52 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void setParameter(String name, String value) {
-	    if (name == null || value == null) {
+	    if (name == null) {
 	        throw new IllegalArgumentException(
 	            "name and value must not be null");
 	    }
-	
-	    parameters.put(name, new String[]{value});
+	    SharedRenderProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getSharedRenderProvider(servletRequest);
+	    if (value == null){
+	    	if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    		sharedRenderParameter.put(name,new String[] {null});
+		    	
+		    }
+	    	else{
+	    		throw new IllegalArgumentException(
+	            	"name and value must not be null");
+	    	}
+	    }
+	    
+	    if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    	sharedRenderParameter.put(name,new String[] {value});
+	    }
+	    else{
+	    	parameters.put(name, new String[]{value});
+	    }
 	}
 
 	public void setParameter(String name, String[] values) {
-	    if (name == null || values == null || values.length == 0) {
+		if (name == null) {
 	        throw new IllegalArgumentException(
-	            "name and values must not be null or values be an empty array");
+	        	"name and values must not be null or values be an empty array");
 	    }
-	
-	    parameters.put(name, StringUtils.copy(values));
+	    SharedRenderProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getSharedRenderProvider(servletRequest);
+	    if (values == null){
+	    	if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    		sharedRenderParameter.put(name,new String[] {null});
+		    }
+	    	else{
+	    		throw new IllegalArgumentException(
+	    			"name and values must not be null or values be an empty array");
+	    	}
+	    }
+	    
+	    if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    	sharedRenderParameter.put(name,values);
+	    }
+	    else{
+	    	parameters.put(name, StringUtils.copy(values));
+	    }
 	}
 
 	public void setParameters(Map parameters) {
@@ -137,8 +170,11 @@ public class BaseURLImpl implements BaseURL {
 	        urlProvider.setSecure();
 	    }
 	    urlProvider.clearParameters();
+	    
 	    urlProvider.setParameters(parameters);
-	
+	    
+	    urlProvider.setSharedRenderParameters(sharedRenderParameter);
+	    
 	    url.append(urlProvider.toString());
 	
 	    return url.toString();

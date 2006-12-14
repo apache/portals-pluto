@@ -33,6 +33,7 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.descriptors.portlet.EventDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.RenderDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
@@ -42,9 +43,9 @@ import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.EventProvider;
+import org.apache.pluto.spi.SharedRenderProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
-
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
@@ -173,7 +174,7 @@ public class PortalDriverServlet extends HttpServlet {
                 LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
             }
             
-            registerPortlets(pageConfig, portalURL);
+            registerPortlets(pageConfig, portalURL,request);
             
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = (pageConfig.getUri() != null)
@@ -204,7 +205,7 @@ public class PortalDriverServlet extends HttpServlet {
     
     // Private Methods ---------------------------------------------------------
     
-    private void registerPortlets(PageConfig pageConfig, PortalURL portalURL) throws ServletException {
+    private void registerPortlets(PageConfig pageConfig, PortalURL portalURL, HttpServletRequest request) throws ServletException {
 		
 		// iterate all portlets on the page
         for (Object object : pageConfig.getPortletIds()) {
@@ -228,6 +229,16 @@ public class PortalDriverServlet extends HttpServlet {
 					LOG.debug(eventDD.getName()+ " successfully registered!");
 				}
 			}
+            //register SharedRenderParameter
+            SharedRenderProvider renderProvider = container.getRequiredContainerServices()
+            	.getPortalCallbackService().getSharedRenderProvider(request);
+            List<RenderDD> render = portletDD.getRenderParameter();
+            for (RenderDD renderDD : render){
+            	renderProvider.registerSharedRenderParameter(window.getId().getStringId(), renderDD.getName());
+            	if (LOG.isDebugEnabled()){
+					LOG.debug(renderDD.getName()+ " successfully registered!");
+				}
+            }
 		}
 	}
 

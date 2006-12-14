@@ -110,5 +110,10 @@ public class Constants {
 	 * The public key, to store the event name in the request 
 	 */
 	public static final String EVENT_NAME = "EventName";
+	
+	/**
+	 * The public key, to store the SharedRenderProvider in the request
+	 */
+	public static final String SHARED_RENDER_PROVIDER = "SharedRenderProvider";
 
 }
