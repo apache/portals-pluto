@@ -17,20 +17,20 @@ package org.apache.pluto.driver.portlets;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.PortletException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.ArrayList;
-import java.io.IOException;
 
 
 public class PageAdminPortlet extends GenericPlutoPortlet {
@@ -43,19 +43,44 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
 
 
     public void processAction(ActionRequest request, ActionResponse response) {
+        String command = request.getParameter("command");
+        if("add".equalsIgnoreCase(command)) {
+            doAddPortlet(request);
+        }
+        else if ("remove".equalsIgnoreCase(command)) {
+            doRemovePortlet(request);
+        }
+    }
+
+    public void doAddPortlet(ActionRequest request) {
         String page = request.getParameter("page");
         String applicationId = request.getParameter("applications");
         String portletId = request.getParameter("availablePortlets");
 
-        LOG.info("Request: Add [applicationId="+applicationId+":portletId="+portletId+"] to page '"+page+"'");
+        LOG.info("Request: Add [applicationId=" + applicationId + ":portletId=" + portletId + "] to page '" + page + "'");
 
-        DriverConfiguration driverConfig = (DriverConfiguration)getPortletContext()
+        PageConfig config = getPageConfig(page);
+        config.addPortlet(applicationId, portletId);
+
+    }
+
+
+    public void doRemovePortlet(ActionRequest request) {
+        String page = request.getParameter("page");
+        String portletId = request.getParameter("placedPortlets");
+
+        LOG.info("Request: Remove [portletId=" + portletId + "] from page '" + page + "'");
+
+        PageConfig config = getPageConfig(page);
+        config.removePortlet(portletId);
+    }
+
+    private PageConfig getPageConfig(String page) {
+        DriverConfiguration driverConfig = (DriverConfiguration) getPortletContext()
             .getAttribute(AttributeKeys.DRIVER_CONFIG);
 
         PageConfig config = driverConfig.getPageConfig(page);
-        config.addPortlet(applicationId, portletId);
-
-        response.setRenderParameter("portlets", portletId);
+        return config;
     }
 
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
@@ -81,11 +106,11 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
 
         ArrayList list = new ArrayList();
         Iterator it = configuration.getPages().iterator();
-        while(it.hasNext()) {
-            PageConfig config = (PageConfig)it.next();
+        while (it.hasNext()) {
+            PageConfig config = (PageConfig) it.next();
             ArrayList portlets = new ArrayList();
             Iterator pids = config.getPortletIds().iterator();
-            while(pids.hasNext()) {
+            while (pids.hasNext()) {
                 String pid = pids.next().toString();
                 String name = PortletWindowConfig.parsePortletName(pid);
                 portlets.add(new Placement(pid, name));

@@ -45,10 +45,17 @@ limitations under the License.
                   placePortletsSelect.options[i] = null;
               }
 
+              var disabled = select.value == 'Select. . .'
+              document.forms['adminForm'].elements['command'][0].disabled = disabled;
+
+              if(disabled) {
+                  return;
+              }
 
               for(var i=0;i<placedPortlets[select.value].length;i++) {
                   placePortletsSelect[i] = new Option(placedPortlets[select.value][i][1], placedPortlets[select.value][i][0]);
               }
+
           }
       </script>
 
@@ -57,7 +64,7 @@ limitations under the License.
 
 
     <select name="page" onChange="doSwitchPage(this)">
-      <option>Select. . .</option>
+      <option value="Select. . .">Select. . .</option>
     <c:forEach items="${driverConfig.pages}" var="page">
       <option value="<c:out value="${page.name}"/>"><c:out value="${page.name}"/></option>
     </c:forEach>
@@ -66,6 +73,10 @@ limitations under the License.
     <select name="placedPortlets" size="5">
 
     </select>
+
+    <button name="command" disabled="true" value="remove">
+      Remove
+    </button>
   </p>
 </div>
 
@@ -103,7 +114,7 @@ limitations under the License.
         }
 
         function doSwitchButton(select) {
-            document.forms['adminForm'].elements['submitButton'].disabled = (select.value == 'Select. . .' || select.disabled);
+            document.forms['adminForm'].elements['command'][1].disabled = (select.value == 'Select. . .' || select.disabled);
         }
     </script>
 
@@ -118,7 +129,7 @@ limitations under the License.
 
     </select>
 
-    <button name="submitButton" disabled="true">
+    <button name="command" disabled="true" value="add">
         Add Portlet
     </button>
   </p>

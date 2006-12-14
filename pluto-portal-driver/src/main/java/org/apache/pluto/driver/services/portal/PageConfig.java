@@ -63,6 +63,10 @@ public class PageConfig {
             PortletWindowConfig.createPortletId(contextPath, portletName));
     }
 
+    public void removePortlet(String portletId) {
+        portletIds.remove(portletId);
+    }
+
     void setOrderNumber(int number) {
         this.orderNumber = number;
     }
