@@ -214,6 +214,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         
         // Append action and render parameters.
         StringBuffer query = new StringBuffer("?");
+        boolean firstParam = true;
         for (Iterator it = portalURL.getParameters().iterator();
         		it.hasNext(); ) {
             
@@ -223,7 +224,13 @@ public class PortalURLParserImpl implements PortalURLParser {
             if (portalURL.getActionWindow() != null
             		&& portalURL.getActionWindow().equals(param.getWindowId())) {
                 for (int i = 0; i < param.getValues().length; i++) {
-                    query.append("&").append(encodeQueryParam(param.getName())).append("=")
+                    // FIX for PLUTO-247
+                    if ( firstParam ) {
+                        firstParam = false;
+                    } else {
+                        query.append("&");
+                    }
+                    query.append(encodeQueryParam(param.getName())).append("=")
                     		.append(encodeQueryParam(param.getValues()[i]));
                 }
             }
@@ -242,7 +249,12 @@ public class PortalURLParserImpl implements PortalURLParser {
         }
         
         // Construct the string representing the portal URL.
-        return buffer.append(query).toString();
+        // Fix for PLUTO-247 - check if query string contains parameters
+        if ( query.length() > 1 ) {
+            return buffer.append(query).toString();
+        } else {
+            return buffer.toString();
+        }
     }
 
     private String encodeQueryParam(String param) {
