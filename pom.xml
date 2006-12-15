@@ -28,9 +28,7 @@
      * All project pom.xml files,
      * dist-build.xml in this directory,
      * The pluto-portal-driver-config.xml in the pluto-portal module (src/main/webapp/WEB-INF),
-     * expectedResults.properties in the portal-testsuite module (src/main/webapp/WEB-INF/classes),
-     * environment.properties in pluto-container module (src/main/resources/org/apache/pluto) and
-     * InstallationDependancy.java in the maven-pluto-plugin module (src/main/java/org/apache/pluto/maven).
+     * The pluto.container.version.major and pluto.container.version.minor properties (in this file)
     -->
     <version>1.1.0-SNAPSHOT</version>
     <!-- Due to a bug in maven 2.0, the description must not contain any line breaks or tabs. -->
@@ -232,11 +230,16 @@
     NOTE:
     
     Modification of these properties affects:
-    1) Dependent project poms
+    1)  Dependent project poms
     2)  maven-pluto-plugin/src/main/resources/versions.properties as well!
 
     -->
     <properties>
+        <pluto.container.name>Pluto</pluto.container.name>
+	<pluto.container.version.major>1</pluto.container.version.major>
+	<pluto.container.version.minor>1.0</pluto.container.version.minor>
+	<javax.portlet.version.major>1</javax.portlet.version.major>
+	<javax.portlet.version.minor>0</javax.portlet.version.minor>
         <portlet-api.version>1.0</portlet-api.version>
         <servlet-api.version>2.3</servlet-api.version>
         <jsp-api.version>2.0</jsp-api.version>

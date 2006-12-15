@@ -17,7 +17,7 @@
 	Builds a binary and source distribution of Pluto 1.1, bundling it into zip, gzip and bzip2 files.
 	
 	Run the binary build using the command line:
-		ant -f dist-build.xml
+		ant -Dpluto.version=<version> -f dist-build.xml
 				
 	The binary distribution is done in the following way:
 	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
@@ -30,13 +30,13 @@
 	3. Bundles up the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
 	
 	Run the source build using the command line:
-		ant -f dist-build.xml src-dist	
+		ant -Dpluto.version=<version> -f dist-build.xml src-dist	
 
 	All built distributions end up in target/dist.				
 -->
 <project name="PlutoDistributions" default="bin-dist">
 
-	<property name="pluto.version" value="1.1.0-SNAPSHOT" description="Version of Pluto 1.1 to build"/>
+	<property name="pluto.version" value="" description="Version of Pluto 1.1 to build (set on command line using '-Dpluto.version=&lt;version&gt;')"/>
 	<property name="tomcat.version" value="5.5.17" description="Version of Tomcat to deploy Pluto"/>
 
 	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
@@ -59,6 +59,14 @@
 		<exclude name=".classpath"/>
 		<exclude name=".project"/>
 	</fileset>					
+
+	<target name="check-pluto-version" description="Ensures that the pluto.version property is a non-empty string">
+                <condition property="missing.pluto.version">
+		        <equals arg1="" arg2="${pluto.version}" trim="true"/>
+                </condition>
+		<fail if="missing.pluto.version" 
+		      message="Error: Missing required command-line property 'pluto.version'.  Define the property on the command line using '-Dpluto.version=1.1.0' for example."/>
+	</target>
 	
 	<target name="src-dist" depends="prepare-src-dist">
 		<zip destfile="${dist.basedir}/${pluto.name}-src.zip">
@@ -93,7 +101,7 @@
 		</tar>	
 	</target>
 
-	<target name="prepare-src-dist">
+	<target name="prepare-src-dist" depends="check-pluto-version">
 		<mkdir dir="${dist.basedir}"/>		
 	</target>
 
@@ -131,7 +139,7 @@
 		</tar>		
 	</target>
 	
-	<target name="prepare-bin-dist">
+	<target name="prepare-bin-dist" depends="check-pluto-version">
 		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
 			<arg line="clean:clean"/>
 		</exec>
@@ -185,7 +193,7 @@
 		</exec>
 	</target>
 		
-	<target name="clean">
+	<target name="clean" depends="check-pluto-version">
 		<delete dir="${dist.dir}"/>
 		<delete file="${unzip.file}"/>	
 		<delete file="${tar.file}"/>	

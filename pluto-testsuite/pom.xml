@@ -89,6 +89,15 @@
   <!-- Build configuration -->
   <build>
     <finalName>pluto-testsuite</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+	<includes>
+	  <include>expectedResults.properties</include>
+	</includes>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <!-- configure maven-war-plugin to use updated web.xml -->
       <plugin>
