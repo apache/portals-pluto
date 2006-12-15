@@ -20,12 +20,12 @@
 		ant -Dpluto.version=<version> -f dist-build.xml
 				
 	The binary distribution is done in the following way:
-	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
+	1. prepare-bin-dist: Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
 		build:
 		a. Adds emptySessionPath="true" to server.xml.
 		b. Adds a pluto user with pluto role to tomcat-users.xml.
 		c. Adds a pluto role to the tomcat user in tomcat-users.xml.
-	2. Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
+	2. run-maven: Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
 		and installs them into the Tomcat dist in the working directory.
 	3. Bundles up the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
 	
@@ -40,7 +40,8 @@
 	<property name="tomcat.version" value="5.5.17" description="Version of Tomcat to deploy Pluto"/>
 
 	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
-	<property name="base.name" value="apache-tomcat-${tomcat.version}"/>
+	<property name="base.tomcat.project" value="apache" description="Base project name for tomcat"/>
+	<property name="base.name" value="${base.tomcat.project}-tomcat-${tomcat.version}"/>
 	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
 	<property name="pluto.name" value="pluto-${pluto.version}"/>
 	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
@@ -105,7 +106,7 @@
 		<mkdir dir="${dist.basedir}"/>		
 	</target>
 
-	<target name="bin-dist" depends="prepare-bin-dist,run-maven" description="Creates zip, gzip, and bzip2 distributions">
+	<target name="bin-dist" depends="prepare-bin-dist,run-maven,move-ant-task" description="Creates zip, gzip, and bzip2 distributions">
 		<!-- Copy over jars needed to deploy custom portlets -->
 		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
 		<copy file="pluto-descriptor-api/target/pluto-descriptor-api-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
@@ -169,17 +170,17 @@
 			summary="true"
 		/>
 
-		<!-- Put tomcat user in 'pluto' role in tomcat-users.xml -->
+		<!-- Put tomcat user in 'pluto' and 'manager' roles in tomcat-users.xml -->
 		<replace file="${dist.dir}/conf/tomcat-users.xml"
 			token="roles=&quot;tomcat&quot;" 
-			value="roles=&quot;tomcat,pluto&quot;" 
+			value="roles=&quot;tomcat,pluto,manager&quot;" 
 			summary="true"
 		/>
 		
-		<!-- Add 'pluto' user to tomcat-users.xml -->
+		<!-- Add 'pluto' user to tomcat-users.xml and put user in pluto and manager roles -->
 		<replace file="${dist.dir}/conf/tomcat-users.xml"
 			token="&lt;/tomcat-users&gt;" 
-			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
+			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,manager&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
 			summary="true"
 		/>
 	</target>
@@ -192,7 +193,11 @@
 			<arg line="pluto:install -DinstallDir=${user.dir}/${dist.dir}"/>
 		</exec>
 	</target>
-		
+	
+	<target name="move-ant-task" description="Moves Ant task jar into the distribution">
+		<copy file="${user.dir}/pluto-ant-tasks/target/pluto-ant-tasks-${pluto.version}.jar" todir="${dist.dir}"/>	
+	</target>
+	
 	<target name="clean" depends="check-pluto-version">
 		<delete dir="${dist.dir}"/>
 		<delete file="${unzip.file}"/>	
