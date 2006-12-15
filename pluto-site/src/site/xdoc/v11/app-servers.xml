@@ -62,6 +62,12 @@ limitations under the License.
             </td>
           </tr>
           <tr>
+            <td>Glassfish</td>
+            <td>9.1 build 25</td>
+            <td>WORKING</td>
+            <td>Installation instructions are <a href="http://wiki.apache.org/portals/Pluto/InstallPlutoGlassfish">here</a> on the Pluto wiki.</td>
+          </tr>
+          <tr>
             <td>Jetty</td>
             <td>5.1.5rc2</td>
             <td>BEING FIXED</td>
