@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.core.PortletContextManager;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.AttributeKeys;
@@ -34,6 +35,8 @@ import org.apache.pluto.driver.services.portal.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
 import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
+import org.apache.pluto.spi.optional.PortletRegistryEvent;
+import org.apache.pluto.spi.optional.PortletRegistryListener;
 
 /**
  * Implementation of <code>PortletRegistryService</code> and
@@ -49,8 +52,8 @@ implements PortletRegistryService, PortletRegistryAdminService {
     private static final Log LOG = LogFactory.getLog(PortletRegistryServiceImpl.class);
     private ResourceConfig config;
     private ServletContext servletContext;
-    private PortletContainer container;
     
+         
     // Constructor -------------------------------------------------------------
     
     /**
@@ -77,7 +80,9 @@ implements PortletRegistryService, PortletRegistryAdminService {
         } catch (Exception ex) {
             throw new DriverConfigurationException(ex);
         }
-
+        
+        PortletContextManager.getManager().addPortletRegistryListener(
+                new PortletRegistryEventListener());
     }
 
     public void destroy() throws DriverConfigurationException {
@@ -159,6 +164,66 @@ implements PortletRegistryService, PortletRegistryAdminService {
      */
     public PortletWindowConfig getPortletWindowConfig(String id) {
         return config.getPortletWindowConfig(id);
+    }
+    
+    /** 
+     * Listens for events fired by the container's PortletRegistry Service
+     * and acts accordingly - by adding or removing portlets from
+     * the ResourceConfig. 
+     * 
+     * @todo implement portletApplicationRemoved
+     */
+    private class PortletRegistryEventListener implements PortletRegistryListener {
+        
+        public void portletApplicationRegistered(PortletRegistryEvent event) {
+            if (isNullOrEmpty(event)) {
+                return;                
+            }
+                
+            if (LOG.isDebugEnabled()) {
+                LOG.debug( "Portlet Registry service received a portlet registered " +
+                        "event [" + event + "]; Adding portlet application [" +
+                        event.getApplicationId() + "]");
+            }
+            
+            try {
+                addPortletApplication(event.getApplicationId());
+            } catch (DriverAdministrationException e) {
+                LOG.error( "Unable to add portlet [" + event.getApplicationId() + "] " +
+                        "to the Portlet Registry", e);
+                // I don't think there is anything we can do to recover from this
+                // condition, so do nothing here.
+            }            
+        }
+
+        public void portletApplicationRemoved(PortletRegistryEvent event) {
+            if (isNullOrEmpty(event)) {
+                return;
+            }
+                
+            
+            if (LOG.isDebugEnabled()) {
+                LOG.debug( "Portlet Registry service received a portlet registered " +
+                        "event [" + event + "]; Removing portlet application [" +
+                        event.getApplicationId() + "]");
+            }
+            
+            // FIXME: fill in body
+            LOG.warn("Portlet Application Removed event is currently a noop!");
+            
+            
+        }
+        
+        private boolean isNullOrEmpty (PortletRegistryEvent e)
+        {
+            if (e == null || e.getApplicationId() == null)
+            {
+                LOG.warn( "Unable to act on PortletRegistryEvent event: " +
+                        "either the event was null or it did not return an application id.");
+                return true;
+            }   
+            return false;
+        }        
     }
             
 }
