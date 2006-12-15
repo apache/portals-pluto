@@ -62,7 +62,7 @@ limitations under the License.
             </td>
           </tr>
           <tr>
-            <td>Glassfish</td>
+            <td>Sun Java System Application Server (Glassfish)</td>
             <td>9.1 build 25</td>
             <td>WORKING</td>
             <td>Installation instructions are <a href="http://wiki.apache.org/portals/Pluto/InstallPlutoGlassfish">here</a> on the Pluto wiki.</td>
@@ -81,12 +81,6 @@ limitations under the License.
           </tr>
           <tr>
             <td>WebSphere</td>
-            <td></td>
-            <td>UNTESTED</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>SunOne</td>
             <td></td>
             <td>UNTESTED</td>
             <td></td>
