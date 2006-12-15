@@ -237,7 +237,7 @@
     <properties>
         <pluto.container.name>Pluto</pluto.container.name>
 	<pluto.container.version.major>1</pluto.container.version.major>
-	<pluto.container.version.minor>1.0</pluto.container.version.minor>
+	<pluto.container.version.minor>1.0-SNAPSHOT</pluto.container.version.minor>
 	<javax.portlet.version.major>1</javax.portlet.version.major>
 	<javax.portlet.version.minor>0</javax.portlet.version.minor>
         <portlet-api.version>1.0</portlet-api.version>
