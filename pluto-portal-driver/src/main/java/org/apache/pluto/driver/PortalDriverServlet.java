@@ -56,9 +56,6 @@ public class PortalDriverServlet extends HttpServlet {
     
     /** The Portal Driver sServlet Context */
     private ServletContext servletContext = null;
-    
-    /** Is the SupportedModesService initialized? */
-    private boolean isSupportedModesServiceInitialized = false;
         
     protected static final String DEFAULT_PAGE_URI =
     		"/WEB-INF/themes/pluto-default-theme.jsp";
@@ -97,7 +94,6 @@ public class PortalDriverServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-        initSupportedModesService();
         
         PortalRequestContext portalRequestContext =
             new PortalRequestContext(getServletContext(), request, response);
@@ -188,21 +184,6 @@ public class PortalDriverServlet extends HttpServlet {
         return (DriverConfiguration) getServletContext().getAttribute(
         		AttributeKeys.DRIVER_CONFIG);
     }    
-    
-    private void initSupportedModesService()
-    {
-        if (isSupportedModesServiceInitialized)
-        {
-            return;
-        }
-
-        ApplicationContext springContext = (ApplicationContext)servletContext.getAttribute(
-                WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-        SupportedModesService service = (SupportedModesService)springContext.getBean("SupportedModesService");
-        service.init(servletContext);
-        
-        isSupportedModesServiceInitialized = true;
-    }
     
 }
 

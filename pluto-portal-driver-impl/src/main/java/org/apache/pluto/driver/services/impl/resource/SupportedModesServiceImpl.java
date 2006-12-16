@@ -1,11 +1,8 @@
 package org.apache.pluto.driver.services.impl.resource;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
-import java.util.List;
 
 import javax.portlet.PortletMode;
 import javax.servlet.ServletContext;
@@ -13,31 +10,28 @@ import javax.servlet.ServletContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 
 /**
  * Allows clients to determine if a particular PortletMode is supported
  * by the portal, a particular portlet, or both.
  * 
- * This implementation depends on {@link PropertyConfigService},  
- * {@link org.apache.pluto.spi.optional.PortletRegistryService}, and {@link PortletContainer}.
- * The two services are injected by Spring, and the container is obtained
- * from the <code>ServletContext</code>. 
+ * This implementation depends on {@link PropertyConfigService}.
+ * 
+ * The service implementations are injected by Spring.
  * 
  * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version $Id$
  * @since September 9, 2006
- * @todo How will hot-deploy of portlets via the admin portlet work with this impl?
  */
 public class SupportedModesServiceImpl implements SupportedModesService 
 {
@@ -45,25 +39,24 @@ public class SupportedModesServiceImpl implements SupportedModesService
     private static final Log LOG = LogFactory.getLog(SupportedModesServiceImpl.class);
 
     /** PortletMode objects supported by the portal */
-    private Set supportedPortletModesByPortal = new HashSet();        
-    
-    /** PortletContainer used to obtain Portlet Descriptors (PortletAppDD) */
-    private PortletContainer container = null;
+    private Set supportedPortletModesByPortal = new HashSet();
     
     /** PortletRegistryService used to obtain PortletApplicationConfig objects */
     private PortletRegistryService portletRegistry = null;
 
     /** PropertyConfig Service used to obtain supported portal modes */
-    private PropertyConfigService propertySvc = null;
+    private PropertyConfigService propertyService = null;
     
-    
+    /** The portal's servletContext **/
+    private ServletContext servletContext = null;
+        
     /**
      * Constructs a SupportedModesService with its dependencies.
      * 
-     * @param propertySvc the PropertyConfigService
+     * @param propertyService the PropertyConfigService
      */
-    public SupportedModesServiceImpl(PropertyConfigService propertySvc) {
-        this.propertySvc = propertySvc;
+    public SupportedModesServiceImpl(PropertyConfigService propertyService) {
+        this.propertyService = propertyService;
     }
     
     //  SupportedModesService Implementation -----------------
@@ -80,8 +73,21 @@ public class SupportedModesServiceImpl implements SupportedModesService
     public boolean isPortletModeSupportedByPortlet(String portletId, String mode) {
         String applicationId = PortletWindowConfig.parseContextPath(portletId);
         String portletName = PortletWindowConfig.parsePortletName(portletId);
-
-        try {
+        // since SupportedModesService is consulted per portal portal mode per portlet
+        // per render request, store a reference to the registry instead of looking
+        // it up each time.  Is this premature optimization?
+        if (portletRegistry == null) {
+            portletRegistry = ((PortletContainer)servletContext
+                    .getAttribute(AttributeKeys.PORTLET_CONTAINER))
+                    .getOptionalContainerServices()
+                    .getPortletRegistryService();
+        }        
+            
+        try {            
+            if (portletRegistry == null) {
+                LOG.error("Optional Portlet Registry Service not found.");
+                throw new PortletContainerException("Optional Portlet Registry Service not found.");
+            }            
             PortletAppDD ctx = portletRegistry.getPortletApplicationDescriptor(applicationId);
             Iterator i = ctx.getPortlets().iterator();
             while(i.hasNext()) {
@@ -113,26 +119,23 @@ public class SupportedModesServiceImpl implements SupportedModesService
     {
         LOG.debug("Destroying Supported Modes Service...");
         supportedPortletModesByPortal = null;
-        container = null;
         portletRegistry = null;
-        propertySvc = null;
+        propertyService = null;
         LOG.debug("Supported Modes Service destroyed.");
     }
 
     public void init(ServletContext ctx) throws DriverConfigurationException {
-        container = (PortletContainer)ctx.getAttribute(AttributeKeys.PORTLET_CONTAINER);
-        OptionalContainerServices services = container.getOptionalContainerServices();
-        portletRegistry = services.getPortletRegistryService();
+        this.servletContext = ctx;
         loadPortalModes();
     }
 
-        /** Populates the supportedPortletModesByPortal set. */
+    /** Populates the supportedPortletModesByPortal set. */
     private void loadPortalModes()
     {
         // Add the PortletModes supported by the portal to the
         // supportedPortletModesByPortal set.
         LOG.debug("Loading supported portal modes...");
-        Iterator modes = propertySvc.getSupportedPortletModes().iterator();
+        Iterator modes = propertyService.getSupportedPortletModes().iterator();
         while (modes.hasNext()) {
             String mode = (String) modes.next();
             LOG.debug("Loading mode [" + mode + "]");

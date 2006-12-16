@@ -159,6 +159,7 @@ public class DriverConfigurationImpl
         this.propertyService.init(context);
         this.registryService.init(context);
         this.renderService.init(context);
+        this.supportedModesService.init(context);
     }
 
     public void destroy() {
