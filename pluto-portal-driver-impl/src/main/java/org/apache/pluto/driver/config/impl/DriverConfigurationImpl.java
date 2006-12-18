@@ -171,6 +171,9 @@ public class DriverConfigurationImpl
 
         if(renderService != null)
             renderService.destroy();
+        
+        if (supportedModesService != null)
+            supportedModesService.destroy();
     }
 
 //
