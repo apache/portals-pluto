@@ -135,6 +135,11 @@ limitations under the License.
     </taglib>
 
     <taglib>
+        <taglib-uri>http://portals.apache.org/pluto/portlet-el</taglib-uri>
+        <taglib-location>/WEB-INF/tld/portlet-el.tld</taglib-location>
+    </taglib>
+
+    <taglib>
         <taglib-uri>http://portals.apache.org/pluto</taglib-uri>
         <taglib-location>/WEB-INF/tld/pluto.tld</taglib-location>
     </taglib>

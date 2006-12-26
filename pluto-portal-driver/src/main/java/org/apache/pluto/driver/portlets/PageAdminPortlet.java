@@ -36,10 +36,10 @@ import java.util.Iterator;
 public class PageAdminPortlet extends GenericPlutoPortlet {
 
     private static final Log LOG = LogFactory.getLog(PageAdminPortlet.class);
-
-    private static final String VIEW_PAGE = "/WEB-INF/fragments/admin/page/view.jsp";
-    private static final String EDIT_PAGE = "/WEB-INF/fragments/admin/page/edit.jsp";
-    private static final String HELP_PAGE = "/WEB-INF/fragments/admin/page/help.jsp";
+    private static final String JSP_DIR = "/WEB-INF/fragments/admin/page/";
+    private static final String VIEW_PAGE = JSP_DIR + "view.jsp";
+    private static final String EDIT_PAGE = JSP_DIR + "edit.jsp";
+    private static final String HELP_PAGE = JSP_DIR + "help.jsp";
 
 
     public void processAction(ActionRequest request, ActionResponse response) {
@@ -96,8 +96,13 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
         return EDIT_PAGE;
     }
 
-    public String getHelpPage() {
-        return HELP_PAGE;
+    public String getHelpPage(RenderRequest request) {
+    	String incPage = HELP_PAGE;
+    	String page = request.getParameter("helpPage");
+    	if (page != null) {
+    		incPage = JSP_DIR + page;
+    	}
+        return incPage;
     }
 
     public Collection getAvailablePages() {

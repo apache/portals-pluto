@@ -28,7 +28,7 @@ public abstract class GenericPlutoPortlet extends GenericPortlet {
 
     public abstract String getViewPage();
     public abstract String getEditPage();
-    public abstract String getHelpPage();
+    public abstract String getHelpPage(RenderRequest request);
 
     public void doView(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
@@ -50,7 +50,7 @@ public abstract class GenericPlutoPortlet extends GenericPortlet {
     throws PortletException, IOException {
     	PortletContext context = getPortletContext();
     	PortletRequestDispatcher requestDispatcher =
-    			context.getRequestDispatcher(getHelpPage());
+    			context.getRequestDispatcher(getHelpPage(request));
     	requestDispatcher.include(request, response);
     }
 }

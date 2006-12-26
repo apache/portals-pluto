@@ -41,7 +41,7 @@ public class AdminPortlet extends GenericPlutoPortlet {
         return EDIT_PAGE;
     }
 
-    public String getHelpPage() {
+    public String getHelpPage(RenderRequest request) {
         return HELP_PAGE;
     }
 }
