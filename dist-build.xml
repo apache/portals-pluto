@@ -38,7 +38,7 @@
 
 	<xmlproperty file="pom.xml"/>
 	<property name="pluto.version" value="${project.version}" description="Version of Pluto 1.1 to build (set on command line using '-Dpluto.version=&lt;version&gt;')"/>
-	<property name="tomcat.version" value="5.5.17" description="Version of Tomcat to deploy Pluto"/>
+	<property name="tomcat.version" value="5.5.20" description="Version of Tomcat to deploy Pluto"/>
 
 	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
 	<property name="base.tomcat.project" value="apache" description="Base project name for tomcat"/>
