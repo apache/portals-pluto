@@ -23,8 +23,9 @@
 	1. prepare-bin-dist: Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
 		build:
 		a. Adds emptySessionPath="true" to server.xml.
-		b. Adds a pluto user with pluto and manager role to tomcat-users.xml.
-		c. Adds a pluto and manager role to the tomcat user in tomcat-users.xml.
+		b. Uncomments SingleSignOn Valve so that Tomcat manager app can be used without additional login.
+		c. Adds a pluto user with pluto and manager role to tomcat-users.xml.
+		d. Adds a pluto and manager role to the tomcat user in tomcat-users.xml.
 	2. run-maven: Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
 		and installs them into the Tomcat dist in the working directory.
 	3. Bundles up the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
@@ -170,7 +171,14 @@
 			value="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; emptySessionPath=&quot;true&quot; /&gt;" 
 			summary="true"
 		/>
-
+		
+		<!-- Uncomment Single Sign On so Tomcat manager can be used without additional login -->
+		<replace file="${dist.dir}/conf/server.xml"
+			token="&lt;Valve className=&quot;org.apache.catalina.authenticator.SingleSignOn&quot; /&gt;"
+			value="--&gt;${line.separator}        &lt;Valve className=&quot;org.apache.catalina.authenticator.SingleSignOn&quot; /&gt;${line.separator}        &lt;!--"
+			summary="true"
+		/>
+		
 		<!-- Put tomcat user in 'pluto' and 'manager' roles in tomcat-users.xml -->
 		<replace file="${dist.dir}/conf/tomcat-users.xml"
 			token="roles=&quot;tomcat&quot;" 
