@@ -14,6 +14,9 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
 <div class="portlet-section-header">Page Adminstrator Portlet Help</div>
 
@@ -46,8 +49,10 @@ proper portlet-app record like this:
     &lt;portlets&gt;
       &lt;portlet name="HelloWorldPortlet"/&gt;
     &lt;/portlets&gt;
-  &lt;/portlet-app&gt;
+&lt;/portlet-app&gt;
 </pre>  
+</p>
+<p class="portlet-font">
 When these steps have been done, restart Pluto and use the Page Administrator Portlet to add the new portlet to a page. If you want to put the portlet on a new page, you must do so by manually adding a page element as a child of the render-config element in pluto-portal-driver-config.xml before you restart Pluto.
 </p>
 
@@ -60,3 +65,17 @@ When these steps have been done, restart Pluto and use the Page Administrator Po
 	That help file needs to reside in this directory (WEB-INF/fragments/admin/page).
 </p>
 
+
+<fmt:bundle basename="AdminPortlet">
+	<fmt:message key="appserver.deployer.url" var="deployerURL"/>
+</fmt:bundle> 
+
+<p class="portlet-font">
+<a href='<c:out value="${deployerURL}"/>' target="_blank">Upload and deploy a new portlet war</a> 
+</p>
+<p class="portlet-font">
+<a href='<portlet:renderURL portletMode="view"/>'>Page Administrator Portlet</a> 
+</p>
+<p class="portlet-font">
+<a href='<portlet:renderURL portletMode="help"/>'>Page Administrator Portlet Help</a> 
+</p>
