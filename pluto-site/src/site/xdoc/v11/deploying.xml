@@ -189,8 +189,9 @@ limitations under the License.
                To deploy a portlet application, simply deploy the application war
                using any standard mechanism for your application server.  There are many
                maven plugins and ant tasks that can assist with this, or you can use
-               a manager web interface.  How to deploy to your application sever is
-               beyond the scope of this document.
+               a manager web console. This console is pointed to the Tomcat manager webapp in the
+               Pluto binary distribution and is accessed via the 'Upload and deploy portlet war' link
+               on the page administration portlet. See the Help link on that portlet for more details.
            </p>
         </subsection>
             
@@ -198,18 +199,32 @@ limitations under the License.
         <p>
         As soon as the portlet application (war) is deployed to the servlet container
         the portlet application will be available to the portal and can be added to
-        pages using the page administration portlet.
+        pages using the page administration portlet. See the help mode in this portlet
+        for details on its use.
         </p>
         
         <p><b>Portal Page Configuration</b></p>
         <p>
           If you'd like for your page configuration to be consistent throughout
           restarts of the application server (currently placements made through
-          the portlets are not persistent), you should then configure the page
-          layout in the portal-driver configuration file.
+          the page administration portlet is not persistent), you should then configure the page
+          layout in the portal-driver configuration file (pluto-portal-driver-config.xml).
         </p>
         <p>
-          Do this by adding a <code>page</code> element in the <code>render-config</code> 
+		  The portlet application should be first configured in pluto-portal-driver-config.xml by
+		  adding a <code>portlet-app</code> element with appropriate child elements like this:
+			<source>
+&lt;portlet-app&gt;
+    &lt;context-path&gt;/your_portlet_app_context_path&lt;/context-path&gt;
+    &lt;portlets&gt;
+      &lt;portlet name="your_portlet_1"/&gt;
+      &lt;portlet name="your_portlet_2"/&gt;
+    &lt;/portlets&gt;
+&lt;/portlet-app&gt;
+			</source>      
+        </p>
+        <p>
+          The page can then be configured by adding a <code>page</code> element in the <code>render-config</code> 
           element, like this:
           <source><![CDATA[
 <render-config default="Test Page">
@@ -229,6 +244,12 @@ limitations under the License.
           default theme of Pluto Testsuite portlet app), your portlets will be
           displayed in two columns. You can clone this file to customize your layout.
           If you do so, make sure the <code>uri</code> attribute points to the new file.
+        </p>
+        <p>
+         The value of the <code>context-path element</code> within the <code>portlet-app</code> record must correspond to the 
+         value of the <code>context</code> attribute in the <code>portlet</code> element. In addition, the value of the
+         <code>name</code> attribute in the <code>portlet</code> child element of <code>portlet-app</code> must correspond to 
+         the value of the <code>name</code> attribute of the <code>portlet</code> child element of page. 
         </p>
       </subsection>
       
