@@ -204,6 +204,12 @@
 	</target>
 	
 	<target name="move-ant-task" description="Moves Ant task jar into the distribution">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}/pluto-util">
+			<arg line="install"/>
+		</exec>
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}/pluto-ant-tasks">
+			<arg line="install"/>
+		</exec>
 		<copy file="${user.dir}/pluto-ant-tasks/target/pluto-ant-tasks-${pluto.version}.jar" todir="${dist.dir}"/>	
 	</target>
 	
