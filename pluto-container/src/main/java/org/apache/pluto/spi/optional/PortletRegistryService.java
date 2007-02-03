@@ -41,8 +41,18 @@ public interface PortletRegistryService {
      *
      * @return iterator of all application descriptors.
      */
-    Iterator getRegisteredPortletApplications()
-        throws PortletContainerException;
+    Iterator getRegisteredPortletApplications();
+
+    /**
+     * Retrieve the ids of all registered applications.
+     * This list will only contain those applications
+     * which have been registered with the container.
+     * Others may or may not be available within
+     * the servers.
+     *
+     * @return iterator of all ids (strings).
+     */
+    Iterator getRegisteredPortletApplicationIds();
 
     /**
      * Retrieve the portlet descriptor for the specified
@@ -73,5 +83,5 @@ public interface PortletRegistryService {
      */
     void removePortletRegistryListener(PortletRegistryListener listener);
 
-    
+
 }

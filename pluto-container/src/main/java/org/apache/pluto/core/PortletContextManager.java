@@ -125,8 +125,12 @@ public class PortletContextManager implements PortletRegistryService {
         fireRemoved(context);
     }
 
+    public Iterator getRegisteredPortletApplicationIds() {
+        return new HashSet(portletContexts.keySet()).iterator();
 
-    public Iterator getRegisteredPortletApplications() throws PortletContainerException {
+    }
+
+    public Iterator getRegisteredPortletApplications() {
         return new HashSet(portletContexts.values()).iterator();
     }
 
