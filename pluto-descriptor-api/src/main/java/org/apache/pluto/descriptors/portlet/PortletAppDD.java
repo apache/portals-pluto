@@ -30,6 +30,15 @@ public class PortletAppDD {
     /** The defined portlets within the system. */
     private List portlets = new ArrayList();
 
+    /** The defined custom modes within the application. */
+    private List customPortletModes = new ArrayList();
+
+    /** The defined custom states within the application. */
+    private List customWindowStates = new ArrayList();
+
+    /** The defined userAttributes within the app. */
+    private List userAttributes = new ArrayList();
+
     /**
      * Default Constructor.
      */
@@ -52,6 +61,27 @@ public class PortletAppDD {
         this.portlets = portlets;
     }
 
+    public List getCustomPortletModes() {
+        return customPortletModes;
+    }
 
+    public void setCustomPortletModes(List customPortletModes) {
+        this.customPortletModes = customPortletModes;
+    }
+
+    public List getCustomWindowStates() {
+        return customWindowStates;
+    }
+
+    public void setCustomWindowStates(List customWindowStates) {
+        this.customWindowStates = customWindowStates;
+    }
+
+    public List getUserAttributes() {
+        return userAttributes;
+    }
+
+    public void setUserAttributes(List userAttributes) {
+        this.userAttributes = userAttributes;
+    }
 }
-

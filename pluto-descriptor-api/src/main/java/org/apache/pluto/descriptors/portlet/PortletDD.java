@@ -80,7 +80,6 @@ public class PortletDD {
      * @throws IllegalArgumentException if the name has a period since it is used
      * to create the portlet ID in <code>PortletWindowConfig.createPortletId()</code>
      * using a dot to separate the context path from the portlet name.
-     * @see PortletWindowConfig#createPortletId(String, String)
      */
     public void setPortletName(String portletName) {
     	if (portletName.indexOf('.') != -1) {
