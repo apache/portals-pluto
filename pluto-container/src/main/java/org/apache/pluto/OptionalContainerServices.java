@@ -19,7 +19,7 @@ import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.optional.PortletInfoService;
 
 /**
  * Defines the services necessary for integration between the Pluto Container
@@ -61,5 +61,13 @@ public interface OptionalContainerServices {
      * @return an invoker which can be used to service the indicated portlet.
      */
     PortletInvokerService getPortletInvokerService();
+
+    /**
+     * Returns the portlet info service implementation used
+     * by the container.
+     *
+     * @return portlet info service implementation.
+     */
+    PortletInfoService getPortletInfoService();
 
 }

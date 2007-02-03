@@ -33,6 +33,9 @@ import java.util.WeakHashMap;
  * any ServletContext that is destroyed, thus allowing for a the context to be
  * redeployed.
  *
+ * NOTE: This should only be used internally.  Do not access it from embedding
+ * portals, instead, utilize the PortletRegistryService.
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
@@ -111,7 +114,7 @@ public class PortletDescriptorRegistry {
      *
      * @param servletContext  the servlet context.
      * @return The portlet application deployment descriptor.
-     * @throws PortletContainerException
+     * @throws PortletContainerException if the descriptor can not be found or parsed
      */
     public PortletAppDD getPortletAppDD(ServletContext servletContext)
     throws PortletContainerException {

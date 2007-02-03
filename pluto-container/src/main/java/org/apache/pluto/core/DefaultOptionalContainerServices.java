@@ -20,6 +20,7 @@ import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.PortletInfoService;
 
 /**
  * Default Optional Container Services implementation.
@@ -35,6 +36,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletRegistryService portletRegistryService;
     private PortletInvokerService portletInvokerService;
     private PortletEnvironmentService portletEnvironmentService;
+    private PortletInfoService portletInfoService;
     
     
     /**
@@ -46,6 +48,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletRegistryService = PortletContextManager.getManager();
         portletInvokerService = new DefaultPortletInvokerService();
         portletEnvironmentService = null;
+        portletInfoService = null;
     }
     
     /**
@@ -92,6 +95,9 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public PortletInvokerService getPortletInvokerService() {
         return portletInvokerService;
     }
-    
+
+    public PortletInfoService getPortletInfoService() {
+        return portletInfoService;
+    }
 }
 

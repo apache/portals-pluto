@@ -107,7 +107,6 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         };
     }
 
-
     public javax.servlet.ServletConfig getServletConfig() {
         return servletConfig;
     }
@@ -115,5 +114,5 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     public PortletDD getPortletDefinition() {
         return portletDD;
     }
-    // --------------------------------------------------------------------------------------------
+
 }

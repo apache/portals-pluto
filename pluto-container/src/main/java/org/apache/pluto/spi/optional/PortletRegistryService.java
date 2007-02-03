@@ -52,6 +52,8 @@ public interface PortletRegistryService {
      *
      * @param name the name of the portlet application.
      * @return the named portlet application descriptor.
+     * @throws PortletContainerException if the descriptor
+     *         can not be found or if the portlet.xml can not be parsed.
      */
     PortletAppDD getPortletApplicationDescriptor(String name)
         throws PortletContainerException;

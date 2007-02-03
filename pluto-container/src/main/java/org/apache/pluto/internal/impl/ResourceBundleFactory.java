@@ -18,6 +18,9 @@ package org.apache.pluto.internal.impl;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.PortletInfoDD;
 import org.apache.pluto.util.StringManager;
+import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.core.ContainerInvocation;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
@@ -60,9 +63,17 @@ class ResourceBundleFactory {
         }
 
         PortletInfoDD info = dd.getPortletInfo();
+
+        PortletInfoService infoService = getPortletInfoService();
+        PortletWindow window = getWindow();
+
         if(info != null) {
+            String title = infoService == null ? info.getTitle() : infoService.getTitle(window);
+            String shortTitle = infoService == null ? info.getShortTitle() : infoService.getShortTitle(window);
+            String keywords = infoService == null ? info.getKeywords() : infoService.getKeywords(window);
+
             defaultBundle = new InlinePortletResourceBundle(
-                info.getTitle(), info.getShortTitle(), info.getKeywords()
+                title, shortTitle, keywords
             );
         }
         else {
@@ -101,5 +112,22 @@ class ResourceBundleFactory {
             bundles.put(locale, defaultBundle);
         }
        return (ResourceBundle)bundles.get(locale);
+    }
+
+
+    private PortletInfoService getPortletInfoService() {
+        ContainerInvocation invocation = ContainerInvocation.getInvocation();
+        if(invocation != null) {
+            return invocation.getPortletContainer().getOptionalContainerServices().getPortletInfoService();
+        }
+        return null;
+    }
+
+    private PortletWindow getWindow() {
+        ContainerInvocation invocation = ContainerInvocation.getInvocation();
+        if(invocation != null) {
+            return invocation.getPortletWindow();
+        }
+        return null;
     }
 }
