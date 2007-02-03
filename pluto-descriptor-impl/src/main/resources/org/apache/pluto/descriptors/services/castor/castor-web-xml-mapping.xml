@@ -290,7 +290,7 @@
         <field name="AuthConstraint"
                type="org.apache.pluto.descriptors.servlet.AuthConstraintDD"/>
         <field name="UserDataConstraint"
-               type="org.apache.pluto.descriptors.servlet.UserDataConstraintDD"/>
+               type="org.apache.pluto.descriptors.common.UserDataConstraintDD"/>
     </class>
     <class name="org.apache.pluto.descriptors.servlet.WebResourceCollectionDD">
         <field name="description" type="java.lang.String"/>

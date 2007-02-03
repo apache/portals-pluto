@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.descriptors.common.UserDataConstraintDD;
+
 import java.util.List;
 
 /**

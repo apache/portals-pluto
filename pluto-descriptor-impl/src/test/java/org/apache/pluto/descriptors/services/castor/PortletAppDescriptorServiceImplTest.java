@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.IOException;
 
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.SecurityConstraintDD;
 
 /**
  *
@@ -45,7 +46,22 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         assertEquals(2, dd.getCustomPortletModes().size());
         assertEquals(2, dd.getCustomWindowStates().size());
         assertEquals(1, dd.getUserAttributes().size());
+        assertEquals(1, dd.getSecurityConstraints().size());
+
+        SecurityConstraintDD sc = (SecurityConstraintDD)dd.getSecurityConstraints().get(0);
+        assertNotNull(sc.getPortletCollection());
+        assertEquals("description", sc.getDisplayName());
+        assertEquals(3, sc.getPortletCollection().getPortletNames().size());
+        assertEquals("a", sc.getPortletCollection().getPortletNames().get(0));
+        assertEquals("b", sc.getPortletCollection().getPortletNames().get(1));
+        assertEquals("c", sc.getPortletCollection().getPortletNames().get(2));
+
+        assertNotNull(sc.getUserDataConstraint());
+        assertEquals("scdescription", sc.getUserDataConstraint().getDescription());
+        assertEquals("NONE", sc.getUserDataConstraint().getTransportGuarantee());
+        
     }
+
 
 
     private String xml = "<portlet-app\n" +
@@ -59,5 +75,17 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         " <custom-window-state><description>Test</description><window-state>customWindow</window-state></custom-window-state>" +
         " <custom-window-state><description>Test2</description><window-state>customWindow2</window-state></custom-window-state>" +
         " <user-attribute><description>Test2</description><name>user</name></user-attribute>" +
+        "    <security-constraint>\n" +
+        "        <display-name>description</display-name>\n" +
+        "        <portlet-collection>\n" +
+        "            <portlet-name>a</portlet-name>\n" +
+        "            <portlet-name>b</portlet-name>\n" +
+        "            <portlet-name>c</portlet-name>\n" +
+        "        </portlet-collection>\n" +
+        "        <user-data-constraint>\n" +
+        "            <description>scdescription</description>\n" +
+        "            <transport-guarantee>NONE</transport-guarantee>\n" +
+        "        </user-data-constraint>\n" +
+        "    </security-constraint>" +
         "</portlet-app>";
 }

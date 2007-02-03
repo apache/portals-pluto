@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.servlet;
+package org.apache.pluto.descriptors.common;
 
 /**
- * <B>TODO</B>: Document
+ * User Data Constraint descriptor.
+ *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: UserDataConstraintDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005

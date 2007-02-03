@@ -46,6 +46,12 @@
                collection="arraylist">
             <bind-xml name="user-attribute" node="element"/>
         </field>
+
+        <field name="SecurityConstraints"
+               type="org.apache.pluto.descriptors.portlet.SecurityConstraintDD"
+               collection="arraylist">
+            <bind-xml name="security-constraint" node="element"/>
+         </field>
     </class>
 
     <class name="org.apache.pluto.descriptors.portlet.PortletDD">
@@ -172,5 +178,34 @@
         </field>
     </class>
 
-</mapping>
+    <class name="org.apache.pluto.descriptors.portlet.SecurityConstraintDD">
+        <field name="DisplayName">
+            <bind-xml name="display-name" node="element"/>
+        </field>
 
+        <field name="PortletCollection" type="org.apache.pluto.descriptors.portlet.PortletCollectionDD">
+            <bind-xml name="portlet-collection"/>
+        </field>
+
+        <field name="UserDataConstraint" type="org.apache.pluto.descriptors.common.UserDataConstraintDD">
+            <bind-xml name="user-data-constraint"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.portlet.PortletCollectionDD">
+        <field name="PortletNames" type="java.lang.String" collection="arraylist">
+            <bind-xml name="portlet-name" node="element"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.common.UserDataConstraintDD">
+        <field name="Description">
+            <bind-xml name="description" node="element"/>
+        </field>
+
+        <field name="TransportGuarantee">
+            <bind-xml name="transport-guarantee" node="element"/>
+        </field>
+    </class>
+
+</mapping>

@@ -39,6 +39,9 @@ public class PortletAppDD {
     /** The defined userAttributes within the app. */
     private List userAttributes = new ArrayList();
 
+    /** The defined constraints */
+    private List securityConstraints = new ArrayList();
+
     /**
      * Default Constructor.
      */
@@ -83,5 +86,13 @@ public class PortletAppDD {
 
     public void setUserAttributes(List userAttributes) {
         this.userAttributes = userAttributes;
+    }
+
+    public List getSecurityConstraints() {
+        return securityConstraints;
+    }
+
+    public void setSecurityConstraints(List securityConstraints) {
+        this.securityConstraints = securityConstraints;
     }
 }
