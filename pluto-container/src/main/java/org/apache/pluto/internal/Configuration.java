@@ -20,6 +20,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.ResourceBundle;
 import java.util.PropertyResourceBundle;
+import java.util.MissingResourceException;
 
 /**
  * Central location for Configuration info.
@@ -27,7 +28,7 @@ import java.util.PropertyResourceBundle;
  * @author ddewolf@apache.org
  * @since Jul 2, 2005
  */
-class Configuration {
+public class Configuration {
     
     private static final Log LOG = 
             LogFactory.getLog(Configuration.class);
@@ -37,6 +38,12 @@ class Configuration {
 
     private static final String DESCRIPTOR_SERVICE =
         "org.apache.pluto.descriptors.services.PortletAppDescriptorService";
+
+    /**
+     * org.apache.pluto.ALLOW_BUFFER
+     */
+    private static final String BUFFER_SUPPORT =
+        "org.apache.pluto.ALLOW_BUFFER";
             
 
     public static String getPortletAppDescriptorServiceImpl() {
@@ -45,5 +52,15 @@ class Configuration {
             LOG.debug("Using Descriptor Service Impl: "+impl);
         }
         return impl;
+    }
+
+    public static boolean isBufferingSupported() {
+        try {
+            String buffer = BUNDLE.getString(BUFFER_SUPPORT);
+            return Boolean.TRUE.toString().equalsIgnoreCase(buffer);
+        } catch(MissingResourceException mre) {
+            return false;
+        }
+
     }
 }
