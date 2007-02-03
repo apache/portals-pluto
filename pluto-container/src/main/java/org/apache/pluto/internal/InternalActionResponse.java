@@ -19,13 +19,14 @@ import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.portlet.ActionResponse;
 
 /**
  * The internal action response interface extends the internal portlet response
  * interface and provides some action-specific methods.
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public interface InternalActionResponse extends InternalPortletResponse {
+public interface InternalActionResponse extends InternalPortletResponse, ActionResponse {
 
     /**
      * Retrieves the render parameters associated with this response.
@@ -51,6 +52,9 @@ public interface InternalActionResponse extends InternalPortletResponse {
      * @return the redirect location.
      */
     public String getRedirectLocation();
+
+
+    public String encodeRedirectURL(String url);
     
 }
 

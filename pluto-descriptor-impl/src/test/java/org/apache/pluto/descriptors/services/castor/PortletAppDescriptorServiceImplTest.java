@@ -42,6 +42,7 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         InputStream in = new ByteArrayInputStream(xml.toString().getBytes());
 
         PortletAppDD dd = service.read(in);
+        assertEquals("1.0", dd.getVersion());
         assertEquals(0, dd.getPortlets().size());
         assertEquals(2, dd.getCustomPortletModes().size());
         assertEquals(2, dd.getCustomWindowStates().size());

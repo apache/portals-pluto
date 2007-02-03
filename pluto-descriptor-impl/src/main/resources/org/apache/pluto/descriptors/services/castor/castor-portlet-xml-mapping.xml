@@ -25,6 +25,11 @@
 
     <class name="org.apache.pluto.descriptors.portlet.PortletAppDD">
         <map-to xml="portlet-app"/>
+
+        <field name="Version">
+            <bind-xml name="version" node="attribute"/>
+        </field>
+
         <field name="Portlets"
                type="org.apache.pluto.descriptors.portlet.PortletDD"
                collection="arraylist">

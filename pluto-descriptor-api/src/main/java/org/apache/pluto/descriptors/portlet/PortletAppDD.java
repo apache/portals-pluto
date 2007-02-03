@@ -27,6 +27,9 @@ import java.util.List;
  */
 public class PortletAppDD {
 
+    /** PortletApplication descriptor version */
+    private String version;
+
     /** The defined portlets within the system. */
     private List portlets = new ArrayList();
 
@@ -46,6 +49,15 @@ public class PortletAppDD {
      * Default Constructor.
      */
     public PortletAppDD() {
+    }
+
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     /**

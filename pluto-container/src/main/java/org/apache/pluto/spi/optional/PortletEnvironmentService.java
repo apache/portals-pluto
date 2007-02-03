@@ -15,38 +15,48 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletResponse;
-import org.apache.pluto.internal.InternalActionResponse;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.InternalRenderRequest;
+import org.apache.pluto.internal.InternalActionRequest;
+import org.apache.pluto.internal.InternalRenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Factory Service for creating Portlet request and responses.
- * <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
+ * @author David H. DeWolf
+ * @since 1.1.0
  */
 public interface PortletEnvironmentService {
-	
-	public InternalPortletRequest createActionRequest(
-			HttpServletRequest servletRequest,
-			HttpServletResponse servletResponse,
-			InternalPortletWindow internalPortletWindow);
-	
-	public InternalActionResponse createActionRespose(
-			HttpServletRequest servletRequest,
-			HttpServletResponse servletResponse,
-			InternalPortletWindow internalPortletWindow);
-	
-	public InternalPortletRequest createRenderRequest(
-			HttpServletRequest servletRequest,
-			HttpServletResponse servletResponse,
-			InternalPortletWindow internalPortletWindow);
-	
-	public InternalPortletResponse createRenderRespose(
-			HttpServletRequest servletRequest,
-			HttpServletResponse servletResponse,
-			InternalPortletWindow internalPortletWindow);
-	
+
+    public InternalActionRequest createActionRequest(
+        PortletContainer container,
+        HttpServletRequest servletRequest,
+        HttpServletResponse servletResponse,
+        InternalPortletWindow internalPortletWindow);
+
+    public InternalActionResponse createActionResponse(
+        PortletContainer container,
+        HttpServletRequest servletRequest,
+        HttpServletResponse servletResponse,
+        InternalPortletWindow internalPortletWindow);
+
+    public InternalRenderRequest createRenderRequest(
+        PortletContainer container,
+        HttpServletRequest servletRequest,
+        HttpServletResponse servletResponse,
+        InternalPortletWindow internalPortletWindow);
+
+    public InternalRenderResponse createRenderResponse(
+        PortletContainer container,
+        HttpServletRequest servletRequest,
+        HttpServletResponse servletResponse,
+        InternalPortletWindow internalPortletWindow);
+
 }

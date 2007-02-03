@@ -29,11 +29,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
-import org.apache.pluto.internal.impl.ActionRequestImpl;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
+import org.apache.pluto.internal.InternalActionResponse;
+import org.apache.pluto.internal.InternalRenderRequest;
+import org.apache.pluto.internal.InternalRenderResponse;
+import org.apache.pluto.internal.InternalActionRequest;
 import org.apache.pluto.internal.impl.PortletWindowImpl;
-import org.apache.pluto.internal.impl.RenderRequestImpl;
-import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.OptionalContainerServices;
@@ -152,11 +152,12 @@ public class PortletContainerImpl implements PortletContainer {
         		new PortletWindowImpl(servletContext, portletWindow);
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletName());
-        
-        RenderRequestImpl renderRequest = new RenderRequestImpl(
-        		this, internalPortletWindow, request);
-        RenderResponseImpl renderResponse = new RenderResponseImpl(
-        		this, internalPortletWindow, request, response);
+
+        InternalRenderRequest renderRequest = getOptionalContainerServices().getPortletEnvironmentService()
+            .createRenderRequest(this, request, response, internalPortletWindow);
+
+        InternalRenderResponse renderResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            .createRenderResponse(this, request, response, internalPortletWindow);
 
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -170,6 +171,7 @@ public class PortletContainerImpl implements PortletContainer {
         debugWithName("Portlet rendered for: "
         		+ portletWindow.getPortletName());
     }
+
 
     /**
      * Process action for the portlet associated with the given portlet window.
@@ -193,12 +195,13 @@ public class PortletContainerImpl implements PortletContainer {
             	new PortletWindowImpl(servletContext, portletWindow);
     	debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletName());
-    	
-        ActionRequestImpl actionRequest = new ActionRequestImpl(
-        		this, internalPortletWindow, request);
-        ActionResponseImpl actionResponse = new ActionResponseImpl(
-        		this, internalPortletWindow, request, response);
-        
+
+        InternalActionRequest actionRequest = getOptionalContainerServices().getPortletEnvironmentService()
+            .createActionRequest(this, request, response, internalPortletWindow);
+
+        InternalActionResponse actionResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            .createActionResponse(this, request, response, internalPortletWindow); 
+
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
@@ -278,12 +281,14 @@ public class PortletContainerImpl implements PortletContainer {
         		new PortletWindowImpl(servletContext, portletWindow);
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletName());
-        
-        RenderRequestImpl renderRequest = new RenderRequestImpl(
-        		this, internalPortletWindow, request);
-        RenderResponseImpl renderResponse = new RenderResponseImpl(
-        		this, internalPortletWindow, request, response);
-        
+
+        InternalRenderRequest renderRequest =
+            getOptionalContainerServices().getPortletEnvironmentService()
+                .createRenderRequest(this, request, response, internalPortletWindow);
+        InternalRenderResponse renderResponse =
+            getOptionalContainerServices().getPortletEnvironmentService()
+                .createRenderResponse(this, request, response, internalPortletWindow);
+
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
@@ -398,6 +403,7 @@ public class PortletContainerImpl implements PortletContainer {
             LOG.info("Portlet Container [" + name + "]: " + message);
         }
     }
-    
+
+
 }
 

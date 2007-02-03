@@ -45,8 +45,8 @@ import org.apache.commons.logging.Log;
  * Implementation of the <code>javax.portlet.PortletPreferences</code>
  * interface.
  * 
- * @see org.apache.pluto.core.PortletPreference
- * @see org.apache.pluto.core.impl.PortletPreferenceImpl
+ * @see PortletPreferences
+ * @see PortletPreferenceImpl
  * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
@@ -90,7 +90,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     /**
      * Constructs an instance.
      * @param container  the portlet container.
-     * @param portletWindow  the internal portlet window.
+     * @param window  the internal portlet window.
      * @param request  the internal portlet request.
      * @param methodId  the request method ID: render request or action request.
      */
