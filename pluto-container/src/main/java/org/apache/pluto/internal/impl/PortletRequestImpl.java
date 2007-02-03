@@ -331,8 +331,11 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public String getContextPath() {
-        return this.internalPortletWindow.getContextPath();
-        //return ((HttpServletRequest)getRequest()).getContextPath();
+        String contextPath = internalPortletWindow.getContextPath();
+        if ("/".equals(contextPath)) {
+            contextPath = "";
+        }
+        return contextPath;
     }
 
     public String getRemoteUser() {
