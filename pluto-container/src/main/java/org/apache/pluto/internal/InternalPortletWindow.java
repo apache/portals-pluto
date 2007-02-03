@@ -27,6 +27,9 @@ import org.apache.pluto.PortletWindow;
  * twice on a page results in two different windows.
  * 
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @since 1.1.0
+ *
  */
 public interface InternalPortletWindow extends PortletWindow {
 
@@ -41,5 +44,13 @@ public interface InternalPortletWindow extends PortletWindow {
      * @return the portlet entity
      */
     public PortletEntity getPortletEntity();
+
+    /**
+     * Retrieve the original portlet window with
+     * which the container was invoked.
+     * 
+     * @return the original portlet window.
+     */
+    public PortletWindow getOriginalPortletWindow();
     
 }

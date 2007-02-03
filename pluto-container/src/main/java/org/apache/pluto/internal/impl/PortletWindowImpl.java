@@ -63,7 +63,7 @@ public class PortletWindowImpl implements InternalPortletWindow {
      * @param portletWindow  the underlying portlet window instance.
      */
     public PortletWindowImpl(ServletContext context,
-                                 PortletWindow portletWindow) {
+                             PortletWindow portletWindow) {
         this.servletContext = context.getContext(
         		portletWindow.getContextPath());
         if (servletContext == null) {
@@ -112,4 +112,7 @@ public class PortletWindowImpl implements InternalPortletWindow {
         return entity;
     }
 
+    public PortletWindow getOriginalPortletWindow() {
+        return portletWindow;
+    }
 }
