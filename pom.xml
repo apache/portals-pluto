@@ -200,7 +200,7 @@
         </contributor>
 
         <contributor>
-            
+
         </contributor>
     </contributors>
 
@@ -232,14 +232,13 @@
     Modification of these properties affects:
     1)  Dependent project poms
     2)  maven-pluto-plugin/src/main/resources/versions.properties as well!
-
     -->
     <properties>
         <pluto.container.name>Pluto</pluto.container.name>
-	<pluto.container.version.major>1</pluto.container.version.major>
-	<pluto.container.version.minor>1.0-SNAPSHOT</pluto.container.version.minor>
-	<javax.portlet.version.major>1</javax.portlet.version.major>
-	<javax.portlet.version.minor>0</javax.portlet.version.minor>
+        <pluto.container.version.major>1</pluto.container.version.major>
+        <pluto.container.version.minor>1.0-SNAPSHOT</pluto.container.version.minor>
+        <javax.portlet.version.major>1</javax.portlet.version.major>
+        <javax.portlet.version.minor>0</javax.portlet.version.minor>
         <portlet-api.version>1.0</portlet-api.version>
         <servlet-api.version>2.3</servlet-api.version>
         <jsp-api.version>2.0</jsp-api.version>
@@ -253,8 +252,8 @@
         <commons-httpclient.version>3.0</commons-httpclient.version>
         <commons-beanutils.version>1.7.0</commons-beanutils.version>
         <commons-logging.version>1.0.4</commons-logging.version>
-        <log4j.version>1.2.9</log4j.version>
-        <springframework.version>2.0</springframework.version>
+        <log4j.version>1.2.14</log4j.version>
+        <springframework.version>2.0.2</springframework.version>
         <plexus.version>1.0.4</plexus.version>
         <maven.version>2.0</maven.version>
         <ant.version>1.6.5</ant.version>
