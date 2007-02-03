@@ -85,10 +85,8 @@ class InstallationDependency {
     private static final List SHARED = new ArrayList();
 
     static {
-//        ENDORSED.add(XERCES);
-//        ENDORSED.add(XML_PARSER_APIS);
-        SHARED.add(XERCES);
-        SHARED.add(XML_PARSER_APIS);
+        ENDORSED.add(XERCES);
+        ENDORSED.add(XML_PARSER_APIS);
 
         SHARED.add(PORTLET_API);
         SHARED.add(DESCRIPTOR_API);
