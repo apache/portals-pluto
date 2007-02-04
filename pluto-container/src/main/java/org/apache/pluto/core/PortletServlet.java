@@ -223,6 +223,10 @@ public class PortletServlet extends HttpServlet {
                 portlet.processAction(actionRequest, actionResponse);
             }
 
+            else if (methodId == Constants.METHOD_ADMIN) {
+
+            }
+
             // The requested method is NOOP: do nothing.
             else if (methodId == Constants.METHOD_NOOP) {
                 // Do nothing.

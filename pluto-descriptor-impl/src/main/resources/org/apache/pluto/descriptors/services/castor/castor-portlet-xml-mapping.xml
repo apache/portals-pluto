@@ -65,8 +65,13 @@
         </field>
 
         <field name="DisplayNames" type="org.apache.pluto.descriptors.common.DisplayNameDD"
-            collection="arraylist">
+               collection="arraylist">
             <bind-xml name="display-name" node="element"/>
+        </field>
+
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description" node="element"/>
         </field>
 
         <field name="ExpirationCache">

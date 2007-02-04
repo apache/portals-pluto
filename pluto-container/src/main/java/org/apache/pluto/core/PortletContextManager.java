@@ -21,6 +21,7 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
+import org.apache.pluto.internal.Configuration;
 import org.apache.pluto.internal.impl.PortletContextImpl;
 import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
@@ -180,6 +181,16 @@ public class PortletContextManager implements PortletRegistryService {
 //
 // Utility
 
+    public static ServletContext getPortletContext(ServletContext portalContext, String portletContextPath) {
+        if(Configuration.preventUnecessaryCrossContext()) {
+            String portalPath = getContextPath(portalContext);
+            if(portalPath.equals(portletContextPath)) {
+                return portalContext;
+            }
+        }
+        return portalContext.getContext(portletContextPath);
+    }
+
     /**
      * Servlet 2.5 ServletContext.getContextPath() method.
      */
@@ -194,7 +205,7 @@ public class PortletContextManager implements PortletRegistryService {
         }
     }
 
-    protected String getContextPath(ServletContext context) {
+    protected static String getContextPath(ServletContext context) {
         String contextPath = null;
         if (contextPathGetter != null) {
             try {
@@ -212,8 +223,7 @@ public class PortletContextManager implements PortletRegistryService {
     }
 
     private static final String WEB_XML = "/WEB-INF/web.xml";
-
-    protected String computeContextPath(ServletContext context) {
+    protected static String computeContextPath(ServletContext context) {
         try {
             URL webXmlUrl = context.getResource(WEB_XML);
             String path = webXmlUrl.toExternalForm();

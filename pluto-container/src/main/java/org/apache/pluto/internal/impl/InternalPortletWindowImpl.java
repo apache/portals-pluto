@@ -32,14 +32,8 @@ import org.apache.pluto.internal.PortletEntity;
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
-public class PortletWindowImpl implements InternalPortletWindow {
+public class InternalPortletWindowImpl implements InternalPortletWindow {
 
-    private static final StringManager EXCEPTIONS = StringManager.getManager(
-    		PortletWindowImpl.class.getPackage().getName());
-    
-    
-    // Private Member Variables ------------------------------------------------
-    
     /** The underlying portlet window instance. */
     private PortletWindow portletWindow = null;
     
@@ -62,16 +56,9 @@ public class PortletWindowImpl implements InternalPortletWindow {
      *        being invoked.
      * @param portletWindow  the underlying portlet window instance.
      */
-    public PortletWindowImpl(ServletContext context,
+    public InternalPortletWindowImpl(ServletContext context,
                              PortletWindow portletWindow) {
-        this.servletContext = context.getContext(
-        		portletWindow.getContextPath());
-        if (servletContext == null) {
-            throw new PortletContainerRuntimeException(EXCEPTIONS.getString(
-            		"error.config.context.null",
-                    portletWindow.getPortletName(),
-                    portletWindow.getContextPath()));
-        }
+        this.servletContext = context;
         this.portletWindow = portletWindow;
     }
     
@@ -107,7 +94,7 @@ public class PortletWindowImpl implements InternalPortletWindow {
 
     public PortletEntity getPortletEntity() {
         if (entity == null) {
-            entity = new PortletEntityImpl(servletContext, this);
+            entity = new PortletEntityImpl(servletContext, getPortletName());
         }
         return entity;
     }

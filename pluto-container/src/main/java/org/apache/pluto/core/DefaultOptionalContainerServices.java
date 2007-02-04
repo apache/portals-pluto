@@ -21,6 +21,7 @@ import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
 
 /**
  * Default Optional Container Services implementation.
@@ -37,7 +38,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletInvokerService portletInvokerService;
     private PortletEnvironmentService portletEnvironmentService;
     private PortletInfoService portletInfoService;
-    
+    private PortalAdministrationService portalAdministrationService;
+
     
     /**
      * Constructs an instance using the default portlet preferences service
@@ -48,7 +50,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletRegistryService = PortletContextManager.getManager();
         portletInvokerService = new DefaultPortletInvokerService();
         portletEnvironmentService = new DefaultPortletEnvironmentService();
-        portletInfoService = null;
+        portletInfoService = new DefaultPortletInfoService();
+        portalAdministrationService = new DefaultPortalAdministrationService();
     }
     
     /**
@@ -74,6 +77,19 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         if(root.getPortletInvokerService() != null) {
             portletInvokerService = root.getPortletInvokerService();
         }
+
+        if(root.getPortletEnvironmentService() != null) {
+            portletEnvironmentService = root.getPortletEnvironmentService();
+        }
+
+        if(root.getPortletInfoService() != null) {
+            portletInfoService = root.getPortletInfoService();
+        }
+
+        if(root.getPortalAdministrationService() != null) {
+            portalAdministrationService = root.getPortalAdministrationService();
+        }
+
     }
     
     
@@ -98,6 +114,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
     public PortletInfoService getPortletInfoService() {
         return portletInfoService;
+    }
+
+    public PortalAdministrationService getPortalAdministrationService() {
+        return portalAdministrationService;
     }
 }
 

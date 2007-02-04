@@ -25,6 +25,7 @@ import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
 
 import javax.portlet.PortalContext;
 
@@ -97,6 +98,10 @@ implements RequiredContainerServices, OptionalContainerServices {
     }
 
     public PortletInfoService getPortletInfoService() {
+        return null;
+    }
+
+    public PortalAdministrationService getPortalAdministrationService() {
         return null;
     }
 }

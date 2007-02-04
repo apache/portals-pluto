@@ -115,9 +115,18 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     public void load(PortletRequest request, PortletResponse response, InternalPortletWindow window)
     throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Performing Load Invocation");
+            LOG.debug("Performing Load Invocation.");
         }
         invoke(request, response, window, Constants.METHOD_NOOP);
+    }
+
+    public void admin(PortletRequest request, PortletResponse response, InternalPortletWindow window)
+    throws IOException, PortletException {
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Performing Admin Invocation.");
+        }
+
+        invoke(request, response, window, Constants.METHOD_ADMIN);
     }
     
     

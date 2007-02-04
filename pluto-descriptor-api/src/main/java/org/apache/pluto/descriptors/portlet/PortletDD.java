@@ -40,6 +40,9 @@ public class PortletDD {
     /** The display name of the portlet. */
     private List displayNames = new ArrayList();
 
+    /** The descriptions of the portlet. */
+    private List descriptions = new ArrayList();
+
     private int expirationCache = 0;
 
     /** The class which implements the portlet interface. */
@@ -101,6 +104,14 @@ public class PortletDD {
 
     public void setDisplayNames(List displayNames) {
         this.displayNames = displayNames;
+    }
+
+    public List getDescriptions() {
+        return descriptions;
+    }
+
+    public void setDescriptions(List descriptions) {
+        this.descriptions = descriptions;
     }
 
     public int getExpirationCache() {

@@ -20,6 +20,7 @@ import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
 
 /**
  * Defines the services necessary for integration between the Pluto Container
@@ -69,5 +70,13 @@ public interface OptionalContainerServices {
      * @return portlet info service implementation.
      */
     PortletInfoService getPortletInfoService();
+
+    /**
+     * Returns the admin service implementation used by
+     * the container.
+     *
+     * @return portal admin service
+     */
+    PortalAdministrationService getPortalAdministrationService();
 
 }

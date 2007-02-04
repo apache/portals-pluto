@@ -40,5 +40,7 @@ public interface PortletInvokerService {
 
     public void load(PortletRequest req, PortletResponse res, InternalPortletWindow window)
     throws IOException, PortletException;
-	
+
+    public void admin(PortletRequest req, PortletResponse res, InternalPortletWindow window)
+    throws IOException, PortletException;
 }

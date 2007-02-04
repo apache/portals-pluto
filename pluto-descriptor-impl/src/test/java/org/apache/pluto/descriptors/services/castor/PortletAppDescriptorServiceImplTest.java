@@ -51,6 +51,7 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
 
         PortletDD pd = (PortletDD)dd.getPortlets().get(0);
         assertEquals(2, pd.getDisplayNames().size());
+        assertEquals(1, pd.getDescriptions().size());
         assertEquals("About Portlet", ((DisplayNameDD)pd.getDisplayNames().get(0)).getDisplayName());
         assertEquals("en", ((DisplayNameDD)pd.getDisplayNames().get(0)).getLang());
         assertEquals("fr", ((DisplayNameDD)pd.getDisplayNames().get(1)).getLang());
