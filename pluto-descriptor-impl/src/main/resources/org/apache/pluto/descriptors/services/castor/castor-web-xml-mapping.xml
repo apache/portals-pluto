@@ -22,7 +22,7 @@
   <!--
     The Root WebApplication Element
     This element should map each and every one of the possible 2.4
-    elments in order.
+    elements in order.
       + icon,
       + display-name
       + description
@@ -192,7 +192,7 @@
       <field name="InitParams"
           type="org.apache.pluto.descriptors.common.InitParamDD"
           collection="arraylist">
-          <bind-xml name="init-param"/>
+          <bind-xml name="init-param" node="element"/>
       </field>
   </class>
   <class name="org.apache.pluto.descriptors.servlet.FilterMappingDD">
@@ -317,7 +317,55 @@
             <bind-xml name="load-on-startup" node="text"/>
         </field>
     </class>
+    
+    <class name="org.apache.pluto.descriptors.common.DescriptionDD">
+        <field name="Lang">
+            <bind-xml name="lang" node="attribute"/>
+        </field>
 
+        <field name="Description">
+            <bind-xml name="description" node="text"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.common.InitParamDD">
+        <field name="ParamName">
+            <bind-xml name="param-name" node="element"/>
+        </field>
+        <field name="ParamValue">
+            <bind-xml name="param-value" node="element"/>
+        </field>
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description" node="element"/>
+        </field>
+    </class>
+
+
+    <class name="org.apache.pluto.descriptors.common.SecurityRoleRefDD">
+        <field name="RoleName">
+            <bind-xml name="role-name" node="element"/>
+        </field>
+        <field name="RoleLink">
+            <bind-xml name="role-link" node="element"/>
+        </field>
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.common.UserDataConstraintDD">
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description" node="element"/>
+        </field>
+
+        <field name="TransportGuarantee">
+            <bind-xml name="transport-guarantee" node="element"/>
+        </field>
+    </class>
+    
 
 </mapping>
 

@@ -15,6 +15,11 @@
  */
 package org.apache.pluto.descriptors.common;
 
+import org.apache.pluto.descriptors.common.DescriptionDD;
+
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Security Role Reference Configuration.
  *
@@ -30,8 +35,8 @@ public class SecurityRoleRefDD {
     /** The role to which the reference is linked. */
     private String roleLink;
 
-    /** The description of what the role is utilized for. */
-    private String description;
+    /** The descriptions of what the role is utilized for. */
+    private List descriptions = new ArrayList();
 
     /**
      * Default Constructor.
@@ -72,20 +77,13 @@ public class SecurityRoleRefDD {
         this.roleLink = roleLink;
     }
 
-    /**
-     * Retrieve the description of the role reference.
-     * @return
-     */
-    public String getDescription() {
-        return description;
+    public List getDescriptions() {
+        return descriptions;
     }
 
-    /**
-     * Set the description of the role reference.
-     * @param description
-     */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List descriptions) {
+        this.descriptions = descriptions;
     }
 }
+
 

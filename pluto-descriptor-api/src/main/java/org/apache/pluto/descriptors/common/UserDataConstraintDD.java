@@ -15,6 +15,9 @@
  */
 package org.apache.pluto.descriptors.common;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * User Data Constraint descriptor.
  *
@@ -28,19 +31,20 @@ public class UserDataConstraintDD {
     public static final String INTEGRAL = "INTEGRAL";
     public static final String CONFIDENTIAL = "CONFIDENTIAL";
 
-    private String description;
+    private List descriptions = new ArrayList();
+    
     private String transportGuarantee;
 
     public UserDataConstraintDD() {
 
     }
 
-    public String getDescription() {
-        return description;
+    public List getDescriptions() {
+        return descriptions;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List descriptions) {
+        this.descriptions = descriptions;
     }
 
     public String getTransportGuarantee() {

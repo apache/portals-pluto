@@ -136,6 +136,7 @@ public class WebAppDescriptorServiceImplTest extends TestCase {
                 "      <security-role-ref>\n" +
                 "        <role-name>plutoTestRole</role-name>\n" +
                 "        <role-link>tomcat</role-link>\n" +
+                "        <description>tomcat</description>\n" +
                 "      </security-role-ref>\n" +
                 "  </servlet>\n" );
         filterMappings.append(""+

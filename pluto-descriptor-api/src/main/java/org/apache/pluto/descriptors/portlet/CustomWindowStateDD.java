@@ -15,6 +15,9 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -23,16 +26,16 @@ package org.apache.pluto.descriptors.portlet;
  */
 public class CustomWindowStateDD {
 
-    private String description;
+    private List descriptions = new ArrayList();
 
     private String windowState;
 
-    public String getDescription() {
-        return description;
+    public List getDescriptions() {
+        return descriptions;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List descriptions) {
+        this.descriptions = descriptions;
     }
 
     public String getWindowState() {

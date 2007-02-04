@@ -24,7 +24,9 @@ import java.io.IOException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.SecurityConstraintDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.DisplayNameDD;
+import org.apache.pluto.descriptors.common.DisplayNameDD;
+import org.apache.pluto.descriptors.common.DescriptionDD;
+import org.apache.pluto.descriptors.common.InitParamDD;
 
 /**
  *
@@ -55,6 +57,8 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         assertEquals(30, pd.getExpirationCache());
         assertEquals(1, pd.getSupportedLocales().size());
         assertEquals("en", pd.getSupportedLocales().get(0));
+        assertEquals(1, pd.getInitParams().size());
+        assertEquals(1, ((InitParamDD)pd.getInitParams().get(0)).getDescriptions().size());
 
         assertEquals(2, dd.getCustomPortletModes().size());
         assertEquals(2, dd.getCustomWindowStates().size());
@@ -70,7 +74,7 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         assertEquals("c", sc.getPortletCollection().getPortletNames().get(2));
 
         assertNotNull(sc.getUserDataConstraint());
-        assertEquals("scdescription", sc.getUserDataConstraint().getDescription());
+        assertEquals(1, sc.getUserDataConstraint().getDescriptions().size());
         assertEquals("NONE", sc.getUserDataConstraint().getTransportGuarantee());
         
     }
@@ -89,6 +93,11 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         "<display-name>About Portlet</display-name>"+
         "<display-name xml:lang=\"fr\">About Portlet</display-name>"+
         "<portlet-class>org.apache.pluto.driver.portlets.AboutPortlet</portlet-class>"+
+        "        <init-param>\n" +
+        "            <description>a</description>\n" +
+        "            <name>b</name>\n" +
+        "            <value>v</value>\n" +
+        "        </init-param>" +
         "<expiration-cache>30</expiration-cache>"+
         "<supports>"+
         "<mime-type>text/html</mime-type>"+

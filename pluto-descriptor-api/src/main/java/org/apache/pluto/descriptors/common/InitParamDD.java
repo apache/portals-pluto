@@ -15,6 +15,11 @@
  */
 package org.apache.pluto.descriptors.common;
 
+import org.apache.pluto.descriptors.common.DescriptionDD;
+
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Initialization Parameter configuration.
  *
@@ -31,7 +36,7 @@ public class InitParamDD {
     private String paramValue;
 
     /** The description of the parameter. */
-    private String description;
+    private List descriptions = new ArrayList();
 
     /**
      * Default Constructor.
@@ -72,21 +77,12 @@ public class InitParamDD {
         this.paramValue = paramValue;
     }
 
-    /**
-     * Retrieve the description.
-     * @return
-     */
-    public String getDescription() {
-        return description;
+    public List getDescriptions() {
+        return descriptions;
     }
 
-    /**
-     * Set the description of the parameter.
-     * @param description
-     */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List descriptions) {
+        this.descriptions = descriptions;
     }
-
 }
 

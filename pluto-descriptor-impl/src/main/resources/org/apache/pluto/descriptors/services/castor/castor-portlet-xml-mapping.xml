@@ -64,7 +64,7 @@
             <bind-xml name="portlet-name" node="element"/>
         </field>
 
-        <field name="DisplayNames" type="org.apache.pluto.descriptors.portlet.DisplayNameDD"
+        <field name="DisplayNames" type="org.apache.pluto.descriptors.common.DisplayNameDD"
             collection="arraylist">
             <bind-xml name="display-name" node="element"/>
         </field>
@@ -143,6 +143,10 @@
         <field name="ParamValue">
             <bind-xml name="value" node="element"/>
         </field>
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description" node="element"/>
+        </field>
     </class>
 
     <class name="org.apache.pluto.descriptors.portlet.PortletPreferencesDD">
@@ -174,7 +178,8 @@
         <field name="PortletMode">
             <bind-xml name="portlet-mode" node="element"/>
         </field>
-        <field name="Description">
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
             <bind-xml name="description" node="element"/>
         </field>
     </class>
@@ -183,7 +188,8 @@
         <field name="WindowState">
             <bind-xml name="window-state" node="element"/>
         </field>
-        <field name="Description">
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
             <bind-xml name="description" node="element"/>
         </field>
     </class>
@@ -192,13 +198,14 @@
         <field name="Name">
             <bind-xml name="name" node="element"/>
         </field>
-        <field name="Description">
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
             <bind-xml name="description" node="element"/>
         </field>
     </class>
 
     <class name="org.apache.pluto.descriptors.portlet.SecurityConstraintDD">
-        <field name="DisplayNames" type="org.apache.pluto.descriptors.portlet.DisplayNameDD"
+        <field name="DisplayNames" type="org.apache.pluto.descriptors.common.DisplayNameDD"
             collection="arraylist">
             <bind-xml name="display-name" node="element"/>
         </field>
@@ -219,7 +226,8 @@
     </class>
 
     <class name="org.apache.pluto.descriptors.common.UserDataConstraintDD">
-        <field name="Description">
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
             <bind-xml name="description" node="element"/>
         </field>
 
@@ -228,7 +236,7 @@
         </field>
     </class>
 
-    <class name="org.apache.pluto.descriptors.portlet.DisplayNameDD">
+    <class name="org.apache.pluto.descriptors.common.DisplayNameDD">
         <field name="Lang">
             <bind-xml name="lang" node="attribute"/>
         </field>
@@ -238,4 +246,27 @@
         </field>
     </class>
 
+
+    <class name="org.apache.pluto.descriptors.common.DescriptionDD">
+        <field name="Lang">
+            <bind-xml name="lang" node="attribute"/>
+        </field>
+
+        <field name="Description">
+            <bind-xml name="description" node="text"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.common.SecurityRoleRefDD">
+        <field name="RoleName">
+            <bind-xml name="role-name" node="element"/>
+        </field>
+        <field name="RoleLink">
+            <bind-xml name="role-link" node="element"/>
+        </field>
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description"/>
+        </field>
+    </class>
 </mapping>

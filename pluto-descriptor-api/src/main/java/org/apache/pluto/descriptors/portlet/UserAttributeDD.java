@@ -15,6 +15,9 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -25,7 +28,7 @@ public class UserAttributeDD {
 
     private String name;
 
-    private String description;
+    private List descriptions = new ArrayList();
 
     public String getName() {
         return name;
@@ -35,12 +38,11 @@ public class UserAttributeDD {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public List getDescriptions() {
+        return descriptions;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List descriptions) {
+        this.descriptions = descriptions;
     }
-    
 }

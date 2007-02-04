@@ -26,6 +26,7 @@ limitations under the License.
         <description>AboutPortletDescription</description>
         <portlet-name>AboutPortlet</portlet-name>
         <display-name>About Portlet</display-name>
+
         <portlet-class>org.apache.pluto.driver.portlets.AboutPortlet</portlet-class>
         <supports>
             <mime-type>text/html</mime-type>
