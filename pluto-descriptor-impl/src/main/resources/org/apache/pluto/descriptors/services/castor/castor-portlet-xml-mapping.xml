@@ -64,6 +64,15 @@
             <bind-xml name="portlet-name" node="element"/>
         </field>
 
+        <field name="DisplayNames" type="org.apache.pluto.descriptors.portlet.DisplayNameDD"
+            collection="arraylist">
+            <bind-xml name="display-name" node="element"/>
+        </field>
+
+        <field name="ExpirationCache">
+            <bind-xml name="expiration-cache" node="element"/>
+        </field>
+
         <field name="PortletClass">
             <bind-xml name="portlet-class" node="element"/>
         </field>
@@ -89,6 +98,11 @@
         <field name="Supports" type="org.apache.pluto.descriptors.portlet.SupportsDD"
                collection="arraylist">
             <bind-xml name="supports" node="element"/>
+        </field>
+
+        <field name="SupportedLocales" type="java.lang.String"
+               collection="arraylist">
+            <bind-xml name="supported-locale" node="element"/>
         </field>
 
         <field name="PortletPreferences" type="org.apache.pluto.descriptors.portlet.PortletPreferencesDD">
@@ -184,7 +198,8 @@
     </class>
 
     <class name="org.apache.pluto.descriptors.portlet.SecurityConstraintDD">
-        <field name="DisplayName">
+        <field name="DisplayNames" type="org.apache.pluto.descriptors.portlet.DisplayNameDD"
+            collection="arraylist">
             <bind-xml name="display-name" node="element"/>
         </field>
 
@@ -210,6 +225,16 @@
 
         <field name="TransportGuarantee">
             <bind-xml name="transport-guarantee" node="element"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.portlet.DisplayNameDD">
+        <field name="Lang">
+            <bind-xml name="lang" node="attribute"/>
+        </field>
+
+        <field name="DisplayName">
+            <bind-xml name="display-name" node="text"/>
         </field>
     </class>
 

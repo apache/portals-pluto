@@ -17,19 +17,21 @@ package org.apache.pluto.descriptors.portlet;
 
 import org.apache.pluto.descriptors.common.UserDataConstraintDD;
 
+import java.util.List;
+
 
 public class SecurityConstraintDD {
 
-    private String displayName;
+    private List displayNames;
     private PortletCollectionDD portletCollection;
     private UserDataConstraintDD userDataConstraint;
 
-    public String getDisplayName() {
-        return displayName;
+    public List getDisplayNames() {
+        return displayNames;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public void setDisplayNames(List displayNames) {
+        this.displayNames = displayNames;
     }
 
     public PortletCollectionDD getPortletCollection() {

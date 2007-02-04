@@ -37,6 +37,11 @@ public class PortletDD {
     /** The unique name of the portlet. */
     private String portletName = null;
 
+    /** The display name of the portlet. */
+    private List displayNames = new ArrayList();
+
+    private int expirationCache = 0;
+
     /** The class which implements the portlet interface. */
     private String portletClass = null;
 
@@ -49,6 +54,8 @@ public class PortletDD {
     private List initParams = new ArrayList();
 
     private List supports = new ArrayList();
+
+    private List supportedLocales = new ArrayList();
 
     /** All security role references. */
     private List securityRoleRefs = new ArrayList();
@@ -86,6 +93,22 @@ public class PortletDD {
     		throw new IllegalArgumentException("Portlet name must not have a dot(period). Please remove the dot from the value of the portlet-name element ("+ portletName + ") in portlet.xml");
     	}
         this.portletName = portletName;
+    }
+
+    public List getDisplayNames() {
+        return displayNames;
+    }
+
+    public void setDisplayNames(List displayNames) {
+        this.displayNames = displayNames;
+    }
+
+    public int getExpirationCache() {
+        return expirationCache;
+    }
+
+    public void setExpirationCache(int expirationCache) {
+        this.expirationCache = expirationCache;
     }
 
     /**
@@ -126,6 +149,14 @@ public class PortletDD {
 
     public void setSupports(List supports) {
         this.supports = supports;
+    }
+
+    public List getSupportedLocales() {
+        return supportedLocales;
+    }
+
+    public void setSupportedLocales(List supportedLocales) {
+        this.supportedLocales = supportedLocales;
     }
 
     public List getInitParams() {
