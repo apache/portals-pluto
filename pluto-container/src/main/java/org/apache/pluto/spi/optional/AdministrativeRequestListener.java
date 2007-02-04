@@ -1,8 +1,3 @@
-package org.apache.pluto.spi.optional;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 /*
  * Copyright 2007 The Apache Software Foundation.
  *
@@ -18,6 +13,12 @@ import javax.portlet.PortletResponse;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.pluto.spi.optional;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+
 public interface AdministrativeRequestListener {
 
     void administer(PortletRequest request, PortletResponse response);
