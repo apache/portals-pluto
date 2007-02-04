@@ -94,14 +94,16 @@ public class PortalDriverServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-        
         PortalRequestContext portalRequestContext =
             new PortalRequestContext(getServletContext(), request, response);
 
         PortalURL portalURL = portalRequestContext.getRequestedPortalURL();
         String actionWindowId = portalURL.getActionWindow();
-        PortletWindowConfig actionWindowConfig = getDriverConfiguration()
-        		.getPortletWindowConfig(actionWindowId);
+
+        PortletWindowConfig actionWindowConfig =
+            actionWindowId == null
+                ? null
+                : PortletWindowConfig.fromId(actionWindowId);
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {

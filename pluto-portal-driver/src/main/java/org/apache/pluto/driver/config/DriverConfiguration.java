@@ -15,7 +15,6 @@
  */
 package org.apache.pluto.driver.config;
 
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURLParser;
@@ -87,12 +86,6 @@ public interface DriverConfiguration {
     Collection getSupportedPortletModes();
 
     Collection getSupportedWindowStates();
-
-    Collection getPortletApplications();
-
-    PortletApplicationConfig getPortletApp(String id);
-
-    PortletWindowConfig getPortletWindowConfig(String id);
 
     Collection getPages();
 

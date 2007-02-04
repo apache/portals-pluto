@@ -66,7 +66,6 @@ limitations under the License.
       <!-- ===== Portal Services ===== -->
       <constructor-arg><ref bean="PortalURLParser"/></constructor-arg>
       <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
-      <constructor-arg><ref bean="PortletRegistryConfig"/></constructor-arg>
       <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
       <constructor-arg><ref bean="SupportedModesService"/></constructor-arg>
 
@@ -84,7 +83,6 @@ limitations under the License.
     <!-- The single top element of the administration tree -->
     <!-- ================================================ -->
     <bean id="AdminConfiguration" class="org.apache.pluto.driver.config.impl.AdminConfigurationImpl">
-      <property name="portletRegistryAdminService"><ref bean="PortletRegistryConfig"/></property>
       <property name="renderConfigAdminService"><ref bean="RenderConfigService"/></property>
     </bean>
 
@@ -100,11 +98,6 @@ limitations under the License.
 
     <bean id="PropertyConfigService"
           class="org.apache.pluto.driver.services.impl.resource.PropertyConfigServiceImpl"
-          singleton="true">
-    </bean>
-
-    <bean id="PortletRegistryConfig"
-          class="org.apache.pluto.driver.services.impl.resource.PortletRegistryServiceImpl"
           singleton="true">
     </bean>
 

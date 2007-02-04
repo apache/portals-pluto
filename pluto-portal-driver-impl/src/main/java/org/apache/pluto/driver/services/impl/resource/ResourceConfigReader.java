@@ -18,7 +18,6 @@ package org.apache.pluto.driver.services.impl.resource;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfig;
@@ -96,28 +95,6 @@ public class ResourceConfigReader {
             "pluto-portal-driver/supports/window-state",
             "addSupportedWindowState", 0
         );
-
-        digester.addObjectCreate(
-            "pluto-portal-driver/portlet-app",
-            PortletApplicationConfig.class
-        );
-        digester.addBeanPropertySetter(
-            "pluto-portal-driver/portlet-app/context-path", "contextPath"
-        );
-
-        digester.addObjectCreate(
-            "pluto-portal-driver/portlet-app/portlets/portlet",
-            PortletWindowConfig.class
-        );
-        digester.addSetProperties(
-            "pluto-portal-driver/portlet-app/portlets/portlet", "name",
-            "portletName"
-        );
-        digester.addSetNext(
-            "pluto-portal-driver/portlet-app/portlets/portlet",
-            "addPortlet"
-        );
-        digester.addSetNext("pluto-portal-driver/portlet-app", "addPortletApp");
 
         digester.addObjectCreate(
             "pluto-portal-driver/render-config",

@@ -17,6 +17,8 @@ package org.apache.pluto.driver.services.impl.resource;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.*;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 import javax.servlet.ServletContext;
 import java.util.Set;
@@ -32,6 +34,9 @@ import java.io.InputStream;
  */
 public class PropertyConfigServiceImpl implements
     PropertyConfigService {
+
+    private static final Log LOG =
+        LogFactory.getLog(PropertyConfigServiceImpl.class);
 
     private ResourceConfig config;
 
@@ -49,6 +54,7 @@ public class PropertyConfigServiceImpl implements
             config = ResourceConfigReader.getFactory().parse(in);
         }
         catch(Exception e) {
+            LOG.error("Unable to parse resource config "+e.getMessage(), e);
             throw new DriverConfigurationException(e);
         }
     }
@@ -81,7 +87,4 @@ public class PropertyConfigServiceImpl implements
         return config.getSupportedWindowStates();
     }
 
-    public Set getPortletApplications() {
-        return config.getPortletApplications();
-    }
 }

@@ -21,8 +21,6 @@ import javax.servlet.ServletContext;
 
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
-import org.apache.pluto.driver.services.portal.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
@@ -43,7 +41,6 @@ public class DriverConfigurationImpl
 
     private PortalURLParser portalUrlParser;
     private PropertyConfigService propertyService;
-    private PortletRegistryService registryService;
     private RenderConfigService renderService;
     private SupportedModesService supportedModesService;
 
@@ -53,13 +50,11 @@ public class DriverConfigurationImpl
 
     public DriverConfigurationImpl(PortalURLParser portalUrlParser,
                                    PropertyConfigService propertyService,
-                                   PortletRegistryService registryService,
                                    RenderConfigService renderService,
                                    PortalCallbackService portalCallback,
                                    SupportedModesService supportedModesService) {
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
-        this.registryService = registryService;
         this.renderService = renderService;
         this.portalCallbackService = portalCallback;
         this.supportedModesService = supportedModesService;
@@ -107,32 +102,6 @@ public class DriverConfigurationImpl
 
     /**
      * Standard Getter.
-     * @return the configuration data of all configured portlet applications.
-     */
-    public Collection getPortletApplications() {
-        return registryService.getPortletApplications();
-    }
-
-   /**
-     * Retrieve the portlet application with the given id.
-     * @param id the id of the portlet application.
-     * @return the portlet application configuration data.
-     */
-    public PortletApplicationConfig getPortletApp(String id) {
-        return registryService.getPortletApplication(id);
-    }
-
-    /**
-     * Retrieve the window configuration associated with the given id.
-     * @param id the id of the portlet window.
-     * @return the portlet window configuration data.
-     */
-    public PortletWindowConfig getPortletWindowConfig(String id) {
-        return registryService.getPortlet(id);
-    }
-
-    /**
-     * Standard Getter.
      * @return the render configuration.
      */
     public Collection getPages() {
@@ -157,7 +126,6 @@ public class DriverConfigurationImpl
 
     public void init(ServletContext context) {
         this.propertyService.init(context);
-        this.registryService.init(context);
         this.renderService.init(context);
         this.supportedModesService.init(context);
     }
@@ -165,9 +133,6 @@ public class DriverConfigurationImpl
     public void destroy() {
         if(propertyService != null)
             propertyService.destroy();
-
-        if(registryService != null)
-            registryService.destroy();
 
         if(renderService != null)
             renderService.destroy();

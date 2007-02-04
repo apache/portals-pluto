@@ -18,7 +18,6 @@ package org.apache.pluto.driver.services.portal;
 import junit.framework.TestCase;
 
 /**
- * TODO JavaDoc
  *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
@@ -26,26 +25,29 @@ import junit.framework.TestCase;
  */
 public class PortletWindowConfigTest extends TestCase {
 
-
     public void testCreatePortletId() {
-        assertEquals("context.PortletName", PortletWindowConfig.createPortletId("context", "PortletName"));
-        assertEquals("c.PortletName", PortletWindowConfig.createPortletId("c", "PortletName"));
-        assertEquals("context.P", PortletWindowConfig.createPortletId("context", "P"));
-        assertEquals("c.P", PortletWindowConfig.createPortletId("c", "P"));
+        assertEquals("context.PortletName!", PortletWindowConfig.createPortletId("context", "PortletName", ""));
+        assertEquals("c.PortletName!1234567", PortletWindowConfig.createPortletId("c", "PortletName", "1234567"));
+        assertEquals("context.P!", PortletWindowConfig.createPortletId("context", "P", ""));
+        assertEquals("c.P!", PortletWindowConfig.createPortletId("c", "P", ""));
     }
 
     public void testParsePortletName() {
-        assertEquals("PortletName", PortletWindowConfig.parsePortletName("context.PortletName"));
-        assertEquals("PortletName", PortletWindowConfig.parsePortletName("c.PortletName"));
-        assertEquals("P", PortletWindowConfig.parsePortletName("context.P"));
-        assertEquals("P", PortletWindowConfig.parsePortletName("c.P"));
+        assertEquals("PortletName", PortletWindowConfig.parsePortletName("context.PortletName!1234567"));
+        assertEquals("PortletName", PortletWindowConfig.parsePortletName("c.PortletName!1234567"));
+        assertEquals("P", PortletWindowConfig.parsePortletName("context.P!"));
+        assertEquals("P", PortletWindowConfig.parsePortletName("c.P!ABC"));
     }
 
     public void testParseContextPath() {
-        assertEquals("context", PortletWindowConfig.parseContextPath("context.PortletName"));
-        assertEquals("c", PortletWindowConfig.parseContextPath("c.PortletName"));
+        assertEquals("context", PortletWindowConfig.parseContextPath("context.PortletName!aasdf"));
+        assertEquals("c", PortletWindowConfig.parseContextPath("c.PortletName!1234"));
         assertEquals("context", PortletWindowConfig.parseContextPath("context.P"));
         assertEquals("c", PortletWindowConfig.parseContextPath("c.P"));
+    }
+
+    public void testParseMetaInfo() {
+        assertEquals("A", PortletWindowConfig.parseMetaInfo("c.p!A"));
     }
 
     public void testParseInvalidId() {

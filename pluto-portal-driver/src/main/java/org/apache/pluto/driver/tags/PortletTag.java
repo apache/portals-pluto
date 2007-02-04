@@ -42,7 +42,7 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 /**
  * The portlet tag is used to render a portlet specified by the portlet ID.
  * 
- * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
+ * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
  * @see org.apache.pluto.PortletContainer#doRender(PortletWindow, HttpServletRequest, HttpServletResponse)
  * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -110,10 +110,10 @@ public class PortletTag extends BodyTagSupport {
         
     	// Retrieve the portlet window config for the evaluated portlet ID.
         ServletContext servletContext = pageContext.getServletContext();
-        DriverConfiguration driverConfig = (DriverConfiguration)
-            	servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
-        PortletWindowConfig windowConfig = driverConfig
-        		.getPortletWindowConfig(evaluatedPortletId);
+
+        PortletWindowConfig windowConfig =
+            PortletWindowConfig.fromId(evaluatedPortletId);
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rendering Portlet Window: " + windowConfig);
         }

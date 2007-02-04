@@ -83,22 +83,6 @@ public class RenderConfigServiceImpl
         return config.getSupportedWindowStates();
     }
 
-    public Set getPortletApplications() {
-        return config.getPortletApplications();
-    }
-
-    public PortletApplicationConfig getPortletApplication(String id) {
-        return config.getPortletApp(id);
-    }
-
-    public PortletWindowConfig getPortletWindowConfig(String id) {
-        return config.getPortletWindowConfig(id);
-    }
-
-    public PortletWindowConfig getPortlet(String id) {
-        return config.getPortletWindowConfig(id);
-    }
-
     public List getPages() {
         return config.getRenderConfig().getPages();
     }

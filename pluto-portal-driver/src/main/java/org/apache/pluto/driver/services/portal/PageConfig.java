@@ -59,8 +59,9 @@ public class PageConfig {
     }
 
     public void addPortlet(String contextPath, String portletName) {
-        portletIds.add(
-            PortletWindowConfig.createPortletId(contextPath, portletName));
+        synchronized(portletIds) {
+            portletIds.add(PortletWindowConfig.createPortletId(contextPath, portletName, createPlacementId()));
+        }
     }
 
     public void removePortlet(String portletId) {
@@ -75,5 +76,8 @@ public class PageConfig {
         return orderNumber;
     }
 
+    private String createPlacementId() {
+        return getName().hashCode() + "|"+portletIds.size();
+    }
 
 }

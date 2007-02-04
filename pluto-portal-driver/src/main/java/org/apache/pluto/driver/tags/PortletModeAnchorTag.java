@@ -83,10 +83,8 @@ public class PortletModeAnchorTag extends BodyTagSupport {
         ServletContext servletContext = pageContext.getServletContext();
         DriverConfiguration driverConfig = (DriverConfiguration)
                 servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
-        PortletWindowConfig windowConfig = driverConfig
-                .getPortletWindowConfig(evaluatedPortletId);
        
-        if (isPortletModeAllowed(driverConfig, windowConfig, portletMode)) {
+        if (isPortletModeAllowed(driverConfig, portletMode)) {
             // Retrieve the portal environment.
             PortalRequestContext portalEnv = PortalRequestContext.getContext(
                     (HttpServletRequest) pageContext.getRequest());        
@@ -157,8 +155,8 @@ public class PortletModeAnchorTag extends BodyTagSupport {
         this.portletMode = portletMode;
     }
     
-    private boolean isPortletModeAllowed(DriverConfiguration config, PortletWindowConfig window, String mode) {
-        LOG.debug("Testing if PortletWindowConfig [" + Integer.toHexString(window.hashCode()) + "] supports mode [" + mode + "]");
+    private boolean isPortletModeAllowed(DriverConfiguration config, String mode) {
+        LOG.debug("Testing if PortletWindowConfig [" + getEvaluatedPortletId() + "] supports mode [" + mode + "]");
         return config.isPortletModeSupported(getEvaluatedPortletId(), mode);       
     }
 

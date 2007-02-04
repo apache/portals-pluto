@@ -17,7 +17,6 @@ package org.apache.pluto.driver.services.impl.resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.RenderConfig;
 
@@ -164,58 +163,6 @@ public class ResourceConfig {
 
     /**
      * Standard Getter.
-     * @return the configuration data of all configured portlet applications.
-     */
-    public Set getPortletApplications() {
-        return new HashSet(portletApplications.values());
-    }
-
-    /**
-     * Add a porltet applicaiton conofiguration to this list of portlet apps.
-     * @param app portlet application coniguration data.
-     */
-    public void addPortletApp(PortletApplicationConfig app) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(
-                " - - Adding PortletApp ResourceConfig for: " +
-                app.getContextPath());
-        }
-        portletApplications.put(app.getContextPath(), app);
-    }
-
-    /**
-     * Retrieve the portlet application with the given id.
-     * @param id the id of the portlet application.
-     * @return the portlet application configuration data.
-     */
-    public PortletApplicationConfig getPortletApp(String id) {
-        return (PortletApplicationConfig) portletApplications.get(id);
-    }
-
-    /**
-     * Retrieve the window configuration associated with the given id.
-     * @param id the id of the portlet window.
-     * @return the portlet window configuration data.
-     */
-    public PortletWindowConfig getPortletWindowConfig(String id) {
-        if (id == null) {
-            return null;
-        }
-        String context = getContextFromPortletId(id);
-        String portlet = getPortletNameFromPortletId(id);
-
-        PortletApplicationConfig app = getPortletApp(context);
-        if (app == null) {
-            if (LOG.isErrorEnabled()) {
-                LOG.error("Portlet Application '" + context + "' not found.");
-            }
-            return null;
-        }
-        return app.getPortlet(portlet);
-    }
-
-    /**
-     * Standard Getter.
      * @return the render configuration.
      */
     public RenderConfig getRenderConfig() {
@@ -230,36 +177,5 @@ public class ResourceConfig {
         this.renderConfig = renderConfig;
     }
 
-    /**
-     * Retrieve the id of the context from the portlet id.
-     * @param portletId the id of the portlet.
-     * @return the context, derived from the portlet id.
-     */
-    private String getContextFromPortletId(String portletId) {
-    	if (portletId == null) {
-    		throw new NullPointerException("Portlet ID must not be null.");
-    	}
-        int idx = portletId.lastIndexOf(".");
-        if (idx < 0) {
-        	throw new IllegalArgumentException("Portlet ID does not contain a dot.");
-        }
-        return portletId.substring(0, idx);
-    }
-
-    /**
-     *  Retreive the porlet name from the given portletId.
-     * @param portletId the portlet id.
-     * @return the name of the portlet.
-     */
-    private String getPortletNameFromPortletId(String portletId) {
-    	if (portletId == null) {
-    		throw new NullPointerException("Portlet ID must not be null.");
-    	}
-        int idx = portletId.lastIndexOf(".");
-        if (idx < 0) {
-        	throw new IllegalArgumentException("Portlet ID does not contain a dot.");
-        }
-        return portletId.substring(idx + 1);
-    }
 }
 

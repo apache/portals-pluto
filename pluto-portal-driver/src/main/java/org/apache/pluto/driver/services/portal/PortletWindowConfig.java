@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.driver.services.portal;
 
+import java.util.Random;
+
 /**
  * Configuration of a portlet window on the portal page.
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -23,13 +25,15 @@ package org.apache.pluto.driver.services.portal;
 public class PortletWindowConfig {
 	
 	// Private Member Variables ------------------------------------------------
-	
+
     /** The context path of the associated portlet. */
     private String contextPath = null;
     
     /** The portlet name. */
     private String portletName = null;
-    
+
+    /** The metaInfo that provides uniqueness across window ids. */
+    private String metaInfo = null;
     
     // Constructor -------------------------------------------------------------
     
@@ -37,14 +41,19 @@ public class PortletWindowConfig {
      * No-arg constructor.
      */
     public PortletWindowConfig() {
-    	// Do nothing.
+
     }
-    
-    
+
+    private PortletWindowConfig(String contextPath, String portletName, String metaInfo) {
+        this.contextPath = contextPath;
+        this.portletName = portletName;
+        this.metaInfo = metaInfo;
+    }
+
     // Public Methods ----------------------------------------------------------
     
     public String getId() {
-    	return createPortletId(contextPath, portletName);
+    	return createPortletId(contextPath, portletName, metaInfo);
     }
 
     public String getContextPath() {
@@ -62,8 +71,15 @@ public class PortletWindowConfig {
     public void setPortletName(String portletName) {
         this.portletName = portletName;
     }
-    
-    
+
+    public String getMetaInfo() {
+        return metaInfo;
+    }
+
+    public void setMetaInfo(String metaInfo) {
+        this.metaInfo = metaInfo;
+    }
+
     // Public Static Methods ---------------------------------------------------
     
     /**
@@ -79,7 +95,7 @@ public class PortletWindowConfig {
      * @throws IllegalArgumentException if the portletName has a dot
      * @throws NullPointerException if the portlet Name or context path is null.
      */
-    public static String createPortletId(String contextPath, String portletName) 
+    public static String createPortletId(String contextPath, String portletName, String metaInfo)
     	throws NullPointerException, IllegalArgumentException {
     	
     	if (contextPath == null) {
@@ -91,7 +107,11 @@ public class PortletWindowConfig {
     	if (portletName.indexOf('.') != -1) {
     		throw new IllegalArgumentException("Portlet name must not have a dot(period). Please remove the dot from the value of the portlet-name element ("+ portletName + ") in portlet.xml");
     	}
-        return contextPath + "." + portletName;
+
+        if(metaInfo == null) {
+            metaInfo = "";
+        }
+        return contextPath + "." + portletName + "!" + metaInfo;
     }
     
     /**
@@ -111,7 +131,14 @@ public class PortletWindowConfig {
      */
     public static String parsePortletName(String portletId) {
     	int index = getSeparatorIndex(portletId);
-        return portletId.substring(index + 1);
+        String postfix = portletId.substring(index + 1);
+        index = postfix.indexOf("!");
+        return postfix.substring(0, index);
+    }
+
+    public static String parseMetaInfo(String portletId) {
+        int index = portletId.indexOf("!");
+        return portletId.substring(index+1);
     }
     
     
@@ -130,16 +157,22 @@ public class PortletWindowConfig {
      */
     private static int getSeparatorIndex(String portletId)
     	throws NullPointerException, IllegalArgumentException {
-    	
     	if (portletId == null) {
     		throw new NullPointerException("Portlet ID is null");
     	}
-    	int index = portletId.lastIndexOf(".");
+
+        int index = portletId.lastIndexOf(".");
     	if (index <= 0 || index == portletId.length() - 1) {
     		throw new IllegalArgumentException("Portlet ID '" + portletId + "' does not contain a dot or the dot is the first or last character");
     	}
     	return index;
     }
-    
+
+   public static PortletWindowConfig fromId(String portletWindowId) {
+       String contextPath = parseContextPath(portletWindowId);
+       String portletName = parsePortletName(portletWindowId);
+       String metaInfo = parseMetaInfo(portletWindowId);
+       return new PortletWindowConfig(contextPath, portletName, metaInfo);
+   }
 }
 
