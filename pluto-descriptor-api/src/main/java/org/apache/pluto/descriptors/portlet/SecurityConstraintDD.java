@@ -15,14 +15,15 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
-import org.apache.pluto.descriptors.common.UserDataConstraintDD;
-
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.pluto.descriptors.common.UserDataConstraintDD;
 
 
 public class SecurityConstraintDD {
 
-    private List displayNames;
+    private List displayNames = new ArrayList();
     private PortletCollectionDD portletCollection;
     private UserDataConstraintDD userDataConstraint;
 
