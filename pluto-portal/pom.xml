@@ -89,6 +89,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.1</version>
                 <configuration>
                     <tasks>
                         <get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v5.5.9/bin/jakarta-tomcat-5.5.9.tar.gz"
@@ -101,6 +102,7 @@
 
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.1</version>
                 <configuration>
                     <descriptor>src/assemble/bin.xml</descriptor>
                     <finalName>pluto-portal-${pom.version}</finalName>
@@ -109,6 +111,7 @@
 
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
+                <version>2.0-beta-5</version>
                 <configuration>
                     <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
                 </configuration>
