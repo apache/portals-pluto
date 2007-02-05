@@ -17,6 +17,8 @@ package org.apache.pluto.core;
 
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.AdministrativeRequestListener;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletConfig;
@@ -223,8 +225,19 @@ public class PortletServlet extends HttpServlet {
                 portlet.processAction(actionRequest, actionResponse);
             }
 
+            // The requested method is ADMIN: call handlers.
             else if (methodId == Constants.METHOD_ADMIN) {
+                ContainerInvocation inv = ContainerInvocation.getInvocation();
+                PortalAdministrationService pas =
+                    inv.getPortletContainer()
+                        .getOptionalContainerServices()
+                        .getPortalAdministrationService();
 
+                Iterator it = pas.getAdministrativeRequestListeners().iterator();
+                while(it.hasNext()) {
+                    AdministrativeRequestListener l =(AdministrativeRequestListener)it.next();
+                    l.administer(portletRequest, portletResponse);
+                }
             }
 
             // The requested method is NOOP: do nothing.
