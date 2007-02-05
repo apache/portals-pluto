@@ -19,7 +19,7 @@
 	elementFormDefault="qualified">
 
 	<xs:element name="pluto-portal-driver">
-		<xs:complexType>
+        <xs:complexType>
 			<xs:sequence>
 				<xs:element name="portal-name" type="xs:string"
 					default="pluto-portal-driver" />
@@ -36,40 +36,6 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-
-                <!-- Deprecated?  Not needed any more -->
-                <xs:element name="portlet-app" minOccurs="0"
-					maxOccurs="unbounded">
-					<xs:complexType>
-
-						<xs:sequence>
-							<xs:element name="context-path">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:pattern
-											value="/[a-zA-Z0-9_ /]*" />
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-
-							<xs:element name="portlets">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="portlet"
-											minOccurs="1" maxOccurs="unbounded">
-											<xs:complexType>
-												<xs:attribute
-													name="name" type="xs:string" />
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>
-
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-
 				<xs:element name="render-config">
 					<xs:complexType>
 
@@ -99,6 +65,7 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
+            <xs:attribute name="version" type="xs:string" use="required"/>
 		</xs:complexType>
 	</xs:element>
 

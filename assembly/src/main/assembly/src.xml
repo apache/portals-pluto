@@ -26,21 +26,6 @@
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
 
-    <dependencySets>
-        <dependencySet>
-            <outputDirectory>lib</outputDirectory>
-            <scope>optional</scope>
-        </dependencySet>
-        <dependencySet>
-            <outputDirectory>lib</outputDirectory>
-            <scope>compile</scope>
-        </dependencySet>
-        <dependencySet>
-            <outputDirectory>lib</outputDirectory>
-            <scope>provided</scope>
-        </dependencySet>
-    </dependencySets>
-
     <fileSets>
         <fileSet>
             <directory>src/main/resources</directory>
@@ -55,17 +40,16 @@
         <!-- Include the source code in the assembly -->
         <fileSet>
             <directory>../</directory>
-            <outputDirectory>src/</outputDirectory>
+            <outputDirectory>/</outputDirectory>
             <includes>
                 <include>pom.xml</include>
-                <include>src/</include>
             </includes>
         </fileSet>
 
         <!-- Start Container Src -->
         <fileSet>
             <directory>../pluto-descriptor-api</directory>
-            <outputDirectory>src/pluto-descriptor-api</outputDirectory>
+            <outputDirectory>/pluto-descriptor-api</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -74,7 +58,7 @@
 
         <fileSet>
             <directory>../pluto-descriptor-impl</directory>
-            <outputDirectory>src/pluto-descriptor-impl</outputDirectory>
+            <outputDirectory>/pluto-descriptor-impl</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -83,7 +67,7 @@
 
         <fileSet>
             <directory>../pluto-container</directory>
-            <outputDirectory>src/pluto-container</outputDirectory>
+            <outputDirectory>/pluto-container</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -92,7 +76,7 @@
 
         <fileSet>
             <directory>../pluto-taglib</directory>
-            <outputDirectory>src/pluto-taglib</outputDirectory>
+            <outputDirectory>/pluto-taglib</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -103,7 +87,7 @@
 
         <fileSet>
             <directory>../pluto-portal-driver</directory>
-            <outputDirectory>src/pluto-portal-driver</outputDirectory>
+            <outputDirectory>/pluto-portal-driver</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -112,7 +96,7 @@
 
         <fileSet>
             <directory>../pluto-portal-driver-impl</directory>
-            <outputDirectory>src/pluto-portal-driver-impl</outputDirectory>
+            <outputDirectory>/pluto-portal-driver-impl</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -121,7 +105,7 @@
 
         <fileSet>
             <directory>../pluto-portal</directory>
-            <outputDirectory>src/pluto-portal</outputDirectory>
+            <outputDirectory>/pluto-portal</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -130,7 +114,7 @@
 
         <fileSet>
             <directory>../pluto-testsuite</directory>
-            <outputDirectory>src/pluto-testsuite</outputDirectory>
+            <outputDirectory>/pluto-testsuite</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -141,7 +125,7 @@
 
         <fileSet>
             <directory>../pluto-util</directory>
-            <outputDirectory>src/pluto-util</outputDirectory>
+            <outputDirectory>/pluto-util</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -149,7 +133,7 @@
         </fileSet>
         <fileSet>
             <directory>../maven-pluto-plugin</directory>
-            <outputDirectory>src/maven-pluto-plugin</outputDirectory>
+            <outputDirectory>/maven-pluto-plugin</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -158,7 +142,7 @@
 
         <fileSet>
             <directory>../pluto-ant-tasks</directory>
-            <outputDirectory>src/pluto-ant-tasks</outputDirectory>
+            <outputDirectory>/pluto-ant-tasks</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>
@@ -168,7 +152,7 @@
         <!-- Docs -->
         <fileSet>
             <directory>../pluto-site</directory>
-            <outputDirectory>src/pluto-site</outputDirectory>
+            <outputDirectory>/pluto-site</outputDirectory>
             <includes>
                 <include>pom.xml</include>
                 <include>src/</include>

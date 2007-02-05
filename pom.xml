@@ -306,10 +306,8 @@
 
     </distributionManagement>
 
-
     <reporting>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -325,7 +323,7 @@
 
     <profiles>
         <profile>
-            <id>assemblies</id>
+            <id>assembly</id>
             <modules>
                 <module>assembly</module>
             </modules>
