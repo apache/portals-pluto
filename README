@@ -13,79 +13,109 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License
 
-README for Pluto 1.1-beta2
 
-To run the Pluto Portal Driver deployed in Tomcat 5.5.17:
+To run the Pluto Portal Driver deployed in Tomcat 5.5.20:
+
 1. Unzip the binary distribution into a directory.
-	a. <PLUTO-HOME> will be the pluto-1.1.0-beta2 subdirectory.
+	a. <PLUTO-HOME> will be the pluto-1.1.0 subdirectory.
+
 2. Execute startup.bat (Windows) or startup.sh (Unix)
-in <PLUTO-HOME>/bin.
+   in <PLUTO-HOME>/bin.
 	a. Use shutdown.bat/shutdown.sh to stop the portal
+
 3. Browse to http://localhost:8080/pluto/portal
+
 4. Login as tomcat user (password=tomcat).
 
 For information on deploying portlets, building the portal from source
- and for the most up to date documentation please go to: 
+ and for the most up to date documentation please go to:
+ 
   http://portals.apache.org/pluto
-  
-***********************************************************
-* RELEASE NOTES: 1.1.0-beta2 Sept 26, 2006                *
-***********************************************************
-* Fixed or Resolved Issues                                *
-***********************************************************
-** Bug ****************************************************
- PLUTO-191  Dynamic Inclusion of dependencies in Maven Plugin
- PLUTO-232  Maximize window state does not work properly
- PLUTO-233  Exception thrown if edit or help mode is not supported by portlet
- PLUTO-242  Portlet session is invalidated when maxInactiveInterval < 0
- PLUTO-243  PortalURLParser drops '/' characters when building render path
- PLUTO-245  Parsing of portlet.xml strips space from init-param values
- PLUTO-246  PortalURLParser should URLEncode query string parameters 
- PLUTO-248  PortalUrlParser should encode '#' character
- PLUTO-251  Pluto fails when navigating between pages using the drop-downs
- PLUTO-254  NPE in PortalDriverServlet when requesting a resource that doesn't exist 
-***********************************************************
 
-** New Feature ********************************************
- PLUTO-214  Add logout link to portal page.
- PLUTO-255   Seperate portal-driver into portal-driver-api and portal-driver-impl
-***********************************************************
-***********************************************************
 
-***********************************************************
-***********************************************************
-* Open Issues                                             *
-***********************************************************
+Release Notes - Pluto - Version 1.1.0
+=====================================
 
-** Bug ****************************************************
- PLUTO-124  POST Data gets truncated due to internal redirect by pluto
- PLUTO-122  Portlet Preferences need to be user specific
- PLUTO-257  Pluto 1.1 plugin for the deployment of custom portlets does not work
- PLUTO-200  Missing Resource Exception from PortletConfig.getResourceBundle
- PLUTO-234  Session Timeout Test in testsuite fails
-***********************************************************
-    
-** New Feature ********************************************
- PLUTO-215  Create admin portlet for Pluto portal driver
- PLUTO-252  Custom Tags with response.encodeUrl( url ) and Render hidden portlet mode.
- PLUTO-38   user profile attribute support
- PLUTO-186  ToolTips to Portlet Controls
-***********************************************************
-    
-** Improvement ********************************************
- PLUTO-204  Add spec PLT number to TestResult in portlet tests
- PLUTO-247  PortalURLParser: Avoid putting '?' and '&' characters in query string if unnecessary
-***********************************************************
-    
-** Task ***************************************************
- PLUTO-218  [1.1] Script to package source release
- PLUTO-217  [1.1] Script to package binary release
-***********************************************************
+** Bug
+    * [PLUTO-122] - Portlet Preferences need to be user specific
+    * [PLUTO-166] - Creation of PreferencesValidator breaks the portlet spec.
+    * [PLUTO-177] - [1.1] Multiple failures in Testsuite Resource Bundle Test
+    * [PLUTO-188] - [1.1] Four failures in the testsuite's Simple Preference Test
+    * [PLUTO-189] - [1.1] Three failures in the testsuite's Resource Bundle Test on Test Portlet #1
+    * [PLUTO-190] - [1.1] Two problems in the testsuite's Security Mapping Test
+    * [PLUTO-191] - Dynamic Inclusion of dependencies in Maven Plugin
+    * [PLUTO-192] - ActionRequest.isPortletModeAllowed Fails
+    * [PLUTO-193] - ActionRequest.GetParameterMap
+    * [PLUTO-194] - ActionResponse.SetPortletMode IllegalStateException not thrown
+    * [PLUTO-197] - ActionRequest.GetParameterMap
+    * [PLUTO-198] - ActionRequest.GetPreferences NullPointerException
+    * [PLUTO-199] - ActionResponse.setRenderParameter
+    * [PLUTO-200] - Missing Resource Exception from PortletConfig.getResourceBundle
+    * [PLUTO-205] - PortletPreferences.store() does not throw IllegalStateException when called within render()
+    * [PLUTO-207] - Request did not return correct query string when dispatched
+    * [PLUTO-208] - Render parameters are lost when dispatching request
+    * [PLUTO-209] - RenderResponse: getWriter() and getPortletOutputStream() should have thrown IllegalStateException if content-type is not set
+    * [PLUTO-210] - Default preference value not returned correctly
+    * [PLUTO-213] - PortletSession not invalidated after max inactive interval.
+    * [PLUTO-220] - flush causing problem in doEndTag() in BasicURLTag.java
+    * [PLUTO-232] - Maximize window state does not work properly
+    * [PLUTO-233] - Exception thrown if edit or help mode is not supported by portlet
+    * [PLUTO-234] - Session Timeout Test in testsuite fails
+    * [PLUTO-239] - Missing error message key in properties file results in an ambiquous log entry
+    * [PLUTO-242] - Portlet session is invalidated when maxInactiveInterval < 0
+    * [PLUTO-243] - PortalURLParser  drops '/' characters when building render path
+    * [PLUTO-245] - Parsing of portlet.xml strips space from init-param values
+    * [PLUTO-246] - PortalURLParser should URLEncode query string parameters
+    * [PLUTO-248] - PortalUrlParser should encode '#' character
+    * [PLUTO-251] - Pluto fails when navigating between pages using the drop-downs
+    * [PLUTO-254] - NPE in PortalDriverServlet when requesting a resource that doesn't exist
+    * [PLUTO-257] - Pluto 1.1 plugin for the deployment of custom portlets does not work
+    * [PLUTO-258] - Custom WindowStates and PortletModes do not work with tag library (in Pluto 1.1)
+    * [PLUTO-261] - PortalServletRequest makes a redundant check
+    * [PLUTO-264] - pluto-portal-driver-config.xml does not validate against pluto-portal-driver-config.xsd
+    * [PLUTO-270] - Dot in context path or portlet name causes NPE in Pluto driver
+    * [PLUTO-275] - Implement Window Ids to allow same instance of one portlet on a page.
+    * [PLUTO-280] - Fix License/Header Problems
+    * [PLUTO-281] - NPE thrown when trying to add a hot deployed portlet to a Pluto page
+    * [PLUTO-282] - Runtime exception encountered in binary distribution when hot-deploying portlets
+    * [PLUTO-288] - PortletRequestImpl.getContextPath() returns wrong value for root context
+    * [PLUTO-296] - PortletAPPDD should provide version attribute from descriptor
+    * [PLUTO-297] - PortletRegistryService access to all application IDs
+    * [PLUTO-298] - Enable PortletEnvironmentService for request/response instantiation
+    * [PLUTO-299] - Support alternate buffering support (as in 1.0.1)
+    * [PLUTO-303] - POM Staging Repository
+    * [PLUTO-304] - SecurityConstraintDD.displayNames should not default to null
 
-** Test ***************************************************
- PLUTO-206  Improve pluto-testsuite to test more aspects
-***********************************************************
-    
-** Wish ***************************************************
- PLUTO-153  Jetty Deployment Support
-***********************************************************
+** Improvement
+    * [PLUTO-151] - New class hierarchy to implement portlet request and response, and resolve the dispatching parameters problem.
+    * [PLUTO-195] - Validate Container Startup / init before servicing requests
+    * [PLUTO-211] - Too many methods overwritten in RenderRequestImpl
+    * [PLUTO-212] - Merge methods in RenderRequestImpl and PortletContextImpl
+    * [PLUTO-247] - PortalURLParser: Avoid putting '?' and '&' characters in query string if unnecessary
+    * [PLUTO-253] - [1.1] Upgrade binary distribution build to use a recent version of Tomcat
+    * [PLUTO-255] - Seperate portal-driver into portal-driver-api and portal-driver-impl
+    * [PLUTO-256] - add getPortletApplicationDescriptor(String) to PortletContainer interface
+    * [PLUTO-259] - Automate new version numbers for new releases
+    * [PLUTO-269] - Make PortletInvoker a public class
+    * [PLUTO-279] - Include jars for Pluto ant task in binary distribution
+    * [PLUTO-286] - Update library versions
+    * [PLUTO-301] - Administrative lifcycle hooks in portlet servlet
+
+** New Feature
+    * [PLUTO-182] - [1.1] Add assembly plugin to create distributions
+    * [PLUTO-214] - Add logout link to portal page.
+    * [PLUTO-252] - Custom Tags with response.encodeUrl( url ) and Render hidden portlet mode.
+    * [PLUTO-268] - Ability to configure portlet dispatch servlet in maven-pluto-plugin
+    * [PLUTO-273] - Remove Portlets From Pages
+    * [PLUTO-291] - Add UserAttributes, PortletModes & WindowStates to PortletAppDD
+    * [PLUTO-292] - Create PortletInfo callback service
+    * [PLUTO-293] - I18n support for portlet.xml elements
+    * [PLUTO-300] - PortletDD needs the following information from the portlet.xml added
+
+** Task
+    * [PLUTO-217] - [1.1] Script to package binary release
+    * [PLUTO-218] - [1.1] Script to package source release
+    * [PLUTO-306] - Update license headers for release
+
+** Wish
+    * [PLUTO-236] - Removal of log4j + logging configuration from web apps
