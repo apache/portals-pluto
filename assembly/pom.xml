@@ -40,7 +40,7 @@
                         <goals>
                             <goal>run</goal>
                         </goals>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                     </execution>
                 </executions>
                 <configuration>
@@ -62,6 +62,23 @@
                         <version>2.7.4</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.pluto</groupId>
+                <artifactId>maven-pluto-plugin</artifactId>
+                <version>${pom.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <installDir>${project.build.directory}/pluto-tomcat</installDir>
+                    <installationDirectory>${project.build.directory}/pluto-tomcat</installationDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>

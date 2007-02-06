@@ -64,9 +64,9 @@
               value="${project.build.directory}/pluto-tomcat"/>
 
 
-    <target name="package" depends="download-tomcat" description="Package pluto into a tomcat distribution">
-
-    </target>
+    <target name="package"
+            depends="download-tomcat,update-tomcat-config"
+            description="Package pluto into a tomcat distribution"/>
 
 
     <target name="download-tomcat"
@@ -96,8 +96,7 @@
     </target>
 
     <target name="update-tomcat-config">
-        <!-- Copy over README -->
-		<copy file="README" todir="${package.dir}"/>
+		<copy file="${basedir}/../README" todir="${package.dir}"/>
 
 		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
 		<replace file="${package.dir}/conf/server.xml"
@@ -134,7 +133,7 @@
 			<arg line="install"/>
 		</exec>
 		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
-			<arg line="pluto:install -DinstallDir=${user.dir}/${package.dir}"/>
+			<arg line="pluto:install -DinstallDir=${package.dir}"/>
 		</exec>
 	</target>
 
