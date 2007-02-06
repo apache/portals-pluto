@@ -29,6 +29,7 @@ import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 import javax.servlet.ServletContext;
+import javax.portlet.PortletContext;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -132,12 +133,23 @@ public class PortletContextManager implements PortletRegistryService {
 
     }
 
+    /**
+     * Retrieve an iterator of all PortletContext instances
+     * which exist within this application.
+     *
+     * @return
+     */
     public Iterator getRegisteredPortletApplications() {
         return new HashSet(portletContexts.values()).iterator();
     }
 
-    public PortletAppDD getPortletApplicationDescriptor(String name) throws PortletContainerException {
-        InternalPortletContext ipc = (InternalPortletContext) portletContexts.get(name);
+    public PortletContext getPortletContext(String applicationId)
+    throws PortletContainerException {
+        return (InternalPortletContext) portletContexts.get(applicationId);
+    }
+
+    public PortletAppDD getPortletApplicationDescriptor(String applicationId) throws PortletContainerException {
+        InternalPortletContext ipc = (InternalPortletContext) portletContexts.get(applicationId);
         if (ipc != null) {
             return ipc.getPortletApplicationDefinition();
         }

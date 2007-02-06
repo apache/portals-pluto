@@ -28,6 +28,9 @@ import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Set;
+import java.util.Enumeration;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
@@ -46,20 +49,15 @@ public class PortletContextImpl
      */
     private static final Log LOG = LogFactory.getLog(PortletContextImpl.class);
 
-    /**
-     * Attribute key used to bind the servletContext to the application.
-     */
-    private static final String CONTEXT_PATH =
-        "org.apache.pluto.PORTLET_APP_CONTEXT_PATH";
-
-
 
     // Private Member Variables ------------------------------------------------
 
     private String applicationId;
     private String applicationName;
+
     private PortletAppDD portletAppDD = null;
     private ServletContext servletContext = null;
+    private ClassLoader contextClassLoader = null;
 
     // Constructor -------------------------------------------------------------
 
@@ -68,6 +66,7 @@ public class PortletContextImpl
      *
      * @param servletContext the servlet context in which we are contained.
      * @param portletAppDD   the portlet application descriptor.
+     * @param portletApplicationId applicationId
      */
     public PortletContextImpl(String portletApplicationId,
                               ServletContext servletContext,
@@ -76,9 +75,15 @@ public class PortletContextImpl
         this.portletAppDD = portletAppDD;
         this.applicationId = portletApplicationId;
         this.applicationName = servletContext.getServletContextName();
+
         if(applicationName == null) {
             applicationName = applicationId;
         }
+        init();
+    }
+
+    private void init() {
+        setContextClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
     public String getApplicationId() {
@@ -87,6 +92,22 @@ public class PortletContextImpl
 
     public String getApplicationName() {
         return applicationName;
+    }
+
+    /**
+     * ClassLoader associated with this context.
+     * @return
+     */
+    public ClassLoader getContextClassLoader() {
+        return contextClassLoader;
+    }
+
+    /**
+     * ClassLoader associated with this context.
+     * @param contextClassLoader
+     */
+    public void setContextClassLoader(ClassLoader contextClassLoader) {
+        this.contextClassLoader = contextClassLoader;
     }
 
     // PortletContext Impl -----------------------------------------------------
@@ -183,11 +204,11 @@ public class PortletContextImpl
         return servletContext.getRealPath(path);
     }
 
-    public java.util.Set getResourcePaths(String path) {
+    public Set getResourcePaths(String path) {
         return servletContext.getResourcePaths(path);
     }
 
-    public java.net.URL getResource(String path)
+    public URL getResource(String path)
         throws java.net.MalformedURLException {
         if (path == null || !path.startsWith("/")) {
             throw new MalformedURLException("path must start with a '/'");
@@ -195,7 +216,7 @@ public class PortletContextImpl
         return servletContext.getResource(path);
     }
 
-    public java.lang.Object getAttribute(java.lang.String name) {
+    public Object getAttribute(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -203,11 +224,11 @@ public class PortletContextImpl
         return servletContext.getAttribute(name);
     }
 
-    public java.util.Enumeration getAttributeNames() {
+    public Enumeration getAttributeNames() {
         return servletContext.getAttributeNames();
     }
 
-    public java.lang.String getInitParameter(java.lang.String name) {
+    public String getInitParameter(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Parameter name == null");
         }
@@ -215,7 +236,7 @@ public class PortletContextImpl
         return servletContext.getInitParameter(name);
     }
 
-    public java.util.Enumeration getInitParameterNames() {
+    public Enumeration getInitParameterNames() {
         return servletContext.getInitParameterNames();
     }
 

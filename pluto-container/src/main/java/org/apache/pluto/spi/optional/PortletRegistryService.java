@@ -18,7 +18,9 @@ package org.apache.pluto.spi.optional;
 
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.internal.InternalPortletContext;
 
+import javax.portlet.PortletContext;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -70,6 +72,16 @@ public interface PortletRegistryService {
         throws PortletContainerException;
 
     /**
+     * Retrieve the PortletContext for the specified applicationId
+     * 
+     * @param applicationId
+     * @return
+     * @throws PortletContainerException
+     */
+    PortletContext getPortletContext(String applicationId)
+    throws PortletContainerException;
+
+    /**
      * Add a listener which will recieve notifications of newly
      * registered applications.
      *
@@ -83,6 +95,7 @@ public interface PortletRegistryService {
      * @param listener the listener to remove
      */
     void removePortletRegistryListener(PortletRegistryListener listener);
+
 
 
 }
