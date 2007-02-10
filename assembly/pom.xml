@@ -88,7 +88,7 @@
                         <goals>
                             <goal>assembly</goal>
                         </goals>
-                        <phase>install</phase>
+                        <phase>attached</phase>
                     </execution>
                 </executions>
                 <configuration>
