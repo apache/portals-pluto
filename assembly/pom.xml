@@ -40,7 +40,7 @@
                         <goals>
                             <goal>run</goal>
                         </goals>
-                        <phase>compile</phase>
+                        <phase>prepare-package</phase>
                     </execution>
                 </executions>
                 <configuration>
@@ -85,10 +85,11 @@
                 <version>2.1</version>
                 <executions>
                     <execution>
+                        <id>make-assemblies</id>
+                        <phase>install</phase>
                         <goals>
-                            <goal>assembly</goal>
+                            <goal>attached</goal>
                         </goals>
-                        <phase>attached</phase>
                     </execution>
                 </executions>
                 <configuration>
