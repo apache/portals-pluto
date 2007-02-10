@@ -152,7 +152,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
                                                      Locale locale) {
         TestResult result = new TestResult();
         result.setDescription("Retrieve the title and ensure it's set properly "
-        		+ "under local " + locale);
+        		+ "under locale " + locale);
         
         // Retrieve title, short title and keywords from portlet resource bundle.
         ResourceBundle bundle = config.getResourceBundle(locale);

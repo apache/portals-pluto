@@ -35,7 +35,7 @@ public class DefaultPortletInfoService implements PortletInfoService {
     public String getShortTitle(PortletWindow window) {
         if (window instanceof InternalPortletWindow) {
             return getPortletDefinition((InternalPortletWindow) window)
-                .getPortletInfo().getTitle();
+                .getPortletInfo().getShortTitle();
         }
         return null;
     }
@@ -43,7 +43,7 @@ public class DefaultPortletInfoService implements PortletInfoService {
     public String getKeywords(PortletWindow window) {
         if (window instanceof InternalPortletWindow) {
             return getPortletDefinition((InternalPortletWindow) window)
-                .getPortletInfo().getTitle();
+                .getPortletInfo().getKeywords();
         }
         return null;
     }
