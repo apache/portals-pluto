@@ -77,7 +77,23 @@
         <finalName>pluto-portal</finalName>
 
         <plugins>
-            <plugin>
+             <plugin>
+               <artifactId>maven-war-plugin</artifactId>
+               <configuration>
+                 <webResources>
+                   <resource>
+                     <filtering>true</filtering>
+                     <directory>${pom.basedir}/src/main/resources</directory>
+                     <includes>
+                       <include>pluto-portal-driver-config.xml</include>
+                     </includes>
+                     <!-- <targetPath> requires version 2.0.2 of maven-war-plugin -->
+                     <targetPath>WEB-INF</targetPath>
+                   </resource>
+                 </webResources>
+               </configuration>
+             </plugin>
+             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.1</version>
                 <configuration>
