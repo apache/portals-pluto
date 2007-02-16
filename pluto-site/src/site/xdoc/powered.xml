@@ -29,6 +29,16 @@ limitations under the License.
 	  The following portals use Pluto for their portlet container:
 	  <table>
       <tr><th>Portal</th><th>Website</th><th>License</th><th>Status</th><th>Pluto Version</th></tr>
+      <tr><td>uPortal 3</td>
+          <td><a href="http://www.uportal.org">http://www.uportal.org</a></td>
+          <td>JA-SIG</td>
+          <td></td>
+          <td>1.1.x</td></tr>
+      <tr><td>Sakai</td>
+          <td><a href="http://www.sakaiproject.org">http://www.sakaiproject.org</a></td>
+          <td>Sakai Foundation</td>
+          <td></td>
+          <td>1.1.x</td></tr>
 	  <tr><td>Apache Jetspeed 2</td>
           <td><a href="http://portals.apache.org/jetspeed-2">http://portals.apache.org/jetspeed-2</a></td>
           <td>Apache 2.0</td>
@@ -39,7 +49,7 @@ limitations under the License.
           <td>Apache 2.0</td>
           <td></td>
           <td>1.0.1</td></tr>
-      <tr><td>uPortal</td>
+      <tr><td>uPortal 2</td>
           <td><a href="http://www.uportal.org">http://www.uportal.org</a></td>
           <td>JA-SIG</td>
           <td></td>
