@@ -61,7 +61,7 @@ public class ContainerInvocation {
     }
 
     public static void clearInvocation() {
-        CONTAINERS.remove();
+        CONTAINERS.set(null);
     }
 
 
