@@ -161,6 +161,13 @@ public class PortletContextManager implements PortletRegistryService {
 
     public void remove(InternalPortletContext context) {
         portletContexts.remove(context);
+        Iterator configs = portletConfigs.keySet().iterator();
+        while(configs.hasNext()) {
+            String key = (String)configs.next();
+            if(key.startsWith(context.getApplicationId() + "/")) {
+                portletConfigs.remove(key);
+            }
+        }
         fireRemoved(context);
     }
 
