@@ -95,35 +95,17 @@ public class PortletServlet extends HttpServlet {
         portletName = getInitParameter("portlet-name");
 
         // Retrieve the associated internal portlet context.
-        ServletContext servletContext = getServletContext();
+        PortletContextManager mgr = PortletContextManager.getManager();
         try {
-            portletContext = PortletContextManager.getManager()
-                .register(servletContext);
+            String applicationId = mgr.register(getServletConfig());
+            portletContext = (InternalPortletContext) mgr.getPortletContext(applicationId);
+            portletConfig =  (InternalPortletConfig) mgr.getPortletConfig(applicationId, portletName);
 
         } catch (PortletContainerException ex) {
             throw new ServletException(ex);
         }
 
-        // Retrieve the portletDD and create portlet config.
-        PortletDD portletDD = null;
-        PortletAppDD portletAppDD =
-            portletContext.getPortletApplicationDefinition();
-        for (Iterator it = portletAppDD.getPortlets().iterator();
-             it.hasNext();) {
-            PortletDD currentDD = (PortletDD) it.next();
-            if (currentDD.getPortletName().equals(portletName)) {
-                portletDD = currentDD;
-                break;
-            }
-        }
-        if (portletDD == null) {
-            throw new ServletException("Unable to resolve portlet '"
-                + portletName + "'");
-        }
-        portletConfig = new PortletConfigImpl(getServletConfig(),
-            portletContext,
-            portletDD);
-
+        PortletDD portletDD = portletConfig.getPortletDefinition();
         // Create and initialize the portlet wrapped in the servlet.
         try {
             ClassLoader loader = Thread.currentThread().getContextClassLoader();

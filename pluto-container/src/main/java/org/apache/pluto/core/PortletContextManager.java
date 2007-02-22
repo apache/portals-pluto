@@ -20,16 +20,22 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.Configuration;
+import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.impl.PortletContextImpl;
+import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletConfig;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletConfig;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -69,6 +75,10 @@ public class PortletContextManager implements PortletRegistryService {
      */
     private Map portletContexts = new HashMap();
 
+
+    private Map portletConfigs = new HashMap();
+    
+
     /**
      * The registered listeners that should be notified upon
      * registry events.
@@ -99,9 +109,34 @@ public class PortletContextManager implements PortletRegistryService {
      * Retrieves the PortletContext associated with the given ServletContext.
      * If one does not exist, it is created.
      *
-     * @param servletContext the servlet context.
+     * @param config the servlet config.
      * @return the InternalPortletContext associated with the ServletContext.
      * @throws PortletContainerException
+     */
+    public String register(ServletConfig config) throws PortletContainerException {
+        InternalPortletContext portletContext = register(config.getServletContext());
+
+         PortletAppDD portletAppDD =
+            portletContext.getPortletApplicationDefinition();
+        PortletDD portletDD = null;
+
+        for (Iterator it = portletAppDD.getPortlets().iterator(); it.hasNext();) {
+            portletDD = (PortletDD) it.next();
+            portletConfigs.put(
+                portletContext.getApplicationId() + "/" + portletDD.getPortletName(),
+                new PortletConfigImpl(config, portletContext, portletDD)
+            );
+        }
+
+        return portletContext.getApplicationId();
+    }
+
+    /**
+     *
+     * @param servletContext
+     * @return
+     * @throws PortletContainerException
+     * @deprecated Use {@link #register(ServletConfig)}
      */
     public InternalPortletContext register(ServletContext servletContext)
         throws PortletContainerException {
@@ -118,6 +153,7 @@ public class PortletContextManager implements PortletRegistryService {
                 throw new IllegalStateException("Unable to resolve unique identifier for portletContext.");
             }
             portletContexts.put(applicationId, portletContext);
+
             fireRegistered(portletContext);
         }
         return (InternalPortletContext)portletContexts.get(applicationId);
@@ -146,6 +182,19 @@ public class PortletContextManager implements PortletRegistryService {
     public PortletContext getPortletContext(String applicationId)
     throws PortletContainerException {
         return (InternalPortletContext) portletContexts.get(applicationId);
+    }
+
+    public PortletConfig getPortletConfig(String applicationId, String portletName) {
+        return (InternalPortletConfig) portletConfigs.get(applicationId + "/" + portletName); 
+    }
+
+    public PortletDD getPortletDescriptor(String applicationId, String portletName) {
+        InternalPortletConfig ipc = (InternalPortletConfig) portletConfigs.get(applicationId + "/" + portletName);
+        if(ipc != null) {
+            return ipc.getPortletDefinition();
+        }
+        return null;
+
     }
 
     public PortletAppDD getPortletApplicationDescriptor(String applicationId) throws PortletContainerException {

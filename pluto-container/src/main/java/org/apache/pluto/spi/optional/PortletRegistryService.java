@@ -17,10 +17,12 @@
 package org.apache.pluto.spi.optional;
 
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.internal.InternalPortletContext;
 
 import javax.portlet.PortletContext;
+import javax.portlet.PortletConfig;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -79,7 +81,13 @@ public interface PortletRegistryService {
      * @throws PortletContainerException
      */
     PortletContext getPortletContext(String applicationId)
-    throws PortletContainerException;
+        throws PortletContainerException;
+
+    PortletDD getPortletDescriptor(String applicationId, String portletName)
+        throws PortletContainerException;
+
+    PortletConfig getPortletConfig(String applicationId, String portletName)
+        throws PortletContainerException;
 
     /**
      * Add a listener which will recieve notifications of newly
