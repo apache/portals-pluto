@@ -19,12 +19,10 @@ package org.apache.pluto.spi.optional;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.internal.InternalPortletContext;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletConfig;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Interface defining the services used by the container
@@ -76,16 +74,31 @@ public interface PortletRegistryService {
     /**
      * Retrieve the PortletContext for the specified applicationId
      * 
-     * @param applicationId
-     * @return
-     * @throws PortletContainerException
+     * @param applicationId context identifier
+     * @return portlet context
+     * @throws PortletContainerException if internal error occurs
      */
     PortletContext getPortletContext(String applicationId)
         throws PortletContainerException;
 
+    /**
+     * Retreive the portlet descriptor for the given portlet.
+     *
+     * @param applicationId context identifier
+     * @param portletName portlet name
+     * @return descriptor
+     * @throws PortletContainerException if unexpected error
+     */
     PortletDD getPortletDescriptor(String applicationId, String portletName)
         throws PortletContainerException;
 
+    /**
+     * Retrieve the portlet configuration for the specified portlet
+     * @param applicationId context identifier
+     * @param portletName portlet name
+     * @return portletconfig
+     * @throws PortletContainerException if internal error occurs
+     */
     PortletConfig getPortletConfig(String applicationId, String portletName)
         throws PortletContainerException;
 
