@@ -46,17 +46,30 @@ final class Environment {
     /**
      * Retrieve the major version number.
      * @return the major version number.
+     * @deprecated
      */
     public static final String getPortletContainerMajorVersion() {
-        return PROPS.getString("pluto.container.version.major");
+        String version = getPortletContainerVersion();
+        return version.substring(0, version.indexOf("."));
     }
 
     /**
      * Retrieve the minor version number.
      * @return the minor version number.
+     * @deprecated
      */
     public static final String getPortletContainerMinorVersion() {
-        return PROPS.getString("pluto.container.version.minor");
+        String version = getPortletContainerVersion();
+        return version.substring(version.indexOf("."));
+    }
+
+    /**
+     * Retrieve the portlet container version.
+     *
+     * @return container version
+     */
+    public static final String getPortletContainerVersion() {
+        return PROPS.getString("pluto.container.version");
     }
 
     /**
@@ -85,9 +98,7 @@ final class Environment {
     public static final String getServerInfo() {
         StringBuffer sb = new StringBuffer(getPortletContainerName())
             .append("/")
-            .append(getPortletContainerMajorVersion())
-            .append(".")
-            .append(getPortletContainerMinorVersion());
+            .append(getPortletContainerVersion());
         return sb.toString();
     }
 

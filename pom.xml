@@ -223,8 +223,6 @@
     -->
     <properties>
         <pluto.container.name>Pluto</pluto.container.name>
-        <pluto.container.version.major>1</pluto.container.version.major>
-        <pluto.container.version.minor>1.0-SNAPSHOT</pluto.container.version.minor>
         <javax.portlet.version.major>1</javax.portlet.version.major>
         <javax.portlet.version.minor>0</javax.portlet.version.minor>
         <portlet-api.version>1.0</portlet-api.version>
@@ -234,18 +232,18 @@
         <taglibs.standard.version>1.0.4</taglibs.standard.version>
         <xerces.version>2.6.2</xerces.version>
         <castor.version>1.0</castor.version>
-        <commons-digester.version>1.7</commons-digester.version>
+        <commons-digester.version>1.8</commons-digester.version>
         <commons-collections.version>3.2</commons-collections.version>
         <commons-cli.version>1.0</commons-cli.version>
-        <commons-httpclient.version>3.0</commons-httpclient.version>
+        <commons-httpclient.version>3.0.1</commons-httpclient.version>
         <commons-beanutils.version>1.7.0</commons-beanutils.version>
         <commons-logging.version>1.0.4</commons-logging.version>
         <log4j.version>1.2.14</log4j.version>
         <springframework.version>2.0.2</springframework.version>
         <plexus.version>1.0.4</plexus.version>
-        <maven.version>2.0</maven.version>
+        <maven.version>2.0.5</maven.version>
         <ant.version>1.6.5</ant.version>
-        <junit.version>3.8</junit.version>
+        <junit.version>3.8.1</junit.version>
         <jmock.version>1.0.1</jmock.version>
     </properties>
 

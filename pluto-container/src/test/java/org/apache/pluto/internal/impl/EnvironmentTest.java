@@ -37,11 +37,15 @@ public class EnvironmentTest extends PlutoTestCase {
     }
 
     public void testContainerMajorVersion() {
-        assertEquals(props.getProperty("pluto.container.version.major"), Environment.getPortletContainerMajorVersion());
+        assertEquals("1", Environment.getPortletContainerMajorVersion());
     }
 
     public void testContainerMinorVersion() {
-        assertEquals(props.getProperty("pluto.container.version.minor"), Environment.getPortletContainerMinorVersion());
+        assertTrue(Environment.getPortletContainerVersion().endsWith(Environment.getPortletContainerMinorVersion()));
+    }
+
+    public void testContainerVersion() {
+        assertEquals(props.getProperty("pluto.container.version"), Environment.getPortletContainerVersion());
     }
 
     public void testContainerName() {
@@ -58,7 +62,6 @@ public class EnvironmentTest extends PlutoTestCase {
 
     public void testServerInfo() {
         assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.name"), Environment.getServerInfo());
-        assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.version.major"), Environment.getServerInfo());
-        assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.version.minor"), Environment.getServerInfo());
+        assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.version"), Environment.getServerInfo());
     }
 }

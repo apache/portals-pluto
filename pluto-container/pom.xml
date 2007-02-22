@@ -29,12 +29,6 @@
             <version>${pom.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.pluto</groupId>
-            <artifactId>pluto-portal-driver</artifactId>
-            <version>${pom.version}</version>
-            <scope>test</scope>
-        </dependency>
         <!-- Other Support Libraries =========================================== -->
         <dependency>
             <groupId>commons-logging</groupId>
