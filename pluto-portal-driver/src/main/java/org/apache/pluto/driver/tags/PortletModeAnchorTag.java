@@ -17,6 +17,7 @@
 package org.apache.pluto.driver.tags;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletMode;
 import javax.servlet.ServletContext;
@@ -31,7 +32,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 
@@ -93,15 +93,18 @@ public class PortletModeAnchorTag extends BodyTagSupport {
             PortalURL portalUrl =  portalEnv.createPortalURL();
             portalUrl.setPortletMode(evaluatedPortletId, new PortletMode(portletMode));
 
+            // Build a string buffer containing the anchor tag
+            StringBuffer tag = new StringBuffer();
+            tag.append("<a class=\"" + ToolTips.CSS_CLASS_NAME + "\" href=\"" + portalUrl.toString() + "\">");
+            tag.append("<span class=\"" + portletMode + "\"></span>");
+            tag.append("<span class=\"" + ToolTips.CSS_CLASS_NAME + "\">");
+            tag.append(ToolTips.forMode(new PortletMode(portletMode)));
+            tag.append("</span></a>");
+
             // Print the mode anchor tag.
             try {
                 JspWriter out = pageContext.getOut();
-                out.print("<a href=\"");
-                out.print(portalUrl.toString());
-                out.print("\">");
-                out.print("<span class=\"");
-                out.print(portletMode);
-                out.print("\"></span></a>");
+                out.print(tag.toString());
             } catch (IOException ex) {
                 throw new JspException(ex);
             }
