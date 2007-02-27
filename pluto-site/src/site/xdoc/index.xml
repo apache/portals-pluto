@@ -35,13 +35,13 @@ limitations under the License.
           The Java Portlet API version 2.0 specification is now under
           development by the JSR-286 Expert Group under the auspices of the
           <a href="http://www.jcp.org">Java Community Process</a>.
-          JSR-286 builds on JSR-168. Details on the specification work can be
+          Details on the specification work can be
           found at the <a href="http://jcp.org/en/jsr/detail?id=286">JSR-286 web
-          site</a>. The Expert Group is very interested in feedback from the
+          site</a>. Drafts of the new portlet specification and API can
+		  be found at <a href="http://ipc658.inf-swt.uni-jena.de/spec/">http://ipc658.inf-swt.uni-jena.de/spec/</a>.
+		  The Expert Group is very interested in feedback from the
           community. Send your comments to <a href="mailto:jsr-286-comments@jcp.org">
-          jsr-286-comments@jcp.org</a> or post to the
-          <a href="http://wiki.apache.org/portals/Pluto/IdeasAndCommentsForJSR286">
-          'Comments and ideas for JSR286'</a> wiki page.
+          jsr-286-comments@jcp.org</a>.
         </p>
       </div>
       
@@ -52,7 +52,7 @@ limitations under the License.
             <img valign="top" src="images/download.gif" border="0" title="download"/>
             Download
           </a>
-          Pluto 1.1.0-beta2 (19Mb)
+          Pluto 1.1.0 GA (19Mb)
         </p>
         <ul>
           <li><a href="v11/getting-started.html">Installation Guide</a></li>
@@ -115,13 +115,13 @@ limitations under the License.
     <section name="Project Status">
       <p>
         Apache Pluto is a subproject of the Apache Portals Project. The current
-        stable release of Apache Pluto is version 1.0.1. The current version
-        actively being developed is version 1.1.
+        stable release of Apache Pluto is version 1.1.0, which is currently being
+        actively developed as the Reference Implementation of JSR-286.
       </p>
       <subsection name="Pluto 1.0.1">
         <p>
-          Pluto 1.0.1 is the current stable release of Pluto. This version of
-          pluto is utilized as the portlet container for Jetspeed and other
+          Pluto 1.0.1 is the first stable release of Pluto. This version of
+          Pluto is utilized as the portlet container for Jetspeed and other
           portals. In addition, Pluto 1.0.1 is embeded within Apache Geronimo.
         </p>
       </subsection>
