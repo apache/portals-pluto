@@ -27,6 +27,7 @@ import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.UserInfoService;
 
 import javax.portlet.PortalContext;
 
@@ -39,7 +40,7 @@ import javax.portlet.PortalContext;
  * @since Sep 21, 2004
  */
 public class ContainerServicesImpl
-implements RequiredContainerServices, OptionalContainerServices {
+    implements RequiredContainerServices, OptionalContainerServices {
 
 
     private PortalContextImpl context;
@@ -103,6 +104,10 @@ implements RequiredContainerServices, OptionalContainerServices {
     }
 
     public PortalAdministrationService getPortalAdministrationService() {
+        return null;
+    }
+
+    public UserInfoService getUserInfoService() {
         return null;
     }
 }

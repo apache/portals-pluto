@@ -19,6 +19,8 @@ package org.apache.pluto.internal.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.spi.optional.UserInfoService;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
@@ -199,14 +201,6 @@ implements PortletRequest, InternalPortletRequest {
         HttpSession httpSession = getHttpServletRequest().getSession(create);
         if (httpSession != null) {
         	// HttpSession is not null does NOT mean that it is valid.
-//START PATCH - Jira Issue PLUTO-242 contriuted by David Garcia
-//            long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
-//            long currentInactiveTime = System.currentTimeMillis()
-//            		- httpSession.getLastAccessedTime();
-//            if (currentInactiveTime > maxInactiveTime) {
-//            	if (LOG.isDebugEnabled()) {
-//            		LOG.debug("The underlying HttpSession is expired and "
-//            				+ "should be invalidated.");
             int maxInactiveInterval = httpSession.getMaxInactiveInterval();
             if (maxInactiveInterval >= 0) {    // < 0 => Never expires.
             	long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
@@ -220,11 +214,9 @@ implements PortletRequest, InternalPortletRequest {
             		httpSession.invalidate();
             		httpSession = getHttpServletRequest().getSession(create);
             	}
-//            	httpSession.invalidate();
-//            	httpSession = getHttpServletRequest().getSession(create);
-//END PATCH 
             }
         }
+        
         if (httpSession == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("The underlying HttpSession is not available: "
@@ -232,6 +224,7 @@ implements PortletRequest, InternalPortletRequest {
             }
             return null;
         }
+
         //
         // If we reach here, we are sure that the underlying HttpSession is
         //   available. If we haven't created and cached a portlet session
@@ -383,6 +376,10 @@ implements PortletRequest, InternalPortletRequest {
 
     public Object getAttribute(String name) {
     	ArgumentUtility.validateNotNull("attributeName", name);
+
+        if(PortletRequest.USER_INFO.equals(name)) {
+            return getUserInfo();
+        }
     	
         String encodedName = isNameReserved(name) ?
                 name :
@@ -415,6 +412,17 @@ implements PortletRequest, InternalPortletRequest {
         }
 
         return portletAttributes.elements();
+    }
+
+    public Map getUserInfo() {
+        UserInfoService uis = container.getOptionalContainerServices().getUserInfoService();
+        try {
+            Map map = uis.getUserInfo(this);
+            return Collections.unmodifiableMap(map);
+        } catch (PortletContainerException e) {
+            LOG.warn("Unable to retrieve user attribute map for user "+getRemoteUser()+".  Returning null.");
+            return null;
+        }
     }
 
     public String getParameter(String name) {
@@ -607,6 +615,8 @@ implements PortletRequest, InternalPortletRequest {
     /**
      * Is this attribute name a reserved name (by the J2EE spec)?. Reserved
      * names begin with "java." or "javax.".
+     * 
+     * @return true if the name is reserved.
      */
     private boolean isNameReserved(String name) {
         return name.startsWith("java.") || name.startsWith("javax.");

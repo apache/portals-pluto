@@ -22,10 +22,17 @@ import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
  * Defines the services necessary for integration between the Pluto Container
  * and a Portal.
+ *
+ * <p>NOTE: Backwards compatibility is not garaunteed against
+ * this interface as additional services may be needed.
+ * Please extend the DefaultOptionalContainerServices
+ * class to ensure your implementation can be used without
+ * modicications in the future.</p>
  *
  * @since 1.1.0
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -79,5 +86,14 @@ public interface OptionalContainerServices {
      * @return portal admin service
      */
     PortalAdministrationService getPortalAdministrationService();
+
+
+    /**
+     * Returns the user info service implementation used
+     * by the container.
+     *
+     * @return user info service
+     */
+    UserInfoService getUserInfoService();
 
 }

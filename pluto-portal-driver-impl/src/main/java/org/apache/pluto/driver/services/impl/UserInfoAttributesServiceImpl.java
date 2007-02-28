@@ -31,7 +31,6 @@ import org.apache.pluto.spi.optional.UserInfoAttributesService;
 import org.apache.pluto.spi.optional.P3PAttributes;
 
 /**
- * TODO: Add a cache keyed by logged-in username.
  * FIXME: Only include attributes that are defined in portlet.xml
  * 
  * This is a default implementation of that gets user information attributes
@@ -68,12 +67,12 @@ public class UserInfoAttributesServiceImpl implements UserInfoAttributesService 
 	/**
 	 * Implementation of PLT.17.2 used to access user information attributes.
 	 * 
-	 * @see UserInfoAttributesService#getAttributes(javax.portlet.PortletRequest)
+	 * @see UserInfoAttributesService#getUserInfo(javax.portlet.PortletRequest)
 	 * @return As per the spec, return null if the user is not authenticated or an empty Map if there are
 	 * no attributes in the properties file or a Map containing only those attributes found in the attribute 
 	 * data store (properties file).
 	 */
-	public Map getAttributes(PortletRequest request)
+	public Map getUserInfo(PortletRequest request)
 			throws PortletContainerException {
 		Map map = null;
 		String user = request.getRemoteUser();

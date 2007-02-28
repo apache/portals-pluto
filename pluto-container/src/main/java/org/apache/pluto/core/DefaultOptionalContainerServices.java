@@ -23,6 +23,7 @@ import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
  * Default Optional Container Services implementation.
@@ -40,6 +41,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletEnvironmentService portletEnvironmentService;
     private PortletInfoService portletInfoService;
     private PortalAdministrationService portalAdministrationService;
+    private UserInfoService userInfoService;
 
     
     /**
@@ -119,6 +121,14 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
     public PortalAdministrationService getPortalAdministrationService() {
         return portalAdministrationService;
+    }
+
+    public UserInfoService getUserInfoService() {
+        return userInfoService;
+    }
+
+    public void setUserInfoService(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
     }
 }
 

@@ -58,14 +58,14 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 	}
 
 	/*
-	 * Test method for 'org.apache.pluto.services.optional.UserInfoAttributesServiceImpl.getAttributes(PortletRequest)'
+	 * Test method for 'org.apache.pluto.services.optional.UserInfoAttributesServiceImpl.getUserInfo(PortletRequest)'
 	 */
 	public void testGetAttributes() {
 		try {
 			Map map = null;
 			UserInfoAttributesServiceImpl uias = UserInfoAttributesServiceImpl.getInstance(props);
 			PortletRequest pr = new MockPortletRequest();
-			map = uias.getAttributes(pr);
+			map = uias.getUserInfo(pr);
 			String sex = (String)map.get(P3PAttributes.USER_GENDER); 
 			assertTrue(sex.equals(TEST_USER_GENDER));
 			System.out.println("Sex: " + sex);
