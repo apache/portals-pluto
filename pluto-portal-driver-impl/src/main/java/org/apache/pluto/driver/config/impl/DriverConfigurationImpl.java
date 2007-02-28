@@ -22,10 +22,10 @@ import javax.servlet.ServletContext;
 
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
+import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
@@ -44,6 +44,7 @@ public class DriverConfigurationImpl
     private PropertyConfigService propertyService;
     private RenderConfigService renderService;
     private SupportedModesService supportedModesService;
+    private SupportedWindowStateService supportedWindowStateService;
 
     // Container Services
     private PortalCallbackService portalCallbackService;
@@ -51,14 +52,17 @@ public class DriverConfigurationImpl
 
     public DriverConfigurationImpl(PortalURLParser portalUrlParser,
                                    PropertyConfigService propertyService,
-                                   RenderConfigService renderService,
-                                   PortalCallbackService portalCallback,
-                                   SupportedModesService supportedModesService) {
+                                   RenderConfigService renderService,                                  
+                                   SupportedModesService supportedModesService,
+                                   SupportedWindowStateService supportedWindowStateService,
+                                   PortalCallbackService portalCallback) {
+        
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
         this.renderService = renderService;
         this.portalCallbackService = portalCallback;
         this.supportedModesService = supportedModesService;
+        this.supportedWindowStateService = supportedWindowStateService;
     }
 
     /**
@@ -129,6 +133,7 @@ public class DriverConfigurationImpl
         this.propertyService.init(context);
         this.renderService.init(context);
         this.supportedModesService.init(context);
+        this.supportedWindowStateService.init(context);
     }
 
     public void destroy() {
@@ -140,6 +145,9 @@ public class DriverConfigurationImpl
         
         if (supportedModesService != null)
             supportedModesService.destroy();
+        
+        if (supportedWindowStateService != null)
+            supportedWindowStateService.destroy();
     }
 
 //
@@ -171,6 +179,21 @@ public class DriverConfigurationImpl
 
     public void setPortletPreferencesService(PortletPreferencesService portletPreferencesService) {
         this.portletPreferencesService = portletPreferencesService;
+    }
+
+    public boolean isWindowStateSupported(String portletId, String windowState)
+    {
+        return supportedWindowStateService.isWindowStateSupported(portletId, windowState);
+    }
+
+    public boolean isWindowStateSupportedByPortal(String windowState)
+    {
+        return supportedWindowStateService.isWindowStateSupportedByPortal(windowState);
+    }
+
+    public boolean isWindowStateSupportedByPortlet(String portletId, String windowState)
+    {
+        return supportedWindowStateService.isWindowStateSupportedByPortlet(portletId, windowState);
     }
 }
 

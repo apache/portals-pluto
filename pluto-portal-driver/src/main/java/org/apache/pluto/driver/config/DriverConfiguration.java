@@ -97,6 +97,12 @@ public interface DriverConfiguration {
     boolean isPortletModeSupportedByPortlet(String portletId, String mode);
     
     boolean isPortletModeSupported(String portletId, String mode);
+    
+    boolean isWindowStateSupportedByPortal(String windowState);
+    
+    boolean isWindowStateSupportedByPortlet(String portletId, String windowState);
+    
+    boolean isWindowStateSupported(String portletId, String windowState);
 
 //
 // Utility methods for the container
