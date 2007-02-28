@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+Copyright 1999-2006 The Apache Software Foundation
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!--
+// ======================================================================== 78
+-->
+<faqs title="Frequently Asked Questions">
+    <part id="general">
+        <faq id="version">
+            <question>Which version of Pluto should I use?</question>
+            <answer>
+              <p>
+              The latest release from the 1.1.x series is the current
+              stable release. We recommend that you use this if you
+              are looking for a stable release.
+              </p>
+
+              <p>
+              Pluto 1.2.x is currently under development.  The primary
+              chanages between 1.1.x and 1.2.x is that the 1.2 series
+              will require Java1.5.  If you are looking for generics
+              support and other Java5 features, you may want to become
+              an early adopter of 1.2.x.
+              </p>
+
+              <p>
+              There is also a branch which has been created to foster
+              the development of JSR-286 support. We hope that this
+              branch eventually becomes the 2.x series, however, the
+              development is currently very immature.  If you are
+              looking for JSR-286 support, we recommend that you
+              utilize and help us flush out this version.
+              </p>
+            </answer>
+        </faq>
+
+        <faq id="10">
+          <question>I've seen references to Pluto 1.0.0.  What's the deal?</question>
+          <answer>
+            <p>
+              Pluto 1.0.x is based off of the code base which was
+              originally donated to the ASF by IBM. The first release
+              candidate in this series was published on October 8, 2004.
+            </p>
+            <p>
+              Around the same time that this release occured Pluto
+              1.1.0-ALPHA was imported into our source repository.
+              The 1.1.x series is a refactoring/rewrite of Pluto. It's
+              entire purpose is to simplify the container and make it
+              easier for both Portlet Developers and Portal Developers
+              looking to embed Pluto into their portal to use Pluto.
+            </p>
+            <p>
+              Now that Pluto 1.1.0 has been released, our team highly
+              recommends that you migrate to it.  Pluto 1.0.x development
+              has been stagnant for some time and there are no plans to
+              support it in the future.  Pluto 1.1.0 on the otherhand
+              will be the basis for all development currently envisioned
+              (including jsr 286 support).
+            </p>
+          </answer>
+        </faq>
+
+      <faq id="portal">
+        <question>Is Pluto an Enterprise Portal?</question>
+        <answer>
+          No, the Pluto project aims to provide a Java Specification
+          compliant  Portlet Container. In order to support the container,
+          the Pluto project  provides a simple portal, however, this does
+          not provides optional services such as single sign on. If you
+          are looking for an Open Source enterprise Portal implementation,
+          there are several available.  Apache Jetspeed is an enterprise
+          portal hosted by the Apache Software Foundation. Sakai and uPortal
+          are both educational portals which utilize Pluto as their container.
+          There are many other open source portals.
+        </answer>
+      </faq>
+
+    </part>
+</faqs>

@@ -58,21 +58,7 @@ limitations under the License.
           <li><a href="v11/getting-started.html">Installation Guide</a></li>
         </ul>
       </div>
-
-      <div class="highlightBox">
-        <h5>Get Pluto 1.0.1</h5>
-        <p>
-          <a href="http://archive.apache.org/dist/portals/pluto/">
-            <img valign="top" src="images/download.gif" border="0" title="download"/>
-            Download
-          </a>
-          Pluto 1.0.1 (12Mb)
-        </p>
-        <ul>
-          <li><a href="v101/install.html">Installation Guide</a></li>
-        </ul>
-      </div>
-      
+     
       <p>
         Pluto is the Reference Implementation of the Java Portlet Specfication.
         The current version of this specification is JSR 168.
