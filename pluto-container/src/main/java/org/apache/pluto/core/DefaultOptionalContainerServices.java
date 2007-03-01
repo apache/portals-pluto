@@ -55,6 +55,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletEnvironmentService = new DefaultPortletEnvironmentService();
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
+        userInfoService = new DefaultUserInfoService();
     }
     
     /**
@@ -93,6 +94,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
             portalAdministrationService = root.getPortalAdministrationService();
         }
 
+		 if(root.getUserInfoService() != null) {
+			 userInfoService = root.getUserInfoService();
+		 }
+
     }
     
     
@@ -127,8 +132,5 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         return userInfoService;
     }
 
-    public void setUserInfoService(UserInfoService userInfoService) {
-        this.userInfoService = userInfoService;
-    }
 }
 

@@ -32,7 +32,14 @@ public class DefaultUserInfoService implements UserInfoService {
     private Map userInfoMap = new HashMap();
 
     public Map getUserInfo(PortletRequest request) throws PortletContainerException {
-        return (Map)userInfoMap.get(request.getRemoteUser());
+        Map retval = null;
+        if ( request.getRemoteUser() != null ) {
+        	retval= (Map)userInfoMap.get(request.getRemoteUser());
+        }
+        if ( retval == null ) {
+        	retval = new HashMap();
+        }
+        return retval;
     }
 
     public void setUserInfo(String userName, Map userInfoMap) {
