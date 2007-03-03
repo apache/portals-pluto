@@ -17,6 +17,7 @@
 package org.apache.pluto.util.assemble;
 
 import org.apache.pluto.util.assemble.file.FileAssembler;
+import org.apache.pluto.util.assemble.war.WarAssembler;
 
 /**
  * The pluto assembler factory that creates an assembler. 
@@ -55,7 +56,12 @@ public class AssemblerFactory {
      * @return an assembler instance.
      */
     public Assembler createAssembler(AssemblerConfig config) {
-    	return new FileAssembler();
+        if (config.getWarSource() != null) {
+            return new WarAssembler();
+        }
+        else {
+            return new FileAssembler();
+        }
     }
     
 }
