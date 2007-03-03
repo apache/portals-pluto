@@ -122,7 +122,7 @@
 		<!-- Add 'pluto' user to tomcat-users.xml and put user in pluto and manager roles -->
 		<replace file="${package.dir}/conf/tomcat-users.xml"
 			token="&lt;/tomcat-users&gt;"
-			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,manager&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;"
+			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,tomcat,manager&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;"
 			summary="true"
 		/>
     </target>
