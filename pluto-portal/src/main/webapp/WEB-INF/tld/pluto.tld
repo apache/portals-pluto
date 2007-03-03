@@ -51,6 +51,17 @@ limitations under the License.
       <rtexprvalue>false</rtexprvalue>
     </attribute>
   </tag>
+  
+  <tag>
+    <name>windowStateAnchor</name>
+    <tagclass>org.apache.pluto.driver.tags.PortletWindowStateAnchorTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>windowState</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
      
   <tag>
     <name>title</name>
