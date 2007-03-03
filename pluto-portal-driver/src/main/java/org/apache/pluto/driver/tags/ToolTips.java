@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.tags;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletMode;
@@ -30,15 +31,14 @@ import org.apache.commons.logging.LogFactory;
  * @author Elliot Metsger (emetsger@jhu.edu)
  * @since Feb 23, 2007
  * @version $Id$
- * @todo Provide access to tooltips for custom modes and states.
  */
 class ToolTips
 {
     private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("ToolTips");
     private static final Log LOG = LogFactory.getLog(ToolTips.class);
     
-    static final ToolTips MAXIMIZE = new ToolTips(BUNDLE.getString("tooltip.windowstate.maximize"));
-    static final ToolTips MINIMIZE = new ToolTips(BUNDLE.getString("tooltip.windowstate.minimize"));
+    static final ToolTips MAXIMIZE = new ToolTips(BUNDLE.getString("tooltip.windowstate.maximized"));
+    static final ToolTips MINIMIZE = new ToolTips(BUNDLE.getString("tooltip.windowstate.minimized"));
     static final ToolTips NORMAL = new ToolTips(BUNDLE.getString("tooltip.windowstate.normal"));
     
     static final ToolTips VIEW = new ToolTips(BUNDLE.getString("tooltip.mode.view"));
@@ -54,46 +54,32 @@ class ToolTips
         this.tooltip = tooltip;
     }
     
-    static ToolTips forMode(PortletMode mode)
+    static ToolTips forMode(PortletMode mode)       
     {
-        if (PortletMode.VIEW.equals(mode))
+        StringBuffer tip = new StringBuffer("");
+        try
         {
-            return VIEW;
+            tip.append(BUNDLE.getString("tooltip.mode." + mode));
         }
-        
-        if (PortletMode.HELP.equals(mode))
+        catch (MissingResourceException e)
         {
-            return HELP;
+            LOG.warn("No tooltip found for portlet mode [" + mode + "]", e);
         }
-        
-        if (PortletMode.EDIT.equals(mode))
-        {
-            return EDIT;
-        }
-        
-        LOG.debug("No tooltip found for portlet mode [" + mode + "]");
-        return null;
+        return new ToolTips(tip.toString());
     }
     
     static ToolTips forWindowState(WindowState state)
     {
-        if (WindowState.MAXIMIZED.equals(state))
+        StringBuffer tip = new StringBuffer("");
+        try 
         {
-            return MAXIMIZE;
+            tip.append(BUNDLE.getString("tooltip.windowstate." + state));
         }
-        
-        if (WindowState.MINIMIZED.equals(state))
+        catch (MissingResourceException e)
         {
-            return MINIMIZE;
+            LOG.warn("No tooltip found for window state [" + state + "]", e);
         }
-        
-        if (WindowState.NORMAL.equals(state))
-        {
-            return NORMAL;
-        }
-        
-        LOG.debug("No tooltip found for window state [" + state + "]");
-        return null;
+        return new ToolTips(tip.toString());
     }
     
     public String toString()

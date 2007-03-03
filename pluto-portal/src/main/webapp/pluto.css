@@ -188,15 +188,15 @@ a.tooltip:hover span.tooltip {
 
 /** 'portlet' block: portlet mode and window state controls **/
 
-.portlet .header span.min {
+.portlet .header span.minimized {
   background: url(images/controls/min.png) no-repeat;
 }
 
-.portlet .header span.max {
+.portlet .header span.maximized {
   background: url(images/controls/max.png) no-repeat;
 }
 
-.portlet .header span.norm {
+.portlet .header span.normal {
   background: url(images/controls/norm.png) no-repeat;
 }
 

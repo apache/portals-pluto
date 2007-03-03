@@ -29,6 +29,9 @@ limitations under the License.
       <pluto:modeAnchor portletMode="edit"/>
       <pluto:modeAnchor portletMode="help"/>
       <!-- Window State Controls -->
+      <pluto:windowStateAnchor windowState="minimized"/>
+      <pluto:windowStateAnchor windowState="maximized"/>
+      <pluto:windowStateAnchor windowState="normal"/>
       <a href="<pluto:url windowState="minimized"/>"><span class="min"></span></a>
       <a href="<pluto:url windowState="maximized"/>"><span class="max"></span></a>
       <a href="<pluto:url windowState="normal"/>"><span class="norm"></span></a>
