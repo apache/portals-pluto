@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Object Mapping DTD Version 1.0//EN"
-                         "http://castor.exolab.org/mapping.dtd">
+                         "http://castor.org/mapping.dtd">
 <!-- 
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -50,7 +50,13 @@
     -->
   <class name="org.apache.pluto.descriptors.servlet.WebAppDD">
     <map-to xml="web-app"/>
-      
+    
+    <field name="ServletVersion"
+           handler="org.apache.pluto.descriptors.services.castor.ServletVersionCastorFieldHandler"
+           type="java.lang.String">
+        <bind-xml name="version" node="attribute"/>
+    </field>
+        
     <field name="Icon"
            type="org.apache.pluto.descriptors.common.IconDD"/>
 

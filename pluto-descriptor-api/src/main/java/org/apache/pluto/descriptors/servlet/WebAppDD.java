@@ -53,6 +53,10 @@ public class WebAppDD {
     private List securityRoles = new ArrayList();
     private List envEntrys = new ArrayList();
     private List ejbRefs = new ArrayList();
+    // Default to servletVersion 2.3.  If a <web-app>
+    // element is present with a version attribute,
+    // the Castor mapping will update this field.
+    private String servletVersion = "2.3";
 
     public WebAppDD() {
 
@@ -232,6 +236,15 @@ public class WebAppDD {
 
     public void setEjbRefs(List ejbRefs) {
         this.ejbRefs = ejbRefs;
+    }
+    
+
+    public String getServletVersion() {
+        return servletVersion;
+    }
+
+    public void setServletVersion(String servletVersion) {
+        this.servletVersion = servletVersion;
     }
 
 // Helpers

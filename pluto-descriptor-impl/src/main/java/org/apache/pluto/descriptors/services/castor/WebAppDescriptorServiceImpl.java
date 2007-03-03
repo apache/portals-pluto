@@ -21,6 +21,7 @@ import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
+import org.exolab.castor.xml.Marshaller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -99,6 +100,14 @@ public class WebAppDescriptorServiceImpl
         Mapping mapping = new Mapping();
         mapping.loadMapping(url);
         return mapping;
+    }
+    
+    protected void setCastorMarshallerOptions(Marshaller marshaller, Object beingMarshalled) {
+        String servletVersion = ((WebAppDD)beingMarshalled).getServletVersion();
+        if ( "2.3".equals(servletVersion) )
+        {
+            marshaller.setDoctype(getPublicId(), getDTDUri());
+        }
     }
 
 }
