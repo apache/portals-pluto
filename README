@@ -25,7 +25,7 @@ To run the Pluto Portal Driver deployed in Tomcat 5.5.20:
 
 3. Browse to http://localhost:8080/pluto/portal
 
-4. Login as tomcat user (password=tomcat).
+4. Login as pluto user (password=pluto).
 
 For information on deploying portlets, building the portal from source
  and for the most up to date documentation please go to:
