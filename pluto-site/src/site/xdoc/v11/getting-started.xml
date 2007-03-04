@@ -30,9 +30,26 @@ limitations under the License.
   <body>
 
     <section name="Installing the Pluto 1.1 Binary Build">
-      
+      <div class="highlightBox">
+        <h4>About Pluto Distributions</h4>
+        <p>
+          There are a number of distributions to choose from depending
+          on your needs.
+          <ul>
+            <li><strong>pluto-current-bundle</strong> - Provides Pluto and Tomcat bundled together.
+                If you are getting started with Pluto, this is the distribution you
+                want.</li>
+            <li><strong>pluto-current-bin</strong> - Provides the Pluto libraries, portal and 
+                testsuite web applications.</li>
+            <li><strong>pluto-current-container-bin</strong> - Provides the Pluto container
+                libraries only.</li>
+            <li><strong>pluto-current-src</strong> - Provides the Pluto source code; requires
+                that you build and deploy Pluto on your own.</li>
+          </ul>
+        </p>
+      </div>
       <ol>
-        <li>Download a Pluto 1.1 binary distribution from 
+        <li>Download the Pluto 1.1 binary distribution named <strong>pluto-current-bundle</strong> from 
         a <a href="http://cvs.apache.org/dist/portals/pluto/">distribution site</a>.</li>
         <li>Unzip the binary distribution into a directory.</li>
         	<ol>
@@ -47,7 +64,7 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
         <li>Login as the user pluto (password=pluto).</li>
       </ol>
 
-	</section>
+    </section>
 	    
     <section name="Building Pluto from Source">
       
