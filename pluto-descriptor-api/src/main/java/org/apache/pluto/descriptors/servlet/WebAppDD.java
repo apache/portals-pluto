@@ -35,7 +35,6 @@ public class WebAppDD {
     private IconDD icon;
     private String displayName;
     private String description;
-    private boolean distributable;
     private List contextParams = new ArrayList();
     private List filters = new ArrayList();
     private List filterMappings = new ArrayList();
@@ -57,6 +56,10 @@ public class WebAppDD {
     // element is present with a version attribute,
     // the Castor mapping will update this field.
     private String servletVersion = "2.3";
+    // Default to false.  If a <web-app> 
+    // contains a <distributable/> element, then
+    // Castor will update this field to true.
+    private DistributableDD distributableDD = new DistributableDD();
 
     public WebAppDD() {
 
@@ -87,15 +90,19 @@ public class WebAppDD {
     }
 
     public boolean isDistributable() {
-        return distributable;
+        return distributableDD.isDistributable().booleanValue();
+    }
+    
+    public DistributableDD getDistributable() {
+        return distributableDD;
     }
 
     public void setDistributable() {
-        this.distributable = true;
+        this.distributableDD.setDistributable(true);
     }
 
     public void setDistributable(boolean distributable) {
-        this.distributable = distributable;
+        this.distributableDD.setDistributable(distributable);
     }
 
     /**

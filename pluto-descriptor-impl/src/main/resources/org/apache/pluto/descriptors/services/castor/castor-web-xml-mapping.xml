@@ -68,7 +68,9 @@
       <bind-xml name="description" node="element"/>
     </field>
 
-    <field name="Distributable" get-method="isDistributable">
+    <field name="Distributable"
+           type="org.apache.pluto.descriptors.servlet.DistributableDD"
+           handler="org.apache.pluto.descriptors.services.castor.DistributableDDCastorFieldHandler">
       <bind-xml name="distributable" node="element"/>
     </field>
 
@@ -373,6 +375,13 @@
         </field>
     </class>
     
+    <class name="org.apache.pluto.descriptors.servlet.DistributableDD">
+         <field name="Distributable" 
+                type="java.lang.Boolean"
+                handler="org.apache.pluto.descriptors.services.castor.DistributableCastorFieldHandler">
+             <bind-xml name="distributable" node="element"/>
+         </field>
+    </class>        
 
 </mapping>
 
