@@ -18,6 +18,7 @@ package org.apache.pluto.descriptors.services.castor;
 
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
+import org.exolab.castor.util.LocalConfiguration;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
 import org.xml.sax.helpers.DefaultHandler;
@@ -83,7 +84,8 @@ abstract class AbstractCastorDescriptorService {
             //  https://issues.apache.org/jira/browse/PLUTO-312
             //  http://castor.org/javadoc/org/exolab/castor/xml/Marshaller.html#setDoctype(java.lang.String,%20java.lang.String)
             Marshaller marshaller = new Marshaller(writer);
-            marshaller.setMapping(getCastorMapping()); 
+            marshaller.setMapping(getCastorMapping());
+            LocalConfiguration.getInstance().getProperties().setProperty("org.exolab.castor.indent", "true");
             setCastorMarshallerOptions(marshaller, object);
             marshaller.marshal(object);
         } catch(IOException io) {
