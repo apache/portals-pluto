@@ -24,27 +24,7 @@ import javax.servlet.jsp.JspException;
 public class ParamTag extends org.apache.pluto.tags.ParamTag {
 
     public String getValue() throws JspException {
-        String string = super.getValue();
-
-        ExpressionEvaluator eval = pageContext.getExpressionEvaluator();
-
-        try {
-            Object evaluated = eval.evaluate(
-                    string,
-                    Object.class,
-                    pageContext.getVariableResolver(),
-                    null
-            );
-
-            if(evaluated != null) {
-                string = evaluated.toString();
-            }
-
-        }
-        catch(ELException el) {
-            throw new JspException(el);
-        }
-        return string;
+        return ExpressionEvaluatorProxy.getProxy().evaluate(super.getValue(), pageContext);
     }
 
 }

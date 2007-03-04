@@ -16,15 +16,8 @@
  */
 package org.apache.pluto.tags;
 
-import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
-import javax.portlet.PortletSecurityException;
-import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 import javax.portlet.PortletURL;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
+import javax.portlet.RenderResponse;
 
 /**
  * Supporting class for the <CODE>renderURL</CODE> tag. Creates a url that
