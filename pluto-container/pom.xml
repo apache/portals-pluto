@@ -32,7 +32,7 @@
         <!-- Other Support Libraries =========================================== -->
         <dependency>
             <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
+            <artifactId>commons-logging-api</artifactId>
             <version>${commons-logging.version}</version>
             <scope>compile</scope>
         </dependency>
