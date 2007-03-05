@@ -32,6 +32,46 @@ For information on deploying portlets, building the portal from source
  
   http://portals.apache.org/pluto
 
+Release Notes - Pluto - Version 1.1.1
+=====================================
+
+** Bug
+    * [PLUTO-309] - Portlet Testsuite Test # 13 Misc test fails
+    * [PLUTO-310] - Session Timeout Test (Testsuite test # 10) fails, for Test Portlet 2 only
+    * [PLUTO-312] - web.xml for Testsuite web app missing DTD declarataion
+    * [PLUTO-313] - o.a.p.core.ContainerInvocation.clearInvocation() requires 1.5 
+    * [PLUTO-316] - Cleanup PortletConfig from PortletContextManager on destroy
+    * [PLUTO-319] - checkContextServerInfo test on Misc Test page of Testsuite fails
+    * [PLUTO-320] - Testsuite SecurityMapping warnings issued if logged in as pluto user
+    * [PLUTO-323] - 1.1.0 GA binary release does not contain /bin folder
+    * [PLUTO-324] - UserInfoService (Recently added) is not working properly
+    * [PLUTO-327] - Assembler doesn't use the WebAppDescriptor service.
+    * [PLUTO-329] - A copy of castor.properties has slipped into pluto-descriptor-impl-1.1.1-SNAPSHOT.jar
+
+** Improvement
+    * [PLUTO-276] - Do not force cross servlet contex when portlet window context path is same as servlet context path
+    * [PLUTO-278] - Create module pluto-taglib-el
+    * [PLUTO-302] - Library updates
+    * [PLUTO-305] - Provide access to a portlet's ResourceBundle's as loaded by Pluto
+    * [PLUTO-315] - Provide Access to PortletConfig through PortletRegistryService
+    * [PLUTO-321] - Give DefaultPortletInvokerService.invoke() protected access
+    * [PLUTO-326] - WebAppDescriptorService doesn't output DOCTYPE for Servlet 2.3 descriptors
+    * [PLUTO-330] - Update commons-logging dependencies to only depend on api 1.1
+
+** New Feature
+    * [PLUTO-38] - user profile attribute support
+    * [PLUTO-186] - ToolTips to Portlet Controls
+    * [PLUTO-314] - WAR Support in Assembler
+    * [PLUTO-318] - Implement supported window state service
+
+
+
+
+
+** Wish
+    * [PLUTO-290] - Driver config entries pointing to pluto without requirement for context path declarations
+
+
 
 Release Notes - Pluto - Version 1.1.0
 =====================================
