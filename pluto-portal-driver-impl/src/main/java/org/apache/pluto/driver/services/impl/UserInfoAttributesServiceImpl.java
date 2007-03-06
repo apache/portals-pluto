@@ -27,6 +27,7 @@ import javax.portlet.PortletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.spi.optional.UserInfoAttributesService;
 import org.apache.pluto.spi.optional.P3PAttributes;
 
@@ -104,7 +105,12 @@ public class UserInfoAttributesServiceImpl implements UserInfoAttributesService 
 		return map;
 	}
 
-	private static void loadProperties() throws IOException {
+
+    public Map getUserInfo(PortletRequest request, PortletWindow window) throws PortletContainerException {
+        return getUserInfo(request);
+    }
+
+    private static void loadProperties() throws IOException {
 	    //get the properties from prop file
 		if (props.isEmpty()) {
 		    InputStream stream = UserInfoAttributesServiceImpl.class.getResourceAsStream(USER_INFO_ATTR_FILE);

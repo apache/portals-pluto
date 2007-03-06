@@ -18,6 +18,7 @@ package org.apache.pluto.spi.optional;
 
 import org.apache.pluto.spi.ContainerService;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
 
 import javax.portlet.PortletRequest;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.Map;
  * @author <a href="ddewolf@apache.org">David DeWolf</a>
  */
 public interface UserInfoService extends ContainerService {
+
     /**
      * To access user information attributes as defined in PLT.17
      * of JSR-168.
@@ -38,6 +40,13 @@ public interface UserInfoService extends ContainerService {
      * @param request Used to extract the authenticated user name.
      * @return A map of names and values of user information attributes
      *         for a particular authenticated user.
+     * @deprecated use {@link #getUserInfo(PortletRequest, PortletWindow)}
      */
     Map getUserInfo(PortletRequest request) throws PortletContainerException;
+
+    /**
+     * Retrieve the user attribues associated with the given
+     * request and window.
+     */
+    Map getUserInfo(PortletRequest request, PortletWindow window) throws PortletContainerException;
 }
