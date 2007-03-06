@@ -16,17 +16,23 @@
  */
 package org.apache.pluto.tags.el;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.JspException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 
 public abstract class ExpressionEvaluatorProxy {
 
-    private static final Map FACTORIES = new HashMap();
+    private static final Log LOG = LogFactory.getLog(ExpressionEvaluatorProxy.class);
+
+    private static final Map FACTORIES = new TreeMap();
 
     private static ExpressionEvaluatorProxy proxy;
 
@@ -41,10 +47,20 @@ public abstract class ExpressionEvaluatorProxy {
             Map.Entry entry = (Map.Entry)entrySetIterator.next();
             if(isPageContextMethodAvailable(entry.getKey().toString())) {
                 try {
-                    Class proxyClass = Class.forName(
-                        ExpressionEvaluatorProxy.class.getPackage().getName()+entry.getValue()
-                    );
+                    String className =
+                        ExpressionEvaluatorProxy.class.getPackage().getName()+"."+entry.getValue();
+
+                    if(LOG.isInfoEnabled()) {
+                        LOG.info("Attempting to utilize expression evaluator proxy '"+className+"'");
+                    }
+
+                    Class proxyClass = Class.forName(className);
                     proxy = (ExpressionEvaluatorProxy)proxyClass.newInstance();
+
+                    if(proxy != null) {
+                        break;
+                    }
+                    
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException("Unable to find ExpressionEvaluatorProxy '"+entry.getValue()+"'");
                 } catch (IllegalAccessException e) {
@@ -56,6 +72,8 @@ public abstract class ExpressionEvaluatorProxy {
         }
         if(proxy == null) {
             throw new RuntimeException("Unable to find a supported proxy");
+        } else {
+            LOG.info("ExpressionEvaluator Proxy Found: "+proxy.getClass().getName());
         }
     }
 
