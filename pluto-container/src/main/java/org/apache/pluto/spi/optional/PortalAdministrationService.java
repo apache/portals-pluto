@@ -24,7 +24,7 @@ import java.util.List;
  * when the portal needs to accessing items such as the
  * session.
  *
- * Example Use Cases:
+ * Example Use Cases for the PortalAdministrationService:
  * <ul>
  *   <li>PortletException
  *   <p>The portal wants to ensure that portlets never
@@ -46,5 +46,7 @@ import java.util.List;
 public interface PortalAdministrationService {
 
     List getAdministrativeRequestListeners();
+
+    List getPortletInvocationListeners();
 
 }

@@ -17,6 +17,8 @@
 package org.apache.pluto.core;
 
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.AdministrativeRequestListener;
+import org.apache.pluto.spi.optional.PortletInvocationListener;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -26,7 +28,30 @@ public class DefaultPortalAdministrationService implements PortalAdministrationS
     private List administrativeRequestListeners =
         new ArrayList();
 
+    private List portletInvocationListeners =
+        new ArrayList();
+
     public List getAdministrativeRequestListeners() {
         return administrativeRequestListeners;
+    }
+
+    public void setAdministrativeRequestListeners(List administrativeRequestListeners) {
+        this.administrativeRequestListeners = administrativeRequestListeners;
+    }
+
+    public void addAdministrativeRequestListener(AdministrativeRequestListener listener) {
+        administrativeRequestListeners.add(listener);
+    }
+
+    public List getPortletInvocationListeners() {
+        return portletInvocationListeners;
+    }
+
+    public void setPortletInvocationListeners(List portletInvocationListeners) {
+        this.portletInvocationListeners = portletInvocationListeners;
+    }
+
+    public void addPortletInvocationListener(PortletInvocationListener listener) {
+        portletInvocationListeners.add(listener);
     }
 }
