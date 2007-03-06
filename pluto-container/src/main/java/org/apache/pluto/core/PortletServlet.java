@@ -18,9 +18,7 @@ package org.apache.pluto.core;
 
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.spi.optional.PortalAdministrationService;
-import org.apache.pluto.spi.optional.AdministrativeRequestListener;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
@@ -28,13 +26,15 @@ import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.internal.impl.ActionRequestImpl;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
-import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.apache.pluto.spi.optional.AdministrativeRequestListener;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletInvocationEvent;
+import org.apache.pluto.spi.optional.PortletInvocationListener;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -99,7 +99,7 @@ public class PortletServlet extends HttpServlet {
         try {
             String applicationId = mgr.register(getServletConfig());
             portletContext = (InternalPortletContext) mgr.getPortletContext(applicationId);
-            portletConfig =  (InternalPortletConfig) mgr.getPortletConfig(applicationId, portletName);
+            portletConfig = (InternalPortletConfig) mgr.getPortletConfig(applicationId, portletName);
 
         } catch (PortletContainerException ex) {
             throw new ServletException(ex);
@@ -175,19 +175,31 @@ public class PortletServlet extends HttpServlet {
         throws ServletException, IOException {
         InternalPortletRequest portletRequest = null;
         InternalPortletResponse portletResponse = null;
+
+        // Save portlet config into servlet request.
+        request.setAttribute(Constants.PORTLET_CONFIG, portletConfig);
+
+        // Retrieve attributes from the servlet request.
+        Integer methodId = (Integer) request.getAttribute(
+            Constants.METHOD_ID);
+
+        portletRequest = (InternalPortletRequest) request.getAttribute(
+            Constants.PORTLET_REQUEST);
+
+        portletResponse = (InternalPortletResponse) request.getAttribute(
+            Constants.PORTLET_RESPONSE);
+
+        portletRequest.init(portletContext, request);
+
+        PortletWindow window =
+            ContainerInvocation.getInvocation().getPortletWindow();
+
+        PortletInvocationEvent event =
+            new PortletInvocationEvent(portletRequest, window, methodId.intValue());
+
+        notify(event, true, null);
+
         try {
-
-            // Save portlet config into servlet request.
-            request.setAttribute(Constants.PORTLET_CONFIG, portletConfig);
-
-            // Retrieve attributes from the servlet request.
-            Integer methodId = (Integer) request.getAttribute(
-                Constants.METHOD_ID);
-            portletRequest = (InternalPortletRequest) request.getAttribute(
-                Constants.PORTLET_REQUEST);
-            portletResponse = (InternalPortletResponse) request.getAttribute(
-                Constants.PORTLET_RESPONSE);
-            portletRequest.init(portletContext, request);
 
             // The requested method is RENDER: call Portlet.render(..)
             if (methodId == Constants.METHOD_RENDER) {
@@ -217,8 +229,8 @@ public class PortletServlet extends HttpServlet {
                         .getPortalAdministrationService();
 
                 Iterator it = pas.getAdministrativeRequestListeners().iterator();
-                while(it.hasNext()) {
-                    AdministrativeRequestListener l =(AdministrativeRequestListener)it.next();
+                while (it.hasNext()) {
+                    AdministrativeRequestListener l = (AdministrativeRequestListener) it.next();
                     l.administer(portletRequest, portletResponse);
                 }
             }
@@ -227,6 +239,8 @@ public class PortletServlet extends HttpServlet {
             else if (methodId == Constants.METHOD_NOOP) {
                 // Do nothing.
             }
+
+            notify(event, false, null);
 
         } catch (javax.portlet.UnavailableException ex) {
             ex.printStackTrace();
@@ -248,6 +262,7 @@ public class PortletServlet extends HttpServlet {
             throw new javax.servlet.UnavailableException(ex.getMessage());
 
         } catch (PortletException ex) {
+            notify(event, false, ex);
             ex.printStackTrace();
             throw new ServletException(ex);
 
@@ -257,5 +272,25 @@ public class PortletServlet extends HttpServlet {
                 portletRequest.release();
             }
         }
+    }
+
+    protected void notify(PortletInvocationEvent event, boolean pre, Throwable e) {
+        ContainerInvocation inv = ContainerInvocation.getInvocation();
+        PortalAdministrationService pas = inv.getPortletContainer()
+            .getOptionalContainerServices()
+            .getPortalAdministrationService();
+
+        Iterator i = pas.getPortletInvocationListeners().iterator();
+        while (i.hasNext()) {
+            PortletInvocationListener listener = (PortletInvocationListener) i.next();
+            if (pre) {
+                listener.onBegin(event);
+            } else if (e == null) {
+                listener.onEnd(event);
+            } else {
+                listener.onError(event, e);
+            }
+        }
+
     }
 }

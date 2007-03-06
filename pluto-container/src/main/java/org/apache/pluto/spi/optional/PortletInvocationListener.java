@@ -19,7 +19,10 @@ package org.apache.pluto.spi.optional;
 
 public interface PortletInvocationListener {
 
-    void preprocess(PortletInvocationEvent event);
+    void onBegin(PortletInvocationEvent event);
     
-    void postprocess(PortletInvocationEvent event);
+    void onEnd(PortletInvocationEvent event);
+
+    void onError(PortletInvocationEvent event, Throwable error);
+
 }
