@@ -16,8 +16,6 @@
  */
 package org.apache.pluto.tags.el;
 
-import javax.servlet.jsp.el.ExpressionEvaluator;
-import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.JspException;
 
 
