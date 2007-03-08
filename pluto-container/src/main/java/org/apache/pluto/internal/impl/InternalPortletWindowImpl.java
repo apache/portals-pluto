@@ -28,8 +28,6 @@ import org.apache.pluto.internal.PortletEntity;
 /**
  * Implementation of <code>InternalPortletWindow</code> interface.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class InternalPortletWindowImpl implements InternalPortletWindow {
 

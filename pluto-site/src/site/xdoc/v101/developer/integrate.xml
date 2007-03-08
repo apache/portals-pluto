@@ -21,19 +21,12 @@ limitations under the License.
 <document>
   
 	<properties>
-		<author email="sthepper@apache.org">Stefan Hepper</author>
-		<author email="shesmer@apache.org">Stephan Hesmer</author>
 		<title>Integrating Pluto Into Your Container</title>
 	</properties>
   
 	<body>
 		<section name="Integrating Pluto Into Your Container">
 			
-      <div align="center">
-        Stefan Hepper (sthepper@apache.org)<br/>
-        Stephan Hesmer (shesmer@apache.org)<br/>
-      </div>
-      
 			<subsection name="1 Introduction">
 				<p>
 					<a href="http://portals.apache.org/pluto/">Pluto</a> is a project at

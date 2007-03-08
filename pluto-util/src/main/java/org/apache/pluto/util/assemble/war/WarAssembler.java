@@ -39,34 +39,33 @@ import org.apache.pluto.util.assemble.WebXmlRewritingAssembler;
 
 /**
  *
- * @author Eric Dalquist <a href="mailto:edalquist@doit.wisc.edu">edalquist@doit.wisc.edu</a>
  * @version 1.0
  * @since Nov 8, 2004
  */
 public class WarAssembler extends WebXmlRewritingAssembler {
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Default no-arg constructor.
      */
     public WarAssembler() {
     	// Do nothing.
     }
-    
-    
+
+
     // Assembler Impl ----------------------------------------------------------
-    
+
     public void assemble(AssemblerConfig config) throws UtilityException {
         try {
             final File sourceArchive = config.getWarSource();
             final File destinationFolder = config.getDestination();
             final File destinationArchive = new File(destinationFolder, sourceArchive.getName());
-            
+
             //If the source and dest are the same a temp location is needed
             if (sourceArchive.equals(destinationArchive)) {
                 final File tempArchive = File.createTempFile(sourceArchive.getName() + ".", ".tmp");
                 this.assembleWar(sourceArchive, tempArchive, config.getDispatchServletClass());
-                
+
                 //Move the temp file to the destination location
                 destinationArchive.delete();
                 tempArchive.renameTo(destinationArchive);
@@ -74,12 +73,12 @@ public class WarAssembler extends WebXmlRewritingAssembler {
             else {
                 this.assembleWar(sourceArchive, destinationArchive, config.getDispatchServletClass());
             }
-            
+
         } catch (IOException ex) {
             throw new UtilityException(ex.getMessage(), ex, null);
         }
     }
-    
+
     /**
      * Reads the source JAR copying entries to the dest JAR. The web.xml and portlet.xml are cached
      * and after the entire archive is copied (minus the web.xml) a re-written web.xml is generated
@@ -87,7 +86,7 @@ public class WarAssembler extends WebXmlRewritingAssembler {
      */
     protected void assembleWar(File source, File dest, String dispatchServletClass) throws IOException {
         final JarInputStream jarIn = new JarInputStream(new FileInputStream(source));
-        
+
         try {
             //Create the output JAR stream, copying the Manifest
             final Manifest manifest = jarIn.getManifest();
@@ -100,12 +99,12 @@ public class WarAssembler extends WebXmlRewritingAssembler {
                 JarEntry servletXmlEntry = null;
                 byte[] servletXmlBuffer = null;
                 byte[] portletXmlBuffer = null;
-                
+
                 //Read the source archive entry by entry
                 JarEntry originalJarEntry;
                 while ((originalJarEntry = jarIn.getNextJarEntry()) != null) {
                     final JarEntry newJarEntry = this.smartClone(originalJarEntry);
-                    
+
                     //Capture the web.xml JarEntry and contents as a byte[], don't write it out now
                     if (SERVLET_XML.equals(newJarEntry.getName())) {
                         servletXmlEntry = newJarEntry;
@@ -123,7 +122,7 @@ public class WarAssembler extends WebXmlRewritingAssembler {
                         IOUtils.copy(jarIn, jarOut);
                     }
                 }
-                
+
                 //Checks to make sure the web.xml and portlet.xml were found
                 if (servletXmlBuffer == null) {
                     throw new FileNotFoundException("File '" + SERVLET_XML + "' could not be found in the archive '" + source + "'");
@@ -131,25 +130,25 @@ public class WarAssembler extends WebXmlRewritingAssembler {
                 if (portletXmlBuffer == null) {
                     throw new FileNotFoundException("File '" + PORTLET_XML + "' could not be found in the archive '" + source + "'");
                 }
-                
+
                 //Create streams of the byte[] data for the updater method
                 final InputStream webXmlIn = new ByteArrayInputStream(servletXmlBuffer);
                 final InputStream portletXmlIn = new ByteArrayInputStream(portletXmlBuffer);
                 final ByteArrayOutputStream webXmlOut = new ByteArrayOutputStream(servletXmlBuffer.length);
-                
+
                 //Update the web.xml
                 this.updateWebappDescriptor(webXmlIn, portletXmlIn, webXmlOut, dispatchServletClass);
                 final byte[] webXmlBytes = webXmlOut.toByteArray();
-                
+
                 //If no compression is being used (STORED) we have to manually update the size and crc
                 if (servletXmlEntry.getMethod() == ZipEntry.STORED) {
                     servletXmlEntry.setSize(webXmlBytes.length);
-                    
+
                     final CRC32 webXmlCrc = new CRC32();
                     webXmlCrc.update(webXmlBytes);
                     servletXmlEntry.setCrc(webXmlCrc.getValue());
                 }
-                
+
                 //write out the web.xml entry and contents
                 jarOut.putNextEntry(servletXmlEntry);
                 IOUtils.write(webXmlBytes, jarOut);
@@ -177,7 +176,7 @@ public class WarAssembler extends WebXmlRewritingAssembler {
             newJarEntry.setSize(originalJarEntry.getSize());
             newJarEntry.setCrc(originalJarEntry.getCrc());
         }
-        
+
         return newJarEntry;
     }
 }

@@ -29,7 +29,6 @@ import org.apache.pluto.internal.InternalRenderResponse;
 /**
  * Factory Service for creating Portlet request and responses.
  *
- * @author David H. DeWolf
  * @since 1.1.0
  */
 public interface PortletEnvironmentService {

@@ -44,8 +44,6 @@ import org.apache.pluto.internal.PreferencesValidatorRegistry;
  * Definition as defined by the {@link PortletDD} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletEntityImpl implements PortletEntity {
 
@@ -59,16 +57,16 @@ public class PortletEntityImpl implements PortletEntity {
     // Private Member Variables ------------------------------------------------
 
     /** The servlet context. */
-    private ServletContext servletContext = null;
+    private final ServletContext servletContext;
 
     /** The portlet window. */
-    private String portletName = null;
+    private final String portletName;
 
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
-    private PortletDD portletDefinition = null;
+    private PortletDD portletDefinition;
 
     /** Default portlet preferences defined for this portlet. */
-    private InternalPortletPreference[] defaultPreferences = null;
+    private InternalPortletPreference[] defaultPreferences ;
 
 
     // Constructor -------------------------------------------------------------

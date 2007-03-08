@@ -28,8 +28,6 @@ import org.apache.pluto.spi.optional.UserInfoService;
 /**
  * Default Optional Container Services implementation.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
@@ -43,7 +41,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
 
-    
+
     /**
      * Constructs an instance using the default portlet preferences service
      * implementation.
@@ -57,7 +55,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
     }
-    
+
     /**
      * Constructs an instance using specified optional container services
      * implementation. If the portlet preferences service is provided, it will
@@ -99,10 +97,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 		 }
 
     }
-    
-    
+
+
     // OptionalContainerServices Impl ------------------------------------------
-    
+
     public PortletPreferencesService getPortletPreferencesService() {
         return portletPreferencesService;
     }
@@ -115,7 +113,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public PortletEnvironmentService getPortletEnvironmentService() {
         return portletEnvironmentService;
     }
-    
+
     public PortletInvokerService getPortletInvokerService() {
         return portletInvokerService;
     }

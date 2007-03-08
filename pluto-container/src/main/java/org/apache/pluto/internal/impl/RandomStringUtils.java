@@ -19,15 +19,9 @@ package org.apache.pluto.internal.impl;
 import java.util.Random;
 /**
  * <strong>Copied from commons-lang. No need for dependency.</strong>
- * 
+ *
  * <p>Operations for random <code>String</code>s.</p>
  *
- * @author GenerationJava Core library
- * @author <a href="mailto:bayard@generationjava.com">Henri Yandell</a>
- * @author <a href="mailto:steven@caswell.name">Steven Caswell</a>
- * @author Stephen Colebourne
- * @author Gary Gregory
- * @author Phil Steitz
  * @since 1.0
  * @version $Id$
  */

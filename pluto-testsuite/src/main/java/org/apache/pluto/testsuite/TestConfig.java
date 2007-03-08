@@ -25,57 +25,55 @@ import java.util.Map;
 
 /**
  * Configuration for <code>PortletTest</code>.
- * 
+ *
  * @see TestConfigFactory
  * @see PortletTest
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  * @version 1.0
  * @since Sep 15, 2004
  */
 public class TestConfig implements Serializable {
-	
+
 	// Private Member Variables ------------------------------------------------
-	
+
 	/** PortletTest class name. */
-    private String testClassName = null;
-    
+    private String testClassName;
+
     /** Test name. */
     private String name = null;
-    
-    private String displayURI = null;
-    
-    private Map initParameters = new HashMap();
-    
+
+    private String displayURI;
+
+    private final Map initParameters = new HashMap();
+
     /**
      * The action parameters list holding TestConfig.Parameter objects.
      * We are not using Map to hold action parameters because parameters with
      * the same name are allowed.
      */
-    private List actionParameters = new ArrayList();
-    
+    private final List actionParameters = new ArrayList();
+
     /**
      * The render parameters list holding TestConfig.Parameter objects.
      * We are not using Map to hold render parameters because parameters with
      * the same name are allowed.
-     * 
+     *
      * FIXME: when is this field used?
      */
-    private List renderParameters = new ArrayList();
-    
-    
+    private final List renderParameters = new ArrayList();
+
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Default constructor required by Digester.
      */
     public TestConfig() {
     	// Do nothing.
     }
-    
+
     // Public Methods ----------------------------------------------------------
-    
+
     public String getTestClassName() {
         return testClassName;
     }
@@ -111,18 +109,18 @@ public class TestConfig implements Serializable {
     public void addActionParameter(String name, String value) {
     	actionParameters.add(new Parameter(name, value));
     }
-    
+
     public List getActionParameters() {
     	return actionParameters;
     }
-    
+
     /**
      * FIXME: why is this method required?
      */
     public void addRenderParameter(String name, String value) {
     	renderParameters.add(new Parameter(name, value));
     }
-    
+
     /**
      * FIXME: when is this method used?
      */
@@ -136,7 +134,7 @@ public class TestConfig implements Serializable {
     	buffer.append("[").append(getName()).append("]");
     	return buffer.toString();
     }
-    
+
     public static class Parameter {
     	private String name = null;
     	private String value = null;
@@ -144,7 +142,7 @@ public class TestConfig implements Serializable {
     		this.name = name;
     		this.value = value;
     	}
-    	
+
     	public String getName() {
     		return name;
     	}
@@ -152,6 +150,6 @@ public class TestConfig implements Serializable {
     		return value;
     	}
     }
-    
+
 }
 

@@ -29,10 +29,9 @@ import java.io.IOException;
 
 /**
  * Service used to invoke portlets.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public interface PortletInvokerService {
-	
+
     public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window)
     throws IOException, PortletException;
 

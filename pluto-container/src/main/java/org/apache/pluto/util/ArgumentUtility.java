@@ -21,18 +21,16 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Static class that provides utility static methods for argument validation.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public class ArgumentUtility {
-	
+
 	/** Logger. */
     public static final Log LOG = LogFactory.getLog(ArgumentUtility.class);
-    
-    
+
+
     // Static Utility Methods --------------------------------------------------
-    
+
     /**
      * Validates that the passed-in argument value is not null.
      * @param argumentName  the argument name.
@@ -51,7 +49,7 @@ public class ArgumentUtility {
         			+ " (argument should not be null)");
         }
     }
-    
+
     /**
      * Validates that the passed-in string argument value is not null or empty.
      * @param argumentName  the argument name.
@@ -70,5 +68,5 @@ public class ArgumentUtility {
             		+ " (argument should not be null or empty)");
         }
     }
-    
+
 }

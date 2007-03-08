@@ -24,26 +24,24 @@ import javax.portlet.PortletSession;
 import java.util.Enumeration;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 15, 2004
  */
 public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
-	
+
     private static final String TEST_PARAM_NAME = "test-parameter-name";
     private static final String TEST_PARAM_VALUE = "test-parameter-val";
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkEnumerationContainsNames(
     		PortletContext context) {
         TestResult result = new TestResult();
         result.setDescription("Ensure that the expected init parameter name "
         		+ "exists in the portlet context's init parameters.");
         result.setSpecPLT("10.3.1");
-        
+
         boolean found = false;
         for (Enumeration en = context.getInitParameterNames();
         		!found && en.hasMoreElements(); ) {
@@ -62,12 +60,12 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
         }
         return result;
     }
-    
+
     protected TestResult checkGetInitParameter(PortletContext context) {
         TestResult result = new TestResult();
         result.setDescription("Ensure that init parameters are retrieveable.");
         result.setSpecPLT("10.3.1");
-        
+
         String value = context.getInitParameter(TEST_PARAM_NAME);
         if (TEST_PARAM_VALUE.equals(value)) {
         	result.setReturnCode(TestResult.PASSED);
@@ -76,7 +74,7 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
         }
         return result;
     }
-    
+
     /**
      * FIXME: should this test reside in this class?  -- ZHENG Zhong
      */
@@ -84,7 +82,7 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
         TestResult result = new TestResult();
         result.setDescription("Ensure that the PortletContext can be retrieved "
         		+ "from the portlet session.");
-        
+
         PortletContext context = session.getPortletContext();
         if (context != null) {
         	result.setReturnCode(TestResult.PASSED);

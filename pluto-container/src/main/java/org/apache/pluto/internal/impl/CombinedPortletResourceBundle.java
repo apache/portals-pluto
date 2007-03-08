@@ -25,7 +25,6 @@ import java.util.Vector;
 
 /**
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Jan 9, 2006
  */
@@ -34,7 +33,7 @@ class CombinedPortletResourceBundle extends ResourceBundle {
     private static final StringManager EXCEPTIONS =
         StringManager.getManager(CombinedPortletResourceBundle.class.getPackage().getName());
 
-    private HashMap contents = new HashMap();
+    private final HashMap contents = new HashMap();
 
     public CombinedPortletResourceBundle(InlinePortletResourceBundle inlineBundle, ResourceBundle resourceBundle) {
        dump(inlineBundle);

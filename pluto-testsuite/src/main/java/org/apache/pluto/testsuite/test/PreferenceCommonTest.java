@@ -31,36 +31,35 @@ import javax.portlet.ReadOnlyException;
 
 /**
  * Common portlet preferences test.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PreferenceCommonTest extends AbstractReflectivePortletTest {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PreferenceCommonTest.class);
-    
+
     protected static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
-    
+
     protected static final String READ_ONLY_PREF_NAME = "readonly";
-    
+
     protected static final String NO_VALUE_PREF_NAME = "nameWithNoValue";
-    
+
     protected static final String PREF_NAME = "dummyName";
     protected static final String PREF_VALUE = "dummyValue";
-    
+
     protected static final String DEF_VALUE = "Default";
     protected static final String NEW_VALUE = "notTheOriginal";
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkGetEmptyPreference(PortletRequest request) {
     	return doCheckDefaultPreference(request, "nonexistence!");
     }
-    
+
     protected TestResult checkGetNoValuePreference(PortletRequest request) {
     	return doCheckDefaultPreference(request, NO_VALUE_PREF_NAME);
     }
-    
+
     /**
      * Private method that checks if a preference is not defined or has no
      * value in <code>portlet.xml</code>, the default values are returned.
@@ -75,7 +74,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     	result.setDescription("Ensure proper default is returned when "
     			+ "a non-existing/value-undefined preference is requested.");
     	result.setSpecPLT("14.1");
-    	
+
     	PortletPreferences preferences = request.getPreferences();
     	String value =  preferences.getValue(preferenceName, DEF_VALUE);
     	String[] values = preferences.getValues(preferenceName,
@@ -101,7 +100,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         result.setDescription("Ensure that preferences defined "
         		+ "in the deployment descriptor may be retrieved.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         String value = preferences.getValue(PREF_NAME, DEF_VALUE);
         if (value != null && value.equals(PREF_VALUE)) {
@@ -111,12 +110,12 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkSetPreferenceSingleValue(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure a single preference value can be set.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         try {
             preferences.setValue("TEST", "TEST_VALUE");
@@ -124,7 +123,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         	TestUtils.failOnException("Unable to set preference value.", ex, result);
             return result;
         }
-        
+
         String value = preferences.getValue("TEST", DEF_VALUE);
         if (value != null && value.equals("TEST_VALUE")) {
         	result.setReturnCode(TestResult.PASSED);
@@ -138,7 +137,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure multiple preference values can be set.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         try {
             preferences.setValues("TEST", new String[] {"ONE", "ANOTHER"});
@@ -169,12 +168,12 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkSetPreferenceNull(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure a preference value can be set to null.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         try {
             preferences.setValue("TEST", null);
@@ -182,7 +181,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         	TestUtils.failOnException("Unable to set preference value.", ex, result);
             return result;
         }
-        
+
         String value = preferences.getValue("TEST", DEF_VALUE);
         if (DEF_VALUE.equals(value)) {
         	result.setReturnCode(TestResult.PASSED);
@@ -191,13 +190,13 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkSetPreferencesReturnsFirst(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure the first value set to a given "
         		+ "preference is returned first by PortletPreferences.getValue().");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         try {
             preferences.setValues("TEST", new String[] { "FIRST", "SECOND" });
@@ -214,16 +213,16 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkResetPreferenceToDefault(PortletRequest request) {
     	TestResult result = new TestResult();
     	result.setDescription("Ensure preferences are properly reset.");
     	result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         boolean setOccured = false;
         boolean resetOccured = false;
-        
+
         try {
         	// Set new value to overwrite the default value.
             preferences.setValue(PREF_NAME, NEW_VALUE);
@@ -241,7 +240,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         	TestUtils.failOnException("Unable to set preference value.", ex, result);
         	return result;
         }
-        
+
         // Everything is OK.
         if (setOccured && resetOccured) {
         	result.setReturnCode(TestResult.PASSED);
@@ -260,17 +259,17 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkResetPreferenceWithoutDefault(PortletRequest request) {
     	TestResult result = new TestResult();
         result.setDescription("Ensure preferences are properly reset (removed) "
         		+ "when the default value is not defined.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         boolean setOccured = false;
         boolean resetOccured = false;
-        
+
         try {
         	// Set preference value to overwrite the original (null).
             preferences.setValue(BOGUS_KEY, NEW_VALUE);
@@ -288,7 +287,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         	TestUtils.failOnException("Unable to set preference value.", ex, result);
         	return result;
         }
-        
+
         // Everything is OK.
         if (setOccured && resetOccured) {
         	result.setReturnCode(TestResult.PASSED);
@@ -308,14 +307,14 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkModifyReadOnlyPreferences(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure that setValue() / setValues() / reset() "
         		+ "methods throw ReadOnlyException when invoked "
         		+ "on read-only preferences.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         if (!preferences.isReadOnly(READ_ONLY_PREF_NAME)) {
         	result.setReturnCode(TestResult.WARNING);
@@ -324,32 +323,32 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         			+ "This may be due to misconfiuration.");
         	return result;
         }
-        
+
         boolean setValueOK = false;
         boolean setValuesOK = false;
         boolean resetOK = false;
-        
+
         // Check setValue() method.
         try {
             preferences.setValue(READ_ONLY_PREF_NAME, "written");
         } catch (ReadOnlyException ex) {
             setValueOK = true;
         }
-        
+
         // Check setValues() method.
         try {
         	preferences.setValues(READ_ONLY_PREF_NAME, new String[] { "written" });
         } catch (ReadOnlyException ex) {
         	setValuesOK = true;
         }
-        
+
         // Check reset() method.
         try {
         	preferences.reset(READ_ONLY_PREF_NAME);
         } catch (ReadOnlyException ex) {
         	resetOK = true;
         }
-        
+
         if (setValueOK && setValuesOK && resetOK) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
@@ -370,12 +369,12 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkGetPreferenceNames(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure returned enumeration is valid.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         Map prefMap = preferences.getMap();
         boolean hasAll = true;
@@ -385,7 +384,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
                 break;
             }
         }
-        
+
         if (hasAll) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
@@ -395,7 +394,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     /**
      * FIXME:
      */
@@ -415,13 +414,13 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     	result.setDescription("Preferences values are not modified if "
     			+ "the values in the returned preference Map are altered.");
     	result.setSpecPLT("14.1");
-    	
+
     	PortletPreferences preferences = request.getPreferences();
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Original Preferences:");
         	logPreferences(preferences);
         }
-        
+
         // Modify the returned preference map.
     	Map prefMap = preferences.getMap();
     	String[] values = (String[]) prefMap.get(PREF_NAME);
@@ -431,7 +430,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     		originalValue = values[0];
     		values[0] = modifiedValue;
     	}
-    	
+
     	// Check if the value held by portlet preferences is modified.
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Modified Preferences:");
@@ -447,11 +446,11 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     	}
     	return result;
     }
-    
-    
+
+
     // Debug Methods -----------------------------------------------------------
-    
-    
+
+
     /**
      * Logs out the portlet preferences.
      * @param preferences  PortletPreferences to log.
@@ -476,9 +475,9 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
     			// Spec allows null values.
     			buffer.append("NULL");
     		}
-    		buffer.append(";");    		
+    		buffer.append(";");
     	}
     	LOG.debug("PortletPreferences: " + buffer.toString());
     }
-    
+
 }

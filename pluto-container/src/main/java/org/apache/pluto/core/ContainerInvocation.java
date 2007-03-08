@@ -29,9 +29,8 @@ import org.apache.pluto.PortletWindow;
  * Provides static access to the currently executing container.
  * This is critical for instance of the PortletContext and PortletConfig
  * to be able to access container specific services.
- * 
  *
- * @author David H. DeWolf
+ *
  * @since 1.1
  *
  */

@@ -50,8 +50,6 @@ import org.apache.pluto.spi.optional.PortletRegistryService;
  * Manager used to cache the portlet configurations which have
  * been previously parsed.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 20, 2004
  */

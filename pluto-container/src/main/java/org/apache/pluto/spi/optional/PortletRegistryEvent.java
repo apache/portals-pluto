@@ -22,7 +22,6 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
  * Encapsulation of event information.
  *
  * @since 1.1.0
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public class PortletRegistryEvent {
 

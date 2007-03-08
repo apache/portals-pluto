@@ -27,47 +27,46 @@ import org.apache.pluto.util.assemble.AssemblerFactory;
 /**
  * TODO: Document
  * TODO: Refactor this and the assembler to model deployer and allow no arg constructor
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ *
  * @since Jul 30, 2005
  * @see org.apache.pluto.util.assemble.Assembler
- * 
+ *
  * @goal assemble
  * @description prepares a web application as a portlet application
  * @phase process-resources
  */
 public class AssembleMojo extends AbstractPortletMojo {
-	
+
 	// Private Member Variables ------------------------------------------------
-	
+
     /**
      * The portlet application descriptor (<code>WEB-INF/portlet.xml</code>).
      * @parameter expression="${basedir}/src/main/webapp/WEB-INF/portlet.xml"
      * @required
      */
-    private File portletXml = null;
+    private File portletXml;
 
     /**
      * The original webapp descriptor (<code>WEB-INF/web.xml</code>).
      * @parameter expression="${basedir}/src/main/webapp/WEB-INF/web.xml"
      * @required
      */
-    private File webXml = null;
-    
+    private File webXml;
+
     /**
-     * The file to which the updated webapp descriptor is written. 
+     * The file to which the updated webapp descriptor is written.
      * @parameter expression="${project.build.directory}/pluto-resources/web.xml"
      */
-    private File webXmlDestination = null;
+    private File webXmlDestination;
 
     /**
      * The name of the dispatch servlet class to use
      * @parameter
      */
-    private String dispatchServletClass = null;
+    private String dispatchServletClass;
 
     // AbstractPlutoMojo Impl --------------------------------------------------
-    
+
     protected void doExecute() throws Exception {
         // Log parameter values.
     	Log log = getLog();
@@ -91,9 +90,9 @@ public class AssembleMojo extends AbstractPortletMojo {
             throw new MojoExecutionException("Portlet descriptor must be a valid portlet.xml");
         }
     }
-    
+
     // Private Methods ---------------------------------------------------------
-    
+
     private AssemblerConfig createAssemblerConfig() {
         AssemblerConfig config = new AssemblerConfig();
         config.setPortletDescriptor(portletXml);
@@ -102,5 +101,5 @@ public class AssembleMojo extends AbstractPortletMojo {
         config.setDispatchServletClass(dispatchServletClass);
         return config;
     }
-    
+
 }

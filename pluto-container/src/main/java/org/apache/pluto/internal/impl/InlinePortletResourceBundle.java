@@ -26,13 +26,12 @@ import java.util.ArrayList;
  * inline title, short-title, and keywords as properties from the
  * bundle.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Jan 9, 2006
  */
 class InlinePortletResourceBundle extends ListResourceBundle {
 
-    private Object[][] contents;
+    private final Object[][] contents;
 
     public InlinePortletResourceBundle(Object[][] contents) {
         this.contents = contents;

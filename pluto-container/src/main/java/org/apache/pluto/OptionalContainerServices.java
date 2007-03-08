@@ -35,7 +35,6 @@ import org.apache.pluto.spi.optional.UserInfoService;
  * modicications in the future.</p>
  *
  * @since 1.1.0
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public interface OptionalContainerServices {
 
@@ -63,7 +62,7 @@ public interface OptionalContainerServices {
      */
     PortletRegistryService getPortletRegistryService();
 
-    
+
     /**
      * Returns an invoker for the specified PortletWindow.
      *

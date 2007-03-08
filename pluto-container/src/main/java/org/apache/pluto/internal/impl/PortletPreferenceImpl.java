@@ -20,33 +20,31 @@ import org.apache.pluto.internal.InternalPortletPreference;
 
 /**
  * TODO: javadoc
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 20, 2004
  */
 public class PortletPreferenceImpl implements InternalPortletPreference {
-	
+
 	// Private Member Variables ------------------------------------------------
-	
+
 	/** The preference name. */
-    private String name = null;
-    
+    private String name;
+
     /** The preference values. */
-    private String[] values = null;
-    
+    private String[] values;
+
     /** Flag indicating if this preference is read-only. */
     private boolean readOnly = false;
-    
-    
+
+
     // Constructors ------------------------------------------------------------
-    
+
     public PortletPreferenceImpl(String name, String[] values) {
         this.name = name;
         this.values = values;
         this.readOnly = false;
     }
-    
+
     public PortletPreferenceImpl(String name,
                                  String[] values,
                                  boolean readOnly) {
@@ -54,7 +52,7 @@ public class PortletPreferenceImpl implements InternalPortletPreference {
         this.values = values;
         this.readOnly = readOnly;
     }
-    
+
     /**
      * Private constructor that is used only within the <code>clone()</code>
      * method.
@@ -63,10 +61,10 @@ public class PortletPreferenceImpl implements InternalPortletPreference {
     private PortletPreferenceImpl() {
     	// Do nothing.
     }
-    
-    
+
+
     // PortletPreference Impl --------------------------------------------------
-    
+
     public String getName() {
         return name;
     }
@@ -90,7 +88,7 @@ public class PortletPreferenceImpl implements InternalPortletPreference {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
-    
+
     public Object clone() {
     	PortletPreferenceImpl copy = new PortletPreferenceImpl();
     	copy.name = this.name;
@@ -100,10 +98,10 @@ public class PortletPreferenceImpl implements InternalPortletPreference {
     	copy.readOnly = this.readOnly;
     	return copy;
     }
-    
-    
+
+
     // Object Methods ----------------------------------------------------------
-    
+
     /**
      * Override of toString() that prints out name and values of fields.
      * @see java.lang.Object#toString()
@@ -123,6 +121,6 @@ public class PortletPreferenceImpl implements InternalPortletPreference {
     	buffer.append("readOnly=").append(readOnly).append("]");
     	return buffer.toString();
     }
-    
+
 }
 

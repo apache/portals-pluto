@@ -25,29 +25,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Mar 9, 2005
  */
 public class NoOpTest implements PortletTest {
-	
+
 	/** The test configuration. */
-    private TestConfig config = null;
-    
-    
+    private TestConfig config;
+
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Default no-arg constructor.
      */
     public NoOpTest() {
     	// Do nothing.
     }
-    
-    
+
+
     // PortletTest Impl --------------------------------------------------------
-    
+
     public String getTestSuiteName() {
         return "NoOpTest";
     }
@@ -55,7 +53,7 @@ public class NoOpTest implements PortletTest {
     public Map getRenderParameters(PortletRequest request) {
         return new HashMap();
     }
-    
+
     public TestResults doTest(PortletConfig config,
                               PortletContext context,
                               PortletRequest request,
@@ -70,6 +68,6 @@ public class NoOpTest implements PortletTest {
     public TestConfig getConfig() {
         return config;
     }
-    
+
 }
 

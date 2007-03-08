@@ -22,26 +22,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.digester.Digester;
-import org.apache.pluto.testsuite.TestConfig;
 import org.xml.sax.SAXException;
 
 /**
  * Test configuration factory that reads and parses testsuite config file using
  * Digester and constructs <code>TestConfig</code> objects.
- * 
+ *
  * @see TestConfig
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public class TestConfigFactory {
-	
+
 	/** Digester instance used to parse testsuite config file. */
     private Digester digester = new Digester();
-    
-    
+
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Creates a factory instance.
      */
@@ -75,14 +72,14 @@ public class TestConfigFactory {
         digester.addSetRoot("testportlet-config/testsuite-config", "add");
 
     }
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     /**
      * Reads and parses testsuite config file, creates a list of
      * <code>TestConfig</code> objects.
-     * 
+     *
      * @param in  the input stream of the testsuite config file.
      * @return a list of <code>TestConfig</code> objects.
      * @throws SAXException  if a parsing error occurs.
@@ -93,5 +90,5 @@ public class TestConfigFactory {
     throws SAXException, IOException {
         return (List) digester.parse(in);
     }
-    
+
 }

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,9 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * The internal portlet request interface extends PortletRequest and adds
  * some methods used by Pluto.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public interface InternalPortletRequest extends PortletRequest {
 
@@ -36,24 +34,23 @@ public interface InternalPortletRequest extends PortletRequest {
      * This method ensures that the portlet utilizes resources from the
      * <b>included</b> context, and not those from the intiating (portal)
      * context.
-     * 
+     *
      * @param context  the target portlet context.
      * @param request  the servlet request.
      */
-    public void init(PortletContext context, HttpServletRequest request);
+    void init(PortletContext context, HttpServletRequest request);
 
     /**
      * Recycle the request by rolling the underlying request
      * back to the originating request.
      */
-    public void release();
+    void release();
 
-    public InternalPortletWindow getInternalPortletWindow();
+    InternalPortletWindow getInternalPortletWindow();
 
-    public PortletContainer getPortletContainer();
+    PortletContainer getPortletContainer();
 
-    public HttpServletRequest getHttpServletRequest();
-    
+    HttpServletRequest getHttpServletRequest();
 }
 
 

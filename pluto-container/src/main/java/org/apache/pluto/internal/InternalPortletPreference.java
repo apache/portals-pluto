@@ -18,40 +18,37 @@ package org.apache.pluto.internal;
 
 /**
  * This class represents a portlet preference, which is a name-value pair.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public interface InternalPortletPreference {
-	
+
 	/**
 	 * Returns the name of this portlet preference.
 	 * @return the name of this portlet preference.
 	 */
-    public String getName();
-    
+    String getName();
+
     /**
      * Returns the values of this portlet preference, which is a string array.
      * @return the values of this portlet preference as a string array.
      */
-    public String[] getValues();
-    
+    String[] getValues();
+
     /**
      * Sets values of this portlet preference.
      * @param values  values of this portlet preference to set.
      */
-    public void setValues(String[] values);
-    
+    void setValues(String[] values);
+
     /**
      * Returns true if this portlet preference is marked as read-only.
      * @return true if this portlet preference is marked as read-only.
      */
-    public boolean isReadOnly();
-    
+    boolean isReadOnly();
+
     /**
      * Clone a copy of itself.
      * @return a copy of itself.
      */
-    public Object clone();
-    
+    Object clone();
 }

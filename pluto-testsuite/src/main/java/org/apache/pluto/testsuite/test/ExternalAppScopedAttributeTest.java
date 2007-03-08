@@ -30,24 +30,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTest {
 
     public static final String INT_KEY = "org.apache.pluto.testsuite.INTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
     public static final String EXT_KEY = "org.apache.pluto.testsuite.EXTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
     public static final String VALUE = "Should be visible to all Portlets and Web Resources.";
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkSetAppScopedAttributeHereSeenElsewhere(
     		PortletSession session) {
         TestResult result = new TestResult();
         result.setDescription("Ensure application scoped attributes set here "
         		+ "in portlet session can be seen elsewhere.");
-        
+
         session.setAttribute(INT_KEY, VALUE, PortletSession.APPLICATION_SCOPE);
         result.setReturnCode(TestResult.WARNING);
         result.setResultMessage("Click the provided link to validate test.");
@@ -59,7 +57,7 @@ public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTes
         TestResult result = new TestResult();
         result.setDescription("Ensure application scoped attributes set "
         		+ "elsewhere in portlet session can be seen here.");
-        
+
         Object value = session.getAttribute(EXT_KEY,
                                             PortletSession.APPLICATION_SCOPE);
         if (VALUE.equals(value)) {
@@ -71,10 +69,10 @@ public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTes
         }
         return result;
     }
-    
-    
+
+
     // Nested Servlet Class ----------------------------------------------------
-    
+
     /**
      * The companion servlet that cooperates with this portlet test.
      */
@@ -89,12 +87,12 @@ public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTes
             	request.setAttribute("passed", new Boolean(true));
                 session.setAttribute(EXT_KEY, VALUE);
             }
-            
+
             RequestDispatcher dispatcher = request.getRequestDispatcher(
             		"/jsp/ExternalAppScopedAttributeTest_companion.jsp");
             dispatcher.forward(request, response);
         }
-        
+
     }
-    
+
 }

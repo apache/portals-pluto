@@ -41,10 +41,7 @@ import java.util.ResourceBundle;
  * <p/>
  * <p>Please see the documentation for java.util.ResourceBundle for more
  * information.
- * @author James Duncan Davidson [duncan@eng.sun.com]
- * @author James Todd [gonzo@eng.sun.com]
  */
-
 public class StringManager {
     private static final Log LOG =  LogFactory.getLog(StringManager.class);
 
@@ -53,11 +50,11 @@ public class StringManager {
      */
 
     private ResourceBundle bundle;
-    
-    /** 
+
+    /**
      * The package this StringManager belongs to.
      */
-    private String packageName = null;
+    private final String packageName;
 
     /**
      * Creates a new StringManager for a given package. This is a private method

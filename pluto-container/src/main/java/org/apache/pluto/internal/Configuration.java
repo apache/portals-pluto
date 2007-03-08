@@ -26,7 +26,6 @@ import java.util.ResourceBundle;
 /**
  * Central location for Configuration info.
  *
- * @author ddewolf@apache.org
  * @since Jul 2, 2005
  */
 public class Configuration {

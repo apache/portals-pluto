@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,8 +46,6 @@ import java.util.Iterator;
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
  * the the container and services the portlet request for the specified method.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.1
  * @since 09/22/2004
  */
@@ -58,22 +56,22 @@ public class PortletServlet extends HttpServlet {
     /**
      * The portlet name as defined in the portlet app descriptor.
      */
-    private String portletName = null;
+    private String portletName;
 
     /**
      * The portlet instance wrapped by this servlet.
      */
-    private Portlet portlet = null;
+    private Portlet portlet;
 
     /**
      * The internal portlet context instance.
      */
-    private InternalPortletContext portletContext = null;
+    private InternalPortletContext portletContext;
 
     /**
      * The internal portlet config instance.
      */
-    private InternalPortletConfig portletConfig = null;
+    private InternalPortletConfig portletConfig;
 
     // HttpServlet Impl --------------------------------------------------------
 

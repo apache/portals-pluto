@@ -29,17 +29,15 @@ import javax.portlet.PortletSession;
  * Tests basic attribute retrieval and storage functions within the portlet
  * request, session, and context objects.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class SimpleAttributeTest extends AbstractReflectivePortletTest {
-	
+
     private static final String KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
     private static final String VAL = "! TEST VAL !";
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkGetNullAttribute(PortletRequest req) {
         TestResult result = new TestResult();
         result.setDescription("Ensure that if an attribute bound to an invalid "
@@ -76,7 +74,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure that attributes can be removed from "
         		+ "portlet request.");
-        
+
         req.setAttribute(KEY, VAL);
         req.removeAttribute(KEY);
         Object val = req.getAttribute(KEY);
@@ -92,12 +90,12 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure that all attribute names appear in the "
         		+ "attribute name enumeration returned by portlet request.");
-        
+
         int count = 5;
         for (int i = 0; i < count; i++) {
             req.setAttribute(KEY + "." + i, VAL);
         }
-        
+
         int found = 0;
         for (Enumeration en = req.getAttributeNames();
         		en.hasMoreElements(); ) {
@@ -114,10 +112,10 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
-    
+
+
     // Test Methods for Session Attributes -------------------------------------
-    
+
     protected TestResult checkGetNullAttribute(PortletSession session) {
         TestResult res = new TestResult();
         res.setName("Retrieve Missing Session Attribute Test");
@@ -173,10 +171,10 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
     }
 
     protected TestResult checkEnumerateAttributes(PortletSession session) {
-    	
+
         TestResult result = new TestResult();
         result.setDescription("Sets session attributes and enumerates over them.");
-        
+
         int count = 5;
         for (int i = 0; i < count; i++) {
         	session.setAttribute(KEY + "." + i, VAL);
@@ -190,7 +188,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
                 found++;
             }
         }
-        
+
         if (count != found) {
         	result.setReturnCode(TestResult.FAILED);
         	result.setResultMessage("Expected " + count + " attributes. "
@@ -264,12 +262,12 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Sets attributes in portlet context "
         		+ "and enumerates over them.");
-        
+
         int count = 5;
         for (int i = 0; i < count; i++) {
         	context.setAttribute(KEY + "." + i, VAL);
         }
-        
+
         int found = 0;
         for (Enumeration en = context.getAttributeNames();
         		en.hasMoreElements(); ) {
@@ -277,7 +275,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
                 found++;
             }
         }
-        
+
         if (count == found) {
         	result.setReturnCode(TestResult.PASSED);
         } else {

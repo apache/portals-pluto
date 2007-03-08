@@ -22,7 +22,6 @@ package org.apache.pluto.spi.optional;
  * of new portlet application registrations.
  *
  * @since 1.1.0
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public interface PortletRegistryListener {
 

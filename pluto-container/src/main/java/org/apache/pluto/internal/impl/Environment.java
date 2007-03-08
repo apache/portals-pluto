@@ -21,7 +21,6 @@ import java.util.ResourceBundle;
 /**
  * Utility class used to retrieve environment information from the
  * <code>environment.properties</code> file packaged with pluto.
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 final class Environment {
 

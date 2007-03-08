@@ -19,10 +19,6 @@ limitations under the License.
 -->
 <document>
 <properties>
-  <author email="nlothian.AT.apache.DOT.org">Nick Lothian</author>
-  <author email="ddewolf.AT.apache.DOT.org">David DeWolf</author>
-  <author email="cdoremus.AT.apache.DOT.org">Craig Doremus</author>
-  <author email="zheng.AT.apache.DOT.org">ZHENG Zhong</author>
   <title>User Guide: Pluto Portal Driver</title>
 </properties>
 

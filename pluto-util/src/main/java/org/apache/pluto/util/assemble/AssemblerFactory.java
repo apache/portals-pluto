@@ -20,24 +20,22 @@ import org.apache.pluto.util.assemble.file.FileAssembler;
 import org.apache.pluto.util.assemble.war.WarAssembler;
 
 /**
- * The pluto assembler factory that creates an assembler. 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * The pluto assembler factory that creates an assembler.
  * @version 1.0
  * @since Nov 8, 2004
  */
 public class AssemblerFactory {
-	
+
 	/** The singleton factory instance. */
     private static final AssemblerFactory FACTORY = new AssemblerFactory();
-    
+
     /**
      * Private constructor that prevents external instantiation.
      */
     private AssemblerFactory() {
     	// Do nothing.
     }
-    
+
     /**
      * Returns the singleton factory instance.
      * @return the singleton factory instance.
@@ -45,10 +43,10 @@ public class AssemblerFactory {
     public static AssemblerFactory getFactory() {
         return FACTORY;
     }
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     /**
      * Creates an assembler to assemble a portlet app WAR file to a web app WAR
      * file deployable to pluto.
@@ -63,5 +61,5 @@ public class AssemblerFactory {
             return new FileAssembler();
         }
     }
-    
+
 }

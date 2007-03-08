@@ -19,7 +19,6 @@ package org.apache.pluto;
 /**
  * Exception thrown when Pluto configuration fails.
  *
- * @author ddewolf@apache.org
  * @since Jul 2, 2005
  */
 public class PlutoConfigurationException extends RuntimeException {

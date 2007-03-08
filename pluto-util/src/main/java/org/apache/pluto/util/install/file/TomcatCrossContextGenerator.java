@@ -16,22 +16,25 @@
  */
 package org.apache.pluto.util.install.file;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * TODO JavaDoc
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Dec 11, 2005
  */
 public class TomcatCrossContextGenerator {
 	private static final String PLUTO_TEMP_DIR = "PlutoDomain";
 	private static Log LOG = LogFactory.getLog(TomcatCrossContextGenerator.class);
-	
+
     public static void main(String[] args) throws IOException {
 
         File tomcatHome = new File(args[0]);
@@ -48,13 +51,13 @@ public class TomcatCrossContextGenerator {
     }
 
     /**
-     * Creates a tomcat-specific context deployment descriptor 
+     * Creates a tomcat-specific context deployment descriptor
      * and deploys it.
-     * 
+     *
      * @param confDir Tomcat conf directory
      * @param fileName File name of the war
      * @param contextName The root name of the context file
-     * @throws IOException If there is a problem 
+     * @throws IOException If there is a problem
      */
 	public static void createContextFile(File confDir, String fileName, String contextName) throws IOException {
 		PrintWriter out = null;
@@ -66,14 +69,14 @@ public class TomcatCrossContextGenerator {
 			        .append("crossContext=\"true\">").append("</Context>");
 			File confFile = new File(confDir, contextName+".xml");
 			if (LOG.isInfoEnabled()) {
-				LOG.info("Writing file: "+ confFile.getAbsolutePath());			
+				LOG.info("Writing file: "+ confFile.getAbsolutePath());
 			}
 			out = new PrintWriter(new FileWriter(confFile));
 			out.println(contents.toString());
 		} finally {
 			if (out != null) {
 				out.flush();
-				out.close();							
+				out.close();
 			}
 		}
 	}
