@@ -16,16 +16,11 @@
  */
 package org.apache.pluto.core;
 
-import junit.framework.TestCase;
+import java.net.MalformedURLException;
 
 import javax.servlet.ServletContext;
 
-/* Java 5 req'd
- import org.easymock.EasyMock;
-*/
-
-import java.net.MalformedURLException;
-import java.net.URL;
+import junit.framework.TestCase;
 
 
 public class PortletContextManagerTest extends TestCase {

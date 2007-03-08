@@ -16,10 +16,8 @@
  */
 package org.apache.pluto.descriptors.common;
 
-import org.apache.pluto.descriptors.common.DescriptionDD;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Initialization Parameter configuration.

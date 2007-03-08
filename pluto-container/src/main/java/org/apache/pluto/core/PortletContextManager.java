@@ -16,35 +16,35 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
-import org.apache.pluto.internal.Configuration;
-import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.internal.impl.PortletContextImpl;
-import org.apache.pluto.internal.impl.PortletConfigImpl;
-import org.apache.pluto.spi.optional.PortletRegistryEvent;
-import org.apache.pluto.spi.optional.PortletRegistryListener;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletConfig;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.internal.Configuration;
+import org.apache.pluto.internal.InternalPortletConfig;
+import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.internal.PortletDescriptorRegistry;
+import org.apache.pluto.internal.impl.PortletConfigImpl;
+import org.apache.pluto.internal.impl.PortletContextImpl;
+import org.apache.pluto.spi.optional.PortletRegistryEvent;
+import org.apache.pluto.spi.optional.PortletRegistryListener;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 
 /**
  * Manager used to cache the portlet configurations which have
@@ -73,17 +73,17 @@ public class PortletContextManager implements PortletRegistryService {
      * The PortletContext cache map: key is servlet context, and value is the
      * associated portlet context.
      */
-    private Map portletContexts = new HashMap();
+    private final Map portletContexts = new HashMap();
 
 
-    private Map portletConfigs = new HashMap();
-    
+    private final Map portletConfigs = new HashMap();
+
 
     /**
      * The registered listeners that should be notified upon
      * registry events.
      */
-    private List registryListeners = new ArrayList();
+    private final List registryListeners = new ArrayList();
 
     // Constructor -------------------------------------------------------------
 
@@ -192,7 +192,7 @@ public class PortletContextManager implements PortletRegistryService {
     }
 
     public PortletConfig getPortletConfig(String applicationId, String portletName) {
-        return (InternalPortletConfig) portletConfigs.get(applicationId + "/" + portletName); 
+        return (InternalPortletConfig) portletConfigs.get(applicationId + "/" + portletName);
     }
 
     public PortletDD getPortletDescriptor(String applicationId, String portletName) {

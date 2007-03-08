@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,27 +16,19 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.OptionalContainerServices;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.descriptors.portlet.UserAttributeDD;
-import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.PortletEntity;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.UserInfoService;
-import org.apache.pluto.util.ArgumentUtility;
-import org.apache.pluto.util.Enumerator;
-import org.apache.pluto.util.NamespaceMapper;
-import org.apache.pluto.util.StringManager;
-import org.apache.pluto.util.StringUtils;
-import org.apache.pluto.util.impl.NamespaceMapperImpl;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletContext;
@@ -49,21 +41,25 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-import java.util.HashMap;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.SupportsDD;
+import org.apache.pluto.descriptors.portlet.UserAttributeDD;
+import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.Enumerator;
+import org.apache.pluto.util.NamespaceMapper;
+import org.apache.pluto.util.StringManager;
+import org.apache.pluto.util.StringUtils;
+import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 /**
  * Abstract <code>javax.portlet.PortletRequest</code> implementation.
@@ -88,38 +84,38 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     /**
      * The parent container within which this request was created.
      */
-    private PortletContainer container = null;
+    private final PortletContainer container;
 
     /**
      * The portlet window which is the target of this portlet request.
      */
-    private InternalPortletWindow internalPortletWindow = null;
+    private final InternalPortletWindow internalPortletWindow;
 
     /**
      * The PortletContext associated with this Request. This PortletContext must
      * be initialized from within the <code>PortletServlet</code>.
      */
-    private PortletContext portletContext = null;
+    private PortletContext portletContext;
 
     /**
      * The PortalContext within which this request is occuring.
      */
-    private PortalContext portalContext = null;
+    private final PortalContext portalContext;
 
     /**
      * The portlet session.
      */
-    private PortletSession portletSession = null;
+    private PortletSession portletSession;
 
     /**
      * Response content types.
      */
-    private Vector contentTypes = null;
+    private Vector contentTypes;
 
     /**
      * TODO: javadoc
      */
-    private NamespaceMapper mapper = new NamespaceMapperImpl();
+    private final NamespaceMapper mapper = new NamespaceMapperImpl();
 
     /**
      * FIXME: do we really need this?

@@ -16,14 +16,14 @@
  */
 package org.apache.pluto.driver.config;
 
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import java.util.Collection;
+
+import javax.servlet.ServletContext;
+
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
-
-import javax.servlet.ServletContext;
-import java.util.Collection;
 
 /**
  * Interface defining a means for retrieving driver services
@@ -91,17 +91,17 @@ public interface DriverConfiguration {
     Collection getPages();
 
     PageConfig getPageConfig(String pageId);
-    
+
     boolean isPortletModeSupportedByPortal(String mode);
-    
+
     boolean isPortletModeSupportedByPortlet(String portletId, String mode);
-    
+
     boolean isPortletModeSupported(String portletId, String mode);
-    
+
     boolean isWindowStateSupportedByPortal(String windowState);
-    
+
     boolean isWindowStateSupportedByPortlet(String portletId, String windowState);
-    
+
     boolean isWindowStateSupported(String portletId, String windowState);
 
 //

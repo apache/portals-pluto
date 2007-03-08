@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,38 +21,36 @@ import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.PortletContainerRuntimeException;
 import org.apache.pluto.PortletWindowID;
-import org.apache.pluto.util.StringManager;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 
 /**
  * Implementation of <code>InternalPortletWindow</code> interface.
- * 
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class InternalPortletWindowImpl implements InternalPortletWindow {
 
     /** The underlying portlet window instance. */
-    private PortletWindow portletWindow = null;
-    
+    private final PortletWindow portletWindow;
+
     /** The servlet context of the portlet. */
-    private ServletContext servletContext = null;
-    
+    private final ServletContext servletContext;
+
     /** The portlet entity associated with the portlet window. */
-    private PortletEntity entity = null;
-    
-    
+    private PortletEntity entity;
+
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Constructs an internal portlet window that wraps a portlet window.
      * An internal portlet window instance is created everytime when the portlet
      * container's <code>doRender()</code> or <code>doAction()</code> method is
      * invoked.
-     * 
+     *
      * @param context  the servlet context from which this window is
      *        being invoked.
      * @param portletWindow  the underlying portlet window instance.
@@ -62,10 +60,10 @@ public class InternalPortletWindowImpl implements InternalPortletWindow {
         this.servletContext = context;
         this.portletWindow = portletWindow;
     }
-    
-    
+
+
     // PortletWindow Impl ------------------------------------------------------
-    
+
     public String getContextPath() {
         return portletWindow.getContextPath();
     }
@@ -81,14 +79,14 @@ public class InternalPortletWindowImpl implements InternalPortletWindow {
     public PortletMode getPortletMode() {
         return portletWindow.getPortletMode();
     }
-    
+
     public PortletWindowID getId() {
         return portletWindow.getId();
     }
-    
-    
+
+
     // InternalPortletWindow Impl ----------------------------------------------
-    
+
     public ServletContext getServletContext() {
         return servletContext;
     }

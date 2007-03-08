@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.driver.services.portal;
 
-import java.util.Random;
 
 /**
  * Configuration of a portlet window on the portal page.
@@ -24,20 +23,20 @@ import java.util.Random;
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletWindowConfig {
-	
+
 	// Private Member Variables ------------------------------------------------
 
     /** The context path of the associated portlet. */
-    private String contextPath = null;
-    
+    private String contextPath;
+
     /** The portlet name. */
-    private String portletName = null;
+    private String portletName;
 
     /** The metaInfo that provides uniqueness across window ids. */
-    private String metaInfo = null;
-    
+    private String metaInfo;
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * No-arg constructor.
      */
@@ -52,7 +51,7 @@ public class PortletWindowConfig {
     }
 
     // Public Methods ----------------------------------------------------------
-    
+
     public String getId() {
     	return createPortletId(contextPath, portletName, metaInfo);
     }
@@ -82,15 +81,15 @@ public class PortletWindowConfig {
     }
 
     // Public Static Methods ---------------------------------------------------
-    
+
     /**
      * Creates the portlet ID from context path and portlet name. The portlet ID
      * is constructed by concatinating the context path and the portlet name
      * using a dot ('.').
-     * 
+     *
      * The method checks that the portlet name parameter does not have a dot. This check
      * is not done for the portlet ID.
-     * 
+     *
      * @param contextPath  the portlet context path.
      * @param portletName  the portlet name.
      * @throws IllegalArgumentException if the portletName has a dot
@@ -98,12 +97,12 @@ public class PortletWindowConfig {
      */
     public static String createPortletId(String contextPath, String portletName, String metaInfo)
     	throws NullPointerException, IllegalArgumentException {
-    	
+
     	if (contextPath == null) {
-    		throw new NullPointerException("Context path must not be null.");    		
+    		throw new NullPointerException("Context path must not be null.");
     	}
     	if (portletName == null) {
-    		throw new NullPointerException("Portlet name must not be null.");    		    		
+    		throw new NullPointerException("Portlet name must not be null.");
     	}
     	if (portletName.indexOf('.') != -1) {
     		throw new IllegalArgumentException("Portlet name must not have a dot(period). Please remove the dot from the value of the portlet-name element ("+ portletName + ") in portlet.xml");
@@ -114,7 +113,7 @@ public class PortletWindowConfig {
         }
         return contextPath + "." + portletName + "!" + metaInfo;
     }
-    
+
     /**
      * Parses out the portlet context path from the portlet ID.
      * @param portletId  the portlet ID to parse.
@@ -124,7 +123,7 @@ public class PortletWindowConfig {
     	int index = getSeparatorIndex(portletId);
         return portletId.substring(0, index);
     }
-    
+
     /**
      * Parses out the portlet context path from the portlet ID.
      * @param portletId  the portlet ID to parse.
@@ -141,16 +140,16 @@ public class PortletWindowConfig {
         int index = portletId.indexOf("!");
         return portletId.substring(index+1);
     }
-    
-    
+
+
     // Private Static Method ---------------------------------------------------
-    
+
     /**
      * Parses the portlet ID and returns the separator (".") index. The portlet
      * ID passed in should be a valid ID: not null, not starts with ".",
      * not ends with ".", and contains ".". The portlet ID can have more than
      * one dot, but the last one is taken to be the separator.
-     * 
+     *
      * @param portletId  the portlet ID to parse.
      * @return the separator index.
      * @throws IllegalArgumentException if portlet ID does not contain a dot or the dot is the first or last character.

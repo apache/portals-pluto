@@ -35,15 +35,12 @@ import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
- * 
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
@@ -53,26 +50,26 @@ import org.springframework.web.context.WebApplicationContext;
 public class PortalDriverServlet extends HttpServlet {
 
     /** Internal Logger. */
-    private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);    
-    
+    private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);
+
     /** The Portal Driver sServlet Context */
-    private ServletContext servletContext = null;
-        
+    private ServletContext servletContext;
+
     protected static final String DEFAULT_PAGE_URI =
     		"/WEB-INF/themes/pluto-default-theme.jsp";
-    
+
     /** The portlet container to which we will forward all portlet requests. */
-    protected PortletContainer container = null;
-    
-    
-    
-    
+    protected PortletContainer container;
+
+
+
+
     // HttpServlet Impl --------------------------------------------------------
-    
+
     public String getServletInfo() {
         return "Pluto Portal Driver Servlet";
     }
-    
+
     /**
      * Initialize the Portal Driver. This method retrieves the portlet container
      * instance from the servlet context scope.
@@ -81,9 +78,9 @@ public class PortalDriverServlet extends HttpServlet {
     public void init() {
         servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
-        		AttributeKeys.PORTLET_CONTAINER);        
+        		AttributeKeys.PORTLET_CONTAINER);
     }
-    
+
 
     /**
      * Handle all requests. All POST requests are passed to this method.
@@ -125,7 +122,7 @@ public class PortalDriverServlet extends HttpServlet {
             	LOG.debug("Action request processed.\n\n");
             }
         }
-        
+
         // Otherwise (actionWindowConfig == null), handle the render request.
         else {
         	if (LOG.isDebugEnabled()) {
@@ -134,9 +131,10 @@ public class PortalDriverServlet extends HttpServlet {
             PageConfig pageConfig = getPageConfig(portalURL);
             if (pageConfig == null)
             {
+                // TODO Shouldn't we throw an exception here?
                 LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
             }
-            
+
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = (pageConfig.getUri() != null)
             		? pageConfig.getUri() : DEFAULT_PAGE_URI;
@@ -162,10 +160,10 @@ public class PortalDriverServlet extends HttpServlet {
     throws ServletException, IOException {
         doGet(request, response);
     }
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Returns the config of the portal page to be rendered.
      * @param currentURL  the current portal URL.
@@ -178,7 +176,7 @@ public class PortalDriverServlet extends HttpServlet {
         }
         return getDriverConfiguration().getPageConfig(requestedPageId);
     }
-    
+
     /**
      * Returns the portal driver configuration object.
      * @return the portal driver configuration object.
@@ -186,7 +184,7 @@ public class PortalDriverServlet extends HttpServlet {
     private DriverConfiguration getDriverConfiguration() {
         return (DriverConfiguration) getServletContext().getAttribute(
         		AttributeKeys.DRIVER_CONFIG);
-    }    
-    
+    }
+
 }
 

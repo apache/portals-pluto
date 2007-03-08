@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,27 +16,26 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalPortletPreference;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
-import org.apache.pluto.internal.PortletEntity;
-import org.apache.pluto.internal.PreferencesValidatorRegistry;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletPreferenceDD;
-import org.apache.pluto.descriptors.portlet.PortletPreferencesDD;
-import org.apache.pluto.descriptors.servlet.ServletDD;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
 import javax.servlet.ServletContext;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.PortletPreferenceDD;
+import org.apache.pluto.descriptors.portlet.PortletPreferencesDD;
+import org.apache.pluto.descriptors.servlet.ServletDD;
+import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.internal.PortletDescriptorRegistry;
+import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.internal.PreferencesValidatorRegistry;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -44,44 +43,44 @@ import java.util.List;
  * PortletEntity consists of two primary peices of information, the Portlet
  * Definition as defined by the {@link PortletDD} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
- * 
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletEntityImpl implements PortletEntity {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletEntityImpl.class);
-    
+
     /** URI prefix of the portlet invoker servlet. */
     private static final String PREFIX = "/PlutoInvoker/";
-    
-    
+
+
     // Private Member Variables ------------------------------------------------
-    
+
     /** The servlet context. */
     private ServletContext servletContext = null;
-    
+
     /** The portlet window. */
     private String portletName = null;
 
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
     private PortletDD portletDefinition = null;
-    
+
     /** Default portlet preferences defined for this portlet. */
     private InternalPortletPreference[] defaultPreferences = null;
-    
-    
+
+
     // Constructor -------------------------------------------------------------
-    
+
     PortletEntityImpl(ServletContext servletContext, String portletName) {
         this.servletContext = servletContext;
         this.portletName = portletName;
     }
-    
-    
+
+
     // PortletEntity Impl ------------------------------------------------------
-    
+
     /**
      * Returns the URI to the controller servlet that wraps this portlet.
      * @return the URI to the controller servlet that wraps this portlet.
@@ -89,7 +88,7 @@ public class PortletEntityImpl implements PortletEntity {
     public String getControllerServletUri() {
         return PREFIX + portletName;
     }
-    
+
     /**
      * Returns an array of default preferences of this portlet. The default
      * preferences are retrieved from the portlet application descriptor.
@@ -109,7 +108,7 @@ public class PortletEntityImpl implements PortletEntity {
      * may be null.
      * </p>
      * @return the preference set
-     * 
+     *
      * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
      */
     public InternalPortletPreference[] getDefaultPreferences() {
@@ -147,7 +146,7 @@ public class PortletEntityImpl implements PortletEntity {
         }
         return portletDefinition;
     }
-    
+
     /**
      * Returns the preferences validator instance for this portlet.
      * One validator instance is created per portlet definition.
@@ -161,21 +160,21 @@ public class PortletEntityImpl implements PortletEntity {
     			.getPreferencesValidator(getPortletDefinition());
     	return validator;
     }
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Loads the portlet definition.
      */
     private void load() {
-    	
+
     	// Retrieve the cross servlet context for the portlet.
         ServletContext crossContext = servletContext;
         if (LOG.isDebugEnabled()) {
             LOG.debug("Retrieved cross context: " + crossContext);
         }
-        
+
         // Load PortletAppDD and find out the portlet definition.
         try {
             PortletAppDD appDD = PortletDescriptorRegistry.getRegistry()
