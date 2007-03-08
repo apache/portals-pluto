@@ -16,16 +16,16 @@
  */
 package org.apache.pluto.tags.el;
 
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.JspException;
-import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.TreeMap;
 
 
 public abstract class ExpressionEvaluatorProxy {
@@ -60,7 +60,7 @@ public abstract class ExpressionEvaluatorProxy {
                     if(proxy != null) {
                         break;
                     }
-                    
+
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException("Unable to find ExpressionEvaluatorProxy '"+entry.getValue()+"'");
                 } catch (IllegalAccessException e) {

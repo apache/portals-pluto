@@ -16,18 +16,17 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import junit.framework.TestCase;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.IOException;
-
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.SecurityConstraintDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.common.DisplayNameDD;
-import org.apache.pluto.descriptors.common.DescriptionDD;
 import org.apache.pluto.descriptors.common.InitParamDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.SecurityConstraintDD;
 
 /**
  *
@@ -78,12 +77,12 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         assertNotNull(sc.getUserDataConstraint());
         assertEquals(1, sc.getUserDataConstraint().getDescriptions().size());
         assertEquals("NONE", sc.getUserDataConstraint().getTransportGuarantee());
-        
+
     }
 
 
 
-    private String xml = "<portlet-app\n" +
+    private final String xml = "<portlet-app\n" +
         "    xmlns=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\"\n" +
         "    version=\"1.0\"\n" +
         "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +

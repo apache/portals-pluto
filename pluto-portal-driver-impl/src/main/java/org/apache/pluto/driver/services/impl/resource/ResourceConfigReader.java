@@ -16,16 +16,15 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.commons.digester.Digester;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfig;
 import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
@@ -51,7 +50,7 @@ public class ResourceConfigReader {
         return factory;
     }
 
-    private Digester digester;
+    private final Digester digester;
 
     private ResourceConfigReader() {
         digester = new Digester();

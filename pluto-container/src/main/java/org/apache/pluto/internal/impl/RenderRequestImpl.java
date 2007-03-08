@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,33 +41,33 @@ import java.util.StringTokenizer;
 
 /**
  * Implementation of the <code>javax.portlet.RenderRequest</code> interface.
- * 
+ *
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class RenderRequestImpl extends PortletRequestImpl
 implements RenderRequest, InternalRenderRequest {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(RenderRequestImpl.class);
-    
-    
+
+
     // Private Member Variables ------------------------------------------------
-    
+
     /** True if we are in an include call. */
     private boolean included = false;
-    
+
     /** The parameters including parameters appended to the dispatching URI. */
     private Map parameters = null;
-    
+
     /** The portlet preferences. */
     private PortletPreferences portletPreferences = null;
-    
-    
+
+
     // Constructors ------------------------------------------------------------
-    
+
     public RenderRequestImpl(InternalPortletRequest request) {
-        super(request);    
+        super(request);
     }
 
     public RenderRequestImpl(PortletContainer container,
@@ -78,10 +78,10 @@ implements RenderRequest, InternalRenderRequest {
         	LOG.debug("Created render request for: " + internalPortletWindow);
         }
     }
-    
-    
+
+
     // RenderRequest Impl ------------------------------------------------------
-    
+
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
@@ -92,8 +92,8 @@ implements RenderRequest, InternalRenderRequest {
         }
         return portletPreferences;
     }
-    
-    
+
+
     /**
      * Checks the included flag and returns the content type. If the included
      * flag is set to true, this method returns null.
@@ -101,7 +101,7 @@ implements RenderRequest, InternalRenderRequest {
     public String getContentType() {
         return included ? null : super.getContentType();
     }
-    
+
     /**
      * Checks the included flag and returns the content length. If the included
      * flag is set to true, this method returns 0.
@@ -109,7 +109,7 @@ implements RenderRequest, InternalRenderRequest {
     public int getContentLength() {
         return included ? 0 : super.getContentLength();
     }
-    
+
     /**
      * Checks the included flag and returns the reader to this rende response.
      * If the included flag is set to true, this method returns null.
@@ -118,7 +118,7 @@ implements RenderRequest, InternalRenderRequest {
     throws UnsupportedEncodingException, IOException {
         return included ? null : super.getReader();
     }
-    
+
     /**
      * Checks the included flag and returns the input stream to this render
      * response. If the included flag is set to true, this method returns null.
@@ -126,10 +126,10 @@ implements RenderRequest, InternalRenderRequest {
     public ServletInputStream getInputStream() throws IOException {
         return included ? null : super.getInputStream();
     }
-    
-    
+
+
     // PortletRequestImpl Overwriting ------------------------------------------
-    
+
     protected Map baseGetParameterMap() {
     	if (included && parameters != null) {
     		super.setBodyAccessed();
@@ -138,10 +138,10 @@ implements RenderRequest, InternalRenderRequest {
     		return super.baseGetParameterMap();
     	}
     }
-    
-    
+
+
     // InternalRenderRequest Impl ----------------------------------------------
-    
+
     public void setIncluded(boolean included) {
     	this.included = included;
         if (!included) {
@@ -155,7 +155,7 @@ implements RenderRequest, InternalRenderRequest {
     public boolean isIncluded() {
         return included;
     }
-    
+
     public void setIncludedQueryString(String queryString)
     throws IllegalStateException {
     	if (!included) {
@@ -178,10 +178,10 @@ implements RenderRequest, InternalRenderRequest {
     		}
     	}
     }
-    
-    
+
+
     // Included HttpServletRequest (Limited) Impl ------------------------------
-    
+
     /*
      * -------------------------------------------------------------------------
      * (non-javadoc)
@@ -196,7 +196,7 @@ implements RenderRequest, InternalRenderRequest {
      *   getServletPath
      * -------------------------------------------------------------------------
      */
-    
+
     public String getPathInfo() {
     	String attr = (String) super.getAttribute(
     			"javax.servlet.include.path_info");
@@ -208,7 +208,7 @@ implements RenderRequest, InternalRenderRequest {
     			"javax.servlet.include.query_string");
     	return (included && attr != null) ? attr : super.getQueryString();
     }
-    
+
     /**
      * TODO: check PLT.16.3.3. page 67, line 10.
      */
@@ -216,19 +216,19 @@ implements RenderRequest, InternalRenderRequest {
     	// TODO:
         return null;
     }
-    
+
     public String getRequestURI() {
     	String attr = (String) super.getAttribute(
     			"javax.servlet.include.request_uri");
         return (included && attr != null) ? attr : super.getRequestURI();
     }
-    
+
     public String getServletPath() {
         String attr = (String) super.getAttribute(
                 "javax.servlet.include.servlet_path");
         return (included && attr != null) ? attr : super.getServletPath();
     }
-    
+
     /*
      * -------------------------------------------------------------------------
      * (non-Javadoc)
@@ -241,7 +241,7 @@ implements RenderRequest, InternalRenderRequest {
      *   getRequestURL
      * -------------------------------------------------------------------------
      */
-    
+
     public String getProtocol() {
         return included ? null : super.getProtocol();
     }
@@ -261,7 +261,7 @@ implements RenderRequest, InternalRenderRequest {
     public StringBuffer getRequestURL() {
         return included ? null : super.getRequestURL();
     }
-    
+
     /*
      * -------------------------------------------------------------------------
      * (non-Javadoc)
@@ -276,18 +276,18 @@ implements RenderRequest, InternalRenderRequest {
      * The getContentLength method of the HttpServletRequest must return 0.
      * -------------------------------------------------------------------------
      */
-    
+
     public String getCharacterEncoding() {
         return included ? null : super.getCharacterEncoding();
     }
-    
+
     public void setCharacterEncoding(String encoding)
     throws UnsupportedEncodingException {
         if (!included) {
         	super.setCharacterEncoding(encoding);
         }
     }
-    
+
     /*
      * -------------------------------------------------------------------------
      * (non-javadoc)
@@ -295,14 +295,14 @@ implements RenderRequest, InternalRenderRequest {
      * The getMethod method of the HttpServletRequest must always return 'GET'.
      * -------------------------------------------------------------------------
      */
-    
+
     public String getMethod() {
     	return "GET";
     }
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Parses the appended query string and merges the appended parameters to
      * the original parameters. Query parameters are name-value pairs separated
@@ -311,12 +311,12 @@ implements RenderRequest, InternalRenderRequest {
      * @param queryString  the appended query string.
      */
     private void mergeQueryString(Map parameters, String queryString) {
-    	
+
     	// Create the appended parameters map:
     	//   key is the parameter name as a string,
     	//   value is a List of parameter values (List of String).
         Map appendedParameters = new HashMap();
-        
+
         // Parse the appended query string.
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("Parsing appended query string: " + queryString);
@@ -343,7 +343,7 @@ implements RenderRequest, InternalRenderRequest {
         if (LOG.isDebugEnabled()) {
             LOG.debug(appendedParameters.size() + " parameters appended.");
         }
-        
+
         // Merge the appended parameters and the original parameters.
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Merging appended parameters and original parameters...");
@@ -361,8 +361,8 @@ implements RenderRequest, InternalRenderRequest {
     				}
     			}
     		}
-    		parameters.put(key, (String[]) values.toArray(new String[values.size()]));
+    		parameters.put(key, values.toArray(new String[values.size()]));
     	}
     }
-    
+
 }

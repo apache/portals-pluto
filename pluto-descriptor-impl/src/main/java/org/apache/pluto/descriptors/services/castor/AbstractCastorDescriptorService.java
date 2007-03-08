@@ -16,14 +16,17 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
 import org.exolab.castor.util.LocalConfiguration;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
-import org.xml.sax.helpers.DefaultHandler;
-
-import java.io.*;
 
 /**
  * Abstract deployment descriptor support class.
@@ -79,7 +82,7 @@ abstract class AbstractCastorDescriptorService {
             // Construct the marshaller with a Writer instead of
             // a SAX DocumentHandler.  When you supply a document
             // handler, you can't set call marshaller.setDocType(String, String)
-            
+
             // See Also:
             //  https://issues.apache.org/jira/browse/PLUTO-312
             //  http://castor.org/javadoc/org/exolab/castor/xml/Marshaller.html#setDoctype(java.lang.String,%20java.lang.String)
@@ -106,16 +109,16 @@ abstract class AbstractCastorDescriptorService {
     protected abstract Mapping getCastorMapping() throws IOException, MappingException;
     protected abstract String getPublicId();
     protected abstract String getDTDUri();
-    
+
     /**
      * Subclasses should override this method if they need to set
      * options on the Castor marshaller, such as a doctype.
-     * 
+     *
      * @param marshaller the Castor Marshaller
      * @param beingMarshalled the Object being marshalled by Castor.
      */
     protected void setCastorMarshallerOptions(final Marshaller marshaller, final Object beingMarshalled) {
-        
+
     }
 
 }
