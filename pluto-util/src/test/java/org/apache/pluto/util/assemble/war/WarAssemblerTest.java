@@ -29,7 +29,7 @@ import org.apache.pluto.util.assemble.AssemblerConfig;
  * @version $Revision$
  */
 public class WarAssemblerTest extends TestCase {
-    private File portletFile = null;
+    private File portletFile;
 
     protected void setUp() throws Exception {
         final URL portletUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/war/WarDeployerTestPortlet.war");
