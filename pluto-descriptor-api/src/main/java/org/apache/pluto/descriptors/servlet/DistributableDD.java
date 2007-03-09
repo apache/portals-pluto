@@ -18,16 +18,15 @@ package org.apache.pluto.descriptors.servlet;
 
 /**
  * Models the &lt;distributable&gt; web.xml element.
- * 
- * @author Elliot Metsger (emetsger@jhu.edu)
+ *
  * @since Mar 3, 2007
  * @version $Id$
  */
 public class DistributableDD
 {
-    
+
     private boolean distributable = false;
-    
+
     public Boolean isDistributable()
     {
         return Boolean.valueOf(distributable);

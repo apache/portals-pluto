@@ -24,7 +24,6 @@ import javax.servlet.ServletContext;
  * Abstract interface defining lifecycle methods for
  * Driver configuration services.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
 public interface DriverConfigurationService {

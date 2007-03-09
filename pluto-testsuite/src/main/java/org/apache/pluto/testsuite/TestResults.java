@@ -16,25 +16,21 @@
  */
 package org.apache.pluto.testsuite;
 
-import org.apache.pluto.testsuite.TestResult;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.io.Serializable;
 
 /**
  * This class contains one or more test results.
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class TestResults implements Serializable {
-	
-	
-    private String name = null;
-    
+
+
+    private String name;
+
     private ArrayList list = new ArrayList();
-    
+
     private boolean failed = false;
     private boolean inQuestion = false;
 
@@ -74,7 +70,7 @@ public class TestResults implements Serializable {
     /**
      * Override of toString() that prints out variable
      * names and values.
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     public String toString(){
@@ -83,7 +79,7 @@ public class TestResults implements Serializable {
     	buffer.append("[name=").append(name);
     	buffer.append(";failed=").append(failed);
     	buffer.append(";inQuestion=").append(inQuestion);
-    	buffer.append(";results={").append(list).append("}]");    	
+    	buffer.append(";results={").append(list).append("}]");
     	return buffer.toString();
     }
 }

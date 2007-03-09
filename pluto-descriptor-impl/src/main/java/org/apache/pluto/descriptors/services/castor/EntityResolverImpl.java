@@ -27,7 +27,6 @@ import java.io.InputStream;
  * Entity Resolver which first looks for dtd and xls
  * locally in our packaged.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since 1.1
  */

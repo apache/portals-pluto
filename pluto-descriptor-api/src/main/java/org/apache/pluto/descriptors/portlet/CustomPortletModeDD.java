@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id$
  * @since 1.1.0
  */

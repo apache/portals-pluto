@@ -16,21 +16,21 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
-import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.services.portal.*;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
+import java.io.InputStream;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
-import java.util.Set;
-import java.io.InputStream;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
 /**
  * Default implementation of all of the portal Services.
  * Utilizes resource configuration from
  * <code>pluto-portal-driver-config.xml</code>
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
 public class PropertyConfigServiceImpl implements
@@ -42,7 +42,7 @@ public class PropertyConfigServiceImpl implements
     private ResourceConfig config;
 
     public PropertyConfigServiceImpl() {
-        
+
     }
 
     /**

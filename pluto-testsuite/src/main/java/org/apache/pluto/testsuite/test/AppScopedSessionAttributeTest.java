@@ -23,8 +23,6 @@ import org.apache.pluto.testsuite.TestUtils;
 import javax.portlet.PortletSession;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class AppScopedSessionAttributeTest
 extends AbstractReflectivePortletTest {
@@ -32,17 +30,17 @@ extends AbstractReflectivePortletTest {
     private static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
     private static final String KEY = "org.apache.pluto.testsuite.KEY";
     private static final String VALUE = "VALUE";
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkGetEmptyAppScopedAttribute(PortletSession session) {
         TestResult result = new TestResult();
         result.setDescription("Retrieve an attribute that has not been set "
         		+ "in the session's application scope "
         		+ "and ensure it's value is null.");
         result.setSpecPLT("15.3");
-        
+
         Object value = session.getAttribute(BOGUS_KEY, PortletSession.APPLICATION_SCOPE);
         if (value == null) {
         	result.setReturnCode(TestResult.PASSED);
@@ -51,13 +49,13 @@ extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkSetAppScopedAttribute(PortletSession session) {
         TestResult result = new TestResult();
         result.setDescription("Set an application scoped session attribute "
         		+ "and ensure it's retrievable.");
         result.setSpecPLT("15.3");
-        
+
         session.setAttribute(KEY, VALUE, PortletSession.APPLICATION_SCOPE);
         Object value = session.getAttribute(KEY, PortletSession.APPLICATION_SCOPE);
         if (VALUE.equals(value)) {
@@ -73,7 +71,7 @@ extends AbstractReflectivePortletTest {
         result.setDescription("Remove an application scoped session attribute "
         		+ "and ensure it's null.");
         result.setSpecPLT("15.3");
-        
+
         session.setAttribute(KEY, VALUE, PortletSession.APPLICATION_SCOPE);
         session.removeAttribute(KEY, PortletSession.APPLICATION_SCOPE);
         Object value = session.getAttribute(KEY, PortletSession.APPLICATION_SCOPE);
@@ -84,5 +82,5 @@ extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
 }

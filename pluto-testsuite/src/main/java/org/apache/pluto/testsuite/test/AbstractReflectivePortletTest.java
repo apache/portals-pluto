@@ -38,26 +38,24 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class AbstractReflectivePortletTest implements PortletTest {
-	
+
 	/** Logger. */
 	private static final Log LOG = LogFactory.getLog(
 			AbstractReflectivePortletTest.class);
-	
-    private Map initParameters = null;
-    private TestConfig config = null;
-    
-    
+
+    private Map initParameters;
+    private TestConfig config;
+
+
     // PortletTest Impl --------------------------------------------------------
-    
+
     public void init(TestConfig config) {
         this.config = config;
         this.initParameters = config.getInitParameters();
     }
-    
+
     /**
      * Returns the render parameters that will be set into the render request.
      * The default implementation just returns an empty Map object. This method
@@ -69,11 +67,11 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     public Map getRenderParameters(PortletRequest request) {
         return new HashMap();
     }
-    
+
     public TestConfig getConfig() {
         return config;
     }
-    
+
     /**
      * Returns the test suite name. The test suite name is the portlet test
      * class name without package name prefix.
@@ -88,7 +86,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     		return className;
     	}
     }
-    
+
     /**
      * Invoke test methods using java reflection. All 'check*' methods are
      * invoked and test results are saved into <code>TestResults</code> object.
@@ -96,14 +94,14 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
      * @param context  the portlet context.
      * @param request  the portlet request.
      * @param response  the portlet response.
-     * @return the test results including several TestResult instances. 
+     * @return the test results including several TestResult instances.
      */
     public TestResults doTest(PortletConfig config,
                               PortletContext context,
                               PortletRequest request,
                               PortletResponse response) {
         TestResults results = new TestResults(getTestSuiteName());
-        
+
         for (Iterator it = getCheckMethods().iterator(); it.hasNext(); ) {
         	Method method = (Method) it.next();
         	debugWithName("Invoking test method: " + method.getName());
@@ -126,39 +124,39 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         		results.add(result);
             }
         }
-        
+
         return results;
     }
-    
-    
+
+
     // Protected Methods -------------------------------------------------------
-    
+
     protected Map getInitParameters() {
         return initParameters;
     }
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     private void debugWithName(String message) {
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("Test [" + getTestSuiteName() + "]: " + message);
     	}
     }
-    
+
     private void errorWithName(String message, Throwable cause) {
     	if (LOG.isErrorEnabled()) {
     		LOG.error("Test [" + getTestSuiteName() + "]: " + message, cause);
     	}
     }
-    
+
     /**
      * Returns check methods to run as tests using java reflection.
      * The following rules are applied to select check methods:
      * <ul>
      *   <li>methods declared in this class or inherited from super class</li>
      *   <li>methods with modifier 'public' or 'protected', but not 'abstract'</li>
-     *   <li>methods that starts with <code>check</code></li> 
+     *   <li>methods that starts with <code>check</code></li>
      * </ul>
      * @return a list of check methods.
      */
@@ -181,7 +179,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     	}
         return checkMethods;
     }
-    
+
     /**
      * Invokes the test method ('<code>check*</code>') by preparing method
      * parameters. A test method may accept the following types of parameters:
@@ -219,10 +217,10 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
         TestResult result = (TestResult) method.invoke(this, paramValues);
         return result;
     }
-    
-    
+
+
     // Object Methods ----------------------------------------------------------
-    
+
     /**
      * Override of toString() that prints out names and values of variables.
      * @see java.lang.Object#toString()
@@ -231,7 +229,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(getClass().getName());
     	buffer.append("[initParameters=").append(initParameters);
-    	buffer.append(";config=").append(config).append("]");    	
+    	buffer.append(";config=").append(config).append("]");
     	return buffer.toString();
     }
 }

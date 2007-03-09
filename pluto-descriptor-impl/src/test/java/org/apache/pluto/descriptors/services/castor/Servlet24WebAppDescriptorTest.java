@@ -27,19 +27,18 @@ import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
 
 /**
- * This test ensures that the version attribute of a Servlet 2.4 
+ * This test ensures that the version attribute of a Servlet 2.4
  * descriptor is being read from and written to propery by Castor.
- * 
- * @author Elliot Metsger (emetsger@jhu.edu)
+ *
  * @since Mar 3, 2007
  * @version $Id$
  */
 public class Servlet24WebAppDescriptorTest extends TestCase
 {
-    
+
     private static final String DESCRIPTOR = "/servlet-2.4-webapp-descriptor.xml";
     InputStream in = null;
-    private WebAppDescriptorService underTest = null;
+    private WebAppDescriptorService underTest;
 
     protected void setUp() throws Exception
     {

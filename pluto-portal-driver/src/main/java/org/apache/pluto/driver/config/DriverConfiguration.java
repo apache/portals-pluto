@@ -32,7 +32,6 @@ import org.apache.pluto.spi.optional.PortletPreferencesService;
  * the portal's ServletContext.
  *
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Sep 2, 2005
  *
  */

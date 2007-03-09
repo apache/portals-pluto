@@ -22,7 +22,6 @@ import java.util.ArrayList;
 /**
  * User Data Constraint descriptor.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: UserDataConstraintDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
@@ -33,7 +32,7 @@ public class UserDataConstraintDD {
     public static final String CONFIDENTIAL = "CONFIDENTIAL";
 
     private List descriptions = new ArrayList();
-    
+
     private String transportGuarantee;
 
     public UserDataConstraintDD() {

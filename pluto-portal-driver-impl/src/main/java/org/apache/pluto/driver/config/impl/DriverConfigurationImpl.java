@@ -33,7 +33,6 @@ import org.apache.pluto.spi.optional.PortletPreferencesService;
 /**
  * Encapsulation of the Pluto Driver ResourceConfig.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 23, 2004
  */
@@ -52,11 +51,11 @@ public class DriverConfigurationImpl
 
     public DriverConfigurationImpl(PortalURLParser portalUrlParser,
                                    PropertyConfigService propertyService,
-                                   RenderConfigService renderService,                                  
+                                   RenderConfigService renderService,
                                    SupportedModesService supportedModesService,
                                    SupportedWindowStateService supportedWindowStateService,
                                    PortalCallbackService portalCallback) {
-        
+
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
         this.renderService = renderService;
@@ -116,15 +115,15 @@ public class DriverConfigurationImpl
     public PageConfig getPageConfig(String pageId) {
         return renderService.getPage(pageId);
     }
-    
+
     public boolean isPortletModeSupportedByPortal(String mode) {
         return supportedModesService.isPortletModeSupportedByPortal(mode);
     }
-    
+
     public boolean isPortletModeSupportedByPortlet(String portletId, String mode) {
         return supportedModesService.isPortletModeSupportedByPortlet(portletId, mode);
     }
-    
+
     public boolean isPortletModeSupported(String portletId, String mode) {
         return supportedModesService.isPortletModeSupported(portletId, mode);
     }
@@ -142,10 +141,10 @@ public class DriverConfigurationImpl
 
         if(renderService != null)
             renderService.destroy();
-        
+
         if (supportedModesService != null)
             supportedModesService.destroy();
-        
+
         if (supportedWindowStateService != null)
             supportedWindowStateService.destroy();
     }
@@ -160,7 +159,7 @@ public class DriverConfigurationImpl
 
     public void setPortalUrlParser(PortalURLParser portalUrlParser) {
         this.portalUrlParser = portalUrlParser;
-    }       
+    }
 
 //
 // Container Services

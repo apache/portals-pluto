@@ -20,7 +20,6 @@ import javax.servlet.ServletException;
 
 /**
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Nov 23, 2005
  */

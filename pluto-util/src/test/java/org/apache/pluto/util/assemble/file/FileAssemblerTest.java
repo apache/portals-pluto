@@ -29,6 +29,7 @@ import org.custommonkey.xmlunit.XMLUnit;
  * @version $Revision$
  */
 public class FileAssemblerTest extends XMLTestCase {
+
     private File webXmlFile;
     private File portletXmlFile;
     private File assembledWebXmlFile;

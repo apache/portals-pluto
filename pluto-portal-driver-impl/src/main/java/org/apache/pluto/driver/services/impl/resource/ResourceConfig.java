@@ -27,7 +27,6 @@ import org.apache.pluto.driver.services.portal.RenderConfig;
 /**
  * Encapsulation of the Pluto Driver ResourceConfig Info.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 23, 2004
  */

@@ -32,18 +32,17 @@ import org.apache.pluto.spi.optional.PortletRegistryService;
 /**
  * A mock PortletRegistryService.  Supply an InputStream
  * to a portlet.xml file on construction.
- * 
+ *
  * All methods are no-ops except for getPortletApplicationDescriptor(String).
- * 
- * 
- * @author Elliot Metsger (emetsger@jhu.edu)
+ *
+ *
  * @since Feb 28, 2007
  * @version $Id$
  */
 public class MockPortletRegistryService implements PortletRegistryService
 {
-    PortletAppDD portletApp = null;
-    
+    PortletAppDD portletApp;
+
     public MockPortletRegistryService(InputStream portletXml)
     {
         PortletAppDescriptorServiceImpl svc = new PortletAppDescriptorServiceImpl();
@@ -59,7 +58,7 @@ public class MockPortletRegistryService implements PortletRegistryService
 
     public void addPortletRegistryListener(PortletRegistryListener listener)
     {
-        
+
     }
 
     public PortletAppDD getPortletApplicationDescriptor(String name)

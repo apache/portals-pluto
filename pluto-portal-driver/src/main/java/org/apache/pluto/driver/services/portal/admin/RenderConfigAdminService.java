@@ -22,7 +22,6 @@ import org.apache.pluto.driver.config.DriverConfigurationException;
 /**
  *
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Nov 30, 2005
  */

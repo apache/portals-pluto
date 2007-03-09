@@ -16,14 +16,14 @@
  */
 package org.apache.pluto.util.install.file.jetty;
 
-import org.apache.pluto.util.install.InstallationConfig;
-import org.apache.pluto.util.install.file.FileSystemInstaller;
-import org.apache.pluto.util.UtilityException;
-import org.codehaus.plexus.util.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.pluto.util.UtilityException;
+import org.apache.pluto.util.install.InstallationConfig;
+import org.apache.pluto.util.install.file.FileSystemInstaller;
 
 public class Jetty5FileSystemInstaller extends FileSystemInstaller {
 
@@ -91,7 +91,7 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
 
             // Jetty Doesn't need 'em
             //copyFilesToDirectory(config.getEndorsedDependencies(), endorsedDir);
-            
+
             copyFilesToDirectory(config.getSharedDependencies(), sharedDir);
 
             Iterator it = config.getPortletApplications().values().iterator();

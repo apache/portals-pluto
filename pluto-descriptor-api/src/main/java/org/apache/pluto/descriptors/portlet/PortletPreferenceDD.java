@@ -21,27 +21,25 @@ import java.util.ArrayList;
 
 /**
  * Portlet preference definition in portlet.xml.
- * 
+ *
  * @see PortletPreferencesDD
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  * @since Jun 29, 2005
  */
 public class PortletPreferenceDD {
-	
+
 	/** The preference name. */
-    private String name = null;
-    
+    private String name;
+
     /** The preference values. */
     private List values = new ArrayList();
-    
+
     /** Flag indicating if this preference is marked as read-only. */
     private boolean readOnly = false;
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     public String getName() {
         return name;
     }
@@ -53,17 +51,17 @@ public class PortletPreferenceDD {
     public List getValues() {
         return values;
     }
-    
+
     public void setValues(List values) {
         this.values = values;
     }
-    
+
     public boolean isReadOnly() {
     	return readOnly;
     }
-    
+
     public void setReadOnly(boolean readOnly) {
     	this.readOnly = readOnly;
     }
-    
+
 }

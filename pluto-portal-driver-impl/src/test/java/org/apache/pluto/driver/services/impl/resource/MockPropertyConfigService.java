@@ -21,30 +21,27 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.services.impl.resource.ResourceConfig;
-import org.apache.pluto.driver.services.impl.resource.ResourceConfigReader;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
 /**
  * A mock PropertyConfigService.
- * 
+ *
  * The init() and destroy() methods are no-ops.
- * 
- * @author Elliot Metsger (emetsger@jhu.edu)
+ *
  * @since Feb 28, 2007
  * @version $Id$
  */
 class MockPropertyConfigService implements PropertyConfigService
 {
 
-    private ResourceConfig config = null;
+    private ResourceConfig config;
     private static final String configFile = "/pluto-portal-driver-config.xml";
 
     public MockPropertyConfigService()
     {
         this(configFile);
     }
-    
+
     public MockPropertyConfigService(String configFile)
     {
         ResourceConfigReader r = ResourceConfigReader.getFactory();

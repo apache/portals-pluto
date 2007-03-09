@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
 /**
  * Process logout from the Pluto portal.
  *
- * @author <a href="cdoremus@apache.org">Craig Doremus</a>
  *
  */
 public class PortalDriverLogoutServlet extends HttpServlet {
@@ -35,7 +34,7 @@ public class PortalDriverLogoutServlet extends HttpServlet {
 	/**
 	 * Processes logout by invalidating the session, creating a new session
 	 * and forwards to the login (home) page.
-	 * 
+	 *
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

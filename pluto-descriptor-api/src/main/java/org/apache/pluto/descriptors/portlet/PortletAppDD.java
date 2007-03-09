@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * Portlet Application Configuration.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: PortletAppDD.java 157475 2005-03-14 22:13:18Z ddewolf $
  * @since Mar 6, 2005
  */

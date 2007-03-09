@@ -26,21 +26,19 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class ActionParameterTest extends AbstractReflectivePortletTest
 implements ActionTest {
-	
+
 	/** Parameter key encoded in the action URL. */
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_ACTION_KEY";
-    
+
     /** Parameter value encoded in the action URL. */
     public static final String VALUE = "org.apache.pluto.testsuite.ACTION_VALUE";
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkGetActionParameter(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL are "
@@ -59,7 +57,7 @@ implements ActionTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL are "
         		+ "available in the action request parameter map.");
-        
+
         Map parameterMap = request.getParameterMap();
         String[] values = (String[]) parameterMap.get(KEY);
         if (values != null && values.length == 1 && VALUE.equals(values[0])) {
@@ -70,12 +68,12 @@ implements ActionTest {
         }
         return result;
     }
-    
+
     protected TestResult checkParameterNames(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL "
         		+ "exists in the parameter name enumeration.");
-        
+
         boolean hasParameterName = false;
         for (Enumeration en = request.getParameterNames();
         		!hasParameterName && en.hasMoreElements(); ) {
@@ -84,7 +82,7 @@ implements ActionTest {
         		hasParameterName = true;
         	}
         }
-        
+
         if (hasParameterName) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
@@ -94,5 +92,5 @@ implements ActionTest {
         }
         return result;
     }
-    
+
 }

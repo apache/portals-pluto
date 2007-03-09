@@ -30,7 +30,6 @@ import org.apache.pluto.descriptors.portlet.SecurityConstraintDD;
 
 /**
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id$
  * @since 1.1.0
  */

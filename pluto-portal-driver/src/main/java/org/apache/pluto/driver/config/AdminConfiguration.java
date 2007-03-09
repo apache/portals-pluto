@@ -28,7 +28,6 @@ import javax.servlet.ServletContext;
  * ServletContext IF administrative functions are
  * supported by the current implementation.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Nov 30, 2005
  */

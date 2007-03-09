@@ -24,7 +24,6 @@ import javax.servlet.ServletContext;
 
 /**
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Nov 30, 2005
  */
@@ -34,7 +33,7 @@ public class AdminConfigurationImpl implements AdminConfiguration {
     private RenderConfigAdminService renderConfigAdminService;
 
     public void init(ServletContext context) {
-        
+
     }
 
     public void destroy() {

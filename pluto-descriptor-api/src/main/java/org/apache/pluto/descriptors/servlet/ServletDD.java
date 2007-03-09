@@ -25,7 +25,6 @@ import java.util.List;
  * Filter DD() uration as contained within the
  * web.xml Deployment Descriptor.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: ServletDD.java 156743 2005-03-10 05:50:30Z ddewolf $
  * @since Feb 28, 2005
  */
@@ -37,7 +36,7 @@ public class ServletDD {
     private String description;
     private String jspFile;
     private LoadOnStartupDD loadOnStartup;
-    
+
     private IconDD icon;
     private List initParams = new ArrayList();
     private List securityRoleRefs = new ArrayList();

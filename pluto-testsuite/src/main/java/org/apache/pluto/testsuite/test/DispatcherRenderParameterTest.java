@@ -38,53 +38,51 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  * @version 1.0
  * @since Mar 9, 2005
  */
-public class DispatcherRenderParameterTest 
+public class DispatcherRenderParameterTest
 extends AbstractReflectivePortletTest {
-	
+
 	/** Internal logger. */
 	private static final Log LOG = LogFactory.getLog(
 			DispatcherRenderParameterTest.class);
-	
+
 	// Static Final Constants --------------------------------------------------
-	
+
 	/** The path to the companion servlet. */
 	private static final String SERVLET_PATH = "/test/DispatcherRenderParameterTest_Servlet";
-	
+
 	private static final String KEY_TARGET = "target";
-	
+
 	private static final String TARGET_PARAMS = "testParams";
 	private static final String TARGET_SAME_NAME_PARAM = "testSameNameParam";
 	private static final String TARGET_ADDED_SAME_NAME_PARAM = "testAddedSameNameParam";
 	private static final String TARGET_INVALID_PARAMS = "testInvalidParams";
-	
+
 	private static final String KEY_RENDER = "renderParamKey";
 	private static final String VALUE_RENDER = "renderParamValue";
 	private static final String VALUE_ADDED1 = "addedParamValue1";
 	private static final String VALUE_ADDED2 = "addedParamValue2";
-	
+
     private static final String KEY_A = "includedTestKeyA";
     private static final String VALUE_A = "includedTestValueA";
-    
+
     private static final String KEY_B = "includedTestKeyB";
     private static final String VALUE_B = "includedTestValueB";
-    
+
     private static final String KEY_C = "includedTestKeyC";
     private static final String VALUE_C1 = "valueOneOfKeyC";
     private static final String VALUE_C2 = "valueTwoOfKeyC";
     private static final String VALUE_C3 = "valueThreeOfKeyC";
-    
+
     public static final String RESULT_KEY =
     		DispatcherRenderParameterTest.class.getName() + ".RESULT_KEY";
-    
-    
+
+
     // AbstractReflectivePortletTest Impl --------------------------------------
-    
+
     /**
      * Overwrites <code>super.getRenderParameters(..)</code> to set the
      * test-specific render parameter in the render URL.
@@ -94,42 +92,42 @@ extends AbstractReflectivePortletTest {
     	parameterMap.put(KEY_RENDER, new String[] { VALUE_RENDER });
     	return parameterMap;
     }
-    
 
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkParameters(PortletContext context,
                                          PortletRequest request,
                                          PortletResponse response)
     throws IOException, PortletException {
-    	
+
     	// Dispatch to the companion servlet: call checkParameters().
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(SERVLET_PATH).append("?")
     			.append(KEY_TARGET).append("=").append(TARGET_PARAMS)
     			.append("&").append(KEY_A).append("=").append(VALUE_A)
     			.append("&").append(KEY_B).append("=").append(VALUE_B);
-    	
+
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("Dispatching to: " + buffer.toString());
     	}
         PortletRequestDispatcher dispatcher = context.getRequestDispatcher(
         		buffer.toString());
         dispatcher.include((RenderRequest) request, (RenderResponse) response);
-        
+
     	// Retrieve test result returned by the companion servlet.
         TestResult result = (TestResult) request.getAttribute(RESULT_KEY);
     	request.removeAttribute(RESULT_KEY);
         return result;
     }
-    
-    
+
+
     protected TestResult checkSameNameParameter(PortletContext context,
                                                 PortletRequest request,
                                                 PortletResponse response)
     throws IOException, PortletException {
-    	
+
     	// Dispatch to the companion servlet: call checkSameNameParameter().
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(SERVLET_PATH).append("?")
@@ -137,20 +135,20 @@ extends AbstractReflectivePortletTest {
     			.append("&").append(KEY_C).append("=").append(VALUE_C1)
     			.append("&").append(KEY_C).append("=").append(VALUE_C2)
     			.append("&").append(KEY_C).append("=").append(VALUE_C3);
-    	
+
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("Dispatching to: " + buffer.toString());
     	}
     	PortletRequestDispatcher dispatcher = context.getRequestDispatcher(
     			buffer.toString());
     	dispatcher.include((RenderRequest) request, (RenderResponse) response);
-    	
+
     	// Retrieve test result returned by the companion servlet.
         TestResult result = (TestResult) request.getAttribute(RESULT_KEY);
     	request.removeAttribute(RESULT_KEY);
     	return result;
     }
-    
+
     protected TestResult checkAddedSameNameParameter(PortletContext context,
                                                      PortletRequest request,
                                                      PortletResponse response)
@@ -161,25 +159,25 @@ extends AbstractReflectivePortletTest {
     			.append(KEY_TARGET).append("=").append(TARGET_ADDED_SAME_NAME_PARAM)
     			.append("&").append(KEY_RENDER).append("=").append(VALUE_ADDED1)
     			.append("&").append(KEY_RENDER).append("=").append(VALUE_ADDED2);
-    	
+
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("Dispatching to: " + buffer.toString());
     	}
     	PortletRequestDispatcher dispatcher = context.getRequestDispatcher(
     			buffer.toString());
     	dispatcher.include((RenderRequest) request, (RenderResponse) response);
-    	
+
     	// Retrieve test result returned by the companion servlet.
         TestResult result = (TestResult) request.getAttribute(RESULT_KEY);
     	request.removeAttribute(RESULT_KEY);
     	return result;
     }
-    
+
     protected TestResult checkInvalidParameters(PortletContext context,
                                                 PortletRequest request,
                                                 PortletResponse response)
     throws IOException, PortletException {
-    	
+
     	// Dispatch to the companion servlet: call checkInvalidParameters().
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(SERVLET_PATH).append("?")
@@ -193,29 +191,27 @@ extends AbstractReflectivePortletTest {
     	PortletRequestDispatcher dispatcher = context.getRequestDispatcher(
     			buffer.toString());
     	dispatcher.include((RenderRequest) request, (RenderResponse) response);
-    	
+
     	// Retrieve test result returned by the companion servlet.
         TestResult result = (TestResult) request.getAttribute(RESULT_KEY);
     	request.removeAttribute(RESULT_KEY);
     	return result;
     }
-    
-    
+
+
     // Nested Companion Servlet Class ------------------------------------------
-    
+
     /**
      * Nested static companion servlet class.
-     * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
-     * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
      */
     public static class CompanionServlet extends GenericServlet {
 
         // GenericServlet Impl -------------------------------------------------
-        
+
         public String getServletInfo() {
         	return getClass().getName();
         }
-        
+
     	/**
     	 * Services the servlet request dispatched from the test portlet.
     	 * This method checks the 'target' parameter to determine which test
@@ -241,10 +237,10 @@ extends AbstractReflectivePortletTest {
         	}
         	request.setAttribute(RESULT_KEY, result);
         }
-        
-        
+
+
         // Private Methods -----------------------------------------------------
-        
+
         /**
          * Check that parameters A and B are available in the dispatching
          * request.
@@ -265,7 +261,7 @@ extends AbstractReflectivePortletTest {
             }
             return result;
         }
-        
+
         /**
          * Check that parameter C has three values.
          * @param request  the servlet reqeust.
@@ -284,7 +280,7 @@ extends AbstractReflectivePortletTest {
         	}
             return result;
         }
-        
+
         /**
          * Check that parameter RENDER has three values: one is the render
          * parameter, while the other two are appended in the dispatch URI.
@@ -305,7 +301,7 @@ extends AbstractReflectivePortletTest {
         	}
     		return result;
         }
-        
+
         /**
          * Check that invalid parameter A is ignored, parameter B is attached
          * to the dispatching request with the correct value, and parameter C
@@ -330,7 +326,7 @@ extends AbstractReflectivePortletTest {
         	}
     		return result;
         }
-        
+
         private TestResult failOnUnknownTarget(ServletRequest request) {
         	TestResult result = new TestResult();
         	result.setReturnCode(TestResult.FAILED);
@@ -338,8 +334,8 @@ extends AbstractReflectivePortletTest {
             		+ KEY_TARGET + ": " + request.getParameter(KEY_TARGET));
             return result;
         }
-        
+
     }
-    
+
 }
 

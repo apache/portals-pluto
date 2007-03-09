@@ -22,7 +22,6 @@ import java.util.Set;
  * Service interface which defines the methods required
  * for a provider wishing to provide property management.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
 public interface PropertyConfigService extends DriverConfigurationService {

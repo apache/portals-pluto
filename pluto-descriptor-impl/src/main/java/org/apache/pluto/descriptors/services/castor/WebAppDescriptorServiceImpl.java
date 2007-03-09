@@ -34,7 +34,6 @@ import java.net.URL;
  * the service; requiring only that subclasses provide the
  * input streams to/from the actual descriptor.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: WebAppDescriptorServiceImpl.java 156743 2005-03-10 05:50:30Z ddewolf $
  * @since Mar 5, 2005
  */
@@ -101,7 +100,7 @@ public class WebAppDescriptorServiceImpl
         mapping.loadMapping(url);
         return mapping;
     }
-    
+
     protected void setCastorMarshallerOptions(Marshaller marshaller, Object beingMarshalled) {
         String servletVersion = ((WebAppDD)beingMarshalled).getServletVersion();
         if ( "2.3".equals(servletVersion) )

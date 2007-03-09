@@ -20,45 +20,43 @@ import java.io.Serializable;
 
 /**
  * The test result represents the result of one test method.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public class TestResult implements Serializable {
-	
+
 	/** The undefined return code. */
 	public static final int UNDEFINED = -1;
-	
+
 	/** The warning return code. */
 	public static final int WARNING = 0;
-	
+
 	/** The failed return code. */
 	public static final int FAILED = 1;
-	
+
 	/** The passed return code. */
 	public static final int PASSED = 2;
-	
-	
+
+
     // Private Member Variables ------------------------------------------------
-    
+
     /** The name of the test. */
-    private String name = null;
-    
+    private String name;
+
     /** The description of the test. */
     private String description = "[unknown]";
-    
+
     /** The PLT number in the spec that is tested. */
     private String specPLT = "[unknown]";
-    
+
     /** The return code of the test result: PASSED, WARNING, FAILED. */
     private int returnCode = UNDEFINED;
-    
+
     /** The message of the test result. */
     private String resultMessage ="[unknown]";
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     public String getName() {
         return name;
     }
@@ -66,27 +64,27 @@ public class TestResult implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getDescription() {
     	return description;
     }
-    
+
     public void setDescription(String description) {
     	this.description = description;
     }
-    
+
     public String getSpecPLT() {
     	return specPLT;
     }
-    
+
     public void setSpecPLT(String specPLT) {
     	this.specPLT = specPLT;
     }
-    
+
     public int getReturnCode() {
         return returnCode;
     }
-    
+
     public String getReturnCodeAsString() {
     	if (returnCode == WARNING) {
     		return "WARNING";
@@ -102,18 +100,18 @@ public class TestResult implements Serializable {
     public void setReturnCode(int returnCode) {
         this.returnCode = returnCode;
     }
-    
+
     public String getResultMessage() {
     	return resultMessage;
     }
-    
+
     public void setResultMessage(String resultMessage) {
     	this.resultMessage = resultMessage;
     }
-    
-    
+
+
     // Object Methods ----------------------------------------------------------
-    
+
     /**
      * Override of toString() that prints out name and results values.
      * @see java.lang.Object#toString()
@@ -123,8 +121,8 @@ public class TestResult implements Serializable {
     	buffer.append(getClass().getName());
     	buffer.append("[name=").append(name);
     	buffer.append(";returnCode=").append(returnCode);
-    	buffer.append(";resultMessage=").append(resultMessage).append("]");    	
+    	buffer.append(";resultMessage=").append(resultMessage).append("]");
     	return buffer.toString();
     }
-    
+
 }

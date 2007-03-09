@@ -18,7 +18,6 @@ package org.apache.pluto.descriptors.servlet;
 
 /**
  * <B>TODO</B>: Document
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id:$
  * @since Feb 28, 2005
  */

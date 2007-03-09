@@ -19,7 +19,6 @@ package org.apache.pluto.descriptors.servlet;
 /**
  * ServletMapping configuration as contained within the
  * web.xml Deployment Descriptor.
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: ServletMappingDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */

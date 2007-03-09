@@ -40,43 +40,42 @@ import org.apache.pluto.spi.optional.PortletRegistryService;
 /**
  * Allows clients to determine if a particular PortletMode is supported
  * by the portal, a particular portlet, or both.
- * 
+ *
  * This implementation depends on {@link PropertyConfigService}.
- * 
+ *
  * The service implementations are injected by Spring.
- * 
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
+ *
  * @version $Id$
  * @since September 9, 2006
  */
-public class SupportedModesServiceImpl implements SupportedModesService 
+public class SupportedModesServiceImpl implements SupportedModesService
 {
     /** Logger */
     private static final Log LOG = LogFactory.getLog(SupportedModesServiceImpl.class);
 
     /** PortletMode objects supported by the portal */
     private Set supportedPortletModesByPortal = new HashSet();
-    
+
     /** PortletRegistryService used to obtain PortletApplicationConfig objects */
-    private PortletRegistryService portletRegistry = null;
+    private PortletRegistryService portletRegistry;
 
     /** PropertyConfig Service used to obtain supported portal modes */
-    private PropertyConfigService propertyService = null;
-    
+    private PropertyConfigService propertyService;
+
     /** The portal's servletContext **/
-    private ServletContext servletContext = null;
-        
+    private ServletContext servletContext;
+
     /**
      * Constructs a SupportedModesService with its dependencies.
-     * 
+     *
      * @param propertyService the PropertyConfigService
      */
     public SupportedModesServiceImpl(PropertyConfigService propertyService) {
         this.propertyService = propertyService;
     }
-    
+
     //  SupportedModesService Implementation -----------------
-    
+
     public boolean isPortletModeSupported(String portletId, String mode)  {
         return isPortletModeSupportedByPortal(mode) &&
             isPortletModeSupportedByPortlet(portletId, mode);
@@ -97,13 +96,13 @@ public class SupportedModesServiceImpl implements SupportedModesService
                     .getAttribute(AttributeKeys.PORTLET_CONTAINER))
                     .getOptionalContainerServices()
                     .getPortletRegistryService();
-        }        
-            
-        try {            
+        }
+
+        try {
             if (portletRegistry == null) {
                 LOG.error("Optional Portlet Registry Service not found.");
                 throw new PortletContainerException("Optional Portlet Registry Service not found.");
-            }            
+            }
             PortletAppDD ctx = portletRegistry.getPortletApplicationDescriptor(applicationId);
             Iterator i = ctx.getPortlets().iterator();
             while(i.hasNext()) {
@@ -130,8 +129,8 @@ public class SupportedModesServiceImpl implements SupportedModesService
     }
 
     // DriverConfiguration Lifecycle Implementation ---------
-    
-    public void destroy() throws DriverConfigurationException 
+
+    public void destroy() throws DriverConfigurationException
     {
         LOG.debug("Destroying Supported Modes Service...");
         supportedPortletModesByPortal = null;

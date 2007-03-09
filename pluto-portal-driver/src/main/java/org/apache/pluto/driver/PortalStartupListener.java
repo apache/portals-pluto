@@ -46,8 +46,6 @@ import org.springframework.web.context.WebApplicationContext;
  * <li>Registration of the ContainerServices</li>
  * </ol>
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version $Revision$ $Date$
  * @since Sep 22, 2004
  */

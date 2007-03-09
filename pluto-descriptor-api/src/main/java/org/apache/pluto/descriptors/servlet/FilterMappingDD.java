@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * FilterMapping configuration as contained within the
  * web.xml Deployment Descriptor.
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: FilterMappingDD.java 157475 2005-03-14 22:13:18Z ddewolf $
  * @since Feb 28, 2005
  */

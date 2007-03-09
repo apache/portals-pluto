@@ -41,9 +41,6 @@ import org.apache.pluto.driver.url.PortalURL;
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
