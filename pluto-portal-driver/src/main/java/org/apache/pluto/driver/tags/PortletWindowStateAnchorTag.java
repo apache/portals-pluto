@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,34 +37,33 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 /**
  * The tag is used to render a portlet mode anchor specified by the portlet ID and mode.
  * This is designed to live inside of a <pluto:portlet/> tag.
- * 
+ *
  * <pluto:windowStateAnchor portletId="" windowState="maximized"/>
  *
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  */
 public class PortletWindowStateAnchorTag extends BodyTagSupport {
-    
+
     /** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletWindowStateAnchorTag.class);
-        
-    
+
+
     // Private Member Variables ------------------------------------------------
-    private String state = null;
-    
+    private String state;
+
     /** The portlet ID attribute obtained from parent tag. */
-    private String portletId = null;
-    
+    private String portletId;
+
     /** The evaluated value of the portlet ID attribute. */
-    private String evaluatedPortletId = null;       
-    
+    private String evaluatedPortletId;
+
     // BodyTagSupport Impl -----------------------------------------------------
-    
+
     /**
      * Method invoked when the start tag is encountered.
      * @throws JspException  if an error occurs.
      */
     public int doStartTag() throws JspException {
-        
+
         // Ensure that the modeAnchor tag resides within a portlet tag.
         PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
                 this, PortletTag.class);
@@ -72,20 +71,20 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
             throw new JspException("Portlet window controls may only reside "
                     + "within a pluto:portlet tag.");
         }
-        
-        portletId = parentTag.getPortletId();        
+
+        portletId = parentTag.getPortletId();
         // Evaluate portlet ID attribute.
         evaluatePortletId();
-        
+
         // Retrieve the portlet window config for the evaluated portlet ID.
         ServletContext servletContext = pageContext.getServletContext();
         DriverConfiguration driverConfig = (DriverConfiguration)
                 servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
-       
+
         if (isWindowStateAllowed(driverConfig, state)) {
             // Retrieve the portal environment.
             PortalRequestContext portalEnv = PortalRequestContext.getContext(
-                    (HttpServletRequest) pageContext.getRequest());        
+                    (HttpServletRequest) pageContext.getRequest());
 
             PortalURL portalUrl =  portalEnv.createPortalURL();
             portalUrl.setWindowState(evaluatedPortletId, new WindowState(state));
@@ -106,15 +105,15 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
                 throw new JspException(ex);
             }
         }
-        
-        
+
+
         // Continue to evaluate the tag body.
         return EVAL_BODY_INCLUDE;
     }
-    
-    
+
+
     // Package Methods ---------------------------------------------------------
-    
+
     /**
      * Returns the evaluated portlet ID.
      * @return the evaluated portlet ID.
@@ -123,10 +122,10 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
         return evaluatedPortletId;
     }
 
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Evaluates the portlet ID attribute passed into this tag. This method
      * evaluates the member variable <code>portletId</code> and saves the
@@ -155,11 +154,11 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
     public void setWindowState(String state) {
         this.state = state;
     }
-    
+
     private boolean isWindowStateAllowed(DriverConfiguration config, String state) {
         LOG.debug("Testing if PortletWindowConfig [" + getEvaluatedPortletId() + "] supports window state [" + state + "]");
-        return config.isWindowStateSupported(getEvaluatedPortletId(), state);       
+        return config.isWindowStateSupported(getEvaluatedPortletId(), state);
     }
 
-    
+
 }

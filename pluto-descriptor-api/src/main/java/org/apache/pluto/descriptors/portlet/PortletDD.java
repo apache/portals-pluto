@@ -21,20 +21,18 @@ import java.util.ArrayList;
 
 /**
  * Bare bones implementation of the Portlet descriptor.
- * 
+ *
  * FIXME: Hmmm... What do you mean, David?  --ZHENG Zhong
- * 
+ *
  * Eventually this should be flushed out :), but for the sake of timing I'll be lazy for now.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * 
+ *
  * @since Mar 6, 2005
  */
 public class PortletDD {
-	
+
 	// Private Member Variables ------------------------------------------------
-	
+
     /** The unique name of the portlet. */
     private String portletName = null;
 
@@ -63,20 +61,20 @@ public class PortletDD {
 
     /** All security role references. */
     private List securityRoleRefs = new ArrayList();
-    
-    
+
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Default no-arg constructor.
      */
     public PortletDD() {
     	// Do nothing.
     }
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     /**
      * Retrieve the unique name of the portlet.
      * @return
@@ -202,10 +200,10 @@ public class PortletDD {
     public void setSecurityRoleRefs(List securityRoleRefs) {
         this.securityRoleRefs = securityRoleRefs;
     }
-    
-    
+
+
     // Object Methods ----------------------------------------------------------
-    
+
     /**
      * Returns a string representation of this instance.
      * FIXME: more info!
@@ -219,7 +217,7 @@ public class PortletDD {
     	// TODO:
     	return buffer.toString();
     }
-    
+
     /**
      * Returns the hash code for this instance.
      * @return the hash code for this instance.
@@ -227,6 +225,6 @@ public class PortletDD {
     public int hashCode() {
     	return toString().hashCode();
     }
-    
+
 }
 

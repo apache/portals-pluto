@@ -18,7 +18,6 @@ package org.apache.pluto.descriptors.services;
 
 /**
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: Constants.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Mar 7, 2005
  */

@@ -20,13 +20,12 @@ import org.apache.pluto.descriptors.servlet.WebAppDD;
 import org.exolab.castor.mapping.AbstractFieldHandler;
 
 /**
- * This class manages the <code>version</code> attribute on the &lt;web-app&gt; for 
+ * This class manages the <code>version</code> attribute on the &lt;web-app&gt; for
  * Servlet 2.3 and greater deployment descriptors.
- * 
- * Servlet 2.3 does not have a <code>version</code> attribute, for the &lt;web-app&gt; 
+ *
+ * Servlet 2.3 does not have a <code>version</code> attribute, for the &lt;web-app&gt;
  * while Servlet 2.4 and higher do.
- * 
- * @author Elliot Metsger (emetsger@jhu.edu)
+ *
  * @since Mar 3, 2007
  * @version $Id$
  */
@@ -40,18 +39,18 @@ public class ServletVersionCastorFieldHandler extends AbstractFieldHandler
             throw new ClassCastException( "Error: was expecting a " +
                     WebAppDD.class.getName() + " but received a " + webAppDD.getClass().getName() );
         }
-        
+
         String servletVersion = ((WebAppDD)webAppDD).getServletVersion();
-        
+
         // if the servlet version is 2.3, we don't want to include it in the
         // XML output as a version attribute.  Only servlet 2.4 and higher
         // have a version attribute in their <web-app> element.
-        
+
         if ( "2.3".equals(servletVersion) )
         {
             return null;
         }
-        
+
         return servletVersion;
     }
 
@@ -87,8 +86,8 @@ public class ServletVersionCastorFieldHandler extends AbstractFieldHandler
             throw new ClassCastException( "Error: was expecting a " +
                     String.class.getName() + " but received a " + servletVersionValue.getClass().getName() );
         }
-        
-        ((WebAppDD)webAppDD).setServletVersion((String)servletVersionValue);        
+
+        ((WebAppDD)webAppDD).setServletVersion((String)servletVersionValue);
     }
 
 }

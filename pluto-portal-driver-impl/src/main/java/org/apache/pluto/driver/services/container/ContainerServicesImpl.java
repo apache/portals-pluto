@@ -16,26 +16,24 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import javax.portlet.PortalContext;
+
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.RequiredContainerServices;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.spi.optional.PortletPreferencesService;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.PortletInvokerService;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.UserInfoService;
-
-import javax.portlet.PortalContext;
 
 /**
  * The Portal Driver's <code>PortletContainerServices</code> implementation. The
  * <code>PortletContainerServices</code> interface is the main integration point
  * between the pluto container and the surrounding portal.
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 21, 2004
  */
@@ -84,7 +82,7 @@ public class ContainerServicesImpl
 
 
     /**
-     * Returns null to use pluto's default 
+     * Returns null to use pluto's default
      * @return
      */
     public PortletRegistryService getPortletRegistryService() {

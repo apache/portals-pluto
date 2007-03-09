@@ -17,7 +17,6 @@
 package org.apache.pluto.driver.config;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @todo Document
  * @since Aug 10, 2005
  */

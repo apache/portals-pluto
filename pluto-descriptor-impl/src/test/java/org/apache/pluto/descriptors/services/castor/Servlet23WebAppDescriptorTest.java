@@ -30,19 +30,18 @@ import org.apache.pluto.descriptors.servlet.WebAppDD;
 /**
  * This test ensures that the version attribute of a servlet 2.3 descriptor
  * is being read from and written to properly by Castor.
- * 
- * @author Elliot Metsger (emetsger@jhu.edu)
+ *
  * @since Mar 3, 2007
  * @version $Id$
  * @todo JavaDoc
  */
 public class Servlet23WebAppDescriptorTest extends TestCase
 {
-    
+
     private static final String DESCRIPTOR = "/servlet-2.3-webapp-descriptor.xml";
     private InputStream in = null;
     private WebAppDescriptorService underTest = null;
-    
+
     protected void setUp() throws Exception
     {
         underTest = new WebAppDescriptorServiceImpl();
@@ -60,15 +59,15 @@ public class Servlet23WebAppDescriptorTest extends TestCase
     {
         WebAppDD webappdd = underTest.read(in);
         assertNotNull(webappdd);
-        assertEquals("2.3", webappdd.getServletVersion());        
+        assertEquals("2.3", webappdd.getServletVersion());
     }
 
     public void testWrite() throws Exception
     {
         File outputFile = File.createTempFile( "webapp-2.3-descriptor-test", ".xml" );
-        OutputStream out = new FileOutputStream( outputFile );        
+        OutputStream out = new FileOutputStream( outputFile );
         WebAppDD webappdd = underTest.read(in);
-        underTest.write(webappdd, out);        
+        underTest.write(webappdd, out);
         // now round-trip it
         WebAppDD webappdd2 = underTest.read(new FileInputStream(outputFile));
         assertNotNull(webappdd2);

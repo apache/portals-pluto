@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,45 +41,43 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 
 /**
  * The portlet tag is used to render a portlet specified by the portlet ID.
- * 
+ *
  * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
  * @see org.apache.pluto.PortletContainer#doRender(PortletWindow, HttpServletRequest, HttpServletResponse)
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public class PortletTag extends BodyTagSupport {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletTag.class);
-    
+
     /** Status constant for failed rendering. */
     public static final int FAILED = 0;
-    
+
     /** Status constant for successful rendering. */
     public static final int SUCCESS = 1;
-    
-    
+
+
     // Private Member Variables ------------------------------------------------
-    
+
     /** The portlet ID attribute passed into this tag. */
     private String portletId = null;
-    
+
     /** The evaluated value of the portlet ID attribute. */
     private String evaluatedPortletId = null;
-    
+
     /** The cached portal servlet response holding rendering result. */
     private PortalServletResponse response = null;
-    
+
     /** The cached rendering status: SUCCESS or FAILED. */
     private int status;
-    
+
     /** The cached Throwable instance when fail to render the portlet. */
     private Throwable throwable = null;
-    
-    
+
+
     // Tag Attribute Accessors -------------------------------------------------
-    
+
     /**
      * Returns the portlet ID attribute.
      * @return the portlet ID attribute.
@@ -87,7 +85,7 @@ public class PortletTag extends BodyTagSupport {
     public String getPortletId() {
         return portletId;
     }
-    
+
     /**
      * Sets the portlet ID attribute.
      * @param portletId  the portlet ID attribute.
@@ -95,19 +93,19 @@ public class PortletTag extends BodyTagSupport {
     public void setPortletId(String portletId) {
         this.portletId = portletId;
     }
-    
-    
+
+
     // BodyTagSupport Impl -----------------------------------------------------
-    
+
     /**
      * Method invoked when the start tag is encountered.
      * @throws JspException  if an error occurs.
      */
     public int doStartTag() throws JspException {
-        
+
     	// Evaluate portlet ID attribute.
     	evaluatePortletId();
-        
+
     	// Retrieve the portlet window config for the evaluated portlet ID.
         ServletContext servletContext = pageContext.getServletContext();
 
@@ -117,15 +115,15 @@ public class PortletTag extends BodyTagSupport {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rendering Portlet Window: " + windowConfig);
         }
-        
+
         // Retrieve the current portal URL.
         PortalRequestContext portalEnv = PortalRequestContext.getContext(
                 (HttpServletRequest) pageContext.getRequest());
         PortalURL portalURL = portalEnv.getRequestedPortalURL();
-        
+
         // Create the portlet window to render.
         PortletWindow window = new PortletWindowImpl(windowConfig, portalURL);
-        
+
         // Check if someone else is maximized. If yes, don't show content.
         Map windowStates = portalURL.getWindowStates();
         for (Iterator it = windowStates.keySet().iterator(); it.hasNext(); ) {
@@ -136,18 +134,18 @@ public class PortletTag extends BodyTagSupport {
                 return SKIP_BODY;
             }
         }
-        
+
         // Create portal servlet request and response to wrap the original
         // HTTP servlet request and response.
         PortalServletRequest portalRequest = new PortalServletRequest(
         		(HttpServletRequest) pageContext.getRequest(), window);
         PortalServletResponse portalResponse = new PortalServletResponse(
                 (HttpServletResponse) pageContext.getResponse());
-        
+
         // Retrieve the portlet container from servlet context.
         PortletContainer container = (PortletContainer)
             	servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
-        
+
         // Render the portlet and cache the response.
         try {
             container.doRender(window, portalRequest, portalResponse);
@@ -157,14 +155,14 @@ public class PortletTag extends BodyTagSupport {
             status = FAILED;
             throwable = th;
         }
-        
+
         // Continue to evaluate the tag body.
         return EVAL_BODY_INCLUDE;
     }
-    
-    
+
+
     // Package Methods ---------------------------------------------------------
-    
+
     /**
      * Returns the rendering status.
      * @return the rendering status.
@@ -172,15 +170,15 @@ public class PortletTag extends BodyTagSupport {
     int getStatus() {
         return status;
     }
-    
+
     /**
-     * Returns the portal servlet response holding rendering result. 
+     * Returns the portal servlet response holding rendering result.
      * @return the portal servlet response holding rendering result.
      */
     PortalServletResponse getPortalServletResponse() {
         return response;
     }
-    
+
     /**
      * Returns the error that has occurred when rendering portlet.
      * @return the error that has occurred when rendering portlet.
@@ -188,7 +186,7 @@ public class PortletTag extends BodyTagSupport {
     Throwable getThrowable() {
         return throwable;
     }
-    
+
     /**
      * Returns the evaluated portlet ID.
      * @return the evaluated portlet ID.
@@ -197,10 +195,10 @@ public class PortletTag extends BodyTagSupport {
         return evaluatedPortletId;
     }
 
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Evaluates the portlet ID attribute passed into this tag. This method
      * evaluates the member variable <code>portletId</code> and saves the
@@ -215,5 +213,5 @@ public class PortletTag extends BodyTagSupport {
         }
         evaluatedPortletId = (String) obj;
     }
-    
+
 }

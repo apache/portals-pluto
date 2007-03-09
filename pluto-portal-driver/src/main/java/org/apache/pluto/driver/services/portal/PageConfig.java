@@ -16,13 +16,10 @@
  */
 package org.apache.pluto.driver.services.portal;
 
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public class PageConfig {
 

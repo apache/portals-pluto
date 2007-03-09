@@ -19,8 +19,6 @@ package org.apache.pluto.driver.services.portal;
 
 /**
  * Configuration of a portlet window on the portal page.
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletWindowConfig {
 

@@ -20,7 +20,6 @@ import junit.framework.TestCase;
 
 /**
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Dec 1, 2005
  */

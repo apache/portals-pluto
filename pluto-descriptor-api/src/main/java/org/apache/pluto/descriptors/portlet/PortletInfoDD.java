@@ -18,7 +18,6 @@ package org.apache.pluto.descriptors.portlet;
 
 /**
  * Implementation of the Portlet Info descriptor element.
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @since 1.1.0
  */
 public class PortletInfoDD {

@@ -21,8 +21,7 @@ import java.util.ArrayList;
 
 /**
  * Web Resource Collection configuration.
- * 
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ *
  * @version $Id: WebResourceCollectionDD.java 157475 2005-03-14 22:13:18Z ddewolf $
  * @since Mar 4, 2005
  */

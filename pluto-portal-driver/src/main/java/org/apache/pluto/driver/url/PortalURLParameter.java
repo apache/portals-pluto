@@ -18,8 +18,6 @@ package org.apache.pluto.driver.url;
 
 /**
  * The portal URL parameter.
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 30, 2004
  */

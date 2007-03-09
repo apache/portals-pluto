@@ -28,7 +28,6 @@ import java.io.OutputStream;
  * This service reads the portlet.xml and converts it to a
  * standard bean model.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: PortletAppDescriptorService.java 157038 2005-03-11 03:44:40Z ddewolf $
  * @since Mar 6, 2005
  */

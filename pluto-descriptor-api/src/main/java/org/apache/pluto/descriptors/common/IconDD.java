@@ -19,7 +19,6 @@ package org.apache.pluto.descriptors.common;
 /**
  * Resource Icon configuration.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: IconDD.java 157038 2005-03-11 03:44:40Z ddewolf $
  * @since Feb 28, 2005
  */

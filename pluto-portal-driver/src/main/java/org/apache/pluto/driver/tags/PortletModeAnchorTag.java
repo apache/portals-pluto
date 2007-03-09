@@ -40,8 +40,6 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
  *
  * <pluto:modeAnchor portletId="" portletMode="edit"/>
  *
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
- * @author <a href="mailto:cdoremus@apache.org">Craig Doremus</a>
  * @todo Test supported Window States using a version of ActionResponseImpl.isWindowStateAllowed()
  */
 public class PortletModeAnchorTag extends BodyTagSupport {

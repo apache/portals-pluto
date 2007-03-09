@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * Security Role Reference Configuration.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: SecurityRoleRefDD.java 157038 2005-03-11 03:44:40Z ddewolf $
  * @since Feb 28, 2005
  */

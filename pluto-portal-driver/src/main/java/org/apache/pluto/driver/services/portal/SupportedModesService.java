@@ -18,15 +18,14 @@ package org.apache.pluto.driver.services.portal;
 
 /**
  * Allows clients to determine if a particular PortletMode is supported
- * by the portal, a particular portlet, or both. 
- * 
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
+ * by the portal, a particular portlet, or both.
+ *
  * @version $Id$
  * @since September 9, 2006
  * @see javax.portlet.PortletMode
  */
 public interface SupportedModesService extends DriverConfigurationService {
-    
+
     /**
      * Returns true if the portlet and the portal support the supplied mode.
      * @param portletId the id uniquely identifiying the portlet
@@ -34,14 +33,14 @@ public interface SupportedModesService extends DriverConfigurationService {
      * @return true if the portlet and portal both support the supplied mode
      */
     boolean isPortletModeSupported(String portletId, String mode);
-    
+
     /**
      * Returns true if the portal supports the supplied mode.
      * @param mode the portlet mode
      * @return true if the portal supports the supplied mode
      */
     boolean isPortletModeSupportedByPortal(String mode);
-    
+
     /**
      * Returns true if the portlet supports the supplied mode.
      * @param portletId the id uniquely identifying the portlet

@@ -33,7 +33,6 @@ import org.exolab.castor.xml.Unmarshaller;
  * This Base class provides support for reading
  * and writing deployment descriptors using Castor.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: AbstractCastorDescriptorService.java 156743 2005-03-10 05:50:30Z ddewolf $
  * @since Mar 5, 2005
  */

@@ -20,7 +20,6 @@ import java.util.Locale;
 
 /**
  *
- * @author David H. DeWolf
  * @since 1.1.0
  */
 public class DisplayNameDD {

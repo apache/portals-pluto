@@ -20,7 +20,6 @@ import java.util.List;
 
 /**
  * <B>TODO</B>: Document
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: WelcomeFileListDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */

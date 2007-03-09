@@ -37,8 +37,7 @@ import junit.framework.TestCase;
 
 /**
  * JUnit test class for UserInfoAttributesServicesImpl.
- * 
- * @author <a href="cdoremus@apache.org">Craig Doremus</a>
+ *
  */
 public class UserInfoAttributesServicesImplTest extends TestCase {
 	/* Represents properties in user-info-attributes.properties */
@@ -49,7 +48,7 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 	private static final String TEST_USER_GENDER = "male";
 	private static final String TEST_USER_NAME_GIVEN = "Catalina";
 	private static final String TEST_USER_NAME_FAMILY = "Tomcat";
-		
+
 	protected void setUp() throws Exception {
 		super.setUp();
 		props.setProperty(TEST_REMOTE_USER + "." + P3PAttributes.USER_GENDER, TEST_USER_GENDER);
@@ -66,7 +65,7 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 			UserInfoAttributesServiceImpl uias = UserInfoAttributesServiceImpl.getInstance(props);
 			PortletRequest pr = new MockPortletRequest();
 			map = uias.getUserInfo(pr);
-			String sex = (String)map.get(P3PAttributes.USER_GENDER); 
+			String sex = (String)map.get(P3PAttributes.USER_GENDER);
 			assertTrue(sex.equals(TEST_USER_GENDER));
 			System.out.println("Sex: " + sex);
 			String fname = (String)map.get(P3PAttributes.USER_NAME_GIVEN);
@@ -87,8 +86,7 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 	/**
 	 * Stubbed implementation used only by this class where only
 	 * getRemoteUser() has been implemented to return a constant.
-	 * 
-	 * @author <a href="cdoremus@apache.org">Craig Doremus</a>
+	 *
 	 */
 	public class MockPortletRequest implements PortletRequest {
 

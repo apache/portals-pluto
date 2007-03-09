@@ -26,7 +26,6 @@ import java.util.List;
  * WebApplication configuration as contained
  * within the web.xml Deployment Descriptor.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: WebAppDD.java 157475 2005-03-14 22:13:18Z ddewolf $
  * @since Feb 28, 2005
  */
@@ -56,7 +55,7 @@ public class WebAppDD {
     // element is present with a version attribute,
     // the Castor mapping will update this field.
     private String servletVersion = "2.3";
-    // Default to false.  If a <web-app> 
+    // Default to false.  If a <web-app>
     // contains a <distributable/> element, then
     // Castor will update this field to true.
     private DistributableDD distributableDD = new DistributableDD();
@@ -92,7 +91,7 @@ public class WebAppDD {
     public boolean isDistributable() {
         return distributableDD.isDistributable().booleanValue();
     }
-    
+
     public DistributableDD getDistributable() {
         return distributableDD;
     }
@@ -244,7 +243,7 @@ public class WebAppDD {
     public void setEjbRefs(List ejbRefs) {
         this.ejbRefs = ejbRefs;
     }
-    
+
 
     public String getServletVersion() {
         return servletVersion;

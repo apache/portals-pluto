@@ -22,13 +22,12 @@ import javax.servlet.ServletContext;
 import junit.framework.TestCase;
 
 import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.services.impl.resource.SupportedWindowStateServiceImpl;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
 
 public class SupportedWindowStateServiceTest extends TestCase
 {
-    
+
     SupportedWindowStateService underTest = null;
 
     protected void setUp() throws Exception
@@ -56,9 +55,9 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertTrue(underTest.isWindowStateSupported("some.id", "normal"));
         assertTrue(underTest.isWindowStateSupported("some.id", WindowState.MAXIMIZED.toString()));
         assertTrue(underTest.isWindowStateSupported("some.id", WindowState.MINIMIZED.toString()));
-        assertTrue(underTest.isWindowStateSupported("some.id", WindowState.NORMAL.toString()));  
+        assertTrue(underTest.isWindowStateSupported("some.id", WindowState.NORMAL.toString()));
     }
-    
+
     /**
      * Ensure a custom window state is supported by both the portal and portlet.
      */
@@ -67,7 +66,7 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertTrue(underTest.isWindowStateSupported("some.id", "a-custom-state"));
         assertTrue(underTest.isWindowStateSupported("some.id", new WindowState("a-custom-state").toString()));
     }
-    
+
     /**
      * Ensure a non-existant window state is not supported by either the portal
      * or the portlet.
@@ -75,7 +74,7 @@ public class SupportedWindowStateServiceTest extends TestCase
     public void testIsNonExistantWindowStateSupported()
     {
         assertFalse(underTest.isWindowStateSupported("some.id", "a-nonexistant-state"));
-        assertFalse(underTest.isWindowStateSupported("some.id", new WindowState("a-nonexistant-state").toString()));   
+        assertFalse(underTest.isWindowStateSupported("some.id", new WindowState("a-nonexistant-state").toString()));
     }
 
     /**
@@ -89,9 +88,9 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertTrue(underTest.isWindowStateSupportedByPortal("normal"));
         assertTrue(underTest.isWindowStateSupportedByPortal(WindowState.MAXIMIZED.toString()));
         assertTrue(underTest.isWindowStateSupportedByPortal(WindowState.MINIMIZED.toString()));
-        assertTrue(underTest.isWindowStateSupportedByPortal(WindowState.NORMAL.toString()));        
+        assertTrue(underTest.isWindowStateSupportedByPortal(WindowState.NORMAL.toString()));
     }
-    
+
     /**
      * Ensure custom window states are supported by the portal.
      */
@@ -100,7 +99,7 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertTrue(underTest.isWindowStateSupportedByPortal("a-custom-state"));
         assertTrue(underTest.isWindowStateSupportedByPortal(new WindowState("a-custom-state").toString()));
     }
-    
+
     /**
      * Ensure non-existant window states are not supported by the portal.
      */
@@ -109,7 +108,7 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertFalse(underTest.isWindowStateSupportedByPortal("a-nonexistant-state"));
         assertFalse(underTest.isWindowStateSupportedByPortal(new WindowState("a-nonexistant-state").toString()));
     }
-    
+
     /**
      * Ensure the portlet supports all JSR-168 window states.
      */
@@ -123,7 +122,7 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertTrue(underTest.isWindowStateSupportedByPortlet("some.id", WindowState.MINIMIZED.toString()));
         assertTrue(underTest.isWindowStateSupportedByPortlet("some.id", WindowState.NORMAL.toString()));
     }
-    
+
     /**
      * Ensure custom window states are supported in the portlet.
      */
@@ -132,7 +131,7 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertTrue(underTest.isWindowStateSupportedByPortlet("some.id", "a-custom-state"));
         assertTrue(underTest.isWindowStateSupportedByPortlet("some.id", new WindowState("a-custom-state").toString()));
     }
-    
+
     /**
      * Ensure non-existant window states are not supported by the portlet.
      */
@@ -141,23 +140,22 @@ public class SupportedWindowStateServiceTest extends TestCase
         assertFalse(underTest.isWindowStateSupportedByPortlet("some.id", "a-nonexistant-state"));
         assertFalse(underTest.isWindowStateSupportedByPortlet("some.id", new WindowState("a-nonexistant-state").toString()));
     }
-    
+
     /**
      * This class wraps the actual SupportedWindowStateServiceImpl class in
      * order to override the init() method and supply mock service objects.
-     * 
-     * @author Elliot Metsger (emetsger@jhu.edu)
+     *
      * @since Feb 28, 2007
      * @version $Id$
      */
-    private class SupportedWindowStateServiceUnitTestImpl 
+    private class SupportedWindowStateServiceUnitTestImpl
         extends SupportedWindowStateServiceImpl
     {
         SupportedWindowStateServiceUnitTestImpl(PropertyConfigService svc)
         {
             super(svc);
         }
-        
+
         public void init(ServletContext ctx) throws DriverConfigurationException
         {
             this.portletRegistry = new MockPortletRegistryService(
@@ -165,6 +163,6 @@ public class SupportedWindowStateServiceTest extends TestCase
             this.portalSupportedWindowStates = propertyService.getSupportedWindowStates();
         }
     }
-    
+
 
 }

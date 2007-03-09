@@ -16,17 +16,17 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.RenderConfig;
-
-import java.util.*;
 
 /**
  * Encapsulation of the Pluto Driver ResourceConfig Info.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 23, 2004
  */

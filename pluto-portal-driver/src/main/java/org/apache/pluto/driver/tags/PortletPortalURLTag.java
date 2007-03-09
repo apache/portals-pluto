@@ -32,9 +32,7 @@ import org.apache.pluto.driver.core.PortalRequestContext;
 /**
  * The portlet URL tag is used to generate portal URL pointing to the current
  * portlet with specified portlet mode and window state.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  * @version 1.0
  * @since Oct 4, 2004
  */
@@ -43,10 +41,10 @@ public class PortletPortalURLTag extends BodyTagSupport {
     // Private Member Variables ------------------------------------------------
 
     /** The window state to be encoded in the portal URL. */
-    private String windowState = null;
+    private String windowState;
 
     /** The portlet mode to be encoded in the portal URL. */
-    private String portletMode = null;
+    private String portletMode;
 
 
     // Tag Attribute Accessors -------------------------------------------------

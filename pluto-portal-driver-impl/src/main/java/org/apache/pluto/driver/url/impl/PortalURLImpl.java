@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,30 +30,28 @@ import java.util.Map;
 
 /**
  * The portal URL.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since 1.0
  */
 public class PortalURLImpl implements PortalURL {
-	
+
 	/** Server URI contains protocol, host name, and (optional) port. */
-    private String serverURI = null;
-    
-    private String servletPath = null;
-    private String renderPath = null;
-    private String actionWindow = null;
-    
+    private String serverURI;
+
+    private String servletPath;
+    private String renderPath;
+    private String actionWindow;
+
     /** The window states: key is the window ID, value is WindowState. */
     private Map windowStates = new HashMap();
-    
+
     private Map portletModes = new HashMap();
-    
+
     /** Parameters of the portlet windows. */
     private Map parameters = new HashMap();
-    
-    
+
+
     // Constructors ------------------------------------------------------------
-    
+
     /**
      * Constructs a PortalURLImpl instance using default port.
      * @param protocol  the protocol.
@@ -67,7 +65,7 @@ public class PortalURLImpl implements PortalURL {
                          String servletName) {
     	this(protocol, hostName, -1, contextPath, servletName);
     }
-    
+
     /**
      * Constructs a PortalURLImpl instance using customized port.
      * @param protocol  the protocol.
@@ -88,13 +86,13 @@ public class PortalURLImpl implements PortalURL {
     		buffer.append(":").append(port);
     	}
     	serverURI = buffer.toString();
-    	
+
     	buffer = new StringBuffer();
     	buffer.append(contextPath);
     	buffer.append(servletName);
         servletPath = buffer.toString();
     }
-    
+
     /**
      * Internal private constructor used by method <code>clone()</code>.
      * @see #clone()
@@ -102,9 +100,9 @@ public class PortalURLImpl implements PortalURL {
     private PortalURLImpl() {
     	// Do nothing.
     }
-    
+
     // Public Methods ----------------------------------------------------------
-    
+
     public void setRenderPath(String renderPath) {
         this.renderPath = renderPath;
     }
@@ -148,7 +146,7 @@ public class PortalURLImpl implements PortalURL {
     public Map getWindowStates() {
         return Collections.unmodifiableMap(windowStates);
     }
-    
+
     /**
      * Returns the window state of the specified window.
      * @param windowId  the window ID.
@@ -170,7 +168,7 @@ public class PortalURLImpl implements PortalURL {
     public void setWindowState(String windowId, WindowState windowState) {
         this.windowStates.put(windowId, windowState);
     }
-    
+
     /**
      * Clear parameters of the specified window.
      * @param windowId  the window ID.
@@ -184,7 +182,7 @@ public class PortalURLImpl implements PortalURL {
             }
         }
     }
-    
+
     /**
      * Converts to a string representing the portal URL.
      * @return a string representing the portal URL.
@@ -202,7 +200,7 @@ public class PortalURLImpl implements PortalURL {
     public String getServerURI() {
         return serverURI;
     }
-    
+
     /**
      * Returns the servlet path (context path + servlet name).
      * @return the servlet path.
@@ -210,7 +208,7 @@ public class PortalURLImpl implements PortalURL {
     public String getServletPath() {
         return servletPath;
     }
-    
+
     /**
      * Clone a copy of itself.
      * @return a copy of itself.

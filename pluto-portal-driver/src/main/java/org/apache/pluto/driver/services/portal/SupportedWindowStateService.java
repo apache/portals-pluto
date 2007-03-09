@@ -19,30 +19,29 @@ package org.apache.pluto.driver.services.portal;
 /**
  * Allows clients to see if a particular WindowState is supported by
  * the portal, a particular portlet, or both.
- * 
- * @author Elliot Metsger (emetsger@jhu.edu)
+ *
  * @since Feb 27, 2007
  * @version $Id$
  * @see javax.portlet.WindowState
  */
 public interface SupportedWindowStateService extends DriverConfigurationService {
-    
+
     /**
-     * Returns true if the portlet and the portal support the supplied 
+     * Returns true if the portlet and the portal support the supplied
      * window state.
      * @param portletId the id uniquely identifying the portlet
      * @param state the portlet window state
      * @return true if the portlet and portal both support the supplied window state
      */
     public boolean isWindowStateSupported( String portletId, String state );
-    
+
     /**
      * Returns true if the portal supports the supplied window state.
      * @param state the portlet window state
      * @return true if the portal supports the supplied window state
      */
     public boolean isWindowStateSupportedByPortal( String state );
-    
+
     /**
      * Returns true if the portlet supports the supplied window state.
      * @param portletId the id uniquely identifying the portlet
@@ -50,5 +49,5 @@ public interface SupportedWindowStateService extends DriverConfigurationService 
      * @return true if the portlet support the supplied state
      */
     public boolean isWindowStateSupportedByPortlet( String portletId, String state );
-    
+
 }

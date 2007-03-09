@@ -32,7 +32,6 @@ import java.io.IOException;
  * Allows external clients to connect and notify the portal
  * of available portlet applications.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Nov 23, 2005
  */

@@ -16,21 +16,22 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
-import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.services.portal.*;
-import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
-
-import javax.servlet.ServletContext;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
-import java.io.InputStream;
+
+import javax.servlet.ServletContext;
+
+import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.RenderConfigService;
+import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
 
 /**
  * Default implementation of all of the portal Services.
  * Utilizes resource configuration from
  * <code>pluto-portal-driver-config.xml</code>
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
 public class RenderConfigServiceImpl

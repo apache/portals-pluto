@@ -16,38 +16,35 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import java.util.Collections;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.services.container.ResourceURLProviderImpl;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
 
-import java.util.Map;
-import java.util.Collections;
-
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
 public class PortalCallbackServiceImpl implements PortalCallbackService {
 
 	// Constructor -------------------------------------------------------------
-	
+
 	/**
 	 * Default no-arg constructor.
 	 */
     public PortalCallbackServiceImpl() {
     	// Do nothing.
     }
-    
-    
+
+
     // PortalCallbackService Impl ----------------------------------------------
-    
+
     /**
      * Method invoked by the container when the portlet sets its title. This
      * method binds the dynamic portlet title to the servlet request for later

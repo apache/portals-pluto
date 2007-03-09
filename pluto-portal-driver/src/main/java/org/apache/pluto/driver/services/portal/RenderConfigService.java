@@ -22,7 +22,6 @@ import java.util.List;
  * Service interface defining methods necessary for
  * a provider wishing to manage page administration.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
 public interface RenderConfigService extends DriverConfigurationService {
