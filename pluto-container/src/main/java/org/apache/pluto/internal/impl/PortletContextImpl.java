@@ -37,8 +37,6 @@ import org.apache.pluto.internal.InternalPortletContext;
  * <code>InternalPortletContext</code> which provides container specific
  * information needed for processing.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.1
  */
 public class PortletContextImpl

@@ -23,7 +23,6 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @todo Document
  * @since Jul 30, 2005
  */
@@ -32,14 +31,14 @@ public abstract class AbstractPlutoMojo extends AbstractMojo {
     /**
      * @parameter expression="${installDir}"
      */
-    protected File installationDirectory = null;
+    protected File installationDirectory;
 
     /**
      * @parameter expression="${project}"
      * @required
      * @readonly
      */
-    protected MavenProject project = null;
+    protected MavenProject project;
 
     public void execute() throws MojoExecutionException {
         // Validation of the installDir property is done by maven.

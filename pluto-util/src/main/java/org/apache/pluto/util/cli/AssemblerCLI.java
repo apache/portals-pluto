@@ -34,7 +34,6 @@ import org.apache.pluto.util.UtilityException;
 /**
  * Command Line Interface to the Pluto Assembler.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
@@ -92,7 +91,7 @@ public class AssemblerCLI {
         config.setWebappDescriptor(webXml);
         config.setPortletDescriptor(portletXml);
         config.setDestination(webXml);
-        
+
         Assembler assembler = AssemblerFactory.getFactory()
             .createAssembler(config);
 

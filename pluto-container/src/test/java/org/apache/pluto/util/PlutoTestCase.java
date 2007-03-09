@@ -24,7 +24,6 @@ import org.jmock.MockObjectTestCase;
 /**
  * Test Class
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since June 1, 2005
  */
@@ -67,6 +66,6 @@ public abstract class PlutoTestCase extends MockObjectTestCase {
                                   String testString) {
         if (testString.indexOf(expectedSubstring) < 0) {
             fail(message);
-        } 
+        }
     }
 }

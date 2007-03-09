@@ -28,8 +28,6 @@ import java.util.Map;
  * PLT.17.2 of the JSR-168 specificiation. Attribute persistence is
  * not covered by the spec so it is not done here.
  *
- * @author <a href="cdoremus@apache.org">Craig Doremus</a>
- * @author <a href="ddewolf@apache.org">David DeWolf</a>
  */
 public interface UserInfoService extends ContainerService {
 

@@ -37,30 +37,28 @@ import java.util.WeakHashMap;
  * NOTE: This should only be used internally.  Do not access it from embedding
  * portals, instead, utilize the PortletRegistryService.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Nov 3, 2004
  */
 public class PortletDescriptorRegistry {
-	
+
     /** Portlet deployment descriptor location. */
     private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 
     /** Exception Messages. */
     private static final StringManager EXCEPTIONS = StringManager.getManager(
             PortletDescriptorRegistry.class.getPackage().getName());
-    
+
     /** The static singleton registry instance. */
     private static final PortletDescriptorRegistry REGISTRY =
     		new PortletDescriptorRegistry();
-    
-    
+
+
     // Private Member Variables ------------------------------------------------
-    
+
     /** The portlet application descriptor service. */
-    private PortletAppDescriptorService portletDDService = null;
-    
+    private PortletAppDescriptorService portletDDService;
+
     /**
      * Cache of descriptors.  WeakHashMap is used so that
      * once the context is destroyed (kinda), the cache is eliminated.
@@ -70,9 +68,9 @@ public class PortletDescriptorRegistry {
      */
     private Map cache = new WeakHashMap();
 
-    
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Returns the singleton registry instance.
      * @return the singleton registry instance.
@@ -105,10 +103,10 @@ public class PortletDescriptorRegistry {
             		"Unable to access class " + className, ex);
         }
     }
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     /**
      * Retrieve the Portlet Application Deployment Descriptor for the given
      * servlet context.  Create it if it does not allready exist.
@@ -126,10 +124,10 @@ public class PortletDescriptorRegistry {
         }
         return portletAppDD;
     }
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Creates the portlet.xml deployment descriptor representation.
      *
@@ -151,6 +149,6 @@ public class PortletDescriptorRegistry {
         }
         return portletAppDD;
     }
-    
+
 }
 

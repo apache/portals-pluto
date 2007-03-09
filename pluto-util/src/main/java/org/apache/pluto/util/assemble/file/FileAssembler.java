@@ -28,38 +28,37 @@ import org.apache.pluto.util.assemble.WebXmlRewritingAssembler;
 
 /**
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Nov 8, 2004
  */
 public class FileAssembler extends WebXmlRewritingAssembler {
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Default no-arg constructor.
      */
     public FileAssembler() {
     	// Do nothing.
     }
-    
-    
+
+
     // Assembler Impl ----------------------------------------------------------
-    
+
     public void assemble(AssemblerConfig config) throws UtilityException {
         try {
             final File webappDescriptor = config.getWebappDescriptor();
             InputStream webXmlIn = new FileInputStream(webappDescriptor);
-            
+
             final File portletDescriptor = config.getPortletDescriptor();
             InputStream portletXmlIn = new FileInputStream(portletDescriptor);
-            
+
             final File destinationDescriptor = config.getDestination();
             if (webappDescriptor.equals(destinationDescriptor)) {
                 final File tempXml = File.createTempFile(webappDescriptor.getName() + ".", ".tmp");
                 final FileOutputStream webXmlOut = new FileOutputStream(tempXml);
-                
+
                 this.updateWebappDescriptor(webXmlIn, portletXmlIn, webXmlOut, config.getDispatchServletClass());
-                
+
                 //Move the temp file to the destination location
                 destinationDescriptor.delete();
                 tempXml.renameTo(destinationDescriptor);

@@ -49,8 +49,6 @@ import org.apache.commons.logging.Log;
  * @see PortletPreferences
  * @see PortletPreferenceImpl
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletPreferencesImpl implements PortletPreferences {
 
@@ -64,17 +62,17 @@ public class PortletPreferencesImpl implements PortletPreferences {
     // Private Member Variables ------------------------------------------------
 
     /** The portlet preferences service provided by the portal. */
-    private PortletPreferencesService preferencesService = null;
+    private PortletPreferencesService preferencesService;
 
-    private InternalPortletWindow window = null;
+    private InternalPortletWindow window;
 
-    private InternalPortletRequest request = null;
+    private InternalPortletRequest request;
 
     /**
      * Default portlet preferences retrieved from portlet.xml, and used for
      * resetting portlet preferences.
      */
-    private InternalPortletPreference[] defaultPreferences = null;
+    private InternalPortletPreference[] defaultPreferences;
 
     /**
      * Current portlet preferences: key is the preference name as a string,
@@ -83,7 +81,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     private final Map preferences = new HashMap();
 
     /** Current method used for managing these preferences. */
-    private Integer methodId = null;
+    private Integer methodId;
 
 
     // Constructor -------------------------------------------------------------

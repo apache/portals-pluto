@@ -25,7 +25,6 @@ import java.util.Vector;
 
 /**
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Jan 9, 2006
  */

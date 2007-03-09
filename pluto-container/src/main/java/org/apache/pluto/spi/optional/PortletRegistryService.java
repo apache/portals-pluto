@@ -31,8 +31,7 @@ import java.util.Iterator;
  * as a mechanism for notifying the container of new applications.
  *
  * @since 1.1.0
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * 
+ *
  */
 public interface PortletRegistryService {
 
@@ -73,7 +72,7 @@ public interface PortletRegistryService {
 
     /**
      * Retrieve the PortletContext for the specified applicationId
-     * 
+     *
      * @param applicationId context identifier
      * @return portlet context
      * @throws PortletContainerException if internal error occurs

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,23 +22,21 @@ import java.util.Map;
 
 /**
  * Static class hosting a couple of utility methods around strings.
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class StringUtils {
-	
+
 	// Private Constructor -----------------------------------------------------
-	
+
 	/**
 	 * Private constructor that prevents external instantiation.
 	 */
 	private StringUtils() {
 		// Do nothing.
 	}
-	
-	
+
+
 	// Static Utility Methods --------------------------------------------------
-	
+
     /**
      * Replaces all occurrences of a pattern within a string by a replacement.
      * @param source  the string that should be searched.
@@ -75,7 +73,7 @@ public class StringUtils {
         out.append(source.substring(i));
         return out.toString();
     }
-    
+
     /**
      * TODO: can't we just use String[].clone()?
      * @param source
@@ -90,7 +88,7 @@ public class StringUtils {
         System.arraycopy(source, 0, result, 0, length);
         return result;
     }
-    
+
     /**
      * Deep-clones a parameter map. The key is the parameter name as a String
      * instance, while the value is a String array (String[]) instance.
@@ -114,11 +112,11 @@ public class StringUtils {
         }
         return result;
     }
-    
+
     /**
      * Strips the specified mime type by removing the character encoding
      * specified at the end of the mime type (all characters after the ';').
-     * The stripped mime type is trimmed string which contains no white 
+     * The stripped mime type is trimmed string which contains no white
      * spaces at the beginning and the end.
      * @param mimeType  the mime type to strip.
      * @return the stripped mime type.

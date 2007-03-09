@@ -22,7 +22,6 @@ import org.apache.pluto.util.UtilityException;
  * The pluto assembler is used to assemble a portlet application which is
  * deployable to pluto.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
@@ -31,7 +30,7 @@ public interface Assembler {
     public static final String PORTLET_XML = "WEB-INF/portlet.xml";
 
     public static final String SERVLET_XML = "WEB-INF/web.xml";
-    
+
     public static final String DISPATCH_SERVLET_CLASS =
         	"org.apache.pluto.core.PortletServlet";
 

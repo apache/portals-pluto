@@ -44,8 +44,6 @@ import org.apache.pluto.internal.PreferencesValidatorRegistry;
  * Definition as defined by the {@link PortletDD} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletEntityImpl implements PortletEntity {
 

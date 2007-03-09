@@ -20,49 +20,48 @@ import java.io.File;
 
 /**
  * The pluto assembler configuration.
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public class AssemblerConfig {
-	
+
 	// Private Member Variables ------------------------------------------------
-	
+
 	/** The portlet app descriptor, which is usually WEB-INF/portlet.xml. */
-    private File portletDescriptor = null;
-    
+    private File portletDescriptor;
+
     /** The webapp descriptor, which is usually WEB-INF/web.xml. */
-    private File webappDescriptor = null;
-    
+    private File webappDescriptor;
+
     /** The assemble destination, which points to the assembled WAR file. */
-    private File destination = null;
+    private File destination;
 
     /** The class of the servlet that will handle portlet requests */
-    private String dispatchServletClass = null;
-    
+    private String dispatchServletClass;
+
     /** A source WAR archive to assemble */
-    private File warSource = null;
-    
+    private File warSource;
+
     // Public Methods ----------------------------------------------------------
-    
+
     public File getPortletDescriptor() {
         return portletDescriptor;
     }
-    
+
     public void setPortletDescriptor(File portletDescriptor) {
         this.portletDescriptor = portletDescriptor;
     }
-    
+
     public File getWebappDescriptor() {
         return webappDescriptor;
     }
-    
+
     public void setWebappDescriptor(File webappDescriptor) {
         this.webappDescriptor = webappDescriptor;
     }
-    
+
     public File getDestination() {
         return destination;
     }
-    
+
     public void setDestination(File destination) {
         this.destination = destination;
     }

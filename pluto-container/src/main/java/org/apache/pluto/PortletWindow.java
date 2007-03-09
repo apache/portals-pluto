@@ -27,8 +27,6 @@ import javax.portlet.WindowState;
  * @see org.apache.pluto.internal.impl.InternalPortletWindowImpl
  * @see org.apache.pluto.descriptors.portlet.PortletDD
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 22, 2004
  */
@@ -65,5 +63,5 @@ public interface PortletWindow {
      * @return the current portlet mode.
      */
     public PortletMode getPortletMode();
-    
+
 }

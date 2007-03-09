@@ -40,7 +40,6 @@ import java.util.HashMap;
  * Abstract Mojo for installation tasks.
  *
  * @since 07/29/2005
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 public abstract class AbstractManagementMojo extends AbstractPlutoMojo {
 

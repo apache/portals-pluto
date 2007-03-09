@@ -42,8 +42,6 @@ import java.util.StringTokenizer;
 /**
  * Implementation of the <code>javax.portlet.RenderRequest</code> interface.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class RenderRequestImpl extends PortletRequestImpl
 implements RenderRequest, InternalRenderRequest {
@@ -58,10 +56,10 @@ implements RenderRequest, InternalRenderRequest {
     private boolean included = false;
 
     /** The parameters including parameters appended to the dispatching URI. */
-    private Map parameters = null;
+    private Map parameters;
 
     /** The portlet preferences. */
-    private PortletPreferences portletPreferences = null;
+    private PortletPreferences portletPreferences;
 
 
     // Constructors ------------------------------------------------------------

@@ -16,28 +16,31 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletInfoDD;
-import org.apache.pluto.util.StringManager;
-import org.apache.pluto.spi.optional.PortletInfoService;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.ContainerInvocation;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
-
-import java.util.*;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.PortletInfoDD;
+import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.util.StringManager;
 
 /**
  * Factory object used to create Portlet Resource Bundles.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  *
  */
 class ResourceBundleFactory {
-    
-    private static final Log LOG = 
+
+    private static final Log LOG =
         LogFactory.getLog(ResourceBundleFactory.class);
-    
+
     private static final StringManager EXCEPTIONS =
         StringManager.getManager(ResourceBundleFactory.class.getPackage().getName());
 

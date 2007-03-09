@@ -27,7 +27,6 @@ import org.apache.pluto.util.ArgumentUtility;
  * the underlying pluto container implementation by using the the given
  * container services.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
@@ -78,15 +77,15 @@ public class PortletContainerFactory {
     		String containerName,
     		RequiredContainerServices requiredServices,
     		OptionalContainerServices optionalServices) {
-    	
+
         ArgumentUtility.validateNotNull("requiredServices", requiredServices);
         ArgumentUtility.validateNotEmpty("containerName", containerName);
-        
+
         DefaultOptionalContainerServices optionalServicesWrapper =
         		new DefaultOptionalContainerServices(optionalServices);
         PortletContainer container = new PortletContainerImpl(
         		containerName, requiredServices, optionalServicesWrapper);
-        
+
         if (LOG.isInfoEnabled()) {
             LOG.info("Portlet Container [" + containerName + "] created.");
         }

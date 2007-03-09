@@ -17,7 +17,6 @@
 package org.apache.pluto.maven;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @todo Document
  * @since Jul 30, 2005
  */

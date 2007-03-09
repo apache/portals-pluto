@@ -65,8 +65,6 @@ import org.apache.pluto.util.impl.NamespaceMapperImpl;
  * Abstract <code>javax.portlet.PortletRequest</code> implementation.
  * This class also implements InternalPortletRequest.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     implements PortletRequest, InternalPortletRequest {
@@ -84,33 +82,33 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     /**
      * The parent container within which this request was created.
      */
-    private PortletContainer container = null;
+    private PortletContainer container;
 
     /**
      * The portlet window which is the target of this portlet request.
      */
-    private InternalPortletWindow internalPortletWindow = null;
+    private InternalPortletWindow internalPortletWindow;
 
     /**
      * The PortletContext associated with this Request. This PortletContext must
      * be initialized from within the <code>PortletServlet</code>.
      */
-    private PortletContext portletContext = null;
+    private PortletContext portletContext;
 
     /**
      * The PortalContext within which this request is occuring.
      */
-    private PortalContext portalContext = null;
+    private PortalContext portalContext;
 
     /**
      * The portlet session.
      */
-    private PortletSession portletSession = null;
+    private PortletSession portletSession;
 
     /**
      * Response content types.
      */
-    private Vector contentTypes = null;
+    private Vector contentTypes;
 
     /**
      * TODO: javadoc

@@ -23,7 +23,6 @@ import org.apache.pluto.util.PlutoTestCase;
 /**
  * Test Class
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since June 1, 2005
  */

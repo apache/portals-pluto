@@ -51,9 +51,6 @@ import org.apache.pluto.util.StringManager;
 /**
  * Default Pluto Container implementation.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version 1.0
  * @since Sep 18, 2004
  */

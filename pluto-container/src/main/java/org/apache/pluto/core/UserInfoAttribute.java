@@ -19,8 +19,7 @@ package org.apache.pluto.core;
 /**
  * Encapsulates a user information attribute as described in
  * PLT.17 of the JSR-168 specification.
- * 
- * @author <a href="cdoremus@apache.org">Craig Doremus</a>
+ *
  */
 public interface UserInfoAttribute {
 

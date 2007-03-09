@@ -33,7 +33,6 @@ import org.apache.tools.ant.types.FileSet;
 /**
  * TODO JavaDoc
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>:
  * @version 1.0
  * @since Nov 23, 2005
  */
@@ -46,11 +45,11 @@ public class AssembleTask extends Task {
     private File destfile;
 
     private File webapp;
-    
+
     private File war;
-    
+
     private File destdir;
-    
+
     private Collection warFileSets = new LinkedList();
 
     public File getPortletxml() {
@@ -90,7 +89,7 @@ public class AssembleTask extends Task {
     public void setWebapp(File webapp) {
         this.webapp = webapp;
     }
-    
+
     public File getWar() {
         return this.war;
     }
@@ -109,7 +108,7 @@ public class AssembleTask extends Task {
     public void setDestdir(File destDir) {
         this.destdir = destDir;
     }
-    
+
     public void addWars(FileSet fileSet) {
         this.warFileSets.add(fileSet);
     }
@@ -123,17 +122,17 @@ public class AssembleTask extends Task {
                 for (final Iterator fileSetItr = this.warFileSets.iterator(); fileSetItr.hasNext();) {
                     final FileSet fileSet = (FileSet)fileSetItr.next();
                     final DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(this.getProject());
-                    
+
                     final File basedir = directoryScanner.getBasedir();
                     final String[] includedFiles = directoryScanner.getIncludedFiles();
-                    
+
                     for (int index = 0; index < includedFiles.length; index++) {
                         AssemblerConfig config = new AssemblerConfig();
-                        
+
                         final File warSource = new File(basedir, includedFiles[index]);
                         config.setWarSource(warSource);
                         config.setDestination(getDestdir());
-                        
+
                         this.log("Assembling '" + warSource + "' to '" + getDestdir() + "'");
                         Assembler assembler = AssemblerFactory.getFactory().createAssembler(config);
                         assembler.assemble(config);
@@ -142,7 +141,7 @@ public class AssembleTask extends Task {
             }
             else {
                 AssemblerConfig config = new AssemblerConfig();
-    
+
                 final File warSource = getWar();
                 if (warSource != null) {
                     config.setWarSource(warSource);
@@ -155,8 +154,8 @@ public class AssembleTask extends Task {
                     config.setDestination(getDestfile());
                     this.log("Assembling '" + getWebxml() + "' to '" + getDestfile() + "'");
                 }
-                
-    
+
+
                 Assembler assembler = AssemblerFactory.getFactory().createAssembler(config);
                 assembler.assemble(config);
             }
@@ -173,7 +172,7 @@ public class AssembleTask extends Task {
             if(!webapp.exists()) {
                throw new BuildException("webapp "+webapp.getAbsolutePath()+ " does not exist");
             }
-            
+
             if (war != null) {
                 throw new BuildException("war should not be specified if webapp is specified");
             }
@@ -183,16 +182,16 @@ public class AssembleTask extends Task {
             if (destdir != null) {
                 throw new BuildException("destfile should not be specified if webapp is specified");
             }
-            
+
             return;
         }
-        
+
         //Check if running with war arg
         if (war != null) {
             if(!war.exists()) {
                 throw new BuildException("WAR "+war.getAbsolutePath()+ " does not exist");
             }
-            
+
             if (this.warFileSets.size() > 0) {
                 throw new BuildException("wars should not be specified if war is specified");
             }
@@ -211,7 +210,7 @@ public class AssembleTask extends Task {
 
             return;
         }
-        
+
         //Check if running with war arg
         if (this.warFileSets.size() > 0) {
             if (war != null) {

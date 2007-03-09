@@ -34,16 +34,15 @@ import org.apache.pluto.descriptors.servlet.ServletMappingDD;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
 
 /**
- * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  * @todo fix direct dependency on pluto-descriptor-impl
  */
-public abstract class WebXmlRewritingAssembler implements Assembler {    
-    
+public abstract class WebXmlRewritingAssembler implements Assembler {
+
     /**
      * Updates the webapp descriptor by injecting portlet wrapper servlet
      * definitions and mappings.
-     * 
+     *
      * @param webXmlIn  input stream to the webapp descriptor, it will be closed before the web xml is written out.
      * @param portletXmlIn  input stream to the portlet app descriptor, it will be closed before the web xml is written out.
      * @param webXmlOut output stream to the webapp descriptor, it will be flushed and closed.
@@ -62,7 +61,7 @@ public abstract class WebXmlRewritingAssembler implements Assembler {
             dispatchServletClass.trim().length() == 0) {
             dispatchServletClass = DISPATCH_SERVLET_CLASS;
         }
-        
+
         WebAppDescriptorService descriptorSvc = new WebAppDescriptorServiceImpl();
         WebAppDD webAppDDIn = descriptorSvc.read(webXmlIn);
 
@@ -70,24 +69,24 @@ public abstract class WebXmlRewritingAssembler implements Assembler {
                 new PortletAppDescriptorServiceImpl();
         PortletAppDD portletAppDD = portletAppDescriptorService.read(portletXmlIn);
         portletXmlIn.close();
-        
+
         for (Iterator it = portletAppDD.getPortlets().iterator();
                 it.hasNext(); ) {
-            
+
             // Read portlet definition.
             PortletDD portlet = (PortletDD) it.next();
             String name = portlet.getPortletName();
 
             ServletDD servlet = new ServletDD();
             servlet.setServletName(name);
-     
+
             servlet.setServletClass(dispatchServletClass);
 
             InitParamDD initParam = new InitParamDD();
             initParam.setParamName("portlet-name");
             initParam.setParamValue(name);
             servlet.getInitParams().add(initParam);
-            
+
             LoadOnStartupDD onStartup = new LoadOnStartupDD();
             onStartup.setPriority(1);
             servlet.setLoadOnStartup(onStartup);
@@ -98,9 +97,9 @@ public abstract class WebXmlRewritingAssembler implements Assembler {
 
             webAppDDIn.getServlets().add(servlet);
             webAppDDIn.getServletMappings().add(servletMapping);
-            
+
         }
-        
+
         descriptorSvc.write(webAppDDIn, webXmlOut);
     }
 }

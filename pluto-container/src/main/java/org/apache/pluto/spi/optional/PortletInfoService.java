@@ -24,7 +24,6 @@ import org.apache.pluto.PortletWindow;
  * portlet administration tool enables customization
  * during deployment.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @since  1.1.0
  *
  */
@@ -56,5 +55,5 @@ public interface PortletInfoService {
      * @return
      */
     String getKeywords(PortletWindow window);
-    
+
 }

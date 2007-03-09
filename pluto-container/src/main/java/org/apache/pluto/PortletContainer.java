@@ -47,8 +47,6 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
  * <p/>
  * <TR><TD>{@link #destroy()}</TD> <TD>Destroy and remove container from
  * service.</TD> <TD>Performed only once per container lifecylce</TD></TR>
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version $Id: PortletContainer.java 36010 2004-07-30 14:16:06Z ddewolf $
  */
 public interface PortletContainer {

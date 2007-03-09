@@ -17,20 +17,19 @@
 package org.apache.pluto.spi.optional;
 
 /**
- * As defined in PLT.D of the JSR-168 specification, this class defines a set of 
- * attribute names for user information and their intended 
- * meaning. To allow portals an automated mapping of commonly used user information 
- * attributes portlet programmers should use these attribute names. These attribute names  
- * are derived from the Platform for Privacy Preferences 1.0 (P3P 1.0) Specification by the 
- * W3C (http://www.w3c.org/TR/P3P).  
- * 
- * @author <a href="cdoremus@apache.org">Craig Doremus</a>
+ * As defined in PLT.D of the JSR-168 specification, this class defines a set of
+ * attribute names for user information and their intended
+ * meaning. To allow portals an automated mapping of commonly used user information
+ * attributes portlet programmers should use these attribute names. These attribute names
+ * are derived from the Platform for Privacy Preferences 1.0 (P3P 1.0) Specification by the
+ * W3C (http://www.w3c.org/TR/P3P).
+ *
  */
 public interface P3PAttributes {
 
-	/*	NOTE: The user.bdate must consist of a string that represents the time in milliseconds 
+	/*	NOTE: The user.bdate must consist of a string that represents the time in milliseconds
 	since January 1, 1970, 00:00:00 GMT. */
-	public static final String USER_BDATE = "user.bdate"; 
+	public static final String USER_BDATE = "user.bdate";
 	public static final String USER_GENDER = "user.gender";
 	public static final String USER_EMPLOYER = "user.employer";
 	public static final String USER_DEPARTMENT = "user.department";
@@ -99,7 +98,7 @@ public interface P3PAttributes {
 	public static final String USER_BUSINESS_INFO_TELECOM_PAGER_COMMENT = "user.business-info.telecom.pager.comment";
 	public static final String USER_BUSINESS_INFO_ONLINE_EMAIL = "user.business-info.online.email";
 	public static final String USER_BUSINESS_INFO_ONLINE_URI = "user.business-info.online.uri";
-	
+
 	public static final String[] ATTRIBUTE_ARRAY = {
 		"user.bdate",
 		"user.gender",

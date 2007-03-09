@@ -23,7 +23,6 @@ import org.apache.pluto.util.NamespaceMapper;
 /**
  * Test Class
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since June 1, 2005
  */
@@ -62,10 +61,10 @@ public class NamespaceMapperImplTest extends PlutoTestCase {
     }
 
     private static int objectIDCounter = 1;
-    
-    
+
+
     private class InternalPortletWindowID implements PortletWindowID {
-    	
+
         private int id;
 
         public InternalPortletWindowID() {

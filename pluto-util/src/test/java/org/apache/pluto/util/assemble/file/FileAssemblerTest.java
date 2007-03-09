@@ -26,23 +26,22 @@ import org.custommonkey.xmlunit.XMLTestCase;
 import org.custommonkey.xmlunit.XMLUnit;
 
 /**
- * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
 public class FileAssemblerTest extends XMLTestCase {
-    private File webXmlFile = null;
-    private File portletXmlFile = null;
-    private File assembledWebXmlFile = null;
-    
+    private File webXmlFile;
+    private File portletXmlFile;
+    private File assembledWebXmlFile;
+
     protected void setUp() throws Exception {
         XMLUnit.setIgnoreWhitespace(true);
-        
+
         final URL webXmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/web.xml");
         this.webXmlFile = new File(webXmlUrl.getFile());
-        
+
         final URL portletXmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/portlet.xml");
         this.portletXmlFile = new File(portletXmlUrl.getFile());
-        
+
         final URL assembledWebXmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/assembled.web.xml");
         this.assembledWebXmlFile = new File(assembledWebXmlUrl.getFile());
     }
@@ -54,35 +53,35 @@ public class FileAssemblerTest extends XMLTestCase {
 
     public void testAssembleToNewDirectory() throws Exception {
         AssemblerConfig config = new AssemblerConfig();
-        
+
         final File webXmlFileDest = File.createTempFile(this.webXmlFile.getName() + ".", ".xml");
         webXmlFileDest.deleteOnExit();
 
         config.setWebappDescriptor(this.webXmlFile);
         config.setPortletDescriptor(this.portletXmlFile);
         config.setDestination(webXmlFileDest);
-        
+
         FileAssembler assembler = new FileAssembler();
         assembler.assemble(config);
 
         assertXMLEqual(new FileReader(this.assembledWebXmlFile), new FileReader(webXmlFileDest));
     }
-    
+
     public void testAssembleOverSelf() throws Exception {
         AssemblerConfig config = new AssemblerConfig();
-        
+
         final File webXmlFileCopy = File.createTempFile(this.webXmlFile.getName() + ".", ".source.xml");
         webXmlFileCopy.deleteOnExit();
 
         FileUtils.copyFile(this.webXmlFile, webXmlFileCopy);
-        
+
         config.setWebappDescriptor(webXmlFileCopy);
         config.setPortletDescriptor(this.portletXmlFile);
         config.setDestination(webXmlFileCopy);
-        
+
         FileAssembler assembler = new FileAssembler();
         assembler.assemble(config);
-        
+
         assertXMLEqual(new FileReader(this.assembledWebXmlFile), new FileReader(webXmlFileCopy));
     }
 }

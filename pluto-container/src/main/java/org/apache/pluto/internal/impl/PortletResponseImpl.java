@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,31 +36,29 @@ import org.apache.pluto.util.PrintWriterServletOutputStream;
  * Abstract <code>javax.portlet.PortletResponse</code> implementation.
  * This class also implements InternalPortletResponse.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class PortletResponseImpl extends HttpServletResponseWrapper
 implements PortletResponse, InternalPortletResponse {
-	
+
 	// Private Member Variables ------------------------------------------------
-	
+
 	/** The portlet container. */
-    private PortletContainer container = null;
-    
+    private PortletContainer container;
+
     /** The internal portlet window. */
-    private InternalPortletWindow internalPortletWindow = null;
+    private InternalPortletWindow internalPortletWindow;
 
     /** The servlet request of the target/portlet's web module. */
-    private HttpServletRequest httpServletRequest = null;
-    
+    private HttpServletRequest httpServletRequest;
+
     private boolean usingWriter;
     private boolean usingStream;
 
     private ServletOutputStream wrappedWriter;
-    
-    
+
+
     // Constructor -------------------------------------------------------------
-    
+
     public PortletResponseImpl(PortletContainer container,
                                InternalPortletWindow internalPortletWindow,
                                HttpServletRequest servletRequest,
@@ -70,10 +68,10 @@ implements PortletResponse, InternalPortletResponse {
         this.httpServletRequest = servletRequest;
         this.internalPortletWindow = internalPortletWindow;
     }
-    
-    
+
+
     // PortletResponse Impl ----------------------------------------------------
-    
+
     public void addProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
@@ -99,7 +97,7 @@ implements PortletResponse, InternalPortletResponse {
             throw new IllegalArgumentException(
                 "only absolute URLs or full path URIs are allowed");
         }
-        
+
         ResourceURLProvider provider = getContainer()
         		.getRequiredContainerServices()
         		.getPortalCallbackService()
@@ -113,17 +111,17 @@ implements PortletResponse, InternalPortletResponse {
         }
         return getHttpServletResponse().encodeURL(provider.toString());
     }
-    
-    
+
+
     // InternalPortletResponse impl --------------------------------------------
-    
+
     public InternalPortletWindow getInternalPortletWindow() {
         return internalPortletWindow;
     }
-    
-    
+
+
     // Internal Methods --------------------------------------------------------
-    
+
     /**
      * Returns the portlet container.
      * @return the portlet container.
@@ -131,7 +129,7 @@ implements PortletResponse, InternalPortletResponse {
     protected PortletContainer getContainer() {
         return container;
     }
-    
+
     /**
      * Returns the nested HttpServletRequest instance.
      * @return the nested HttpServletRequest instance.
@@ -139,7 +137,7 @@ implements PortletResponse, InternalPortletResponse {
     protected HttpServletRequest getHttpServletRequest() {
         return httpServletRequest;
     }
-    
+
     /**
      * Returns the nested HttpServletResponse instance.
      * @return the nested HttpServletResponse instance.
@@ -147,14 +145,14 @@ implements PortletResponse, InternalPortletResponse {
     public HttpServletResponse getHttpServletResponse() {
         return (HttpServletResponse) super.getResponse();
     }
-    
-    
+
+
     // HttpServletResponse Methods ---------------------------------------------
-    
+
     public String encodeUrl(String url) {
         return this.encodeURL(url);
     }
-    
+
     /**
      * TODO: javadoc about why we are using a wrapped writer here.
      * @see org.apache.pluto.util.PrintWriterServletOutputStream
@@ -173,7 +171,7 @@ implements PortletResponse, InternalPortletResponse {
         usingStream = true;
         return wrappedWriter;
     }
-    
+
     public PrintWriter getWriter()
     throws IllegalStateException, IOException {
         if (usingStream) {

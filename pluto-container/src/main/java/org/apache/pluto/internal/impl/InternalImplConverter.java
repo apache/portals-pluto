@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,23 +28,21 @@ import javax.portlet.PortletResponse;
  * Static class that provides utility methods to convert a generic
  * PortletRequest or PortletResponse object into an Internal respresentation
  * of the same object.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  */
 class InternalImplConverter {
-	
+
 	/**
 	 * Private constructor that prevents external instantiation.
 	 */
 	private InternalImplConverter() {
 		// Do nothing.
 	}
-	
-	
+
+
 	// Public Static Utility Methods -------------------------------------------
 
     /**
-     * The scary part about this is that there is not yet a 
+     * The scary part about this is that there is not yet a
      * PortletRequestWrapper defined by the spec.  Because of this, there's a
      * chance someone might implement their own wrapper and we won't be able to
      * get the real internal one!
@@ -82,5 +80,5 @@ class InternalImplConverter {
         }
         return (InternalPortletResponse) response;
     }
-    
+
 }

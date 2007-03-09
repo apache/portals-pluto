@@ -41,8 +41,6 @@ import java.util.ResourceBundle;
  * <p/>
  * <p>Please see the documentation for java.util.ResourceBundle for more
  * information.
- * @author James Duncan Davidson [duncan@eng.sun.com]
- * @author James Todd [gonzo@eng.sun.com]
  */
 
 public class StringManager {
@@ -53,11 +51,11 @@ public class StringManager {
      */
 
     private ResourceBundle bundle;
-    
-    /** 
+
+    /**
      * The package this StringManager belongs to.
      */
-    private String packageName = null;
+    private String packageName;
 
     /**
      * Creates a new StringManager for a given package. This is a private method
