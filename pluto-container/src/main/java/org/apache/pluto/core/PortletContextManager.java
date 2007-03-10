@@ -60,6 +60,8 @@ public class PortletContextManager implements PortletRegistryService {
      */
     private static final Log LOG = LogFactory.getLog(PortletContextManager.class);
 
+    public static final String CONTEXT_PATH_PARAM = "org.apache.pluto.CONTEXT_PATH";
+
     /**
      * The singleton manager instance.
      */
@@ -114,7 +116,7 @@ public class PortletContextManager implements PortletRegistryService {
     public String register(ServletConfig config) throws PortletContainerException {
         InternalPortletContext portletContext = register(config.getServletContext());
 
-         PortletAppDD portletAppDD =
+        PortletAppDD portletAppDD =
             portletContext.getPortletApplicationDefinition();
         PortletDD portletDD = null;
 
@@ -154,6 +156,11 @@ public class PortletContextManager implements PortletRegistryService {
 
             fireRegistered(portletContext);
         }
+
+        if(LOG.isInfoEnabled()) {
+            LOG.info("Registered portlet application with application id '"+applicationId+"'");
+        }
+        
         return (InternalPortletContext)portletContexts.get(applicationId);
     }
 
@@ -280,6 +287,14 @@ public class PortletContextManager implements PortletRegistryService {
             } catch (Exception e) {
                 LOG.warn("Unable to directly retrieve context path from ServletContext. Computing. . . ");
             }
+        }
+
+        if(contextPath == null) {
+            contextPath = context.getInitParameter(CONTEXT_PATH_PARAM);
+        }
+
+        if(contextPath == null) {
+            context.getAttribute(CONTEXT_PATH_PARAM);
         }
 
         if(contextPath == null) {
