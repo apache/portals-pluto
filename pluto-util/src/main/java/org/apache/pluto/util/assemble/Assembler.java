@@ -27,11 +27,11 @@ import org.apache.pluto.util.UtilityException;
  */
 public interface Assembler {
 
-    public static final String PORTLET_XML = "WEB-INF/portlet.xml";
+    String PORTLET_XML = "WEB-INF/portlet.xml";
 
-    public static final String SERVLET_XML = "WEB-INF/web.xml";
+    String SERVLET_XML = "WEB-INF/web.xml";
 
-    public static final String DISPATCH_SERVLET_CLASS =
+    String DISPATCH_SERVLET_CLASS =
         	"org.apache.pluto.core.PortletServlet";
 
     /**
@@ -39,7 +39,7 @@ public interface Assembler {
      * deployable into the pluto-1.1 portlet container. The specified web
      * application will be overwritten with the new application.
      */
-    public void assemble(AssemblerConfig config) throws UtilityException;
+    void assemble(AssemblerConfig config) throws UtilityException;
 
 }
 

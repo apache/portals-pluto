@@ -18,7 +18,6 @@ package org.apache.pluto.util;
 
 import java.io.File;
 
-
 /**
  * Exception thrown if an error occurs while managing
  * a portal instance.
