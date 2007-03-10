@@ -235,12 +235,9 @@
         <commons-digester.version>1.8</commons-digester.version>
         <commons-collections.version>3.2</commons-collections.version>
         <commons-cli.version>1.0</commons-cli.version>
-        <commons-httpclient.version>3.0.1</commons-httpclient.version>
-        <commons-beanutils.version>1.7.0</commons-beanutils.version>
         <commons-logging.version>1.1</commons-logging.version>
         <log4j.version>1.2.14</log4j.version>
         <springframework.version>2.0.2</springframework.version>
-        <plexus.version>1.0.4</plexus.version>
         <maven.version>2.0.5</maven.version>
         <ant.version>1.6.5</ant.version>
         <junit.version>3.8.2</junit.version>
