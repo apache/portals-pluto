@@ -16,21 +16,6 @@
  */
 package org.apache.pluto.core;
 
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
@@ -45,6 +30,20 @@ import org.apache.pluto.internal.impl.PortletContextImpl;
 import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.util.ClasspathScanner;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Manager used to cache the portlet configurations which have
@@ -60,12 +59,15 @@ public class PortletContextManager implements PortletRegistryService {
      */
     private static final Log LOG = LogFactory.getLog(PortletContextManager.class);
 
-    public static final String CONTEXT_PATH_PARAM = "org.apache.pluto.CONTEXT_PATH";
-
     /**
      * The singleton manager instance.
      */
     private static final PortletContextManager MANAGER = new PortletContextManager();
+
+    /**
+     * List of application id resolvers. *
+     */
+    private static final List APP_ID_RESOLVERS = new ArrayList();
 
     // Private Member Variables ------------------------------------------------
 
@@ -132,7 +134,6 @@ public class PortletContextManager implements PortletRegistryService {
     }
 
     /**
-     *
      * @param servletContext
      * @return
      * @throws PortletContainerException
@@ -147,7 +148,7 @@ public class PortletContextManager implements PortletRegistryService {
                 .getPortletAppDD(servletContext);
 
             PortletContextImpl portletContext = new PortletContextImpl(
-                applicationId,  servletContext, portletAppDD);
+                applicationId, servletContext, portletAppDD);
 
             if (portletContext.getApplicationId() == null) {
                 throw new IllegalStateException("Unable to resolve unique identifier for portletContext.");
@@ -157,19 +158,19 @@ public class PortletContextManager implements PortletRegistryService {
             fireRegistered(portletContext);
         }
 
-        if(LOG.isInfoEnabled()) {
-            LOG.info("Registered portlet application with application id '"+applicationId+"'");
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Registered portlet application with application id '" + applicationId + "'");
         }
-        
-        return (InternalPortletContext)portletContexts.get(applicationId);
+
+        return (InternalPortletContext) portletContexts.get(applicationId);
     }
 
     public void remove(InternalPortletContext context) {
         portletContexts.remove(context);
         Iterator configs = portletConfigs.keySet().iterator();
-        while(configs.hasNext()) {
-            String key = (String)configs.next();
-            if(key.startsWith(context.getApplicationId() + "/")) {
+        while (configs.hasNext()) {
+            String key = (String) configs.next();
+            if (key.startsWith(context.getApplicationId() + "/")) {
                 configs.remove();
             }
         }
@@ -192,7 +193,7 @@ public class PortletContextManager implements PortletRegistryService {
     }
 
     public PortletContext getPortletContext(String applicationId)
-    throws PortletContainerException {
+        throws PortletContainerException {
         return (InternalPortletContext) portletContexts.get(applicationId);
     }
 
@@ -202,7 +203,7 @@ public class PortletContextManager implements PortletRegistryService {
 
     public PortletDD getPortletDescriptor(String applicationId, String portletName) {
         InternalPortletConfig ipc = (InternalPortletConfig) portletConfigs.get(applicationId + "/" + portletName);
-        if(ipc != null) {
+        if (ipc != null) {
             return ipc.getPortletDefinition();
         }
         return null;
@@ -251,14 +252,13 @@ public class PortletContextManager implements PortletRegistryService {
         LOG.info("Portlet Context '" + context.getApplicationId() + "' removed.");
     }
 
-
 //
 // Utility
 
     public static ServletContext getPortletContext(ServletContext portalContext, String portletContextPath) {
-        if(Configuration.preventUnecessaryCrossContext()) {
+        if (Configuration.preventUnecessaryCrossContext()) {
             String portalPath = getContextPath(portalContext);
-            if(portalPath.equals(portletContextPath)) {
+            if (portalPath.equals(portletContextPath)) {
                 return portalContext;
             }
         }
@@ -289,38 +289,54 @@ public class PortletContextManager implements PortletRegistryService {
             }
         }
 
-        if(contextPath == null) {
-            contextPath = context.getInitParameter(CONTEXT_PATH_PARAM);
-        }
-
-        if(contextPath == null) {
-            context.getAttribute(CONTEXT_PATH_PARAM);
-        }
-
-        if(contextPath == null) {
+        if (contextPath == null) {
             contextPath = computeContextPath(context);
         }
 
         return contextPath;
     }
 
-    private static final String WEB_XML = "/WEB-INF/web.xml";
+
     protected static String computeContextPath(ServletContext context) {
-        try {
-            URL webXmlUrl = context.getResource(WEB_XML);
-            String path = webXmlUrl.toExternalForm();
-            path = path.substring(0, path.indexOf(WEB_XML));
-            path = path.substring(path.lastIndexOf("/"));
-
-            int id = path.indexOf(".war");
-            if(id > 0) {
-                path = path.substring(0, id);
+        if (APP_ID_RESOLVERS.size() < 1) {
+            List classes = null;
+            try {
+                classes = ClasspathScanner.findConfiguredImplementations(ApplicationIdResolver.class);
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to find any ApplicationIdResolvers");
             }
-
-            return path;
-        } catch (MalformedURLException e) {
-            LOG.warn("Erorr retrieving web.xml from ServletContext. Unable to derive contextPath.");
-            return null;
+            Iterator i = classes.iterator();
+            while (i.hasNext()) {
+                Class c = (Class) i.next();
+                try {
+                    APP_ID_RESOLVERS.add(c.newInstance());
+                } catch (Exception e) {
+                    LOG.warn("Unable to instantiate ApplicationIdResolver for class " + c.getName());
+                }
+            }
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Found " +APP_ID_RESOLVERS.size()+" application id resolvers.");
+            }
         }
+
+        String path = null;
+        int authority = Integer.MAX_VALUE;
+
+        Iterator i = APP_ID_RESOLVERS.iterator();
+        while (i.hasNext()) {
+            ApplicationIdResolver resolver = (ApplicationIdResolver) i.next();
+            if (resolver.getAuthority() < authority || path == null) {
+                authority = resolver.getAuthority();
+                String temp = resolver.resolveApplicationId(context);
+                if(temp != null) {
+                    path = temp;
+                }
+            }
+        }
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Resolved application id '"+path+"' with authority "+authority);
+        }
+        return path;
     }
+
 }
