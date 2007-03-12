@@ -34,7 +34,13 @@ public interface PortletEntity {
 
     /**
      * Returns the URI to the controller servlet that wraps this portlet.
+     * <p>
+     * Note: this method has been deprecated as of Pluto 1.1.2.  Future versions 
+     * of Pluto will use the <code>PortletInvokerService</code> for resolving
+     * the invoker url pattern.
+     * 
      * @return the URI to the controller servlet that wraps this portlet.
+     * @deprecated
      */
     String getControllerServletUri();
 
