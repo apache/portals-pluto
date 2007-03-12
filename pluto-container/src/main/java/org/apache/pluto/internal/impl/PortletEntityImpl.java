@@ -82,8 +82,13 @@ public class PortletEntityImpl implements PortletEntity {
     /**
      * Returns the URI to the controller servlet that wraps this portlet.
      * @return the URI to the controller servlet that wraps this portlet.
+     * @deprecated
      */
     public String getControllerServletUri() {
+        // this method is deprecated as of pluto 1.1.2, so that
+        // we can remove it in the future.  The PortletInvokerService
+        // will be responsible for resolving the URI used to invoke
+        // the portlet.
         return PREFIX + portletName;
     }
 
