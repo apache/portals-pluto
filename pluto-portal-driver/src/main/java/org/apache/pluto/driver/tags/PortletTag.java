@@ -30,6 +30,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
@@ -206,8 +207,8 @@ public class PortletTag extends BodyTagSupport {
      * @throws JspException  if an error occurs.
      */
     private void evaluatePortletId() throws JspException {
-        Object obj = ExpressionEvaluatorManager.evaluate(
-        		"portletId", portletId, String.class, this, pageContext);
+        ExpressionEvaluatorProxy proxy = ExpressionEvaluatorProxy.getProxy();
+        Object obj = proxy.evaluate(portletId, pageContext);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Evaluated portletId to: " + obj);
         }

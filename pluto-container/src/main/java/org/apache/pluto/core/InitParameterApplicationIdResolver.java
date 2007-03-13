@@ -18,6 +18,14 @@ package org.apache.pluto.core;
 
 import javax.servlet.ServletContext;
 
+/**
+ <pre>
+      <context-param>
+      <param-name>org.apache.pluto.CONTEXT_PATH</param-name>
+      <param-value>/path</param-value>
+    </context-param>
+ </pre>
+ */
 public class InitParameterApplicationIdResolver implements ApplicationIdResolver {
 
     public static final String CONTEXT_PATH_PARAM = "org.apache.pluto.CONTEXT_PATH";
