@@ -122,6 +122,8 @@ public class PortletContextManager implements PortletRegistryService {
             portletContext.getPortletApplicationDefinition();
         PortletDD portletDD = null;
 
+        LOG.info("Registering "+portletAppDD.getPortlets().size()+" portlets for context "+portletContext.getApplicationId());
+
         for (Iterator it = portletAppDD.getPortlets().iterator(); it.hasNext();) {
             portletDD = (PortletDD) it.next();
             portletConfigs.put(
@@ -142,7 +144,7 @@ public class PortletContextManager implements PortletRegistryService {
     public InternalPortletContext register(ServletContext servletContext)
         throws PortletContainerException {
         String applicationId = getContextPath(servletContext);
-        if (!portletContexts.containsKey(servletContext)) {
+        if (!portletContexts.containsKey(applicationId)) {
 
             PortletAppDD portletAppDD = PortletDescriptorRegistry.getRegistry()
                 .getPortletAppDD(servletContext);
@@ -156,17 +158,22 @@ public class PortletContextManager implements PortletRegistryService {
             portletContexts.put(applicationId, portletContext);
 
             fireRegistered(portletContext);
+
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Registered portlet application with application id '" + applicationId + "'");
+            }
+        } else {
+             if (LOG.isInfoEnabled()) {
+                LOG.info("Portlet application with application id '" + applicationId + "' already registered.");
+            }
         }
 
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Registered portlet application with application id '" + applicationId + "'");
-        }
 
         return (InternalPortletContext) portletContexts.get(applicationId);
     }
 
     public void remove(InternalPortletContext context) {
-        portletContexts.remove(context);
+        portletContexts.remove(context.getApplicationId());
         Iterator configs = portletConfigs.keySet().iterator();
         while (configs.hasNext()) {
             String key = (String) configs.next();
@@ -198,7 +205,11 @@ public class PortletContextManager implements PortletRegistryService {
     }
 
     public PortletConfig getPortletConfig(String applicationId, String portletName) {
-        return (InternalPortletConfig) portletConfigs.get(applicationId + "/" + portletName);
+        String lookup = applicationId + "/" + portletName;
+        if(!portletConfigs.containsKey(lookup)) {
+            LOG.info("Unable to locate portlet config [applicationId="+applicationId+"]/["+portletName+"].");
+        }
+        return (InternalPortletConfig) portletConfigs.get(lookup);
     }
 
     public PortletDD getPortletDescriptor(String applicationId, String portletName) {
@@ -315,7 +326,7 @@ public class PortletContextManager implements PortletRegistryService {
                 }
             }
             if (LOG.isInfoEnabled()) {
-                LOG.info("Found " +APP_ID_RESOLVERS.size()+" application id resolvers.");
+                LOG.info("Found " + APP_ID_RESOLVERS.size() + " application id resolvers.");
             }
         }
 
@@ -328,13 +339,13 @@ public class PortletContextManager implements PortletRegistryService {
             if (resolver.getAuthority() < authority || path == null) {
                 authority = resolver.getAuthority();
                 String temp = resolver.resolveApplicationId(context);
-                if(temp != null) {
+                if (temp != null) {
                     path = temp;
                 }
             }
         }
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Resolved application id '"+path+"' with authority "+authority);
+            LOG.debug("Resolved application id '" + path + "' with authority " + authority);
         }
         return path;
     }

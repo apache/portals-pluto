@@ -227,9 +227,9 @@
         <javax.portlet.version.minor>0</javax.portlet.version.minor>
         <portlet-api.version>1.0</portlet-api.version>
         <servlet-api.version>2.3</servlet-api.version>
-        <jsp-api.version>2.0</jsp-api.version>
-        <jstl.version>1.1.2</jstl.version>
-        <taglibs.standard.version>1.0.4</taglibs.standard.version>
+        <jsp-api.version>1.2</jsp-api.version>
+        <jstl.version>1.0.6</jstl.version>
+        <taglibs.standard.version>1.0.6</taglibs.standard.version>
         <xerces.version>2.6.2</xerces.version>
         <castor.version>1.0</castor.version>
         <commons-digester.version>1.8</commons-digester.version>
