@@ -27,6 +27,24 @@ limitations under the License.
   <body>
     
     <section name="Download Pluto">
+      <div class="highlightBox">
+        <h4>About Pluto Distributions</h4>
+        <p>
+          There are a number of distributions to choose from depending
+          on your needs.
+          <ul>
+            <li><strong>pluto-current-bundle</strong> - Provides Pluto and Tomcat bundled together.
+                If you are getting started with Pluto, this is the distribution you
+                want.</li>
+            <li><strong>pluto-current-bin</strong> - Provides the Pluto libraries, portal and
+                testsuite web applications.</li>
+            <li><strong>pluto-current-container-bin</strong> - Provides the Pluto container
+                libraries only.</li>
+            <li><strong>pluto-current-src</strong> - Provides the Pluto source code; requires
+                that you build and deploy Pluto on your own.</li>
+          </ul>
+        </p>
+      </div>
       <p>
         The Apache Pluto source and binary distributions can be downloaded from
         <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">a Pluto

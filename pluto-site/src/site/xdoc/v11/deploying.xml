@@ -113,8 +113,8 @@ limitations under the License.
   <name>${pom.artifactId}</name>
   <!-- Dependency Version Properties ======================================= -->
   <properties>
-  	<!-- Change this for a new Pluto version -->
-    <pluto.version>1.1.0</pluto.version>
+    <!-- Change this for a new Pluto version -->
+    <pluto.version>1.1.1</pluto.version>
     <portlet-api.version>1.0</portlet-api.version>
     <servlet-api.version>2.4</servlet-api.version>
     <jsp-api.version>2.0</jsp-api.version>
