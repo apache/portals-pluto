@@ -47,7 +47,7 @@ limitations under the License.
       </div>
       <ol>
         <li>Download the Pluto 1.1 binary distribution named <strong>pluto-current-bundle</strong> from 
-        a <a href="http://cvs.apache.org/dist/portals/pluto/">distribution site</a>.</li>
+        a <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">distribution site</a>.</li>
         <li>Unzip the binary distribution into a directory.</li>
         	<ol>
         		<li>&lt;PLUTO-1.1-HOME&gt; will be the top level directory.</li>
@@ -103,8 +103,8 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/trunk/ pluto</pre>
 		</p>
 
-		<p>To check out Pluto 1.1.0 source to the 'pluto' directory use this command:
-		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.0 pluto</pre>
+		<p>To check out Pluto 1.1.1 source to the 'pluto' directory use this command:
+		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.1 pluto</pre>
 		</p>
 
         <p>
@@ -185,10 +185,10 @@ $> mvn install
           <ul>
             <li>castor-1.0.jar</li>
             <li>portlet-api-1.0.jar</li>
-            <li>pluto-container-1.1.0.jar</li>
-            <li>pluto-descriptor-api-1.1.0.jar</li>
-            <li>pluto-descriptor-impl-1.1.0.jar</li>
-            <li>pluto-taglib-1.1.0.jar</li>
+            <li>pluto-container-1.1.1.jar</li>
+            <li>pluto-descriptor-api-1.1.1.jar</li>
+            <li>pluto-descriptor-impl-1.1.1.jar</li>
+            <li>pluto-taglib-1.1.1.jar</li>
           </ul>
         </p>
         <p>
