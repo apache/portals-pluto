@@ -274,7 +274,7 @@
     <distributionManagement>
         <site>
             <id>website</id>
-            <url>scp://minotaur.apache.org/www/portals.apache.org/pluto</url>
+            <url>scp://people.apache.org/www/portals.apache.org/pluto</url>
         </site>
 
         <repository>
