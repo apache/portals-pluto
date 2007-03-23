@@ -32,6 +32,28 @@ For information on deploying portlets, building the portal from source
  
   http://portals.apache.org/pluto
 
+Release Notes - Pluto - Version 1.1.2
+=====================================
+
+** Bug
+    * [PLUTO-331] - Page Admin Portlet fails in Pluto 1.1.1
+    * [PLUTO-332] - PortletContextManager.remove(InternalPortletContext) fails
+    * [PLUTO-336] - Provide alternate ways for deriving applicationId
+
+** Improvement
+    * [PLUTO-334] - UserInfoService should provide PortletWindow in getUserInfo()
+    * [PLUTO-335] - Use proper namespacing for JavaScript in Page Admin Portlet
+    * [PLUTO-338] - Remove dependency to plexus file utils, commons httpclient and commons beanutils
+    * [PLUTO-344] - Update maven pluto plugin to accept a list of war files to assemble.
+
+** New Feature
+    * [PLUTO-328] - Add support for a callback right before Render and Action in PortletServlet
+
+** Task
+    * [PLUTO-339] - Deprecate PortletEntity getControllerServletUri() so it can be removed in future versions of Pluto.
+    * [PLUTO-345] - Fix link to distribution website on http://portals.apache.org/pluto/v11/getting-started.html
+
+
 Release Notes - Pluto - Version 1.1.1
 =====================================
 
@@ -64,13 +86,8 @@ Release Notes - Pluto - Version 1.1.1
     * [PLUTO-314] - WAR Support in Assembler
     * [PLUTO-318] - Implement supported window state service
 
-
-
-
-
 ** Wish
     * [PLUTO-290] - Driver config entries pointing to pluto without requirement for context path declarations
-
 
 
 Release Notes - Pluto - Version 1.1.0
