@@ -50,6 +50,7 @@ limitations under the License.
     
     <menu name="Pluto 1.1">
       <item name="Getting Started" href="/v11/getting-started.html"/>
+      <item name="Release Notes" href="/v11/release-notes.html"/>
       <item name="Deploying" href="/v11/deploying.html"/>
       <item name="App Servers" href="/v11/app-servers.html"/>
       <item name="Architecture" href="/v11/architecture.html"/>
