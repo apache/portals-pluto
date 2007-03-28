@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.portlet.PortletSecurityException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
@@ -62,8 +63,12 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         }
     }
 
-    public void setSecure() {
-        //url.setSecure(true);
+    public void setSecure() throws PortletSecurityException {
+        throw new PortletSecurityException("No Supported");
+    }
+
+    public boolean isSecureSupported() {
+        return false;
     }
 
     public void clearParameters() {

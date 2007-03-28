@@ -21,13 +21,6 @@ import javax.portlet.WindowState;
 import java.util.Collection;
 import java.util.Map;
 
-/**
- * Created by IntelliJ IDEA.
- * User: ddewolf
- * Date: Sep 4, 2006
- * Time: 5:17:34 PM
- * To change this template use File | Settings | File Templates.
- */
 public interface PortalURL extends Cloneable {
     void setRenderPath(String renderPath);
 
@@ -57,6 +50,10 @@ public interface PortalURL extends Cloneable {
 
     String toString();
 
+    /**
+     * @deprecated no longer used. will be removed in 1.1.x
+     * @return
+     */
     String getServerURI();
 
     String getServletPath();
