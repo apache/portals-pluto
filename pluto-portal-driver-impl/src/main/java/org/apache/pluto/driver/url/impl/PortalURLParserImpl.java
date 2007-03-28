@@ -100,20 +100,11 @@ public class PortalURLParserImpl implements PortalURLParser {
             LOG.debug("Parsing URL: " + request.getRequestURI());
         }
 
-        String protocol = request.isSecure() ? "https://" : "http://";
-        String server = request.getServerName();
-        int port = request.getServerPort();
         String contextPath = request.getContextPath();
         String servletName = request.getServletPath();
 
         // Construct portal URL using info retrieved from servlet request.
-        PortalURL portalURL = null;
-        if ((request.isSecure() && port != 443)
-        		|| (!request.isSecure() && port != 80)) {
-        	portalURL = new PortalURLImpl(protocol, server, port, contextPath, servletName);
-        } else {
-        	portalURL = new PortalURLImpl(protocol, server, contextPath, servletName);
-        }
+        PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName);
 
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
@@ -177,8 +168,8 @@ public class PortalURLParserImpl implements PortalURLParser {
     	StringBuffer buffer = new StringBuffer();
 
         // Append the server URI and the servlet path.
-    	buffer.append(portalURL.getServerURI())
-    			.append(portalURL.getServletPath());
+    	buffer.append(portalURL.getServletPath().startsWith("/")?"":"/")
+            .append(portalURL.getServletPath());
 
         // Start the pathInfo with the path to the render URL (page).
         if (portalURL.getRenderPath() != null) {

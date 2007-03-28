@@ -132,7 +132,13 @@ public class PortletURLImpl implements PortletURL {
     }
 
     public void setSecure(boolean secure) throws PortletSecurityException {
-        this.secure = secure;
+        PortletURLProvider urlProvider = container
+        		.getRequiredContainerServices()
+        		.getPortalCallbackService()
+        		.getPortletURLProvider(servletRequest, internalPortletWindow);
+        if(urlProvider.isSecureSupported()) {
+            throw new PortletSecurityException("Secure URLs not supported.");
+        }
     }
 
     public String toString() {
@@ -152,8 +158,14 @@ public class PortletURLImpl implements PortletURL {
         if (isAction) {
             urlProvider.setAction(true);
         }
-        if (secure) {
-            urlProvider.setSecure();
+        if (secure && urlProvider.isSecureSupported()) {
+            try {
+                urlProvider.setSecure();
+            } catch (PortletSecurityException e) {
+                throw new IllegalStateException("URL Provider is misconfigured." +
+                    "  It claims to support secure urls," +
+                    " yet it threw a PortletSecurityException");
+            }
         }
         urlProvider.clearParameters();
         urlProvider.setParameters(parameters);

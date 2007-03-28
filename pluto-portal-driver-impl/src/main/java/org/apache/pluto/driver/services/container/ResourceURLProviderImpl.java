@@ -29,21 +29,11 @@ import org.apache.pluto.spi.ResourceURLProvider;
 
 public class ResourceURLProviderImpl implements ResourceURLProvider {
 
-    private static final Log LOG =
-        LogFactory.getLog(ResourceURLProviderImpl.class);
-
     private String stringUrl = "";
     private String base = "";
 
     public ResourceURLProviderImpl(HttpServletRequest req,
                                    PortletWindow internalPortletWindow) {
-        PortalRequestContext ctx = (PortalRequestContext)
-            req.getAttribute(PortalRequestContext.REQUEST_KEY);
-
-        this.base = ctx.createPortalURL().getServerURI();
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Resource URL Created with base: " + base);
-        }
     }
 
     public void setAbsoluteURL(String path) {
@@ -55,18 +45,7 @@ public class ResourceURLProviderImpl implements ResourceURLProvider {
     }
 
     public String toString() {
-        URL url = null;
-
-        if (!"".equals(stringUrl)) {
-            try {
-                url = new URL(stringUrl);
-            } catch (MalformedURLException e) {
-                throw new java.lang.IllegalArgumentException(
-                    "A malformed URL has occured");
-            }
-        }
-
-        return ((url == null) ? "" : url.toString());
+        return (stringUrl == null) ? "" : stringUrl;
 
     }
 }

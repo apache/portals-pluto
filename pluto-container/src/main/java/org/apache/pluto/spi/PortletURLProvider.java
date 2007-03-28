@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.portlet.PortletSecurityException;
 
 /**
  * Defines the interface used by the portlet container to create Portal URLs.
@@ -55,7 +56,16 @@ public interface PortletURLProvider {
     /**
      * By calling this method the URL is defined as a secure URL.
      */
-    public void setSecure();
+    public void setSecure() throws PortletSecurityException;
+
+    /**
+     * Determine whether or not this url provider
+     * supports secure urls.
+     * 
+     * @return
+     * @throws PortletSecurityException
+     */
+    public boolean isSecureSupported();
 
     /**
      * Removes all pre-existing parameters in this URL
@@ -69,7 +79,6 @@ public interface PortletURLProvider {
      *                   [java.lang.String[]] of the parameters.
      */
     public void setParameters(Map parameters);
-
 
     /**
      * Returns the URL in string format. This method should only be called

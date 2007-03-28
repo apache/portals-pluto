@@ -31,6 +31,7 @@ import java.util.Map;
 /**
  * The portal URL.
  * @since 1.0
+ * @deprecated replaced by {@link RelativePortalURLImpl}
  */
 public class PortalURLImpl implements PortalURL {
 
