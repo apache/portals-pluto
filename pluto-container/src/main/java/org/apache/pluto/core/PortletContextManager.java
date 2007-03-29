@@ -217,6 +217,7 @@ public class PortletContextManager implements PortletRegistryService {
         if (ipc != null) {
             return ipc.getPortletDefinition();
         }
+        LOG.warn("Unable to retrieve portlet descriptor: '"+applicationId+"/"+portletName+"'");
         return null;
 
     }
@@ -226,6 +227,7 @@ public class PortletContextManager implements PortletRegistryService {
         if (ipc != null) {
             return ipc.getPortletApplicationDefinition();
         }
+        LOG.warn("Unable to retrieve portlet application descriptor: '"+applicationId+"'");
         return null;
     }
 

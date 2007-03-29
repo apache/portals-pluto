@@ -27,11 +27,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ddewolf
- * Date: Sep 4, 2006
- * Time: 9:27:35 PM
- * To change this template use File | Settings | File Templates.
+ * Determine whether the one of the portlets
+ * for the given url is maximized.
  */
 public class IsMaximizedTag extends TagSupport {
 

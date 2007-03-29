@@ -34,9 +34,7 @@ group (the left column) displays portlets with odd IDs, while the second group
         @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
         @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
     </style>
-    <script type="text/javascript"
-            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
-    </script>
+    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>
 </head>
 
 <body>
@@ -46,7 +44,6 @@ group (the left column) displays portlets with odd IDs, while the second group
     <!-- Header block: the Apache Pluto banner image and description -->
     <div id="header">
         <h1>Apache Pluto</h1>
-
         <p>An Apache Portals Project</p>
     </div>
 
@@ -56,29 +53,7 @@ group (the left column) displays portlets with odd IDs, while the second group
     </div>
 
     <!-- Navigation block: links to portal pages -->
-    <div id="navigation">
-        <h2>Navigation:</h2>
-        <ul>
-            <c:forEach var="page" items="${driverConfig.pages}">
-                <c:choose>
-                    <c:when test="${page == currentPage}">
-                        <li class="selected">
-                            <a href='<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>'>
-                                <c:out value="${page.name}"/>
-                            </a>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li>
-                            <a href='<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>'>
-                                <c:out value="${page.name}"/>
-                            </a>
-                        </li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </ul>
-    </div>
+    <jsp:include page="navigation.jsp"/>
 
     <!-- Content block: portlets are divided into two columns/groups -->
     <div id="content">
