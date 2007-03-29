@@ -31,6 +31,22 @@
                     </descriptors>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.pluto</groupId>
+                <artifactId>pluto-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <resourceBundles>
+                                <resourceBundle>org.apache.pluto:pluto-resources:${pom.parent.version}</resourceBundle>
+                            </resourceBundles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

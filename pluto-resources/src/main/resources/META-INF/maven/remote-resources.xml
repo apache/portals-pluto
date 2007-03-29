@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteResourcesBundle>
+  <remoteResources>
+    <remoteResource>META-INF/NOTICE.vm</remoteResource>
+    <remoteResource>META-INF/LICENSE.vm</remoteResource>
+  </remoteResources>
+  <resourceSupplements>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>xerces</groupId>
+                              <artifactId>xmlParserAPIs</artifactId>
+                              <name>Apache Xerces</name>
+                              <url>http://xerces.apache.org/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>xerces</groupId>
+                              <artifactId>xercesImpl</artifactId>
+                              <name>Apache Xerces</name>
+                              <url>http://xerces.apache.org/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>xml-apis</groupId>
+                              <artifactId>xml-apis</artifactId>
+                              <name>Apache XML Commons</name>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>avalon-framework</groupId>
+                              <artifactId>avalon-framework</artifactId>
+                              <name>Apache Avalon Framework</name>
+                              <url>http://avalon.apache.org/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>commons-logging</groupId>
+                              <artifactId>commons-logging</artifactId>
+                              <name>Apache Commons Logging</name>
+                              <url>http://jakarta.apache.org/commons/logging/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>commons-logging</groupId>
+                              <artifactId>commons-logging-api</artifactId>
+                              <name>Apache Commons Logging API</name>
+                              <url>http://jakarta.apache.org/commons/logging/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>commons-beanutils</groupId>
+                              <artifactId>commons-beanutils</artifactId>
+                              <name>Apache Commons Beanutils</name>
+                              <url>http://jakarta.apache.org/commons/beanutils/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>javax.servlet</groupId>
+                              <artifactId>jstl</artifactId>
+                              <name>JSP Standard Tag Library</name>
+                              <url>http://java.sun.com/products/jsp/jstl/</url>
+                              <organization>
+                                <name>Sun Microsystems</name>
+                                <url>http://www.sun.com/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>taglibs</groupId>
+                              <artifactId>standard</artifactId>
+                              <name>JSP Standard Tag Library Implementation</name>
+                              <url>http://jakarta.apache.org/taglibs/doc/standard-1.0-doc/intro.html</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>javax.servlet</groupId>
+                              <artifactId>servlet-api</artifactId>
+                              <name>Servlet API</name>
+                              <url>http://java.sun.com/products/servlet/</url>
+                              <organization>
+                                <name>Sun Microsystems</name>
+                                <url>http://www.sun.com/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>junit</groupId>
+                              <artifactId>junit</artifactId>
+                              <name>JUnit</name>
+                              <url>http://www.junit.org/</url>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>logkit</groupId>
+                              <artifactId>logkit</artifactId>
+                              <name>Apache Avalon Logkit</name>
+                              <url>http://avalon.apache.org/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>castor</groupId>
+                              <artifactId>castor</artifactId>
+                              <name>The Castor Project</name>
+                              <url>http://www.castor.org/</url>
+                              <organization>
+                                <name>The Codehaus</name>
+                                <url>http://www.codehaus.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+  </resourceSupplements>
+</remoteResourcesBundle>
