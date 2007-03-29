@@ -4,6 +4,9 @@
 <div id="navigation">
     <h2>Navigation:</h2>
     <ul>
+        <li>
+        <a href='<c:out value="${pageContext.request.contextPath}"/>/about.jsp'>About Pluto</a>
+        </li>
         <c:forEach var="page" items="${driverConfig.pages}">
             <c:choose>
                 <c:when test="${page == currentPage}">
