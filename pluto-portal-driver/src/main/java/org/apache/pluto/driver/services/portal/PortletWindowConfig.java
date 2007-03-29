@@ -131,12 +131,18 @@ public class PortletWindowConfig {
     	int index = getSeparatorIndex(portletId);
         String postfix = portletId.substring(index + 1);
         index = postfix.indexOf("!");
-        return postfix.substring(0, index);
+        if(index > -1) {
+            return postfix.substring(0, index);
+        }
+        return postfix;
     }
 
     public static String parseMetaInfo(String portletId) {
         int index = portletId.indexOf("!");
-        return portletId.substring(index+1);
+        if(index > -1) {
+            return portletId.substring(index+1);
+        }
+        return "";
     }
 
 
