@@ -100,13 +100,16 @@ limitations under the License.
         <ul>
           <li>Add the Portal Driver listener Configuration to your web.xml
             <pre>
+<![CDATA[
 &lt;listener&gt;
     &lt;listener-class&gt;org.apache.pluto.driver.PortalStartupListener&lt;/listener-class&gt;
 &lt;/listener&gt;
+]]>
             </pre>
           </li>
           <li>Add the PortalDriverFilter configuration to your web.xml
             <pre>
+<![CDATA[
 &lt;filter&gt;
   &lt;filter-name&gt;plutoPortalDriver&lt;/filter-name&gt;
   &lt;filter-class&gt;org.apache.pluto.driver.PortalDriverFilter&lt;/filter-class&gt;
@@ -121,10 +124,12 @@ limitations under the License.
   &lt;filter-name&gt;plutoPortalDriver&lt;/filter-name&gt;
   &lt;url-pattern&gt;/about.jsp/*&lt;/url-pattern&gt;
 &lt;/filter-mapping&gt;
+]]>
             </pre>
           </li>
           <li>Include the portlet (and perhaps some controls?) in your jsp.
             <pre>
+<![CDATA[
 &lt;%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %&gt;
 
 &lt;!-- Use pluto portlet tag to render the portlet --&gt;
@@ -153,6 +158,7 @@ limitations under the License.
   &lt;/div&gt;
 
 &lt;/pluto:portlet&gt;
+]]>
             </pre>
           </li>
         </ul>
