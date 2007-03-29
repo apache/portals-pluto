@@ -97,71 +97,51 @@ limitations under the License.
           Simple, use the Pluto Portal Drivers "PortalDriverFilter". This allows
           you to embed a portlet directly into a jsp page. To use it, do the following:
         </p>
+        <p>
         <ul>
           <li>Add the Portal Driver listener Configuration to your web.xml
-            <pre>
-<![CDATA[
-&lt;listener&gt;
-    &lt;listener-class&gt;org.apache.pluto.driver.PortalStartupListener&lt;/listener-class&gt;
-&lt;/listener&gt;
-]]>
-            </pre>
+            <textarea style="border:0; width: 100%; background:transparent; color:#555555" rows="3" readonly="true">
+<listener>
+    <listener-class>org.apache.pluto.driver.PortalStartupListener</listener-class>
+</listener>
+            </textarea>
           </li>
           <li>Add the PortalDriverFilter configuration to your web.xml
-            <pre>
-<![CDATA[
-&lt;filter&gt;
-  &lt;filter-name&gt;plutoPortalDriver&lt;/filter-name&gt;
-  &lt;filter-class&gt;org.apache.pluto.driver.PortalDriverFilter&lt;/filter-class&gt;
-&lt;/filter&gt;
+            <textarea style="border:0; width: 100%; background:transparent; color:#555555" rows="15" readonly="true">
+<filter>
+  <filter-name>plutoPortalDriver</filter-name>
+  <filter-class>org.apache.pluto.driver.PortalDriverFilter</filter-class>
+</filter>
 
-&lt;filter-mapping&gt;
-  &lt;filter-name&gt;plutoPortalDriver&lt;/filter-name&gt;
-  &lt;url-pattern&gt;/about.jsp&lt;/url-pattern&gt;
-&lt;/filter-mapping&gt;
+<filter-mapping>
+  <filter-name>plutoPortalDriver</filter-name>
+  <url-pattern>/about.jsp</url-pattern>
+</filter-mapping>
 
-&lt;filter-mapping&gt;
-  &lt;filter-name&gt;plutoPortalDriver&lt;/filter-name&gt;
-  &lt;url-pattern&gt;/about.jsp/*&lt;/url-pattern&gt;
-&lt;/filter-mapping&gt;
-]]>
-            </pre>
+<filter-mapping>
+  <filter-name>plutoPortalDriver</filter-name>
+  <url-pattern>/about.jsp/*</url-pattern>
+</filter-mapping>
+            </textarea>
           </li>
           <li>Include the portlet (and perhaps some controls?) in your jsp.
-            <pre>
-<![CDATA[
-&lt;%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %&gt;
+            <textarea style="border:0; width: 100%; background:transparent; color:#555555" rows="15" readonly="true">
+%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %
 
-&lt;!-- Use pluto portlet tag to render the portlet --&gt;
-&lt;pluto:portlet portletId="${portlet}"&gt;
-
-  &lt;!-- Assemble the rendering result --&gt;
-  &lt;div class="portlet" id='&lt;c:out value="${portlet}"/&gt;'&gt;
-    &lt;div class="header"&gt;
-      &lt;!-- Portlet Mode Controls --&gt;
-      &lt;pluto:modeAnchor portletMode="view"/&gt;
-      &lt;pluto:modeAnchor portletMode="edit"/&gt;
-      &lt;pluto:modeAnchor portletMode="help"/&gt;
-      &lt;!-- Window State Controls --&gt;
-      &lt;pluto:windowStateAnchor windowState="minimized"/&gt;
-      &lt;pluto:windowStateAnchor windowState="maximized"/&gt;
-      &lt;pluto:windowStateAnchor windowState="normal"/&gt;
-      &lt;a href="&lt;pluto:url windowState="minimized"/&gt;"&gt;&lt;span class="min"&gt;&lt;/span&gt;&lt;/a&gt;
-      &lt;a href="&lt;pluto:url windowState="maximized"/&gt;"&gt;&lt;span class="max"&gt;&lt;/span&gt;&lt;/a&gt;
-      &lt;a href="&lt;pluto:url windowState="normal"/&gt;"&gt;&lt;span class="norm"&gt;&lt;/span&gt;&lt;/a&gt;
-      &lt;!-- Portlet Title --&gt;
-      &lt;h2 class="title"&gt;&lt;pluto:title/&gt;&lt;/h2&gt;
-    &lt;/div&gt;
-    &lt;div class="body"&gt;
-      &lt;pluto:render/&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-&lt;/pluto:portlet&gt;
-]]>
-            </pre>
+<pluto:portlet portletId="${portlet}">
+  <div class="portlet" id='&gt;c:out value="${portlet}"/&gt;'>
+    <div class="header">
+      <h2 class="title"><pluto:title/></h2>
+    </div>
+    <div class="body">
+      <pluto:render/>
+    </div>
+  </div>
+</pluto:portlet>
+            </textarea>
           </li>
         </ul>
+        </p>
       </answer>
     </faq>
 
