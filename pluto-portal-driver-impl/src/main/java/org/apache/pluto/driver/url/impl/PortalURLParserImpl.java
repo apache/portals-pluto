@@ -109,7 +109,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         // Support added for filter.  Should we seperate into a different impl?
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
-            if(servletName.contains(".jsp") && !servletName.endsWith(".jsp")) {
+            if(servletName.indexOf(".jsp") > 0 && !servletName.endsWith(".jsp")) {
                 int idx = servletName.indexOf(".jsp")+".jsp".length();
                 pathInfo = servletName.substring(idx);
                 servletName = servletName.substring(0, idx);
