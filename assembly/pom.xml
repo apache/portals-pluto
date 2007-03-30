@@ -88,27 +88,32 @@
               <workDirectory>target/assembly/work</workDirectory>
             </configuration>
           </plugin>
-            <plugin>
-                <groupId>org.apache.pluto</groupId>
-                <artifactId>pluto-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <configuration>
-                            <resourceBundles>
-                                <resourceBundle>org.apache.pluto:pluto-resources:${pom.parent.version}</resourceBundle>
-                            </resourceBundles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
       </build>
     </profile>
   </profiles>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.pluto</groupId>
+        <artifactId>pluto-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <resourceBundles>
+                <resourceBundle>org.apache.pluto:pluto-resources:${pom.parent.version}</resourceBundle>
+              </resourceBundles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+    
   <dependencies>
     <dependency>
       <groupId>org.apache.pluto</groupId>
@@ -146,6 +151,20 @@
       <artifactId>pluto-testsuite</artifactId>
       <type>war</type>
       <version>${pom.version}</version>
+    </dependency>
+
+    <!--
+      This dependency is required because the
+      of the Pluto resource plugin.  Note this
+      is an issue in the Maven Remote Resources plugin
+      as well (which the Pluto resource plugin is
+      based on).
+    -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
