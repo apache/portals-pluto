@@ -26,6 +26,32 @@ limitations under the License.
   
   <body>
 
+    <section name="Pluto 1.1.3 Release Notes">
+      <subsection name="Bug">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-351'>PLUTO-351</a> - Method removeAttribute in PortletRequestImpl causes NullPointerException in Resin 3.0.17 </li>
+        </ul>
+      </subsection> 
+      
+      <subsection name="Improvement">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-350'>PLUTO-350</a> - Remove absolute url dependency</li>
+        </ul>
+    
+      <subsection name="New Feature">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-352'>PLUTO-352</a> - Implement "Simple" Portlet Page Support</li>
+        </ul>
+      </subsection>
+          
+      <subsection name="Task">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-348'>PLUTO-348</a> - Automate PGP key signing of M2 artifacts.</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-349'>PLUTO-349</a> - Include META-INF/LICENSE and META-INF/NOTICE in maven artifacts</li>
+        </ul>
+      </subsection>    
+    </section>
+
     <section name="Pluto 1.1.2 Release Notes">
 
       <subsection name="Bug">
