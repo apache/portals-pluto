@@ -200,5 +200,61 @@ limitations under the License.
                             </project>
                           ]]>
     </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>log4j</groupId>
+                              <artifactId>log4j</artifactId>
+                              <name>Apache log4j Project</name>
+                              <url>http://logging.apache.org/log4j/docs/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>aopalliance</groupId>
+                              <artifactId>aopalliance</artifactId>
+                              <name>AOP Alliance</name>
+                              <url>http://aopalliance.sourceforge.net/</url>
+                              <organization>
+                                <name>AOP Alliance</name>
+                                <url>http://aopalliance.sourceforge.net</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>commons-lang</groupId>
+                              <artifactId>commons-lang</artifactId>
+                              <name>Jakarta Commons Lang</name>
+                              <url>http://jakarta.apache.org/commons/lang/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
+    <resourceSupplement>
+      <![CDATA[
+                            <project>
+                              <groupId>commons-cli</groupId>
+                              <artifactId>commons-cli</artifactId>
+                              <name>Jakarta Commons CLI</name>
+                              <url>http://jakarta.apache.org/commons/cli/</url>
+                              <organization>
+                                <name>Apache Software Foundation</name>
+                                <url>http://www.apache.org/</url>
+                              </organization>
+                            </project>
+                          ]]>
+    </resourceSupplement>
   </resourceSupplements>
 </remoteResourcesBundle>
