@@ -20,7 +20,7 @@ limitations under the License.
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
-<div class="portlet-section-header">Page Adminstrator Portlet Help</div>
+<div class="portlet-section-header">Deploying Portlet Applications in Tomcat</div>
 
 <div class="portlet-section-subheader">Adding New Portlets to a Portal Page</div>
 
@@ -43,19 +43,13 @@ like this:<br/>
 <p class="portlet-font">
 The logged in user also needs to have a manager role also, 
 which is configured in conf/tomcat-users.xml. In the binary distribution, the tomcat and pluto users have the manager 
-role set.In addition, the portlet application needs to be registered in pluto-portal-driver-config.xml with a 
-proper portlet-app record like this:
-<pre>
-&lt;portlet-app&gt;
-    &lt;context-path&gt;/HelloWorldPortlet&lt;/context-path&gt;
-    &lt;portlets&gt;
-      &lt;portlet name="HelloWorldPortlet"/&gt;
-    &lt;/portlets&gt;
-&lt;/portlet-app&gt;
-</pre>  
+role already set.  
 </p>
 <p class="portlet-font">
-When these steps have been done, restart Pluto and use the Page Administrator Portlet to add the new portlet to a page. If you want to put the portlet on a new page, you must do so by manually adding a page element as a child of the render-config element in pluto-portal-driver-config.xml before you restart Pluto.
+When the portlet application has been deployed, restart Pluto and use the Page Administrator Portlet to add the new portlet to a page. 
+If you want to put the portlet on a new page, you must do so by manually adding a page element as a child of the 
+render-config element in pluto-portal-driver-config.xml before you restart Pluto. See the Help mode for more details
+on doing this process.
 </p>
 
 <div class="portlet-section-subheader">Deployment in Another Application Server</div>

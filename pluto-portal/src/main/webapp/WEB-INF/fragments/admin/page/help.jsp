@@ -23,45 +23,54 @@ limitations under the License.
 <div class="portlet-section-header">Page Adminstrator Portlet Help</div>
 
 <p class="portlet-font">
-The Page Administrator Portlet works with portal pages and portlet applications defined in pluto-portal-driver-config.xml. 
-Portlets must be deployed to the app server (Tomcat in the binary distribution). Deployment can be done via Maven, Ant 
-or the app server's deployment console (use the 'Upload and deploy portlet war' link on the bottom of the page). 
+The Page Administrator Portlet is used to add and remove portlets from portal pages. The current
+version of this application does not deploy the portlet application war or persist page
+configurations that are held in pluto-portal-driver-config.xml.
 </p>
 
 <div class="portlet-section-subheader">Configuring a Portlet Application</div>
 <p class="portlet-font">
-The portlet application needs to be registered in pluto-portal-driver-config.xml with a 
-proper portlet-app record like this:
-<pre>
-&lt;portlet-app&gt;
-    &lt;context-path&gt;/HelloWorldPortlet&lt;/context-path&gt;
-    &lt;portlets&gt;
-      &lt;portlet name="HelloWorldPortlet"/&gt;
-    &lt;/portlets&gt;
-&lt;/portlet-app&gt;
-</pre>  
+The portlet application needs to be bundled in a war file as per the Java Portlet Specification. 
+The war also needs to include proper PortletServlet servlet and servlet-mapping records in WEB-INF/web.xml.
+An assembly process has been developed to add these records to web.xml using Maven 2 (the
+pluto:assemble goal in maven-pluto-plugin) or Ant (AssembleTask). 
+See the testsuite web.xml file for an example how the servlet and servlet-mapping
+records should look like after assembly (other items the developer adds to web.xml should be 
+carried forward into the updated file). 
 </p>
 
-<div class="portlet-section-subheader">Configuring a Portal Page</div>
 <p class="portlet-font">
-The portal needs to be defined in pluto-portal-driver-config.xml as a page child element of render-config:
+A custom portlet war deployed into the bundled distribution of Pluto also needs a Tomcat context descriptor 
+with the same name as the portlet app war name (a.k.a. context name). This context file needs to be 
+in the META-INF directory of the war file. Here's an example of one for a portlet bundled for a 
+HelloWorldPortlet context (file name is HelloWorldPortlet.xml): 
 <pre>
-&lt;page name="Hello World Page" uri="/WEB-INF/themes/pluto-default-theme.jsp"&gt;
-&lt;/page&gt;
-</pre>
+&lt;Context path="/HelloWorldPortlet" docBase="HelloWorldPortlet" crossContext="true"/&gt; 
+</pre>  
+The crossContext attribute allows Pluto, which is deployed in its own Tomcat context, to work with this custom portlet. 
+</p>
+
+<div class="portlet-section-subheader">Deploying a Portlet Application</div>
+<p class="portlet-font">
+	The way to deploy a portlet application depends on the app server Pluto is running in. In the bundled distribution
+	Pluto is deployed in Tomcat. In this case, you can use the Tomcat manager app to deploy the portlet
+	war. There is a 'Upload and deploy portlet war' link at the bottom of the Page Administrator portlet that points to 
+	the manager app	in the bundled distribution (this link can be changed for other app servers -- see the 
+	adjacent Help link). In the bundled distribution of Pluto, you can also simply drop the portlet application war into Tomcat's 
+    webapp directory.
 </p>
 
 <div class="portlet-section-subheader">Adding Portlets to a Portal Pages</div>
 <p class="portlet-font">
-Adding portlets to a portal page involves first selecting a portal page using the Portal Pages drop-down and then
-selecting a portlet application using the Portlet Applications drop-down. When this is done, click the Add Portlet 
-button.
+Adding portlets to a portal page using the Pluto Page Administrator portlet involves first selecting a portal 
+page using the Portal Pages drop-down and then selecting a portlet application using the Portlet Applications 
+drop-down and finally a portlet in the adjacent drop down. When this is done, click the Add Portlet button.
 </p>
 
 <div class="portlet-section-subheader">Removing Portal Pages</div>
 <p class="portlet-font">
-Removing portlets from a portal page involves selecting a portal page using the Portal Pages drop-down and then
-clicking on the Remove Page button.
+Removing portlets from a portal page involves selecting a portal page using the Portal Pages drop-down, selecting
+the portlet in the adjacent list and then clicking on the Remove Page button.
 </p>
 
 
@@ -74,20 +83,22 @@ from pages must also be done manually in pluto-portal-driver-config.xml.
 
 <p class="portlet-font">
 To manually add a portlet to a page in pluto-portal-driver-config.xml, a portlet child element must be added to the 
-page element. This element should look like this:
+page element, which is a child of render-config. This element should look like this:
 <pre>
 &lt;portlet context="/HelloWorldPortlet" name="HelloWorldPortlet"/&gt;
 </pre>
 </p>
+
 <p class="portlet-font">
- The value of the context-path element within the portlet-app record must correspond to the value of the context 
- attribute in the portlet element. In addition, the value of the name attribute in the portlet child element of 
- portlet-app must correspond to the value of the name attribute of the portlet child element of page. 
+New portal pages can be created by adding a page element under render-config in pluto-portal-driver-config.xml. 
+The uri attribute of the page element points to a JSP page that will contain a portlet (or portlets) defined in 
+its child (or children) portlet element(s). The default 'theme' lays out the portlets in two columns 
+(see WEB-INF\themes\pluto-default-theme.jsp in the pluto webapp for details). 
 </p>
+
 
 <%-- Properties for link to app server deployer and help mode file --%>
 <fmt:bundle basename="AdminPortlet">
-	<fmt:message key="appserver.deployer.help.page" var="deployerHelp"/>
 	<fmt:message key="appserver.deployer.help.page" var="deployerHelp"/>
 </fmt:bundle> 
 <portlet:renderURL portletMode="help" var="deployerhelpURL">
