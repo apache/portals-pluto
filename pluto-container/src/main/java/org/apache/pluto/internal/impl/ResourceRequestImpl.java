@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -96,6 +97,21 @@ implements ResourceRequest, InternalActionRequest {
 		// TODO Auto-generated method stub
 //		return null;
 		throw new UnsupportedOperationException("This method needs to be implemented");
+	}
+
+	public String getLifecyclePhase() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public String getResourceID() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Cookie[] getCookieProperties() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 	
 }

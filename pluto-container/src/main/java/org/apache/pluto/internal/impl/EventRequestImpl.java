@@ -21,12 +21,19 @@ import java.util.List;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletPreferences;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
 import org.apache.pluto.internal.InternalEventRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.EventProvider;
@@ -73,7 +80,33 @@ public class EventRequestImpl extends PortletRequestImpl
         String eventName = (String) this.getAttribute(Constants.EVENT_NAME);
         List<Event> events = provider.getAllSavedEvents();
         for (Event event : events) {
-        	if (eventName.contains(event.getName())){
+        	if (eventName.contains(event.getName().toString())){
+        		Object value = event.getValue();
+        		if (value instanceof XMLStreamReader) {
+        			XMLStreamReader xml = (XMLStreamReader) event.getValue();
+					EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(event.getName());
+					try {
+						// now test if object is jaxb
+						
+						ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			            Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());
+						
+						JAXBContext jc = JAXBContext.newInstance(clazz);
+						Unmarshaller unmarshaller  = jc.createUnmarshaller();
+
+						unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+						
+					    JAXBElement result = unmarshaller.unmarshal(xml,clazz);
+					    
+					    return new EventImpl(event.getName(),result.getValue());
+					} catch (JAXBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				return event;
 			}
 		}
@@ -98,5 +131,15 @@ public class EventRequestImpl extends PortletRequestImpl
        }
        return portletPreferences;
    }
+
+	public String getLifecyclePhase() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Cookie[] getCookieProperties() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 
 }

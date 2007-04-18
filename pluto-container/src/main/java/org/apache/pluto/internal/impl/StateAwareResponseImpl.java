@@ -15,7 +15,13 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.rmi.MarshalException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,9 +39,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.SchemaFactoryLoader;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
@@ -43,6 +65,9 @@ import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.StringUtils;
+import org.xml.sax.SAXException;
+
+import com.sun.org.apache.xerces.internal.jaxp.validation.xs.SchemaFactoryImpl;
 
 /**
  * Implementation of JSR-286 <code>StateAwareResponse</code>.
@@ -51,6 +76,9 @@ import org.apache.pluto.util.StringUtils;
  */
 public class StateAwareResponseImpl extends PortletResponseImpl implements
 		StateAwareResponse {
+	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(StateAwareResponseImpl.class);
 
 	boolean redirectAllowed = true;
 	private boolean redirected;
@@ -72,46 +100,99 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		context = container.getRequiredContainerServices().getPortalContext();
 		callback = container.getRequiredContainerServices().getPortalCallbackService();
 	}
-	public void setEvent(String name, Object value) {
+	
+	public void setEvent(QName qname, Object value) {
 		EventProvider provider = callback.getEventProvider(
 				getHttpServletRequest(),getHttpServletResponse());
+		XMLStreamReader xml = null;
 		try {
-			provider.registerToFireEvent(new EventImpl(name,value));
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PortletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PortletContainerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+			EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(qname);
+			if (value != null && eventDefinitionDD == null) {
+				// throw exception
+			} if (eventDefinitionDD == null) {
+				// throw exception
+			}
+			else {
+				
+				ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	            Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());
+				Class valueClazz = value.getClass();
+	            
+				// now test if object is jaxb
+				JAXBContext jc = JAXBContext.newInstance(clazz);
 
-	public void setEvents(Map events) {
-		EventProvider provider = callback.getEventProvider(
-				getHttpServletRequest(),getHttpServletResponse());
-		Set keys = events.keySet();
-		try {
-			for (Object key : keys) {
-				provider.registerToFireEvent(new EventImpl((String)key,events.get(key)));
+				Marshaller marshaller  = jc.createMarshaller();
+				marshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, 
+			              Boolean.TRUE );
+			    
+			    Writer out = new StringWriter();
+			    
+			    marshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+			    			    
+//			    marshaller.setEventHandler(new ValidationEventHandler()
+//			    {
+//
+//				public boolean handleEvent(ValidationEvent event) {
+////					System.out.println(event);
+////					System.out.println("lineno: " + event.getLocator().getLineNumber());
+////					System.out.println("coleno: " + event.getLocator().getColumnNumber());
+////					System.out.println("message: " + event.getMessage());
+////					System.out.println(event.getSeverity());
+//					return true;
+//				}
+//			    });
+			    marshaller.marshal(new JAXBElement(
+			    			eventDefinitionDD.getName(),clazz,value), out);
+//			    Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(new File("/home/chrisra/pluto/portlets/EventPortlet/src/main/java/de/xilma/pluto/name.xsd")); 
+//			    marshaller.setSchema(schema);
+//			    marshaller.marshal(value, out);
+			   
+			    LOG.info(out.toString());
+			    
+		        Reader in = new StringReader(out.toString());
+		        
+		        xml = XMLInputFactory.newInstance().createXMLStreamReader(in);
+			}
+			if (xml != null) {
+				provider.registerToFireEvent(new EventImpl(qname,xml));
+			} else { 
+				provider.registerToFireEvent(new EventImpl(qname,value));
 			}
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (PortletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PortletContainerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (MarshalException e) {
+			// there is no valid jaxb binding
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			// maybe there is no valid jaxb binding
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XMLStreamException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
+	public void setEvents(Map events) {
+		Set keys = events.keySet();
+		for (Object key : keys) {
+			setEvent((QName)key,events.get(key));
 		}
 	}
 
@@ -257,14 +338,26 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     public Map getRenderParameters() {
         return renderParameters;
     }
+    
+    public Map getRenderParameterMap() {
+		return renderParameters;
+	}
 
     public PortletMode getChangedPortletMode() {
         return this.portletMode;
     }
+    
+    public PortletMode getPortletMode() {
+		return getChangedPortletMode();
+	}
 
     public WindowState getChangedWindowState() {
         return this.windowState;
     }
+    
+    public WindowState getWindowState() {
+		return getChangedWindowState();
+	}
     
     private boolean isPortletModeAllowed(PortletMode mode) {
         return isPortletModeAllowedByPortlet(mode)
@@ -309,5 +402,8 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         }
         return false;
     }
-
+	public void setNextPossiblePortletModes(Enumeration portletModes) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }

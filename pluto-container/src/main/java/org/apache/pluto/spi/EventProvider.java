@@ -22,9 +22,11 @@ import java.util.List;
 import javax.portlet.Event;
 import javax.portlet.PortletException;
 import javax.servlet.ServletException;
+import javax.xml.namespace.QName;
 
 import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
 
 	/**
 	 * 
@@ -66,8 +68,9 @@ public interface EventProvider {
 	 *            the event we want to add
 	 * @param portletName -
 	 *            null or the pw to be associated with the event
+	 * @param eventDefinitionDD TODO
 	 */
-	public abstract void registerEvent(String evtLabel, String portletName);
+	public abstract void registerEvent(String evtLabel, String portletName, EventDefinitionDD eventDefinitionDD);
 
 	/**
 	 * 
@@ -111,4 +114,6 @@ public interface EventProvider {
 	public abstract List<Event> getAllSavedEvents();
 
 	public abstract void fireEvents(EventContainer container);
+
+	public abstract EventDefinitionDD getEventDefinition(QName qname);
 }

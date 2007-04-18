@@ -1,17 +1,23 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 /*
- * Copyright 2006 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * NOTE: this source code is based on an early draft version of JSR 286 and not intended for product
+ * implementations. This file may change or vanish in the final version of the JSR 286 specification.
  */
 /*
  * This source code implements specifications defined by the Java
@@ -20,18 +26,23 @@
  */
 /*
  * Copyright 2006 IBM Corporation.
+ *
  */
 package javax.portlet.filter;
 
+import java.util.Enumeration;
 import java.util.Map;
 
+import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.FragmentURL;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.xml.namespace.QName;
 
 /**
  * The <code>EventResponseWrapper</code> provides a convenient 
@@ -71,7 +82,7 @@ public class EventResponseWrapper implements EventResponse {
       * The default behavior of this method is to call 
       * <code>setEvent(name, value)</code> on the wrapped response object.
       */
-     public void setEvent(String name, Object value) {
+     public void setEvent(QName name, Object value) {
          response.setEvent(name, value);
      }
 
@@ -133,15 +144,7 @@ public class EventResponseWrapper implements EventResponse {
          response.addProperty(key, value);
      }
 
-     /**
-      * The default behavior of this method is to call 
-      * <code>addProperty(key, value, scope)</code> on the wrapped response object.
-      */
-     public void addProperty(String key, String value, int scope) {
-         response.addProperty(key, value, scope);
-     }
-
-     /**
+    /**
       * The default behavior of this method is to call 
       * <code>createActionURL()</code> on the wrapped response object.
       */
@@ -163,6 +166,14 @@ public class EventResponseWrapper implements EventResponse {
       */
      public ResourceURL createResourceURL() {
          return response.createResourceURL();
+     }
+
+     /**
+      * The default behavior of this method is to call 
+      * <code>createResourceURL</code> on the wrapped response object.
+      */
+     public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
+         return response.createResourceURL(markupContainsPortletURLs);
      }
 
      /**
@@ -190,14 +201,6 @@ public class EventResponseWrapper implements EventResponse {
      }
 
      /**
-      * The default behavior of this method is to call 
-      * <code>setProperty(key, value, scope)</code> on the wrapped response object.
-      */
-     public void setProperty(String key, String value, int scope) {
-         response.setProperty(key, value, scope);
-     }
-
-     /**
       * Return the wrapped response object.
       * 
       * @return the wrapped response
@@ -214,6 +217,54 @@ public class EventResponseWrapper implements EventResponse {
       */
      public void setResponse(EventResponse response) {
          this.response = response;
+     }
+
+     /**
+      * The default behavior of this method is to call 
+      * <code>getPortletMode()</code> on the wrapped response object.
+      */
+     public PortletMode getPortletMode() {
+         return response.getPortletMode();
+     }
+
+     /**
+      * The default behavior of this method is to call 
+      * <code>getRenderParameterMap()</code> on the wrapped response object.
+      */
+     public Map getRenderParameterMap() {
+         return response.getRenderParameterMap();
+     }
+
+     /**
+      * The default behavior of this method is to call 
+      * <code>getWindowState()</code> on the wrapped response object.
+      */
+     public WindowState getWindowState() {
+         return response.getWindowState();
+     }
+
+     /**
+      * The default behavior of this method is to call 
+      * <code>createFragmentURL()</code> on the wrapped response object.
+      */
+     public FragmentURL createFragmentURL() {
+         return response.createFragmentURL();
+     }
+
+     /**
+      *  The default behavior of this method is to call 
+      * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
+      */
+     public void setNextPossiblePortletModes(Enumeration portletModes) {
+         response.setNextPossiblePortletModes(portletModes);
+     }
+
+     /**
+      *  The default behavior of this method is to call 
+      * <code>setRenderParameters()</code> on the wrapped response object.
+      */
+     public void setRenderParameters(EventRequest request) {
+         response.setRenderParameters(request);         
      }
 
 }

@@ -80,6 +80,29 @@ class InstallationDependency {
     public static final InstallationDependency  XML_PARSER_APIS =
             new InstallationDependency("xerces", "xmlParserAPIs", 
                     VERSION_PROPERTIES.getProperty("xmlParserAPIs.version"));
+    
+    
+    public static final InstallationDependency JAXB_API =
+		new InstallationDependency("javax.xml.bind","jaxb-api",
+				VERSION_PROPERTIES.getProperty("jaxb.version"));
+    public static final InstallationDependency JAXB_IMPL =
+		new InstallationDependency("com.sun.xml.bind","jaxb-impl",
+				VERSION_PROPERTIES.getProperty("jaxb-impl.version"));
+    
+    public static final InstallationDependency STAX_API =
+		new InstallationDependency("stax","stax-api",
+				VERSION_PROPERTIES.getProperty("stax.api.version"));
+    public static final InstallationDependency STAX_IMPL =
+		new InstallationDependency("stax","stax",
+				VERSION_PROPERTIES.getProperty("stax.impl.version"));
+    
+    public static final InstallationDependency XALAN =
+		new InstallationDependency("xalan","xalan",
+				VERSION_PROPERTIES.getProperty("xalan.version"));
+    public static final InstallationDependency ACTIVATION =
+		new InstallationDependency("javax.activation","activation",
+				VERSION_PROPERTIES.getProperty("activation.version"));
+    
 
     private static final List ENDORSED = new ArrayList();
     private static final List SHARED = new ArrayList();
@@ -95,7 +118,17 @@ class InstallationDependency {
         SHARED.add(DESCRIPTOR_IMPL);
         SHARED.add(CONTAINER);
         SHARED.add(TAGLIB);
-        SHARED.add(CASTOR);
+//        SHARED.add(CASTOR);
+        
+        SHARED.add(JAXB_API);
+        SHARED.add(JAXB_IMPL);
+        
+        SHARED.add(STAX_API);
+        SHARED.add(STAX_IMPL);
+        
+        SHARED.add(ACTIVATION);
+
+
     }
 
 

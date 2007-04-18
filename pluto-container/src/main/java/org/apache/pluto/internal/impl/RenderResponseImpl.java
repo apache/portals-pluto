@@ -30,8 +30,10 @@ import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 import javax.portlet.CacheControl;
+import javax.portlet.FragmentURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -262,7 +264,19 @@ implements RenderResponse, InternalRenderResponse {
      */
 	public CacheControl getCacheControl() {
 		// TODO Auto-generated method stub
-		return new CacheControlImpl();
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+
+	public void addProperty(Cookie cookie) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+
+	public FragmentURL createFragmentURL() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
 }

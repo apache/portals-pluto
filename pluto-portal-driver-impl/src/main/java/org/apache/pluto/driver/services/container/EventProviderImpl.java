@@ -29,6 +29,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,6 +38,7 @@ import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.PortletContainerImpl;
+import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortletWindowImpl;
@@ -67,6 +69,8 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
      */
     private static Map<String, List<String>> portalEvts = 
     	new HashMap<String, List<String>>(100);
+    private static Map<String, EventDefinitionDD> portalEvtsDefs = 
+    	new HashMap<String, EventDefinitionDD>(100);
 
     private List<Event> savedEvents = new ArrayList<Event>();
     	
@@ -136,17 +140,17 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
      * @param evtLabel - the event we want to add
      * @param portletName - null or the pw to be associated with the event
      */
-    public void registerEvent(String evtLabel, String portletName) {
+    public void registerEvent(String evtLabel, String portletName, EventDefinitionDD eventDefinitionDD) {
     	if (evtLabel == null)
     		return ;
     	
     	// check, if event by that name already exists 
     	if (portalEvts.containsKey(evtLabel)) {
     		if (portletName != null) {
-    			
     			// we don't want duplicate Portlet Window entries, so leave 'em out
-    			if (!this.containsValue(portletName, portalEvts.get(evtLabel)))
+    			if (!this.containsValue(portletName, portalEvts.get(evtLabel))){
     				portalEvts.get(evtLabel).add(portletName);
+    			}
     			
     		}
     	}
@@ -156,6 +160,8 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     		if (portletName != null) 
     			list.add(portletName);
     		portalEvts.put(evtLabel, list);
+    		// add EventDefinition
+        	portalEvtsDefs.put(evtLabel, eventDefinitionDD);
     	}
     }
     
@@ -165,7 +171,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
      */
     public void registerEvent(String evtLabel) {
     	if (evtLabel != null)
-    		registerEvent(evtLabel, null);
+    		registerEvent(evtLabel, null, null);
     }
 	
     /**
@@ -282,23 +288,29 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
             
             for (Event event : this.savedEvents) {
             	// get list of portlet windows that are associated with the event
-            	List<String> portletNames = portalEvts.get(event.getName());
+            	List<String> portletNames = portalEvts.get(event.getName().toString());
 
-            	for (String portlet : portletNames) {
-            		if (portlet.equals(portletId)){
-            			try {
-							eventContainer.fireEvent(this.request,this.response,
-									window,event.getName());
-						} catch (PortletException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-            		}      		
+            	if (portletNames != null){ 
+            		for (String portlet : portletNames) {
+            			if (portlet.equals(portletId)){
+            				try {
+            					eventContainer.fireEvent(this.request,this.response,
+            							window,event.getName());
+            				} catch (PortletException e) {
+            					// TODO Auto-generated catch block
+            					e.printStackTrace();
+            				} catch (IOException e) {
+            					// TODO Auto-generated catch block
+            					e.printStackTrace();
+            				}
+            			}      		
+            		}
             	}
             }
         }
+	}
+
+	public EventDefinitionDD getEventDefinition(QName qname) {
+		return portalEvtsDefs.get(qname.toString());
 	}
 }

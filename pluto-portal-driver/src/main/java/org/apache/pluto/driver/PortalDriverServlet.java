@@ -16,6 +16,7 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -25,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,12 +34,14 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.descriptors.portlet.EventDD;
+import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.RenderDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
@@ -174,7 +178,11 @@ public class PortalDriverServlet extends HttpServlet {
                 LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
             }
             
-            registerPortlets(pageConfig, portalURL,request);
+            try {
+				registerPortlets(pageConfig, portalURL,request);
+			} catch (PortletContainerException e) {
+				throw new ServletException(e);
+			}
             
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = (pageConfig.getUri() != null)
@@ -205,13 +213,16 @@ public class PortalDriverServlet extends HttpServlet {
     
     // Private Methods ---------------------------------------------------------
     
-    private void registerPortlets(PageConfig pageConfig, PortalURL portalURL, HttpServletRequest request) throws ServletException {
+    private void registerPortlets(PageConfig pageConfig, PortalURL portalURL, HttpServletRequest request) throws ServletException, PortletContainerException {
 		
 		// iterate all portlets on the page
         for (Object object : pageConfig.getPortletIds()) {
         	String portletId = (String) object;
         	DriverConfiguration driverConfig = (DriverConfiguration)
-			getServletContext().getAttribute(AttributeKeys.DRIVER_CONFIG);
+				getServletContext().getAttribute(AttributeKeys.DRIVER_CONFIG);
+        	PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(
+        		PortletWindowConfig.parseContextPath(portletId));
+        	
         	PortletWindowConfig windowConfig = driverConfig
         			.getPortletWindowConfig(portletId);
             PortletWindow window = new PortletWindowImpl(windowConfig, portalURL);
@@ -219,26 +230,29 @@ public class PortalDriverServlet extends HttpServlet {
             		getServletContext(),window);
             PortletDD portletDD = win.getPortletEntity().getPortletDefinition();
             
-            // register Events
-            EventProvider eventProvider = container.getRequiredContainerServices()
-            	.getPortalCallbackService().getEventProvider();
-            List<EventDD> events = portletDD.getProcessingEvents();
-            for (EventDD eventDD : events) {
-				eventProvider.registerEvent(eventDD.getName(),window.getId().getStringId());
+            registerEvents(window, portletDD, portletAppDD);
+            
+            registerSharedRenderParams(request, window, portletDD);
+		}
+	}
+
+	/**
+	 * registers the shared render params at the SharedRenderProvider
+	 * @param request the 
+	 * @param window
+	 * @param portletDD
+	 */
+	private void registerSharedRenderParams(HttpServletRequest request, PortletWindow window, PortletDD portletDD) {
+		SharedRenderProvider renderProvider = container.getRequiredContainerServices()
+			.getPortalCallbackService().getSharedRenderProvider(request);
+		List<String> render = portletDD.getRenderParameter();
+		if (render != null){ 
+			for (String renderDD : render){
+				renderProvider.registerSharedRenderParameter(window.getId().getStringId(), renderDD);
 				if (LOG.isDebugEnabled()){
-					LOG.debug(eventDD.getName()+ " successfully registered!");
+					LOG.debug(renderDD+ " successfully registered!");
 				}
 			}
-            //register SharedRenderParameter
-            SharedRenderProvider renderProvider = container.getRequiredContainerServices()
-            	.getPortalCallbackService().getSharedRenderProvider(request);
-            List<RenderDD> render = portletDD.getRenderParameter();
-            for (RenderDD renderDD : render){
-            	renderProvider.registerSharedRenderParameter(window.getId().getStringId(), renderDD.getName());
-            	if (LOG.isDebugEnabled()){
-					LOG.debug(renderDD.getName()+ " successfully registered!");
-				}
-            }
 		}
 	}
 
@@ -247,19 +261,33 @@ public class PortalDriverServlet extends HttpServlet {
 	 * @param window The PortletWindow to store the event
 	 * @param portletDD The PortletDD, where the event is declared
 	 */
-	private void registerEvents(PortletWindow window, PortletDD portletDD) {
+	private void registerEvents(PortletWindow window, PortletDD portletDD, 
+			PortletAppDD portletAppDD) {
 		EventProvider eventProvider = container.getRequiredContainerServices()
 			.getPortalCallbackService().getEventProvider();
-		List<EventDD> events = portletDD.getProcessingEvents();
-		for (EventDD eventDD : events) {
-			eventProvider.registerEvent(eventDD.getName(),window.getId().getStringId());
-			if (LOG.isDebugEnabled()){
-				LOG.debug(eventDD.getName()+" registered successfully!");
+		List<QName> events = portletDD.getProcessingEvents();
+		if (events != null) {
+			for (QName event : events) {
+				EventDefinitionDD eventDD = getEvent(event, portletAppDD);
+				eventProvider.registerEvent(event.toString(),window.getId().getStringId(), eventDD);
+				if (LOG.isDebugEnabled()){
+					LOG.debug(event+" registered successfully!");
+				}
 			}
 		}
 	}
     
-    /**
+    private EventDefinitionDD getEvent(QName event, PortletAppDD portletAppDD) {
+		List<EventDefinitionDD> events = portletAppDD.getEvents();
+		for (EventDefinitionDD definitionDD : events) {
+			if (definitionDD.getName().equals(event))
+				return definitionDD;
+		}
+		// return null, if not found
+		return null;
+	}
+
+	/**
      * Returns the portal driver configuration object.
      * @return the portal driver configuration object.
      */

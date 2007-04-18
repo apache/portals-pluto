@@ -1,17 +1,23 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 /*
- * Copyright 2006 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * NOTE: this source code is based on an early draft version of JSR 286 and not intended for product
+ * implementations. This file may change or vanish in the final version of the JSR 286 specification.
  */
 /*
  * This source code implements specifications defined by the Java
@@ -20,14 +26,23 @@
  */
 /*
  * Copyright 2006 IBM Corporation.
+ *
  */
 package javax.portlet.filter;
 
 import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.FragmentRequest;
+import javax.portlet.FragmentResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * A <code>FilterChain</code> is an object provided by the portlet container 
@@ -45,19 +60,70 @@ public interface FilterChain {
      * or if the calling filter is the last filter in the chain, 
      * causes the portlet at the end of the chain to be invoked.
      * 
-     * @param request  the current request, must be of type
-     *                 <code>ActionRequest</code>, 
-     *                 <code>EventRequest</code>, 
-     *                 <code>RenderRequest</code>, or 
-     *                 <code>ResourceRequest.</code> 
-     * @param response  the current response, nust be of type
-     *                 <code>ActionResponse</code>, 
-     *                 <code>EventReaponse</code>, or 
-     *                 <code>RenderResponse</code>. 
+     * @param request  the current action request. 
+     * @param response  the current action response
+     *                   
      * @throws IOException  if an IO error occured in the filter processing
      * @throws PortletException  if a portlet exception occured in the filter processing
      */
-    public void doFilter(PortletRequest request, PortletResponse response)
+    public void doFilter(ActionRequest request, ActionResponse response)
+     throws IOException, PortletException;
+
+    /**
+     * Causes the next filter in the chain to be invoked, 
+     * or if the calling filter is the last filter in the chain, 
+     * causes the portlet at the end of the chain to be invoked.
+     * 
+     * @param request  the current event request. 
+     * @param response  the current event response.
+     *  
+     * @throws IOException  if an IO error occured in the filter processing
+     * @throws PortletException  if a portlet exception occured in the filter processing
+     */
+    public void doFilter(EventRequest request, EventResponse response)
+     throws IOException, PortletException;
+
+    /**
+     * Causes the next filter in the chain to be invoked, 
+     * or if the calling filter is the last filter in the chain, 
+     * causes the portlet at the end of the chain to be invoked.
+     * 
+     * @param request  the current render request.
+     *  
+     * @param response  the current render response.
+     *  
+     * @throws IOException  if an IO error occured in the filter processing
+     * @throws PortletException  if a portlet exception occured in the filter processing
+     */
+    public void doFilter(RenderRequest request, RenderResponse response)
      throws IOException, PortletException;
     
+    /**
+     * Causes the next filter in the chain to be invoked, 
+     * or if the calling filter is the last filter in the chain, 
+     * causes the portlet at the end of the chain to be invoked.
+     * 
+     * @param request  the current resource request. 
+     * @param response  the current resource response.
+     *  
+     * @throws IOException  if an IO error occured in the filter processing
+     * @throws PortletException  if a portlet exception occured in the filter processing
+     */
+    public void doFilter(ResourceRequest request, ResourceResponse response)
+     throws IOException, PortletException;
+
+    /**
+     * Causes the next filter in the chain to be invoked, 
+     * or if the calling filter is the last filter in the chain, 
+     * causes the portlet at the end of the chain to be invoked.
+     * 
+     * @param request  the current fragment request. 
+     * @param response  the current fragment response.
+     *  
+     * @throws IOException  if an IO error occured in the filter processing
+     * @throws PortletException  if a portlet exception occured in the filter processing
+     */
+    public void doFilter(FragmentRequest request, FragmentResponse response)
+     throws IOException, PortletException;
+
 }

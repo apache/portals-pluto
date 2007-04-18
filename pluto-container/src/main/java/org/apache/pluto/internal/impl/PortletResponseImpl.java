@@ -18,6 +18,7 @@ package org.apache.pluto.internal.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.FragmentURL;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -110,16 +111,16 @@ implements PortletResponse, InternalPortletResponse {
                         name, value);
     }
     
-    public void setProperty(String name, String value, int scope) {
-    	// FIXME: What should this do? (scope seems to be new)
-    	ArgumentUtility.validateNotNull("propertyName", name);
-        container.getRequiredContainerServices()
-                .getPortalCallbackService()
-                .setResponseProperty(
-                        getHttpServletRequest(),
-                        internalPortletWindow,
-                        name, value);
-    }
+//    public void setProperty(String name, String value, int scope) {
+//    	// FIXME: What should this do? (scope seems to be new)
+//    	ArgumentUtility.validateNotNull("propertyName", name);
+//        container.getRequiredContainerServices()
+//                .getPortalCallbackService()
+//                .setResponseProperty(
+//                        getHttpServletRequest(),
+//                        internalPortletWindow,
+//                        name, value);
+//    }
 
     public String encodeURL(String path) {
         if (path.indexOf("://") == -1 && !path.startsWith("/")) {
@@ -227,7 +228,15 @@ implements PortletResponse, InternalPortletResponse {
 	                              getHttpServletRequest(),
 	                              getHttpServletResponse());
 	}
+	
+	public ResourceURL createResourceURL(boolean markupContainsPortletURLs){
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 
+	public FragmentURL createFragmentURL() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 
 	/**
 	 * Creates a portlet URL.
@@ -257,5 +266,4 @@ implements PortletResponse, InternalPortletResponse {
 	     }
 	     return validNamespace.toString();
 	}
-
 }

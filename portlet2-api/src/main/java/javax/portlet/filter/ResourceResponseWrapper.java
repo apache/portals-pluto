@@ -1,17 +1,23 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 /*
- * Copyright 2006 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * NOTE: this source code is based on an early draft version of JSR 286 and not intended for product
+ * implementations. This file may change or vanish in the final version of the JSR 286 specification.
  */
 /*
  * This source code implements specifications defined by the Java
@@ -20,6 +26,7 @@
  */
 /*
  * Copyright 2006 IBM Corporation.
+ *
  */
 package javax.portlet.filter;
 
@@ -29,9 +36,12 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
+import javax.portlet.FragmentRequest;
+import javax.portlet.FragmentURL;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
+import javax.servlet.http.Cookie;
 
 /**
  * The <code>ResourceResponseWrapper</code> provides a convenient 
@@ -81,14 +91,6 @@ public class ResourceResponseWrapper implements ResourceResponse {
 
     /**
      * The default behavior of this method is to call 
-     * <code>addProperty(key, value, scope)</code> on the wrapped response object.
-     */
-    public void addProperty(String key, String value, int scope) {
-        response.addProperty(key, value, scope);
-    }
-
-    /**
-     * The default behavior of this method is to call 
      * <code>createActionURL()</code> on the wrapped response object.
      */
     public PortletURL createActionURL() {
@@ -113,6 +115,14 @@ public class ResourceResponseWrapper implements ResourceResponse {
 
     /**
      * The default behavior of this method is to call 
+     * <code>createResourceURL</code> on the wrapped response object.
+     */
+    public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
+        return response.createResourceURL(markupContainsPortletURLs);
+    }
+
+   /**
+     * The default behavior of this method is to call 
      * <code>encodeURL(path)</code> on the wrapped response object.
      */
     public String encodeURL(String path) {
@@ -133,14 +143,6 @@ public class ResourceResponseWrapper implements ResourceResponse {
      */
     public void setProperty(String key, String value) {
         response.setProperty(key, value);
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>setProperty(key, value, scope)</code> on the wrapped response object.
-     */
-    public void setProperty(String key, String value, int scope) {
-        response.setProperty(key, value, scope);
     }
 
     /**
@@ -254,6 +256,48 @@ public class ResourceResponseWrapper implements ResourceResponse {
      */
     public CacheControl getCacheControl() {
         return response.getCacheControl();
+    }
+
+    /**
+     * The default behavior of this method is to call 
+     * <code>setCharacterEncoding(String charset)</code> on the wrapped response object.
+     */
+    public void setCharacterEncoding(String charset) {
+        this.setCharacterEncoding(charset);
+        return;
+    }
+
+    /**
+     * The default behavior of this method is to call 
+     * <code>setLocale(Locale loc)</code> on the wrapped response object.
+     */
+    public void setLocale(Locale loc) {
+        this.setLocale(loc);
+        return;
+    }
+
+    /**
+     * The default behavior of this method is to call 
+     * <code>createFragmentURL()</code> on the wrapped response object.
+     */
+    public FragmentURL createFragmentURL() {
+        return response.createFragmentURL();
+    }
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>addProperty()</code> on the wrapped response object.
+     */
+    public void addProperty(Cookie cookie) {
+        response.addProperty(cookie);
+    }
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>setContentLength()</code> on the wrapped response object.
+     */
+    public void setContentLength(int len) {
+        response.setContentLength(len);
     }
 
 }

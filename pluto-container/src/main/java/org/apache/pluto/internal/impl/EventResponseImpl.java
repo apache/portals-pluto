@@ -19,6 +19,7 @@ package org.apache.pluto.internal.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +58,13 @@ public class EventResponseImpl extends StateAwareResponseImpl
 		// TODO Auto-generated method stub
 //		return null;
 		throw new UnsupportedOperationException();
+	}
+
+
+
+	public void setRenderParameters(EventRequest request) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
 

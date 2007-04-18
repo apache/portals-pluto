@@ -27,6 +27,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -371,7 +372,7 @@ public class PortletContainerImpl implements PortletContainer,
      * @see {@link javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest, javax.portlet.EventResponse)
      */
     public void fireEvent(HttpServletRequest request, HttpServletResponse response,
-    		PortletWindow window, String eventName) 
+    		PortletWindow window, QName eventName) 
     throws PortletException, IOException {
 
     	ensureInitialized();
@@ -387,7 +388,7 @@ public class PortletContainerImpl implements PortletContainer,
     			this, internalPortletWindow, request, response);
     	
     	// Save the name of the actual event to fire in the Request
-    	eventRequest.setAttribute(Constants.EVENT_NAME, eventName);
+    	eventRequest.setAttribute(Constants.EVENT_NAME, eventName.toString());
 
     	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
     	invoker.event(eventRequest, eventResponse);

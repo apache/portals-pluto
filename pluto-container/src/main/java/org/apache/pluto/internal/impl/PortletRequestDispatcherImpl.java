@@ -15,22 +15,29 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.internal.InternalRenderRequest;
-import org.apache.pluto.internal.InternalRenderResponse;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.FragmentRequest;
+import javax.portlet.FragmentResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.internal.InternalRenderRequest;
+import org.apache.pluto.internal.InternalRenderResponse;
 
 /**
  * Implementation of the <code>PortletRequestDispatcher</code> interface.
@@ -121,7 +128,32 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         }
     }
     
-    public void include(ResourceRequest request, RenderResponse response) throws PortletException, IOException {
+    public void include(ResourceRequest request, ResourceResponse response) throws PortletException, IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void include(ActionRequest request, ActionResponse response) throws PortletException, IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void include(EventRequest request, EventResponse response) throws PortletException, IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void forward(ResourceRequest request, ResourceResponse response) throws PortletException, IOException, IllegalStateException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void forward(FragmentRequest request, FragmentResponse response) throws PortletException, IOException, IllegalStateException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void include(FragmentRequest request, FragmentResponse response) throws PortletException, IOException {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}

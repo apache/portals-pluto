@@ -17,6 +17,7 @@
 package org.apache.pluto.internal.impl;
 
 import javax.portlet.Event;
+import javax.xml.namespace.QName;
 
 /**
  * Implementation of JSR-286 <code>Event</code>.
@@ -25,20 +26,20 @@ import javax.portlet.Event;
  */
 public class EventImpl implements Event {
 
-	private String _name;
+	private QName _qname;
 	private Object _value;
 	
-	public EventImpl(String name){
-		_name = name;
+	public EventImpl(QName qname){
+		_qname = qname;
 	}
 	
-	public EventImpl(String name, Object value){
-		this(name);
+	public EventImpl(QName qname, Object value){
+		this(qname);
 		_value = value;
 	}
 
-	public String getName() {
-		return _name;
+	public QName getName() {
+		return _qname;
 	}
 
 	public Object getValue() {

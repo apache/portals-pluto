@@ -619,7 +619,6 @@ implements PortletRequest, InternalPortletRequest {
         super.setCharacterEncoding(encoding);
     }
     
-    
     // Private Methods ---------------------------------------------------------
     
     /**

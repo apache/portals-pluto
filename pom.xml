@@ -50,7 +50,19 @@
     </notifiers>
   </ciManagement>
   <inceptionYear>2003</inceptionYear>
-  
+<repositories>
+  <repository>
+
+  <id>java.net</id>
+
+  <name>java.net Maven Repository</name>
+
+  <url>https://maven-repository.dev.java.net/nonav/repository</url>
+
+  <layout>legacy</layout>
+
+  </repository>
+</repositories>
   
   <!-- Mailing Lists ======================================================= -->
   
@@ -225,13 +237,18 @@
 
     -->
   <properties>
-    <portlet-api.version>2.0-SNAPSHOT</portlet-api.version>
+    <portlet-api.version>2.0-r12</portlet-api.version>
     <servlet-api.version>2.4</servlet-api.version>
     <jsp-api.version>2.0</jsp-api.version>
     <jstl.version>1.1.2</jstl.version>
     <taglibs.standard.version>1.0.4</taglibs.standard.version>
     <xerces.version>2.6.2</xerces.version>
     <castor.version>1.0</castor.version>
+    <jaxb.version>2.1</jaxb.version>
+    <jaxb-impl.version>2.1.2</jaxb-impl.version>
+    <stax.api.version>1.0.1</stax.api.version>
+    <stax.impl.version>1.2.0</stax.impl.version>
+    <xalan.version>2.7.0</xalan.version>
     <commons-digester.version>1.7</commons-digester.version>
     <commons-cli.version>1.0</commons-cli.version>
     <commons-httpclient.version>3.0</commons-httpclient.version>
@@ -243,7 +260,8 @@
     <maven.version>2.0</maven.version>
     <ant.version>1.6.5</ant.version>
     <junit.version>4.0</junit.version>
-    <jmock.version>1.0.1</jmock.version>    
+    <jmock.version>1.0.1</jmock.version>
+    <activation.version>1.1</activation.version>
   </properties>
 
   
@@ -283,6 +301,8 @@
       <name>Apache Release Distribution Repository</name>
       <url>scp://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository</url>
     </repository>
+
+
     
     <snapshotRepository>
        <id>apache.snapshots</id>

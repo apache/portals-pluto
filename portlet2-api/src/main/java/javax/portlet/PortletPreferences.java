@@ -1,26 +1,33 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 /*
- * Copyright 2006 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * NOTE: this source code is based on an early draft version of JSR 286 and not intended for product
+ * implementations. This file may change or vanish in the final version of the JSR 286 specification.
  */
 /*
  * This source code implements specifications defined by the Java
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
+
 package javax.portlet;
 
 
@@ -53,19 +60,26 @@ public interface PortletPreferences
 
 
   /**
-   * Returns true, if the value of this key cannot be modified by the user.
+   * Returns true, if the value of this key is defined as read-only and thus
+   * cannot be modified by the user.
    * <p>
    * Modifiable preferences can be changed by the
    * portlet in any standard portlet mode (<code>EDIT, HELP, VIEW</code>). 
    * Per default every preference is modifiable.
    * <p>
    * Read-only preferences cannot be changed by the
-   * portlet in any standard portlet mode, but inside of custom modes
-   * it may be allowed changing them.
+   * portlet in any standard portlet mode, but inside of custom modes,
+   * like the <code>CONFIG</code> mode, it may be allowed changing them.
+   * <p>
    * Preferences are read-only, if they are defined in the 
    * deployment descriptor with <code>read-only</code> set to <code>true</code>,
    * or if the portlet container restricts write access.
-   *
+   * <p>
+   * Note that even if this call returns <code>false</code> and the 
+   * preference key is modifiable in general it does not mean that it
+   * is modifiable in the scope of the current request, e.g. if this
+   * request is a render request.
+   * 
    * @return  false, if the value of this key can be changed, or
    *          if the key is not known
    *

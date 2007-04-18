@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.Constants;
@@ -96,5 +97,15 @@ implements ActionRequest, InternalActionRequest {
         }
         return portletPreferences;
     }
+
+	public String getLifecyclePhase() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Cookie[] getCookieProperties() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
     
 }

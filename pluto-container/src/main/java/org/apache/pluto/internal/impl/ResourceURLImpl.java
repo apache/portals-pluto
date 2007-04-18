@@ -33,4 +33,9 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 			super(container,internalPortletWindow,servletRequest,
 				servletResponse,false,true);
 	}
+
+	public void setResourceID(String resourceID) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }

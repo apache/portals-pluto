@@ -23,6 +23,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
+import javax.servlet.http.Cookie;
 
 public class PortletRequestWrapper
     extends javax.servlet.http.HttpServletRequestWrapper
@@ -204,5 +205,15 @@ public class PortletRequestWrapper
         setRequest((javax.servlet.http.HttpServletRequest) request);
     }
     // --------------------------------------------------------------------------------------------
+
+	public String getLifecyclePhase() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Cookie[] getCookieProperties() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }
 

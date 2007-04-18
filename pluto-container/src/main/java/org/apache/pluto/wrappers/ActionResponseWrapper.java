@@ -15,6 +15,7 @@
  */
 package org.apache.pluto.wrappers;
 
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.ActionResponse;
@@ -23,6 +24,7 @@ import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.xml.namespace.QName;
 
 public class ActionResponseWrapper extends PortletResponseWrapper
     implements ActionResponse {
@@ -81,13 +83,30 @@ public class ActionResponseWrapper extends PortletResponseWrapper
     	return (StateAwareResponse) getPortletResponse();
     }
 
-	public void setEvent(String name, Object value) {
-		this.getStateAwareResponse().setEvent(name, value);
+	public void setEvent(QName qname, Object value) {
+		this.getStateAwareResponse().setEvent(qname, value);
 	}
 
 	public void setEvents(Map events) {
 		this.getStateAwareResponse().setEvents(events);		
 	}
     // --------------------------------------------------------------------------------------------
+
+	public PortletMode getPortletMode() {
+		return this.getStateAwareResponse().getPortletMode();
+	}
+
+	public Map getRenderParameterMap() {
+		return this.getStateAwareResponse().getRenderParameterMap();
+	}
+
+	public WindowState getWindowState() {
+		return this.getStateAwareResponse().getWindowState();
+	}
+
+	public void setNextPossiblePortletModes(Enumeration portletModes) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }
 

@@ -15,6 +15,7 @@
  */
 package org.apache.pluto.wrappers;
 
+import javax.portlet.FragmentURL;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -49,9 +50,10 @@ public class PortletResponseWrapper
         return this.getPortletResponse().encodeURL(path);
     }
     
-    public void addProperty(String arg0, String arg1, int arg2) {
-		this.getPortletResponse().addProperty(arg0, arg1, arg2);
-	}
+    // FIXME: can we delete this function?
+//    public void addProperty(String arg0, String arg1, int arg2) {
+//		this.getPortletResponse().addProperty(arg0, arg1, arg2);
+//	}
 
 	public PortletURL createActionURL() {
 		return this.getPortletResponse().createActionURL();
@@ -64,13 +66,13 @@ public class PortletResponseWrapper
 	public ResourceURL createResourceURL() {
 		return this.getPortletResponse().createResourceURL(); 
 	}
+	
+	public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
+		return this.getPortletResponse().createResourceURL(markupContainsPortletURLs); 
+	}
 
 	public String getNamespace() {
 		return this.getPortletResponse().getNamespace();
-	}
-
-	public void setProperty(String arg0, String arg1, int arg2) {
-		this.getPortletResponse().setProperty(arg0, arg1, arg2);
 	}
 	
     // --------------------------------------------------------------------------------------------
@@ -94,6 +96,10 @@ public class PortletResponseWrapper
         }
         setResponse((javax.servlet.http.HttpServletResponse) response);
     }
-    // --------------------------------------------------------------------------------------------
+
+	public FragmentURL createFragmentURL() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}   
 }
 

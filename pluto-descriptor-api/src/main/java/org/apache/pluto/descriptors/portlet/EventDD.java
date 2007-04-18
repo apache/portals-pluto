@@ -15,18 +15,46 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * Initialization Event
  * 
  * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
  *
+ * 
+ * 			The name element contains the name of a parameter. 
+ * 			Used in: init-param, ...
+ * 			
+ * 
+ * <p>Java class for nameType complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="nameType">
+ *   &lt;simpleContent>
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+ *     &lt;/extension>
+ *   &lt;/simpleContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
  */
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "nameType", propOrder = {
+    "name"
+})
 public class EventDD {
 	
 	/** 
 	 * Name of the Event
 	 */
+	@XmlElement(name = "value")
 	private String name;
 	
 	/**

@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import javax.portlet.CacheControl;
 import javax.portlet.PortalContext;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -76,6 +77,12 @@ implements ResourceResponse, InternalActionResponse {
 	public void setTitle(String arg0) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented");		
+	}
+
+
+	public void addProperty(Cookie cookie) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 	
 }

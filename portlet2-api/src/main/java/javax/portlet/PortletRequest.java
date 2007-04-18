@@ -1,26 +1,33 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 /*
- * Copyright 2006 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * NOTE: this source code is based on an early draft version of JSR 286 and not intended for product
+ * implementations. This file may change or vanish in the final version of the JSR 286 specification.
  */
 /*
  * This source code implements specifications defined by the Java
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
+
 package javax.portlet;
 
 
@@ -37,7 +44,7 @@ package javax.portlet;
  */
 public interface PortletRequest
 {
-
+    
   /** Used to retrieve user information attributes with the 
    * <code>getAttribute</code> call. The user information is returned 
    * as a <code>Map</code> object. The portlet must define the 
@@ -57,6 +64,15 @@ public interface PortletRequest
    */
   public static final String USER_INFO = "javax.portlet.userinfo";
 
+  /**
+   * Used to retieve an instance of the <code>javax.ccpp.profile</code>
+   * with the <code>getAttribute</code> call. The returned profile is based
+   * on the current portlet request and may contain additional CC/PP 
+   * information set by the portal / portlet container.   
+   * <p>
+   * The value is <code>javax.portlet.ccpp</code>.
+   */
+  public static final String CCPP_PROFILE = "javax.portlet.ccpp";
 
   /**
    * String identifier for Basic authentication. Value "BASIC".
@@ -78,7 +94,180 @@ public interface PortletRequest
    */
   public static final String DIGEST_AUTH = "DIGEST";
 
+  /**
+   * P3P user information constants.
+   * <p>
+   * Note: these are only available in the Java SE 5.0 supported version
+   * of the API.
+   * 
+   * @since 2.0
+   */
+  public enum P3PUserInfos {
+      USER_BDATE("user.bdate"), USER_GENDER("user.gender"), USER_EMPLOYER("user.employer"), 
+      USER_DEPARTMENT("user.department"), USER_JOBTITLE("user.jobtitle"), 
+      USER_NAME_PREFIX("user.name.prefix"), USER_NAME_GIVEN("user.name.given"), 
+      USER_NAME_FAMILY("user.name.family"), USER_NAME_MIDDLE("user.name.middle"),
+      USER_NAME_SUFFIX("user.name.suffix"), USER_NAME_NICKNAME("user.name.nickName"),
+      USER_LOGIN_ID("user.login.id"),
+      USER_HOMEINFO_POSTAL_NAME("user.home-info.postal.name"), 
+      USER_HOMEINFO_POSTAL_STREET("user.home-info.postal.street"),
+      USER_HOMEINFO_POSTAL_CITY("user.home-info.postal.city"), 
+      USER_HOMEINFO_POSTAL_STATEPROV("user.home-info.postal.stateprov"),
+      USER_HOMEINFO_POSTAL_POSTALCODE("user.home-info.postal.postalcode"),
+      USER_HOMEINFO_POSTAL_COUNTRY("user.home-info.postal.country"), 
+      USER_HOMEINFO_POSTAL_ORGANIZATION("user.home-info.postal.organization"), 
+      USER_HOMEINFO_TELECOM_TELEPHONE_INTCODE("user.home-info.telecom.telephone.intcode"),
+      USER_HOMEINFO_TELECOM_TELEPHONE_LOCCODE("user.home-info.telecom.telephone.loccode"),
+      USER_HOMEINFO_TELECOM_TELEPHONE_NUMBER("user.home-info.telecom.telephone.number"),
+      USER_HOMEINFO_TELECOM_TELEPHONE_EXT("user.home-info.telecom.telephone.ext"),
+      USER_HOMEINFO_TELECOM_TELEPHONE_COMMENT("user.home-info.telecom.telephone.comment"),
+      USER_HOMEINFO_TELECOM_FAX_INTCODE("user.home-info.telecom.fax.intcode"),
+      USER_HOMEINFO_TELECOM_FAX_LOCCODE("user.home-info.telecom.fax.loccode"),
+      USER_HOMEINFO_TELECOM_FAX_NUMBER("user.home-info.telecom.fax.number"),
+      USER_HOMEINFO_TELECOM_FAX_EXT("user.home-info.telecom.fax.ext"),
+      USER_HOMEINFO_TELECOM_FAX_COMMENT("user.home-info.telecom.fax.comment"),
+      USER_HOMEINFO_TELECOM_MOBILE_INTCODE("user.home-info.telecom.mobile.intcode"),
+      USER_HOMEINFO_TELECOM_MOBILE_LOCCODE("user.home-info.telecom.mobile.loccode"),
+      USER_HOMEINFO_TELECOM_MOBILE_NUMBER("user.home-info.telecom.mobile.number"),
+      USER_HOMEINFO_TELECOM_MOBILE_EXT("user.home-info.telecom.mobile.ext"),
+      USER_HOMEINFO_TELECOM_MOBILE_COMMENT("user.home-info.telecom.mobile.comment"),
+      USER_HOMEINFO_TELECOM_PAGER_INTCODE("user.home-info.telecom.pager.intcode"),
+      USER_HOMEINFO_TELECOM_PAGER_LOCCODE("user.home-info.telecom.pager.loccode"),
+      USER_HOMEINFO_TELECOM_PAGER_NUMBER("user.home-info.telecom.pager.number"),
+      USER_HOMEINFO_TELECOM_PAGER_EXT("user.home-info.telecom.pager.ext"),
+      USER_HOMEINFO_TELECOM_PAGER_COMMENT("user.home-info.telecom.pager.comment"),
+      USER_HOMEINFO_ONLINE_EMAIL("user.home-info.online.email"),
+      USER_HOMEINFO_ONLINE_URI("user.home-info.online.uri"),
+      USER_BUSINESSINFO_POSTAL_NAME("user.business-info.postal.name"), 
+      USER_BUSINESSINFO_POSTAL_STREET("user.business-info.postal.street"),
+      USER_BUSINESSINFO_POSTAL_CITY("user.business-info.postal.city"), 
+      USER_BUSINESSINFO_POSTAL_STATEPROV("user.business-info.postal.stateprov"),
+      USER_BUSINESSINFO_POSTAL_POSTALCODE("user.business-info.postal.postalcode"),
+      USER_BUSINESSINFO_POSTAL_COUNTRY("user.business-info.postal.country"), 
+      USER_BUSINESSINFO_POSTAL_ORGANIZATION("user.business-info.postal.organization"), 
+      USER_BUSINESSINFO_TELECOM_TELEPHONE_INTCODE("user.business-info.telecom.telephone.intcode"),
+      USER_BUSINESSINFO_TELECOM_TELEPHONE_LOCCODE("user.business-info.telecom.telephone.loccode"),
+      USER_BUSINESSINFO_TELECOM_TELEPHONE_NUMBER("user.business-info.telecom.telephone.number"),
+      USER_BUSINESSINFO_TELECOM_TELEPHONE_EXT("user.business-info.telecom.telephone.ext"),
+      USER_BUSINESSINFO_TELECOM_TELEPHONE_COMMENT("user.business-info.telecom.telephone.comment"),
+      USER_BUSINESSINFO_TELECOM_FAX_INTCODE("user.business-info.telecom.fax.intcode"),
+      USER_BUSINESSINFO_TELECOM_FAX_LOCCODE("user.business-info.telecom.fax.loccode"),
+      USER_BUSINESSINFO_TELECOM_FAX_NUMBER("user.business-info.telecom.fax.number"),
+      USER_BUSINESSINFO_TELECOM_FAX_EXT("user.business-info.telecom.fax.ext"),
+      USER_BUSINESSINFO_TELECOM_FAX_COMMENT("user.business-info.telecom.fax.comment"),
+      USER_BUSINESSINFO_TELECOM_MOBILE_INTCODE("user.business-info.telecom.mobile.intcode"),
+      USER_BUSINESSINFO_TELECOM_MOBILE_LOCCODE("user.business-info.telecom.mobile.loccode"),
+      USER_BUSINESSINFO_TELECOM_MOBILE_NUMBER("user.business-info.telecom.mobile.number"),
+      USER_BUSINESSINFO_TELECOM_MOBILE_EXT("user.business-info.telecom.mobile.ext"),
+      USER_BUSINESSINFO_TELECOM_MOBILE_COMMENT("user.business-info.telecom.mobile.comment"),
+      USER_BUSINESSINFO_TELECOM_PAGER_INTCODE("user.business-info.telecom.pager.intcode"),
+      USER_BUSINESSINFO_TELECOM_PAGER_LOCCODE("user.business-info.telecom.pager.loccode"),
+      USER_BUSINESSINFO_TELECOM_PAGER_NUMBER("user.business-info.telecom.pager.number"),
+      USER_BUSINESSINFO_TELECOM_PAGER_EXT("user.business-info.telecom.pager.ext"),
+      USER_BUSINESSINFO_TELECOM_PAGER_COMMENT("user.business-info.telecom.pager.comment"),
+      USER_BUSINESSINFO_ONLINE_EMAIL("user.business-info.online.email"),
+      USER_BUSINESSINFO_ONLINE_URI("user.business-info.online.uri");
+      P3PUserInfos(String value) {this.value = value; }
+      private final String value;
+      public String toString() {return value;}
+  }
+  
+  /**
+   * String identifier for the portlet action lifecycle phase. In this
+   * phase the portlet request and response are from type
+   * <code>ActionRequest</code> and <code>ActionResponse</code>.
+   * <p>
+   * The value of the constant is ACTION_PHASE.
+   * 
+   * @since 2.0
+   */
+  public static final String ACTION_PHASE = "ACTION_PHASE";
+  
+  /**
+   * String identifier for the portlet event lifecycle phase. In this
+   * phase the portlet request and response are from type
+   * <code>EventRequest</code> and <code>EventResponse</code>.
+   * <p>
+   * The value of the constant is EVENT_PHASE.
+   * 
+   * @since 2.0
+   */
+  public static final String EVENT_PHASE = "EVENT_PHASE";
+  
+  /**
+   * String identifier for the portlet render lifecycle phase. In this
+   * phase the portlet request and response are from type
+   * <code>RenderRequest</code> and <code>RenderResponse</code>.
+   * <p>
+   * The value of the constant is RENDER_PHASE.
+   * 
+   * @since 2.0
+   */
+  public static final String RENDER_PHASE = "RENDER_PHASE";
+  
+  /**
+   * String identifier for the portlet resource serving lifecycle phase. In this
+   * phase the portlet request and response are from type
+   * <code>ResourceRequest</code> and <code>ResourceResponse</code>.
+   * <p>
+   * The value of the constant is RESOURCE_SERVING_PHASE.
+   * 
+   * @since 2.0
+   */
+  public static final String RESOURCE_SERVING_PHASE = "RESOURCE_SERVING_PHASE";
+  
+  /**
+   * String identifier for the portlet fragment serving lifecycle phase. In this
+   * phase the portlet request and response are from type
+   * <code>FragmentRequest</code> and <code>FragmentResponse</code>.
+   * <p>
+   * The value of the constant is FRAGMENT_SERVING_PHASE.
+   * 
+   * @since 2.0
+   */
+  public static final String FRAGMENT_SERVING_PHASE = "FRAGMENT_SERVING_PHASE";
 
+  /**
+   * The RENDER_PART portlet request attribute is set by portals
+   * that are streaming based and therefore need to split the
+   * render phase into two parts: first the RENDER_HEADERS part
+   * where the portlet should only set the header related data
+   * and the portlet title, and second the RENDER_MARKUP part
+   * in which the portlet should produce its markup.
+   * <p>
+   * Non-streaming portals will not set this attribute and thus
+   * the portlet should set headers, portlet title and produce
+   * its markup in a single render request.
+   * <p>
+   * The value of the constant is javax.portlet.render_part.
+   * 
+   *  @since 2.0
+   */
+  public static final String RENDER_PART = "javax.portlet.render_part";
+  
+  /**
+   * The RENDER_HEADERS is a possible value of the RENDER_PART
+   * request attribute and denotes that the portlet should set
+   * the intended headers and the portlet title of this render
+   * request.
+   * <p>
+   * The value of the constant is RENDER_HEADERS.
+   * 
+   * @since 2.0
+   */
+  public static final String RENDER_HEADERS = "RENDER_HEADERS";
+
+  /**
+   * The RENDER_MARKUP is a possible value of the RENDER_PART
+   * request attribute and denotes that the portlet should
+   * produce its markup for this render request.
+   * <p>
+   * The value of the constant is RENDER_MARKUP.
+   * 
+   * @since 2.0
+   */
+  public static final String RENDER_MARKUP = "RENDER_MARKUP";
+  
   /**
    * Returns true, if the given window state is valid
    * to be set for this portlet in the context
@@ -577,7 +766,8 @@ public interface PortletRequest
    * Returns the portal preferred content type for the response.
    * <p>
    * The content type only includes the MIME type, not the
-   * character set.
+   * character set. The character set of the response
+   * can be retrieved via the {@link RenderResponse#getCharacterEncoding}.
    * <p>
    * Only content types that the portlet has defined in its
    * deployment descriptor are valid return values for
@@ -668,10 +858,42 @@ public interface PortletRequest
    * Returns the portlet window ID. The portlet window ID is 
    * unique for this portlet window and is constant for the lifetime
    * of the portlet window.
+   * <p>
+   * This ID is the same that is used by the portlet container for
+   * scoping the portlet-scope session attributes.
    * 
    * @since 2.0
    * @return  the portlet window ID
    */
   public String getWindowId();
   
+  /**
+   * Returns the portlet lifecycle phase of the current request.
+   * <p>
+   * Valid return values are: ACTION_PHASE, EVENT_PHASE, RENDER_PHASE,
+   * RESOURCE_SERVING_PHASE.
+   *  
+   * @since 2.0
+   * @return  the portlet lifecycle phase of the current request.
+   */
+  public String getLifecyclePhase();
+  
+  /**
+   * Returns an array containing all of the Cookie properties 
+   * set by the current portlet or another portlet of the same portlet
+   * application given that they where set in the domain of the portlet
+   * application. 
+   * <p>
+   * The returned cookies are in the domain of the current portlet
+   * application.
+   * <p> 
+   * This method returns <code>null</code> if no cookies in the current
+   * portlet application domain exist.
+   * 
+   * @since 2.0
+   * @return  array of cookie properties in the current portlet application
+   *          domain, or <code>null</code> if no cookies in this domain exist. 
+   */
+  javax.servlet.http.Cookie[] getCookieProperties();
+
 }

@@ -26,6 +26,7 @@ import org.apache.pluto.internal.InternalRenderRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.BufferedReader;
@@ -368,6 +369,16 @@ implements RenderRequest, InternalRenderRequest {
 	public String getETag() {
 		// TODO Auto-generated method stub
 //		return null;
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public String getLifecyclePhase() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Cookie[] getCookieProperties() {
+		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
     

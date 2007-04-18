@@ -15,23 +15,80 @@
  */
 package org.apache.pluto.descriptors.common;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import org.apache.pluto.descriptors.portlet.PortletDD;
+
 /**
  * Initialization Parameter configuration.
  *
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: InitParamDD.java 157038 2005-03-11 03:44:40Z ddewolf $
  * @since Feb 28, 2005
+ *
+ * 
+ *                      The init-param element contains a name/value pair as an 
+ *                      initialization param of the portlet
+ *                      Used in:portlet
+ *                      
+ * 
+ * <p>Java class for init-paramType complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="init-paramType">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="description" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}descriptionType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="name" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}nameType"/>
+ *         &lt;element name="value" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}valueType"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "init-paramType", propOrder = {
+    "description", "description1",
+    "paramName", "paramName1",
+    "paramValue", "paramValue1"
+})
 public class InitParamDD {
+	
+	/** The description of the parameter. */
+	@XmlElement(name = "description")
+    private String description;
+	
+	/** The description of the parameter. */
+	@XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
+    private String description1;
 
     /** The name of the parameter. */
+	@XmlElement(name = "name")
     private String paramName;
+	
+	/** The name of the parameter. */
+	@XmlElement(name = "name", namespace = PortletDD.QNAME_JSR168)
+    private String paramName1;
 
     /** The value of the parameter. */
+	@XmlElement(name = "value")
     private String paramValue;
+	
+	/** The value of the parameter. */
+	@XmlElement(name = "value", namespace = PortletDD.QNAME_JSR168)
+    private String paramValue1;
 
-    /** The description of the parameter. */
-    private String description;
+    
 
     /**
      * Default Constructor.
@@ -45,7 +102,9 @@ public class InitParamDD {
      * @return
      */
     public String getParamName() {
-        return paramName;
+    	if (paramName!= null)
+    		return paramName;
+    	return paramName1;
     }
 
     /**
@@ -53,7 +112,8 @@ public class InitParamDD {
      * @param paramName
      */
     public void setParamName(String paramName) {
-        this.paramName = paramName;
+    	this.paramName = paramName;
+    	this.paramName1 = paramName;
     }
 
     /**
@@ -61,7 +121,9 @@ public class InitParamDD {
      * @return
      */
     public String getParamValue() {
-        return paramValue;
+    	if (paramValue != null)
+    		return paramValue;
+    	return paramValue1;
     }
 
     /**
@@ -69,7 +131,8 @@ public class InitParamDD {
      * @param paramValue
      */
     public void setParamValue(String paramValue) {
-        this.paramValue = paramValue;
+    	this.paramValue = paramValue;
+    	this.paramValue1 = paramValue;
     }
 
     /**
@@ -77,7 +140,9 @@ public class InitParamDD {
      * @return
      */
     public String getDescription() {
-        return description;
+    	if (description != null)
+    		return description;
+    	return description1;
     }
 
     /**
@@ -85,7 +150,8 @@ public class InitParamDD {
      * @param description
      */
     public void setDescription(String description) {
-        this.description = description;
+    	this.description = description;
+    	this.description1 = description;
     }
 
 }

@@ -28,6 +28,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
+import javax.servlet.http.Cookie;
 
 import org.apache.pluto.PortletContainerException;
 
@@ -260,6 +261,21 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 		}
 
 		public String getWindowId() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Class getRequestClass() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public String getLifecyclePhase() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Cookie[] getCookieProperties() {
 			// TODO Auto-generated method stub
 			return null;
 		}

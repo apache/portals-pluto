@@ -18,6 +18,8 @@ package org.apache.pluto.wrappers;
 import javax.portlet.CacheControl;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.Cookie;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -119,6 +121,11 @@ public class RenderResponseWrapper extends PortletResponseWrapper
         return (RenderResponse) getPortletResponse();
     }
     // --------------------------------------------------------------------------------------------
+
+	public void addProperty(Cookie cookie) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 
 }
 

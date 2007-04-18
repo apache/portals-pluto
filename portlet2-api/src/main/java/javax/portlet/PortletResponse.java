@@ -1,27 +1,35 @@
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 /*
- * Copyright 2006 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * NOTE: this source code is based on an early draft version of JSR 286 and not intended for product
+ * implementations. This file may change or vanish in the final version of the JSR 286 specification.
  */
 /*
  * This source code implements specifications defined by the Java
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
+
 package javax.portlet;
+
 
 
 /**
@@ -39,29 +47,6 @@ package javax.portlet;
 public interface PortletResponse
 {
 
-    /**
-     * This constant defines a per response scope for the response properties.
-     * The properties should considerate valid only until the current portlet response is
-     * returned to the portlet container / portal.
-     * <p>
-     * Value: <code>0x01</code>
-     */
-    public static final int RESPONSE_SCOPE = 0x01;
-
-    /**
-     * This constant defines a per end user session scope for the response attribute.
-     * The attributes should considerate valid only within the current end user session.
-     * <p>
-     * Properties stored in this scope can be shared by the portlet container / portal
-     * with other portlets or artifacts within the current end user scope. The portlet
-     * should be aware that other portlets or artifacts may change this value too.
-     * <p>
-     * Session scoped properties must be declared in the portlet deployment descriptor
-     * using the <code><shared-property></code> tag.
-     * <p>
-     * Value: <code>0x02</code>
-     */
-    public static final int SESSION_SCOPE = 0x02;
 
   /**
    * Adds a String property to an existing key to be returned to the portal.
@@ -79,27 +64,6 @@ public interface PortletResponse
    */
 
   public void addProperty(String key, String value);
-
-
-  /**
-   * Adds a String property to an existing key to be returned to the portal.
-   * <p>
-   * This method allows response properties to have multiple values.
-   * <p>
-   * Properties can be used by portlets to provide vendor specific 
-   * information to the portal or for sharing data at the portal level.
-   *
-   * @param  key    the key of the property to be returned to the portal
-   * @param  value  the value of the property to be returned to the portal
-   * @param  scope  the scope in which this key should be set
-   * 
-   * @exception  java.lang.IllegalArgumentException 
-   *                            if key is <code>null</code>,
-   *                            scope is unkown, or
-   *                            value is not allowed in the given scope.
-   */
-
-  public void addProperty(String key, String value, int scope);
 
 
   /**
@@ -139,22 +103,82 @@ public interface PortletResponse
   /**
    * Creates a portlet URL targeting the portlet. If no security modifier is 
    * set in the PortletURL the current values are preserved. 
-   * The current portlet mode and window state are preserved. 
+   * The current render parameters, portlet mode and window state are preserved. 
    * <p>
    * If a request is triggered by the
-   * PortletURL, it results in a render resource request of the
-   * <code>ResouceServingListener</code> interface.
+   * PortletURL, it results in a serve resource request of the
+   * <code>ResouceServingPortlet</code> interface.
    * <p>
    * The returned URL can be further extended by adding
    * portlet-specific parameters . 
    * <p>
    * The created URL will per default contain 
    * the current render request.
+   * <p>
+   * The markup returned when activating this
+   * resource URL must only contain resource URLs or no portlet URLs at all.
+   * This method is equivalent to calling
+   * <code>createResourceURL(false)</code>.<BR>
+   * You should use this <code>createResourceURL</code> method
+   * if your resource markup does not contain any portlet URLs or only
+   * resource URLs as the final URL that may be create as an result
+   * will allow for better cachability of the resource markup on
+   * the client.
    *
    * @since 2.0
    * @return a portlet resource URL
    */
   public ResourceURL createResourceURL ();
+
+  /**
+   * Creates a portlet URL targeting the portlet. If no security modifier is 
+   * set in the PortletURL the current values are preserved. 
+   * The current render parameters, portlet mode and window state are preserved. 
+   * <p>
+   * If a request is triggered by the
+   * PortletURL, it results in a serve resource request of the
+   * <code>ResouceServingPortlet</code> interface.
+   * <p>
+   * The returned URL can be further extended by adding
+   * portlet-specific parameters . 
+   * <p>
+   * The created URL will per default contain 
+   * the current render request.
+   * <p>
+   * If <code>markupContainsPortletURLs</code> is set to 
+   * <code>true</code>, the markup returned when activating this
+   * resource URL may contain arbitrary portlet URLs (action URLs,
+   * render URLs, fragment URLs and resource URLs). If set to
+   * <code>false</code>, the markup returned when activating this
+   * resource URL must only contain resource URLs or no portlet URLs at all.
+   *
+   * @since 2.0
+   * @param  markupContainsPortletURLs
+   * 			if set to <code>true</code>, the markup returned when activating this
+   * 			resource URL may contain arbitrary portlet URLs.
+   * @return a portlet resource URL
+   */
+  public ResourceURL createResourceURL (boolean markupContainsPortletURLs);
+
+  /**
+   * Creates a portlet URL targeting the portlet. If no security modifier is 
+   * set in the PortletURL the current values are preserved. 
+   * The current render parameters, portlet mode and window state are preserved. 
+   * <p>
+   * If a request is triggered via some client side script function provided
+   * by the portal application, it results in a serve fragment request of the
+   * <code>FragmentServingPortlet</code> interface.
+   * <p>
+   * The returned URL can be further extended by adding
+   * fragment-specific parameters and portlet modes and window states. 
+   * <p>
+   * The created URL will per default contain 
+   * the current render request.
+   *
+   * @since 2.0
+   * @return a portlet fragment URL
+   */
+  public FragmentURL createFragmentURL ();
 
   /**
    * Sets a String property to be returned to the portal.
@@ -172,26 +196,6 @@ public interface PortletResponse
    */
 
   public void setProperty(String key, String value);
-
-  /**
-   * Sets a String property to be returned to the portal.
-   * <p>
-   * Properties can be used by portlets to provide vendor specific 
-   * information to the portal or for sharing data at the portal level.
-   * <p>
-   * This method resets all properties previously added with the same key.
-   *
-   * @param  key    the key of the property to be returned to the portal
-   * @param  value  the value of the property to be returned to the portal
-   * @param  scope  the scope in which this key should be set
-   *
-   * @exception  java.lang.IllegalArgumentException 
-   *                            if key is <code>null</code>,
-   *                            scope is unkown, or
-   *                            value is not allowed in the given scope.
-   */
-
-  public void setProperty(String key, String value, int scope);
 
   /**
    * Returns the encoded URL of the resource, like servlets,
@@ -232,9 +236,6 @@ public interface PortletResponse
    */
   
   public String getNamespace ();
-
-
-
 }
 
 

@@ -16,6 +16,8 @@
 
 package org.apache.pluto.internal.impl;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -188,6 +190,10 @@ public class BaseURLImpl implements BaseURL {
 	public String[] getParameters(String name) {
 	    return (String[]) parameters.get(name);
 	}
+	
+	public Map getParameterMap() {
+		return parameters;
+	}
 
 	public PortletMode getPortletMode() {
 	    return mode;
@@ -261,4 +267,13 @@ public class BaseURLImpl implements BaseURL {
 	    return false;
 	}
 
+	public void write(Writer out) throws IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void write(Writer out, boolean escapeXML) throws IOException {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }
