@@ -299,6 +299,35 @@
 
     </distributionManagement>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-remote-resources-plugin</artifactId>
+                    <version>1.0-alpha-5</version>
+                    <executions>
+                        <execution>
+                            <goals> 
+                                <goal>process</goal>
+                            </goals>
+                            <configuration>
+                                <supplementalModels>
+                                    <supplementalModel>
+                                        ${project.basedir}/../pluto-site/src/main/appended-resources/supplemental-models.xml
+                                    </supplementalModel>
+                                </supplementalModels>
+                                <resourceBundles>
+                                    <resourceBundle>org.apache:apache-jar-resource-bundle:1.2</resourceBundle>
+                                </resourceBundles>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <reporting>
         <plugins>
             <plugin>

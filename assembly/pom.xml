@@ -12,6 +12,15 @@
   <url>http://portals.apache.org/pluto/</url>
   <inceptionYear>2001</inceptionYear>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
   <profiles>
     <profile>
       <id>build-assemblies</id>
