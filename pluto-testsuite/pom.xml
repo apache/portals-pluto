@@ -48,12 +48,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
       <version>${taglibs.standard.version}</version>
