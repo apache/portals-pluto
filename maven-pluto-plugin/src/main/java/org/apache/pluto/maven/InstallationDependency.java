@@ -71,7 +71,7 @@ class InstallationDependency {
                     VERSION_PROPERTIES.getProperty("pluto.version"), "war");
 
     public static final InstallationDependency  CASTOR =
-            new InstallationDependency("castor", "castor", 
+            new InstallationDependency("org.codehaus.castor", "castor", 
                     VERSION_PROPERTIES.getProperty("castor.version"));
 
     public static final InstallationDependency  XERCES =
