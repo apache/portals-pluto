@@ -12,15 +12,6 @@
   <url>http://portals.apache.org/pluto/</url>
   <inceptionYear>2001</inceptionYear>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
   <profiles>
     <profile>
       <id>build-assemblies</id>
@@ -102,6 +93,15 @@
     </profile>
   </profiles>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+    
   <dependencies>
     <dependency>
       <groupId>org.apache.pluto</groupId>
@@ -139,6 +139,17 @@
       <artifactId>pluto-testsuite</artifactId>
       <type>war</type>
       <version>${pom.version}</version>
+    </dependency>
+
+    <!--
+      This dependency is required because the
+      of the Maven Remote Resources plugin.
+    -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
