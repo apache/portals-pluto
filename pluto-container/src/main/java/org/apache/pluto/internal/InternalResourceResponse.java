@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -16,10 +17,9 @@
 package org.apache.pluto.internal;
 
 /**
- * The internal render response interface extends the internal portlet response
- * interface and provides some render-specific methods.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @since 2006-02-17
+ * The internal resource response interface extends the internal portlet response
+ * interface and provides some resource-specific methods.
+ * @since 2.0
  */
 public interface InternalResourceResponse extends InternalPortletResponse {
 	
