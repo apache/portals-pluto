@@ -16,11 +16,11 @@
 package org.apache.pluto.internal;
 
 /**
- * The internal render response interface extends the internal portlet response
- * interface and provides some render-specific methods.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @since 2006-02-17
+ * The internal resource request interface extends the internal portlet request
+ * interface and provides some resource-specific methods.
+ * @author <a href="mailto:dettborn@minet.uni-jena.de">Torsten Dettborn</a>
+ * @since 2.0
  */
-public interface InternalRenderResponse extends InternalPortletResponse {
+public interface InternalResourceRequest extends InternalPortletRequest {
 	
 }

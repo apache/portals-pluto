@@ -27,11 +27,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalActionRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.InternalResourceRequest;
 
 public class ResourceRequestImpl extends PortletRequestImpl
-implements ResourceRequest, InternalActionRequest {
+implements ResourceRequest, InternalResourceRequest {
 
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(ResourceRequestImpl.class);

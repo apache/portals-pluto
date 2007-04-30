@@ -54,8 +54,7 @@ implements RenderRequest, InternalRenderRequest {
     
     // Private Member Variables ------------------------------------------------
     
-    /** True if we are in an include call. */
-    private boolean included = false;
+    
     
     /** The parameters including parameters appended to the dispatching URI. */
     private Map parameters = null;
@@ -99,7 +98,7 @@ implements RenderRequest, InternalRenderRequest {
      * flag is set to true, this method returns null.
      */
     public String getContentType() {
-        return included ? null : super.getContentType();
+        return super.isIncluded() ? null : super.getContentType();
     }
     
     /**
@@ -107,7 +106,7 @@ implements RenderRequest, InternalRenderRequest {
      * flag is set to true, this method returns 0.
      */
     public int getContentLength() {
-        return included ? 0 : super.getContentLength();
+        return super.isIncluded() ? 0 : super.getContentLength();
     }
     
     /**
@@ -116,7 +115,7 @@ implements RenderRequest, InternalRenderRequest {
      */
     public BufferedReader getReader()
     throws UnsupportedEncodingException, IOException {
-        return included ? null : super.getReader();
+        return super.isIncluded() ? null : super.getReader();
     }
     
     /**
@@ -124,14 +123,14 @@ implements RenderRequest, InternalRenderRequest {
      * response. If the included flag is set to true, this method returns null.
      */
     public ServletInputStream getInputStream() throws IOException {
-        return included ? null : super.getInputStream();
+        return super.isIncluded() ? null : super.getInputStream();
     }
     
     
     // PortletRequestImpl Overwriting ------------------------------------------
     
     protected Map baseGetParameterMap() {
-    	if (included && parameters != null) {
+    	if (super.isIncluded() && parameters != null) {
     		super.setBodyAccessed();
     		return parameters;
     	} else {
@@ -143,7 +142,7 @@ implements RenderRequest, InternalRenderRequest {
     // InternalRenderRequest Impl ----------------------------------------------
     
     public void setIncluded(boolean included) {
-    	this.included = included;
+    	super.setIncluded(included);
         if (!included) {
         	this.parameters = null;
         }
@@ -151,14 +150,10 @@ implements RenderRequest, InternalRenderRequest {
         	LOG.debug("Render request's included mode: " + included);
         }
     }
-
-    public boolean isIncluded() {
-        return included;
-    }
     
     public void setIncludedQueryString(String queryString)
     throws IllegalStateException {
-    	if (!included) {
+    	if (!super.isIncluded()) {
     		throw new IllegalStateException("Parameters cannot be appended to "
     				+ "render request which is not included in a dispatch.");
     	}
@@ -200,13 +195,13 @@ implements RenderRequest, InternalRenderRequest {
     public String getPathInfo() {
     	String attr = (String) super.getAttribute(
     			"javax.servlet.include.path_info");
-    	return (included && attr != null) ? attr : super.getPathInfo();
+    	return (super.isIncluded() && attr != null) ? attr : super.getPathInfo();
     }
 
     public String getQueryString() {
     	String attr = (String) super.getAttribute(
     			"javax.servlet.include.query_string");
-    	return (included && attr != null) ? attr : super.getQueryString();
+    	return (super.isIncluded() && attr != null) ? attr : super.getQueryString();
     }
     
     /**
@@ -221,13 +216,13 @@ implements RenderRequest, InternalRenderRequest {
     public String getRequestURI() {
     	String attr = (String) super.getAttribute(
     			"javax.servlet.include.request_uri");
-        return (included && attr != null) ? attr : super.getRequestURI();
+        return (super.isIncluded() && attr != null) ? attr : super.getRequestURI();
     }
     
     public String getServletPath() {
         String attr = (String) super.getAttribute(
                 "javax.servlet.include.servlet_path");
-        return (included && attr != null) ? attr : super.getServletPath();
+        return (super.isIncluded() && attr != null) ? attr : super.getServletPath();
     }
     
     /*
@@ -244,23 +239,23 @@ implements RenderRequest, InternalRenderRequest {
      */
     
     public String getProtocol() {
-        return included ? null : super.getProtocol();
+        return super.isIncluded() ? null : super.getProtocol();
     }
 
     public String getRemoteAddr() {
-        return included ? null : super.getRemoteAddr();
+        return super.isIncluded() ? null : super.getRemoteAddr();
     }
 
     public String getRemoteHost() {
-        return included ? null : super.getRemoteHost();
+        return super.isIncluded() ? null : super.getRemoteHost();
     }
 
     public String getRealPath(String path) {
-        return included ? null : super.getRealPath(path);
+        return super.isIncluded() ? null : super.getRealPath(path);
     }
 
     public StringBuffer getRequestURL() {
-        return included ? null : super.getRequestURL();
+        return super.isIncluded() ? null : super.getRequestURL();
     }
     
     /*
@@ -279,12 +274,12 @@ implements RenderRequest, InternalRenderRequest {
      */
     
     public String getCharacterEncoding() {
-        return included ? null : super.getCharacterEncoding();
+        return super.isIncluded() ? null : super.getCharacterEncoding();
     }
     
     public void setCharacterEncoding(String encoding)
     throws UnsupportedEncodingException {
-        if (!included) {
+        if (!super.isIncluded()) {
         	super.setCharacterEncoding(encoding);
         }
     }

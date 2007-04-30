@@ -51,6 +51,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -106,6 +107,8 @@ implements PortletRequest, InternalPortletRequest {
      * Flag indicating if the HTTP-Body has been accessed. */
     private boolean bodyAccessed = false;
 
+    /** True if we are in an include call. */
+    private boolean included = false;
 
     // Constructors ------------------------------------------------------------
 
@@ -666,4 +669,39 @@ implements PortletRequest, InternalPortletRequest {
     }
 
 
+// InternalRenderRequest Impl ----------------------------------------------
+    
+    public void setIncluded(boolean included) {
+    	this.included = included;
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Portlet request's included mode: " + included);
+        }
+    }
+
+    public boolean isIncluded() {
+        return included;
+    }
+    
+    public void setIncludedQueryString(String queryString)
+    throws IllegalStateException {
+    	if (!included) {
+    		throw new IllegalStateException("Parameters cannot be appended to "
+    				+ "render request which is not included in a dispatch.");
+    	}
+    	if (queryString != null && queryString.trim().length() > 0) {
+    		// Copy all the original render parameters.
+    		//parameters = new HashMap(super.getParameterMap());
+    		// Merge the appended parameters to the render parameter map.
+    		// The original render parameters should not be overwritten.
+    		//mergeQueryString(parameters, queryString);
+    		// Log the new render parameter map.
+    		if (LOG.isDebugEnabled()) {
+    			LOG.debug("Merged parameters: ");
+    		}
+    	} else {
+    		if (LOG.isDebugEnabled()) {
+    			LOG.debug("No query string appended to the included request.");
+    		}
+    	}
+    }
 }

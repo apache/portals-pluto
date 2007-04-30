@@ -121,9 +121,11 @@ public class PortletEntityImpl implements PortletEntity {
             			it.hasNext(); ) {
             		PortletPreferenceDD prefDD = (PortletPreferenceDD) it.next();
             		String[] values = null;
-            		if (prefDD.getValues().size() > 0) {
-            			values = (String[]) prefDD.getValues().toArray(
-            					new String[prefDD.getValues().size()]);
+            		if (prefDD.getValues()!=null){
+	            		if (prefDD.getValues().size() > 0) {
+	            			values = (String[]) prefDD.getValues().toArray(
+	            					new String[prefDD.getValues().size()]);
+	            		}
             		}
             		PortletPreferenceImpl pref = new PortletPreferenceImpl(
             				prefDD.getName(), values, prefDD.isReadOnly());

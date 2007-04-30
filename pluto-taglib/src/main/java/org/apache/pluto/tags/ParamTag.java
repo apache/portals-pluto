@@ -15,17 +15,21 @@
  */
 package org.apache.pluto.tags;
 
-import javax.portlet.PortletURL;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 
 /**
- * Supporting class for the <CODE>param</CODE> tag. Defines a parameter that
- * can be added to a <CODE>actionURL</CODE> or a <CODE>renderURL</CODE>
+ * A tag handler for the <CODE>param</CODE> tag. Defines a parameter that
+ * can be added to a <CODE>actionURL</CODE>, a <CODE>resourceURL</CODE> or a <CODE>renderURL</CODE>
  * <BR>The following attributes are mandatory:
- *   <UL><LI><CODE>name</CODE>
- *       <LI><CODE>value</CODE></UL>
+ *   <UL>
+ *       <LI><CODE>name</CODE>
+ *       <LI><CODE>value</CODE>
+ *   </UL>
+ *       
+ *  @author <a href="mailto:olisp_jena@yahoo.de">Oliver Spindler</a> (since Nov 01, 2006)
+ *  @version 2.0
  */
 public class ParamTag extends TagSupport {
 
@@ -37,19 +41,15 @@ public class ParamTag extends TagSupport {
      * @return <CODE>SKIP_BODY</CODE>
      */
     public int doStartTag() throws JspException {
-        BasicURLTag urlTag = (BasicURLTag)
-                findAncestorWithClass(this, BasicURLTag.class);
+        BaseURLTag urlTag = (BaseURLTag)
+                findAncestorWithClass(this, BaseURLTag.class);
 
         if (urlTag == null) {
             throw new JspException(
-                "the 'param' Tag must have actionURL or renderURL as a parent");
+                "the 'param' Tag must have actionURL, renderURL or resourceURL as a parent");
         }
 
-        PortletURL url = urlTag.getUrl();
-
-        if (getName() != null) {
-            url.setParameter(getName(), getValue());
-        }
+        urlTag.addParameter(getName(), getValue());
 
         return SKIP_BODY;
     }

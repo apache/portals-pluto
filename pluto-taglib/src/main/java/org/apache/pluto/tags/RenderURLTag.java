@@ -15,62 +15,31 @@
  */
 package org.apache.pluto.tags;
 
-import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
-import javax.portlet.PortletSecurityException;
-import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
+
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+
 
 /**
- * Supporting class for the <CODE>renderURL</CODE> tag. Creates a url that
- * points to the current Portlet and triggers an render request * with the
- * supplied parameters. *
+ * A tag handler for the <CODE>renderURL</CODE> tag,which creates a url that
+ * points to the current Portlet and triggers a render request with the
+ * supplied parameters.
+ * 
+ * @author <a href="mailto:olisp_jena@yahoo.de">Oliver Spindler</a> (since Nov 01, 2006)
+ * @version 2.0
  */
-public class RenderURLTag extends BasicURLTag {
+public class RenderURLTag extends PortletURLTag {
 
 
-    /* (non-Javadoc)
-         * @see javax.servlet.jsp.tagext.Tag#doStartTag()
-         */
-    public int doStartTag() throws JspException {
-        if (var != null) {
-            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
-        }
-        RenderResponse renderResponse = (RenderResponse) pageContext.getRequest()
-            .getAttribute("javax.portlet.response");
-
-        if (renderResponse != null) {
-            setUrl(renderResponse.createRenderURL());
-            if (portletMode != null) {
-                try {
-                    url.setPortletMode(
-                        (PortletMode) TEI.portletModes.get(
-                            portletMode.toUpperCase()));
-                } catch (PortletModeException e) {
-                    throw new JspException(e);
-                }
-            }
-            if (windowState != null) {
-                try {
-                    url.setWindowState(
-                        (WindowState) TEI.definedWindowStates.get(
-                            windowState.toUpperCase()));
-                } catch (WindowStateException e) {
-                    throw new JspException(e);
-                }
-            }
-            if (secure != null) {
-                try {
-                    url.setSecure(getSecureBoolean());
-                } catch (PortletSecurityException e) {
-                    throw new JspException(e);
-                }
-            }
-        }
-        return EVAL_PAGE;
-    }
+    /**
+     * Creates a renderURL
+     * @param portletResponse PortletResponse
+     * @return PortletURL
+     */
+	protected PortletURL createPortletUrl(PortletResponse portletResponse)
+	{
+		return portletResponse.createRenderURL();
+	}
+    
 }
 

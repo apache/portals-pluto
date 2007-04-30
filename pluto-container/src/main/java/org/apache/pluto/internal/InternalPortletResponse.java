@@ -23,9 +23,23 @@ import javax.portlet.PortletResponse;
  * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:dettborn@minet.uni-jena.de">Torsten Dettborn</a>
  */
 public interface InternalPortletResponse extends PortletResponse {
 
     public InternalPortletWindow getInternalPortletWindow();
+    
+
+    /**
+     * Is set true when a jsp, servlet is included.
+     * @param included true when included
+     */
+    public void setIncluded(boolean included);
+    
+    /**
+     * Returns true if a jsp or servlet is included.
+     * @return true if a jsp or servlet is included.
+     */
+    public boolean isIncluded();
 
 }

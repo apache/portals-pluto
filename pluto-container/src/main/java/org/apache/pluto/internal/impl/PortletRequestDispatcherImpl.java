@@ -36,8 +36,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.internal.InternalActionRequest;
+import org.apache.pluto.internal.InternalActionResponse;
+import org.apache.pluto.internal.InternalEventRequest;
+import org.apache.pluto.internal.InternalEventResponse;
 import org.apache.pluto.internal.InternalRenderRequest;
 import org.apache.pluto.internal.InternalRenderResponse;
+import org.apache.pluto.internal.InternalResourceRequest;
+import org.apache.pluto.internal.InternalResourceResponse;
 
 /**
  * Implementation of the <code>PortletRequestDispatcher</code> interface.
@@ -129,18 +135,93 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     }
     
     public void include(ResourceRequest request, ResourceResponse response) throws PortletException, IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+    	InternalResourceRequest internalRequest = (InternalResourceRequest)
+        InternalImplConverter.getInternalRequest(request);
+		InternalResourceResponse internalResponse = (InternalResourceResponse)
+		        InternalImplConverter.getInternalResponse(response);
+		
+		boolean isIncluded = (internalRequest.isIncluded()
+				|| internalResponse.isIncluded());
+		try {
+			internalRequest.setIncluded(true);
+			internalRequest.setIncludedQueryString(queryString);
+			internalResponse.setIncluded(true);
+		
+		    requestDispatcher.include(
+		    		(HttpServletRequest) internalRequest,
+		    		(HttpServletResponse) internalResponse);
+		} catch (IOException ex) {
+		    throw ex;
+		} catch (ServletException ex) {
+		    if (ex.getRootCause() != null) {
+		        throw new PortletException(ex.getRootCause());
+		    } else {
+		        throw new PortletException(ex);
+		    }
+		} finally {
+			internalRequest.setIncluded(isIncluded);
+			internalResponse.setIncluded(isIncluded);
+		}
 	}
 
 	public void include(ActionRequest request, ActionResponse response) throws PortletException, IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		InternalActionRequest internalRequest = (InternalActionRequest)
+        InternalImplConverter.getInternalRequest(request);
+		InternalActionResponse internalResponse = (InternalActionResponse)
+		        InternalImplConverter.getInternalResponse(response);
+		
+		boolean isIncluded = (internalRequest.isIncluded()
+				|| internalResponse.isIncluded());
+		try {
+			internalRequest.setIncluded(true);
+			internalRequest.setIncludedQueryString(queryString);
+			internalResponse.setIncluded(true);
+		
+		    requestDispatcher.include(
+		    		(HttpServletRequest) internalRequest,
+		    		(HttpServletResponse) internalResponse);
+		} catch (IOException ex) {
+		    throw ex;
+		} catch (ServletException ex) {
+		    if (ex.getRootCause() != null) {
+		        throw new PortletException(ex.getRootCause());
+		    } else {
+		        throw new PortletException(ex);
+		    }
+		} finally {
+			internalRequest.setIncluded(isIncluded);
+			internalResponse.setIncluded(isIncluded);
+		}
 	}
 
 	public void include(EventRequest request, EventResponse response) throws PortletException, IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		InternalEventRequest internalRequest = (InternalEventRequest)
+        InternalImplConverter.getInternalRequest(request);
+		InternalEventResponse internalResponse = (InternalEventResponse)
+		        InternalImplConverter.getInternalResponse(response);
+		
+		boolean isIncluded = (internalRequest.isIncluded()
+				|| internalResponse.isIncluded());
+		try {
+			internalRequest.setIncluded(true);
+			internalRequest.setIncludedQueryString(queryString);
+			internalResponse.setIncluded(true);
+		
+		    requestDispatcher.include(
+		    		(HttpServletRequest) internalRequest,
+		    		(HttpServletResponse) internalResponse);
+		} catch (IOException ex) {
+		    throw ex;
+		} catch (ServletException ex) {
+		    if (ex.getRootCause() != null) {
+		        throw new PortletException(ex.getRootCause());
+		    } else {
+		        throw new PortletException(ex);
+		    }
+		} finally {
+			internalRequest.setIncluded(isIncluded);
+			internalResponse.setIncluded(isIncluded);
+		}
 	}
 
 	public void forward(ResourceRequest request, ResourceResponse response) throws PortletException, IOException, IllegalStateException {

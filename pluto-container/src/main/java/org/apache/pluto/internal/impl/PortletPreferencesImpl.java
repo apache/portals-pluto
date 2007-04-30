@@ -113,9 +113,11 @@ public class PortletPreferencesImpl implements PortletPreferences {
         // Put default portlet preferences into preferences map.
         PortletEntity entity = window.getPortletEntity();
         defaultPreferences = entity.getDefaultPreferences();
-        for (int i = 0; i < defaultPreferences.length; i++) {
-            preferences.put(defaultPreferences[i].getName(),
-                            (InternalPortletPreference) defaultPreferences[i].clone());
+        if (defaultPreferences!=null){
+	        for (int i = 0; i < defaultPreferences.length; i++) {
+	            preferences.put(defaultPreferences[i].getName(),
+	                            (InternalPortletPreference) defaultPreferences[i].clone());
+	        }
         }
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Loaded default preferences: " + toString());
@@ -137,7 +139,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
             //   Portlet preferences are stored everytime when a
             //   PortletPreferencesImpl instance is created.
             //   So here we do not check the portlet request method ID.
-        	internalStore();
+            if (storedPreferences.length >0)
+            	internalStore();
         	
         } catch (PortletContainerException ex) {
             LOG.error("Error retrieving preferences.", ex);

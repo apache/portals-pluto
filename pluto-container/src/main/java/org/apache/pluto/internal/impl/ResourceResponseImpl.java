@@ -26,12 +26,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.InternalResourceResponse;
 import org.apache.pluto.spi.PortalCallbackService;
 
 public class ResourceResponseImpl extends StateAwareResponseImpl
-implements ResourceResponse, InternalActionResponse {
+implements ResourceResponse, InternalResourceResponse {
 
 	/**
      * Is it still allowed to invoke the method sendRedirect() ?

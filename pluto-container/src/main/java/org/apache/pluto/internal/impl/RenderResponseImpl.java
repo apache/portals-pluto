@@ -61,8 +61,7 @@ implements RenderResponse, InternalRenderResponse {
     
     // Private Member Variables ------------------------------------------------
     
-    /** True if we are in an include call. */
-    private boolean included = false;
+    
     
     /** The current content type. */
     private String currentContentType = null;    
@@ -174,15 +173,7 @@ implements RenderResponse, InternalRenderResponse {
     }
 
     
-    // InternalRenderResponse Impl ---------------------------------------------
     
-    public void setIncluded(boolean included) {
-        this.included = included;
-    }
-
-    public boolean isIncluded() {
-        return included;
-    }
     
     
     // Included HttpServletResponse (Limited) Impl -----------------------------
@@ -191,7 +182,7 @@ implements RenderResponse, InternalRenderResponse {
      * TODO
      */
     public String encodeRedirectUrl(String url) {
-    	if (included) {
+    	if (super.isIncluded()) {
     		return null;
     	} else {
     		return super.encodeRedirectUrl(url);
@@ -202,7 +193,7 @@ implements RenderResponse, InternalRenderResponse {
      * TODO
      */
     public String encodeRedirectURL(String url) {
-    	if (included) {
+    	if (super.isIncluded()) {
     		return null;
     	} else {
     		return super.encodeRedirectURL(url);

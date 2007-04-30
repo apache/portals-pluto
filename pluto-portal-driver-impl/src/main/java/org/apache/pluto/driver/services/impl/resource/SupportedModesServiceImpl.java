@@ -202,14 +202,16 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 while (supports.hasNext())
                 {
                     SupportsDD supportsDD = (SupportsDD)supports.next();
-                    Iterator portletModes = supportsDD.getPortletModes().iterator();
+                    if (supportsDD.getPortletModes()!=null){
+                    	Iterator portletModes = supportsDD.getPortletModes().iterator();
                     
-                    while (portletModes.hasNext())
-                    {
-                        PortletMode pMode = new PortletMode((String)portletModes.next());
-                        LOG.debug("Adding mode [" + pMode + "]");
-                        pModes.add(pMode);                                
-                    }                    
+	                    while (portletModes.hasNext())
+	                    {
+	                        PortletMode pMode = new PortletMode((String)portletModes.next());
+	                        LOG.debug("Adding mode [" + pMode + "]");
+	                        pModes.add(pMode);                                
+	                    }
+                    }
                 }
                 
                 supportedPortletModesByPortlet.put(

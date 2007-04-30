@@ -64,6 +64,8 @@ implements PortletResponse, InternalPortletResponse {
     
     private NamespaceMapper mapper = new NamespaceMapperImpl();
     
+    /** True if we are in an include call. */
+    private boolean included = false;
     
     // Constructor -------------------------------------------------------------
     
@@ -266,4 +268,14 @@ implements PortletResponse, InternalPortletResponse {
 	     }
 	     return validNamespace.toString();
 	}
+
+// InternalRenderResponse Impl ---------------------------------------------
+    
+    public void setIncluded(boolean included) {
+        this.included = included;
+    }
+
+    public boolean isIncluded() {
+        return included;
+    }
 }

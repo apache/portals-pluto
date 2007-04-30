@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @author <a href="mailto:dettborn@minet.uni-jena.de">Torsten Dettborn</a>
  */
 public interface InternalPortletRequest extends PortletRequest {
 
@@ -53,6 +54,19 @@ public interface InternalPortletRequest extends PortletRequest {
 
     public HttpServletRequest getHttpServletRequest();
     
+    /**
+     * Is set true when a jsp, servlet is included.
+     * @param included true when included
+     */
+    public void setIncluded(boolean included);
+    
+    /**
+     * Returns true if a jsp or servlet is included.
+     * @return true if a jsp or servlet is included.
+     */
+    public boolean isIncluded();
+    
+    public void setIncludedQueryString(String queryString);
 }
 
 

@@ -23,10 +23,4 @@ package org.apache.pluto.internal;
  */
 public interface InternalRenderRequest extends InternalPortletRequest {
 	
-    public void setIncluded(boolean included);
-    
-    public boolean isIncluded();
-    
-    public void setIncludedQueryString(String queryString);
-    
 }

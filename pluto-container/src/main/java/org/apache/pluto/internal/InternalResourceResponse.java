@@ -21,6 +21,6 @@ package org.apache.pluto.internal;
  * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @since 2006-02-17
  */
-public interface InternalRenderResponse extends InternalPortletResponse {
+public interface InternalResourceResponse extends InternalPortletResponse {
 	
 }

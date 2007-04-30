@@ -44,10 +44,10 @@ limitations under the License.
             <rtexprvalue>false</rtexprvalue>
         </attribute>
     </tag>
-    <tag>
+   <tag>
         <name>actionURL</name>
         <tagclass>org.apache.pluto.tags.ActionURLTag</tagclass>
-        <teiclass>org.apache.pluto.tags.BasicURLTag$TEI</teiclass>
+        <teiclass>org.apache.pluto.tags.PortletURLTag$TEI</teiclass>
         <bodycontent>JSP</bodycontent>
         <attribute>
             <name>windowState</name>
@@ -59,13 +59,23 @@ limitations under the License.
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+	   <attribute>
+            <name>var</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>        
         <attribute>
             <name>secure</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>var</name>
+            <name>copyCurrentRenderParameters</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>        
+        <attribute>
+            <name>escapeXml</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -73,7 +83,7 @@ limitations under the License.
     <tag>
         <name>renderURL</name>
         <tagclass>org.apache.pluto.tags.RenderURLTag</tagclass>
-        <teiclass>org.apache.pluto.tags.BasicURLTag$TEI</teiclass>
+        <teiclass>org.apache.pluto.tags.PortletURLTag$TEI</teiclass>
         <bodycontent>JSP</bodycontent>
         <attribute>
             <name>windowState</name>
@@ -95,7 +105,38 @@ limitations under the License.
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <name>copyCurrentRenderParameters</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>        
+        <attribute>
+            <name>escapeXml</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>        
     </tag>
+    <tag>
+        <name>resourceURL</name>
+        <tagclass>org.apache.pluto.tags.ResourceURLTag</tagclass>
+        <teiclass>org.apache.pluto.tags.BaseURLTag$TEI</teiclass>
+        <bodycontent>JSP</bodycontent>
+        <attribute>
+            <name>var</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>        
+        <attribute>
+            <name>secure</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>escapeXml</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>        
+    </tag>    
     <tag>
         <name>namespace</name>
         <tagclass>org.apache.pluto.tags.NamespaceTag</tagclass>
