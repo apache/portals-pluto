@@ -16,6 +16,9 @@
  */
 package org.apache.pluto.util.assemble;
 
+import java.io.File;
+
+import org.apache.pluto.util.assemble.ear.EarAssembler;
 import org.apache.pluto.util.assemble.file.FileAssembler;
 import org.apache.pluto.util.assemble.war.WarAssembler;
 
@@ -54,12 +57,21 @@ public class AssemblerFactory {
      * @return an assembler instance.
      */
     public Assembler createAssembler(AssemblerConfig config) {
-        if (config.getWarSource() != null) {
-            return new WarAssembler();
-        }
-        else {
+        File source = config.getSource();
+        
+        if ( source == null ) {
             return new FileAssembler();
         }
+
+        if ( source.getName().toLowerCase().endsWith( ".war" ) ) {
+            return new WarAssembler();
+        }
+        
+        if ( source.getName().toLowerCase().endsWith( ".ear" ) ) {
+            return new EarAssembler();
+        }
+        
+        return new FileAssembler();
     }
 
 }

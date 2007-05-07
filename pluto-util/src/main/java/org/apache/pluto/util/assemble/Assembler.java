@@ -27,15 +27,27 @@ import org.apache.pluto.util.UtilityException;
  */
 public interface Assembler {
 
+    /**
+     * Name of the Portlet Application descriptor file relative
+     * to the web application root, normally <code>WEB-INF/portlet.xml</code>.
+     */
     String PORTLET_XML = "WEB-INF/portlet.xml";
 
+    /**
+     * Name of the Web Application descriptor file relative
+     * to the web application root, normally <code>WEB-INF/web.xml</code>.
+     */
     String SERVLET_XML = "WEB-INF/web.xml";
 
+    /**
+     * The fully qualified name of the class responsible for
+     * dispatching requests from the Pluto container to portlets. 
+     */
     String DISPATCH_SERVLET_CLASS =
         	"org.apache.pluto.core.PortletServlet";
 
     /**
-     * Assemble a web applicaiton into a portlet web application which is
+     * Assemble a web application into a portlet web application which is
      * deployable into the pluto-1.1 portlet container. The specified web
      * application will be overwritten with the new application.
      */

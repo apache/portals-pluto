@@ -38,19 +38,54 @@ import org.apache.tools.ant.types.FileSet;
  */
 public class AssembleTask extends Task {
 
+    /**
+     * Path to the portlet descriptor 
+     * (normally <code>WEB-INF/portlet.xml</code>)
+     * <p/>
+     * If <code>webapp</code> is specified, this File will
+     * be resolved relative to <code>webapp</code>
+     */
     private File portletxml;
 
+    /**
+     * Path to the unassembled servlet descriptor 
+     * (normally <code>WEB-INF/web.xml</code>)
+     * <p/>
+     * If <code>webapp</code> is specified, this File will
+     * be resolved relative to <code>webapp</code>
+     */
     private File webxml;
-
+    
+    /**
+     * Path the assembled servlet descriptor will
+     * be written to.
+     */
     private File destfile;
 
+    /** 
+     * The base directory of the exploded web application to assemble.
+     * If set, <code>webXml</code> and <code>portletXml</code>
+     * will be resolved relative to this directory.
+     */
     private File webapp;
 
-    private File war;
+    /**
+     * Path to the archive to assemble.  EAR and WAR 
+     * packaging formats are supported.
+     */
+    private File archive;
 
+    /**
+     * Destination directory the assembled archives
+     * are written out to.
+     */
     private File destdir;
-
-    private Collection warFileSets = new LinkedList();
+    
+    /**
+     * Collection allowing multiple files to be assembled
+     * at once.
+     */
+    private Collection archiveFileSets = new LinkedList();
 
     public File getPortletxml() {
         if(webapp != null)
@@ -90,17 +125,38 @@ public class AssembleTask extends Task {
         this.webapp = webapp;
     }
 
+    /**
+     * Note this methods remains to support
+     * backwards compatiblity.
+     * 
+     * @deprecated see <code>getArchive()</code>
+     */
     public File getWar() {
-        return this.war;
+        return this.archive;
     }
 
+    /**
+     * Note this methods remains to support
+     * backwards compatiblity.
+     * 
+     * @param war
+     * @deprecated see <code>setArchive(File)</code>
+     */
     public void setWar(File war) {
-        this.war = war;
+        this.archive = war;
+    }
+    
+    public File getArchive() {
+        return this.archive;
+    }
+    
+    public void setArchive(File archive) {
+        this.archive = archive;
     }
 
     public File getDestdir() {
         if (destdir == null) {
-            return (war != null ? war.getParentFile() : null);
+            return (archive != null ? archive.getParentFile() : null);
         }
         return this.destdir;
     }
@@ -109,8 +165,19 @@ public class AssembleTask extends Task {
         this.destdir = destDir;
     }
 
+    /**
+     * Note this method remains to support 
+     * backwards compatiblity.
+     * 
+     * @param fileSet
+     * @deprecated use addArchives instead
+     */
     public void addWars(FileSet fileSet) {
-        this.warFileSets.add(fileSet);
+        this.archiveFileSets.add(fileSet);
+    }
+    
+    public void addArchives(FileSet fileSet) {
+        this.archiveFileSets.add(fileSet);
     }
 
     public void execute() throws BuildException {
@@ -118,8 +185,8 @@ public class AssembleTask extends Task {
         validateArgs();
 
         try {
-            if (this.warFileSets.size() > 0) {
-                for (final Iterator fileSetItr = this.warFileSets.iterator(); fileSetItr.hasNext();) {
+            if (this.archiveFileSets.size() > 0) {
+                for (final Iterator fileSetItr = this.archiveFileSets.iterator(); fileSetItr.hasNext();) {
                     final FileSet fileSet = (FileSet)fileSetItr.next();
                     final DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(this.getProject());
 
@@ -129,11 +196,11 @@ public class AssembleTask extends Task {
                     for (int index = 0; index < includedFiles.length; index++) {
                         AssemblerConfig config = new AssemblerConfig();
 
-                        final File warSource = new File(basedir, includedFiles[index]);
-                        config.setWarSource(warSource);
+                        final File archiveSource = new File(basedir, includedFiles[index]);
+                        config.setSource(archiveSource);
                         config.setDestination(getDestdir());
 
-                        this.log("Assembling '" + warSource + "' to '" + getDestdir() + "'");
+                        this.log("Assembling '" + archiveSource + "' to '" + getDestdir() + "'");
                         Assembler assembler = AssemblerFactory.getFactory().createAssembler(config);
                         assembler.assemble(config);
                     }
@@ -142,11 +209,11 @@ public class AssembleTask extends Task {
             else {
                 AssemblerConfig config = new AssemblerConfig();
 
-                final File warSource = getWar();
-                if (warSource != null) {
-                    config.setWarSource(warSource);
+                final File archiveSource = getArchive();
+                if (archiveSource != null) {
+                    config.setSource(archiveSource);
                     config.setDestination(getDestdir());
-                    this.log("Assembling '" + warSource + "' to '" + getDestdir() + "'");
+                    this.log("Assembling '" + archiveSource + "' to '" + getDestdir() + "'");
                 }
                 else {
                     config.setPortletDescriptor(getPortletxml());
@@ -154,7 +221,6 @@ public class AssembleTask extends Task {
                     config.setDestination(getDestfile());
                     this.log("Assembling '" + getWebxml() + "' to '" + getDestfile() + "'");
                 }
-
 
                 Assembler assembler = AssemblerFactory.getFactory().createAssembler(config);
                 assembler.assemble(config);
@@ -173,12 +239,13 @@ public class AssembleTask extends Task {
                throw new BuildException("webapp "+webapp.getAbsolutePath()+ " does not exist");
             }
 
-            if (war != null) {
-                throw new BuildException("war should not be specified if webapp is specified");
+            if (archive != null) {
+                throw new BuildException("archive (or war) should not be specified if webapp is specified");
             }
-            if (this.warFileSets.size() > 0) {
-                throw new BuildException("wars should not be specified if webapp is specified");
+            if (this.archiveFileSets.size() > 0) {
+                throw new BuildException("archive (or wars) should not be specified if webapp is specified");
             }
+            // TODO check this
             if (destdir != null) {
                 throw new BuildException("destfile should not be specified if webapp is specified");
             }
@@ -187,46 +254,46 @@ public class AssembleTask extends Task {
         }
 
         //Check if running with war arg
-        if (war != null) {
-            if(!war.exists()) {
-                throw new BuildException("WAR "+war.getAbsolutePath()+ " does not exist");
+        if (archive != null) {
+            if(!archive.exists()) {
+                throw new BuildException("Archive file "+archive.getAbsolutePath()+ " does not exist");
             }
 
-            if (this.warFileSets.size() > 0) {
-                throw new BuildException("wars should not be specified if war is specified");
+            if (this.archiveFileSets.size() > 0) {
+                throw new BuildException("archives (or wars) should not be specified if archive (or war) is specified");
             }
             if (webapp != null) {
-                throw new BuildException("webapp should not be specified if war is specified");
+                throw new BuildException("webapp should not be specified if archive (or war) is specified");
             }
             if (destfile != null) {
-                throw new BuildException("destfile should not be specified if war is specified");
+                throw new BuildException("destfile should not be specified if archive (or war) is specified");
             }
             if (portletxml != null) {
-                throw new BuildException("portletxml should not be specified if war is specified");
+                throw new BuildException("portletxml should not be specified if archive (or war) is specified");
             }
             if (webxml != null) {
-                throw new BuildException("webxml should not be specified if war is specified");
+                throw new BuildException("webxml should not be specified if archive (or war) is specified");
             }
 
             return;
         }
 
-        //Check if running with war arg
-        if (this.warFileSets.size() > 0) {
-            if (war != null) {
-                throw new BuildException("wars should not be specified if war is specified");
+        //Check if running with archives or wars arg
+        if (this.archiveFileSets.size() > 0) {
+            if (archive != null) {
+                throw new BuildException("archives (or wars) should not be specified if archive (or war) is specified");
             }
             if (webapp != null) {
-                throw new BuildException("webapp should not be specified if war is specified");
+                throw new BuildException("webapp should not be specified if archives (or wars) is specified");
             }
             if (destfile != null) {
-                throw new BuildException("destfile should not be specified if war is specified");
+                throw new BuildException("destfile should not be specified if archives (or wars) is specified");
             }
             if (portletxml != null) {
-                throw new BuildException("portletxml should not be specified if war is specified");
+                throw new BuildException("portletxml should not be specified if archive (or wars) is specified");
             }
             if (webxml != null) {
-                throw new BuildException("webxml should not be specified if war is specified");
+                throw new BuildException("webxml should not be specified if archives (or wars) is specified");
             }
 
             return;
@@ -239,13 +306,14 @@ public class AssembleTask extends Task {
         if(webxml == null || !webxml.exists()) {
             throw new BuildException("webxml "+webxml + " does not exist");
         }
-        if (war != null) {
-            throw new BuildException("war should not be specified if portletxml and webxml are aspecified");
+        if (archive != null) {
+            throw new BuildException("archive (or war) should not be specified if portletxml and webxml are specified");
         }
-        if (this.warFileSets.size() > 0) {
-            throw new BuildException("wars should not be specified if portletxml and webxml are aspecified");
+        if (this.archiveFileSets.size() > 0) {
+            throw new BuildException("archives (or wars) should not be specified if portletxml and webxml are specified");
         }
         if (destdir != null) {
+            // TODO check this
             throw new BuildException("destfile should not be specified if portletxml and webxml are aspecified");
         }
     }
