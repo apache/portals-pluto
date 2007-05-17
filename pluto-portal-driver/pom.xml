@@ -30,6 +30,12 @@
       <artifactId>commons-digester</artifactId>
       <version>${commons-digester.version}</version>
       <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
