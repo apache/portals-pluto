@@ -20,20 +20,21 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.io.FileUtils;
+import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
+import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 
 /**
  * @version $Revision$
  */
-public class WarAssemblerTest extends TestCase {
+public class WarAssemblerTest extends ArchiveBasedAssemblyTest {
 
-    private File portletFile;
-
+    private static final String portletResource = "/org/apache/pluto/util/assemble/war/WarDeployerTestPortlet.war";
+    private File portletFile = null;
+    
     protected void setUp() throws Exception {
-        final URL portletUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/war/WarDeployerTestPortlet.war");
+        final URL portletUrl = this.getClass().getResource(portletResource);
         this.portletFile = new File(portletUrl.getFile());
     }
 
@@ -44,7 +45,7 @@ public class WarAssemblerTest extends TestCase {
     public void testAssembleToNewDirectory() throws Exception {
         AssemblerConfig config = new AssemblerConfig();
 
-        config.setWarSource(this.portletFile);
+        config.setSource(this.portletFile);
 
         final File tempDir = getTempDir();
         config.setDestination(tempDir);
@@ -62,7 +63,7 @@ public class WarAssemblerTest extends TestCase {
         portletCopy.deleteOnExit();
         FileUtils.copyFile(this.portletFile, portletCopy);
 
-        config.setWarSource(portletCopy);
+        config.setSource(portletCopy);
         config.setDestination(portletCopy.getParentFile());
 
         WarAssembler assembler = new WarAssembler();
@@ -77,4 +78,13 @@ public class WarAssemblerTest extends TestCase {
         final File tempDir = tempFile.getParentFile();
         return tempDir;
     }
+
+    protected Assembler getAssemblerUnderTest() {
+        return new WarAssembler();
+    }
+
+    protected File getFileToAssemble() {
+        return portletFile;
+    }
 }
+
