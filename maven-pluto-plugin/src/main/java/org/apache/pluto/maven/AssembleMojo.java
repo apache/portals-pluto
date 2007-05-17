@@ -155,6 +155,13 @@ public class AssembleMojo extends AbstractPortletMojo {
      * @parameter alias="warFilesDestination" expression="${project.build.directory}/pluto-assembled-wars"
      */
     private File assemblyOutputDirectory;
+    
+    /**
+     * Destination directory the assembled files are written out to.
+     * @parameter
+     * @deprecated see assemblyOutputDirectory parameter
+     */
+    private File warFilesDestination;
 
     // AbstractPlutoMojo Impl --------------------------------------------------
 
@@ -207,7 +214,13 @@ public class AssembleMojo extends AbstractPortletMojo {
             }
             archives.addAll( warFiles );
         }
-
+        
+        // Warn if the old 'warFilesDestination' mojo parameter is used
+        if ( warFilesDestination != null ) {
+            log.warn( "'warFilesDestination' parameter is deprecated.  Use 'assemblyOutputDirectory' instead." );
+            assemblyOutputDirectory = warFilesDestination;
+        }
+        
         // If a list of war files are supplied:
         //   1) webXml, portletXml, and webXmlDestination parameters are ignored
         //   2) verify the files in the List exist.
@@ -216,13 +229,13 @@ public class AssembleMojo extends AbstractPortletMojo {
         // A list of files was supplied so we ignore other parameters. 
         if (archives != null && !archives.isEmpty()) {
             if (webXml != null) {
-                log.debug("warFiles parameter and webXml parameter are mutually exclusive.  Ignoring webXml parameter.");
+                log.debug("archives parameter and webXml parameter are mutually exclusive.  Ignoring webXml parameter.");
             }
             if (portletXml != null) {
-                log.debug("warFiles parameter and portletXml parameter are mutually exclusive.  Ignoring portletXml parameter.");
+                log.debug("archives parameter and portletXml parameter are mutually exclusive.  Ignoring portletXml parameter.");
             }
             if (webXmlDestination != null) {
-                log.debug("warFiles parameter and webXmlDestination parameter are mutually exclusive.  Ignoring webXmlDestination parameter.");
+                log.debug("archives parameter and webXmlDestination parameter are mutually exclusive.  Ignoring webXmlDestination parameter.");
             }
             
             // verify each file can be found
