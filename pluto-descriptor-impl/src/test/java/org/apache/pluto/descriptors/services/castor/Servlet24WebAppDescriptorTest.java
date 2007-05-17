@@ -70,6 +70,7 @@ public class Servlet24WebAppDescriptorTest extends TestCase
         WebAppDD webapp2 = underTest.read(new FileInputStream(outputFile));
         assertNotNull(webapp2);
         assertEquals("2.4", webapp2.getServletVersion());
+        outputFile.delete();
     }
 
 }

@@ -100,6 +100,7 @@ public abstract class ArchiveBasedAssemblyTest extends TestCase {
         assertTrue( "Destination directory does not exist, assembly did not complete properly.", destDir.exists() );
         assertTrue( "Assembled war file does not exist, assembly did not complete properly.", destFile.exists() );
         
+        tmpFile.delete();
         destFile.delete();
         destDir.delete();
     }
