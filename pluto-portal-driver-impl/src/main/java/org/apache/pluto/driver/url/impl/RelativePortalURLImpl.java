@@ -16,18 +16,20 @@
  */
 package org.apache.pluto.driver.url.impl;
 
-import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLParameter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURLParser;
 
 /**
  * The portal URL.
@@ -39,7 +41,13 @@ public class RelativePortalURLImpl implements PortalURL {
 
     private String servletPath;
     private String renderPath;
-    private String actionWindow;
+    private String actionWindow;    
+    
+    /** 
+     * PortalURLParser used to construct the string
+     * representation of this portal url.
+     */
+    private PortalURLParser urlParser;
 
     /** The window states: key is the window ID, value is WindowState. */
     private Map windowStates = new HashMap();
@@ -53,12 +61,14 @@ public class RelativePortalURLImpl implements PortalURL {
      * Constructs a PortalURLImpl instance using customized port.
      * @param contextPath  the servlet context path.
      * @param servletName  the servlet name.
+     * @param urlParser    the {@link PortalURLParser} used to construct a string representation of the url.
      */
-    public RelativePortalURLImpl(String contextPath, String servletName) {
+    public RelativePortalURLImpl(String contextPath, String servletName, PortalURLParser urlParser) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(contextPath);
     	buffer.append(servletName);
         servletPath = buffer.toString();
+        this.urlParser = urlParser;
     }
 
     /**
@@ -157,7 +167,7 @@ public class RelativePortalURLImpl implements PortalURL {
      * @see PortalURLParserImpl#toString(org.apache.pluto.driver.url.PortalURL)
      */
     public String toString() {
-        return PortalURLParserImpl.getParser().toString(this);
+        return urlParser.toString(this);
     }
 
 
@@ -190,6 +200,7 @@ public class RelativePortalURLImpl implements PortalURL {
     	portalURL.windowStates = new HashMap(windowStates);
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
+        portalURL.urlParser = urlParser;
         return portalURL;
     }
 }
