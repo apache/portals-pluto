@@ -24,6 +24,13 @@
   <bannerRight>
     <src>http://portals.apache.org/pluto/images/banner.png</src>
   </bannerRight>
+
+  <skin>  
+      <groupId>org.apache.pluto</groupId>
+      <artifactId>pluto-site-skin</artifactId>
+      <version>1.1.4-SNAPSHOT</version>
+  </skin> 
+
   <body>
     <links>
       <item name="Pluto Home" href="http://portals.apache.org/pluto"/>
@@ -31,10 +38,7 @@
 	  <item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh/pluto-container"/>
     </links>
 
-	<menu name="Pluto Portal">
-      <item name="Getting Started" href="/getting-started.html"/>
-	</menu>
-
     ${reports}
+
   </body>
 </project>

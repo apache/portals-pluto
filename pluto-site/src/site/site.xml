@@ -28,6 +28,12 @@ limitations under the License.
   <bannerRight>
     <src>http://portals.apache.org/pluto/images/banner.png</src>
   </bannerRight>
+
+  <skin>  
+      <groupId>org.apache.pluto</groupId>
+      <artifactId>pluto-site-skin</artifactId>
+      <version>1.1.4-SNAPSHOT</version>
+  </skin> 
   
   <body>
     
@@ -63,7 +69,7 @@ limitations under the License.
         <item name="Testsuite" href="/pluto-testsuite/index.html"/>
         <item name="Descriptor API" href="/pluto-descriptor-api/index.html"/>
         <item name="Descriptor Impl" href="/pluto-descriptor-impl/index.html"/>
-        <item name="Optional Services" href="/pluto-optional-services/index.html"/>
+        <!--item name="Optional Services" href="/pluto-optional-services/index.html"/-->
         <item name="Maven Plugin" href="/maven-pluto-plugin/index.html"/>
         <item name="Ant Tasks" href="/pluto-ant-tasks/index.html"/>
         <item name="Util" href="/pluto-util/index.html"/>

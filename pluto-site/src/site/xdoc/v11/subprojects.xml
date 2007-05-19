@@ -94,12 +94,6 @@ limitations under the License.
               The default implementation utilzes castor for reading and writing
               portlet and web application descriptors.
             </li>
-            <li>
-              <b>Pluto Optional Services:</b>
-              Provides optional implementations of the Pluto Container Services.
-              Includes database implementations of the PortletPreferencesService
-              and the UserAttributeService.
-            </li>
           </ul>
         </p>
       </subsection>

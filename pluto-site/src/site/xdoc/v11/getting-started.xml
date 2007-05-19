@@ -103,8 +103,8 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/trunk/ pluto</pre>
 		</p>
 
-		<p>To check out Pluto 1.1.2 source to the 'pluto' directory use this command:
-		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.2 pluto</pre>
+		<p>To check out Pluto 1.1.3 source to the 'pluto' directory use this command:
+		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.3 pluto</pre>
 		</p>
 
         <p>
@@ -185,10 +185,10 @@ $> mvn install
           <ul>
             <li>castor-1.0.jar</li>
             <li>portlet-api-1.0.jar</li>
-            <li>pluto-container-1.1.2.jar</li>
-            <li>pluto-descriptor-api-1.1.2.jar</li>
-            <li>pluto-descriptor-impl-1.1.2.jar</li>
-            <li>pluto-taglib-1.1.2.jar</li>
+            <li>pluto-container-1.1.3.jar</li>
+            <li>pluto-descriptor-api-1.1.3.jar</li>
+            <li>pluto-descriptor-impl-1.1.3.jar</li>
+            <li>pluto-taglib-1.1.3.jar</li>
           </ul>
         </p>
         <p>
