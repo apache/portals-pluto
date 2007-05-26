@@ -24,10 +24,9 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- *
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
 package javax.portlet;
 
 /**
@@ -52,7 +51,7 @@ public interface CacheControl {
      *          or <code>null</code> if no expiration time
      *          is set.
      */
-    public long getExpirationTime();
+    public int getExpirationTime();
     
     /**
      * Sets a new expiration time for the current response
@@ -66,7 +65,7 @@ public interface CacheControl {
      * 
      * @param time  expiration time in seconds
      */
-    public void setExpirationTime(long time);
+    public void setExpirationTime(int time);
     
     
     /**

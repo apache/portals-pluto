@@ -103,7 +103,11 @@ public interface PortletRequest
    * @since 2.0
    */
   public enum P3PUserInfos {
-      USER_BDATE("user.bdate"), USER_GENDER("user.gender"), USER_EMPLOYER("user.employer"), 
+      USER_BDATE_YMD_YEAR("user.bdate.ymd.year"), USER_BDATE_YMD_MONTH("user.bdate.ymd.month"),
+      USER_BDATE_YMD_DAY("user.bdate.ymd.day"), USER_BDATE_HMS_HOUR("user.bdate.hms.hour"),
+	  USER_BDATE_HMS_MINUTE("user.bdate.hms.minute"), USER_BDATE_HMS_SECOND("user.bdate.hms.second"),
+	  USER_BDATE_FRACTIONSECOND("user.bdate.fractionsecond"), USER_BDATE_TIMEZONE("user.bdate.timezone"),
+	  USER_GENDER("user.gender"), USER_EMPLOYER("user.employer"), 
       USER_DEPARTMENT("user.department"), USER_JOBTITLE("user.jobtitle"), 
       USER_NAME_PREFIX("user.name.prefix"), USER_NAME_GIVEN("user.name.given"), 
       USER_NAME_FAMILY("user.name.family"), USER_NAME_MIDDLE("user.name.middle"),
@@ -177,7 +181,7 @@ public interface PortletRequest
    * phase the portlet request and response are from type
    * <code>ActionRequest</code> and <code>ActionResponse</code>.
    * <p>
-   * The value of the constant is ACTION_PHASE.
+   * The value of the constant is <code>ACTION_PHASE</code>.
    * 
    * @since 2.0
    */
@@ -188,7 +192,7 @@ public interface PortletRequest
    * phase the portlet request and response are from type
    * <code>EventRequest</code> and <code>EventResponse</code>.
    * <p>
-   * The value of the constant is EVENT_PHASE.
+   * The value of the constant is <code>EVENT_PHASE</code>.
    * 
    * @since 2.0
    */
@@ -199,7 +203,7 @@ public interface PortletRequest
    * phase the portlet request and response are from type
    * <code>RenderRequest</code> and <code>RenderResponse</code>.
    * <p>
-   * The value of the constant is RENDER_PHASE.
+   * The value of the constant is <code>RENDER_PHASE</code>.
    * 
    * @since 2.0
    */
@@ -210,7 +214,7 @@ public interface PortletRequest
    * phase the portlet request and response are from type
    * <code>ResourceRequest</code> and <code>ResourceResponse</code>.
    * <p>
-   * The value of the constant is RESOURCE_SERVING_PHASE.
+   * The value of the constant is <code>RESOURCE_SERVING_PHASE</code>.
    * 
    * @since 2.0
    */
@@ -221,12 +225,26 @@ public interface PortletRequest
    * phase the portlet request and response are from type
    * <code>FragmentRequest</code> and <code>FragmentResponse</code>.
    * <p>
-   * The value of the constant is FRAGMENT_SERVING_PHASE.
+   * The value of the constant is <code>FRAGMENT_SERVING_PHASE</code>.
    * 
    * @since 2.0
    */
   public static final String FRAGMENT_SERVING_PHASE = "FRAGMENT_SERVING_PHASE";
 
+  
+  /**
+   * Provides the portlet lifecycle phase of the current request.
+   * <p>
+   * Valid values are: ACTION_PHASE, EVENT_PHASE, RENDER_PHASE,
+   * RESOURCE_SERVING_PHASE.
+   * <p>
+   * The value of the constant is <code>javax.portlet.lifecylce_phase</code>.
+   * 
+   * @since 2.0
+   */
+  public static final String LIFECYCLE_PHASE = "javax.portlet.lifecycle_phase";
+  
+  
   /**
    * The RENDER_PART portlet request attribute is set by portals
    * that are streaming based and therefore need to split the
@@ -239,7 +257,7 @@ public interface PortletRequest
    * the portlet should set headers, portlet title and produce
    * its markup in a single render request.
    * <p>
-   * The value of the constant is javax.portlet.render_part.
+   * The value of the constant is <code>javax.portlet.render_part</code>.
    * 
    *  @since 2.0
    */
@@ -251,7 +269,7 @@ public interface PortletRequest
    * the intended headers and the portlet title of this render
    * request.
    * <p>
-   * The value of the constant is RENDER_HEADERS.
+   * The value of the constant is <code>RENDER_HEADERS</code>.
    * 
    * @since 2.0
    */
@@ -262,7 +280,7 @@ public interface PortletRequest
    * request attribute and denotes that the portlet should
    * produce its markup for this render request.
    * <p>
-   * The value of the constant is RENDER_MARKUP.
+   * The value of the constant is <code>RENDER_MARKUP</code>.
    * 
    * @since 2.0
    */
@@ -867,33 +885,18 @@ public interface PortletRequest
    */
   public String getWindowId();
   
-  /**
-   * Returns the portlet lifecycle phase of the current request.
-   * <p>
-   * Valid return values are: ACTION_PHASE, EVENT_PHASE, RENDER_PHASE,
-   * RESOURCE_SERVING_PHASE.
-   *  
-   * @since 2.0
-   * @return  the portlet lifecycle phase of the current request.
-   */
-  public String getLifecyclePhase();
   
   /**
    * Returns an array containing all of the Cookie properties 
-   * set by the current portlet or another portlet of the same portlet
-   * application given that they where set in the domain of the portlet
-   * application. 
+   * set by the portlet. 
    * <p>
-   * The returned cookies are in the domain of the current portlet
-   * application.
-   * <p> 
-   * This method returns <code>null</code> if no cookies in the current
-   * portlet application domain exist.
+   * This method returns <code>null</code> if no cookies exist.
    * 
    * @since 2.0
-   * @return  array of cookie properties in the current portlet application
-   *          domain, or <code>null</code> if no cookies in this domain exist. 
+   * @return  array of cookie properties of this portlet, or 
+   *          <code>null</code> if no cookies exist.
+   * @see PortletResponse#addProperty(Cookie) 
    */
-  javax.servlet.http.Cookie[] getCookieProperties();
+  javax.servlet.http.Cookie[] getCookies();
 
 }

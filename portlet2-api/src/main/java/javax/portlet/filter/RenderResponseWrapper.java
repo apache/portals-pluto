@@ -24,19 +24,18 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- *
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
 package javax.portlet.filter;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
-import javax.portlet.FragmentURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -110,14 +109,6 @@ public class RenderResponseWrapper implements RenderResponse {
      */
     public ResourceURL createResourceURL() {
         return response.createResourceURL();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createResourceURL</code> on the wrapped response object.
-     */
-    public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
-        return response.createResourceURL(markupContainsPortletURLs);
     }
 
     /**
@@ -257,19 +248,19 @@ public class RenderResponseWrapper implements RenderResponse {
     }
 
     /**
-     * The default behavior of this method is to call 
-     * <code>createFragmentURL()</code> on the wrapped response object.
-     */
-    public FragmentURL createFragmentURL() {
-        return response.createFragmentURL();
-    }
-
-    /**
      *  The default behavior of this method is to call 
      * <code>addProperty()</code> on the wrapped response object.
      */
     public void addProperty(Cookie cookie) {
         response.addProperty(cookie);
+    }
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
+     */
+    public void setNextPossiblePortletModes(Enumeration portletModes) {
+        response.setNextPossiblePortletModes(portletModes);
     }
 
 }

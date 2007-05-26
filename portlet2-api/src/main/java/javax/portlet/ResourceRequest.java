@@ -33,7 +33,7 @@ package javax.portlet;
  * The <code>ResourceRequest</code> interface represents the request
  * send to the portlet for rendering resources.
  * 
- * It extends the ClientHttpRequest interface and provides resource request
+ * It extends the ClientDataRequest interface and provides resource request
  * information to portlets.
  * <p>
  * The portlet container creates an <CODE>ResourceRequest</CODE> object and
@@ -51,11 +51,11 @@ package javax.portlet;
  * resource URL contains, the render parameter must be the last entry in the 
  * parameter value array. 
  * 
- * @see ClientHttpRequest
+ * @see ClientDataRequest
  * @see ResourceServingPortlet
  * @since 2.0
  */
-public interface ResourceRequest extends ClientHttpRequest {
+public interface ResourceRequest extends ClientDataRequest {
 
     /**
      * This property is set by the container if the container
@@ -88,4 +88,5 @@ public interface ResourceRequest extends ClientHttpRequest {
      *          if no resource ID was set onj the URL. 
      */
     String getResourceID();
+    
 }

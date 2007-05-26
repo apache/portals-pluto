@@ -25,14 +25,15 @@
  * DO NOT add / change / or delete method signatures!
  */
 /**
- * Copyright 2006 IBM Corporation.
- */
+  * Copyright 2006 IBM Corporation.
+  */
 
 package javax.portlet;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
 
 import javax.xml.namespace.QName;
 
@@ -168,7 +169,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * method.
      * <p>
      * It also evaluates the <code>RENDER_PART</code> request attribute and if set calls
-     * the <code>doHeaders</code> and <code>getTitle</code> methods for the
+     * the <code>doHeaders, getNextPossiblePortletModes</code> and <code>getTitle</code> methods for the
      * <code>RENDER_HEADERS</code> part and the <code>doDispatch</code>
      * method for the <code>RENDER_MARKUP</code> part.<br>
      * If the <code>RENDER_PART</code> request attribute is not set all
@@ -196,6 +197,9 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 		if (request.getAttribute(RenderRequest.RENDER_PART) != null) {  // streaming portal calling
 			if (request.getAttribute(RenderRequest.RENDER_PART).equals(RenderRequest.RENDER_HEADERS) ) {
 			    doHeaders(request, response);
+			    Enumeration nextModes = getNextPossiblePortletModes(request);
+			    if (nextModes != null)
+			    	response.setNextPossiblePortletModes(nextModes);
 			    response.setTitle(getTitle(request));				
 			} else if (request.getAttribute(RenderRequest.RENDER_PART).equals(RenderRequest.RENDER_MARKUP) ) {
 			    doDispatch(request, response);				
@@ -468,14 +472,19 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * <p>
      * The default implemention of this method is to call a
      * RequestDispatcher.foward with the ResourceID of the ResourceRequest.
+     * <p>
+     * If no ResourceID is set on the resource URL the default implementation
+     * does nothing. 
      * 
      * @since 2.0
      */
 	public void serveResource(ResourceRequest request, ResourceResponse response)
 			throws PortletException, IOException {
-		PortletRequestDispatcher rd = getPortletConfig().getPortletContext()
-				.getRequestDispatcher(request.getResourceID());
-		rd.forward(request, response);
+		if ( request.getResourceID() != null ) {
+			PortletRequestDispatcher rd = getPortletConfig().getPortletContext()
+										.getRequestDispatcher(request.getResourceID());
+			rd.forward(request, response);
+		}
 	}
 
 	/**
@@ -525,5 +534,28 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      */
 	protected void doHeaders(RenderRequest request, RenderResponse response) {
 		return;
+	}
+	
+	/**
+     * Used by the render method to set the next possible portlet modes.
+     * <p>
+     * The portlet should override this method and set the next possible portlet modes
+     * using this method in order to ensure that they are set before anything is
+     * written to the output stream.
+     * <p>
+     * The default implemention of this method returns <code>null</code>.
+     * 
+     * @since 2.0
+     */
+	protected java.util.Enumeration getNextPossiblePortletModes(RenderRequest request) {
+		return null;
+	}
+
+	/**
+	 * will be added in a new revision of the spec
+	 * (chrisra)
+	 */
+	public Enumeration getPublicRenderParameterNames() {
+		return null;
 	}
 }

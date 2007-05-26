@@ -211,6 +211,17 @@ public interface StateAwareResponse extends PortletResponse {
 	/**
      * Publishes an array of Events.
      * <p>
+<<<<<<< .mine
+     * All previously set events are cleared.
+=======
+     * The events map must contain
+     * <code>javax.xml.namespace.QName, Object</code> value pairs. The
+     * <code>javax.xml.namespace.QName</code> value represents the event name
+     * and the <code>Object</code> value represents the event payload. The
+     * object types of the payload values must be compliant with the specified
+     * event types for the event types in the portlet deployment descriptor.
+>>>>>>> .r539908
+     * <p>
      * The events map must contain
      * <code>javax.xml.namespace.QName, Object</code> value pairs. The
      * <code>javax.xml.namespace.QName</code> value represents the event name
@@ -275,25 +286,4 @@ public interface StateAwareResponse extends PortletResponse {
      */
 
 	public WindowState getWindowState();
-
-	/**
-     * This method allows the portlet to tell the portal the next possible
-     * portlet modes that the make sense from the portlet point of view.
-     * <p>
-     * If set, the portal should honor these enumeration of portlet modes and
-     * only provide the end user with choices to the provided portlet modes or a
-     * subset of these modes based on access control considerations.
-     * <p>
-     * If the portlet does not set any next possible portlet modes the default
-     * is that all portlet modes that the portlet has defined supporting in the
-     * portlet deployment descriptor are meaningful new portlet modes.
-     * 
-     * @param portletModes
-     *            next possible portlet modes that the make sense from the
-     *            portlet point of view, must not be <code>null</code> or an
-     *            empty enumeration.
-     * @since 2.0
-     */
-	public void setNextPossiblePortletModes(java.util.Enumeration portletModes);
-
 }

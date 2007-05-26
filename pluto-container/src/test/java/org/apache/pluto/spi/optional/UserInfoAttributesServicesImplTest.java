@@ -280,5 +280,9 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 			return null;
 		}
 
+		public Cookie[] getCookies() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 }

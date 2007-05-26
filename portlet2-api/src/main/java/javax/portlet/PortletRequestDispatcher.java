@@ -25,8 +25,8 @@
  * DO NOT add / change / or delete method signatures!
  */
 /**
- * Copyright 2006 IBM Corporation.
- */
+  * Copyright 2006 IBM Corporation.
+  */
 
 package javax.portlet;
 
@@ -178,41 +178,6 @@ public interface PortletRequestDispatcher {
     public void include(EventRequest request, EventResponse response)
             throws PortletException, java.io.IOException;
 
-    /**
-     * 
-     * Includes the content of a resource (servlet, JSP page, HTML file) in the
-     * response. In essence, this method enables programmatic server-side
-     * includes.
-     * <p>
-     * The included servlet cannot set or change the response status code or set
-     * headers; any attempt to make a change is ignored.
-     * 
-     * 
-     * @param request
-     *            a {@link FragmentRequest} object that contains the client
-     *            request. Must be either the render request passed to the
-     *            portlet in <code>serveFragmnet</code> or a wrapped version of this
-     *            fragment request.
-     * 
-     * @param response
-     *            a {@link FragmentResponse} object that contains the fragment
-     *            response. Must be either the fragmnet response passed to the
-     *            portlet in <code>serveFragment</code> or a wrapped version of this
-     *            fragmnent response.
-     * 
-     * @exception PortletException
-     *                if the included resource throws a ServletException, or
-     *                other exceptions that are not Runtime- or IOExceptions.
-     * 
-     * @exception java.io.IOException
-     *                if the included resource throws this exception
-     * 
-     * @since 2.0
-     */
-
-    public void include(FragmentRequest request, FragmentResponse response)
-            throws PortletException, java.io.IOException;
-    
     
     /**
      * Forwards a resource request from a portlet to another resource (servlet, JSP file, or HTML file) 
@@ -245,34 +210,5 @@ public interface PortletRequestDispatcher {
             throws PortletException, java.io.IOException, java.lang.IllegalStateException;
 
     
-    /**
-     * Forwards a fragmnet request from a portlet to another resource (servlet, JSP file, or HTML file) 
-     * on the server. This method allows the portlet to do preliminary processing of a 
-     * request and another resource to generate the response.
-     * <p>
-     * The <code>forward</code> method should be called before the response has been 
-     * committed to the client (before response body output has been flushed). 
-     * If the response already has been committed, this method throws an 
-     * <code>IllegalStateException</code>. Uncommitted output in the response buffer 
-     * is automatically cleared before the forward.
-     * <p>
-     * The request and response parameters must be either the same objects as were passed to 
-     * the calling portlet's <code>serveFragment</code> method or be subclasses of the 
-     * <code>FragmentRequestWrapper</code> or <code>FragmentResponseWrapper</code> classes that wrap them.
-     * 
-     * @param request  a {@link FragmentRequest} object that represents the request the 
-     *                 client makes of the portlet
-     * @param response a {@link FragmentResponse} object that contains the resource response 
-     * @exception PortletException
-     *                if the included resource throws a ServletException, or
-     *                other exceptions that are not Runtime- or IOExceptions.
-     * @exception java.io.IOException
-     *                if the included resource throws this exception
-     * @exception java.lang.IllegalStateException
-     *                if the response was already committed
-     * @since 2.0
-     */
-    public void forward(FragmentRequest request, FragmentResponse response)
-            throws PortletException, java.io.IOException, java.lang.IllegalStateException;
 
 }

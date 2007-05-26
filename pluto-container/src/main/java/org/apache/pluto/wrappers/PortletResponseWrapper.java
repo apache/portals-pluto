@@ -15,10 +15,10 @@
  */
 package org.apache.pluto.wrappers;
 
-import javax.portlet.FragmentURL;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
+import javax.servlet.http.Cookie;
 
 public class PortletResponseWrapper
     extends javax.servlet.http.HttpServletResponseWrapper
@@ -40,6 +40,10 @@ public class PortletResponseWrapper
     // javax.portlet.PortletResponse implementation ------------------------------------------------
     public void addProperty(String key, String value) {
         this.getPortletResponse().addProperty(key, value);
+    }
+    
+    public void addProperty(Cookie cookie){
+    	this.getPortletResponse().addProperty(cookie);
     }
 
     public void setProperty(String key, String value) {
@@ -65,10 +69,6 @@ public class PortletResponseWrapper
 
 	public ResourceURL createResourceURL() {
 		return this.getPortletResponse().createResourceURL(); 
-	}
-	
-	public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
-		return this.getPortletResponse().createResourceURL(markupContainsPortletURLs); 
 	}
 
 	public String getNamespace() {
@@ -96,10 +96,5 @@ public class PortletResponseWrapper
         }
         setResponse((javax.servlet.http.HttpServletResponse) response);
     }
-
-	public FragmentURL createFragmentURL() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}   
 }
 

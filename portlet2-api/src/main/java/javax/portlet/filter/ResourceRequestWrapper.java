@@ -24,10 +24,9 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- *
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
 package javax.portlet.filter;
 
 import java.io.BufferedReader;
@@ -439,14 +438,6 @@ public class ResourceRequestWrapper implements ResourceRequest {
     }
 
     /**
-     * The default behavior of this method is to call 
-     * <code>getLifecyclePhase()</code> on the wrapped request object.
-     */
-    public String getLifecyclePhase() {
-        return request.getLifecyclePhase();
-    }
-
-    /**
      *  The default behavior of this method is to call 
      * <code>getMethod()</code> on the wrapped request object.
      */
@@ -465,10 +456,10 @@ public class ResourceRequestWrapper implements ResourceRequest {
 
     /**
      * The default behavior of this method is to call 
-     * <code>getCookieProperties()</code> on the wrapped request object.
+     * <code>getCookies()</code> on the wrapped request object.
      */
-    public Cookie[] getCookieProperties() {
-        return request.getCookieProperties();
+    public Cookie[] getCookies() {
+        return request.getCookies();
     }
     
 }

@@ -27,10 +27,11 @@
 /**
   * Copyright 2006 IBM Corporation.
   */
+
 package javax.portlet;
 
 /**
- * The <CODE>BaseUIRL</CODE> defines the basic capabilities
+ * The <CODE>BaseURL</CODE> defines the basic capabilities
  * of a portlet URL pointing back to the portlet.
  *
  * @since 2.0
@@ -122,7 +123,7 @@ public interface BaseURL {
      * a secure connection between the client and the portlet window for
      * this URL. Secure set to <code>false</code> indicates that the portlet 
      * does not need a secure connection for this URL. If the security is not
-     * set for a URL, it will stay the same as the current request. 
+     * set for a URL, it should stay the same as the current request. 
      *
      * @param  secure  true, if portlet requests to have a secure connection
      *                 between its portlet window and the client; false, if

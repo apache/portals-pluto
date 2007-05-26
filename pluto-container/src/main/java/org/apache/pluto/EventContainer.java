@@ -36,13 +36,14 @@ public interface EventContainer {
      * @param internalPortletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
+	 * @param eventNumber 
      * @throws PortletException          if one portlet has trouble fulfilling
      *                                   the request
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
 	public void fireEvent(HttpServletRequest request, HttpServletResponse response, 
-			PortletWindow window, QName eventName) throws PortletException, IOException;
+			PortletWindow window, QName eventName, int eventNumber) throws PortletException, IOException;
 	
 	public ServletContext getServletContext();
 }

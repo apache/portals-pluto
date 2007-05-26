@@ -34,14 +34,14 @@ package javax.portlet;
 /**
  * The <CODE>ActionRequest</CODE> represents the request sent to the portlet
  * to handle an action.<br>
- * It extends the ClientHttpRequest interface and provides action request
+ * It extends the ClientDataRequest interface and provides action request
  * information to portlets.
  * <p>
  * The portlet container creates an <CODE>ActionRequest</CODE> object and
  * passes it as argument to the portlet's <CODE>processAction</CODE> method.
  * 
- * @see ClientHttpRequest
+ * @see ClientDataRequest
  */
-public interface ActionRequest extends ClientHttpRequest
+public interface ActionRequest extends ClientDataRequest
 {
 }

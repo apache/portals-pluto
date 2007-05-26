@@ -19,11 +19,11 @@ package org.apache.pluto.internal.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.portlet.FragmentURL;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -103,6 +103,11 @@ implements PortletResponse, InternalPortletResponse {
         				internalPortletWindow,
         				name, value);
     }
+    
+    public void addProperty(Cookie cookie) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 
     public void setProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
@@ -236,11 +241,6 @@ implements PortletResponse, InternalPortletResponse {
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
-	public FragmentURL createFragmentURL() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
 	/**
 	 * Creates a portlet URL.
 	 * TODO: make dynamic? as service?
@@ -269,7 +269,6 @@ implements PortletResponse, InternalPortletResponse {
 	     }
 	     return validNamespace.toString();
 	}
-
 // InternalRenderResponse Impl ---------------------------------------------
     
     public void setIncluded(boolean included) {

@@ -379,5 +379,3 @@ public interface PortletSession
   public PortletContext getPortletContext ();
 
 }
-
-

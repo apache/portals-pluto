@@ -24,10 +24,9 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Created on Jun 29, 2006
- *
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
 package javax.portlet.filter;
 
 

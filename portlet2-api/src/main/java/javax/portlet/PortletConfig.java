@@ -121,6 +121,21 @@ public interface PortletConfig
 
   public java.util.Enumeration getInitParameterNames();
   
+
+  /**
+   * Returns the names of the public render parameters supported by the portlet
+   * as an <code>Enumeration</code> of String objects, or an empty <code>Enumeration</code> if the 
+   * portlet has no public render parameters.    
+   *
+   * @return		an <code>Enumeration</code> of <code>String</code> 
+   *			objects containing the names of the public 
+   *			render parameters, or an empty <code>Enumeration</code> if the 
+   *                    portlet does not define any public render parameters.
+   * @since 2.0 
+   */
+
+  public java.util.Enumeration getPublicRenderParameterNames();
+  
   
 }
 

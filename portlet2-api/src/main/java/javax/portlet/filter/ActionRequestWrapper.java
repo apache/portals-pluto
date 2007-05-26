@@ -431,27 +431,19 @@ public class ActionRequestWrapper implements ActionRequest {
     }
 
     /**
-     * The default behavior of this method is to call 
-     * <code>getLifecyclePhase()</code> on the wrapped request object.
-     */
-    public String getLifecyclePhase() {
-        return request.getLifecyclePhase();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>getCookieProperties()</code> on the wrapped request object.
-     */
-    public Cookie[] getCookieProperties() {
-        return request.getCookieProperties();
-    }
-
-    /**
      *  The default behavior of this method is to call 
      * <code>getMethod()</code> on the wrapped request object.
      */
     public String getMethod() {
         return request.getMethod();
+    }
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>getCookies()</code> on the wrapped request object.
+     */
+    public Cookie[] getCookies() {
+    	return request.getCookies();
     }
 
 }

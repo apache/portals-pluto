@@ -22,8 +22,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.FragmentRequest;
-import javax.portlet.FragmentResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
@@ -226,16 +224,6 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
 	}
 
 	public void forward(ResourceRequest request, ResourceResponse response) throws PortletException, IOException, IllegalStateException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
-	public void forward(FragmentRequest request, FragmentResponse response) throws PortletException, IOException, IllegalStateException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
-	public void include(FragmentRequest request, FragmentResponse response) throws PortletException, IOException {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}

@@ -36,8 +36,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.FragmentRequest;
-import javax.portlet.FragmentResponse;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -111,19 +109,4 @@ public interface FilterChain {
      */
     public void doFilter(ResourceRequest request, ResourceResponse response)
      throws IOException, PortletException;
-
-    /**
-     * Causes the next filter in the chain to be invoked, 
-     * or if the calling filter is the last filter in the chain, 
-     * causes the portlet at the end of the chain to be invoked.
-     * 
-     * @param request  the current fragment request. 
-     * @param response  the current fragment response.
-     *  
-     * @throws IOException  if an IO error occured in the filter processing
-     * @throws PortletException  if a portlet exception occured in the filter processing
-     */
-    public void doFilter(FragmentRequest request, FragmentResponse response)
-     throws IOException, PortletException;
-
 }

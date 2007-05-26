@@ -24,24 +24,22 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- *
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
 package javax.portlet.filter;
 
-import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.FragmentURL;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.servlet.http.Cookie;
 import javax.xml.namespace.QName;
 
 /**
@@ -170,14 +168,6 @@ public class EventResponseWrapper implements EventResponse {
 
      /**
       * The default behavior of this method is to call 
-      * <code>createResourceURL</code> on the wrapped response object.
-      */
-     public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
-         return response.createResourceURL(markupContainsPortletURLs);
-     }
-
-     /**
-      * The default behavior of this method is to call 
       * <code>encodeURL(path)</code> on the wrapped response object.
       */
      public String encodeURL(String path) {
@@ -244,22 +234,6 @@ public class EventResponseWrapper implements EventResponse {
      }
 
      /**
-      * The default behavior of this method is to call 
-      * <code>createFragmentURL()</code> on the wrapped response object.
-      */
-     public FragmentURL createFragmentURL() {
-         return response.createFragmentURL();
-     }
-
-     /**
-      *  The default behavior of this method is to call 
-      * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
-      */
-     public void setNextPossiblePortletModes(Enumeration portletModes) {
-         response.setNextPossiblePortletModes(portletModes);
-     }
-
-     /**
       *  The default behavior of this method is to call 
       * <code>setRenderParameters()</code> on the wrapped response object.
       */
@@ -267,4 +241,11 @@ public class EventResponseWrapper implements EventResponse {
          response.setRenderParameters(request);         
      }
 
+     /**
+      *  The default behavior of this method is to call 
+      * <code>addProperty()</code> on the wrapped response object.
+      */
+     public void addProperty(Cookie cookie) {
+         response.addProperty(cookie);
+     }
 }

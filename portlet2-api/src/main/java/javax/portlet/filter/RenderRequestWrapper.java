@@ -385,18 +385,9 @@ public class RenderRequestWrapper implements RenderRequest {
 
     /**
      * The default behavior of this method is to call 
-     * <code>getLifecyclePhase()</code> on the wrapped request object.
+     * <code>getCookies()</code> on the wrapped request object.
      */
-    public String getLifecyclePhase() {
-        return request.getLifecyclePhase();
+    public Cookie[] getCookies() {
+        return request.getCookies();
     }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>getCookieProperties()</code> on the wrapped request object.
-     */
-    public Cookie[] getCookieProperties() {
-        return request.getCookieProperties();
-    }
-
 }

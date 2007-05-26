@@ -60,6 +60,11 @@
 	  <artifactId>stax</artifactId>
 	  <version>${stax.impl.version}</version>
 	</dependency>
+	<dependency>
+	  <groupId>stax</groupId>
+	  <artifactId>stax</artifactId>
+	  <version>${stax.impl.version}</version>
+	</dependency>
     
     <!-- Specification Libraries =========================================== -->
     <dependency>

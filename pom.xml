@@ -237,7 +237,7 @@
 
     -->
   <properties>
-    <portlet-api.version>2.0-r12</portlet-api.version>
+    <portlet-api.version>2.0-r14</portlet-api.version>
     <servlet-api.version>2.4</servlet-api.version>
     <jsp-api.version>2.0</jsp-api.version>
     <jstl.version>1.1.2</jstl.version>
@@ -288,6 +288,7 @@
 
     <!-- Pluto Documentations -->
     <module>pluto-site</module>
+
   </modules>
   
   <distributionManagement>
@@ -361,5 +362,3 @@
   </reporting>
 
 </project>
-
-

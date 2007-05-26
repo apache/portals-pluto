@@ -22,6 +22,7 @@ import javax.servlet.http.Cookie;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Enumeration;
 
 public class RenderResponseWrapper extends PortletResponseWrapper
     implements RenderResponse {
@@ -123,9 +124,12 @@ public class RenderResponseWrapper extends PortletResponseWrapper
     // --------------------------------------------------------------------------------------------
 
 	public void addProperty(Cookie cookie) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		this.getRenderResponse().addProperty(cookie);
 	}
 
+	public void setNextPossiblePortletModes(Enumeration portletModes) {
+		// TODO Auto-generated method stub
+		this.getRenderResponse().setNextPossiblePortletModes(portletModes);
+	}
 }
 

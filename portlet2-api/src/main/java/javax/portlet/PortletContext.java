@@ -461,4 +461,58 @@ public interface PortletContext
     
   public String getPortletContextName();
 
+  
+  /**
+   * Returns the portlet application level container runtime options
+   * and values supported by this portlet container.
+   * <p>
+   * The portlet can set portlet application level container runtime
+   * options in the <code>portlet.xml</code> via the
+   * <code>container-runtime-option</code> element with a name and a
+   * value on the portlet application level.
+   * The map returned from this method will provide the subset the
+   * portlet container supports of the options the portlet has specified 
+   * in the <code>portlet.xml</code>.
+   * <p>
+   * The map will contain name of the runtime option as key of type String
+   * and the runtime options as values of type String array (<code>String[]</code>).
+   * 
+   * @since 2.0
+   *  
+   * @return  an immutable <code>Map</code> containing portlet application
+   *          level container runtime options names as keys and the 
+   *          container runtime values as map values, or an empty <code>Map</code>
+   *          if no portlet application level container runtime options are set
+   *          in the <code>portlet.xml</code> or supported by this portlet container. 
+   *          The keys in the map are of type String. The values in the map are of type
+   *          String array (<code>String[]</code>).
+   */
+  public java.util.Map getApplicationRuntimeOptions();
+
+  /**
+   * Returns the portlet level container runtime options
+   * and values supported by this portlet container.
+   * <p>
+   * The portlet can set portlet level container runtime
+   * options in the <code>portlet.xml</code> via the
+   * <code>container-runtime-option</code> element with a name and a
+   * value on the portlet level.
+   * The map returned from this method will provide the subset the
+   * portlet container supports of the options the portlet has specified 
+   * in the <code>portlet.xml</code>.
+   * <p>
+   * The map will contain name of the runtime option as key of type String
+   * and the runtime options as values of type String array (<code>String[]</code>).
+   * 
+   * @since 2.0
+   *  
+   * @return  an immutable <code>Map</code> containing portlet
+   *          level container runtime options names as keys and the 
+   *          container runtime values as map values, or an empty <code>Map</code>
+   *          if no portlet level container runtime options are set
+   *          in the <code>portlet.xml</code> or supported by this portlet container. 
+   *          The keys in the map are of type String. The values in the map are of type
+   *          String array (<code>String[]</code>).
+   */
+  public java.util.Map getPortletRuntimeOptions();
 }

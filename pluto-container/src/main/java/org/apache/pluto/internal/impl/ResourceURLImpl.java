@@ -38,4 +38,14 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
+
+	public String getCacheability() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void setCacheability(String cacheLevel) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }

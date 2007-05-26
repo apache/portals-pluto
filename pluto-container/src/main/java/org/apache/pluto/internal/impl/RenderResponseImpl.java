@@ -16,33 +16,30 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.InternalRenderResponse;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.util.ArgumentUtility;
-import org.apache.pluto.util.NamespaceMapper;
-import org.apache.pluto.util.StringManager;
-import org.apache.pluto.util.StringUtils;
-import org.apache.pluto.util.impl.NamespaceMapperImpl;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Locale;
 
 import javax.portlet.CacheControl;
-import javax.portlet.FragmentURL;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.Locale;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.SupportsDD;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.InternalRenderResponse;
+import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.StringManager;
+import org.apache.pluto.util.StringUtils;
 
 /**
  * Implementation of the <code>javax.portlet.RenderResponse</code> interface.
@@ -258,17 +255,20 @@ implements RenderResponse, InternalRenderResponse {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
+	
+	/* (non-Javadoc)
+	 * @see javax.portlet.RenderResponse#setNextPossiblePortletModes(java.util.Enumeration)
+	 */
+	public void setNextPossiblePortletModes(Enumeration portletModes) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 
-
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.internal.impl.PortletResponseImpl#addProperty(javax.servlet.http.Cookie)
+	 */
 	public void addProperty(Cookie cookie) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
-
-
-	public FragmentURL createFragmentURL() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
 }

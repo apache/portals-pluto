@@ -305,7 +305,6 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			assertEquals(portletApp286.getVersion(), "2.0");
 			
 		} catch (IOException e) {
-			e.printStackTrace();
 			fail("exception was thrown");
 		}
 	}

@@ -115,5 +115,16 @@ public class Constants {
 	 * The public key, to store the SharedRenderProvider in the request
 	 */
 	public static final String SHARED_RENDER_PROVIDER = "SharedRenderProvider";
+	
+	/**
+	 * The public key, to store, if the render parameter are already cleared in the request
+	 */
+	public static final String RENDER_ALREADY_CLEARED = "RenderAlreadyCleared";
+
+	public static final String EVENT_NUMBER = "EventNumber";
+
+	public static final int MAX_EVENTS_SIZE = 10;
+
+	public static final long THREAD_DELAY_TIME = 300;
 
 }

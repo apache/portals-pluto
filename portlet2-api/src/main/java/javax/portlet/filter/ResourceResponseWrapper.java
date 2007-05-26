@@ -24,10 +24,9 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/*
- * Copyright 2006 IBM Corporation.
- *
- */
+/**
+  * Copyright 2006 IBM Corporation.
+  */
 package javax.portlet.filter;
 
 import java.io.IOException;
@@ -36,8 +35,6 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
-import javax.portlet.FragmentRequest;
-import javax.portlet.FragmentURL;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -111,14 +108,6 @@ public class ResourceResponseWrapper implements ResourceResponse {
      */
     public ResourceURL createResourceURL() {
         return response.createResourceURL();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createResourceURL</code> on the wrapped response object.
-     */
-    public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
-        return response.createResourceURL(markupContainsPortletURLs);
     }
 
    /**
@@ -241,14 +230,6 @@ public class ResourceResponseWrapper implements ResourceResponse {
         response.setContentType(type);
     }
 
-    /**
-     * The default behavior of this method is to call 
-     * <code>setTitle(title)</code> on the wrapped response object.
-     */
-    public void setTitle(String title) {
-        response.setTitle(title);
-    }
-
 
     /**
      * The default behavior of this method is to call 
@@ -274,14 +255,6 @@ public class ResourceResponseWrapper implements ResourceResponse {
     public void setLocale(Locale loc) {
         this.setLocale(loc);
         return;
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createFragmentURL()</code> on the wrapped response object.
-     */
-    public FragmentURL createFragmentURL() {
-        return response.createFragmentURL();
     }
 
     /**

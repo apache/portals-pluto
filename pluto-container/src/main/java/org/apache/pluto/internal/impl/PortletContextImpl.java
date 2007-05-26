@@ -26,6 +26,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.Map;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
@@ -233,6 +234,17 @@ implements PortletContext, InternalPortletContext {
     public PortletAppDD getPortletApplicationDefinition() {
         return portletAppDD;
     }
+
+
+	public Map getApplicationRuntimeOptions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map getPortletRuntimeOptions() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
     
 }
 

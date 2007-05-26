@@ -372,8 +372,8 @@ public class PortletContainerImpl implements PortletContainer,
      * @see {@link javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest, javax.portlet.EventResponse)
      */
     public void fireEvent(HttpServletRequest request, HttpServletResponse response,
-    		PortletWindow window, QName eventName) 
-    throws PortletException, IOException {
+    		PortletWindow window, QName eventName, int eventNumber) 
+    		throws PortletException, IOException {
 
     	ensureInitialized();
 
@@ -389,6 +389,7 @@ public class PortletContainerImpl implements PortletContainer,
     	
     	// Save the name of the actual event to fire in the Request
     	eventRequest.setAttribute(Constants.EVENT_NAME, eventName.toString());
+    	eventRequest.setAttribute(Constants.EVENT_NUMBER, new Integer(eventNumber).toString());
 
     	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
     	invoker.event(eventRequest, eventResponse);
@@ -417,7 +418,7 @@ public class PortletContainerImpl implements PortletContainer,
     
     // Private Methods ---------------------------------------------------------
     
-    /**
+	/**
      * Ensures that the portlet container is initialized.
      * @throws IllegalStateException  if the container is not initialized.
      */
@@ -478,7 +479,12 @@ public class PortletContainerImpl implements PortletContainer,
 
 		// Encode render parameters retrieved from action response.
 		Map renderParameters = response.getRenderParameters();
-		redirectURL.clearParameters();
+		
+		// clear render parameter only once per request
+		// (there could be more than one (eventing))
+		if (!isAlreadyCleared(request))
+			redirectURL.clearParameters();
+		
 		redirectURL.setParameters(renderParameters);
 
 		// Encode redirect URL as a render URL.
@@ -491,7 +497,21 @@ public class PortletContainerImpl implements PortletContainer,
 	}
 
 
-	
-    
+	/**
+	 * Checks if render parameter are already cleared,
+	 * bye storing/reading an ID in the request
+	 * 
+	 * @param request the portlet request
+	 * 
+	 * @return true, if already cleared
+	 */
+	private boolean isAlreadyCleared(PortletRequest request) {
+		String cleared = (String) request.getAttribute(Constants.RENDER_ALREADY_CLEARED);
+		if (cleared == null || cleared.equals("false")) {
+			request.setAttribute(Constants.RENDER_ALREADY_CLEARED,"true");
+			return false;
+		}
+		return true;
+	}    
 }
 

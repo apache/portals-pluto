@@ -5,7 +5,7 @@
  *  to you under the Apache License, Version 2.0 (the
  *  "License"); you may not use this file except in compliance
  *  with the License.  You may obtain a copy of the License at
- *
+ *  
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing,
@@ -31,17 +31,16 @@
 package javax.portlet.filter;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.ActionResponse;
-import javax.portlet.FragmentURL;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.servlet.http.Cookie;
 import javax.xml.namespace.QName;
 
 /**
@@ -175,13 +174,6 @@ public class ActionResponseWrapper implements ActionResponse {
         return response.createResourceURL();
     }
 
-    /**
-     * The default behavior of this method is to call 
-     * <code>createResourceURL</code> on the wrapped response object.
-     */
-    public ResourceURL createResourceURL(boolean markupContainsPortletURLs) {
-        return response.createResourceURL(markupContainsPortletURLs);
-    }
 
     /**
      * The default behavior of this method is to call 
@@ -251,20 +243,10 @@ public class ActionResponseWrapper implements ActionResponse {
     }
 
     /**
-     * The default behavior of this method is to call 
-     * <code>createFragmentURL()</code> on the wrapped response object.
-     */
-    public FragmentURL createFragmentURL() {
-        return response.createFragmentURL();
-    }
-
-    /**
      *  The default behavior of this method is to call 
-     * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
+     * <code>addProperty()</code> on the wrapped response object.
      */
-    public void setNextPossiblePortletModes(Enumeration portletModes) {
-        response.setNextPossiblePortletModes(portletModes);
+    public void addProperty(Cookie cookie) {
+        response.addProperty(cookie);
     }
-
-
 }

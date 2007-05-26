@@ -22,6 +22,8 @@ import java.util.List;
 import javax.portlet.Event;
 import javax.portlet.PortletException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 
 import org.apache.pluto.EventContainer;
@@ -39,9 +41,9 @@ public interface EventProvider {
 
 	/**
 	 * 
+	 * @param event
 	 * @param request
 	 * @param response
-	 * @param event
 	 * @throws ServletException
 	 * @throws IOException
 	 * @throws PortletException
@@ -97,6 +99,11 @@ public interface EventProvider {
 	public abstract void removePortletName(String portletName,
 			List<String> evtLabelsList);
 
+	/**
+	 * Removes the portlet name.
+	 * 
+	 * @param portletName the portlet name
+	 */
 	public abstract void removePortletName(String portletName);
 
 	/**
@@ -111,9 +118,50 @@ public interface EventProvider {
 	 */
 	public abstract List<String> getAllEventLabelsList();
 
+	/**
+	 * Gets all saved events.
+	 * 
+	 * @return the saved events
+	 */
 	public abstract List<Event> getAllSavedEvents();
+	
+	/**
+	 * Gets the event.
+	 * 
+	 * @param eventName the event name
+	 * @param eventNumber the event number
+	 * 
+	 * @return the event
+	 */
+	public abstract Event getEvent(String eventName, int eventNumber);
 
+	/**
+	 * Fire events.
+	 * 
+	 * @param container the event container
+	 */
 	public abstract void fireEvents(EventContainer container);
 
+	/**
+	 * Gets the event definition from DD
+	 * 
+	 * @param qname the qname
+	 * 
+	 * @return the event definition
+	 */
 	public abstract EventDefinitionDD getEventDefinition(QName qname);
+	
+	/**
+	 * Gets the request.
+	 * 
+	 * @return the request
+	 */
+	public HttpServletRequest getRequest();
+	
+	/**
+	 * Gets the response.
+	 * 
+	 * @return the response
+	 */
+	public HttpServletResponse getResponse();
 }

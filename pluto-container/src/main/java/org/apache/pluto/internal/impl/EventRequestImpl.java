@@ -16,8 +16,6 @@
 package org.apache.pluto.internal.impl;
 
 
-import java.util.List;
-
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletPreferences;
@@ -78,41 +76,36 @@ public class EventRequestImpl extends PortletRequestImpl
         EventProvider provider = 
         	(EventProvider) request.getAttribute(Constants.PROVIDER);
         String eventName = (String) this.getAttribute(Constants.EVENT_NAME);
-        List<Event> events = provider.getAllSavedEvents();
-        for (Event event : events) {
-        	if (eventName.contains(event.getName().toString())){
-        		Object value = event.getValue();
-        		if (value instanceof XMLStreamReader) {
-        			XMLStreamReader xml = (XMLStreamReader) event.getValue();
-					EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(event.getName());
-					try {
-						// now test if object is jaxb
-						
-						ClassLoader loader = Thread.currentThread().getContextClassLoader();
-			            Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());
-						
-						JAXBContext jc = JAXBContext.newInstance(clazz);
-						Unmarshaller unmarshaller  = jc.createUnmarshaller();
+        int eventNumber = Integer.parseInt((String) this.getAttribute(Constants.EVENT_NUMBER));
+        Event event = provider.getEvent(eventName, eventNumber);
 
-						unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
-						
-					    JAXBElement result = unmarshaller.unmarshal(xml,clazz);
-					    
-					    return new EventImpl(event.getName(),result.getValue());
-					} catch (JAXBException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				return event;
-			}
-		}
-        
-        // should not be
-        throw new UnsupportedOperationException();
+        Object value = event.getValue();
+        if (value instanceof XMLStreamReader) {
+        	XMLStreamReader xml = (XMLStreamReader) event.getValue();
+        	EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(event.getName());
+        	try {
+        		// now test if object is jaxb
+
+        		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        		Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());
+
+        		JAXBContext jc = JAXBContext.newInstance(clazz);
+        		Unmarshaller unmarshaller  = jc.createUnmarshaller();
+
+        		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+
+        		JAXBElement result = unmarshaller.unmarshal(xml,clazz);
+
+        		return new EventImpl(event.getName(),result.getValue());
+        	} catch (JAXBException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	} catch (ClassNotFoundException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
+        }
+        return event;
     }
     
     //  PortletRequestImpl impl -------------------------------------------------

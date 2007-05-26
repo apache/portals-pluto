@@ -32,7 +32,7 @@ public class CacheControlImpl implements CacheControl {
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
-	public long getExpirationTime() {
+	public int getExpirationTime() {
 		// TODO Auto-generated method stub
 //		return 0;
 		throw new UnsupportedOperationException("This method needs to be implemented.");
@@ -49,7 +49,7 @@ public class CacheControlImpl implements CacheControl {
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
-	public void setExpirationTime(long arg0) {
+	public void setExpirationTime(int arg0) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}

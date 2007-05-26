@@ -43,7 +43,6 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     		throw new IOException(jaxbEx.getMessage());
     	}
     	catch(Exception me) {
-    		me.printStackTrace();
     		throw new IOException(me.getLocalizedMessage());
     	}
 

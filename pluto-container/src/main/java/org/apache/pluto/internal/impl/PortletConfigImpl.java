@@ -116,4 +116,9 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return portletDD;
     }
     // --------------------------------------------------------------------------------------------
+
+	public Enumeration getPublicRenderParameterNames() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }
