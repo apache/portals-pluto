@@ -22,6 +22,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
 import org.exolab.castor.util.LocalConfiguration;
@@ -39,6 +41,38 @@ import org.exolab.castor.xml.Unmarshaller;
 abstract class AbstractCastorDescriptorService {
 
     /**
+     * Logger
+     */
+    private static final Log LOG = LogFactory.getLog(AbstractCastorDescriptorService.class);
+    
+    /**
+     * The name of the system property that when set to the string
+     * value "true" has Castor use JAXP instead of the parser specified
+     * by the <code>org.exolab.castor.parser</code> property.
+     * 
+     * By using JAXP, the Pluto descriptor services no longer require
+     * an XML parser in a shared classloader.
+     * 
+     * By default the value of this property is "true" For Pluto 1.2 and
+     * higher.
+     */
+    private static final String JAXP_PROPERTY = "org.apache.pluto.useJaxp";
+    
+    /**
+     * Default value of org.apache.pluto.useJaxp system property.
+     * In Pluto 1.2.x it should be "true".  In Pluto 1.1.4 and up (but still
+     * within the 1.1 line) it should be "false".
+     */
+    private static final String JAXP_DEFAULT = "false";
+
+    /**
+     * Whether or not Castor should use JAXP.  If Castor is not using
+     * JAXP, then default to the parser specified by 
+     * <code>org.exolab.castor.parser</code>.
+     */
+    protected static boolean USING_JAXP = System.getProperty(JAXP_PROPERTY, JAXP_DEFAULT).equalsIgnoreCase("true");
+    
+    /**
      * Read the and convert the descriptor into it's Object graph.
      * @return
      * @throws IOException
@@ -46,10 +80,24 @@ abstract class AbstractCastorDescriptorService {
     protected Object readInternal(InputStream is) throws IOException {
         Object object = null;
         try {
+            // Use JAXP if we are instructed to do so.
+            if (USING_JAXP) {
+                LocalConfiguration castorConfig = LocalConfiguration.getInstance();
+                // empty string means "use JAXP" for Castor
+                castorConfig.getProperties().setProperty("org.exolab.castor.parser", "");
+                castorConfig.getProperties().setProperty("org.exolab.castor.xml.serializer.factory", 
+                        "org.exolab.castor.xml.XercesJDK5XMLSerializerFactory" );
+            }
+            
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Pluto descriptor service implementation using JAXP: [" + USING_JAXP + "]");                        
+            }
+            
             Mapping mapping = getCastorMapping();
             Unmarshaller unmarshaller = new Unmarshaller(mapping);
             unmarshaller.setEntityResolver(new EntityResolverImpl());
             unmarshaller.setIgnoreExtraElements(getIgnoreExtraElements());
+
             if(is!=null) {
                 InputStreamReader in = new InputStreamReader(is);
                 object = unmarshaller.unmarshal(in);
@@ -87,7 +135,21 @@ abstract class AbstractCastorDescriptorService {
             //  http://castor.org/javadoc/org/exolab/castor/xml/Marshaller.html#setDoctype(java.lang.String,%20java.lang.String)
             Marshaller marshaller = new Marshaller(writer);
             marshaller.setMapping(getCastorMapping());
-            LocalConfiguration.getInstance().getProperties().setProperty("org.exolab.castor.indent", "true");
+            
+            // Use JAXP if we are instructed to do so.
+            LocalConfiguration castorConfig = LocalConfiguration.getInstance();
+            if (USING_JAXP) {                
+                // empty string means "use JAXP" for Castor
+                castorConfig.getProperties().setProperty("org.exolab.castor.parser", "" );                
+                castorConfig.getProperties().setProperty("org.exolab.castor.xml.serializer.factory", 
+                        "org.exolab.castor.xml.XercesJDK5XMLSerializerFactory" );
+            }
+            
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Pluto descriptor service implementation using JAXP: [" + USING_JAXP + "]");                        
+            }
+            
+            castorConfig.getProperties().setProperty("org.exolab.castor.indent", "true");
             setCastorMarshallerOptions(marshaller, object);
             marshaller.marshal(object);
         } catch(IOException io) {
