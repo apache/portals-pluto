@@ -16,14 +16,15 @@
  */
 package org.apache.pluto.util.install.file.tomcat5;
 
-import org.apache.pluto.util.install.InstallationConfig;
-import org.apache.pluto.util.install.file.FileSystemInstaller;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.pluto.util.install.InstallationConfig;
+import org.apache.pluto.util.install.file.FileSystemInstaller;
 
 public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
 
@@ -51,7 +52,10 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
     throws IOException {
 
         File contextConfigurationDirectory = getConfigurationDir(config);
-
+        if (! contextConfigurationDirectory.exists()) {
+            contextConfigurationDirectory.mkdirs();
+        }
+            
         Iterator it = config.getPortletApplications().entrySet().iterator();
         while(it.hasNext()) {
             Map.Entry entry = (Map.Entry)it.next();
@@ -86,6 +90,17 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
 
     protected File getSharedDir(InstallationConfig config) {
         File installationDirectory = config.getInstallationDirectory();
+        // Tomcat 5 provides commons-logging-api.  Should be a nicer way
+        // for installers to indicate what dependencies are provided by the
+        // servlet container.
+        if ( new File(config.getInstallationDirectory(), "bin/commons-logging-api.jar").exists()) {
+            for (Iterator iter = config.getSharedDependencies().iterator(); iter.hasNext();) {
+                File dep = (File) iter.next();
+                if (dep.getPath().contains("commons-logging-api")) {
+                    iter.remove();
+                }
+            }
+        }
         return new File(installationDirectory, "shared/lib");
     }
 

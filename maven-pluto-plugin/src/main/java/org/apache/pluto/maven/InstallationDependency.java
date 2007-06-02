@@ -74,6 +74,9 @@ class InstallationDependency {
             new InstallationDependency("org.codehaus.castor", "castor", 
                     VERSION_PROPERTIES.getProperty("castor.version"));
 
+    public static final InstallationDependency  COMMONS_LOGGING_API =
+            new InstallationDependency("commons-logging", "commons-logging-api",
+                    VERSION_PROPERTIES.getProperty("commons-logging.version"));
 
     private static final List ENDORSED = new ArrayList();
     private static final List SHARED = new ArrayList();
@@ -85,6 +88,7 @@ class InstallationDependency {
         SHARED.add(CONTAINER);
         SHARED.add(TAGLIB);
         SHARED.add(CASTOR);
+        SHARED.add(COMMONS_LOGGING_API);
     }
 
 
