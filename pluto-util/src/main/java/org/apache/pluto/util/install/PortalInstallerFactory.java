@@ -16,12 +16,13 @@
  */
 package org.apache.pluto.util.install;
 
-import org.apache.pluto.util.install.file.tomcat5.Tomcat5FileSystemInstaller;
-import org.apache.pluto.util.install.file.jetty.Jetty5FileSystemInstaller;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import org.apache.pluto.util.install.file.jetty.Jetty5FileSystemInstaller;
+import org.apache.pluto.util.install.file.tomcat5.Tomcat5FileSystemInstaller;
+import org.apache.pluto.util.install.file.tomcat6.Tomcat6FileSystemInstaller;
 
 /**
  *
@@ -32,6 +33,7 @@ public abstract class PortalInstallerFactory {
     private static final ArrayList HANDLERS = new ArrayList();
 
     static {
+        HANDLERS.add(new Tomcat6FileSystemInstaller());
         HANDLERS.add(new Tomcat5FileSystemInstaller());
         HANDLERS.add(new Jetty5FileSystemInstaller());
     }

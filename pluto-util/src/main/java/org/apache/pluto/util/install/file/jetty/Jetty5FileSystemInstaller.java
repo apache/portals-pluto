@@ -34,6 +34,17 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
 
     protected File getSharedDir(InstallationConfig config) {
         File installationDirectory = config.getInstallationDirectory();
+        // Jetty 5.1 provides commons-logging.  Should be a nicer way
+        // for installers to indicate what dependencies are provided by the
+        // servlet container.
+        if ( new File(config.getInstallationDirectory(), "ext/commons-logging.jar").exists()) {
+            for (Iterator iter = config.getSharedDependencies().iterator(); iter.hasNext();) {
+                File dep = (File) iter.next();
+                if (dep.getPath().contains("commons-logging-api")) {
+                    iter.remove();
+                }
+            }
+        }
         return new File(installationDirectory, "ext");
     }
 
