@@ -74,21 +74,11 @@ class InstallationDependency {
             new InstallationDependency("org.codehaus.castor", "castor", 
                     VERSION_PROPERTIES.getProperty("castor.version"));
 
-    public static final InstallationDependency  XERCES =
-            new InstallationDependency("xerces", "xercesImpl", 
-                    VERSION_PROPERTIES.getProperty("xercesImpl.version"));
-
-    public static final InstallationDependency  XML_PARSER_APIS =
-            new InstallationDependency("xerces", "xmlParserAPIs", 
-                    VERSION_PROPERTIES.getProperty("xmlParserAPIs.version"));
 
     private static final List ENDORSED = new ArrayList();
     private static final List SHARED = new ArrayList();
 
     static {
-        ENDORSED.add(XERCES);
-        ENDORSED.add(XML_PARSER_APIS);
-
         SHARED.add(PORTLET_API);
         SHARED.add(DESCRIPTOR_API);
         SHARED.add(DESCRIPTOR_IMPL);
