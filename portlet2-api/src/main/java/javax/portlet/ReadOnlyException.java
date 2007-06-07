@@ -37,6 +37,7 @@ package javax.portlet;
 
 public class ReadOnlyException extends PortletException
 {
+	  private static final long serialVersionUID = 1L;
 
   private ReadOnlyException ()
   {

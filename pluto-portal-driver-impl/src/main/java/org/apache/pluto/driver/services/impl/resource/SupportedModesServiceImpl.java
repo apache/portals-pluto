@@ -34,6 +34,7 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.container.FilterManagerImpl;
 import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletRegistryService;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
@@ -125,6 +126,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
         portletRegistry = null;
         portletApps = null;        
         propertySvc = null;
+        FilterManagerImpl.removeAllFilterApps();
         LOG.debug("Supported Modes Service destroyed.");
     }
 
@@ -206,7 +208,8 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 LOG.warn(e);
                 continue;
             }
-                        
+            //init the portletapplication filter
+            FilterManagerImpl.addFilterApp(portletAppDD, app.getContextPath());
             // for each portletAppDD, retrieve the portletDD and the supported modes
             Iterator portlets = portletAppDD.getPortlets().iterator();
             while (portlets.hasNext()) {                

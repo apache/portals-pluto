@@ -25,6 +25,7 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.ResourceURLProviderImpl;
 import org.apache.pluto.spi.EventProvider;
+import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
@@ -106,6 +107,15 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
 
 	public SharedRenderProvider getSharedRenderProvider(HttpServletRequest request) {
 		return SharedRenderProviderImpl.getSharedRenderProviderImpl();
+	}
+
+
+	/**
+     * Returns the FilterManager, this is used to process the filter.
+     * @return FilterManager
+     */
+	public FilterManager getFilterManager() {
+		return FilterManagerImpl.getFilterManager();
 	}
 }
 

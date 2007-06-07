@@ -24,9 +24,10 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/**
-  * Copyright 2006 IBM Corporation.
-  */
+/*
+ * Copyright 2006 IBM Corporation.
+ *
+ */
 package javax.portlet.filter;
 
 import java.io.BufferedReader;
@@ -118,7 +119,7 @@ public class ResourceRequestWrapper implements ResourceRequest {
      * The default behavior of this method is to call 
      * <code>getAttributeNames()</code> on the wrapped request object.
      */
-    public Enumeration getAttributeNames() {
+    public Enumeration<String> getAttributeNames() {
         return request.getAttributeNames();
     }
 
@@ -166,7 +167,7 @@ public class ResourceRequestWrapper implements ResourceRequest {
      * The default behavior of this method is to call 
      * <code>getParameterMap()</code> on the wrapped request object.
      */
-    public Map getParameterMap() {
+    public Map<String, String[]> getParameterMap() {
         return request.getParameterMap();
     }
 
@@ -174,7 +175,7 @@ public class ResourceRequestWrapper implements ResourceRequest {
      * The default behavior of this method is to call 
      * <code>getParameterNames()</code> on the wrapped request object.
      */
-    public Enumeration getParameterNames() {
+    public Enumeration<String> getParameterNames() {
         return request.getParameterNames();
     }
 
@@ -230,7 +231,7 @@ public class ResourceRequestWrapper implements ResourceRequest {
      * The default behavior of this method is to call 
      * <code>getProperteis(name)</code> on the wrapped request object.
      */
-    public Enumeration getProperties(String name) {
+    public Enumeration<String> getProperties(String name) {
         return request.getProperties(name);
     }
 
@@ -246,7 +247,7 @@ public class ResourceRequestWrapper implements ResourceRequest {
      * The default behavior of this method is to call 
      * <code>getPropertyNames()</code> on the wrapped request object.
      */
-    public Enumeration getPropertyNames() {
+    public Enumeration<String> getPropertyNames() {
         return request.getPropertyNames();
     }
 
@@ -278,7 +279,7 @@ public class ResourceRequestWrapper implements ResourceRequest {
      * The default behavior of this method is to call 
      * <code>getResponseContentTypes()</code> on the wrapped request object.
      */
-    public Enumeration getResponseContentTypes() {
+    public Enumeration<String> getResponseContentTypes() {
         return request.getResponseContentTypes();
     }
 

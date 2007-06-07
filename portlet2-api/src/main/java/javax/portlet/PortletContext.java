@@ -372,7 +372,7 @@ public interface PortletContext
    * @see  #getInitParameter
    */
 
-  public java.util.Enumeration getInitParameterNames();
+  public java.util.Enumeration<String> getInitParameterNames();
 
 
   /**
@@ -487,7 +487,7 @@ public interface PortletContext
    *          The keys in the map are of type String. The values in the map are of type
    *          String array (<code>String[]</code>).
    */
-  public java.util.Map getApplicationRuntimeOptions();
+  public java.util.Map<String, String[]> getApplicationRuntimeOptions();
 
   /**
    * Returns the portlet level container runtime options
@@ -514,5 +514,5 @@ public interface PortletContext
    *          The keys in the map are of type String. The values in the map are of type
    *          String array (<code>String[]</code>).
    */
-  public java.util.Map getPortletRuntimeOptions();
+  public java.util.Map<String, String[]> getPortletRuntimeOptions();
 }

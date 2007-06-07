@@ -24,46 +24,35 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/**
-  * Copyright 2006 IBM Corporation.
-  */
+/*
+ * Copyright 2006 IBM Corporation.
+ *
+ */
 package javax.portlet;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * The <code>Event</code> interface represents an event that the portlet has received
- * in the event processing phase.
- * <p>
- * The <code>Event</code> interface encapsulates the event name and event payload,
- * it does not represent the event object itself.
- * <p>
- * The portlet must define the events it is able to receive in the portlet deployment
- * descriptor with the <code>supported-processing-event</code>.
- * 
+ * Annotation for marking a method for processing
+ * a specific action.
+ * The <code>GenericPortlet</code> tries to dispatch to methods annotated 
+ * with the tag <code>@ProcessAction</code> for any received
+ * <code>processAction</code> call.
+ *
  * @since 2.0
- * @see EventPortlet
  */
-public interface Event {
-    
-    /**
-     * Get the event QName.
-     * 
-     * @return  the QName of the event, never <code>null</code>.
-     */
-    javax.xml.namespace.QName getQName();
-
-    /**
-     * Get the local part of the event name.
-     * 
-     * @return  the local part of the event, never <code>null</code>.
-     */
-    java.lang.String getName();
-
-    /**
-     * Get the event payload.
-     * 
-     * @return  event payload, must be serializable.
-     *          May return <code>null</code> if this event has no payload.
-     */
-    Object getValue();
-   
+@Target(ElementType.METHOD)
+@Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+public @interface ProcessAction {
+	/**
+	 * Name of the action.
+	 * Must be set on the 
+	 * <code>ActionURL</code> as value of the 
+	 * parameter <code>javax.portlet.action</code>.
+	 * 
+	 * @return  action name
+	 */
+	String name();
 }

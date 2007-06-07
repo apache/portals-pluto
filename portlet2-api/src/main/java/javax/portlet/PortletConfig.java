@@ -119,7 +119,7 @@ public interface PortletConfig
    *                    portlet has no initialization parameters. 
    */
 
-  public java.util.Enumeration getInitParameterNames();
+  public java.util.Enumeration<String> getInitParameterNames();
   
 
   /**
@@ -134,8 +134,23 @@ public interface PortletConfig
    * @since 2.0 
    */
 
-  public java.util.Enumeration getPublicRenderParameterNames();
+  public java.util.Enumeration<String> getPublicRenderParameterNames();
   
   
+  /**
+   * Returns the default event namespace.
+   * This namespace is defined in the portlet deployment descriptor
+   * with the <code>default-event-namespace</code> element.
+   * <p>
+   * If no default namespace is defined in the portlet deployment
+   * descriptor this methods returns the XML default namespace 
+   * <code>XMLConstants.NULL_NS_URI</code>.
+   * 
+   * @return the default event namespace defined in the portlet deployment
+   *         descriptor, or <code>XMLConstants.NULL_NS_URI</code> is non is
+   *         defined.
+   * @since 2.0
+   */
+  public java.lang.String getDefaultEventNamespace();
 }
 

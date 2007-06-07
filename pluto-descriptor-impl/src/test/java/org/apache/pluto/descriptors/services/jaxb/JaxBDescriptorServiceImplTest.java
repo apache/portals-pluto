@@ -300,7 +300,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			assertEquals(portletApp286.getEvents().get(0).getJavaClass(), "java-class");
 			assertEquals(portletApp286.getRender().get(0).getName(), "QName");
 			assertEquals(portletApp286.getFilter().get(0).getLifecycle(), "lifecycle");
-			assertEquals(portletApp286.getFilterMapping().get(0).getPortletName(), "portlet-name");
+			assertEquals(portletApp286.getFilterMapping().get(0).getPortletName().get(0), "portlet-name");
 			assertEquals(portletApp286.getResourceBundle(), "resource-bundle");
 			assertEquals(portletApp286.getVersion(), "2.0");
 			

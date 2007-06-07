@@ -25,8 +25,8 @@
  * DO NOT add / change / or delete method signatures!
  */
 /**
-  * Copyright 2006 IBM Corporation.
-  */
+ * Copyright 2006 IBM Corporation.
+ */
 
 package javax.portlet;
 
@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 
@@ -69,6 +71,10 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 		EventPortlet, ResourceServingPortlet {
 
 	private transient PortletConfig config;
+
+	private transient Map<String, Method> processActionHandlingMethodsMap = new HashMap<String, Method>();
+	private transient Map<String, Method> processEventHandlingMethodsMap = new HashMap<String, Method>();
+	private transient Map<String, Method> renderModeHandlingMethodsMap = new HashMap<String, Method>();
 
 	/**
      * Does nothing.
@@ -110,6 +116,26 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      */
 	public void init(PortletConfig config) throws PortletException {
 		this.config = config;
+		// cache annotated methods
+		Method[] methods = this.getClass().getMethods();
+		for (Method method : methods) {			
+			Annotation[] annotations = method.getAnnotations();
+			for (Annotation annotation : annotations) {
+				if (annotation.equals(ProcessAction.class)) {
+					processActionHandlingMethodsMap.put(((ProcessAction)annotation).name(), method);					
+				} else if (annotation.equals(ProcessEvent.class)) {
+					if (((ProcessEvent)annotation).qname() != null)
+						processEventHandlingMethodsMap.put(((ProcessEvent)annotation).qname(), method);
+					else {
+						QName qn = new QName(config.getDefaultEventNamespace(), ((ProcessEvent)annotation).name());
+						processEventHandlingMethodsMap.put(qn.toString(), method);
+					}									
+				} else if (annotation.equals(RenderMode.class)) {
+					renderModeHandlingMethodsMap.put(((RenderMode)annotation).name().toLowerCase(), method);
+				}
+			}
+		}
+		
 		this.init();
 	}
 
@@ -158,7 +184,19 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      *                if the streaming causes an I/O problem
      */
 	public void processAction(ActionRequest request, ActionResponse response)
-			throws PortletException, java.io.IOException {
+			throws PortletException, java.io.IOException {		
+		String action = request.getParameter(ActionRequest.ACTION_NAME);
+		try {
+			// check if action is cached in init
+			if ( processActionHandlingMethodsMap.containsKey(action) )
+				processActionHandlingMethodsMap.get(action).invoke(this, request, response);
+			// check if action is present as annotation
+			invokeProcessActionAnnotatedMethod(request, response, action);
+		} catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		// if no action processing method was found throw exc
 		throw new PortletException("processAction method not implemented");
 	}
 
@@ -197,7 +235,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 		if (request.getAttribute(RenderRequest.RENDER_PART) != null) {  // streaming portal calling
 			if (request.getAttribute(RenderRequest.RENDER_PART).equals(RenderRequest.RENDER_HEADERS) ) {
 			    doHeaders(request, response);
-			    Enumeration nextModes = getNextPossiblePortletModes(request);
+			    Enumeration<PortletMode> nextModes = getNextPossiblePortletModes(request);
 			    if (nextModes != null)
 			    	response.setNextPossiblePortletModes(nextModes);
 			    response.setTitle(getTitle(request));				
@@ -240,19 +278,25 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	}
 
 	/**
-     * The default implementation of this method routes the render request to a
-     * set of helper methods depending on the current portlet mode the portlet
-     * is currently in. These methods are:
-     * <ul>
-     * <li><code>doView</code> for handling <code>view</code> requests
-     * <li><code>doEdit</code> for handling <code>edit</code> requests
-     * <li><code>doHelp</code> for handling <code>help</code> requests
-     * </ul>
+     * The default implementation of this method routes the render request to:
+     * <ol>
+     *   <li>method annotated with <code>@RenderMode</name> and the name of the
+     *       portlet mode</li>
+     *   <li>a set of helper methods depending on the current portlet mode the portlet
+     * 		 is currently in. These methods are:
+     * 		<ul>
+     * 			<li><code>doView</code> for handling <code>view</code> requests
+     * 			<li><code>doEdit</code> for handling <code>edit</code> requests
+     * 			<li><code>doHelp</code> for handling <code>help</code> requests
+     * 		</ul>
+     *	</li>
+     * </ul> 
      * <P>
      * If the window state of this portlet is <code>minimized</code>, this
      * method does not invoke any of the portlet mode rendering methods.
      * <p>
-     * For handling custom portlet modes the portlet should override this
+     * For handling custom portlet modes the portlet should either use the
+     * <code>@RenderMode</name> annotation or override this
      * method.
      * 
      * @param request
@@ -281,6 +325,18 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 
 		if (!state.equals(WindowState.MINIMIZED)) {
 			PortletMode mode = request.getPortletMode();
+			// first look if there are methods annotated for
+			// handling the rendering of this mode
+			try {
+				// check if mode is cached in init
+				if ( renderModeHandlingMethodsMap.containsKey(mode) )
+					renderModeHandlingMethodsMap.get(mode).invoke(this, request, response);
+				// check if mode is present as annotation
+				invokeRenderModeAnnotatedMethod(request, response, mode);
+			} catch (Exception e) {
+				throw new PortletException(e);
+			}
+			// if not, try the default doXYZ methods
 			if (mode.equals(PortletMode.VIEW)) {
 				doView(request, response);
 			} else if (mode.equals(PortletMode.EDIT)) {
@@ -459,7 +515,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      *         an empty Enumeration if the portlet has no initialization
      *         parameters.
      */
-	public java.util.Enumeration getInitParameterNames() {
+	public java.util.Enumeration<String> getInitParameterNames() {
 		return config.getInitParameterNames();
 	}
 
@@ -500,23 +556,17 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      */
 	public void processEvent(EventRequest request, EventResponse response)
 			throws PortletException, IOException {
-		Method[] methods = this.getClass().getMethods();
-		QName eventName = request.getEvent().getName();
-		final String targetMethodAnnotation = "@javax.portlet.ProcessEvent(name="
-				+ eventName + ")";
-		for (Method method : methods) {
-			Annotation[] annotations = method.getAnnotations();
-			for (Annotation annotation : annotations) {
-				if (annotation.toString().equals(targetMethodAnnotation)) {
-					try {
-						method.invoke(this, request, response);
-						return;
-					} catch (Exception e) {
-						throw new PortletException(e);
-					}
-				}
-			}
+		QName eventName = request.getEvent().getQName();
+		try {
+			// check if event is cached in init
+			if ( processEventHandlingMethodsMap.containsKey(eventName) )
+				processEventHandlingMethodsMap.get(eventName).invoke(this, request, response);
+			// check if event is present as annotation			
+			invokeProcessEventAnnotatedMethod(request, response, eventName.toString());
+		} catch (Exception e) {
+			throw new PortletException(e);
 		}
+
 		// if no event processing method was found just keep render params
 		response.setRenderParameters(request);
 	}
@@ -547,15 +597,114 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * 
      * @since 2.0
      */
-	protected java.util.Enumeration getNextPossiblePortletModes(RenderRequest request) {
+	protected java.util.Enumeration<PortletMode> getNextPossiblePortletModes(RenderRequest request) {
 		return null;
 	}
 
+	
 	/**
-	 * will be added in a new revision of the spec
-	 * (chrisra)
+	 * Returns the names of the public render parameters supported by the portlet
+	 * as an <code>Enumeration</code> of String objects, or an empty <code>Enumeration</code> if the 
+	 * portlet has no public render parameters.    
+	 *
+	 * @return		an <code>Enumeration</code> of <code>String</code> 
+	 *			objects containing the names of the public 
+	 *			render parameters, or an empty <code>Enumeration</code> if the 
+	 *                    portlet does not define any public render parameters.
+     * 
+	 * @see javax.portlet.PortletConfig#getPublicRenderParameterNames()
 	 */
-	public Enumeration getPublicRenderParameterNames() {
+	public Enumeration<String> getPublicRenderParameterNames() {
+		return config.getPublicRenderParameterNames();
+	}
+	
+	/**
+	 * Will be added in the next draft of the spec.
+	 * Torsten Dettborn
+	 */
+	public String getDefaultEventNamespace() {
 		return null;
+	}
+
+	private void invokeProcessActionAnnotatedMethod(ActionRequest request, ActionResponse response, String action)
+	throws PortletException
+	{
+		Method[] methods = this.getClass().getMethods();
+		for (Method method : methods) {			
+			Annotation[] annotations = method.getAnnotations();
+			for (Annotation annotation : annotations) {
+				if (annotation.equals(ProcessAction.class)) {
+					if (((ProcessAction)annotation).name().equals(action)) {
+						processActionHandlingMethodsMap.put(((ProcessAction)annotation).name(), method);					
+						try {
+							method.invoke(this, request, response);
+							return;
+						} catch (Exception e) {
+							throw new PortletException(e);
+						}
+					}
+				}
+			}
+		}
+	
+	}
+	private void invokeProcessEventAnnotatedMethod(EventRequest request, EventResponse response, String event)
+	throws PortletException
+	{
+		Method[] methods = this.getClass().getMethods();
+		for (Method method : methods) {			
+			Annotation[] annotations = method.getAnnotations();
+			for (Annotation annotation : annotations) {
+				if (annotation.equals(ProcessEvent.class)) {
+					if (((ProcessEvent)annotation).qname() != null) {
+						if (((ProcessEvent)annotation).qname().equals(event)) {
+							processEventHandlingMethodsMap.put(((ProcessEvent)annotation).qname(), method);
+							try {
+								method.invoke(this, request, response);
+								return;
+							} catch (Exception e) {
+								throw new PortletException(e);
+							}
+						}
+					} else {
+						QName qn = new QName(config.getDefaultEventNamespace(), ((ProcessEvent)annotation).name());
+						if (qn.toString().equals(event)) {
+							processEventHandlingMethodsMap.put(qn.toString(), method);
+							try {
+								method.invoke(this, request, response);
+								return;
+							} catch (Exception e) {
+								throw new PortletException(e);
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+
+	private void invokeRenderModeAnnotatedMethod(RenderRequest request, RenderResponse response, PortletMode mode)
+		throws PortletException
+	{
+		Method[] methods = this.getClass().getMethods();
+		for (Method method : methods) {			
+			Annotation[] annotations = method.getAnnotations();
+			for (Annotation annotation : annotations) {
+				if (annotation.equals(RenderMode.class)) {
+					if (((RenderMode)annotation).name().toLowerCase().equals(mode.toString())) {
+						renderModeHandlingMethodsMap.put(((RenderMode)annotation).name().toLowerCase(), method);
+						try {
+							method.invoke(this, request, response);
+							return;
+						} catch (Exception e) {
+							throw new PortletException(e);
+						}
+					}
+				}
+			}
+		}
+
 	}
 }

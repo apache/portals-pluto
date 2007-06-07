@@ -5,7 +5,7 @@
  *  to you under the Apache License, Version 2.0 (the
  *  "License"); you may not use this file except in compliance
  *  with the License.  You may obtain a copy of the License at
- *  
+ *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing,
@@ -96,7 +96,7 @@ public class ActionResponseWrapper implements ActionResponse {
      * The default behavior of this method is to call 
      * <code>setEvents(events)</code> on the wrapped response object.
      */
-    public void setEvents(Map events) {
+    public void setEvents(Map<javax.xml.namespace.QName, Object> events) {
         response.setEvents(events);
     }
 
@@ -129,7 +129,7 @@ public class ActionResponseWrapper implements ActionResponse {
      * The default behavior of this method is to call 
      * <code>setRenderParameters(parameters)</code> on the wrapped response object.
      */
-    public void setRenderParameters(Map parameters) {
+    public void setRenderParameters(Map<String, String[]> parameters) {
         response.setRenderParameters(parameters);
     }
 
@@ -173,7 +173,6 @@ public class ActionResponseWrapper implements ActionResponse {
     public ResourceURL createResourceURL() {
         return response.createResourceURL();
     }
-
 
     /**
      * The default behavior of this method is to call 
@@ -230,7 +229,7 @@ public class ActionResponseWrapper implements ActionResponse {
      * The default behavior of this method is to call 
      * <code>getRenderParameterMap()</code> on the wrapped response object.
      */
-    public Map getRenderParameterMap() {
+    public Map<String, String[]> getRenderParameterMap() {
         return response.getRenderParameterMap();
     }
 
@@ -249,4 +248,21 @@ public class ActionResponseWrapper implements ActionResponse {
     public void addProperty(Cookie cookie) {
         response.addProperty(cookie);
     }
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>setDefaultNamspacedEvents()</code> on the wrapped response object.
+     */
+	public void setDefaultNamspacedEvents(Map<String, Object> events) {
+		response.setDefaultNamspacedEvents(events);
+	}
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>setEvent()</code> on the wrapped response object.
+     */
+	public void setEvent(String name, Object value) {
+		response.setEvent(name, value);
+	}
+
 }

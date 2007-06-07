@@ -39,6 +39,8 @@ package javax.portlet;
 public class PortletSecurityException extends PortletException
 {
 
+  private static final long serialVersionUID = 1L;
+
   private PortletSecurityException ()
   {
   }

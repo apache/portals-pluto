@@ -131,7 +131,7 @@ public interface StateAwareResponse extends PortletResponse {
      *                has been called.
      */
 
-	public void setRenderParameters(java.util.Map parameters);
+	public void setRenderParameters(java.util.Map<String, String[]> parameters);
 
 	/**
      * Sets a String parameter for the render request.
@@ -196,11 +196,11 @@ public interface StateAwareResponse extends PortletResponse {
      * @param name
      *            the event name to publish, must not be <code>null</code>
      * @param value
-     *            the value of this event, must not be <code>null</code> and
-     *            must have a valid JAXB binding and be serializable.
+     *            the value of this event, must have a valid JAXB binding and 
+     *            be serializable, or <code>null</code>.
      * 
      * @exception java.lang.IllegalArgumentException
-     *                if name or value is <code>null</code>, the value is not
+     *                if name is <code>null</code>, the value is not
      *                serializable, the value has not a valid JAXB binding, the
      *                object type of the value is not the same as specified in
      *                the portlet deployment descriptor for this event name.
@@ -209,18 +209,35 @@ public interface StateAwareResponse extends PortletResponse {
 	public void setEvent(javax.xml.namespace.QName name, Object value);
 
 	/**
-     * Publishes an array of Events.
+     * Publishes an Event with the given payload in the default namespace.
      * <p>
-<<<<<<< .mine
-     * All previously set events are cleared.
-=======
-     * The events map must contain
-     * <code>javax.xml.namespace.QName, Object</code> value pairs. The
-     * <code>javax.xml.namespace.QName</code> value represents the event name
-     * and the <code>Object</code> value represents the event payload. The
-     * object types of the payload values must be compliant with the specified
-     * event types for the event types in the portlet deployment descriptor.
->>>>>>> .r539908
+     * The name is treated as local part of the event QName and the namespace
+     * is either taken from the <code>default-event-namespace</code> element
+     * in the portlet deployment descriptor, or if this element is not provided
+     * the XML default namespace XMLConstants.NULL_NS_URI is used.
+     * <p>
+     * The object type of the value must be compliant with the specified event
+     * type in the portlet deployment descriptor.
+     * <p>
+     * The value must have a valid JAXB binding and be serializable.
+     * 
+     * @param name
+     *            the local part of the event name to publish, must not be <code>null</code>
+     * @param value
+     *            the value of this event, must have a valid JAXB binding and 
+     *            be serializable, or <code>null</code>.
+     * 
+     * @exception java.lang.IllegalArgumentException
+     *                if name is <code>null</code>, the value is not
+     *                serializable, the value has not a valid JAXB binding, the
+     *                object type of the value is not the same as specified in
+     *                the portlet deployment descriptor for this event name.
+     * @since 2.0
+     */
+	public void setEvent(String name, Object value);
+
+	/**
+     * Publishes an array of Events.
      * <p>
      * The events map must contain
      * <code>javax.xml.namespace.QName, Object</code> value pairs. The
@@ -238,7 +255,7 @@ public interface StateAwareResponse extends PortletResponse {
      *            the events to publish, must not be <code>null</code>
      * 
      * @exception java.lang.IllegalArgumentException
-     *                if events is <code>null</code>, a name or payload in
+     *                if events is <code>null</code>, a name in
      *                events is <code>null</code>, a payload in events is not
      *                serializable, a payload in events has not a valid JAXB
      *                binding, the object type of a payload is not the same as
@@ -247,7 +264,40 @@ public interface StateAwareResponse extends PortletResponse {
      * @see #setEvent(javax.xml.namespace.QName, Object)
      * @since 2.0
      */
-	public void setEvents(java.util.Map events);
+	public void setEvents(java.util.Map<javax.xml.namespace.QName, Object> events);
+
+	/**
+     * Publishes an array of Events in the default namespace.
+     * <p>
+     * The events map must contain
+     * <code>String, Object</code> value pairs. The
+     * <code>String</code> value represents the local part of the event name
+     * and the <code>Object</code> value represents the event payload. The namespace
+     * for the events is either taken from the <code>default-event-namespace</code> element
+     * in the portlet deployment descriptor, or if this element is not provided
+     * the XML default namespace XMLConstants.NULL_NS_URI is used. The
+     * object types of the payload values must be compliant with the specified
+     * event types for the event types in the portlet deployment descriptor.
+     * <p>
+     * The values must have a valid JAXB binding and be serializable.
+     * <p>
+     * The order of the events in the map does not imply the order of the
+     * delivery of the events.
+     * 
+     * @param events
+     *            the events to publish, must not be <code>null</code>
+     * 
+     * @exception java.lang.IllegalArgumentException
+     *                if events is <code>null</code>, a name in
+     *                events is <code>null</code>, a payload in events is not
+     *                serializable, a payload in events has not a valid JAXB
+     *                binding, the object type of a payload is not the same as
+     *                specified in the portlet deployment descriptor for this
+     *                event name.
+     * @see #setEvent(String, Object)
+     * @since 2.0
+     */
+	public void setDefaultNamspacedEvents(java.util.Map<String, Object> events);
 
 	/**
      * Returns a <code>Map</code> of the render parameters currently set on
@@ -265,7 +315,7 @@ public interface StateAwareResponse extends PortletResponse {
      *         String. The values in the parameter map are of type String array (<code>String[]</code>).
      */
 
-	public java.util.Map getRenderParameterMap();
+	public java.util.Map<String, String[]> getRenderParameterMap();
 
 	/**
      * Returns the currently set portlet mode on this reponse.
@@ -286,4 +336,6 @@ public interface StateAwareResponse extends PortletResponse {
      */
 
 	public WindowState getWindowState();
+
+
 }

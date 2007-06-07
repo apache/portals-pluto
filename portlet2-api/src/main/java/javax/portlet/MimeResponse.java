@@ -24,11 +24,18 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/**
-  * Copyright 2006 IBM Corporation.
-  */
+/*
+ * Copyright 2006 IBM Corporation.
+ *
+ */
 package javax.portlet;
 
+/**
+ * The <CODE>MimeResponse</CODE> defines the base interface to assist a
+ * portlet in returing MIME content. 
+ *
+ * @since 2.0
+ */
 public interface MimeResponse extends PortletResponse {
 
     /**

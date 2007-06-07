@@ -43,6 +43,7 @@ public class PortletException extends java.lang.Exception
 
   private Throwable _cause;
 
+  private static final long serialVersionUID = 1L;
 
   /**
    * Constructs a new portlet exception.

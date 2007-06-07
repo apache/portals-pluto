@@ -24,9 +24,10 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/**
-  * Copyright 2006 IBM Corporation.
-  */
+/*
+ * Copyright 2006 IBM Corporation.
+ *
+ */
 package javax.portlet.filter;
 
 import java.util.Map;
@@ -88,7 +89,7 @@ public class EventResponseWrapper implements EventResponse {
       * The default behavior of this method is to call 
       * <code>setEvents(events)</code> on the wrapped response object.
       */
-     public void setEvents(Map events) {
+     public void setEvents(Map<javax.xml.namespace.QName, Object> events) {
          response.setEvents(events);
      }
 
@@ -121,7 +122,7 @@ public class EventResponseWrapper implements EventResponse {
       * The default behavior of this method is to call 
       * <code>setRenderParameters(parameters)</code> on the wrapped response object.
       */
-     public void setRenderParameters(Map parameters) {
+     public void setRenderParameters(Map<String, String[]> parameters) {
          response.setRenderParameters(parameters);
      }
 
@@ -221,7 +222,7 @@ public class EventResponseWrapper implements EventResponse {
       * The default behavior of this method is to call 
       * <code>getRenderParameterMap()</code> on the wrapped response object.
       */
-     public Map getRenderParameterMap() {
+     public Map<String, String[]> getRenderParameterMap() {
          return response.getRenderParameterMap();
      }
 
@@ -248,4 +249,21 @@ public class EventResponseWrapper implements EventResponse {
      public void addProperty(Cookie cookie) {
          response.addProperty(cookie);
      }
+     
+     /**
+      *  The default behavior of this method is to call 
+      * <code>setDefaultNamspacedEvents()</code> on the wrapped response object.
+      */
+ 	public void setDefaultNamspacedEvents(Map<String, Object> events) {
+ 		response.setDefaultNamspacedEvents(events);
+ 	}
+
+     /**
+      *  The default behavior of this method is to call 
+      * <code>setEvent()</code> on the wrapped response object.
+      */
+ 	public void setEvent(String name, Object value) {
+ 		response.setEvent(name, value);
+ 	}
+
 }

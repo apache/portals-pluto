@@ -1,5 +1,8 @@
 package org.apache.pluto.descriptors.portlet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,7 +18,8 @@ public class FilterMappingDD {
 	private String filterName = null;
 	
 	@XmlElement (name = "portlet-name")
-	private String portletName = null;
+	private List<String> portletName = null;
+	
 
 	public String getFilterName() {
 		return filterName;
@@ -25,12 +29,11 @@ public class FilterMappingDD {
 		this.filterName = filterName;
 	}
 
-	public String getPortletName() {
+	public List<String> getPortletName() {
 		return portletName;
 	}
 
-	public void setPortletName(String portletName) {
+	public void setPortletName(List<String> portletName) {
 		this.portletName = portletName;
 	}
-
 }

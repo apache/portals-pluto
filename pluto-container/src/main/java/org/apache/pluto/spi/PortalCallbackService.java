@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -84,5 +85,11 @@ public interface PortalCallbackService extends ContainerService {
      * @return the SharedRenderProvider.
      */
     public SharedRenderProvider getSharedRenderProvider(HttpServletRequest request);
+    
+    /**
+     * Returns the FilterManager, this is used to process the filter.
+     * @return FilterManager
+     */
+    public FilterManager getFilterManager(); 
 
 }

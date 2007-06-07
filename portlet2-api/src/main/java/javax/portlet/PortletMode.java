@@ -159,3 +159,4 @@ public class PortletMode
       return false;
   }
 }
+

@@ -1,12 +1,13 @@
 /*
- * Copyright 2006 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -82,7 +83,7 @@ public class EventRequestImpl extends PortletRequestImpl
         Object value = event.getValue();
         if (value instanceof XMLStreamReader) {
         	XMLStreamReader xml = (XMLStreamReader) event.getValue();
-        	EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(event.getName());
+        	EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(event.getQName());
         	try {
         		// now test if object is jaxb
 
@@ -96,7 +97,7 @@ public class EventRequestImpl extends PortletRequestImpl
 
         		JAXBElement result = unmarshaller.unmarshal(xml,clazz);
 
-        		return new EventImpl(event.getName(),result.getValue());
+        		return new EventImpl(event.getQName(),result.getValue());
         	} catch (JAXBException e) {
         		// TODO Auto-generated catch block
         		e.printStackTrace();

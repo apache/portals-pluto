@@ -27,7 +27,6 @@
 /**
   * Copyright 2006 IBM Corporation.
   */
-
 package javax.portlet;
 
 /**
@@ -113,7 +112,7 @@ public interface BaseURL {
      *                      the values is not a String array.
      */
 
-    public void setParameters(java.util.Map parameters);
+    public void setParameters(java.util.Map<String, String[]> parameters);
 
 
     /**
@@ -173,7 +172,7 @@ public interface BaseURL {
      *             String array (<code>String[]</code>).
      */
 
-    public java.util.Map getParameterMap();
+    public java.util.Map<String, String[]> getParameterMap();
 
     /**
      * Writes the portlet URL to the output stream using the provided writer.

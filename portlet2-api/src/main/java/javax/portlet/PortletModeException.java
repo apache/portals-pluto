@@ -41,6 +41,8 @@ public class PortletModeException extends PortletException
 
   private transient PortletMode _mode = null;
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * Constructs a new portlet mode exception with the given text and the
    * portlet mode that caused this exception. The

@@ -210,7 +210,7 @@ public interface PortletPreferences
    *         or an empty <code>Enumeration</code> if no keys are
    *         available.
    */
-  public java.util.Enumeration getNames();
+  public java.util.Enumeration<String> getNames();
 
   /** 
    * Returns a <code>Map</code> of the preferences.
@@ -227,7 +227,7 @@ public interface PortletPreferences
    *             String array (<code>String[]</code>).
    */
 
-  public java.util.Map getMap();
+  public java.util.Map<String, String[]> getMap();
 
 
   /**

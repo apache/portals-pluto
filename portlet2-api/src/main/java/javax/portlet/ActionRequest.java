@@ -44,4 +44,9 @@ package javax.portlet;
  */
 public interface ActionRequest extends ClientDataRequest
 {
+	/**
+	 * Predefined action name for usage with the
+	 * <code>@ProcessAction</code> annotation.
+	 */
+	public static final String ACTION_NAME = "javax.portlet.action";
 }

@@ -65,7 +65,7 @@ public interface PortalContext
    * @return  All portal property names as an 
    *          <code>Enumeration</code> of <code>String</code> objects
    */
-  public java.util.Enumeration getPropertyNames();
+  public java.util.Enumeration<String> getPropertyNames();
 
 
   /**
@@ -79,7 +79,7 @@ public interface PortalContext
    *          as an enumeration of <code>PortletMode</code> objects.
    */
 
-  public java.util.Enumeration getSupportedPortletModes();
+  public java.util.Enumeration<PortletMode> getSupportedPortletModes();
 
 
   /**
@@ -93,7 +93,7 @@ public interface PortalContext
    *          as an enumertation of <code>WindowState</code> objects.
    */
 
-  public java.util.Enumeration getSupportedWindowStates();
+  public java.util.Enumeration<WindowState> getSupportedWindowStates();
 
 
   /**

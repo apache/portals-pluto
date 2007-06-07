@@ -214,24 +214,12 @@ public interface PortletRequest
    * phase the portlet request and response are from type
    * <code>ResourceRequest</code> and <code>ResourceResponse</code>.
    * <p>
-   * The value of the constant is <code>RESOURCE_SERVING_PHASE</code>.
+   * The value of the constant is <code>RESOURCE_PHASE</code>.
    * 
    * @since 2.0
    */
-  public static final String RESOURCE_SERVING_PHASE = "RESOURCE_SERVING_PHASE";
-  
-  /**
-   * String identifier for the portlet fragment serving lifecycle phase. In this
-   * phase the portlet request and response are from type
-   * <code>FragmentRequest</code> and <code>FragmentResponse</code>.
-   * <p>
-   * The value of the constant is <code>FRAGMENT_SERVING_PHASE</code>.
-   * 
-   * @since 2.0
-   */
-  public static final String FRAGMENT_SERVING_PHASE = "FRAGMENT_SERVING_PHASE";
-
-  
+  public static final String RESOURCE_PHASE = "RESOURCE_PHASE";
+    
   /**
    * Provides the portlet lifecycle phase of the current request.
    * <p>
@@ -433,7 +421,7 @@ public interface PortletRequest
    *                            if name is <code>null</code>.
    */			
   
-  public java.util.Enumeration getProperties(String name); 
+  public java.util.Enumeration<String> getProperties(String name); 
     
     
   /**
@@ -449,7 +437,7 @@ public interface PortletRequest
    *				no properties, an empty <code>Enumeration</code>.
    */
 
-  public java.util.Enumeration getPropertyNames();
+  public java.util.Enumeration<String> getPropertyNames();
     
     
   /**
@@ -584,7 +572,7 @@ public interface PortletRequest
    *                    has no attributes available to it.
    */
   
-  public java.util.Enumeration getAttributeNames();
+  public java.util.Enumeration<String> getAttributeNames();
 
 
   /**
@@ -639,7 +627,7 @@ public interface PortletRequest
    *			request has no parameters.
    */
 
-  public java.util.Enumeration getParameterNames();
+  public java.util.Enumeration<String> getParameterNames();
 
 
   /**
@@ -685,7 +673,7 @@ public interface PortletRequest
    *             String array (<code>String[]</code>).
    */
 
-  public java.util.Map getParameterMap();
+  public java.util.Map<String, String[]> getParameterMap();
 
 
   /**
@@ -815,7 +803,7 @@ public interface PortletRequest
    * @return ordered list of MIME types for the response
    */
 
-  public java.util.Enumeration getResponseContentTypes();
+  public java.util.Enumeration<String> getResponseContentTypes();
 
 
   /**

@@ -40,6 +40,7 @@ public class WindowStateException extends PortletException
 {
 
   private transient WindowState _state = null;
+  private static final long serialVersionUID = 1L;
 
   /**
    * Constructs a new portlet state exception with the given text. The

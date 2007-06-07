@@ -42,6 +42,7 @@ public class UnavailableException extends PortletException
     private boolean     permanent;         // needs admin action?
     private int         seconds;           // unavailability estimate
 
+    private static final long serialVersionUID = 1L;
 
     /**
      * 

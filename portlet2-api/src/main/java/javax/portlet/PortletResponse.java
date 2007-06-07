@@ -25,8 +25,8 @@
  * DO NOT add / change / or delete method signatures!
  */
 /**
-  * Copyright 2006 IBM Corporation.
-  */
+ * Copyright 2006 IBM Corporation.
+ */
 
 package javax.portlet;
 

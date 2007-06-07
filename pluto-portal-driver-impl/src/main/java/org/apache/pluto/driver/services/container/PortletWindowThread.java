@@ -64,7 +64,7 @@ public class PortletWindowThread extends Thread {
 			HttpServletResponse res = eventProvider.getResponse();
 			try {
 				synchronized (this) {
-					eventContainer.fireEvent(req, res, portletWindow, events.get(0).getName(),
+					eventContainer.fireEvent(req, res, portletWindow, events.get(0).getQName(),
 							eventProvider.getSavedEvents().getNumber(events.get(0)));
 					//wait();
 					Thread.sleep(1);

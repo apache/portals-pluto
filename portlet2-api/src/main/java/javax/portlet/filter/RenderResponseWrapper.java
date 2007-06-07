@@ -24,9 +24,10 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/**
-  * Copyright 2006 IBM Corporation.
-  */
+/*
+ * Copyright 2006 IBM Corporation.
+ *
+ */
 package javax.portlet.filter;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -259,7 +261,7 @@ public class RenderResponseWrapper implements RenderResponse {
      *  The default behavior of this method is to call 
      * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
      */
-    public void setNextPossiblePortletModes(Enumeration portletModes) {
+    public void setNextPossiblePortletModes(Enumeration<PortletMode> portletModes) {
         response.setNextPossiblePortletModes(portletModes);
     }
 

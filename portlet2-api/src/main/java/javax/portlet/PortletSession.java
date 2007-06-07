@@ -30,6 +30,8 @@
 
 package javax.portlet;
 
+import java.util.Map;
+
 
 
 /**
@@ -138,7 +140,7 @@ public interface PortletSession
    *					invalidated session   
    */
   
-  public java.util.Enumeration getAttributeNames();
+  public java.util.Enumeration<String> getAttributeNames();
 
 
   /**
@@ -159,7 +161,7 @@ public interface PortletSession
    *					invalidated session, or the scope is unkown to the container.   
    */
   
-  public java.util.Enumeration getAttributeNames(int scope);
+  public java.util.Enumeration<String> getAttributeNames(int scope);
 
   /**
    * Returns the time when this session was created, measured in 
@@ -378,4 +380,44 @@ public interface PortletSession
 
   public PortletContext getPortletContext ();
 
+  /** 
+   * Returns a <code>Map</code> of the session attributes in
+   * the portlet session scope.
+   * <p>
+   * The values in the returned <code>Map</code> are from type
+   * String array (<code>String[]</code>).
+   * <p>
+   * If no session attributes exist this method returns an empty <code>Map</code>.
+   *
+   * @return     an immutable <code>Map</code> containing the session attributes in the  
+   *             portlet session scope as keys and attribute values as map values, or an empty <code>Map</code>
+   *             if no session attributes exist. The keys in the
+   *             map are of type String, the values of type
+   *             String array (<code>String[]</code>).
+   *  @since 2.0
+   */
+  public Map<String, String[]> getMap();  
+
+  /** 
+   * Returns a <code>Map</code> of the session attributes in
+   * the given session scope.
+   * <p>
+   * The values in the returned <code>Map</code> are from type
+   * String array (<code>String[]</code>).
+   * <p>
+   * If no session attributes exist this method returns an empty <code>Map</code>.
+   *
+   * @param scope               session scope of this attribute
+   * 
+   * @return     an immutable <code>Map</code> containing the session attributes in the  
+   *             given scope as keys and attribute values as map values, or an empty <code>Map</code>
+   *             if no session attributes exist. The keys in the
+   *             map are of type String, the values of type
+   *             String array (<code>String[]</code>).
+   *  @since 2.0
+   */
+  public Map<String, String[]> getMap(int scope);  
+
 }
+
+

@@ -67,7 +67,5 @@ public class AboutPortlet extends GenericPortlet {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 		
-	}
-    
-    	
+	}	
 }

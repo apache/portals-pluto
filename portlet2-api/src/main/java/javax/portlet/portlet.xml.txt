@@ -7,9 +7,9 @@
     <display-name xml:lang="EN">Time Zone Clock Portlet</display-name>
     <display-name xml:lang="DE">ZeitzonenPortlet</display-name>
     <portlet-class>com.myco.samplets.util.zoneclock.ZoneClock</portlet-class>
-    <expiration-cache>
-    	<expiration-time>-1</expiration-time>
-    </expiration-cache>
+    <caching>
+    	<expiration-cache>-1</expiration-cache>
+    </caching>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>config</portlet-mode>

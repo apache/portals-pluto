@@ -25,8 +25,8 @@
  * DO NOT add / change / or delete method signatures!
  */
 /**
-  * Copyright 2006 IBM Corporation.
-  */
+ * Copyright 2006 IBM Corporation.
+ */
 
 package javax.portlet;
 
@@ -53,16 +53,14 @@ public interface PortletRequestDispatcher {
      * 
      * 
      * @param request
-     *            a {@link RenderRequest} object that contains the client
-     *            request. Must be either the render request passed to the
-     *            portlet in <code>render</code> or a wrapped version of this
-     *            render request.
+     *            a {@link PortletRequest} object that contains the portlet
+     *            request. Must be either the original request passed to the
+     *            portlet or a wrapped version of this request.
      * 
      * @param response
-     *            a {@link RenderResponse} object that contains the render
-     *            response. Must be either the render response passed to the
-     *            portlet in <code>render</code> or a wrapped version of this
-     *            render response.
+     *            a {@link PortletResponse} object that contains the portlet
+     *            response. Must be either the portlet response passed to the
+     *            portlet or a wrapped version of this response.
      * 
      * @exception PortletException
      *                if the included resource throws a ServletException, or
@@ -70,133 +68,29 @@ public interface PortletRequestDispatcher {
      * 
      * @exception java.io.IOException
      *                if the included resource throws this exception
-     * 
-     * 
      */
 
-    public void include(RenderRequest request, RenderResponse response)
+    public void include(PortletRequest request, PortletResponse response)
             throws PortletException, java.io.IOException;
 
     /**
-     * 
-     * Includes the content of a resource (servlet, JSP page, HTML file) in the
-     * response. In essence, this method enables programmatic server-side
-     * includes.
-     * <p>
-     * The included servlet cannot set or change the response status code or set
-     * headers; any attempt to make a change is ignored.
-     * 
-     * 
-     * @param request
-     *            a {@link RenderRequest} object that contains the client
-     *            request. Must be either the resource request passed to the
-     *            portlet in <code>serveResource</code> or a wrapped version
-     *            of this resource request.
-     * 
-     * @param response
-     *            a {@link ResourceResponse} object that contains the resource
-     *            response. Must be either the resource response passed to the
-     *            portlet in <code>serveResource</code> or a wrapped version
-     *            of this resource response.
-     * 
-     * @exception PortletException
-     *                if the included resource throws a ServletException, or
-     *                other exceptions that are not Runtime- or IOExceptions.
-     * 
-     * @exception java.io.IOException
-     *                if the included resource throws this exception
-     * 
-     * @since 2.0
-     */
-
-    public void include(ResourceRequest request, ResourceResponse response)
-            throws PortletException, java.io.IOException;
-
-    /**
-     * 
-     * Includes the content of a servlet in order to delegate the action
-     * processing.
-     * <p>
-     * The included servlet cannot write anything to the outputstream.
-     * 
-     * 
-     * @param request
-     *            a {@link ActionRequest} object that contains the client
-     *            request. Must be either the action request passed to the
-     *            portlet in <code>processAction</code> or a wrapped version
-     *            of this action request.
-     * 
-     * @param response
-     *            a {@link ActionResponse} object that contains the action
-     *            response. Must be either the action response passed to the
-     *            portlet in <code>processAction</code> or a wrapped version
-     *            of this action response.
-     * 
-     * @exception PortletException
-     *                if the included resource throws a ServletException, or
-     *                other exceptions that are not Runtime- or IOExceptions.
-     * 
-     * @exception java.io.IOException
-     *                if the included resource throws this exception
-     * 
-     * @since 2.0
-     */
-
-    public void include(ActionRequest request, ActionResponse response)
-            throws PortletException, java.io.IOException;
-
-    /**
-     * 
-     * Includes the content of a servlet in order to delegate the event
-     * processing.
-     * <p>
-     * The included servlet cannot write anything to the outputstream.
-     * 
-     * 
-     * @param request
-     *            a {@link EventRequest} object that contains the client
-     *            request. Must be either the event request passed to the
-     *            portlet in <code>processEvent</code> or a wrapped version of
-     *            this event request.
-     * 
-     * @param response
-     *            a {@link EventResponse} object that contains the event
-     *            response. Must be either the event response passed to the
-     *            portlet in <code>processEvent</code> or a wrapped version of
-     *            this event response.
-     * 
-     * @exception PortletException
-     *                if the included resource throws a ServletException, or
-     *                other exceptions that are not Runtime- or IOExceptions.
-     * 
-     * @exception java.io.IOException
-     *                if the included resource throws this exception
-     * 
-     * @since 2.0
-     */
-
-    public void include(EventRequest request, EventResponse response)
-            throws PortletException, java.io.IOException;
-
-    
-    /**
-     * Forwards a resource request from a portlet to another resource (servlet, JSP file, or HTML file) 
+     * Forwards a portlet request from a portlet to another resource (servlet, JSP file, or HTML file) 
      * on the server. This method allows the portlet to do preliminary processing of a 
      * request and another resource to generate the response.
      * <p>
      * The <code>forward</code> method should be called before the response has been 
-     * committed to the client (before response body output has been flushed). 
+     * committed to the portlet container (before response body output has been flushed). 
      * If the response already has been committed, this method throws an 
      * <code>IllegalStateException</code>. Uncommitted output in the response buffer 
      * is automatically cleared before the forward.
      * <p>
      * The request and response parameters must be either the same objects as were passed to 
-     * the calling portlet's <code>serveResource</code> method or be subclasses of the 
-     * <code>ResourceRequestWrapper</code> or <code>ResourceResponseWrapper</code> classes that wrap them.
+     * the calling portletor be wrapped versions of these.
      * 
-     * @param request  a {@link ResourceRequest} object that represents the request the 
-     *                 client makes of the portlet
-     * @param response a {@link ResourceResponse} object that contains the resource response 
+     * @param request  a request object that represents the request to the 
+     *                 portlet
+     * @param response a reponse object that contains the portlet response
+     *  
      * @exception PortletException
      *                if the included resource throws a ServletException, or
      *                other exceptions that are not Runtime- or IOExceptions.
@@ -206,7 +100,7 @@ public interface PortletRequestDispatcher {
      *                if the response was already committed
      * @since 2.0
      */
-    public void forward(ResourceRequest request, ResourceResponse response)
+    public void forward(PortletRequest request, PortletResponse response)
             throws PortletException, java.io.IOException, java.lang.IllegalStateException;
 
     

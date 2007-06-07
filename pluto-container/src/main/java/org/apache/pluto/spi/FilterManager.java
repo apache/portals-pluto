@@ -14,40 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.pluto.spi;
 
-package org.apache.pluto.internal.impl;
-
-import javax.portlet.Event;
-import javax.xml.namespace.QName;
-
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 /**
- * Implementation of JSR-286 <code>Event</code>.
- *
- * @since 2.0
+ * Manage the initialization and doFilter for the filter which are
+ * declareted in the deployment descriptor.
+ * @since 05/29/2007
+ * @version 2.0
  */
-public class EventImpl implements Event {
-
-	private QName _qname;
-	private Object _value;
-	
-	public EventImpl(QName qname){
-		_qname = qname;
-	}
-	
-	public EventImpl(QName qname, Object value){
-		this(qname);
-		_value = value;
-	}
-
-	public QName getQName() {
-		return _qname;
-	}
-
-	public Object getValue() {
-		return _value;
-	}
-
-	public String getName() {
-		return _qname.getLocalPart();
-	}
+public interface FilterManager {
+	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, String portletName, PortletContext portletContext, String lifecycle);
 }

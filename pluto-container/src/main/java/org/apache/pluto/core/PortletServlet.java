@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,6 +46,7 @@ import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.internal.impl.ResourceRequestImpl;
 import org.apache.pluto.internal.impl.ResourceResponseImpl;
+import org.apache.pluto.spi.FilterManager;
 
 /**
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
@@ -210,14 +212,19 @@ public class PortletServlet extends HttpServlet {
             		Constants.PORTLET_RESPONSE);
             portletRequest.init(portletContext, request);
             
+            //Init the classloader for the filter and get the Service for processing the filters.
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            FilterManager filtermanager = (FilterManager) request.getAttribute(
+            		"filter-manager");
+            
             // The requested method is RENDER: call Portlet.render(..)
             if (methodId == Constants.METHOD_RENDER) {
                 RenderRequestImpl renderRequest =
                 		(RenderRequestImpl) portletRequest;
                 RenderResponseImpl renderResponse =
                     	(RenderResponseImpl) portletResponse;
+                filtermanager.processFilter(renderRequest, renderResponse, loader, portletName, portletContext,"RENDER_PHASE");
                 portlet.render(renderRequest, renderResponse);
-                
             }
 
             //The requested method is RESOURCE: call ResourceServingPortlet.serveResource(..)
@@ -298,5 +305,5 @@ public class PortletServlet extends HttpServlet {
        else{
     	   resourceServingPortlet = new NullPortlet();
        }
-    }       
+    }
 }

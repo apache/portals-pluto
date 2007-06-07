@@ -75,4 +75,7 @@ public interface RenderRequest extends PortletRequest
      * @since 2.0
      */
     public String getETag();
+    
+
+
 }

@@ -109,4 +109,6 @@ public interface FilterChain {
      */
     public void doFilter(ResourceRequest request, ResourceResponse response)
      throws IOException, PortletException;
+
+
 }

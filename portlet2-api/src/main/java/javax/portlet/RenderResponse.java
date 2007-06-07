@@ -25,8 +25,8 @@
  * DO NOT add / change / or delete method signatures!
  */
 /**
-  * Copyright 2006 IBM Corporation.
-  */
+ * Copyright 2006 IBM Corporation.
+ */
 
 package javax.portlet;
 
@@ -69,11 +69,12 @@ public interface RenderResponse extends MimeResponse {
      * portlet deployment descriptor are meaningful new portlet modes.
      * 
      * @param portletModes
+     *            <code>Enumeration</code> of <code>PortletMode</code> objects with the
      *            next possible portlet modes that the make sense from the
      *            portlet point of view, must not be <code>null</code> or an
      *            empty enumeration.
      * @since 2.0
      */
-	public void setNextPossiblePortletModes(java.util.Enumeration portletModes);
+	public void setNextPossiblePortletModes(java.util.Enumeration<PortletMode> portletModes);
 
 }
