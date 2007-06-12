@@ -30,6 +30,8 @@
 
 package javax.portlet;
 
+import java.io.IOException;
+
 /**
  * The <code>PortletRequestDispatcher</code> interface defines an object that
  * receives requests from the client and sends them to the specified resources
@@ -103,6 +105,7 @@ public interface PortletRequestDispatcher {
     public void forward(PortletRequest request, PortletResponse response)
             throws PortletException, java.io.IOException, java.lang.IllegalStateException;
 
-    
+    public void include(RenderRequest request, RenderResponse response)
+    throws PortletException, java.io.IOException;
 
 }

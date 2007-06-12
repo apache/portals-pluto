@@ -1,17 +1,19 @@
-/*
- * Copyright 2005 The Apache Software Foundation
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 package org.apache.pluto.descriptors.portlet;
 
@@ -49,7 +51,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="filter" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}filterType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="filter-mapping" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}filter-mappingType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="event-definition" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}event-definitionType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="shared-render-parameter" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}shared-render-parameterType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="public-render-parameter" type="{http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd}public-render-parameterType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -117,9 +119,9 @@ public class PortletAppDD {
 	@XmlElement(name = "event-definition")
     private List<EventDefinitionDD> events = null;
     
-    /** The defined Shared Render Parameter within the system. */
-	@XmlElement(name = "shared-render-parameter")
-    private List<SharedRenderParamDD> render =null;
+    /** The defined public Render Parameter within the system. */
+	@XmlElement(name = "public-render-parameter")
+    private List<PublicRenderParamDD> render =null;
 	
 	@XmlElement ( name = "filter")
 	private List<FilterDD> filter = null;
@@ -171,16 +173,16 @@ public class PortletAppDD {
 	}
 
 	/**
-	 * @return Returns the shared render parameter.
+	 * @return Returns the public render parameter.
 	 */
-	public List<SharedRenderParamDD> getRender() {
+	public List<PublicRenderParamDD> getRender() {
 		return render;
 	}
 
 	/**
-	 * @param render The shared render parameter to set.
+	 * @param render The public render parameter to set.
 	 */
-	public void setRender(List<SharedRenderParamDD> render) {
+	public void setRender(List<PublicRenderParamDD> render) {
 		this.render = render;
 	}
 

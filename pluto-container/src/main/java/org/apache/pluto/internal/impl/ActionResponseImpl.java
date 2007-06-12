@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,6 +36,7 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.StringUtils;
@@ -50,6 +52,10 @@ implements ActionResponse, InternalActionResponse {
     private boolean redirected;
     private String redirectLocation;
 
+    private InternalPortletWindow internalPortletWindow;
+    private PortletContainer container;
+    private Map<String, String[]> publicRenderParameter = new HashMap<String, String[]>();
+    
     private Map renderParameters = new HashMap();
     private WindowState windowState = null;
     private PortletMode portletMode = null;
@@ -64,6 +70,8 @@ implements ActionResponse, InternalActionResponse {
                               HttpServletResponse servletResponse) {
         super(container, internalPortletWindow, servletRequest,
               servletResponse);
+        this.container = container;
+        this.internalPortletWindow = internalPortletWindow;
         context = container.getRequiredContainerServices().getPortalContext();
         callback = container.getRequiredContainerServices().getPortalCallbackService();
     }
@@ -143,7 +151,7 @@ implements ActionResponse, InternalActionResponse {
     }
 
     public void setRenderParameters(Map parameters) {
-        if (redirected) {
+    	if (redirected) {
             throw new IllegalStateException(
                 "Can't invoke setRenderParameters() after sendRedirect() has been called");
         }
@@ -162,48 +170,86 @@ implements ActionResponse, InternalActionResponse {
                     "Value must not be null and of type java.lang.String[].");
             }
         }
-
-        renderParameters = StringUtils.copyParameters(parameters);
-
+        
+        renderParameters.clear();
+        publicRenderParameter.clear();
+        if (parameters.keySet()!= null){
+        	for (Object key : parameters.keySet()) {
+        		this.setRenderParameter((String)key, (String[])parameters.get(key));
+    		}
+        }
+        
         redirectAllowed = false;
     }
 
     public void setRenderParameter(String key, String value) {
-        if (redirected) {
+    	if (redirected) {
             throw new IllegalStateException(
                 "Can't invoke setRenderParameter() after sendRedirect() has been called");
         }
 
-        if ((key == null) || (value == null)) {
+        if ((key == null)) {
             throw new IllegalArgumentException(
-                "Render parameter key or value must not be null.");
+                "Render parameter key must not be null.");
         }
-
-        renderParameters.put(key, new String[]{value});
-
+        PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
+        //only if the value is null, if it is a public parameter will deleted from list.
+        if (value == null){
+        	//test if this is a public render parameter
+        	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+        		publicRenderParameter.put(key, new String[] {null});
+        	}
+        	else{
+        		throw new IllegalArgumentException(
+                	"Render parameter value must not be null.");
+        	}
+        }
+        else if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+        	publicRenderParameter.put(key, new String[] {value});
+        }
+        else{
+        	renderParameters.put(key, new String[]{value});
+        }
         redirectAllowed = false;
     }
 
     public void setRenderParameter(String key, String[] values) {
-        if (redirected) {
+    	if (redirected) {
             throw new IllegalStateException(
                 "Can't invoke setRenderParameter() after sendRedirect() has been called");
-        }
-
-        if (key == null || values == null || values.length == 0) {
-            throw new IllegalArgumentException(
-                "Render parameter key or value must not be null or values be an empty array.");
-        }
-
-        renderParameters.put(key, StringUtils.copy(values));
-
-        redirectAllowed = false;
+        }        
+        
+        if (key == null) {
+	        throw new IllegalArgumentException(
+	        	"name and values must not be null or values be an empty array");
+	    }
+	    PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
+	    if (values == null){
+	    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+	    		publicRenderParameter.put(key,new String[] {null});
+		    }
+	    	else{
+	    		throw new IllegalArgumentException(
+	    			"name and values must not be null or values be an empty array");
+	    	}
+	    }
+	    
+	    if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+	    	publicRenderParameter.put(key,StringUtils.copy(values));
+	    }
+	    else{
+	    	renderParameters.put(key, StringUtils.copy(values));
+	    }
     }
     // --------------------------------------------------------------------------------------------
     
     // org.apache.pluto.core.InternalActionResponse implementation --------------------------------
     public Map getRenderParameters() {
         return renderParameters;
+    }
+    
+    public Map<String, String[]> getPublicRenderParameter(){
+    	return publicRenderParameter;
     }
 
     public PortletMode getChangedPortletMode() {

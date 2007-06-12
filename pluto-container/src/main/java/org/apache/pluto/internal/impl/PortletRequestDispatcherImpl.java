@@ -243,4 +243,35 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         	internalResponse.setIncluded(isIncluded);
         }
     }
+	public void include(RenderRequest request, RenderResponse response)
+    throws PortletException, IOException {
+
+        InternalRenderRequest internalRequest = (InternalRenderRequest)
+                InternalImplConverter.getInternalRequest(request);
+        InternalRenderResponse internalResponse = (InternalRenderResponse)
+                InternalImplConverter.getInternalResponse(response);
+
+        boolean isIncluded = (internalRequest.isIncluded()
+        		|| internalResponse.isIncluded());
+        try {
+        	internalRequest.setIncluded(true);
+        	internalRequest.setIncludedQueryString(queryString);
+        	internalResponse.setIncluded(true);
+
+            requestDispatcher.include(
+            		(HttpServletRequest) internalRequest,
+            		(HttpServletResponse) internalResponse);
+        } catch (IOException ex) {
+            throw ex;
+        } catch (ServletException ex) {
+            if (ex.getRootCause() != null) {
+                throw new PortletException(ex.getRootCause());
+            } else {
+                throw new PortletException(ex);
+            }
+        } finally {
+        	internalRequest.setIncluded(isIncluded);
+        	internalResponse.setIncluded(isIncluded);
+        }
+    }
 }

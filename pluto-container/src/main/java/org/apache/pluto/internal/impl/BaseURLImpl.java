@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,7 +36,7 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.SharedRenderProvider;
+import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 
@@ -49,7 +50,7 @@ public class BaseURLImpl implements BaseURL {
 
 	private static final StringManager EXCEPTIONS = StringManager.getManager(PortletURLImpl.class.getPackage().getName());
 	protected Map parameters = new HashMap();
-	protected Map<String, String[]> sharedRenderParameter = new HashMap<String, String[]>();
+	protected Map<String, String[]> publicRenderParameters = new HashMap<String, String[]>();
 	protected boolean secure;
 	protected PortletContainer container;
 	protected PortletMode mode = null;
@@ -81,10 +82,10 @@ public class BaseURLImpl implements BaseURL {
 	        throw new IllegalArgumentException(
 	            "name and value must not be null");
 	    }
-	    SharedRenderProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getSharedRenderProvider(servletRequest);
+	    PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
 	    if (value == null){
-	    	if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    		sharedRenderParameter.put(name,new String[] {null});
+	    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    		publicRenderParameters.put(name,new String[] {null});
 		    	
 		    }
 	    	else{
@@ -93,8 +94,8 @@ public class BaseURLImpl implements BaseURL {
 	    	}
 	    }
 	    
-	    if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    	sharedRenderParameter.put(name,new String[] {value});
+	    if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    	publicRenderParameters.put(name,new String[] {value});
 	    }
 	    else{
 	    	parameters.put(name, new String[]{value});
@@ -106,10 +107,10 @@ public class BaseURLImpl implements BaseURL {
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-	    SharedRenderProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getSharedRenderProvider(servletRequest);
+	    PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
 	    if (values == null){
-	    	if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    		sharedRenderParameter.put(name,new String[] {null});
+	    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    		publicRenderParameters.put(name,new String[] {null});
 		    }
 	    	else{
 	    		throw new IllegalArgumentException(
@@ -117,8 +118,8 @@ public class BaseURLImpl implements BaseURL {
 	    	}
 	    }
 	    
-	    if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    	sharedRenderParameter.put(name,values);
+	    if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+	    	publicRenderParameters.put(name,StringUtils.copy(values));
 	    }
 	    else{
 	    	parameters.put(name, StringUtils.copy(values));
@@ -126,22 +127,32 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void setParameters(Map parameters) {
-	    if (parameters == null) {
-	        throw new IllegalArgumentException("Parameters must not be null.");
-	    }
-	    for (Iterator it = parameters.entrySet().iterator(); it.hasNext();) {
-	        Map.Entry entry = (Map.Entry) it.next();
-	        if (!(entry.getKey() instanceof String)) {
-	            throw new IllegalArgumentException(
-	                "Key must not be null and of type java.lang.String.");
-	        }
-	        if (!(entry.getValue() instanceof String[])) {
-	            throw new IllegalArgumentException(
-	                "Value must not be null and of type java.lang.String[].");
-	        }
-	    }
-	
-	    this.parameters = StringUtils.copyParameters(parameters);
+		
+        if (parameters == null) {
+            throw new IllegalArgumentException(
+                "Render parameters must not be null.");
+        }
+        for (Iterator iter = parameters.entrySet().iterator(); iter.hasNext();) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            if (!(entry.getKey() instanceof String)) {
+                throw new IllegalArgumentException(
+                    "Key must not be null and of type java.lang.String.");
+            }
+            if (!(entry.getValue() instanceof String[])) {
+                throw new IllegalArgumentException(
+                    "Value must not be null and of type java.lang.String[].");
+            }
+        }
+        
+        this.parameters.clear();
+        this.publicRenderParameters.clear();
+        if (parameters.keySet()!= null){
+        	for (Object key : parameters.keySet()) {
+        		this.setParameter((String)key, (String[])parameters.get(key));
+    		}
+        }
+        
+        
 	}
 
 	public void setSecure(boolean secure) throws PortletSecurityException {
@@ -175,7 +186,7 @@ public class BaseURLImpl implements BaseURL {
 	    
 	    urlProvider.setParameters(parameters);
 	    
-	    urlProvider.setSharedRenderParameters(sharedRenderParameter);
+	    urlProvider.setPublicRenderParameters(publicRenderParameters);
 	    
 	    url.append(urlProvider.toString());
 	

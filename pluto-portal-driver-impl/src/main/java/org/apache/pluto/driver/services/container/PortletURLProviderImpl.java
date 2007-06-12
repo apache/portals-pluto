@@ -1,17 +1,19 @@
-/*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 package org.apache.pluto.driver.services.container;
 
@@ -103,20 +105,20 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         }
     }
     
-    public String[] getSharedRenderParameter(String name){
-    	Map sharedRenderParaMap = url.getSharedParameters();
+    public String[] getPublicRenderParameters(String name){
+    	Map publicRenderParaMap = url.getPublicParameters();
     	String[] values = null;
-    	for (Iterator it=sharedRenderParaMap.keySet().iterator();it.hasNext();){
+    	for (Iterator it=publicRenderParaMap.keySet().iterator();it.hasNext();){
     		String tmp = (String) it.next();
     		if (tmp.equals(name)){
-    			values = (String[])sharedRenderParaMap.get(tmp);
+    			values = (String[])publicRenderParaMap.get(tmp);
     		}
     	}
     	return values;
     }
     
-    public void setSharedRenderParameters(Map parameters) {
-		url.addSharedRenderParametersNew(parameters);
+    public void setPublicRenderParameters(Map parameters) {
+		url.addPublicRenderParametersNew(parameters);
 	}
 
     public String toString() {

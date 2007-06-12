@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -80,11 +81,11 @@ public interface PortletURLProvider {
     public void setParameters(Map parameters);
 
     /**
-     * Sets the given shared-render-parameters as parameters into the URL.
+     * Sets the given public-render-parameters as parameters into the URL.
      * @param parameters a map containing the name [java.lang.String] and value
      *                   [java.lang.String[]] of the parameters.
      */
-    public void setSharedRenderParameters(Map parameters);
+    public void setPublicRenderParameters(Map parameters);
 
     /**
      * Returns the URL in string format. This method should only be called
@@ -96,9 +97,9 @@ public interface PortletURLProvider {
     public void savePortalURL(HttpServletRequest request);
     
     /**
-     * Gets the values from the current shared-render-parameter from this request.
+     * Gets the values from the current public-render-parameters from this request.
      * @param name Parametername
      * @return the values for the Parameter, can be null, if there is no Parameter with this name.
      */
-    public String[] getSharedRenderParameter(String name);
+    public String[] getPublicRenderParameters(String name);
 }

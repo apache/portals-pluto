@@ -38,6 +38,7 @@ import org.apache.pluto.descriptors.portlet.EventDD;
 import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.PublicRenderParamDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
@@ -48,7 +49,7 @@ import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.EventProvider;
-import org.apache.pluto.spi.SharedRenderProvider;
+import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 /**
@@ -184,7 +185,7 @@ public class PortalDriverServlet extends HttpServlet {
             }
             
             try {
-				registerPortlets(pageConfig, portalURL,request);
+				registerPortlets(pageConfig, portalURL);
 			} catch (PortletContainerException e) {
 				throw new ServletException(e);
 			}
@@ -218,7 +219,7 @@ public class PortalDriverServlet extends HttpServlet {
     
     // Private Methods ---------------------------------------------------------
     
-    private void registerPortlets(PageConfig pageConfig, PortalURL portalURL, HttpServletRequest request) throws ServletException, PortletContainerException {
+    private void registerPortlets(PageConfig pageConfig, PortalURL portalURL) throws ServletException, PortletContainerException {
 		
 		// iterate all portlets on the page
         for (Object object : pageConfig.getPortletIds()) {
@@ -237,25 +238,34 @@ public class PortalDriverServlet extends HttpServlet {
             
             registerEvents(window, portletDD, portletAppDD);
             
-            registerSharedRenderParams(request, window, portletDD);
+            registerPublicRenderParams(window, portletDD,portletAppDD);
 		}
 	}
 
 	/**
-	 * registers the shared render params at the SharedRenderProvider
-	 * @param request the 
+	 * registers the public render params at the PublicRenderParameterProvider
 	 * @param window
 	 * @param portletDD
+	 * @param portletAppDD
 	 */
-	private void registerSharedRenderParams(HttpServletRequest request, PortletWindow window, PortletDD portletDD) {
-		SharedRenderProvider renderProvider = container.getRequiredContainerServices()
-			.getPortalCallbackService().getSharedRenderProvider(request);
+	private void registerPublicRenderParams(PortletWindow window, PortletDD portletDD, PortletAppDD portletAppDD) {
+		PublicRenderParameterProvider renderProvider = container.getRequiredContainerServices()
+			.getPortalCallbackService().getPublicRenderParameterProvider();
 		List<String> render = portletDD.getRenderParameter();
 		if (render != null){ 
 			for (String renderDD : render){
-				renderProvider.registerSharedRenderParameter(window.getId().getStringId(), renderDD);
-				if (LOG.isDebugEnabled()){
-					LOG.debug(renderDD+ " successfully registered!");
+				List<PublicRenderParamDD> publicRenderParameterList = portletAppDD.getRender();
+				if (publicRenderParameterList!= null){
+					for (PublicRenderParamDD renderportletAppDD : publicRenderParameterList){
+						if (renderportletAppDD.getIdentifier().equals(renderDD)){
+							renderDD = renderportletAppDD.getName().toString();
+							break;
+						}
+					}
+					renderProvider.registerPublicRenderParameter(window.getId().getStringId(), renderDD);
+					if (LOG.isDebugEnabled()){
+						LOG.debug(renderDD+ " successfully registered!");
+					}
 				}
 			}
 		}

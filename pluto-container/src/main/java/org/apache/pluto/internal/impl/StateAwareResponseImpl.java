@@ -67,6 +67,7 @@ import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.StringUtils;
 import org.xml.sax.SAXException;
@@ -89,6 +90,10 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	private String redirectLocation;
     
 
+	private InternalPortletWindow internalPortletWindow;
+	private PortletContainer container;
+	private Map<String, String[]> publicRenderParameter = new HashMap<String, String[]>();
+	
     private Map renderParameters = new HashMap();
     private WindowState windowState = null;
     private PortletMode portletMode = null;
@@ -101,6 +106,8 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 			            HttpServletResponse servletResponse) {
 		super(container, internalPortletWindow, servletRequest,
 		servletResponse);
+		this.internalPortletWindow = internalPortletWindow;
+		this.container = container;
 		context = container.getRequiredContainerServices().getPortalContext();
 		callback = container.getRequiredContainerServices().getPortalCallbackService();
 	}
@@ -292,9 +299,15 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
                     "Value must not be null and of type java.lang.String[].");
             }
         }
-
-        renderParameters = StringUtils.copyParameters(parameters);
-
+        
+        renderParameters.clear();
+        publicRenderParameter.clear();
+        if (parameters.keySet()!= null){
+        	for (Object key : parameters.keySet()) {
+        		this.setRenderParameter((String)key, (String[])parameters.get(key));
+    		}
+        }
+        
         redirectAllowed = false;
     }
     
@@ -304,30 +317,58 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
                 "Can't invoke setRenderParameter() after sendRedirect() has been called");
         }
 
-        if ((key == null) || (value == null)) {
+        if ((key == null)) {
             throw new IllegalArgumentException(
-                "Render parameter key or value must not be null.");
+                "Render parameter key must not be null.");
         }
-
-        renderParameters.put(key, new String[]{value});
-
+        PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
+        //only if the value is null, if it is a public parameter will deleted from list.
+        if (value == null){
+        	//test if this is a public render parameter
+        	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+        		publicRenderParameter.put(key, new String[] {null});
+        	}
+        	else{
+        		throw new IllegalArgumentException(
+                	"Render parameter value must not be null.");
+        	}
+        }
+        else if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+        	publicRenderParameter.put(key, new String[] {value});
+        }
+        else{
+        	renderParameters.put(key, new String[]{value});
+        }
         redirectAllowed = false;
     }
     
     public void setRenderParameter(String key, String[] values) {
-        if (redirected) {
+    	if (redirected) {
             throw new IllegalStateException(
                 "Can't invoke setRenderParameter() after sendRedirect() has been called");
-        }
-
-        if (key == null || values == null || values.length == 0) {
-            throw new IllegalArgumentException(
-                "Render parameter key or value must not be null or values be an empty array.");
-        }
-
-        renderParameters.put(key, StringUtils.copy(values));
-
-        redirectAllowed = false;
+        }        
+        
+        if (key == null) {
+	        throw new IllegalArgumentException(
+	        	"name and values must not be null or values be an empty array");
+	    }
+	    PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
+	    if (values == null){
+	    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+	    		publicRenderParameter.put(key,new String[] {null});
+		    }
+	    	else{
+	    		throw new IllegalArgumentException(
+	    			"name and values must not be null or values be an empty array");
+	    	}
+	    }
+	    
+	    if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+	    	publicRenderParameter.put(key,StringUtils.copy(values));
+	    }
+	    else{
+	    	renderParameters.put(key, StringUtils.copy(values));
+	    }
     }
     // --------------------------------------------------------------------------------------------
     
@@ -339,6 +380,10 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     public Map getRenderParameterMap() {
 		return renderParameters;
 	}
+    
+    public Map<String, String[]> getPublicRenderParameter(){
+    	return publicRenderParameter;
+    }
 
     public PortletMode getChangedPortletMode() {
         return this.portletMode;

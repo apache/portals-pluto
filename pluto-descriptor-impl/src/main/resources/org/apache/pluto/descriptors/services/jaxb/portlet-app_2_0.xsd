@@ -71,6 +71,16 @@
 			<selector xpath="portlet:user-attribute"/>
 			<field xpath="portlet:name"/>
 		</unique>
+		<unique name="filter-name-uniqueness">
+			<annotation>
+				<documentation>
+				The filter element contains the name of a filter.
+				The name must be unique within the portlet application.
+				</documentation>
+			</annotation>
+			<selector xpath="portlet:filter"/>
+			<field xpath="portlet:filter-name"/>
+		</unique>
 	</element>
 	<complexType name="portlet-appType">
 		<sequence>
@@ -123,8 +133,10 @@
 			<element name="resource-bundle" type="portlet:resource-bundleType" minOccurs="0"/>
 			<element name="filter" type="portlet:filterType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="filter-mapping" type="portlet:filter-mappingType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="default-event-namespace" type="xs:anyURI" minOccurs="0"/>
 			<element name="event-definition" type="portlet:event-definitionType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="shared-render-parameter" type="portlet:shared-render-parameterType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="public-render-parameter" type="portlet:public-render-parameterType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="version" type="string" use="required"/>
 		<attribute name="id" type="string" use="optional"/>
@@ -135,7 +147,7 @@
 			Caching scope, allowed values are "private" indicating that the content should not be shared
 			across users and "public" indicating that the content may be shared across users.
 			The default value if not present is "private".
-			Used in: expiration-cache
+			Used in: caching
 			</documentation>
 		</annotation>
 		<simpleContent>
@@ -163,7 +175,7 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="portlet-mode" type="portlet:portlet-modeType"/>
 			<element name="portal-managed" type="portlet:portal-managedType" minOccurs="0"/>
-			<element name="decoration-name" type="string" minOccurs="0"/>
+			<element name="decoration-name" type="portlet:display-nameType" minOccurs="0"/>
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
@@ -181,7 +193,7 @@
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
-	<complexType name="expiration-cacheType">
+	<complexType name="cachingType">
 		<annotation>
 			<documentation>
 			Expriation-cache defines expiration-based caching for this
@@ -190,17 +202,17 @@
 			</documentation>
 		</annotation>
 		<sequence>
-			<element name="expiration-time" type="portlet:expiration-timeType" minOccurs="0"/>
+			<element name="expiration-cache" type="portlet:expiration-cacheType" minOccurs="0"/>
 			<element name="scope" type="portlet:cache-scopeType" minOccurs="0"/>
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
-	<complexType name="expiration-timeType">
+	<complexType name="expiration-cacheType">
 		<annotation>
 			<documentation>
 			Expriation-time defines the time in seconds after which the portlet output expires. 
 			-1 indicates that the output never expires.
-			Used in: expiration-cache
+			Used in: caching
 			</documentation>
 		</annotation>
 		<simpleContent>
@@ -271,7 +283,7 @@
 			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="portlet-class" type="portlet:portlet-classType"/>
 			<element name="init-param" type="portlet:init-paramType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="expiration-cache" type="portlet:expiration-cacheType" minOccurs="0"/>
+			<element name="caching" type="portlet:cachingType" minOccurs="0"/>
 			<element name="supports" type="portlet:supportsType" maxOccurs="unbounded"/>
 			<element name="supported-locale" type="portlet:supported-localeType" minOccurs="0" maxOccurs="unbounded"/>
 			<choice>
@@ -283,9 +295,9 @@
 			</choice>
 			<element name="portlet-preferences" type="portlet:portlet-preferencesType" minOccurs="0"/>
 			<element name="security-role-ref" type="portlet:security-role-refType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="supported-processing-event" type="portlet:nameType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="supported-publishing-event" type="portlet:nameType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="supported-shared-render-parameter" type="string" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="supported-processing-event" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="supported-publishing-event" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="supported-public-render-parameter" type="string" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
@@ -311,7 +323,7 @@
 			 default.
 			 Names with the javax.portlet prefix are reserved for the Java
 			 Portlet Specification.
-			Used in: portlet
+			Used in: portlet-app, portlet
 			</documentation>
 		</annotation>
 		<sequence>
@@ -320,18 +332,47 @@
 		</sequence>
 	</complexType>
 	<complexType name="filter-mappingType">
+		<annotation>
+			<documentation>
+			Declaration of the filter mappings in this portlet
+			application is done by using filter-mappingType.
+			The container uses the filter-mapping
+			declarations to decide which filters to apply to a request,
+			and in what order. To determine which filters to
+			apply it matches filter-mapping declarations on the
+			portlet-name and the lifecyle phase defined in the
+			filter element. The order in which filters are invoked 
+			is the order in which filter-mapping declarations 
+			that match appear in the list of filter-mapping elements.
+			Used in: portlet-app
+			</documentation>
+		</annotation>
 		<sequence>
 			<element name="filter-name" type="portlet:filter-nameType"/>
 			<element name="portlet-name" type="portlet:portlet-nameType" maxOccurs="unbounded"/>
 		</sequence>
 	</complexType>
 	<complexType name="filterType">
+		<annotation>
+			<documentation>
+				The filter element specifies a filter that can transform the 
+				content of portlet requests and portlet responses. 
+				Filters can access the initialization parameters declared in 
+				the deployment descriptor at runtime via the FilterConfig 
+				interface.
+				A filter can be restricted to one or more lifecycle phases
+				of the portlet. Valid entries for lifecycle are:
+				ACTION_PHASE, EVENT_PHASE, RENDER_PHASE,
+				RESOURCE_PHASE
+				Used in: portlet-app
+				</documentation>
+		</annotation>
 		<sequence>
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="filter-name" type="portlet:filter-nameType"/>
 			<element name="filter-class" type="portlet:fully-qualified-classType"/>
-			<element name="lifecycle" type="string"/>
+			<element name="lifecycle" type="string" maxOccurs="unbounded"/>
 			<element name="init-param" type="portlet:init-paramType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 	</complexType>
@@ -360,9 +401,12 @@
 		</annotation>
 		<sequence>
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="name" type="xs:QName"/>
+			<choice>
+				<element name="qname" type="xs:QName"/>
+				<element name="name" type="string"/>
+			</choice>
 			<element name="alias" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="java-class" type="portlet:fully-qualified-classType" minOccurs="0"/>
+			<element name="value-type" type="portlet:fully-qualified-classType" minOccurs="0"/>
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
@@ -538,12 +582,12 @@
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
-	<complexType name="shared-render-parameterType">
+	<complexType name="public-render-parameterType">
 		<annotation>
 			<documentation>
-			The shared-render-parameters defines a render parameter that is allowed to be shared
-			with other portlets.
-			The identifier must be used for referencing this shared render parameter in the portlet code.
+			The public-render-parameters defines a render parameter that is allowed to be public
+			and thus be shared with other portlets.
+			The identifier must be used for referencing this public render parameter in the portlet code.
 			Used in: portlet-app
 			</documentation>
 		</annotation>
@@ -697,7 +741,7 @@
 			description. It has an optional attribute xml:lang to indicate 
 			which language is used in the description according to 
 			RFC 1766 (http://www.ietf.org/rfc/rfc1766.txt). The default
-			value of this attribute is English(“en�?).
+			value of this attribute is English(“en”).
 			Used in: init-param, portlet, portlet-app, security-role
 			</documentation>
 		</annotation>
@@ -720,7 +764,7 @@
 			It has an optional attribute xml:lang to indicate 
 			which language is used in the description according to 
 			RFC 1766 (http://www.ietf.org/rfc/rfc1766.txt). The default
-			value of this attribute is English(“en�?).
+			value of this attribute is English(“en”).
 			</documentation>
 		</annotation>
 		<simpleContent>

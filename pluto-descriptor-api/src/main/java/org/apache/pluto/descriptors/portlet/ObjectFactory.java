@@ -39,7 +39,7 @@ public class ObjectFactory {
     private final static QName _PortletDDResourceBundle_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "resource-bundle");
     private final static QName _PortletDDDisplayName_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "display-name");
     private final static QName _PortletDDPortletClass_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "portlet-class");
-    private final static QName _PortletDDSupportedSharedRenderParameter_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "supported-shared-render-parameter");
+    private final static QName _PortletDDSupportedPublicRenderParameter_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "supported-public-render-parameter");
     private final static QName _PortletDDPortletInfo_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "portlet-info");
     private final static QName _PortletDDPortletName_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "portlet-name");
     private final static QName _PortletDDSupports_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "supports");
@@ -297,11 +297,11 @@ public class ObjectFactory {
 //    }
 //
 //    /**
-//     * Create an instance of {@link SharedRenderParameterDD }
+//     * Create an instance of {@link PublicRenderParameterDD }
 //     * 
 //     */
-//    public SharedRenderParameterDD createSharedRenderParameterDD() {
-//        return new SharedRenderParameterDD();
+//    public PublicRenderParameterDD createPublicRenderParameterDD() {
+//        return new PublicRenderParameterDD();
 //    }
 //
 //    /**
@@ -414,9 +414,9 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "supported-shared-render-parameter", scope = PortletDD.class)
-    public JAXBElement<String> createPortletDDSupportedSharedRenderParameter(String value) {
-        return new JAXBElement<String>(_PortletDDSupportedSharedRenderParameter_QNAME, String.class, PortletDD.class, value);
+    @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "supported-public-render-parameter", scope = PortletDD.class)
+    public JAXBElement<String> createPortletDDSupportedPublicRenderParameter(String value) {
+        return new JAXBElement<String>(_PortletDDSupportedPublicRenderParameter_QNAME, String.class, PortletDD.class, value);
     }
 
     /**

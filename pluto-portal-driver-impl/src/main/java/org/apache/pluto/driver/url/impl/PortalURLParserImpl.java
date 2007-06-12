@@ -1,17 +1,19 @@
-/*
- * Copyright 2004 The Apache Software Foundation.
+/*  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 package org.apache.pluto.driver.url.impl;
 
@@ -25,9 +27,9 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.pluto.spi.SharedRenderProvider;
+import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.util.StringUtils;
-import org.apache.pluto.driver.services.container.SharedRenderProviderImpl;
+import org.apache.pluto.driver.services.container.PublicRenderParameterProviderImpl;
 import org.apache.pluto.driver.url.impl.PortalURLImpl;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.driver.url.PortalURL;
@@ -58,7 +60,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String ACTION = "ac";
     private static final String RESOURCE = "rs";
     private static final String RENDER_PARAM = "rp";
-    private static final String SHARED_RENDER_PARAM = "sp";
+    private static final String PUBLIC_RENDER_PARAM = "sp";
     private static final String WINDOW_STATE = "ws";
     private static final String PORTLET_MODE = "pm";
     private static final String VALUE_DELIM = "0x0";
@@ -171,17 +173,17 @@ public class PortalURLParserImpl implements PortalURLParser {
         		
         		
         	}
-        	else{ // besser if PREFIX + SHARED_PARAM
+        	else{ // besser if PREFIX + PUBLIC_PARAM
         		String value = null;
         		if (st.hasMoreTokens()) {
         			value = st.nextToken();
         		}
-        		PortalURLParameter param = decodeSharedParameter(token, value);
-        		SharedRenderProvider provider = SharedRenderProviderImpl
-    				.getSharedRenderProviderImpl();
+        		PortalURLParameter param = decodePublicParameter(token, value);
+        		PublicRenderParameterProvider provider = PublicRenderParameterProviderImpl
+    				.getPublicRenderParameterProviderImpl();
 	    		
-	    		// set shared parameter in portalURL
-	    		portalURL.addSharedParameterCurrent(param.getName(), param.getValues());
+	    		// set public parameter in portalURL
+	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
         	}
         }
         if (renderPath.length() > 0) {
@@ -269,14 +271,14 @@ public class PortalURLParserImpl implements PortalURLParser {
             }
         }
         
-        Map<String, String[]> sharedParamList = portalURL.getSharedParameters();
-        if (sharedParamList!=null){
-	        for (Iterator iter = sharedParamList.keySet().iterator();iter.hasNext();){
+        Map<String, String[]> publicParamList = portalURL.getPublicParameters();
+        if (publicParamList!=null){
+	        for (Iterator iter = publicParamList.keySet().iterator();iter.hasNext();){
 	        	String paramname = (String)iter.next();
-	        	String[] tmp = (String[])sharedParamList.get(paramname);
+	        	String[] tmp = (String[])publicParamList.get(paramname);
 	        	String valueString = encodeMultiValues(tmp);
 	        	if (valueString.length()>0){
-	        		buffer.append("/").append(encodeSharedParamname(SHARED_RENDER_PARAM, paramname));
+	        		buffer.append("/").append(encodePublicParamname(PUBLIC_RENDER_PARAM, paramname));
 	        		buffer.append("/").append(valueString);
 	        	}
 	        }
@@ -315,7 +317,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     	return buffer.toString();
     }
     
-    private String encodeSharedParamname(String type, String name){
+    private String encodePublicParamname(String type, String name){
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(PREFIX).append(type)
     	.append(DELIM).append(name);
@@ -409,7 +411,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         return new PortalURLParameter(windowId, paramName, paramValues);
     }
     
-    private PortalURLParameter decodeSharedParameter(String name, String value) {
+    private PortalURLParameter decodePublicParameter(String name, String value) {
     	
         if (LOG.isDebugEnabled()) {
             LOG.debug("Decoding parameter: name=" + name

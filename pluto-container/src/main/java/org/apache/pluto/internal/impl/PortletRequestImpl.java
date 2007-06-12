@@ -26,7 +26,7 @@ import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.SharedRenderProvider;
+import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
@@ -430,14 +430,14 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	SharedRenderProvider provider = container
+    	PublicRenderParameterProvider provider = container
     		.getRequiredContainerServices()
     		.getPortalCallbackService()
-    		.getSharedRenderProvider(getHttpServletRequest());
+    		.getPublicRenderParameterProvider();
     	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
     	String[] values = null;
-    	if (provider.isSharedRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-    		values = urlProvider.getSharedRenderParameter(name);
+    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+    		values = urlProvider.getPublicRenderParameters(name);
     	}
     	else{
     		values = (String[]) baseGetParameterMap().get(name);
