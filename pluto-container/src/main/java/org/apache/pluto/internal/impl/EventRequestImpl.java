@@ -56,15 +56,15 @@ public class EventRequestImpl extends PortletRequestImpl
 	 */
 	private PortletPreferences portletPreferences = null;
 	
-	private HttpServletRequest request = null; 
+	private Event event; 
 	
 	//	 Constructor -------------------------------------------------------------
     
     public EventRequestImpl(PortletContainer container,
                              InternalPortletWindow internalPortletWindow,
-                             HttpServletRequest servletRequest) {
+                             HttpServletRequest servletRequest, Event event) {
         super(container, internalPortletWindow, servletRequest);
-        this.request = servletRequest;
+        this.event = event;
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Created Event request for: " + internalPortletWindow);
         }
@@ -75,10 +75,7 @@ public class EventRequestImpl extends PortletRequestImpl
     
     public Event getEvent(){
         EventProvider provider = 
-        	(EventProvider) request.getAttribute(Constants.PROVIDER);
-        String eventName = (String) this.getAttribute(Constants.EVENT_NAME);
-        int eventNumber = Integer.parseInt((String) this.getAttribute(Constants.EVENT_NUMBER));
-        Event event = provider.getEvent(eventName, eventNumber);
+        	(EventProvider) this.getRequest().getAttribute(Constants.PROVIDER);
 
         Object value = event.getValue();
         if (value instanceof XMLStreamReader) {

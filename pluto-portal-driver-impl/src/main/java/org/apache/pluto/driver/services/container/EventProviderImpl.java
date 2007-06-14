@@ -283,7 +283,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 			
 			Event eActual = getArbitraryEvent();
 
-        	List<String> portletNames = (eActual.getName() != null) ? portalEvts.get(eActual.getName().toString()) : null;
+        	List<String> portletNames = (eActual.getQName() != null) ? portalEvts.get(eActual.getQName().toString()) : null;
         	
         	Collection<PortletWindowConfig> portlets = getAllPortletsInPortal(driverConfig);
         	

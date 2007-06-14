@@ -5,6 +5,6 @@ PortletDD
 PortletInfoDD
 PortletPreferenceDD
 PortletPreferencesDD
-SharedRenderParamDD
+PublicRenderParamDD
 SupportsDD
 ExpirationCacheDD

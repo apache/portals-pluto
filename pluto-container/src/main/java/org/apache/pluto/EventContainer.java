@@ -22,7 +22,7 @@ import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.namespace.QName;
+import javax.portlet.Event;
 
 /**
  * The publicized entry point into Pluto for firing events
@@ -43,7 +43,7 @@ public interface EventContainer {
      *                                   has trouble fulfilling the request
      */
 	public void fireEvent(HttpServletRequest request, HttpServletResponse response, 
-			PortletWindow window, QName eventName, int eventNumber) throws PortletException, IOException;
+			PortletWindow window, Event event) throws PortletException, IOException;
 	
 	public ServletContext getServletContext();
 }

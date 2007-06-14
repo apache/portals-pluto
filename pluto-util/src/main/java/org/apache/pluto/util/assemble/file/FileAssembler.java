@@ -22,7 +22,7 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.castor.EntityResolverImpl;
-import org.apache.pluto.descriptors.services.castor.PortletAppDescriptorServiceImpl;
+import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.driver.core.PortalServletRequest;
 
 public class PortletWindowThread extends Thread {
 	
@@ -60,12 +61,11 @@ public class PortletWindowThread extends Thread {
 	public void run() {
 		super.run();
 		while (events.size() > 0) {
-			HttpServletRequest req = eventProvider.getRequest();
+			HttpServletRequest req = new PortalServletRequest(eventProvider.getRequest(), this.portletWindow);
 			HttpServletResponse res = eventProvider.getResponse();
 			try {
 				synchronized (this) {
-					eventContainer.fireEvent(req, res, portletWindow, events.get(0).getQName(),
-							eventProvider.getSavedEvents().getNumber(events.get(0)));
+					eventContainer.fireEvent(req, res, portletWindow, events.get(0));
 					//wait();
 					Thread.sleep(1);
 					events.remove(0);				

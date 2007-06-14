@@ -28,7 +28,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.namespace.QName;
+import javax.portlet.Event;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -246,6 +246,10 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Portlet action processed for: "
         		+ portletWindow.getPortletName());
         
+        PortletURLProvider portletURLProvider = requiredContainerServices.getPortalCallbackService().getPortletURLProvider(request, internalPortletWindow);
+        saveChangedParameters(actionRequest, actionResponse, portletURLProvider);
+        portletURLProvider.savePortalURL(request);        
+        
         EventProvider provider = this.getRequiredContainerServices().getPortalCallbackService().
 			getEventProvider(request,response);
         provider.fireEvents(this);
@@ -260,8 +264,6 @@ public class PortletContainerImpl implements PortletContainer,
             PortletURLProvider redirectURL = requiredContainerServices
             		.getPortalCallbackService()
             		.getPortletURLProvider(request, internalPortletWindow);
-            
-            saveChangedParameters(actionRequest, actionResponse, redirectURL);
             
             // Encode the redirect URL to a string.
             location = actionResponse.encodeRedirectURL(redirectURL.toString());
@@ -373,7 +375,7 @@ public class PortletContainerImpl implements PortletContainer,
      * @see {@link javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest, javax.portlet.EventResponse)
      */
     public void fireEvent(HttpServletRequest request, HttpServletResponse response,
-    		PortletWindow window, QName eventName, int eventNumber) 
+    		PortletWindow window, Event event) 
     		throws PortletException, IOException {
 
     	ensureInitialized();
@@ -384,13 +386,9 @@ public class PortletContainerImpl implements PortletContainer,
     			+ window.getPortletName());
 
     	EventRequestImpl eventRequest = new EventRequestImpl(
-    			this, internalPortletWindow, request);
+    			this, internalPortletWindow, request, event);
     	EventResponseImpl eventResponse = new EventResponseImpl(
     			this, internalPortletWindow, request, response);
-    	
-    	// Save the name of the actual event to fire in the Request
-    	eventRequest.setAttribute(Constants.EVENT_NAME, eventName.toString());
-    	eventRequest.setAttribute(Constants.EVENT_NUMBER, new Integer(eventNumber).toString());
 
     	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
     	invoker.event(eventRequest, eventResponse);

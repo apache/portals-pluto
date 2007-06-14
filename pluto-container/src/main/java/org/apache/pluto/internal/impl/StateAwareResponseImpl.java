@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -29,7 +28,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.Event;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -41,7 +39,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -51,14 +48,9 @@ import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.SchemaFactoryLoader;
-
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
@@ -70,9 +62,6 @@ import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.StringUtils;
-import org.xml.sax.SAXException;
-
-import com.sun.org.apache.xerces.internal.jaxp.validation.xs.SchemaFactoryImpl;
 
 /**
  * Implementation of JSR-286 <code>StateAwareResponse</code>.
@@ -132,18 +121,16 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 			}
 			
 			ClassLoader loader = Thread.currentThread().getContextClassLoader();
-			Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());
+			Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());		
 
 			JAXBContext jc = JAXBContext.newInstance(clazz);
 
 			Marshaller marshaller  = jc.createMarshaller();
-			marshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, 
-					Boolean.TRUE );
+//			marshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, 
+//					Boolean.TRUE );
 
 			Writer out = new StringWriter();
-
-			marshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
-
+			
 			marshaller.marshal(new JAXBElement(
 					eventDefinitionDD.getName(),clazz,value), out);
 

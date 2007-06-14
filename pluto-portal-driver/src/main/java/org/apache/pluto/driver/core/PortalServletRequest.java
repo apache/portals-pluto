@@ -92,21 +92,6 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
             }
         }
 
-        String id = portletWindow.getId().getStringId();
-        if (portletWindow.getId().getStringId().equals(id)) {
-            Enumeration params = super.getParameterNames();
-            while (params.hasMoreElements()) {
-                String name = params.nextElement().toString();
-                String[] values = super.getParameterValues(name);
-                if (portletParameters.containsKey(name)) {
-                    String[] temp = (String[]) portletParameters.get(name);
-                    String[] all = new String[values.length + temp.length];
-                    System.arraycopy(values, 0, all, 0, values.length);
-                    System.arraycopy(temp, 0, all, values.length, temp.length);
-                }
-                portletParameters.put(name, values);
-            }
-        }
     }
 
     /**
