@@ -238,6 +238,8 @@ public class PortalDriverServlet extends HttpServlet {
             
             registerEvents(window, portletDD, portletAppDD);
             
+            registerEventDefinitions(portletAppDD);
+            
             registerPublicRenderParams(window, portletDD,portletAppDD);
 		}
 	}
@@ -284,13 +286,39 @@ public class PortalDriverServlet extends HttpServlet {
 		if (events != null) {
 			for (QName event : events) {
 				EventDefinitionDD eventDD = getEvent(event, portletAppDD);
-				eventProvider.registerEvent(event.toString(),window.getId().getStringId(), eventDD);
-				if (LOG.isDebugEnabled()){
-					LOG.debug(event+" registered successfully!");
+				if (eventDD != null) {
+
+					// register event only if it is declared as "processing-event"
+					List<QName> processingEvents = portletDD.getProcessingEvents();
+					for (QName name : processingEvents) {
+						if (name.toString().equals(eventDD.getName().toString())) {
+							eventProvider.registerEvent(event.toString(),window.getId().getStringId(), eventDD);
+							if (LOG.isDebugEnabled()){
+								LOG.debug(event+" registered successfully!");
+							}
+						}
+					}				
 				}
 			}
 		}
 	}
+	
+	/**
+	 * Register event definitions.
+	 * 
+	 * @param portletAppDD the portlet app DD
+	 */
+	private void registerEventDefinitions(PortletAppDD portletAppDD) {
+		EventProvider eventProvider = container.getRequiredContainerServices()
+		.getPortalCallbackService().getEventProvider();
+		List<EventDefinitionDD> defs = portletAppDD.getEvents();
+		if (defs != null){
+			for (EventDefinitionDD definitionDD : defs) {
+				eventProvider.registerEventDefinitionDD(definitionDD);
+			}
+		}
+	}
+
     
     private EventDefinitionDD getEvent(QName event, PortletAppDD portletAppDD) {
 		List<EventDefinitionDD> events = portletAppDD.getEvents();

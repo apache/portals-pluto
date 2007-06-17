@@ -114,7 +114,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     /**
      * c'tor
      */
-    public EventProviderImpl(){
+    private EventProviderImpl(){
     	
     }
     
@@ -168,8 +168,6 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     		if (portletName != null) 
     			list.add(portletName);
     		portalEvts.put(evtLabel, list);
-    		// add EventDefinition
-        	portalEvtsDefs.put(evtLabel, eventDefinitionDD);
     	}
     }
     
@@ -278,8 +276,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 
 		PortalURL portalURL = PortalURLParserImpl.getParser().parse(request);
 		
-		// for every event there is one extra event, thats why we need E*2+1
-		while (savedEvents.hasMoreEvents() && savedEvents.getSize() < Constants.MAX_EVENTS_SIZE){ //* 2 + 1) {
+		while (savedEvents.hasMoreEvents() && savedEvents.getSize() < Constants.MAX_EVENTS_SIZE){
 			
 			Event eActual = getArbitraryEvent();
 
@@ -297,6 +294,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
         					PortletWindowThread portletWindowThread = 
         						getPortletWindowThread(eventContainer, config, window);
 
+        					// is this event 
         					portletWindowThread.addEvent(eActual);
  
         					portletWindowThread.start();
@@ -415,5 +413,11 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 	 */
 	public EventList getSavedEvents(){
 		return savedEvents;
+	}
+
+	
+	public void registerEventDefinitionDD(EventDefinitionDD eventDefinitionDD) {
+		// add EventDefinition
+    	portalEvtsDefs.put(eventDefinitionDD.getName().toString(), eventDefinitionDD);		
 	}
 }

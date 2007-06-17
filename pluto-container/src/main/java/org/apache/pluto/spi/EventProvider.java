@@ -152,6 +152,13 @@ public interface EventProvider {
 	public abstract EventDefinitionDD getEventDefinition(QName qname);
 	
 	/**
+	 * Register event definition DD.
+	 * 
+	 * @param eventDefinitionDD the event definition DD
+	 */
+	public abstract void registerEventDefinitionDD(EventDefinitionDD eventDefinitionDD);
+	
+	/**
 	 * Gets the request.
 	 * 
 	 * @return the request
