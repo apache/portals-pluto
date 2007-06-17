@@ -70,6 +70,8 @@ import javax.xml.namespace.QName;
 public abstract class GenericPortlet implements Portlet, PortletConfig,
 		EventPortlet, ResourceServingPortlet {
 
+
+
 	private transient PortletConfig config;
 
 	private transient Map<String, Method> processActionHandlingMethodsMap = new HashMap<String, Method>();
@@ -121,16 +123,16 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 		for (Method method : methods) {			
 			Annotation[] annotations = method.getAnnotations();
 			for (Annotation annotation : annotations) {
-				if (annotation.equals(ProcessAction.class)) {
+				if (annotation.annotationType().equals(ProcessAction.class)) {
 					processActionHandlingMethodsMap.put(((ProcessAction)annotation).name(), method);					
-				} else if (annotation.equals(ProcessEvent.class)) {
+				} else if (annotation.annotationType().equals(ProcessEvent.class)) {
 					if (((ProcessEvent)annotation).qname() != null)
 						processEventHandlingMethodsMap.put(((ProcessEvent)annotation).qname(), method);
 					else {
 						QName qn = new QName(config.getDefaultEventNamespace(), ((ProcessEvent)annotation).name());
 						processEventHandlingMethodsMap.put(qn.toString(), method);
 					}									
-				} else if (annotation.equals(RenderMode.class)) {
+				} else if (annotation.annotationType().equals(RenderMode.class)) {
 					renderModeHandlingMethodsMap.put(((RenderMode)annotation).name().toLowerCase(), method);
 				}
 			}
@@ -186,20 +188,26 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	public void processAction(ActionRequest request, ActionResponse response)
 			throws PortletException, java.io.IOException {		
 		String action = request.getParameter(ActionRequest.ACTION_NAME);
+		boolean actionProcessed = false;
+		
 		try {
 			// check if action is cached in init
-			if ( processActionHandlingMethodsMap.containsKey(action) )
+			if ( processActionHandlingMethodsMap.containsKey(action) ) {
 				processActionHandlingMethodsMap.get(action).invoke(this, request, response);
-			// check if action is present as annotation
-			invokeProcessActionAnnotatedMethod(request, response, action);
+				actionProcessed = true;				
+			} else { 
+				// check if action is present as annotation
+				actionProcessed = invokeProcessActionAnnotatedMethod(request, response, action);
+			}
 		} catch (Exception e) {
 			throw new PortletException(e);
 		}
-
-		// if no action processing method was found throw exc
-		throw new PortletException("processAction method not implemented");
+		if ( ! actionProcessed )
+			// if no action processing method was found throw exc
+			throw new PortletException("processAction method not implemented");
 	}
 
+	
 	/**
      * The default implementation of this method sets the headers using the
      * <code>doHeaders</code> method, sets the title using the 
@@ -322,29 +330,36 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	protected void doDispatch(RenderRequest request, RenderResponse response)
 			throws PortletException, java.io.IOException {
 		WindowState state = request.getWindowState();
-
+		boolean dispatchPerformed = false;
+		
 		if (!state.equals(WindowState.MINIMIZED)) {
 			PortletMode mode = request.getPortletMode();
 			// first look if there are methods annotated for
 			// handling the rendering of this mode
 			try {
 				// check if mode is cached in init
-				if ( renderModeHandlingMethodsMap.containsKey(mode) )
+				if ( renderModeHandlingMethodsMap.containsKey(mode) ) {
 					renderModeHandlingMethodsMap.get(mode).invoke(this, request, response);
-				// check if mode is present as annotation
-				invokeRenderModeAnnotatedMethod(request, response, mode);
+					dispatchPerformed = true;
+				}
+				else {
+					// check if mode is present as annotation
+					dispatchPerformed = invokeRenderModeAnnotatedMethod(request, response, mode);
+				}
 			} catch (Exception e) {
 				throw new PortletException(e);
 			}
-			// if not, try the default doXYZ methods
-			if (mode.equals(PortletMode.VIEW)) {
-				doView(request, response);
-			} else if (mode.equals(PortletMode.EDIT)) {
-				doEdit(request, response);
-			} else if (mode.equals(PortletMode.HELP)) {
-				doHelp(request, response);
-			} else {
-				throw new PortletException("unknown portlet mode: " + mode);
+			if ( ! dispatchPerformed ) {
+				// if not, try the default doXYZ methods
+				if (mode.equals(PortletMode.VIEW)) {
+					doView(request, response);
+				} else if (mode.equals(PortletMode.EDIT)) {
+					doEdit(request, response);
+				} else if (mode.equals(PortletMode.HELP)) {
+					doHelp(request, response);
+				} else {
+					throw new PortletException("unknown portlet mode: " + mode);
+				}
 			}
 		}
 
@@ -539,7 +554,8 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 		if ( request.getResourceID() != null ) {
 			PortletRequestDispatcher rd = getPortletConfig().getPortletContext()
 										.getRequestDispatcher(request.getResourceID());
-			rd.forward(request, response);
+			if ( rd != null )
+				rd.forward(request, response);
 		}
 	}
 
@@ -557,18 +573,25 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	public void processEvent(EventRequest request, EventResponse response)
 			throws PortletException, IOException {
 		QName eventName = request.getEvent().getQName();
+		boolean eventProcessed = false;
+		
 		try {
 			// check if event is cached in init
-			if ( processEventHandlingMethodsMap.containsKey(eventName) )
+			if ( processEventHandlingMethodsMap.containsKey(eventName) ) {
 				processEventHandlingMethodsMap.get(eventName).invoke(this, request, response);
-			// check if event is present as annotation			
-			invokeProcessEventAnnotatedMethod(request, response, eventName.toString());
+				eventProcessed = true;
+			} else {
+				// check if event is present as annotation			
+				eventProcessed = invokeProcessEventAnnotatedMethod(request, response, eventName.toString());
+			}
 		} catch (Exception e) {
 			throw new PortletException(e);
 		}
-
-		// if no event processing method was found just keep render params
-		response.setRenderParameters(request);
+		
+		if ( ! eventProcessed ) {
+			// if no event processing method was found just keep render params
+			response.setRenderParameters(request);
+		}
 	}
 
 	/**
@@ -617,16 +640,29 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	public Enumeration<String> getPublicRenderParameterNames() {
 		return config.getPublicRenderParameterNames();
 	}
-	
-	/**
-	 * Will be added in the next draft of the spec.
-	 * Torsten Dettborn
-	 */
+
+	 /**
+	   * Returns the default event namespace.
+	   * This namespace is defined in the portlet deployment descriptor
+	   * with the <code>default-event-namespace</code> element.
+	   * <p>
+	   * If no default namespace is defined in the portlet deployment
+	   * descriptor this methods returns the XML default namespace 
+	   * <code>XMLConstants.NULL_NS_URI</code>.
+	   * 
+	   * @return the default event namespace defined in the portlet deployment
+	   *         descriptor, or <code>XMLConstants.NULL_NS_URI</code> is non is
+	   *         defined.
+	   *         
+	   * @javax.portlet.PortletConfig#getDefaultEventNamespace()
+	   */
 	public String getDefaultEventNamespace() {
-		return null;
+		return config.getDefaultEventNamespace();
 	}
 
-	private void invokeProcessActionAnnotatedMethod(ActionRequest request, ActionResponse response, String action)
+	
+	
+	private boolean invokeProcessActionAnnotatedMethod(ActionRequest request, ActionResponse response, String action)
 	throws PortletException
 	{
 		Method[] methods = this.getClass().getMethods();
@@ -638,7 +674,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 						processActionHandlingMethodsMap.put(((ProcessAction)annotation).name(), method);					
 						try {
 							method.invoke(this, request, response);
-							return;
+							return true;
 						} catch (Exception e) {
 							throw new PortletException(e);
 						}
@@ -646,9 +682,9 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 				}
 			}
 		}
-	
+		return false;
 	}
-	private void invokeProcessEventAnnotatedMethod(EventRequest request, EventResponse response, String event)
+	private boolean invokeProcessEventAnnotatedMethod(EventRequest request, EventResponse response, String event)
 	throws PortletException
 	{
 		Method[] methods = this.getClass().getMethods();
@@ -661,7 +697,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 							processEventHandlingMethodsMap.put(((ProcessEvent)annotation).qname(), method);
 							try {
 								method.invoke(this, request, response);
-								return;
+								return true;
 							} catch (Exception e) {
 								throw new PortletException(e);
 							}
@@ -672,7 +708,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 							processEventHandlingMethodsMap.put(qn.toString(), method);
 							try {
 								method.invoke(this, request, response);
-								return;
+								return true;
 							} catch (Exception e) {
 								throw new PortletException(e);
 							}
@@ -681,11 +717,11 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 				}
 			}
 		}
-
+		return false;
 	}
 
 
-	private void invokeRenderModeAnnotatedMethod(RenderRequest request, RenderResponse response, PortletMode mode)
+	private boolean invokeRenderModeAnnotatedMethod(RenderRequest request, RenderResponse response, PortletMode mode)
 		throws PortletException
 	{
 		Method[] methods = this.getClass().getMethods();
@@ -697,7 +733,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 						renderModeHandlingMethodsMap.put(((RenderMode)annotation).name().toLowerCase(), method);
 						try {
 							method.invoke(this, request, response);
-							return;
+							return true;
 						} catch (Exception e) {
 							throw new PortletException(e);
 						}
@@ -705,6 +741,6 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 				}
 			}
 		}
-
+		return false;
 	}
 }

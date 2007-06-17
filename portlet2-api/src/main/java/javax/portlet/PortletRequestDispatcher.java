@@ -30,8 +30,6 @@
 
 package javax.portlet;
 
-import java.io.IOException;
-
 /**
  * The <code>PortletRequestDispatcher</code> interface defines an object that
  * receives requests from the client and sends them to the specified resources
@@ -43,6 +41,41 @@ import java.io.IOException;
  */
 
 public interface PortletRequestDispatcher {
+
+    /**
+     * 
+     * Includes the content of a resource (servlet, JSP page, HTML file) in the
+     * response. In essence, this method enables programmatic server-side
+     * includes.
+     * <p>
+     * The included servlet cannot set or change the response status code or set
+     * headers; any attempt to make a change is ignored.
+     * 
+     * 
+     * @param request
+     *            a {@link RenderRequest} object that contains the client
+     *            request. Must be either the render request passed to the
+     *            portlet in <code>render</code> or a wrapped version of this
+     *            render request.
+     * 
+     * @param response
+     *            a {@link RenderResponse} object that contains the render
+     *            response. Must be either the render response passed to the
+     *            portlet in <code>render</code> or a wrapped version of this
+     *            render response.
+     * 
+     * @exception PortletException
+     *                if the included resource throws a ServletException, or
+     *                other exceptions that are not Runtime- or IOExceptions.
+     * 
+     * @exception java.io.IOException
+     *                if the included resource throws this exception
+     * 
+     * @deprecated since 2.0, use {@link #include(PortletRequest, PortletResponse)} instead 
+     */
+
+    public void include(RenderRequest request, RenderResponse response)
+            throws PortletException, java.io.IOException;
 
     /**
      * 
@@ -70,6 +103,8 @@ public interface PortletRequestDispatcher {
      * 
      * @exception java.io.IOException
      *                if the included resource throws this exception
+     *                
+     * @since 2.0
      */
 
     public void include(PortletRequest request, PortletResponse response)
@@ -105,7 +140,6 @@ public interface PortletRequestDispatcher {
     public void forward(PortletRequest request, PortletResponse response)
             throws PortletException, java.io.IOException, java.lang.IllegalStateException;
 
-    public void include(RenderRequest request, RenderResponse response)
-    throws PortletException, java.io.IOException;
+    
 
 }

@@ -238,10 +238,16 @@ implements PortletContext, InternalPortletContext {
 
 	public Map getApplicationRuntimeOptions() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
 	public Map getPortletRuntimeOptions() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+
+	public Map<String, String[]> getContainerRuntimeOptions() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}

@@ -771,16 +771,19 @@ public interface PortletRequest
   /**
    * Returns the portal preferred content type for the response.
    * <p>
-   * The content type only includes the MIME type, not the
+   * For <code>ActionRequest, EventRequest</code>, and
+   * <code>RenderRequest</code> the following restrictions apply:
+   * <ul>
+   * <li>The content type only includes the MIME type, not the
    * character set. The character set of the response
-   * can be retrieved via the {@link RenderResponse#getCharacterEncoding}.
-   * <p>
-   * Only content types that the portlet has defined in its
+   * can be retrieved via the {@link RenderResponse#getCharacterEncoding}.</li>
+   * <li>Only content types that the portlet has defined in its
    * deployment descriptor are valid return values for
    * this method call. If the portlet has defined
    * <code>'*'</code> or <code>'* / *'</code> as supported content
-   * types, these may also be valid return values.
-   *
+   * types, these may also be valid return values.</li>
+   * </ul>
+   * 
    * @return preferred MIME type of the response
    */
 
@@ -791,14 +794,17 @@ public interface PortletRequest
    * Gets a list of content types which the portal accepts for the response.
    * This list is ordered with the most preferable types listed first.
    * <p>
-   * The content type only includes the MIME type, not the
-   * character set.
-   * <p>
-   * Only content types that the portlet has defined in its
+   * For <code>ActionRequest, EventRequest</code>, and
+   * <code>RenderRequest</code> the following restrictions apply:
+   * <ul>
+   * <li>The content type only includes the MIME type, not the
+   * character set.</li>
+   * <li>Only content types that the portlet has defined in its
    * deployment descriptor are valid return values for
    * this method call. If the portlet has defined
    * <code>'*'</code> or <code>'* / *'</code> as supported content
-   * types, these may also be valid return values.
+   * types, these may also be valid return values.</li>
+   * </ul>
    *
    * @return ordered list of MIME types for the response
    */
