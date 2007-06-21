@@ -76,21 +76,12 @@ the portlet in the adjacent list and then clicking on the Remove Page button.
 
 <div class="portlet-section-subheader">Manually Updating the Configuration File</div>
 <p class="portlet-font">
-The Page Administrator Portlet does not persist any portlet additions or portal page removals to 
-the pluto-portal-driver-config.xml file. This must be done manually in the config file. Removal of portlets
-from pages must also be done manually in pluto-portal-driver-config.xml.
+The Page Administrator Portlet does not allow the addition of pages. This must be done manually in the 
+pluto-portal-driver-config.xml file.
 </p>
 
 <p class="portlet-font">
-To manually add a portlet to a page in pluto-portal-driver-config.xml, a portlet child element must be added to the 
-page element, which is a child of render-config. This element should look like this:
-<pre>
-&lt;portlet context="/HelloWorldPortlet" name="HelloWorldPortlet"/&gt;
-</pre>
-</p>
-
-<p class="portlet-font">
-New portal pages can be created by adding a page element under render-config in pluto-portal-driver-config.xml. 
+New portal pages can be created in the config file by adding a page element under render-config. 
 The uri attribute of the page element points to a JSP page that will contain a portlet (or portlets) defined in 
 its child (or children) portlet element(s). The default 'theme' lays out the portlets in two columns 
 (see WEB-INF\themes\pluto-default-theme.jsp in the pluto webapp for details). 
