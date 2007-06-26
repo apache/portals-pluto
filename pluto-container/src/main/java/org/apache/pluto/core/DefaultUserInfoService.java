@@ -16,13 +16,15 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.pluto.spi.optional.UserInfoService;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import java.util.Map;
-import java.util.HashMap;
+
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
  * UserInfo
@@ -35,7 +37,10 @@ public class DefaultUserInfoService implements UserInfoService {
     public Map getUserInfo(PortletRequest request)
         throws PortletContainerException {
         if ( request.getRemoteUser() != null ) {
-        	return (Map)userInfoMap.get(request.getRemoteUser());
+        	Map info = (Map)userInfoMap.get(request.getRemoteUser());
+            if ( info == null ) {
+                return Collections.EMPTY_MAP;
+            }
         }
         return new HashMap();
     }
