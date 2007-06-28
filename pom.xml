@@ -266,10 +266,6 @@
         <module>pluto-util</module>
         <module>maven-pluto-plugin</module>
         <module>pluto-ant-tasks</module>
-        <!--
-        <module>pluto-resources</module>
-        <module>pluto-resources-plugin</module>
-        -->
 
         <!-- Pluto Documentations -->
         <module>pluto-site</module>
