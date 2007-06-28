@@ -42,7 +42,11 @@ limitations under the License.
 
 
   <!-- Render configuration which defines the portal pages. -->
-  <render-config default="Test Page">
+  <render-config default="About Apache Pluto">
+    <page name="About Apache Pluto" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/pluto" name="AboutPortlet"/>
+      <portlet context="/testsuite" name="TestPortlet1"/>
+    </page>
     <page name="Test Page" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/testsuite" name="TestPortlet1"/>
       <portlet context="/testsuite" name="TestPortlet2"/>
