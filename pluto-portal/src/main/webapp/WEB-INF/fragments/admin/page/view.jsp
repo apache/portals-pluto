@@ -32,17 +32,15 @@ limitations under the License.
 
 <div>
   <h2>Portal Pages</h2>
-  <!-- h4>Namespace: <portlet:namespace/> </h4 -->
   <p>
       <script type="text/javascript">
           var <portlet:namespace/>placedPortlets = new Array();
           <c:forEach items="${availablePages}" var="page">
               <portlet:namespace/>placedPortlets['<c:out value="${page.id}"/>'] = new Array();
-              var <portlet:namespace/>i = 0;
-              <c:forEach items="${page.portlets}" var="portlet">
-              	<portlet:namespace/>placedPortlets['<c:out value="${page.id}"/>'][<portlet:namespace/>i] = new Array();
-              	<portlet:namespace/>placedPortlets['<c:out value="${page.id}"/>'][<portlet:namespace/>i][0] = '<c:out value="${portlet.id}"/>';
-              	<portlet:namespace/>placedPortlets['<c:out value="${page.id}"/>'][<portlet:namespace/>i++][1] = '<c:out value="${portlet.portletName}"/>';
+              <c:forEach items="${page.portlets}" var="portlet" varStatus="loopStatus">
+              	<portlet:namespace/>placedPortlets['<c:out value="${page.id}"/>'][<c:out value="${loopStatus.index}"/>] = new Array();
+              	<portlet:namespace/>placedPortlets['<c:out value="${page.id}"/>'][<c:out value="${loopStatus.index}"/>][0] = '<c:out value="${portlet.id}"/>';
+              	<portlet:namespace/>placedPortlets['<c:out value="${page.id}"/>'][<c:out value="${loopStatus.index}"/>][1] = '<c:out value="${portlet.portletName}"/>';
               </c:forEach>
           </c:forEach>
 
@@ -80,10 +78,9 @@ limitations under the License.
     <select name="placedPortlets" size="5">
 
     </select>
-
-    <button name="command" disabled="true" value="remove">
-      Remove
-    </button>
+    <p>
+      <input id="removeButton" type="submit" name="command" disabled="true" value="Remove Portlet"></input>
+    </p>
   </p>
 </div>
 
@@ -94,11 +91,10 @@ limitations under the License.
     <script type="text/javascript">
         var <portlet:namespace/>portlets = new Array();
         <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
-            var <portlet:namespace/>i = 0;
             <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'] = new Array();
-            <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'][<portlet:namespace/>i++] = 'Select. . .';
-          <c:forEach items="${app.portletApplicationDefinition.portlets}" var="portlet">
-            <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'][<portlet:namespace/>i++] = '<c:out value="${portlet.portletName}"/>';
+            <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'][0] = 'Select. . .';
+          <c:forEach items="${app.portletApplicationDefinition.portlets}" var="portlet" varStatus="loopStatus">
+            <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'][<c:out value="${loopStatus.index + 1}"/>] = '<c:out value="${portlet.portletName}"/>';
           </c:forEach>
         </c:forEach>
 
@@ -135,9 +131,9 @@ limitations under the License.
 
     </select>
 
-    <button name="command" disabled="true" value="add">
-        Add Portlet
-    </button>
+    <p>
+        <input id="addButton" type="submit" name="command" disabled="true" value="Add Portlet"></input>
+    </p>
   </p>
 </div>
 </form>

@@ -52,10 +52,10 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
 
     public void processAction(ActionRequest request, ActionResponse response) {
         String command = request.getParameter("command");
-        if("add".equalsIgnoreCase(command)) {
+        if("Add Portlet".equalsIgnoreCase(command)) {
             doAddPortlet(request);
         }
-        else if ("remove".equalsIgnoreCase(command)) {
+        else if ("Remove Portlet".equalsIgnoreCase(command)) {
             doRemovePortlet(request);
         }
         try {
