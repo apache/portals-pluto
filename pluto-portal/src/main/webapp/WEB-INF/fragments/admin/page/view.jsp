@@ -35,11 +35,10 @@ limitations under the License.
           var placedPortlets = new Array();
           <c:forEach items="${availablePages}" var="page">
               placedPortlets['<c:out value="${page.id}"/>'] = new Array();
-              var i = 0;
-              <c:forEach items="${page.portlets}" var="portlet">
-              placedPortlets['<c:out value="${page.id}"/>'][i] = new Array();
-              placedPortlets['<c:out value="${page.id}"/>'][i][0] = '<c:out value="${portlet.id}"/>';
-              placedPortlets['<c:out value="${page.id}"/>'][i++][1] = '<c:out value="${portlet.portletName}"/>';
+              <c:forEach items="${page.portlets}" var="portlet" varStatus="loopStatus">
+                placedPortlets['<c:out value="${page.id}"/>'][<c:out value="${loopStatus.index}"/>] = new Array();
+                placedPortlets['<c:out value="${page.id}"/>'][<c:out value="${loopStatus.index}"/>][0] = '<c:out value="${portlet.id}"/>';
+                placedPortlets['<c:out value="${page.id}"/>'][<c:out value="${loopStatus.index}"/>][1] = '<c:out value="${portlet.portletName}"/>';
               </c:forEach>
           </c:forEach>
 
@@ -77,10 +76,9 @@ limitations under the License.
     <select name="placedPortlets" size="5">
 
     </select>
-
-    <button name="command" disabled="true" value="remove">
-      Remove
-    </button>
+    <p>
+      <input id="removeButton" type="submit" name="command" disabled="true" value="Remove Portlet"></input>
+    </p>
   </p>
 </div>
 
@@ -92,11 +90,10 @@ limitations under the License.
     <script type="text/javascript">
         var portlets = new Array();
         <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.registeredPortletApplications}" var="app">
-            var i = 0;
             portlets['<c:out value="${app.applicationId}"/>'] = new Array();
-            portlets['<c:out value="${app.applicationId}"/>'][i++] = 'Select. . .';
-          <c:forEach items="${app.portletApplicationDefinition.portlets}" var="portlet">
-            portlets['<c:out value="${app.applicationId}"/>'][i++] = '<c:out value="${portlet.portletName}"/>';
+            portlets['<c:out value="${app.applicationId}"/>'][0] = 'Select. . .';
+          <c:forEach items="${app.portletApplicationDefinition.portlets}" var="portlet" varStatus="loopStatus">
+            portlets['<c:out value="${app.applicationId}"/>'][<c:out value="${loopStatus.index + 1}"/>] = '<c:out value="${portlet.portletName}"/>';
           </c:forEach>
         </c:forEach>
 
@@ -133,9 +130,9 @@ limitations under the License.
 
     </select>
 
-    <button name="command" disabled="true" value="add">
-        Add Portlet
-    </button>
+    <p>
+        <input id="addButton" type="submit" name="command" disabled="true" value="Add Portlet"></input>
+    </p>
   </p>
 </div>
 </form>
