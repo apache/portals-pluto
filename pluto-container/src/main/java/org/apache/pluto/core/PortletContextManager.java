@@ -227,8 +227,9 @@ public class PortletContextManager implements PortletRegistryService {
         if (ipc != null) {
             return ipc.getPortletApplicationDefinition();
         }
-        LOG.warn("Unable to retrieve portlet application descriptor: '"+applicationId+"'");
-        return null;
+        String msg = "Unable to retrieve portlet application descriptor: '"+applicationId+"'"; 
+        LOG.warn(msg);
+        throw new PortletContainerException(msg);
     }
 
     public void addPortletRegistryListener(PortletRegistryListener listener) {
