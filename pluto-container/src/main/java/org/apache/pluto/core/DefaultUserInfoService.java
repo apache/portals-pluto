@@ -40,6 +40,8 @@ public class DefaultUserInfoService implements UserInfoService {
         	Map info = (Map)userInfoMap.get(request.getRemoteUser());
             if ( info == null ) {
                 return Collections.EMPTY_MAP;
+            } else {
+                return info;
             }
         }
         return new HashMap();
