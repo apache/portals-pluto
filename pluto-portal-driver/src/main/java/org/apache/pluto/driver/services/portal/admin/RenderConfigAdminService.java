@@ -29,5 +29,8 @@ public interface RenderConfigAdminService {
 
     public void addPage(PageConfig config)
         throws DriverConfigurationException;
+    
+    public void removePage(PageConfig config)
+        throws DriverConfigurationException;
 
 }

@@ -194,5 +194,9 @@ public class DriverConfigurationImpl
     {
         return supportedWindowStateService.isWindowStateSupportedByPortlet(portletId, windowState);
     }
+    
+    public RenderConfigService getRenderConfigService(){
+    	return renderService;
+    }
 }
 

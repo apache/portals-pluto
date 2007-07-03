@@ -51,7 +51,10 @@ limitations under the License.
               }
 
               var disabled = select.value == 'Select. . .'
-              document.forms['adminForm'].elements['command'][0].disabled = disabled;
+        	  //disable 'Remove Page' button
+              document.forms['adminForm'].elements['command'][1].disabled = disabled;
+        	  //disable 'Remove Portlet' button
+              document.forms['adminForm'].elements['command'][2].disabled = disabled;
 
               if(disabled) {
                   return;
@@ -64,9 +67,10 @@ limitations under the License.
           }
       </script>
 
-
-
-
+	<p>
+ 		<input type="text" name="newPage"></input>
+    	<input id="addPageButton" type="submit" name="command" value="Add Page"></input>
+	</p>
 
     <select name="page" onChange="<portlet:namespace/>doSwitchPage(this)">
       <option value="Select. . .">Select. . .</option>
@@ -79,6 +83,7 @@ limitations under the License.
 
     </select>
     <p>
+      <input id="removePageButton" type="submit" name="command" disabled="true" value="Remove Page"></input>
       <input id="removeButton" type="submit" name="command" disabled="true" value="Remove Portlet"></input>
     </p>
   </p>
@@ -116,7 +121,8 @@ limitations under the License.
         }
 
         function <portlet:namespace/>doSwitchButton(select) {
-            document.forms['adminForm'].elements['command'][1].disabled = (select.value == 'Select. . .' || select.disabled);
+        	//disable 'Add Portlet' button
+            document.forms['adminForm'].elements['command'][3].disabled = (select.value == 'Select. . .' || select.disabled);
         }
     </script>
 

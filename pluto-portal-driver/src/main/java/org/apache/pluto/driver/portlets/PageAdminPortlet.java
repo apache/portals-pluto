@@ -20,9 +20,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.PortalDriverServlet;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.services.portal.RenderConfigService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -31,7 +33,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,21 +53,23 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
 
     public void processAction(ActionRequest request, ActionResponse response) {
         String command = request.getParameter("command");
-        if("Add Portlet".equalsIgnoreCase(command)) {
-            doAddPortlet(request);
-        }
-        else if ("Remove Portlet".equalsIgnoreCase(command)) {
-            doRemovePortlet(request);
-        }
         try {
+	        if("Add Portlet".equalsIgnoreCase(command)) {
+	            doAddPortlet(request);
+	        } else if ("Remove Portlet".equalsIgnoreCase(command)) {
+	            doRemovePortlet(request);
+	        } else if ("Add Page".equalsIgnoreCase(command)) {
+	        	doAddPage(request);
+	        } else if ("Remove Page".equalsIgnoreCase(command)) {
+	        	doRemovePage(request);
+	        }
 			persistPages();
 		} catch (IOException e) {
-			String msg = "Problem persisting configuration changes";
+			String msg = "Problem persisting configuration changes. Changes will not be persisted.";
 			LOG.error(msg, e);
-			IllegalStateException ese = new IllegalStateException(msg);
-			ese.initCause(e);
-			throw ese;
+			//TODO: send message back to UI
 		}
+		//TODO: send 'success' message back to UI
     }
 
     public void doAddPortlet(ActionRequest request) {
@@ -81,7 +84,68 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
 
     }
 
+    /**
+     * Adds a page to the portal via the <code>RenderConfigService</code>.
+     * 
+     *  This does not add portlets to the new page. Do that when the page is created
+     *  using the Add Portlet button.
+     *   
+     * @param request The action request.
+     */
+    public void doAddPage(ActionRequest request) {
+        String page = request.getParameter("newPage");//newPage text input element
+        //Check if page is null or empty
+        if (page == null || page.equals("")) {
+			LOG.warn("Page parameter is null or empty. Page addition will be ignored.");
+			//TODO: send message back to UI
+        	return;
+        }
+        //TODO: add page URI input to form
+        String uri = request.getParameter("pageURI");
+        if (uri == null) {
+        	uri = PortalDriverServlet.DEFAULT_PAGE_URI;
+        }
+        DriverConfiguration driverConfig = (DriverConfiguration) getPortletContext()
+    		.getAttribute(AttributeKeys.DRIVER_CONFIG);
+        PageConfig pageConfig = new PageConfig();
+        pageConfig.setName(page);
+        pageConfig.setUri(uri);
 
+        RenderConfigService renderConfig = driverConfig.getRenderConfigService();
+        renderConfig.addPage(pageConfig);
+    }
+
+    /**
+     * Removes a page from the portal ignoring any requests to remove the default page
+     * or the Pluto Admin page. 
+     * 
+     * The page's portlets are still available, but no longer associated with the deleted page.
+     * 
+     * @param request The action request.
+     * @throws IOException If a problem occurs accessing the config file.
+     */
+    public void doRemovePage(ActionRequest request) throws IOException {
+        String page = request.getParameter("page");
+        DriverConfiguration driverConfig = (DriverConfiguration) getPortletContext()
+    	.getAttribute(AttributeKeys.DRIVER_CONFIG);
+        //make sure we are not deleting the default page
+		String defaultPage = getDefaultPage();
+	    if (page.equalsIgnoreCase(defaultPage)) {
+			LOG.warn("Trying to delete the default page. Page deletion will be ignored.");
+			//TODO: send message back to UI
+	    	return;
+	    }
+        //make sure we are not deleting the Pluto Admin page
+		if (page.equalsIgnoreCase("Pluto Admin")) {
+			LOG.warn("Trying to delete the Pluto Admin page. Page deletion will be ignored.");
+			return;
+		}
+
+		PageConfig pageConfig = getPageConfig(page);
+        RenderConfigService renderConfig = driverConfig.getRenderConfigService();
+        renderConfig.removePage(pageConfig);
+    }
+    
     public void doRemovePortlet(ActionRequest request) {
         String page = request.getParameter("page");
         String portletId = request.getParameter("placedPortlets");
@@ -143,20 +207,23 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
         return list;
     }
 
+    /**
+     * Persist page configuration changes to render-config section of pluto-portal-driver-config.xml.
+     * 
+     * TODO: Use JAXB for config file parsing and persistence.
+     * 
+     * @throws IOException
+     */
     private void persistPages() throws IOException {
-    	//TODO: Null checks. Substitute empty string or throw an Exception
+    	//TODO: Null checks??? Substitute empty string or throw an Exception
     	final String NL = System.getProperty("line.separator");
         DriverConfiguration driverConfig = (DriverConfiguration) getPortletContext()
         	.getAttribute(AttributeKeys.DRIVER_CONFIG);
-    	String path = getPortletContext().getRealPath(CONFIG_FILE_PATH);
-    	File configFile = new File(path);
-    	String configFileContents = FileUtils.readFileToString(configFile);
     	StringBuffer renderConfig = new StringBuffer();
     	//start with render-config element
     	renderConfig.append(" ");//indent
     	renderConfig.append(RENDER_CONFIG_SEARCH_TOKEN);
-    	String defaultPage = parseDefaultPage(configFileContents);
-    	renderConfig.append(defaultPage);
+    	renderConfig.append(getDefaultPage());
     	renderConfig.append("\">");
     	renderConfig.append(NL);
     	Collection pages = getAvailablePages();
@@ -196,13 +263,39 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
     	renderConfig.append(NL);
     	//create new config file content
     	StringBuffer newFileContents = new StringBuffer();
-    	newFileContents.append(getContentBeforeRenderConfig(configFileContents));
+    	newFileContents.append(getContentBeforeRenderConfig(getConfigFileContents()));
     	newFileContents.append(renderConfig);
-    	//persist to new config file content to file
-    	FileUtils.writeStringToFile(configFile, newFileContents.toString());
+    	//persist content to new config file
+    	FileUtils.writeStringToFile(getConfigFile(), newFileContents.toString());
     }
     
+    private String getConfigFileContents() throws IOException {
+    	return FileUtils.readFileToString(getConfigFile());
+    }
+
+    private File getConfigFile() {
+    	String path = getPortletContext().getRealPath(CONFIG_FILE_PATH);
+    	return new File(path);
+    }
     
+    /**
+     * Get the page name of the default page from pluto-portal-driver-config.xml.
+     * 
+     * @return
+     * @throws IOException
+     */
+    private String getDefaultPage() throws IOException {
+    	String configFileContents = getConfigFileContents();
+    	return parseDefaultPage(configFileContents);
+    }
+    
+    /**
+     * Gets the content of the config page before the render-config element
+     * (also including the default attribute of render-config - see RENDER_CONFIG_SEARCH_TOKEN above).
+     * 
+     * @param contents pluto-portal-driver-config.xml file contents.
+     * @return
+     */
     protected static String getContentBeforeRenderConfig(String contents) {
     	return contents.substring(0, contents.indexOf(RENDER_CONFIG_SEARCH_TOKEN));
     }

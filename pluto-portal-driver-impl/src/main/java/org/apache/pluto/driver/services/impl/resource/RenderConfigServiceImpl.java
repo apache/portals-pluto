@@ -100,4 +100,8 @@ public class RenderConfigServiceImpl
     public void addPage(PageConfig pageConfig) {
         config.getRenderConfig().addPage(pageConfig);
     }
+    
+    public void removePage(PageConfig pageConfig){
+        config.getRenderConfig().removePage(pageConfig);
+    }
 }
