@@ -48,4 +48,8 @@ public interface RenderConfigService extends DriverConfigurationService {
      */
     PageConfig getPage(String id);
 
+    //added for page admin portlet
+    public void addPage(PageConfig pageConfig);
+    public void removePage(PageConfig pageConfig);
+        
 }

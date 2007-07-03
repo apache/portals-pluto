@@ -52,7 +52,7 @@ public class PortalDriverServlet extends HttpServlet {
     /** The Portal Driver sServlet Context */
     private ServletContext servletContext;
 
-    protected static final String DEFAULT_PAGE_URI =
+    public static final String DEFAULT_PAGE_URI =
     		"/WEB-INF/themes/pluto-default-theme.jsp";
 
     /** The portlet container to which we will forward all portlet requests. */

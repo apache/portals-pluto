@@ -122,5 +122,9 @@ public class RenderConfig {
         config.setOrderNumber(orderNumberCounter++);
         pages.put(config.getName(), config);
     }
+    
+    public void removePage(PageConfig config){
+        pages.remove(config.getName());
+    }
 
 }

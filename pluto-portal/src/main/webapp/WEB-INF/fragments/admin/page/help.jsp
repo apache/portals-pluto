@@ -23,71 +23,106 @@ limitations under the License.
 <div class="portlet-section-header">Page Adminstrator Portlet Help</div>
 
 <p class="portlet-font">
-The Page Administrator Portlet works with portal pages and portlet applications defined in pluto-portal-driver-config.xml. 
-Portlets must be deployed to the app server (Tomcat in the binary distribution). Deployment can be done via Maven, Ant 
-or the app server's deployment console (use the 'Upload and deploy portlet war' link on the bottom of the page). 
+The Page Administrator Portlet is used to add and remove pages and portlets from portal pages. The portlet
+also persist these changes to pluto-portal-driver-config.xml in pluto's WEB-INF directory.
 </p>
 
-<div class="portlet-section-subheader">Configuring a Portlet Application</div>
+<div class="portlet-section-subheader"><a name="ConfiguringPortletApp">Configuring a Portlet Application</a></div>
 <p class="portlet-font">
-The portlet application needs to be registered in pluto-portal-driver-config.xml with a 
-proper portlet-app record like this:
+The portlet application needs to be bundled in a war file as per the Java Portlet Specification. 
+The war also needs to include proper PortletServlet servlet and servlet-mapping records in WEB-INF/web.xml.
+An assembly process has been developed to add these records to web.xml using Maven 2 (the
+pluto:assemble goal in maven-pluto-plugin) or Ant (AssembleTask). 
+See the testsuite web.xml file for an example how the servlet and servlet-mapping
+records should look like after assembly (other items the developer adds to web.xml should be 
+carried forward into the updated file). 
+</p>
+
+<p class="portlet-font">
+A custom portlet war deployed into the bundled distribution of Pluto also needs a Tomcat context descriptor 
+with the same name as the portlet app war name (a.k.a. context name). This context file needs to be 
+in the META-INF directory of the war file. Here's an example of one for a portlet bundled for a 
+HelloWorldPortlet context (file name is HelloWorldPortlet.xml): 
 <pre>
-&lt;portlet-app&gt;
-    &lt;context-path&gt;/HelloWorldPortlet&lt;/context-path&gt;
-    &lt;portlets&gt;
-      &lt;portlet name="HelloWorldPortlet"/&gt;
-    &lt;/portlets&gt;
-&lt;/portlet-app&gt;
+&lt;Context path="/HelloWorldPortlet" 
+	docBase="HelloWorldPortlet" crossContext="true"/&gt; 
 </pre>  
+The crossContext attribute allows Pluto, which is deployed in its own Tomcat context, to work with this custom portlet. 
 </p>
 
-<div class="portlet-section-subheader">Configuring a Portal Page</div>
+<div class="portlet-section-subheader">Deploying a Portlet Application</div>
 <p class="portlet-font">
-The portal needs to be defined in pluto-portal-driver-config.xml as a page child element of render-config:
-<pre>
-&lt;page name="Hello World Page" uri="/WEB-INF/themes/pluto-default-theme.jsp"&gt;
-&lt;/page&gt;
-</pre>
+	The way to deploy a portlet application depends on the app server Pluto is running in. In the bundled distribution
+	Pluto is deployed in Tomcat. In this case, you can use the Tomcat manager app to deploy the portlet
+	war. There is a 'Upload and deploy portlet war' link at the bottom of the Page Administrator portlet that points to 
+	the manager app	in the bundled distribution (this link can be changed for other app servers -- see the 
+	adjacent Help link). Use of the manager application requires you to be logged into Pluto in a manager role (pluto or
+	tomcat user). 
+</p>
+	
+<p class="portlet-font">
+	In the bundled distribution of Pluto, you can also deploy a properly configured portlet application by simply dropping
+	the war file into the webapp directory (see <a href="#ConfiguringPortletApp">Configuring a Portlet Application</a> above).
+	You will need to restart Pluto in order for the Page Administrator Portlet to see the newly deployed portlet so it
+	can be added to a portal page.
 </p>
 
-<div class="portlet-section-subheader">Adding Portlets to a Portal Pages</div>
+<div class="portlet-section-subheader">Adding Portal Pages</div>
 <p class="portlet-font">
-Adding portlets to a portal page involves first selecting a portal page using the Portal Pages drop-down and then
-selecting a portlet application using the Portlet Applications drop-down. When this is done, click the Add Portlet 
-button.
+Adding a new portal page using the Pluto Page Administrator portlet involves inputing the page name into the text box adjacent 
+to the Add Page button and clicking on the button. The new page is created with the default 'theme', which lays out the 
+portlets in two columns (see /WEB-INF/themes/pluto-default-theme.jsp in the pluto webapp for details). Once a page
+has been added, portlets will need to be added to the page (see <a href="#AddingPortlets">Adding Portlets to a Portal Page</a>).
+</p>
+
+<p class="portlet-font">
+Please note that adding a new Page with the name of an existing page will replace the existing page with the
+new page. This is equivalent to removing the page and adding it again with the same name.
 </p>
 
 <div class="portlet-section-subheader">Removing Portal Pages</div>
 <p class="portlet-font">
-Removing portlets from a portal page involves selecting a portal page using the Portal Pages drop-down and then
-clicking on the Remove Page button.
+Removing a portal page using the Pluto Page Administrator portlet involves selecting a page in the drop down above 
+the Remove Page button and clicking on the button. You are not allowed to remove the default page 
+(default attribute of the render-config element in pluto-portal-driver-config.xml) and the Pluto Admin page.
+</p>
+
+<div class="portlet-section-subheader"><a name="AddingPortlets">Adding Portlets to a Portal Page</a></div>
+<p class="portlet-font">
+Adding portlets to a portal page using the Pluto Page Administrator portlet involves first selecting a portal 
+page in the Portal Pages drop-down (above the Remove Page button) and then selecting a portlet application 
+using the Portlet Applications drop-down and finally a portlet in the adjacent drop down. When this is done, 
+click the Add Portlet button.
+</p>
+
+<div class="portlet-section-subheader">Removing Portlets from a Portal Page</div>
+<p class="portlet-font">
+Removing portlets from a portal page involves selecting a portal page on the Portal Pages drop-down 
+(above the Remove Page button), selecting the portlet in the adjacent list and then clicking on the 
+Remove Portlet button.
 </p>
 
 
 <div class="portlet-section-subheader">Manually Updating the Configuration File</div>
 <p class="portlet-font">
-The Page Administrator Portlet does not persist any portlet additions or portal page removals to 
-the pluto-portal-driver-config.xml file. This must be done manually in the config file. Removal of portlets
-from pages must also be done manually in pluto-portal-driver-config.xml.
+The pluto-portal-driver-config.xml file holds changes made by the Page Administrator Portlet. You can manually 
+update this file to add pages or portlets. If this is done, please be careful of the structure of the 
+render-config child elements. 
 </p>
 
 <p class="portlet-font">
-To manually add a portlet to a page in pluto-portal-driver-config.xml, a portlet child element must be added to the 
-page element. This element should look like this:
-<pre>
-&lt;portlet context="/HelloWorldPortlet" name="HelloWorldPortlet"/&gt;
-</pre>
+You can also change the theme of portlets and the default page -- the portal's 
+home page after login -- in this config file. The theme will require a proper URI to a file containing
+the new theme. Use the default theme (/WEB-INF/themes/pluto-default-theme.jsp in the pluto webapp) for 
+an example theme elements.
+
+Again, be careful to not modify the XML structure of the 
+config file if you choose to change the theme or default 
 </p>
-<p class="portlet-font">
- The value of the context-path element within the portlet-app record must correspond to the value of the context 
- attribute in the portlet element. In addition, the value of the name attribute in the portlet child element of 
- portlet-app must correspond to the value of the name attribute of the portlet child element of page. 
-</p>
+
 
 <%-- Properties for link to app server deployer and help mode file --%>
 <fmt:bundle basename="AdminPortlet">
-	<fmt:message key="appserver.deployer.help.page" var="deployerHelp"/>
 	<fmt:message key="appserver.deployer.help.page" var="deployerHelp"/>
 </fmt:bundle> 
 <portlet:renderURL portletMode="help" var="deployerhelpURL">
