@@ -439,7 +439,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
                 .getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
 
             Map allMap = container.getOptionalContainerServices()
-                .getUserInfoService().getUserInfo(this);
+            	//PLUTO-388 fix:
+            	//The PortletWindow is currently ignored in the implementing class
+            	// See: org.apache.pluto.core.DefaultUserInfoService
+            	.getUserInfoService().getUserInfo( this, this.internalPortletWindow );
 
             Iterator i = dd.getUserAttributes().iterator();
             while(i.hasNext()) {
