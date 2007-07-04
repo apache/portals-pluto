@@ -82,12 +82,12 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     /**
      * The parent container within which this request was created.
      */
-    private final PortletContainer container;
+    private PortletContainer container;
 
     /**
      * The portlet window which is the target of this portlet request.
      */
-    private final InternalPortletWindow internalPortletWindow;
+    private InternalPortletWindow internalPortletWindow;
 
     /**
      * The PortletContext associated with this Request. This PortletContext must
@@ -98,7 +98,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     /**
      * The PortalContext within which this request is occuring.
      */
-    private final PortalContext portalContext;
+    private PortalContext portalContext;
 
     /**
      * The portlet session.
@@ -439,7 +439,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
                 .getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
 
             Map allMap = container.getOptionalContainerServices()
-                .getUserInfoService().getUserInfo(this);
+            	//PLUTO-388 fix:
+            	//The PortletWindow is currently ignored in the implementing class
+            	// See: org.apache.pluto.core.DefaultUserInfoService
+            	.getUserInfoService().getUserInfo( this, this.internalPortletWindow );
 
             Iterator i = dd.getUserAttributes().iterator();
             while(i.hasNext()) {
