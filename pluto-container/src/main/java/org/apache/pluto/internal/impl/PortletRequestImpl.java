@@ -417,8 +417,11 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
         while (attributes.hasMoreElements()) {
             String attribute = (String) attributes.nextElement();
-
-            String portletAttribute = mapper.decode(
+            
+            //Fix for PLUTO-369
+            String portletAttribute = isNameReserved(attribute) ?
+            		attribute :
+            	mapper.decode(
                 internalPortletWindow.getId(), attribute);
 
             if (portletAttribute != null) { // it is in the portlet's namespace
