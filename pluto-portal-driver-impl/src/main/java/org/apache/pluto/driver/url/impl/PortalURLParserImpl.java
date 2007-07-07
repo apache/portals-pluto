@@ -104,16 +104,16 @@ public class PortalURLParserImpl implements PortalURLParser {
         String servletName = request.getServletPath();
 
         // Construct portal URL using info retrieved from servlet request.
-        PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName, this);
+        PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName);
 
         // Support added for filter.  Should we seperate into a different impl?
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
-            if(servletName.indexOf(".jsp") > 0 && !servletName.endsWith(".jsp")) {
+            if(servletName.contains(".jsp") && !servletName.endsWith(".jsp")) {
                 int idx = servletName.indexOf(".jsp")+".jsp".length();
                 pathInfo = servletName.substring(idx);
                 servletName = servletName.substring(0, idx);
-                portalURL = new RelativePortalURLImpl(contextPath, servletName, this);
+                portalURL = new RelativePortalURLImpl(contextPath, servletName);
             } else {
                 return portalURL;
             }
@@ -154,7 +154,16 @@ public class PortalURLParserImpl implements PortalURLParser {
         		if (st.hasMoreTokens()) {
         			value = st.nextToken();
         		}
-        		portalURL.addParameter(decodeParameter(token, value));
+
+        		// Defect PLUTO-361
+        		// ADDED
+        		PortalURLParameter param = decodeParameter( token, value );
+        		if( param != null )
+        		{
+        			portalURL.addParameter( param );
+        		}
+        		// REMOVED
+        		// portalURL.addParameter(decodeParameter(token, value));
         	}
         }
         if (renderPath.length() > 0) {
@@ -249,9 +258,9 @@ public class PortalURLParserImpl implements PortalURLParser {
         // Fix for PLUTO-247 - check if query string contains parameters
         if ( query.length() > 1 ) {
             return buffer.append(query).toString();
-        } else {
-            return buffer.toString();
         }
+
+        return buffer.toString();
     }
 
     private String encodeQueryParam(String param) {
@@ -350,6 +359,13 @@ public class PortalURLParserImpl implements PortalURLParser {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Decoding parameter: name=" + name
             		+ ", value=" + value);
+        }
+
+        // Defect PLUTO-361
+        // ADDED: if the length is less than this, there is no parameter...
+        if( name.length() < (PREFIX + PORTLET_ID).length() )
+        {
+        	return null;
         }
 
     	// Decode the name into window ID and parameter name.
