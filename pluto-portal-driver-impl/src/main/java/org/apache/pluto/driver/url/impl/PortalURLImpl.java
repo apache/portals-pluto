@@ -16,17 +16,18 @@
  */
 package org.apache.pluto.driver.url.impl;
 
-import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLParameter;
-
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
+
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURLParser;
 
 /**
  * The portal URL.
@@ -41,6 +42,12 @@ public class PortalURLImpl implements PortalURL {
     private String servletPath;
     private String renderPath;
     private String actionWindow;
+    
+    /**
+     * PortalURLParser used to construct the string
+     * representation of this portal url.
+     */
+    private PortalURLParser urlParser;
 
     /** The window states: key is the window ID, value is WindowState. */
     private Map windowStates = new HashMap();
@@ -63,8 +70,9 @@ public class PortalURLImpl implements PortalURL {
     public PortalURLImpl(String protocol,
                          String hostName,
                          String contextPath,
-                         String servletName) {
-    	this(protocol, hostName, -1, contextPath, servletName);
+                         String servletName,
+                         PortalURLParser urlParser) {
+    	this(protocol, hostName, -1, contextPath, servletName, urlParser);
     }
 
     /**
@@ -79,7 +87,8 @@ public class PortalURLImpl implements PortalURL {
                          String hostName,
                          int port,
                          String contextPath,
-                         String servletName) {
+                         String servletName,
+                         PortalURLParser urlParser) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(protocol);
     	buffer.append(hostName);
@@ -92,6 +101,7 @@ public class PortalURLImpl implements PortalURL {
     	buffer.append(contextPath);
     	buffer.append(servletName);
         servletPath = buffer.toString();
+        this.urlParser = urlParser;
     }
 
     /**
@@ -190,7 +200,7 @@ public class PortalURLImpl implements PortalURL {
      * @see org.apache.pluto.driver.url.impl.PortalURLParserImpl#toString(PortalURL)
      */
     public String toString() {
-        return PortalURLParserImpl.getParser().toString(this);
+        return urlParser.toString(this);
     }
 
 

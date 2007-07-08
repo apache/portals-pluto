@@ -104,7 +104,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         String servletName = request.getServletPath();
 
         // Construct portal URL using info retrieved from servlet request.
-        PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName);
+        PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName, this);
 
         // Support added for filter.  Should we seperate into a different impl?
         String pathInfo = request.getPathInfo();
@@ -113,7 +113,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                 int idx = servletName.indexOf(".jsp")+".jsp".length();
                 pathInfo = servletName.substring(idx);
                 servletName = servletName.substring(0, idx);
-                portalURL = new RelativePortalURLImpl(contextPath, servletName);
+                portalURL = new RelativePortalURLImpl(contextPath, servletName, this);
             } else {
                 return portalURL;
             }
