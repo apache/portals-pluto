@@ -88,7 +88,7 @@ a.tooltip:hover span.tooltip {
 /** 'content' block **/
 
 #content {
-
+  float: top;
 }
 
 /** 'portlet' block **/
@@ -228,7 +228,7 @@ input {
 
 #navigation {
     position: relative;
-    float: left;
+    float: top;
     width: 100%;
     padding: 0 0 1.75em 1em;
     margin: 0;
