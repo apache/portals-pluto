@@ -42,7 +42,7 @@ limitations under the License.
           <li>
             <b>Deployment</b>: After portlet applications are assembled properly
             they must be deployed to the servlet engine within which the portal
-            application is running. The current binary distribution uses
+            application is running. The current bundled distribution uses
             Tomcat 5.5 as the servlet engine.
           </li>
         </ul>
@@ -197,10 +197,43 @@ limitations under the License.
                To deploy a portlet application, simply deploy the application war
                using any standard mechanism for your application server.  There are many
                maven plugins and ant tasks that can assist with this, or you can use
-               a manager web console. This console is pointed to the Tomcat manager webapp in the
-               Pluto binary distribution and is accessed via the 'Upload and deploy portlet war' link
+               an administrative web console. This console is the Tomcat manager webapp in the
+               Pluto bundled distribution and is accessed via the 'Upload and deploy portlet war' link
                on the page administration portlet. See the Help link on that portlet for more details.
            </p>
+           <p>
+           	   In the bundled distribution that uses Tomcat, deployment of an assembled war can simply
+           	   be done by dropping the war into the webapps directory. You can automatically achive this
+           	   by adding the following code within the plugins section of your maven pom.xml:
+           </p>
+          <source><![CDATA[
+       <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>integration-test</phase>
+            <configuration>
+              <tasks>
+                  <property environment="env"/>
+                  <property name="pluto.home" value="${env.CATALINA_HOME}"/>
+                  <copy file="target/${pom.name}.war" todir="${pluto.home}/webapps"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>          
+          ]]></source>
+           <p>
+              Once the pom.xml file has been updated with this plugin, you can run the full build
+              and deployment using the command: mvn integration-test. The code assumes that you have set
+              the environmental variable CATALINA_HOME to the Pluto home directory. If that has not been
+              done, just set pluto.home from the command line with the -D flag. The command line would
+              then be: mvn -Dpluto.home=C:/pluto integration-test.
+           </p>
+           
         </subsection>
             
       <subsection name="Portlet Publishing">
@@ -219,20 +252,7 @@ limitations under the License.
           layout in the portal-driver configuration file (pluto-portal-driver-config.xml).
         </p>
         <p>
-		  The portlet application should be first configured in pluto-portal-driver-config.xml by
-		  adding a <code>portlet-app</code> element with appropriate child elements like this:
-			<source>
-&lt;portlet-app&gt;
-    &lt;context-path&gt;/your_portlet_app_context_path&lt;/context-path&gt;
-    &lt;portlets&gt;
-      &lt;portlet name="your_portlet_1"/&gt;
-      &lt;portlet name="your_portlet_2"/&gt;
-    &lt;/portlets&gt;
-&lt;/portlet-app&gt;
-			</source>      
-        </p>
-        <p>
-          The page can then be configured by adding a <code>page</code> element in the <code>render-config</code> 
+          The page can then be configured by adding a <code>page</code> child element of the <code>render-config</code> 
           element, like this:
           <source><![CDATA[
 <render-config default="Test Page">
@@ -252,12 +272,6 @@ limitations under the License.
           default theme of Pluto Testsuite portlet app), your portlets will be
           displayed in two columns. You can clone this file to customize your layout.
           If you do so, make sure the <code>uri</code> attribute points to the new file.
-        </p>
-        <p>
-         The value of the <code>context-path element</code> within the <code>portlet-app</code> record must correspond to the 
-         value of the <code>context</code> attribute in the <code>portlet</code> element. In addition, the value of the
-         <code>name</code> attribute in the <code>portlet</code> child element of <code>portlet-app</code> must correspond to 
-         the value of the <code>name</code> attribute of the <code>portlet</code> child element of page. 
         </p>
       </subsection>
       
