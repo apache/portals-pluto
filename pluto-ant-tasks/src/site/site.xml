@@ -24,6 +24,13 @@
   <bannerRight>
     <src>http://portals.apache.org/pluto/images/banner.png</src>
   </bannerRight>
+
+  <skin>  
+      <groupId>org.apache.pluto</groupId>
+      <artifactId>pluto-site-skin</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+  </skin> 
+
   <body>
     <links>
       <item name="Pluto Home" href="http://portals.apache.org/pluto"/>

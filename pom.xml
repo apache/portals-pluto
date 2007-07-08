@@ -268,6 +268,7 @@
 
         <!-- Pluto Documentations -->
         <module>pluto-site</module>
+        <module>pluto-site-skin</module>
     </modules>
 
     <distributionManagement>

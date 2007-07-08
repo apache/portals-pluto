@@ -28,6 +28,23 @@ limitations under the License.
     
     <section name="News and Status">
 
+        <h4>17 May 2007 - Portals Pluto 1.1.3</h4>
+        <p>
+            The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.3. 
+            This is the fourth GA release of the 1.1 line of Pluto, which is a major refactoring of 
+            Pluto 1.0.1 to allow for easier integration of Pluto's portlet container into a portal.
+        </p>
+        <p>
+            The 1.1.3 GA release includes a simple filter enabling JSP's to include portlets, and an updated
+            portal url generator. Release notes for the 1.1.3 release can be found at 
+            http://portals.apache.org/pluto/v11/release-notes.html. 
+        </p>
+        <p>
+            Pluto is the reference implementation of the JSR-168 (Portlet 1.0) specification for a portlet container. 
+            Pluto 1.1 is the basis for the reference implementation of the JSR-286 (Portlet 2.0) specification now 
+            under development by the JSR-286 Expert Group.
+        </p>
+
         <h4>21 March 2007 - Portals Pluto 1.1.2</h4>
         <p>
             The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.2. 
@@ -47,57 +64,57 @@ limitations under the License.
 
 
 
-	<h4>26 February 2007 - Portals Pluto 1.1.0 released</h4>
-	<p>
-		The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.0. 
-		This is the first GA release of the 1.1 line of Pluto, which is a major refactoring of Pluto 1.0.1 
-		to allow for easier integration of Pluto's portlet container into a portal and easier 
-		configuration of the Pluto portal driver, a bare-bones portal included with Pluto.
-	</p>
-	<p>
-		This release fixes a number of outstanding bugs in Pluto 1.1. The bundled binary release, which
-		has been updated to use Tomcat 5.5.20, now contains an administrative portlet for registering
-		custom portlets in Pluto, which is linked to Tomcat's native war deployer. 
-	</p>
-	<p>
-		Pluto is the reference implementation of the JSR-168 (Portlet 1.0) specification for a portlet container. 
-		Pluto 1.1 is the basis for the reference implementation of the JSR-286 (Portlet 2.0) specification 
-		now under development by the JSR-286 Expert Group.
-	</p>
+        <h4>26 February 2007 - Portals Pluto 1.1.0 released</h4>
+        <p>
+            The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.0. 
+            This is the first GA release of the 1.1 line of Pluto, which is a major refactoring of Pluto 1.0.1 
+            to allow for easier integration of Pluto's portlet container into a portal and easier 
+            configuration of the Pluto portal driver, a bare-bones portal included with Pluto.
+        </p>
+        <p>
+            This release fixes a number of outstanding bugs in Pluto 1.1. The bundled binary release, which
+            has been updated to use Tomcat 5.5.20, now contains an administrative portlet for registering
+            custom portlets in Pluto, which is linked to Tomcat's native war deployer. 
+        </p>
+        <p>
+            Pluto is the reference implementation of the JSR-168 (Portlet 1.0) specification for a portlet container. 
+            Pluto 1.1 is the basis for the reference implementation of the JSR-286 (Portlet 2.0) specification 
+            now under development by the JSR-286 Expert Group.
+        </p>
+              
+
+
+        <h4>12 October 2006 - Portals Pluto 1.1.0 beta2 released</h4>
+        <p>
+            The Apache Pluto project is proud to announce the release of Pluto 1.1.0 beta2. 
+            This is the second release of the 1.1 version of Pluto, which is a major refactoring of Pluto 1.0.1 
+            to allow for easier integration of Pluto's portlet container into a portal and easier 
+            configuration of the Pluto portal driver, a bare-bones portal included with Pluto.
+        </p>
+        <p>
+            This release fixes a number of bugs in Pluto 1.1 including ones that prevented standard portlet modes and
+            window states from functioning properly. We've also updated the binary release to deploy Pluto into 
+            Tomcat 5.5.17.
+        </p>
+        <p>
+            Pluto is the reference implementation of the JSR-168 (Portlet 1.0) specification for a portlet container. 
+            Pluto 1.1 is the basis for the reference implementation of the JSR-286 (Portlet 2.0) specification 
+            now under development by the JSR-286 Expert Group.
+        </p>
 	      
 
-
-	<h4>12 October 2006 - Portals Pluto 1.1.0 beta2 released</h4>
-	<p>
-		The Apache Pluto project is proud to announce the release of Pluto 1.1.0 beta2. 
-		This is the second release of the 1.1 version of Pluto, which is a major refactoring of Pluto 1.0.1 
-		to allow for easier integration of Pluto's portlet container into a portal and easier 
-		configuration of the Pluto portal driver, a bare-bones portal included with Pluto.
-	</p>
-	<p>
-		This release fixes a number of bugs in Pluto 1.1 including ones that prevented standard portlet modes and
-		window states from functioning properly. We've also updated the binary release to deploy Pluto into 
-		Tomcat 5.5.17.
-	</p>
-	<p>
-		Pluto is the reference implementation of the JSR-168 (Portlet 1.0) specification for a portlet container. 
-		Pluto 1.1 is the basis for the reference implementation of the JSR-286 (Portlet 2.0) specification 
-		now under development by the JSR-286 Expert Group.
-	</p>
-	      
-
-	<h4>1 June 2006 - Portals Pluto 1.1.0 beta1 released</h4>
-	<p>
-		The Apache Pluto project is proud to announce the release of Pluto 1.1.0 beta1. 
-		This is the first release of the 1.1 version of Pluto, which is a major refactoring of Pluto 1.0.1. 
-		This refactoring allows for easier integration of Pluto's portlet container into a portal and easier 
-		configuration of the Pluto portal driver, a bare-bones portal included with Pluto.
-	</p>
-	<p>
-		Pluto is the reference implementation of the JSR-168 (Portlet 1.0) specification for a portlet container. 
-		Pluto 1.1 will be the basis for the reference implementation of the JSR-286 (Portlet 2.0) specification 
-		now under development by the JSR-286 Expert Group.
-	</p>
+        <h4>1 June 2006 - Portals Pluto 1.1.0 beta1 released</h4>
+        <p>
+            The Apache Pluto project is proud to announce the release of Pluto 1.1.0 beta1. 
+            This is the first release of the 1.1 version of Pluto, which is a major refactoring of Pluto 1.0.1. 
+            This refactoring allows for easier integration of Pluto's portlet container into a portal and easier 
+            configuration of the Pluto portal driver, a bare-bones portal included with Pluto.
+        </p>
+        <p>
+            Pluto is the reference implementation of the JSR-168 (Portlet 1.0) specification for a portlet container. 
+            Pluto 1.1 will be the basis for the reference implementation of the JSR-286 (Portlet 2.0) specification 
+            now under development by the JSR-286 Expert Group.
+        </p>
 	      
       <h4>18 September 2005 - Portals Pluto 1.0.1 General Availability Released</h4>
       <p>

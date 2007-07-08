@@ -37,7 +37,8 @@ limitations under the License.
         <ul>
           <li><a href='https://issues.apache.org/jira/browse/PLUTO-350'>PLUTO-350</a> - Remove absolute url dependency</li>
         </ul>
-    
+      </subsection>
+   
       <subsection name="New Feature">
         <ul>
           <li><a href='https://issues.apache.org/jira/browse/PLUTO-352'>PLUTO-352</a> - Implement "Simple" Portlet Page Support</li>
