@@ -40,7 +40,7 @@ public class Jetty5FileSystemInstaller extends FileSystemInstaller {
         if ( new File(config.getInstallationDirectory(), "ext/commons-logging.jar").exists()) {
             for (Iterator iter = config.getSharedDependencies().iterator(); iter.hasNext();) {
                 File dep = (File) iter.next();
-                if (dep.getPath().contains("commons-logging-api")) {
+                if (dep.getPath().indexOf("commons-logging-api") != -1) {
                     iter.remove();
                 }
             }
