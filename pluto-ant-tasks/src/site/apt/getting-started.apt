@@ -39,7 +39,7 @@ Getting Started
         * pluto-descriptor-api-${version}.jar
         * pluto-descriptor-util-${version}.jar
         * commons-logging-1.0.4.jar
-        * castor-0.9.6
+        * castor-1.1.1.jar
       -->
     <fileset dir="/path/to/pluto-libraries" includes="**/*.jar"/>
     <fileset dir="/path/to/commons-logging" includes="**/*.jar"/>
