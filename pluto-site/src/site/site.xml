@@ -71,7 +71,7 @@ limitations under the License.
         <item name="Descriptor Impl" href="/pluto-descriptor-impl/index.html"/>
         <!--item name="Optional Services" href="/pluto-optional-services/index.html"/-->
         <item name="Maven Plugin" href="/maven-pluto-plugin/index.html"/>
-        <item name="Ant Tasks" href="/pluto-ant-tasks/index.html"/>
+        <item name="Ant Tasks" href="/pluto-ant-tasks/getting-started.html"/>
         <item name="Util" href="/pluto-util/index.html"/>
       </item>
     </menu>
