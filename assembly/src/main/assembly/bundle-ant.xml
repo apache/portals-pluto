@@ -48,7 +48,7 @@
               description="Base project name for tomcat"/>
 
     <property name="tomcat.version"
-              value="5.5.20"
+              value="5.5.23"
               description="Version of Tomcat to deploy Pluto"/>
 
     <property name="base.name"
