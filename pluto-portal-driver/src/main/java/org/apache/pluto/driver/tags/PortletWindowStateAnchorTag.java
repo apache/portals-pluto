@@ -91,10 +91,16 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
 
             // Build a string buffer containing the anchor tag
             StringBuffer tag = new StringBuffer();
-            tag.append("<a class=\"" + ToolTips.CSS_CLASS_NAME + "\" href=\"" + portalUrl.toString() + "\">");
-            tag.append("<span class=\"" + state + "\"></span>");
-            tag.append("<span class=\"" + ToolTips.CSS_CLASS_NAME + "\">");
+//            tag.append("<a class=\"" + ToolTips.CSS_CLASS_NAME + "\" href=\"" + portalUrl.toString() + "\">");
+//            tag.append("<span class=\"" + state + "\"></span>");
+//            tag.append("<span class=\"" + ToolTips.CSS_CLASS_NAME + "\">");
+//            tag.append(ToolTips.forWindowState(new WindowState(state)));
+//            tag.append("</span></a>");
+            tag.append("<a title=\"");
             tag.append(ToolTips.forWindowState(new WindowState(state)));
+            tag.append("\" ");
+            tag.append("href=\"" + portalUrl.toString() + "\">");
+            tag.append("<span class=\"" + state + "\"></span>");
             tag.append("</span></a>");
 
             // Print the mode anchor tag.

@@ -92,12 +92,17 @@ public class PortletModeAnchorTag extends BodyTagSupport {
 
             // Build a string buffer containing the anchor tag
             StringBuffer tag = new StringBuffer();
-            tag.append("<a class=\"" + ToolTips.CSS_CLASS_NAME + "\" href=\"" + portalUrl.toString() + "\">");
-            tag.append("<span class=\"" + portletMode + "\"></span>");
-            tag.append("<span class=\"" + ToolTips.CSS_CLASS_NAME + "\">");
+//            tag.append("<a class=\"" + ToolTips.CSS_CLASS_NAME + "\" href=\"" + portalUrl.toString() + "\">");
+//            tag.append("<span class=\"" + portletMode + "\"></span>");
+//            tag.append("<span class=\"" + ToolTips.CSS_CLASS_NAME + "\">");
+//            tag.append(ToolTips.forMode(new PortletMode(portletMode)));
+//            tag.append("</span></a>");
+            tag.append("<a title=\"");
             tag.append(ToolTips.forMode(new PortletMode(portletMode)));
-            tag.append("</span></a>");
-
+            tag.append("\" ");
+            tag.append("href=\"" + portalUrl.toString() + "\">");
+            tag.append("<span class=\"" + portletMode + "\"></span>");       
+            tag.append("</a>");
             // Print the mode anchor tag.
             try {
                 JspWriter out = pageContext.getOut();
