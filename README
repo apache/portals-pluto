@@ -33,6 +33,36 @@ For information on deploying portlets, building the portal from source
   http://portals.apache.org/pluto
 
 
+Release Notes - Pluto - Version 1.1.4
+=====================================
+
+** Bug
+    * [PLUTO-341] - Page Admin Portlet does not work with Internet Explorer ver 6
+    * [PLUTO-356] - Pluto Driver not using injected Portal URL Parser
+    * [PLUTO-361] - Error when parsing the portal url
+    * [PLUTO-369] - Inconsistency in PortletRequest attribute handling
+    * [PLUTO-370] - Cannot build 1.1.3 GA release from source
+    * [PLUTO-381] - Not able to Add Portal page to a new application
+    * [PLUTO-383] - DefaultUserInfo service returns null userinfo map
+    * [PLUTO-386] - Src distribution does not contain Pluto-AntTask.jar
+    * [PLUTO-389] - Pluto-Ant-Task can not be built because of missing junit dependency
+    * [PLUTO-393] - Maximize Window State formatting problems in Firefox 2.0
+
+** Improvement
+    * [PLUTO-347] - Remove dependency on shared/lib xerces and xmlAPIs
+    * [PLUTO-358] - Upgrade to Castor 1.1.1
+    * [PLUTO-375] - The ExpressionEvaluatorProxy for JSP 2.1 is unimplemented
+    * [PLUTO-376] - Update Pluto to work with Tomcat 6.x
+    * [PLUTO-384] - PortletContextManager.getPortletApplicationDescriptor returns null when a portlet context cannot be found.
+    * [PLUTO-385] - Use CSS-based tab navigation for Pluto Portal
+    * [PLUTO-387] - Provide add/remove page functionality to Pluto Portal Driver
+    * [PLUTO-388] - Removed use of deprecated method
+
+** New Feature
+    * [PLUTO-186] - ToolTips to Portlet Controls
+    * [PLUTO-359] - Add ability to assemble EAR files
+    * [PLUTO-382] - Have Page Administrator portlet persist new page configurations
+
 Release Notes - Pluto - Version 1.1.3
 =====================================
 
