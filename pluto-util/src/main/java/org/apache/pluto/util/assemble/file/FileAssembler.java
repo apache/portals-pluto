@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.pluto.util.UtilityException;
 import org.apache.pluto.util.assemble.AssemblerConfig;
 import org.apache.pluto.util.assemble.WebXmlRewritingAssembler;
@@ -61,7 +62,11 @@ public class FileAssembler extends WebXmlRewritingAssembler {
 
                 //Move the temp file to the destination location
                 destinationDescriptor.delete();
-                tempXml.renameTo(destinationDescriptor);
+                // renameTo() is impl-specific
+                boolean success = tempXml.renameTo(destinationDescriptor);
+                if (! success) {
+                    FileUtils.copyFile( tempXml, destinationDescriptor );
+                }
             }
             else {
                 destinationDescriptor.getParentFile().mkdirs();
