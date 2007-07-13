@@ -19,6 +19,7 @@ package org.apache.pluto.util.assemble;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.util.UtilityException;
@@ -61,7 +62,12 @@ public abstract class AbstractArchiveAssembler extends WebXmlRewritingAssembler 
                     dest = File.createTempFile( source.getName(), ".tmp" );
                     config.setDestination( dest );
                     assembleInternal( config );
-                    dest.renameTo( source );          
+                    // renameTo() is impl-specific
+                    boolean success = dest.renameTo( source );
+                    if (! success ) {
+                        // do it the old-fashioned way
+                        FileUtils.copyFile( dest, source );
+                    }
             } else {
                 if ( LOG.isDebugEnabled() ) {
                     LOG.debug( "Performing assembly of " + config.getSource().getAbsolutePath() + " to " + 
