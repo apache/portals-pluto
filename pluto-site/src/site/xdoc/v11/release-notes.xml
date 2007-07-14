@@ -25,6 +25,42 @@ limitations under the License.
   </properties>
   
   <body>
+    <section name="Pluto 1.1.4 Release Notes">
+      <subsection name="Bug">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-341'>PLUTO-341</a> - Page Admin Portlet does not work with Internet Explorer ver 6</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-356'>PLUTO-356</a> - Pluto Driver not using injected Portal URL Parser</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-361'>PLUTO-361</a> - Error when parsing the portal url</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-369'>PLUTO-369</a> - Inconsistency in PortletRequest attribute handling</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-370'>PLUTO-370</a> - Cannot build 1.1.3 GA release from source</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-381'>PLUTO-381</a> - Not able to Add Portal page to a new application</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-383'>PLUTO-383</a> - DefaultUserInfo service returns null userinfo map</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-386'>PLUTO-386</a> - Src distribution does not contain Pluto-AntTask.jar</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-389'>PLUTO-389</a> - Pluto-Ant-Task can not be built because of missing junit dependency</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-390'>PLUTO-390</a> - EarAssemblerTest failure</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-393'>PLUTO-393</a> - Maximize Window State formatting problems in Firefox 2.0</li>
+        </ul>
+      </subsection>
+      <subsection name="Improvement"> 
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-347'>PLUTO-347</a> - Remove dependency on shared/lib xerces and xmlAPIs</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-358'>PLUTO-358</a> - Upgrade to Castor 1.1.1</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-375'>PLUTO-375</a> - The ExpressionEvaluatorProxy for JSP 2.1 is unimplemented</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-376'>PLUTO-376</a> - Update Pluto to work with Tomcat 6.x</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-384'>PLUTO-384</a> - PortletContextManager.getPortletApplicationDescriptor returns null when a portlet context cannot be found.</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-385'>PLUTO-385</a> - Use CSS-based tab navigation for Pluto Portal</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-387'>PLUTO-387</a> - Provide add/remove page functionality to Pluto Portal Driver</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-388'>PLUTO-388</a> - Removed use of deprecated method</li>
+        </ul>
+      </subsection>
+      <subsection name="New Feature"> 
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-186'>PLUTO-186</a> - ToolTips to Portlet Controls</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-359'>PLUTO-359</a> - Add ability to assemble EAR files</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-382'>PLUTO-382</a> - Have Page Administrator portlet persist new page configurations</li>
+        </ul>
+      </subsection>
+    </section>
 
     <section name="Pluto 1.1.3 Release Notes">
       <subsection name="Bug">

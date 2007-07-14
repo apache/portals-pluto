@@ -46,6 +46,7 @@ Release Notes - Pluto - Version 1.1.4
     * [PLUTO-383] - DefaultUserInfo service returns null userinfo map
     * [PLUTO-386] - Src distribution does not contain Pluto-AntTask.jar
     * [PLUTO-389] - Pluto-Ant-Task can not be built because of missing junit dependency
+    * [PLUTO-390] - EarAssemblerTest failure
     * [PLUTO-393] - Maximize Window State formatting problems in Firefox 2.0
 
 ** Improvement

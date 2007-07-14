@@ -36,7 +36,7 @@ limitations under the License.
                 If you are getting started with Pluto, this is the distribution you
                 want.</li>
             <li><strong>pluto-current-bin</strong> - Provides the Pluto libraries, portal and
-                testsuite web applications.</li>
+                testsuite web applications.  Includes ant tasks.</li>
             <li><strong>pluto-current-container-bin</strong> - Provides the Pluto container
                 libraries only.</li>
             <li><strong>pluto-current-src</strong> - Provides the Pluto source code; requires
