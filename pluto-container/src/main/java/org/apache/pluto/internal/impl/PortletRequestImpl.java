@@ -38,6 +38,7 @@ import javax.portlet.PortalContext;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
@@ -71,6 +72,7 @@ import java.security.Principal;
 public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 implements PortletRequest, InternalPortletRequest {
 	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletRequestImpl.class);
     
@@ -705,4 +707,24 @@ implements PortletRequest, InternalPortletRequest {
     		}
     	}
     }
+
+	public PortletPreferences getPreferences() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Map<String, String[]> getPrivateParameterMap() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Map<String, String[]> getPublicParameterMap() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+	
+	public String getWindowID() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
 }

@@ -40,16 +40,18 @@ package javax.portlet;
 public interface CacheControl {
 
     /**
-     * Get the currently set expiration time,
-     * or <code>null</code> if no expiration time
-     * is set.
+     * Get the currently set expiration time.
+     * If no expiration time is set on this response the
+     * default defined in the portlet deployment descriptor
+     * with the <code>expiration-cache<code> tag is returned,
+     * or <code>0</code> if no default is defined.
      * <p>
      * This call returns the same value as the
      * <code>getProperty(EXPIRATION_CACHE)</code>
      * call.
      * 
      * @return  the currently set expiration time in seconds,
-     *          or <code>null</code> if no expiration time
+     *          or <code>0</code> if no expiration time
      *          is set.
      */
     public int getExpirationTime();
@@ -72,8 +74,10 @@ public interface CacheControl {
     /**
      * Returns a boolean indicating whether the
      * caching scope is set to public for the current response.
-     * If no caching scope is set, the default scope
-     * is not public and thus returns false.
+     * If no caching scope is set on this response, the default 
+     * defined in the deployment descriptor with the
+     * <code>cache-scope</code> tag is returned,
+ 	 * or <code>false</code> if no default is defined.
      * <p>
      * Public cache scope indicates that the cache entry can be shared across
      * users. Non-public, or private cache scope indicates that the cache entry
@@ -101,14 +105,14 @@ public interface CacheControl {
      * <code>(publicScope ? setProperty(CACHE_SCOPE, PUBLIC_SCOPE | 
      *        setProperty(CACHE_SCOPE, PRIVATE_SCOPE)</code>.
      * 
-     * @param publicScope
+     * @param publicScope  indicating if the cache entry can be shared across users
      */
     public void setPublicScope(boolean publicScope);
     
     /**
      * Returns the ETag for the current response that is
      * used as validation tag, or <code>null</null>
-     * if no ETag is set.
+     * if no ETag is set on the response.
      * <p>
      * This call is equivalent to calling
      * <code>getProperty(ETAG)</code>.
@@ -127,23 +131,20 @@ public interface CacheControl {
      * This call is equivalent to calling
      * <code>setProperty(ETAG, token)</code>.
      *  
-     * @param token
+     * @param token  the ETag token
      */
     public void setETag(String token);
     
     
     /**
      * Returns a boolean indicating whether the
-     * caching scope is set to public for the current response.
-     * If no caching scope is set, the default scope
-     * is not public and thus returns false.
-     * <p>
-     * Public cache scope indicates that the cache entry can be shared across
-     * users. Non-public, or private cache scope indicates that the cache entry
-     * must not be shared across users.
+     * cached content for the provided ETag at the request
+     * can still be considerated valid.
+     * If not set, the default is <code>false</code>.
      * <p>
      * This call is equivalent to calling
-     * <code>getProperty(CACHE_SCOPE).equals(PUBLIC_SCOPE)</code>.
+     * <code>getProperty(USE_CACHED_CONTENT)</code> and getting a non-null
+     * value back.
      * 
      * @return  boolean indicating whether the
      *          caching scope is set to public for the current response
@@ -151,7 +152,15 @@ public interface CacheControl {
     public boolean useCachedContent();
     
     /**
-     * 
+     * Sets the indication whether the cached content
+     * for the provided ETag at the request is still valid or not.
+     * If set to <code>true</code> no output should be rendered,
+     * but a new expiration time should be set for the
+     * markup with the given ETag . 
+     * <p>
+     * This call is equivalent to calling
+     * <code>setProperty(USE_CACHED_CONTENT, "true")</code>.
+     *        
      * @param useCachedContent
      */
     public void setUseCachedContent(boolean useCachedContent);

@@ -80,7 +80,7 @@ public interface BaseURL {
      *          the parameter values
      *
      * @exception  java.lang.IllegalArgumentException 
-     *                            if name or values are <code>null</code>.
+     *                            if name is <code>null</code>.
      */
 
     public void setParameter (String name, String[] values);
@@ -107,7 +107,7 @@ public interface BaseURL {
      *
      * @exception   java.lang.IllegalArgumentException 
      *                      if parameters is <code>null</code>, if
-     *                      any of the key/values in the Map are <code>null</code>, 
+     *                      any of the keys in the Map are <code>null</code>, 
      *                      if any of the keys is not a String, or if any of 
      *                      the values is not a String array.
      */
@@ -163,13 +163,13 @@ public interface BaseURL {
      * <p>
      * If no parameters exist this method returns an empty <code>Map</code>.
      *             
-     * @since 2.0
-     *
      * @return     <code>Map</code> containing parameter names as 
      *             keys and parameter values as map values, or an empty <code>Map</code>
      *             if no parameters exist. The keys in the parameter
      *             map are of type String. The values in the parameter map are of type
      *             String array (<code>String[]</code>).
+     *
+     * @since 2.0
      */
 
     public java.util.Map<String, String[]> getParameterMap();
@@ -186,6 +186,8 @@ public interface BaseURL {
      *  
      * @param out  the writer to write the portlet URL to
      * @throws java.io.IOException  if an I/O error occured while writing the URL
+     *
+     * @since 2.0
      */
     public void write(java.io.Writer out) throws java.io.IOException;
     
@@ -205,8 +207,50 @@ public interface BaseURL {
      * @param escapeXML denotes if the URL should be XML escaped before written to the output
      *                  stream or not
      * @throws java.io.IOException  if an I/O error occured while writing the URL
+     *
+     * @since 2.0
      */
+     public void write(java.io.Writer out, boolean escapeXML) throws java.io.IOException;
+
     
-    public void write(java.io.Writer out, boolean escapeXML) throws java.io.IOException;
-    
+    /**
+     * Adds a String property to an existing key on the URL.
+     * <p>
+     * This method allows URL properties to have multiple values.
+     * <p>
+     * Properties can be used by portlets to provide vendor specific information
+     * to the URL.
+     *
+     * @param key
+     *            the key of the property
+     * @param value
+     *            the value of the property
+     *
+     * @exception java.lang.IllegalArgumentException
+     *                if key is <code>null</code>.
+     *
+     * @since 2.0
+     */
+    public void addProperty(String key, String value);
+
+
+    /**
+     * Sets a String property on the URL.
+     * <p>
+     * Properties can be used by portlets to provide vendor specific information
+     * to the URL.
+     * <p>
+     * This method resets all properties previously added with the same key.
+     *
+     * @param key
+     *            the key of the property
+     * @param value
+     *            the value of the property
+     *
+     * @exception java.lang.IllegalArgumentException
+     *                if key is <code>null</code>.
+     *
+     * @since 2.0
+     */
+    public void setProperty(String key, String value);
 }

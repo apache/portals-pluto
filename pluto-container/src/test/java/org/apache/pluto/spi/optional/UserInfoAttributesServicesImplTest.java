@@ -260,7 +260,7 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 			return 0;
 		}
 
-		public String getWindowId() {
+		public String getWindowID() {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -281,6 +281,16 @@ public class UserInfoAttributesServicesImplTest extends TestCase {
 		}
 
 		public Cookie[] getCookies() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Map<String, String[]> getPrivateParameterMap() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Map<String, String[]> getPublicParameterMap() {
 			// TODO Auto-generated method stub
 			return null;
 		}

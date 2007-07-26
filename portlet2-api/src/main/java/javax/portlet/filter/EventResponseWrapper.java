@@ -36,11 +36,8 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
-import javax.portlet.PortletURL;
-import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
-import javax.servlet.http.Cookie;
 import javax.xml.namespace.QName;
 
 /**
@@ -54,17 +51,9 @@ import javax.xml.namespace.QName;
  * @see EventResponse
  */
 
-public class EventResponseWrapper implements EventResponse {
+public class EventResponseWrapper extends PortletResponseWrapper implements EventResponse {
 
     EventResponse response;
-     
-     /** 
-      * Require having a response for constructing
-      * the wrapper.
-      *
-      */
-     private EventResponseWrapper() {
-     }
      
      /**
       * Creates an <code>EventResponse</code> adaptor 
@@ -74,6 +63,7 @@ public class EventResponseWrapper implements EventResponse {
       * @throws java.lang.IllegalArgumentException if the response is <code>null</code>
       */
      public EventResponseWrapper(EventResponse response) {
+    	 super(response);
          this.response = response;
      }
 
@@ -81,16 +71,8 @@ public class EventResponseWrapper implements EventResponse {
       * The default behavior of this method is to call 
       * <code>setEvent(name, value)</code> on the wrapped response object.
       */
-     public void setEvent(QName name, Object value) {
+     public void setEvent(QName name, java.io.Serializable value) {
          response.setEvent(name, value);
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setEvents(events)</code> on the wrapped response object.
-      */
-     public void setEvents(Map<javax.xml.namespace.QName, Object> events) {
-         response.setEvents(events);
      }
 
      /**
@@ -136,62 +118,6 @@ public class EventResponseWrapper implements EventResponse {
      }
 
      /**
-      * The default behavior of this method is to call 
-      * <code>addProperty(key, value)</code> on the wrapped response object.
-      */
-     public void addProperty(String key, String value) {
-         response.addProperty(key, value);
-     }
-
-    /**
-      * The default behavior of this method is to call 
-      * <code>createActionURL()</code> on the wrapped response object.
-      */
-     public PortletURL createActionURL() {
-         return response.createActionURL();
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>createRenderURL()</code> on the wrapped response object.
-      */
-     public PortletURL createRenderURL() {
-         return response.createRenderURL();
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>createResourceURL</code> on the wrapped response object.
-      */
-     public ResourceURL createResourceURL() {
-         return response.createResourceURL();
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>encodeURL(path)</code> on the wrapped response object.
-      */
-     public String encodeURL(String path) {
-         return response.encodeURL(path);
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>getNamespace()</code> on the wrapped response object.
-      */
-     public String getNamespace() {
-         return response.getNamespace();
-     }
-
-     /**
-      * The default behavior of this method is to call 
-      * <code>setProperty(key, value)</code> on the wrapped response object.
-      */
-     public void setProperty(String key, String value) {
-         response.setProperty(key, value);
-     }
-
-     /**
       * Return the wrapped response object.
       * 
       * @return the wrapped response
@@ -207,7 +133,10 @@ public class EventResponseWrapper implements EventResponse {
       * @throws java.lang.IllegalArgumentException   if the response is null.
       */
      public void setResponse(EventResponse response) {
-         this.response = response;
+	    	if ( response == null)
+	    		throw new java.lang.IllegalArgumentException("Response is null");
+
+	    	this.response = response;
      }
 
      /**
@@ -244,25 +173,9 @@ public class EventResponseWrapper implements EventResponse {
 
      /**
       *  The default behavior of this method is to call 
-      * <code>addProperty()</code> on the wrapped response object.
-      */
-     public void addProperty(Cookie cookie) {
-         response.addProperty(cookie);
-     }
-     
-     /**
-      *  The default behavior of this method is to call 
-      * <code>setDefaultNamspacedEvents()</code> on the wrapped response object.
-      */
- 	public void setDefaultNamspacedEvents(Map<String, Object> events) {
- 		response.setDefaultNamspacedEvents(events);
- 	}
-
-     /**
-      *  The default behavior of this method is to call 
       * <code>setEvent()</code> on the wrapped response object.
       */
- 	public void setEvent(String name, Object value) {
+ 	public void setEvent(String name, java.io.Serializable value) {
  		response.setEvent(name, value);
  	}
 

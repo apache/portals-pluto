@@ -281,13 +281,13 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
 
 
-	public Map<String, String[]> getMap() {
+	public Map<String, Object> getMap() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
-	public Map<String, String[]> getMap(int scope) {
+	public Map<String, Object> getMap(int scope) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -25,6 +25,8 @@ import org.apache.commons.logging.LogFactory;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.servlet.ServletConfig;
+import javax.xml.namespace.QName;
+
 import java.util.*;
 
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
@@ -119,12 +121,29 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     // --------------------------------------------------------------------------------------------
 
 	public Enumeration getPublicRenderParameterNames() {
+		if (portletDD.getPublicRenderParameter() != null){
+			return portletDD.getPublicRenderParameter().elements();
+		}
+		return null;
+	}
+
+	public String getDefaultNamespace() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
-	public String getDefaultEventNamespace() {
+	public Enumeration<QName> getProcessingEventQNames() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Enumeration<QName> getPublishingEventQNames() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Enumeration<Locale> getSupportedLocales() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 }

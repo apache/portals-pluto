@@ -265,6 +265,8 @@ public class PortletContainerImpl implements PortletContainer,
             		.getPortalCallbackService()
             		.getPortletURLProvider(request, internalPortletWindow);
             
+            saveChangedParameters(actionRequest, actionResponse, redirectURL);
+            
             // Encode the redirect URL to a string.
             location = actionResponse.encodeRedirectURL(redirectURL.toString());
         }
@@ -417,7 +419,7 @@ public class PortletContainerImpl implements PortletContainer,
     
     // Private Methods ---------------------------------------------------------
     
-	/**
+    /**
      * Ensures that the portlet container is initialized.
      * @throws IllegalStateException  if the container is not initialized.
      */

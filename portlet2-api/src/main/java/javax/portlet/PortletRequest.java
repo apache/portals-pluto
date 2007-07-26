@@ -30,6 +30,8 @@
 
 package javax.portlet;
 
+import java.util.Locale;
+
 
 /**
  * The <CODE>PortletRequest</CODE> defines the base interface to provide client
@@ -832,7 +834,7 @@ public interface PortletRequest
    *           the portal will accept content for this request
    */
 
-  public java.util.Enumeration getLocales();
+  public java.util.Enumeration<Locale> getLocales();
 
 
   /**
@@ -877,7 +879,7 @@ public interface PortletRequest
    * @since 2.0
    * @return  the portlet window ID
    */
-  public String getWindowId();
+  public String getWindowID();
   
   
   /**
@@ -891,6 +893,46 @@ public interface PortletRequest
    *          <code>null</code> if no cookies exist.
    * @see PortletResponse#addProperty(Cookie) 
    */
-  javax.servlet.http.Cookie[] getCookies();
+  public javax.servlet.http.Cookie[] getCookies();
+  
+  /**
+   * Returns a <code>Map</code> of the private parameters of this request.
+   * Private parameters are not shared with other portlets or components.  
+   * The returned parameters are "x-www-form-urlencoded" decoded.
+   * <p>
+   * The values in the returned <code>Map</code> are from type
+   * String array (<code>String[]</code>).
+   * <p>
+   * If no private parameters exist this method returns an empty <code>Map</code>.
+   *
+   * @since 2.0
+   * @return     an immutable <code>Map</code> containing private parameter names as 
+   *             keys and private parameter values as map values, or an empty <code>Map</code>
+   *             if no private parameters exist. The keys in the parameter
+   *             map are of type String. The values in the parameter map are of type
+   *             String array (<code>String[]</code>).
+   */
+  public java.util.Map<String, String[]> getPrivateParameterMap();
+  
+  /**
+   * Returns a <code>Map</code> of the public parameters of this request.
+   * Public parameters may be shared with other portlets or components and
+   * defined in the portlet deployment descriptor with the 
+   * <code>supported-public-render-parameter</code> element.  
+   * The returned parameters are "x-www-form-urlencoded" decoded.
+   * <p>
+   * The values in the returned <code>Map</code> are from type
+   * String array (<code>String[]</code>).
+   * <p>
+   * If no public parameters exist this method returns an empty <code>Map</code>.
+   *
+   * @since 2.0
+   * @return     an immutable <code>Map</code> containing public parameter names as 
+   *             keys and public parameter values as map values, or an empty <code>Map</code>
+   *             if no public parameters exist. The keys in the parameter
+   *             map are of type String. The values in the parameter map are of type
+   *             String array (<code>String[]</code>).
+   */
+  public java.util.Map<String, String[]> getPublicParameterMap();
 
 }

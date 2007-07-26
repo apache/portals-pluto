@@ -126,7 +126,7 @@ public class BaseURLImpl implements BaseURL {
 	    }
 	}
 
-	public void setParameters(Map parameters) {
+	public void setParameters(Map<String, String[]> parameters) {
 		
         if (parameters == null) {
             throw new IllegalArgumentException(
@@ -286,5 +286,15 @@ public class BaseURLImpl implements BaseURL {
 	public void write(Writer out, boolean escapeXML) throws IOException {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public void addProperty(String key, String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setProperty(String key, String value) {
+		// TODO Auto-generated method stub
+		
 	}
 }

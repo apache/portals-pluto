@@ -18,6 +18,7 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -104,7 +105,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	/* (non-Javadoc)
 	 * @see javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.lang.Object)
 	 */
-	public void setEvent(QName qname, Object value) {
+	public void setEvent(QName qname, java.io.Serializable value) {
 		EventProvider provider = callback.getEventProvider(
 				getHttpServletRequest(),getHttpServletResponse());
 		
@@ -139,9 +140,9 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 			xml = XMLInputFactory.newInstance().createXMLStreamReader(in);
 
 			if (xml != null) {
-				provider.registerToFireEvent(new EventImpl(qname,xml));
+				provider.registerToFireEvent(new EventImpl(qname,(Serializable) xml));
 			} else { 
-				provider.registerToFireEvent(new EventImpl(qname,value));
+				provider.registerToFireEvent(new EventImpl(qname,(Serializable) value));
 			}
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
@@ -177,7 +178,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	/* (non-Javadoc)
 	 * @see javax.portlet.StateAwareResponse#setEvents(java.util.Map)
 	 */
-	public void setEvents(Map events) {
+	public void setEvents(java.util.Map<javax.xml.namespace.QName, java.io.Serializable> events) {
 		Set keys = events.keySet();
 		for (Object key : keys) {
 			setEvent((QName)key,events.get(key));
@@ -266,7 +267,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 
     }
     
-    public void setRenderParameters(Map parameters) {
+    public void setRenderParameters(java.util.Map<String, String[]> parameters) {
         if (redirected) {
             throw new IllegalStateException(
                 "Can't invoke setRenderParameters() after sendRedirect() has been called");
@@ -437,13 +438,15 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
-	public void setDefaultNamspacedEvents(Map<String, Object> events) {
+	public void setEvent(String name, java.io.Serializable value) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setEvent(String name, Object value) {
+	public void setDefaultNamespacedEvents(Map<String, Object> events) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

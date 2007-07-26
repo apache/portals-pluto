@@ -59,6 +59,6 @@ public interface EventRequest extends PortletRequest {
      * @return  a String specifying the name of the HTTP method with which 
      *          this request was made
      */
-    String getMethod();
+    public String getMethod();
 
 }

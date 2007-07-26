@@ -33,15 +33,12 @@ package javax.portlet.filter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
-import javax.servlet.http.Cookie;
 
 /**
  * The <code>RenderResponseWrapper</code> provides a convenient 
@@ -54,17 +51,9 @@ import javax.servlet.http.Cookie;
  * @see RenderResponse
  */
 
-public class RenderResponseWrapper implements RenderResponse {
+public class RenderResponseWrapper extends PortletResponseWrapper implements RenderResponse {
 
     RenderResponse response;
-    
-    /** 
-     * Require having a response for constructing
-     * the wrapper.
-     *
-     */
-    private RenderResponseWrapper() {
-    }
     
     /**
      * Creates an <code>RenderResponse</code> adaptor 
@@ -74,67 +63,8 @@ public class RenderResponseWrapper implements RenderResponse {
      * @throws java.lang.IllegalArgumentException if the response is <code>null</code>
      */
     public RenderResponseWrapper(RenderResponse response) {
-        this.response = response;
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>setEvent(name, value)</code> on the wrapped response object.
-     */
-     /**
-     * The default behavior of this method is to call 
-     * <code>addProperty(key, value)</code> on the wrapped response object.
-     */
-    public void addProperty(String key, String value) {
-        response.addProperty(key, value);
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createActionURL()</code> on the wrapped response object.
-     */
-    public PortletURL createActionURL() {
-        return response.createActionURL();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createRenderURL()</code> on the wrapped response object.
-     */
-    public PortletURL createRenderURL() {
-        return response.createRenderURL();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createResourceURL</code> on the wrapped response object.
-     */
-    public ResourceURL createResourceURL() {
-        return response.createResourceURL();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>encodeURL(path)</code> on the wrapped response object.
-     */
-    public String encodeURL(String path) {
-        return response.encodeURL(path);
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>getNamespace()</code> on the wrapped response object.
-     */
-    public String getNamespace() {
-        return response.getNamespace();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>setProperty(key, value)</code> on the wrapped response object.
-     */
-    public void setProperty(String key, String value) {
-        response.setProperty(key, value);
+    	super(response);
+    	this.response = response;
     }
 
     /**
@@ -251,18 +181,32 @@ public class RenderResponseWrapper implements RenderResponse {
 
     /**
      *  The default behavior of this method is to call 
-     * <code>addProperty()</code> on the wrapped response object.
+     * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
      */
-    public void addProperty(Cookie cookie) {
-        response.addProperty(cookie);
+    public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
+        response.setNextPossiblePortletModes(portletModes);
     }
 
     /**
-     *  The default behavior of this method is to call 
-     * <code>setNextPossiblePortletModes()</code> on the wrapped response object.
+     * Return the wrapped response object.
+     * 
+     * @return the wrapped response
      */
-    public void setNextPossiblePortletModes(Enumeration<PortletMode> portletModes) {
-        response.setNextPossiblePortletModes(portletModes);
+    public RenderResponse getResponse() {
+        return response;
+    }
+
+    /**
+     * Sets the response object being wrapped.
+     * 
+     * @param response the response to set
+     * @throws java.lang.IllegalArgumentException   if the response is null.
+     */
+    public void setResponse(RenderResponse response) {
+	    	if ( response == null)
+	    		throw new java.lang.IllegalArgumentException("Response is null");
+
+	    	this.response = response;
     }
 
 }

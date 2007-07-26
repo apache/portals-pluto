@@ -50,7 +50,7 @@ public interface EventResponse extends StateAwareResponse {
      * All previously set render parameters are cleared.
      * <p>
      * These parameters will be accessible in all
-     * sub-sequent render calls via the
+     * subsequent render calls via the
      * <code>PortletRequest.getParameter</code> call until
      * a new request is targeted to the portlet.
      * <p>

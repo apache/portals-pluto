@@ -16,12 +16,14 @@
 package org.apache.pluto.wrappers;
 
 import javax.portlet.CacheControl;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.Cookie;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.Enumeration;
 
 public class RenderResponseWrapper extends PortletResponseWrapper
@@ -127,7 +129,7 @@ public class RenderResponseWrapper extends PortletResponseWrapper
 		this.getRenderResponse().addProperty(cookie);
 	}
 
-	public void setNextPossiblePortletModes(Enumeration portletModes) {
+	public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
 		// TODO Auto-generated method stub
 		this.getRenderResponse().setNextPossiblePortletModes(portletModes);
 	}

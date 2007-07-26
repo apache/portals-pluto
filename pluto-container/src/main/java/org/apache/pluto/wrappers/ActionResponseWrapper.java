@@ -58,7 +58,7 @@ public class ActionResponseWrapper extends PortletResponseWrapper
         this.getActionResponse().sendRedirect(location);
     }
 
-    public void setRenderParameters(Map parameters) {
+    public void setRenderParameters(Map<String, String[]> parameters) {
         this.getActionResponse().setRenderParameters(parameters);
     }
 
@@ -84,12 +84,13 @@ public class ActionResponseWrapper extends PortletResponseWrapper
     	return (StateAwareResponse) getPortletResponse();
     }
 
-	public void setEvent(QName qname, Object value) {
+	public void setEvent(QName qname, java.io.Serializable value) {
 		this.getStateAwareResponse().setEvent(qname, value);
 	}
 
-	public void setEvents(Map events) {
-		this.getStateAwareResponse().setEvents(events);		
+	public void setEvents(Map<javax.xml.namespace.QName, java.io.Serializable> events) {
+		// TODO look for setEvents in StateAwareResponse
+//		this.getStateAwareResponse().setEvents(events);		
 	}
     // --------------------------------------------------------------------------------------------
 
@@ -110,12 +111,12 @@ public class ActionResponseWrapper extends PortletResponseWrapper
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
-	public void setDefaultNamspacedEvents(Map<String, Object> events) {
+	public void setDefaultNamespacedEvents(Map<String, Object> events) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setEvent(String name, Object value) {
+	public void setEvent(String name, java.io.Serializable value) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -30,6 +30,8 @@
 
 package javax.portlet;
 
+import java.util.Locale;
+
 
 /**
  * The <CODE>WindowState</CODE> class represents
@@ -86,13 +88,13 @@ public class WindowState
    * Upper case letters in the name are converted to
    * lower case letters.
    *
-   * @param name The name of the portlet mode
+   * @param name The name of the window state
    */
   public WindowState(String name) {
     if (name==null) {
       throw new IllegalArgumentException("WindowState name can not be NULL");
     }
-    _name = name.toLowerCase();
+    _name = name.toLowerCase(Locale.ENGLISH);
   }
 
   /**

@@ -16,6 +16,7 @@
 package org.apache.pluto.wrappers;
 
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
@@ -179,8 +180,8 @@ public class PortletRequestWrapper
         return this.getPortletRequest().getServerPort();
     }
     
-    public String getWindowId() {
-    	return this.getPortletRequest().getWindowId();
+    public String getWindowID() {
+    	return this.getPortletRequest().getWindowID();
 	}
 
     // --------------------------------------------------------------------------------------------
@@ -214,6 +215,16 @@ public class PortletRequestWrapper
 	public Cookie[] getCookieProperties() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+	public Map<String, String[]> getPrivateParameterMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, String[]> getPublicParameterMap() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

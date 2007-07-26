@@ -124,13 +124,18 @@ public interface PortletConfig
 
   /**
    * Returns the names of the public render parameters supported by the portlet
-   * as an <code>Enumeration</code> of String objects, or an empty <code>Enumeration</code> if the 
-   * portlet has no public render parameters.    
+   * as an <code>Enumeration</code> of <code>String</code> objects, 
+   * or an empty <code>Enumeration</code> if the 
+   * portlet has not defined public render parameters.
+   * <p>
+   * Public render parameters are defined in the portlet deployment descriptor
+   * with the <code>supported-public-render-parameter</code> element.    
    *
    * @return		an <code>Enumeration</code> of <code>String</code> 
    *			objects containing the names of the public 
    *			render parameters, or an empty <code>Enumeration</code> if the 
-   *                    portlet does not define any public render parameters.
+   *                    portlet has not defined support for any public render parameters
+   *                    in the portlet deployment descriptor.
    * @since 2.0 
    */
 
@@ -138,19 +143,78 @@ public interface PortletConfig
   
   
   /**
-   * Returns the default event namespace.
+   * Returns the default namespace for events and public render parameters.
    * This namespace is defined in the portlet deployment descriptor
-   * with the <code>default-event-namespace</code> element.
+   * with the <code>default-namespace</code> element.
    * <p>
    * If no default namespace is defined in the portlet deployment
    * descriptor this methods returns the XML default namespace 
    * <code>XMLConstants.NULL_NS_URI</code>.
    * 
-   * @return the default event namespace defined in the portlet deployment
+   * @return the default namespace defined in the portlet deployment
    *         descriptor, or <code>XMLConstants.NULL_NS_URI</code> is non is
    *         defined.
    * @since 2.0
    */
-  public java.lang.String getDefaultEventNamespace();
+  public java.lang.String getDefaultNamespace();
+  
+  
+  /**
+   * Returns the QNames of the publishing events supported by the portlet
+   * as an <code>Enumeration</code> of <code>QName</code> objects, 
+   * or an empty <code>Enumeration</code> if the 
+   * portlet has not defined any publishing events.    
+   * <p>
+   * Publishing events are defined in the portlet deployment descriptor
+   * with the <code>supported-publishing-event</code> element.    
+   * <p>
+   * Note that this call does not return any events published that have not been
+   * declared in the deployment descriptor as supported.
+   * 
+   * @return		an <code>Enumeration</code> of <code>QName</code> 
+   *			objects containing the names of the publishing events, 
+   *			or an empty <code>Enumeration</code> if the 
+   *                    portlet has not defined any support for publishing events in
+   *                    the deployment descriptor.
+   * @since 2.0 
+   */
+  public java.util.Enumeration<javax.xml.namespace.QName> getPublishingEventQNames();
+
+  
+  /**
+   * Returns the QNames of the processing events supported by the portlet
+   * as an <code>Enumeration</code> of <code>QName</code> objects, 
+   * or an empty <code>Enumeration</code> if the 
+   * portlet has not defined any processing events.    
+   * <p>
+   * Processing events are defined in the portlet deployment descriptor
+   * with the <code>supported-processing-event</code> element.    
+   * 
+   * @return		an <code>Enumeration</code> of <code>QName</code> 
+   *			objects containing the names of the processing events, 
+   *			or an empty <code>Enumeration</code> if the 
+   *                    portlet has not defined any support for processing events in
+   *                    the deployment descriptor.
+   * @since 2.0 
+   */
+  public java.util.Enumeration<javax.xml.namespace.QName> getProcessingEventQNames();
+
+  /**
+   * Returns the locales supported by the portlet
+   * as an <code>Enumeration</code> of <code>Locale</code> objects, 
+   * or an empty <code>Enumeration</code> if the 
+   * portlet has not defined any supported locales.    
+   * <p>
+   * Supported locales are defined in the portlet deployment descriptor
+   * with the <code>supported-locale</code> element.    
+   * 
+   * @return		an <code>Enumeration</code> of <code>Locale</code> 
+   *			objects containing the supported locales, 
+   *			or an empty <code>Enumeration</code> if the 
+   *                    portlet has not defined any supported locales in
+   *                    the deployment descriptor.
+   * @since 2.0
+   */
+  public java.util.Enumeration<java.util.Locale> getSupportedLocales();
 }
 

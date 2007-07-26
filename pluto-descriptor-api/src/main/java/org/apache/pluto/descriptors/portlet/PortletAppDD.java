@@ -70,6 +70,7 @@ import javax.xml.bind.annotation.XmlType;
     "userAttribute","userAttribute1",
     "securityConstraint","securityConstraint1",
     "resourceBundle","resourceBundle1",
+    "defaultNamespace",
     "filter",
     "filterMapping",
     "events",
@@ -114,6 +115,10 @@ public class PortletAppDD {
 	
 	@XmlElement ( name = "resource-bundle", namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
 	private String resourceBundle1 = null;
+	
+	/** The default Namespace */
+	@XmlElement(name = "default-namespace")
+	private String defaultNamespace = null; 
 	
     /** The defined Portlet Events within the system. */
 	@XmlElement(name = "event-definition")
@@ -263,6 +268,14 @@ public class PortletAppDD {
 
 	public void setFilterMapping(List<FilterMappingDD> filterMapping) {
 		this.filterMapping = filterMapping;
+	}
+
+	public String getDefaultNamespace() {
+		return defaultNamespace;
+	}
+
+	public void setDefaultNamespace(String defaultNamespace) {
+		this.defaultNamespace = defaultNamespace;
 	}
 }
 

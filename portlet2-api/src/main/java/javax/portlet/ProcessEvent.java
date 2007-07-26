@@ -55,7 +55,7 @@ public @interface ProcessEvent {
      * 
      * @return event QName.
      */
-    String qname();
+    String qname() default "";
     
     /**
      * Local part of the event name.
@@ -65,6 +65,6 @@ public @interface ProcessEvent {
      * 
      * @return local part of the event name.
      */
-    String name();
+    String name() default "";
 
 }

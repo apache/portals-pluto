@@ -17,6 +17,8 @@
 package org.apache.pluto.internal.impl;
 
 
+import java.io.Serializable;
+
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletPreferences;
@@ -94,7 +96,7 @@ public class EventRequestImpl extends PortletRequestImpl
 
         		JAXBElement result = unmarshaller.unmarshal(xml,clazz);
 
-        		return new EventImpl(event.getQName(),result.getValue());
+        		return new EventImpl(event.getQName(),(Serializable) result.getValue());
         	} catch (JAXBException e) {
         		// TODO Auto-generated catch block
         		e.printStackTrace();

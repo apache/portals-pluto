@@ -1,3 +1,4 @@
+
 /*  Licensed to the Apache Software Foundation (ASF) under one
  *  or more contributor license agreements.  See the NOTICE file
  *  distributed with this work for additional information
@@ -24,7 +25,7 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
-/**
+ /**
   * Copyright 2006 IBM Corporation.
   */
 
@@ -40,8 +41,20 @@ package javax.portlet;
  */
 public interface PortalContext
 {
-
+	/**
+     * Property indicating if the portal application supports the
+     * <code>MimeResponse</code> property <code>MARKUP_HEAD_ELEMENT</code>.
+     * <p>
+     * A non-null value indicates that the portal application supports
+     * the <code>MARKUP_HEAD_ELEMENT</code> property.
+     * <p>
+     * The value is <code>"javax.portlet.markup.head.element.support"</code>.
+     *
+     * @since 2.0
+     */
+	public static final String MARKUP_HEAD_ELEMENT_SUPPORT = "javax.portlet.markup.head.element.support";
   
+	
   /**
    * Returns the portal property with the given name, 
    * or a <code>null</code> if there is 

@@ -48,6 +48,8 @@ public interface PortletResponse {
 
 	/**
      * Adds a String property to an existing key to be returned to the portal.
+     * If there are no property values already associated with the key, 
+     * a new key is created.
      * <p>
      * This method allows response properties to have multiple values.
      * <p>
@@ -80,9 +82,9 @@ public interface PortletResponse {
      * @return a portlet render URL
      * @throws java.lang.IllegalStateException
      *             if the cacheability level of the resource URL
-     *             triggering this <code>serveResource</code> call,
-     *             or one of the parent calls, have defined a stricter
-     *             cachability level.
+     *             triggering this <code>serveResource</code> call
+     *             is not <code>PAGE<code> and thus does not allow
+     *             for creating render URLs.
      */
 	public PortletURL createRenderURL() throws java.lang.IllegalStateException;
 
@@ -101,9 +103,9 @@ public interface PortletResponse {
      * @return a portlet action URL
      * @throws java.lang.IllegalStateException
      *             if the cacheability level of the resource URL
-     *             triggering this <code>serveResource</code> call,
-     *             or one of the parent calls, have defined a stricter
-     *             cachability level.
+     *             triggering this <code>serveResource</code> call
+     *             is not <code>PAGE<code> and thus does not allow
+     *             for creating action URLs.
      */
 	public PortletURL createActionURL() throws java.lang.IllegalStateException;
 
@@ -118,11 +120,9 @@ public interface PortletResponse {
      * The returned URL can be further extended by adding portlet-specific
      * parameters .
      * <p>
-     * The created URL will per default contain the current render request
-     * and supports markup that contain unrestricted <code>ResourceURLs</code>,
-     * <code>PortletURLs</code>, and <code>FragmentURLs</code>. This URL
-     * is equivalent to a resource URL created with 
-     * <code>createResourceURL(PAGE)</code>.
+     * The created URL will per default contain the current 
+     * cacheability setting of the parent resource. 
+     * If no parent resource is available, <code>PAGE</code> is the default.
      * 
      * @since 2.0
      * @return a portlet resource URL
@@ -214,4 +214,27 @@ public interface PortletResponse {
 
     public void addProperty(javax.servlet.http.Cookie cookie);
 
+    /**
+     * Adds an XML DOM element property to the response.
+     * <p>
+     * If a DOM element with the provided key already exists
+     * the provided element will be stored in addition to the
+     * existing element under the same key.
+     * <p>
+     * If the element is <code>null</code> the key is removed from
+     * the response.
+     * <p>
+     * Properties can be used by portlets to provide vendor specific information
+     * to the portal.
+     *
+     * @param key
+     *            the key of the property to be returned to the portal
+     * @param  element
+     *            the XML DOM element to be added to the response
+     *
+     * @exception  java.lang.IllegalArgumentException
+     *                            if key is <code>null</code>.
+     * @since 2.0
+     */
+   void addProperty(String key, org.w3c.dom.Element element);
 }

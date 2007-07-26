@@ -40,25 +40,39 @@ public interface MimeResponse extends PortletResponse {
 
     /**
      * Property to set the expiration time in seconds for this response using
-     * the <code>setProperty</code> method.
+     * the <code>setProperty</code> method intended to be used in 
+     * forwarded or included servlets/JSPs.
      * <P>
-     * If the expiration value is set to 0, caching is disabled for this
-     * portlet; if the value is set to -1, the cache does not expire.
+     * If the expiration value is set to <code>0</code>, caching is disabled for this
+     * portlet; if the value is set to <code>-1</code>, the cache does not expire.
+     * <p>
+     * A default can be defined in the portlet deployment descriptor
+     * with the <code>expiration-cache<code> tag, otherwise it is <code>0</code>.
+     * <p>
+     * Non-integer values are treated as <code>0</code>.
      * <p>
      * The value is <code>"portlet.expiration-cache"</code>.
+     * 
+     * @see CacheControl
      */
     public static final String EXPIRATION_CACHE = "portlet.expiration-cache";
 
     /**
      * Property to set the cache scope for this response using the
-     * <code>setProperty</code> method.
+     * <code>setProperty</code> method intended to be used in 
+     * forwarded or included servlets/JSPs.
      * <P>
-     * Predefined cache scopes are: PUBLIC_SCOPE and PRIVATE_SCOPE.
+     * Predefined cache scopes are: <code>PUBLIC_SCOPE</code> and <code>PRIVATE_SCOPE</code>.
      * <p>
-     * Default is PRIVATE_SCOPE.
+     * A default can be defined in the portlet deployment descriptor
+     * with the <code>cache-scope<code> tag, otherwise it is <code>PRIVATE_SCOPE</code>.
+     * <p>
+     * Values that are not either <code>PUBLIC_SCOPE</code> or <code>PRIVATE_SCOPE</code>
+     * are treated as <code>PRIVATE_SCOPE</code>.
      * <p>
      * The value is <code>"portlet.cache-scope"</code>.
      * 
+     * @see CacheControl
      * @since 2.0
      */
     public static final String CACHE_SCOPE = "portlet.cache-scope";
@@ -80,26 +94,75 @@ public interface MimeResponse extends PortletResponse {
     public static final String PRIVATE_SCOPE = "portlet.private-scope";
     
     /**
-     * This property is set by the container if the container
-     * has a cached response for the given validation tag. The property can be
-     * retrieved using the <code>getProperty</code> method. 
+     * Property to tell the portlet container the new ETag for this response
+     * intended to be used in forwarded or included servlets/JSPs.
+     * <p>
+     * This property needs to be set using the <code>setProperty</code> method. 
      * <P>
      * The value is <code>"portlet.ETag "</code>.
      * 
+     * @see CacheControl
      * @since 2.0
      */
     public static final String ETAG = "portlet.ETag";
 
     /**
      * Property to tell the portlet container to use the cached markup
-     * for the validation token provided in the render request. This property 
+     * for the validation token provided in the request. This property 
      * needs to be set using the <code>setProperty</code> method with a non-null
-     * value. The value itself is not evaluated. 
+     * value and is intended to be used in forwarded or included servlets/JSPs.
+     * The value itself is not evaluated. 
      * <P>
      * The value is <code>"portlet.use-cached-content "</code>.
+     * 
+     * @see CacheControl
+     * @since 2.0
      */
     public static final String USE_CACHED_CONTENT = "portlet.use-cached-content";
 
+    
+    /**
+     * Property intended to be a hint to the portal application that the returned 
+     * content is completely namespaced. 
+     * This includes all markup id elements, form fields, etc.
+     * One example where this is might be used is for portal applications that
+     * are form-based and thus need to re-write any forms included in the portlet
+     * markup. 
+     * <p>
+     * This property  needs to be set using the <code>setProperty</code> method with a non-null
+     * value. The value itself is not evaluated. 
+     * <p>
+     * The value is <code>"X-JAVAX-PORTLET-NAMESPACED-RESPONSE"</code>.
+     * 
+     * @since 2.0
+     */
+    public static final String NAMESPACED_RESPONSE = "X-JAVAX-PORTLET-NAMESPACED-RESPONSE";
+    
+    /**
+     * Property intended to be a hint to the portal application that the provided
+     * DOM element should be added to the markup head section of the response to the
+     * client.
+     * <p>
+     * Support for this property is optional and the portlet can verify if the
+     * calling portal supports this property via the <code>MARKUP_HEAD_ELEMENT_SUPPORT</code>
+     * property on the <code>PortalContext</code>.
+     * <p>
+     * Even if the calling portal support this property delivery of the DOM
+     * element to the client cannot be guaranteed, e.g. due to possible security
+     * rules of the portal application or elements that conflict with the
+     * response of other portlets.
+     * <p>
+     * This property  needs to be set using the 
+     * <code>setProperty(String key,org.w3c.dom.Element element)</code>
+     * method.
+     * <p>
+     * The value is <code>"javax.portlet.markup.head.element"</code>.
+     *
+     * @since 2.0
+     */
+    public static final String MARKUP_HEAD_ELEMENT = "javax.portlet.markup.head.element";
+    
+    
     /**
      * Returns the MIME type that can be used to contribute markup to the render
      * response.
@@ -123,7 +186,8 @@ public interface MimeResponse extends PortletResponse {
      * <code>getOutputStream</code> does not change the content type.
      * <p>
      * The portlet container will ignore any character encoding
-     * specified as part of the content type.
+     * specified as part of the content type for <code>render</code>
+     * calls.
      * 
      * @param type
      *            the content MIME type

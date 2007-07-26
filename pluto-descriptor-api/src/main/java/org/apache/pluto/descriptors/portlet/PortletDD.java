@@ -18,6 +18,7 @@
 package org.apache.pluto.descriptors.portlet;
 
 import java.util.List;
+import java.util.Vector;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -100,7 +101,7 @@ import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
     "portletPreferences", "portletPreferences1",
     "description",    "description1",
     "displayName",    "displayName1",
-    "renderParameter"
+    "publicRenderParameter"
 })
 public class PortletDD {
 	
@@ -197,7 +198,7 @@ public class PortletDD {
 	
     /** the supported public render parameter */
 	@XmlElement(name = "supported-public-render-parameter")
-    private List<String> renderParameter = null;
+    private Vector<String> publicRenderParameter = null;
     
     
     // Constructor -------------------------------------------------------------
@@ -332,13 +333,13 @@ public class PortletDD {
 	}
 
 
-	public List<String> getRenderParameter() {
-		return renderParameter;
+	public Vector<String> getPublicRenderParameter() {
+		return publicRenderParameter;
 	}
 
 
-	public void setRenderParameter(List<String> renderParameter) {
-		this.renderParameter = renderParameter;
+	public void setPublicRenderParameter(Vector<String> publicRenderParameter) {
+		this.publicRenderParameter = publicRenderParameter;
 	}
 
 

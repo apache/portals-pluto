@@ -466,10 +466,15 @@ public interface PortletContext
    * Returns the container container runtime options
    * and values supported by this portlet container.
    * <p>
-   * The portlet can set portlet level container runtime
+   * The portlet can set container runtime
    * options in the <code>portlet.xml</code> via the
    * <code>container-runtime-option</code> element with a name and a
    * value on the application and portlet level.<br>
+   * If a container runtime option is set on the portlet application 
+   * level and on the portlet level with the same name the setting 
+   * on the portlet level takes precedence and overwrites the one 
+   * set on the portal application level.
+   * <p>
    * The map returned from this method will provide the subset the
    * portlet container supports of the options the portlet has specified 
    * in the <code>portlet.xml</code>.

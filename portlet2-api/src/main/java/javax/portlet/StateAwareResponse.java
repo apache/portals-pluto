@@ -114,6 +114,9 @@ public interface StateAwareResponse extends PortletResponse {
      * <p>
      * The given parameters do not need to be encoded prior to calling this
      * method.
+     * <p>
+     * The portlet should not modify the map any further after calling
+     * this method.
      * 
      * @param parameters
      *            Map containing parameter names for the render phase as keys
@@ -123,7 +126,7 @@ public interface StateAwareResponse extends PortletResponse {
      * 
      * @exception java.lang.IllegalArgumentException
      *                if parameters is <code>null</code>, if any of the
-     *                key/values in the Map are <code>null</code>, if any of
+     *                keys in the Map are <code>null</code>, if any of
      *                the keys is not a String, or if any of the values is not a
      *                String array.
      * @exception java.lang.IllegalStateException
@@ -151,7 +154,7 @@ public interface StateAwareResponse extends PortletResponse {
      *            value of the render parameter
      * 
      * @exception java.lang.IllegalArgumentException
-     *                if key or value are <code>null</code>.
+     *                if key is <code>null</code>.
      * @exception java.lang.IllegalStateException
      *                if the method is invoked after <code>sendRedirect</code>
      *                has been called.
@@ -201,12 +204,12 @@ public interface StateAwareResponse extends PortletResponse {
      * 
      * @exception java.lang.IllegalArgumentException
      *                if name is <code>null</code>, the value is not
-     *                serializable, the value has not a valid JAXB binding, the
+     *                serializable, the value does not have a valid JAXB binding, the
      *                object type of the value is not the same as specified in
      *                the portlet deployment descriptor for this event name.
      * @since 2.0
      */
-	public void setEvent(javax.xml.namespace.QName name, Object value);
+	public void setEvent(javax.xml.namespace.QName name, java.io.Serializable value);
 
 	/**
      * Publishes an Event with the given payload in the default namespace.
@@ -229,75 +232,13 @@ public interface StateAwareResponse extends PortletResponse {
      * 
      * @exception java.lang.IllegalArgumentException
      *                if name is <code>null</code>, the value is not
-     *                serializable, the value has not a valid JAXB binding, the
+     *                serializable, the value does not have a valid JAXB binding, the
      *                object type of the value is not the same as specified in
      *                the portlet deployment descriptor for this event name.
      * @since 2.0
      */
-	public void setEvent(String name, Object value);
+	public void setEvent(String name, java.io.Serializable value);
 
-	/**
-     * Publishes an array of Events.
-     * <p>
-     * The events map must contain
-     * <code>javax.xml.namespace.QName, Object</code> value pairs. The
-     * <code>javax.xml.namespace.QName</code> value represents the event name
-     * and the <code>Object</code> value represents the event payload. The
-     * object types of the payload values must be compliant with the specified
-     * event types for the event types in the portlet deployment descriptor.
-     * <p>
-     * The values must have a valid JAXB binding and be serializable.
-     * <p>
-     * The order of the events in the map does not imply the order of the
-     * delivery of the events.
-     * 
-     * @param events
-     *            the events to publish, must not be <code>null</code>
-     * 
-     * @exception java.lang.IllegalArgumentException
-     *                if events is <code>null</code>, a name in
-     *                events is <code>null</code>, a payload in events is not
-     *                serializable, a payload in events has not a valid JAXB
-     *                binding, the object type of a payload is not the same as
-     *                specified in the portlet deployment descriptor for this
-     *                event name.
-     * @see #setEvent(javax.xml.namespace.QName, Object)
-     * @since 2.0
-     */
-	public void setEvents(java.util.Map<javax.xml.namespace.QName, Object> events);
-
-	/**
-     * Publishes an array of Events in the default namespace.
-     * <p>
-     * The events map must contain
-     * <code>String, Object</code> value pairs. The
-     * <code>String</code> value represents the local part of the event name
-     * and the <code>Object</code> value represents the event payload. The namespace
-     * for the events is either taken from the <code>default-event-namespace</code> element
-     * in the portlet deployment descriptor, or if this element is not provided
-     * the XML default namespace XMLConstants.NULL_NS_URI is used. The
-     * object types of the payload values must be compliant with the specified
-     * event types for the event types in the portlet deployment descriptor.
-     * <p>
-     * The values must have a valid JAXB binding and be serializable.
-     * <p>
-     * The order of the events in the map does not imply the order of the
-     * delivery of the events.
-     * 
-     * @param events
-     *            the events to publish, must not be <code>null</code>
-     * 
-     * @exception java.lang.IllegalArgumentException
-     *                if events is <code>null</code>, a name in
-     *                events is <code>null</code>, a payload in events is not
-     *                serializable, a payload in events has not a valid JAXB
-     *                binding, the object type of a payload is not the same as
-     *                specified in the portlet deployment descriptor for this
-     *                event name.
-     * @see #setEvent(String, Object)
-     * @since 2.0
-     */
-	public void setDefaultNamspacedEvents(java.util.Map<String, Object> events);
 
 	/**
      * Returns a <code>Map</code> of the render parameters currently set on

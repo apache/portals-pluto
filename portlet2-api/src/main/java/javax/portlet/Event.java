@@ -49,14 +49,14 @@ public interface Event {
      * 
      * @return  the QName of the event, never <code>null</code>.
      */
-    javax.xml.namespace.QName getQName();
+    public javax.xml.namespace.QName getQName();
 
     /**
      * Get the local part of the event name.
      * 
      * @return  the local part of the event, never <code>null</code>.
      */
-    java.lang.String getName();
+    public java.lang.String getName();
 
     /**
      * Get the event payload.
@@ -64,6 +64,6 @@ public interface Event {
      * @return  event payload, must be serializable.
      *          May return <code>null</code> if this event has no payload.
      */
-    Object getValue();
+    public java.io.Serializable getValue();
    
 }

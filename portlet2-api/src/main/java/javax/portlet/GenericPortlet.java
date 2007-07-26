@@ -33,8 +33,10 @@ package javax.portlet;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -74,6 +76,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 
 	private transient PortletConfig config;
 
+	private transient boolean annotationsCached = false;
 	private transient Map<String, Method> processActionHandlingMethodsMap = new HashMap<String, Method>();
 	private transient Map<String, Method> processEventHandlingMethodsMap = new HashMap<String, Method>();
 	private transient Map<String, Method> renderModeHandlingMethodsMap = new HashMap<String, Method>();
@@ -118,25 +121,6 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      */
 	public void init(PortletConfig config) throws PortletException {
 		this.config = config;
-		// cache annotated methods
-		Method[] methods = this.getClass().getMethods();
-		for (Method method : methods) {			
-			Annotation[] annotations = method.getAnnotations();
-			for (Annotation annotation : annotations) {
-				if (annotation.annotationType().equals(ProcessAction.class)) {
-					processActionHandlingMethodsMap.put(((ProcessAction)annotation).name(), method);					
-				} else if (annotation.annotationType().equals(ProcessEvent.class)) {
-					if (((ProcessEvent)annotation).qname() != null)
-						processEventHandlingMethodsMap.put(((ProcessEvent)annotation).qname(), method);
-					else {
-						QName qn = new QName(config.getDefaultEventNamespace(), ((ProcessEvent)annotation).name());
-						processEventHandlingMethodsMap.put(qn.toString(), method);
-					}									
-				} else if (annotation.annotationType().equals(RenderMode.class)) {
-					renderModeHandlingMethodsMap.put(((RenderMode)annotation).name().toLowerCase(), method);
-				}
-			}
-		}
 		
 		this.init();
 	}
@@ -188,23 +172,23 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	public void processAction(ActionRequest request, ActionResponse response)
 			throws PortletException, java.io.IOException {		
 		String action = request.getParameter(ActionRequest.ACTION_NAME);
-		boolean actionProcessed = false;
-		
+
+		if (! annotationsCached ) {
+			cacheAnnotations();
+		}
+
 		try {
-			// check if action is cached in init
+			// check if action is cached
 			if ( processActionHandlingMethodsMap.containsKey(action) ) {
 				processActionHandlingMethodsMap.get(action).invoke(this, request, response);
-				actionProcessed = true;				
-			} else { 
-				// check if action is present as annotation
-				actionProcessed = invokeProcessActionAnnotatedMethod(request, response, action);
+				return;				
 			}
 		} catch (Exception e) {
 			throw new PortletException(e);
 		}
-		if ( ! actionProcessed )
-			// if no action processing method was found throw exc
-			throw new PortletException("processAction method not implemented");
+
+		// if no action processing method was found throw exc
+		throw new PortletException("processAction method not implemented");
 	}
 
 	
@@ -243,7 +227,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 		if (request.getAttribute(RenderRequest.RENDER_PART) != null) {  // streaming portal calling
 			if (request.getAttribute(RenderRequest.RENDER_PART).equals(RenderRequest.RENDER_HEADERS) ) {
 			    doHeaders(request, response);
-			    Enumeration<PortletMode> nextModes = getNextPossiblePortletModes(request);
+			    Collection<PortletMode> nextModes = getNextPossiblePortletModes(request);
 			    if (nextModes != null)
 			    	response.setNextPossiblePortletModes(nextModes);
 			    response.setTitle(getTitle(request));				
@@ -330,36 +314,33 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	protected void doDispatch(RenderRequest request, RenderResponse response)
 			throws PortletException, java.io.IOException {
 		WindowState state = request.getWindowState();
-		boolean dispatchPerformed = false;
 		
 		if (!state.equals(WindowState.MINIMIZED)) {
 			PortletMode mode = request.getPortletMode();
 			// first look if there are methods annotated for
 			// handling the rendering of this mode
 			try {
-				// check if mode is cached in init
+				if (! annotationsCached ) {
+					cacheAnnotations();
+				}
+				// check if mode is cached
 				if ( renderModeHandlingMethodsMap.containsKey(mode) ) {
 					renderModeHandlingMethodsMap.get(mode).invoke(this, request, response);
-					dispatchPerformed = true;
-				}
-				else {
-					// check if mode is present as annotation
-					dispatchPerformed = invokeRenderModeAnnotatedMethod(request, response, mode);
+					return;
 				}
 			} catch (Exception e) {
 				throw new PortletException(e);
 			}
-			if ( ! dispatchPerformed ) {
-				// if not, try the default doXYZ methods
-				if (mode.equals(PortletMode.VIEW)) {
-					doView(request, response);
-				} else if (mode.equals(PortletMode.EDIT)) {
-					doEdit(request, response);
-				} else if (mode.equals(PortletMode.HELP)) {
-					doHelp(request, response);
-				} else {
-					throw new PortletException("unknown portlet mode: " + mode);
-				}
+			
+			// if not, try the default doXYZ methods
+			if (mode.equals(PortletMode.VIEW)) {
+				doView(request, response);
+			} else if (mode.equals(PortletMode.EDIT)) {
+				doEdit(request, response);
+			} else if (mode.equals(PortletMode.HELP)) {
+				doHelp(request, response);
+			} else {
+				throw new PortletException("unknown portlet mode: " + mode);
 			}
 		}
 
@@ -477,6 +458,10 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * @see PortletConfig#getPortletName()
      */
 	public String getPortletName() {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
 		return config.getPortletName();
 	}
 
@@ -487,6 +472,10 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * @return the portlet application context
      */
 	public PortletContext getPortletContext() {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
 		return config.getPortletContext();
 	}
 
@@ -499,6 +488,10 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * @return the resource bundle for the given locale
      */
 	public java.util.ResourceBundle getResourceBundle(java.util.Locale locale) {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
 		return config.getResourceBundle(locale);
 	}
 
@@ -517,6 +510,10 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      *                if name is <code>null</code>.
      */
 	public String getInitParameter(java.lang.String name) {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
 		return config.getInitParameter(name);
 	}
 
@@ -531,8 +528,46 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      *         parameters.
      */
 	public java.util.Enumeration<String> getInitParameterNames() {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
 		return config.getInitParameterNames();
 	}
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.PortletConfig#getProcessingEventQNames()
+	 */
+	public Enumeration<QName> getProcessingEventQNames() {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
+		return config.getProcessingEventQNames();
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.PortletConfig#getPublishingEventQNames()
+	 */
+	public Enumeration<QName> getPublishingEventQNames() {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
+		return config.getPublishingEventQNames();
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.PortletConfig#getSupportedLocales()
+	 */
+	public Enumeration<Locale> getSupportedLocales() {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
+		return config.getSupportedLocales();
+	}
+
 
 	// -------------------------------------------------------------------------
 	// V 2.0 additions
@@ -572,26 +607,40 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      */
 	public void processEvent(EventRequest request, EventResponse response)
 			throws PortletException, IOException {
-		QName eventName = request.getEvent().getQName();
-		boolean eventProcessed = false;
+		String eventName = request.getEvent().getQName().toString();
 		
+		if (! annotationsCached ) {
+			cacheAnnotations();
+		}
+			
 		try {
-			// check if event is cached in init
+			// check for exact match
 			if ( processEventHandlingMethodsMap.containsKey(eventName) ) {
 				processEventHandlingMethodsMap.get(eventName).invoke(this, request, response);
-				eventProcessed = true;
+				return;
 			} else {
-				// check if event is present as annotation			
-				eventProcessed = invokeProcessEventAnnotatedMethod(request, response, eventName.toString());
+ 		 		 // Search for the longest possible matching wildcard annotation
+                int endPos = eventName.indexOf('}');
+                int dotPos = eventName.lastIndexOf('.');
+                while(dotPos > endPos)
+                {
+                    String wildcardLookup = eventName.substring(0, dotPos + 1);
+                    if(processEventHandlingMethodsMap.containsKey(wildcardLookup)) {
+                        processEventHandlingMethodsMap.get(wildcardLookup).invoke(this, request, response);
+                        return;
+                    }
+                    if(dotPos == 0) {
+                        break;
+                    }
+                    dotPos = eventName.lastIndexOf('.', dotPos - 1);
+                }
 			}
 		} catch (Exception e) {
 			throw new PortletException(e);
 		}
 		
-		if ( ! eventProcessed ) {
-			// if no event processing method was found just keep render params
-			response.setRenderParameters(request);
-		}
+		// if no event processing method was found just keep render params
+		response.setRenderParameters(request);
 	}
 
 	/**
@@ -620,7 +669,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * 
      * @since 2.0
      */
-	protected java.util.Enumeration<PortletMode> getNextPossiblePortletModes(RenderRequest request) {
+	protected java.util.Collection<PortletMode> getNextPossiblePortletModes(RenderRequest request) {
 		return null;
 	}
 
@@ -637,110 +686,64 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * 
 	 * @see javax.portlet.PortletConfig#getPublicRenderParameterNames()
 	 */
-	public Enumeration<String> getPublicRenderParameterNames() {
+	public Enumeration<String> getPublicRenderParameterNames() {	
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
 		return config.getPublicRenderParameterNames();
 	}
 
 	 /**
-	   * Returns the default event namespace.
+	   * Returns the default namespace for events and public parameters.
 	   * This namespace is defined in the portlet deployment descriptor
-	   * with the <code>default-event-namespace</code> element.
+	   * with the <code>default-namespace</code> element.
 	   * <p>
 	   * If no default namespace is defined in the portlet deployment
 	   * descriptor this methods returns the XML default namespace 
 	   * <code>XMLConstants.NULL_NS_URI</code>.
 	   * 
-	   * @return the default event namespace defined in the portlet deployment
+	   * @return the default namespace defined in the portlet deployment
 	   *         descriptor, or <code>XMLConstants.NULL_NS_URI</code> is non is
 	   *         defined.
 	   *         
-	   * @javax.portlet.PortletConfig#getDefaultEventNamespace()
+	   * @see javax.portlet.PortletConfig#getDefaultNamespace()
 	   */
-	public String getDefaultEventNamespace() {
-		return config.getDefaultEventNamespace();
+	public String getDefaultNamespace() {
+		if (config == null)
+			throw new java.lang.IllegalStateException(
+					"Config is null, please ensure that your init(config) method calls super.init(config)");
+
+		return config.getDefaultNamespace();
 	}
 
 	
 	
-	private boolean invokeProcessActionAnnotatedMethod(ActionRequest request, ActionResponse response, String action)
-	throws PortletException
-	{
+	
+	private void cacheAnnotations() {
+		// cache annotated methods
 		Method[] methods = this.getClass().getMethods();
 		for (Method method : methods) {			
 			Annotation[] annotations = method.getAnnotations();
 			for (Annotation annotation : annotations) {
-				if (annotation.equals(ProcessAction.class)) {
-					if (((ProcessAction)annotation).name().equals(action)) {
-						processActionHandlingMethodsMap.put(((ProcessAction)annotation).name(), method);					
-						try {
-							method.invoke(this, request, response);
-							return true;
-						} catch (Exception e) {
-							throw new PortletException(e);
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	private boolean invokeProcessEventAnnotatedMethod(EventRequest request, EventResponse response, String event)
-	throws PortletException
-	{
-		Method[] methods = this.getClass().getMethods();
-		for (Method method : methods) {			
-			Annotation[] annotations = method.getAnnotations();
-			for (Annotation annotation : annotations) {
-				if (annotation.equals(ProcessEvent.class)) {
-					if (((ProcessEvent)annotation).qname() != null) {
-						if (((ProcessEvent)annotation).qname().equals(event)) {
-							processEventHandlingMethodsMap.put(((ProcessEvent)annotation).qname(), method);
-							try {
-								method.invoke(this, request, response);
-								return true;
-							} catch (Exception e) {
-								throw new PortletException(e);
-							}
-						}
-					} else {
-						QName qn = new QName(config.getDefaultEventNamespace(), ((ProcessEvent)annotation).name());
-						if (qn.toString().equals(event)) {
-							processEventHandlingMethodsMap.put(qn.toString(), method);
-							try {
-								method.invoke(this, request, response);
-								return true;
-							} catch (Exception e) {
-								throw new PortletException(e);
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
+				if (annotation.annotationType().equals(ProcessAction.class)) {
+					processActionHandlingMethodsMap.put(((ProcessAction)annotation).name(), method);					
+				} else if (annotation.annotationType().equals(ProcessEvent.class)) {
+					if ( ! ((ProcessEvent)annotation).qname().equals("") )
+						processEventHandlingMethodsMap.put(((ProcessEvent)annotation).qname(), method);
+					else {
+						if (config == null)
+							throw new java.lang.IllegalStateException(
+									"Config is null, please ensure that your init(config) method calls super.init(config)");
 
-
-	private boolean invokeRenderModeAnnotatedMethod(RenderRequest request, RenderResponse response, PortletMode mode)
-		throws PortletException
-	{
-		Method[] methods = this.getClass().getMethods();
-		for (Method method : methods) {			
-			Annotation[] annotations = method.getAnnotations();
-			for (Annotation annotation : annotations) {
-				if (annotation.equals(RenderMode.class)) {
-					if (((RenderMode)annotation).name().toLowerCase().equals(mode.toString())) {
-						renderModeHandlingMethodsMap.put(((RenderMode)annotation).name().toLowerCase(), method);
-						try {
-							method.invoke(this, request, response);
-							return true;
-						} catch (Exception e) {
-							throw new PortletException(e);
-						}
-					}
+						QName qn = new QName(config.getDefaultNamespace(), ((ProcessEvent)annotation).name());
+						processEventHandlingMethodsMap.put(qn.toString(), method);
+					}									
+				} else if (annotation.annotationType().equals(RenderMode.class)) {
+					renderModeHandlingMethodsMap.put(((RenderMode)annotation).name().toLowerCase(), method);
 				}
 			}
 		}
-		return false;
+		annotationsCached=true;
 	}
 }

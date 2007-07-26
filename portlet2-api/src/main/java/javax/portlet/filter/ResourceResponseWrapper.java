@@ -36,10 +36,7 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
-import javax.servlet.http.Cookie;
 
 /**
  * The <code>ResourceResponseWrapper</code> provides a convenient 
@@ -52,17 +49,9 @@ import javax.servlet.http.Cookie;
  * @see ResourceResponse
  */
 
-public class ResourceResponseWrapper implements ResourceResponse {
+public class ResourceResponseWrapper extends PortletResponseWrapper implements ResourceResponse {
 
     ResourceResponse response;
-    
-    /** 
-     * Require having a response for constructing
-     * the wrapper.
-     *
-     */
-    private ResourceResponseWrapper() {
-    }
     
     /**
      * Creates an <code>ResourceResponse</code> adaptor 
@@ -72,67 +61,8 @@ public class ResourceResponseWrapper implements ResourceResponse {
      * @throws java.lang.IllegalArgumentException if the response is <code>null</code>
      */
     public ResourceResponseWrapper(ResourceResponse response) {
-        this.response = response;
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>setEvent(name, value)</code> on the wrapped response object.
-     */
-     /**
-     * The default behavior of this method is to call 
-     * <code>addProperty(key, value)</code> on the wrapped response object.
-     */
-    public void addProperty(String key, String value) {
-        response.addProperty(key, value);
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createActionURL()</code> on the wrapped response object.
-     */
-    public PortletURL createActionURL() {
-        return response.createActionURL();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createRenderURL()</code> on the wrapped response object.
-     */
-    public PortletURL createRenderURL() {
-        return response.createRenderURL();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>createResourceURL</code> on the wrapped response object.
-     */
-    public ResourceURL createResourceURL() {
-        return response.createResourceURL();
-    }
-
-   /**
-     * The default behavior of this method is to call 
-     * <code>encodeURL(path)</code> on the wrapped response object.
-     */
-    public String encodeURL(String path) {
-        return response.encodeURL(path);
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>getNamespace()</code> on the wrapped response object.
-     */
-    public String getNamespace() {
-        return response.getNamespace();
-    }
-
-    /**
-     * The default behavior of this method is to call 
-     * <code>setProperty(key, value)</code> on the wrapped response object.
-     */
-    public void setProperty(String key, String value) {
-        response.setProperty(key, value);
+    	super(response);
+    	this.response = response;
     }
 
     /**
@@ -260,18 +190,32 @@ public class ResourceResponseWrapper implements ResourceResponse {
 
     /**
      *  The default behavior of this method is to call 
-     * <code>addProperty()</code> on the wrapped response object.
-     */
-    public void addProperty(Cookie cookie) {
-        response.addProperty(cookie);
-    }
-
-    /**
-     *  The default behavior of this method is to call 
      * <code>setContentLength()</code> on the wrapped response object.
      */
     public void setContentLength(int len) {
         response.setContentLength(len);
+    }
+
+    /**
+     * Return the wrapped response object.
+     * 
+     * @return the wrapped response
+     */
+    public ResourceResponse getResponse() {
+        return response;
+    }
+
+    /**
+     * Sets the response object being wrapped.
+     * 
+     * @param response the response to set
+     * @throws java.lang.IllegalArgumentException   if the response is null.
+     */
+    public void setResponse(ResourceResponse response) {
+	    	if ( response == null)
+	    		throw new java.lang.IllegalArgumentException("Response is null");
+
+	    	this.response = response;
     }
 
 }

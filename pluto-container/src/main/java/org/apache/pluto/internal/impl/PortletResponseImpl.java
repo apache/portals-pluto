@@ -18,7 +18,9 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -36,6 +38,7 @@ import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
+import org.w3c.dom.Element;
 
 /**
  * Abstract <code>javax.portlet.PortletResponse</code> implementation.
@@ -104,7 +107,13 @@ implements PortletResponse, InternalPortletResponse {
         				name, value);
     }
     
-    public void addProperty(Cookie cookie) {
+    public void addProperty(String key, Element element) {
+    	// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+
+
+	public void addProperty(Cookie cookie) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}

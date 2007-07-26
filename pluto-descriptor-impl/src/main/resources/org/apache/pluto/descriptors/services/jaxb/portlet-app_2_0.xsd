@@ -133,7 +133,7 @@
 			<element name="resource-bundle" type="portlet:resource-bundleType" minOccurs="0"/>
 			<element name="filter" type="portlet:filterType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="filter-mapping" type="portlet:filter-mappingType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="default-event-namespace" type="xs:anyURI" minOccurs="0"/>
+			<element name="default-namespace" type="xs:anyURI" minOccurs="0"/>
 			<element name="event-definition" type="portlet:event-definitionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="public-render-parameter" type="portlet:public-render-parameterType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
@@ -147,7 +147,7 @@
 			Caching scope, allowed values are "private" indicating that the content should not be shared
 			across users and "public" indicating that the content may be shared across users.
 			The default value if not present is "private".
-			Used in: caching
+			Used in: portlet
 			</documentation>
 		</annotation>
 		<simpleContent>
@@ -175,7 +175,7 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="portlet-mode" type="portlet:portlet-modeType"/>
 			<element name="portal-managed" type="portlet:portal-managedType" minOccurs="0"/>
-			<element name="decoration-name" type="portlet:display-nameType" minOccurs="0"/>
+			<element name="decoration-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
@@ -193,26 +193,12 @@
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
-	<complexType name="cachingType">
-		<annotation>
-			<documentation>
-			Expriation-cache defines expiration-based caching for this
-			portlet. 
-			Used in: portlet
-			</documentation>
-		</annotation>
-		<sequence>
-			<element name="expiration-cache" type="portlet:expiration-cacheType" minOccurs="0"/>
-			<element name="scope" type="portlet:cache-scopeType" minOccurs="0"/>
-		</sequence>
-		<attribute name="id" type="string" use="optional"/>
-	</complexType>
 	<complexType name="expiration-cacheType">
 		<annotation>
 			<documentation>
 			Expriation-time defines the time in seconds after which the portlet output expires. 
 			-1 indicates that the output never expires.
-			Used in: caching
+			Used in: portlet
 			</documentation>
 		</annotation>
 		<simpleContent>
@@ -283,7 +269,8 @@
 			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="portlet-class" type="portlet:portlet-classType"/>
 			<element name="init-param" type="portlet:init-paramType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="caching" type="portlet:cachingType" minOccurs="0"/>
+			<element name="expiration-cache" type="portlet:expiration-cacheType" minOccurs="0"/>
+			<element name="cache-scope" type="portlet:cache-scopeType" minOccurs="0"/>
 			<element name="supports" type="portlet:supportsType" maxOccurs="unbounded"/>
 			<element name="supported-locale" type="portlet:supported-localeType" minOccurs="0" maxOccurs="unbounded"/>
 			<choice>
@@ -295,8 +282,8 @@
 			</choice>
 			<element name="portlet-preferences" type="portlet:portlet-preferencesType" minOccurs="0"/>
 			<element name="security-role-ref" type="portlet:security-role-refType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="supported-processing-event" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="supported-publishing-event" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="supported-processing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="supported-publishing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="supported-public-render-parameter" type="string" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
@@ -408,6 +395,20 @@
 			<element name="alias" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="value-type" type="portlet:fully-qualified-classType" minOccurs="0"/>
 		</sequence>
+		<attribute name="id" type="string" use="optional"/>
+	</complexType>
+	<complexType name="event-definition-referenceType">
+		<annotation>
+			<documentation>
+			The event-definition-referenceType is used to refernece events 
+			declared with the event-definition element on application level.
+			Used in: portlet
+			</documentation>
+		</annotation>
+		<choice>
+			<element name="qname" type="xs:QName"/>
+			<element name="name" type="string"/>
+		</choice>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>
 	<complexType name="portlet-infoType">
@@ -522,8 +523,9 @@
 	<complexType name="resource-bundleType">
 		<annotation>
 			<documentation>
-			Filename of the resource bundle containing the language specific 
-			portlet informations in different languages.
+			Name of the resource bundle containing the language specific 
+			portlet informations in different languages (Filename without
+			the language specific part (e.g. _en) and the ending (.properties).
 			Used in: portlet-info
 			</documentation>
 		</annotation>
@@ -594,7 +596,11 @@
 		<sequence>
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="identifier" type="string"/>
-			<element name="name" type="xs:QName" maxOccurs="unbounded"/>
+			<choice>
+				<element name="qname" type="xs:QName"/>
+				<element name="name" type="string"/>
+			</choice>
+			<element name="alias" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
 	</complexType>

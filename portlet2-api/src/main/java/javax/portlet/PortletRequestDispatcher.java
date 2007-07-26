@@ -50,7 +50,10 @@ public interface PortletRequestDispatcher {
      * <p>
      * The included servlet cannot set or change the response status code or set
      * headers; any attempt to make a change is ignored.
-     * 
+     * <p>
+     * This method is kept in order to provide backward compatability with
+     * version 1.0. Please use {@link #include(PortletRequest, PortletResponse)} instead
+     * of this method.
      * 
      * @param request
      *            a {@link RenderRequest} object that contains the client
@@ -71,7 +74,7 @@ public interface PortletRequestDispatcher {
      * @exception java.io.IOException
      *                if the included resource throws this exception
      * 
-     * @deprecated since 2.0, use {@link #include(PortletRequest, PortletResponse)} instead 
+     *  
      */
 
     public void include(RenderRequest request, RenderResponse response)

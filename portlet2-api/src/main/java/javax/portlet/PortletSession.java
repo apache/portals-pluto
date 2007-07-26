@@ -384,8 +384,8 @@ public interface PortletSession
    * Returns a <code>Map</code> of the session attributes in
    * the portlet session scope.
    * <p>
-   * The values in the returned <code>Map</code> are from type
-   * String array (<code>String[]</code>).
+   * The keys are of type <code>String</code> and the values in the 
+   * eturned <code>Map</code> are from type <code>Object</code>.
    * <p>
    * If no session attributes exist this method returns an empty <code>Map</code>.
    *
@@ -393,17 +393,17 @@ public interface PortletSession
    *             portlet session scope as keys and attribute values as map values, or an empty <code>Map</code>
    *             if no session attributes exist. The keys in the
    *             map are of type String, the values of type
-   *             String array (<code>String[]</code>).
+   *             Object.
    *  @since 2.0
    */
-  public Map<String, String[]> getMap();  
+  public Map<String, Object> getMap();  
 
   /** 
    * Returns a <code>Map</code> of the session attributes in
    * the given session scope.
    * <p>
-   * The values in the returned <code>Map</code> are from type
-   * String array (<code>String[]</code>).
+   * The keys are of type <code>String</code> and the values in the 
+   * eturned <code>Map</code> are from type <code>Object</code>.
    * <p>
    * If no session attributes exist this method returns an empty <code>Map</code>.
    *
@@ -413,10 +413,10 @@ public interface PortletSession
    *             given scope as keys and attribute values as map values, or an empty <code>Map</code>
    *             if no session attributes exist. The keys in the
    *             map are of type String, the values of type
-   *             String array (<code>String[]</code>).
+   *             Object.
    *  @since 2.0
    */
-  public Map<String, String[]> getMap(int scope);  
+  public Map<String, Object> getMap(int scope);  
 
 }
 

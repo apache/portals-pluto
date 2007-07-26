@@ -75,6 +75,6 @@ public interface RenderResponse extends MimeResponse {
      *            empty enumeration.
      * @since 2.0
      */
-	public void setNextPossiblePortletModes(java.util.Enumeration<PortletMode> portletModes);
+	public void setNextPossiblePortletModes(java.util.Collection<PortletMode> portletModes);
 
 }

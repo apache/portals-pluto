@@ -253,7 +253,7 @@ public class PortalDriverServlet extends HttpServlet {
 	private void registerPublicRenderParams(PortletWindow window, PortletDD portletDD, PortletAppDD portletAppDD) {
 		PublicRenderParameterProvider renderProvider = container.getRequiredContainerServices()
 			.getPortalCallbackService().getPublicRenderParameterProvider();
-		List<String> render = portletDD.getRenderParameter();
+		List<String> render = portletDD.getPublicRenderParameter();
 		if (render != null){ 
 			for (String renderDD : render){
 				List<PublicRenderParamDD> publicRenderParameterList = portletAppDD.getRender();

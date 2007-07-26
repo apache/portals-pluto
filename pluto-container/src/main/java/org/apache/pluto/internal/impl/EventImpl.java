@@ -28,13 +28,13 @@ import javax.xml.namespace.QName;
 public class EventImpl implements Event {
 
 	private QName _qname;
-	private Object _value;
+	private java.io.Serializable _value;
 	
 	public EventImpl(QName qname){
 		_qname = qname;
 	}
 	
-	public EventImpl(QName qname, Object value){
+	public EventImpl(QName qname, java.io.Serializable value){
 		this(qname);
 		_value = value;
 	}
@@ -43,7 +43,7 @@ public class EventImpl implements Event {
 		return _qname;
 	}
 
-	public Object getValue() {
+	public java.io.Serializable getValue() {
 		return _value;
 	}
 

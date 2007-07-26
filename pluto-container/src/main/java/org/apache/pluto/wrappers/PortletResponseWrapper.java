@@ -20,6 +20,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.Cookie;
 
+import org.w3c.dom.Element;
+
 public class PortletResponseWrapper
     extends javax.servlet.http.HttpServletResponseWrapper
     implements PortletResponse {
@@ -96,5 +98,10 @@ public class PortletResponseWrapper
         }
         setResponse((javax.servlet.http.HttpServletResponse) response);
     }
+
+	public void addProperty(String key, Element element) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
