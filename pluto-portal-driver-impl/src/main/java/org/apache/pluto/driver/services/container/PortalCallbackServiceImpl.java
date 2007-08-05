@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.ResourceURLProviderImpl;
@@ -97,8 +98,9 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
     }
     
     public EventProvider getEventProvider(
-			HttpServletRequest request,HttpServletResponse response) {
-		return EventProviderImpl.getEventProviderImpl(request,response);
+			HttpServletRequest request,HttpServletResponse response,
+			PortletContainer container) {
+		return EventProviderImpl.getEventProviderImpl(request,response, container);
 	}
 
 

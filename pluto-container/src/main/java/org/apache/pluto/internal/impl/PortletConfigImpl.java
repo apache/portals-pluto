@@ -81,9 +81,9 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
             throw new IllegalArgumentException("Parameter name == null");
         }
 
-        Iterator parms = portletDD.getInitParams().iterator();
+        Iterator<InitParamDD> parms = portletDD.getInitParams().iterator();
         while(parms.hasNext()) {
-            InitParamDD param = (InitParamDD)parms.next();
+            InitParamDD param = parms.next();
             if (param.getParamName().equals(name)) {
                 return param.getParamValue();
             }
@@ -91,21 +91,20 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return null;
     }
 
-    public Enumeration getInitParameterNames() {
-        return new java.util.Enumeration() {
-            private Iterator iterator =
-                new ArrayList(portletDD.getInitParams()).iterator();
+    public Enumeration<String> getInitParameterNames() {
+        return new java.util.Enumeration<String>() {
+            private Iterator<InitParamDD> iterator =
+                new ArrayList<InitParamDD>(portletDD.getInitParams()).iterator();
 
             public boolean hasMoreElements() {
                 return iterator.hasNext();
             }
 
-            public Object nextElement() {
+            public String nextElement() {
                 if (iterator.hasNext()) {
-                    return ((InitParamDD) iterator.next()).getParamName();
-                } else {
-                    return null;
-                }
+                    return iterator.next().getParamName();
+                } 
+                return null;
             }
         };
     }
@@ -120,30 +119,40 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     }
     // --------------------------------------------------------------------------------------------
 
-	public Enumeration getPublicRenderParameterNames() {
+	public Enumeration<String> getPublicRenderParameterNames() {
 		if (portletDD.getPublicRenderParameter() != null){
-			return portletDD.getPublicRenderParameter().elements();
+			return Collections.enumeration(portletDD.getPublicRenderParameter());
 		}
 		return null;
 	}
 
 	public String getDefaultNamespace() {
+		// how to get the corresponding porletAppDD
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 
 	public Enumeration<QName> getProcessingEventQNames() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		
+		return (portletDD.getProcessingEvents() != null) ? 
+				Collections.enumeration(portletDD.getProcessingEvents()) :
+					null;
 	}
 
 	public Enumeration<QName> getPublishingEventQNames() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return (portletDD.getPublishingEvents() != null) ?
+				Collections.enumeration(portletDD.getPublishingEvents()) :
+					null;
 	}
 
 	public Enumeration<Locale> getSupportedLocales() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		// for each String entry in SupportedLocales (portletDD)
+		// add an entry in the resut list (new Locale(string))
+		List<Locale> locals = new ArrayList<Locale>();
+		List<String> localsAsStrings = portletDD.getSupportedLocale();
+		for (String string : localsAsStrings) {
+			locals.add(new Locale(string));
+		}
+		return Collections.enumeration(locals);
 	}
 }

@@ -236,9 +236,9 @@ public class PortalDriverServlet extends HttpServlet {
             		getServletContext(),window);
             PortletDD portletDD = win.getPortletEntity().getPortletDefinition();
             
-            registerEvents(window, portletDD, portletAppDD);
+//            registerEvents(window, portletDD, portletAppDD);
             
-            registerEventDefinitions(portletAppDD);
+//            registerEventDefinitions(portletAppDD);
             
             registerPublicRenderParams(window, portletDD,portletAppDD);
 		}
@@ -278,57 +278,57 @@ public class PortalDriverServlet extends HttpServlet {
 	 * @param window The PortletWindow to store the event
 	 * @param portletDD The PortletDD, where the event is declared
 	 */
-	private void registerEvents(PortletWindow window, PortletDD portletDD, 
-			PortletAppDD portletAppDD) {
-		EventProvider eventProvider = container.getRequiredContainerServices()
-			.getPortalCallbackService().getEventProvider();
-		List<QName> events = portletDD.getProcessingEvents();
-		if (events != null) {
-			for (QName event : events) {
-				EventDefinitionDD eventDD = getEvent(event, portletAppDD);
-				if (eventDD != null) {
-
-					// register event only if it is declared as "processing-event"
-					List<QName> processingEvents = portletDD.getProcessingEvents();
-					for (QName name : processingEvents) {
-						if (name.toString().equals(eventDD.getName().toString())) {
-							eventProvider.registerEvent(event.toString(),window.getId().getStringId(), eventDD);
-							if (LOG.isDebugEnabled()){
-								LOG.debug(event+" registered successfully!");
-							}
-						}
-					}				
-				}
-			}
-		}
-	}
+//	private void registerEvents(PortletWindow window, PortletDD portletDD, 
+//			PortletAppDD portletAppDD) {
+//		EventProvider eventProvider = container.getRequiredContainerServices()
+//			.getPortalCallbackService().getEventProvider();
+//		List<QName> events = portletDD.getProcessingEvents();
+//		if (events != null) {
+//			for (QName event : events) {
+//				EventDefinitionDD eventDD = getEvent(event, portletAppDD);
+//				if (eventDD != null) {
+//
+//					// register event only if it is declared as "processing-event"
+//					List<QName> processingEvents = portletDD.getProcessingEvents();
+//					for (QName name : processingEvents) {
+//						if (name.toString().equals(eventDD.getName().toString())) {
+//							eventProvider.registerEvent(event.toString(),window.getId().getStringId(), eventDD);
+//							if (LOG.isDebugEnabled()){
+//								LOG.debug(event+" registered successfully!");
+//							}
+//						}
+//					}				
+//				}
+//			}
+//		}
+//	}
 	
 	/**
 	 * Register event definitions.
 	 * 
 	 * @param portletAppDD the portlet app DD
 	 */
-	private void registerEventDefinitions(PortletAppDD portletAppDD) {
-		EventProvider eventProvider = container.getRequiredContainerServices()
-		.getPortalCallbackService().getEventProvider();
-		List<EventDefinitionDD> defs = portletAppDD.getEvents();
-		if (defs != null){
-			for (EventDefinitionDD definitionDD : defs) {
-				eventProvider.registerEventDefinitionDD(definitionDD);
-			}
-		}
-	}
-
-    
-    private EventDefinitionDD getEvent(QName event, PortletAppDD portletAppDD) {
-		List<EventDefinitionDD> events = portletAppDD.getEvents();
-		for (EventDefinitionDD definitionDD : events) {
-			if (definitionDD.getName().equals(event))
-				return definitionDD;
-		}
-		// return null, if not found
-		return null;
-	}
+//	private void registerEventDefinitions(PortletAppDD portletAppDD) {
+//		EventProvider eventProvider = container.getRequiredContainerServices()
+//		.getPortalCallbackService().getEventProvider();
+//		List<EventDefinitionDD> defs = portletAppDD.getEvents();
+//		if (defs != null){
+//			for (EventDefinitionDD definitionDD : defs) {
+//				eventProvider.registerEventDefinitionDD(definitionDD);
+//			}
+//		}
+//	}
+//
+//    
+//    private EventDefinitionDD getEvent(QName event, PortletAppDD portletAppDD) {
+//		List<EventDefinitionDD> events = portletAppDD.getEvents();
+//		for (EventDefinitionDD definitionDD : events) {
+//			if (definitionDD.getName().equals(event))
+//				return definitionDD;
+//		}
+//		// return null, if not found
+//		return null;
+//	}
 
 	/**
      * Returns the portal driver configuration object.

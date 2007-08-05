@@ -48,17 +48,17 @@ public class EventResponseImpl extends StateAwareResponseImpl
 
 	
 
-	public ServletOutputStream getOutputStream() throws IOException {
-		// TODO Auto-generated method stub
-//		return null;
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
+//	public ServletOutputStream getOutputStream() throws IOException {
+//		// TODO Auto-generated method stub
+////		return null;
+//		throw new UnsupportedOperationException("This method needs to be implemented.");
+//	}
 
-	public PrintWriter getWriter() throws IOException {
-		// TODO Auto-generated method stub
-//		return null;
-		throw new UnsupportedOperationException();
-	}
+//	public PrintWriter getWriter() throws IOException {
+//		// TODO Auto-generated method stub
+////		return null;
+//		throw new UnsupportedOperationException();
+//	}
 
 
 

@@ -19,6 +19,7 @@ package org.apache.pluto.driver.services.container;
  * The Class EventAttribute.
  * Stores the attributes for a given event.
  */
+@Deprecated
 public class EventAttribute {
 	
 	/** The event number. */

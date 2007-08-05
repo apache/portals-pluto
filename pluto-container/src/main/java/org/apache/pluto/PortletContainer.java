@@ -169,5 +169,7 @@ public interface PortletContainer {
      */    
     public PortletAppDD getPortletApplicationDescriptor(String context)
         throws PortletContainerException;
+
+	public ServletContext getServletContext();
     
 }

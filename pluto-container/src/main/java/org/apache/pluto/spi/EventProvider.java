@@ -29,6 +29,7 @@ import javax.xml.namespace.QName;
 import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 	/**
 	 * 
@@ -58,7 +59,7 @@ public interface EventProvider {
 	 *            the name of the event
 	 * @return ArrayList of associated InternalPortletWindows
 	 */
-	public abstract List<String> getAllPortletNames(String evtLabel);
+//	public abstract List<String> getAllPortletNames(String evtLabel);
 
 	/**
 	 * Bind an InternalPortletWindow to an event and/or create a new event
@@ -72,21 +73,21 @@ public interface EventProvider {
 	 *            null or the pw to be associated with the event
 	 * @param eventDefinitionDD TODO
 	 */
-	public abstract void registerEvent(String evtLabel, String portletName, EventDefinitionDD eventDefinitionDD);
+//	public abstract void registerEvent(String evtLabel, String portletName, EventDefinitionDD eventDefinitionDD);
 
 	/**
 	 * 
 	 * @param evtLabel -
 	 *            creates a new event with an empty ArrayList
 	 */
-	public abstract void registerEvent(String evtLabel);
+//	public abstract void registerEvent(String evtLabel);
 
 	/**
 	 * 
 	 * @param evtLabel -
 	 *            removes an event
 	 */
-	public abstract void removeEvent(String evtLabel);
+//	public abstract void removeEvent(String evtLabel);
 
 	/**
 	 * 
@@ -96,34 +97,34 @@ public interface EventProvider {
 	 *            pw is removed from the events listed herein or all events if
 	 *            evtLabelsList is null
 	 */
-	public abstract void removePortletName(String portletName,
-			List<String> evtLabelsList);
+//	public abstract void removePortletName(String portletName,
+//			List<String> evtLabelsList);
 
 	/**
 	 * Removes the portlet name.
 	 * 
 	 * @param portletName the portlet name
 	 */
-	public abstract void removePortletName(String portletName);
+//	public abstract void removePortletName(String portletName);
 
 	/**
 	 * 
 	 * @return Enumeration containing all events
 	 */
-	public abstract Enumeration<String> getAllEventLabelsEnumeration();
+//	public abstract Enumeration<String> getAllEventLabelsEnumeration();
 
 	/**
 	 * 
 	 * @return String list containing all events
 	 */
-	public abstract List<String> getAllEventLabelsList();
+//	public abstract List<String> getAllEventLabelsList();
 
 	/**
 	 * Gets all saved events.
 	 * 
 	 * @return the saved events
 	 */
-	public abstract List<Event> getAllSavedEvents();
+//	public abstract List<Event> getAllSavedEvents();
 	
 	/**
 	 * Gets the event.
@@ -133,7 +134,7 @@ public interface EventProvider {
 	 * 
 	 * @return the event
 	 */
-	public abstract Event getEvent(String eventName, int eventNumber);
+//	public abstract Event getEvent(String eventName, int eventNumber);
 
 	/**
 	 * Fire events.
@@ -156,7 +157,7 @@ public interface EventProvider {
 	 * 
 	 * @param eventDefinitionDD the event definition DD
 	 */
-	public abstract void registerEventDefinitionDD(EventDefinitionDD eventDefinitionDD);
+//	public abstract void registerEventDefinitionDD(EventDefinitionDD eventDefinitionDD);
 	
 	/**
 	 * Gets the request.
@@ -171,4 +172,18 @@ public interface EventProvider {
 	 * @return the response
 	 */
 	public HttpServletResponse getResponse();
+	
+	/**
+	 * Gets the default event namespace.
+	 * 
+	 * @return the default event namespace
+	 */
+	public abstract String getDefaultEventNamespace(String portletName);
+	
+	/**
+	 * Sets the default event namespace.
+	 * 
+	 * @return the string
+	 */
+//	public abstract void setDefaultEventNamespace(PortletAppDD portletAppDD);
 }

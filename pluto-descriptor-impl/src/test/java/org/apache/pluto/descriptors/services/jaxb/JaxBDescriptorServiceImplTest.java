@@ -107,8 +107,8 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 				"<role-name>NMTOKEN</role-name>\n" +
 				"<role-link>role-link</role-link>\n" +
 				"</security-role-ref>\n" +
-				"<supported-processing-event>supported-processing-event</supported-processing-event>\n" +
-				"<supported-publishing-event>supported-publishing-event</supported-publishing-event>\n" +
+				"<supported-processing-event><name>supported-processing-event</name></supported-processing-event>\n" +
+				"<supported-publishing-event><qname xmlns:x=\"http://test.com\">supported-publishing-event</qname></supported-publishing-event>\n" +
 				"<supported-public-render-parameter>supported-public-render-parameter</supported-public-render-parameter>\n" +
 				"</portlet>\n" );
 		attrs286.append("" + 
@@ -155,7 +155,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			    "<description xml:lang=\"de\">description</description>\n" +
 			    "<name>QName</name>\n" +
 			    "<alias>QName</alias>\n" +
-			    "<java-class>java-class</java-class>\n" +
+			    "<value-type>java-class</value-type>\n" +
 			  "</event-definition>\n" +
 			  "<public-render-parameter id=\"public1\">\n" +
 			    "<description xml:lang=\"de\">description</description>\n" +

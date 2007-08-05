@@ -100,8 +100,7 @@ public class PortletResponseWrapper
     }
 
 	public void addProperty(String key, Element element) {
-		// TODO Auto-generated method stub
-		
+		this.getPortletResponse().addProperty(key, element);
 	}
 }
 

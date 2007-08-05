@@ -48,7 +48,7 @@ public class ObjectFactory {
     private final static QName _PortletApp1_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd", "portlet-app");
     private final static QName _Portlet1DD_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd", "portlet");
     private final static QName _PortletDD_QNAME = new QName("http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "portlet");
-
+  
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.sun.java.xml.ns.portlet.portlet_app_2_0
      * 
@@ -352,8 +352,8 @@ public class ObjectFactory {
      * 
      */
     @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "supported-publishing-event", scope = PortletDD.class)
-    public JAXBElement<QName> createPortletDDSupportedPublishingEvent(QName value) {
-        return new JAXBElement<QName>(_PortletDDSupportedPublishingEvent_QNAME, QName.class, PortletDD.class, value);
+    public JAXBElement<EventDefinitionReferenceDD> createPortletDDSupportedPublishingEvent(EventDefinitionReferenceDD value) {
+        return new JAXBElement<EventDefinitionReferenceDD>(_PortletDDSupportedPublishingEvent_QNAME, EventDefinitionReferenceDD.class, PortletDD.class, value);
     }
 
     /**
@@ -370,8 +370,8 @@ public class ObjectFactory {
      * 
      */
     @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "supported-processing-event", scope = PortletDD.class)
-    public JAXBElement<QName> createPortletDDSupportedProcessingEvent(QName value) {
-        return new JAXBElement<QName>(_PortletDDSupportedProcessingEvent_QNAME, QName.class, PortletDD.class, value);
+    public JAXBElement<EventDefinitionReferenceDD> createPortletDDSupportedProcessingEvent(EventDefinitionReferenceDD value) {
+        return new JAXBElement<EventDefinitionReferenceDD>(_PortletDDSupportedProcessingEvent_QNAME, EventDefinitionReferenceDD.class, PortletDD.class, value);
     }
 
     /**
@@ -473,4 +473,5 @@ public class ObjectFactory {
         return new JAXBElement<PortletAppDD>(_PortletApp1_QNAME, PortletAppDD.class, null, value);
     }
 
+    
 }

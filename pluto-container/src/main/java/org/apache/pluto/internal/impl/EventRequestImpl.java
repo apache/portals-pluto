@@ -18,6 +18,7 @@ package org.apache.pluto.internal.impl;
 
 
 import java.io.Serializable;
+import java.io.StringReader;
 
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
@@ -28,13 +29,19 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalEventRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.EventProvider;
@@ -58,6 +65,10 @@ public class EventRequestImpl extends PortletRequestImpl
 	 */
 	private PortletPreferences portletPreferences = null;
 	
+	private PortletContainer container;
+	
+	private InternalPortletWindow window;
+	
 	private Event event; 
 	
 	//	 Constructor -------------------------------------------------------------
@@ -67,6 +78,8 @@ public class EventRequestImpl extends PortletRequestImpl
                              HttpServletRequest servletRequest, Event event) {
         super(container, internalPortletWindow, servletRequest);
         this.event = event;
+        this.window = internalPortletWindow;
+        this.container = container;
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Created Event request for: " + internalPortletWindow);
         }
@@ -80,19 +93,37 @@ public class EventRequestImpl extends PortletRequestImpl
         	(EventProvider) this.getRequest().getAttribute(Constants.PROVIDER);
 
         Object value = event.getValue();
-        if (value instanceof XMLStreamReader) {
-        	XMLStreamReader xml = (XMLStreamReader) event.getValue();
-        	EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(event.getQName());
+        
+        XMLStreamReader xml = null;
+		try {
+			if (value instanceof String) {
+				String in = (String) value; 
+				xml = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(in));
+			}			
+		}  
+		catch (XMLStreamException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (FactoryConfigurationError e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        if (xml != null) {
+        	//XMLStreamReader xml = (XMLStreamReader) event.getValue();
+        	
+        		//provider.getEventDefinition(event.getQName());
         	try {
         		// now test if object is jaxb
-
+        		EventDefinitionDD eventDefinitionDD = getEventDefintion(event.getQName()); 
+        		
         		ClassLoader loader = Thread.currentThread().getContextClassLoader();
         		Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());
 
         		JAXBContext jc = JAXBContext.newInstance(clazz);
         		Unmarshaller unmarshaller  = jc.createUnmarshaller();
 
-        		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+//        		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 
         		JAXBElement result = unmarshaller.unmarshal(xml,clazz);
 
@@ -103,13 +134,26 @@ public class EventRequestImpl extends PortletRequestImpl
         	} catch (ClassNotFoundException e) {
         		// TODO Auto-generated catch block
         		e.printStackTrace();
-        	}
+        	} catch (PortletContainerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         return event;
     }
     
     //  PortletRequestImpl impl -------------------------------------------------
     
+	private EventDefinitionDD getEventDefintion(QName name) throws PortletContainerException {
+		PortletAppDD appDD = container.getPortletApplicationDescriptor(window.getContextPath());
+		for (EventDefinitionDD def : appDD.getEvents()){
+			if (def.getName().equals(name)){
+				return def;
+			}
+		}
+		return null;
+	}
+
 	/**
     * FIXME: (see ActionRequestImpl)
     */
