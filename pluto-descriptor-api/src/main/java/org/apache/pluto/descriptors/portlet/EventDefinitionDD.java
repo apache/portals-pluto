@@ -64,6 +64,7 @@ import javax.xml.namespace.QName;
 @XmlType(name = "event-definitionType", propOrder = {
     "description",
     "name",
+    "qname",
     "alias",
     "javaClass"
 })
@@ -76,13 +77,18 @@ public class EventDefinitionDD {
 	
 	/**
 	 * Name of the Event
+	 * <choice>
+	 * 		<element name="qname" type="xs:QName"/>
+	 * 		<element name="name" type="string"/>
+	 * </choice>
 	 */
-	private QName name;	
+	private QName qname;	
+	private String name;
 	
 	/**
 	 * Java-Type of the Event
 	 */
-	@XmlElement(name = "java-class")
+	@XmlElement(name = "value-type")
 	private String javaClass;
 	
 	/**
@@ -164,14 +170,14 @@ public class EventDefinitionDD {
 	 * @return Returns the name.
 	 */
 	public QName getName() {
-		return name;
+		return (qname==null) ? new QName(name) : qname; 
 	}
 
 	/**
 	 * @param name The name to set.
 	 */
-	public void setName(QName name) {
-		this.name = name;
+	public void setName(QName qname) {
+		this.qname = qname;
 	}
 
 	/**

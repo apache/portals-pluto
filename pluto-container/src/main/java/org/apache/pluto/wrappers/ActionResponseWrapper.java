@@ -88,10 +88,10 @@ public class ActionResponseWrapper extends PortletResponseWrapper
 		this.getStateAwareResponse().setEvent(qname, value);
 	}
 
-	public void setEvents(Map<javax.xml.namespace.QName, java.io.Serializable> events) {
-		// TODO look for setEvents in StateAwareResponse
-//		this.getStateAwareResponse().setEvents(events);		
-	}
+//	public void setEvents(Map<javax.xml.namespace.QName, java.io.Serializable> events) {
+//		// TODO look for setEvents in StateAwareResponse
+////		this.getStateAwareResponse().setEvents(events);		
+//	}
     // --------------------------------------------------------------------------------------------
 
 	public PortletMode getPortletMode() {
@@ -106,19 +106,8 @@ public class ActionResponseWrapper extends PortletResponseWrapper
 		return this.getStateAwareResponse().getWindowState();
 	}
 
-	public void setNextPossiblePortletModes(Enumeration portletModes) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
-	public void setDefaultNamespacedEvents(Map<String, Object> events) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void setEvent(String name, java.io.Serializable value) {
-		// TODO Auto-generated method stub
-		
+		this.getStateAwareResponse().setEvent(name, value);
 	}
 }
 

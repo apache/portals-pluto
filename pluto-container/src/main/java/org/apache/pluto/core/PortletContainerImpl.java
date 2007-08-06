@@ -247,11 +247,12 @@ public class PortletContainerImpl implements PortletContainer,
         		+ portletWindow.getPortletName());
         
         PortletURLProvider portletURLProvider = requiredContainerServices.getPortalCallbackService().getPortletURLProvider(request, internalPortletWindow);
+        
+        portletURLProvider.savePortalURL(request);
         saveChangedParameters(actionRequest, actionResponse, portletURLProvider);
-        portletURLProvider.savePortalURL(request);        
         
         EventProvider provider = this.getRequiredContainerServices().getPortalCallbackService().
-			getEventProvider(request,response);
+			getEventProvider(request,response, this);
         provider.fireEvents(this);
         
         // After processing action, send a redirect URL for rendering.

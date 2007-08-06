@@ -17,6 +17,7 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -127,7 +128,7 @@ public class PortletDD {
 	
 	/** the supported processing Events */
 	@XmlElement(name = "supported-processing-event")
-    private List<QName> processingEvents = null;
+    private List<EventDefinitionReferenceDD> processingEvents = null;
 	
     /** The unique name of the portlet. */
 	@XmlElement(name = "portlet-name")
@@ -150,13 +151,13 @@ public class PortletDD {
 	
 	/** the supported publishing Events */
 	@XmlElement(name = "supported-publishing-event")
-    private List<QName> publishingEvents = null;
+    private List<EventDefinitionReferenceDD> publishingEvents = null;
 	
 	@XmlElement (name = "supported-locale")
-	private String supportedLocale = null;
+	private List<String> supportedLocale = null;
 	
 	@XmlElement (name = "supported-locale", namespace = QNAME_JSR168)
-	private String supportedLocale1 = null;
+	private List<String> supportedLocale1 = null;
 	
 	@XmlElement(name = "portlet-info")
     private PortletInfoDD portletInfo = null;
@@ -198,7 +199,7 @@ public class PortletDD {
 	
     /** the supported public render parameter */
 	@XmlElement(name = "supported-public-render-parameter")
-    private Vector<String> publicRenderParameter = null;
+    private List<String> publicRenderParameter = null;
     
     
     // Constructor -------------------------------------------------------------
@@ -314,31 +315,45 @@ public class PortletDD {
 
 
 	public List<QName> getProcessingEvents() {
-		return processingEvents;
+		List<QName> list = new ArrayList<QName>();
+		if (processingEvents != null) {
+			for (EventDefinitionReferenceDD ref : processingEvents) {
+				list.add(ref.getName());
+			}
+			return list;
+		}
+		return null;
 	}
 
 
-	public void setProcessingEvents(List<QName> processingEvents) {
+	public void setProcessingEvents(List<EventDefinitionReferenceDD> processingEvents) {
 		this.processingEvents = processingEvents;
 	}
 
 
 	public List<QName> getPublishingEvents() {
-		return publishingEvents;
+		List<QName> list = new ArrayList<QName>();
+		if (publishingEvents != null) {
+			for (EventDefinitionReferenceDD ref : publishingEvents) {
+				list.add(ref.getName());
+			}
+			return list;
+		}
+		return null;
 	}
 
 
-	public void setPublishingEvents(List<QName> publishingEvents) {
+	public void setPublishingEvents(List<EventDefinitionReferenceDD> publishingEvents) {
 		this.publishingEvents = publishingEvents;
 	}
 
 
-	public Vector<String> getPublicRenderParameter() {
+	public List<String> getPublicRenderParameter() {
 		return publicRenderParameter;
 	}
 
 
-	public void setPublicRenderParameter(Vector<String> publicRenderParameter) {
+	public void setPublicRenderParameter(List<String> publicRenderParameter) {
 		this.publicRenderParameter = publicRenderParameter;
 	}
 
@@ -407,14 +422,14 @@ public class PortletDD {
 	}
 
 
-	public String getSupportedLocale() {
+	public List<String> getSupportedLocale() {
 		if (supportedLocale != null)
 			return supportedLocale;
 		return supportedLocale1;
 	}
 
 
-	public void setSupportedLocale(String supportedLocale) {
+	public void setSupportedLocale(List<String> supportedLocale) {
 		this.supportedLocale = supportedLocale;
 		this.supportedLocale1 = supportedLocale;
 	}

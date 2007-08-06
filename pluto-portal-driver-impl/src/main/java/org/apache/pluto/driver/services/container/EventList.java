@@ -30,7 +30,7 @@ import javax.portlet.Event;
 public class EventList {
 	
 	/** The events. */
-	private Map<Event,EventAttribute> events = new HashMap<Event, EventAttribute>();;
+	private Map<Event,Boolean> events = new HashMap<Event, Boolean>();;
 	
 	/**
 	 * Adds an event.
@@ -38,8 +38,8 @@ public class EventList {
 	 * @param event the event
 	 * @param eventNumber the event number
 	 */
-	public void addEvent(Event event, int eventNumber){
-		events.put(event, new EventAttribute(eventNumber));
+	public void addEvent(Event event){
+		events.put(event, new Boolean(true));
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class EventList {
 	 * @return true, if is not processed
 	 */
 	public boolean isNotProcessed(Event event) {
-		return events.get(event).isNotProcessed();
+		return events.get(event).booleanValue();
 	}
 
 	/**
@@ -72,9 +72,9 @@ public class EventList {
 	 * @return true, if has more events
 	 */
 	public boolean hasMoreEvents() {
-		Collection<EventAttribute> attr = this.events.values();
-		for (EventAttribute attribute : attr) {
-			if (attribute.isNotProcessed())
+		Collection<Boolean> attr = this.events.values();
+		for (Boolean attribute : attr) {
+			if (attribute.booleanValue())
 				return true;
 		}
 		return false;
@@ -86,8 +86,8 @@ public class EventList {
 	 * @param event the processed
 	 */
 	public void setProcessed(Event event) {
-		EventAttribute attr = events.remove(event);
-		attr.setNotProcessed(false);
+		events.remove(event);
+		Boolean attr = new Boolean(false);
 		events.put(event, attr);
 	}
 	
@@ -99,24 +99,12 @@ public class EventList {
 	 * 
 	 * @return the event
 	 */
-	public Event getEvent(String eventName, int eventNumber){
+	public Event getEvent(String eventName){
 		for (Event event : getEvents()) {
 			if ((event.getName() != null) && (event.getName().toString().equals(eventName)))
-				if (events.get(event).getEventNumber() == eventNumber)
-					return event;
+				return event;
 		}
 		return null;
-	}
-	
-	/**
-	 * Gets the number.
-	 * 
-	 * @param event the event
-	 * 
-	 * @return the number
-	 */
-	public int getNumber(Event event){
-		return events.get(event).getEventNumber();
 	}
 	
 	/**

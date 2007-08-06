@@ -64,16 +64,10 @@ public class PortletWindowThread extends Thread {
 			HttpServletRequest req = new PortalServletRequest(eventProvider.getRequest(), this.portletWindow);
 			HttpServletResponse res = eventProvider.getResponse();
 			try {
-				synchronized (this) {
-					eventContainer.fireEvent(req, res, portletWindow, events.get(0));
-					//wait();
-					Thread.sleep(1);
-					events.remove(0);				
-				}
-			} catch (InterruptedException e){
-				System.out.println();
-				System.out.println("============interupted exception===============");
-				e.printStackTrace();
+//				synchronized (this) {
+					Event event = events.remove(0);
+					eventContainer.fireEvent(req, res, portletWindow, event);	
+//				}
 			} catch (PortletException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

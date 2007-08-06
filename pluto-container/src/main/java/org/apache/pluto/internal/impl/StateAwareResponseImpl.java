@@ -17,17 +17,15 @@
 package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Serializable;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.rmi.MarshalException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletException;
@@ -40,14 +38,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.logging.Log;
@@ -55,6 +52,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
@@ -105,85 +103,89 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	/* (non-Javadoc)
 	 * @see javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.lang.Object)
 	 */
-	public void setEvent(QName qname, java.io.Serializable value) {
+	public void setEvent(QName qname, Serializable value) throws IllegalArgumentException {
 		EventProvider provider = callback.getEventProvider(
-				getHttpServletRequest(),getHttpServletResponse());
-		
-		XMLStreamReader xml = null;
-		try {
+				getHttpServletRequest(),getHttpServletResponse(), container);
+
+		if (isDeclaredAsPublishingEvent(qname)) {
 			
-			EventDefinitionDD eventDefinitionDD = provider.getEventDefinition(qname);
-			if (value != null && eventDefinitionDD == null) {
-				// TODO: throw the right exception
-				throw new PortletException("No Event Defintion!");
-			} if (eventDefinitionDD == null) {
-				// TODO: throw the right exception
-				throw new PortletException("No Event Defintion!");
+			if (!isValueInstanceOfDefinedClass(qname,value))
+				throw new IllegalArgumentException("Payload has not the right class");
+
+			XMLStreamReader xml = null;
+			try {
+
+				if (value == null) {
+					provider.registerToFireEvent(new EventImpl(qname));
+				} else if (!(value instanceof Serializable)) {
+					throw new IllegalArgumentException("Object payload must implement Serializable");
+				}
+				else {
+	
+					Class clazz = value.getClass();
+
+					JAXBContext jc = JAXBContext.newInstance(clazz);
+
+					Marshaller marshaller  = jc.createMarshaller();
+
+					Writer out = new StringWriter();
+
+					marshaller.marshal(new JAXBElement(qname,clazz,value), out);
+//					marshaller.marshal(value, out);
+
+					if (out != null) {
+						provider.registerToFireEvent(new EventImpl(qname,(Serializable) out.toString()));
+					} else { 
+						provider.registerToFireEvent(new EventImpl(qname,(Serializable) value));
+					}
+				}
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PortletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PortletContainerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MarshalException e) {
+				// there is no valid jaxb binding
+				e.printStackTrace();
+			} catch (JAXBException e) {
+				// maybe there is no valid jaxb binding
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FactoryConfigurationError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+//				} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
 			}
-			
-			ClassLoader loader = Thread.currentThread().getContextClassLoader();
-			Class clazz = loader.loadClass(eventDefinitionDD.getJavaClass());		
-
-			JAXBContext jc = JAXBContext.newInstance(clazz);
-
-			Marshaller marshaller  = jc.createMarshaller();
-//			marshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, 
-//					Boolean.TRUE );
-
-			Writer out = new StringWriter();
-			
-			marshaller.marshal(new JAXBElement(
-					eventDefinitionDD.getName(),clazz,value), out);
-
-			Reader in = new StringReader(out.toString());
-
-			xml = XMLInputFactory.newInstance().createXMLStreamReader(in);
-
-			if (xml != null) {
-				provider.registerToFireEvent(new EventImpl(qname,(Serializable) xml));
-			} else { 
-				provider.registerToFireEvent(new EventImpl(qname,(Serializable) value));
-			}
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PortletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PortletContainerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MarshalException e) {
-			// there is no valid jaxb binding
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// maybe there is no valid jaxb binding
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FactoryConfigurationError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		}
 	}
 
 	/* (non-Javadoc)
+	 * @see javax.portlet.StateAwareResponse#setEvent(java.lang.String, java.lang.Object)
+	 */
+	public void setEvent(String name, Serializable value) {
+		String defaultEventNamespace = getDefaultEventNamespace();
+		setEvent((new QName(defaultEventNamespace, name)),value);
+	}
+	
+	/* (non-Javadoc)
 	 * @see javax.portlet.StateAwareResponse#setEvents(java.util.Map)
 	 */
-	public void setEvents(java.util.Map<javax.xml.namespace.QName, java.io.Serializable> events) {
-		Set keys = events.keySet();
-		for (Object key : keys) {
-			setEvent((QName)key,events.get(key));
-		}
-	}
+// Not in API anymore
+//	public void setEvents(Map events) {
+//		Set keys = events.keySet();
+//		for (Object key : keys) {
+//			setEvent((QName)key,(Serializable)events.get(key));
+//		}
+//	}
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.String)
@@ -437,16 +439,53 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
-
-	public void setEvent(String name, java.io.Serializable value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setDefaultNamespacedEvents(Map<String, Object> events) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
+// Not in API anymore
+//	public void setDefaultNamspacedEvents(Map<String, Object> events) {
+//		String defaultEventNamespace = getDefaultEventNamespace();
+//		Set<String> keys = events.keySet();
+//		for (String key : keys) {
+//			setEvent((new QName(defaultEventNamespace, key)),(Serializable) events.get(key));
+//		}	
+//	}
+
+	/**
+	 * Gets the default event namespace.
+	 * 
+	 * @return the default event namespace
+	 */
+	private String getDefaultEventNamespace() {
+		EventProvider provider = callback.getEventProvider(
+				getHttpServletRequest(),getHttpServletResponse(), container);
+		String defaultEventNamespace = provider.getDefaultEventNamespace(this.getInternalPortletWindow().getPortletName());
+		return (defaultEventNamespace == null || defaultEventNamespace.equals("")) ? XMLConstants.NULL_NS_URI : defaultEventNamespace; 
+	}
+	
+	// ****** private methods ******
+
+	private boolean isDeclaredAsPublishingEvent(QName qname) {
+		List<QName> events = internalPortletWindow.getPortletEntity()
+			.getPortletDefinition().getPublishingEvents();
+		return events != null && events.contains(qname);
+	}
+	
+	private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value){
+		PortletAppDD portletAppDD = null;
+		try {
+			 portletAppDD =
+				container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
+			 if (portletAppDD.getEvents() != null) {
+				 for (EventDefinitionDD event : portletAppDD.getEvents()) {
+					 if (event.getName().toString().equals(qname.toString())){
+						 return value.getClass().getName().equals(event.getJavaClass());
+					 }
+				 }
+			 }
+		} catch (PortletContainerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		// event not declared
+		return true;
+	}
 }

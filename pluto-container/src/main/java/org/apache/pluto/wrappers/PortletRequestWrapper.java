@@ -207,24 +207,12 @@ public class PortletRequestWrapper
     }
     // --------------------------------------------------------------------------------------------
 
-	public String getLifecyclePhase() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
-	public Cookie[] getCookieProperties() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
 	public Map<String, String[]> getPrivateParameterMap() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPortletRequest().getPrivateParameterMap();
 	}
 
 	public Map<String, String[]> getPublicParameterMap() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPortletRequest().getPublicParameterMap();
 	}
 }
 

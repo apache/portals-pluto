@@ -16,7 +16,10 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -103,24 +106,23 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
         return getAttributeNames(DEFAULT_SCOPE);
     }
     
-    public Enumeration getAttributeNames(int scope) {
+    public Enumeration<String> getAttributeNames(int scope) {
     	// Return all attribute names in the nested HttpSession object.
         if (scope == PortletSession.APPLICATION_SCOPE) {
             return httpSession.getAttributeNames();
         }
         // Return attribute names with the portlet-scoped prefix.
-        else {
-            Vector portletScopedNames = new Vector();
-            for (Enumeration en = httpSession.getAttributeNames();
-            		en.hasMoreElements(); ) {
-            	String name = (String) en.nextElement();
-                if (isInCurrentPortletScope(name)) {
-                	portletScopedNames.add(
-                			PortletSessionUtil.decodeAttributeName(name));
-                }
-           }
-            return portletScopedNames.elements();
+        Vector<String> portletScopedNames = new Vector<String>();
+        for (Enumeration<String> en = httpSession.getAttributeNames();
+        en.hasMoreElements(); ) {
+        	String name = en.nextElement();
+        	if (isInCurrentPortletScope(name)) {
+        		portletScopedNames.add(
+        				PortletSessionUtil.decodeAttributeName(name));
+        	}
         }
+        return portletScopedNames.elements();
+        
     }
     
     public void removeAttribute(String name) {
@@ -282,14 +284,40 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
 
 
 	public Map<String, Object> getMap() {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> paramNames = getAttributeNamesAsList(DEFAULT_SCOPE);		
+		return fillMap(paramNames, DEFAULT_SCOPE);
 	}
-
 
 	public Map<String, Object> getMap(int scope) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> paramNames = getAttributeNamesAsList(scope);		
+		return fillMap(paramNames, scope);
 	}
     
+// ***** private methods *****
+
+	/**
+	 * transforms the getAttributeNames enumeration to a list
+	 * @return list of getAttributeNames
+	 */
+	private List<String> getAttributeNamesAsList(int scope) {
+		//transform Enum to List
+		List<String> paramNames = new ArrayList<String>();
+		Enumeration<String> e = getAttributeNames(scope);
+		while (e.hasMoreElements()){
+			paramNames.add(e.nextElement());
+		}
+		return paramNames;
+	}
+	
+	/**
+	 * @param paramNames list of the attribute names to be filled in the map
+	 * @return the filled map
+	 */
+	private Map<String, Object> fillMap(List<String> paramNames, int scope) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		for (String string : paramNames) {
+			resultMap.put(string, getAttribute(string,scope));
+		}
+		return resultMap;
+	}
 }

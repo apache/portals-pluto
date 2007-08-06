@@ -724,7 +724,6 @@ implements PortletRequest, InternalPortletRequest {
 	}
 	
 	public String getWindowID() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return internalPortletWindow.getId().getStringId();
 	}
 }
