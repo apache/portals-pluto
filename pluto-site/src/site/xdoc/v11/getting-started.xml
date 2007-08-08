@@ -37,7 +37,7 @@ limitations under the License.
                 If you are getting started with Pluto, this is the distribution you
                 want.</li>
             <li><strong>pluto-current-bin</strong> - Provides the Pluto libraries, portal and 
-                testsuite web applications.</li>
+                testsuite web applications.  Includes ant tasks.</li>
             <li><strong>pluto-current-container-bin</strong> - Provides the Pluto container
                 libraries only.</li>
             <li><strong>pluto-current-src</strong> - Provides the Pluto source code; requires
@@ -103,8 +103,8 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/trunk/ pluto</pre>
 		</p>
 
-		<p>To check out Pluto 1.1.3 source to the 'pluto' directory use this command:
-		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.3 pluto</pre>
+		<p>To check out Pluto 1.1.4 source to the 'pluto' directory use this command:
+		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.4 pluto</pre>
 		</p>
 
         <p>
@@ -151,7 +151,7 @@ $> mvn pluto:install -DinstallDir=path/to/appserver
         <p>
           The <code>pluto:install</code> goal will take the resulting artifacts
           and properly deploy them within the configured Tomcat installation.
-          Currently, the Pluto 1.1 install has been tested on Tomcat 5.5.9, 5.5.17 and 5.5.20.
+          Currently, the Pluto 1.1 install has been tested on Tomcat 5.5.9, 5.5.17 and 5.5.20, 5.5.23, and 6.0.13.
           The Tomcat 5 archive can be found <a href="http://archive.apache.org/dist/tomcat/tomcat-5/archive">here</a>.
         </p>
         <p>
@@ -185,10 +185,10 @@ $> mvn install
           <ul>
             <li>castor-1.0.jar</li>
             <li>portlet-api-1.0.jar</li>
-            <li>pluto-container-1.1.3.jar</li>
-            <li>pluto-descriptor-api-1.1.3.jar</li>
-            <li>pluto-descriptor-impl-1.1.3.jar</li>
-            <li>pluto-taglib-1.1.3.jar</li>
+            <li>pluto-container-1.1.4.jar</li>
+            <li>pluto-descriptor-api-1.1.4.jar</li>
+            <li>pluto-descriptor-impl-1.1.4.jar</li>
+            <li>pluto-taglib-1.1.4.jar</li>
           </ul>
         </p>
         <p>

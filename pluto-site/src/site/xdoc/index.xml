@@ -45,13 +45,13 @@ limitations under the License.
       </div>
       
       <div class="highlightBox">
-        <h5>Get Pluto 1.1.3</h5>
+        <h5>Get Pluto 1.1.4</h5>
         <p>
           <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">
             <img valign="top" src="images/download.gif" border="0" title="download"/>
             Download
           </a>
-          Pluto 1.1.3 GA
+          Pluto 1.1.4 GA
         </p>
         <ul>
           <li><a href="v11/getting-started.html">Installation Guide</a></li>
@@ -100,7 +100,7 @@ limitations under the License.
     <section name="Project Status">
       <p>
         Apache Pluto is a subproject of the Apache Portals Project. The current
-        stable release of Apache Pluto is version 1.1.3.  Pluto 1.1 is being
+        stable release of Apache Pluto is version 1.1.4.  Pluto 1.1 is being
         actively developed as the Reference Implementation of JSR-286.
       </p>
       <subsection name="Pluto 1.1">
