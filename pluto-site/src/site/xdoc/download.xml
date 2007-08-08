@@ -49,6 +49,13 @@ limitations under the License.
         <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">a Pluto
         distribution mirror</a>.
       </p>
+      <br/>
+      <br/>
+      <p>
+        <strong>Please note:</strong> It was discovered during the 1.1.4 release process 
+        that Pluto 1.1.<em>3</em> was not binary compatible with Pluto 1.1.<em>2</em>. The <em>1.1.4</em>  release 
+        maintains binary compatability with <em>1.1.3.</em>
+      </p>
     </section>
     
     <section name="Browse Distribution Archives">
@@ -57,7 +64,7 @@ limitations under the License.
         <a href="http://archive.apache.org/dist/portals/pluto/">from here</a>.
       </p>
     </section>
-  
+
   </body>
   
 </document>
