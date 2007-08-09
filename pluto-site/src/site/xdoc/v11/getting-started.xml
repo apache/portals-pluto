@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<document>
+  
+  <properties>
+    <title>Getting Started With Pluto</title>
+  </properties>
+  
+  <body>
+
+    <section name="Installing the Pluto 1.1 Binary Build">
+      <div class="highlightBox">
+        <h4>About Pluto Distributions</h4>
+        <p>
+          There are a number of distributions to choose from depending
+          on your needs.
+          <ul>
+            <li><strong>pluto-current-bundle</strong> - Provides Pluto and Tomcat bundled together.
+                If you are getting started with Pluto, this is the distribution you
+                want.</li>
+            <li><strong>pluto-current-bin</strong> - Provides the Pluto libraries, portal and 
+                testsuite web applications.</li>
+            <li><strong>pluto-current-container-bin</strong> - Provides the Pluto container
+                libraries only.</li>
+            <li><strong>pluto-current-src</strong> - Provides the Pluto source code; requires
+                that you build and deploy Pluto on your own.</li>
+          </ul>
+        </p>
+      </div>
+      <ol>
+        <li>Download the Pluto 1.1 binary distribution named <strong>pluto-current-bundle</strong> from 
+        a <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">distribution site</a>.</li>
+        <li>Unzip the binary distribution into a directory.</li>
+        	<ol>
+        		<li>&lt;PLUTO-1.1-HOME&gt; will be the top level directory.</li>
+        	</ol>	
+        <li>Execute startup.bat (Windows) or startup.sh (Unix)
+in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
+			<ol>
+	        	<li>Use shutdown.bat/shutdown.sh to stop the portal</li>
+			</ol>
+        <li>Browse to <a href="http://localhost:8080/pluto/portal">http://localhost:8080/pluto/portal</a></li>
+        <li>Login as the user pluto (password=pluto).</li>
+      </ol>
+
+    </section>
+	    
+    <section name="Building Pluto from Source">
+      
+      <p>
+        Maven 2 is utilized as the project management and build system for
+        Pluto 1.1. Pluto currently provides Maven plugins which can be used to
+        install the Pluto Portal, assemble portlet applications, deploy
+        applications, and publish portlet applications to the Pluto Portal.
+      </p>
+
+      <subsection name="Obtaining Pluto 1.1 Source Code">
+		<p>The Pluto project uses the
+		<a href="http://subversion.tigris.org/">Subversion</a> version control
+		system.  If you're new to Subversion, you can check out the
+		<a href="http://svnbook.red-bean.com/">online book</a> about Subversion.
+		Note that we are currently using Subversion 1.3.x (there are separate
+		versions of the book covering the different versions of Subversion). 
+		</p>
+
+    	<p><b>Web Access to Subversion</b></p>
+    	
+		<p>
+		To browse the Pluto 1.1 source code, you can use the
+		<a href="http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk?root=Apache-SVN">ViewCVS
+		web interface</a> to Subversion. This is current at all times.
+		</p>
+
+		<p><b>Normal Subversion Access</b></p>
+		<p>Anyone can check code out of Subversion anonymously.  However, you need to specify a
+		username and password in order to update the Subversion repository, and only
+		Pluto committers have the permissions to do that.  We run Subversion
+		over standard HTTPS, so hopefully you won't have problems with intervening
+		firewalls.</p>
+
+		<h3>Check out from Subversion</h3>
+		
+		<p>Again, anyone can do this.  To check out the latest distribution of Pluto 1.1 (trunk) to a directory 
+		called 'pluto' use this command:
+		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/trunk/ pluto</pre>
+		</p>
+
+		<p>To check out Pluto 1.1.3 source to the 'pluto' directory use this command:
+		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.3 pluto</pre>
+		</p>
+
+        <p>
+          Zipped up Pluto source distributions can also be downloaded from
+        a <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">distribution mirror</a>.  
+        </p>          
+
+	  </subsection>	    
+	    
+      <subsection name="Building Pluto with Maven 2">
+        <p>
+          If this is your first time building Pluto with Maven 2, edit <code>~/.m2/settings.xml</code>
+	  and add the &lt;pluginGroups&gt; element:
+	  <p>
+	    <source><![CDATA[
+<settings>
+  ...
+  <pluginGroups>
+    <pluginGroup>org.apache.pluto</pluginGroup>
+  </pluginGroups>
+  ...
+</settings>]]>
+            </source>
+	  </p>
+          If you don't have <code>org.apache.pluto</code> specified as a <code>&lt;pluginGroup&gt;</code>,
+	  then the <code>pluto:install</code> will fail.
+	</p>
+        <p>
+          <code>&lt;PLUTO-1.1-SRCHOME&gt;</code> is the local directory where the
+          Pluto 1.1 source distribution has been checked out or unzipped into.
+        </p>
+        <p>
+          <source><![CDATA[
+$> cd <PLUTO-1.1-SRCHOME>
+$> mvn install
+$> mvn pluto:install -DinstallDir=path/to/appserver
+          ]]></source>
+        </p>
+        <p>
+          The <code>install</code> goal is a built in Maven 2 lifecycle
+          which builds the project artifacts and installs them into the Maven
+          repository.
+        </p>
+        <p>
+          The <code>pluto:install</code> goal will take the resulting artifacts
+          and properly deploy them within the configured Tomcat installation.
+          Currently, the Pluto 1.1 install has been tested on Tomcat 5.5.9, 5.5.17 and 5.5.20.
+          The Tomcat 5 archive can be found <a href="http://archive.apache.org/dist/tomcat/tomcat-5/archive">here</a>.
+        </p>
+        <p>
+          If installing to a directory that contains spaces, <code>installDir</code>
+          needs to be enclosed within quotes:
+        </p>
+        <p>
+          <source><![CDATA[
+C:\pluto> mvn pluto:install -DinstallDir="C:\Program Files\Apache Software Foundation\Tomcat 5.5"
+          ]]></source>
+        </p>
+        
+      </subsection>
+      
+      <subsection name="Installing Pluto Manually">
+        <p>
+        This section documents the manual installation of Pluto into Tomcat. It replaces 
+        the pluto:install goal, but requires that the built-in Maven 2 install goal 
+        (<code>mvn install</code>) be run from <code>&lt;PLUTO-1.1-SRCHOME&gt;</code>.
+        </p>
+        <p>
+          <b>Step 1:</b>
+          <source><![CDATA[
+$> cd <PLUTO-1.1-SRCHOME>
+$> mvn install
+          ]]></source>
+        </p>
+        <p>
+          <b>Step 2:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/shared/lib</code>:
+          <ul>
+            <li>castor-1.0.jar</li>
+            <li>portlet-api-1.0.jar</li>
+            <li>pluto-container-1.1.3.jar</li>
+            <li>pluto-descriptor-api-1.1.3.jar</li>
+            <li>pluto-descriptor-impl-1.1.3.jar</li>
+            <li>pluto-taglib-1.1.3.jar</li>
+          </ul>
+        </p>
+        <p>
+          <b>Step 3:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/common/endorsed</code>:
+          <ul>
+            <li>xercesImpl-2.6.2.jar</li>
+            <li>xmlParserAPIs-2.6.2.jar</li>
+          </ul>
+        </p>
+        <p>
+          <b>Step 4:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/conf/Catalina/localhost</code>:
+          <ul>
+            <li>&lt;PLUTO_SRCHOME&gt;/pluto-portal/src/main/resources/pluto.xml</li>
+            <li>&lt;PLUTO_SRCHOME&gt;/pluto-testsuite/src/main/resources/testsuite.xml</li>
+          </ul>
+        </p>
+        <p>
+          <b>Step 5:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/webapps</code>:
+          <ul>
+            <li>&lt;PLUTO_SRCHOME&gt;/pluto-portal/target/pluto-portal.war</li>
+            <li>&lt;PLUTO_SRCHOME&gt;/pluto-testsuite/target/pluto-testsuite.war</li>
+          </ul>
+        </p>
+      </subsection>
+      
+      <subsection name="Installing Pluto with a Windows EXE">
+        <p>
+          The NSIS Installer is not yet complete, but we hope to have a fully
+          functional one soon.  Anyone is more than welcome to assist us in
+          this process.
+        </p>
+      </subsection>
+          
+    <subsection name="Configuring Source-Built Pluto for Application Scope PortletSession Attributes">
+    <p>To be able to use application-scoped <code>PortletSession</code> attributes in Pluto, modify
+    the Connector element for port 8080 in <code>&lt;TOMCAT_HOME&gt;/conf/server.xml</code> by
+    adding the following attribute and value: emptySessionPath="true".
+    </p>
+    </subsection>    
+    <subsection name="Configuring User and Role in the Pluto Source Build">
+      <p>
+        The Pluto Testsuite portlet application needs the role '<code>pluto</code>'
+        to run the Security Mapping Test. So before starting tomcat, you should
+        edit <code>&lt;TOMCAT_HOME&gt;/conf/tomcat-users.xml</code>, add the
+        role '<code>pluto</code>', and add a user in that role. The simplest way
+        to do this is to edit add the '<code>pluto</code>' role to the
+        '<code>tomcat</code>' user's record. Here is a sample
+        <code>tomcat-users.xml</code> file:
+        <source><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<tomcat-users>
+  <role rolename="manager"/>
+  <role rolename="pluto"/>
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <user username="tomcat" password="tomcat" roles="tomcat,pluto,manager"/>
+  <user username="role1" password="tomcat" roles="role1"/>
+  <user username="both" password="tomcat" roles="tomcat,role1"/>
+  <user username="pluto" password="pluto" roles="pluto,manager"/>
+</tomcat-users>
+        ]]></source>
+      </p>
+    </subsection>
+    
+    
+    <subsection name="Starting the Portal">
+      <p>
+        Now you are ready to use the Pluto Portal built from source. Start up tomcat by running
+        <code>startup.bat</code> (for windows) or <code>startup.sh</code> (for
+        *nix) in <code>&lt;TOMCAT_HOME&gt;/bin</code>, and browse to
+        <code>http://localhost:8080/pluto/portal</code>. Login to Pluto using
+        the user and password you just created in <code>tomcat-users.xml</code>.
+        If you added the 'pluto' role to the 'tomcat' user's record, you can
+        login as 'tomcat/tomcat'.
+      </p>
+    </subsection>
+    </section>
+    
+  </body>
+  
+</document>
+
