@@ -82,7 +82,7 @@ public interface ResourceRequest extends ClientDataRequest {
     
     /**
      * Returns the resource ID set on the ResourceURL or <code>null</code>
-     * if no resource ID was set onj the URL.
+     * if no resource ID was set on the URL.
      * 
      * @return  the resource ID set on the ResourceURL,or <code>null</code>
      *          if no resource ID was set on the URL. 

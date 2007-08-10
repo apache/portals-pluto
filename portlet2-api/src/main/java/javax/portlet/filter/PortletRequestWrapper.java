@@ -65,6 +65,7 @@ public class PortletRequestWrapper implements PortletRequest {
     private PortletRequestWrapper() {
     }
     
+    
     /**
      * Creates an <code>PortletRequest</code> adaptor 
      * wrapping the given request object.

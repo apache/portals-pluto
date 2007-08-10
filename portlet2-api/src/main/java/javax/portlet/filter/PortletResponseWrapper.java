@@ -47,7 +47,7 @@ import javax.servlet.http.Cookie;
  */
 public class PortletResponseWrapper implements PortletResponse {
 
-	   PortletResponse response;
+		PortletResponse response;
 	    
 	    /** 
 	     * Require having a response for constructing
