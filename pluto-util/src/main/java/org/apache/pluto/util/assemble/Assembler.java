@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -21,25 +22,36 @@ import org.apache.pluto.util.UtilityException;
  * The pluto assembler is used to assemble a portlet application which is
  * deployable to pluto.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Oct 15, 2004
  */
 public interface Assembler {
 
-    public static final String PORTLET_XML = "WEB-INF/portlet.xml";
+    /**
+     * Name of the Portlet Application descriptor file relative
+     * to the web application root, normally <code>WEB-INF/portlet.xml</code>.
+     */
+    String PORTLET_XML = "WEB-INF/portlet.xml";
 
-    public static final String SERVLET_XML = "WEB-INF/web.xml";
-    
-    public static final String DISPATCH_SERVLET_CLASS =
+    /**
+     * Name of the Web Application descriptor file relative
+     * to the web application root, normally <code>WEB-INF/web.xml</code>.
+     */
+    String SERVLET_XML = "WEB-INF/web.xml";
+
+    /**
+     * The fully qualified name of the class responsible for
+     * dispatching requests from the Pluto container to portlets. 
+     */
+    String DISPATCH_SERVLET_CLASS =
         	"org.apache.pluto.core.PortletServlet";
 
     /**
-     * Assemble a web applicaiton into a portlet web application which is
+     * Assemble a web application into a portlet web application which is
      * deployable into the pluto-1.1 portlet container. The specified web
      * application will be overwritten with the new application.
      */
-    public void assemble(AssemblerConfig config) throws UtilityException;
+    void assemble(AssemblerConfig config) throws UtilityException;
 
 }
 

@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,15 +16,15 @@
  */
 package org.apache.pluto.util.install.file;
 
-import org.apache.pluto.util.install.InstallationConfig;
-import org.apache.pluto.util.install.PortalInstaller;
-import org.apache.pluto.util.UtilityException;
-import org.codehaus.plexus.util.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Collection;
+import java.util.Iterator;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.pluto.util.UtilityException;
+import org.apache.pluto.util.install.InstallationConfig;
+import org.apache.pluto.util.install.PortalInstaller;
 
 /**
  * File System based installer.  Copies files to the appropriate

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+    <display-name>WarTestServletDisplayName</display-name>
+    <servlet>
+        <servlet-name>WarTestPortletName</servlet-name>
+        <servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+        <init-param>
+            <param-name>portlet-name</param-name>
+            <param-value>WarTestPortletName</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WarTestPortletName</servlet-name>
+        <url-pattern>/PlutoInvoker/WarTestPortletName</url-pattern>
+    </servlet-mapping>
+</web-app>
