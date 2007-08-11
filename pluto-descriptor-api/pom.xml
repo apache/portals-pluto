@@ -47,12 +47,6 @@
 		<id>maven2-repository.dev.java.net</id>
 		<url>https://maven2-repository.dev.java.net/nonav/repository</url>
 	</pluginRepository>
-	<pluginRepository>
-		<id>maven-repository.dev.java.net</id>
-		<name>Java.net Maven 1 Repository (legacy)</name>
-		<url>https://maven-repository.dev.java.net/nonav/repository</url>
-		<layout>legacy</layout>
-	</pluginRepository>
 </pluginRepositories>
 
 
@@ -80,8 +74,12 @@
 						${basedir}/../pluto-site/src/site/resources
 					</resourcesDirectory>
 				</configuration>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+      </plugin>
 			</plugin>
-			<plugin>
+				<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<!-- best lock down version of the plugin too -->

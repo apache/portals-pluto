@@ -1,9 +1,10 @@
 /*
- * Copyright 2005 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -25,7 +26,6 @@ import java.util.List;
  * WebApplication configuration as contained
  * within the web.xml Deployment Descriptor.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: WebAppDD.java 157475 2005-03-14 22:13:18Z ddewolf $
  * @since Feb 28, 2005
  */
@@ -34,7 +34,6 @@ public class WebAppDD {
     private IconDD icon;
     private String displayName;
     private String description;
-    private boolean distributable;
     private List contextParams = new ArrayList();
     private List filters = new ArrayList();
     private List filterMappings = new ArrayList();
@@ -52,6 +51,14 @@ public class WebAppDD {
     private List securityRoles = new ArrayList();
     private List envEntrys = new ArrayList();
     private List ejbRefs = new ArrayList();
+    // Default to servletVersion 2.3.  If a <web-app>
+    // element is present with a version attribute,
+    // the Castor mapping will update this field.
+    private String servletVersion = "2.4";
+    // Default to false.  If a <web-app>
+    // contains a <distributable/> element, then
+    // Castor will update this field to true.
+    private DistributableDD distributableDD = new DistributableDD();
 
     public WebAppDD() {
 
@@ -82,15 +89,19 @@ public class WebAppDD {
     }
 
     public boolean isDistributable() {
-        return distributable;
+        return distributableDD.isDistributable().booleanValue();
+    }
+
+    public DistributableDD getDistributable() {
+        return distributableDD;
     }
 
     public void setDistributable() {
-        this.distributable = true;
+        this.distributableDD.setDistributable(true);
     }
 
     public void setDistributable(boolean distributable) {
-        this.distributable = distributable;
+        this.distributableDD.setDistributable(distributable);
     }
 
     /**
@@ -231,6 +242,15 @@ public class WebAppDD {
 
     public void setEjbRefs(List ejbRefs) {
         this.ejbRefs = ejbRefs;
+    }
+
+
+    public String getServletVersion() {
+        return servletVersion;
+    }
+
+    public void setServletVersion(String servletVersion) {
+        this.servletVersion = servletVersion;
     }
 
 // Helpers
