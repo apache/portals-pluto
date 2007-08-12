@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2005-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <parent>
+    <groupId>org.apache.pluto</groupId>
+    <artifactId>pluto</artifactId>
+    <version>1.1.0-286-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>pluto-testsuite</artifactId>
+  <packaging>war</packaging>
+  <name>Pluto Testsuite Portlet</name>
+  
+  <dependencies>
+    <dependency>
+      <groupId>javax.portlet</groupId>
+      <artifactId>portlet-api</artifactId>
+      <version>${portlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>${servlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>${jstl.version}</version>
+      <scope>compile</scope>
+      <exclusions>
+          <exclusion>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+          </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>commons-digester</groupId>
+      <artifactId>commons-digester</artifactId>
+      <version>${commons-digester.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>${commons-logging.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>${taglibs.standard.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  
+  <!-- Build configuration -->
+  <build>
+    <finalName>pluto-testsuite</finalName>
+    <plugins>
+      <!-- configure maven-war-plugin to use updated web.xml -->
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
+        </configuration>
+      </plugin>
+      <!-- bind 'pluto:assemble' goal to 'process-resources' lifecycle -->
+      <plugin>
+        <groupId>org.apache.pluto</groupId>
+        <artifactId>maven-pluto-plugin</artifactId>
+        <version>${pom.version}</version>
+        <executions>
+          <execution>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>
+
+
