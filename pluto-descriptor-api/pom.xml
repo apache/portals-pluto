@@ -74,11 +74,11 @@
 						${basedir}/../pluto-site/src/site/resources
 					</resourcesDirectory>
 				</configuration>
+			</plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
       </plugin>
-			</plugin>
 				<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
