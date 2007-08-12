@@ -130,6 +130,9 @@ public interface CacheControl {
      * <p>
      * This call is equivalent to calling
      * <code>setProperty(ETAG, token)</code>.
+     * <p>
+     * Setting the ETag to <code>null</code> removes
+     * the currently set ETag.
      *  
      * @param token  the ETag token
      */

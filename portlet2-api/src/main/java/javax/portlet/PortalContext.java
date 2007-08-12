@@ -1,4 +1,3 @@
-
 /*  Licensed to the Apache Software Foundation (ASF) under one
  *  or more contributor license agreements.  See the NOTICE file
  *  distributed with this work for additional information
@@ -25,7 +24,7 @@
  * Community Process. In order to remain compliant with the specification
  * DO NOT add / change / or delete method signatures!
  */
- /**
+/**
   * Copyright 2006 IBM Corporation.
   */
 

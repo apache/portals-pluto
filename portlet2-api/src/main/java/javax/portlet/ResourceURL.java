@@ -93,6 +93,20 @@ public interface ResourceURL extends BaseURL {
 	public static final String PAGE = "cacheLevelPage";
 
 	/**
+	 * Property that the portlet can set for resouces with caching
+	 * type <code>FULL</code> via the <code>setProperty</code> method
+	 * on the <code>ResourceURL</code>.
+	 * <p>
+	 * When set, this property indicates to the portal application
+	 * that it can share this resource across different portlet applications.
+	 * <p>
+	 * The value of this property should be a QName in the 
+	 * format of <code>javax.xml.namespace.QName.toString()</code>.
+	 */
+	public static final String SHARED = "javax.portlet.shared";
+
+	
+	/**
      * Allows setting a resource ID that can be retrieved when serving the
      * resource through the {@link ResourceRequest#getResourceID} method.
      * 

@@ -193,10 +193,10 @@ public interface MimeResponse extends PortletResponse {
      *            the content MIME type
      * 
      * @throws java.lang.IllegalArgumentException
-     *             if the given type is not in the list returned by
-     *             <code>PortletRequest.getResponseContentTypes</code>
+     *             for <code>render</code> calls if the given type is not in the list 
+     *             returned by <code>PortletRequest.getResponseContentTypes</code>
      * 
-     * @see RenderRequest#getResponseContentTypes
+     * @see PortletRequest#getResponseContentTypes
      * @see #getContentType
      */
     public void setContentType(String type);

@@ -92,7 +92,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * Called by the portlet container to indicate to a portlet that the portlet
      * is being placed into service.
      * <p>
-     * The default implementation just stores the <code>PortletConfig</code>
+     * The default implementation stores the <code>PortletConfig</code>
      * object.
      * <p>
      * The portlet container calls the <code>init</code> method exactly once
@@ -236,6 +236,9 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 			}
 		} else {	// buffered portal calling
 			doHeaders(request, response);
+		    Collection<PortletMode> nextModes = getNextPossiblePortletModes(request);
+		    if (nextModes != null)
+		    	response.setNextPossiblePortletModes(nextModes);
 			response.setTitle(getTitle(request));
 			doDispatch(request, response);
 		}
