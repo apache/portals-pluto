@@ -21,6 +21,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.descriptors.common.UserDataConstraintDD;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "security-constraintType", propOrder = {
     "displayName","displayName1",
