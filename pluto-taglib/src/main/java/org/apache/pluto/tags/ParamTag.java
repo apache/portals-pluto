@@ -59,7 +59,7 @@ public class ParamTag extends TagSupport {
      * Returns the name.
      * @return String
      */
-    public String getName() {
+    public String getName() throws JspException {
         return name;
     }
 
