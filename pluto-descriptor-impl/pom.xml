@@ -39,6 +39,10 @@
 					</resourcesDirectory>
 				</configuration>
 			</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+      </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -59,7 +63,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>castor</groupId>
+			<groupId>org.codehaus.castor</groupId>
 			<artifactId>castor</artifactId>
 			<version>${castor.version}</version>
 			<scope>compile</scope>

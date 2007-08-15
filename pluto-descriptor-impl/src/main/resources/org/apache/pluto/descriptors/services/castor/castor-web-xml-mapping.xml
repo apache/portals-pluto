@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Object Mapping DTD Version 1.0//EN"
-                         "http://castor.exolab.org/mapping.dtd">
+                         "http://castor.org/mapping.dtd">
 <!-- 
-  Copyright 2004 The Apache Software Foundation
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
 
       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -22,7 +23,7 @@
   <!--
     The Root WebApplication Element
     This element should map each and every one of the possible 2.4
-    elments in order.
+    elements in order.
       + icon,
       + display-name
       + description
@@ -49,7 +50,13 @@
     -->
   <class name="org.apache.pluto.descriptors.servlet.WebAppDD">
     <map-to xml="web-app"/>
-      
+    
+    <field name="ServletVersion"
+           handler="org.apache.pluto.descriptors.services.castor.ServletVersionCastorFieldHandler"
+           type="java.lang.String">
+        <bind-xml name="version" node="attribute"/>
+    </field>
+        
     <field name="Icon"
            type="org.apache.pluto.descriptors.common.IconDD"/>
 
@@ -61,7 +68,9 @@
       <bind-xml name="description" node="element"/>
     </field>
 
-    <field name="Distributable" get-method="isDistributable">
+    <field name="Distributable"
+           type="org.apache.pluto.descriptors.servlet.DistributableDD"
+           handler="org.apache.pluto.descriptors.services.castor.DistributableDDCastorFieldHandler">
       <bind-xml name="distributable" node="element"/>
     </field>
 
@@ -192,7 +201,7 @@
       <field name="InitParams"
           type="org.apache.pluto.descriptors.common.InitParamDD"
           collection="arraylist">
-          <bind-xml name="init-param"/>
+          <bind-xml name="init-param" node="element"/>
       </field>
   </class>
   <class name="org.apache.pluto.descriptors.servlet.FilterMappingDD">
@@ -290,7 +299,7 @@
         <field name="AuthConstraint"
                type="org.apache.pluto.descriptors.servlet.AuthConstraintDD"/>
         <field name="UserDataConstraint"
-               type="org.apache.pluto.descriptors.servlet.UserDataConstraintDD"/>
+               type="org.apache.pluto.descriptors.common.UserDataConstraintDD"/>
     </class>
     <class name="org.apache.pluto.descriptors.servlet.WebResourceCollectionDD">
         <field name="description" type="java.lang.String"/>
@@ -317,7 +326,62 @@
             <bind-xml name="load-on-startup" node="text"/>
         </field>
     </class>
+    
+    <class name="org.apache.pluto.descriptors.common.DescriptionDD">
+        <field name="Lang">
+            <bind-xml name="lang" node="attribute"/>
+        </field>
 
+        <field name="Description">
+            <bind-xml name="description" node="text"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.common.InitParamDD">
+        <field name="ParamName">
+            <bind-xml name="param-name" node="element"/>
+        </field>
+        <field name="ParamValue">
+            <bind-xml name="param-value" node="element"/>
+        </field>
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description" node="element"/>
+        </field>
+    </class>
+
+
+    <class name="org.apache.pluto.descriptors.common.SecurityRoleRefDD">
+        <field name="RoleName">
+            <bind-xml name="role-name" node="element"/>
+        </field>
+        <field name="RoleLink">
+            <bind-xml name="role-link" node="element"/>
+        </field>
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description"/>
+        </field>
+    </class>
+
+    <class name="org.apache.pluto.descriptors.common.UserDataConstraintDD">
+        <field name="Descriptions" type="org.apache.pluto.descriptors.common.DescriptionDD"
+               collection="arraylist">
+            <bind-xml name="description" node="element"/>
+        </field>
+
+        <field name="TransportGuarantee">
+            <bind-xml name="transport-guarantee" node="element"/>
+        </field>
+    </class>
+    
+    <class name="org.apache.pluto.descriptors.servlet.DistributableDD">
+         <field name="Distributable" 
+                type="java.lang.Boolean"
+                handler="org.apache.pluto.descriptors.services.castor.DistributableCastorFieldHandler">
+             <bind-xml name="distributable" node="element"/>
+         </field>
+    </class>        
 
 </mapping>
 

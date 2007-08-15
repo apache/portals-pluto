@@ -1,9 +1,10 @@
 /*
- * Copyright 2005 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -20,6 +21,7 @@ import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
+import org.exolab.castor.xml.Marshaller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +34,6 @@ import java.net.URL;
  * the service; requiring only that subclasses provide the
  * input streams to/from the actual descriptor.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: WebAppDescriptorServiceImpl.java 156743 2005-03-10 05:50:30Z ddewolf $
  * @since Mar 5, 2005
  */
@@ -98,6 +99,14 @@ public class WebAppDescriptorServiceImpl
         Mapping mapping = new Mapping();
         mapping.loadMapping(url);
         return mapping;
+    }
+
+    protected void setCastorMarshallerOptions(Marshaller marshaller, Object beingMarshalled) {
+        String servletVersion = ((WebAppDD)beingMarshalled).getServletVersion();
+        if ( "2.4".equals(servletVersion) )
+        {
+            marshaller.setDoctype(getPublicId(), getDTDUri());
+        }
     }
 
 }
