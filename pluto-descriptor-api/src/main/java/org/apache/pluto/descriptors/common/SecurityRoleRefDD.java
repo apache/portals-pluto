@@ -16,6 +16,8 @@
  */
 package org.apache.pluto.descriptors.common;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -68,7 +70,8 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 @XmlType(name = "security-role-refType", propOrder = {
     "description","description1",
     "roleName","roleName1",
-    "roleLink","roleLink1"
+    "roleLink","roleLink1",
+    "descriptions", "descriptions1"
 })
 
 public class SecurityRoleRefDD {
@@ -80,6 +83,14 @@ public class SecurityRoleRefDD {
 	/** The description of what the role is utilized for. */
 	@XmlElement( name = "description", namespace = PortletDD.QNAME_JSR168)
     private String description1;
+
+	/** The description list. */
+	@XmlElement(name = "descriptions")
+    private List<String> descriptions;
+	
+	/** The description list. */
+	@XmlElement(name = "descriptions", namespace = PortletDD.QNAME_JSR168)
+    private List descriptions1;
 
     /** The name of the role reference. */
 	@XmlElement( name = "role-name")
@@ -159,6 +170,25 @@ public class SecurityRoleRefDD {
     public void setDescription(String description) {
     	this.description = description;
     	this.description1 = description;
+    }
+
+    /**
+     * Retrieve the description list.
+     * @return
+     */
+    public List getDescriptions() {
+    	if (descriptions != null)
+    		return descriptions;
+    	return descriptions1;
+    }
+
+    /**
+     * Set the description list.
+     * @param description
+     */
+    public void setDescriptions(List<String> descriptions) {
+    	this.descriptions = descriptions;
+    	this.descriptions1 = descriptions;
     }
 }
 

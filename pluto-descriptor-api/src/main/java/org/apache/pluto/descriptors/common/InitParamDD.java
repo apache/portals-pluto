@@ -20,6 +20,8 @@
  */
 package org.apache.pluto.descriptors.common;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -64,7 +66,8 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 @XmlType(name = "init-paramType", propOrder = {
     "description", "description1",
     "paramName", "paramName1",
-    "paramValue", "paramValue1"
+    "paramValue", "paramValue1",
+    "descriptions", "descriptions1"
 })
 public class InitParamDD {
 	
@@ -76,7 +79,15 @@ public class InitParamDD {
 	@XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
     private String description1;
 
-    /** The name of the parameter. */
+	/** The description list. */
+	@XmlElement(name = "descriptions")
+    private List<String> descriptions;
+	
+	/** The description list. */
+	@XmlElement(name = "descriptions", namespace = PortletDD.QNAME_JSR168)
+    private List descriptions1;
+
+	/** The name of the parameter. */
 	@XmlElement(name = "name")
     private String paramName;
 	
@@ -158,5 +169,23 @@ public class InitParamDD {
     	this.description1 = description;
     }
 
+    /**
+     * Retrieve the description list.
+     * @return
+     */
+    public List getDescriptions() {
+    	if (descriptions != null)
+    		return descriptions;
+    	return descriptions1;
+    }
+
+    /**
+     * Set the description list.
+     * @param description
+     */
+    public void setDescriptions(List<String> descriptions) {
+    	this.descriptions = descriptions;
+    	this.descriptions1 = descriptions;
+    }
 }
 
