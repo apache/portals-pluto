@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -70,8 +71,12 @@ class InstallationDependency {
                     VERSION_PROPERTIES.getProperty("pluto.version"), "war");
 
     public static final InstallationDependency  CASTOR =
-            new InstallationDependency("castor", "castor", 
+            new InstallationDependency("org.codehaus.castor", "castor", 
                     VERSION_PROPERTIES.getProperty("castor.version"));
+
+    public static final InstallationDependency  COMMONS_LOGGING_API =
+            new InstallationDependency("commons-logging", "commons-logging-api",
+                    VERSION_PROPERTIES.getProperty("commons-logging.version"));
 
     public static final InstallationDependency  XERCES =
             new InstallationDependency("xerces", "xercesImpl", 

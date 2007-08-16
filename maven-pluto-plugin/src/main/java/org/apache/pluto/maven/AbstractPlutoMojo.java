@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -22,7 +23,6 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @todo Document
  * @since Jul 30, 2005
  */
@@ -31,14 +31,14 @@ public abstract class AbstractPlutoMojo extends AbstractMojo {
     /**
      * @parameter expression="${installDir}"
      */
-    protected File installationDirectory = null;
+    protected File installationDirectory;
 
     /**
      * @parameter expression="${project}"
      * @required
      * @readonly
      */
-    protected MavenProject project = null;
+    protected MavenProject project;
 
     public void execute() throws MojoExecutionException {
         // Validation of the installDir property is done by maven.
