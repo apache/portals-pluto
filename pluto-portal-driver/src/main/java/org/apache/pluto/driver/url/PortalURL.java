@@ -49,7 +49,7 @@ public interface PortalURL extends Cloneable {
     public void addPublicParameterCurrent(String name, String[] values);
     
     public Map<String, String[]> getPublicParameters();
-
+    
     void setActionWindow(String actionWindow);
 
     String getActionWindow();

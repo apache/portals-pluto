@@ -83,10 +83,10 @@ implements PortletRequest, InternalPortletRequest {
     // Private Member Variables ------------------------------------------------
     
     /** The parent container within which this request was created. */
-    private PortletContainer container = null;
+    protected PortletContainer container = null;
     
     /** The portlet window which is the target of this portlet request. */
-    private InternalPortletWindow internalPortletWindow = null;
+    protected InternalPortletWindow internalPortletWindow = null;
 
     /**
      * The PortletContext associated with this Request. This PortletContext must
@@ -442,7 +442,7 @@ implements PortletRequest, InternalPortletRequest {
     		values = urlProvider.getPublicRenderParameters(name);
     	}
     	else{
-    		values = (String[]) baseGetParameterMap().get(name);
+    			values = (String[]) baseGetParameterMap().get(name);
     	}
         if (values != null && values.length > 0) {
             return values[0];
@@ -457,7 +457,20 @@ implements PortletRequest, InternalPortletRequest {
 
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	String[] values = (String[]) baseGetParameterMap().get(name);
+    	PublicRenderParameterProvider provider = container
+		.getRequiredContainerServices()
+		.getPortalCallbackService()
+		.getPublicRenderParameterProvider();
+    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    	
+    	String[] values = null;
+    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
+    		values = urlProvider.getPublicRenderParameters(name);
+    	}
+    	else{
+    			values = (String[]) baseGetParameterMap().get(name);
+    	}
+    	
         if (values != null) {
             values = StringUtils.copy(values);
         }

@@ -30,6 +30,10 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalResourceRequest;
+import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.PublicRenderParameterProvider;
+import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.StringUtils;
 
 public class ResourceRequestImpl extends PortletRequestImpl
 implements ResourceRequest, InternalResourceRequest {
@@ -78,6 +82,53 @@ implements ResourceRequest, InternalResourceRequest {
         return servletRequest.getInputStream();
     }
 
+    public String[] getParameterValues(String name) {
+    	ArgumentUtility.validateNotNull("parameterName", name);
+    	String values1[] = super.getParameterValues(name);
+    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    	String values2[] = urlProvider.getPrivateRenderParameters(name);
+    	String values[] = null;
+    	int length1 = 0;
+    	int length2 = 0;
+    	if (values1 != null)
+    		length1 = values1.length;
+    	if (values2 != null){
+    		length2 += values2.length;
+    		values = new String[length1+length2];
+    		System.arraycopy(values2, 0, values, length1, length2);
+    	}
+    	else if (length1>0){
+    		values = new String[length1];
+    	}
+    	
+    	if (length1>0){
+    		System.arraycopy(values1, 0, values, 0, length1);
+    	}
+    	if ((length1+length2) == 0){
+    		values = null;
+    	}
+        if (values != null) {
+            values = StringUtils.copy(values);
+        }
+        return values;
+    }
+    
+    public String getParameter(String name) {
+    	
+    	ArgumentUtility.validateNotNull("parameterName", name);
+    	String value = super.getParameter(name);
+    	if (value == null){
+    		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+        	String[] values1 = urlProvider.getPrivateRenderParameters(name);
+        	if (values1!= null){
+        		if (values1.length>0){
+        			value = values1[0];
+        		}
+        	}
+    	}
+		return value;
+    }
+    
     // PortletRequestImpl impl -------------------------------------------------
     
     /**
@@ -106,8 +157,7 @@ implements ResourceRequest, InternalResourceRequest {
 	}
 
 	public String getResourceID() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return getParameter("resourceID");
 	}
 
 	public Cookie[] getCookieProperties() {
