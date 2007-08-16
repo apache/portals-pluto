@@ -51,6 +51,12 @@
             <version>${jsp-api.version}</version>
             <scope>provided</scope>
         </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging-api</artifactId>
+        <version>${commons-logging.version}</version>
+      </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -75,6 +81,10 @@
                 <configuration>
                     <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
             </plugin>
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>

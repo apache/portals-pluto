@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,35 +16,17 @@
  */
 package org.apache.pluto.tags.el;
 
-import javax.servlet.jsp.el.ExpressionEvaluator;
-import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.JspException;
 
 
 public class ParamTag extends org.apache.pluto.tags.ParamTag {
 
     public String getValue() throws JspException {
-        String string = super.getValue();
-
-        ExpressionEvaluator eval = pageContext.getExpressionEvaluator();
-
-        try {
-            Object evaluated = eval.evaluate(
-                    string,
-                    Object.class,
-                    pageContext.getVariableResolver(),
-                    null
-            );
-
-            if(evaluated != null) {
-                string = evaluated.toString();
-            }
-
-        }
-        catch(ELException el) {
-            throw new JspException(el);
-        }
-        return string;
+        return ExpressionEvaluatorProxy.getProxy().evaluate(super.getValue(), pageContext);
     }
+    public String getName() throws JspException {
+        return ExpressionEvaluatorProxy.getProxy().evaluate(super.getName(), pageContext);
+    }
+
 
 }
