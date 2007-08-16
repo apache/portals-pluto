@@ -17,6 +17,7 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -76,6 +77,13 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         }
     }
 
+    public boolean isResourceServing(){
+    	if (url.getResourceWindow() != null)
+    		return true;
+    	else
+    		return false;
+    }
+    
     public void setAction(boolean action) {
         if (action) {
             url.setActionWindow(window);
@@ -103,6 +111,16 @@ public class PortletURLProviderImpl implements PortletURLProvider {
             		(String[]) entry.getValue());
             url.addParameter(param);
         }
+    }
+    
+    public String[] getPrivateRenderParameters(String name){
+    	String[] values = null;
+    	for (Iterator it=url.getParameters().iterator();it.hasNext();){
+    		PortalURLParameter param = (PortalURLParameter)it.next();
+    		if (param.getName().equals(name))
+    			values = param.getValues();
+    	}
+    	return values;
     }
     
     public String[] getPublicRenderParameters(String name){

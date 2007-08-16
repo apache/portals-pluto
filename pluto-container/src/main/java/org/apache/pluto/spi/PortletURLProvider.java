@@ -63,6 +63,13 @@ public interface PortletURLProvider {
     public void setResourceServing(boolean resource);
     
     /**
+     * Shows you if the lifecycle is serveResource
+     * @return true if ResourceServing else false
+     * @since 2.0
+     */
+    public boolean isResourceServing();
+    
+    /**
      * By calling this method the URL is defined as a secure URL.
      */
     public void setSecure();
@@ -102,4 +109,11 @@ public interface PortletURLProvider {
      * @return the values for the Parameter, can be null, if there is no Parameter with this name.
      */
     public String[] getPublicRenderParameters(String name);
+    
+    /**
+     * Gets the values from the parameters from this request. This is only used for ServeResource.
+     * @param name Parametername
+     * @return the values for the Parameter, can be null, if there is no Parameter with this name.
+     */
+    public String[] getPrivateRenderParameters(String name);
 }

@@ -29,6 +29,7 @@ import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 
 import org.apache.pluto.PortletContainer;
@@ -75,8 +76,23 @@ public class BaseURLImpl implements BaseURL {
 		this.isAction = isAction;
 		this.isResourceServing = isResourceServing;
 		this.context = container.getRequiredContainerServices().getPortalContext();
+		if (!isResourceServing)
+			checkCacheLevel();
 	}
 
+	private String getCacheability() {
+		String cacheLevel[] = getRenderParameters("CACHABILITY");
+		if (cacheLevel == null)
+			return ResourceURL.PAGE;
+		else
+			return cacheLevel[0];
+	}
+	
+	private void checkCacheLevel(){
+		if (getCacheability().equals(ResourceURL.FULL) || getCacheability().equals(ResourceURL.PORTLET))
+			throw new IllegalStateException("Action or RenderURLs have no FULL or PORTLET cache level.");
+	}
+	
 	public void setParameter(String name, String value) {
 	    if (name == null) {
 	        throw new IllegalArgumentException(
@@ -182,7 +198,8 @@ public class BaseURLImpl implements BaseURL {
 	    if (secure) {
 	        urlProvider.setSecure();
 	    }
-	    urlProvider.clearParameters();
+	    if (!isResourceServing)
+	    	urlProvider.clearParameters();
 	    
 	    urlProvider.setParameters(parameters);
 	    
@@ -296,5 +313,34 @@ public class BaseURLImpl implements BaseURL {
 	public void setProperty(String key, String value) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	//TODO:This two methods should be deleted, when the CACHABILITY parameter gets his own prefix
+	private String[] getRenderParameters(String name){
+		int lenght = 0;
+		String[] tmp1 = this.servletRequest.getParameterValues(name);
+		if (tmp1!=null)
+			lenght += tmp1.length;
+		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(servletRequest, internalPortletWindow);
+		String[] tmp2 = urlProvider.getPrivateRenderParameters(name);
+		if (tmp2!=null)
+			lenght += tmp2.length;
+		String[] tmp3 = urlProvider.getPublicRenderParameters(name);
+		if (tmp3!=null)
+			lenght += tmp3.length;
+		if (lenght>0){
+			String[] values = new String[lenght];
+			int pos = mergeStrings(tmp1, values, 0);
+			pos = mergeStrings(tmp2, values, pos);
+			mergeStrings(tmp3, values, pos);
+			return values;
+		}
+		return null;
+	}
+	private int mergeStrings(String[] src, String[] destination, int position){
+		if (src == null)
+			return position;
+		System.arraycopy(src, 0, destination, position, src.length);
+		return position+src.length;
 	}
 }
