@@ -34,8 +34,8 @@ package javax.portlet;
  * serving resources through the portlet.
  * <p>
  * The portlet container must call this method for links created by
- * the <code>RenderResponse.createResouceURL()</code> call.
- * If the portlet creates resource URLs with <code>RenderResponse.createResouceURL()</code> 
+ * the <code>RenderResponse.createResourceURL()</code> call.
+ * If the portlet creates resource URLs with <code>RenderResponse.createResourceURL()</code> 
  * it must implement this lifecycle method.
  * 
  * @since 2.0
@@ -44,7 +44,7 @@ public interface ResourceServingPortlet {
 
     /**
      * Called by the portlet container to allow the portlet to generate
-     * the resouce content based on its current state.
+     * the resource content based on its current state.
      * The portal / portlet container must not render any output in addition 
      * to the content returned by the portlet. The portal / portlet container 
      * should expect that the portlet may return binary content for a 

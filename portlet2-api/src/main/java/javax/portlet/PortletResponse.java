@@ -115,7 +115,7 @@ public interface PortletResponse {
      * render parameters, portlet mode and window state are preserved.
      * <p>
      * If a request is triggered by the PortletURL, it results in a serve
-     * resource request of the <code>ResouceServingPortlet</code> interface.
+     * resource request of the <code>ResourceServingPortlet</code> interface.
      * <p>
      * The returned URL can be further extended by adding portlet-specific
      * parameters .
@@ -158,6 +158,10 @@ public interface PortletResponse {
 	/**
      * Returns the encoded URL of the resource, like servlets, JSPs, images and
      * other static files, at the given path.
+     * <p>
+     * Portlets should encode all resource URLs pointing to resources in the
+     * portlet application via this method in order to ensure that they get
+     * served via the portal application.
      * <p>
      * Some portal/portlet-container implementation may require those URLs to
      * contain implementation specific data encoded in it. Because of that,

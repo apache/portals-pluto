@@ -67,7 +67,7 @@ public interface PortletRequest
   public static final String USER_INFO = "javax.portlet.userinfo";
 
   /**
-   * Used to retieve an instance of the <code>javax.ccpp.profile</code>
+   * Used to retieve an instance of the <code>javax.ccpp.Profile</code>
    * with the <code>getAttribute</code> call. The returned profile is based
    * on the current portlet request and may contain additional CC/PP 
    * information set by the portal / portlet container.   
@@ -275,6 +275,17 @@ public interface PortletRequest
    * @since 2.0
    */
   public static final String RENDER_MARKUP = "RENDER_MARKUP";
+
+  /**
+   * The action scope ID that the portlet container uses
+   * for storing the current action scope as render parameter
+   * if the <code>javax.portlet.actionScopedRequestAttributes</code>
+   * container runtime option is used by the portlet.
+   * 
+   * @since 2.0
+   */
+  public static final String ACTION_SCOPE_ID = "Xas";
+  
   
   /**
    * Returns true, if the given window state is valid
@@ -883,13 +894,12 @@ public interface PortletRequest
   
   
   /**
-   * Returns an array containing all of the Cookie properties 
-   * set by the portlet. 
+   * Returns an array containing all of the Cookie properties. 
    * <p>
    * This method returns <code>null</code> if no cookies exist.
    * 
    * @since 2.0
-   * @return  array of cookie properties of this portlet, or 
+   * @return  array of cookie properties, or 
    *          <code>null</code> if no cookies exist.
    * @see PortletResponse#addProperty(Cookie) 
    */
