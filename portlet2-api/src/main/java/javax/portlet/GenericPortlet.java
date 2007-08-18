@@ -76,7 +76,6 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 
 	private transient PortletConfig config;
 
-	private transient boolean annotationsCached = false;
 	private transient Map<String, Method> processActionHandlingMethodsMap = new HashMap<String, Method>();
 	private transient Map<String, Method> processEventHandlingMethodsMap = new HashMap<String, Method>();
 	private transient Map<String, Method> renderModeHandlingMethodsMap = new HashMap<String, Method>();
@@ -93,7 +92,13 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      * is being placed into service.
      * <p>
      * The default implementation stores the <code>PortletConfig</code>
-     * object.
+     * object and checks for annotated methods with the annotations
+     * </ul>
+     * <li>ProcessActiony/li>
+     * <li>ProcessEvent</li>
+     * <li>RenderMode</li>
+     * </ul>
+     * and stores these in a hashmap for later dispatching.
      * <p>
      * The portlet container calls the <code>init</code> method exactly once
      * after instantiating the portlet. The <code>init</code> method must
@@ -121,6 +126,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
      */
 	public void init(PortletConfig config) throws PortletException {
 		this.config = config;
+		cacheAnnotations();
 		
 		this.init();
 	}
@@ -172,10 +178,6 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	public void processAction(ActionRequest request, ActionResponse response)
 			throws PortletException, java.io.IOException {		
 		String action = request.getParameter(ActionRequest.ACTION_NAME);
-
-		if (! annotationsCached ) {
-			cacheAnnotations();
-		}
 
 		try {
 			// check if action is cached
@@ -323,9 +325,6 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 			// first look if there are methods annotated for
 			// handling the rendering of this mode
 			try {
-				if (! annotationsCached ) {
-					cacheAnnotations();
-				}
 				// check if mode is cached
 				if ( renderModeHandlingMethodsMap.containsKey(mode) ) {
 					renderModeHandlingMethodsMap.get(mode).invoke(this, request, response);
@@ -611,11 +610,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 	public void processEvent(EventRequest request, EventResponse response)
 			throws PortletException, IOException {
 		String eventName = request.getEvent().getQName().toString();
-		
-		if (! annotationsCached ) {
-			cacheAnnotations();
-		}
-			
+					
 		try {
 			// check for exact match
 			if ( processEventHandlingMethodsMap.containsKey(eventName) ) {
@@ -747,6 +742,5 @@ public abstract class GenericPortlet implements Portlet, PortletConfig,
 				}
 			}
 		}
-		annotationsCached=true;
 	}
 }

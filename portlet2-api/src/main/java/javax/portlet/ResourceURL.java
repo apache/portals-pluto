@@ -93,7 +93,7 @@ public interface ResourceURL extends BaseURL {
 	public static final String PAGE = "cacheLevelPage";
 
 	/**
-	 * Property that the portlet can set for resouces with caching
+	 * Property that the portlet can set for resources with caching
 	 * type <code>FULL</code> via the <code>setProperty</code> method
 	 * on the <code>ResourceURL</code>.
 	 * <p>
