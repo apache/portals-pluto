@@ -285,6 +285,7 @@
 			<element name="supported-processing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="supported-publishing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="supported-public-render-parameter" type="string" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="url-generation-listener" type="portlet:fully-qualified-classType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 		<attribute name="id" type="string" use="optional"/>
