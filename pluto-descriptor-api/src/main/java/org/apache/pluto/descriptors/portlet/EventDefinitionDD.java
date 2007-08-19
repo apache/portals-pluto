@@ -82,8 +82,8 @@ public class EventDefinitionDD {
 	 * 		<element name="name" type="string"/>
 	 * </choice>
 	 */
-	private QName qname;	
 	private String name;
+	private QName qname;	
 	
 	/**
 	 * Java-Type of the Event

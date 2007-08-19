@@ -160,7 +160,12 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			  "<public-render-parameter id=\"public1\">\n" +
 			    "<description xml:lang=\"de\">description</description>\n" +
 			    "<identifier>identifier</identifier>\n" +
-			    "<name>QName</name>\n" +
+			    "<qname>QName</qname>\n" +
+			  "</public-render-parameter>\n" +
+			  "<public-render-parameter id=\"public2\">\n" +
+			    "<description xml:lang=\"de\">description2</description>\n" +
+			    "<identifier>identifier2</identifier>\n" +
+			    "<name>Name</name>\n" +
 			  "</public-render-parameter>\n" +
 			  "" );
 		xmlEnd.append("" +
