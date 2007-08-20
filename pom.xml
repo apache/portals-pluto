@@ -221,7 +221,7 @@
         <javax.portlet.version.minor>0</javax.portlet.version.minor>
     	<portlet-api.version>2.0-r22</portlet-api.version>
         <servlet-api.version>2.4</servlet-api.version>
-        <jsp-api.version>1.2</jsp-api.version>
+        <jsp-api.version>2.0</jsp-api.version>
         <jstl.version>1.1.2</jstl.version>
         <taglibs.standard.version>1.0.6</taglibs.standard.version>
     <xerces.version>2.6.2</xerces.version>
@@ -241,7 +241,7 @@
         <springframework.version>2.0.2</springframework.version>
         <maven.version>2.0.5</maven.version>
         <ant.version>1.6.5</ant.version>
-        <junit.version>3.8.2</junit.version>
+        <junit.version>4.0</junit.version>
         <jmock.version>1.0.1</jmock.version>
         <commons-io.version>1.3.1</commons-io.version>
         <xmlunit.version>1.0</xmlunit.version>
