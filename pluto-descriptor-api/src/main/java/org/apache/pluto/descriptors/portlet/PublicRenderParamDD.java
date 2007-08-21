@@ -17,8 +17,11 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
@@ -52,7 +55,10 @@ import javax.xml.namespace.QName;
  * 		<sequence>
  *			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
  *			<element name="identifier" type="string"/>
- *			<element name="name" type="xs:QName" maxOccurs="unbounded"/>
+ *			<choice>
+ *				<element name="qname" type="xs:QName"/>
+ *				<element name="name" type="string"/>
+ *			</choice>
  *		</sequence>
  *		<attribute name="id" type="string" use="optional"/>
  *	</complexType>
@@ -64,7 +70,8 @@ import javax.xml.namespace.QName;
 @XmlType(name = "public-render-parameterType", propOrder = {
     "description",
     "identifier",
-    "name"
+    "name","qname",
+    "alias"
 })
 
 public class PublicRenderParamDD {
@@ -80,9 +87,16 @@ public class PublicRenderParamDD {
 	private String identifier;
 	
 	/**
-	 * Name of the public render Parameter
+	 * Name of the public render parameter
 	 */
-	private QName name;		
+	private QName qname;		
+	private String name;
+	
+	/**
+	 * Alias names of the public render parameter
+	 */
+	@XmlElement ( name = "alias")
+	private List<QName> alias;
 
 	/**
 	 * @return the description
@@ -116,14 +130,28 @@ public class PublicRenderParamDD {
 	 * @return the name
 	 */
 	public QName getName() {
-		return name;
+		return (qname==null) ? new QName(name) : qname; 
 	}
 
 	/**
 	 * @param name The name to set
 	 */
-	public void setName(QName name) {
-		this.name = name;
+	public void setName(QName qname) {
+		this.qname = qname;
+	}
+	
+	/**
+	 * @return Returns the alias.
+	 */
+	public List<QName> getAlias() {
+		return alias;
+	}
+
+	/**
+	 * @param alias The alias to set.
+	 */
+	public void setAlias(List<QName> alias) {
+		this.alias = alias;
 	}
 
 }
