@@ -15,18 +15,24 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.descriptors.portlet.ContainerRuntimeOptionDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.internal.InternalPortletContext;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
@@ -48,6 +54,9 @@ implements PortletContext, InternalPortletContext {
     
     /** Portlet Application Descriptor. */
     private PortletAppDD portletAppDD = null;
+    
+    /** Portlet Descriptor */
+    private PortletDD portletDD = null;
 
     /** ServletContext in which we are contained. */
     private ServletContext servletContext = null;
@@ -61,9 +70,18 @@ implements PortletContext, InternalPortletContext {
      * @param portletAppDD  the portlet application descriptor.
      */
     public PortletContextImpl(ServletContext servletContext,
-                              PortletAppDD portletAppDD) {
+                              PortletAppDD portletAppDD,
+                              String portletName) {
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
+        
+        //retrieve portletDD
+        for (PortletDD portletDD : (List<PortletDD>)portletAppDD.getPortlets()) {
+			if (portletDD.getPortletName().equals(portletName))
+				this.portletDD = portletDD;
+			break;
+		}
+        assert(portletDD != null);  // else exception is thrown before (PortletServlet)
     }
     
     
@@ -236,21 +254,63 @@ implements PortletContext, InternalPortletContext {
     }
 
 
-	public Map getApplicationRuntimeOptions() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+	public Map<String, String[]> getApplicationRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletAppDD.getContainerRuntimeOption() != null){
+			for (ContainerRuntimeOptionDD option : portletAppDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
 	}
 
-	public Map getPortletRuntimeOptions() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+	public Map<String, String[]> getPortletRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletDD.getContainerRuntimeOption() != null) {
+			for (ContainerRuntimeOptionDD option : portletDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
 	}
 
 
 	public Map<String, String[]> getContainerRuntimeOptions() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
+		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
+		
+		// merge these two, with portlet priority
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		
+		// first all entries in portletAppDD (without these in portletDD)
+		for (String option : appRuntimeOptions.keySet()) {
+			if (portletRuntimeOptions.containsKey(option))
+				resultMap.put(option, portletRuntimeOptions.get(option));
+			else
+				resultMap.put(option, appRuntimeOptions.get(option));
+		}
+		// and now the rest
+		if (portletRuntimeOptions != null){
+			for (String option : portletRuntimeOptions.keySet()) {
+				if (!appRuntimeOptions.containsKey(option))
+					resultMap.put(option, portletRuntimeOptions.get(option));
+			}
+		}
+		return resultMap;
 	}
-    
 }
 

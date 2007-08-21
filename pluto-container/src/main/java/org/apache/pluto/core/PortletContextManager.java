@@ -78,13 +78,13 @@ public class PortletContextManager {
      * @return the InternalPortletContext associated with the ServletContext.
      * @throws PortletContainerException
      */
-    public InternalPortletContext getPortletContext(ServletContext servletContext)
+    public InternalPortletContext getPortletContext(ServletContext servletContext, String portletName)
     throws PortletContainerException {
         if (!portletContexts.containsKey(servletContext)) {
             PortletAppDD portletAppDD = PortletDescriptorRegistry.getRegistry()
             		.getPortletAppDD(servletContext);
             PortletContext portletContext = new PortletContextImpl(
-            		servletContext, portletAppDD);
+            		servletContext, portletAppDD, portletName);
             portletContexts.put(servletContext, portletContext);
         }
         return (InternalPortletContext) portletContexts.get(servletContext);
