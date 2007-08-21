@@ -110,6 +110,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 				"<supported-processing-event><name>supported-processing-event</name></supported-processing-event>\n" +
 				"<supported-publishing-event><qname xmlns:x=\"http://test.com\">supported-publishing-event</qname></supported-publishing-event>\n" +
 				"<supported-public-render-parameter>supported-public-render-parameter</supported-public-render-parameter>\n" +
+				"<container-runtime-option><name>Runtime-Option</name><value>true</value></container-runtime-option>\n" +
 				"</portlet>\n" );
 		attrs286.append("" + 
 				"<custom-portlet-mode id=\"mode1\">\n" +
@@ -167,6 +168,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			    "<identifier>identifier2</identifier>\n" +
 			    "<name>Name</name>\n" +
 			  "</public-render-parameter>\n" +
+			  "<container-runtime-option><name>Runtime-Option-Portlet-App</name><value>false</value></container-runtime-option>\n" +
 			  "" );
 		xmlEnd.append("" +
 				"</portlet-app>" );
@@ -325,6 +327,16 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			assertEquals(portletApp286.getFilterMapping().get(0).getPortletName().get(0), "portlet-name");
 			assertEquals(portletApp286.getResourceBundle(), "resource-bundle");
 			assertEquals(portletApp286.getVersion(), "2.0");
+			
+			// test container runtime options
+			assertEquals(portletApp286.getContainerRuntimeOption().size(),1);
+			assertEquals(portletApp286.getContainerRuntimeOption().get(0).getName(),"Runtime-Option-Portlet-App");
+			assertEquals(portletApp286.getContainerRuntimeOption().get(0).getValue().get(0),"false");
+			
+			assertEquals(portlet286.getContainerRuntimeOption().size(),1);
+			assertEquals(portlet286.getContainerRuntimeOption().get(0).getName(),"Runtime-Option");
+			assertEquals(portlet286.getContainerRuntimeOption().get(0).getValue().get(0),"true");
+			
 			
 		} catch (IOException e) {
 			fail("exception was thrown");

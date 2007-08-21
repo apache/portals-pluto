@@ -102,7 +102,7 @@ public class PortletServlet extends HttpServlet {
         ServletContext servletContext = getServletContext();
         try {
             portletContext = PortletContextManager.getManager()
-            		.getPortletContext(servletContext);
+            		.getPortletContext(servletContext, portletName);
         } catch (PortletContainerException ex) {
             throw new ServletException(ex);
         }
