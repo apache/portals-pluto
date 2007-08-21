@@ -102,7 +102,8 @@ import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
     "portletPreferences", "portletPreferences1",
     "description",    "description1",
     "displayName",    "displayName1",
-    "publicRenderParameter"
+    "publicRenderParameter",
+    "containerRuntimeOption"
 })
 public class PortletDD {
 	
@@ -200,6 +201,10 @@ public class PortletDD {
     /** the supported public render parameter */
 	@XmlElement(name = "supported-public-render-parameter")
     private List<String> publicRenderParameter = null;
+	
+	/** the container runtime options of this portlet */
+	@XmlElement(name = "container-runtime-option")
+	private List<ContainerRuntimeOptionDD> containerRuntimeOption = null;
     
     
     // Constructor -------------------------------------------------------------
@@ -451,6 +456,11 @@ public class PortletDD {
 	public void setExpirationCacheDD(ExpirationCacheDD expirationCacheDD) {
 		expirationCache = expirationCacheDD.getExpirationTime();
 		this.expirationCacheDD = expirationCacheDD;
+	}
+
+
+	public List<ContainerRuntimeOptionDD> getContainerRuntimeOption() {
+		return containerRuntimeOption;
 	}
 }
 

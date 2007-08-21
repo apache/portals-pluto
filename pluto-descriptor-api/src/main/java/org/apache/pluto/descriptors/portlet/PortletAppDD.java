@@ -74,7 +74,8 @@ import javax.xml.bind.annotation.XmlType;
     "filter",
     "filterMapping",
     "events",
-    "render"
+    "render",
+    "containerRuntimeOption"
 })
 public class PortletAppDD {
 
@@ -137,6 +138,10 @@ public class PortletAppDD {
 	@XmlAttribute(name = "version")
 	private String version;
 
+	/** the container runtime options of this portlet application */
+	@XmlElement(name = "container-runtime-option")
+	private List<ContainerRuntimeOptionDD> containerRuntimeOption = null;
+	
     /**
      * Default Constructor.
      */
@@ -276,6 +281,10 @@ public class PortletAppDD {
 
 	public void setDefaultNamespace(String defaultNamespace) {
 		this.defaultNamespace = defaultNamespace;
+	}
+
+	public List<ContainerRuntimeOptionDD> getContainerRuntimeOption() {
+		return containerRuntimeOption;
 	}
 }
 
