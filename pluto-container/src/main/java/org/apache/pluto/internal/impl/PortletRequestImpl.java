@@ -478,7 +478,7 @@ implements PortletRequest, InternalPortletRequest {
     }
     
     public Map getParameterMap() {
-    	return StringUtils.copyParameters(baseGetParameterMap());
+    	return Collections.unmodifiableMap(StringUtils.copyParameters(baseGetParameterMap()));
     }
 
     public boolean isSecure() {
