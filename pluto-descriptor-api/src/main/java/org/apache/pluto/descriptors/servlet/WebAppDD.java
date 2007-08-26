@@ -54,7 +54,7 @@ public class WebAppDD {
     // Default to servletVersion 2.3.  If a <web-app>
     // element is present with a version attribute,
     // the Castor mapping will update this field.
-    private String servletVersion = "2.4";
+    private String servletVersion = "2.3";
     // Default to false.  If a <web-app>
     // contains a <distributable/> element, then
     // Castor will update this field to true.

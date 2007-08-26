@@ -103,9 +103,9 @@ public class WebAppDescriptorServiceImpl
 
     protected void setCastorMarshallerOptions(Marshaller marshaller, Object beingMarshalled) {
         String servletVersion = ((WebAppDD)beingMarshalled).getServletVersion();
-	    if ( "2.3".equals(servletVersion) ) {//JSR-168 
+	    if ( "2.3".equals(servletVersion) ) {//JSR-168 based on servlet 2.3 
 	        marshaller.setDoctype(getPublicId(), getDTDUri());
-	    } else if ( "2.4".equals(servletVersion) ) {//JSR-286
+	    } else {//use schema for other versions (JSR-286 based on servlet 2.4)
             marshaller.setNamespaceMapping(Constants.SCHEMA_PREFIX, Constants.SCHEMA_NAMESPACE_URI);
             marshaller.setSchemaLocation(Constants.SCHEMA_LOCATION);
 	    }
