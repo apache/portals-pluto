@@ -26,8 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
@@ -93,7 +95,15 @@ implements PortletResponse, InternalPortletResponse {
     }
 
     public String encodeURL(String path) {
-        if (path.indexOf("://") == -1 && !path.startsWith("/")) {
+        
+        if ( path == null ) {
+            throw new IllegalArgumentException( "Argument to encodeURL must not be null." );
+        }
+        
+        final String wsrpRewriteToken = "wsrp_rewrite?";        
+        
+        if ( (path.indexOf("://") == -1 && !path.startsWith("/")) && 
+                !path.startsWith( wsrpRewriteToken ) ) {
             throw new IllegalArgumentException(
                 "only absolute URLs or full path URIs are allowed");
         }
@@ -104,11 +114,13 @@ implements PortletResponse, InternalPortletResponse {
         		.getResourceURLProvider(
         				httpServletRequest,
         				internalPortletWindow);
-        if (path.indexOf("://") != -1) {
+
+        if (isAbsolute(path)) {            
             provider.setAbsoluteURL(path);
-        } else {
+        } else {            
             provider.setFullPath(path);
         }
+
         return getHttpServletResponse().encodeURL(provider.toString());
     }
 
@@ -136,6 +148,49 @@ implements PortletResponse, InternalPortletResponse {
      */
     protected HttpServletRequest getHttpServletRequest() {
         return httpServletRequest;
+    }
+    
+    /**
+     * Determines if the supplied path should be treated as an
+     * absolute URL.  This default implementation considers the
+     * following conditions when evaluating the path:
+     * <ol>
+     *   <li>If the path is null, return false</li>
+     *   <li>If the path contains the string "://", then return true</li>
+     *   <li>If the path starts with the string "wsrp-rewrite?" then
+     *      return true</li>
+     *   <li>If none of the previous conditions hold true, return false</li>
+     * </ol>
+     * <p/>
+     * If the path is considered absolute, then ResourceURL providers
+     * (e.g. ResourceURLProvider implementations) should perform little, 
+     * if any, manipulation of the path.
+     * <p/>
+     * If the path is not considered absolute, then the ResourceURL provider
+     * may modify it to be absolute according to the 
+     * <code>ResourceURLProvider.toString()</code> contract.  For example,
+     * they may pre-pend a scheme and host to the supplied path.
+     * 
+     * @param path a string representing a resource path
+     * @return true if the resource path should be considered absolute
+     */
+    protected boolean isAbsolute(String path) {
+        final String wsrpToken = "wsrp_rewrite?";
+        final String schemeToken = "://";
+        
+        if ( path == null ) {
+            return false;
+        }
+        
+        if ( path.indexOf( schemeToken ) != -1 ) {
+            return true;
+        }
+        
+        if ( path.startsWith( wsrpToken ) ) {
+            return true;
+        }
+        
+        return false;
     }
 
     /**
