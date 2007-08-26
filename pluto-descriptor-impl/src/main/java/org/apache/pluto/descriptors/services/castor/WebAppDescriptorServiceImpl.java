@@ -103,10 +103,12 @@ public class WebAppDescriptorServiceImpl
 
     protected void setCastorMarshallerOptions(Marshaller marshaller, Object beingMarshalled) {
         String servletVersion = ((WebAppDD)beingMarshalled).getServletVersion();
-        if ( "2.4".equals(servletVersion) )
-        {
-            marshaller.setDoctype(getPublicId(), getDTDUri());
-        }
+	    if ( "2.3".equals(servletVersion) ) {//JSR-168 
+	        marshaller.setDoctype(getPublicId(), getDTDUri());
+	    } else if ( "2.4".equals(servletVersion) ) {//JSR-286
+            marshaller.setNamespaceMapping(Constants.SCHEMA_PREFIX, Constants.SCHEMA_NAMESPACE_URI);
+            marshaller.setSchemaLocation(Constants.SCHEMA_LOCATION);
+	    }
     }
 
 }

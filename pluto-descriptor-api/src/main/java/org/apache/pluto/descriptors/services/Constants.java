@@ -16,16 +16,21 @@
 package org.apache.pluto.descriptors.services;
 
 /**
- *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
+ * 
  * @version $Id: Constants.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Mar 7, 2005
  */
 public class Constants {
-
+	
+	//For JSR-168 web.xml
     public static final String WEB_XML_PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN";
     public static final String WEB_XML_DTD = "http://java.sun.com/dtd/web-app_2_3.dtd";
 
+    //For JSR-286 web.xml
+    public static final String SCHEMA_PREFIX = "xsi";
+    public static final String SCHEMA_NAMESPACE_URI = "http://www.w3.org/2001/XMLSchema-instance";
+    public static final String SCHEMA_LOCATION = "http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd";
+    
     public static final String PORLTET_XML_PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD PortletApplication 1.0//EN";
     public static final String PORTLET_XML_DTD = "http://java.sun.com/dtd/portlet-app_1_0.dtd";
 
