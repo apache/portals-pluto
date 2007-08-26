@@ -56,7 +56,7 @@ public class FileAssemblerTest extends XMLTestCase {
         AssemblerConfig config = new AssemblerConfig();
 
         final File webXmlFileDest = File.createTempFile(this.webXmlFile.getName() + ".", ".xml");
-//        webXmlFileDest.deleteOnExit();
+        webXmlFileDest.deleteOnExit();
 
         config.setWebappDescriptor(this.webXmlFile);
         config.setPortletDescriptor(this.portletXmlFile);
