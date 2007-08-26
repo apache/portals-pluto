@@ -29,7 +29,7 @@ public class Constants {
     //For JSR-286 web.xml
     public static final String SCHEMA_PREFIX = "xsi";
     public static final String SCHEMA_NAMESPACE_URI = "http://www.w3.org/2001/XMLSchema-instance";
-    public static final String SCHEMA_LOCATION = "http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd";
+    public static final String SCHEMA_LOCATION_FIRST_PART = "http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_";
     
     public static final String PORLTET_XML_PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD PortletApplication 1.0//EN";
     public static final String PORTLET_XML_DTD = "http://java.sun.com/dtd/portlet-app_1_0.dtd";

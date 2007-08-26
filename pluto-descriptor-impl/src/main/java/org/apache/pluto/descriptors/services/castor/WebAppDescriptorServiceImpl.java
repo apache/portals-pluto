@@ -107,7 +107,8 @@ public class WebAppDescriptorServiceImpl
 	        marshaller.setDoctype(getPublicId(), getDTDUri());
 	    } else {//use schema for other versions (JSR-286 based on servlet 2.4)
             marshaller.setNamespaceMapping(Constants.SCHEMA_PREFIX, Constants.SCHEMA_NAMESPACE_URI);
-            marshaller.setSchemaLocation(Constants.SCHEMA_LOCATION);
+            String schemaLocationVersion = servletVersion.replace('.', '_');
+            marshaller.setSchemaLocation(Constants.SCHEMA_LOCATION_FIRST_PART + schemaLocationVersion + ".xsd");
 	    }
     }
 
