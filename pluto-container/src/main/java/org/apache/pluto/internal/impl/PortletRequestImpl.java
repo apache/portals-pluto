@@ -112,6 +112,9 @@ implements PortletRequest, InternalPortletRequest {
 
     /** True if we are in an include call. */
     private boolean included = false;
+    
+    /** True if we are in an forwarded call. */
+    private boolean forwarded = false;
 
     // Constructors ------------------------------------------------------------
 
@@ -687,6 +690,22 @@ implements PortletRequest, InternalPortletRequest {
 
 // InternalRenderRequest Impl ----------------------------------------------
     
+    public boolean isForwarded() {
+		return forwarded;
+	}
+
+	public void setForwarded(boolean forwarded) {
+		this.forwarded = forwarded;
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Portlet request's forwarded mode: " + forwarded);
+        }
+	}
+
+	public void setForwardedQueryString(String queryString) {
+		// TODO Auto-generated method stub
+		
+	}
+    
     public void setIncluded(boolean included) {
     	this.included = included;
         if (LOG.isDebugEnabled()) {
@@ -739,4 +758,6 @@ implements PortletRequest, InternalPortletRequest {
 	public String getWindowID() {
 		return internalPortletWindow.getId().getStringId();
 	}
+
+	
 }

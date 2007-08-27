@@ -71,6 +71,9 @@ implements PortletResponse, InternalPortletResponse {
     /** True if we are in an include call. */
     private boolean included = false;
     
+    /** True if we are in an forwarded call. */
+    private boolean forwarded = false;
+    
     // Constructor -------------------------------------------------------------
     
     public PortletResponseImpl(PortletContainer container,
@@ -287,4 +290,22 @@ implements PortletResponse, InternalPortletResponse {
     public boolean isIncluded() {
         return included;
     }
+    
+    public boolean isForwarded() {
+		return forwarded;
+	}
+
+
+	public void setForwarded(boolean forwared) {
+		this.forwarded = forwared;
+		
+	}
+    
+    public int getBufferSize() {
+        // TODO: return this.getHttpServletResponse().getBufferSize();
+        return 0;
+    }
+
+
+	
 }

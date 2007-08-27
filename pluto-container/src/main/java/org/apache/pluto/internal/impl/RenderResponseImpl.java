@@ -80,9 +80,7 @@ implements RenderResponse, InternalRenderResponse {
     // RenderResponse Impl -----------------------------------------------------
     
     public String getContentType() {
-        // NOTE: in servlet 2.4 we could simply use this:
-        //   return super.getHttpServletResponse().getContentType();
-        return currentContentType;
+        return super.getHttpServletResponse().getContentType();
     }
 
     public void setTitle(String title) {
@@ -153,8 +151,8 @@ implements RenderResponse, InternalRenderResponse {
 
     public int getBufferSize() {
         // TODO: return this.getHttpServletResponse().getBufferSize();
-//        return 0;
-        throw new UnsupportedOperationException("portlet container does not support buffering");
+        return 0;
+//        throw new UnsupportedOperationException("portlet container does not support buffering");
     }
 
     public void flushBuffer() throws IOException {
