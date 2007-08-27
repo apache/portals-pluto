@@ -18,18 +18,12 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,14 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.internal.InternalActionRequest;
-import org.apache.pluto.internal.InternalActionResponse;
-import org.apache.pluto.internal.InternalEventRequest;
-import org.apache.pluto.internal.InternalEventResponse;
-import org.apache.pluto.internal.InternalRenderRequest;
-import org.apache.pluto.internal.InternalRenderResponse;
-import org.apache.pluto.internal.InternalResourceRequest;
-import org.apache.pluto.internal.InternalResourceResponse;
+import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletResponse;
 
 /**
  * Implementation of the <code>PortletRequestDispatcher</code> interface.
@@ -65,7 +53,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     /** The nested servlet request dispatcher instance. */
     private RequestDispatcher requestDispatcher = null;
     
-    /** The included query string. */
+    /** The included/forwarded query string. */
     private String queryString = null;
     
     
@@ -104,43 +92,38 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     // PortletRequestDispatcher Impl -------------------------------------------
    
 	public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-		
-		if(ActionRequest.class.isInstance(request)&& ActionResponse.class.isInstance(response)){
-			InternalActionRequest internalRequest = (InternalActionRequest)
-	        InternalImplConverter.getInternalRequest(request);
-			InternalActionResponse internalResponse = (InternalActionResponse)
-			InternalImplConverter.getInternalResponse(response);
-			include(internalRequest, internalResponse);
-		}
-		if(RenderRequest.class.isInstance(request)&& RenderResponse.class.isInstance(response)){
-			InternalRenderRequest internalRequest = (InternalRenderRequest)
-	        InternalImplConverter.getInternalRequest(request);
-			InternalRenderResponse internalResponse = (InternalRenderResponse)
-			InternalImplConverter.getInternalResponse(response);
-			include(internalRequest, internalResponse);
-		}
-		if(EventRequest.class.isInstance(request)&& EventResponse.class.isInstance(response)){
-			InternalEventRequest internalRequest = (InternalEventRequest)
-	        InternalImplConverter.getInternalRequest(request);
-			InternalEventResponse internalResponse = (InternalEventResponse)
-			InternalImplConverter.getInternalResponse(response);
-			include(internalRequest, internalResponse);
-		}
-		if(ResourceRequest.class.isInstance(request)&& ResourceResponse.class.isInstance(response)){
-			InternalResourceRequest internalRequest = (InternalResourceRequest)
-	        InternalImplConverter.getInternalRequest(request);
-			InternalResourceResponse internalResponse = (InternalResourceResponse)
-			InternalImplConverter.getInternalResponse(response);
-			include(internalRequest, internalResponse);
-		}
+		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
+		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
+		internalInclude(internalRequest,internalResponse);
 	}
 
 	public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException, IllegalStateException {
-		// TODO Auto-generated method stub
-		
+		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
+		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
+		boolean isForwarded = (internalRequest.isForwarded()
+        		|| internalResponse.isForwarded());
+        try {
+        	internalRequest.setForwarded(true);
+        	internalRequest.setForwardedQueryString(queryString);
+        	internalResponse.setForwarded(true);
+
+            requestDispatcher.forward((HttpServletRequest) internalRequest,
+            		(HttpServletResponse) internalResponse);
+        } catch (IOException ex) {
+            throw ex;
+        } catch (ServletException ex) {
+            if (ex.getRootCause() != null) {
+                throw new PortletException(ex.getRootCause());
+            } else {
+                throw new PortletException(ex);
+            }
+        } finally {
+        	internalRequest.setForwarded(isForwarded);
+        	internalResponse.setForwarded(isForwarded);
+        }
 	}
 	
-	private void include(InternalActionRequest internalRequest, InternalActionResponse internalResponse)
+	private void internalInclude(InternalPortletRequest internalRequest, InternalPortletResponse internalResponse)
     throws PortletException, IOException {
     	boolean isIncluded = (internalRequest.isIncluded()
         		|| internalResponse.isIncluded());
@@ -166,112 +149,10 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         }
     }
 	
-	private void include(InternalRenderRequest internalRequest, InternalRenderResponse internalResponse)
-    throws PortletException, IOException {
-    	boolean isIncluded = (internalRequest.isIncluded()
-        		|| internalResponse.isIncluded());
-        try {
-        	internalRequest.setIncluded(true);
-        	internalRequest.setIncludedQueryString(queryString);
-        	internalResponse.setIncluded(true);
-
-            requestDispatcher.include(
-            		(HttpServletRequest) internalRequest,
-            		(HttpServletResponse) internalResponse);
-        } catch (IOException ex) {
-            throw ex;
-        } catch (ServletException ex) {
-            if (ex.getRootCause() != null) {
-                throw new PortletException(ex.getRootCause());
-            } else {
-                throw new PortletException(ex);
-            }
-        } finally {
-        	internalRequest.setIncluded(isIncluded);
-        	internalResponse.setIncluded(isIncluded);
-        }
-    }
-	
-	private void include(InternalEventRequest internalRequest, InternalEventResponse internalResponse)
-    throws PortletException, IOException {
-    	boolean isIncluded = (internalRequest.isIncluded()
-        		|| internalResponse.isIncluded());
-        try {
-        	internalRequest.setIncluded(true);
-        	internalRequest.setIncludedQueryString(queryString);
-        	internalResponse.setIncluded(true);
-
-            requestDispatcher.include(
-            		(HttpServletRequest) internalRequest,
-            		(HttpServletResponse) internalResponse);
-        } catch (IOException ex) {
-            throw ex;
-        } catch (ServletException ex) {
-            if (ex.getRootCause() != null) {
-                throw new PortletException(ex.getRootCause());
-            } else {
-                throw new PortletException(ex);
-            }
-        } finally {
-        	internalRequest.setIncluded(isIncluded);
-        	internalResponse.setIncluded(isIncluded);
-        }
-    }
-	
-	private void include(InternalResourceRequest internalRequest, InternalResourceResponse internalResponse)
-    throws PortletException, IOException {
-    	boolean isIncluded = (internalRequest.isIncluded()
-        		|| internalResponse.isIncluded());
-        try {
-        	internalRequest.setIncluded(true);
-        	internalRequest.setIncludedQueryString(queryString);
-        	internalResponse.setIncluded(true);
-
-            requestDispatcher.include(
-            		(HttpServletRequest) internalRequest,
-            		(HttpServletResponse) internalResponse);
-        } catch (IOException ex) {
-            throw ex;
-        } catch (ServletException ex) {
-            if (ex.getRootCause() != null) {
-                throw new PortletException(ex.getRootCause());
-            } else {
-                throw new PortletException(ex);
-            }
-        } finally {
-        	internalRequest.setIncluded(isIncluded);
-        	internalResponse.setIncluded(isIncluded);
-        }
-    }
 	public void include(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
-
-        InternalRenderRequest internalRequest = (InternalRenderRequest)
-                InternalImplConverter.getInternalRequest(request);
-        InternalRenderResponse internalResponse = (InternalRenderResponse)
-                InternalImplConverter.getInternalResponse(response);
-
-        boolean isIncluded = (internalRequest.isIncluded()
-        		|| internalResponse.isIncluded());
-        try {
-        	internalRequest.setIncluded(true);
-        	internalRequest.setIncludedQueryString(queryString);
-        	internalResponse.setIncluded(true);
-
-            requestDispatcher.include(
-            		(HttpServletRequest) internalRequest,
-            		(HttpServletResponse) internalResponse);
-        } catch (IOException ex) {
-            throw ex;
-        } catch (ServletException ex) {
-            if (ex.getRootCause() != null) {
-                throw new PortletException(ex.getRootCause());
-            } else {
-                throw new PortletException(ex);
-            }
-        } finally {
-        	internalRequest.setIncluded(isIncluded);
-        	internalResponse.setIncluded(isIncluded);
-        }
+		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
+		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
+		internalInclude(internalRequest,internalResponse);
     }
 }
