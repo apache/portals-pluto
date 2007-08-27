@@ -41,5 +41,9 @@ public interface InternalPortletResponse extends PortletResponse {
      * @return true if a jsp or servlet is included.
      */
     public boolean isIncluded();
+    
+    public void setForwarded(boolean forwared);
+    
+    public boolean isForwarded();
 
 }

@@ -67,6 +67,12 @@ public interface InternalPortletRequest extends PortletRequest {
     public boolean isIncluded();
     
     public void setIncludedQueryString(String queryString);
+
+    public void setForwarded(boolean forwarded);
+    
+    public boolean isForwarded();
+
+    public void setForwardedQueryString(String queryString);
 }
 
 
