@@ -75,6 +75,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             new String[] { ">",  "0x7" },
             new String[] { " ",  "0x8" },
             new String[] { "#",  "0x9" },
+            new String[] { "+",  "0xd" },
     };
     
     // Constructor -------------------------------------------------------------
@@ -141,7 +142,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         	if (!token.startsWith(PREFIX)) {
 //        		renderPath.append(token);
         		//Fix for PLUTO-243
-        		renderPath.append('/').append(token);
+        		renderPath.append('/').append(decodeCharacters(token));
         	}
 //        	 Resource window definition: portalURL.setResourceWindow().
            else if (token.startsWith(PREFIX + RESOURCE)) {
@@ -209,7 +210,11 @@ public class PortalURLParserImpl implements PortalURLParser {
     	
         // Start the pathInfo with the path to the render URL (page).
         if (portalURL.getRenderPath() != null) {
-        	buffer.append("/").append(portalURL.getRenderPath());
+        	String renderPath = portalURL.getRenderPath().startsWith("/") 
+            		? portalURL.getRenderPath().substring(1)
+            		: portalURL.getRenderPath();
+            buffer.append("/").append(encodeQueryParam(
+            		encodeCharacters(renderPath)));
         }
         //Append the resource window definition, if it exists.        
         if (portalURL.getResourceWindow() != null){
@@ -221,7 +226,8 @@ public class PortalURLParserImpl implements PortalURLParser {
         if (portalURL.getActionWindow() != null) {
         	buffer.append("/");
         	buffer.append(PREFIX).append(ACTION)
-        			.append(encodeCharacters(portalURL.getActionWindow()));
+        			.append(encodeQueryParam(
+        					encodeCharacters(portalURL.getActionWindow())));
         }
         
         // Append portlet mode definitions.
@@ -312,8 +318,8 @@ public class PortalURLParserImpl implements PortalURLParser {
                                           String name) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(PREFIX).append(type)
-    			.append(encodeCharacters(windowId))
-    			.append(DELIM).append(name);
+    			.append(encodeQueryParam(encodeCharacters(windowId)))
+    			.append(DELIM).append(encodeQueryParam(name));
     	return buffer.toString();
     }
     
@@ -338,7 +344,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             	buffer.append(VALUE_DELIM);
             }
         }
-        return encodeCharacters(buffer.toString());
+        return encodeQueryParam(encodeCharacters(buffer.toString()));
     }
     
     /**
