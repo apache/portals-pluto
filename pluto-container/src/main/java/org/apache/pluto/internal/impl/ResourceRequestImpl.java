@@ -152,8 +152,7 @@ implements ResourceRequest, InternalResourceRequest {
 	}
 
 	public String getLifecyclePhase() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return RESOURCE_PHASE;
 	}
 
 	public String getResourceID() {

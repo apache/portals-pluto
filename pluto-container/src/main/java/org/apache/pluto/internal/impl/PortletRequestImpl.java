@@ -604,6 +604,7 @@ implements PortletRequest, InternalPortletRequest {
         this.portletContext = portletContext;
         setRequest(req);
         setCCPPProfile();
+        setLifecyclePhase();
     }
 
 	/**
@@ -763,6 +764,11 @@ implements PortletRequest, InternalPortletRequest {
 	
 	public String getWindowID() {
 		return internalPortletWindow.getId().getStringId();
+	}
+	
+	private void setLifecyclePhase() {
+		String lifecyclePhase = getLifecyclePhase();
+		this.setAttribute(LIFECYCLE_PHASE, lifecyclePhase);
 	}
 
 	// ============= private methods ==================

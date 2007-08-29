@@ -73,6 +73,8 @@ public interface InternalPortletRequest extends PortletRequest {
     public boolean isForwarded();
 
     public void setForwardedQueryString(String queryString);
+    
+    public String getLifecyclePhase();
 }
 
 

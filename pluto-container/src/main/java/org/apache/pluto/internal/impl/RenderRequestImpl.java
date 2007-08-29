@@ -367,10 +367,9 @@ implements RenderRequest, InternalRenderRequest {
 //		return null;
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
-
+	
 	public String getLifecyclePhase() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return RENDER_PHASE;
 	}
 
 	public Cookie[] getCookieProperties() {
