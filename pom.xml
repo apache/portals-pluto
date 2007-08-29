@@ -262,6 +262,10 @@
     <junit.version>4.0</junit.version>
     <jmock.version>1.0.1</jmock.version>
     <activation.version>1.1</activation.version>
+    <ccpp-api.version>1.0</ccpp-api.version>
+    <ccpp-ri.version>1.0</ccpp-ri.version>
+    <rdffilter.version>1.0</rdffilter.version>
+    <jena.version>1.4.0</jena.version>
   </properties>
 
   

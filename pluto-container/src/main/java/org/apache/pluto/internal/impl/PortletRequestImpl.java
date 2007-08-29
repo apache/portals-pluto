@@ -34,6 +34,7 @@ import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
+import javax.ccpp.Profile;
 import javax.portlet.PortalContext;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
@@ -115,6 +116,9 @@ implements PortletRequest, InternalPortletRequest {
     
     /** True if we are in an forwarded call. */
     private boolean forwarded = false;
+    
+    /** The corresponding servlet request. */
+    private HttpServletRequest servletRequest = null;
 
     // Constructors ------------------------------------------------------------
 
@@ -137,6 +141,7 @@ implements PortletRequest, InternalPortletRequest {
         this.container = container;
         this.internalPortletWindow = internalPortletWindow;
         this.portalContext = container.getRequiredContainerServices().getPortalContext();
+        this.servletRequest = servletRequest;
     }
     
     
@@ -598,9 +603,10 @@ implements PortletRequest, InternalPortletRequest {
     public void init(PortletContext portletContext, HttpServletRequest req) {
         this.portletContext = portletContext;
         setRequest(req);
+        setCCPPProfile();
     }
 
-    /**
+	/**
      * TODO: Implement this properly.  Not required now
      */
     public void release() {
@@ -759,5 +765,10 @@ implements PortletRequest, InternalPortletRequest {
 		return internalPortletWindow.getId().getStringId();
 	}
 
+	// ============= private methods ==================
 	
+	private void setCCPPProfile() {
+		Profile profile = container.getRequiredContainerServices().getCCPPProfileService().getCCPPProfile(servletRequest);
+		this.setAttribute(CCPP_PROFILE, profile);
+	}
 }
