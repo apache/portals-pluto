@@ -99,8 +99,7 @@ implements ActionRequest, InternalActionRequest {
     }
 
 	public String getLifecyclePhase() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return ACTION_PHASE;
 	}
 
 	public Cookie[] getCookieProperties() {

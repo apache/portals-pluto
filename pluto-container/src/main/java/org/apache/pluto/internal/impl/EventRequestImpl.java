@@ -170,13 +170,11 @@ public class EventRequestImpl extends PortletRequestImpl
    }
 
 	public String getLifecyclePhase() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return EVENT_PHASE;
 	}
 
 	public Cookie[] getCookieProperties() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
-
 }
