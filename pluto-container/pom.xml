@@ -79,6 +79,32 @@
       <version>${servlet-api.version}</version>
       <scope>provided</scope>
     </dependency>
+    
+    <!--  CCPP Libraries -->
+    <dependency>
+      <groupId>javax.ccpp</groupId>
+      <artifactId>ccpp</artifactId>
+      <version>${ccpp-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- <dependency>
+      <groupId>com.sun.ccpp</groupId>
+      <artifactId>ccpp-ri</artifactId>
+      <version>${ccpp-ri.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.megginson.sax.rdf.rdffilter</groupId>
+      <artifactId>rdffilter</artifactId>
+      <version>${rdffilter.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>jena</artifactId>
+      <version>${jena.version}</version>
+      <scope>provided</scope>
+    </dependency>-->
 
     <!-- Testing Libraries ================================================= -->
     <dependency>

@@ -23,6 +23,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+//import sun.security.provider.SHA;
+
+//import com.sun.corba.se.impl.protocol.SharedCDRClientRequestDispatcherImpl;
+
 /**
  *
  */
@@ -107,6 +111,20 @@ class InstallationDependency {
     public static final InstallationDependency ACTIVATION =
 		new InstallationDependency("javax.activation","activation",
 				VERSION_PROPERTIES.getProperty("activation.version"));
+
+    public static final InstallationDependency CCPP_API =
+		new InstallationDependency("javax.ccpp","ccpp",
+				VERSION_PROPERTIES.getProperty("ccpp-api.version"));
+//    public static final InstallationDependency CCPP_IMPL=
+//		new InstallationDependency("com.sun.ccpp","ccpp-ri",
+//				VERSION_PROPERTIES.getProperty("ccpp-ri.version"));
+//    public static final InstallationDependency RDF_FILTER =
+//		new InstallationDependency("com.megginson.sax.rdf.rdffilter","rdffilter",
+//				VERSION_PROPERTIES.getProperty("rdffilter.version"));
+//    public static final InstallationDependency JENA =
+//		new InstallationDependency("com.hp.hpl.jena","jena",
+//				VERSION_PROPERTIES.getProperty("jena.version"));
+ 
     
 
     private static final List ENDORSED = new ArrayList();

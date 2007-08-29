@@ -19,6 +19,7 @@ import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
@@ -40,15 +41,18 @@ implements RequiredContainerServices, OptionalContainerServices {
 
     private PortalContextImpl context;
     private DriverConfiguration driverConfig;
+    private CCPPProfileService ccppProfileService;
 
 
     /**
      * Default Constructor.
      */
     public ContainerServicesImpl(PortalContextImpl context,
-                                 DriverConfiguration driverConfig) {
+                                 DriverConfiguration driverConfig,
+                                 CCPPProfileService ccppProfileService) {
         this.context = context;
         this.driverConfig = driverConfig;
+        this.ccppProfileService = ccppProfileService;
     }
 
     /**
@@ -84,5 +88,9 @@ implements RequiredContainerServices, OptionalContainerServices {
     public PortletInvokerService getPortletInvokerService(InternalPortletWindow window) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+	public CCPPProfileService getCCPPProfileService() {
+		return ccppProfileService;
+	}
 }
 

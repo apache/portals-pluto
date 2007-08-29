@@ -235,18 +235,18 @@
         <jsp-api.version>2.0</jsp-api.version>
         <jstl.version>1.1.2</jstl.version>
         <taglibs.standard.version>1.0.6</taglibs.standard.version>
-    <xerces.version>2.6.2</xerces.version>
-    <jaxb.version>2.1</jaxb.version>
-    <jaxb-impl.version>2.1.2</jaxb-impl.version>
-    <stax.api.version>1.0.1</stax.api.version>
-    <stax.impl.version>1.2.0</stax.impl.version>
-    <xalan.version>2.7.0</xalan.version>
+	    <xerces.version>2.6.2</xerces.version>
+	    <jaxb.version>2.1</jaxb.version>
+	    <jaxb-impl.version>2.1.2</jaxb-impl.version>
+	    <stax.api.version>1.0.1</stax.api.version>
+	    <stax.impl.version>1.2.0</stax.impl.version>
+	    <xalan.version>2.7.0</xalan.version>
         <castor.version>1.1.1</castor.version>
         <commons-digester.version>1.8</commons-digester.version>
         <commons-collections.version>3.2</commons-collections.version>
         <commons-cli.version>1.0</commons-cli.version>
-    <commons-httpclient.version>3.0</commons-httpclient.version>
-    <commons-beanutils.version>1.7.0</commons-beanutils.version>
+	    <commons-httpclient.version>3.0</commons-httpclient.version>
+	    <commons-beanutils.version>1.7.0</commons-beanutils.version>
         <commons-logging.version>1.1</commons-logging.version>
         <log4j.version>1.2.14</log4j.version>
         <springframework.version>2.0.2</springframework.version>
@@ -256,7 +256,11 @@
         <jmock.version>1.0.1</jmock.version>
         <commons-io.version>1.3.1</commons-io.version>
         <xmlunit.version>1.0</xmlunit.version>
-    <activation.version>1.1</activation.version>
+	    <activation.version>1.1</activation.version>
+	    <ccpp-api.version>1.0</ccpp-api.version>
+	    <ccpp-ri.version>1.0</ccpp-ri.version>
+	    <rdffilter.version>1.0</rdffilter.version>
+	    <jena.version>1.4.0</jena.version>
     </properties>
 
 
