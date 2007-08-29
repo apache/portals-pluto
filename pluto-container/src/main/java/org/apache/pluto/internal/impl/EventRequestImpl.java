@@ -150,6 +150,12 @@ public class EventRequestImpl extends PortletRequestImpl
 			if (def.getName().equals(name)){
 				return def;
 			}
+			if (def.getName().getNamespaceURI() != null && (def.getName().getNamespaceURI().equals(""))){
+				QName qname = new QName(appDD.getDefaultNamespace(),def.getName().getLocalPart());
+				if (qname.equals(name))
+					return def;
+			}
+				
 		}
 		return null;
 	}
