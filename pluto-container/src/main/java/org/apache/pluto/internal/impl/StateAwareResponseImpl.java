@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletException;
@@ -108,62 +109,80 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 				getHttpServletRequest(),getHttpServletResponse(), container);
 
 		if (isDeclaredAsPublishingEvent(qname)) {
-			
-			if (!isValueInstanceOfDefinedClass(qname,value))
-				throw new IllegalArgumentException("Payload has not the right class");
-
-			XMLStreamReader xml = null;
-			try {
-
-				if (value == null) {
+			if (value == null) {
+				try {
 					provider.registerToFireEvent(new EventImpl(qname));
-				} else if (!(value instanceof Serializable)) {
-					throw new IllegalArgumentException("Object payload must implement Serializable");
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PortletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PortletContainerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				else {
-	
-					Class clazz = value.getClass();
+			}else {
 
-					JAXBContext jc = JAXBContext.newInstance(clazz);
+				if (!isValueInstanceOfDefinedClass(qname,value))
+					throw new IllegalArgumentException("Payload has not the right class");
 
-					Marshaller marshaller  = jc.createMarshaller();
+				XMLStreamReader xml = null;
+				try {
 
-					Writer out = new StringWriter();
-
-					marshaller.marshal(new JAXBElement(qname,clazz,value), out);
-//					marshaller.marshal(value, out);
-
-					if (out != null) {
-						provider.registerToFireEvent(new EventImpl(qname,(Serializable) out.toString()));
-					} else { 
-						provider.registerToFireEvent(new EventImpl(qname,(Serializable) value));
+					if (value == null) {
+						provider.registerToFireEvent(new EventImpl(qname));
+					} else if (!(value instanceof Serializable)) {
+						throw new IllegalArgumentException("Object payload must implement Serializable");
 					}
+					else {
+
+						Class clazz = value.getClass();
+
+						JAXBContext jc = JAXBContext.newInstance(clazz);
+
+						Marshaller marshaller  = jc.createMarshaller();
+
+						Writer out = new StringWriter();
+
+						marshaller.marshal(new JAXBElement(qname,clazz,value), out);
+//						marshaller.marshal(value, out);
+
+						if (out != null) {
+							provider.registerToFireEvent(new EventImpl(qname,(Serializable) out.toString()));
+						} else { 
+							provider.registerToFireEvent(new EventImpl(qname,(Serializable) value));
+						}
+					}
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PortletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PortletContainerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (MarshalException e) {
+					// there is no valid jaxb binding
+					e.printStackTrace();
+				} catch (JAXBException e) {
+					// maybe there is no valid jaxb binding
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (FactoryConfigurationError e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+//					} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
 				}
-			} catch (ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (PortletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (PortletContainerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (MarshalException e) {
-				// there is no valid jaxb binding
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				// maybe there is no valid jaxb binding
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FactoryConfigurationError e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-//				} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
 			}
 		}
 	}
@@ -465,8 +484,17 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 
 	private boolean isDeclaredAsPublishingEvent(QName qname) {
 		List<QName> events = internalPortletWindow.getPortletEntity()
-			.getPortletDefinition().getPublishingEvents();
-		return events != null && events.contains(qname);
+		.getPortletDefinition().getPublishingEvents();
+		List<QName> tempEvents = new ArrayList<QName>();
+		if (events == null) 
+			return false;
+		for (QName name : events) {
+			if (name.getNamespaceURI() != null && !(name.getNamespaceURI().equals("")))
+				tempEvents.add(name);
+			else
+				tempEvents.add(new QName(getDefaultEventNamespace(),name.getLocalPart()));
+		}
+		return tempEvents.contains(qname);
 	}
 	
 	private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value){
