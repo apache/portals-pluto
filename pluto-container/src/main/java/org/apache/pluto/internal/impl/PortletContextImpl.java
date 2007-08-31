@@ -126,7 +126,7 @@ implements PortletContext, InternalPortletContext {
             		.getRequestDispatcher(path);
             if (servletRequestDispatcher != null) {
             	portletRequestDispatcher = new PortletRequestDispatcherImpl(
-                		servletRequestDispatcher, queryString);
+                		servletRequestDispatcher, path);
             } else {
             	if (LOG.isInfoEnabled()) {
             		LOG.info("No matching request dispatcher found for: " + path);

@@ -74,6 +74,8 @@ public interface InternalPortletRequest extends PortletRequest {
 
     public void setForwardedQueryString(String queryString);
     
+    public void setAttribute(String name, Object object);
+    
     public String getLifecyclePhase();
 }
 
