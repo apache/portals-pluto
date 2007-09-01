@@ -55,6 +55,9 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     
     /** The included/forwarded query string. */
     private String queryString = null;
+    private String servlet_path;
+    private String path_info;
+    private boolean namedDispatcher = true;
     
     
     // Constructors ------------------------------------------------------------
@@ -80,9 +83,28 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
      * @see javax.portlet.PortletContext#getRequestDispatcher(String)
      */
     public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher,
-                                        String queryString) {
-        this(requestDispatcher);
-        this.queryString = queryString;
+                                        String path) {
+    	this(requestDispatcher);
+    	namedDispatcher = false;
+    	
+    	//Extract servlet_path
+        int index1 = path.indexOf("/", 1);
+        if (index1 > 0 && index1 < path.length() - 1) {
+        	servlet_path = path.substring(0, index1);
+        }
+    	
+    	//Extract query string which contains appended parameters.
+    	queryString = null;
+        int index2 = path.indexOf("?");
+        if (index2 > 0 && index2 < path.length() - 1) {
+        	queryString = path.substring(index2 + 1);
+        }
+        
+        //Extract path_info        
+        if (index1 > 0 && index1 < index2 && index2 > 0 && index2 < path.length() - 1) {
+        	path_info = path.substring(index1, index2);
+        }
+        
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Request dispatcher created.");
         }
@@ -97,7 +119,20 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
 		internalInclude(internalRequest,internalResponse);
 	}
 
+
+	
+	public void include(RenderRequest request, RenderResponse response)
+    throws PortletException, IOException {
+		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
+		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
+		internalInclude(internalRequest,internalResponse);
+    }
+	
 	public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException, IllegalStateException {
+		if (((HttpServletResponse)response).isCommitted()){
+			throw new IllegalStateException("Response has been committed, this isn't allowed before forward" +
+											" method. Content must delete before service from servlet is called.");
+		}
 		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
 		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
 		boolean isForwarded = (internalRequest.isForwarded()
@@ -105,6 +140,9 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         try {
         	internalRequest.setForwarded(true);
         	internalRequest.setForwardedQueryString(queryString);
+        	if (!namedDispatcher){
+        		setAttributesForward(internalRequest);
+        	}
         	internalResponse.setForwarded(true);
 
             requestDispatcher.forward((HttpServletRequest) internalRequest,
@@ -130,6 +168,9 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         try {
         	internalRequest.setIncluded(true);
         	internalRequest.setIncludedQueryString(queryString);
+        	if (!namedDispatcher){
+        		setAttributesInclude(internalRequest);
+        	}
         	internalResponse.setIncluded(true);
 
             requestDispatcher.include(
@@ -148,11 +189,24 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         	internalResponse.setIncluded(isIncluded);
         }
     }
+
+	private void setAttributesForward(InternalPortletRequest internalRequest){
+		String context_path = internalRequest.getContextPath();
+		String request_uri = context_path + servlet_path + path_info;
+		internalRequest.setAttribute("javax.servlet.forward.request_uri", request_uri);
+		internalRequest.setAttribute("javax.servlet.forward.context_path", context_path);
+		internalRequest.setAttribute("javax.servlet.forward.servlet_path", servlet_path);
+		internalRequest.setAttribute("javax.servlet.forward.path_info", path_info);
+		internalRequest.setAttribute("javax.servlet.forward.query_string", queryString);
+	}
 	
-	public void include(RenderRequest request, RenderResponse response)
-    throws PortletException, IOException {
-		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
-		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
-		internalInclude(internalRequest,internalResponse);
-    }
+	private void setAttributesInclude(InternalPortletRequest internalRequest){
+		String context_path = internalRequest.getContextPath();
+		String request_uri = context_path + servlet_path + path_info;
+		internalRequest.setAttribute("javax.servlet.include.request_uri", request_uri);
+		internalRequest.setAttribute("javax.servlet.include.context_path", context_path);
+		internalRequest.setAttribute("javax.servlet.include.servlet_path", servlet_path);
+		internalRequest.setAttribute("javax.servlet.include.path_info", path_info);
+		internalRequest.setAttribute("javax.servlet.include.query_string", queryString);
+	}
 }

@@ -16,31 +16,19 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Locale;
 
 import javax.portlet.ActionResponse;
-import javax.portlet.PortalContext;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
-import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.spi.PublicRenderParameterProvider;
-import org.apache.pluto.spi.ResourceURLProvider;
-import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.util.StringUtils;
 
 public class ActionResponseImpl extends StateAwareResponseImpl
 implements ActionResponse, InternalActionResponse {
@@ -62,4 +50,281 @@ implements ActionResponse, InternalActionResponse {
         context = container.getRequiredContainerServices().getPortalContext();
         callback = container.getRequiredContainerServices().getPortalCallbackService();
     }
+
+	@Override
+	public void reset() {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.reset();
+	}
+
+	@Override
+	public void resetBuffer() {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.resetBuffer();
+	}
+
+	@Override
+	public void setBufferSize(int arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setBufferSize(arg0);
+	}
+
+	@Override
+	public void setCharacterEncoding(String arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setCharacterEncoding(arg0);
+	}
+
+	@Override
+	public void setContentLength(int arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setContentLength(arg0);
+	}
+
+	@Override
+	public void setContentType(String arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setContentType(arg0);
+	}
+
+	@Override
+	public void setLocale(Locale arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setLocale(arg0);
+	}
+
+	@Override
+	public ServletOutputStream getOutputStream() throws IllegalStateException, IOException {
+		if (super.isForwarded() || super.isIncluded()){
+			return null;
+		}
+		else
+			return super.getOutputStream();
+	}
+
+	@Override
+	public PrintWriter getWriter() throws IllegalStateException, IOException {
+		if (super.isForwarded() || super.isIncluded()){
+			return null;
+		}
+		else
+			return super.getWriter();
+	}
+
+	@Override
+	public void addCookie(Cookie arg0) {
+		if (super.isForwarded()){
+			addProperty(arg0);
+		}
+		else if (super.isIncluded()){
+			//no operation
+		}
+		else
+		super.addCookie(arg0);
+	}
+
+	@Override
+	public void addDateHeader(String arg0, long arg1) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.addDateHeader(arg0, arg1);
+	}
+
+	@Override
+	public void addHeader(String arg0, String arg1) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.addHeader(arg0, arg1);
+	}
+
+	@Override
+	public void addIntHeader(String arg0, int arg1) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.addIntHeader(arg0, arg1);
+	}
+
+	@Override
+	public boolean containsHeader(String arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			return false;
+		}
+		else
+			return super.containsHeader(arg0);
+	}
+
+	@Override
+	public String encodeRedirectUrl(String arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			return null;
+		}
+		else
+		return super.encodeRedirectUrl(arg0);
+	}
+
+	@Override
+	public String encodeRedirectURL(String arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			return null;
+		}
+		else
+			return super.encodeRedirectURL(arg0);
+	}
+
+	@Override
+	public void sendError(int arg0) throws IOException {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.sendError(arg0);
+	}
+	
+	
+
+	@Override
+	public void sendError(int arg0, String arg1) throws IOException {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.sendError(arg0, arg1);
+	}
+
+	@Override
+	public void setStatus(int arg0, String arg1) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setStatus(arg0, arg1);
+	}
+
+	@Override
+	public void sendRedirect(String location) throws IOException {
+		if (super.isIncluded()){
+			// no operation
+		}
+		super.sendRedirect(location);
+	}
+
+	@Override
+	public void setDateHeader(String arg0, long arg1) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setDateHeader(arg0, arg1);
+	}
+
+	@Override
+	public void setHeader(String arg0, String arg1) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setHeader(arg0, arg1);
+	}
+
+	@Override
+	public void setIntHeader(String arg0, int arg1) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setIntHeader(arg0, arg1);
+	}
+
+	@Override
+	public void setStatus(int arg0) {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.setStatus(arg0);
+	}
+
+	@Override
+	public void flushBuffer() throws IOException {
+		if (super.isForwarded() || super.isIncluded()){
+			// no operation
+		}
+		else
+			super.flushBuffer();
+	}
+
+	@Override
+	public int getBufferSize() {
+		if (super.isForwarded() || super.isIncluded()){
+			return 0;
+		}
+		else
+			return super.getBufferSize();
+	}
+
+	@Override
+	public String getCharacterEncoding() {
+		if (super.isForwarded() || super.isIncluded()){
+			return null;
+		}
+		else
+			return super.getCharacterEncoding();
+	}
+
+	@Override
+	public String getContentType() {
+		if (super.isForwarded() || super.isIncluded()){
+			return null;
+		}
+		else
+			return super.getContentType();
+	}
+
+	@Override
+	public Locale getLocale() {
+		if (super.isForwarded() || super.isIncluded()){
+			return null;
+		}
+		else
+			return super.getLocale();
+	}
+
+	@Override
+	public boolean isCommitted() {
+		if (super.isForwarded() || super.isIncluded()){
+			return true;
+		}
+		else
+			return super.isCommitted();
+	}
+    
+    
+    
 }
