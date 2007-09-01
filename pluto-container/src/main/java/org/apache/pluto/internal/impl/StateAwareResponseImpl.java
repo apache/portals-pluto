@@ -79,15 +79,15 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	private String redirectLocation;
     
 
-	private InternalPortletWindow internalPortletWindow;
-	private PortletContainer container;
+	protected InternalPortletWindow internalPortletWindow;
+	protected PortletContainer container;
 	private Map<String, String[]> publicRenderParameter = new HashMap<String, String[]>();
 	
     private Map renderParameters = new HashMap();
     private WindowState windowState = null;
     private PortletMode portletMode = null;
-	private PortalCallbackService callback;
-    private PortalContext context;
+	protected PortalCallbackService callback;
+    protected PortalContext context;
     
 	public StateAwareResponseImpl(PortletContainer container,
 			            InternalPortletWindow internalPortletWindow,
@@ -410,19 +410,22 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		return getChangedWindowState();
 	}
     
-    private boolean isPortletModeAllowed(PortletMode mode) {
+    protected boolean isPortletModeAllowed(PortletMode mode) {
         return isPortletModeAllowedByPortlet(mode)
                && isPortletModeAllowedByPortal(mode);
     }
 
-    private boolean isPortletModeAllowedByPortlet(PortletMode mode) {
+    protected boolean isPortletModeAllowedByPortlet(PortletMode mode) {
         PortletDD dd = getInternalPortletWindow().getPortletEntity()
             .getPortletDefinition();
 
         Iterator supports = dd.getSupports().iterator();
         while(supports.hasNext()) {
             SupportsDD sup = (SupportsDD)supports.next();
-            Iterator modes = sup.getPortletModes().iterator();
+            List<String> portletModes = sup.getPortletModes();
+            if (portletModes == null)
+            	return false;
+            Iterator modes = portletModes.iterator();
             while(modes.hasNext()) {
                 if (modes.next().toString().equalsIgnoreCase(mode.toString())) {
                     return true;
@@ -432,7 +435,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         return false;
     }
 
-    private boolean isPortletModeAllowedByPortal(PortletMode mode) {
+    protected boolean isPortletModeAllowedByPortal(PortletMode mode) {
         Enumeration supportedModes = context.getSupportedPortletModes();
         while (supportedModes.hasMoreElements()) {
             if (supportedModes.nextElement().toString().equalsIgnoreCase(
@@ -443,7 +446,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         return false;
     }
 
-    private boolean isWindowStateAllowed(WindowState state) {
+    protected boolean isWindowStateAllowed(WindowState state) {
         Enumeration supportedStates = context.getSupportedWindowStates();
         while (supportedStates.hasMoreElements()) {
             if (supportedStates.nextElement().toString().equalsIgnoreCase(

@@ -46,22 +46,6 @@ public class EventResponseImpl extends StateAwareResponseImpl
               servletResponse);
     }
 
-	
-
-//	public ServletOutputStream getOutputStream() throws IOException {
-//		// TODO Auto-generated method stub
-////		return null;
-//		throw new UnsupportedOperationException("This method needs to be implemented.");
-//	}
-
-//	public PrintWriter getWriter() throws IOException {
-//		// TODO Auto-generated method stub
-////		return null;
-//		throw new UnsupportedOperationException();
-//	}
-
-
-
 	public void setRenderParameters(EventRequest request) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
