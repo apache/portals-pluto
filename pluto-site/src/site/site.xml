@@ -62,7 +62,7 @@ limitations under the License.
       <item name="Architecture" href="/v11/architecture.html"/>
       <item name="Resources" href="/v11/resources.html"/>
       <item name="Subprojects" href="/v11/subprojects.html" collapsed="true">
-        <item name="Portlet Container" href="/pluto-container/index.html"/>
+        <item name="Portlet Container" href="/pluto-container/getting-started.html"/>
         <item name="Portlet Tags" href="/pluto-taglib/index.html"/>
         <item name="Portal Driver" href="/pluto-portal-driver/index.html"/>
         <item name="Portal" href="/pluto-portal/index.html"/>
@@ -70,7 +70,7 @@ limitations under the License.
         <item name="Descriptor API" href="/pluto-descriptor-api/index.html"/>
         <item name="Descriptor Impl" href="/pluto-descriptor-impl/index.html"/>
         <!--item name="Optional Services" href="/pluto-optional-services/index.html"/-->
-        <item name="Maven Plugin" href="/maven-pluto-plugin/index.html"/>
+        <item name="Maven Plugin" href="/maven-pluto-plugin/getting-started.html"/>
         <item name="Ant Tasks" href="/pluto-ant-tasks/getting-started.html"/>
         <item name="Util" href="/pluto-util/index.html"/>
       </item>
