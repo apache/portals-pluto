@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -30,23 +31,21 @@ import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PreferenceInActionTest extends PreferenceCommonTest
 implements ActionTest {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PreferenceInActionTest.class);
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkPreferenceValidator(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure the validator catches invalid preferences.");
         result.setSpecPLT("14.4");
-        
+
         PortletPreferences preferences = request.getPreferences();
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Original preferences:");
@@ -61,15 +60,15 @@ implements ActionTest {
             }
             // Call store() method to invoke the validator.
             preferences.store();
-            
+
         } catch (ReadOnlyException ex) {
         	TestUtils.failOnException("Unable to set preference value.", ex, result);
         	return result;
-        	
+
         } catch (IOException ex) {
         	TestUtils.failOnException("Unable to store preference value.", ex, result);
         	return result;
-        	
+
         } catch (ValidatorException ex) {
         	// We are expecting this exception!
             exceptionThrown = true;
@@ -79,10 +78,10 @@ implements ActionTest {
                 preferences.setValue("TEST", "OK");
             	preferences.reset("TEST");
             } catch (Throwable th) {
-            	LOG.error(th);            	
+            	LOG.error(th);
             }
         }
-        
+
         if (exceptionThrown) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
@@ -91,14 +90,14 @@ implements ActionTest {
         }
         return result;
     }
-    
+
     protected TestResult checkOnePreferenceValidatorPerPortletDefinition(
     		PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure only one validator instance is created "
         		+ "per portlet definition.");
         result.setSpecPLT("14.4");
-        
+
         PortletPreferences preferences = request.getPreferences();
         try {
             preferences.setValue(
@@ -130,15 +129,15 @@ implements ActionTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure storage works for portlet preferences.");
         result.setSpecPLT("14.1");
-        
+
         PortletPreferences preferences = request.getPreferences();
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Preferences to store: " + preferences);
         }
-        
+
         boolean setOccured = false;
         boolean storeOccured = false;
-        
+
         try {
         	// Set new value for preference "dummyName".
             preferences.setValue(PREF_NAME, NEW_VALUE);
@@ -171,7 +170,7 @@ implements ActionTest {
             	return result;
         	}
         }
-        
+
         // Everything is OK.
         if (setOccured && storeOccured) {
         	result.setReturnCode(TestResult.PASSED);
@@ -190,5 +189,5 @@ implements ActionTest {
         }
         return result;
     }
-    
+
 }

@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -20,27 +21,26 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Static class that provides utility methods for Pluto testsuite.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @since 2006-02-13
  */
 public class TestUtils {
-	
+
 	/** Logger. */
 	private static final Log LOG = LogFactory.getLog(TestUtils.class);
-	
-	
+
+
 	// Private Constructor -----------------------------------------------------
-	
+
 	/**
 	 * Private method that prevents external instantiation.
 	 */
 	private TestUtils() {
 		// Do nothing.
 	}
-	
-	
+
+
 	// Public Static Methods ---------------------------------------------------
-	
+
 	/**
 	 * Sets the test result return code to <code>FAILED</code>, and reports
 	 * assertion details by specifying values got and values expected.
@@ -58,7 +58,7 @@ public class TestUtils {
 		                arrayToString(valuesExpected),
 		                result);
 	}
-	
+
 	/**
 	 * Sets the test result return code to <code>FAILED</code>, and reports
 	 * assertion details by specifying value got and value expected.
@@ -78,7 +78,7 @@ public class TestUtils {
     	result.setReturnCode(TestResult.FAILED);
     	result.setResultMessage(buffer.toString());
 	}
-	
+
     /**
      * Sets the test result return code to <code>FAILED</code>, and reports
      * exception details.
@@ -98,20 +98,20 @@ public class TestUtils {
     	}
     	buffer.append(" Cause (").append(cause.getClass().getName()).append("): ");
     	buffer.append(cause.getMessage());
-    	
+
     	// Log error message.
     	if (LOG.isErrorEnabled()) {
     		LOG.error(buffer.toString(), cause);
     	}
-    	
+
     	// Set error message to test result.
     	result.setReturnCode(TestResult.FAILED);
     	result.setResultMessage(buffer.toString());
     }
-    
-    
+
+
     // Private Static Methods --------------------------------------------------
-    
+
     /**
      * Converts a string array to a string.
      * @param values  the string array to convert.
@@ -133,6 +133,6 @@ public class TestUtils {
 		}
     	return buffer.toString();
     }
-    
-	
+
+
 }

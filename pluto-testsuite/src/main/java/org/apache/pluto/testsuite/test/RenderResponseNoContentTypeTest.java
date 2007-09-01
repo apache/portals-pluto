@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -27,14 +28,13 @@ import org.apache.pluto.testsuite.TestUtils;
 
 /**
  * FIXME: separate the two check methods to two classes.
- * 
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public class RenderResponseNoContentTypeTest
 extends AbstractReflectivePortletTest {
-	
+
 	private static final Log LOG = LogFactory.getLog(RenderResponseNoContentTypeTest.class);
-	
+
 	/**
 	 * Overwrite super implementation to return null. This test requires that
 	 * content type of the render response is not set.
@@ -43,22 +43,22 @@ extends AbstractReflectivePortletTest {
 	public String getRenderResponseContentType() {
 		return null;
 	}
-	
+
 	// Test Methods ------------------------------------------------------------
-	
+
 	protected TestResult checkGetPortletOutputStream(PortletResponse response) {
 		TestResult result = new TestResult();
 		result.setDescription("Ensure If the getPortletOutputStream() method "
 				+ "is called before the setContentType() method, it will throw "
 				+ "an IllegalStateException.");
 		result.setSpecPLT("12.3.1");
-		
+
 		RenderResponse renderResponse = (RenderResponse) response;
 		ensureContentTypeNotSet(renderResponse, result);
 		if (result.getReturnCode() == TestResult.WARNING) {
 			return result;
 		}
-		
+
 		try {
 			renderResponse.getPortletOutputStream();
 			result.setReturnCode(TestResult.FAILED);
@@ -81,13 +81,13 @@ extends AbstractReflectivePortletTest {
 				+ "is called before the setContentType() method, it will throw "
 				+ "an IllegalStateException.");
 		result.setSpecPLT("12.3.1");
-		
+
 		RenderResponse renderResponse = (RenderResponse) response;
 		ensureContentTypeNotSet(renderResponse, result);
 		if (result.getReturnCode() == TestResult.WARNING) {
 			return result;
 		}
-		
+
 		try {
 			renderResponse.getWriter();
 			result.setReturnCode(TestResult.FAILED);
@@ -103,10 +103,10 @@ extends AbstractReflectivePortletTest {
 		}
 		return result;
 	}
-	
-	
+
+
 	// Private Methods ---------------------------------------------------------
-	
+
 	/**
 	 * Ensures that the content type of the current render response is not set.
 	 * If the content type is already set, this method sets the test result to

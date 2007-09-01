@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,8 +25,6 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,46 +38,44 @@ import java.util.Map;
 
 /**
  * Pluto testsuite's test portlet.
- * 
+ *
  * @see TestConfig
  * @see PortletTest
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  */
 public class TestPortlet extends GenericPortlet {
 
 	/** Internal logger. */
 	private static final Log LOG = LogFactory.getLog(TestPortlet.class);
-	
-	
+
+
 	// Private Member Variables ------------------------------------------------
-	
+
 	/** List of test configurations. */
-    private List testConfigs = null;
-    
+    private List testConfigs;
+
     /**
      * Map of test instances: key is an integer ID (as a string), and value is
      * the <code>PortletTest</code> instances.
      */
-    private Map tests = null;
-    
-    
+    private Map tests;
+
+
     // GenericPortlet Impl -----------------------------------------------------
-    
+
     /**
      * Initialize the test portlet. This method reads the testsuite's config
      * files, constructs and initializes all <code>PortletTest</code> instances.
      * @throws PortletException if fail to read the configuration file.
      */
     public void init() throws PortletException {
-    	
+
     	// Get configuration file name.
         String configFile = getInitParameter("config");
         if (configFile == null) {
             configFile = "/WEB-INF/testsuite-config.xml";
         }
-        
+
         // Get configuration file as an input stream.
         InputStream is = getPortletContext().getResourceAsStream(configFile);
         if (is == null) {
@@ -86,7 +83,7 @@ public class TestPortlet extends GenericPortlet {
         	LOG.error(message);
         	throw new PortletException(message);
         }
-        
+
         // Load PortletTest instances: constructing and initializing.
         TestConfigFactory factory = new TestConfigFactory();
         try {
@@ -118,14 +115,14 @@ public class TestPortlet extends GenericPortlet {
             throw new PortletException(message, th);
         }
     }
-    
-    
+
+
     public void processAction(ActionRequest request, ActionResponse response)
     throws PortletException, IOException {
-    	
+
         String testId = getTestId(request);
         PortletTest test = (PortletTest) tests.get(testId);
-        
+
         // For ActionTest, run test and save results in session.
         if (test != null && test instanceof ActionTest) {
             TestResults results = test.doTest(getPortletConfig(),
@@ -135,7 +132,7 @@ public class TestPortlet extends GenericPortlet {
             PortletSession session = request.getPortletSession();
             session.setAttribute(test.getClass().getName(), results);
         }
-        
+
         Map renderParameters = null;
         if (test != null) {
             renderParameters = test.getRenderParameters(request);
@@ -146,17 +143,17 @@ public class TestPortlet extends GenericPortlet {
         renderParameters.put("testId", new String[] { testId });
         response.setRenderParameters(renderParameters);
     }
-    
+
     /**
      * Serves up the <code>view</code> mode.
      * TODO: more javadoc.
-     * 
+     *
      * @param request  the protlet request.
      * @param response  the portlet response.
      */
     public void doView(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
-    	
+
     	// Get the current test ID, the test instance and its config.
         String testId = getTestId(request);
         TestConfig testConfig = null;
@@ -165,7 +162,7 @@ public class TestPortlet extends GenericPortlet {
         	testConfig = (TestConfig) testConfigs.get(Integer.parseInt(testId));
         	test = (PortletTest) tests.get(testId);
         }
-        
+
         // For non-ActionTest, run test and save results in request.
         if (test != null && !(test instanceof ActionTest)) {
             TestResults results = test.doTest(getPortletConfig(),
@@ -181,8 +178,8 @@ public class TestPortlet extends GenericPortlet {
             		test.getClass().getName());
             request.setAttribute("results", results);
         }
-        
-        
+
+
         if (testId == null) {
         	// FIXME: update attribute name from tests to testConfigs.
             request.setAttribute("tests", testConfigs);
@@ -203,7 +200,7 @@ public class TestPortlet extends GenericPortlet {
             request.setAttribute("prevTest", prevTestConfig);
             request.setAttribute("nextTest", nextTestConfig);
         }
-        
+
         // Set content type for render response, and dispatch to JSP.
         response.setContentType("text/html");
         String displayUri = null;
@@ -229,7 +226,7 @@ public class TestPortlet extends GenericPortlet {
         		.getRequestDispatcher("/jsp/edit.jsp");
         dispatcher.include(request, response);
     }
-    
+
     /**
      * Serves up the <code>help</code> mode. This method dispatches the request
      * and response to the help JSP page (<code>/jsp/help.jsp</code>).
@@ -242,28 +239,28 @@ public class TestPortlet extends GenericPortlet {
     			.getRequestDispatcher("/jsp/help.jsp");
     	dispatcher.include(request, response);
     }
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Returns the current test ID.
      * @param request  the portlet request.
      * @return the current test ID.
      */
     private String getTestId(PortletRequest request) {
-        
+
     	String testId = request.getParameter("testId");
         String prevTestId = request.getParameter("previousTestId");
         String nextTestId = request.getParameter("nextTestId");
-        
+
         // If none of the parameters are available, return null.
         if ((testId == null || testId.trim().length() == 0)
         		&& nextTestId == null && prevTestId == null
         		&& tests.size() > 0) {
             return null;
         }
-        
+
         // Retrieve the test which is next to the previous test.
         else if (testId == null && prevTestId != null) {
             int previousTestIdInt = Integer.parseInt(prevTestId);
@@ -273,7 +270,7 @@ public class TestPortlet extends GenericPortlet {
                 testId = String.valueOf(previousTestIdInt + 1);
             }
         }
-        
+
         // Retrieve the test which is previous to the next test.
         else if (testId == null && nextTestId != null) {
             int nextTestIdInt = Integer.parseInt(nextTestId);
@@ -283,13 +280,8 @@ public class TestPortlet extends GenericPortlet {
                 testId = String.valueOf(nextTestIdInt - 1);
             }
         }
-        
+
         // Return the current test ID.
         return testId;
     }
-
-	public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
 }

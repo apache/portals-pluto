@@ -1,8 +1,11 @@
+<%@ page import="javax.portlet.WindowState" %>
 <%--
-Copyright 2004 The Apache Software Foundation
-Licensed  under the  Apache License,  Version 2.0  (the "License");
-you may not use  this file  except in  compliance with the License.
-You may obtain a copy of the License at
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
@@ -24,7 +27,7 @@ limitations under the License.
   <c:when test="${results.inQuestion}">
     
     <%-- Generate portlet render URL: Start =============================== --%>
-    <portlet:renderURL secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
+    <portlet:renderURL windowState="<%=WindowState.MAXIMIZED.toString()%>" secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
                        var="url">
       <portlet:param name="maxInactiveIntervalSet" value="<%= Boolean.TRUE.toString() %>"/>
       <portlet:param name="testId" value="<%= renderRequest.getParameter("testId") %>"/>
@@ -51,6 +54,11 @@ limitations under the License.
             This test requires manual intervention. Please wait for at least
             5 seconds and click <a href="<c:out value="${url}"/>">here</a>.
           </p>
+            <p>
+                NOTE: Clicking the url above will maximize this portlet.  This is required
+                to ensure that no other portlets on the current page recreate the session we
+                are trying to invalidate.
+            </p>
         </td>
       </tr>
     </table>

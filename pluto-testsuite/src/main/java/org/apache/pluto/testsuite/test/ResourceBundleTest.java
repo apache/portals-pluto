@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,63 +16,69 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.pluto.testsuite.TestResult;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-import javax.portlet.*;
-import java.util.*;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
+
+import org.apache.pluto.testsuite.TestResult;
 
 /**
  * Tests basic attribute retrieval and storage functions within
  * the portlet request, session, and context objects.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class ResourceBundleTest extends AbstractReflectivePortletTest {
-	
+
 	// Static Constant Definitions ---------------------------------------------
-	
+
 	/** Key for portlet title defined in portlet.xml/init-param. */
     private static final String TITLE_KEY = "javax.portlet.title";
-    
+
 	/** Key for portlet short title defined in portlet.xml/init-param. */
     private static final String SHORT_TITLE_KEY = "javax.portlet.short-title";
-    
+
 	/** Key for portlet keywords defined in portlet.xml/init-param. */
     private static final String KEYWORDS_KEY = "javax.portlet.keywords";
-    
+
     /**
      * Parameter name for if resource bundle is declared in
      * <code>testsuite-config/init-param</code>.
      */
     private static final String BUNDLE_DECLARED_PARAM = "resource-bundle";
-    
+
     /**
      * Parameter name for portlet title in
      * <code>testsuite-config/init-param</code>.
      */
     private static final String TITLE_PARAM = "title";
-    
+
     /**
      * Parameter name for portlet short title in
      * <code>testsuite-config/init-param</code>.
      */
     private static final String SHORT_TITLE_PARAM = "short-title";
-    
+
     /**
      * Parameter name for portlet keywords in
      * <code>testsuite-config/init-param</code>.
      */
     private static final String KEYWORDS_PARAM = "keywords";
-	
-	
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkResourceBundleExists(PortletConfig config,
                                                    PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure the resource bundle is not null.");
-        
+
         ResourceBundle bundle = config.getResourceBundle(request.getLocale());
         if (bundle != null) {
         	result.setReturnCode(TestResult.PASSED);
@@ -82,7 +89,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     protected TestResult checkGetNames(PortletConfig config,
                                        PortletRequest request) {
         TestResult result = new TestResult();
@@ -93,7 +100,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         requiredKeys.add(TITLE_KEY);
         requiredKeys.add(SHORT_TITLE_KEY);
         requiredKeys.add(KEYWORDS_KEY);
-        
+
         ResourceBundle bundle = config.getResourceBundle(request.getLocale());
         if (bundle == null) {
         	result.setReturnCode(TestResult.WARNING);
@@ -102,12 +109,12 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         			+ "Check the other test results in this test suite.");
         	return result;
         }
-        
+
         for (Enumeration en = bundle.getKeys(); en.hasMoreElements(); ) {
             String key = (String) en.nextElement();
             requiredKeys.remove(key);
         }
-        
+
         if (requiredKeys.isEmpty()) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
@@ -142,17 +149,17 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         return doGenericLocaleRequiredFields(config, req, new Locale("dflt"));
     }
     */
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     private TestResult doGenericLocaleRequiredFields(PortletConfig config,
                                                      PortletRequest request,
                                                      Locale locale) {
         TestResult result = new TestResult();
         result.setDescription("Retrieve the title and ensure it's set properly "
-        		+ "under local " + locale);
-        
+        		+ "under locale " + locale);
+
         // Retrieve title, short title and keywords from portlet resource bundle.
         ResourceBundle bundle = config.getResourceBundle(locale);
         if (bundle == null) {
@@ -165,7 +172,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         String title = bundle.getString(TITLE_KEY);
         String shortTitle = bundle.getString(SHORT_TITLE_KEY);
         String keywords = bundle.getString(KEYWORDS_KEY);
-        
+
         // Retrieve expected title, short title and keywords from test config.
         String suffix = isBundleDeclared() ? ("_" + locale.getLanguage()) : "";
         Map initParams = getInitParameters();
@@ -175,7 +182,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         		SHORT_TITLE_PARAM + suffix);
         String expectedKeywords = (String) initParams.get(
         		KEYWORDS_PARAM + suffix);
-        
+
         // Assert that values retrieved from resource bundler are expected.
         boolean inconsistent = false;
         StringBuffer buffer = new StringBuffer();
@@ -201,7 +208,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
             		.append(keywords).append("' != '")
             		.append(expectedKeywords).append("'; ");
         }
-        
+
         if (!inconsistent) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
@@ -210,7 +217,7 @@ public class ResourceBundleTest extends AbstractReflectivePortletTest {
         }
         return result;
     }
-    
+
     private boolean isBundleDeclared() {
         String bundleDeclared = (String) getInitParameters().get(
         		BUNDLE_DECLARED_PARAM);
