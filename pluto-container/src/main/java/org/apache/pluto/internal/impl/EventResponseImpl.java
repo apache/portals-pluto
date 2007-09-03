@@ -183,42 +183,6 @@ public class EventResponseImpl extends StateAwareResponseImpl
 	}
 
 	@Override
-	public String encodeRedirectUrl(String arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			return null;
-		}
-		else
-		return super.encodeRedirectUrl(arg0);
-	}
-
-	@Override
-	public String encodeRedirectURL(String arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			return null;
-		}
-		else
-			return super.encodeRedirectURL(arg0);
-	}
-
-	@Override
-	public void sendError(int arg0) throws IOException {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.sendError(arg0);
-	}
-	
-	@Override
-	public void sendError(int arg0, String arg1) throws IOException {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.sendError(arg0, arg1);
-	}
-
-	@Override
 	public void setStatus(int arg0, String arg1) {
 		if (super.isForwarded() || super.isIncluded()){
 			// no operation
