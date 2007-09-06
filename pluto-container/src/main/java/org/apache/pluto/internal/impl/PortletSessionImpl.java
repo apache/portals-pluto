@@ -67,6 +67,8 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     /** The internal portlet window. */
     private InternalPortletWindow internalPortletWindow = null;
     
+    //
+    private boolean isIncludeOrForward = false;
     
     // Constructor -------------------------------------------------------------
     
@@ -85,6 +87,8 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     // PortletSession Impl: Attributes -----------------------------------------
     
     public Object getAttribute(String name) {
+    	if (isIncludeOrForward)
+    		return getAttribute(name, APPLICATION_SCOPE);
         return getAttribute(name, DEFAULT_SCOPE);
     }
     
@@ -103,6 +107,8 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
     
     public Enumeration getAttributeNames() {
+    	if (isIncludeOrForward)
+    		return getAttributeNames(APPLICATION_SCOPE);
         return getAttributeNames(DEFAULT_SCOPE);
     }
     
@@ -126,7 +132,10 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
     
     public void removeAttribute(String name) {
-        removeAttribute(name, DEFAULT_SCOPE);
+    	if(isIncludeOrForward)
+    		removeAttribute(name, APPLICATION_SCOPE);
+    	else
+    		removeAttribute(name, DEFAULT_SCOPE);
     }
 
     public void removeAttribute(String name, int scope) {
@@ -139,7 +148,10 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
     
     public void setAttribute(String name, Object value) {
-        setAttribute(name, value, DEFAULT_SCOPE);
+    	if (isIncludeOrForward)
+    		setAttribute(name, value, PortletSession.APPLICATION_SCOPE);
+    	else
+    		setAttribute(name, value, DEFAULT_SCOPE);
     }
 
     public void setAttribute(String name, Object value, int scope) {
@@ -263,7 +275,10 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
 
     public Object getValue(String name) {
-        return this.getAttribute(name, DEFAULT_SCOPE);
+    	if (isIncludeOrForward)
+    		return this.getAttribute(name, APPLICATION_SCOPE);
+    	else
+    		return this.getAttribute(name, DEFAULT_SCOPE);
     }
 
     /**
@@ -275,17 +290,21 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     }
 
     public void putValue(String name, Object value) {
+    	if (isIncludeOrForward)
+    		this.setAttribute(name, value, APPLICATION_SCOPE);
         this.setAttribute(name, value, DEFAULT_SCOPE);
     }
 
     public void removeValue(String name) {
+    	if (isIncludeOrForward)
+    		this.removeAttribute(name, APPLICATION_SCOPE);
         this.removeAttribute(name, DEFAULT_SCOPE);
     }
 
 
 	public Map<String, Object> getMap() {
 		List<String> paramNames = getAttributeNamesAsList(DEFAULT_SCOPE);		
-		return fillMap(paramNames, DEFAULT_SCOPE);
+		return fillMap(paramNames, DEFAULT_SCOPE);	
 	}
 
 	public Map<String, Object> getMap(int scope) {
@@ -319,5 +338,10 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
 			resultMap.put(string, getAttribute(string,scope));
 		}
 		return resultMap;
+	}
+
+
+	public void setIncludeOrForward(boolean isIncludeOrForward) {
+		this.isIncludeOrForward = isIncludeOrForward;
 	}
 }

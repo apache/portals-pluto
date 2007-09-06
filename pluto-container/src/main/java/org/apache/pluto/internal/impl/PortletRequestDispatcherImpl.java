@@ -135,8 +135,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
 		}
 		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
 		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
-		boolean isForwarded = (internalRequest.isForwarded()
-        		|| internalResponse.isForwarded());
+		boolean isForwarded = (internalRequest.isForwarded()||internalResponse.isForwarded());
         try {
         	internalRequest.setForwarded(true);
         	internalRequest.setForwardedQueryString(queryString);
