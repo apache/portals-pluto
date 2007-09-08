@@ -629,13 +629,17 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 			super.flushBuffer();
 	}
 
+	/*
+	 * The pluto implementation don't works with buffering.
+	 * @see javax.servlet.ServletResponseWrapper#getBufferSize()
+	 */
 	@Override
 	public int getBufferSize() {
 		if (super.isForwarded() || super.isIncluded()){
 			return 0;
 		}
 		else
-			return super.getBufferSize();
+			return 0;
 	}
 
 	@Override

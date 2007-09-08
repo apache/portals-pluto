@@ -77,6 +77,7 @@ public class FilterManagerImpl implements FilterManager{
 				//initialize the rest of the needed data
 				filterChain2.setFilterData(loader, portletName, portletContext);
 				try {
+					filterChain2.setIndex(-1);
 					if (lifecycle.equals(ACTION_PHASE)){
 							filterChain2.doFilter((ActionRequest)req, (ActionResponse)res);	
 					}

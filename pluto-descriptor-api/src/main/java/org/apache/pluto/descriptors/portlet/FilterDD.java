@@ -32,7 +32,7 @@ public class FilterDD {
 	private String filterClass = null;
 	
 	@XmlElement (name = "lifecycle")
-	private String lifecycle = null;
+	private List<String> lifecycle = null;
 	
 	@XmlElement (name = "init-param")
 	private List<InitParamDD> initParam = null;
@@ -77,11 +77,11 @@ public class FilterDD {
 		this.initParam = initParam;
 	}
 
-	public String getLifecycle() {
+	public List getLifecycle() {
 		return lifecycle;
 	}
 
-	public void setLifecycle(String lifecycle) {
+	public void setLifecycle(List<String> lifecycle) {
 		this.lifecycle = lifecycle;
 	}
 }

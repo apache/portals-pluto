@@ -26,6 +26,8 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -55,6 +57,7 @@ public class FilterChainImpl implements FilterChain {
 	ClassLoader loader;
 	String portletName;
 	PortletContext portletContext;
+	private int index = -1;
 	
 	/**
 	 * The class capsulate the PortletFilter and the parameter for the
@@ -89,8 +92,27 @@ public class FilterChainImpl implements FilterChain {
 		 * @return true if contains, false else.
 		 */
 		public boolean isFilterForPortlet(String portletName){
-			// TODO: update for wildcards
-			return this.portletNames.contains(portletName);
+			if (portletNames == null){
+				return false;
+			}
+			for (int i = 0; i < portletNames.size();i++){
+				String name = portletNames.get(i);
+				if (name.endsWith("*")){
+					if (name.length()== 1){
+						//if only *
+						return true;
+					}
+					name = name.substring(0, name.length()-1);
+					if (portletName.length()>=name.length()){
+						if (portletName.substring(0, name.length()).equals(name))
+							return true;
+					}
+				}
+				else if(name.equals(portletName))
+					return true;
+			}
+			return false;
+//			return this.portletNames.contains(portletName);
 		}
 		
 		/**
@@ -132,26 +154,29 @@ public class FilterChainImpl implements FilterChain {
 	 * @param portletNames
 	 * @param lifecycle
 	 */
-	public void addFilter(String className, FilterConfigImpl filterConfig, List<String> portletNames, String lifecycle){
+	public void addFilter(String className, FilterConfigImpl filterConfig, List<String> portletNames, List lifecycle){
 		PortletFilter portletFilter = new PortletFilter(className, filterConfig, portletNames);
-		if (lifecycle.equals(FilterManagerImpl.ACTION_PHASE)){
-			actionFilters.add(portletFilter);
-		}
-		else if (lifecycle.equals(FilterManagerImpl.EVENT_PHASE)){
-			eventFilters.add(portletFilter);
-		}
-
-		else if (lifecycle.equals(FilterManagerImpl.RENDER_PHASE)){
-			renderFilters.add(portletFilter);
-		}
-		else if (lifecycle.equals(FilterManagerImpl.RESOURCE_PHASE)){
-			resourceFilters.add(portletFilter);
+		for (int i = 0; i < lifecycle.size();i++){
+			if (lifecycle.get(i).equals(FilterManagerImpl.ACTION_PHASE)){
+				actionFilters.add(portletFilter);
+			}
+			else if (lifecycle.get(i).equals(FilterManagerImpl.EVENT_PHASE)){
+				eventFilters.add(portletFilter);
+			}
+			else if (lifecycle.get(i).equals(FilterManagerImpl.RENDER_PHASE)){
+				renderFilters.add(portletFilter);
+			}
+			else if (lifecycle.get(i).equals(FilterManagerImpl.RESOURCE_PHASE)){
+				resourceFilters.add(portletFilter);
+			}
 		}
 	}
 	
 	public void doFilter(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 		if (actionFilters!= null){
-			for (PortletFilter filter2 : actionFilters) {
+			index++;
+			if (index < actionFilters.size()){
+				PortletFilter filter2 = actionFilters.get(index);
 				if (filter2.isFilterForPortlet(portletName)){
 					ActionFilter actionfilter;
 					try {
@@ -159,6 +184,7 @@ public class FilterChainImpl implements FilterChain {
 						actionfilter = (ActionFilter) filter2.getFilterClass().newInstance();
 						actionfilter.init(filter2.getFilterConfig());
 						actionfilter.doFilter(request, response, this);
+						actionfilter.destroy();
 					} catch (InstantiationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -169,6 +195,9 @@ public class FilterChainImpl implements FilterChain {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
+				else{
+					doFilter(request, response);
 				}
 			}
 		}
@@ -176,7 +205,9 @@ public class FilterChainImpl implements FilterChain {
 
 	public void doFilter(EventRequest request, EventResponse response) throws IOException, PortletException {
 		if (eventFilters!= null){
-			for (PortletFilter filter2 : eventFilters) {
+			index++;
+			if (index < eventFilters.size()){
+				PortletFilter filter2 = eventFilters.get(index); 
 				if (filter2.isFilterForPortlet(portletName)){
 					EventFilter eventfilter;
 					try {
@@ -184,6 +215,7 @@ public class FilterChainImpl implements FilterChain {
 						eventfilter = (EventFilter) filter2.getFilterClass().newInstance();
 						eventfilter.init(filter2.getFilterConfig());
 						eventfilter.doFilter(request, response, this);
+						eventfilter.destroy();
 					} catch (InstantiationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -194,6 +226,9 @@ public class FilterChainImpl implements FilterChain {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
+				else{
+					doFilter(request, response);
 				}
 			}
 		}
@@ -201,7 +236,9 @@ public class FilterChainImpl implements FilterChain {
 
 	public void doFilter(RenderRequest request, RenderResponse response) throws IOException, PortletException {
 		if (renderFilters!= null){
-			for (PortletFilter filter2 : renderFilters) {
+			index++;
+			if (index < renderFilters.size()){
+				PortletFilter filter2 = renderFilters.get(index);
 				if (filter2.isFilterForPortlet(portletName)){
 					RenderFilter renderfilter;
 					try {
@@ -209,6 +246,7 @@ public class FilterChainImpl implements FilterChain {
 						renderfilter = (RenderFilter) filter2.getFilterClass().newInstance();
 						renderfilter.init(filter2.getFilterConfig());
 						renderfilter.doFilter(request, response, this);
+						renderfilter.destroy();
 					} catch (InstantiationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -220,13 +258,18 @@ public class FilterChainImpl implements FilterChain {
 						e.printStackTrace();
 					}
 				}
+				else{
+					doFilter(request, response);
+				}
 			}
 		}
 	}
 
 	public void doFilter(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 		if (resourceFilters!= null){
-			for (PortletFilter filter2 : resourceFilters) {
+			index++;
+			if (index < resourceFilters.size()){
+				PortletFilter filter2 = resourceFilters.get(index);
 				if (filter2.isFilterForPortlet(portletName)){
 					ResourceFilter resourcefilter;
 					try {
@@ -234,6 +277,7 @@ public class FilterChainImpl implements FilterChain {
 						resourcefilter = (ResourceFilter) filter2.getFilterClass().newInstance();
 						resourcefilter.init(filter2.getFilterConfig());
 						resourcefilter.doFilter(request, response, this);
+						resourcefilter.destroy();
 					} catch (InstantiationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -244,6 +288,9 @@ public class FilterChainImpl implements FilterChain {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
+				else{
+					doFilter(request, response);
 				}
 			}
 		}
@@ -255,6 +302,14 @@ public class FilterChainImpl implements FilterChain {
 	 */
 	public String getAppName() {
 		return appName;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 }
