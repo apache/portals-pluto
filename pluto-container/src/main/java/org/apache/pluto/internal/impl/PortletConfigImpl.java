@@ -137,7 +137,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 		if (portletDD.getPublicRenderParameter() != null){
 			return Collections.enumeration(portletDD.getPublicRenderParameter());
 		}
-		return null;
+		return  Collections.enumeration(new ArrayList<String>());
 	}
 
 	public String getDefaultNamespace() {
@@ -148,13 +148,13 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 		
 		return (portletDD.getProcessingEvents() != null) ? 
 				Collections.enumeration(portletDD.getProcessingEvents()) :
-					null;
+					Collections.enumeration(new ArrayList<QName>());
 	}
 
 	public Enumeration<QName> getPublishingEventQNames() {
 		return (portletDD.getPublishingEvents() != null) ?
 				Collections.enumeration(portletDD.getPublishingEvents()) :
-					null;
+					Collections.enumeration(new ArrayList<QName>());
 	}
 
 	public Enumeration<Locale> getSupportedLocales() {
@@ -162,8 +162,10 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 		// add an entry in the resut list (new Locale(string))
 		List<Locale> locals = new ArrayList<Locale>();
 		List<String> localsAsStrings = portletDD.getSupportedLocale();
-		for (String string : localsAsStrings) {
-			locals.add(new Locale(string));
+		if (localsAsStrings!=null){
+			for (String string : localsAsStrings) {
+				locals.add(new Locale(string));
+			}
 		}
 		return Collections.enumeration(locals);
 	}
