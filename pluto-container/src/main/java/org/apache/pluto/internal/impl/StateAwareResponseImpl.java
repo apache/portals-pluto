@@ -18,38 +18,26 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.rmi.MarshalException;
+import java.io.Serializable; 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.ArrayList;
+import java.util.Map; 
 
 import javax.portlet.PortalContext;
-import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
-import javax.servlet.ServletException;
+import javax.portlet.WindowStateException; 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -82,15 +70,13 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	private String redirectLocation;
     
 
-	protected InternalPortletWindow internalPortletWindow;
-	protected PortletContainer container;
 	private Map<String, String[]> publicRenderParameter = new HashMap<String, String[]>();
 	
-    private Map renderParameters = new HashMap();
+    private Map<String, String[]> renderParameters = new HashMap<String, String[]>();
     private WindowState windowState = null;
     private PortletMode portletMode = null;
-	protected PortalCallbackService callback;
-    protected PortalContext context;
+	private PortalCallbackService callback;
+    private PortalContext context;
     
 	public StateAwareResponseImpl(PortletContainer container,
 			            InternalPortletWindow internalPortletWindow,
@@ -98,8 +84,6 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 			            HttpServletResponse servletResponse) {
 		super(container, internalPortletWindow, servletRequest,
 		servletResponse);
-		this.internalPortletWindow = internalPortletWindow;
-		this.container = container;
 		context = container.getRequiredContainerServices().getPortalContext();
 		callback = container.getRequiredContainerServices().getPortalCallbackService();
 	}
@@ -108,85 +92,19 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	 * @see javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.lang.Object)
 	 */
 	public void setEvent(QName qname, Serializable value) throws IllegalArgumentException {
+		if (qname == null) {
+			throw new IllegalArgumentException();
+		}
+		
 		EventProvider provider = callback.getEventProvider(
-				getHttpServletRequest(),getHttpServletResponse(), container);
+				getHttpServletRequest(),getHttpServletResponse(), getContainer());
 
 		if (isDeclaredAsPublishingEvent(qname)) {
-			if (value == null) {
-				try {
-					provider.registerToFireEvent(new EventImpl(qname));
-				} catch (ServletException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (PortletException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (PortletContainerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}else {
+			
+			if (value != null && !isValueInstanceOfDefinedClass(qname,value))
+				throw new IllegalArgumentException("Payload has not the right class");
 
-				if (!isValueInstanceOfDefinedClass(qname,value))
-					throw new IllegalArgumentException("Payload has not the right class");
-
-				XMLStreamReader xml = null;
-				try {
-
-					if (value == null) {
-						provider.registerToFireEvent(new EventImpl(qname));
-					} else if (!(value instanceof Serializable)) {
-						throw new IllegalArgumentException("Object payload must implement Serializable");
-					}
-					else {
-
-						Class clazz = value.getClass();
-
-						JAXBContext jc = JAXBContext.newInstance(clazz);
-
-						Marshaller marshaller  = jc.createMarshaller();
-
-						Writer out = new StringWriter();
-
-						marshaller.marshal(new JAXBElement(qname,clazz,value), out);
-//						marshaller.marshal(value, out);
-
-						if (out != null) {
-							provider.registerToFireEvent(new EventImpl(qname,(Serializable) out.toString()));
-						} else { 
-							provider.registerToFireEvent(new EventImpl(qname,(Serializable) value));
-						}
-					}
-				} catch (ServletException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (PortletException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (PortletContainerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (MarshalException e) {
-					// there is no valid jaxb binding
-					e.printStackTrace();
-				} catch (JAXBException e) {
-					// maybe there is no valid jaxb binding
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FactoryConfigurationError e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-//					} catch (ClassNotFoundException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-				}
-			}
+			provider.registerToFireEvent(qname, value);
 		}
 	}
 
@@ -194,8 +112,17 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	 * @see javax.portlet.StateAwareResponse#setEvent(java.lang.String, java.lang.Object)
 	 */
 	public void setEvent(String name, Serializable value) {
-		String defaultEventNamespace = getDefaultEventNamespace();
-		setEvent((new QName(defaultEventNamespace, name)),value);
+        String contextPath = getInternalPortletWindow().getContextPath();
+        String defaultNamespace;
+        try {
+            // TODO defaultNamespace = getContainer().getOptionalContainerServices().getPortletRegistryService().getPortletApplicationDescriptor(contextPath).getDefaultNamespace();
+            defaultNamespace = getContainer().getPortletApplicationDescriptor(contextPath).getDefaultNamespace();
+        } catch (PortletContainerException e) { 
+            LOG.error(contextPath, e); 
+            defaultNamespace = XMLConstants.NULL_NS_URI;
+        }
+        QName qname = new QName(defaultNamespace, name);
+        setEvent(qname, value);
 	}
 	
 	/* (non-Javadoc)
@@ -333,11 +260,11 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
             throw new IllegalArgumentException(
                 "Render parameter key must not be null.");
         }
-        PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
+        PublicRenderParameterProvider provider = getContainer().getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
         //only if the value is null, if it is a public parameter will deleted from list.
         if (value == null){
         	//test if this is a public render parameter
-        	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+        	if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
         		publicRenderParameter.put(key, new String[] {null});
         	}
         	else{
@@ -345,7 +272,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
                 	"Render parameter value must not be null.");
         	}
         }
-        else if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+        else if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
         	publicRenderParameter.put(key, new String[] {value});
         }
         else{
@@ -364,9 +291,9 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-	    PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
+	    PublicRenderParameterProvider provider = getContainer().getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
 	    if (values == null){
-	    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+	    	if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
 	    		publicRenderParameter.put(key,new String[] {null});
 		    }
 	    	else{
@@ -375,7 +302,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	    	}
 	    }
 	    
-	    if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), key)){
+	    if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
 	    	publicRenderParameter.put(key,StringUtils.copy(values));
 	    }
 	    else{
@@ -389,7 +316,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         return renderParameters;
     }
     
-    public Map getRenderParameterMap() {
+    public Map<String, String[]> getRenderParameterMap() {
 		return renderParameters;
 	}
     
@@ -688,40 +615,40 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 //		}	
 //	}
 
-	/**
-	 * Gets the default event namespace.
-	 * 
-	 * @return the default event namespace
-	 */
-	private String getDefaultEventNamespace() {
-		EventProvider provider = callback.getEventProvider(
-				getHttpServletRequest(),getHttpServletResponse(), container);
-		String defaultEventNamespace = provider.getDefaultEventNamespace(this.getInternalPortletWindow().getPortletName());
-		return (defaultEventNamespace == null || defaultEventNamespace.equals("")) ? XMLConstants.NULL_NS_URI : defaultEventNamespace; 
-	}
-	
 	// ****** private methods ******
 
 	private boolean isDeclaredAsPublishingEvent(QName qname) {
-		List<QName> events = internalPortletWindow.getPortletEntity()
+		List<QName> events = getInternalPortletWindow().getPortletEntity()
 		.getPortletDefinition().getPublishingEvents();
-		List<QName> tempEvents = new ArrayList<QName>();
-		if (events == null) 
-			return false;
-		for (QName name : events) {
-			if (name.getNamespaceURI() != null && !(name.getNamespaceURI().equals("")))
-				tempEvents.add(name);
-			else
-				tempEvents.add(new QName(getDefaultEventNamespace(),name.getLocalPart()));
+		if (events != null) {
+			String contextPath = getInternalPortletWindow().getContextPath();
+			try {
+				PortletAppDD portletAppDD =	getContainer().getPortletApplicationDescriptor(contextPath);
+				String defaultNamespace = portletAppDD.getDefaultNamespace();
+				if (defaultNamespace == null) {
+					defaultNamespace = XMLConstants.NULL_NS_URI;
+				} 
+				for (QName name : events) {
+					String namespaceURI = name.getNamespaceURI();
+					if (XMLConstants.NULL_NS_URI.equals(namespaceURI)) {
+						name = new QName(defaultNamespace, name.getLocalPart());
+					}
+					if (qname.equals(name)) {
+						return true;
+					}
+				}
+			} catch (PortletContainerException e) {
+				LOG.error(e);
+			} 
 		}
-		return tempEvents.contains(qname);
+		return false;
 	}
 	
 	private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value){
 		PortletAppDD portletAppDD = null;
 		try {
 			 portletAppDD =
-				container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
+				 getContainer().getPortletApplicationDescriptor(getInternalPortletWindow().getContextPath());
 			 if (portletAppDD.getEvents() != null) {
 				 for (EventDefinitionDD event : portletAppDD.getEvents()) {
 					 if (event.getName().toString().equals(qname.toString())){

@@ -36,10 +36,6 @@ implements ActionResponse, InternalActionResponse {
                               HttpServletResponse servletResponse) {
         super(container, internalPortletWindow, servletRequest,
               servletResponse);
-        this.container = container;
-        this.internalPortletWindow = internalPortletWindow;
-        context = container.getRequiredContainerServices().getPortalContext();
-        callback = container.getRequiredContainerServices().getPortalCallbackService();
     }
 
 	@Override
