@@ -20,6 +20,7 @@ package org.apache.pluto.driver.services.container;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.portlet.BaseURL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,9 +31,10 @@ import org.apache.pluto.driver.core.ResourceURLProviderImpl;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.spi.PublicRenderParameterProvider;
+import org.apache.pluto.spi.ResourceURLProvider;
 
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -120,6 +122,11 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
      */
 	public FilterManager getFilterManager() {
 		return FilterManagerImpl.getFilterManager();
+	}
+
+
+	public PortletURLListener getPortletURLListener() {
+		return PortletURLListenerImpl.getPortletURLListener();
 	}
 }
 

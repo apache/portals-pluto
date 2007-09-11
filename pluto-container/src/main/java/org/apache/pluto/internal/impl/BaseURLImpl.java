@@ -22,6 +22,7 @@ import java.io.Writer;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.BaseURL;
@@ -36,6 +37,7 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.util.StringManager;
@@ -148,6 +150,7 @@ public class BaseURLImpl implements BaseURL {
             throw new IllegalArgumentException(
                 "Render parameters must not be null.");
         }
+        
         for (Iterator iter = parameters.entrySet().iterator(); iter.hasNext();) {
             Map.Entry entry = (Map.Entry) iter.next();
             if (!(entry.getKey() instanceof String)) {
@@ -162,9 +165,18 @@ public class BaseURLImpl implements BaseURL {
         
         this.parameters.clear();
         this.publicRenderParameters.clear();
+        List<String> publicPortletRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
         if (parameters.keySet()!= null){
         	for (Object key : parameters.keySet()) {
-        		this.setParameter((String)key, (String[])parameters.get(key));
+        		if (publicPortletRenderParameterNames == null)
+        			this.setParameter((String)key, (String[])parameters.get(key));
+        		else{
+        			//test if this is a public parameter
+        			if (publicPortletRenderParameterNames.contains(key))
+        				publicRenderParameters.put((String)key, (String[])parameters.get(key));
+        			else
+        				this.setParameter((String)key, (String[])parameters.get(key));
+        		}
     		}
         }
         
@@ -183,6 +195,9 @@ public class BaseURLImpl implements BaseURL {
 	    		.getPortalCallbackService()
 	    		.getPortletURLProvider(servletRequest, internalPortletWindow);
 	
+	    PortletURLListener portletURLFilterListener = portletURLFilterListener = container
+			.getRequiredContainerServices()
+			.getPortalCallbackService().getPortletURLListener();
 	    if (mode != null) {
 	        urlProvider.setPortletMode(mode);
 	    }
@@ -192,15 +207,19 @@ public class BaseURLImpl implements BaseURL {
 	    if (isAction) {
 	        urlProvider.setAction(true);
 	    }
-	    if (isResourceServing){
+	    else if (isResourceServing){
 	    	urlProvider.setResourceServing(true);
 	    }
+
+        portletURLFilterListener.callListener(internalPortletWindow,this,isAction,isResourceServing);
+	    
 	    if (secure) {
 	        urlProvider.setSecure();
 	    }
 	    if (!isResourceServing)
 	    	urlProvider.clearParameters();
 	    
+			
 	    urlProvider.setParameters(parameters);
 	    
 	    urlProvider.setPublicRenderParameters(publicRenderParameters);
@@ -255,13 +274,15 @@ public class BaseURLImpl implements BaseURL {
 	    Iterator supports = dd.getSupports().iterator();
 	    while(supports.hasNext()) {
 	        SupportsDD support = (SupportsDD)supports.next();
-	        Iterator modes = support.getPortletModes().iterator();
-	        while(modes.hasNext()) {
-	            String md = (String)modes.next();
-	            if (md.toUpperCase().equals(
-	                mode.toString().toUpperCase())) {
-	                return true;
-	            }
+	        if (support.getPortletModes() != null){
+	        	Iterator modes = support.getPortletModes().iterator();
+		        while(modes.hasNext()) {
+		            String md = (String)modes.next();
+		            if (md.toUpperCase().equals(
+		                mode.toString().toUpperCase())) {
+		                return true;
+		            }
+		        }
 	        }
 	    }
 	    String message = EXCEPTIONS.getString(
