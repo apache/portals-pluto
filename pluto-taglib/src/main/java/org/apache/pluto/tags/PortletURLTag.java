@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -50,15 +49,15 @@ public abstract class PortletURLTag extends BaseURLTag {
 	 * TagExtraInfo class for PortletURLTag.
 	 */
 	public static class TEI extends BaseURLTag.TEI {
-        public final static Hashtable definedWindowStates = getDefinedWindowStates();
-        public final static Hashtable portletModes = getDefinedPortletModes();
+        public final static Hashtable<String,Object> definedWindowStates = getDefinedWindowStates();
+        public final static Hashtable<String,Object> portletModes = getDefinedPortletModes();
 
         /**
          * Provides a list of all static PortletMode available in the
          * specifications by using introspection
          * @return Hashtable
          */
-        private static Hashtable getDefinedPortletModes() {
+        private static Hashtable<String,Object> getDefinedPortletModes() {
             Hashtable<String,Object> portletModes = new Hashtable<String,Object>();
             Field[] f = PortletMode.class.getDeclaredFields();
 
@@ -82,7 +81,7 @@ public abstract class PortletURLTag extends BaseURLTag {
          * specifications by using introspection
          * @return Hashtable
          */
-        private static Hashtable getDefinedWindowStates() {
+        private static Hashtable<String,Object> getDefinedWindowStates() {
             Hashtable<String,Object> definedWindowStates = new Hashtable<String,Object>();
             Field[] f = WindowState.class.getDeclaredFields();
 
@@ -103,37 +102,38 @@ public abstract class PortletURLTag extends BaseURLTag {
 
     }
 	
-	protected String portletMode;
-	protected String windowState;
-	protected Boolean copyCurrentRenderParameters=false;
-	protected PortletURL url;
+	//------------------------------------------------------------------------------------------------------------------
+	
+	protected String portletMode = null;
+	protected String windowState = null;
+	protected Boolean copyCurrentRenderParameters = false;
+	protected PortletURL url = null;
 	
 	
-	/**
-	 * Process the start tag for this instance.
-	 * @throws JspException
-     * @return EVAL_BODY_INCLUDE
-     */
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.tags.BaseURLTag#doStartTag()
+	 */
+	@Override
     public int doStartTag() throws JspException {
     	
     	//parameters= new HashMap<String,List<String>> ();
     	
-    	if(copyCurrentRenderParameters)
-		{
+    	if(copyCurrentRenderParameters){
 			doCopyCurrentRenderParameters();
 		}
     	
         if (var != null) {
             pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
         }
-        PortletResponse portletResponse = (PortletResponse) pageContext.getRequest()
-            .getAttribute(Constants.PORTLET_RESPONSE);
+        
+        PortletResponse portletResponse = 
+        	(PortletResponse) pageContext.getRequest().getAttribute(Constants.PORTLET_RESPONSE);
 
         if (portletResponse != null) {
         	
             setUrl(createPortletUrl(portletResponse));
             
-            if (portletMode != null) {
+            if (portletMode != null) {//set portlet mode
                 try {
                     PortletMode mode = (PortletMode)
                         TEI.portletModes.get(portletMode.toUpperCase());
@@ -141,29 +141,34 @@ public abstract class PortletURLTag extends BaseURLTag {
                     if (mode == null) {
                         mode = new PortletMode(portletMode);// support for custom portlet modes PLUTO-258
                     }
+                    
                     url.setPortletMode(mode);
-                } catch (PortletModeException e) {
-                    throw new JspException(e);
+                    
+                } catch (PortletModeException e) {                	
+                    throw new JspException(e);                    
                 }
             }
             
-            if (windowState != null) {
-                try {
+            if (windowState != null) {//set window state
+                try {                	
                     WindowState state = (WindowState)
                         TEI.definedWindowStates.get(windowState.toUpperCase());                  
+                    
                     if (state == null) {
                         state = new WindowState(windowState);//support for custom window states PLUTO-258
                     }
+                    
                     url.setWindowState(state);
-                } catch (WindowStateException e) {
+                    
+                } catch (WindowStateException e) {                	
                     throw new JspException(e);
                 }
             }
             
-            if (secure != null) {
-                try {
+            if (secure != null) {//set secure boolean
+                try {                	
                     url.setSecure(getSecureBoolean());
-                } catch (PortletSecurityException e) {
+                } catch (PortletSecurityException e) {                	
                     throw new JspException(e);
                 }
             }
@@ -172,26 +177,25 @@ public abstract class PortletURLTag extends BaseURLTag {
     }
 	
     
-	/**
-	 * Process the end tag for this instance.
-	 * @throws JspException
-     * @return EVAL_PAGE
-     */
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.tags.BaseURLTag#doEndTag()
+	 */
+	@Override
 	public int doEndTag() throws JspException{
 		
-		setUrlParameters(url);
+		setUrlParameters(url);		
+		setUrlProperties(url);
 		
-		
-		HttpServletResponse response=(HttpServletResponse) pageContext.getResponse();
+		HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
 		//	properly encoding urls to allow non-cookie enabled sessions - PLUTO-252 
-		String urlString=response.encodeURL(url.toString());
+		String urlString = response.encodeURL(url.toString());
 		
 		if(escapeXml){
-			urlString=doEscapeXml(urlString);
+			urlString = doEscapeXml(urlString);
 		}
 		
 	    if (var == null) {
-            try {
+            try {            	
                 JspWriter writer = pageContext.getOut();
                 writer.print(urlString);
             } catch (IOException ioe) {
@@ -204,7 +208,8 @@ public abstract class PortletURLTag extends BaseURLTag {
                                      PageContext.PAGE_SCOPE);
         }
 	    
-	    parameters.clear();//cleanup
+	    propertiesMap.clear();
+	    parametersMap.clear();//cleanup
 	    
         return EVAL_PAGE;
 	}
@@ -290,26 +295,26 @@ public abstract class PortletURLTag extends BaseURLTag {
      * Copies the current render parameters to the parameter map.
      * @return void
      */
-    protected void doCopyCurrentRenderParameters()
-    {
-    	PortletRequest request = (PortletRequest) pageContext.getRequest()
-        .getAttribute(Constants.PORTLET_REQUEST);
-		if(request!=null)
-		{
-			Map<String,String[]> renderParamsMap=request.getParameterMap();
-			Set<String> keys=renderParamsMap.keySet();
-			Iterator i=keys.iterator();
-			while(i.hasNext())
-			{
-				String key=(String) i.next();
-				String[] values=renderParamsMap.get(key);
-				List<String> valuesList=new ArrayList<String>();
-				int index=0;
-			    while(index<values.length){
-			    	valuesList.add(values[index]);
-			         index++;
-			      }
-				parameters.put(key,valuesList);
+    protected void doCopyCurrentRenderParameters(){
+    	PortletRequest request = 
+    		(PortletRequest) pageContext.getRequest().getAttribute(Constants.PORTLET_REQUEST);
+		
+    	if(request != null){    		
+			Map<String,String[]> renderParamsMap = request.getPrivateParameterMap();
+			
+			Set<String> keySet = renderParamsMap.keySet();
+			
+			for(String key : keySet){
+												
+				String[] values = renderParamsMap.get(key);
+				
+				List<String> valueList = new ArrayList<String>();
+				
+				for(int index = 0; index < values.length; ++index){
+					valueList.add(values[index]);
+				}
+			    
+				parametersMap.put(key,valueList);
 			}
 		}
     }

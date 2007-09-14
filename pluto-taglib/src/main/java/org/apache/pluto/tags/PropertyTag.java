@@ -21,7 +21,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 
 /**
- * A tag handler for the <CODE>param</CODE> tag. Defines a parameter that
+ * A tag handler for the <CODE>property</CODE> tag. Defines a propery that
  * can be added to a <CODE>actionURL</CODE>, a <CODE>resourceURL</CODE> or a <CODE>renderURL</CODE>
  * <BR>The following attributes are mandatory:
  *   <UL>
@@ -31,17 +31,17 @@ import javax.servlet.jsp.tagext.TagSupport;
  *       
  *  @version 2.0
  */
-public class ParamTag extends TagSupport {
+public class PropertyTag extends TagSupport {
 	
 	private static final long serialVersionUID = 286L;
 
     private String name;
     private String value;
 
-    /* (non-Javadoc)
-     * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
+    /**
+     * Processes the <CODE>param</CODE> tag.
+     * @return <CODE>SKIP_BODY</CODE>
      */
-    @Override
     public int doStartTag() throws JspException {
         BaseURLTag urlTag = (BaseURLTag)
                 findAncestorWithClass(this, BaseURLTag.class);
@@ -51,7 +51,7 @@ public class ParamTag extends TagSupport {
                 "the 'param' Tag must have actionURL, renderURL or resourceURL as a parent");
         }
 
-        urlTag.addParameter(getName(), getValue());
+        urlTag.addProperty(getName(), getValue());
 
         return SKIP_BODY;
     }

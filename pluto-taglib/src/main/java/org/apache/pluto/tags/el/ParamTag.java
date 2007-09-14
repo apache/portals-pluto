@@ -21,6 +21,8 @@ import javax.servlet.jsp.JspException;
 
 
 public class ParamTag extends org.apache.pluto.tags.ParamTag {
+	
+	private static final long serialVersionUID=286L;
 
     public String getValue() throws JspException {
         String string = super.getValue();

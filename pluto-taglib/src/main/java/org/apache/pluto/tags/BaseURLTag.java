@@ -16,7 +16,11 @@
  */
 package org.apache.pluto.tags;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
@@ -30,7 +34,6 @@ import javax.portlet.BaseURL;
 /**
  * Abstract supporting class for actionURL tag, renderURL tag and resourceURL tag.
  * 
- * @author <a href="mailto:olisp_jena@yahoo.de">Oliver Spindler</a> (since Nov 01, 2006)
  * @version 2.0
  * 
  */
@@ -48,7 +51,7 @@ public abstract class BaseURLTag extends TagSupport {
             if (var != null) {
                 vi = new VariableInfo[1];
                 vi[0] =
-                new VariableInfo(var, "java.lang.String", true,
+                	new VariableInfo(var, "java.lang.String", true,
                                  VariableInfo.AT_BEGIN);
             }
             return vi;
@@ -56,41 +59,43 @@ public abstract class BaseURLTag extends TagSupport {
 
     }
 	
-	protected String secure;
+	//--------------------------------------------------------------------------
+	
+	protected String secure = null;
 	protected Boolean secureBoolean;
-	protected String var;
+	protected String var = null;
 	//TODO: not the default value (should be true)
-	protected Boolean escapeXml=false;
+	protected Boolean escapeXml = false;
 		
-	protected Map<String,List<String>> parameters=new HashMap<String,List<String>> (); 
+	protected Map<String,List<String>> parametersMap = new HashMap<String,List<String>> ();
+	protected Map<String, List<String>> propertiesMap = new HashMap<String,List<String>> ();
 	
 	
-	/**
-	 * Process the start tag for this instance.
-	 * @throws JspException
-     * @return int
-     */
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
+	 */
+	@Override
 	public abstract int doStartTag() throws JspException;
 	
 	
-	/**
-	 * Process the end tag for this instance.
-	 * @throws JspException
-     * @return int
-     */
+	/* (non-Javadoc)
+	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
+	 */
+	@Override
 	public abstract int doEndTag() throws JspException;
 	
 	
-	/**
-	 * Releases state of the tag handler.
-     * @return void
-     */
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.jsp.tagext.TagSupport#release()
+	 */
 	//Called at the end of the lifecycle.
-	public void release()
-	{
+	@Override
+	public void release(){
 		super.release();
-		parameters=null;
-		secureBoolean=null;
+		parametersMap = null;
+		secureBoolean = null;
 	}
 	
 	
@@ -167,41 +172,93 @@ public abstract class BaseURLTag extends TagSupport {
      * @param value String
      * @return void
      */
-    public void addParameter(String key,String value)
-    {
-    	/*if (escapeXml)
-    	{
-    		value=escapeXml(value);
-    	}*/
-    	List<String> values;
-    	if(parameters.containsKey(key))
-    	{
-    		values=(List<String>)parameters.get(key);//get old value list    		    	
+    protected void addParameter(String key,String value) {
+    	if(key == null){
+    		throw new NullPointerException();
     	}
-    	else
-    	{
-    		values=new ArrayList<String>();// create new value list    		    		
+    	
+    	if((value == null) || (value.length() == 0)){//remove parameter
+    		if(parametersMap.containsKey(key)){
+    			parametersMap.remove(key);
+    		}
     	}
-    	values.add(value);
-    	parameters.put(key, values);
+    	else{//add value
+    	   	List<String> valueList = null;
+    	
+    	   	if(parametersMap.containsKey(key)){
+    	   		valueList = parametersMap.get(key);//get old value list    		    	
+    	   	}
+    	   	else{
+    	   		valueList = new ArrayList<String>();// create new value list    		    		
+    	   	}
+    	
+    	   	valueList.add(value);
+    	
+    	   	parametersMap.put(key, valueList);
+    	}
+    }
+    
+    /**
+     * Adds a key,value pair to the property map. 
+     * @param key String
+     * @param value String
+     * @return void
+     */
+    protected void addProperty(String key,String value) {
+    	if(key == null){
+    		throw new NullPointerException();
+    	}
+    	
+    	List<String> valueList = null;
+    	
+    	if(propertiesMap.containsKey(key)){
+    		valueList = propertiesMap.get(key);//get old value list    		    	
+    	}
+    	else{
+    		valueList = new ArrayList<String>();// create new value list    		    		
+    	}
+
+    	valueList.add(value);
+
+    	propertiesMap.put(key, valueList);
+    	
     }
     
     
     /**
-     * Copies parameters from map to url.
+     * Copies the parameters from map to the BaseURL.
      * @param url BaseURL
      * @return void
      */
-    protected void setUrlParameters(BaseURL url)
-    {
-    	Set<String> keys=parameters.keySet();
-		Iterator i=keys.iterator();
-		while(i.hasNext())
-		{
-			String key=(String) i.next();
-			List<String> values=parameters.get(key);
-			String[] valarr=values.toArray(new String[0]);	
-			url.setParameter(key, valarr);
+    protected void setUrlParameters(BaseURL url) {
+    	Set<String> keySet = parametersMap.keySet();
+    	
+		
+		for(String key : keySet){
+			
+			List<String> valueList = parametersMap.get(key);
+			
+			String[] valueArray = valueList.toArray(new String[0]);
+			
+			url.setParameter(key, valueArray);
+		}
+    }
+    
+    /**
+     * Copies the properties from map to the BaseURL.
+     * @param url BaseURL
+     * @return void
+     */
+    protected void setUrlProperties(BaseURL url) {
+    	Set<String> keySet = propertiesMap.keySet();
+		
+		for(String key : keySet){
+			
+			List<String> valueList = propertiesMap.get(key);
+			
+			for(String value:valueList){
+				url.addProperty(key, value);
+			}
 		}
     }
     
@@ -224,7 +281,7 @@ public abstract class BaseURLTag extends TagSupport {
     
     /**
      * Checks if string is empty.
-     * This method has been copied from <code>org.apache.commons.lang.StringUtils</code> class.
+     * This method is a copy from <code>org.apache.commons.lang.StringUtils</code> class.
      * @param str String
      * @return boolean
      */
@@ -235,7 +292,7 @@ public abstract class BaseURLTag extends TagSupport {
     
     /**
      * Replaces String repl with String with in String text.
-     * This method has been copied from <code>org.apache.commons.lang.StringUtils</code> class.
+     * This method is a copy from <code>org.apache.commons.lang.StringUtils</code> class.
      * @param text - the String where to replace 
      * @param repl - the sub-String what to replace
      * @param with - the sub-String what to replace repl with

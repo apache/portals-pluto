@@ -35,16 +35,18 @@ import javax.portlet.PortletURL;
  * points to the current Portlet and triggers an action request with the
  * supplied parameters.
  * 
- * @author <a href="mailto:olisp_jena@yahoo.de">Oliver Spindler</a> (since Nov 01, 2006)
  * @version 2.0
  */
 public class ActionURLTag extends PortletURLTag {
+	
+	private static final long serialVersionUID = 286L;
 
     /**
-     * Creates an actionURL 
+     * Creates an action PortletURL 
      * @param portletResponse PortletResponse
      * @return PortletURL
      */
+	@Override
 	protected PortletURL createPortletUrl(PortletResponse portletResponse)
 	{
 		return portletResponse.createActionURL();

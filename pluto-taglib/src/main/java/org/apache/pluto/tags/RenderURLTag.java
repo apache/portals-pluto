@@ -29,13 +29,15 @@ import javax.portlet.PortletURL;
  * @version 2.0
  */
 public class RenderURLTag extends PortletURLTag {
-
+	
+	private static final long serialVersionUID = 286L;
 
     /**
-     * Creates a renderURL
+     * Creates a render PortletURL
      * @param portletResponse PortletResponse
      * @return PortletURL
      */
+	@Override
 	protected PortletURL createPortletUrl(PortletResponse portletResponse)
 	{
 		return portletResponse.createRenderURL();

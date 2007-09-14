@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalResourceResponse;
+import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.StringUtils;
 
 public class ResourceResponseImpl extends MimeResponseImpl
 implements ResourceResponse, InternalResourceResponse {
@@ -65,4 +67,35 @@ implements ResourceResponse, InternalResourceResponse {
 			super.setLocale(arg0);
 	}
 	
+	@Override
+	public int getBufferSize() {
+		if (super.isForwarded() || super.isIncluded()){
+			return 0;
+		}
+		else
+			return getHttpServletResponse().getBufferSize();
+	}
+	
+	@Override
+    public void setContentType(String contentType)
+    		throws IllegalArgumentException {
+    	
+    	if (super.isIncluded()){
+    		//no operation
+    	}
+    	else{
+    		ArgumentUtility.validateNotNull("contentType", contentType);
+            String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
+            if (!isValidContentType(mimeType)) {
+                throw new IllegalArgumentException("Specified content type '"
+                		+ mimeType + "' is not supported.");
+            }
+            getHttpServletResponse().setContentType(mimeType);
+    	}
+    }
+	
+	@Override
+	public String getContentType() {
+        return getHttpServletResponse().getContentType();
+    }	
 }

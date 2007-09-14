@@ -30,6 +30,8 @@ import java.io.IOException;
  * for the current portlet <BR>This tag has no attributes
  */
 public class NamespaceTag extends TagSupport {
+	
+	private static final long serialVersionUID = 286L;
 
     /* (non-Javadoc)
      * @see javax.servlet.jsp.tagext.Tag#doStartTag()
