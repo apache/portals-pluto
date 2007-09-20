@@ -16,17 +16,36 @@
 package org.apache.pluto.driver.services.container;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.Event;
 import javax.portlet.PortletException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.pluto.EventContainer;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
+import org.apache.pluto.internal.impl.EventImpl;
 
 public class PortletWindowThread extends Thread {
 	
@@ -66,6 +85,50 @@ public class PortletWindowThread extends Thread {
 			try {
 //				synchronized (this) {
 					Event event = events.remove(0);
+			        Object value = event.getValue();
+			        
+			        XMLStreamReader xml = null;
+					try {
+						if (value instanceof String) {
+							String in = (String) value; 
+							xml = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(in));
+						}			
+					}  
+					catch (XMLStreamException e1) {
+						throw new IllegalStateException(e1);
+					} catch (FactoryConfigurationError e1) {
+						throw new IllegalStateException(e1);
+					}
+			        
+			        if (xml != null) {
+			        	//XMLStreamReader xml = (XMLStreamReader) event.getValue();
+			        	
+			        		//provider.getEventDefinition(event.getQName());
+			        	try {
+			        		// now test if object is jaxb
+			        		EventDefinitionDD eventDefinitionDD = getEventDefintion(event.getQName()); 
+			        		
+			        		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getJavaClass()).asSubclass(Serializable.class);
+
+			        		JAXBContext jc = JAXBContext.newInstance(clazz);
+			        		Unmarshaller unmarshaller  = jc.createUnmarshaller();
+
+//			        		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+
+			        		JAXBElement result = unmarshaller.unmarshal(xml,clazz);
+
+			        		event =  new EventImpl(event.getQName(),(Serializable) result.getValue());
+			        	} catch (JAXBException e) {
+			        		throw new IllegalStateException(e);
+			        	} catch (ClassCastException e) {
+			        		throw new IllegalStateException(e);
+			        	} catch (ClassNotFoundException e) {
+			        		throw new IllegalStateException(e);
+			        	} catch (PortletContainerException e) {
+			        		throw new IllegalStateException(e);
+						}
+			        }					
 					eventContainer.fireEvent(req, res, portletWindow, event);	
 //				}
 			} catch (PortletException e) {
@@ -80,6 +143,19 @@ public class PortletWindowThread extends Thread {
 
 	public void addEvent(Event event) {
 		this.events.add(event);	
+	}
+
+	private EventDefinitionDD getEventDefintion(QName name) throws PortletContainerException {
+		PortalRequestContext context = PortalRequestContext.getContext(eventProvider.getRequest());
+		ServletContext servletContext = context.getServletContext();
+		PortletContainer container = (PortletContainer) servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
+		PortletAppDD appDD = container.getPortletApplicationDescriptor(portletWindow.getContextPath());
+		for (EventDefinitionDD def : appDD.getEvents()){
+			if (def.getName().equals(name)){
+				return def;
+			}
+		}
+		throw new IllegalStateException();
 	}
 
 }

@@ -15,21 +15,11 @@
  */
 package org.apache.pluto.spi;
 
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.List;
+import java.io.Serializable;
 
-import javax.portlet.Event;
-import javax.portlet.PortletException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 
 import org.apache.pluto.EventContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 	/**
 	 * 
@@ -42,17 +32,12 @@ public interface EventProvider {
 
 	/**
 	 * 
-	 * @param event
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 * @throws PortletException
-	 * @throws PortletContainerException
+	 * @param qname
+	 * @param value 
+	 * @throws IllegalArgumentException
 	 */
-	public abstract void registerToFireEvent(Event event)
-			throws ServletException, IOException, PortletException,
-			PortletContainerException;
+	public abstract void registerToFireEvent(QName name, Serializable value)
+			throws IllegalArgumentException;
 
 	/**
 	 * @param evtLabel -
@@ -150,7 +135,7 @@ public interface EventProvider {
 	 * 
 	 * @return the event definition
 	 */
-	public abstract EventDefinitionDD getEventDefinition(QName qname);
+//	public abstract EventDefinitionDD getEventDefinition(QName qname);
 	
 	/**
 	 * Register event definition DD.
@@ -164,21 +149,21 @@ public interface EventProvider {
 	 * 
 	 * @return the request
 	 */
-	public HttpServletRequest getRequest();
+//	public HttpServletRequest getRequest();
 	
 	/**
 	 * Gets the response.
 	 * 
 	 * @return the response
 	 */
-	public HttpServletResponse getResponse();
+//	public HttpServletResponse getResponse();
 	
 	/**
 	 * Gets the default event namespace.
 	 * 
 	 * @return the default event namespace
 	 */
-	public abstract String getDefaultEventNamespace(String portletName);
+//	public abstract String getDefaultEventNamespace(String portletName);
 	
 	/**
 	 * Sets the default event namespace.

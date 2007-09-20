@@ -15,25 +15,28 @@
  */
 package org.apache.pluto.driver.services.container;
 
-import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
 
 import javax.portlet.Event;
-import javax.portlet.PortletException;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
+import javax.xml.stream.FactoryConfigurationError;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,13 +45,11 @@ import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.PortletWindowID;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.PortalDriverServlet;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
@@ -56,6 +57,7 @@ import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
+import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.spi.EventProvider;
 
 public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
@@ -116,15 +118,51 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     
     /**
      * Register an event, which should be fired within that request
-     * @param event
-     * @throws {@link IOException} 
-     * @throws {@link ServletException} 
-     * @throws {@link PortletContainerException}
-     * @throws {@link PortletException}
+     * @param qname
+     * @param value
+     * @throws {@link IllegalArgumentException}
      */
-    public void registerToFireEvent(Event event) 
-    throws ServletException, IOException, PortletException, PortletContainerException {
-    	savedEvents.addEvent(event);	
+    public void registerToFireEvent(QName qname, Serializable value) 
+    throws IllegalArgumentException {
+			
+		try {
+
+			if (value == null) {
+				savedEvents.addEvent(new EventImpl(qname,value));
+			} else if (!(value instanceof Serializable)) {
+				throw new IllegalArgumentException("Object payload must implement Serializable");
+			}
+			else {
+				
+				Class clazz = value.getClass();
+
+				JAXBContext jc = JAXBContext.newInstance(clazz);
+
+				Marshaller marshaller  = jc.createMarshaller();
+
+				Writer out = new StringWriter();
+
+				JAXBElement<Serializable> element = new JAXBElement<Serializable>(qname,clazz,value);
+				marshaller.marshal(element, out);
+//					marshaller.marshal(value, out);
+
+				if (out != null) {
+					savedEvents.addEvent(new EventImpl(qname,(Serializable) out.toString()));
+				} else { 
+					savedEvents.addEvent(new EventImpl(qname,value));
+				}
+			}
+		} catch (JAXBException e) {
+			// maybe there is no valid jaxb binding
+			// TODO wsrp:eventHandlingFailed
+			LOG.error("Event handling failed", e);
+		} catch (FactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+//				} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+		}
     }
 
 	/**
@@ -147,7 +185,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 			
         	List<String> portletNames = getAllPortletsRegisteredForEvent(eActual,driverConfig);
         	
-        	Collection<PortletWindowConfig> portlets = getAllPortlets();
+        	Collection<PortletWindowConfig> portlets = getAllPortlets(driverConfig);
         	
         	// iterate all portlets in the portal        	
         	for (PortletWindowConfig config : portlets) {
@@ -184,7 +222,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 		Set<String> resultSet = new HashSet<String>();
 		List<String> resultList = new ArrayList<String>();
 		QName eventName = event.getQName();
-		Collection<PortletWindowConfig> portlets = getAllPortlets();
+		Collection<PortletWindowConfig> portlets = getAllPortlets(driverConfig);
 		
 		for (PortletWindowConfig portlet : portlets) {
 			String contextPath = portlet.getContextPath();
@@ -219,7 +257,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 								}								
 								// also look for default namespaced events
 								if (name.getNamespaceURI() == null || name.getNamespaceURI().equals("")){
-									String defaultNamespace = getDefaultEventNamespace(portlet.getPortletName());
+									String defaultNamespace = portletAppDD.getDefaultNamespace();
 									QName qname = new QName(defaultNamespace,name.getLocalPart());
 									if (eventName.toString().equals(qname.toString()) &&
 											portletDD.getPortletName().equals(portlet.getPortletName())){
@@ -324,36 +362,11 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 		return eActual;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.pluto.spi.EventProvider#getEventDefinition(javax.xml.namespace.QName)
-	 */
-	public EventDefinitionDD getEventDefinition(QName qname) {
-		Collection<PortletWindowConfig> portlets = getAllPortlets();
-			for (PortletWindowConfig portlet : portlets) {
-				String contextPath = portlet.getContextPath();
-				PortletAppDD portletAppDD = null;
-				try {
-					portletAppDD = container.getPortletApplicationDescriptor(contextPath);
-					for (EventDefinitionDD def : portletAppDD.getEvents()) {
-						if (def.getName().equals(qname)){
-							return def;
-						}
-					}
-				} catch (PortletContainerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			return null;
-		}
 
 	/**
 	 * 
 	 */
-	private Collection<PortletWindowConfig> getAllPortlets() {
-		ServletContext servletContext = container.getServletContext();
-		DriverConfiguration driverConfig = (DriverConfiguration) servletContext.getAttribute(
-        		AttributeKeys.DRIVER_CONFIG);
+	private Collection<PortletWindowConfig> getAllPortlets(DriverConfiguration driverConfig) {
 		Collection<PortletApplicationConfig> apps = driverConfig.getPortletApplications();
 		Collection<PortletWindowConfig> portlets = new ArrayList<PortletWindowConfig>();
 		for (PortletApplicationConfig app : apps) {
@@ -385,22 +398,4 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 		return savedEvents;
 	}
 
-	public String getDefaultEventNamespace(String portletName) {
-		Collection<PortletWindowConfig> portlets = getAllPortlets();
-		for (PortletWindowConfig portlet : portlets) {
-			if (portlet.getPortletName().equals(portletName)){
-				String contextPath = portlet.getContextPath();
-				PortletAppDD portletAppDD = null;
-				try {
-					portletAppDD = container.getPortletApplicationDescriptor(contextPath);
-					return portletAppDD.getDefaultNamespace();
-
-				} catch (PortletContainerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		return null;
-	}
 }
