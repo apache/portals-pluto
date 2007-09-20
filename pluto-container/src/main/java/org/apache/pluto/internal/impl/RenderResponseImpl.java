@@ -28,6 +28,8 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.StringUtils;
 
 /**
  * Implementation of the <code>javax.portlet.RenderResponse</code> interface.
@@ -37,6 +39,8 @@ import org.apache.pluto.spi.PortalCallbackService;
  */
 public class RenderResponseImpl extends MimeResponseImpl
 implements RenderResponse, InternalRenderResponse {
+	
+	private String contenType = null;
     
     public RenderResponseImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
@@ -44,7 +48,6 @@ implements RenderResponse, InternalRenderResponse {
                               HttpServletResponse servletResponse) {
         super(container, internalPortletWindow, servletRequest, servletResponse);
     }
-    
 
     public void setTitle(String title) {
         PortalCallbackService callback = getContainer()
@@ -88,4 +91,32 @@ implements RenderResponse, InternalRenderResponse {
 			super.setLocale(arg0);
 	}
 	
+	@Override
+	public int getBufferSize() {
+			return 0;
+	}
+	
+	@Override
+    public void setContentType(String contentType)
+    		throws IllegalArgumentException {
+    	
+    	if (super.isIncluded()){
+    		//no operation
+    	}
+    	else{
+    		ArgumentUtility.validateNotNull("contentType", contentType);
+            String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
+            if (!isValidContentType(mimeType)) {
+                throw new IllegalArgumentException("Specified content type '"
+                		+ mimeType + "' is not supported.");
+            }
+            getHttpServletResponse().setContentType(mimeType);
+            this.contenType = contentType;
+    	}
+    }
+	
+	@Override
+	public String getContentType() {
+		return contenType;
+    }
 }

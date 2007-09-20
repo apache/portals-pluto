@@ -48,9 +48,6 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 	private static final StringManager EXCEPTIONS = StringManager.getManager(
     		MimeResponseImpl.class.getPackage().getName());
 	
-	/** The current content type. */
-    private String currentContentType = null; 
-    
 	
 	public MimeResponseImpl(PortletContainer container,
             InternalPortletWindow internalPortletWindow,
@@ -59,21 +56,13 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 		
 		super(container, internalPortletWindow, servletRequest,
 				servletResponse);
+
 	}
 	
 	@Override
     public void flushBuffer() throws IOException {
         getHttpServletResponse().flushBuffer();
     }
-    
-	@Override
-	public int getBufferSize() {
-		if (super.isForwarded() || super.isIncluded()){
-			return 0;
-		}
-		else
-			return 0;
-	}
     
 	public CacheControl getCacheControl() {
 		// TODO Auto-generated method stub
@@ -86,11 +75,6 @@ public class MimeResponseImpl extends PortletResponseImpl implements
     }
 	
 	@Override
-	public String getContentType() {
-        return getHttpServletResponse().getContentType();
-    }
-	
-	@Override
 	public Locale getLocale() {
         return getHttpServletResponse().getLocale();
     }
@@ -100,7 +84,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements
      * @see #getWriter()
      */
 	public OutputStream getPortletOutputStream() throws IOException {
-		if (currentContentType == null) {
+		if (getContentType() == null) {
             String message = EXCEPTIONS.getString("error.contenttype.null");
             if (LOG.isWarnEnabled()) {
             	LOG.warn("Current content type is not set.");
@@ -116,7 +100,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements
      */
 	@Override
     public PrintWriter getWriter() throws IOException, IllegalStateException {
-        if (currentContentType == null) {
+        if (getContentType() == null) {
             String message = EXCEPTIONS.getString("error.contenttype.null");
             if (LOG.isWarnEnabled()) {
             	LOG.warn("Current content type is not set.");
@@ -144,25 +128,6 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 	@Override
     public void setBufferSize(int size) {
     	getHttpServletResponse().setBufferSize(size);
-    }
-    
-	@Override
-    public void setContentType(String contentType)
-    		throws IllegalArgumentException {
-    	
-    	if (super.isIncluded()){
-    		//no operation
-    	}
-    	else{
-    		ArgumentUtility.validateNotNull("contentType", contentType);
-            String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
-            if (!isValidContentType(mimeType)) {
-                throw new IllegalArgumentException("Specified content type '"
-                		+ mimeType + "' is not supported.");
-            }
-            getHttpServletResponse().setContentType(mimeType);
-            this.currentContentType = mimeType;
-    	}
     }
     
     // access to a limited set of HttpServletResponse methods ------------------
@@ -291,7 +256,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements
      * @param contentType  the content type to check.
      * @return true if the content type is valid, false otherwise.
      */
-    private boolean isValidContentType(String contentType) {
+    protected boolean isValidContentType(String contentType) {
     	boolean valid = false;
     	
         PortletDD portletDD = getInternalPortletWindow().getPortletEntity()
