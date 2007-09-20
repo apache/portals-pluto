@@ -20,9 +20,7 @@ import java.util.Map;
 
 import javax.portlet.BaseURL;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 
 /**
@@ -78,7 +76,7 @@ public interface PortalCallbackService extends ContainerService {
                                     String value);
     
     public EventProvider getEventProvider(HttpServletRequest request,
-    		HttpServletResponse response, PortletContainer container);
+			PortletWindow portletWindow);
     
     public EventProvider getEventProvider();
     

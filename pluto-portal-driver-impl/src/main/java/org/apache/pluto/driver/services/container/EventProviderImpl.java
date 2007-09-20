@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +30,7 @@ import javax.portlet.Event;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -52,15 +52,16 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortletWindowImpl;
-import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
+import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.spi.EventProvider;
 
-public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
+public class EventProviderImpl implements org.apache.pluto.spi.EventProvider, Cloneable {
 	
 	private static final int DEFAULT_MAPSIZE = 10;
 
@@ -72,6 +73,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private PortletContainer container;
+    private PortletWindow portletWindow;
     
     ThreadGroup threadGroup = new ThreadGroup("FireEventThreads");
     
@@ -87,16 +89,24 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
      * @return The corresponding EventProvierImpl instance
      */
     public static EventProviderImpl getEventProviderImpl(HttpServletRequest request,
-    		HttpServletResponse response, PortletContainer container) {
-    	EventProviderImpl event = (EventProviderImpl) request.getAttribute(Constants.PROVIDER);
-    	if (event == null) {
-    		event = new EventProviderImpl();
-    		event.request = request;
-    		event.response = response;
-    		event.container = container;
-    		request.setAttribute(Constants.PROVIDER, event);
+    		PortletWindow portletWindow) {
+    	EventProviderImpl eventProvider = (EventProviderImpl) request.getAttribute(Constants.PROVIDER);
+    	if (eventProvider == null) {
+    		eventProvider = new EventProviderImpl();
+    		eventProvider.request = request;
+    		PortalRequestContext context = PortalRequestContext.getContext(request);
+    		eventProvider.response = context.getResponse();
+			ServletContext servletContext = context.getServletContext();
+			eventProvider.container = (PortletContainer) servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
+    		request.setAttribute(Constants.PROVIDER, eventProvider);
     	}
-    	return event;
+    	try {
+    		eventProvider = (EventProviderImpl) eventProvider.clone();
+    	} catch (CloneNotSupportedException e) {
+    		throw new IllegalStateException(e);
+    	} 
+    	eventProvider.portletWindow = portletWindow;
+    	return eventProvider;
     }
     
     /**
@@ -124,45 +134,50 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
      */
     public void registerToFireEvent(QName qname, Serializable value) 
     throws IllegalArgumentException {
+		if (isDeclaredAsPublishingEvent(qname)) {
 			
-		try {
-
-			if (value == null) {
-				savedEvents.addEvent(new EventImpl(qname,value));
-			} else if (!(value instanceof Serializable)) {
-				throw new IllegalArgumentException("Object payload must implement Serializable");
-			}
-			else {
-				
-				Class clazz = value.getClass();
-
-				JAXBContext jc = JAXBContext.newInstance(clazz);
-
-				Marshaller marshaller  = jc.createMarshaller();
-
-				Writer out = new StringWriter();
-
-				JAXBElement<Serializable> element = new JAXBElement<Serializable>(qname,clazz,value);
-				marshaller.marshal(element, out);
-//					marshaller.marshal(value, out);
-
-				if (out != null) {
-					savedEvents.addEvent(new EventImpl(qname,(Serializable) out.toString()));
-				} else { 
+			if (value != null && !isValueInstanceOfDefinedClass(qname,value))
+				throw new IllegalArgumentException("Payload has not the right class");
+		
+			try {
+	
+				if (value == null) {
 					savedEvents.addEvent(new EventImpl(qname,value));
+				} else if (!(value instanceof Serializable)) {
+					throw new IllegalArgumentException("Object payload must implement Serializable");
 				}
+				else {
+					
+					Class clazz = value.getClass();
+	
+					JAXBContext jc = JAXBContext.newInstance(clazz);
+	
+					Marshaller marshaller  = jc.createMarshaller();
+	
+					Writer out = new StringWriter();
+	
+					JAXBElement<Serializable> element = new JAXBElement<Serializable>(qname,clazz,value);
+					marshaller.marshal(element, out);
+	//					marshaller.marshal(value, out);
+	
+					if (out != null) {
+						savedEvents.addEvent(new EventImpl(qname,(Serializable) out.toString()));
+					} else { 
+						savedEvents.addEvent(new EventImpl(qname,value));
+					}
+				}
+			} catch (JAXBException e) {
+				// maybe there is no valid jaxb binding
+				// TODO wsrp:eventHandlingFailed
+				LOG.error("Event handling failed", e);
+			} catch (FactoryConfigurationError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+	//				} catch (ClassNotFoundException e) {
+	//				// TODO Auto-generated catch block
+	//				e.printStackTrace();
 			}
-		} catch (JAXBException e) {
-			// maybe there is no valid jaxb binding
-			// TODO wsrp:eventHandlingFailed
-			LOG.error("Event handling failed", e);
-		} catch (FactoryConfigurationError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-//				} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-		}
+		}	
     }
 
 	/**
@@ -396,6 +411,54 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider {
 	 */
 	public EventList getSavedEvents(){
 		return savedEvents;
+	}
+	
+	private boolean isDeclaredAsPublishingEvent(QName qname) {
+		ServletContext servletContext = PortalRequestContext.getContext(request).getServletContext();
+		InternalPortletWindow internalPortletWindow = new org.apache.pluto.internal.impl.PortletWindowImpl(servletContext, this.portletWindow);
+		List<QName> events = internalPortletWindow.getPortletEntity()
+		.getPortletDefinition().getPublishingEvents();
+		if (events != null) {
+			String contextPath = portletWindow.getContextPath();
+			try {
+				PortletAppDD portletAppDD =	container.getPortletApplicationDescriptor(contextPath);
+				String defaultNamespace = portletAppDD.getDefaultNamespace();
+				if (defaultNamespace == null) {
+					defaultNamespace = XMLConstants.NULL_NS_URI;
+				} 
+				for (QName name : events) {
+					String namespaceURI = name.getNamespaceURI();
+					if (XMLConstants.NULL_NS_URI.equals(namespaceURI)) {
+						name = new QName(defaultNamespace, name.getLocalPart());
+					}
+					if (qname.equals(name)) {
+						return true;
+					}
+				}
+			} catch (PortletContainerException e) {
+				LOG.error(qname, e);
+			} 
+		}
+		return false;
+	}
+	
+	private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value){
+		PortletAppDD portletAppDD = null;
+		try {
+			 portletAppDD =
+				 container.getPortletApplicationDescriptor(portletWindow.getContextPath());
+			 if (portletAppDD.getEvents() != null) {
+				 for (EventDefinitionDD event : portletAppDD.getEvents()) {
+					 if (event.getName().toString().equals(qname.toString())){
+						 return value.getClass().getName().equals(event.getJavaClass());
+					 }
+				 }
+			 }
+		} catch (PortletContainerException e) {
+			LOG.error(qname, e);
+		} 
+		// event not declared
+		return true;
 	}
 
 }

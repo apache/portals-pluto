@@ -43,8 +43,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
@@ -97,15 +95,9 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		}
 		
 		EventProvider provider = callback.getEventProvider(
-				getHttpServletRequest(),getHttpServletResponse(), getContainer());
-
-		if (isDeclaredAsPublishingEvent(qname)) {
-			
-			if (value != null && !isValueInstanceOfDefinedClass(qname,value))
-				throw new IllegalArgumentException("Payload has not the right class");
-
-			provider.registerToFireEvent(qname, value);
-		}
+				getHttpServletRequest(),getInternalPortletWindow());
+ 	
+		provider.registerToFireEvent(qname, value);
 	}
 
 	/* (non-Javadoc)
@@ -605,62 +597,4 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 			return super.isCommitted();
 	}
 
-	
-// Not in API anymore
-//	public void setDefaultNamspacedEvents(Map<String, Object> events) {
-//		String defaultEventNamespace = getDefaultEventNamespace();
-//		Set<String> keys = events.keySet();
-//		for (String key : keys) {
-//			setEvent((new QName(defaultEventNamespace, key)),(Serializable) events.get(key));
-//		}	
-//	}
-
-	// ****** private methods ******
-
-	private boolean isDeclaredAsPublishingEvent(QName qname) {
-		List<QName> events = getInternalPortletWindow().getPortletEntity()
-		.getPortletDefinition().getPublishingEvents();
-		if (events != null) {
-			String contextPath = getInternalPortletWindow().getContextPath();
-			try {
-				PortletAppDD portletAppDD =	getContainer().getPortletApplicationDescriptor(contextPath);
-				String defaultNamespace = portletAppDD.getDefaultNamespace();
-				if (defaultNamespace == null) {
-					defaultNamespace = XMLConstants.NULL_NS_URI;
-				} 
-				for (QName name : events) {
-					String namespaceURI = name.getNamespaceURI();
-					if (XMLConstants.NULL_NS_URI.equals(namespaceURI)) {
-						name = new QName(defaultNamespace, name.getLocalPart());
-					}
-					if (qname.equals(name)) {
-						return true;
-					}
-				}
-			} catch (PortletContainerException e) {
-				LOG.error(e);
-			} 
-		}
-		return false;
-	}
-	
-	private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value){
-		PortletAppDD portletAppDD = null;
-		try {
-			 portletAppDD =
-				 getContainer().getPortletApplicationDescriptor(getInternalPortletWindow().getContextPath());
-			 if (portletAppDD.getEvents() != null) {
-				 for (EventDefinitionDD event : portletAppDD.getEvents()) {
-					 if (event.getName().toString().equals(qname.toString())){
-						 return value.getClass().getName().equals(event.getJavaClass());
-					 }
-				 }
-			 }
-		} catch (PortletContainerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		// event not declared
-		return true;
-	}
 }
