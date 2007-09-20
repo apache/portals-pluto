@@ -31,7 +31,6 @@ import javax.portlet.RenderRequest;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -271,13 +270,5 @@ implements RenderRequest, InternalRenderRequest {
 	public Cookie[] getCookieProperties() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
-	@Override
-	public HttpSession getSession() {
-		if (isIncluded() || isForwarded()){
-			return (HttpSession) this.getPortletSession();
-		}
-		return super.getSession();
 	}
 }

@@ -269,6 +269,12 @@ implements PortletRequest, InternalPortletRequest {
                     internalPortletWindow,
                     httpSession);
         }
+        //for RequestDispatcher
+        if (isForwarded() || isIncluded())
+        	((PortletSessionImpl)portletSession).setIncludeOrForward(true);
+        else
+        	((PortletSessionImpl)portletSession).setIncludeOrForward(false);
+        
         return portletSession;
     }
     
@@ -783,7 +789,7 @@ implements PortletRequest, InternalPortletRequest {
 
 	@Override
 	public int getLocalPort() {
-		return (isIncluded() || isForwarded()) ? null : super.getLocalPort();
+		return (isIncluded() || isForwarded()) ? 0 : super.getLocalPort();
 	}
 	
 	public String getProtocol() {
@@ -919,7 +925,23 @@ implements PortletRequest, InternalPortletRequest {
         return (isIncluded() || isForwarded()) ? null : super.getRequestURL();
     }
     
+    @Override
+	public HttpSession getSession() {
+		if (isIncluded() || isForwarded()){
+			PortletSession session = getPortletSession();
+			return (HttpSession)session;
+		}
+		return super.getSession();
+	}
     
+    @Override
+	public HttpSession getSession(boolean arg0) {
+		if (isIncluded() || isForwarded()){
+			PortletSession session = getPortletSession(arg0); 
+			return (HttpSession)session;
+		}
+		return super.getSession();
+	}
 	
 	// ============= private methods ==================
 

@@ -60,7 +60,7 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 	}
 
 	public void setParameter(String name, String value) {
-	    if (name == null) {
+	    if (name == null||value == null) {
 	        throw new IllegalArgumentException(
 	            "name and value must not be null");
 	    }
@@ -78,14 +78,30 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 	}
 
 	public void setParameter(String name, String[] values) {
-		// TODO:
+		if (name == null || values == null) {
+	        throw new IllegalArgumentException(
+	            "name and values must not be null");
+	    }
+	    //first make a get parameter
+	    String[] tmp = this.servletRequest.getParameterValues(name);
+	    if ( tmp== null){
+	    	super.setParameter(name, values);
+	    }
+	    else{
+	    	String[] tmpValues = new String[tmp.length+values.length];
+	    	System.arraycopy(tmp, 0, tmpValues, 0, tmp.length);
+	    	System.arraycopy(values, 0, tmpValues, tmp.length, values.length);
+	    	super.setParameter(name, tmpValues);
+	    }
 	}
 
 	public void setParameters(Map<String, String[]> parameters) {
-		
-        // TODO:
-        
-        
+		if (parameters == null){
+			throw new IllegalArgumentException("parameter must not be null");
+		}
+		for (String name : parameters.keySet()) {
+			setParameter(name, parameters.get(name));
+		}
 	}
 
 	private String[] getRenderParameters(String name){

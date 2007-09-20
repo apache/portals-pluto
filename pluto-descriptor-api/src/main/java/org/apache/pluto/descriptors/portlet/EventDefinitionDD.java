@@ -156,7 +156,7 @@ public class EventDefinitionDD {
 	 * @return Returns the javaType.
 	 */
 	public String getJavaClass() {
-		return javaClass;
+		return javaClass.trim();
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class EventDefinitionDD {
 	 * @return Returns the xmlType.
 	 */
 	public String getXmlType() {
-		return xmlType;
+		return xmlType.trim();
 	}
 
 	/**
