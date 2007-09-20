@@ -18,12 +18,10 @@ package org.apache.pluto.tags;
 
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 
-import javax.portlet.BaseURL;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSecurityException;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -40,67 +38,105 @@ import javax.servlet.jsp.PageContext;
  */
 
 public class ResourceURLTag extends BaseURLTag {
-
-	protected BaseURL url;
 	
-	/**
-	 * Process the start tag for this instance.
-	 * @throws JspException
-     * @return EVAL_BODY_INCLUDE
-     */
+	private static final long serialVersionUID = 286L;
+
+	private ResourceURL url = null;
+	
+	private String id = null;
+	private String cachability = null;
+	
+
+
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.tags.BaseURLTag#doStartTag()
+	 */
+	@Override
 	public int doStartTag() throws JspException {
-		parameters= new HashMap<String,List<String>> ();
+		
         if (var != null) {
             pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
         }
+        
         PortletResponse portletResponse = (PortletResponse) pageContext.getRequest()
             .getAttribute(Constants.PORTLET_RESPONSE);
 
         if (portletResponse != null) {
-            setUrl(portletResponse.createResourceURL());            
+        	
+            url = portletResponse.createResourceURL();
+            
             if (secure != null) {
+            	
                 try {
+                	
                     url.setSecure(getSecureBoolean());
+                    
                 } catch (PortletSecurityException e) {
+                	
                     throw new JspException(e);
+                    
                 }
             }
         }
         return EVAL_BODY_INCLUDE;
     }
 	
-	/**
-	 * Process the end tag for this instance.
-	 * @throws JspException
-     * @return EVAL_PAGE
-     */
+
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.tags.BaseURLTag#doEndTag()
+	 */
+	@Override
 	public int doEndTag() throws JspException{
 		
 		setUrlParameters(url);
+		setUrlProperties(url);
 		
-		HttpServletResponse response=(HttpServletResponse) pageContext.getResponse();
+		if(id != null){
+			url.setResourceID(id);
+		}
 		
-		String urlString=response.encodeURL(url.toString());
+		if(cachability != null){
+			try{
+				url.setCacheability(cachability);
+			}
+			catch(IllegalArgumentException e){
+				throw new JspException(e);
+			}
+			catch(IllegalStateException e){
+				throw new JspException(e);
+			}
+		}
 		
-		if(escapeXml)
-		{
-			urlString=doEscapeXml(urlString);
+		HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
+		
+		String urlString = response.encodeURL(url.toString());
+		
+		if(escapeXml){
+			
+			urlString = doEscapeXml(urlString);
 		}
 		
 	    if (var == null) {
             try {
+            	
                 JspWriter writer = pageContext.getOut();
                 writer.print(urlString);
+                
             } catch (IOException ioe) {
+            	
                 throw new JspException(
                     "resourceURL Tag Exception: cannot write to the output writer.");
             }
+            
         } else {
+        	
             pageContext.setAttribute(var, urlString,
                                      PageContext.PAGE_SCOPE);
+            
         }
 	    
-	    parameters.clear();//cleanup
+	    propertiesMap.clear();
+	    parametersMap.clear();//cleanup
 	    
         return EVAL_PAGE;
 	}
@@ -109,7 +145,7 @@ public class ResourceURLTag extends BaseURLTag {
      * Gets the url property.
      * @return BaseURL
      */
-    public BaseURL getUrl() {
+    public ResourceURL getUrl() {
         return url;
     }
 	
@@ -118,7 +154,38 @@ public class ResourceURLTag extends BaseURLTag {
      * @param url BaseUrl - The url to set.
      * @return void
      */
-    public void setUrl(BaseURL url) {
+    public void setUrl(ResourceURL url) {
         this.url = url;
     }
+    
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	/**
+	 * @return the cachability
+	 */
+	public String getCachability() {
+		return cachability;
+	}
+
+
+	/**
+	 * @param cachability the cachability to set
+	 */
+	public void setCachability(String cachability) {
+		this.cachability = cachability;
+	}
 }

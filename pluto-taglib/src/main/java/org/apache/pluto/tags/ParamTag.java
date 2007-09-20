@@ -32,14 +32,16 @@ import javax.servlet.jsp.tagext.TagSupport;
  *  @version 2.0
  */
 public class ParamTag extends TagSupport {
+	
+	private static final long serialVersionUID = 286L;
 
     private String name;
     private String value;
 
-    /**
-     * Processes the <CODE>param</CODE> tag.
-     * @return <CODE>SKIP_BODY</CODE>
+    /* (non-Javadoc)
+     * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
      */
+    @Override
     public int doStartTag() throws JspException {
         BaseURLTag urlTag = (BaseURLTag)
                 findAncestorWithClass(this, BaseURLTag.class);
