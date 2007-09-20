@@ -67,9 +67,13 @@ public class MimeResponseImpl extends PortletResponseImpl implements
     }
     
 	@Override
-    public int getBufferSize() {
-        return getHttpServletResponse().getBufferSize();
-    }
+	public int getBufferSize() {
+		if (super.isForwarded() || super.isIncluded()){
+			return 0;
+		}
+		else
+			return 0;
+	}
     
 	public CacheControl getCacheControl() {
 		// TODO Auto-generated method stub

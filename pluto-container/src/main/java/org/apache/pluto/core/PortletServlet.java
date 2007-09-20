@@ -234,6 +234,7 @@ public class PortletServlet extends HttpServlet {
                     	(ResourceRequestImpl) portletRequest;
             	ResourceResponseImpl resourceResponse =
                     	(ResourceResponseImpl) portletResponse;
+            	filtermanager.processFilter(resourceRequest, resourceResponse, loader, portletName, portletContext,"RESOURCE_PHASE");
             	resourceServingPortlet.serveResource(resourceRequest, resourceResponse);
             }
             
@@ -243,6 +244,7 @@ public class PortletServlet extends HttpServlet {
                     	(ActionRequestImpl) portletRequest;
                 ActionResponseImpl actionResponse =
                     	(ActionResponseImpl) portletResponse;
+                filtermanager.processFilter(actionRequest, actionResponse, loader, portletName, portletContext,"ACTION_PHASE");
                 portlet.processAction(actionRequest, actionResponse);
             }
             
@@ -252,6 +254,7 @@ public class PortletServlet extends HttpServlet {
                 	(EventRequestImpl) portletRequest;
             	EventResponseImpl eventResponse =
                 	(EventResponseImpl) portletResponse;
+            	filtermanager.processFilter(eventRequest, eventResponse, loader, portletName, portletContext,"EVENT_PHASE");
             	eventPortlet.processEvent(eventRequest, eventResponse);
             }
             

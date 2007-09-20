@@ -251,7 +251,9 @@ public class PortalURLParserImpl implements PortalURLParser {
             
             // Encode action params in the query appended at the end of the URL.
             if (portalURL.getActionWindow() != null
-            		&& portalURL.getActionWindow().equals(param.getWindowId())) {
+            		&& portalURL.getActionWindow().equals(param.getWindowId())
+            		|| (portalURL.getResourceWindow() != null
+            				&& portalURL.getResourceWindow().equals(param.getWindowId()))) {
                 for (int i = 0; i < param.getValues().length; i++) {
                     query.append("&").append(encodeQueryParam(param.getName())).append("=")
                     		.append(encodeQueryParam(param.getValues()[i]));
