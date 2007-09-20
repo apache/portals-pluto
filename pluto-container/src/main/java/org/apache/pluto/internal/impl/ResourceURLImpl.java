@@ -71,8 +71,8 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 	    }
 	    else{
 	    	String[] values = new String[tmp.length+1];
-	    	System.arraycopy(tmp, 0, values, 0, tmp.length);
-	    	values[tmp.length] = value;
+	    	values[0] = value;
+	    	System.arraycopy(tmp, 0, values, 1, tmp.length);
 	    	super.setParameter(name, values);
 	    }
 	}
@@ -89,8 +89,8 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 	    }
 	    else{
 	    	String[] tmpValues = new String[tmp.length+values.length];
-	    	System.arraycopy(tmp, 0, tmpValues, 0, tmp.length);
-	    	System.arraycopy(values, 0, tmpValues, tmp.length, values.length);
+	    	System.arraycopy(values, 0, tmpValues, 0, values.length);
+	    	System.arraycopy(tmp, 0, tmpValues, values.length, tmp.length);
 	    	super.setParameter(name, tmpValues);
 	    }
 	}

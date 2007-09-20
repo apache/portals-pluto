@@ -18,6 +18,7 @@ package org.apache.pluto.spi;
 
 import java.util.Map;
 
+import javax.portlet.BaseURL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -92,5 +93,11 @@ public interface PortalCallbackService extends ContainerService {
      * @return FilterManager
      */
     public FilterManager getFilterManager(); 
+    
+    /**
+     * Returns the PortletURLListener which calls the Filter for the URL.
+     * @return
+     */
+    public PortletURLListener getPortletURLListener();
 
 }

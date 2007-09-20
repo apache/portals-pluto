@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -445,14 +446,14 @@ implements PortletRequest, InternalPortletRequest {
 
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	PublicRenderParameterProvider provider = container
-    		.getRequiredContainerServices()
-    		.getPortalCallbackService()
-    		.getPublicRenderParameterProvider();
+    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
     	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
     	String[] values = null;
-    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-    		values = urlProvider.getPublicRenderParameters(name);
+    	if (publicRenderParameterNames != null){
+    		if (publicRenderParameterNames.contains(name))
+    			values = urlProvider.getPublicRenderParameters(name);
+    		else
+    			values = (String[]) baseGetParameterMap().get(name);
     	}
     	else{
     			values = (String[]) baseGetParameterMap().get(name);
@@ -470,15 +471,17 @@ implements PortletRequest, InternalPortletRequest {
 
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	PublicRenderParameterProvider provider = container
-		.getRequiredContainerServices()
-		.getPortalCallbackService()
-		.getPublicRenderParameterProvider();
-    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	PortletURLProvider urlProvider = container.getRequiredContainerServices()
+    											  .getPortalCallbackService()
+    											  .getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
     	
     	String[] values = null;
-    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-    		values = urlProvider.getPublicRenderParameters(name);
+    	if (publicRenderParameterNames != null){
+    		if (publicRenderParameterNames.contains(name))
+    			values = urlProvider.getPublicRenderParameters(name);
+    		else
+    			values = (String[]) baseGetParameterMap().get(name);
     	}
     	else{
     			values = (String[]) baseGetParameterMap().get(name);
@@ -491,7 +494,22 @@ implements PortletRequest, InternalPortletRequest {
     }
     
     public Map getParameterMap() {
-    	return Collections.unmodifiableMap(StringUtils.copyParameters(baseGetParameterMap()));
+    	Map<String, String[]>map = StringUtils.copyParameters(baseGetParameterMap());
+    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	if (publicRenderParameterNames!=null){
+    		PortletURLProvider urlProvider = container
+    			.getRequiredContainerServices()
+    			.getPortalCallbackService()
+    			.getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    		String[] values = null;
+    		for (String string : publicRenderParameterNames) {
+    			values = urlProvider.getPublicRenderParameters(string);
+    			if (values != null){
+    				map.put(string, values);
+    			}
+			}
+    	}
+    	return Collections.unmodifiableMap(map);
     }
 
     public boolean isSecure() {
@@ -758,8 +776,7 @@ implements PortletRequest, InternalPortletRequest {
 	}
 
 	public Map<String, String[]> getPrivateParameterMap() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return Collections.unmodifiableMap(StringUtils.copyParameters(baseGetParameterMap()));
 	}
 
 	public Map<String, String[]> getPublicParameterMap() {

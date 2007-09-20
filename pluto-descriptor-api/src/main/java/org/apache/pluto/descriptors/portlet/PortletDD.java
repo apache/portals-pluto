@@ -198,7 +198,12 @@ public class PortletDD {
     /** the supported public render parameter */
 	@XmlElement(name = "supported-public-render-parameter")
     private List<String> publicRenderParameter = null;
+ 	
+	/** the supported public render parameter */
+	@XmlElement(name = "url-generation-listener")
+    private List<String> urlGenerationListener = null;
 	
+		
 	/** the container runtime options of this portlet */
 	@XmlElement(name = "container-runtime-option")
 	private List<ContainerRuntimeOptionDD> containerRuntimeOption = null;
@@ -458,6 +463,16 @@ public class PortletDD {
 
 	public List<ContainerRuntimeOptionDD> getContainerRuntimeOption() {
 		return containerRuntimeOption;
+	}
+
+
+	public List<String> getUrlGenerationListener() {
+		return urlGenerationListener;
+	}
+
+
+	public void setUrlGenerationListener(List<String> urlGenerationListener) {
+		this.urlGenerationListener = urlGenerationListener;
 	}
 }
 
