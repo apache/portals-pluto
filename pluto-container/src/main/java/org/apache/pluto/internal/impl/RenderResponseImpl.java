@@ -323,44 +323,6 @@ implements RenderResponse, InternalRenderResponse {
 	}
 
 	// Included HttpServletResponse (Limited) Impl -----------------------------
-    
-    @Override
-    public String encodeRedirectUrl(String url) {
-    	if (super.isIncluded() || super.isForwarded()) {
-    		return null;
-    	} else {
-    		return super.encodeRedirectUrl(url);
-    	}
-    }
-    
-    @Override
-    public String encodeRedirectURL(String url) {
-    	if (super.isIncluded() || super.isForwarded()) {
-    		return null;
-    	} else {
-    		return super.encodeRedirectURL(url);
-    	}
-    }
-	
-	@Override
-	public void sendError(int arg0, String arg1) throws IOException {
-		if (super.isIncluded() || super.isForwarded()){
-			// no operation
-		}
-		else
-			super.sendError(arg0, arg1);
-	}
-
-
-	@Override
-	public void sendError(int arg0) throws IOException {
-		if (super.isIncluded() || super.isForwarded()){
-			// no operation
-		}
-		else
-			super.sendError(arg0);
-	}
-
 
 	@Override
 	public void sendRedirect(String arg0) throws IOException {

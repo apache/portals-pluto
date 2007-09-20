@@ -16,6 +16,34 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
+import javax.ccpp.Profile;
+import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.WindowState;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
@@ -33,35 +61,6 @@ import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
-
-import javax.ccpp.Profile;
-import javax.portlet.PortalContext;
-import javax.portlet.Portlet;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.UnsupportedEncodingException;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-import java.util.Locale;
-import java.security.Principal;
 
 /**
  * Abstract <code>javax.portlet.PortletRequest</code> implementation.
@@ -770,9 +769,165 @@ implements PortletRequest, InternalPortletRequest {
 		String lifecyclePhase = getLifecyclePhase();
 		this.setAttribute(LIFECYCLE_PHASE, lifecyclePhase);
 	}
-
-	// ============= private methods ==================
 	
+	@Override
+	public String getLocalAddr() {
+		return (isIncluded() || isForwarded()) ? null : super.getLocalAddr();
+	}
+	
+
+	@Override
+	public String getLocalName() {
+		return (isIncluded() || isForwarded()) ? null : super.getLocalName();
+	}
+
+	@Override
+	public int getLocalPort() {
+		return (isIncluded() || isForwarded()) ? null : super.getLocalPort();
+	}
+	
+	public String getProtocol() {
+        return (isIncluded() || isForwarded()) ? "HTTP/1.1" : super.getProtocol();
+    }
+
+	@Override
+	public String getRealPath(String arg0) {
+		return (isIncluded() || isForwarded()) ? null : super.getRealPath(arg0);
+	}
+
+	@Override
+	public String getRemoteAddr() {
+		return (isIncluded() || isForwarded()) ? null : super.getRemoteAddr();
+	}
+
+	@Override
+	public String getRemoteHost() {
+		return (isIncluded() || isForwarded()) ? null : super.getRemoteHost();
+	}
+
+	@Override
+	public int getRemotePort() {
+		return (isIncluded() || isForwarded()) ? 0 : super.getRemotePort();
+	}
+	
+	@Override
+	public Cookie[] getCookies() {
+		if (isIncluded() || isForwarded()){
+			// TODO:return Cookies from properties
+			return null;
+		}
+		else
+			return super.getCookies();
+	}
+
+	@Override
+	public long getDateHeader(String arg0) {
+		if (isIncluded() || isForwarded()){
+			// TODO:return header from properties
+			return 0;
+		}
+		else
+			return super.getDateHeader(arg0);
+	}
+
+	@Override
+	public String getHeader(String arg0) {
+		if (isIncluded() || isForwarded()){
+			// TODO:return Cookies from properties
+			return null;
+		}
+		else
+			return super.getHeader(arg0);
+	}
+
+	@Override
+	public Enumeration getHeaderNames() {
+		if (isIncluded() || isForwarded()){
+			// TODO:return Cookies from properties
+			return null;
+		}
+		else
+			return super.getHeaderNames();
+	}
+
+	@Override
+	public Enumeration getHeaders(String arg0) {
+		if (isIncluded() || isForwarded()){
+			// TODO:return Cookies from properties
+			return null;
+		}
+		else
+			return super.getHeaders(arg0);
+	}
+
+	@Override
+	public int getIntHeader(String arg0) {
+		if (isIncluded() || isForwarded()){
+			// TODO:return Cookies from properties
+			return 0;
+		}
+		else
+			return super.getIntHeader(arg0);
+	}
+	
+	public String getPathInfo() {
+    	if (isIncluded())
+    		return (String) super.getAttribute("javax.servlet.include.path_info");
+    	else if (isForwarded())
+    		return (String) super.getAttribute("javax.servlet.forward.path_info");
+    	else
+    		return super.getPathInfo();
+    }
+
+    public String getQueryString() {
+    	if (isIncluded())
+    		return (String) super.getAttribute("javax.servlet.include.query_string");
+    	else if (isForwarded())
+    		return (String) super.getAttribute("javax.servlet.forward.query_string");
+    	else
+	    	return super.getQueryString();
+    }
+    
+    
+    public String getPathTranslated() {
+    	if (isIncluded() || isForwarded()){
+    		String path = getServletPath() + getPathInfo() + "?" + getQueryString();
+    		return getRealPath(path);
+    	}
+    	return super.getPathTranslated();
+    }
+    
+    public String getRequestURI() {
+    	if (isIncluded())
+    		return (String) super.getAttribute("javax.servlet.include.request_uri");
+    	else if (isForwarded())
+    		return (String) super.getAttribute("javax.servlet.forward.request_uri");
+    	else
+    		return super.getRequestURI();
+    }
+    
+    public String getServletPath() {
+    	if (isIncluded())
+    		return (String) super.getAttribute("javax.servlet.include.servlet_path");
+    	else if (isForwarded())
+    		return (String) super.getAttribute("javax.servlet.forward.servlet_path");
+    	else
+    		return super.getServletPath();
+    }
+    
+    public StringBuffer getRequestURL() {
+        return (isIncluded() || isForwarded()) ? null : super.getRequestURL();
+    }
+    
+    
+	
+	// ============= private methods ==================
+
+	public String getLifecyclePhase() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private void setCCPPProfile() {
 		Profile profile = container.getRequiredContainerServices().getCCPPProfileService().getCCPPProfile(servletRequest);
 		this.setAttribute(CCPP_PROFILE, profile);

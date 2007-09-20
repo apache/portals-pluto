@@ -16,20 +16,6 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalRenderRequest;
-
-import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -39,6 +25,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.Constants;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.InternalRenderRequest;
 
 /**
  * Implementation of the <code>javax.portlet.RenderRequest</code> interface.
@@ -99,7 +100,7 @@ implements RenderRequest, InternalRenderRequest {
      * flag is set to true, this method returns null.
      */
     public String getContentType() {
-        return super.isIncluded() ? null : super.getContentType();
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getContentType();
     }
     
     /**
@@ -107,7 +108,7 @@ implements RenderRequest, InternalRenderRequest {
      * flag is set to true, this method returns 0.
      */
     public int getContentLength() {
-        return super.isIncluded() ? 0 : super.getContentLength();
+        return (super.isIncluded() || super.isForwarded()) ? 0 : super.getContentLength();
     }
     
     /**
@@ -116,7 +117,7 @@ implements RenderRequest, InternalRenderRequest {
      */
     public BufferedReader getReader()
     throws UnsupportedEncodingException, IOException {
-        return super.isIncluded() ? null : super.getReader();
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getReader();
     }
     
     /**
@@ -124,7 +125,7 @@ implements RenderRequest, InternalRenderRequest {
      * response. If the included flag is set to true, this method returns null.
      */
     public ServletInputStream getInputStream() throws IOException {
-        return super.isIncluded() ? null : super.getInputStream();
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getInputStream();
     }
     
     
@@ -175,123 +176,18 @@ implements RenderRequest, InternalRenderRequest {
     	}
     }
     
-    
     // Included HttpServletRequest (Limited) Impl ------------------------------
     
-    /*
-     * -------------------------------------------------------------------------
-     * (non-javadoc)
-     * Portlet Spec. PLT. 16.3.3.
-     * The following methods of the HttpServletRequest must return the path and
-     * query string information used to obtain the PortletRequestDispatcher
-     * object:
-     *   getPathInfo
-     *   getPathTranslated
-     *   getQueryString
-     *   getRequestURI
-     *   getServletPath
-     * -------------------------------------------------------------------------
-     */
-    
-    public String getPathInfo() {
-    	String attr = (String) super.getAttribute(
-    			"javax.servlet.include.path_info");
-    	return (super.isIncluded() && attr != null) ? attr : super.getPathInfo();
-    }
-
-    public String getQueryString() {
-    	String attr = (String) super.getAttribute(
-    			"javax.servlet.include.query_string");
-    	return (super.isIncluded() && attr != null) ? attr : super.getQueryString();
-    }
-    
-    /**
-     * TODO: check PLT.16.3.3. page 67, line 10.
-     */
-    public String getPathTranslated() {
-    	// TODO:
-//        return null;
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-    }
-    
-    public String getRequestURI() {
-    	String attr = (String) super.getAttribute(
-    			"javax.servlet.include.request_uri");
-        return (super.isIncluded() && attr != null) ? attr : super.getRequestURI();
-    }
-    
-    public String getServletPath() {
-        String attr = (String) super.getAttribute(
-                "javax.servlet.include.servlet_path");
-        return (super.isIncluded() && attr != null) ? attr : super.getServletPath();
-    }
-    
-    /*
-     * -------------------------------------------------------------------------
-     * (non-Javadoc)
-     * Portlet Spec. PLT. 16.3.3.
-     * The following methods of the HttpServletRequest must return null:
-     *   getProtocol
-     *   getRemoteAddr
-     *   getRemoteHost
-     *   getRealPath
-     *   getRequestURL
-     * -------------------------------------------------------------------------
-     */
-    
-    public String getProtocol() {
-        return super.isIncluded() ? null : super.getProtocol();
-    }
-
-    public String getRemoteAddr() {
-        return super.isIncluded() ? null : super.getRemoteAddr();
-    }
-
-    public String getRemoteHost() {
-        return super.isIncluded() ? null : super.getRemoteHost();
-    }
-
-    public String getRealPath(String path) {
-        return super.isIncluded() ? null : super.getRealPath(path);
-    }
-
-    public StringBuffer getRequestURL() {
-        return super.isIncluded() ? null : super.getRequestURL();
-    }
-    
-    /*
-     * -------------------------------------------------------------------------
-     * (non-Javadoc)
-     * Portlet Spec. PLT. 16.3.3.
-     * The following methods of the HttpServletRequest must do no operations
-     * and return null:
-     *   getCharacterEncoding
-     *   setCharacterEncoding
-     *   getContentType
-     *   getInputStream
-     *   getReader
-     * The getContentLength method of the HttpServletRequest must return 0.
-     * -------------------------------------------------------------------------
-     */
-    
     public String getCharacterEncoding() {
-        return super.isIncluded() ? null : super.getCharacterEncoding();
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getCharacterEncoding();
     }
     
     public void setCharacterEncoding(String encoding)
     throws UnsupportedEncodingException {
-        if (!super.isIncluded()) {
+        if (!super.isIncluded() && !super.isForwarded()) {
         	super.setCharacterEncoding(encoding);
         }
     }
-    
-    /*
-     * -------------------------------------------------------------------------
-     * (non-javadoc)
-     * Portlet Spec. PLT. 16.3.3.
-     * The getMethod method of the HttpServletRequest must always return 'GET'.
-     * -------------------------------------------------------------------------
-     */
     
     public String getMethod() {
     	return "GET";
@@ -376,5 +272,12 @@ implements RenderRequest, InternalRenderRequest {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
-    
+
+	@Override
+	public HttpSession getSession() {
+		if (isIncluded() || isForwarded()){
+			return (HttpSession) this.getPortletSession();
+		}
+		return super.getSession();
+	}
 }

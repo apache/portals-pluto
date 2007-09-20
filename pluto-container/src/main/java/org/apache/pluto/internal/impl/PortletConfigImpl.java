@@ -16,18 +16,25 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.descriptors.common.InitParamDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.servlet.ServletConfig;
 import javax.xml.namespace.QName;
 
-import java.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.descriptors.common.InitParamDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.internal.InternalPortletConfig;
 
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
@@ -47,15 +54,22 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
      * The portlet descriptor.
      */
     protected PortletDD portletDD;
+    
+    /**
+     * The portlet application descriptor.
+     */
+    private PortletAppDD portletAppDD;
 
     private ResourceBundleFactory bundles;
 
     public PortletConfigImpl(ServletConfig servletConfig,
                              PortletContext portletContext,
-                             PortletDD portletDD) {
+                             PortletDD portletDD,
+                             PortletAppDD portletAppDD) {
         this.servletConfig = servletConfig;
         this.portletContext = portletContext;
         this.portletDD = portletDD;
+        this.portletAppDD = portletAppDD;
     }
 
     public String getPortletName() {
@@ -127,9 +141,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 	}
 
 	public String getDefaultNamespace() {
-		// how to get the corresponding porletAppDD
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return portletAppDD.getDefaultNamespace();
 	}
 
 	public Enumeration<QName> getProcessingEventQNames() {

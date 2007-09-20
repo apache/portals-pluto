@@ -281,6 +281,44 @@ implements PortletResponse, InternalPortletResponse {
 	     }
 	     return validNamespace.toString();
 	}
+	
+	@Override
+	public String encodeRedirectUrl(String arg0) {
+		if (isForwarded() || isIncluded()){
+			return null;
+		}
+		else
+		return super.encodeRedirectUrl(arg0);
+	}
+
+	@Override
+	public String encodeRedirectURL(String arg0) {
+		if (isForwarded() || isIncluded()){
+			return null;
+		}
+		else
+			return super.encodeRedirectURL(arg0);
+	}
+	
+	@Override
+	public void sendError(int arg0) throws IOException {
+		if (isForwarded() || isIncluded()){
+			// no operation
+		}
+		else
+			super.sendError(arg0);
+	}
+	
+	
+
+	@Override
+	public void sendError(int arg0, String arg1) throws IOException {
+		if (isForwarded() || isIncluded()){
+			// no operation
+		}
+		else
+			super.sendError(arg0, arg1);
+	}
 // InternalRenderResponse Impl ---------------------------------------------
     
     public void setIncluded(boolean included) {

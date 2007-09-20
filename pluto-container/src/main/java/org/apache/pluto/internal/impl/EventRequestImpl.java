@@ -17,12 +17,16 @@
 package org.apache.pluto.internal.impl;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletPreferences;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
@@ -183,4 +187,38 @@ public class EventRequestImpl extends PortletRequestImpl
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
+	
+	
+    
+    //////////////////////////////////////////////////////////////////
+	//for forward and include
+	//////////////////////////////////////////////////////////////////
+	
+	public String getCharacterEncoding() {
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getCharacterEncoding();
+    }
+	
+	public int getContentLength() {
+        return (super.isIncluded() || super.isForwarded()) ? 0 : super.getContentLength();
+    }
+	
+	public String getContentType() {
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getContentType();
+    }
+	
+	public ServletInputStream getInputStream() throws IOException {
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getInputStream();
+    }
+	
+	public BufferedReader getReader()
+    throws UnsupportedEncodingException, IOException {
+        return (super.isIncluded() || super.isForwarded()) ? null : super.getReader();
+    }
+	
+	public void setCharacterEncoding(String encoding)
+    throws UnsupportedEncodingException {
+        if (!super.isIncluded() && !super.isForwarded()) {
+        	super.setCharacterEncoding(encoding);
+        }
+    }
 }

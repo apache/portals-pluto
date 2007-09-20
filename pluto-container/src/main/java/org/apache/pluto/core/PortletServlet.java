@@ -125,7 +125,8 @@ public class PortletServlet extends HttpServlet {
         }
         portletConfig = new PortletConfigImpl(getServletConfig(),
                                               portletContext,
-                                              portletDD);
+                                              portletDD,
+                                              portletAppDD);
         
         // Create and initialize the portlet wrapped in the servlet.
         try {

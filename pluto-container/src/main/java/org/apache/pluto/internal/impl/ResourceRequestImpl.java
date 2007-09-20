@@ -21,6 +21,7 @@ import java.io.InputStream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +32,6 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalResourceRequest;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringUtils;
 
@@ -164,4 +164,7 @@ implements ResourceRequest, InternalResourceRequest {
 		throw new UnsupportedOperationException("This method needs to be implemented.");
 	}
 	
+	public ServletInputStream getInputStream() throws IOException {
+        return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
+    }
 }

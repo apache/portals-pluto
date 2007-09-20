@@ -19,6 +19,7 @@ package org.apache.pluto.internal.impl;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
@@ -32,10 +33,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalResourceResponse;
 import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringManager;
+import org.apache.pluto.util.StringUtils;
 
 public class ResourceResponseImpl extends StateAwareResponseImpl
 implements ResourceResponse, InternalResourceResponse {
@@ -114,6 +119,68 @@ implements ResourceResponse, InternalResourceResponse {
         return super.getWriter();
     }
 	
+    public void setContentType(String contentType)
+    throws IllegalArgumentException {
+    	if (super.isIncluded()){
+    		//no operation
+    	}
+    	else{
+    		ArgumentUtility.validateNotNull("contentType", contentType);
+            String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
+            if (!isValidContentType(mimeType)) {
+                throw new IllegalArgumentException("Specified content type '"
+                		+ mimeType + "' is not supported.");
+            }
+            getHttpServletResponse().setContentType(mimeType);
+            this.currentContentType = mimeType;
+    	}
+    }
+    
+    /**
+     * Checks if the specified content type is valid (supported by the portlet).
+     * The specified content type should be a tripped mime type without any
+     * character encoding suffix.
+     * @param contentType  the content type to check.
+     * @return true if the content type is valid, false otherwise.
+     */
+    private boolean isValidContentType(String contentType) {
+    	boolean valid = false;
+    	
+        PortletDD portletDD = getInternalPortletWindow().getPortletEntity()
+        		.getPortletDefinition();
+        for (Iterator it = portletDD.getSupports().iterator();
+        		!valid && it.hasNext(); ) {
+            
+        	SupportsDD supportsDD = (SupportsDD) it.next();
+            String supportedType = supportsDD.getMimeType();
+            
+            // Content type is supported by an exact match.
+            if (supportedType.equals(contentType)) {
+            	valid = true;
+            }
+            // The supported type contains a wildcard.
+            else if (supportedType.indexOf("*") >= 0) {
+            	
+                int index = supportedType.indexOf("/");
+                String supportedPrefix = supportedType.substring(0, index);
+                String supportedSuffix = supportedType.substring(index + 1);
+                
+                index = contentType.indexOf("/");
+                String typePrefix = contentType.substring(0, index);
+                String typeSuffix = contentType.substring(index + 1);
+                
+                // Check if the prefixes match AND the suffixes match.
+                if (supportedPrefix.equals("*") || supportedPrefix.equals(typePrefix)) {
+                    if (supportedSuffix.equals("*") || supportedSuffix.equals(typeSuffix)) {
+                        valid = true;
+                    }
+                }
+            }
+        }
+        // Return the check result.
+        return valid;
+    }
+    
 	public Locale getLocale() {
         return getHttpServletRequest().getLocale();
     }
@@ -219,44 +286,6 @@ implements ResourceResponse, InternalResourceResponse {
 	}
 
 	// Included HttpServletResponse (Limited) Impl -----------------------------
-    
-    @Override
-    public String encodeRedirectUrl(String url) {
-    	if (super.isIncluded() || super.isForwarded()) {
-    		return null;
-    	} else {
-    		return super.encodeRedirectUrl(url);
-    	}
-    }
-    
-    @Override
-    public String encodeRedirectURL(String url) {
-    	if (super.isIncluded() || super.isForwarded()) {
-    		return null;
-    	} else {
-    		return super.encodeRedirectURL(url);
-    	}
-    }
-	
-	@Override
-	public void sendError(int arg0, String arg1) throws IOException {
-		if (super.isIncluded() || super.isForwarded()){
-			// no operation
-		}
-		else
-			super.sendError(arg0, arg1);
-	}
-
-
-	@Override
-	public void sendError(int arg0) throws IOException {
-		if (super.isIncluded() || super.isForwarded()){
-			// no operation
-		}
-		else
-			super.sendError(arg0);
-	}
-
 
 	@Override
 	public void sendRedirect(String arg0) throws IOException {
