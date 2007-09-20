@@ -282,6 +282,27 @@ implements PortletResponse, InternalPortletResponse {
 	     return validNamespace.toString();
 	}
 	
+    @Override
+	public void addCookie(Cookie arg0) {
+		if (isIncluded()){
+			//no operation
+		}
+		else if (isForwarded()){
+			addProperty(arg0);
+		}
+		else
+			super.addCookie(arg0);
+	}
+	
+    @Override
+	public boolean containsHeader(String arg0) {
+		if (isForwarded() || isIncluded()){
+			return false;
+		}
+		else
+			return super.containsHeader(arg0);
+	}
+	
 	@Override
 	public String encodeRedirectUrl(String arg0) {
 		if (isForwarded() || isIncluded()){
@@ -338,12 +359,5 @@ implements PortletResponse, InternalPortletResponse {
 		this.forwarded = forwared;
 		
 	}
-    
-    public int getBufferSize() {
-        // TODO: return this.getHttpServletResponse().getBufferSize();
-        return 0;
-    }
-
-
-	
+    	
 }
