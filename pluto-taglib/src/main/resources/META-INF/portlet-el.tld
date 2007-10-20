@@ -46,6 +46,21 @@ limitations under the License.
             <rtexprvalue>false</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>property</name>
+        <tagclass>org.apache.pluto.tags.PropertyTag</tagclass>
+        <bodycontent>empty</bodycontent>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>     
    <tag>
         <name>actionURL</name>
         <tagclass>org.apache.pluto.tags.ActionURLTag</tagclass>
@@ -137,7 +152,17 @@ limitations under the License.
             <name>escapeXml</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
-        </attribute>        
+        </attribute>      
+		<attribute>
+            <name>id</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+		<attribute>
+            <name>cacheability</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>            
     </tag>    
     <tag>
         <name>namespace</name>
