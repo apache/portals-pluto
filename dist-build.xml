@@ -36,8 +36,10 @@
 -->
 <project name="PlutoDistributions" default="bin-dist">
 
-	<property name="pluto.version" value="1.1.0-286-SNAPSHOT" description="Version of Pluto 1.1 to build"/>
-	<property name="tomcat.version" value="5.5.17" description="Version of Tomcat to deploy Pluto"/>
+    <property name="tomcat.version" value="5.5.23" description="Version of Tomcat to deploy Pluto"/>
+
+    <xmlproperty file="pom.xml"/> <!-- picks up version from pom file -->
+    <property name="pluto.version" value="${project.version}" description="Version of Pluto 1.1 to build"/>
 
 	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
 	<property name="base.name" value="apache-tomcat-${tomcat.version}"/>
