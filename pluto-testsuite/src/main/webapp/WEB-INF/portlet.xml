@@ -79,10 +79,10 @@ limitations under the License.
       <preferences-validator>org.apache.pluto.testsuite.validator.PreferencesValidatorImpl</preferences-validator>
     </portlet-preferences>
     
-    <!-- <security-role-ref>
+    <security-role-ref>
       <role-name>plutoTestRole</role-name>
       <role-link>tomcat</role-link>
-    </security-role-ref>-->
+    </security-role-ref>
   
   </portlet>
   
@@ -140,10 +140,10 @@ limitations under the License.
       <preferences-validator>org.apache.pluto.testsuite.validator.PreferencesValidatorImpl2</preferences-validator>
     </portlet-preferences>
     
-   <!-- <security-role-ref>
+   <security-role-ref>
       <role-name>plutoTestRole</role-name>
       <role-link>tomcat</role-link>
-    </security-role-ref> -->
+    </security-role-ref>
     
   </portlet>
   
