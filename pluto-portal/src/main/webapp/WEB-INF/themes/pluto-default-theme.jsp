@@ -1,8 +1,10 @@
 <%--
-Copyright 2004 The Apache Software Foundation
-Licensed  under the  Apache License,  Version 2.0  (the "License");
-you may not use  this file  except in  compliance with the License.
-You may obtain a copy of the License at
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
@@ -30,6 +32,7 @@ group (the left column) displays portlets with odd IDs, while the second group
     <title>Pluto Portal</title>
     <style type="text/css" title="currentStyle" media="screen">
         @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
+        @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
     </style>
     <script type="text/javascript"
             src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
@@ -53,29 +56,7 @@ group (the left column) displays portlets with odd IDs, while the second group
     </div>
 
     <!-- Navigation block: links to portal pages -->
-    <div id="navigation">
-        <h2>Navigation:</h2>
-        <ul>
-            <c:forEach var="page" items="${driverConfig.pages}">
-                <c:choose>
-                    <c:when test="${page == currentPage}">
-                        <li class="selected">
-                            <a href='<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>'>
-                                <c:out value="${page.name}"/>
-                            </a>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li>
-                            <a href='<c:out value="${pageContext.request.contextPath}"/>/portal/<c:out value="${page.name}"/>'>
-                                <c:out value="${page.name}"/>
-                            </a>
-                        </li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </ul>
-    </div>
+    <jsp:include page="navigation.jsp"/>
 
     <!-- Content block: portlets are divided into two columns/groups -->
     <div id="content">
