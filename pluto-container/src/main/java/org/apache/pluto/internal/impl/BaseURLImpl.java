@@ -39,7 +39,6 @@ import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 
@@ -96,52 +95,42 @@ public class BaseURLImpl implements BaseURL {
 	}
 	
 	public void setParameter(String name, String value) {
-	    if (name == null) {
+	    if (name == null || value == null) {
 	        throw new IllegalArgumentException(
 	            "name and value must not be null");
 	    }
-	    PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
-	    if (value == null){
-	    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    		publicRenderParameters.put(name,new String[] {null});
-		    	
-		    }
-	    	else{
-	    		throw new IllegalArgumentException(
-	            	"name and value must not be null");
-	    	}
-	    }
-	    
-	    if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    	publicRenderParameters.put(name,new String[] {value});
-	    }
-	    else{
+	    List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+	    if (publicRenderParameterNames == null){
 	    	parameters.put(name, new String[]{value});
 	    }
+	    else{
+	    	if (publicRenderParameterNames.contains(name)){
+		    	publicRenderParameters.put(name,new String[] {value});
+		    }
+		    else{
+		    	parameters.put(name, new String[]{value});
+		    }
+		}
 	}
 
 	public void setParameter(String name, String[] values) {
-		if (name == null) {
+		if (name == null || values == null) {
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-	    PublicRenderParameterProvider provider = container.getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
-	    if (values == null){
-	    	if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    		publicRenderParameters.put(name,new String[] {null});
-		    }
-	    	else{
-	    		throw new IllegalArgumentException(
-	    			"name and values must not be null or values be an empty array");
-	    	}
-	    }
+		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
 	    
-	    if (provider.isPublicRenderParameter(internalPortletWindow.getId().getStringId(), name)){
-	    	publicRenderParameters.put(name,StringUtils.copy(values));
+		if (publicRenderParameterNames == null){
+			parameters.put(name, StringUtils.copy(values));
 	    }
-	    else{
-	    	parameters.put(name, StringUtils.copy(values));
-	    }
+		else{
+			if (publicRenderParameterNames.contains(name)){
+		    	publicRenderParameters.put(name,StringUtils.copy(values));
+		    }
+		    else{
+		    	parameters.put(name, StringUtils.copy(values));
+		    }
+		}
 	}
 
 	public void setParameters(Map<String, String[]> parameters) {

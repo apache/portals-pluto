@@ -63,7 +63,7 @@ public class PortletEntityImpl implements PortletEntity {
     private ServletContext servletContext = null;
     
     /** The portlet window. */
-    private PortletWindow portletWindow = null;
+    private String portletName = null;
 
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
     private PortletDD portletDefinition = null;
@@ -74,9 +74,9 @@ public class PortletEntityImpl implements PortletEntity {
     
     // Constructor -------------------------------------------------------------
     
-    PortletEntityImpl(ServletContext servletContext, PortletWindow portletWindow) {
+    PortletEntityImpl(ServletContext servletContext, String portletName) {
         this.servletContext = servletContext;
-        this.portletWindow = portletWindow;
+        this.portletName = portletName;
     }
     
     
@@ -87,7 +87,7 @@ public class PortletEntityImpl implements PortletEntity {
      * @return the URI to the controller servlet that wraps this portlet.
      */
     public String getControllerServletUri() {
-        return PREFIX + portletWindow.getPortletName();
+        return PREFIX + portletName;
     }
     
     /**
@@ -172,24 +172,19 @@ public class PortletEntityImpl implements PortletEntity {
      */
     private void load() {
     	
-    	// Retrieve the cross servlet context for the portlet.
-        String contextPath = portletWindow.getContextPath();
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Loading portlet definition for context: " + contextPath);
-        }
-        ServletContext crossContext = servletContext.getContext(contextPath);
+    	//Retrieve the cross servlet context for the portlet.
+        ServletContext crossContext = servletContext;
         if (LOG.isDebugEnabled()) {
             LOG.debug("Retrieved cross context: " + crossContext);
         }
-        
+
         // Load PortletAppDD and find out the portlet definition.
         try {
             PortletAppDD appDD = PortletDescriptorRegistry.getRegistry()
             		.getPortletAppDD(crossContext);
             for (Iterator it = appDD.getPortlets().iterator(); it.hasNext(); ) {
                 PortletDD portletDD = (PortletDD) it.next();
-                if (portletDD.getPortletName().equals(
-                		portletWindow.getPortletName())) {
+                if (portletDD.getPortletName().equals(portletName)) {
                 	portletDefinition = portletDD;
                 	break;
                 }

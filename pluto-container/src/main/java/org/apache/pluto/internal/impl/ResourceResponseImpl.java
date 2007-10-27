@@ -97,5 +97,10 @@ implements ResourceResponse, InternalResourceResponse {
 	@Override
 	public String getContentType() {
         return getHttpServletResponse().getContentType();
-    }	
+    }
+
+	public String getCacheability() {
+		// TODO Auto-generated method stub
+		return null;
+	}	
 }

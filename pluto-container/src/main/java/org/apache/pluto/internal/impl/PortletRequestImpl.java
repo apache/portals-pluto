@@ -55,7 +55,6 @@ import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;

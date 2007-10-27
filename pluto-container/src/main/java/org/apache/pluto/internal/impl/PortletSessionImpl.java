@@ -344,4 +344,42 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
 	public void setIncludeOrForward(boolean isIncludeOrForward) {
 		this.isIncludeOrForward = isIncludeOrForward;
 	}
+	/** 
+	   * Returns a <code>Map</code> of the session attributes in
+	   * the portlet session scope.
+	   * <p>
+	   * The keys are of type <code>String</code> and the values in the 
+	   * returned <code>Map</code> are from type <code>Object</code>.
+	   * <p>
+	   * If no session attributes exist this method returns an empty <code>Map</code>.
+	   *
+	   * @return     an immutable <code>Map</code> containing the session attributes in the  
+	   *             portlet session scope as keys and attribute values as map values, or an empty <code>Map</code>
+	   *             if no session attributes exist. The keys in the
+	   *             map are of type String, the values of type
+	   *             Object.
+	   *  @since 2.0
+	   */
+	  public Map<String, Object> getAttributeMap(int scope){
+		  return null; 
+	  }
+	  /** 
+	   * Returns a <code>Map</code> of the session attributes in
+	   * the portlet session scope.
+	   * <p>
+	   * The keys are of type <code>String</code> and the values in the 
+	   * returned <code>Map</code> are from type <code>Object</code>.
+	   * <p>
+	   * If no session attributes exist this method returns an empty <code>Map</code>.
+	   *
+	   * @return     an immutable <code>Map</code> containing the session attributes in the  
+	   *             portlet session scope as keys and attribute values as map values, or an empty <code>Map</code>
+	   *             if no session attributes exist. The keys in the
+	   *             map are of type String, the values of type
+	   *             Object.
+	   *  @since 2.0
+	   */
+	  public Map<String, Object> getAttributeMap(){
+		  return null;
+	  }
 }

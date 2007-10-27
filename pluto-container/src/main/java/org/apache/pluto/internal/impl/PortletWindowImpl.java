@@ -107,7 +107,7 @@ public class PortletWindowImpl implements InternalPortletWindow {
 
     public PortletEntity getPortletEntity() {
         if (entity == null) {
-            entity = new PortletEntityImpl(servletContext, this);
+            entity = new PortletEntityImpl(servletContext, this.getPortletName() );
         }
         return entity;
     }

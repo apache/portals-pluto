@@ -18,6 +18,7 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
@@ -167,4 +168,8 @@ implements ResourceRequest, InternalResourceRequest {
 	public ServletInputStream getInputStream() throws IOException {
         return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
     }
+
+	public Map<String, String[]> getPrivateRenderParameterMap() {
+		return super.getPrivateParameterMap();
+	}
 }

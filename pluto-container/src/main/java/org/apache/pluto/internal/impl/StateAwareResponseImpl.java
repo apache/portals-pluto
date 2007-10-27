@@ -18,20 +18,20 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable; 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map; 
+import java.util.Map;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException; 
+import javax.portlet.WindowStateException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +48,6 @@ import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.StringUtils;
 
@@ -64,7 +63,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     private static final Log LOG = LogFactory.getLog(StateAwareResponseImpl.class);
 
 	boolean redirectAllowed = true;
-	private boolean redirected;
+	protected boolean redirected;
 	private String redirectLocation;
     
 
@@ -73,7 +72,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     private Map<String, String[]> renderParameters = new HashMap<String, String[]>();
     private WindowState windowState = null;
     private PortletMode portletMode = null;
-	private PortalCallbackService callback;
+	protected PortalCallbackService callback;
     private PortalContext context;
     
 	public StateAwareResponseImpl(PortletContainer container,
@@ -160,7 +159,6 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
             throw new java.lang.IllegalStateException(
                 "Can't invoke sendRedirect() after certain methods have been called");
         }
-
     }
 
     
@@ -248,24 +246,18 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
                 "Can't invoke setRenderParameter() after sendRedirect() has been called");
         }
 
-        if ((key == null)) {
+        if ((key == null || value == null)) {
             throw new IllegalArgumentException(
                 "Render parameter key must not be null.");
         }
-        PublicRenderParameterProvider provider = getContainer().getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
-        //only if the value is null, if it is a public parameter will deleted from list.
-        if (value == null){
-        	//test if this is a public render parameter
-        	if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
-        		publicRenderParameter.put(key, new String[] {null});
-        	}
-        	else{
-        		throw new IllegalArgumentException(
-                	"Render parameter value must not be null.");
-        	}
-        }
-        else if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
-        	publicRenderParameter.put(key, new String[] {value});
+        List<String> publicRenderParameterNames = super.getInternalPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+        if (publicRenderParameterNames != null){
+	    	if (publicRenderParameterNames.contains(key)){
+	        	publicRenderParameter.put(key, new String[] {value});
+	        }
+	        else{
+	        	renderParameters.put(key, new String[]{value});
+	        }
         }
         else{
         	renderParameters.put(key, new String[]{value});
@@ -279,23 +271,18 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
                 "Can't invoke setRenderParameter() after sendRedirect() has been called");
         }        
         
-        if (key == null) {
+        if (key == null || values == null) {
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-	    PublicRenderParameterProvider provider = getContainer().getRequiredContainerServices().getPortalCallbackService().getPublicRenderParameterProvider();
-	    if (values == null){
-	    	if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
-	    		publicRenderParameter.put(key,new String[] {null});
+	    List<String> publicRenderParameterNames = super.getInternalPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+	    if (publicRenderParameterNames != null){
+		    if (publicRenderParameterNames.contains(key)){
+		    	publicRenderParameter.put(key,StringUtils.copy(values));
 		    }
-	    	else{
-	    		throw new IllegalArgumentException(
-	    			"name and values must not be null or values be an empty array");
-	    	}
-	    }
-	    
-	    if (provider.isPublicRenderParameter(getInternalPortletWindow().getId().getStringId(), key)){
-	    	publicRenderParameter.put(key,StringUtils.copy(values));
+		    else{
+		    	renderParameters.put(key, StringUtils.copy(values));
+		    }
 	    }
 	    else{
 	    	renderParameters.put(key, StringUtils.copy(values));
@@ -597,4 +584,16 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 			return super.isCommitted();
 	}
 
+	public void removePublicRenderParameter(String name) {
+		List<String> publicRenderParameterNames = super.getInternalPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		if (publicRenderParameterNames != null){
+			if (publicRenderParameterNames.contains(name)){
+	    		publicRenderParameter.put(name,new String[] {null});
+		    }
+	    	else{
+	    		throw new IllegalArgumentException(
+	    			"name and values must not be null or values be an empty array");
+	    	}
+		}
+	}
 }

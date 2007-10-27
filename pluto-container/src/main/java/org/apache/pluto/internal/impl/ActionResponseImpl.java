@@ -17,14 +17,21 @@
 package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletModeException;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.ResourceURLProvider;
 
 public class ActionResponseImpl extends StateAwareResponseImpl
 implements ActionResponse, InternalActionResponse {
@@ -45,5 +52,67 @@ implements ActionResponse, InternalActionResponse {
 		}
 		super.sendRedirect(location);
 	}
-	
+
+	public void sendRedirect(String location, String renderUrlParamName) throws IOException {
+		
+        if (location != null) {
+            HttpServletResponse redirectResponse = getHttpServletResponse();
+            while (redirectResponse instanceof HttpServletResponseWrapper) {
+                redirectResponse = (HttpServletResponse)
+                    ((HttpServletResponseWrapper)redirectResponse).getResponse();
+            }
+
+            ResourceURLProvider provider = super.callback.getResourceURLProvider(
+                            getHttpServletRequest(),
+                            getInternalPortletWindow()
+            );
+
+            if (location.indexOf("://") != -1) {
+                provider.setAbsoluteURL(location);
+            } else {
+                provider.setFullPath(location);
+            }
+            location =
+            	redirectResponse.encodeRedirectURL(provider.toString());
+            //add the currently windows state, portlet mode, render parameter and current public parameter
+            String renderURL = getCurrentRenderURL();
+            if (location.indexOf("?") != -1){
+            	//add the URL to the other Parameters
+            	location += "&" + renderUrlParamName + "=" +renderURL;
+            }
+            else{
+            	//first Query Parameter
+            	location += "?" + renderUrlParamName + "=" +renderURL;
+            }
+            
+            redirectResponse.sendRedirect(location);
+            super.redirected = true;
+        }
+	}
+	private String getCurrentRenderURL(){
+        PortletURL renderURL = createRenderURL();
+		try {
+			if (getPortletMode()!= null)
+				renderURL.setPortletMode(getPortletMode());
+			if (getWindowState() != null)
+				renderURL.setWindowState(getWindowState());
+			if (getRenderParameterMap()!= null)
+				renderURL.setParameters(getRenderParameterMap());
+			if (getPublicRenderParameter() != null){
+				Set<String> keys = getPublicRenderParameter().keySet();
+				if (keys != null){
+					for (String string : keys) {
+						renderURL.setParameter(string, getPublicRenderParameter().get(string));
+					}
+				}
+			}
+		} catch (PortletModeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (WindowStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return renderURL.toString();
+	}
 }

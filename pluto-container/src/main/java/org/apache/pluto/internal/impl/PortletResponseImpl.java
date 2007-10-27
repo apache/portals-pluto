@@ -38,6 +38,7 @@ import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 /**
@@ -340,9 +341,14 @@ implements PortletResponse, InternalPortletResponse {
 		else
 			super.sendError(arg0, arg1);
 	}
+	
+	public Element createElement(String tagName) throws DOMException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 // InternalRenderResponse Impl ---------------------------------------------
-    
-    public void setIncluded(boolean included) {
+
+	public void setIncluded(boolean included) {
         this.included = included;
     }
 

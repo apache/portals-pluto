@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.util.List;
+
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletURL;
@@ -58,5 +60,20 @@ public class PortletURLImpl extends BaseURLImpl implements PortletURL {
         isPortletModeAllowed(portletMode);
         mode = portletMode;
     }
+
+	public void removePublicRenderParameter(String name) {
+		// TODO Auto-generated method stub
+		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+	    
+	    if (publicRenderParameterNames != null){
+	    	if (publicRenderParameterNames.contains(name)){
+	    		publicRenderParameters.put(name,new String[] {null});
+		    }
+	    	else{
+	    		throw new IllegalArgumentException(
+	            	"name and value must not be null");
+	    	}
+	    }
+	}
 
 }
