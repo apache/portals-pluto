@@ -1,57 +1,51 @@
-/*  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
- *  "License"); you may not use this file except in compliance
- *  with the License.  You may obtain a copy of the License at
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.pluto.driver.url.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.net.URLEncoder;
-import java.io.UnsupportedEncodingException;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.pluto.spi.PublicRenderParameterProvider;
-import org.apache.pluto.util.StringUtils;
-import org.apache.pluto.driver.services.container.PublicRenderParameterProviderImpl;
-import org.apache.pluto.driver.url.impl.PortalURLImpl;
-import org.apache.pluto.driver.url.PortalURLParser;
-import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.util.StringUtils;
 
 /**
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 30, 2004
  */
 public class PortalURLParserImpl implements PortalURLParser {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortalURLParserImpl.class);
-    
+
     /** The singleton parser instance. */
     private static final PortalURLParser PARSER = new PortalURLParserImpl();
-    
-    
+
+
     // Constants used for Encoding/Decoding ------------------------------------
     
     private static final String PREFIX = "__";
@@ -65,6 +59,8 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String PORTLET_MODE = "pm";
     private static final String VALUE_DELIM = "0x0";
 
+    //This is a list of characters that need to be encoded  to be protected
+    //The ? is necessary to protect URI's with a query portion that is being passed as a parameter
     private static final String[][] ENCODINGS = new String[][] {
     		new String[] { "_",  "0x1" },
             new String[] { ".",  "0x2" },
@@ -75,6 +71,9 @@ public class PortalURLParserImpl implements PortalURLParser {
             new String[] { ">",  "0x7" },
             new String[] { " ",  "0x8" },
             new String[] { "#",  "0x9" },
+            new String[] { "?",  "0xa" },
+            new String[] { "\\", "0xb" },
+            new String[] { "%",  "0xc" },
     };
     
     // Constructor -------------------------------------------------------------
@@ -107,25 +106,24 @@ public class PortalURLParserImpl implements PortalURLParser {
     	if (LOG.isDebugEnabled()) {
             LOG.debug("Parsing URL: " + request.getRequestURI());
         }
-        
-        String protocol = request.isSecure() ? "https://" : "http://";
-        String server = request.getServerName();
-        int port = request.getServerPort();
+
         String contextPath = request.getContextPath();
         String servletName = request.getServletPath();
         
         // Construct portal URL using info retrieved from servlet request.
-        PortalURL portalURL = null;
-        if ((request.isSecure() && port != 443)
-        		|| (!request.isSecure() && port != 80)) {
-        	portalURL = new PortalURLImpl(protocol, server, port, contextPath, servletName);
-        } else {
-        	portalURL = new PortalURLImpl(protocol, server, contextPath, servletName);
-        }
-        
+        PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName, this);
+
+        // Support added for filter.  Should we seperate into a different impl?
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
-            return portalURL;
+            if(servletName.contains(".jsp") && !servletName.endsWith(".jsp")) {
+                int idx = servletName.indexOf(".jsp")+".jsp".length();
+                pathInfo = servletName.substring(idx);
+                servletName = servletName.substring(0, idx);
+                portalURL = new RelativePortalURLImpl(contextPath, servletName, this);
+            } else {
+                return portalURL;
+            }
         }
         
         if (LOG.isDebugEnabled()) {
@@ -179,8 +177,10 @@ public class PortalURLParserImpl implements PortalURLParser {
         			value = st.nextToken();
         		}
         		PortalURLParameter param = decodePublicParameter(token, value);
-        		PublicRenderParameterProvider provider = PublicRenderParameterProviderImpl
-    				.getPublicRenderParameterProviderImpl();
+        		if( param != null )
+        		{
+        			portalURL.addParameter( param );
+        		}
 	    		
 	    		// set public parameter in portalURL
 	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
@@ -201,12 +201,13 @@ public class PortalURLParserImpl implements PortalURLParser {
      * @return a URL string representing the portal URL.
      */
     public String toString(PortalURL portalURL) {
+
     	StringBuffer buffer = new StringBuffer();
     	
         // Append the server URI and the servlet path.
-    	buffer.append(portalURL.getServerURI())
-    			.append(portalURL.getServletPath());
-    	
+    	buffer.append(portalURL.getServletPath().startsWith("/")?"":"/")
+            .append(portalURL.getServletPath());
+
         // Start the pathInfo with the path to the render URL (page).
         if (portalURL.getRenderPath() != null) {
         	buffer.append("/").append(portalURL.getRenderPath());
@@ -244,6 +245,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         
         // Append action and render parameters.
         StringBuffer query = new StringBuffer("?");
+        boolean firstParam = true;
         for (Iterator it = portalURL.getParameters().iterator();
         		it.hasNext(); ) {
             
@@ -254,8 +256,14 @@ public class PortalURLParserImpl implements PortalURLParser {
             		&& portalURL.getActionWindow().equals(param.getWindowId())
             		|| (portalURL.getResourceWindow() != null
             				&& portalURL.getResourceWindow().equals(param.getWindowId()))) {
-                for (int i = 0; i < param.getValues().length; i++) {
-                    query.append("&").append(encodeQueryParam(param.getName())).append("=")
+            	for (int i = 0; i < param.getValues().length; i++) {
+                    // FIX for PLUTO-247
+                    if ( firstParam ) {
+                        firstParam = false;
+                    } else {
+                        query.append("&");
+                    }
+                    query.append(encodeQueryParam(param.getName())).append("=")
                     		.append(encodeQueryParam(param.getValues()[i]));
                 }
             }
@@ -271,6 +279,12 @@ public class PortalURLParserImpl implements PortalURLParser {
                 	buffer.append("/").append(valueString);
                 }
             }
+        }
+
+        // Construct the string representing the portal URL.
+        // Fix for PLUTO-247 - check if query string contains parameters
+        if ( query.length() > 1 ) {
+            return buffer.append(query).toString();
         }
         
         Map<String, String[]> publicParamList = portalURL.getPublicParameters();
