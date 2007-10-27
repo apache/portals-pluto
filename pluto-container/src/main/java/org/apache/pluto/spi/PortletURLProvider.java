@@ -19,6 +19,7 @@ package org.apache.pluto.spi;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
+import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,7 +73,7 @@ public interface PortletURLProvider {
     /**
      * By calling this method the URL is defined as a secure URL.
      */
-    public void setSecure();
+    public void setSecure() throws PortletSecurityException ;
 
     /**
      * Removes all pre-existing parameters in this URL

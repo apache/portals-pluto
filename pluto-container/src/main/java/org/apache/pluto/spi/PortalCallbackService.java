@@ -18,7 +18,6 @@ package org.apache.pluto.spi;
 
 import java.util.Map;
 
-import javax.portlet.BaseURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
@@ -80,11 +79,7 @@ public interface PortalCallbackService extends ContainerService {
     
     public EventProvider getEventProvider();
     
-    /**
-     * Returns a Public Render Parameter Provider, this is used to register get and set all public-render-parameter-parameter.
-     * @return the PublicRenderParameterProvider.
-     */
-    public PublicRenderParameterProvider getPublicRenderParameterProvider();
+    
     
     /**
      * Returns the FilterManager, this is used to process the filter.

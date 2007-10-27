@@ -17,9 +17,12 @@ package org.apache.pluto.wrappers;
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.Cookie;
 
+import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 public class PortletResponseWrapper
@@ -43,10 +46,6 @@ public class PortletResponseWrapper
     public void addProperty(String key, String value) {
         this.getPortletResponse().addProperty(key, value);
     }
-    
-    public void addProperty(Cookie cookie){
-    	this.getPortletResponse().addProperty(cookie);
-    }
 
     public void setProperty(String key, String value) {
         this.getPortletResponse().setProperty(key, value);
@@ -62,15 +61,15 @@ public class PortletResponseWrapper
 //	}
 
 	public PortletURL createActionURL() {
-		return this.getPortletResponse().createActionURL();
+		return ((RenderResponse) this.getPortletResponse()).createActionURL();
 	}
 
 	public PortletURL createRenderURL() {
-		return this.getPortletResponse().createRenderURL();
+		return ((RenderResponse) this.getPortletResponse()).createRenderURL();
 	}
 
 	public ResourceURL createResourceURL() {
-		return this.getPortletResponse().createResourceURL(); 
+		return ((RenderResponse) this.getPortletResponse()).createResourceURL(); 
 	}
 
 	public String getNamespace() {
@@ -101,6 +100,11 @@ public class PortletResponseWrapper
 
 	public void addProperty(String key, Element element) {
 		this.getPortletResponse().addProperty(key, element);
+	}
+
+	public Element createElement(String tagName) throws DOMException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

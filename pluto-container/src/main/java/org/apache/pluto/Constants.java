@@ -102,6 +102,13 @@ public class Constants {
      */
     public final static Integer METHOD_EVENT = new Integer(9);
     
+    /**
+     * The unique method identifier for admin requests.  Admin requests
+     * are requested through a call to the {@link PortletContainer#doAdmin(PortletWindow, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+     * method.
+     */
+    public final static Integer  METHOD_ADMIN = new Integer(11);
+    
 	/**
 	 * the public key, to store the EventProvider in the Request
 	 */

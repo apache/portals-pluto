@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.wrappers;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -108,6 +109,16 @@ public class ActionResponseWrapper extends PortletResponseWrapper
 
 	public void setEvent(String name, java.io.Serializable value) {
 		this.getStateAwareResponse().setEvent(name, value);
+	}
+
+	public void sendRedirect(String location, String renderUrlParamName) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removePublicRenderParameter(String name) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 
