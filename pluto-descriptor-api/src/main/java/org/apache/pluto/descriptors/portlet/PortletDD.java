@@ -100,6 +100,7 @@ import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
     "description",    "description1",
     "displayName",    "displayName1",
     "publicRenderParameter",
+    "urlGenerationListener",
     "containerRuntimeOption"
 })
 public class PortletDD {

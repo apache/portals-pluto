@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSecurityException;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +64,7 @@ public class ResourceURLTag extends BaseURLTag {
 
         if (portletResponse != null) {
         	
-            url = portletResponse.createResourceURL();
+            url = ((RenderResponse)portletResponse).createResourceURL();
             
             if (secure != null) {
             	

@@ -28,6 +28,7 @@ package org.apache.pluto.tags;
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class ActionURLTag extends PortletURLTag {
 	@Override
 	protected PortletURL createPortletUrl(PortletResponse portletResponse)
 	{
-		return portletResponse.createActionURL();
+		return ((RenderResponse)portletResponse).createActionURL();
 	}
     
     

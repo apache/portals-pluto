@@ -145,7 +145,7 @@ public class DefineObjectsTag extends TagSupport {
     	PortletSession portletSession=request.getPortletSession(false);
     	Map<String, Object> portletSessionScope = null;
     	if(portletSession != null){
-    		portletSessionScope = (Map<String, Object>)portletSession.getMap();
+    		portletSessionScope = (Map<String, Object>)portletSession.getAttributeMap();
     	}
     	
     	PortletPreferences portletPreferences = request.getPreferences();
