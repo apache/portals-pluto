@@ -95,4 +95,45 @@ public interface ResourceResponse extends MimeResponse {
      * @param len an integer specifying the length of the content being returned
      */
     public void setContentLength(int len);
+    
+    
+	/**
+     * @throws java.lang.IllegalStateException
+     *             if the cacheability level of the resource URL
+     *             triggering this <code>serveResource</code> call
+     *             is not <code>PAGE<code> and thus does not allow
+     *             for creating render URLs.
+     */
+	public PortletURL createRenderURL() throws java.lang.IllegalStateException;
+
+	/**
+     * @throws java.lang.IllegalStateException
+     *             if the cacheability level of the resource URL
+     *             triggering this <code>serveResource</code> call
+     *             is not <code>PAGE<code> and thus does not allow
+     *             for creating action URLs.
+     */
+	public PortletURL createActionURL() throws java.lang.IllegalStateException;
+
+	/**
+     * @throws java.lang.IllegalStateException
+     *             if the cacheability level of the resource URL
+     *             triggering this <code>serveResource</code> call,
+     *             or one of the parent calls, have defined a stricter
+     *             cachability level.
+     */
+	public ResourceURL createResourceURL()
+			throws java.lang.IllegalStateException;
+
+	/**
+	 * Returns the cache level of this resource request.
+	 * <p>
+	 * Possible return values are: 
+	 * <code>ResourceURL.FULL, ResourceURL.PORTLET</code> 
+	 * or <code>ResourceURL.PAGE</code>.
+	 * 
+     * @return  the cache level of this resource request.
+     */
+	public String getCacheability();
+
 }

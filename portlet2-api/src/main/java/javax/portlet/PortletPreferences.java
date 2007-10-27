@@ -97,7 +97,7 @@ public interface PortletPreferences
    * If there are no preference values associated with the given key, or the 
    * backing preference database is unavailable, it returns the given 
    * default value.
-   * A <code>null</code> value is treated as a non-existant value.
+   * A <code>null</code> value is treated as a non-existent value.
    *
    * @param key key for which the associated value is to be returned
    * @param def the value to be returned in the event that there is no 
@@ -121,7 +121,7 @@ public interface PortletPreferences
    *
    * <p>Returns the specified default if there is no value
    * associated with the key, or if the backing store is inaccessible.
-   * A <code>null</code> value is treated as a non-existant value.
+   * A <code>null</code> value is treated as a non-existent value.
    *
    * <p>If the implementation supports <i>stored defaults</i> and such a
    * default exists and is accessible, it is used in favor of the
@@ -253,7 +253,7 @@ public interface PortletPreferences
    * Commits all changes made to the preferences via the 
    * <code>set</code> methods in the persistent store.
    * <P>
-   * If this call returns succesfull, all changes are made
+   * If this call returns successful, all changes are made
    * persistent. If this call fails, no changes are made
    * in the persistent store. This call is an atomic operation 
    * regardless of how many preference attributes have been modified.
@@ -264,8 +264,8 @@ public interface PortletPreferences
    * <P>
    * If a validator is defined for this preferences in the
    * deployment descriptor, this validator is called before
-   * the actual store is performed to check wether the given
-   * preferences are vaild. If this check fails a 
+   * the actual store is performed to check whether the given
+   * preferences are valid. If this check fails a 
    * <code>ValidatorException</code> is thrown.
    *
    * @exception  java.io.IOException    

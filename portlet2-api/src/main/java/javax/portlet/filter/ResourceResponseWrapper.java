@@ -36,7 +36,10 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
+import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
+import javax.servlet.http.Cookie;
 
 /**
  * The <code>ResourceResponseWrapper</code> provides a convenient 
@@ -218,4 +221,44 @@ public class ResourceResponseWrapper extends PortletResponseWrapper implements R
 	    	this.response = response;
     }
 
+    /**
+     *  The default behavior of this method is to call 
+     * <code>createActionURL()</code> on the wrapped response object.
+     */
+	public PortletURL createActionURL() throws IllegalStateException {
+		return response.createActionURL();
+	}
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>createRenderURL()</code> on the wrapped response object.
+     */
+	public PortletURL createRenderURL() throws IllegalStateException {
+		return response.createRenderURL();
+	}
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>createResourceURL()</code> on the wrapped response object.
+     */
+	public ResourceURL createResourceURL() throws IllegalStateException {
+		return response.createResourceURL();
+	}
+	
+    /**
+     *  The default behavior of this method is to call 
+     * <code>addProperty()</code> on the wrapped response object.
+     */
+    public void addProperty(Cookie cookie) {
+        response.addProperty(cookie);
+    }
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>getCacheability()</code> on the wrapped response object.
+     */
+    public String getCacheability() {
+        return response.getCacheability();
+    }
+    
 }

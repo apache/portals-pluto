@@ -279,4 +279,19 @@ public interface StateAwareResponse extends PortletResponse {
 	public WindowState getWindowState();
 
 
+	/**
+	 * Removes the specified public render parameter.
+	 * The name must reference a public render parameter defined
+	 * in the portlet deployment descriptor under the
+	 * <code>public-render-parameter</code> element with the
+	 * <code>identifier</code> mapping to the parameter name.
+	 * 
+	 * @param name			a <code>String</code> specifying 
+	 *					the name of the public render parameter to be removed
+	 *
+	 * @exception  java.lang.IllegalArgumentException 
+	 *                            if name is <code>null</code>.
+	 * @since 2.0
+	 */
+	public void removePublicRenderParameter(String name);
 }

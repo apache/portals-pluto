@@ -34,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 import javax.portlet.ResourceRequest;
 
@@ -160,6 +161,14 @@ public class ResourceRequestWrapper extends PortletRequestWrapper implements Res
     public String getResourceID() {
         return request.getResourceID();
     }
+
+    /**
+     * The default behavior of this method is to call 
+     * <code>getPrivateRenderParameterMap()</code> on the wrapped request object.
+     */
+	public Map<String, String[]> getPrivateRenderParameterMap() {
+		return request.getPrivateParameterMap();
+	}
 
 
 }

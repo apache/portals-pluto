@@ -52,9 +52,7 @@ public interface RenderResponse extends MimeResponse {
      *            portlet title as text String or resource URI
      */
     public void setTitle(String title);
-
-
-    
+   
     
 	/**
      * This method allows the portlet to tell the portal the next possible

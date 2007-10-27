@@ -51,7 +51,7 @@ public interface PortletRequestDispatcher {
      * The included servlet cannot set or change the response status code or set
      * headers; any attempt to make a change is ignored.
      * <p>
-     * This method is kept in order to provide backward compatability with
+     * This method is kept in order to provide backward compatibility with
      * version 1.0. Please use {@link #include(PortletRequest, PortletResponse)} instead
      * of this method.
      * 

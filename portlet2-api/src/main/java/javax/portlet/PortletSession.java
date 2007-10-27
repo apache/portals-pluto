@@ -117,7 +117,7 @@ public interface PortletSession
    * @return			the object with the specified name
    *
    * @exception java.lang.IllegalStateException	if this method is called on an
-   *					invalidated session, or the scope is unkown to the container.
+   *					invalidated session, or the scope is unknown to the container.
    * @exception  java.lang.IllegalArgumentException 
    *                            if name is <code>null</code>.
    */
@@ -385,7 +385,7 @@ public interface PortletSession
    * the portlet session scope.
    * <p>
    * The keys are of type <code>String</code> and the values in the 
-   * eturned <code>Map</code> are from type <code>Object</code>.
+   * returned <code>Map</code> are from type <code>Object</code>.
    * <p>
    * If no session attributes exist this method returns an empty <code>Map</code>.
    *
@@ -396,14 +396,14 @@ public interface PortletSession
    *             Object.
    *  @since 2.0
    */
-  public Map<String, Object> getMap();  
+  public Map<String, Object> getAttributeMap();  
 
   /** 
    * Returns a <code>Map</code> of the session attributes in
    * the given session scope.
    * <p>
    * The keys are of type <code>String</code> and the values in the 
-   * eturned <code>Map</code> are from type <code>Object</code>.
+   * returned <code>Map</code> are from type <code>Object</code>.
    * <p>
    * If no session attributes exist this method returns an empty <code>Map</code>.
    *
@@ -416,7 +416,7 @@ public interface PortletSession
    *             Object.
    *  @since 2.0
    */
-  public Map<String, Object> getMap(int scope);  
+  public Map<String, Object> getAttributeMap(int scope);  
 
 }
 

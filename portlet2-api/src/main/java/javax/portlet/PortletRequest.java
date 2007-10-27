@@ -67,7 +67,7 @@ public interface PortletRequest
   public static final String USER_INFO = "javax.portlet.userinfo";
 
   /**
-   * Used to retieve an instance of the <code>javax.ccpp.Profile</code>
+   * Used to retrieve an instance of the <code>javax.ccpp.Profile</code>
    * with the <code>getAttribute</code> call. The returned profile is based
    * on the current portlet request and may contain additional CC/PP 
    * information set by the portal / portlet container.   
@@ -281,10 +281,11 @@ public interface PortletRequest
    * for storing the current action scope as render parameter
    * if the <code>javax.portlet.actionScopedRequestAttributes</code>
    * container runtime option is used by the portlet.
-   * 
+   * <p>
+   * The value is <code>javax.portlet.as</code>.
    * @since 2.0
    */
-  public static final String ACTION_SCOPE_ID = "Xas";
+  public static final String ACTION_SCOPE_ID = "javax.portlet.as";
   
   
   /**
@@ -416,7 +417,7 @@ public interface PortletRequest
    * Returns all the values of the specified request property
    * as a <code>Enumeration</code> of <code>String</code> objects.
    * <p>
-   * If the request did not include any propertys
+   * If the request did not include any properties
    * of the specified name, this method returns an empty
    * <code>Enumeration</code>.
    * The property name is case insensitive. You can use
@@ -829,7 +830,7 @@ public interface PortletRequest
    * Returns the preferred Locale in which the portal will accept content.
    * The Locale may be based on the Accept-Language header of the client.
    *
-   * @return  the prefered Locale in which the portal will accept content.
+   * @return  the preferred Locale in which the portal will accept content.
    */
 
   public java.util.Locale getLocale();

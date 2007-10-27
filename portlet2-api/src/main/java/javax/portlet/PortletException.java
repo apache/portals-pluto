@@ -41,8 +41,6 @@ package javax.portlet;
 public class PortletException extends java.lang.Exception
 {
 
-  private Throwable _cause;
-
   private static final long serialVersionUID = 1L;
 
   /**
@@ -84,9 +82,7 @@ public class PortletException extends java.lang.Exception
   
   public PortletException (String text, Throwable cause)
   {
-    super(text);
-    _cause = cause;
-    // change this when going to jdk1.4:    super (text, cause);
+    super(text, cause);
   }
 
   /**
@@ -100,68 +96,8 @@ public class PortletException extends java.lang.Exception
 
   public PortletException (Throwable cause)
   {
-    _cause = cause;
-    // change this when going to jdk1.4:        super (cause);
+    super(cause);
   }
 
-  /**
-   * Prints the stack trace of this exception to the standard error stream.
-   */
-  public void printStackTrace()
-  {
-    this.printStackTrace(System.err);
-  }
-  
-  /**
-   * Prints the stack trace of this exception to the specified print stream.
-   *
-   * @param out the <code>PrintStream</code> to be used for output
-   */
-  public void printStackTrace(java.io.PrintStream out) 
-  {
-    this.printStackTrace(new java.io.PrintWriter(out, true));
-  }
-
-  /**
-   * Prints the stack trace of this exception to the specified print writer.
-   * 
-   * @param out the <code>PrintWriter</code> to be used for output
-   */
-  public void printStackTrace(java.io.PrintWriter out)
-  {
-    super.printStackTrace(out);
-
-    if( getCause () != null ) {
-      out.println();
-      out.print("Nested Exception is ");
-      getCause ().printStackTrace(out);
-    }
-    // change this when going tojdk1.4:
-      /*
-        super.printStackTrace(out);
-
-        if( getRootCause () != null )
-        {
-            out.println();
-            out.print("Nested Exception is ");
-            getRootCause ().printStackTrace(out);
-        }
-        */
-  }
-
-  /**
-   * Returns the cause of this throwable or <code>null</code> if the
-   * cause is nonexistent or unknown.  (The cause is the throwable that
-   * caused this throwable to get thrown.)
-   *
-   * <p>This implementation returns the cause that was supplied via one of
-   * the constructors requiring a <tt>Throwable</tt>.
-   *
-   * @return  the cause of this throwable or <code>null</code> if the
-   *          cause is nonexistent or unknown.
-   */
-  public Throwable getCause() {
-    return (_cause!=null ? _cause : null);
-  }
 
 }

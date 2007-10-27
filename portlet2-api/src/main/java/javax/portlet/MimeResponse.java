@@ -32,7 +32,7 @@ package javax.portlet;
 
 /**
  * The <CODE>MimeResponse</CODE> defines the base interface to assist a
- * portlet in returing MIME content. 
+ * portlet in returning MIME content. 
  *
  * @since 2.0
  */
@@ -168,7 +168,7 @@ public interface MimeResponse extends PortletResponse {
      * response.
      * <p>
      * If no content type was set previously using the {@link #setContentType}
-     * method this method retuns <code>null</code>.
+     * method this method returns <code>null</code>.
      * 
      * @see #setContentType
      * 
@@ -286,7 +286,7 @@ public interface MimeResponse extends PortletResponse {
      * this method automatically commits the response.
      * 
      * @exception java.io.IOException
-     *                if an error occured when writing the output
+     *                if an error occurred when writing the output
      * 
      * @see #setBufferSize
      * @see #getBufferSize
@@ -301,7 +301,7 @@ public interface MimeResponse extends PortletResponse {
      * throws an <code>IllegalStateException</code>.
      * 
      * @exception IllegalStateException
-     *                if this method is called after response is comitted
+     *                if this method is called after response is committed
      * 
      * @see #setBufferSize
      * @see #getBufferSize
@@ -365,7 +365,59 @@ public interface MimeResponse extends PortletResponse {
     public java.io.OutputStream getPortletOutputStream()
             throws java.io.IOException;
 
-    
+	/**
+     * Creates a portlet URL targeting the portlet. If no portlet mode, window
+     * state or security modifier is set in the PortletURL the current values
+     * are preserved. If a request is triggered by the PortletURL, it results in
+     * a render request.
+     * <p>
+     * The returned URL can be further extended by adding portlet-specific
+     * parameters and portlet modes and window states.
+     * <p>
+     * The created URL will per default not contain any parameters of the
+     * current render request.
+     * 
+     * @return a portlet render URL
+     */
+	public PortletURL createRenderURL();
+
+	/**
+     * Creates a portlet URL targeting the portlet. If no portlet mode, window
+     * state or security modifier is set in the PortletURL the current values
+     * are preserved. If a request is triggered by the PortletURL, it results in
+     * an action request.
+     * <p>
+     * The returned URL can be further extended by adding portlet-specific
+     * parameters and portlet modes and window states.
+     * <p>
+     * The created URL will per default not contain any parameters of the
+     * current render request.
+     * 
+     * @return a portlet action URL
+     */
+	public PortletURL createActionURL();
+
+	/**
+     * Creates a portlet URL targeting the portlet. If no security modifier is
+     * set in the PortletURL the current values are preserved. The current
+     * render parameters, portlet mode and window state are preserved.
+     * <p>
+     * If a request is triggered by the PortletURL, it results in a serve
+     * resource request of the <code>ResourceServingPortlet</code> interface.
+     * <p>
+     * The returned URL can be further extended by adding portlet-specific
+     * parameters .
+     * <p>
+     * The created URL will per default contain the current 
+     * cacheability setting of the parent resource. 
+     * If no parent resource is available, <code>PAGE</code> is the default.
+     * 
+     * @since 2.0
+     * @return a portlet resource URL
+     */
+	public ResourceURL createResourceURL();
+
+
     
     /**
      * Returns the cache control object allowing to set
@@ -377,6 +429,25 @@ public interface MimeResponse extends PortletResponse {
      * @since 2.0
      */
     public CacheControl getCacheControl();
+
     
+    /**
+     * Adds a HTTP Cookie property to the response.<br>
+     * The portlet should note that the cookie may not make
+     * it to the client, but may be stored at the portal.
+     * <p>
+     * This method allows response properties to have multiple cookies.
+     * <p>
+     *
+     * @param  cookie the cookie to be added to the response
+     * 
+     * @exception  java.lang.IllegalArgumentException 
+     *                            if cookie is <code>null</code>.
+     * @since 2.0
+     */
+
+    public void addProperty(javax.servlet.http.Cookie cookie);
+
+
 
 }

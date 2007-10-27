@@ -31,12 +31,12 @@
 package javax.portlet;
 
 /**
- * Portlets can register portlet URL listeners in order to filter URLs 
+ * Portlet applications can register portlet URL listeners in order to filter URLs 
  * before they get generated.
  * In order to receive a callback from the portlet container before a 
- * portlet URL is generated the portlet needs to implement this 
+ * portlet URL is generated the portlet application needs to implement this 
  * interface and register it in the deployment descriptor with the
- * <code>url-generation-listener</code> element.
+ * <code>listener</code> element.
  *
  * @since 2.0
  */

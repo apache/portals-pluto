@@ -71,7 +71,7 @@ public interface ClientDataRequest extends PortletRequest {
      * {@link #getReader} method returns.
      *
      * @param   enc a <code>String</code> containing the name of 
-     *          the chararacter encoding.
+     *          the character encoding.
      *
      * @exception       java.io.UnsupportedEncodingException if this is not a valid encoding
      * @exception       java.lang.IllegalStateException      if this method is called after 
@@ -122,7 +122,7 @@ public interface ClientDataRequest extends PortletRequest {
      * does not specify a character encoding.
      *
      * @return      a <code>String</code> containing the name of 
-     *          the chararacter encoding, or <code>null</code>
+     *          the character encoding, or <code>null</code>
      *          if the request does not specify a character encoding.
      */
     

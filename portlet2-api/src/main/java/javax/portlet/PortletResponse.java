@@ -67,74 +67,6 @@ public interface PortletResponse {
 
 	public void addProperty(String key, String value);
 
-	/**
-     * Creates a portlet URL targeting the portlet. If no portlet mode, window
-     * state or security modifier is set in the PortletURL the current values
-     * are preserved. If a request is triggered by the PortletURL, it results in
-     * a render request.
-     * <p>
-     * The returned URL can be further extended by adding portlet-specific
-     * parameters and portlet modes and window states.
-     * <p>
-     * The created URL will per default not contain any parameters of the
-     * current render request.
-     * 
-     * @return a portlet render URL
-     * @throws java.lang.IllegalStateException
-     *             if the cacheability level of the resource URL
-     *             triggering this <code>serveResource</code> call
-     *             is not <code>PAGE<code> and thus does not allow
-     *             for creating render URLs.
-     */
-	public PortletURL createRenderURL() throws java.lang.IllegalStateException;
-
-	/**
-     * Creates a portlet URL targeting the portlet. If no portlet mode, window
-     * state or security modifier is set in the PortletURL the current values
-     * are preserved. If a request is triggered by the PortletURL, it results in
-     * an action request.
-     * <p>
-     * The returned URL can be further extended by adding portlet-specific
-     * parameters and portlet modes and window states.
-     * <p>
-     * The created URL will per default not contain any parameters of the
-     * current render request.
-     * 
-     * @return a portlet action URL
-     * @throws java.lang.IllegalStateException
-     *             if the cacheability level of the resource URL
-     *             triggering this <code>serveResource</code> call
-     *             is not <code>PAGE<code> and thus does not allow
-     *             for creating action URLs.
-     */
-	public PortletURL createActionURL() throws java.lang.IllegalStateException;
-
-	/**
-     * Creates a portlet URL targeting the portlet. If no security modifier is
-     * set in the PortletURL the current values are preserved. The current
-     * render parameters, portlet mode and window state are preserved.
-     * <p>
-     * If a request is triggered by the PortletURL, it results in a serve
-     * resource request of the <code>ResourceServingPortlet</code> interface.
-     * <p>
-     * The returned URL can be further extended by adding portlet-specific
-     * parameters .
-     * <p>
-     * The created URL will per default contain the current 
-     * cacheability setting of the parent resource. 
-     * If no parent resource is available, <code>PAGE</code> is the default.
-     * 
-     * @since 2.0
-     * @return a portlet resource URL
-     * @throws java.lang.IllegalStateException
-     *             if the cacheability level of the resource URL
-     *             triggering this <code>serveResource</code> call,
-     *             or one of the parent calls, have defined a stricter
-     *             cachability level.
-     */
-	public ResourceURL createResourceURL()
-			throws java.lang.IllegalStateException;
-
 
 	/**
      * Sets a String property to be returned to the portal.
@@ -202,23 +134,6 @@ public interface PortletResponse {
 
 	
     /**
-     * Adds a HTTP Cookie property to the response.<br>
-     * The portlet should note that the cookie may not make
-     * it to the client, but may be stored at the portal.
-     * <p>
-     * This method allows response properties to have multiple cookies.
-     * <p>
-     *
-     * @param  cookie the cookie to be added to the response
-     * 
-     * @exception  java.lang.IllegalArgumentException 
-     *                            if cookie is <code>null</code>.
-     * @since 2.0
-     */
-
-    public void addProperty(javax.servlet.http.Cookie cookie);
-
-    /**
      * Adds an XML DOM element property to the response.
      * <p>
      * If a DOM element with the provided key already exists
@@ -241,4 +156,19 @@ public interface PortletResponse {
      * @since 2.0
      */
    void addProperty(String key, org.w3c.dom.Element element);
+   
+   /**
+    * Creates an element of the type specified to be used in the 
+    * {@link addProperty} method. 
+    * 
+    * @param tagName	name of the element type to instantiate
+    * @return  A new Element object with the nodeName attribute set to tagName, 
+    *          and localName, prefix, and namespaceURI set to null.
+    * @throws org.w3c.dom.DOMException
+    *     INVALID_CHARACTER_ERR: Raised if the specified name 
+    *     contains an illegal character.
+    */
+   org.w3c.dom.Element createElement(String tagName) throws org.w3c.dom.DOMException;
+
+
 }

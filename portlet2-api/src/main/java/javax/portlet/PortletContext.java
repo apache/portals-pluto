@@ -50,7 +50,7 @@ import java.net.MalformedURLException;
  * The portlet context leverages most of its functionality from the
  * servlet context of the portlet application.
  * <p>
- * Attibutes stored in the context are global for <I>all</I> users and <I>all</I>
+ * Attributes stored in the context are global for <I>all</I> users and <I>all</I>
  * components in the portlet application.
  * <p>
  * In the case of a web
@@ -325,7 +325,7 @@ public interface PortletContext
 
   /**
    * Returns an <code>Enumeration</code> containing the attribute names 
-   * available within this portlet context, or an emtpy
+   * available within this portlet context, or an empty
    * <code>Enumeration</code> if no attributes are available. Use the
    * {@link #getAttribute} method with an attribute name
    * to get the value of an attribute.

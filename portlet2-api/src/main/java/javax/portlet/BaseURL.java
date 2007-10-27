@@ -197,7 +197,7 @@ public interface BaseURL {
      * valid XML characters, i.e. &lt, &gt, &amp, &#039, &#034 will get converted
      * into their corresponding character entity codes (&lt to &&lt, &gt to &&gt, 
      * &amp to &&amp, &#039 to &&#039, &#034 to &&#034).
-     * If escapeXML is set to flase no escaping will be done.
+     * If escapeXML is set to false no escaping will be done.
      * <p>
      * Note that the URL written to the output stream may not be a valid URL, as it may
      * be rewritten by the portal/portlet-container before returning the 
@@ -206,7 +206,7 @@ public interface BaseURL {
      * @param out       the writer to write the portlet URL to
      * @param escapeXML denotes if the URL should be XML escaped before written to the output
      *                  stream or not
-     * @throws java.io.IOException  if an I/O error occured while writing the URL
+     * @throws java.io.IOException  if an I/O error occurred while writing the URL
      *
      * @since 2.0
      */

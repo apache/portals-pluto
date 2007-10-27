@@ -50,7 +50,7 @@ package javax.portlet;
  *     trigger a render request.
  * </ul>
  * <p>
- * The string reprensentation of a PortletURL does not need to be a valid 
+ * The string representation of a PortletURL does not need to be a valid 
  * URL at the time the portlet is generating its content. It may contain  
  * special tokens that will be converted to a valid URL, by the portal, 
  * before the content is returned to the client.
@@ -129,5 +129,19 @@ public interface PortletURL extends BaseURL
 
   public WindowState getWindowState ();
 
- 
+  /**
+	* Removes the specified public render parameter.
+	* The name must reference a public render parameter defined
+	* in the portlet deployment descriptor under the
+	* <code>public-render-parameter</code> element with the
+	* <code>identifier</code> mapping to the parameter name.
+	* 
+	* @param name			a <code>String</code> specifying 
+	*					the name of the public render parameter to be removed
+	*
+	* @exception  java.lang.IllegalArgumentException 
+	*                            if name is <code>null</code>.
+	* @since 2.0
+	*/
+  public void removePublicRenderParameter(String name); 
 }

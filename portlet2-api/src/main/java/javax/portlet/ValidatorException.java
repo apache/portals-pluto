@@ -75,7 +75,7 @@ public class ValidatorException extends PortletException
    * Constructs a new portlet validator exception.
    * Used, when the portlet needs to do one of the following:
    * <ul>
-   * <il>throw an exception 
+   * <li>throw an exception 
    * <li>include a message about the "root cause" that interfered
    *     with its normal operation
    * <li>include a description message

@@ -57,10 +57,6 @@ public interface ActionResponse extends StateAwareResponse
    * the portlet container may encode the given URL before the 
    * redirection is issued to the client.
    * <p>
-   * It is valid to provide a portlet URL as parameter on the redirect URL. The portlet 
-   * container will translate the portlet URL to a valid URL that can be used for
-   * invoking the portlet again.  
-   * <p>
    * The sendRedirect method can not be invoked after any of the 
    * following methods of the ActionResponse interface has been called:
    * <ul>
@@ -82,6 +78,46 @@ public interface ActionResponse extends StateAwareResponse
    */
 
   public void sendRedirect(String location)
+    throws java.io.IOException; 
+
+  /**
+   * Instructs the portlet container to send a redirect response 
+   * to the client using the specified redirect location URL and
+   * encode a render URL as parameter on the redirect URL.  
+   * <p>
+   * This method only accepts an absolute URL (e.g. 
+   * <code>http://my.co/myportal/mywebap/myfolder/myresource.gif</code>)
+   * or a full path URI (e.g. <code>/myportal/mywebap/myfolder/myresource.gif</code>).
+   * If required, 
+   * the portlet container may encode the given URL before the 
+   * redirection is issued to the client.
+   * <p>
+   * The portlet container will attach a render URL with the currently set portlet mode, window state
+   * and render parameters on the <code>ActionResponse</code> and the current public render parameters. 
+   * The attached URL will be available as query parameter value under the key provided with the 
+   * <code>renderUrlParamName</code> parameter.
+   * <p>
+   * New values for
+   * <ul>
+   * <li>setPortletMode
+   * <li>setWindowState
+   * <li>setRenderParameter
+   * <li>setRenderParameters
+   * </ul>
+   * are only used for creating the render URL and not remembered after the redirect
+   * is issued. 
+   *
+   * @param		location	the redirect location URL
+   * @param     renderUrlParamName	name of the query parameter under which the portlet container should
+   *                                store a render URL to this portlet
+   *                                
+   * @exception	java.io.IOException	
+   *                    if an input or output exception occurs.
+   * @exception	java.lang.IllegalArgumentException	
+   *                    if a relative path URL is given
+   */
+
+  public void sendRedirect(String location, String renderUrlParamName)
     throws java.io.IOException; 
 }
 

@@ -44,8 +44,8 @@ package javax.portlet;
  * <code>PortletResourceRequest</code> with <code>getPortletMode</code> and, 
  * <code>getWindowState</code>, or one of the <code>getParameter</code> methods.   
  * ResourceURLs cannot change the current portlet mode, window state or 
- * render parameters . Parameters set on a resource URL are not render parameters 
- * but parameters for renderserving this resource and will last olnyonly for only 
+ * render parameters. Parameters set on a resource URL are not render parameters 
+ * but parameters for serving this resource and will last only for only 
  * this the current serveResource request.<br>
  * If a parameter is set that has the same name as a render parameter that this 
  * resource URL contains, the render parameter must be the last entry in the 
@@ -88,5 +88,26 @@ public interface ResourceRequest extends ClientDataRequest {
      *          if no resource ID was set on the URL. 
      */
     public String getResourceID();
-    
+ 
+    /**
+     * Returns a <code>Map</code> of the private render parameters of this request.
+     * Private parameters are not shared with other portlets or components.  
+     * The returned parameters are "x-www-form-urlencoded" decoded.
+     * <p>
+     * The parameters returned do not include the resource parameters that
+     * the portlet may have set on the resource URL triggering this
+     * <code>serveResource</code> call.
+     * <p>
+     * The values in the returned <code>Map</code> are from type
+     * String array (<code>String[]</code>).
+     * <p>
+     * If no private parameters exist this method returns an empty <code>Map</code>.
+     *
+     * @return     an immutable <code>Map</code> containing private parameter names as 
+     *             keys and private parameter values as map values, or an empty <code>Map</code>
+     *             if no private parameters exist. The keys in the parameter
+     *             map are of type String. The values in the parameter map are of type
+     *             String array (<code>String[]</code>).
+     */
+    public java.util.Map<String, String[]> getPrivateRenderParameterMap();
 }

@@ -76,6 +76,14 @@ public class ActionResponseWrapper extends PortletResponseWrapper implements Act
 
     /**
      * The default behavior of this method is to call 
+     * <code>sendRedirect(location, renderUrlParamName)</code> on the wrapped response object.
+     */
+    public void sendRedirect(String location, String renderUrlParamName) throws IOException {
+        response.sendRedirect(location, renderUrlParamName);
+    }
+
+    /**
+     * The default behavior of this method is to call 
      * <code>setEvent(name, value)</code> on the wrapped response object.
      */
     public void setEvent(QName name, java.io.Serializable value) {
@@ -176,6 +184,14 @@ public class ActionResponseWrapper extends PortletResponseWrapper implements Act
      */
 	public void setEvent(String name, java.io.Serializable value) {
 		response.setEvent(name, value);
+	}
+
+    /**
+     *  The default behavior of this method is to call 
+     * <code>removePublicRenderParameter()</code> on the wrapped response object.
+     */
+	public void removePublicRenderParameter(String name) {
+		response.removePublicRenderParameter(name);		
 	}
 
 }

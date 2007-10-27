@@ -178,5 +178,13 @@ public class EventResponseWrapper extends PortletResponseWrapper implements Even
  	public void setEvent(String name, java.io.Serializable value) {
  		response.setEvent(name, value);
  	}
+ 	
+    /**
+     *  The default behavior of this method is to call 
+     * <code>removePublicRenderParameter()</code> on the wrapped response object.
+     */
+	public void removePublicRenderParameter(String name) {
+		response.removePublicRenderParameter(name);		
+	}
 
 }

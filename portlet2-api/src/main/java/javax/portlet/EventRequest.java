@@ -44,7 +44,7 @@ package javax.portlet;
 public interface EventRequest extends PortletRequest {
 
     /**
-     * Returns the event that trigged the call to the processEvent method.
+     * Returns the event that triggered the call to the processEvent method.
      * 
      * @return      the event that triggered the current processEvent call. 
      */
@@ -52,7 +52,7 @@ public interface EventRequest extends PortletRequest {
     public Event getEvent();
     
     /**
-     * Returns the name of the HTTP method with which the orginal action request was made, 
+     * Returns the name of the HTTP method with which the original action request was made, 
      * for example, POST, or PUT.
      * 
      * @since 2.0

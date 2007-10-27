@@ -31,9 +31,6 @@
 package javax.portlet.filter;
 
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
-import javax.portlet.ResourceURL;
-import javax.servlet.http.Cookie;
 
 /**
  * The <code>PortletResponseWrapper</code> provides a convenient 
@@ -77,30 +74,6 @@ public class PortletResponseWrapper implements PortletResponse {
 	     */
 	    public void addProperty(String key, String value) {
 	        response.addProperty(key, value);
-	    }
-
-	    /**
-	     * The default behavior of this method is to call 
-	     * <code>createActionURL()</code> on the wrapped response object.
-	     */
-	    public PortletURL createActionURL() {
-	        return response.createActionURL();
-	    }
-
-	    /**
-	     * The default behavior of this method is to call 
-	     * <code>createRenderURL()</code> on the wrapped response object.
-	     */
-	    public PortletURL createRenderURL() {
-	        return response.createRenderURL();
-	    }
-
-	    /**
-	     * The default behavior of this method is to call 
-	     * <code>createResourceURL</code> on the wrapped response object.
-	     */
-	    public ResourceURL createResourceURL() {
-	        return response.createResourceURL();
 	    }
 
 	    /**
@@ -153,16 +126,16 @@ public class PortletResponseWrapper implements PortletResponse {
 	     *  The default behavior of this method is to call 
 	     * <code>addProperty()</code> on the wrapped response object.
 	     */
-	    public void addProperty(Cookie cookie) {
-	        response.addProperty(cookie);
+	    public void addProperty(String key, org.w3c.dom.Element element) {
+	        response.addProperty(key, element);
 	    }
 
 	    /**
 	     *  The default behavior of this method is to call 
-	     * <code>addProperty()</code> on the wrapped response object.
+	     * <code>createElement()</code> on the wrapped response object.
 	     */
-	    public void addProperty(String key, org.w3c.dom.Element element) {
-	        response.addProperty(key, element);
+	    public org.w3c.dom.Element createElement(String tagName) {
+	        return response.createElement(tagName);
 	    }
 
 }

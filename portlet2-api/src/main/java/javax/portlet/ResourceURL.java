@@ -84,7 +84,7 @@ public interface ResourceURL extends BaseURL {
 	/**
      * The URL of type <code>PAGE</code> may contain artifacts that require
      * knowledge of the state of the complete page, like
-     * <code>PortletURLs</code>, or <code>FragmentURLs</code>.
+     * <code>PortletURLs</code>.
      * <p>
      * URLs of the type <code>PAGE</code> are only cacheable on the page level
      * and can only be served from the browser cache as long as no state on the

@@ -48,7 +48,7 @@ import java.io.IOException;
  * with other fragments into a complete document. The content of a portlet is normally
  * aggregated with the content of other portlets into the portal page. 
  * <P>
- * The portlet container instanciates portlets, manages their lifecycle 
+ * The portlet container instantiates portlets, manages their lifecycle 
  * and invoking them to process requests. The lifecycle consists of:
  * <ul>
  * <li>initializing the portlet using using the <code>init</code> method
@@ -189,3 +189,4 @@ public interface Portlet
   
   public void destroy();
 }
+
