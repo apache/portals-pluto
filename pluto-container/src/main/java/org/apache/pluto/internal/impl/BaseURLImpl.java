@@ -33,6 +33,8 @@ import javax.portlet.PortletSecurityException;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
@@ -50,6 +52,7 @@ import org.apache.pluto.util.StringUtils;
  */
 public class BaseURLImpl implements BaseURL {
 
+	private static final Log LOG = LogFactory.getLog(BaseURLImpl.class);
 	private static final StringManager EXCEPTIONS = StringManager.getManager(PortletURLImpl.class.getPackage().getName());
 	protected Map parameters = new HashMap();
 	protected Map<String, String[]> publicRenderParameters = new HashMap<String, String[]>();
@@ -203,7 +206,12 @@ public class BaseURLImpl implements BaseURL {
         portletURLFilterListener.callListener(internalPortletWindow,this,isAction,isResourceServing);
 	    
 	    if (secure) {
-	        urlProvider.setSecure();
+	        try {
+				urlProvider.setSecure();
+			} catch (PortletSecurityException e) {
+				LOG.error("Problem calling PortletURLProvider.setSecure()", e);
+				throw new IllegalStateException("Security cannot be set on this URL (" + e.toString() + ").");
+			}
 	    }
 	    if (!isResourceServing)
 	    	urlProvider.clearParameters();

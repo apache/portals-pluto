@@ -23,6 +23,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.ServletContext;
@@ -495,7 +496,12 @@ public class PortletContainerImpl implements PortletContainer,
 
 		// Set secure of the redirect URL if necessary.
 		if (request.isSecure()) {
-			redirectURL.setSecure();
+			try {
+				redirectURL.setSecure();
+			} catch (PortletSecurityException e) {
+				LOG.error("Problem calling PortletURLProvider.setSecure()", e);
+				throw new IllegalStateException("Security cannot be set on the redirect URL (" + e.toString() + ").");
+			}
 		}
 	}
 
