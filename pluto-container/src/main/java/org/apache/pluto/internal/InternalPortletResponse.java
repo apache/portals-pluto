@@ -21,9 +21,7 @@ import javax.portlet.PortletResponse;
 /**
  * The internal portlet response interface extends PortletResponse and adds
  * some methods used by Pluto.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public interface InternalPortletResponse extends PortletResponse {
 

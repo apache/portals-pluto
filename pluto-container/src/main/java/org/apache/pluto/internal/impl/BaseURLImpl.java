@@ -176,7 +176,13 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void setSecure(boolean secure) throws PortletSecurityException {
-	    this.secure = secure;
+        PortletURLProvider urlProvider = container
+        		.getRequiredContainerServices()
+        		.getPortalCallbackService()
+        		.getPortletURLProvider(servletRequest, internalPortletWindow);
+        if(urlProvider.isSecureSupported()) {
+            throw new PortletSecurityException("Secure URLs not supported.");
+        }
 	}
 
 	public String toString() {
@@ -205,13 +211,14 @@ public class BaseURLImpl implements BaseURL {
 
         portletURLFilterListener.callListener(internalPortletWindow,this,isAction,isResourceServing);
 	    
-	    if (secure) {
-	        try {
-				urlProvider.setSecure();
-			} catch (PortletSecurityException e) {
-				LOG.error("Problem calling PortletURLProvider.setSecure()", e);
-				throw new IllegalStateException("Security cannot be set on this URL (" + e.toString() + ").");
-			}
+        if (secure && urlProvider.isSecureSupported()) {
+            try {
+                urlProvider.setSecure();
+            } catch (PortletSecurityException e) {
+                throw new IllegalStateException("URL Provider is misconfigured." +
+                    "  It claims to support secure urls," +
+                    " yet it threw a PortletSecurityException");
+            }
 	    }
 	    if (!isResourceServing)
 	    	urlProvider.clearParameters();

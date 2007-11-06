@@ -38,8 +38,6 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Implementation of the <code>javax.portlet.PortletSession</code> interface.
  * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletSessionImpl implements PortletSession, HttpSession {
 	
@@ -59,13 +57,13 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     // Private Member Variables ------------------------------------------------
     
     /** The wrapped HttpSession object. */
-    private HttpSession httpSession = null;
+    private HttpSession httpSession;
     
     /** The portlet context. */
-    private PortletContext portletContext = null;
+    private PortletContext portletContext;
     
     /** The internal portlet window. */
-    private InternalPortletWindow internalPortletWindow = null;
+    private InternalPortletWindow internalPortletWindow;
     
     //
     private boolean isIncludeOrForward = false;

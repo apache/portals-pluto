@@ -23,7 +23,6 @@ import javax.portlet.EventPortlet;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceServingPortlet;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
+
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
@@ -47,38 +47,48 @@ import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.internal.impl.ResourceRequestImpl;
 import org.apache.pluto.internal.impl.ResourceResponseImpl;
 import org.apache.pluto.spi.FilterManager;
+import org.apache.pluto.spi.optional.AdministrativeRequestListener;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletInvocationEvent;
+import org.apache.pluto.spi.optional.PortletInvocationListener;
 
 /**
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
  * the the container and services the portlet request for the specified method.
  * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.1
  * @since 09/22/2004
  */
 public class PortletServlet extends HttpServlet {
 	
-	// Private Member Variables ------------------------------------------------
-	
-	/** The portlet name as defined in the portlet app descriptor. */
-    private String portletName = null;
-    
-    /** The portlet instance wrapped by this servlet. */
-    private Portlet portlet = null;
-    
+
+    // Private Member Variables ------------------------------------------------
+
+    /**
+     * The portlet name as defined in the portlet app descriptor.
+     */
+    private String portletName;
+
+    /**
+     * The portlet instance wrapped by this servlet.
+     */
+    private Portlet portlet;
+
+    /**
+     * The internal portlet context instance.
+     */
+    private InternalPortletContext portletContext;
+
+    /**
+     * The internal portlet config instance.
+     */
+    private InternalPortletConfig portletConfig;
+
     /** The Event Portlet instance (the same object as portlet) wrapped by this servlet. */
     private EventPortlet eventPortlet = null;
     
     /** The resource serving portlet instance wrapped by this servlet. */
-    private ResourceServingPortlet resourceServingPortlet = null;
-    
-    /** The internal portlet context instance. */
-    private InternalPortletContext portletContext = null;
-    
-    /** The internal portlet config instance. */
-    private InternalPortletConfig portletConfig = null;
-    
+    private ResourceServingPortlet resourceServingPortlet = null;        
     
     // HttpServlet Impl --------------------------------------------------------
     
@@ -99,34 +109,17 @@ public class PortletServlet extends HttpServlet {
         portletName = getInitParameter("portlet-name");
         
         // Retrieve the associated internal portlet context.
-        ServletContext servletContext = getServletContext();
+        PortletContextManager mgr = PortletContextManager.getManager();
         try {
-            portletContext = PortletContextManager.getManager()
-            		.getPortletContext(servletContext, portletName);
+            String applicationId = mgr.register(getServletConfig());
+            portletContext = (InternalPortletContext) mgr.getPortletContext(applicationId);
+            portletConfig = (InternalPortletConfig) mgr.getPortletConfig(applicationId, portletName);
+
         } catch (PortletContainerException ex) {
             throw new ServletException(ex);
         }
-        
-        // Retrieve the portletDD and create portlet config.
-        PortletDD portletDD = null;
-        PortletAppDD portletAppDD =
-        		portletContext.getPortletApplicationDefinition();
-        for (Iterator it = portletAppDD.getPortlets().iterator();
-        		it.hasNext(); ) {
-        	PortletDD currentDD = (PortletDD) it.next();
-        	if (currentDD.getPortletName().equals(portletName)) {
-        		portletDD = currentDD;
-        		break;
-        	}
-        }
-        if (portletDD == null) {
-            throw new ServletException("Unable to resolve portlet '"
-            		+ portletName + "'");
-        }
-        portletConfig = new PortletConfigImpl(getServletConfig(),
-                                              portletContext,
-                                              portletDD,
-                                              portletAppDD);
+
+        PortletDD portletDD = portletConfig.getPortletDefinition();
         
         // Create and initialize the portlet wrapped in the servlet.
         try {
@@ -151,6 +144,14 @@ public class PortletServlet extends HttpServlet {
         }
     }
 
+    public void destroy() {
+        PortletContextManager.getManager().remove(portletContext);
+        if (portlet != null) {
+            portlet.destroy();
+        }
+        super.destroy();
+    }
+    
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
     throws ServletException, IOException {
@@ -167,13 +168,6 @@ public class PortletServlet extends HttpServlet {
                          HttpServletResponse response)
     throws ServletException, IOException {
         dispatch(request, response);
-    }
-
-    public void destroy() {
-        if (portlet != null) {
-            portlet.destroy();
-        }
-        super.destroy();
     }
     
     
@@ -199,24 +193,36 @@ public class PortletServlet extends HttpServlet {
     throws ServletException, IOException {
         InternalPortletRequest portletRequest = null;
         InternalPortletResponse portletResponse = null;
+        // Save portlet config into servlet request.
+        
+        request.setAttribute(Constants.PORTLET_CONFIG, portletConfig);
+
+        // Retrieve attributes from the servlet request.
+        Integer methodId = (Integer) request.getAttribute(
+            Constants.METHOD_ID);
+
+        portletRequest = (InternalPortletRequest) request.getAttribute(
+            Constants.PORTLET_REQUEST);
+
+        portletResponse = (InternalPortletResponse) request.getAttribute(
+            Constants.PORTLET_RESPONSE);
+
+        portletRequest.init(portletContext, request);
+
+        PortletWindow window =
+            ContainerInvocation.getInvocation().getPortletWindow();
+
+        PortletInvocationEvent event =
+            new PortletInvocationEvent(portletRequest, window, methodId.intValue());
+
+        notify(event, true, null);
+
+//      Init the classloader for the filter and get the Service for processing the filters.
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        FilterManager filtermanager = (FilterManager) request.getAttribute(
+        		"filter-manager");
+        
         try {
-        	
-        	// Save portlet config into servlet request.
-            request.setAttribute(Constants.PORTLET_CONFIG, portletConfig);
-            
-            // Retrieve attributes from the servlet request.
-            Integer methodId = (Integer) request.getAttribute(
-            		Constants.METHOD_ID);
-            portletRequest = (InternalPortletRequest) request.getAttribute(
-            		Constants.PORTLET_REQUEST);
-            portletResponse = (InternalPortletResponse) request.getAttribute(
-            		Constants.PORTLET_RESPONSE);
-            portletRequest.init(portletContext, request);
-            
-            //Init the classloader for the filter and get the Service for processing the filters.
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            FilterManager filtermanager = (FilterManager) request.getAttribute(
-            		"filter-manager");
             
             // The requested method is RENDER: call Portlet.render(..)
             if (methodId == Constants.METHOD_RENDER) {
@@ -257,11 +263,28 @@ public class PortletServlet extends HttpServlet {
             	filtermanager.processFilter(eventRequest, eventResponse, loader, portletName, portletContext,"EVENT_PHASE");
             	eventPortlet.processEvent(eventRequest, eventResponse);
             }
-            
+            // The requested method is ADMIN: call handlers.
+            else if (methodId == Constants.METHOD_ADMIN) {
+                ContainerInvocation inv = ContainerInvocation.getInvocation();
+                PortalAdministrationService pas =
+                    inv.getPortletContainer()
+                        .getOptionalContainerServices()
+                        .getPortalAdministrationService();
+
+                Iterator it = pas.getAdministrativeRequestListeners().iterator();
+                while (it.hasNext()) {
+                    AdministrativeRequestListener l = (AdministrativeRequestListener) it.next();
+                    l.administer(portletRequest, portletResponse);
+                }
+            }
+
             // The requested method is NOOP: do nothing.
             else if (methodId == Constants.METHOD_NOOP) {
                 // Do nothing.
             }
+            
+            notify(event, false, null);
+
 
         } catch (javax.portlet.UnavailableException ex) {
             ex.printStackTrace();
@@ -283,6 +306,7 @@ public class PortletServlet extends HttpServlet {
             throw new javax.servlet.UnavailableException(ex.getMessage());
             
         } catch (PortletException ex) {
+            notify(event, false, ex);
             ex.printStackTrace();
             throw new ServletException(ex);
             
@@ -293,6 +317,28 @@ public class PortletServlet extends HttpServlet {
             }
         }
     }
+    
+
+    protected void notify(PortletInvocationEvent event, boolean pre, Throwable e) {
+        ContainerInvocation inv = ContainerInvocation.getInvocation();
+        PortalAdministrationService pas = inv.getPortletContainer()
+            .getOptionalContainerServices()
+            .getPortalAdministrationService();
+
+        Iterator i = pas.getPortletInvocationListeners().iterator();
+        while (i.hasNext()) {
+            PortletInvocationListener listener = (PortletInvocationListener) i.next();
+            if (pre) {
+                listener.onBegin(event);
+            } else if (e == null) {
+                listener.onEnd(event);
+            } else {
+                listener.onError(event, e);
+            }
+        }
+
+    }
+    
     private void initializeEventPortlet() {
        if (portlet instanceof EventPortlet) {
                eventPortlet = (EventPortlet) portlet;

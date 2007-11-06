@@ -46,11 +46,8 @@ import org.apache.commons.logging.Log;
  * Implementation of the <code>javax.portlet.PortletPreferences</code>
  * interface.
  * 
- * @see org.apache.pluto.core.PortletPreference
- * @see org.apache.pluto.core.impl.PortletPreferenceImpl
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * @see PortletPreferences
+ * @see PortletPreferenceImpl
  */
 public class PortletPreferencesImpl implements PortletPreferences {
 	
@@ -64,26 +61,26 @@ public class PortletPreferencesImpl implements PortletPreferences {
     // Private Member Variables ------------------------------------------------
     
     /** The portlet preferences service provided by the portal. */
-    private PortletPreferencesService preferencesService = null;
+    private PortletPreferencesService preferencesService;
 
-    private InternalPortletWindow window = null;
+    private InternalPortletWindow window;
 
-    private InternalPortletRequest request = null;
+    private InternalPortletRequest request;
     
     /**
      * Default portlet preferences retrieved from portlet.xml, and used for
      * resetting portlet preferences.
      */
-    private InternalPortletPreference[] defaultPreferences = null;
+    private InternalPortletPreference[] defaultPreferences;
     
     /**
      * Current portlet preferences: key is the preference name as a string,
      * value is the PortletPreference instance.
      */
-    private Map preferences = new HashMap();
+    private final Map preferences = new HashMap();
 
     /** Current method used for managing these preferences. */
-    private Integer methodId = null;
+    private Integer methodId;
     
     
     // Constructor -------------------------------------------------------------
@@ -91,7 +88,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     /**
      * Constructs an instance.
      * @param container  the portlet container.
-     * @param portletWindow  the internal portlet window.
+     * @param window  the internal portlet window.
      * @param request  the internal portlet request.
      * @param methodId  the request method ID: render request or action request.
      */
@@ -117,7 +114,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         if (defaultPreferences!=null){
 	        for (int i = 0; i < defaultPreferences.length; i++) {
 	            preferences.put(defaultPreferences[i].getName(),
-	                            (InternalPortletPreference) defaultPreferences[i].clone());
+                            defaultPreferences[i].clone());
 	        }
         }
         if (LOG.isDebugEnabled()) {
@@ -261,7 +258,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         			LOG.debug("Resetting preference for key: " + key);
         		}
         		preferences.put(key,
-        				(InternalPortletPreference) defaultPreferences[i].clone());
+        				defaultPreferences[i].clone());
         		resetDone = true;
         	}
         }

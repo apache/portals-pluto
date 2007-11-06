@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -46,8 +47,6 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
  * <p/>
  * <TR><TD>{@link #destroy()}</TD> <TD>Destroy and remove container from
  * service.</TD> <TD>Performed only once per container lifecylce</TD></TR>
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
  * @version $Id: PortletContainer.java 36010 2004-07-30 14:16:06Z ddewolf $
  */
 public interface PortletContainer {
@@ -57,7 +56,7 @@ public interface PortletContainer {
      * @param servletContext  the servlet context.
      * @throws PortletContainerException if an error occurs.
      */
-    public void init(ServletContext servletContext)
+    void init(ServletContext servletContext)
     throws PortletContainerException;
 
     /**
@@ -66,7 +65,7 @@ public interface PortletContainer {
      * @throws PortletContainerException if an error occurs while shutting down
      *                                   the container
      */
-    public void destroy() throws PortletContainerException;
+    void destroy() throws PortletContainerException;
 
     /**
      * Calls the render method of the given portlet window.
@@ -79,7 +78,7 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    public void doRender(PortletWindow internalPortletWindow,
+    void doRender(PortletWindow internalPortletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
         throws PortletException, IOException, PortletContainerException;
@@ -95,7 +94,7 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    public void doServeResource(PortletWindow internalPortletWindow,
+    void doServeResource(PortletWindow internalPortletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
         throws PortletException, IOException, PortletContainerException;
@@ -111,7 +110,7 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    public void doAction(PortletWindow internalPortletWindow,
+    void doAction(PortletWindow internalPortletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
         throws PortletException, IOException, PortletContainerException;
@@ -126,34 +125,49 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    public void doLoad(PortletWindow internalPortletWindow,
+    void doLoad(PortletWindow internalPortletWindow,
                        HttpServletRequest servletRequest,
                        HttpServletResponse servletResponse)
         throws PortletException, IOException, PortletContainerException;
 
     /**
+     * Indicates that the portal needs to perform administrative
+     * actions upon the portlet and/or portlet application.  An
+     * administrative request will be spawned and any registered
+     * handlers invoked.
+     * @param portletWindow   the portlet window
+     * @param servletRequest  the servlet request
+     * @param servletResponse the servlet response
+     * @throws PortletContainerException if the request can not be fullfilled.
+     */
+    void doAdmin(PortletWindow portletWindow,
+                 HttpServletRequest servletRequest,
+                 HttpServletResponse servletResponse)
+    throws PortletException, IOException, PortletContainerException;
+
+    /**
      * Returns whether the container is already initialized or not.
      * @return <code>true</code> if the container is initialized
      */
-    public boolean isInitialized();
+    boolean isInitialized();
 
     /**
      * Retrieve the unique container name
      * @return the container name.
      */
-    public String getName();
+    String getName();
 
     /**
      * Retreive the required container services associated with this container.
      * @return the required container services associated with this container.
      */
-    public RequiredContainerServices getRequiredContainerServices();
+    RequiredContainerServices getRequiredContainerServices();
 
     /**
      * Retrieve the optional container services associated with this contianer.
      * @return the container services provided by either the portal or the defaults.
      */
-    public OptionalContainerServices getOptionalContainerServices();
+    OptionalContainerServices getOptionalContainerServices();
     
     /**
      * Retrieve the {@link PortletAppDD} for the portlet
@@ -167,7 +181,7 @@ public interface PortletContainer {
      *                                   the context of the portlet, or retrieving
      *                                   the <code>PortletAppDD</code>
      */    
-    public PortletAppDD getPortletApplicationDescriptor(String context)
+    PortletAppDD getPortletApplicationDescriptor(String context)
         throws PortletContainerException;
 
 	public ServletContext getServletContext();

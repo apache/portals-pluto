@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderRequest;
@@ -41,28 +42,35 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
-import org.apache.pluto.internal.impl.ActionRequestImpl;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
-import org.apache.pluto.internal.impl.EventRequestImpl;
-import org.apache.pluto.internal.impl.EventResponseImpl;
-import org.apache.pluto.internal.impl.PortletWindowImpl;
-import org.apache.pluto.internal.impl.RenderRequestImpl;
-import org.apache.pluto.internal.impl.RenderResponseImpl;
-import org.apache.pluto.internal.impl.ResourceRequestImpl;
-import org.apache.pluto.internal.impl.ResourceResponseImpl;
+import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletResponse;
+import org.apache.pluto.internal.InternalActionRequest;
+import org.apache.pluto.internal.InternalActionResponse;
+import org.apache.pluto.internal.InternalEventRequest;
+import org.apache.pluto.internal.InternalEventResponse;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.InternalRenderRequest;
+import org.apache.pluto.internal.InternalRenderResponse;
+import org.apache.pluto.internal.InternalResourceRequest;
+import org.apache.pluto.internal.InternalResourceResponse;
 import org.apache.pluto.internal.impl.StateAwareResponseImpl;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.internal.impl.InternalPortletWindowImpl;
+import org.apache.pluto.internal.impl.PortletRequestImpl;
+import org.apache.pluto.internal.impl.PortletResponseImpl;
+import org.apache.pluto.internal.impl.PortletWindowImpl;
+import org.apache.pluto.internal.impl.ResourceRequestImpl;
+import org.apache.pluto.internal.impl.ResourceResponseImpl;
+import org.apache.pluto.util.StringManager;
+
 
 /**
  * Default Pluto Container implementation.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
- * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
@@ -75,17 +83,20 @@ public class PortletContainerImpl implements PortletContainer,
     
     // Private Member Variables ------------------------------------------------
     
+    private static final StringManager EXCEPTIONS = StringManager.getManager(
+    		    		PortletContainerImpl.class.getPackage().getName());
+    
     /** The portlet container name. */
-    private String name = null;
+    private final String name;
     
     /** The required container services associated with this container. */
-    private RequiredContainerServices requiredContainerServices = null;
+    private final RequiredContainerServices requiredContainerServices;
     
     /** The optional container services associated with this container. */
-    private OptionalContainerServices optionalContainerServices = null;
+    private final OptionalContainerServices optionalContainerServices;
     
     /** The servlet context associated with this container. */
-    private ServletContext servletContext = null;
+    private ServletContext servletContext;
 
     /** Flag indicating whether or not we've been initialized. */
     private boolean initialized = false;
@@ -165,17 +176,28 @@ public class PortletContainerImpl implements PortletContainer,
     	ensureInitialized();
     	
         InternalPortletWindow internalPortletWindow =
-        		new PortletWindowImpl(servletContext, portletWindow);
+        	new InternalPortletWindowImpl(
+		                    PortletContextManager.getPortletContext(servletContext,
+		                        portletWindow.getContextPath()),
+		                    portletWindow);
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletName());
         
-        RenderRequestImpl renderRequest = new RenderRequestImpl(
-        		this, internalPortletWindow, request);
-        RenderResponseImpl renderResponse = new RenderResponseImpl(
-        		this, internalPortletWindow, request, response);
+        InternalRenderRequest renderRequest = getOptionalContainerServices().getPortletEnvironmentService()
+            .createRenderRequest(this, request, response, internalPortletWindow);
 
-        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-        invoker.render(renderRequest, renderResponse);
+        InternalRenderResponse renderResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            .createRenderResponse(this, request, response, internalPortletWindow);
+
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        try {
+            ContainerInvocation.setInvocation(this, internalPortletWindow);
+            invoker.render(renderRequest, renderResponse, internalPortletWindow);
+        } finally {
+            ContainerInvocation.clearInvocation();
+        }
+        
         debugWithName("Portlet rendered for: "
         		+ portletWindow.getPortletName());
     }
@@ -199,17 +221,28 @@ public class PortletContainerImpl implements PortletContainer,
     	ensureInitialized();
     	
         InternalPortletWindow internalPortletWindow =
-        		new PortletWindowImpl(servletContext, portletWindow);
+        	new InternalPortletWindowImpl(
+                    PortletContextManager.getPortletContext(servletContext,
+                        portletWindow.getContextPath()),
+                    portletWindow);
         debugWithName("Resource request received for portlet: "
         		+ portletWindow.getPortletName());
         
-        ResourceRequestImpl renderRequest = new ResourceRequestImpl(
-        		this, internalPortletWindow, request);
-        ResourceResponseImpl renderResponse = new ResourceResponseImpl(
-        		this, internalPortletWindow, request, response);
+        InternalResourceRequest resourceRequest = getOptionalContainerServices().getPortletEnvironmentService()
+            .createResourceRequest(this, request, response, internalPortletWindow);
 
-        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-        invoker.resource(renderRequest, renderResponse);
+        InternalResourceResponse resourceResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            .createResourceResponse(this, request, response, internalPortletWindow);
+
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        try {
+            ContainerInvocation.setInvocation(this, internalPortletWindow);
+            invoker.render(resourceRequest, resourceResponse, internalPortletWindow);
+        } finally {
+            ContainerInvocation.clearInvocation();
+        }
+        
         debugWithName("Portlet resource for: "
         		+ portletWindow.getPortletName());
 	}
@@ -233,17 +266,29 @@ public class PortletContainerImpl implements PortletContainer,
     	ensureInitialized();
     	
         InternalPortletWindow internalPortletWindow =
-            	new PortletWindowImpl(servletContext, portletWindow);
-    	debugWithName("Action request received for portlet: "
+        	new InternalPortletWindowImpl(
+                    PortletContextManager.getPortletContext(servletContext,
+                        portletWindow.getContextPath()), portletWindow);
+
+        debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletName());
     	
-        ActionRequestImpl actionRequest = new ActionRequestImpl(
-        		this, internalPortletWindow, request);
-        ActionResponseImpl actionResponse = new ActionResponseImpl(
-        		this, internalPortletWindow, request, response);
-        
-        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-        invoker.action(actionRequest, actionResponse);
+        InternalActionRequest actionRequest = getOptionalContainerServices().getPortletEnvironmentService()
+            .createActionRequest(this, request, response, internalPortletWindow);
+
+        InternalActionResponse actionResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            .createActionResponse(this, request, response, internalPortletWindow);
+
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        try {
+            ContainerInvocation.setInvocation(this, internalPortletWindow);
+            invoker.action(actionRequest, actionResponse, internalPortletWindow);
+        }
+        finally {
+            ContainerInvocation.clearInvocation();
+        }
+
         debugWithName("Portlet action processed for: "
         		+ portletWindow.getPortletName());
         
@@ -296,19 +341,69 @@ public class PortletContainerImpl implements PortletContainer,
     	ensureInitialized();
     	
         InternalPortletWindow internalPortletWindow =
-        		new PortletWindowImpl(servletContext, portletWindow);
+        		new InternalPortletWindowImpl(
+                    PortletContextManager.getPortletContext(servletContext,
+                        portletWindow.getContextPath()),
+                    portletWindow);
+
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletName());
         
-        RenderRequestImpl renderRequest = new RenderRequestImpl(
-        		this, internalPortletWindow, request);
-        RenderResponseImpl renderResponse = new RenderResponseImpl(
-        		this, internalPortletWindow, request, response);
-        
-        PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-        invoker.load(renderRequest, renderResponse);
+
+        InternalRenderRequest renderRequest =
+            getOptionalContainerServices().getPortletEnvironmentService()
+                .createRenderRequest(this, request, response, internalPortletWindow);
+
+        InternalRenderResponse renderResponse =
+            getOptionalContainerServices().getPortletEnvironmentService()
+                .createRenderResponse(this, request, response, internalPortletWindow);
+
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        try {
+            ContainerInvocation.setInvocation(this, internalPortletWindow);
+            invoker.load(renderRequest, renderResponse, internalPortletWindow);
+        } finally {
+            ContainerInvocation.clearInvocation();
+        }
+
         debugWithName("Portlet loaded for: " + portletWindow.getPortletName());
     }
+    
+
+    public void doAdmin(PortletWindow portletWindow,
+                        HttpServletRequest servletRequest,
+                        HttpServletResponse servletResponse)
+    throws PortletException, IOException, PortletContainerException {
+        ensureInitialized();
+
+        InternalPortletWindow internalPortletWindow =
+            new InternalPortletWindowImpl(
+                PortletContextManager.getPortletContext(servletContext,
+                    portletWindow.getContextPath()), portletWindow);
+
+        debugWithName("Admin request received for portlet: "
+            +portletWindow.getPortletName());
+
+        InternalPortletRequest internalRequest =
+            new AdminRequest(this, internalPortletWindow, servletRequest) { };
+
+        InternalPortletResponse internalResponse =
+            new AdminResponse(this, internalPortletWindow, servletRequest, servletResponse);
+
+        PortletInvokerService invoker =
+            optionalContainerServices.getPortletInvokerService();
+
+        try {
+            ContainerInvocation.setInvocation(this, internalPortletWindow);
+            invoker.admin(internalRequest, internalResponse, internalPortletWindow);
+        } finally {
+            ContainerInvocation.clearInvocation();
+        }
+
+        debugWithName("Admin request complete.");
+    }
+
 
     public String getName() {
         return name;
@@ -318,6 +413,13 @@ public class PortletContainerImpl implements PortletContainer,
         return requiredContainerServices;
     }
 
+    /**
+     * Retrieve the optional container services used by the container.
+     * If no implementation was provided during construction, the default
+     * instance will be returned.
+     *
+     * @return services used by the container.
+     */
     public OptionalContainerServices getOptionalContainerServices() {
         return optionalContainerServices;
     }
@@ -336,7 +438,7 @@ public class PortletContainerImpl implements PortletContainer,
         }
         
         // obtain the context of the portlet
-        ServletContext portletCtx = servletContext.getContext(context);
+        ServletContext portletCtx = PortletContextManager.getPortletContext(servletContext, context);
         if (portletCtx == null) {
             final String msg = "Unable to obtain the servlet context for " +
                 "portlet context [" + context + "].  Ensure the portlet has " +
@@ -522,5 +624,27 @@ public class PortletContainerImpl implements PortletContainer,
 		}
 		return true;
 	}    
+	class AdminRequest extends PortletRequestImpl {
+
+        public AdminRequest(PortletContainer container,
+                            InternalPortletWindow internalPortletWindow,
+                            HttpServletRequest servletRequest) {
+            super(container, internalPortletWindow, servletRequest);
+        }
+
+        public PortletPreferences getPreferences() {
+            throw new IllegalStateException("Can not access preferences during admin request.");
+        }
+    }
+
+    class AdminResponse extends PortletResponseImpl {
+
+        public AdminResponse(PortletContainer container,
+                             InternalPortletWindow internalPortletWindow,
+                             HttpServletRequest servletRequest,
+                             HttpServletResponse servletResponse) {
+            super(container, internalPortletWindow, servletRequest, servletResponse);
+        }
+    }
 }
 

@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -16,38 +17,45 @@
 package org.apache.pluto.core;
 
 import org.apache.pluto.OptionalContainerServices;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
  * Default Optional Container Services implementation.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
-public class DefaultOptionalContainerServices
-implements OptionalContainerServices {
-	
-	// Private Member Variables ------------------------------------------------
-	
-    /** The portlet preferences service implementation. */
-    private PortletPreferencesService preferenceService = null;
-    
-    
-    // Constructors ------------------------------------------------------------
-    
+public class DefaultOptionalContainerServices implements OptionalContainerServices {
+
+    private PortletPreferencesService portletPreferencesService;
+    private PortletRegistryService portletRegistryService;
+    private PortletInvokerService portletInvokerService;
+    private PortletEnvironmentService portletEnvironmentService;
+    private PortletInfoService portletInfoService;
+    private PortalAdministrationService portalAdministrationService;
+    private UserInfoService userInfoService;
+
+
     /**
      * Constructs an instance using the default portlet preferences service
      * implementation.
      */
     public DefaultOptionalContainerServices() {
-        preferenceService = new DefaultPortletPreferencesService();
+        portletPreferencesService = new DefaultPortletPreferencesService();
+        portletRegistryService = PortletContextManager.getManager();
+        portletInvokerService = new DefaultPortletInvokerService();
+        portletEnvironmentService = new DefaultPortletEnvironmentService();
+        portletInfoService = new DefaultPortletInfoService();
+        portalAdministrationService = new DefaultPortalAdministrationService();
+        userInfoService = new DefaultUserInfoService();
     }
-    
+
     /**
      * Constructs an instance using specified optional container services
      * implementation. If the portlet preferences service is provided, it will
@@ -55,34 +63,72 @@ implements OptionalContainerServices {
      * @param root  the root optional container services implementation.
      */
     public DefaultOptionalContainerServices(OptionalContainerServices root) {
+        this();
         if (root.getPortletPreferencesService() != null) {
-            preferenceService = root.getPortletPreferencesService();
-        } else {
-        	preferenceService = new DefaultPortletPreferencesService();
+            portletPreferencesService = root.getPortletPreferencesService();
         }
+
+        if (root.getPortletRegistryService() != null) {
+            portletRegistryService = root.getPortletRegistryService();
+        }
+
+        if(root.getPortletEnvironmentService() != null) {
+            portletEnvironmentService = root.getPortletEnvironmentService();
+        }
+
+        if(root.getPortletInvokerService() != null) {
+            portletInvokerService = root.getPortletInvokerService();
+        }
+
+        if(root.getPortletEnvironmentService() != null) {
+            portletEnvironmentService = root.getPortletEnvironmentService();
+        }
+
+        if(root.getPortletInfoService() != null) {
+            portletInfoService = root.getPortletInfoService();
+        }
+
+        if(root.getPortalAdministrationService() != null) {
+            portalAdministrationService = root.getPortalAdministrationService();
+        }
+
+		 if(root.getUserInfoService() != null) {
+			 userInfoService = root.getUserInfoService();
+		 }
+
     }
-    
-    
+
+
     // OptionalContainerServices Impl ------------------------------------------
-    
+
     public PortletPreferencesService getPortletPreferencesService() {
-        return preferenceService;
+        return portletPreferencesService;
     }
-    
-    /**
-     * TODO:
-     */
+
+
+    public PortletRegistryService getPortletRegistryService() {
+        return portletRegistryService;
+    }
+
     public PortletEnvironmentService getPortletEnvironmentService() {
-        return null;
+        return portletEnvironmentService;
     }
-    
-    /**
-     * TODO:
-     */
-    public PortletInvokerService getPortletInvokerService(
-    		InternalPortletWindow window) {
-        return null;
+
+    public PortletInvokerService getPortletInvokerService() {
+        return portletInvokerService;
     }
-    
+
+    public PortletInfoService getPortletInfoService() {
+        return portletInfoService;
+    }
+
+    public PortalAdministrationService getPortalAdministrationService() {
+        return portalAdministrationService;
+    }
+
+    public UserInfoService getUserInfoService() {
+        return userInfoService;
+    }
+
 }
 

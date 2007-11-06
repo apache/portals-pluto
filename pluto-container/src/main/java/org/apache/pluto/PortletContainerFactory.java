@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -17,8 +18,8 @@ package org.apache.pluto;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.core.DefaultOptionalContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
+import org.apache.pluto.core.DefaultOptionalContainerServices;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**
@@ -26,7 +27,6 @@ import org.apache.pluto.util.ArgumentUtility;
  * the underlying pluto container implementation by using the the given
  * container services.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 18, 2004
  */
@@ -77,15 +77,15 @@ public class PortletContainerFactory {
     		String containerName,
     		RequiredContainerServices requiredServices,
     		OptionalContainerServices optionalServices) {
-    	
+
         ArgumentUtility.validateNotNull("requiredServices", requiredServices);
         ArgumentUtility.validateNotEmpty("containerName", containerName);
-        
+
         DefaultOptionalContainerServices optionalServicesWrapper =
         		new DefaultOptionalContainerServices(optionalServices);
         PortletContainer container = new PortletContainerImpl(
         		containerName, requiredServices, optionalServicesWrapper);
-        
+
         if (LOG.isInfoEnabled()) {
             LOG.info("Portlet Container [" + containerName + "] created.");
         }

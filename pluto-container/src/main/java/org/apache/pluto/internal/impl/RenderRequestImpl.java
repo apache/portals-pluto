@@ -43,8 +43,6 @@ import org.apache.pluto.internal.InternalRenderRequest;
 /**
  * Implementation of the <code>javax.portlet.RenderRequest</code> interface.
  * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class RenderRequestImpl extends PortletRequestImpl
 implements RenderRequest, InternalRenderRequest {
@@ -58,10 +56,10 @@ implements RenderRequest, InternalRenderRequest {
     
     
     /** The parameters including parameters appended to the dispatching URI. */
-    private Map parameters = null;
+    private Map parameters;
     
     /** The portlet preferences. */
-    private PortletPreferences portletPreferences = null;
+    private PortletPreferences portletPreferences;
     
     
     // Constructors ------------------------------------------------------------
@@ -78,10 +76,10 @@ implements RenderRequest, InternalRenderRequest {
         	LOG.debug("Created render request for: " + internalPortletWindow);
         }
     }
-    
-    
+
+
     // RenderRequest Impl ------------------------------------------------------
-    
+
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
@@ -92,8 +90,8 @@ implements RenderRequest, InternalRenderRequest {
         }
         return portletPreferences;
     }
-    
-    
+
+
     /**
      * Checks the included flag and returns the content type. If the included
      * flag is set to true, this method returns null.
@@ -253,7 +251,7 @@ implements RenderRequest, InternalRenderRequest {
     				}
     			}
     		}
-    		parameters.put(key, (String[]) values.toArray(new String[values.size()]));
+    		parameters.put(key, values.toArray(new String[values.size()]));
     	}
     }
 

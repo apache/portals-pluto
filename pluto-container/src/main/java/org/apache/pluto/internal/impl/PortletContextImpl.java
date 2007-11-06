@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.Set;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
@@ -40,26 +43,29 @@ import org.apache.pluto.internal.InternalPortletContext;
  * information needed for processing.
  * 
  * @version 1.1
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletContextImpl
 implements PortletContext, InternalPortletContext {
 	
-	/** Logger. */
+	/**
+	 *  Logger.
+	 */
     private static final Log LOG = LogFactory.getLog(PortletContextImpl.class);
     
     
     // Private Member Variables ------------------------------------------------
     
-    /** Portlet Application Descriptor. */
-    private PortletAppDD portletAppDD = null;
     
     /** Portlet Descriptor */
     private PortletDD portletDD = null;
 
-    /** ServletContext in which we are contained. */
-    private ServletContext servletContext = null;
+
+    private final String applicationId;
+    private String applicationName;
+     
+    private final PortletAppDD portletAppDD;
+    private final ServletContext servletContext;
+    private ClassLoader contextClassLoader;
 
     
     // Constructor -------------------------------------------------------------
@@ -69,11 +75,19 @@ implements PortletContext, InternalPortletContext {
      * @param servletContext  the servlet context in which we are contained.
      * @param portletAppDD  the portlet application descriptor.
      */
-    public PortletContextImpl(ServletContext servletContext,
+    public PortletContextImpl(String portletApplicationId,
+                              ServletContext servletContext,
                               PortletAppDD portletAppDD,
                               String portletName) {
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
+        this.applicationId = portletApplicationId;
+        this.applicationName = servletContext.getServletContextName();
+
+        if(applicationName == null) {
+            applicationName = applicationId;
+        }
+
         
         //retrieve portletDD
         for (PortletDD portletDD : (List<PortletDD>)portletAppDD.getPortlets()) {
@@ -82,8 +96,39 @@ implements PortletContext, InternalPortletContext {
 			break;
 		}
         assert(portletDD != null);  // else exception is thrown before (PortletServlet)
+        
+        init();
     }
     
+
+    private void init() {
+        setContextClassLoader(Thread.currentThread().getContextClassLoader());
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public String getApplicationName() {
+        return applicationName;
+    }
+
+    /**
+     * ClassLoader associated with this context.
+     * @return
+     */
+    public ClassLoader getContextClassLoader() {
+        return contextClassLoader;
+    }
+
+    /**
+     * ClassLoader associated with this context.
+     * @param contextClassLoader
+     */
+    public void setContextClassLoader(ClassLoader contextClassLoader) {
+        this.contextClassLoader = contextClassLoader;
+    }
+
     
     // PortletContext Impl -----------------------------------------------------
     

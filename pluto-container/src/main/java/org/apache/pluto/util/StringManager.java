@@ -1,9 +1,10 @@
 /*
- * Copyright 1999,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -40,8 +41,6 @@ import java.util.ResourceBundle;
  * <p/>
  * <p>Please see the documentation for java.util.ResourceBundle for more
  * information.
- * @author James Duncan Davidson [duncan@eng.sun.com]
- * @author James Todd [gonzo@eng.sun.com]
  */
 
 public class StringManager {
@@ -52,11 +51,11 @@ public class StringManager {
      */
 
     private ResourceBundle bundle;
-    
-    /** 
+
+    /**
      * The package this StringManager belongs to.
      */
-    private String packageName = null;
+    private String packageName;
 
     /**
      * Creates a new StringManager for a given package. This is a private method

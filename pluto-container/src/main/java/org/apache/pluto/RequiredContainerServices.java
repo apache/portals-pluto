@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -23,8 +24,7 @@ import org.apache.pluto.spi.PortalCallbackService;
 /**
  * This interface defines the services required for integration between the
  * Pluto Portlet Container and a Portal.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ *
  */
 public interface RequiredContainerServices {
 
@@ -33,19 +33,19 @@ public interface RequiredContainerServices {
      * portlet container services.
      * @return a PortalContext implementation.
      */
-    public PortalContext getPortalContext();
+    PortalContext getPortalContext();
 
     /**
      * Returns the portal callback service implementation instance associated
      * with this group of portlet container services. 
      * @return a PortalCallbackService implementation.
      */
-    public PortalCallbackService getPortalCallbackService();
+    PortalCallbackService getPortalCallbackService();
     
     /**
      * Returns the CC/PP profile service implementation
      * @return a CCPPProfileServiceImplementation
      */
-    public CCPPProfileService getCCPPProfileService();
+    CCPPProfileService getCCPPProfileService();
     
 }

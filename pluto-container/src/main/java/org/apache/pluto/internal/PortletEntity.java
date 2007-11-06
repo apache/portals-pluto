@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +16,11 @@
  */
 package org.apache.pluto.internal;
 
-import org.apache.pluto.internal.InternalPortletPreference;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.servlet.ServletDD;
-
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
+
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.servlet.ServletDD;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -28,18 +28,22 @@ import javax.portlet.ValidatorException;
  * PortletEntity consists of two primary peices of information, the Portlet
  * Definition as defined by the {@link PortletDD} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
- * 
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ *
  */
 public interface PortletEntity {
-	
+
     /**
      * Returns the URI to the controller servlet that wraps this portlet.
+     * <p>
+     * Note: this method has been deprecated as of Pluto 1.1.2.  Future versions 
+     * of Pluto will use the <code>PortletInvokerService</code> for resolving
+     * the invoker url pattern.
+     * 
      * @return the URI to the controller servlet that wraps this portlet.
+     * @deprecated
      */
     public String getControllerServletUri();
-    
+
     /**
      * Returns an array of default preferences of this portlet. The default
      * preferences are retrieved from the portlet application descriptor.
@@ -59,7 +63,7 @@ public interface PortletEntity {
      * may be null.
      * </p>
      * @return the preference set
-     * 
+     *
      * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
      */
     public InternalPortletPreference[] getDefaultPreferences();
@@ -69,7 +73,7 @@ public interface PortletEntity {
      * @return the portlet description.
      */
     public PortletDD getPortletDefinition();
-    
+
     /**
      * Returns the preferences validator instance for this portlet.
      * One validator instance is created per portlet definition.
@@ -78,7 +82,7 @@ public interface PortletEntity {
      */
     public PreferencesValidator getPreferencesValidator()
     throws ValidatorException;
-    
+
 }
 
 

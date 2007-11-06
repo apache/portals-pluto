@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
  * instance.  This instance may appear zero or more times per user. The
@@ -45,8 +46,6 @@ import java.util.List;
  * Definition as defined by the {@link PortletDD} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
  * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletEntityImpl implements PortletEntity {
 	
@@ -60,16 +59,16 @@ public class PortletEntityImpl implements PortletEntity {
     // Private Member Variables ------------------------------------------------
     
     /** The servlet context. */
-    private ServletContext servletContext = null;
+    private final ServletContext servletContext;
     
     /** The portlet window. */
     private String portletName = null;
 
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
-    private PortletDD portletDefinition = null;
+    private PortletDD portletDefinition;
     
     /** Default portlet preferences defined for this portlet. */
-    private InternalPortletPreference[] defaultPreferences = null;
+    private InternalPortletPreference[] defaultPreferences;
     
     
     // Constructor -------------------------------------------------------------
@@ -85,8 +84,13 @@ public class PortletEntityImpl implements PortletEntity {
     /**
      * Returns the URI to the controller servlet that wraps this portlet.
      * @return the URI to the controller servlet that wraps this portlet.
+     * @deprecated
      */
     public String getControllerServletUri() {
+        // this method is deprecated as of pluto 1.1.2, so that
+        // we can remove it in the future.  The PortletInvokerService
+        // will be responsible for resolving the URI used to invoke
+        // the portlet.
         return PREFIX + portletName;
     }
     

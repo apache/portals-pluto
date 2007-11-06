@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -20,18 +21,16 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Static class that provides utility static methods for argument validation.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public class ArgumentUtility {
-	
+
 	/** Logger. */
     public static final Log LOG = LogFactory.getLog(ArgumentUtility.class);
-    
-    
+
+
     // Static Utility Methods --------------------------------------------------
-    
+
     /**
      * Validates that the passed-in argument value is not null.
      * @param argumentName  the argument name.
@@ -50,7 +49,7 @@ public class ArgumentUtility {
         			+ " (argument should not be null)");
         }
     }
-    
+
     /**
      * Validates that the passed-in string argument value is not null or empty.
      * @param argumentName  the argument name.
@@ -69,5 +68,5 @@ public class ArgumentUtility {
             		+ " (argument should not be null or empty)");
         }
     }
-    
+
 }

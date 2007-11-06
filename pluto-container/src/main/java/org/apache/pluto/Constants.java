@@ -62,6 +62,7 @@ public class Constants {
      */
     public final static String METHOD_ID = "org.apache.pluto.core.method";
 
+
     /**
      * The unique method identifier for render requests.  Render requests are
      * requested through a call to the {@link PortletContainer#doRender(org.apache.pluto.PortletWindow,
@@ -79,7 +80,7 @@ public class Constants {
     public final static Integer METHOD_ACTION = new Integer(3);
 
     /**
-     * The unique method identifier for render requests.  Render requests are
+     * The unique method identifier for noop (load) requests.  Load requests are
      * requested through a call to the {@link PortletContainer#doLoad(org.apache.pluto.PortletWindow,
         * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
      * method.

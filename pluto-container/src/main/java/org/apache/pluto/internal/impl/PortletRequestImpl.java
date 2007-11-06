@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -48,9 +49,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
+import org.apache.pluto.descriptors.portlet.UserAttributeDD;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
@@ -62,12 +66,11 @@ import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
+
 /**
  * Abstract <code>javax.portlet.PortletRequest</code> implementation.
  * This class also implements InternalPortletRequest.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 implements PortletRequest, InternalPortletRequest {
@@ -83,25 +86,25 @@ implements PortletRequest, InternalPortletRequest {
     // Private Member Variables ------------------------------------------------
     
     /** The parent container within which this request was created. */
-    protected PortletContainer container = null;
+    protected PortletContainer container;
     
     /** The portlet window which is the target of this portlet request. */
-    protected InternalPortletWindow internalPortletWindow = null;
+    protected InternalPortletWindow internalPortletWindow;
 
     /**
      * The PortletContext associated with this Request. This PortletContext must
      * be initialized from within the <code>PortletServlet</code>.
      */
-    private PortletContext portletContext = null;
+    private PortletContext portletContext;
 
     /** The PortalContext within which this request is occuring. */
-    private PortalContext portalContext = null;
+    private PortalContext portalContext;
 
     /** The portlet session. */
-    private PortletSession portletSession = null;
+    private PortletSession portletSession;
 
     /** Response content types. */
-    private Vector contentTypes = null;
+    private Vector contentTypes;
     
     /** TODO: javadoc */
     private NamespaceMapper mapper = new NamespaceMapperImpl();
@@ -222,30 +225,23 @@ implements PortletRequest, InternalPortletRequest {
         HttpSession httpSession = getHttpServletRequest().getSession(create);
         if (httpSession != null) {
         	// HttpSession is not null does NOT mean that it is valid.
-//START PATCH - Jira Issue PLUTO-242 contriuted by David Garcia
-//            long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
-//            long currentInactiveTime = System.currentTimeMillis()
-//            		- httpSession.getLastAccessedTime();
-//            if (currentInactiveTime > maxInactiveTime) {
-//            	if (LOG.isDebugEnabled()) {
-//            		LOG.debug("The underlying HttpSession is expired and "
-//            				+ "should be invalidated.");
             int maxInactiveInterval = httpSession.getMaxInactiveInterval();
-            if (maxInactiveInterval >= 0) {    // < 0 => Never expires.
-            	long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
-            	long currentInactiveTime = System.currentTimeMillis()
-            			- httpSession.getLastAccessedTime();
-            	if (currentInactiveTime > maxInactiveTime) {
-            		if (LOG.isDebugEnabled()) {
-            			LOG.debug("The underlying HttpSession is expired and "
-            					+ "should be invalidated.");
-            		}
-            		httpSession.invalidate();
-            		httpSession = getHttpServletRequest().getSession(create);
-            	}
-//            	httpSession.invalidate();
-//            	httpSession = getHttpServletRequest().getSession(create);
-//END PATCH 
+            long lastAccesstime = httpSession.getLastAccessedTime();//lastAccesstime checks added for PLUTO-436
+            if (maxInactiveInterval >= 0 && lastAccesstime > 0) {    // < 0 => Never expires.
+                long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
+                long currentInactiveTime = System.currentTimeMillis() - lastAccesstime;
+                if (currentInactiveTime > maxInactiveTime) {
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("The underlying HttpSession is expired and "
+                            + "should be invalidated.");
+                    }
+                    httpSession.invalidate();
+                    httpSession = getHttpServletRequest().getSession(create);
+                    //Added for PLUTO-436
+                    // a cached portletSession is no longer useable.
+                    // a new one will be created below.
+                    portletSession = null;
+                }
             }
         }
         if (httpSession == null) {
@@ -361,8 +357,11 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public String getContextPath() {
-        return this.internalPortletWindow.getContextPath();
-        //return ((HttpServletRequest)getRequest()).getContextPath();
+        String contextPath = internalPortletWindow.getContextPath();
+        if ("/".equals(contextPath)) {
+            contextPath = "";
+        }
+        return contextPath;
     }
 
     public String getRemoteUser() {
@@ -410,6 +409,10 @@ implements PortletRequest, InternalPortletRequest {
     public Object getAttribute(String name) {
     	ArgumentUtility.validateNotNull("attributeName", name);
     	
+        if (PortletRequest.USER_INFO.equals(name)) {
+            return createUserInfoMap();
+        }
+        
         String encodedName = isNameReserved(name) ?
                 name :
                 mapper.encode(internalPortletWindow.getId(), name);
@@ -431,10 +434,13 @@ implements PortletRequest, InternalPortletRequest {
 
         while (attributes.hasMoreElements()) {
             String attribute = (String) attributes.nextElement();
-
-            String portletAttribute = mapper.decode(
-                    internalPortletWindow.getId(), attribute);
-
+            
+            //Fix for PLUTO-369
+            String portletAttribute = isNameReserved(attribute) ?
+            		attribute :
+            	mapper.decode(
+                internalPortletWindow.getId(), attribute);
+            
             if (portletAttribute != null) { // it is in the portlet's namespace
                 portletAttributes.add(portletAttribute);
             }
@@ -443,6 +449,35 @@ implements PortletRequest, InternalPortletRequest {
         return portletAttributes.elements();
     }
 
+    public Map createUserInfoMap() {
+
+        Map userInfoMap = new HashMap();
+        try {
+
+            PortletAppDD dd = container.getOptionalContainerServices()
+                .getPortletRegistryService()
+                .getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
+
+            Map allMap = container.getOptionalContainerServices()
+            	//PLUTO-388 fix:
+            	//The PortletWindow is currently ignored in the implementing class
+            	// See: org.apache.pluto.core.DefaultUserInfoService
+            	.getUserInfoService().getUserInfo( this, this.internalPortletWindow );
+
+            Iterator i = dd.getUserAttribute().iterator();
+            while(i.hasNext()) {
+                UserAttributeDD udd = (UserAttributeDD)i.next();
+                userInfoMap.put(udd.getName(), allMap.get(udd.getName()));
+            }
+        } catch (PortletContainerException e) {
+            LOG.warn("Unable to retrieve user attribute map for user " + getRemoteUser() + ".  Returning null.");
+            return null;
+        }
+
+        return Collections.unmodifiableMap(userInfoMap);
+    }
+
+    
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
     	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
@@ -675,6 +710,8 @@ implements PortletRequest, InternalPortletRequest {
     /**
      * Is this attribute name a reserved name (by the J2EE spec)?. Reserved
      * names begin with "java." or "javax.".
+     * 
+     * @return true if the name is reserved.
      */
     private boolean isNameReserved(String name) {
         return name.startsWith("java.") || name.startsWith("javax.");

@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,25 +16,31 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.core.ContainerInvocation;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.PortletInfoDD;
+import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.util.StringManager;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
-
-import java.util.*;
 
 /**
  * Factory object used to create Portlet Resource Bundles.
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  *
  */
 class ResourceBundleFactory {
-    
-    private static final Log LOG = 
+
+    private static final Log LOG =
         LogFactory.getLog(ResourceBundleFactory.class);
-    
+
     private static final StringManager EXCEPTIONS =
         StringManager.getManager(ResourceBundleFactory.class.getPackage().getName());
 
@@ -60,9 +67,17 @@ class ResourceBundleFactory {
         }
 
         PortletInfoDD info = dd.getPortletInfo();
+
+        PortletInfoService infoService = getPortletInfoService();
+        PortletWindow window = getWindow();
+
         if(info != null) {
+            String title = infoService == null ? info.getTitle() : infoService.getTitle(window);
+            String shortTitle = infoService == null ? info.getShortTitle() : infoService.getShortTitle(window);
+            String keywords = infoService == null ? info.getKeywords() : infoService.getKeywords(window);
+
             defaultBundle = new InlinePortletResourceBundle(
-                info.getTitle(), info.getShortTitle(), info.getKeywords()
+                title, shortTitle, keywords
             );
         }
         else {
@@ -101,5 +116,22 @@ class ResourceBundleFactory {
             bundles.put(locale, defaultBundle);
         }
        return (ResourceBundle)bundles.get(locale);
+    }
+
+
+    private PortletInfoService getPortletInfoService() {
+        ContainerInvocation invocation = ContainerInvocation.getInvocation();
+        if(invocation != null) {
+            return invocation.getPortletContainer().getOptionalContainerServices().getPortletInfoService();
+        }
+        return null;
+    }
+
+    private PortletWindow getWindow() {
+        ContainerInvocation invocation = ContainerInvocation.getInvocation();
+        if(invocation != null) {
+            return invocation.getPortletWindow();
+        }
+        return null;
     }
 }

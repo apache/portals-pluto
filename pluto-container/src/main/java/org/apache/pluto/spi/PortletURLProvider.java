@@ -28,8 +28,6 @@ import javax.servlet.http.HttpServletRequest;
  * This provider must be implemented by the Portal and provided via the
  * container services upon initialization of the container.
  * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  */
 public interface PortletURLProvider {
@@ -75,6 +73,15 @@ public interface PortletURLProvider {
      */
     public void setSecure() throws PortletSecurityException ;
 
+    /**
+     * Determine whether or not this url provider
+     * supports secure urls.
+     * 
+     * @return
+     * @throws PortletSecurityException
+     */
+    public boolean isSecureSupported();
+    
     /**
      * Removes all pre-existing parameters in this URL
      */

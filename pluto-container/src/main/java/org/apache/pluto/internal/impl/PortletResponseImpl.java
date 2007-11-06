@@ -45,8 +45,6 @@ import org.w3c.dom.Element;
  * Abstract <code>javax.portlet.PortletResponse</code> implementation.
  * This class also implements InternalPortletResponse.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public abstract class PortletResponseImpl extends HttpServletResponseWrapper
 implements PortletResponse, InternalPortletResponse {
@@ -54,13 +52,13 @@ implements PortletResponse, InternalPortletResponse {
 	// Private Member Variables ------------------------------------------------
 	
 	/** The portlet container. */
-    private PortletContainer container = null;
+    private PortletContainer container;
     
     /** The internal portlet window. */
-    private InternalPortletWindow internalPortletWindow = null;
+    private InternalPortletWindow internalPortletWindow;
 
     /** The servlet request of the target/portlet's web module. */
-    private HttpServletRequest httpServletRequest = null;
+    private HttpServletRequest httpServletRequest;
     
     private boolean usingWriter;
     private boolean usingStream;

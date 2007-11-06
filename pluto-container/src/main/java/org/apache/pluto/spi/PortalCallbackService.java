@@ -25,8 +25,6 @@ import org.apache.pluto.PortletWindow;
 /**
  * The callback service interface defining callback methods that will be invoked
  * by the portlet container when necessary.
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Sep 21, 2004
  */

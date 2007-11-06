@@ -1,9 +1,10 @@
 /*
- * Copyright 2003-2006 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,39 +16,16 @@
  */
 package org.apache.pluto.spi.optional;
 
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
-
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.spi.ContainerService;
 
 /**
  * Used to access user information attributes as described in
  * PLT.17.2 of the JSR-168 specificiation. Attribute persistence is
  * not covered by the spec so it is not done here.
- * 
- * @author <a href="cdoremus@apache.org">Craig Doremus</a>
+ *
+ * @deprecated use UserInfoService
+ * @see UserInfoService
  */
-public interface UserInfoAttributesService extends ContainerService  {
+public interface UserInfoAttributesService extends UserInfoService {
 
-	/**
-	 * To access user information attributes as defined in PLT.17
-	 * of JSR-168.
-	 * 
-	 * @param request Used to extract the authenticated user name.
-	 * @return A map of names and values of user information attributes
-	 * for a particular authenticated user.
-	 */
-    Map getAttributes(PortletRequest request) 
-    	throws PortletContainerException ;
-    
-	/**
-	 * Persists user information attributes. 
-	 *  
-	 * @param attributes The attributes to persist.
-    void store(UserInfoAttribute[] attributes)
-    	throws PortletContainerException;
-	 */
 
 }

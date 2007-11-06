@@ -25,22 +25,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.internal.Configuration;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringUtils;
 
+
 /**
  * Implementation of the <code>javax.portlet.RenderResponse</code> interface.
  * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class RenderResponseImpl extends MimeResponseImpl
 implements RenderResponse, InternalRenderResponse {
 	
-	private String contenType = null;
+	private String contenType;
     
     public RenderResponseImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,

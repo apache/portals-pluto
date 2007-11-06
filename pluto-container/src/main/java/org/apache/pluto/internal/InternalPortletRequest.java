@@ -25,9 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * The internal portlet request interface extends PortletRequest and adds
  * some methods used by Pluto.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public interface InternalPortletRequest extends PortletRequest {
 
@@ -36,7 +34,7 @@ public interface InternalPortletRequest extends PortletRequest {
      * This method ensures that the portlet utilizes resources from the
      * <b>included</b> context, and not those from the intiating (portal)
      * context.
-     * 
+     *
      * @param context  the target portlet context.
      * @param request  the servlet request.
      */

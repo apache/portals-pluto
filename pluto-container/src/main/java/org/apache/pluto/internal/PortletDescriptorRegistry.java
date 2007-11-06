@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -33,30 +34,31 @@ import java.util.WeakHashMap;
  * any ServletContext that is destroyed, thus allowing for a the context to be
  * redeployed.
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ * NOTE: This should only be used internally.  Do not access it from embedding
+ * portals, instead, utilize the PortletRegistryService.
+ *
  * @version 1.0
  * @since Nov 3, 2004
  */
 public class PortletDescriptorRegistry {
-	
+
     /** Portlet deployment descriptor location. */
     private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 
     /** Exception Messages. */
     private static final StringManager EXCEPTIONS = StringManager.getManager(
             PortletDescriptorRegistry.class.getPackage().getName());
-    
+
     /** The static singleton registry instance. */
     private static final PortletDescriptorRegistry REGISTRY =
     		new PortletDescriptorRegistry();
-    
-    
+
+
     // Private Member Variables ------------------------------------------------
-    
+
     /** The portlet application descriptor service. */
-    private PortletAppDescriptorService portletDDService = null;
-    
+    private PortletAppDescriptorService portletDDService;
+
     /**
      * Cache of descriptors.  WeakHashMap is used so that
      * once the context is destroyed (kinda), the cache is eliminated.
@@ -66,9 +68,9 @@ public class PortletDescriptorRegistry {
      */
     private Map cache = new WeakHashMap();
 
-    
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Returns the singleton registry instance.
      * @return the singleton registry instance.
@@ -101,17 +103,17 @@ public class PortletDescriptorRegistry {
             		"Unable to access class " + className, ex);
         }
     }
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     /**
      * Retrieve the Portlet Application Deployment Descriptor for the given
      * servlet context.  Create it if it does not allready exist.
      *
      * @param servletContext  the servlet context.
      * @return The portlet application deployment descriptor.
-     * @throws PortletContainerException
+     * @throws PortletContainerException if the descriptor can not be found or parsed
      */
     public PortletAppDD getPortletAppDD(ServletContext servletContext)
     throws PortletContainerException {
@@ -122,10 +124,10 @@ public class PortletDescriptorRegistry {
         }
         return portletAppDD;
     }
-    
-    
+
+
     // Private Methods ---------------------------------------------------------
-    
+
     /**
      * Creates the portlet.xml deployment descriptor representation.
      *
@@ -147,6 +149,6 @@ public class PortletDescriptorRegistry {
         }
         return portletAppDD;
     }
-    
+
 }
 

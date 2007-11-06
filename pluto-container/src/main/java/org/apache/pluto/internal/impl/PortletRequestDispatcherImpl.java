@@ -40,7 +40,6 @@ import org.apache.pluto.internal.InternalPortletResponse;
  * <b>RenderResponse</b> to a URI. Note that ActionRequest and ActionResponse
  * can never be dispatched.
  * 
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
 	
@@ -51,10 +50,10 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     // Private Member Variables ------------------------------------------------
     
     /** The nested servlet request dispatcher instance. */
-    private RequestDispatcher requestDispatcher = null;
+    private RequestDispatcher requestDispatcher;
     
     /** The included/forwarded query string. */
-    private String queryString = null;
+    private String queryString;
     private String servlet_path;
     private String path_info;
     private boolean namedDispatcher = true;
