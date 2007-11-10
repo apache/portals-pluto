@@ -1,9 +1,10 @@
 /*
- * Copyright 2005 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -22,7 +23,6 @@ import org.apache.pluto.util.PlutoTestCase;
 /**
  * Test Class
  *
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since June 1, 2005
  */
@@ -36,11 +36,15 @@ public class EnvironmentTest extends PlutoTestCase {
     }
 
     public void testContainerMajorVersion() {
-        assertEquals(props.getProperty("pluto.container.version.major"), Environment.getPortletContainerMajorVersion());
+        assertEquals("1", Environment.getPortletContainerMajorVersion());
     }
 
     public void testContainerMinorVersion() {
-        assertEquals(props.getProperty("pluto.container.version.minor"), Environment.getPortletContainerMinorVersion());
+        assertTrue(Environment.getPortletContainerVersion().endsWith(Environment.getPortletContainerMinorVersion()));
+    }
+
+    public void testContainerVersion() {
+        assertEquals(props.getProperty("pluto.container.version"), Environment.getPortletContainerVersion());
     }
 
     public void testContainerName() {
@@ -57,7 +61,6 @@ public class EnvironmentTest extends PlutoTestCase {
 
     public void testServerInfo() {
         assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.name"), Environment.getServerInfo());
-        assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.version.major"), Environment.getServerInfo());
-        assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.version.minor"), Environment.getServerInfo());
+        assertContains("Server Info does not contain container name.", props.getProperty("pluto.container.version"), Environment.getServerInfo());
     }
 }

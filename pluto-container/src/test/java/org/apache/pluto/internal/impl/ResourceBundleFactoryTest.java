@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -27,7 +28,6 @@ import junit.framework.Assert;
 
 /**
  * Unit test for the resource bundle factory.
- * @author ddewolf@apache.org
  * @since Jul 30, 2005
  */
 public class ResourceBundleFactoryTest extends PlutoTestCase {
@@ -44,7 +44,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
         info.setShortTitle("Info Short Title");
         info.setKeywords("Info Keywords");
         validDD.setPortletInfo(info);
-        
+
         validDD.setResourceBundle(TestResourceBundle.class.getName());
     }
 
@@ -117,7 +117,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
 
 
     public static class TestResourceBundle extends ListResourceBundle {
-        
+
         private Object[][] contents = {
             {"javax.portlet.title", "Bundle Title"},
             {"javax.portlet.short-title", "Bundle Short Title"},
