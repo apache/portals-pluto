@@ -24,9 +24,13 @@ import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
@@ -42,6 +46,11 @@ public class RelativePortalURLImpl implements PortalURL {
     private String servletPath;
     private String renderPath;
     private String actionWindow;    
+    private String resourceWindow;
+
+    private Map<String, String[]> publicParameterCurrent = new HashMap<String, String[]>();
+    
+    private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
     
     /** 
      * PortalURLParser used to construct the string
@@ -201,6 +210,65 @@ public class RelativePortalURLImpl implements PortalURL {
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
         portalURL.urlParser = urlParser;
+    	portalURL.resourceWindow = resourceWindow;
+    	portalURL.publicParameterCurrent = publicParameterCurrent;
         return portalURL;
     }
+//JSR-286 methods
+    
+    public void addPublicRenderParametersNew(Map parameters){
+    	for (Iterator iter=parameters.keySet().iterator(); iter.hasNext();) {
+			String key = (String) iter.next();
+			if (publicParameterNew.containsKey(key)){
+				publicParameterNew.remove(key);
+			}
+			String[] values = (String[])parameters.get(key);
+			if (values[0]!= null){
+				publicParameterNew.put(key, values);
+			}
+		}
+    }
+    
+    
+    public void addPublicParameterCurrent(String name, String[] values){
+    	publicParameterCurrent.put(name, values);
+    }
+    
+    public Map<String, String[]> getPublicParameters() {
+    	Map<String,String[]> tmp = new HashMap<String, String[]>();
+		
+		for (Iterator iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
+           String paramname = (String) iter.next();
+           if (!publicParameterNew.containsKey(paramname)){
+               String[] paramvalue = publicParameterCurrent.get(paramname);
+               tmp.put(paramname, paramvalue);
+           }
+        }
+		for (Iterator iter = publicParameterNew.keySet().iterator();iter.hasNext();){
+			String paramname = (String) iter.next();
+			String[] paramvalue = publicParameterNew.get(paramname);
+			if (paramvalue[0]!=null){
+				tmp.put(paramname, paramvalue);
+			}
+		}
+		return tmp;
+    }
+
+
+	public PageConfig getPageConfig(ServletContext servletContext) {
+		String requestedPageId = getRenderPath();
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Requested Page: " + requestedPageId);
+        }
+        return ((DriverConfiguration) servletContext.getAttribute(
+        		AttributeKeys.DRIVER_CONFIG)).getPageConfig(requestedPageId);
+	}
+    
+    public String getResourceWindow() {
+		return resourceWindow;
+	}
+
+	public void setResourceWindow(String resourceWindow) {
+		this.resourceWindow = resourceWindow;
+	}
 }

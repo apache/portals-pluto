@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -18,8 +19,6 @@ package org.apache.pluto.driver.services.impl.resource;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfig;
 import org.xml.sax.SAXException;
@@ -28,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 23, 2004
  */
@@ -96,28 +94,6 @@ public class ResourceConfigReader {
             "pluto-portal-driver/supports/window-state",
             "addSupportedWindowState", 0
         );
-
-        digester.addObjectCreate(
-            "pluto-portal-driver/portlet-app",
-            PortletApplicationConfig.class
-        );
-        digester.addBeanPropertySetter(
-            "pluto-portal-driver/portlet-app/context-path", "contextPath"
-        );
-
-        digester.addObjectCreate(
-            "pluto-portal-driver/portlet-app/portlets/portlet",
-            PortletWindowConfig.class
-        );
-        digester.addSetProperties(
-            "pluto-portal-driver/portlet-app/portlets/portlet", "name",
-            "portletName"
-        );
-        digester.addSetNext(
-            "pluto-portal-driver/portlet-app/portlets/portlet",
-            "addPortlet"
-        );
-        digester.addSetNext("pluto-portal-driver/portlet-app", "addPortletApp");
 
         digester.addObjectCreate(
             "pluto-portal-driver/render-config",

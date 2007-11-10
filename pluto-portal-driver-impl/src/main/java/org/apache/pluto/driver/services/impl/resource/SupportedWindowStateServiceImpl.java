@@ -31,6 +31,7 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.CustomWindowStateDD;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -165,7 +166,7 @@ public class SupportedWindowStateServiceImpl implements
             LOG.error( msg, e );
         }
         
-        List customWindowStates = portletAppDD.getCustomWindowStates();
+        List customWindowStates = portletAppDD.getCustomWindowState();
         if ( customWindowStates != null )
         {
             for ( Iterator i = customWindowStates.iterator(); i.hasNext(); )

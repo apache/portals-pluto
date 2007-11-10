@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,6 +16,8 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.*;
 
@@ -27,11 +30,13 @@ import java.io.InputStream;
  * Utilizes resource configuration from
  * <code>pluto-portal-driver-config.xml</code>
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Aug 10, 2005
  */
 public class PropertyConfigServiceImpl implements
     PropertyConfigService {
+
+    private static final Log LOG =
+        LogFactory.getLog(PropertyConfigServiceImpl.class);
 
     private ResourceConfig config;
 
@@ -49,6 +54,7 @@ public class PropertyConfigServiceImpl implements
             config = ResourceConfigReader.getFactory().parse(in);
         }
         catch(Exception e) {
+            LOG.error("Unable to parse resource config "+e.getMessage(), e);
             throw new DriverConfigurationException(e);
         }
     }
@@ -81,7 +87,7 @@ public class PropertyConfigServiceImpl implements
         return config.getSupportedWindowStates();
     }
 
-    public Set getPortletApplications() {
-        return config.getPortletApplications();
-    }
+//    public Set getPortletApplications() {
+//        return config.getPortletApplications();
+//    }
 }

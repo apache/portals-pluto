@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,23 +16,25 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import javax.portlet.PortalContext;
+
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.RequiredContainerServices;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
-
-import javax.portlet.PortalContext;
+import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
  * The Portal Driver's <code>PortletContainerServices</code> implementation. The
  * <code>PortletContainerServices</code> interface is the main integration point
  * between the pluto container and the surrounding portal.
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version 1.0
  * @since Sep 21, 2004
  */
@@ -81,16 +84,38 @@ implements RequiredContainerServices, OptionalContainerServices {
         return driverConfig.getPortalCallbackService();
     }
 
-    public PortletEnvironmentService getPortletEnvironmentService() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+    /**
+     * Returns null to use pluto's default
+     * @return
+     */
+    public PortletRegistryService getPortletRegistryService() {
+        return null;
     }
 
-    public PortletInvokerService getPortletInvokerService(InternalPortletWindow window) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public PortletEnvironmentService getPortletEnvironmentService() {
+        return null;
+    }
+
+    public PortletInvokerService getPortletInvokerService() {
+        return null;
     }
 
 	public CCPPProfileService getCCPPProfileService() {
 		return ccppProfileService;
 	}
+
+    public PortletInfoService getPortletInfoService() {
+    	return null;
+   }
+
+    public PortalAdministrationService getPortalAdministrationService() {
+    	return null;
+    }
+
+    public UserInfoService getUserInfoService() {
+    	return null;
+    }
+
 }
 

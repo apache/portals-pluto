@@ -51,13 +51,6 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${commons-logging.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>commons-digester</groupId>
             <artifactId>commons-digester</artifactId>
             <version>${commons-digester.version}</version>
@@ -111,6 +104,12 @@
             <artifactId>spring-beans</artifactId>
             <version>${springframework.version}</version>
             <scope>compile</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         
         <dependency>

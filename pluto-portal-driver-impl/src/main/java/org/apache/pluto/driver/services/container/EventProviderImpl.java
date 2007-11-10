@@ -53,12 +53,12 @@ import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.impl.EventImpl;
+import org.apache.pluto.internal.impl.InternalPortletWindowImpl;
 import org.apache.pluto.spi.EventProvider;
 
 public class EventProviderImpl implements org.apache.pluto.spi.EventProvider, Cloneable {
@@ -415,7 +415,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider, Cl
 	
 	private boolean isDeclaredAsPublishingEvent(QName qname) {
 		ServletContext servletContext = PortalRequestContext.getContext(request).getServletContext();
-		InternalPortletWindow internalPortletWindow = new org.apache.pluto.internal.impl.PortletWindowImpl(servletContext, this.portletWindow);
+		InternalPortletWindow internalPortletWindow = new InternalPortletWindowImpl(servletContext, this.portletWindow);
 		List<QName> events = internalPortletWindow.getPortletEntity()
 		.getPortletDefinition().getPublishingEvents();
 		if (events != null) {
