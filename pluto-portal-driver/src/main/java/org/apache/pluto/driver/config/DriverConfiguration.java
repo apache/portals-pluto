@@ -15,9 +15,9 @@
  */
 package org.apache.pluto.driver.config;
 
-import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PageConfig;
+import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
@@ -88,12 +88,6 @@ public interface DriverConfiguration {
 
     Collection getSupportedWindowStates();
 
-    Collection getPortletApplications();
-
-    PortletApplicationConfig getPortletApp(String id);
-
-    PortletWindowConfig getPortletWindowConfig(String id);
-
     Collection getPages();
 
     PageConfig getPageConfig(String pageId);
@@ -104,6 +98,12 @@ public interface DriverConfiguration {
     
     boolean isPortletModeSupported(String portletId, String mode);
 
+    boolean isWindowStateSupportedByPortal(String windowState);
+
+    boolean isWindowStateSupportedByPortlet(String portletId, String windowState);
+
+    boolean isWindowStateSupported(String portletId, String windowState);
+
 //
 // Utility methods for the container
 //
@@ -112,4 +112,7 @@ public interface DriverConfiguration {
     PortletPreferencesService getPortletPreferencesService();
 
     PortalURLParser getPortalUrlParser();
+    
+    public RenderConfigService getRenderConfigService();
+
 }

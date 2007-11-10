@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,18 +16,21 @@
  */
 package org.apache.pluto.driver;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.*;
-import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.config.DriverConfiguration;
-import org.apache.pluto.driver.config.AdminConfiguration;
-import org.springframework.web.context.WebApplicationContext;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.portlet.PortalContext;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.OptionalContainerServices;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletContainerFactory;
+import org.apache.pluto.RequiredContainerServices;
+import org.apache.pluto.driver.config.AdminConfiguration;
+import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Listener used to start up / shut down the Pluto Portal Driver upon startup /
@@ -42,8 +46,6 @@ import javax.portlet.PortalContext;
  * <li>Registration of the ContainerServices</li>
  * </ol>
  *
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version $Revision$ $Date$
  * @since Sep 22, 2004
  */

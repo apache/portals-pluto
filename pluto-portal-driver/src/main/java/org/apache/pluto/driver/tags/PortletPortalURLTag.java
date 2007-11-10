@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -20,6 +21,7 @@ import java.io.IOException;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -30,9 +32,7 @@ import org.apache.pluto.driver.core.PortalRequestContext;
 /**
  * The portlet URL tag is used to generate portal URL pointing to the current
  * portlet with specified portlet mode and window state.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  * @version 1.0
  * @since Oct 4, 2004
  */
@@ -41,10 +41,10 @@ public class PortletPortalURLTag extends BodyTagSupport {
     // Private Member Variables ------------------------------------------------
 
     /** The window state to be encoded in the portal URL. */
-    private String windowState = null;
+    private String windowState;
 
     /** The portlet mode to be encoded in the portal URL. */
-    private String portletMode = null;
+    private String portletMode;
 
 
     // Tag Attribute Accessors -------------------------------------------------
@@ -87,6 +87,9 @@ public class PortletPortalURLTag extends BodyTagSupport {
         HttpServletRequest request = (HttpServletRequest)
                 pageContext.getRequest();
 
+        HttpServletResponse response = (HttpServletResponse)
+                pageContext.getResponse();
+
         PortalRequestContext ctx = (PortalRequestContext)
             request.getAttribute(PortalRequestContext.REQUEST_KEY);
 
@@ -105,7 +108,7 @@ public class PortletPortalURLTag extends BodyTagSupport {
 
         // Print the portal URL as a string to the page.
         try {
-            pageContext.getOut().print(portalUrl.toString());
+            pageContext.getOut().print(response.encodeURL(portalUrl.toString()));
         } catch (IOException ex) {
             throw new JspException(ex);
         }

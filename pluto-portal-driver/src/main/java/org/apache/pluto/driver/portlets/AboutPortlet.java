@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -23,12 +24,9 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 /**
  * The pluto portal driver about portlet.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @since 2006-02-09
  */
 public class AboutPortlet extends GenericPortlet {
@@ -63,9 +61,4 @@ public class AboutPortlet extends GenericPortlet {
     	requestDispatcher.include(request, response);
     }
 
-	public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-		
-	}	
 }

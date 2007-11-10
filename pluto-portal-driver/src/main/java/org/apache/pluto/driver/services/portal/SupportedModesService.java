@@ -1,9 +1,10 @@
 /*
- * Copyright 2006 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -17,9 +18,8 @@ package org.apache.pluto.driver.services.portal;
 
 /**
  * Allows clients to determine if a particular PortletMode is supported
- * by the portal, a particular portlet, or both. 
- * 
- * @author <a href="mailto:esm@apache.org">Elliot Metsger</a>
+ * by the portal, a particular portlet, or both.
+ *
  * @version $Id$
  * @since September 9, 2006
  * @see PortletMode
@@ -49,4 +49,15 @@ public interface SupportedModesService extends DriverConfigurationService {
      */
     boolean isPortletModeSupportedByPortlet(String portletId, String mode);
 
+    /**
+     * For PTL.8.4 implementation of portlet-managed modes, defined in
+     * portlet.xml where portlet child element custom-portlet-mode/portal-managed 
+     * value is false.
+     * 
+     * @param portletId the ID of the portlet
+     * @param mode the portlet mode as defined in the custom-portlet-mode/portlet-mode
+     * and supports/portlet-mode elements.
+     * @return
+     */
+    boolean isPortletManagedMode(String portletId, String mode);    
 }

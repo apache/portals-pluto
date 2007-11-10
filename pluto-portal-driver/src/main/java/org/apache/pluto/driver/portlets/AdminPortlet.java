@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,52 +16,26 @@
  */
 package org.apache.pluto.driver.portlets;
 
-import java.io.IOException;
-
-import javax.portlet.GenericPortlet;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
-public class AdminPortlet extends GenericPortlet {
+public class AdminPortlet extends GenericPlutoPortlet {
 
 	private static final String VIEW_PAGE = "/WEB-INF/fragments/admin/view.jsp";
 	private static final String EDIT_PAGE = "/WEB-INF/fragments/admin/edit.jsp";
 	private static final String HELP_PAGE = "/WEB-INF/fragments/admin/help.jsp";
-	
+
 	// GenericPortlet Impl -----------------------------------------------------
-	
-    public void doView(RenderRequest request, RenderResponse response)
-    throws PortletException, IOException {
-        PortletContext context = getPortletContext();
-        PortletRequestDispatcher requestDispatcher =
-        		context.getRequestDispatcher(VIEW_PAGE);
-        requestDispatcher.include(request, response);
+
+
+    public String getViewPage() {
+        return VIEW_PAGE;
     }
 
-    protected void doEdit(RenderRequest request, RenderResponse response)
-    throws PortletException, IOException {
-        PortletContext context = getPortletContext();
-        PortletRequestDispatcher requestDispatcher =
-        		context.getRequestDispatcher(EDIT_PAGE);
-        requestDispatcher.include(request, response);
-    }
-    
-    protected void doHelp(RenderRequest request, RenderResponse response)
-    throws PortletException, IOException {
-    	PortletContext context = getPortletContext();
-    	PortletRequestDispatcher requestDispatcher =
-    			context.getRequestDispatcher(HELP_PAGE);
-    	requestDispatcher.include(request, response);
+    public String getEditPage() {
+        return EDIT_PAGE;
     }
 
-	public void serveResource(ResourceRequest arg0, ResourceResponse arg1) throws PortletException, IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");		
-	}
-    
+    public String getHelpPage(RenderRequest request) {
+        return HELP_PAGE;
+    }
 }

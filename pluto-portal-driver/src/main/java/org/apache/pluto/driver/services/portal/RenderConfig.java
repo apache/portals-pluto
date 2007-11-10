@@ -1,9 +1,10 @@
 /*
- * Copyright 2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,14 +16,18 @@
  */
 package org.apache.pluto.driver.services.portal;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.services.portal.PageConfig;
 
 import java.util.*;
 
 /**
- * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  */
 public class RenderConfig {
     private static final Log LOG =
@@ -118,6 +123,10 @@ public class RenderConfig {
     public void addPage(PageConfig config) {
         config.setOrderNumber(orderNumberCounter++);
         pages.put(config.getName(), config);
+    }
+    
+    public void removePage(PageConfig config){
+        pages.remove(config.getName());
     }
 
 }

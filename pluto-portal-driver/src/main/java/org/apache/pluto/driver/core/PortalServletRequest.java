@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -27,8 +28,12 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class PortalServletRequest extends HttpServletRequestWrapper {
+
+    private static final Log LOG = LogFactory.getLog(PortalServletRequest.class);
 
     private PortletWindow portletWindow = null;
 
@@ -92,6 +97,30 @@ public class PortalServletRequest extends HttpServletRequestWrapper {
             }
         }
 
+        // Currently this request is only used for rendering.
+        // Because of that, this will never be used, however, it's
+        // being left in since this request's scope may expand at some
+        // point!
+        String id = url.getActionWindow();
+        if (portletWindow.getId().getStringId().equals(id)) {
+            Enumeration params = super.getParameterNames();
+            while (params.hasMoreElements()) {
+                String name = params.nextElement().toString();
+                String[] values = super.getParameterValues(name);
+                if (portletParameters.containsKey(name)) {
+                    String[] temp = (String[]) portletParameters.get(name);
+                    String[] all = new String[values.length + temp.length];
+                    System.arraycopy(values, 0, all, 0, values.length);
+                    System.arraycopy(temp, 0, all, values.length, temp.length);
+                }
+                portletParameters.put(name, values);
+            }
+        }
+
+        if(LOG.isDebugEnabled()) {
+            LOG.debug("Initialized request parameter map for window: '"
+                +portletWindow.getId().getStringId()+"'");
+        }
     }
 
     /**

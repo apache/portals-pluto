@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,10 +30,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.driver.core.PortalServletResponse;
@@ -41,12 +42,10 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 
 /**
  * The portlet tag is used to render a portlet specified by the portlet ID.
- * 
- * @see javax.portlet.Portlet#render(RenderRequest, RenderResponse)
+ *
+ * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
  * @see org.apache.pluto.PortletContainer#doRender(PortletWindow, HttpServletRequest, HttpServletResponse)
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public class PortletTag extends BodyTagSupport {
 	
@@ -63,21 +62,21 @@ public class PortletTag extends BodyTagSupport {
     // Private Member Variables ------------------------------------------------
     
     /** The portlet ID attribute passed into this tag. */
-    private String portletId = null;
-    
+    private String portletId;
+
     /** The evaluated value of the portlet ID attribute. */
-    private String evaluatedPortletId = null;
-    
+    private String evaluatedPortletId;
+
     /** The cached portal servlet response holding rendering result. */
-    private PortalServletResponse response = null;
-    
+    private PortalServletResponse response;
+
     /** The cached rendering status: SUCCESS or FAILED. */
     private int status;
     
     /** The cached Throwable instance when fail to render the portlet. */
-    private Throwable throwable = null;
-    
-    
+    private Throwable throwable;
+
+
     // Tag Attribute Accessors -------------------------------------------------
     
     /**
@@ -110,10 +109,10 @@ public class PortletTag extends BodyTagSupport {
         
     	// Retrieve the portlet window config for the evaluated portlet ID.
         ServletContext servletContext = pageContext.getServletContext();
-        DriverConfiguration driverConfig = (DriverConfiguration)
-            	servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
-        PortletWindowConfig windowConfig = driverConfig
-        		.getPortletWindowConfig(evaluatedPortletId);
+
+        PortletWindowConfig windowConfig =
+            PortletWindowConfig.fromId(evaluatedPortletId);
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rendering Portlet Window: " + windowConfig);
         }
@@ -208,8 +207,8 @@ public class PortletTag extends BodyTagSupport {
      * @throws JspException  if an error occurs.
      */
     private void evaluatePortletId() throws JspException {
-        Object obj = ExpressionEvaluatorManager.evaluate(
-        		"portletId", portletId, String.class, this, pageContext);
+        ExpressionEvaluatorProxy proxy = ExpressionEvaluatorProxy.getProxy();
+        Object obj = proxy.evaluate(portletId, pageContext);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Evaluated portletId to: " + obj);
         }
