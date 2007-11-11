@@ -1,10 +1,11 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
@@ -77,8 +78,7 @@ implements PortletContext, InternalPortletContext {
      */
     public PortletContextImpl(String portletApplicationId,
                               ServletContext servletContext,
-                              PortletAppDD portletAppDD,
-                              String portletName) {
+                              PortletAppDD portletAppDD) {
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
         this.applicationId = portletApplicationId;
@@ -87,16 +87,6 @@ implements PortletContext, InternalPortletContext {
         if(applicationName == null) {
             applicationName = applicationId;
         }
-
-        
-        //retrieve portletDD
-        for (PortletDD portletDD : (List<PortletDD>)portletAppDD.getPortlets()) {
-			if (portletDD.getPortletName().equals(portletName))
-				this.portletDD = portletDD;
-			break;
-		}
-        assert(portletDD != null);  // else exception is thrown before (PortletServlet)
-        
         init();
     }
     
