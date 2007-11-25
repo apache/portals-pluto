@@ -1,12 +1,13 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,23 +31,22 @@ import java.util.Map;
 
 /**
  * Implementation of the portlet preferences validator.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class PreferencesValidatorImpl implements PreferencesValidator {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PreferencesValidatorImpl.class);
-	
+
     public static final String CHECK_VALIDATOR_COUNT = "checkValidatorCount";
-    
+
     /** Count of instances created. */
     private static final Map INSTANCE_COUNTER = new HashMap();
-    
+
     /** Count of invocation number of method <code>validate()</code>. */
     private int validateInvoked = 0;
-    
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Default no-arg constructor.
      */
@@ -62,10 +62,10 @@ public class PreferencesValidatorImpl implements PreferencesValidator {
     	}
     	INSTANCE_COUNTER.put(getClass().getName(), count);
     }
-    
-    
+
+
     // PreferencesValidator Impl -----------------------------------------------
-    
+
     public void validate(PortletPreferences preferences)
     throws ValidatorException {
     	validateInvoked++;
@@ -73,7 +73,7 @@ public class PreferencesValidatorImpl implements PreferencesValidator {
     	if (value != null && value.equalsIgnoreCase("true")) {
     		checkValidatorCount();
     	}
-    	
+
         //
         // TODO: Determine why we use this - I seem to remember it's a
         //   spec requirement, and fix it so that we don't have issues
@@ -102,14 +102,14 @@ public class PreferencesValidatorImpl implements PreferencesValidator {
                 }
             }
         }
-        
+
         if (!failedNames.isEmpty()) {
             throw new ValidatorException(
             		"One or more preferences do not pass the validation.",
             		failedNames);
         }
     }
-    
+
     private void checkValidatorCount() throws ValidatorException {
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("Checking validator count...");
@@ -127,5 +127,5 @@ public class PreferencesValidatorImpl implements PreferencesValidator {
     				null);
     	}
     }
-    
+
 }

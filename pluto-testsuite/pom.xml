@@ -61,15 +61,9 @@
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
+      <artifactId>commons-logging-api</artifactId>
       <version>${commons-logging.version}</version>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>taglibs</groupId>
@@ -89,6 +83,12 @@
   <!-- Build configuration -->
   <build>
     <finalName>pluto-testsuite</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <!-- configure maven-war-plugin to use updated web.xml -->
       <plugin>
@@ -116,6 +116,10 @@
         <configuration>
           <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

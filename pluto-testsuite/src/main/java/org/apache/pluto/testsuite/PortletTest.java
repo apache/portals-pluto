@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -22,39 +23,35 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.apache.pluto.testsuite.TestConfig;
-
 /**
  * Interface for pluto portlet test classes.
- * 
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
+ *
  */
 public interface PortletTest {
-	
+
 	/**
 	 * Returns the test suite name.
 	 * @return the test suite name.
 	 */
     public String getTestSuiteName();
-    
+
     /**
      * Initializes the portlet test using test configuration.
      * @param config  the test configuration.
      */
     public void init(TestConfig config);
-    
+
     /**
      * Returns the render parameters. This method will be invoked in
      * <code>Portlet.processAction()</code> method. All parameters returned
      * by this method will be set as render parameters.
-     * 
+     *
      * @param request  the portlet request.
      * @return a map of render parameters, key is the string name of the
      *         parameter, value is a string array.
      */
     public Map getRenderParameters(PortletRequest request);
-    
+
     /**
      * Runs the test.
      * @param config  the portlet config.
@@ -67,12 +64,12 @@ public interface PortletTest {
                               PortletContext context,
                               PortletRequest request,
                               PortletResponse response);
-    
+
     /**
      * Returns the test configuration.
      * @return the test configuration.
      */
     public TestConfig getConfig();
-    
+
 }
 

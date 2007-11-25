@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -23,13 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
 
 /**
- * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  */
 public class RenderParameterTest extends AbstractReflectivePortletTest {
 
@@ -37,22 +33,22 @@ public class RenderParameterTest extends AbstractReflectivePortletTest {
 
     private static final String RENDER_KEY = "org.apache.pluto.testsuite.PARAM_RENDER_KEY";
     private static final String RENDER_VALUE = "org.apache.pluto.testsuite.RENDER_VALUE";
-    
-    
+
+
     public Map getRenderParameters(PortletRequest request) {
         Map parameterMap = new HashMap();
         parameterMap.put(RENDER_KEY, new String[] { RENDER_VALUE });
         return parameterMap;
     }
-    
-    
+
+
     // Test Methods ------------------------------------------------------------
-    
+
     protected TestResult checkActionParametersNotHere(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure that action parameters are not available "
         		+ "in the following render request.");
-        
+
         String value = request.getParameter(ACTION_KEY);
         if (value == null) {
         	result.setReturnCode(TestResult.PASSED);
@@ -67,7 +63,7 @@ public class RenderParameterTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure that render parameters set in action "
         		+ "response are available in the following render request.");
-        
+
         String value = request.getParameter(RENDER_KEY);
         if (RENDER_VALUE.equals(value)) {
         	result.setReturnCode(TestResult.PASSED);
@@ -93,27 +89,11 @@ public class RenderParameterTest extends AbstractReflectivePortletTest {
         return result;
     }
 
-    protected TestResult checkSpecialCharactersEncoding(PortletResponse response) {
-    	TestResult result = new TestResult();
-    	result.setDescription("Ensure that render parameters are properly url-encoded.");
-    	PortletURL url = ((RenderResponse) response).createRenderURL();
-    	url.setParameter("Ä & ü", "< ö >");
-    	String test = url.toString().trim();
-    	if (test.indexOf("Ä") > -1 || test.indexOf("ü") > -1 
-    			|| test.indexOf("ö") > -1 || test.indexOf(" ") > -1) { 
-    		TestUtils.failOnAssertion("Generated URL", test, 
-    				"A properly url-form-encoded string", result);
-    	} else {
-    		result.setReturnCode(TestResult.PASSED);
-    	}
-    	return result;
-    }
-    
     protected TestResult checkParameterMap(PortletRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure that render request returns the correct "
         		+ "parameter map.");
-        
+
         Map parameterMap = request.getParameterMap();
         String[] values = (String[]) parameterMap.get(RENDER_KEY);
         if (values != null && values.length == 1
@@ -151,7 +131,7 @@ public class RenderParameterTest extends AbstractReflectivePortletTest {
             	hasRenderParameter = true;
             }
         }
-        
+
         if (!hasActionParameter && hasRenderParameter) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
