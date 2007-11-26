@@ -20,6 +20,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,8 +52,8 @@ public class NoOpTest implements PortletTest {
         return "NoOpTest";
     }
 
-    public Map getRenderParameters(PortletRequest request) {
-        return new HashMap();
+    public Map<String, String[]> getRenderParameters(PortletRequest request) {
+        return new HashMap<String, String[]>();
     }
 
     public TestResults doTest(PortletConfig config,
@@ -67,6 +69,11 @@ public class NoOpTest implements PortletTest {
 
     public TestConfig getConfig() {
         return config;
+    }
+
+    public void doHeaders(PortletConfig config, PortletContext context,
+            RenderRequest request, RenderResponse response) {
+        
     }
 
 }

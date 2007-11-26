@@ -174,7 +174,9 @@ public class DispatcherRequestTest extends AbstractReflectivePortletTest {
     
     public static class CompanionServlet extends HttpServlet {
     	
-        private static final String KEY_REQUEST_URI = "javax.servlet.include.request_uri";
+		private static final long serialVersionUID = -6032809452145653960L;
+		
+		private static final String KEY_REQUEST_URI = "javax.servlet.include.request_uri";
         private static final String KEY_CONTEXT_PATH = "javax.servlet.include.context_path";
         private static final String KEY_SERVLET_PATH = "javax.servlet.include.servlet_path";
         private static final String KEY_PATH_INFO = "javax.servlet.include.path_info";

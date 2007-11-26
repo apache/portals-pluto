@@ -86,9 +86,10 @@ public class TestConfigFactory {
      * @throws IOException  if an IO error occurs.
      * @see TestConfig
      */
-    public List createTestConfigs(InputStream in)
+    @SuppressWarnings("unchecked")
+	public List<TestConfig> createTestConfigs(InputStream in)
     throws SAXException, IOException {
-        return (List) digester.parse(in);
+        return (List<TestConfig>) digester.parse(in);
     }
 
 }

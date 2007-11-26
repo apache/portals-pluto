@@ -16,36 +16,40 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.testsuite.TestConfig;
-import org.apache.pluto.testsuite.PortletTest;
-import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestResults;
-
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletSession;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.testsuite.PortletTest;
+import org.apache.pluto.testsuite.TestConfig;
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestResults;
+import org.apache.pluto.testsuite.annotations.DefaultTestPhase;
+import org.apache.pluto.testsuite.annotations.TestPhase;
 
 /**
  */
 public abstract class AbstractReflectivePortletTest implements PortletTest {
 
-	/** Logger. */
-	private static final Log LOG = LogFactory.getLog(
-			AbstractReflectivePortletTest.class);
+    /** Logger. */
+    private static final Log LOG = LogFactory.getLog(
+            AbstractReflectivePortletTest.class);
 
-    private Map initParameters;
+    private Map<String, String> initParameters;
     private TestConfig config;
 
 
@@ -64,8 +68,8 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
      * @param request  the portlet request.
      * @return an empty Map object.
      */
-    public Map getRenderParameters(PortletRequest request) {
-        return new HashMap();
+    public Map<String, String[]> getRenderParameters(PortletRequest request) {
+        return new HashMap<String, String[]>();
     }
 
     public TestConfig getConfig() {
@@ -78,13 +82,13 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
      * @return the test suite name.
      */
     public String getTestSuiteName() {
-    	String className = getClass().getName();
-    	int index = className.lastIndexOf(".");
-    	if (index >= 0 && index < className.length() - 1) {
-    		return className.substring(index + 1);
-    	} else {
-    		return className;
-    	}
+        String className = getClass().getName();
+        int index = className.lastIndexOf(".");
+        if (index >= 0 && index < className.length() - 1) {
+            return className.substring(index + 1);
+        } else {
+            return className;
+        }
     }
 
     /**
@@ -102,36 +106,32 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
                               PortletResponse response) {
         TestResults results = new TestResults(getTestSuiteName());
 
-        for (Iterator it = getCheckMethods().iterator(); it.hasNext(); ) {
-        	Method method = (Method) it.next();
-        	debugWithName("Invoking test method: " + method.getName());
-        	try {
-        		TestResult result = invoke(method, config, context, request, response);
-        		if (result.getName() == null) {
-        			result.setName(method.getName());
-        		}
-        		results.add(result);
-        		debugWithName("Result: " + result.getReturnCodeAsString());
-        	} catch (Throwable th) {
-        		String message = "Error invoking " + method.getName()
-        				+ " (" + th.getClass().getName() + "): "
-        				+ th.getMessage();
-        		errorWithName(message, th);
-        		TestResult result = new TestResult();
-        		result.setName(method.getName());
-        		result.setReturnCode(TestResult.FAILED);
-        		result.setResultMessage(message);
-        		results.add(result);
+        for (Method method : getCheckMethods(request)) {
+            try {
+                TestResult result = invoke(method, config, context, request, response);
+                if (result.getName() == null) {
+                    result.setName(method.getName());
+                }
+                results.add(result);
+            } catch (Throwable th) {
+                String message = "Error invoking " + method.getName()
+                        + " (" + th.getClass().getName() + "): "
+                        + th.getMessage();
+                errorWithName(message, th);
+                TestResult result = new TestResult();
+                result.setName(method.getName());
+                result.setReturnCode(TestResult.FAILED);
+                result.setResultMessage(message);
+                results.add(result);
             }
         }
 
         return results;
     }
 
-
     // Protected Methods -------------------------------------------------------
 
-    protected Map getInitParameters() {
+    protected Map<String, String> getInitParameters() {
         return initParameters;
     }
 
@@ -139,15 +139,15 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
     // Private Methods ---------------------------------------------------------
 
     private void debugWithName(String message) {
-    	if (LOG.isDebugEnabled()) {
-    		LOG.debug("Test [" + getTestSuiteName() + "]: " + message);
-    	}
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Test [" + getTestSuiteName() + "]: " + message);
+        }
     }
 
     private void errorWithName(String message, Throwable cause) {
-    	if (LOG.isErrorEnabled()) {
-    		LOG.error("Test [" + getTestSuiteName() + "]: " + message, cause);
-    	}
+        if (LOG.isErrorEnabled()) {
+            LOG.error("Test [" + getTestSuiteName() + "]: " + message, cause);
+        }
     }
 
     /**
@@ -160,26 +160,39 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
      * </ul>
      * @return a list of check methods.
      */
-    private List getCheckMethods() {
-    	List checkMethods = new ArrayList();
-    	for (Class clazz = getClass();
-    			clazz != null && AbstractReflectivePortletTest.class.isAssignableFrom(clazz);
-    			clazz = clazz.getSuperclass()) {
-    		// debugWithName("Checking class: " + clazz.getName());
-    		Method[] methods = clazz.getDeclaredMethods();
-    		for (int i = 0; i < methods.length; i++) {
-    			int mod = methods[i].getModifiers();
-    			if ((Modifier.isPublic(mod) || Modifier.isProtected(mod))
-    					&& !Modifier.isAbstract(mod)
-    					&& methods[i].getName().startsWith("check")) {
-    				// debugWithName(" - got check method: " + methods[i].getName());
-    				checkMethods.add(methods[i]);
-    			}
-    		}
-    	}
+    private List<Method> getCheckMethods(PortletRequest request) {
+        List<Method> checkMethods = new ArrayList<Method>();
+        DefaultTestPhase dtp = getClass().getAnnotation(DefaultTestPhase.class);
+        String defaultPhase = dtp != null ? dtp.value() 
+                                          : PortletRequest.RENDER_PHASE;
+        String lifecyclePhase = (String) 
+                request.getAttribute(PortletRequest.LIFECYCLE_PHASE);
+        debugWithName("Default phase: " + defaultPhase);
+        debugWithName("Lifecycle Phase: " + lifecyclePhase);
+        for (Class<?> clazz = getClass();
+                clazz != null && AbstractReflectivePortletTest.class.isAssignableFrom(clazz);
+                clazz = clazz.getSuperclass()) {
+            // debugWithName("Checking class: " + clazz.getName());
+            Method[] methods = clazz.getDeclaredMethods();
+            String phase;
+            TestPhase testPhase;
+            for (int i = 0; i < methods.length; i++) {
+                int mod = methods[i].getModifiers();
+                testPhase = methods[i].getAnnotation(TestPhase.class);
+                phase = testPhase != null ? testPhase.value() : defaultPhase;
+                if ((Modifier.isPublic(mod) || Modifier.isProtected(mod))
+                       && lifecyclePhase.equals(phase)
+                       && !Modifier.isAbstract(mod)
+                       && methods[i].getName().startsWith("check")) {
+                    // debugWithName(" - got check method: " + methods[i].getName());
+                    debugWithName(" - got check method: " + methods[i].getName());
+                    checkMethods.add(methods[i]);
+                }
+            }
+        }
         return checkMethods;
     }
-
+    
     /**
      * Invokes the test method ('<code>check*</code>') by preparing method
      * parameters. A test method may accept the following types of parameters:
@@ -198,7 +211,7 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
                               PortletResponse response)
     throws IllegalAccessException, InvocationTargetException {
 
-        Class[] paramTypes = method.getParameterTypes();
+        Class<?>[] paramTypes = method.getParameterTypes();
         Object[] paramValues = new Object[paramTypes.length];
 
         for (int i = 0; i < paramTypes.length; i++) {
@@ -206,9 +219,9 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
                 paramValues[i] = config;
             } else if (paramTypes[i].equals(PortletContext.class)) {
                 paramValues[i] = context;
-            } else if (paramTypes[i].equals(PortletRequest.class)) {
+            } else if (paramTypes[i].isAssignableFrom(request.getClass())) {
                 paramValues[i] = request;
-            } else if (paramTypes[i].equals(PortletResponse.class)) {
+            } else if (paramTypes[i].isAssignableFrom(response.getClass())) {
                 paramValues[i] = response;
             } else if (paramTypes[i].equals(PortletSession.class)) {
                 paramValues[i] = request.getPortletSession();
@@ -226,10 +239,14 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
      * @see java.lang.Object#toString()
      */
     public String toString(){
-    	StringBuffer buffer = new StringBuffer();
-    	buffer.append(getClass().getName());
-    	buffer.append("[initParameters=").append(initParameters);
-    	buffer.append(";config=").append(config).append("]");
-    	return buffer.toString();
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(getClass().getName());
+        buffer.append("[initParameters=").append(initParameters);
+        buffer.append(";config=").append(config).append("]");
+        return buffer.toString();
+    }
+
+    public void doHeaders(PortletConfig config, PortletContext context,
+            RenderRequest request, RenderResponse response) {
     }
 }

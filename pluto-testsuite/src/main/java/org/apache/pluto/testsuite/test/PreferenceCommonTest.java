@@ -16,18 +16,17 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestUtils;
-
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ReadOnlyException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 /**
  * Common portlet preferences test.
@@ -376,9 +375,10 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         result.setSpecPLT("14.1");
 
         PortletPreferences preferences = request.getPreferences();
-        Map prefMap = preferences.getMap();
+        Map<String, String[]> prefMap = preferences.getMap();
         boolean hasAll = true;
-        for (Enumeration en = preferences.getNames(); en.hasMoreElements(); ) {
+        for (Enumeration<String> en = preferences.getNames(); 
+        		en.hasMoreElements(); ) {
             if (!prefMap.containsKey(en.nextElement())) {
                 hasAll = false;
                 break;
@@ -422,7 +422,7 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         }
 
         // Modify the returned preference map.
-    	Map prefMap = preferences.getMap();
+    	Map<String, String[]> prefMap = preferences.getMap();
     	String[] values = (String[]) prefMap.get(PREF_NAME);
     	String originalValue = null;
     	String modifiedValue = "Value modified in preferences map.";
@@ -457,9 +457,8 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
      */
     protected void logPreferences(PortletPreferences preferences) {
     	StringBuffer buffer = new StringBuffer();
-    	Map map = preferences.getMap();
-    	for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-    		String key = (String) it.next();
+    	Map<String, String[]> map = preferences.getMap();
+    	for (String key : map.keySet()) {
     		String[] values = (String[]) map.get(key);
     		buffer.append(key).append("=");
     		if (values != null) {

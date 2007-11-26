@@ -16,14 +16,14 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestUtils;
-
 import java.util.Enumeration;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 /**
  * Tests basic attribute retrieval and storage functions within the portlet
@@ -97,7 +97,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         }
 
         int found = 0;
-        for (Enumeration en = req.getAttributeNames();
+        for (Enumeration<String> en = req.getAttributeNames();
         		en.hasMoreElements(); ) {
             if (en.nextElement().toString().startsWith(KEY)) {
                 found++;
@@ -181,7 +181,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         }
 
         int found = 0;
-        for (Enumeration en = session.getAttributeNames();
+        for (Enumeration<String> en = session.getAttributeNames();
         		en.hasMoreElements(); ) {
         	String name = (String) en.nextElement();
             if (name.startsWith(KEY)) {
@@ -269,7 +269,7 @@ public class SimpleAttributeTest extends AbstractReflectivePortletTest {
         }
 
         int found = 0;
-        for (Enumeration en = context.getAttributeNames();
+        for (Enumeration<?> en = context.getAttributeNames();
         		en.hasMoreElements(); ) {
             if (en.nextElement().toString().startsWith(KEY)) {
                 found++;

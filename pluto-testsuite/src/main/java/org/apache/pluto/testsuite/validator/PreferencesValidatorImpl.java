@@ -40,7 +40,8 @@ public class PreferencesValidatorImpl implements PreferencesValidator {
     public static final String CHECK_VALIDATOR_COUNT = "checkValidatorCount";
 
     /** Count of instances created. */
-    private static final Map INSTANCE_COUNTER = new HashMap();
+    private static final Map<String, Integer> INSTANCE_COUNTER = 
+    	new HashMap<String, Integer>();
 
     /** Count of invocation number of method <code>validate()</code>. */
     private int validateInvoked = 0;
@@ -80,8 +81,9 @@ public class PreferencesValidatorImpl implements PreferencesValidator {
         //   anymore.  When enabled, all preferences fail in testsuite.
         //
         final String[] DEFAULT_VALUES = new String[] { "no values" };
-    	Collection failedNames = new ArrayList();
-        for (Enumeration en = preferences.getNames(); en.hasMoreElements(); ) {
+    	Collection<String> failedNames = new ArrayList<String>();
+        for (Enumeration<String> en = preferences.getNames(); 
+        		en.hasMoreElements(); ) {
             String name = (String) en.nextElement();
             String[] values = preferences.getValues(name, DEFAULT_VALUES);
             if (values != null) { // null values are allowed
