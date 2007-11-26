@@ -19,8 +19,6 @@ package org.apache.pluto.testsuite.test;
 
 import java.io.IOException;
 
-import org.apache.pluto.testsuite.TestResult;
-
 import javax.portlet.PortletSession;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,9 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.pluto.testsuite.TestResult;
+
 /**
  */
-public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTest {
+public class ExternalAppScopedAttributeTest 
+extends AbstractReflectivePortletTest {
 
     public static final String INT_KEY = "org.apache.pluto.testsuite.INTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
     public static final String EXT_KEY = "org.apache.pluto.testsuite.EXTERNALLY_SET_APP_SCOPED_SESSION_TEST_KEY";
@@ -78,7 +79,9 @@ public class ExternalAppScopedAttributeTest extends AbstractReflectivePortletTes
      */
     public static class CompanionServlet extends HttpServlet {
 
-        public void doGet(HttpServletRequest request,
+		private static final long serialVersionUID = 8921101365853307609L;
+
+		public void doGet(HttpServletRequest request,
                           HttpServletResponse response)
         throws ServletException, IOException {
             HttpSession session = request.getSession();

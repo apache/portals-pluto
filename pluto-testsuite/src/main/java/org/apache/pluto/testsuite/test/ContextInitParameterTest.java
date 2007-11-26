@@ -16,18 +16,19 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestUtils;
+import java.util.Enumeration;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
-import java.util.Enumeration;
+
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 /**
  * @version 1.0
  * @since Sep 15, 2004
  */
-public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
+public class ContextInitParameterTest extends AbstractReflectivePortletTest {
 
     private static final String TEST_PARAM_NAME = "test-parameter-name";
     private static final String TEST_PARAM_VALUE = "test-parameter-val";
@@ -43,9 +44,9 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest  {
         result.setSpecPLT("10.3.1");
 
         boolean found = false;
-        for (Enumeration en = context.getInitParameterNames();
+        for (Enumeration<String> en = context.getInitParameterNames();
         		!found && en.hasMoreElements(); ) {
-            String name = (String) en.nextElement();
+            String name = en.nextElement();
             if (TEST_PARAM_NAME.equals(name)) {
                 found = true;
             }

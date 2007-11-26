@@ -16,19 +16,20 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.pluto.testsuite.ActionTest;
-import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestUtils;
-
 import java.util.Enumeration;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
+import org.apache.pluto.testsuite.annotations.DefaultTestPhase;
 
 /**
  */
-public class ActionParameterTest extends AbstractReflectivePortletTest
-implements ActionTest {
+@DefaultTestPhase(PortletRequest.ACTION_PHASE)
+public class ActionParameterTest extends AbstractReflectivePortletTest {
 
 	/** Parameter key encoded in the action URL. */
     public static final String KEY = "org.apache.pluto.testsuite.PARAM_ACTION_KEY";
@@ -39,7 +40,7 @@ implements ActionTest {
 
     // Test Methods ------------------------------------------------------------
 
-    protected TestResult checkGetActionParameter(PortletRequest request) {
+    protected TestResult checkGetActionParameter(ActionRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL are "
         		+ "available in the action request.");
@@ -53,13 +54,13 @@ implements ActionTest {
         return result;
     }
 
-    protected TestResult checkGetActionParamerMap(PortletRequest request) {
+    protected TestResult checkGetActionParamerMap(ActionRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL are "
         		+ "available in the action request parameter map.");
 
-        Map parameterMap = request.getParameterMap();
-        String[] values = (String[]) parameterMap.get(KEY);
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        String[] values = parameterMap.get(KEY);
         if (values != null && values.length == 1 && VALUE.equals(values[0])) {
         	result.setReturnCode(TestResult.PASSED);
         } else {
@@ -69,15 +70,15 @@ implements ActionTest {
         return result;
     }
 
-    protected TestResult checkParameterNames(PortletRequest request) {
+    protected TestResult checkParameterNames(ActionRequest request) {
         TestResult result = new TestResult();
         result.setDescription("Ensure parameters encoded in action URL "
         		+ "exists in the parameter name enumeration.");
 
         boolean hasParameterName = false;
-        for (Enumeration en = request.getParameterNames();
+        for (Enumeration<String> en = request.getParameterNames();
         		!hasParameterName && en.hasMoreElements(); ) {
-        	String name = (String) en.nextElement();
+        	String name = en.nextElement();
         	if (KEY.equals(name)) {
         		hasParameterName = true;
         	}

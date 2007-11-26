@@ -34,6 +34,8 @@ import java.util.Map;
  */
 public class TestConfig implements Serializable {
 
+	private static final long serialVersionUID = -6878431356359186658L;
+
 	// Private Member Variables ------------------------------------------------
 
 	/** PortletTest class name. */
@@ -44,14 +46,14 @@ public class TestConfig implements Serializable {
 
     private String displayURI;
 
-    private Map initParameters = new HashMap();
+    private Map<String, String> initParameters = new HashMap<String, String>();
 
     /**
      * The action parameters list holding TestConfig.Parameter objects.
      * We are not using Map to hold action parameters because parameters with
      * the same name are allowed.
      */
-    private List actionParameters = new ArrayList();
+    private List<Parameter> actionParameters = new ArrayList<Parameter>();
 
     /**
      * The render parameters list holding TestConfig.Parameter objects.
@@ -60,7 +62,7 @@ public class TestConfig implements Serializable {
      *
      * FIXME: when is this field used?
      */
-    private List renderParameters = new ArrayList();
+//    private List renderParameters = new ArrayList();
 
 
     // Constructor -------------------------------------------------------------
@@ -102,7 +104,7 @@ public class TestConfig implements Serializable {
         initParameters.put(parameter, value);
     }
 
-    public Map getInitParameters() {
+    public Map<String, String> getInitParameters() {
         return Collections.unmodifiableMap(initParameters);
     }
 
@@ -110,23 +112,27 @@ public class TestConfig implements Serializable {
     	actionParameters.add(new Parameter(name, value));
     }
 
-    public List getActionParameters() {
+    public List<Parameter> getActionParameters() {
     	return actionParameters;
     }
 
     /**
      * FIXME: why is this method required?
      */
+    /*
     public void addRenderParameter(String name, String value) {
     	renderParameters.add(new Parameter(name, value));
     }
+    */
 
     /**
      * FIXME: when is this method used?
      */
+    /*
     public List getRenderParameters() {
     	return renderParameters;
     }
+    */
 
     public String toString() {
     	StringBuffer buffer = new StringBuffer();
