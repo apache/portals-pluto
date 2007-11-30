@@ -30,6 +30,11 @@ import java.util.ArrayList;
  * @since Mar 6, 2005
  */
 public class PortletDD {
+    /**
+     * The value of the expirationCache property when no expiration cache was configured
+     * in portlet.xml for this portlet descriptor.
+     */
+    public static final int EXPIRATION_CACHE_UNSET = Integer.MIN_VALUE;
 
 	// Private Member Variables ------------------------------------------------
 
@@ -42,7 +47,7 @@ public class PortletDD {
     /** The descriptions of the portlet. */
     private List descriptions = new ArrayList();
 
-    private int expirationCache = 0;
+    private int expirationCache = EXPIRATION_CACHE_UNSET;
 
     /** The class which implements the portlet interface. */
     private String portletClass = null;
