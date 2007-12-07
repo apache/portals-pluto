@@ -87,6 +87,8 @@ public interface DriverConfiguration {
     Collection getSupportedPortletModes();
 
     Collection getSupportedWindowStates();
+    
+//    Collection getPortletApplications();
 
     Collection getPages();
 

@@ -53,6 +53,7 @@ import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
@@ -382,11 +383,11 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider, Cl
 	 * 
 	 */
 	private Collection<PortletWindowConfig> getAllPortlets(DriverConfiguration driverConfig) {
-		Collection<PortletApplicationConfig> apps = driverConfig.getPortletApplications();
+//		Collection<PortletApplicationConfig> apps = driverConfig.getPortletApplications();
 		Collection<PortletWindowConfig> portlets = new ArrayList<PortletWindowConfig>();
-		for (PortletApplicationConfig app : apps) {
-			portlets.addAll(app.getPortlets());			
-		}
+//		for (PortletApplicationConfig app : apps) {
+//			portlets.addAll(app.getPortlets());			
+//		}
 		return portlets;
 	}
 

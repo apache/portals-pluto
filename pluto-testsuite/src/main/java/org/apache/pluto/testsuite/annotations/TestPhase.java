@@ -14,15 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.internal;
+package org.apache.pluto.testsuite.annotations;
 
-import javax.portlet.ResourceRequest;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * The internal resource request interface extends the internal portlet request
- * interface and provides some resource-specific methods.
- * @since 2.0
+ * A test method can be marked to be run during a specific portlet lifecycle
+ * phase using this annotation.  It will override the value of DefaultTestPhase
+ * if DefaultTestPhase is used on the enclosing class.
+ * 
+ * @author Benjamin C. Gould
  */
-public interface InternalResourceRequest extends InternalPortletRequest,ResourceRequest {
-	
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TestPhase {
+
+    public String value();
+    
 }

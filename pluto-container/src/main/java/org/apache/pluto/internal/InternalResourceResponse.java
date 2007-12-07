@@ -16,11 +16,13 @@
  */
 package org.apache.pluto.internal;
 
+import javax.portlet.ResourceResponse;
+
 /**
  * The internal resource response interface extends the internal portlet response
  * interface and provides some resource-specific methods.
  * @since 2.0
  */
-public interface InternalResourceResponse extends InternalPortletResponse {
+public interface InternalResourceResponse extends InternalPortletResponse,ResourceResponse {
 	
 }

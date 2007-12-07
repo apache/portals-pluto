@@ -17,6 +17,24 @@
  */
 package org.apache.pluto.core;
 
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
@@ -25,19 +43,6 @@ import org.apache.pluto.internal.impl.PortletRequestImpl;
 import org.apache.pluto.internal.impl.PortletResponseImpl;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.util.StringManager;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Used internally to invoke/dispatch requests from the container to
@@ -100,6 +105,38 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
             LOG.debug("Performing Render Invocation");
         }
         invoke(request, response, window, Constants.METHOD_RENDER);
+    }
+    
+    /**
+     * Invoke the portlet with a render request.
+     *
+     * @param request  action request used for the invocation.
+     * @param response action response used for the invocation.
+     * @see PortletServlet
+     * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
+     */
+    public void event(HttpServletRequest request, HttpServletResponse response, InternalPortletWindow window)
+        throws IOException, PortletException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Performing Render Invocation");
+        }
+        invoke((PortletRequest)request, (PortletResponse)response, window, Constants.METHOD_EVENT);
+    }
+    
+    /**
+     * Invoke the portlet with a resource request.
+     *
+     * @param request  resource request used for the invocation.
+     * @param response resource response used for the invocation.
+     * @see PortletServlet
+     * @see javax.portlet.Portlet#resource(javax.portlet.ResourceRequest,javax.portlet.ResourceResponse)
+     */
+    public void serveResource(ResourceRequest request, ResourceResponse response, InternalPortletWindow window)
+        throws IOException, PortletException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Performing Resource Invocation");
+        }
+        invoke(request, response, window, Constants.METHOD_RESOURCE);
     }
 
     /**

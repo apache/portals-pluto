@@ -27,6 +27,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.StateAwareResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.driver.core.PortletWindowImpl;
+//import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletResponse;
@@ -239,7 +240,7 @@ public class PortletContainerImpl implements PortletContainer,
 
         try {
             ContainerInvocation.setInvocation(this, internalPortletWindow);
-            invoker.render(resourceRequest, resourceResponse, internalPortletWindow);
+            invoker.serveResource(resourceRequest, resourceResponse, internalPortletWindow);
         } finally {
             ContainerInvocation.clearInvocation();
         }
@@ -296,7 +297,7 @@ public class PortletContainerImpl implements PortletContainer,
         PortletURLProvider portletURLProvider = requiredContainerServices.getPortalCallbackService().getPortletURLProvider(request, internalPortletWindow);
         
         portletURLProvider.savePortalURL(request);
-        saveChangedParameters(actionRequest, actionResponse, portletURLProvider);
+        saveChangedParameters((PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, portletURLProvider);
         
         EventProvider provider = this.getRequiredContainerServices().getPortalCallbackService().
 			getEventProvider(request,portletWindow);
@@ -313,7 +314,7 @@ public class PortletContainerImpl implements PortletContainer,
             		.getPortalCallbackService()
             		.getPortletURLProvider(request, internalPortletWindow);
             
-            saveChangedParameters(actionRequest, actionResponse, redirectURL);
+            saveChangedParameters((PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, redirectURL);
             
             // Encode the redirect URL to a string.
             location = actionResponse.encodeRedirectURL(redirectURL.toString());
@@ -487,8 +488,11 @@ public class PortletContainerImpl implements PortletContainer,
 
     	ensureInitialized();
 
-    	InternalPortletWindow internalPortletWindow =
-    		new PortletWindowImpl(servletContext, window);
+    	InternalPortletWindow internalPortletWindow = new InternalPortletWindowImpl(
+                PortletContextManager.getPortletContext(servletContext,
+                		window.getContextPath()), window);
+//    	InternalPortletWindow internalPortletWindow =
+//    		new PortletWindowImpl(servletContext, window);
     	debugWithName("Event request received for portlet: "
     			+ window.getPortletName());
 
@@ -497,8 +501,18 @@ public class PortletContainerImpl implements PortletContainer,
     	EventResponseImpl eventResponse = new EventResponseImpl(
     			this, internalPortletWindow, request, response);
 
-    	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
-    	invoker.event(eventRequest, eventResponse);
+    	
+    	PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        try {
+            ContainerInvocation.setInvocation(this, internalPortletWindow);
+            invoker.event(request, response, internalPortletWindow);
+        }
+        finally {
+            ContainerInvocation.clearInvocation();
+        }
+//    	PortletInvoker invoker = new PortletInvoker(internalPortletWindow);
+//    	invoker.event(eventRequest, eventResponse);
 
     	debugWithName("Portlet event processed for: "
     			+ window.getPortletName());

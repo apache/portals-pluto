@@ -117,9 +117,15 @@
           <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
         </configuration>
       </plugin>
+      
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-remote-resources-plugin</artifactId>
+      	<groupId>org.apache.maven.plugins</groupId>
+      	<artifactId>maven-compiler-plugin</artifactId>
+      	<!-- best lock down version of the plugin too -->
+      	<configuration>
+      		<source>1.5</source>
+      		<target>1.5</target>
+      	</configuration>
       </plugin>
     </plugins>
   </build>

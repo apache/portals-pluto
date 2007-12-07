@@ -25,6 +25,8 @@ import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalRenderRequest;
 import org.apache.pluto.internal.InternalRenderResponse;
+import org.apache.pluto.internal.InternalResourceRequest;
+import org.apache.pluto.internal.InternalResourceResponse;
 
 /**
  * Factory Service for creating Portlet request and responses.
@@ -56,4 +58,16 @@ public interface PortletEnvironmentService {
         HttpServletRequest servletRequest,
         HttpServletResponse servletResponse,
         InternalPortletWindow internalPortletWindow);
+    
+    InternalResourceRequest createResourceRequest(
+            PortletContainer container,
+            HttpServletRequest servletRequest,
+            HttpServletResponse servletResponse,
+            InternalPortletWindow internalPortletWindow);
+    
+    InternalResourceResponse createResourceResponse(
+            PortletContainer container,
+            HttpServletRequest servletRequest,
+            HttpServletResponse servletResponse,
+            InternalPortletWindow internalPortletWindow);
 }
