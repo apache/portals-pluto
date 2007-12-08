@@ -141,7 +141,7 @@ class InstallationDependency {
         SHARED.add(DESCRIPTOR_IMPL);
         SHARED.add(CONTAINER);
         SHARED.add(TAGLIB);
-//        SHARED.add(CASTOR);
+        SHARED.add(CASTOR);
         
         SHARED.add(JAXB_API);
         SHARED.add(JAXB_IMPL);
@@ -151,6 +151,7 @@ class InstallationDependency {
         
         SHARED.add(ACTIVATION);
 
+        SHARED.add(CCPP_API);
 
     }
 
