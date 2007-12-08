@@ -39,6 +39,7 @@ public class AboutPortlet extends GenericPortlet {
 	
     public void doView(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
+    	response.setContentType("text/html");
         PortletContext context = getPortletContext();
         PortletRequestDispatcher requestDispatcher =
         		context.getRequestDispatcher(VIEW_PAGE);
@@ -47,6 +48,7 @@ public class AboutPortlet extends GenericPortlet {
 
     protected void doEdit(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
+    	response.setContentType("text/html");
         PortletContext context = getPortletContext();
         PortletRequestDispatcher requestDispatcher =
         		context.getRequestDispatcher(EDIT_PAGE);
@@ -55,6 +57,7 @@ public class AboutPortlet extends GenericPortlet {
     
     protected void doHelp(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
+    	response.setContentType("text/html");
     	PortletContext context = getPortletContext();
     	PortletRequestDispatcher requestDispatcher =
     			context.getRequestDispatcher(HELP_PAGE);
