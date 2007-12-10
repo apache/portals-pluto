@@ -37,7 +37,7 @@ limitations under the License.
 <p>
   Please select one of the following tests:
   <table>
-    <c:forEach var="testConfig" items="${tests}" varStatus="status">
+    <c:forEach var="testConfig" items="${testConfigs}" varStatus="status">
       <tr>
         <td>
           # <c:out value="${status.index}"/>.

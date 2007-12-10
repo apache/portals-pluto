@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.core.ResourceURLProviderImpl;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortalCallbackService;
