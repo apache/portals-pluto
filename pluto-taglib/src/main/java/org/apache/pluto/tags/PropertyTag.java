@@ -21,7 +21,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 
 /**
- * A tag handler for the <CODE>property</CODE> tag. Defines a propery that
+ * A tag handler for the <CODE>property</CODE> tag. Defines a property that
  * can be added to a <CODE>actionURL</CODE>, a <CODE>resourceURL</CODE> or a <CODE>renderURL</CODE>
  * <BR>The following attributes are mandatory:
  *   <UL>
@@ -35,8 +35,8 @@ public class PropertyTag extends TagSupport {
 	
 	private static final long serialVersionUID = 286L;
 
-    private String name;
-    private String value;
+    private String name = null;
+    private String value = null;
 
     /**
      * Processes the <CODE>param</CODE> tag.
@@ -48,9 +48,10 @@ public class PropertyTag extends TagSupport {
 
         if (urlTag == null) {
             throw new JspException(
-                "the 'param' Tag must have actionURL, renderURL or resourceURL as a parent");
+                "the 'property' Tag must have a actionURL, renderURL " +
+                "or resourceURL tag as a parent");
         }
-
+        
         urlTag.addProperty(getName(), getValue());
 
         return SKIP_BODY;

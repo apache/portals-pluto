@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,8 +35,8 @@ public class ParamTag extends TagSupport {
 	
 	private static final long serialVersionUID = 286L;
 
-    private String name;
-    private String value;
+    private String name = null;
+    private String value = null;
 
     /* (non-Javadoc)
      * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
@@ -48,7 +48,8 @@ public class ParamTag extends TagSupport {
 
         if (urlTag == null) {
             throw new JspException(
-                "the 'param' Tag must have actionURL, renderURL or resourceURL as a parent");
+                "the 'param' Tag must have a actionURL, renderURL " +
+                "or resourceURL tag as a parent");
         }
 
         urlTag.addParameter(getName(), getValue());
@@ -60,7 +61,7 @@ public class ParamTag extends TagSupport {
      * Returns the name.
      * @return String
      */
-    public String getName() throws JspException {
+    public String getName() {
         return name;
     }
 

@@ -14,45 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
-
- */
-
-/*
- * Created on Feb 21, 2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
- */
 package org.apache.pluto.tags;
+
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
+
 /**
- * 
- * A tag handler for the <CODE>actionURL</CODE> tag,which creates a url that
- * points to the current Portlet and triggers an action request with the
+ * A tag handler for the <CODE>renderURL</CODE> tag,which creates a url that
+ * points to the current Portlet and triggers a render request with the
  * supplied parameters.
  * 
  * @version 2.0
  */
-public class ActionURLTag extends PortletURLTag {
+public class RenderURLTag168 extends PortletURLTag286 {
 	
 	private static final long serialVersionUID = 286L;
 
     /**
-     * Creates an action PortletURL 
+     * Creates a render PortletURL
      * @param portletResponse PortletResponse
      * @return PortletURL
      */
 	@Override
-	protected PortletURL createPortletUrl(PortletResponse portletResponse)
-	{
-		return ((RenderResponse)portletResponse).createActionURL();
+	protected PortletURL createPortletUrl(PortletResponse portletResponse){
+		return ((RenderResponse)portletResponse).createRenderURL();
 	}
-    
     
 }
 

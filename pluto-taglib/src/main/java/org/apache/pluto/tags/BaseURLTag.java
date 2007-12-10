@@ -40,35 +40,20 @@ import javax.portlet.BaseURL;
 
 public abstract class BaseURLTag extends TagSupport {
 	
-	/**
-	 * TagExtraInfo class for BaseUrlTag.
-	 */
-	public static class TEI extends TagExtraInfo {
-		
-        public VariableInfo[] getVariableInfo(TagData tagData) {
-            VariableInfo vi[] = null;
-            String var = tagData.getAttributeString("var");
-            if (var != null) {
-                vi = new VariableInfo[1];
-                vi[0] =
-                	new VariableInfo(var, "java.lang.String", true,
-                                 VariableInfo.AT_BEGIN);
-            }
-            return vi;
-        }
-
-    }
-	
-	//--------------------------------------------------------------------------
-	
 	protected String secure = null;
-	protected Boolean secureBoolean;
+	
+	protected Boolean secureBoolean = null;
+	
 	protected String var = null;
-	//TODO: not the default value (should be true)
+	
+	//Attention: for JSR 286 Tags the default value is true
 	protected Boolean escapeXml = false;
 		
-	protected Map<String,List<String>> parametersMap = new HashMap<String,List<String>> ();
-	protected Map<String, List<String>> propertiesMap = new HashMap<String,List<String>> ();
+	protected Map<String, List<String>> parametersMap = 
+		new HashMap<String, List<String>>();
+	
+	protected Map<String, List<String>> propertiesMap = 
+		new HashMap<String, List<String>>();
 	
 	
 
@@ -90,11 +75,9 @@ public abstract class BaseURLTag extends TagSupport {
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#release()
 	 */
-	//Called at the end of the lifecycle.
 	@Override
 	public void release(){
 		super.release();
-		parametersMap = null;
 		secureBoolean = null;
 	}
 	
@@ -113,7 +96,12 @@ public abstract class BaseURLTag extends TagSupport {
      * @return boolean
      */
     public boolean getSecureBoolean() {
-        return this.secureBoolean.booleanValue();
+    	if(this.secureBoolean != null){
+    		return this.secureBoolean.booleanValue();
+    	}
+    	else{
+    		return false;
+    	}
     }  
     
     
@@ -231,13 +219,13 @@ public abstract class BaseURLTag extends TagSupport {
      * @return void
      */
     protected void setUrlParameters(BaseURL url) {
-    	Set<String> keySet = parametersMap.keySet();
     	
-		
+    	Set<String> keySet = parametersMap.keySet();
+    			
 		for(String key : keySet){
 			
 			List<String> valueList = parametersMap.get(key);
-			
+		
 			String[] valueArray = valueList.toArray(new String[0]);
 			
 			url.setParameter(key, valueArray);
@@ -270,11 +258,13 @@ public abstract class BaseURLTag extends TagSupport {
      * @return String 
      */
     protected String doEscapeXml(String str) {
-        str = replace(str,"&","&amp;");
-        str = replace(str,"<","&lt;");
-        str = replace(str,">","&gt;");
-        str = replace(str,"\"","&#034;");
-        str = replace(str,"'","&#039;");
+    	if(!isEmpty(str)){
+    		str = str.replaceAll("&", "&amp;");
+    		str = str.replaceAll("<", "&lt;");
+    		str = str.replaceAll(">", "&gt;");
+    		str = str.replaceAll("\"", "&#034;");
+    		str = str.replaceAll("'", "&#039;");
+    	}
         return str;
     }
        
@@ -286,43 +276,26 @@ public abstract class BaseURLTag extends TagSupport {
      * @return boolean
      */
     private boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
+        return ((str == null) || (str.length() == 0));
     }
     
-    
-    /**
-     * Replaces String repl with String with in String text.
-     * This method is a copy from <code>org.apache.commons.lang.StringUtils</code> class.
-     * @param text - the String where to replace 
-     * @param repl - the sub-String what to replace
-     * @param with - the sub-String what to replace repl with
-     * @return String 
-     */
-    private String replace(String text, String repl, String with) {
-    	int max=-1;
-        if (isEmpty(text) || isEmpty(repl) || with == null || max == 0) {
-            return text;
-        }
-        int start = 0;
-        int end = text.indexOf(repl, start);
-        if (end == -1) {
-            return text;
-        }
-        int replLength = repl.length();
-        int increase = with.length() - replLength;
-        increase = (increase < 0 ? 0 : increase);
-        increase *= (max < 0 ? 16 : (max > 64 ? 64 : max));
-        StringBuffer buf = new StringBuffer(text.length() + increase);
-        while (end != -1) {
-            buf.append(text.substring(start, end)).append(with);
-            start = end + replLength;
-            if (--max == 0) {
-                break;
+        
+	/**
+	 * TagExtraInfo class for BaseUrlTag.
+	 */
+	public static class TEI extends TagExtraInfo {
+		
+        public VariableInfo[] getVariableInfo(TagData tagData) {
+            VariableInfo vi[] = null;
+            String var = tagData.getAttributeString("var");
+            if (var != null) {
+                vi = new VariableInfo[1];
+                vi[0] =
+                	new VariableInfo(var, "java.lang.String", true,
+                                 VariableInfo.AT_BEGIN);
             }
-            end = text.indexOf(repl, start);
+            return vi;
         }
-        buf.append(text.substring(start));
-        return buf.toString();
-    }
 
+    }
 }

@@ -28,7 +28,7 @@ class ApacheTaglibStandardExpressionEvaluatorProxy extends ExpressionEvaluatorPr
 
     static {
         try {
-            Class expressionEvaluatorManagerClass = Class.forName("org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager");
+            Class<?> expressionEvaluatorManagerClass = Class.forName("org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager");
             evaluateMethod = expressionEvaluatorManagerClass.getMethod("evaluate", new Class[] { String.class, String.class,  Class.class, PageContext.class});
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Unable to find ExpressionEvaluatorManager.  Make sure standard.jar is in your classpath");

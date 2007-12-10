@@ -14,35 +14,83 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.tags;
+/* 
 
+ */
+
+/*
+ * Created on Feb 21, 2003
+ *
+ * To change this generated comment go to 
+ * Window>Preferences>Java>Code Generation>Code Template
+ */
+package org.apache.pluto.tags;
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-
+import javax.servlet.jsp.JspException;
 
 /**
- * A tag handler for the <CODE>renderURL</CODE> tag,which creates a url that
- * points to the current Portlet and triggers a render request with the
+ * 
+ * A tag handler for the <CODE>actionURL</CODE> tag,which creates a url that
+ * points to the current Portlet and triggers an action request with the
  * supplied parameters.
  * 
  * @version 2.0
  */
-public class RenderURLTag extends PortletURLTag {
+public class ActionURLTag286 extends PortletURLTag286 {
 	
 	private static final long serialVersionUID = 286L;
 
+	private String 	name = null;
+	
+	
+	
     /**
-     * Creates a render PortletURL
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	
+
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.tags.PortletURLTag#doEndTag()
+	 */
+	@Override
+	public int doEndTag() throws JspException {
+		
+		if(name != null){
+			addParameter("javax.portlet.action", name);
+		}
+		
+		return super.doEndTag();
+	}
+
+
+
+	/**
+     * Creates an action PortletURL 
      * @param portletResponse PortletResponse
      * @return PortletURL
      */
 	@Override
-	protected PortletURL createPortletUrl(PortletResponse portletResponse)
-	{
-		return ((RenderResponse)portletResponse).createRenderURL();
+	protected PortletURL createPortletUrl(PortletResponse portletResponse){
+		return ((RenderResponse)portletResponse).createActionURL();
 	}
+    
     
 }
 

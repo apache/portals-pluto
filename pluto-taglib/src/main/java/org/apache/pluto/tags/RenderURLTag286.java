@@ -14,17 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.tags.el;
-
-import javax.servlet.jsp.JspException;
+package org.apache.pluto.tags;
 
 
-public class ParamTag extends org.apache.pluto.tags.ParamTag {
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
+
+/**
+ * A tag handler for the <CODE>renderURL</CODE> tag,which creates a url that
+ * points to the current Portlet and triggers a render request with the
+ * supplied parameters.
+ * 
+ * @version 2.0
+ */
+public class RenderURLTag286 extends PortletURLTag286 {
+	
 	private static final long serialVersionUID = 286L;
 
-	public String getValue() throws JspException {
-        return ExpressionEvaluatorProxy.getProxy().evaluate(super.getValue(), pageContext);
-    }
-
+    /**
+     * Creates a render PortletURL
+     * @param portletResponse PortletResponse
+     * @return PortletURL
+     */
+	@Override
+	protected PortletURL createPortletUrl(PortletResponse portletResponse){
+		return ((RenderResponse)portletResponse).createRenderURL();
+	}
+    
 }
+

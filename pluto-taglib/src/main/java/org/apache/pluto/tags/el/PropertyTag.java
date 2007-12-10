@@ -19,7 +19,7 @@ package org.apache.pluto.tags.el;
 import javax.servlet.jsp.JspException;
 
 
-public class ParamTag extends org.apache.pluto.tags.ParamTag {
+public class PropertyTag extends org.apache.pluto.tags.PropertyTag {
 
 	private static final long serialVersionUID = 286L;
 
