@@ -30,8 +30,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.VariableInfo;
 
 /**
- * A tag handler for the <CODE>defineObjects</CODE> tag. Creates the
- * following variables to be used in the JSP: 
+ * A tag handler for the <CODE>defineObjects</CODE> tag as defined in the JSR 168.
+ * Creates the following variables to be used in the JSP: 
  * <UL> 
  * <LI><CODE>{@link RenderRequest} renderRequest</CODE>
  * <LI><CODE>{@link RenderResponse} renderResponse</CODE> 

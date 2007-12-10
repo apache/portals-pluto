@@ -22,6 +22,7 @@ import java.io.IOException;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -30,9 +31,9 @@ import javax.servlet.jsp.PageContext;
 
 
 /**
- * A tag handler for the <CODE>resourceURL</CODE> tag,which creates a url that
- * points to the current Portlet and triggers a resource request with the
- * supplied parameters.
+ * A tag handler for the <CODE>resourceURL</CODE> tag as defined in the JSR 286.
+ * Creates a url that points to the current Portlet and triggers a 
+ * resource request with the supplied parameters.
  * 
  * @version 2.0
  */
@@ -67,8 +68,15 @@ public class ResourceURLTag286 extends BaseURLTag {
             .getAttribute(Constants.PORTLET_RESPONSE);
 
         if (portletResponse != null) {
-        	
-            url = ((RenderResponse)portletResponse).createResourceURL();
+        	if(portletResponse instanceof RenderResponse){
+        		url = ((RenderResponse)portletResponse).createResourceURL();	
+        	}
+        	else if(portletResponse instanceof ResourceResponse){
+        		url = ((ResourceResponse)portletResponse).createResourceURL();
+        	}
+        	else{
+        		throw new JspException();
+        	}
             
             if (secure != null) {
                 try {                	

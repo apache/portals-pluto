@@ -29,6 +29,7 @@ package org.apache.pluto.tags;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceResponse;
 import javax.servlet.jsp.JspException;
 
 /**
@@ -88,7 +89,13 @@ public class ActionURLTag286 extends PortletURLTag286 {
      */
 	@Override
 	protected PortletURL createPortletUrl(PortletResponse portletResponse){
-		return ((RenderResponse)portletResponse).createActionURL();
+		if (portletResponse instanceof RenderResponse) {
+			return ((RenderResponse)portletResponse).createActionURL();			
+		}
+		else if (portletResponse instanceof ResourceResponse) {
+			return ((ResourceResponse)portletResponse).createActionURL();			
+		}
+		throw new IllegalArgumentException();
 	}
     
     

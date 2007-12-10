@@ -147,17 +147,6 @@ limitations under the License.
     <url-pattern>/PlutoInvoker/PlutoPageAdmin</url-pattern>
   </servlet-mapping>
 
-
-    <taglib>
-        <taglib-uri>http://java.sun.com/portlet</taglib-uri>
-        <taglib-location>/WEB-INF/tld/portlet.tld</taglib-location>
-    </taglib>
-
-  <taglib>
-    <taglib-uri>http://portals.apache.org/pluto/portlet-el</taglib-uri>
-    <taglib-location>/WEB-INF/tld/portlet-el.tld</taglib-location>
-  </taglib>
-
     <taglib>
         <taglib-uri>http://portals.apache.org/pluto</taglib-uri>
         <taglib-location>/WEB-INF/tld/pluto.tld</taglib-location>

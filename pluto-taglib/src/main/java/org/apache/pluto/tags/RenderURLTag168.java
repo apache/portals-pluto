@@ -23,9 +23,9 @@ import javax.portlet.RenderResponse;
 
 
 /**
- * A tag handler for the <CODE>renderURL</CODE> tag,which creates a url that
- * points to the current Portlet and triggers a render request with the
- * supplied parameters.
+ * A tag handler for the <CODE>renderURL</CODE> tag as defined in the JSR 168.
+ * Creates a url that points to the current Portlet and triggers a 
+ * render request with the supplied parameters.
  * 
  * @version 2.0
  */
@@ -40,7 +40,10 @@ public class RenderURLTag168 extends PortletURLTag286 {
      */
 	@Override
 	protected PortletURL createPortletUrl(PortletResponse portletResponse){
-		return ((RenderResponse)portletResponse).createRenderURL();
+		if (portletResponse instanceof RenderResponse) {
+			return ((RenderResponse)portletResponse).createRenderURL();			
+		}
+		throw new IllegalArgumentException();
 	}
     
 }

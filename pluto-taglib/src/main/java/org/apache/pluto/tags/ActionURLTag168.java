@@ -32,9 +32,9 @@ import javax.portlet.RenderResponse;
 
 /**
  * 
- * A tag handler for the <CODE>actionURL</CODE> tag,which creates a url that
- * points to the current Portlet and triggers an action request with the
- * supplied parameters.
+ * A tag handler for the <CODE>actionURL</CODE> tag as defined in the JSR 168.
+ * Creates a url that points to the current Portlet and triggers an 
+ * action request with the supplied parameters.
  * 
  * @version 2.0
  */
@@ -49,7 +49,10 @@ public class ActionURLTag168 extends PortletURLTag286 {
      */
 	@Override
 	protected PortletURL createPortletUrl(PortletResponse portletResponse){
-		return ((RenderResponse)portletResponse).createActionURL();
+		if (portletResponse instanceof RenderResponse) {
+			return ((RenderResponse)portletResponse).createActionURL();			
+		}		
+		throw new IllegalArgumentException();
 	}
     
     
