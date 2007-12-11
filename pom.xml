@@ -228,7 +228,7 @@
     -->
     <properties>
         <pluto.container.name>Pluto</pluto.container.name>
-        <javax.portlet.version.major>1</javax.portlet.version.major>
+        <javax.portlet.version.major>2</javax.portlet.version.major>
         <javax.portlet.version.minor>0</javax.portlet.version.minor>
     	<portlet-api.version>2.0-r26</portlet-api.version>
         <servlet-api.version>2.4</servlet-api.version>
