@@ -101,11 +101,12 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 	@Override
     public PrintWriter getWriter() throws IOException, IllegalStateException {
         if (getContentType() == null) {
-            String message = EXCEPTIONS.getString("error.contenttype.null");
-            if (LOG.isWarnEnabled()) {
-            	LOG.warn("Current content type is not set.");
-            }
-            throw new IllegalStateException(message);
+        	setContentType("text/html");
+//            String message = EXCEPTIONS.getString("error.contenttype.null");
+//            if (LOG.isWarnEnabled()) {
+//            	LOG.warn("Current content type is not set.");
+//            }
+//            throw new IllegalStateException(message);
         }
         return super.getWriter();
     }
