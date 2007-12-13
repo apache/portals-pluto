@@ -111,11 +111,17 @@ public class SupportedModesServiceImpl implements SupportedModesService
                     Iterator i2 = dd.getSupports().iterator();
                     while(i2.hasNext()) {
                         SupportsDD sd = (SupportsDD)i2.next();
-                        Iterator pd = sd.getPortletModes().iterator();
-                        while(pd.hasNext()) {
-                            if(mode.equalsIgnoreCase((String)pd.next())) {
-                                return true;
-                            }
+                        if (sd.getPortletModes()==null){
+                        	if (mode.equalsIgnoreCase(PortletMode.VIEW.toString()))
+                        		return true;
+                        }
+                        else{
+	                        Iterator pd = sd.getPortletModes().iterator();
+	                        while(pd.hasNext()) {
+	                            if(mode.equalsIgnoreCase((String)pd.next())) {
+	                                return true;
+	                            }
+	                        }
                         }
                     }
                 }
