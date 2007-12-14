@@ -107,5 +107,10 @@ public class PortletResponseWrapper
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void addProperty(Cookie cookie) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

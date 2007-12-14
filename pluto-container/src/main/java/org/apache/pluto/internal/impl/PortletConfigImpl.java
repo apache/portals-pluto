@@ -22,6 +22,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
@@ -169,5 +170,10 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 			}
 		}
 		return Collections.enumeration(locals);
+	}
+
+	public Map<String, String[]> getContainerRuntimeOptions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

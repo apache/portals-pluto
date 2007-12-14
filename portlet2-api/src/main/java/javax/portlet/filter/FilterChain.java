@@ -61,8 +61,8 @@ public interface FilterChain {
      * @param request  the current action request. 
      * @param response  the current action response
      *                   
-     * @throws IOException  if an IO error occured in the filter processing
-     * @throws PortletException  if a portlet exception occured in the filter processing
+     * @throws IOException  if an IO error occurred in the filter processing
+     * @throws PortletException  if a portlet exception occurred in the filter processing
      */
     public void doFilter(ActionRequest request, ActionResponse response)
      throws IOException, PortletException;
@@ -90,8 +90,8 @@ public interface FilterChain {
      *  
      * @param response  the current render response.
      *  
-     * @throws IOException  if an IO error occured in the filter processing
-     * @throws PortletException  if a portlet exception occured in the filter processing
+     * @throws IOException  if an IO error occurred in the filter processing
+     * @throws PortletException  if a portlet exception occurred in the filter processing
      */
     public void doFilter(RenderRequest request, RenderResponse response)
      throws IOException, PortletException;
@@ -104,8 +104,8 @@ public interface FilterChain {
      * @param request  the current resource request. 
      * @param response  the current resource response.
      *  
-     * @throws IOException  if an IO error occured in the filter processing
-     * @throws PortletException  if a portlet exception occured in the filter processing
+     * @throws IOException  if an IO error occurred in the filter processing
+     * @throws PortletException  if a portlet exception occurred in the filter processing
      */
     public void doFilter(ResourceRequest request, ResourceResponse response)
      throws IOException, PortletException;

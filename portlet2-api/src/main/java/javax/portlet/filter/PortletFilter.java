@@ -56,7 +56,7 @@ public interface PortletFilter {
      * 
      * @param filterConfig    the filter configuration data defined 
      *                        in the portlet deployment descriptor
-     * @throws PortletException  if an error occurs in the filter intialization
+     * @throws PortletException  if an error occurs in the filter initialization
      */
     public void init(FilterConfig filterConfig) throws PortletException;
 

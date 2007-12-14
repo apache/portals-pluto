@@ -178,23 +178,15 @@ public interface MimeResponse extends PortletResponse {
     public String getContentType();
 
     /**
-     * Sets the MIME type for the render response. The portlet must set the
+     * Sets the MIME type for the response. The portlet must set the
      * content type before calling {@link #getWriter} or
      * {@link #getPortletOutputStream}.
      * <p>
      * Calling <code>setContentType</code> after <code>getWriter</code> or
      * <code>getOutputStream</code> does not change the content type.
-     * <p>
-     * The portlet container will ignore any character encoding
-     * specified as part of the content type for <code>render</code>
-     * calls.
      * 
      * @param type
      *            the content MIME type
-     * 
-     * @throws java.lang.IllegalArgumentException
-     *             for <code>render</code> calls if the given type is not in the list 
-     *             returned by <code>PortletRequest.getResponseContentTypes</code>
      * 
      * @see PortletRequest#getResponseContentTypes
      * @see #getContentType
@@ -218,7 +210,7 @@ public interface MimeResponse extends PortletResponse {
     /**
      * Returns a PrintWriter object that can send character text to the portal.
      * <p>
-     * Before calling this method the content type of the render response must
+     * Before calling this method the content type of the render response should
      * be set using the {@link #setContentType} method.
      * <p>
      * Either this method or {@link #getPortletOutputStream} may be called to
@@ -231,8 +223,7 @@ public interface MimeResponse extends PortletResponse {
      *                if an input or output exception occurred
      * @exception java.lang.IllegalStateException
      *                if the <code>getPortletOutputStream</code> method has
-     *                been called on this response, or if no content type was
-     *                set using the <code>setContentType</code> method.
+     *                been called on this response.
      * 
      * @see #setContentType
      * @see #getPortletOutputStream
@@ -353,8 +344,7 @@ public interface MimeResponse extends PortletResponse {
      * 
      * @exception java.lang.IllegalStateException
      *                if the <code>getWriter</code> method has been called on
-     *                this response, or if no content type was set using the
-     *                <code>setContentType</code> method.
+     *                this response.
      * 
      * @exception java.io.IOException
      *                if an input or output exception occurred
@@ -431,23 +421,6 @@ public interface MimeResponse extends PortletResponse {
     public CacheControl getCacheControl();
 
     
-    /**
-     * Adds a HTTP Cookie property to the response.<br>
-     * The portlet should note that the cookie may not make
-     * it to the client, but may be stored at the portal.
-     * <p>
-     * This method allows response properties to have multiple cookies.
-     * <p>
-     *
-     * @param  cookie the cookie to be added to the response
-     * 
-     * @exception  java.lang.IllegalArgumentException 
-     *                            if cookie is <code>null</code>.
-     * @since 2.0
-     */
-
-    public void addProperty(javax.servlet.http.Cookie cookie);
-
 
 
 }

@@ -42,9 +42,6 @@ package javax.portlet;
  * @see PortletRequest
  * @see ActionRequest
  */
-/**
- *
- */
 public interface RenderRequest extends PortletRequest
 {
 

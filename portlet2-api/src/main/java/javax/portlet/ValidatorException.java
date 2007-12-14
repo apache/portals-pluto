@@ -132,7 +132,7 @@ public class ValidatorException extends PortletException
    *          <code>Enumeration</code> if no failed keys are available.
    */
 
-  public Enumeration getFailedKeys()
+  public Enumeration<String> getFailedKeys()
   {
     return Collections.enumeration(failedKeyVector);
   }

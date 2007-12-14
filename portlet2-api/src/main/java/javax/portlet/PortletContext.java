@@ -240,7 +240,7 @@ public interface PortletContext
    *             begins with the supplied path.
    */
     
-  public java.util.Set getResourcePaths(String path);
+  public java.util.Set<String> getResourcePaths(String path);
     
 
   
@@ -335,7 +335,7 @@ public interface PortletContext
    * @see		#getAttribute
    */
 
-  public java.util.Enumeration getAttributeNames();
+  public java.util.Enumeration<String> getAttributeNames();
 
 
   /**
@@ -464,33 +464,12 @@ public interface PortletContext
   
   /**
    * Returns the container container runtime options
-   * and values supported by this portlet container.
-   * <p>
-   * The portlet can set container runtime
-   * options in the <code>portlet.xml</code> via the
-   * <code>container-runtime-option</code> element with a name and a
-   * value on the application and portlet level.<br>
-   * If a container runtime option is set on the portlet application 
-   * level and on the portlet level with the same name the setting 
-   * on the portlet level takes precedence and overwrites the one 
-   * set on the portal application level.
-   * <p>
-   * The map returned from this method will provide the subset the
-   * portlet container supports of the options the portlet has specified 
-   * in the <code>portlet.xml</code>.
-   * <p>
-   * The map will contain name of the runtime option as key of type String
-   * and the runtime options as values of type String array (<code>String[]</code>).
+   * keys supported by this portlet container.
    * 
    * @since 2.0
    *  
-   * @return  an immutable <code>Map</code> containing portlet
-   *          container runtime options names as keys and the 
-   *          container runtime values as map values, or an empty <code>Map</code>
-   *          if no portlet container runtime options are set
-   *          in the <code>portlet.xml</code> or supported by this portlet container. 
-   *          The keys in the map are of type String. The values in the map are of type
-   *          String array (<code>String[]</code>).
+   * @return  container runtime options keys supported by this 
+   *          container as String values.
    */
-  public java.util.Map<String, String[]> getContainerRuntimeOptions();
+  public java.util.Enumeration<String> getContainerRuntimeOptions();
 }

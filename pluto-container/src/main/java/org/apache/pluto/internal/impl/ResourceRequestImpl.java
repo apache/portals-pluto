@@ -172,4 +172,9 @@ implements ResourceRequest, InternalResourceRequest {
 	public Map<String, String[]> getPrivateRenderParameterMap() {
 		return super.getPrivateParameterMap();
 	}
+
+	public String getCacheability() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

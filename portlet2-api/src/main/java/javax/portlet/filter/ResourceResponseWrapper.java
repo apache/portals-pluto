@@ -245,20 +245,5 @@ public class ResourceResponseWrapper extends PortletResponseWrapper implements R
 		return response.createResourceURL();
 	}
 	
-    /**
-     *  The default behavior of this method is to call 
-     * <code>addProperty()</code> on the wrapped response object.
-     */
-    public void addProperty(Cookie cookie) {
-        response.addProperty(cookie);
-    }
 
-    /**
-     *  The default behavior of this method is to call 
-     * <code>getCacheability()</code> on the wrapped response object.
-     */
-    public String getCacheability() {
-        return response.getCacheability();
-    }
-    
 }

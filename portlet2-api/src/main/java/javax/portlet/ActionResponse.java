@@ -115,6 +115,8 @@ public interface ActionResponse extends StateAwareResponse
    *                    if an input or output exception occurs.
    * @exception	java.lang.IllegalArgumentException	
    *                    if a relative path URL is given
+   *                    
+   * @since 2.0
    */
 
   public void sendRedirect(String location, String renderUrlParamName)

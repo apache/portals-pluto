@@ -75,12 +75,12 @@ public interface RenderFilter extends PortletFilter {
      *      <code>doFilter</code> method with a customized implementation 
      *      of the response wrapper <code>RenderResponseWrapper</code> 
      *      to modify response data.</li>
-     *  <li>The filter may invoke the next comonent in the filter chain. 
+     *  <li>The filter may invoke the next component in the filter chain. 
      *      The next component may be another filter, or if the filter 
      *      making the invocation is the last filter configured in the 
      *      deployment descriptor for this chain, the next component 
      *      is the target method of the portlet. The invocation of the 
-     *      next component is effected by calling the <code>doFilter>/code>
+     *      next component is effected by calling the <code>doFilter</code>
      *      method on the <code>FilterChain</code> object, and passing in 
      *      the request and response with which it was called or passing 
      *      in wrapped versions it may have created. 
@@ -107,8 +107,8 @@ public interface RenderFilter extends PortletFilter {
      * @param request  the current render request 
      * @param response  the current render response 
      * @param chain  the remaining filter chain
-     * @throws IOException  if an IO error occured in the filter processing
-     * @throws PortletException  if a portlet exception occured in the filter processing
+     * @throws IOException  if an IO error occurred in the filter processing
+     * @throws PortletException  if a portlet exception occurred in the filter processing
      */
     public void doFilter(RenderRequest request, RenderResponse response,
                          FilterChain chain)

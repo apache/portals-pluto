@@ -110,4 +110,40 @@ public interface ResourceRequest extends ClientDataRequest {
      *             String array (<code>String[]</code>).
      */
     public java.util.Map<String, String[]> getPrivateRenderParameterMap();
+    
+    /**
+     * Returns the portal preferred content type for the response.
+     * <p>
+     * The returned content type should be based on the HTTP Accept header 
+     * provided by the client.
+     * 
+     * @return preferred content type of the response
+     */
+
+    public String getResponseContentType();
+
+
+    /**
+     * Gets a list of content types which the portal accepts for the response.
+     * This list is ordered with the most preferable types listed first.
+     * <p>
+     * The returned content types should be based on the HTTP Accept header 
+     * provided by the client.
+     *
+     * @return ordered list of content types for the response
+     */
+
+    public java.util.Enumeration<String> getResponseContentTypes();
+
+	/**
+	 * Returns the cache level of this resource request.
+	 * <p>
+	 * Possible return values are: 
+	 * <code>ResourceURL.FULL, ResourceURL.PORTLET</code> 
+	 * or <code>ResourceURL.PAGE</code>.
+	 * 
+     * @return  the cache level of this resource request.
+     */
+	public String getCacheability();
+
 }

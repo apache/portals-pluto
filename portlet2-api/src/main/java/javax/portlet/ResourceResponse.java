@@ -55,6 +55,11 @@ package javax.portlet;
  */
 public interface ResourceResponse extends MimeResponse {
     
+	/**
+	 * Constant for setting the HTTP status code via the 
+	 * <code>setProperty</code> method.
+	 */
+	public static final String HTTP_STATUS_CODE = "portlet.http-status-code";
 
     /**
      * Sets the locale of the response, setting the headers 
@@ -125,15 +130,5 @@ public interface ResourceResponse extends MimeResponse {
 	public ResourceURL createResourceURL()
 			throws java.lang.IllegalStateException;
 
-	/**
-	 * Returns the cache level of this resource request.
-	 * <p>
-	 * Possible return values are: 
-	 * <code>ResourceURL.FULL, ResourceURL.PORTLET</code> 
-	 * or <code>ResourceURL.PAGE</code>.
-	 * 
-     * @return  the cache level of this resource request.
-     */
-	public String getCacheability();
 
 }

@@ -170,5 +170,13 @@ public class ResourceRequestWrapper extends PortletRequestWrapper implements Res
 		return request.getPrivateParameterMap();
 	}
 
+    /**
+     *  The default behavior of this method is to call 
+     * <code>getCacheability()</code> on the wrapped response object.
+     */
+    public String getCacheability() {
+        return request.getCacheability();
+    }
+    
 
 }

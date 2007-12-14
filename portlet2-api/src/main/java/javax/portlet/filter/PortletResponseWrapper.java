@@ -31,6 +31,7 @@
 package javax.portlet.filter;
 
 import javax.portlet.PortletResponse;
+import javax.servlet.http.Cookie;
 
 /**
  * The <code>PortletResponseWrapper</code> provides a convenient 
@@ -136,6 +137,14 @@ public class PortletResponseWrapper implements PortletResponse {
 	     */
 	    public org.w3c.dom.Element createElement(String tagName) {
 	        return response.createElement(tagName);
+	    }
+
+	    /**
+	     *  The default behavior of this method is to call 
+	     * <code>addProperty()</code> on the wrapped response object.
+	     */
+	    public void addProperty(Cookie cookie) {
+	        response.addProperty(cookie);
 	    }
 
 }

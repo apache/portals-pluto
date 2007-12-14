@@ -112,8 +112,8 @@ public class TCKDriverServlet extends PortalDriverServlet {
                 String contextPath = "/" + portletNames[i].substring(0, index);
                 String portletName = portletNames[i].substring(index + 1);
                 pageConfig.addPortlet(contextPath, portletName);
-                adminConfig.getPortletRegistryAdminService()
-                		.addPortletApplication(contextPath);
+//                adminConfig.getPortletRegistryAdminService()
+//                		.addPortletApplication(contextPath);
             }
 
             adminConfig.getRenderConfigAdminService().addPage(pageConfig);

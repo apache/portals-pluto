@@ -324,7 +324,7 @@ implements PortletContext, InternalPortletContext {
 	}
 
 
-	public Map<String, String[]> getContainerRuntimeOptions() {
+	public java.util.Enumeration<String> getContainerRuntimeOptions() {
 		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
 		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
 		
@@ -345,7 +345,8 @@ implements PortletContext, InternalPortletContext {
 					resultMap.put(option, portletRuntimeOptions.get(option));
 			}
 		}
-		return resultMap;
+		//return resultMap;
+		return null;
 	}
 }
 

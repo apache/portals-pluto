@@ -73,6 +73,8 @@ public interface PortletRequest
    * information set by the portal / portlet container.   
    * <p>
    * The value is <code>javax.portlet.ccpp</code>.
+   * 
+   * @since 2.0
    */
   public static final String CCPP_PROFILE = "javax.portlet.ccpp";
 
@@ -223,7 +225,8 @@ public interface PortletRequest
   public static final String RESOURCE_PHASE = "RESOURCE_PHASE";
     
   /**
-   * Provides the portlet lifecycle phase of the current request.
+   * Provides the portlet lifecycle phase of the current request
+   * as request attribute.
    * <p>
    * Valid values are: ACTION_PHASE, EVENT_PHASE, RENDER_PHASE,
    * RESOURCE_SERVING_PHASE.
@@ -785,8 +788,7 @@ public interface PortletRequest
   /**
    * Returns the portal preferred content type for the response.
    * <p>
-   * For <code>ActionRequest, EventRequest</code>, and
-   * <code>RenderRequest</code> the following restrictions apply:
+   * The following restrictions apply:
    * <ul>
    * <li>The content type only includes the MIME type, not the
    * character set. The character set of the response
@@ -808,8 +810,7 @@ public interface PortletRequest
    * Gets a list of content types which the portal accepts for the response.
    * This list is ordered with the most preferable types listed first.
    * <p>
-   * For <code>ActionRequest, EventRequest</code>, and
-   * <code>RenderRequest</code> the following restrictions apply:
+   * The following restrictions apply:
    * <ul>
    * <li>The content type only includes the MIME type, not the
    * character set.</li>
@@ -902,7 +903,7 @@ public interface PortletRequest
    * @since 2.0
    * @return  array of cookie properties, or 
    *          <code>null</code> if no cookies exist.
-   * @see PortletResponse#addProperty(Cookie) 
+   * @see MimeResponse#addProperty(Cookie) 
    */
   public javax.servlet.http.Cookie[] getCookies();
   

@@ -236,13 +236,6 @@ public class RenderResponseWrapper extends PortletResponseWrapper implements Ren
 		return response.createResourceURL();
 	}
 
-    /**
-     *  The default behavior of this method is to call 
-     * <code>addProperty()</code> on the wrapped response object.
-     */
-    public void addProperty(Cookie cookie) {
-        response.addProperty(cookie);
-    }
 
 
 }

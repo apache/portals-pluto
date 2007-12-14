@@ -53,8 +53,9 @@ public interface PortletResponse {
      * <p>
      * This method allows response properties to have multiple values.
      * <p>
-     * Properties can be used by portlets to provide vendor specific information
-     * to the portal.
+     * Response properties can be viewed as header values set for the portal application. 
+     * If these header values are intended to be transmitted to the client they should be 
+     * set before the response is committed.
      * 
      * @param key
      *            the key of the property to be returned to the portal
@@ -71,8 +72,9 @@ public interface PortletResponse {
 	/**
      * Sets a String property to be returned to the portal.
      * <p>
-     * Properties can be used by portlets to provide vendor specific information
-     * to the portal.
+     * Response properties can be viewed as header values set for the portal application. 
+     * If these header values are intended to be transmitted to the client they should be 
+     * set before the response is committed.
      * <p>
      * This method resets all properties previously added with the same key.
      * 
@@ -132,7 +134,24 @@ public interface PortletResponse {
 
 	public String getNamespace();
 
-	
+    /**
+     * Adds a HTTP Cookie property to the response.<br>
+     * The portlet should note that the cookie may not make
+     * it to the client, but may be stored at the portal.
+     * <p>
+     * This method allows response properties to have multiple cookies.
+     * <p>
+     *
+     * @param  cookie the cookie to be added to the response
+     * 
+     * @exception  java.lang.IllegalArgumentException 
+     *                            if cookie is <code>null</code>.
+     * @since 2.0
+     */
+
+    public void addProperty(javax.servlet.http.Cookie cookie);
+
+
     /**
      * Adds an XML DOM element property to the response.
      * <p>
@@ -143,8 +162,11 @@ public interface PortletResponse {
      * If the element is <code>null</code> the key is removed from
      * the response.
      * <p>
-     * Properties can be used by portlets to provide vendor specific information
-     * to the portal.
+     * Response XML DOM element properties can be viewed as 
+     * additional response document sections
+     * set for the portal application. 
+     * If these header values are intended to be transmitted to the client they should be 
+     * set before the response is committed.
      *
      * @param key
      *            the key of the property to be returned to the portal
@@ -159,7 +181,7 @@ public interface PortletResponse {
    
    /**
     * Creates an element of the type specified to be used in the 
-    * {@link addProperty} method. 
+    * {@link #addProperty(String,Element)} method. 
     * 
     * @param tagName	name of the element type to instantiate
     * @return  A new Element object with the nodeName attribute set to tagName, 

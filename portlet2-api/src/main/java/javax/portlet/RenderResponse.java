@@ -75,4 +75,28 @@ public interface RenderResponse extends MimeResponse {
      */
 	public void setNextPossiblePortletModes(java.util.Collection<PortletMode> portletModes);
 
+    /**
+     * Sets the MIME type for the render response. The portlet should set the
+     * content type before calling {@link #getWriter} or
+     * {@link #getPortletOutputStream}.
+     * <p>
+     * Calling <code>setContentType</code> after <code>getWriter</code> or
+     * <code>getOutputStream</code> does not change the content type.
+     * <p>
+     * The portlet container will ignore any character encoding
+     * specified as part of the content type for <code>render</code>
+     * calls.
+     * 
+     * @param type
+     *            the content MIME type
+     * 
+     * @throws java.lang.IllegalArgumentException
+     *             if the given type is not in the list 
+     *             returned by <code>PortletRequest.getResponseContentTypes</code>
+     * 
+     * @see PortletRequest#getResponseContentTypes
+     * @see #getContentType
+     */
+    public void setContentType(String type);
+
 }

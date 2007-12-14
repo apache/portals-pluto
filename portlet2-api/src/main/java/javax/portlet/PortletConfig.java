@@ -170,6 +170,10 @@ public interface PortletConfig
    * <p>
    * Note that this call does not return any events published that have not been
    * declared in the deployment descriptor as supported.
+   * <p>
+   * If the event was defined using the <code>name</code> element instead of 
+   * the <code>qname</code> element the defined default namespace 
+   * is added as namespace for the returned QName.
    * 
    * @return		an <code>Enumeration</code> of <code>QName</code> 
    *			objects containing the names of the publishing events, 
@@ -189,7 +193,11 @@ public interface PortletConfig
    * <p>
    * Processing events are defined in the portlet deployment descriptor
    * with the <code>supported-processing-event</code> element.    
-   * 
+   * <p>
+   * If the event was defined using the <code>name</code> element instead of 
+   * the <code>qname</code> element the defined default namespace 
+   * is added as namespace for the returned QName.
+   *   
    * @return		an <code>Enumeration</code> of <code>QName</code> 
    *			objects containing the names of the processing events, 
    *			or an empty <code>Enumeration</code> if the 
@@ -216,5 +224,39 @@ public interface PortletConfig
    * @since 2.0
    */
   public java.util.Enumeration<java.util.Locale> getSupportedLocales();
+  
+  /**
+   * Returns the container runtime options
+   * and values for this portlet.
+   * <p>
+   * The portlet can set container runtime
+   * options in the <code>portlet.xml</code> via the
+   * <code>container-runtime-option</code> element with a name and a
+   * value on the application and portlet level.<br>
+   * If a container runtime option is set on the portlet application 
+   * level and on the portlet level with the same name the setting 
+   * on the portlet level takes precedence and overwrites the one 
+   * set on the portal application level.
+   * <p>
+   * The map returned from this method will provide the subset the
+   * portlet container supports of the options the portlet has specified 
+   * in the <code>portlet.xml</code>. Options that the portlet container
+   * does not support will not be returned in this map.
+   * <p>
+   * The map will contain name of the runtime option as key of type String
+   * and the runtime options as values of type String array (<code>String[]</code>)
+   * with the values specified in the <code>portlet.xml</code> deployment descriptor.
+   * 
+   * @since 2.0
+   *  
+   * @return  an immutable <code>Map</code> containing portlet
+   *          container runtime options names as keys and the 
+   *          container runtime values as map values, or an empty <code>Map</code>
+   *          if no portlet container runtime options are set
+   *          in the <code>portlet.xml</code> or supported by this portlet container. 
+   *          The keys in the map are of type String. The values in the map are of type
+   *          String array (<code>String[]</code>).
+   */
+  public java.util.Map<String, String[]> getContainerRuntimeOptions();
 }
 

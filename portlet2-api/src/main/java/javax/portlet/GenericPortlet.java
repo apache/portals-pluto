@@ -46,7 +46,13 @@ import javax.xml.namespace.QName;
  * the <CODE>Portlet</CODE> interface.
  * <p>
  * It provides an abstract class to be subclassed to create portlets. A subclass
- * of <CODE>GenericPortlet</CODE> should override at least one method, usually
+ * of <CODE>GenericPortlet</CODE> should either use one of the following annotations:
+ * <ul>
+ * <li><code>@ProcessAction</code></li>
+ * <li><code>@ProcessEvent</code></li>
+ * <li><code>@RenderMode</code></li>
+ * </ul>
+ * or override at least one method, usually
  * one of the following:
  * <ul>
  * <li>processAction, to handle action requests</li>
@@ -90,10 +96,10 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * <p>
 	 * The default implementation stores the <code>PortletConfig</code> object
 	 * and checks for annotated methods with the annotations
-	 * </ul>
-	 * <li>ProcessAction</li>
-	 * <li>ProcessEvent</li>
-	 * <li>RenderMode</li>
+	 * <ul>
+	 * <li>@ProcessAction</li>
+	 * <li>@ProcessEvent</li>
+	 * <li>@RenderMode</li>
 	 * </ul>
 	 * and stores these in a hashmap for later dispatching.
 	 * <p>
@@ -127,6 +133,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 		this.init();
 	}
 
+
 	/**
 	 * 
 	 * A convenience method which can be overridden so that there's no need to
@@ -154,7 +161,13 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * URL created (by the portlet) with the
 	 * <code>RenderResponse.createActionURL()</code> method.
 	 * <p>
-	 * The default implementation throws an exception.
+	 * The default implementation tries to dispatch to a method
+	 * annotated with <code>@ProcessAction</name> that matches the action parameter 
+	 * value <code>ActionRequest.ACTION_NAME</code> or, if no
+	 * such method is found throws a <code>PortletException</code>.<br>
+ 	 * Note that the annotated methods needs to be public in order
+	 * to be allowed to be called by <code>GenericPortlet</code>.
+
 	 * 
 	 * @param request
 	 *            the action request
@@ -257,7 +270,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * Portlets can overwrite this method to provide dynamic titles (e.g. based
 	 * on locale, client, and session information). Examples are:
 	 * <UL>
-	 * <LI>language-dependant titles for multi-lingual portals</li>
+	 * <LI>language-dependent titles for multi-lingual portals</li>
 	 * <LI>shorter titles for WAP phones</li>
 	 * <LI>the number of messages in a mailbox portlet</li>
 	 * </UL>
@@ -293,8 +306,9 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * method does not invoke any of the portlet mode rendering methods.
 	 * <p>
 	 * For handling custom portlet modes the portlet should either use the
-	 * <code>@RenderMode</name> annotation or override this
-	 * method.
+	 * <code>@RenderMode</code> annotation or override this
+	 * method. Note that the annotated methods needs to be public in order
+	 * to be allowed to be called by <code>GenericPortlet</code>.
 	 * 
 	 * @param request
 	 *            the render request
@@ -495,8 +509,7 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	}
 
 	/**
-	 * Returns a String containing the value of the named initialization
-	 * parameter, or null if the parameter does not exist.
+	 * Returns a String containing the value of the named initialization	 * parameter, or null if the parameter does not exist.
 	 * 
 	 * @param name
 	 *            a <code>String</code> specifying the name of the
@@ -573,6 +586,13 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 		return config.getSupportedLocales();
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.portlet.PortletConfig#getContainerRuntimeOptions()
+	 */
+	public Map<String, String[]> getContainerRuntimeOptions() {
+		return config.getContainerRuntimeOptions();
+	}
+
 	// -------------------------------------------------------------------------
 	// V 2.0 additions
 	// -------------------------------------------------------------------------
@@ -598,10 +618,13 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	}
 
 	/**
-	 * Default event processing. Tries to dispatch to an event method with
-	 * annotation<BR>
-	 * <code>@ProcessEvent(name=<event name>)</code> and the signature<br>
-	 *                     <code>public void <methodname> (EventRequest, EventResponse) throws PortletException, java.io.IOException</code>.
+	 * The default implementation tries to dispatch to a method
+	 * annotated with <code>@ProcessEvent</name> that matches the 
+	 * event name or, if no
+	 * such method is found just sets the current render parameters on
+	 * the response.<br>
+ 	 * Note that the annotated methods needs to be public in order
+	 * to be allowed to be called by <code>GenericPortlet</code>.
 	 * 
 	 * @see javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest,
 	 *      javax.portlet.EventResponse)
