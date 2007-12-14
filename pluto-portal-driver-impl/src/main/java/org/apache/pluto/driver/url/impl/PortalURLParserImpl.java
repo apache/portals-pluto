@@ -129,6 +129,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Parsing request pathInfo: " + pathInfo);
         }
+
         StringBuffer renderPath = new StringBuffer();
         StringTokenizer st = new StringTokenizer(pathInfo, "/", false);
         while (st.hasMoreTokens()) {
@@ -281,6 +282,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             }
         }
 
+        StringUtils.encode(buffer);
         // Construct the string representing the portal URL.
         // Fix for PLUTO-247 - check if query string contains parameters
         if ( query.length() > 1 ) {

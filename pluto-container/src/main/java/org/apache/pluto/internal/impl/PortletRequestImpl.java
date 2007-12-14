@@ -816,8 +816,20 @@ implements PortletRequest, InternalPortletRequest {
 	}
 
 	public Map<String, String[]> getPublicParameterMap() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		Map<String, String[]>map = new HashMap<String, String[]>();
+		PortletURLProvider urlProvider = container
+			.getRequiredContainerServices()
+			.getPortalCallbackService()
+			.getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		String[] values = null;
+		for (String string : publicRenderParameterNames) {
+			values = urlProvider.getPublicRenderParameters(string);
+			if (values != null){
+				map.put(string, values);
+			}
+		}
+		return Collections.unmodifiableMap(map);
 	}
 	
 	public String getWindowID() {
