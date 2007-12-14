@@ -20,6 +20,7 @@ import java.io.File;
 
 import org.apache.pluto.util.assemble.ear.EarAssembler;
 import org.apache.pluto.util.assemble.file.FileAssembler;
+import org.apache.pluto.util.assemble.file.FileAssemblerAnt;
 import org.apache.pluto.util.assemble.war.WarAssembler;
 
 /**
@@ -72,6 +73,10 @@ public class AssemblerFactory {
         }
         
         return new FileAssembler();
+    }
+    
+    public Assembler createAssemblerAnt(AssemblerConfig config){
+    	return new FileAssemblerAnt();
     }
 
 }
