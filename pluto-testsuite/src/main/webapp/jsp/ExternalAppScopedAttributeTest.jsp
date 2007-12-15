@@ -22,13 +22,13 @@ limitations under the License.
 
 <portlet:defineObjects/>
 
-<script name="JavaScript">
+<script type="text/javascript">
 function openCompanionWindow() {
 	w = 500;
 	h = 400;
 	x = (screen.width - w) / 2;
 	y = (screen.height - h) / 2;
-	window.open('<HTML><BODY><CENTER><FONT color=red>Testing Session Attributes</FONT></CENTER></BODY></HTML>', 'companionWindow', 'resizable=yes,scrollbars=yes,status=yes,width=' + w + ',height=' + h + ',screenX=' + x + ',screenY=' + y + ',left=' + x + ',top=' + y);
+	window.open('about:blank', 'companionWindow', 'resizable=yes,scrollbars=yes,status=yes,width=' + w + ',height=' + h + ',screenX=' + x + ',screenY=' + y + ',left=' + x + ',top=' + y);
 }
 </script>
 
@@ -66,5 +66,3 @@ function openCompanionWindow() {
 </c:choose>
 
 <%@ include file="navigation.inc" %>
-
-

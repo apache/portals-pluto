@@ -17,12 +17,12 @@ implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+<!-- FIXME: schema location points to temp location of portlet spec -->
 <portlet-app
     xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-    version="1.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
-                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+    version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd
+                        http://hnsp.inf-bb.uni-jena.de/spec/JSR%202.0%20API/portlet-app_2_0.xsd">
   
   <!-- Test Portlet #1 ===================================================== -->
   
@@ -148,7 +148,126 @@ limitations under the License.
     </security-role-ref>
     
   </portlet>
+
+  <!-- JSR 286 Compatibility Test Portlet -->
   
+  <portlet>
+    
+    <description>JSR 286 Compatibility Tests</description>
+    <portlet-name>286TestPortlet</portlet-name>
+    <display-name>JSR 286 Test Portlet</display-name>
+    <portlet-class>org.apache.pluto.testsuite.TestPortlet</portlet-class>
+    
+    <init-param>
+      <name>config</name>
+      <value>/WEB-INF/testsuite-286-config.xml</value>
+    </init-param>
+    
+    <expiration-cache>-1</expiration-cache>
+    
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+      <portlet-mode>EDIT</portlet-mode>
+      <portlet-mode>HELP</portlet-mode>
+    </supports>
+        
+    <portlet-info>
+      <title>286 Test Portlet</title>
+      <short-title>286 Tests</short-title>
+      <keywords>JSR 286,Tests</keywords>
+    </portlet-info>
+    
+    <supported-processing-event>
+      <name>trigger-event-phase</name>
+    </supported-processing-event>
+    
+    <supported-publishing-event>
+      <name>trigger-event-phase</name>
+    </supported-publishing-event>
+    
+  </portlet>
+
+  <portlet>
+    
+    <description>JSR 286 Test Portlet Companion</description>
+    <portlet-name>286TestCompanionPortlet</portlet-name>
+    <portlet-class>
+        org.apache.pluto.testsuite.test.jsr286.TestCompanionPortlet
+    </portlet-class>
+    
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    
+    <portlet-info>
+      <title>286 Test Portlet Companion</title>
+      <short-title>286 Test Companion</short-title>
+      <keywords>JSR 286,Tests</keywords>
+    </portlet-info>
+    
+  </portlet>
+
+  <filter>
+  
+    <description>
+        This filter should be applied both the JSR 286
+        test portlet as well as its helper portlet.
+    </description>
+    
+    <display-name>Wildcard Mapped Filter</display-name>
+      
+    <filter-name>WildcardMappedFilter</filter-name>
+    <filter-class>
+        org.apache.pluto.testsuite.jsr286.filter.WildcardMappedFilter
+    </filter-class>
+    
+    <lifecycle>ACTION_PHASE</lifecycle>
+    <lifecycle>RENDER_PHASE</lifecycle>
+    <lifecycle>EVENT_PHASE</lifecycle>
+    <lifecycle>RESOURCE_PHASE</lifecycle>
+  
+  </filter>
+
+  <filter>
+    
+    <description>
+        This filter implements portlet filter methods for all four
+        lifecycle phases and is used in the various portlet filter tests.
+    </description>
+    
+    <display-name>Test Portlet Filter</display-name>
+    
+    <filter-name>TestFilter</filter-name>
+    <filter-class>
+        org.apache.pluto.testsuite.jsr286.filter.TestFilter
+    </filter-class>
+  
+    <lifecycle>ACTION_PHASE</lifecycle>
+    <lifecycle>RENDER_PHASE</lifecycle>
+    <lifecycle>EVENT_PHASE</lifecycle>
+    <lifecycle>RESOURCE_PHASE</lifecycle>
+    
+  </filter>
+
+  <filter-mapping>
+    <filter-name>WildcardMappedFilter</filter-name>
+    <portlet-name>286*</portlet-name>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>TestFilter</filter-name>
+    <portlet-name>286TestPortlet</portlet-name>
+  </filter-mapping>
+
+  <!-- JSR 286 Portlet Coordination Definitions -->
+
+  <default-namespace>http://portals.apache.org/pluto/testsuite</default-namespace>
+  
+  <event-definition>
+  	<name>trigger-event-phase</name>
+  	<value-type>java.lang.String</value-type>
+  </event-definition>
+
 </portlet-app>
-
-
