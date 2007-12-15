@@ -69,7 +69,7 @@ class JSP21ExpressionEvaluatorProxy extends ExpressionEvaluatorProxy {
                     new Object[] { pageContext.getServletContext() });
 
             Object expressionFactory = expressionFactoryGetter.invoke(
-                    jspApplicationContext, null);
+                    jspApplicationContext, new Object[] {});
 
             Object elContext = elContextGetter.invoke(pageContext, null);
 
