@@ -113,16 +113,23 @@ public class PortalDriverServlet extends HttpServlet {
         String actionWindowId = portalURL.getActionWindow();
         String resourceWindowId = portalURL.getResourceWindow();
         
-        PortletWindowConfig actionWindowConfig =
-            actionWindowId == null
-                ? null
-                : PortletWindowConfig.fromId(actionWindowId);
+        PortletWindowConfig actionWindowConfig = null;
+//            actionWindowId == null
+//                ? null
+//                : PortletWindowConfig.fromId(actionWindowId);
         PortletWindowConfig resourceWindowConfig = null;
 
         request.setAttribute("filter-manager",
         		container.getRequiredContainerServices().
         		getPortalCallbackService().
         		getFilterManager());
+        
+		if (resourceWindowId != null){
+			resourceWindowConfig = PortletWindowConfig.fromId(resourceWindowId);
+		}
+		else if(actionWindowId != null){
+			 actionWindowConfig = PortletWindowConfig.fromId(actionWindowId);
+		}
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
