@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.servlet.ServletConfig;
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
@@ -143,20 +144,49 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 	}
 
 	public String getDefaultNamespace() {
+		if (portletAppDD.getDefaultNamespace() == null)
+			return XMLConstants.XML_NS_URI;
 		return portletAppDD.getDefaultNamespace();
 	}
 
 	public Enumeration<QName> getProcessingEventQNames() {
+		List<QName> qnameList = portletDD.getProcessingEvents();
+		if (qnameList != null){
+			for (int index = 0; index < qnameList.size();index++) {
+				QName qname = qnameList.get(index);
+				if (qname.getNamespaceURI().equals("")){
+					qnameList.remove(index);
+					qnameList.add(index, new QName(portletAppDD.getDefaultNamespace(),qname.getLocalPart()));
+				}
+			}
+			return Collections.enumeration(qnameList);
+		}
+		else
+			return Collections.enumeration(new ArrayList<QName>());
 		
-		return (portletDD.getProcessingEvents() != null) ? 
-				Collections.enumeration(portletDD.getProcessingEvents()) :
-					Collections.enumeration(new ArrayList<QName>());
+//		return (portletDD.getProcessingEvents() != null) ? 
+//				Collections.enumeration(portletDD.getProcessingEvents()) :
+//					Collections.enumeration(new ArrayList<QName>());
 	}
 
 	public Enumeration<QName> getPublishingEventQNames() {
-		return (portletDD.getPublishingEvents() != null) ?
-				Collections.enumeration(portletDD.getPublishingEvents()) :
-					Collections.enumeration(new ArrayList<QName>());
+		List<QName> qnameList = portletDD.getPublishingEvents();
+		if (qnameList != null){
+			for (int index = 0; index < qnameList.size();index++) {
+				QName qname = qnameList.get(index);
+				if (qname.getNamespaceURI().equals("")){
+					qnameList.remove(index);
+					qnameList.add(index, new QName(portletAppDD.getDefaultNamespace(),qname.getLocalPart()));
+				}
+			}
+			return Collections.enumeration(qnameList);
+		}
+		else
+			return Collections.enumeration(new ArrayList<QName>());
+		
+//		return (portletDD.getPublishingEvents() != null) ?
+//				Collections.enumeration(portletDD.getPublishingEvents()) :
+//					Collections.enumeration(new ArrayList<QName>());
 	}
 
 	public Enumeration<Locale> getSupportedLocales() {
