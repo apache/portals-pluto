@@ -155,7 +155,9 @@ public class TestPortlet extends GenericPortlet {
             TestResults existingResults = (TestResults) 
                 session.getAttribute(test.getClass().getName());
             if (existingResults != null) {
-                existingResults.getCollection().addAll(results.getCollection());
+                for (TestResult result : results.getCollection()) {
+                    existingResults.add(result);
+                }
             } else {
                 session.setAttribute(test.getClass().getName(), results);
             }
@@ -223,7 +225,9 @@ public class TestPortlet extends GenericPortlet {
             TestResults existing = (TestResults) session.getAttribute(
                     test.getClass().getName());
             if (existing != null) {
-                existing.getCollection().addAll(results.getCollection());
+                for (TestResult result : results.getCollection()) {
+                    existing.add(result);
+                }
                 request.setAttribute("results", existing);
                 session.setAttribute(test.getClass().getName(), null);
             } else {

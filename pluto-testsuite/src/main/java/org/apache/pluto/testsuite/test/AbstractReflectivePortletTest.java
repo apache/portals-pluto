@@ -114,6 +114,10 @@ public abstract class AbstractReflectivePortletTest implements PortletTest {
                 }
                 results.add(result);
             } catch (Throwable th) {
+                if (th instanceof InvocationTargetException 
+                        && th.getCause() != null) {
+                    th = th.getCause();
+                }
                 String message = "Error invoking " + method.getName()
                         + " (" + th.getClass().getName() + "): "
                         + th.getMessage();
