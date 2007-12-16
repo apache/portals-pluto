@@ -106,10 +106,15 @@ import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 public class PortletDD {
 	
 	// Private Member Variables ------------------------------------------------
+    /**
+     * The value of the expirationCache property when no expiration cache was configured
+     * in portlet.xml for this portlet descriptor.
+     */
+    public static final int EXPIRATION_CACHE_UNSET = Integer.MIN_VALUE;
+//	private static final int EXPIRATION_CACHE_DEFAULT = -2;
 	
 	public static final String QNAME_JSR168 = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd";
 	private static final String QNAME_JSR286 = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
-	private static final int EXPIRATION_CACHE_DEFAULT = -2;
 
 	@XmlElement(name = "supports")
 	private List<SupportsDD> supports = null;
@@ -146,7 +151,8 @@ public class PortletDD {
 	private ExpirationCacheDD expirationCacheDD = null;
 	
 	@XmlElement(name = "expiration-cache", namespace = QNAME_JSR168)
-	private int expirationCache = EXPIRATION_CACHE_DEFAULT;
+//	private int expirationCache = EXPIRATION_CACHE_DEFAULT;
+    private int expirationCache = EXPIRATION_CACHE_UNSET;
 	
 	/** the supported publishing Events */
 	@XmlElement(name = "supported-publishing-event")
@@ -445,7 +451,7 @@ public class PortletDD {
 
 	public ExpirationCacheDD getExpirationCacheDD() {
 		// use old style expiration cache (JSR 168)
-		if (expirationCache != EXPIRATION_CACHE_DEFAULT){
+		if (expirationCache != EXPIRATION_CACHE_UNSET){
 			ExpirationCacheDD result = new ExpirationCacheDD();
 			result.expirationTime = expirationCache;
 			result.scope = "";
