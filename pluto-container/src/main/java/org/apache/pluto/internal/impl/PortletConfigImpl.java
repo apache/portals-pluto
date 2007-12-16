@@ -19,6 +19,7 @@ package org.apache.pluto.internal.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -36,6 +37,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.descriptors.common.InitParamDD;
+import org.apache.pluto.descriptors.portlet.ContainerRuntimeOptionDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
@@ -201,9 +203,64 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 		}
 		return Collections.enumeration(locals);
 	}
+	
+	public Map<String, String[]> getApplicationRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletAppDD.getContainerRuntimeOption() != null){
+			for (ContainerRuntimeOptionDD option : portletAppDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
+	}
+	
+	public Map<String, String[]> getPortletRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletDD.getContainerRuntimeOption() != null) {
+			for (ContainerRuntimeOptionDD option : portletDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
+	}
 
 	public Map<String, String[]> getContainerRuntimeOptions() {
-		// TODO Auto-generated method stub
+		
+		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
+		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
+		
+		// merge these two, with portlet priority
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		
+		// first all entries in portletAppDD (without these in portletDD)
+		for (String option : appRuntimeOptions.keySet()) {
+			if (portletRuntimeOptions.containsKey(option))
+				resultMap.put(option, portletRuntimeOptions.get(option));
+			else
+				resultMap.put(option, appRuntimeOptions.get(option));
+		}
+		// and now the rest
+		if (portletRuntimeOptions != null){
+			for (String option : portletRuntimeOptions.keySet()) {
+				if (!appRuntimeOptions.containsKey(option))
+					resultMap.put(option, portletRuntimeOptions.get(option));
+			}
+		}
+		//return resultMap;
 		return null;
 	}
 }

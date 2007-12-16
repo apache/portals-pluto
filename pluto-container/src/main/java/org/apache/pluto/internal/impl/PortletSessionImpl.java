@@ -359,7 +359,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
 	   *  @since 2.0
 	   */
 	  public Map<String, Object> getAttributeMap(int scope){
-		  return null; 
+		  return getMap(scope); 
 	  }
 	  /** 
 	   * Returns a <code>Map</code> of the session attributes in
@@ -378,6 +378,6 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
 	   *  @since 2.0
 	   */
 	  public Map<String, Object> getAttributeMap(){
-		  return null;
+		  return getMap();
 	  }
 }
