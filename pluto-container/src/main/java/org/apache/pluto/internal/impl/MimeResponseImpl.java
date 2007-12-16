@@ -32,12 +32,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.descriptors.portlet.ExpirationCacheDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.util.StringManager;
-import org.apache.pluto.util.StringUtils;
 
 public class MimeResponseImpl extends PortletResponseImpl implements
 		MimeResponse {
@@ -48,7 +48,62 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 	private static final StringManager EXCEPTIONS = StringManager.getManager(
     		MimeResponseImpl.class.getPackage().getName());
 	
-	
+	private class CacheControlImpl implements CacheControl {
+
+		private String eTag;
+
+		private int expirationTime;
+
+		private boolean publicScope;
+
+		private boolean cachedContent;
+
+		public CacheControlImpl() {
+			super();
+		}
+
+		public boolean useCachedContent() {
+			return this.cachedContent;
+		}
+
+		public String getETag() {
+			return this.eTag;
+		}
+
+		public int getExpirationTime() {
+			return this.expirationTime;
+		}
+
+		public boolean isPublicScope() {
+			return this.publicScope;
+		}
+
+		public void setETag(String eTag) {
+			this.eTag = eTag;
+		}
+
+		public void setExpirationTime(int expirationTime) {
+			this.expirationTime = expirationTime;
+			MimeResponseImpl.super.setProperty(EXPIRATION_CACHE, String
+					.valueOf(expirationTime));
+		}
+
+		public void setPublicScope(boolean publicScope) {
+			this.publicScope = publicScope;
+			MimeResponseImpl.super.setProperty(PUBLIC_SCOPE,
+					publicScope ? PUBLIC_SCOPE : PRIVATE_SCOPE);
+		}
+
+		public void setUseCachedContent(boolean cachedContent) {
+			this.cachedContent = cachedContent;
+			MimeResponseImpl.super.setProperty(USE_CACHED_CONTENT,
+					cachedContent ? Boolean.TRUE.toString() : null);
+		}
+
+	}
+
+	private CacheControl cacheControl;
+
 	public MimeResponseImpl(PortletContainer container,
             InternalPortletWindow internalPortletWindow,
             HttpServletRequest servletRequest,
@@ -56,6 +111,17 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 		
 		super(container, internalPortletWindow, servletRequest,
 				servletResponse);
+		this.cacheControl = new CacheControlImpl();
+		PortletEntity portletEntity = internalPortletWindow.getPortletEntity();
+		PortletDD portletDefinition = portletEntity.getPortletDefinition();
+		ExpirationCacheDD expirationCacheDD = portletDefinition
+				.getExpirationCacheDD();
+		if (expirationCacheDD != null) {
+			int expirationTime = expirationCacheDD.getExpirationTime();
+			this.setProperty(EXPIRATION_CACHE, String.valueOf(expirationTime));
+			String scope = expirationCacheDD.getScope();
+			this.setProperty(CACHE_SCOPE, scope);
+		}
 
 	}
 	
@@ -65,8 +131,28 @@ public class MimeResponseImpl extends PortletResponseImpl implements
     }
     
 	public CacheControl getCacheControl() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return this.cacheControl;
+	}
+	
+	@Override
+	public void setProperty(String name, String value) {
+		if (USE_CACHED_CONTENT.equals(name)) {
+			this.cacheControl.setUseCachedContent(value != null);
+		} else if (EXPIRATION_CACHE.equals(name)) {
+			int expirationTime;
+			try {
+				expirationTime = Integer.parseInt(value);
+			} catch (NumberFormatException e) {
+				expirationTime = 0;
+			}
+			this.cacheControl.setExpirationTime(expirationTime);
+		} else if (ETAG.equals(name)) {
+			this.cacheControl.setETag(value);
+		} else if (CACHE_SCOPE.equals(name)) {
+			this.cacheControl.setPublicScope(PUBLIC_SCOPE.equals(value));
+		} else {
+			super.setProperty(name, value);
+		}
 	}
 	
 	@Override
