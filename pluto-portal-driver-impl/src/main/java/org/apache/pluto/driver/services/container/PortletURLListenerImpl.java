@@ -26,6 +26,8 @@ import javax.portlet.ResourceURL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.descriptors.portlet.ListenerDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.PortletURLListener;
 
@@ -39,20 +41,20 @@ public class PortletURLListenerImpl implements PortletURLListener {
 	}
 	
 	
-	public synchronized void callListener(InternalPortletWindow internalPortletWindow, BaseURL baseURL, boolean isAction, boolean isResource){
+	public synchronized void callListener(PortletAppDD portletAppDD, BaseURL baseURL, boolean isAction, boolean isResource){
 		if (isAction&&isResource){
 			String message = "It is not allowed to set both values from isAction and isResource to true";
 			LOG.error(message, new IllegalArgumentException(message));
 		}
 		//this list is needed for the classnames
-		List<String> portletURLFilterList = internalPortletWindow.getPortletEntity().getPortletDefinition().getUrlGenerationListener();
+		List<ListenerDD> portletURLFilterList = portletAppDD.getListener();//internalPortletWindow.get    getPortletEntity().   getPortletDefinition().getUrlGenerationListener();
 		//Iterate over the classnames and for each entry in the list the filter..URL is called.
 		if (portletURLFilterList != null){
-			for (String string : portletURLFilterList) {
+			for (ListenerDD listener : portletURLFilterList) {
 				ClassLoader loader = Thread.currentThread().getContextClassLoader();
 				Class clazz;
 				try {
-					clazz = loader.loadClass(string);
+					clazz = loader.loadClass(listener.getListenerClass() );
 					if (clazz != null){
 						PortletURLGenerationListener portletURLGenerationListener = (PortletURLGenerationListener)clazz.newInstance();
 						if (isAction)
@@ -66,7 +68,7 @@ public class PortletURLListenerImpl implements PortletURLListener {
 					String message = "The class isn't found.";
 					LOG.error(message);
 				} catch (InstantiationException e) {
-					String message = "The instantioation fail.";
+					String message = "The instantiation fail.";
 					LOG.error(message);
 				} catch (IllegalAccessException e) {
 					// TODO Auto-generated catch block

@@ -73,6 +73,7 @@ import javax.xml.bind.annotation.XmlType;
     "defaultNamespace",
     "filter",
     "filterMapping",
+    "listener",
     "events",
     "render",
     "containerRuntimeOption"
@@ -134,6 +135,9 @@ public class PortletAppDD {
 	
 	@XmlElement ( name = "filter-mapping")
 	private List<FilterMappingDD> filterMapping = null;
+	
+	@XmlElement ( name = "listener")
+	private List<ListenerDD> listener = null;
 	
 	@XmlAttribute(name = "version")
 	private String version;
@@ -273,6 +277,14 @@ public class PortletAppDD {
 
 	public void setFilterMapping(List<FilterMappingDD> filterMapping) {
 		this.filterMapping = filterMapping;
+	}
+
+	public List<ListenerDD> getListener() {
+		return listener;
+	}
+
+	public void setListener(List<ListenerDD> listener) {
+		this.listener = listener;
 	}
 
 	public String getDefaultNamespace() {

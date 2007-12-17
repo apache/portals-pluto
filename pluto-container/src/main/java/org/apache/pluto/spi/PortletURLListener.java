@@ -18,8 +18,8 @@ package org.apache.pluto.spi;
 
 import javax.portlet.BaseURL;
 
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 public interface PortletURLListener {
-	public void callListener(InternalPortletWindow internalPortletWindow, BaseURL baseURL, boolean isAction, boolean isResource);
+	public void callListener(PortletAppDD portletAppDD, BaseURL baseURL, boolean isAction, boolean isResource);
 }

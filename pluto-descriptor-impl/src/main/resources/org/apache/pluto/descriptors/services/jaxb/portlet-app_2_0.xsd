@@ -136,10 +136,11 @@
 			<element name="default-namespace" type="xs:anyURI" minOccurs="0"/>
 			<element name="event-definition" type="portlet:event-definitionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="public-render-parameter" type="portlet:public-render-parameterType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="listener" type="portlet:listenerType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
-		<attribute name="version" type="string" use="required"/>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="version" type="portlet:string" use="required"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="cache-scopeType">
 		<annotation>
@@ -151,7 +152,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="custom-portlet-modeType">
@@ -162,12 +163,6 @@
 			If the portal does not need to provide some management functionality
 			for this portlet mode, the portal-managed element needs to be set
 			to "false", otherwise to "true". Default is "true".
-			If the portlet provides a decoration-name for this portlet mode the portal is
-			encouraged to use the provided name as key under which in the portlet
-			resource bundle the localized value of the decoration name is available.
-			If the portlet does not provide a resource bundle the portal should use
-			the name provided with the decoration-name tag.
-			decorations.
 			Used in: portlet-app
 			</documentation>
 		</annotation>
@@ -175,9 +170,8 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="portlet-mode" type="portlet:portlet-modeType"/>
 			<element name="portal-managed" type="portlet:portal-managedType" minOccurs="0"/>
-			<element name="decoration-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="custom-window-stateType">
 		<annotation>
@@ -191,12 +185,12 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="window-state" type="portlet:window-stateType"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="expiration-cacheType">
 		<annotation>
 			<documentation>
-			Expriation-time defines the time in seconds after which the portlet output expires. 
+			Expiration-time defines the time in seconds after which the portlet output expires. 
 			-1 indicates that the output never expires.
 			Used in: portlet
 			</documentation>
@@ -218,7 +212,7 @@
 			<element name="name" type="portlet:nameType"/>
 			<element name="value" type="portlet:valueType"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="keywordsType">
 		<annotation>
@@ -229,7 +223,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="mime-typeType">
@@ -242,7 +236,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="nameType">
@@ -253,7 +247,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="portletType">
@@ -273,22 +267,16 @@
 			<element name="cache-scope" type="portlet:cache-scopeType" minOccurs="0"/>
 			<element name="supports" type="portlet:supportsType" maxOccurs="unbounded"/>
 			<element name="supported-locale" type="portlet:supported-localeType" minOccurs="0" maxOccurs="unbounded"/>
-			<choice>
-				<sequence>
-					<element name="resource-bundle" type="portlet:resource-bundleType"/>
-					<element name="portlet-info" type="portlet:portlet-infoType" minOccurs="0"/>
-				</sequence>
-				<element name="portlet-info" type="portlet:portlet-infoType"/>
-			</choice>
+			<element name="resource-bundle" type="portlet:resource-bundleType" minOccurs="0"/>
+			<element name="portlet-info" type="portlet:portlet-infoType" minOccurs="0"/>
 			<element name="portlet-preferences" type="portlet:portlet-preferencesType" minOccurs="0"/>
 			<element name="security-role-ref" type="portlet:security-role-refType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="supported-processing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="supported-publishing-event" type="portlet:event-definition-referenceType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="supported-public-render-parameter" type="string" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="url-generation-listener" type="portlet:fully-qualified-classType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="supported-public-render-parameter" type="portlet:string" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="container-runtime-option" type="portlet:container-runtime-optionType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<simpleType name="portlet-classType">
 		<annotation>
@@ -360,7 +348,7 @@
 			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="filter-name" type="portlet:filter-nameType"/>
 			<element name="filter-class" type="portlet:fully-qualified-classType"/>
-			<element name="lifecycle" type="string" maxOccurs="unbounded"/>
+			<element name="lifecycle" type="portlet:string" maxOccurs="unbounded"/>
 			<element name="init-param" type="portlet:init-paramType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
 	</complexType>
@@ -391,26 +379,40 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<choice>
 				<element name="qname" type="xs:QName"/>
-				<element name="name" type="string"/>
+				<element name="name" type="xs:NCName"/>
 			</choice>
 			<element name="alias" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="value-type" type="portlet:fully-qualified-classType" minOccurs="0"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="event-definition-referenceType">
 		<annotation>
 			<documentation>
-			The event-definition-referenceType is used to refernece events 
-			declared with the event-definition element on application level.
+			The event-definition-referenceType is used to reference events 
+			declared with the event-definition element at application level.
 			Used in: portlet
 			</documentation>
 		</annotation>
 		<choice>
 			<element name="qname" type="xs:QName"/>
-			<element name="name" type="string"/>
+			<element name="name" type="xs:NCName"/>
 		</choice>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
+	</complexType>
+	<complexType name="listenerType">
+		<annotation>
+			<documentation>
+			The listenerType is used to declare listeners for this portlet application.
+			Used in: portlet-app
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="display-name" type="portlet:display-nameType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="listener-class" type="portlet:fully-qualified-classType"/>
+		</sequence>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="portlet-infoType">
 		<sequence>
@@ -418,7 +420,7 @@
 			<element name="short-title" type="portlet:short-titleType" minOccurs="0"/>
 			<element name="keywords" type="portlet:keywordsType" minOccurs="0"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<simpleType name="portal-managedType">
 		<annotation>
@@ -448,7 +450,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="portlet-nameType">
@@ -461,7 +463,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="portlet-preferencesType">
@@ -475,7 +477,7 @@
 			<element name="preference" type="portlet:preferenceType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="preferences-validator" type="portlet:preferences-validatorType" minOccurs="0"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="preferenceType">
 		<annotation>
@@ -490,7 +492,7 @@
 			<element name="value" type="portlet:valueType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="read-only" type="portlet:read-onlyType" minOccurs="0"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<simpleType name="preferences-validatorType">
 		<annotation>
@@ -531,7 +533,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="role-linkType">
@@ -544,7 +546,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="security-constraintType">
@@ -560,7 +562,7 @@
 			<element name="portlet-collection" type="portlet:portlet-collectionType"/>
 			<element name="user-data-constraint" type="portlet:user-data-constraintType"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="security-role-refType">
 		<annotation>
@@ -583,7 +585,7 @@
 			<element name="role-name" type="portlet:role-nameType"/>
 			<element name="role-link" type="portlet:role-linkType" minOccurs="0"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="public-render-parameterType">
 		<annotation>
@@ -596,14 +598,14 @@
 		</annotation>
 		<sequence>
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="identifier" type="string"/>
+			<element name="identifier" type="portlet:string"/>
 			<choice>
 				<element name="qname" type="xs:QName"/>
-				<element name="name" type="string"/>
+				<element name="name" type="xs:NCName"/>
 			</choice>
 			<element name="alias" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="short-titleType">
 		<annotation>
@@ -613,7 +615,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="supportsType">
@@ -630,7 +632,7 @@
 			<element name="portlet-mode" type="portlet:portlet-modeType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="window-state" type="portlet:window-stateType" minOccurs="0" maxOccurs="unbounded"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="supported-localeType">
 		<annotation>
@@ -640,7 +642,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="titleType">
@@ -651,7 +653,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<simpleType name="transport-guaranteeType">
@@ -695,7 +697,7 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="name" type="portlet:nameType"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="user-data-constraintType">
 		<annotation>
@@ -710,7 +712,7 @@
 			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
 			<element name="transport-guarantee" type="portlet:transport-guaranteeType"/>
 		</sequence>
-		<attribute name="id" type="string" use="optional"/>
+		<attribute name="id" type="portlet:string" use="optional"/>
 	</complexType>
 	<complexType name="valueType">
 		<annotation>
@@ -720,7 +722,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<complexType name="window-stateType">
@@ -731,7 +733,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string"/>
+			<extension base="portlet:string"/>
 		</simpleContent>
 	</complexType>
 	<!--- everything below is copied from j2ee_1_4.xsd -->
@@ -753,7 +755,7 @@
 			</documentation>
 		</annotation>
 		<simpleContent>
-			<extension base="string">
+			<extension base="portlet:string">
 				<attribute ref="xml:lang"/>
 			</extension>
 		</simpleContent>
@@ -802,7 +804,7 @@
 	<simpleType name="string">
 		<annotation>
 			<documentation>
-			This is a special string datatype that is defined by J2EE 
+			This is a special string datatype that is defined by JavaEE 
 			as a base type for defining collapsed strings. When 
 			schemas require trailing/leading space elimination as 
 			well as collapsing the existing whitespace, this base 

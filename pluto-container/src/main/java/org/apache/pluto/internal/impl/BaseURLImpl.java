@@ -36,6 +36,8 @@ import javax.portlet.WindowState;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
@@ -185,7 +187,7 @@ public class BaseURLImpl implements BaseURL {
         }
 	}
 
-	public String toString() {
+	public String toString(){
 	    StringBuffer url = new StringBuffer(200);
 	
 	    PortletURLProvider urlProvider = container
@@ -208,8 +210,17 @@ public class BaseURLImpl implements BaseURL {
 	    else if (isResourceServing){
 	    	urlProvider.setResourceServing(true);
 	    }
-
-        portletURLFilterListener.callListener(internalPortletWindow,this,isAction,isResourceServing);
+	    try {
+	    	
+	    	PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
+//	    	container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
+//			PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
+			portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
+		} catch (PortletContainerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
 	    
         if (secure && urlProvider.isSecureSupported()) {
             try {
