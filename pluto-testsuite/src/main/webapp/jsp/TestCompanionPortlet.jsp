@@ -22,12 +22,17 @@ limitations under the License.
 
 <portlet:defineObjects/>
 
-<div>
-
+<div class="portlet-section-body">
+<p>
+  This portlet is a companion portlet to the 286 Test Portlet.
+  It is designed to test interportlet coordination features of version 2.0 of the
+  Java Portlet API (JSR-286) which include public render parameters and eventing.  
+</p>
+<%-- FIXME: This code does not work.
     <table border="1">    
         <thead>
             <tr>
-                <th colspan="2">Public Render Parameters</th>
+	                <th colspan="2">Public Render Parameters</th>
             </tr>
             <tr>
                 <th>Name</th>
@@ -56,5 +61,6 @@ limitations under the License.
             </c:choose>
         </tbody>
     </table>
-
+ --%>
+ 
 </div>
