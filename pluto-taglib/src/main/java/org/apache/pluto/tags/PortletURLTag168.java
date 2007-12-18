@@ -16,25 +16,22 @@
  */
 package org.apache.pluto.tags;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Hashtable;
 
+import javax.portlet.BaseURL;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
+
 
 /**
  * Abstract supporting class for the JSR168 actionURL 
- * and renderURL tag.
+ * and renderURL tag handlers.
  * 
  * @version 2.0
  */
@@ -46,7 +43,7 @@ public abstract class PortletURLTag168 extends BaseURLTag {
 	
 	protected String windowState = null;
 	
-	protected PortletURL url = null;
+	protected PortletURL portletURL = null;
 	
 	
 	/* (non-Javadoc)
@@ -55,17 +52,12 @@ public abstract class PortletURLTag168 extends BaseURLTag {
 	@Override
     public int doStartTag() throws JspException {
     	    	    	
-        if (var != null) {
-            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
-        }
-        
         PortletResponse portletResponse = 
         	(PortletResponse) pageContext.getRequest().getAttribute(Constants.PORTLET_RESPONSE);
 
         if (portletResponse != null) {
         	
-        	
-            setUrl(createPortletUrl(portletResponse));
+        	PortletURL portletURL = createPortletUrl(portletResponse);             
             
             if (portletMode != null) {//set portlet mode
                 try {
@@ -76,7 +68,7 @@ public abstract class PortletURLTag168 extends BaseURLTag {
                         mode = new PortletMode(portletMode);// support for custom portlet modes PLUTO-258
                     }
                     
-                    url.setPortletMode(mode);
+                    portletURL.setPortletMode(mode);
                     
                 } catch (PortletModeException e) {                	
                     throw new JspException(e);                    
@@ -92,64 +84,18 @@ public abstract class PortletURLTag168 extends BaseURLTag {
                         state = new WindowState(windowState);//support for custom window states PLUTO-258
                     }
                     
-                    url.setWindowState(state);
+                    portletURL.setWindowState(state);
                     
                 } catch (WindowStateException e) {                	
                     throw new JspException(e);
                 }
             }
             
-            if (secure != null) {//set secure boolean
-                try {                	
-                    url.setSecure(getSecureBoolean());
-                } catch (PortletSecurityException e) {                	
-                    throw new JspException(e);
-                }
-            }         
+            setUrl(portletURL);
+            
         }
-        return EVAL_BODY_INCLUDE;
-    }
-	
-    
-	/* (non-Javadoc)
-	 * @see org.apache.pluto.tags.BaseURLTag#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException{
-		
-		setUrlParameters(url);		
-		
-		HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
-		//	properly encoding urls to allow non-cookie enabled sessions - PLUTO-252 
-		String urlString = response.encodeURL(url.toString());
-		
-	    if (var == null) {
-            try {            	
-                JspWriter writer = pageContext.getOut();
-                writer.print(urlString);
-            } catch (IOException ioe) {
-                throw new JspException(
-                    "actionURL/renderURL Tag Exception: cannot write to the output writer.");
-            }
-        } 
-	    else {
-            pageContext.setAttribute(var, urlString,
-                                     PageContext.PAGE_SCOPE);
-        }
-	    
-	    /*cleanup*/
-	    parametersMap.clear();
-	    
-        return EVAL_PAGE;
-	}
-	
-	
-	/**
-	 * Returns the url property.
-     * @return PortletURL
-     */
-    public PortletURL getUrl() {
-        return url;
+        
+        return super.doStartTag();
     }
 	
     
@@ -170,18 +116,7 @@ public abstract class PortletURLTag168 extends BaseURLTag {
         return windowState;
     }
     
-    
-    
-    /**
-     * Sets the url property.
-     * @param url The url to set
-     * @return void
-     */
-    public void setUrl(PortletURL url) {
-        this.url = url;
-    }
-    
-    
+        
     /**
      * Sets the portletMode property.
      * @param portletMode - the portlet mode to set
@@ -203,7 +138,27 @@ public abstract class PortletURLTag168 extends BaseURLTag {
     
   
     
-    /**
+    
+    
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.tags.BaseURLTag#getUrl()
+	 */
+	@Override
+	protected BaseURL getUrl() {
+		return portletURL;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.tags.BaseURLTag#setUrl(javax.portlet.BaseURL)
+	 */
+	@Override
+	protected void setUrl(BaseURL url) {
+		this.portletURL = (PortletURL)url;
+	}
+
+
+	/**
      * Creates an actionURL or a renderURL
      * @param portletResponse PortletResponse
      * @return PortletURL
@@ -216,8 +171,11 @@ public abstract class PortletURLTag168 extends BaseURLTag {
 	 * TagExtraInfo class for PortletURLTag.
 	 */
 	public static class TEI extends BaseURLTag.TEI {
-        public final static Hashtable<String,Object> definedWindowStates = getDefinedWindowStates();
-        public final static Hashtable<String,Object> portletModes = getDefinedPortletModes();
+        public final static Hashtable<String,Object> definedWindowStates = 
+        	getDefinedWindowStates();
+        
+        public final static Hashtable<String,Object> portletModes = 
+        	getDefinedPortletModes();
 
         /**
          * Provides a list of all static PortletMode available in the

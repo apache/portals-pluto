@@ -28,6 +28,8 @@ import javax.servlet.jsp.tagext.TagSupport;
  *       <LI><CODE>name</CODE>
  *       <LI><CODE>value</CODE>
  *   </UL>
+ *   
+ *  The parent tag handler must be a subclass of <code>BaseURLTag</code>.   
  *       
  *  @version 2.0
  */

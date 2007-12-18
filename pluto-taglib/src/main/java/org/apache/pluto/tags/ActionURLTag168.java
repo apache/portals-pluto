@@ -38,7 +38,7 @@ import javax.portlet.RenderResponse;
  * 
  * @version 2.0
  */
-public class ActionURLTag168 extends PortletURLTag286 {
+public class ActionURLTag168 extends PortletURLTag168 {
 	
 	private static final long serialVersionUID = 286L;
 

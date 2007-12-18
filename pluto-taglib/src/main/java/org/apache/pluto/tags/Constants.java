@@ -18,6 +18,7 @@ package org.apache.pluto.tags;
 /**
  * Constant values as defined by the specification
  * typically to a request.
+ * 
  * @version 1.0
  */
 public class Constants {

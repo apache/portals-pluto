@@ -16,42 +16,23 @@
  */
 package org.apache.pluto.tags;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletSecurityException;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 
 /**
  * Abstract supporting class for the JSR 286 actionURL 
- * and renderURL tag.
+ * and renderURL tag handlers.
  * 
  * @version 2.0
  */
 
-public abstract class PortletURLTag286 extends BaseURLTag {
+public abstract class PortletURLTag286 extends PortletURLTag168 {
 	
-
-	protected String portletMode = null;
-	
-	protected String windowState = null;
 	
 	protected Boolean copyCurrentRenderParameters = false;
-	
-	protected PortletURL url = null;
 	
 	
 	public PortletURLTag286() {
@@ -59,24 +40,22 @@ public abstract class PortletURLTag286 extends BaseURLTag {
 		this.escapeXml = true;
 	}
 	
+	
 	/* (non-Javadoc)
 	 * @see org.apache.pluto.tags.BaseURLTag#doStartTag()
 	 */
 	@Override
-    public int doStartTag() throws JspException {
-    	    	    	
-        if (var != null) {
-            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
-        }
+    public int doStartTag() throws JspException {    	    	  
         
-       /* //FIXME:
-        PortletConfig portletConfig = 
+       //FIXME:implement escapeXml-container-runtime-option check! 
+        /*PortletConfig portletConfig = 
         	(PortletConfig) pageContext.getRequest().getAttribute(Constants.PORTLET_CONFIG);
         
         if(portletConfig != null){
         	PortletContext portletContext = portletConfig.getPortletContext();
         	if(portletContext != null){
-        		Map<String, String[]> containerOptions = portletContext.getContainerRuntimeOptions(); 
+        		System.out.println(portletContext.getContainerRuntimeOptions());
+        		/*Map<String, String[]> containerOptions = portletContext.getContainerRuntimeOptions(); 
         		if(containerOptions != null){
         			String[] escapeXmlOption = 
         				containerOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
@@ -87,55 +66,7 @@ public abstract class PortletURLTag286 extends BaseURLTag {
         	}
         }*/
         
-        PortletResponse portletResponse = 
-        	(PortletResponse) pageContext.getRequest().getAttribute(Constants.PORTLET_RESPONSE);
-
-        if (portletResponse != null) {
-        	
-        	
-            setUrl(createPortletUrl(portletResponse));
-            
-            if (portletMode != null) {//set portlet mode
-                try {
-                    PortletMode mode = (PortletMode)
-                        TEI.portletModes.get(portletMode.toUpperCase());
-                    
-                    if (mode == null) {
-                        mode = new PortletMode(portletMode);// support for custom portlet modes PLUTO-258
-                    }
-                    
-                    url.setPortletMode(mode);
-                    
-                } catch (PortletModeException e) {                	
-                    throw new JspException(e);                    
-                }
-            }
-            
-            if (windowState != null) {//set window state
-                try {                	
-                    WindowState state = (WindowState)
-                        TEI.definedWindowStates.get(windowState.toUpperCase());                  
-                    
-                    if (state == null) {
-                        state = new WindowState(windowState);//support for custom window states PLUTO-258
-                    }
-                    
-                    url.setWindowState(state);
-                    
-                } catch (WindowStateException e) {                	
-                    throw new JspException(e);
-                }
-            }
-            
-            if (secure != null) {//set secure boolean
-                try {                	
-                    url.setSecure(getSecureBoolean());
-                } catch (PortletSecurityException e) {                	
-                    throw new JspException(e);
-                }
-            }         
-        }
-        return EVAL_BODY_INCLUDE;
+        return super.doStartTag();
     }
 	
     
@@ -149,67 +80,11 @@ public abstract class PortletURLTag286 extends BaseURLTag {
 			/*prepend current render parameters*/
 			doCopyCurrentRenderParameters();
 		}
-		
-		setUrlParameters(url);		
-		setUrlProperties(url);
-		
-		HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
-		//	properly encoding urls to allow non-cookie enabled sessions - PLUTO-252 
-		String urlString = response.encodeURL(url.toString());
-		
-		if(escapeXml){
-			urlString = doEscapeXml(urlString);
-		}
-		
-	    if (var == null) {
-            try {            	
-                JspWriter writer = pageContext.getOut();
-                writer.print(urlString);
-            } catch (IOException ioe) {
-                throw new JspException(
-                    "actionURL/renderURL Tag Exception: cannot write to the output writer.");
-            }
-        } 
-	    else {
-            pageContext.setAttribute(var, urlString,
-                                     PageContext.PAGE_SCOPE);
-        }
 	    
-	    /*cleanup*/
-	    propertiesMap.clear();
-	    parametersMap.clear();
-	    
-        return EVAL_PAGE;
+        return super.doEndTag();
 	}
 	
-	
-	/**
-	 * Returns the url property.
-     * @return PortletURL
-     */
-    public PortletURL getUrl() {
-        return url;
-    }
-	
-    
-	/**
-     * Returns the portletMode property.
-     * @return String
-     */
-    public String getPortletMode() {
-        return portletMode;
-    }
-    
-    
-    /**
-     * Returns the windowState property.
-     * @return String
-     */
-    public String getWindowState() {
-        return windowState;
-    }
-    
-    
+        
     /**
      * Returns the copyCurrentRenderParameters property.
      * @return Boolean
@@ -217,38 +92,8 @@ public abstract class PortletURLTag286 extends BaseURLTag {
     public Boolean getCopyCurrentRenderParameters() {
         return copyCurrentRenderParameters;
     }
-    
-    
-    /**
-     * Sets the url property.
-     * @param url The url to set
-     * @return void
-     */
-    public void setUrl(PortletURL url) {
-        this.url = url;
-    }
-    
-    
-    /**
-     * Sets the portletMode property.
-     * @param portletMode - the portlet mode to set
-     * @return void
-     */
-    public void setPortletMode(String portletMode) {
-        this.portletMode = portletMode;
-    }
-    
-    
-    /**
-     * Sets the windowState property.
-     * @param windowState - the portlet window state to set
-     * @return void
-     */
-    public void setWindowState(String windowState) {
-        this.windowState = windowState;
-    }
-    
-    
+         
+        
     /**
      * Sets copyCurrentRenderParameters property.
      * @param copyCurrentRenderParameters
@@ -257,9 +102,9 @@ public abstract class PortletURLTag286 extends BaseURLTag {
     public void setCopyCurrentRenderParameters(Boolean copyCurrentRenderParameters) {
         this.copyCurrentRenderParameters = copyCurrentRenderParameters;
     }
-    
-    
-    /**
+        
+    	
+	/**
      * Copies the current render parameters to the parameter map.
      * @return void
      */
@@ -275,80 +120,17 @@ public abstract class PortletURLTag286 extends BaseURLTag {
 			Set<String> keySet = renderParamsMap.keySet();
 			
 			for(String key : keySet){
-												
-				String[] values = renderParamsMap.get(key);
-				
-				for(int index = 0; index < values.length; ++index){
-					addParameter(key, values[index]);				
+									
+				if(!removedParametersList.contains(key)){
+
+					String[] values = renderParamsMap.get(key);
+
+					for(int index = 0; index < values.length; ++index){
+						addParameter(key, values[index]);				
+					}
 				}
 			}
 		}
     }
     
-    
-    /**
-     * Creates an actionURL or a renderURL
-     * @param portletResponse PortletResponse
-     * @return PortletURL
-     */
-    protected abstract PortletURL createPortletUrl(PortletResponse portletResponse);   
-    
-    
-  
-	/**
-	 * TagExtraInfo class for PortletURLTag.
-	 */
-	public static class TEI extends BaseURLTag.TEI {
-        public final static Hashtable<String,Object> definedWindowStates = getDefinedWindowStates();
-        public final static Hashtable<String,Object> portletModes = getDefinedPortletModes();
-
-        /**
-         * Provides a list of all static PortletMode available in the
-         * specifications by using introspection
-         * @return Hashtable
-         */
-        private static Hashtable<String,Object> getDefinedPortletModes() {
-            Hashtable<String,Object> portletModes = new Hashtable<String,Object>();
-            Field[] f = PortletMode.class.getDeclaredFields();
-
-            for (int i = 0; i < f.length; i++) {
-                if (f[i].getType().isAssignableFrom(
-                    javax.portlet.PortletMode.class)) {
-                    try {
-                        portletModes.put(
-                            f[i].get(f[i]).toString().toUpperCase(),
-                            f[i].get(f[i]));
-                    } catch (IllegalAccessException e) {
-                    }
-                }
-            }
-
-            return portletModes;
-        }
-
-        /**
-         * Provides a list of all static WindowsStates available in the
-         * specifications by using introspection
-         * @return Hashtable
-         */
-        private static Hashtable<String,Object> getDefinedWindowStates() {
-            Hashtable<String,Object> definedWindowStates = new Hashtable<String,Object>();
-            Field[] f = WindowState.class.getDeclaredFields();
-
-            for (int i = 0; i < f.length; i++) {
-                if (f[i].getType().isAssignableFrom(
-                    javax.portlet.WindowState.class)) {
-                    try {
-                        definedWindowStates.put(
-                            f[i].get(f[i]).toString().toUpperCase(),
-                            f[i].get(f[i]));
-                    } catch (IllegalAccessException e) {
-
-                    }
-                }
-            }
-            return definedWindowStates;
-        }
-    }
-	
 }

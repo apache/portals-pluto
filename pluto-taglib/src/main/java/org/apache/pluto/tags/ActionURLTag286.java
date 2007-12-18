@@ -34,9 +34,9 @@ import javax.servlet.jsp.JspException;
 
 /**
  * 
- * A tag handler for the <CODE>actionURL</CODE> tag,which creates a url that
- * points to the current Portlet and triggers an action request with the
- * supplied parameters.
+ * A tag handler for the <CODE>actionURL</CODE> tag as defined in the JSR 286,
+ * which creates a url that points to the current Portlet and triggers 
+ * an action request with the supplied parameters.
  * 
  * @version 2.0
  */

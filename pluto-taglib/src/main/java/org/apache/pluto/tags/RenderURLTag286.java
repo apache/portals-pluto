@@ -41,12 +41,14 @@ public class RenderURLTag286 extends PortletURLTag286 {
      */
 	@Override
 	protected PortletURL createPortletUrl(PortletResponse portletResponse){
+		
 		if (portletResponse instanceof RenderResponse) {
 			return ((RenderResponse)portletResponse).createRenderURL();			
 		}
 		else if (portletResponse instanceof ResourceResponse) {
 			return ((ResourceResponse)portletResponse).createRenderURL();			
 		}
+		
 		throw new IllegalArgumentException();
 	}
     

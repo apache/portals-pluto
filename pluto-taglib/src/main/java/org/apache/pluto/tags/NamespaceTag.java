@@ -28,6 +28,8 @@ import java.io.IOException;
  * <p/>
  * A tag handler for the <CODE>namespace</CODE> tag. writes a unique value
  * for the current portlet <BR>This tag has no attributes
+ * 
+ * @version 2.0
  */
 public class NamespaceTag extends TagSupport {
 	
@@ -37,10 +39,14 @@ public class NamespaceTag extends TagSupport {
      * @see javax.servlet.jsp.tagext.Tag#doStartTag()
      */
     public int doStartTag() throws JspException {
+    	
     	PortletResponse portletResponse = (PortletResponse) pageContext.getRequest()
             .getAttribute(Constants.PORTLET_RESPONSE);
+    	
         String namespace = portletResponse.getNamespace();
+        
         JspWriter writer = pageContext.getOut();
+        
         try {
             writer.print(namespace);
         } catch (IOException ioe) {
@@ -48,6 +54,7 @@ public class NamespaceTag extends TagSupport {
                 "Unable to write namespace", ioe
             );
         }
+        
         return SKIP_BODY;
     }
 }

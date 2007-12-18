@@ -17,17 +17,12 @@
 package org.apache.pluto.tags;
 
 
-import java.io.IOException;
-
+import javax.portlet.BaseURL;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 
 
 /**
@@ -40,12 +35,13 @@ import javax.servlet.jsp.PageContext;
 
 public class ResourceURLTag286 extends BaseURLTag {
 	
-	private static final long serialVersionUID = 286L;
-
-	private ResourceURL url = null;
+	private static final long serialVersionUID = 286L;	
 	
 	private String id = null;
+	
 	private String cachability = null;
+	
+	private ResourceURL resourceURL = null;
 	
 
 	public ResourceURLTag286() {
@@ -59,111 +55,37 @@ public class ResourceURLTag286 extends BaseURLTag {
 	 */
 	@Override
 	public int doStartTag() throws JspException {
-		
-        if (var != null) {
-            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
-        }
-        
+		       
         PortletResponse portletResponse = (PortletResponse) pageContext.getRequest()
             .getAttribute(Constants.PORTLET_RESPONSE);
-
+        
         if (portletResponse != null) {
-        	if(portletResponse instanceof RenderResponse){
-        		url = ((RenderResponse)portletResponse).createResourceURL();	
-        	}
-        	else if(portletResponse instanceof ResourceResponse){
-        		url = ((ResourceResponse)portletResponse).createResourceURL();
-        	}
-        	else{
-        		throw new JspException();
-        	}
-            
-            if (secure != null) {
-                try {                	
-                    url.setSecure(getSecureBoolean());                    
-                } catch (PortletSecurityException e) {                	
-                    throw new JspException(e);                    
-                }
+        	
+        	ResourceURL resourceURL = createResourceURL(portletResponse);
+                 
+            if(id != null){
+            	resourceURL.setResourceID(id);
             }
-        }
-        
-    	if(id != null){
-			url.setResourceID(id);
-		}
-		
-		if(cachability != null){
-			try{
-				url.setCacheability(cachability);
-			}
-			catch(IllegalArgumentException e){
-				throw new JspException(e);
-			}
-			catch(IllegalStateException e){
-				throw new JspException(e);
-			}
-		}
-        
-        return EVAL_BODY_INCLUDE;
-    }
-	
 
-	/* (non-Javadoc)
-	 * @see org.apache.pluto.tags.BaseURLTag#doEndTag()
-	 */
-	@Override
-	public int doEndTag() throws JspException{
-		
-		setUrlParameters(url);
-		setUrlProperties(url);
-		
-		HttpServletResponse response = (HttpServletResponse) pageContext.getResponse();
-		
-		String urlString = response.encodeURL(url.toString());
-        //properly encoding urls to allow non-cookie enabled sessions - PLUTO-252 
-		
-		if(escapeXml){			
-			urlString = doEscapeXml(urlString);
-		}
-		
-	    if (var == null) {
-            try {
-                JspWriter writer = pageContext.getOut();
-                writer.print(urlString);                
-            } catch (IOException ioe) {            	
-                throw new JspException(
-                   "resourceURL Tag Exception: cannot write to the output writer.");
+            if(cachability != null){
+            	try{
+            		resourceURL.setCacheability(cachability);
+            	}
+            	catch(IllegalArgumentException e){
+            		throw new JspException(e);
+            	}
+            	catch(IllegalStateException e){
+            		throw new JspException(e);
+            	}
             }
             
-        } 
-	    else {        	
-            pageContext.setAttribute(var, urlString,
-                                     PageContext.PAGE_SCOPE);
+            setUrl(resourceURL);
         }
-	    
-	    /*cleanup*/
-	    propertiesMap.clear();
-	    parametersMap.clear();
-	    
-        return EVAL_PAGE;
-	}
-	
-    /**
-     * Gets the url property.
-     * @return BaseURL
-     */
-    public ResourceURL getUrl() {
-        return url;
+        
+        return super.doStartTag();
     }
 	
-    /**
-     * Sets the url porperty.
-     * @param url BaseUrl - The url to set.
-     * @return void
-     */
-    public void setUrl(ResourceURL url) {
-        this.url = url;
-    }
-    
+	   
 	/**
 	 * @return the id
 	 */
@@ -193,5 +115,45 @@ public class ResourceURLTag286 extends BaseURLTag {
 	 */
 	public void setCachability(String cachability) {
 		this.cachability = cachability;
+	}
+	
+
+    /* (non-Javadoc)
+     * @see org.apache.pluto.tags.BaseURLTag#getUrl()
+     */
+    @Override
+    protected ResourceURL getUrl() {
+        return resourceURL;
+    }
+	
+   
+    /* (non-Javadoc)
+     * @see org.apache.pluto.tags.BaseURLTag#setUrl(javax.portlet.BaseURL)
+     */
+    @Override
+    protected void setUrl(BaseURL url) {
+        this.resourceURL = (ResourceURL)url;
+    }
+	
+    
+	/**
+	 * Creates a resourceURL.
+	 * 
+	 * @param portletResponse
+	 * @return a resourceURL
+	 * @throws JspException
+	 */
+	protected ResourceURL createResourceURL(PortletResponse portletResponse) throws JspException{
+		ResourceURL result = null;
+		if(portletResponse instanceof RenderResponse){
+    		result = ((RenderResponse)portletResponse).createResourceURL();	
+    	}
+    	else if(portletResponse instanceof ResourceResponse){
+    		result = ((ResourceResponse)portletResponse).createResourceURL();
+    	}	
+    	else{
+    		throw new JspException();
+    	}
+		return result;
 	}
 }

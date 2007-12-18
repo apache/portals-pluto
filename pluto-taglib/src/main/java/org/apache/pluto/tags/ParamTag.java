@@ -22,12 +22,15 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * A tag handler for the <CODE>param</CODE> tag. Defines a parameter that
- * can be added to a <CODE>actionURL</CODE>, a <CODE>resourceURL</CODE> or a <CODE>renderURL</CODE>
+ * can be added to a <CODE>actionURL</CODE>, a <CODE>resourceURL</CODE> or 
+ * a <CODE>renderURL</CODE>
  * <BR>The following attributes are mandatory:
  *   <UL>
  *       <LI><CODE>name</CODE>
  *       <LI><CODE>value</CODE>
  *   </UL>
+ *  
+ * The parent tag handler must be a subclass of <code>BaseURLTag</code>.      
  *       
  *  @version 2.0
  */

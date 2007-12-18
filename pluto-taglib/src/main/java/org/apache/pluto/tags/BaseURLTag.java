@@ -16,26 +16,30 @@
  */
 package org.apache.pluto.tags;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.VariableInfo;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 import javax.portlet.BaseURL;
-
+import javax.portlet.PortletSecurityException;
 
 /**
- * Abstract supporting class for actionURL tag, renderURL tag and resourceURL tag.
+ * Abstract supporting class for actionURL tag, renderURL tag 
+ * and resourceURL tag. (for JSR168 and JSR286 URL tag's)
  * 
- * @version 2.0
- * 
+ * @version 2.0 
  */
 
 public abstract class BaseURLTag extends TagSupport {
@@ -51,6 +55,9 @@ public abstract class BaseURLTag extends TagSupport {
 		
 	protected Map<String, List<String>> parametersMap = 
 		new HashMap<String, List<String>>();
+
+	protected List<String> removedParametersList = 
+		new ArrayList<String>();
 	
 	protected Map<String, List<String>> propertiesMap = 
 		new HashMap<String, List<String>>();
@@ -61,14 +68,78 @@ public abstract class BaseURLTag extends TagSupport {
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
 	 */
 	@Override
-	public abstract int doStartTag() throws JspException;
+	public int doStartTag() throws JspException{
+		
+		BaseURL url = getUrl();
+		
+		if(url == null){
+			throw new IllegalStateException("internal error: url not set");
+		}
+		
+		if (var != null) {
+            pageContext.removeAttribute(var, PageContext.PAGE_SCOPE);
+        }
+		
+		if (secure != null) {
+            try {                	
+                url.setSecure(getSecureBoolean());                    
+            } catch (PortletSecurityException e) {                	
+                throw new JspException(e);                    
+            }
+        }
+		
+		return EVAL_BODY_INCLUDE;
+	}
 	
 	
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
 	 */
 	@Override
-	public abstract int doEndTag() throws JspException;
+	public int doEndTag() throws JspException{
+		
+		BaseURL url = getUrl();
+		
+		if(url == null){
+			throw new IllegalStateException("internal error: url not set");
+		}
+		
+		setUrlParameters(url);		
+		setUrlProperties(url);
+		
+		HttpServletResponse response = 
+			(HttpServletResponse) pageContext.getResponse();
+		
+		//	properly encoding urls to allow non-cookie enabled sessions - PLUTO-252 
+		String urlString = response.encodeURL(url.toString());
+		
+		if(escapeXml){
+			urlString = doEscapeXml(urlString);
+		}
+		
+	    if (var == null) {
+            try {            	
+                JspWriter writer = pageContext.getOut();
+                writer.print(urlString);
+            } catch (IOException ioe) {
+                throw new JspException(
+                    "Portlet/ResourceURL-Tag Exception: cannot write to the output writer.");
+            }
+        } 
+	    else {
+            pageContext.setAttribute(var, urlString,
+                                     PageContext.PAGE_SCOPE);
+        }
+	    
+	    /*cleanup*/
+	    propertiesMap.clear();
+	    parametersMap.clear();
+	    removedParametersList.clear();
+	    
+	    setUrl(null);
+	    
+        return EVAL_PAGE;
+	}
 	
 	
 
@@ -77,8 +148,8 @@ public abstract class BaseURLTag extends TagSupport {
 	 */
 	@Override
 	public void release(){
-		super.release();
 		secureBoolean = null;
+		super.release();		
 	}
 	
 	
@@ -161,14 +232,16 @@ public abstract class BaseURLTag extends TagSupport {
      * @return void
      */
     protected void addParameter(String key,String value) {
-    	if(key == null){
-    		throw new NullPointerException();
+    	if((key == null) || (key.length() == 0)){
+    		throw new IllegalArgumentException(
+    				"the argument key must not be null or empty!");
     	}
     	
     	if((value == null) || (value.length() == 0)){//remove parameter
     		if(parametersMap.containsKey(key)){
     			parametersMap.remove(key);
     		}
+    		removedParametersList.add(key);
     	}
     	else{//add value
     	   	List<String> valueList = null;
@@ -185,6 +258,7 @@ public abstract class BaseURLTag extends TagSupport {
     	   	parametersMap.put(key, valueList);
     	}
     }
+    
     
     /**
      * Adds a key,value pair to the property map. 
@@ -232,6 +306,7 @@ public abstract class BaseURLTag extends TagSupport {
 		}
     }
     
+    
     /**
      * Copies the properties from map to the BaseURL.
      * @param url BaseURL
@@ -249,6 +324,18 @@ public abstract class BaseURLTag extends TagSupport {
 			}
 		}
     }
+    
+    
+	/**
+	 * @return the url
+	 */
+    protected abstract BaseURL getUrl();
+
+
+	/**
+	 * @param url the url to set
+	 */
+    protected abstract void setUrl(BaseURL url);
     
     
     /**
@@ -270,8 +357,7 @@ public abstract class BaseURLTag extends TagSupport {
        
     
     /**
-     * Checks if string is empty.
-     * This method is a copy from <code>org.apache.commons.lang.StringUtils</code> class.
+     * Checks if the string is empty. 
      * @param str String
      * @return boolean
      */
@@ -279,6 +365,8 @@ public abstract class BaseURLTag extends TagSupport {
         return ((str == null) || (str.length() == 0));
     }
     
+    
+    /* -------------------------------------------------------------------*/
         
 	/**
 	 * TagExtraInfo class for BaseUrlTag.

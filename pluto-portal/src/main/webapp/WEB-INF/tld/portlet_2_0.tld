@@ -23,7 +23,7 @@
 <taglib>
     <tlib-version>2.0</tlib-version>
     <jsp-version>1.2</jsp-version>
-    <short-name>portlet2</short-name>
+    <short-name>portlet_2_0</short-name>
     <uri>http://java.sun.com/portlet_2_0</uri>
     <description>Pluto Tag Library</description>
     <tag>
@@ -65,7 +65,7 @@
     <tag>
         <name>actionURL</name>
         <tag-class>org.apache.pluto.tags.ActionURLTag286</tag-class>
-        <tei-class>org.apache.pluto.tags.PortletURLTag286$TEI</tei-class>
+        <tei-class>org.apache.pluto.tags.PortletURLTag168$TEI</tei-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>windowState</name>
@@ -106,7 +106,7 @@
     <tag>
         <name>renderURL</name>
         <tag-class>org.apache.pluto.tags.RenderURLTag286</tag-class>
-        <tei-class>org.apache.pluto.tags.PortletURLTag286$TEI</tei-class>
+        <tei-class>org.apache.pluto.tags.PortletURLTag168$TEI</tei-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>windowState</name>
