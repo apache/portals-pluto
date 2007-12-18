@@ -128,12 +128,12 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
     }
 	
 	public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException, IllegalStateException {
-		if (((HttpServletResponse)response).isCommitted()){
-			throw new IllegalStateException("Response has been committed, this isn't allowed before forward" +
-											" method. Content must delete before service from servlet is called.");
-		}
 		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
 		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
+		if (!internalResponse.isForwardedAllowed()){
+			throw new IllegalStateException("Response has been committed, this isn't allowed before forward" +
+				" method. Content must delete before service from servlet is called.");
+		}
 		boolean isForwarded = (internalRequest.isForwarded()||internalResponse.isForwarded());
         try {
         	internalRequest.setForwarded(true);
@@ -145,7 +145,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         		removeAttributes(internalRequest);
         	internalResponse.setForwarded(true);
 
-            requestDispatcher.forward((HttpServletRequest) internalRequest,
+            requestDispatcher.include((HttpServletRequest) internalRequest,
             		(HttpServletResponse) internalResponse);
         } catch (IOException ex) {
             throw ex;

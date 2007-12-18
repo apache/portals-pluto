@@ -363,5 +363,11 @@ implements PortletResponse, InternalPortletResponse {
 		this.forwarded = forwared;
 		
 	}
-    	
+
+	public boolean isForwardedAllowed(){
+		if (usingWriter || usingStream)
+			return false;
+		else
+			return true;
+	}
 }
