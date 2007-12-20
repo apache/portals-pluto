@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 /**
  * The callback service interface defining callback methods that will be invoked
@@ -83,7 +84,7 @@ public interface PortalCallbackService extends ContainerService {
      * Returns the FilterManager, this is used to process the filter.
      * @return FilterManager
      */
-    public FilterManager getFilterManager(); 
+    public FilterManager getFilterManager(PortletAppDD portletAppDD, String portletName, String lifeCycle); 
     
     /**
      * Returns the PortletURLListener which calls the Filter for the URL.

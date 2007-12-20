@@ -115,11 +115,6 @@ public class PortalDriverServlet extends HttpServlet {
         
         PortletWindowConfig actionWindowConfig = null;
         PortletWindowConfig resourceWindowConfig = null;
-
-        request.setAttribute("filter-manager",
-        		container.getRequiredContainerServices().
-        		getPortalCallbackService().
-        		getFilterManager());
         
 		if (resourceWindowId != null){
 			resourceWindowConfig = PortletWindowConfig.fromId(resourceWindowId);

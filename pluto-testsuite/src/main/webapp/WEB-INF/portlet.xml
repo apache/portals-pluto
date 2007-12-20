@@ -219,9 +219,7 @@ limitations under the License.
     <display-name>Wildcard Mapped Filter</display-name>
       
     <filter-name>WildcardMappedFilter</filter-name>
-    <filter-class>
-        org.apache.pluto.testsuite.jsr286.filter.WildcardMappedFilter
-    </filter-class>
+    <filter-class>org.apache.pluto.testsuite.test.jsr286.filter.WildcardMappedFilter</filter-class>
     
     <lifecycle>ACTION_PHASE</lifecycle>
     <lifecycle>RENDER_PHASE</lifecycle>
@@ -240,9 +238,7 @@ limitations under the License.
     <display-name>Test Portlet Filter</display-name>
     
     <filter-name>TestFilter</filter-name>
-    <filter-class>
-        org.apache.pluto.testsuite.jsr286.filter.TestFilter
-    </filter-class>
+    <filter-class>org.apache.pluto.testsuite.test.jsr286.filter.TestFilter</filter-class>
   
     <lifecycle>ACTION_PHASE</lifecycle>
     <lifecycle>RENDER_PHASE</lifecycle>

@@ -206,6 +206,8 @@ public class PortletServlet extends HttpServlet {
 
         portletResponse = (InternalPortletResponse) request.getAttribute(
             Constants.PORTLET_RESPONSE);
+        
+        FilterManager filterManager = (FilterManager) request.getAttribute(Constants.FILTER_MANAGER);
 
         portletRequest.init(portletContext, request);
 
@@ -219,8 +221,8 @@ public class PortletServlet extends HttpServlet {
 
 //      Init the classloader for the filter and get the Service for processing the filters.
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        FilterManager filtermanager = (FilterManager) request.getAttribute(
-        		"filter-manager");
+//        FilterManager filtermanager = (FilterManager) request.getAttribute(
+//        		"filter-manager");
         
         try {
             
@@ -230,8 +232,7 @@ public class PortletServlet extends HttpServlet {
                 		(RenderRequestImpl) portletRequest;
                 RenderResponseImpl renderResponse =
                     	(RenderResponseImpl) portletResponse;
-                filtermanager.processFilter(renderRequest, renderResponse, loader, portletName, portletContext,"RENDER_PHASE");
-                portlet.render(renderRequest, renderResponse);
+                filterManager.processFilter(renderRequest, renderResponse, loader, portlet,portletContext);
             }
 
             //The requested method is RESOURCE: call ResourceServingPortlet.serveResource(..)
@@ -240,8 +241,7 @@ public class PortletServlet extends HttpServlet {
                     	(ResourceRequestImpl) portletRequest;
             	ResourceResponseImpl resourceResponse =
                     	(ResourceResponseImpl) portletResponse;
-            	filtermanager.processFilter(resourceRequest, resourceResponse, loader, portletName, portletContext,"RESOURCE_PHASE");
-            	resourceServingPortlet.serveResource(resourceRequest, resourceResponse);
+            	filterManager.processFilter(resourceRequest, resourceResponse, loader, resourceServingPortlet,portletContext);
             }
             
             // The requested method is ACTION: call Portlet.processAction(..)
@@ -250,8 +250,7 @@ public class PortletServlet extends HttpServlet {
                     	(ActionRequestImpl) portletRequest;
                 ActionResponseImpl actionResponse =
                     	(ActionResponseImpl) portletResponse;
-                filtermanager.processFilter(actionRequest, actionResponse, loader, portletName, portletContext,"ACTION_PHASE");
-                portlet.processAction(actionRequest, actionResponse);
+                filterManager.processFilter(actionRequest, actionResponse, loader, portlet,portletContext);
             }
             
             //The request methode is Event: call Portlet.processEvent(..)
@@ -260,8 +259,7 @@ public class PortletServlet extends HttpServlet {
                 	(EventRequestImpl) portletRequest;
             	EventResponseImpl eventResponse =
                 	(EventResponseImpl) portletResponse;
-            	filtermanager.processFilter(eventRequest, eventResponse, loader, portletName, portletContext,"EVENT_PHASE");
-            	eventPortlet.processEvent(eventRequest, eventResponse);
+            	filterManager.processFilter(eventRequest, eventResponse, loader, eventPortlet,portletContext);
             }
             // The requested method is ADMIN: call handlers.
             else if (methodId == Constants.METHOD_ADMIN) {

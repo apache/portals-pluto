@@ -126,6 +126,11 @@ public class Constants {
 	public static final String PUBLIC_RENDER_PARAMETER_PROVIDER = "PublicRenderParameterProvider";
 	
 	/**
+	 * The public key, to store the FilterManager in the request.
+	 */
+	public static final String FILTER_MANAGER = "FilterManager";
+	
+	/**
 	 * The public key, to store, if the render parameter are already cleared in the request
 	 */
 	public static final String RENDER_ALREADY_CLEARED = "RenderAlreadyCleared";

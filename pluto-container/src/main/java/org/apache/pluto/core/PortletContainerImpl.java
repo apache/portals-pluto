@@ -58,6 +58,7 @@ import org.apache.pluto.internal.InternalResourceRequest;
 import org.apache.pluto.internal.InternalResourceResponse;
 import org.apache.pluto.internal.impl.StateAwareResponseImpl;
 import org.apache.pluto.spi.EventProvider;
+import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.internal.impl.EventRequestImpl;
@@ -195,7 +196,9 @@ public class PortletContainerImpl implements PortletContainer,
 
         try {
             ContainerInvocation.setInvocation(this, internalPortletWindow);
-            invoker.render(renderRequest, renderResponse, internalPortletWindow);
+            //Filter initialisation
+            FilterManager filterManager = filterInitialisation(internalPortletWindow,PortletRequest.RENDER_PHASE);
+            invoker.render(renderRequest, renderResponse, internalPortletWindow, filterManager);
         } finally {
             ContainerInvocation.clearInvocation();
         }
@@ -240,7 +243,8 @@ public class PortletContainerImpl implements PortletContainer,
 
         try {
             ContainerInvocation.setInvocation(this, internalPortletWindow);
-            invoker.serveResource(resourceRequest, resourceResponse, internalPortletWindow);
+            FilterManager filterManager = filterInitialisation(internalPortletWindow,PortletRequest.RESOURCE_PHASE);
+            invoker.serveResource(resourceRequest, resourceResponse, internalPortletWindow, filterManager);
         } finally {
             ContainerInvocation.clearInvocation();
         }
@@ -285,7 +289,8 @@ public class PortletContainerImpl implements PortletContainer,
 
         try {
             ContainerInvocation.setInvocation(this, internalPortletWindow);
-            invoker.action(actionRequest, actionResponse, internalPortletWindow);
+            FilterManager filterManager = filterInitialisation(internalPortletWindow,PortletRequest.ACTION_PHASE);
+            invoker.action(actionRequest, actionResponse, internalPortletWindow, filterManager);
         }
         finally {
             ContainerInvocation.clearInvocation();
@@ -484,7 +489,7 @@ public class PortletContainerImpl implements PortletContainer,
      */
     public void fireEvent(HttpServletRequest request, HttpServletResponse response,
     		PortletWindow window, Event event) 
-    		throws PortletException, IOException {
+    		throws PortletException, IOException, PortletContainerException {
 
     	ensureInitialized();
 
@@ -506,7 +511,8 @@ public class PortletContainerImpl implements PortletContainer,
 
         try {
             ContainerInvocation.setInvocation(this, internalPortletWindow);
-            invoker.event(request, response, internalPortletWindow);
+            FilterManager filterManager = filterInitialisation(internalPortletWindow,PortletRequest.EVENT_PHASE);
+            invoker.event(request, response, internalPortletWindow, filterManager);
         }
         finally {
             ContainerInvocation.clearInvocation();
@@ -639,6 +645,21 @@ public class PortletContainerImpl implements PortletContainer,
 		}
 		return true;
 	}    
+	
+	/**
+	 * The method initialise the FilterManager for later use in the PortletServlet
+	 * @param internalPortletWindow the InternalPortletWindow
+	 * @param lifeCycle like ACTION_PHASE, RENDER_PHASE,...
+	 * @return FilterManager
+	 * @throws PortletContainerException
+	 */
+	private FilterManager filterInitialisation(InternalPortletWindow internalPortletWindow,String lifeCycle) throws PortletContainerException{
+    	PortletAppDD portletAppDD = getOptionalContainerServices().getPortletRegistryService().getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
+        String portletName = internalPortletWindow.getPortletName();
+        
+        return requiredContainerServices.getPortalCallbackService().getFilterManager(portletAppDD,portletName,lifeCycle);
+    }
+	
 	class AdminRequest extends PortletRequestImpl {
 
         public AdminRequest(PortletContainer container,

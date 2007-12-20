@@ -22,8 +22,10 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -32,11 +34,14 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceServingPortlet;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
+
+import org.apache.pluto.descriptors.portlet.FilterDD;
 
 /**
  * A <code>FilterChain</code> is an object provided by the portlet container 
@@ -49,267 +54,136 @@ import javax.portlet.filter.ResourceFilter;
  */
 public class FilterChainImpl implements FilterChain {
 
-	private List<PortletFilter> actionFilters = new ArrayList<PortletFilter>();
-	private List<PortletFilter> eventFilters = new ArrayList<PortletFilter>();
-	private List<PortletFilter> renderFilters = new ArrayList<PortletFilter>();
-	private List<PortletFilter> resourceFilters = new ArrayList<PortletFilter>();
-	private String appName = "";
+	private List<FilterDD> filterList = new ArrayList<FilterDD>();
+	private String lifeCycle;
+	Portlet portlet;
+	EventPortlet eventPortlet;
+	ResourceServingPortlet resourceServingPortlet;
 	ClassLoader loader;
-	String portletName;
 	PortletContext portletContext;
-	private int index = -1;
-	
-	/**
-	 * The class capsulate the PortletFilter and the parameter for the
-	 * init and doFilter from FilterChain.
-	 */
-	class PortletFilter{
-		
-		FilterConfigImpl filterConfig;
-		ActionFilter actionFilter;
-		EventFilter eventFilter;
-		RenderFilter renderFilter;
-		ResourceFilter resourceFilter;
-		List<String> portletNames;
-		String className = null;
-		Class clazz = null;
-		
-		public PortletFilter(String className, FilterConfigImpl filterConfig,List<String> portletNames){
-			this.className = className;
-			this.filterConfig = filterConfig;
-			this.portletNames = portletNames;
-		}
-		
-		public void addPortletNames(List<String> portletnames){
-			for (String string : portletnames) {
-				this.portletNames.add(string);
-			}
-		}
-		
-		/**
-		 * Tests if the filter-mapping contains with the portlet-name. 
-		 * @param portletName Name of the portlet.
-		 * @return true if contains, false else.
-		 */
-		public boolean isFilterForPortlet(String portletName){
-			if (portletNames == null){
-				return false;
-			}
-			for (int i = 0; i < portletNames.size();i++){
-				String name = portletNames.get(i);
-				if (name.endsWith("*")){
-					if (name.length()== 1){
-						//if only *
-						return true;
-					}
-					name = name.substring(0, name.length()-1);
-					if (portletName.length()>=name.length()){
-						if (portletName.substring(0, name.length()).equals(name))
-							return true;
-					}
-				}
-				else if(name.equals(portletName))
-					return true;
-			}
-			return false;
-//			return this.portletNames.contains(portletName);
-		}
-		
-		/**
-		 * Returns the filter class with the given path.
-		 * @return Filterclass
-		 * @throws ClassNotFoundException if Class not found
-		 */
-		private Class getFilterClass() throws ClassNotFoundException{
-			if (clazz == null){
-				clazz = loader.loadClass(className);
-			}
-            return clazz;
-		}
-		private FilterConfigImpl getFilterConfig(){
-			return filterConfig;
-		}
+	int filterListIndex = 0;
+
+	public FilterChainImpl(String lifeCycle){
+		this.lifeCycle = lifeCycle;
 	}
-	
-	public FilterChainImpl(String appName){
-		this.appName = appName;
-	}
-	
-	/**
-	 * The filterData has do be set before call doFilter.
-	 * @param loader Classloader of the appl.
-	 * @param portletName
-	 * @param portletContext
-	 */
-	public void setFilterData(ClassLoader loader, String portletName, PortletContext portletContext){
+	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, EventPortlet eventPortlet, PortletContext portletContext) throws IOException, PortletException{
+		this.eventPortlet = eventPortlet;
 		this.loader = loader;
-		this.portletName = portletName;
-		this.portletContext = portletContext;  
+		this.portletContext = portletContext;
+		doFilter((EventRequest)req,(EventResponse) res);
+	}
+	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext) throws IOException, PortletException{
+		this.resourceServingPortlet = resourceServingPortlet;
+		this.loader = loader;
+		this.portletContext = portletContext;
+		doFilter((ResourceRequest)req,(ResourceResponse) res);
 	}
 	
-	/**
-	 * Adds the filter to the filterChain
-	 * @param className Path to the filter
-	 * @param filterConfig 
-	 * @param portletNames
-	 * @param lifecycle
-	 */
-	public void addFilter(String className, FilterConfigImpl filterConfig, List<String> portletNames, List lifecycle){
-		PortletFilter portletFilter = new PortletFilter(className, filterConfig, portletNames);
-		for (int i = 0; i < lifecycle.size();i++){
-			if (lifecycle.get(i).equals(FilterManagerImpl.ACTION_PHASE)){
-				actionFilters.add(portletFilter);
-			}
-			else if (lifecycle.get(i).equals(FilterManagerImpl.EVENT_PHASE)){
-				eventFilters.add(portletFilter);
-			}
-			else if (lifecycle.get(i).equals(FilterManagerImpl.RENDER_PHASE)){
-				renderFilters.add(portletFilter);
-			}
-			else if (lifecycle.get(i).equals(FilterManagerImpl.RESOURCE_PHASE)){
-				resourceFilters.add(portletFilter);
-			}
+	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws IOException, PortletException{
+		this.portlet = portlet;
+		this.loader = loader;
+		this.portletContext = portletContext;
+		if (lifeCycle.equals(PortletRequest.ACTION_PHASE)){
+			doFilter((ActionRequest)req,(ActionResponse) res);
 		}
+		else if (lifeCycle.equals(PortletRequest.RENDER_PHASE)){
+			doFilter((RenderRequest)req, (RenderResponse)res);
+		}
+	}
+	
+	public void addFilter(FilterDD filterDD){
+		filterList.add(filterDD);
 	}
 	
 	public void doFilter(ActionRequest request, ActionResponse response) throws IOException, PortletException {
-		if (actionFilters!= null){
-			index++;
-			if (index < actionFilters.size()){
-				PortletFilter filter2 = actionFilters.get(index);
-				if (filter2.isFilterForPortlet(portletName)){
-					ActionFilter actionfilter;
-					try {
-						filter2.getFilterConfig().setPortletContext(portletContext);
-						actionfilter = (ActionFilter) filter2.getFilterClass().newInstance();
-						actionfilter.init(filter2.getFilterConfig());
-						actionfilter.doFilter(request, response, this);
-						actionfilter.destroy();
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else{
-					doFilter(request, response);
-				}
+		if (filterListIndex <filterList.size()){
+			FilterDD filterDD = filterList.get(filterListIndex);
+			filterListIndex++;
+			try {
+				ActionFilter filter = (ActionFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
+				filter.init(filterConfig);
+				filter.doFilter(request, response, this);
+				filter.destroy();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
+		else{
+			portlet.processAction(request, response);
+		}
 	}
-
+	
 	public void doFilter(EventRequest request, EventResponse response) throws IOException, PortletException {
-		if (eventFilters!= null){
-			index++;
-			if (index < eventFilters.size()){
-				PortletFilter filter2 = eventFilters.get(index); 
-				if (filter2.isFilterForPortlet(portletName)){
-					EventFilter eventfilter;
-					try {
-						filter2.getFilterConfig().setPortletContext(portletContext);
-						eventfilter = (EventFilter) filter2.getFilterClass().newInstance();
-						eventfilter.init(filter2.getFilterConfig());
-						eventfilter.doFilter(request, response, this);
-						eventfilter.destroy();
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else{
-					doFilter(request, response);
-				}
+		if (filterListIndex <filterList.size()){
+			FilterDD filterDD = filterList.get(filterListIndex);
+			filterListIndex++;
+			try {
+				EventFilter filter = (EventFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
+				filter.init(filterConfig);
+				filter.doFilter(request, response, this);
+				filter.destroy();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
+		}
+		else{
+			eventPortlet.processEvent(request, response);
 		}
 	}
 
 	public void doFilter(RenderRequest request, RenderResponse response) throws IOException, PortletException {
-		if (renderFilters!= null){
-			index++;
-			if (index < renderFilters.size()){
-				PortletFilter filter2 = renderFilters.get(index);
-				if (filter2.isFilterForPortlet(portletName)){
-					RenderFilter renderfilter;
-					try {
-						filter2.getFilterConfig().setPortletContext(portletContext);
-						renderfilter = (RenderFilter) filter2.getFilterClass().newInstance();
-						renderfilter.init(filter2.getFilterConfig());
-						renderfilter.doFilter(request, response, this);
-						renderfilter.destroy();
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else{
-					doFilter(request, response);
-				}
+		if (filterListIndex <filterList.size()){
+			FilterDD filterDD = filterList.get(filterListIndex);
+			filterListIndex++;
+			try {
+				RenderFilter filter = (RenderFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
+				filter.init(filterConfig);
+				filter.doFilter(request, response, this);
+				filter.destroy();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
+		}
+		else{
+			portlet.render(request, response);
 		}
 	}
 
 	public void doFilter(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
-		if (resourceFilters!= null){
-			index++;
-			if (index < resourceFilters.size()){
-				PortletFilter filter2 = resourceFilters.get(index);
-				if (filter2.isFilterForPortlet(portletName)){
-					ResourceFilter resourcefilter;
-					try {
-						filter2.getFilterConfig().setPortletContext(portletContext);
-						resourcefilter = (ResourceFilter) filter2.getFilterClass().newInstance();
-						resourcefilter.init(filter2.getFilterConfig());
-						resourcefilter.doFilter(request, response, this);
-						resourcefilter.destroy();
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else{
-					doFilter(request, response);
-				}
+		if (filterListIndex <filterList.size()){
+			FilterDD filterDD = filterList.get(filterListIndex);
+			filterListIndex++;
+			try {
+				ResourceFilter filter = (ResourceFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
+				filter.init(filterConfig);
+				filter.doFilter(request, response, this);
+				filter.destroy();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
+		else{
+			resourceServingPortlet.serveResource(request, response);
+		}
 	}
-
-	/**
-	 * Gets the application name.
-	 * @return application name
-	 */
-	public String getAppName() {
-		return appName;
-	}
-
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
 }

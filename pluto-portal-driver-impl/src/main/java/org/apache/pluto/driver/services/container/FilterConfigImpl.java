@@ -35,9 +35,10 @@ public class FilterConfigImpl implements FilterConfig {
 	private String filterName = null;
 	private List<InitParamDD> initParameters = null;
 	private PortletContext portletContext = null;
-	public FilterConfigImpl(String filterName, List<InitParamDD> initParameters){
+	public FilterConfigImpl(String filterName, List<InitParamDD> initParameters, PortletContext portletContext){
 		this.filterName = filterName;
 		this.initParameters = initParameters;
+		this.portletContext = portletContext;
 	}
 	public String getFilterName() {
 		return filterName;
@@ -59,9 +60,5 @@ public class FilterConfigImpl implements FilterConfig {
 
 	public PortletContext getPortletContext() {
 		return portletContext;
-	}
-
-	public void setPortletContext(PortletContext portletContext){
-		this.portletContext = portletContext;
 	}
 }

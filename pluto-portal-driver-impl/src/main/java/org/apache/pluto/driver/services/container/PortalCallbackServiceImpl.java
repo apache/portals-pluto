@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.FilterManager;
@@ -109,8 +110,8 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
      * Returns the FilterManager, this is used to process the filter.
      * @return FilterManager
      */
-	public FilterManager getFilterManager() {
-		return FilterManagerImpl.getFilterManager();
+	public FilterManager getFilterManager(PortletAppDD portletAppDD, String portletName, String lifeCycle) {
+		return FilterManagerImpl.getFilterManager(portletAppDD,portletName,lifeCycle);
 	}
 
 

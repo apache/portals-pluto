@@ -153,7 +153,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
         portletRegistry = null;
         portletApps = null;        
         propertyService = null;
-        FilterManagerImpl.removeAllFilterApps();
+//        FilterManagerImpl.removeAllFilterApps();
         LOG.debug("Supported Modes Service destroyed.");
     }
 
@@ -202,10 +202,6 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 LOG.warn(e);
                 continue;
             }
-            //init the portletapplication filter
-            //FIXME: This is bad encapsulation. There should be a service to do this at startup by DriverConfiguration
-            FilterManagerImpl.addFilterApp(portletAppDD, app.getContextPath());
-            // for each portletAppDD, retrieve the portletDD and the supported modes
             Iterator portlets = portletAppDD.getPortlets().iterator();
             while (portlets.hasNext()) {                
                 PortletDD portlet = (PortletDD)portlets.next();

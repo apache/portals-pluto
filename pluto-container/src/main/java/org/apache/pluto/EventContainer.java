@@ -39,11 +39,12 @@ public interface EventContainer {
 	 * @param eventNumber 
      * @throws PortletException          if one portlet has trouble fulfilling
      *                                   the request
+	 * @throws PortletContainerException 
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
 	public void fireEvent(HttpServletRequest request, HttpServletResponse response, 
-			PortletWindow window, Event event) throws PortletException, IOException;
+			PortletWindow window, Event event) throws PortletException, IOException, PortletContainerException;
 	
 	public ServletContext getServletContext();
 }

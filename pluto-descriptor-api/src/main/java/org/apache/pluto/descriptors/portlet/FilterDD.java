@@ -77,7 +77,7 @@ public class FilterDD {
 		this.initParam = initParam;
 	}
 
-	public List getLifecycle() {
+	public List<String> getLifecycle() {
 		return lifecycle;
 	}
 

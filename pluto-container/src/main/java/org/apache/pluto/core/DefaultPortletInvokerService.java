@@ -41,6 +41,7 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.impl.PortletRequestImpl;
 import org.apache.pluto.internal.impl.PortletResponseImpl;
+import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.util.StringManager;
 
@@ -83,12 +84,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,javax.portlet.ActionResponse)
      */
-    public void action(ActionRequest request, ActionResponse response, InternalPortletWindow window)
+    public void action(ActionRequest request, ActionResponse response, InternalPortletWindow window, FilterManager filterManager)
         throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Action Invocation");
         }
-        invoke(request, response, window, Constants.METHOD_ACTION);
+        invoke(request, response, window, filterManager, Constants.METHOD_ACTION);
     }
 
     /**
@@ -99,12 +100,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
-    public void render(RenderRequest request, RenderResponse response, InternalPortletWindow window)
+    public void render(RenderRequest request, RenderResponse response, InternalPortletWindow window, FilterManager filterManager)
         throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");
         }
-        invoke(request, response, window, Constants.METHOD_RENDER);
+        invoke(request, response, window, filterManager, Constants.METHOD_RENDER);
     }
     
     /**
@@ -115,12 +116,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
-    public void event(HttpServletRequest request, HttpServletResponse response, InternalPortletWindow window)
+    public void event(HttpServletRequest request, HttpServletResponse response, InternalPortletWindow window, FilterManager filterManager)
         throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");
         }
-        invoke((PortletRequest)request, (PortletResponse)response, window, Constants.METHOD_EVENT);
+        invoke((PortletRequest)request, (PortletResponse)response, window, filterManager, Constants.METHOD_EVENT);
     }
     
     /**
@@ -131,12 +132,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#resource(javax.portlet.ResourceRequest,javax.portlet.ResourceResponse)
      */
-    public void serveResource(ResourceRequest request, ResourceResponse response, InternalPortletWindow window)
+    public void serveResource(ResourceRequest request, ResourceResponse response, InternalPortletWindow window, FilterManager filterManager)
         throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Resource Invocation");
         }
-        invoke(request, response, window, Constants.METHOD_RESOURCE);
+        invoke(request, response, window, filterManager, Constants.METHOD_RESOURCE);
     }
 
     /**
@@ -165,6 +166,15 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
 
     // Private Invoke Method ---------------------------------------------------
 
+    private final void invoke(PortletRequest request,
+                                PortletResponse response,
+                                InternalPortletWindow portletWindow,
+                                Integer methodID)
+    	throws PortletException, IOException{
+    	
+    	invoke(request, response, portletWindow, null, methodID);
+    }
+    
     /**
      * Perform the invocation.
      *
@@ -178,6 +188,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     protected final void invoke(PortletRequest request,
                                 PortletResponse response,
                                 InternalPortletWindow portletWindow,
+                                FilterManager filterManager,
                                 Integer methodID)
         throws PortletException, IOException {
 
@@ -201,6 +212,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 servletRequest.setAttribute(Constants.METHOD_ID, methodID);
                 servletRequest.setAttribute(Constants.PORTLET_REQUEST, request);
                 servletRequest.setAttribute(Constants.PORTLET_RESPONSE, response);
+                servletRequest.setAttribute(Constants.FILTER_MANAGER, filterManager);
 
                 dispatcher.include(servletRequest, servletResponse);
 

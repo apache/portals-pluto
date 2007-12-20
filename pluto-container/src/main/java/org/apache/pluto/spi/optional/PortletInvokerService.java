@@ -33,22 +33,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.FilterManager;
 
 /**
  * Service used to invoke portlets.
  */
 public interface PortletInvokerService {
 	
-    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window)
+    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window, FilterManager filterManager)
     	throws IOException, PortletException;
     
-    public void event(HttpServletRequest request, HttpServletResponse response, InternalPortletWindow window)
+    public void event(HttpServletRequest request, HttpServletResponse response, InternalPortletWindow window, FilterManager filterManager)
 		throws IOException, PortletException;
 
-    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window)
+    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window, FilterManager filterManager)
     	throws IOException, PortletException;
     
-    public void serveResource(ResourceRequest req, ResourceResponse res, InternalPortletWindow window)
+    public void serveResource(ResourceRequest req, ResourceResponse res, InternalPortletWindow window, FilterManager filterManager)
 		throws IOException, PortletException;
 
     public void load(PortletRequest req, PortletResponse res, InternalPortletWindow window)

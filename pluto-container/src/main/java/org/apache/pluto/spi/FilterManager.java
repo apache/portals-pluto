@@ -16,9 +16,15 @@
  */
 package org.apache.pluto.spi;
 
+import java.io.IOException;
+
+import javax.portlet.EventPortlet;
+import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.ResourceServingPortlet;
 /**
  * Manage the initialization and doFilter for the filter which are
  * declareted in the deployment descriptor.
@@ -26,5 +32,7 @@ import javax.portlet.PortletResponse;
  * @version 2.0
  */
 public interface FilterManager {
-	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, String portletName, PortletContext portletContext, String lifecycle);
+	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
+	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
+	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
 }
