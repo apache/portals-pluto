@@ -116,7 +116,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
-    public void event(HttpServletRequest request, HttpServletResponse response, InternalPortletWindow window, FilterManager filterManager)
+    public void event(EventRequest request, EventResponse response, InternalPortletWindow window, FilterManager filterManager)
         throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");

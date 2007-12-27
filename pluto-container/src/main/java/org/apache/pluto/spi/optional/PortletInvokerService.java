@@ -43,7 +43,7 @@ public interface PortletInvokerService {
     public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window, FilterManager filterManager)
     	throws IOException, PortletException;
     
-    public void event(HttpServletRequest request, HttpServletResponse response, InternalPortletWindow window, FilterManager filterManager)
+    public void event(EventRequest request, EventResponse response, InternalPortletWindow window, FilterManager filterManager)
 		throws IOException, PortletException;
 
     public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window, FilterManager filterManager)

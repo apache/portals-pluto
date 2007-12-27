@@ -46,6 +46,7 @@ import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.internal.impl.EventImpl;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 
 public class PortletWindowThread extends Thread {
 	
@@ -55,14 +56,18 @@ public class PortletWindowThread extends Thread {
 	
 	private EventContainer eventContainer;
 	
+	/** PortletRegistryService used to obtain PortletApplicationConfig objects */
+	private PortletRegistryService portletRegistry;
+	
 	private List<Event> events = new ArrayList<Event>();
 
 	public PortletWindowThread(ThreadGroup group, String name,
-			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer) {
+			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer, PortletRegistryService portletRegistry) {
 		super(group, name);
 		this.eventProvider = eventProvider;
 		this.portletWindow = window;
-		this.eventContainer = eventContainer;		
+		this.eventContainer = eventContainer;
+		this.portletRegistry = portletRegistry;
 	}
 
 	public PortletWindowThread(String name, 
@@ -108,7 +113,7 @@ public class PortletWindowThread extends Thread {
 			        		// now test if object is jaxb
 			        		EventDefinitionDD eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
-			        		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletName());//Thread.currentThread().getContextClassLoader();
 			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getJavaClass()).asSubclass(Serializable.class);
 
 			        		JAXBContext jc = JAXBContext.newInstance(clazz);

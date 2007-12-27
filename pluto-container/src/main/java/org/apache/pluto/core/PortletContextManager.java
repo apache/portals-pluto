@@ -91,7 +91,10 @@ public class PortletContextManager implements PortletRegistryService {
      */
     private final List registryListeners = new ArrayList();
 
-    
+    /**
+     * The classloader for the portal, key is portletWindow and value is the classloader.
+     */
+    private final Map classLoaders = new HashMap();
     
     // Constructor -------------------------------------------------------------
     
@@ -136,6 +139,7 @@ public class PortletContextManager implements PortletRegistryService {
                 portletContext.getApplicationId() + "/" + portletDD.getPortletName(),
                 new PortletConfigImpl(config, portletContext, portletDD, portletAppDD)
             );
+            classLoaders.put(portletDD.getPortletName(), Thread.currentThread().getContextClassLoader());
         }
 
         return portletContext.getApplicationId();
@@ -175,7 +179,7 @@ public class PortletContextManager implements PortletRegistryService {
         }
         return (InternalPortletContext) portletContexts.get(applicationId);
     }
-
+    
     public void remove(InternalPortletContext context) {
         portletContexts.remove(context.getApplicationId());
         Iterator configs = portletConfigs.keySet().iterator();
@@ -234,6 +238,11 @@ public class PortletContextManager implements PortletRegistryService {
         String msg = "Unable to retrieve portlet application descriptor: '"+applicationId+"'"; 
         LOG.warn(msg);
         throw new PortletContainerException(msg);
+    }
+    
+    public ClassLoader getClassLoader(String portletName){
+    	
+    	return (ClassLoader)classLoaders.get(portletName);
     }
 
     public void addPortletRegistryListener(PortletRegistryListener listener) {

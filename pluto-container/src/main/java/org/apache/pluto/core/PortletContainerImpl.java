@@ -512,7 +512,7 @@ public class PortletContainerImpl implements PortletContainer,
         try {
             ContainerInvocation.setInvocation(this, internalPortletWindow);
             FilterManager filterManager = filterInitialisation(internalPortletWindow,PortletRequest.EVENT_PHASE);
-            invoker.event(request, response, internalPortletWindow, filterManager);
+            invoker.event(eventRequest, eventResponse, internalPortletWindow, filterManager);
         }
         finally {
             ContainerInvocation.clearInvocation();

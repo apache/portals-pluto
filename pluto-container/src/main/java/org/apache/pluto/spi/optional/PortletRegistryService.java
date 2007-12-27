@@ -102,6 +102,8 @@ public interface PortletRegistryService {
     PortletConfig getPortletConfig(String applicationId, String portletName)
         throws PortletContainerException;
 
+    ClassLoader getClassLoader(String portletName);
+    
     /**
      * Add a listener which will recieve notifications of newly
      * registered applications.
