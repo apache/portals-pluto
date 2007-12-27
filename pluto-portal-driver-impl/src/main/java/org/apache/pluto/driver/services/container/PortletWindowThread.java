@@ -159,8 +159,14 @@ public class PortletWindowThread extends Thread {
 		PortletContainer container = (PortletContainer) servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
 		PortletAppDD appDD = container.getPortletApplicationDescriptor(portletWindow.getContextPath());
 		for (EventDefinitionDD def : appDD.getEvents()){
-			if (def.getName().equals(name)){
-				return def;
+			if (def.getQName() != null){
+				if (def.getQName().equals(name))
+					return def;
+			}
+			else{
+				QName tmp = new QName(appDD.getDefaultNamespace(),def.getName());
+				if (tmp.equals(name))
+					return def;
 			}
 		}
 		throw new IllegalStateException();

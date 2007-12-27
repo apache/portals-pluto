@@ -167,17 +167,31 @@ public class EventDefinitionDD {
 	}
 
 	/**
-	 * @return Returns the name.
+	 * @return Returns the qName.
 	 */
-	public QName getName() {
-		return (qname==null) ? new QName(name) : qname; 
+	public QName getQName() {
+		return qname; 
 	}
 
 	/**
-	 * @param name The name to set.
+	 * @param name The qName to set.
 	 */
-	public void setName(QName qname) {
+	public void setQName(QName qname) {
 		this.qname = qname;
+	}
+	
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name; 
+	}
+
+	/**
+	 * @param name The qName to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**

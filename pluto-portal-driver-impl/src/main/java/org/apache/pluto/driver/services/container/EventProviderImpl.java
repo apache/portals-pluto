@@ -346,10 +346,16 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 	private List<QName> getAllAliases(QName eventName, PortletAppDD portletAppDD) {
 		if (portletAppDD.getEvents() != null) {
-			for (EventDefinitionDD eventDefinition : portletAppDD.getEvents()) {
-				if (eventName.toString().equals(
-						eventDefinition.getName().toString())) {
-					return eventDefinition.getAlias();
+			
+			for (EventDefinitionDD def : portletAppDD.getEvents()){
+				if (def.getQName() != null){
+					if (def.getQName().equals(eventName))
+						return def.getAlias();
+				}
+				else{
+					QName tmp = new QName(portletAppDD.getDefaultNamespace(),def.getName());
+					if (tmp.equals(eventName))
+						return def.getAlias();
 				}
 			}
 		}
@@ -563,10 +569,19 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 					.getPortletApplicationDescriptor(portletWindow
 							.getContextPath());
 			if (portletAppDD.getEvents() != null) {
-				for (EventDefinitionDD event : portletAppDD.getEvents()) {
-					if (event.getName().toString().equals(qname.toString())) {
-						return value.getClass().getName().equals(
-								event.getJavaClass());
+				
+				
+				for (EventDefinitionDD def : portletAppDD.getEvents()){
+					if (def.getQName() != null){
+						if (def.getQName().equals(qname))
+							return value.getClass().getName().equals(
+									def.getJavaClass());
+					}
+					else{
+						QName tmp = new QName(portletAppDD.getDefaultNamespace(),def.getName());
+						if (tmp.equals(qname))
+							return value.getClass().getName().equals(
+									def.getJavaClass());
 					}
 				}
 			}
