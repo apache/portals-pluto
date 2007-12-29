@@ -59,6 +59,9 @@ public class WebAppDD {
     // contains a <distributable/> element, then
     // Castor will update this field to true.
     private DistributableDD distributableDD = new DistributableDD();
+    // Needed to generate the correct default
+    // namespace URI in Castor
+    private String xmlNs = null;
 
     public WebAppDD() {
 
@@ -252,7 +255,16 @@ public class WebAppDD {
     public void setServletVersion(String servletVersion) {
         this.servletVersion = servletVersion;
     }
+    
+    public String getXmlNs() {
+        return this.xmlNs;
+    }
 
+    public void setXmlNs(String xmlNs) {
+        this.xmlNs = xmlNs;
+    }
+
+    
 // Helpers
 
     public ServletDD getServlet(String name) {

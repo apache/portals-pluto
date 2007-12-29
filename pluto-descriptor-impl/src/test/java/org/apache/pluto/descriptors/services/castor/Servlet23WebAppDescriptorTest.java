@@ -16,16 +16,6 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import junit.framework.TestCase;
-
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
 
 /**
  * This test ensures that the version attribute of a servlet 2.3 descriptor
@@ -35,43 +25,31 @@ import org.apache.pluto.descriptors.servlet.WebAppDD;
  * @version $Id$
  * @todo JavaDoc
  */
-public class Servlet23WebAppDescriptorTest extends TestCase
+public class Servlet23WebAppDescriptorTest extends AbstractVersionedWebAppDescriptorTest
 {
 
     private static final String DESCRIPTOR = "/servlet-2.3-webapp-descriptor.xml";
-    private InputStream in;
-    private WebAppDescriptorService underTest;
-
-    protected void setUp() throws Exception
-    {
-        underTest = new WebAppDescriptorServiceImpl();
-        in = this.getClass().getResourceAsStream(DESCRIPTOR);
-        assertNotNull(in);
+    private static final String EXPECTED_DESCRIPTOR = "/servlet-2.3-expected-webapp-descriptor.xml";
+    
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.descriptors.services.castor.AbstractVersionedWebAppDescriptorTest#getDescriptorPath()
+     */
+    protected String getDescriptorPath() {
+        return DESCRIPTOR;
     }
-
-    protected void tearDown() throws Exception
-    {
-        underTest = null;
-        in = null;
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.descriptors.services.castor.AbstractVersionedWebAppDescriptorTest#getExpectedDescriptorPath()
+     */
+    protected String getExpectedDescriptorPath() {
+        return EXPECTED_DESCRIPTOR;
     }
-
-    public void testRead() throws Exception
-    {
-        WebAppDD webappdd = underTest.read(in);
-        assertNotNull(webappdd);
-        assertEquals("2.3", webappdd.getServletVersion());
-    }
-
-    public void testWrite() throws Exception
-    {
-        File outputFile = File.createTempFile( "webapp-2.3-descriptor-test", ".xml" );
-        OutputStream out = new FileOutputStream( outputFile );
-        WebAppDD webappdd = underTest.read(in);
-        underTest.write(webappdd, out);
-        // now round-trip it
-        WebAppDD webappdd2 = underTest.read(new FileInputStream(outputFile));
-        assertNotNull(webappdd2);
-        assertEquals("2.3", webappdd2.getServletVersion());
-        outputFile.delete();
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.descriptors.services.castor.AbstractVersionedWebAppDescriptorTest#getDescriptorVersion()
+     */
+    protected String getDescriptorVersion() {
+        return "2.3";
     }
 }

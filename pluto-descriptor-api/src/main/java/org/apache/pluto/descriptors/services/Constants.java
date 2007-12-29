@@ -26,6 +26,9 @@ public class Constants {
     public static final String WEB_XML_PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN";
     public static final String WEB_XML_DTD = "http://java.sun.com/dtd/web-app_2_3.dtd";
 
+    public static final String WEB_XML_24_SCHEMA_NAMESPACE = "http://java.sun.com/xml/ns/j2ee";
+    public static final String WEB_XML_24_SCHEMA_LOCATION = WEB_XML_24_SCHEMA_NAMESPACE + " http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd";
+
     public static final String PORLTET_XML_PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD PortletApplication 1.0//EN";
     public static final String PORTLET_XML_DTD = "http://java.sun.com/dtd/portlet-app_1_0.dtd";
 
