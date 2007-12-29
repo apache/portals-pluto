@@ -30,8 +30,10 @@ import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
  */
 public class WarAssemblerTest extends ArchiveBasedAssemblyTest {
 
+    private static final String portletResourceNoManifest = "/org/apache/pluto/util/assemble/war/WarDeployerTestPortletNoManifest.war";
     private static final String portletResource = "/org/apache/pluto/util/assemble/war/WarDeployerTestPortlet.war";
-    private File portletFile = null;
+    private File portletFile = null;    
+    
     
     protected void setUp() throws Exception {
         final URL portletUrl = this.getClass().getResource(portletResource);
@@ -70,6 +72,20 @@ public class WarAssemblerTest extends ArchiveBasedAssemblyTest {
         assembler.assemble(config);
 
         //How to validate it worked?
+    }
+    
+    public void testAssembleWithNoManifest() throws Exception {
+        
+        final File warNoManifest = new File( this.getClass().getResource(portletResourceNoManifest).getFile() );
+        assertNotNull( "Unable to locate the test war file with no manifest.", warNoManifest );
+        
+        final File tempDir = getTempDir();
+        final AssemblerConfig config = new AssemblerConfig();
+        config.setSource( warNoManifest );
+        config.setDestination(tempDir);
+        
+        WarAssembler assembler = new WarAssembler();
+        assembler.assemble(config);        
     }
 
     private File getTempDir() throws IOException {
