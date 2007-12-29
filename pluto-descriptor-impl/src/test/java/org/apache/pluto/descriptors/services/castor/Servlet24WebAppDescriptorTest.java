@@ -16,15 +16,6 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
-import junit.framework.TestCase;
-
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
 
 /**
  * This test ensures that the version attribute of a Servlet 2.4
@@ -33,44 +24,30 @@ import org.apache.pluto.descriptors.servlet.WebAppDD;
  * @since Mar 3, 2007
  * @version $Id$
  */
-public class Servlet24WebAppDescriptorTest extends TestCase
+public class Servlet24WebAppDescriptorTest extends AbstractVersionedWebAppDescriptorTest
 {
 
     private static final String DESCRIPTOR = "/servlet-2.4-webapp-descriptor.xml";
-    InputStream in = null;
-    private WebAppDescriptorService underTest = null;
-
-    protected void setUp() throws Exception
-    {
-        underTest = new WebAppDescriptorServiceImpl();
-        in = this.getClass().getResourceAsStream(DESCRIPTOR);
-        assertNotNull(in);
+    private static final String EXPECTED_DESCRIPTOR = "/servlet-2.4-expected-webapp-descriptor.xml";
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.descriptors.services.castor.AbstractVersionedWebAppDescriptorTest#getDescriptorPath()
+     */
+    protected String getDescriptorPath() {
+        return DESCRIPTOR;
     }
-
-    protected void tearDown() throws Exception
-    {
-        in = null;
-        underTest = null;
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.descriptors.services.castor.AbstractVersionedWebAppDescriptorTest#getExpectedDescriptorPath()
+     */
+    protected String getExpectedDescriptorPath() {
+        return EXPECTED_DESCRIPTOR;
     }
-
-    public void testRead() throws Exception
-    {
-        WebAppDD webapp = underTest.read(in);
-        assertNotNull(webapp);
-        assertEquals("2.4", webapp.getServletVersion());
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.descriptors.services.castor.AbstractVersionedWebAppDescriptorTest#getDescriptorVersion()
+     */
+    protected String getDescriptorVersion() {
+        return "2.4";
     }
-
-    public void testWrite() throws Exception
-    {
-        WebAppDD webapp = underTest.read(in);
-        File outputFile = File.createTempFile("webapp-2.4-descriptor-test", ".xml");
-        FileOutputStream out = new FileOutputStream(outputFile);
-        underTest.write(webapp, out);
-        // roundtrip it.
-        WebAppDD webapp2 = underTest.read(new FileInputStream(outputFile));
-        assertNotNull(webapp2);
-        assertEquals("2.4", webapp2.getServletVersion());
-        outputFile.delete();
-    }
-
 }

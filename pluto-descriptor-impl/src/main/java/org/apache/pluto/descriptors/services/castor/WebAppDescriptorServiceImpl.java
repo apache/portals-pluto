@@ -80,6 +80,14 @@ public class WebAppDescriptorServiceImpl
     protected String getDTDUri() {
         return Constants.WEB_XML_DTD;
     }
+    
+    /**
+     * Retrieve the Web Application Schema location for a Servlet version 2.4 web.xml
+     * @return
+     */
+    protected String get24SchemaLocation() {
+        return Constants.WEB_XML_24_SCHEMA_LOCATION;
+    }
 
     /**
      * Read and Retrieve the Web Application's Castor Mapping
@@ -106,6 +114,11 @@ public class WebAppDescriptorServiceImpl
         if ( "2.3".equals(servletVersion) )
         {
             marshaller.setDoctype(getPublicId(), getDTDUri());
+            marshaller.setSuppressNamespaces(true);
+        }
+        else if ( "2.4".equals(servletVersion) )
+        {
+            marshaller.setSchemaLocation(get24SchemaLocation());
         }
     }
 
