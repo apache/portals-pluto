@@ -64,7 +64,14 @@ public class WarAssembler extends AbstractArchiveAssembler {
         //Create the output JAR stream, copying the Manifest
         final Manifest manifest = jarIn.getManifest();
         //TODO add pluto notes to the Manifest?
-        final JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(dest), manifest);
+        
+        final JarOutputStream jarOut;
+        if (manifest != null) {
+            jarOut = new JarOutputStream(new FileOutputStream(dest), manifest);
+        }
+        else {
+            jarOut = new JarOutputStream(new FileOutputStream(dest));
+        }
         
         try {            
             JarStreamingAssembly.assembleStream(jarIn, jarOut, dispatchServletClass);
