@@ -885,7 +885,7 @@ implements PortletRequest, InternalPortletRequest {
 	public Cookie[] getCookies() {
 		if (isIncluded() || isForwarded()){
 			// TODO:return Cookies from properties
-			return null;
+			return super.getCookies();
 		}
 		else
 			return super.getCookies();

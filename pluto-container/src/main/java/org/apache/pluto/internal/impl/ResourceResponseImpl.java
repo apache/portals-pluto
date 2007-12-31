@@ -69,11 +69,7 @@ implements ResourceResponse, InternalResourceResponse {
 	
 	@Override
 	public int getBufferSize() {
-		if (super.isForwarded() || super.isIncluded()){
-			return 0;
-		}
-		else
-			return getHttpServletResponse().getBufferSize();
+		return 0;
 	}
 	
 	@Override

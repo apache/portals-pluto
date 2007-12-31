@@ -114,7 +114,7 @@ implements ActionRequest, InternalActionRequest {
 	
     
     public int getContentLength() {
-        return (super.isIncluded()) ? 0 : super.getContentLength();
+        return super.getContentLength();
     }
     
     public ServletInputStream getInputStream() throws IOException {

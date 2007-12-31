@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.Configuration;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.spi.PortalCallbackService;

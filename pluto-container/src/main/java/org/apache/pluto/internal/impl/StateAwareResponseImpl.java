@@ -49,6 +49,8 @@ import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
+import org.apache.pluto.util.DummyPrintWriter;
+import org.apache.pluto.util.DummyServletOutputStream;
 import org.apache.pluto.util.StringUtils;
 
 /**
@@ -151,6 +153,8 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
                 }
                 location =
                 redirectResponse.encodeRedirectURL(provider.toString());
+                if (location.indexOf("/") == -1)
+                	throw new IllegalArgumentException("There is a relative path given, an IllegalArgumentException must be thrown.");
                 //redirectResponse.sendRedirect(location);
                 redirectLocation = location;
                 redirected = true;
@@ -439,7 +443,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	@Override
 	public ServletOutputStream getOutputStream() throws IllegalStateException, IOException {
 		if (super.isForwarded() || super.isIncluded()){
-			return null;
+			return new DummyServletOutputStream();
 		}
 		else
 			return super.getOutputStream();
@@ -448,7 +452,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	@Override
 	public PrintWriter getWriter() throws IllegalStateException, IOException {
 		if (super.isForwarded() || super.isIncluded()){
-			return null;
+			return new DummyPrintWriter(super.getWriter());
 		}
 		else
 			return super.getWriter();
