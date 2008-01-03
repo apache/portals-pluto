@@ -23,9 +23,12 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.List;
 
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.custommonkey.xmlunit.DetailedDiff;
+import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLTestCase;
 
 /**
@@ -89,7 +92,15 @@ public abstract class AbstractVersionedWebAppDescriptorTest extends XMLTestCase
         underTest.write(webappdd, out);
         
         final InputStream expectedDescriptorStream = getExpectedDescriptorStream();
-        assertXMLEqual(new InputStreamReader(expectedDescriptorStream), new FileReader(outputFile));
+        // Use DetailedDiff to list all differences
+        final DetailedDiff diff = new DetailedDiff(
+                new Diff(new InputStreamReader(expectedDescriptorStream), new FileReader(outputFile))
+                );
+        final List diffs = diff.getAllDifferences(); 
+        // diffs.size() will be 0 if no differences were found.
+        assertEquals( "Encountered differences in XML: " + System.getProperty( "line.separator" ) + 
+                diff.toString(), 
+                0, diffs.size() );
         
         // now round-trip it
         WebAppDD webappdd2 = underTest.read(new FileInputStream(outputFile));

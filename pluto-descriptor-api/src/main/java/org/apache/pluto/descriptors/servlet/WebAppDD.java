@@ -45,6 +45,7 @@ public class WebAppDD {
     private WelcomeFileListDD welcomeFileList;
     private List errorPages = new ArrayList();
     private List taglibs = new ArrayList();
+    private JspConfigDD jspConfig;
     private List resourceRefs = new ArrayList();
     private List securityConstraints = new ArrayList();
     private LoginConfigDD loginConfig;
@@ -264,6 +265,15 @@ public class WebAppDD {
         this.xmlNs = xmlNs;
     }
 
+    public JspConfigDD getJspConfig()
+    {
+        return jspConfig;
+    }
+
+    public void setJspConfig( JspConfigDD jspConfig )
+    {
+        this.jspConfig = jspConfig;
+    }
     
 // Helpers
 
@@ -292,7 +302,6 @@ public class WebAppDD {
         }
         return null;
     }
-
 
 }
 

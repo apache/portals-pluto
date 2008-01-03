@@ -38,6 +38,7 @@
       + mime-mapping
       + welcome-file-list?,
       + error-page
+      + jsp-config
       + taglib
       + resource-env-ref
       + resource-ref
@@ -137,13 +138,17 @@
            collection="arraylist">
         <bind-xml name="error-page" node="element"/>
     </field>
-
+    
     <field name="Taglibs"
            type="org.apache.pluto.descriptors.servlet.TaglibDD"
            collection="arraylist">
       <bind-xml name="taglib" node="element"/>
     </field>
-
+    
+    <field name="JspConfig" type="org.apache.pluto.descriptors.servlet.JspConfigDD">
+        <bind-xml name="jsp-config" node="element"/>
+    </field>
+    
     <field name="ResourceRefs"
            type="org.apache.pluto.descriptors.servlet.ResourceRefDD"
            collection="arraylist">
@@ -437,5 +442,48 @@
         <field name="Remote" type="java.lang.String"/>
         <field name="EjbLink" type="java.lang.String"/>
     </class>
+    
+    <class name="org.apache.pluto.descriptors.servlet.JspConfigDD">        
+        <field name="taglibs" collection="arraylist" type="org.apache.pluto.descriptors.servlet.TaglibDD">
+            <bind-xml name="taglib" node="element"/>
+        </field>
+        <field name="jspPropertyGroups" collection="arraylist" type="org.apache.pluto.descriptors.servlet.JspPropertyGroupDD">
+            <bind-xml name="jsp-property-group" node="element" />
+        </field>            
+    </class>
+    
+    <class name="org.apache.pluto.descriptors.servlet.JspPropertyGroupDD">
+        <field name="description" type="string">
+            <bind-xml name="description" node="element"/>
+        </field>
+        <field name="displayName" type="string">
+            <bind-xml name="display-name" node="element"/>
+        </field>
+        <field name="icon" type="org.apache.pluto.descriptors.common.IconDD">
+            <bind-xml name="icon" node="element"/>
+        </field>
+        <field name="urlPattern" type="string">
+            <bind-xml name="url-pattern" node="element"/>            
+        </field>
+        <field name="elIgnored" type="boolean">
+            <bind-xml name="el-ignored" node="element"/>
+        </field>
+        <field name="pageEncoding" type="string">
+            <bind-xml name="page-encoding" node="element"/>
+        </field>
+        <field name="scriptingInvalid" type="boolean">
+            <bind-xml name="scripting-invalid" node="element"/>
+        </field>
+        <field name="isXml" type="boolean">
+            <bind-xml name="is-xml" node="element"/>
+        </field>
+        <field name="includePrelude" type="string">
+            <bind-xml name="include-prelude" node="element"/>
+        </field>
+        <field name="includeCoda" type="string">
+            <bind-xml name="include-coda" node="element"/>
+        </field>
+    </class>
+    
 </mapping>
 

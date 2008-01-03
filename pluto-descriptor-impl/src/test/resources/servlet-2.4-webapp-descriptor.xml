@@ -130,7 +130,25 @@ limitations under the License.
         <exception-type>java.io.IOException</exception-type>
         <location>/error/io.html</location>
     </error-page>
-
+    <jsp-config>
+        <taglib>
+            <taglib-uri>http://uri/of/some/taglib</taglib-uri>
+            <taglib-location>/foo/bar/baz.tld</taglib-location>
+        </taglib>
+        <jsp-property-group>
+            <description>JSP Property Group Description</description>
+            <display-name>JSP Property Group Display Name</display-name>
+            <icon>
+                <large-icon>/path/to/large-icon.gif</large-icon>
+            </icon>
+            <url-pattern>/foo/bar/*.jsp</url-pattern>
+            <el-ignored>false</el-ignored>
+            <page-encoding>UTF-8</page-encoding>
+            <scripting-invalid>false</scripting-invalid>
+            <include-prelude>/path/to/some/prelude</include-prelude>
+            <include-coda>/path/to/some/coda</include-coda>
+        </jsp-property-group>        
+    </jsp-config>
     <security-constraint>
         <display-name>Test Constraint</display-name>
         <web-resource-collection>
