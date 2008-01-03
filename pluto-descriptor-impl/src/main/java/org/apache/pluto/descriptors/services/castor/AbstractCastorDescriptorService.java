@@ -103,9 +103,15 @@ abstract class AbstractCastorDescriptorService {
                 object = unmarshaller.unmarshal(in);
             }
         }
-        catch(Exception me) {
-            me.printStackTrace();
-            throw new IOException(me.getMessage());
+        catch (IOException e) {
+            LOG.error(e.getMessage(), e);
+            throw e;
+        }
+        catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            IOException ioe = new IOException(e.getMessage());
+            ioe.initCause(e);
+            throw ioe;
         }
         finally {
             if(is != null) {
@@ -152,10 +158,14 @@ abstract class AbstractCastorDescriptorService {
             castorConfig.getProperties().setProperty("org.exolab.castor.indent", "true");
             setCastorMarshallerOptions(marshaller, object);
             marshaller.marshal(object);
-        } catch(IOException io) {
-            throw io;
+        } catch(IOException e) {
+            LOG.error(e.getMessage(), e);
+            throw e;
         } catch (Exception e) {
-            throw new IOException(e.getMessage());
+            LOG.error(e.getMessage(), e);
+            IOException ioe = new IOException(e.getMessage());
+            ioe.initCause(e);
+            throw ioe;
         }
         finally {
             writer.flush();
