@@ -49,7 +49,7 @@ public class PortletContainerException extends Exception {
      * @param cause the root cause of the is exception
      */
     public PortletContainerException(String text, Throwable cause) {
-        super(text);
+        super(text, cause);
         this.cause = cause;
     }
 
@@ -60,7 +60,7 @@ public class PortletContainerException extends Exception {
      * @param cause the root cause
      */
     public PortletContainerException(Throwable cause) {
-        super(cause.getLocalizedMessage());
+        super(cause.getLocalizedMessage(), cause);
         this.cause = cause;
     }
 
