@@ -81,4 +81,6 @@ public interface PortalURL extends Cloneable {
 	void setResourceWindow(String window);
 	
 	PageConfig getPageConfig(ServletContext servletContext);
+
+	void addPublicParameterActionResourceParameter(String parameterName, String value);
 }

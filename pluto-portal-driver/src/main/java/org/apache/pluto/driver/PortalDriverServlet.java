@@ -18,6 +18,7 @@ package org.apache.pluto.driver;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -47,10 +48,13 @@ import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.impl.InternalPortletWindowImpl;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PublicRenderParameterProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.sun.jmx.snmp.Enumerated;
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
@@ -125,6 +129,14 @@ public class PortalDriverServlet extends HttpServlet {
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
+        	try {
+        		if (request.getParameterNames().hasMoreElements()){
+        			setPublicRenderParameter(request, portalURL, portalURL.getActionWindow());
+        		}
+			} catch (PortletContainerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             PortletWindowImpl portletWindow = new PortletWindowImpl(
             		actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
@@ -144,7 +156,14 @@ public class PortalDriverServlet extends HttpServlet {
         }
         //Resource request
         else if (resourceWindowConfig != null) {
-               PortletWindowImpl portletWindow = new PortletWindowImpl(
+        	try {
+        		if (request.getParameterNames().hasMoreElements())
+				setPublicRenderParameter(request, portalURL, portalURL.getResourceWindow());
+			} catch (PortletContainerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            PortletWindowImpl portletWindow = new PortletWindowImpl(
                                resourceWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing resource Serving request for window: "
@@ -187,6 +206,25 @@ public class PortalDriverServlet extends HttpServlet {
         }
     }
 
+    private void setPublicRenderParameter(HttpServletRequest request, PortalURL portalURL, String portletID)throws ServletException, PortletContainerException {    		
+		String applicationId = PortletWindowConfig.parseContextPath(portletID);
+		String portletName = PortletWindowConfig.parsePortletName(portletID);
+		PortletDD portletDD = container.getOptionalContainerServices().getPortletRegistryService()
+								.getPortletDescriptor(applicationId, portletName);    		
+		Enumeration<String> parameterNames = request.getParameterNames();
+		if (parameterNames != null){
+			while(parameterNames.hasMoreElements()){
+				String parameterName = parameterNames.nextElement();
+				if (portletDD.getPublicRenderParameter() != null){
+					if (portletDD.getPublicRenderParameter().contains(parameterName)){
+						String value = request.getParameter(parameterName);
+						portalURL.addPublicParameterActionResourceParameter(parameterName, value);
+					}	
+				}
+			}
+		}
+    }
+    
     /**
      * Pass all POST requests to {@link #doGet(HttpServletRequest, HttpServletResponse)}.
      * @param request  the incoming servlet request.

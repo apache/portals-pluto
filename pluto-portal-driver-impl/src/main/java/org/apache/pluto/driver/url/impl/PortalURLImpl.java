@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.url.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.util.StringUtils;
 
 /**
  * The portal URL.
@@ -157,6 +159,23 @@ public class PortalURLImpl implements PortalURL {
     public void addPublicParameterCurrent(String name, String[] values){
     	publicParameterCurrent.put(name, values);
     }
+    
+    public void addPublicParameterActionResourceParameter(String parameterName, String value) {
+    	//add at the first position
+		if (publicParameterCurrent.containsKey(parameterName)){
+			String[] tmp = publicParameterCurrent.get(parameterName);
+			
+			String[] values = new String[tmp.length + 1];
+			values[0] = value;
+			for (int i = 0; i < tmp.length; i++) {
+				values[i+1] = tmp[i];
+			}
+			publicParameterCurrent.remove(parameterName);
+			publicParameterCurrent.put(parameterName, StringUtils.copy(values));
+		}
+		else
+			publicParameterCurrent.put(parameterName, new String[]{value});
+	}
     
     public Map<String, String[]> getPublicParameters() {
     	Map<String,String[]> tmp = new HashMap<String, String[]>();

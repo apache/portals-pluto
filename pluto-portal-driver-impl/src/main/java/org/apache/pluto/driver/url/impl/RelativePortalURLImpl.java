@@ -34,6 +34,7 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.util.StringUtils;
 
 /**
  * The portal URL.
@@ -164,8 +165,10 @@ public class RelativePortalURLImpl implements PortalURL {
     	for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();
             PortalURLParameter param = (PortalURLParameter) entry.getValue();
-            if (param.getWindowId().equals(windowId)) {
-            	it.remove();
+            if (param.getWindowId()!=null){
+            	if (param.getWindowId().equals(windowId)) {
+                	it.remove();
+                }
             }
         }
     }
@@ -234,6 +237,23 @@ public class RelativePortalURLImpl implements PortalURL {
     	publicParameterCurrent.put(name, values);
     }
     
+    public void addPublicParameterActionResourceParameter(String parameterName, String value) {
+    	//add at the first position
+		if (publicParameterCurrent.containsKey(parameterName)){
+			String[] tmp = publicParameterCurrent.get(parameterName);
+			
+			String[] values = new String[tmp.length + 1];
+			values[0] = value;
+			for (int i = 0; i < tmp.length; i++) {
+				values[i+1] = tmp[i];
+			}
+			publicParameterCurrent.remove(parameterName);
+			publicParameterCurrent.put(parameterName, StringUtils.copy(values));
+		}
+		else
+			publicParameterCurrent.put(parameterName, new String[]{value});
+	}
+    
     public Map<String, String[]> getPublicParameters() {
     	Map<String,String[]> tmp = new HashMap<String, String[]>();
 		
@@ -271,4 +291,6 @@ public class RelativePortalURLImpl implements PortalURL {
 	public void setResourceWindow(String resourceWindow) {
 		this.resourceWindow = resourceWindow;
 	}
+
+	
 }
