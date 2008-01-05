@@ -179,12 +179,35 @@ public class TestPortlet extends GenericPortlet {
     }
 
 
-    public void serveResource(ResourceRequest arg0, ResourceResponse arg1)
+    public void serveResource(ResourceRequest request, ResourceResponse response)
             throws PortletException, IOException {
-        // TODO: Add resource serving support
-        super.serveResource(arg0, arg1);
+        String testId = getTestId(request);
+        PortletTest test = (PortletTest) tests.get(testId);
+        if (test != null) {
+            TestResults results = test.doTest(getPortletConfig(),
+                                              getPortletContext(),
+                                              request,
+                                              response);
+            PortletSession session = request.getPortletSession();
+            TestResults existing = (TestResults) session.getAttribute(
+                    test.getClass().getName());
+            if (existing != null) {
+                for (TestResult result : results.getCollection()) {
+                    existing.add(result);
+                }
+                request.setAttribute("results", existing);
+                session.setAttribute(test.getClass().getName(), null);
+            } else {
+                request.setAttribute("results", results);
+            }
+        }
+        if (test.getConfig().getDisplayURI().indexOf("load_resource_test") > -1) {
+            response.setContentType("text/html");
+            getPortletContext().getRequestDispatcher("/jsp/test_results.jsp")
+                .include(request, response);
+        }
     }
-
+    
     /**
      * Serves up the <code>view</code> mode.
      * TODO: more javadoc.
@@ -192,6 +215,7 @@ public class TestPortlet extends GenericPortlet {
      * @param request  the protlet request.
      * @param response  the portlet response.
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response)
     throws PortletException, IOException {
 
@@ -253,6 +277,8 @@ public class TestPortlet extends GenericPortlet {
             }
             request.setAttribute("prevTest", prevTestConfig);
             request.setAttribute("nextTest", nextTestConfig);
+            request.setAttribute("testId", new Integer(testId));
+            request.setAttribute("test", test);
         }
 
         // Set content type for render response, and dispatch to JSP.
@@ -263,10 +289,8 @@ public class TestPortlet extends GenericPortlet {
         } else {
             displayUri = "/jsp/introduction.jsp";
         }
-        LOG.debug("Display URI: " + displayUri);
         PortletRequestDispatcher dispatcher = getPortletContext()
                 .getRequestDispatcher(displayUri);
-        LOG.debug("request dispatcher: " + dispatcher);
         dispatcher.include(request, response);
     }
 

@@ -32,7 +32,7 @@
   <testsuite-config>
     <name>Resource Filter Test</name>
     <class>org.apache.pluto.testsuite.test.jsr286.filter.ResourceFilterTest</class>
-    <display-uri>/jsp/test_results.jsp</display-uri>
+    <display-uri>/jsp/load_resource_test.jsp</display-uri>
   </testsuite-config>
    
   <testsuite-config>
@@ -40,5 +40,17 @@
     <class>org.apache.pluto.testsuite.test.jsr286.filter.EventFilterTest</class>
     <display-uri>/jsp/test_results.jsp</display-uri>
   </testsuite-config>
-
+  
+  <testsuite-config>
+  	<name>Simple Payload Event Test</name>
+  	<class>org.apache.pluto.testsuite.test.jsr286.event.SimplePayloadEventTest</class>
+  	<display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+  
+  <testsuite-config>
+  	<name>Complex Payload Event Test</name>
+  	<class>org.apache.pluto.testsuite.test.jsr286.event.ComplexPayloadEventTest</class>
+  	<display-uri>/jsp/test_results.jsp</display-uri>
+  </testsuite-config>
+ 
 </testportlet-config>

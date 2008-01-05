@@ -62,5 +62,10 @@ limitations under the License.
         </tbody>
     </table>
  --%>
- 
+<c:if test="${not empty eventInfo}">
+	<p>
+		<h4>Information from last event:</h4>
+		<p><c:out value="${eventInfo}" /></p>
+	</p>
+</c:if>
 </div>

@@ -21,20 +21,21 @@ limitations under the License.
 <%@ page import="org.apache.pluto.testsuite.TestConfig"%>
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
 <portlet:defineObjects/>
 
+<% if (request instanceof javax.portlet.RenderRequest) {%>
 <center>
   <table>
     <tr>
       <td align="center" nowrap="true">
         
         <%-- Run Previous Test ============================================ --%>
-        <portlet:actionURL secure="<%= renderRequest.isSecure() ? "True" : "False" %>"
+        <portlet:actionURL secure="<%= request.isSecure() ? "True" : "False" %>"
                            var="url">
           <portlet:param name="nextTestId"
-                         value="<%= renderRequest.getParameter("testId") %>"/>
+                         value="<%= request.getParameter("testId") %>"/>
           <c:forEach var="param" items="${prevTest.actionParameters}">
             <%
                 TestConfig.Parameter parameter = (TestConfig.Parameter) pageContext.findAttribute("param");
@@ -45,25 +46,25 @@ limitations under the License.
           </c:forEach>
         </portlet:actionURL>
         <a href="<%= url %>">
-          <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/previous.png") %>"
+          <img src="<%= response.encodeURL(request.getContextPath() + "/images/previous.png") %>"
                border="0">
         </a>
         
         <%-- Return to Introduction ======================================= --%>
-        <portlet:actionURL secure="<%= renderRequest.isSecure() ? "True" : "False" %>"
+        <portlet:actionURL secure="<%= request.isSecure() ? "True" : "False" %>"
                            var="url">
           <portlet:param name="testId" value="<%= null %>"/>
         </portlet:actionURL>
         <a href="<%= url %>">
-          <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/return_index.png") %>"
+          <img src="<%= response.encodeURL(request.getContextPath() + "/images/return_index.png") %>"
                border="0">
         </a>
         
         <%-- Run Next Test ================================================ --%>
-        <portlet:actionURL secure="<%= renderRequest.isSecure() ? "True" : "False" %>"
+        <portlet:actionURL secure="<%= request.isSecure() ? "True" : "False" %>"
                            var="url">
           <portlet:param name="previousTestId"
-                         value="<%= renderRequest.getParameter("testId") %>"/>
+                         value="<%= request.getParameter("testId") %>"/>
           <c:forEach var="param" items="${nextTest.actionParameters}">
             <%
                 TestConfig.Parameter parameter = (TestConfig.Parameter) pageContext.findAttribute("param");
@@ -74,7 +75,7 @@ limitations under the License.
           </c:forEach>
         </portlet:actionURL>
         <a href="<%= url %>">
-          <img src="<%= renderResponse.encodeURL(renderRequest.getContextPath() + "/images/next.png") %>"
+          <img src="<%= response.encodeURL(request.getContextPath() + "/images/next.png") %>"
                border="0">
         </a>
         
@@ -83,5 +84,5 @@ limitations under the License.
   </table>
 </center>
 
-
+<% } %>
 

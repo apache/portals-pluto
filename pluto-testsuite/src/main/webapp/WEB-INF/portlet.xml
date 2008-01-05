@@ -181,10 +181,30 @@ limitations under the License.
     <supported-processing-event>
       <name>trigger-event-phase</name>
     </supported-processing-event>
+
+    <supported-processing-event>
+    	<name>event-with-complex-value</name>
+    </supported-processing-event>
+    
+    <supported-processing-event>
+    	<name>event-with-simple-value</name>
+    </supported-processing-event>
     
     <supported-publishing-event>
       <name>trigger-event-phase</name>
     </supported-publishing-event>
+    
+    <supported-publishing-event>
+    	<name>event-with-simple-value</name>
+    </supported-publishing-event>
+    
+    <supported-publishing-event>
+    	<name>event-with-complex-value</name>
+    </supported-publishing-event>
+
+	<supported-publishing-event>
+  		<qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
+  	</supported-publishing-event>
     
   </portlet>
 
@@ -206,6 +226,18 @@ limitations under the License.
       <short-title>286 Test Companion</short-title>
       <keywords>JSR 286,Tests</keywords>
     </portlet-info>
+    
+    <supported-processing-event>
+    	<name>event-with-simple-value</name>
+    </supported-processing-event>
+    
+    <supported-processing-event>
+    	<name>event-with-complex-value</name>
+    </supported-processing-event>
+
+	<supported-processing-event>
+  		<qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
+  	</supported-processing-event>
     
   </portlet>
 
@@ -264,6 +296,21 @@ limitations under the License.
   <event-definition>
   	<name>trigger-event-phase</name>
   	<value-type>java.lang.String</value-type>
+  </event-definition>
+
+  <event-definition>
+    <name>event-with-simple-value</name>
+    <value-type>java.lang.String</value-type>
+  </event-definition>
+
+  <event-definition>
+    <name>event-with-complex-value</name>
+    <value-type>org.apache.pluto.testsuite.test.jsr286.event.ComposedObject</value-type>
+  </event-definition>
+  
+  <event-definition>
+  	<qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
+  	<value-type>java.lang.Integer</value-type>	
   </event-definition>
 
 </portlet-app>
