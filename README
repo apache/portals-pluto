@@ -13,18 +13,18 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License
 
+Pluto 2.0 is the first version of the JSR-286 Reference Implementation (Java Portlet API 2.0).
 
-This branch (1.1-286-trunk-merge) will be used to merge the svn trunk with the 1.1-286-COMPATIBILITY
-branch, moving toward a Pluto release of the JSR-286 Reference Implementation.
+The starting point for Pluto 2.0 was the 1.1-286-COMPATIBILITY branch with a few modules from the original 
+Pluto 1.1.x trunk that is not in the 1.1-286-COMPATIBILITY branch or has not been used in developing
+the 1.1-286-COMPATIBILITY branch. In addition, all the files in the root of this branch including the
+root pom.xml have come over from the trunk. The 1.1-286-COMPATIBILITY branch is based on Pluto 1.1. It was 
+created from the SVN trunk in January, 2007.
 
-The starting point for this branch is the 1.1-286-COMPATIBILITY branch with a few
-modules from the trunk that is not in this branch or has not been used in developing
-the 1.1-286-COMPATIBILITY branch. The modules brought over from the svn trunk include:
-assembly module
-pluto-site module
-pluto-site-skin module
+The merge of 1.1-286-COMPATIBILITY branch with SVN trunk began on 8/9/2007 in the 1.1-286-trunk-merge branch.
+On 1/7/2008, the 1.1-286-trunk-merge branch was moved to the Subversion trunk as the starting point
+for Pluto 2.0.
 
-In addition, all the files in the root of this branch including this file (README) and the
-root pom.xml have come over from the trunk.
-
-This branch was established on 8/9/2007.
+See the Getting Started page on the Pluto web site (http://portals.apache.org/pluto/v11/getting-started.html)
+for instructions on how to build Pluto from source. Currently there is not a binary or bundled 
+distribution of Pluto 2.0.
