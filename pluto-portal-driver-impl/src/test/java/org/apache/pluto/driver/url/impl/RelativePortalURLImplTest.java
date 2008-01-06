@@ -90,7 +90,7 @@ public class RelativePortalURLImplTest extends TestCase
         assertTrue( params.contains( paramOne ) );
         assertTrue( params.contains( paramTwo ) );
         
-        int itrCount = 0;
+        int matchCount = 0;
         Iterator itr = params.iterator();
         while ( itr.hasNext() )
         {            
@@ -106,20 +106,21 @@ public class RelativePortalURLImplTest extends TestCase
             if ( windowId.equals( paramOne.getWindowId() ) )
             {
                 expected = paramOne;
+                matchCount++;
             }
             
             if ( windowId.equals( paramTwo.getWindowId() ) )
             {
                 expected = paramTwo;
+                matchCount++;
             }
             
             assertNotNull( expected );                            
             assertEquals( expected.getName(), name );
-            assertEquals( expected.getValues()[0], value );
-            itrCount++;
+            assertEquals( expected.getValues()[0], value );            
         }
         
-        assertEquals( 2, itrCount );
+        assertEquals( 2, matchCount );
     }
 
     public void testGetParameters()
