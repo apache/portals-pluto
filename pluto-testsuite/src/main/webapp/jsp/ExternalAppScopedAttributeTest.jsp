@@ -28,7 +28,7 @@ function openCompanionWindow() {
 	h = 400;
 	x = (screen.width - w) / 2;
 	y = (screen.height - h) / 2;
-	window.open('<HTML><BODY><CENTER><FONT color=red>Testing Session Attributes</FONT></CENTER></BODY></HTML>', 'companionWindow', 'resizable=yes,scrollbars=yes,status=yes,width=' + w + ',height=' + h + ',screenX=' + x + ',screenY=' + y + ',left=' + x + ',top=' + y);
+    window.open('about:blank', 'companionWindow', 'resizable=yes,scrollb        ars=yes,status=yes,width=' + w + ',height=' + h + ',screenX=' + x + ',sc        reenY=' + y + ',left=' + x + ',top=' + y);
 }
 </script>
 
