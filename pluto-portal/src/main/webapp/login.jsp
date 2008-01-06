@@ -15,6 +15,8 @@
   limitations under the License.
 --%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<% pageContext.setAttribute("now", new java.util.Date()); %>
 
 <html>
   
@@ -60,7 +62,7 @@
       </div>
       
       <div id="footer">
-        &copy; 2003-2007 Apache Software Foundation
+        &copy; 2003-<fmt:formatDate value="${now}" pattern="yyyy"/> Apache Software Foundation
       </div>
       
     </div>
