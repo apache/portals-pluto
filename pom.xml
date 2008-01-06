@@ -253,7 +253,7 @@
         <maven.version>2.0.5</maven.version>
         <ant.version>1.6.5</ant.version>
         <junit.version>4.0</junit.version>
-        <jmock.version>1.0.1</jmock.version>
+        <jmock.version>1.2.0</jmock.version>
         <commons-io.version>1.3.1</commons-io.version>
         <xmlunit.version>1.0</xmlunit.version>
 	    <activation.version>1.1</activation.version>
