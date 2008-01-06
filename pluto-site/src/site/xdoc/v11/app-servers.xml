@@ -61,6 +61,33 @@ limitations under the License.
             <td>Working</td>
             <td>
               Use <code>mvn pluto:install -DinstallDir=/path/to/tomcat</code> 
+              to install the container and portal into Tomcat.
+            </td>
+          </tr>
+          <tr>
+            <td>Tomcat</td>
+            <td>5.5.20</td>
+            <td>Working</td>
+            <td>
+              Use <code>mvn pluto:install -DinstallDir=/path/to/tomcat</code> 
+              to install the container and portal into Tomcat.
+            </td>
+          </tr>
+          <tr>
+            <td>Tomcat</td>
+            <td>5.5.23</td>
+            <td>Working</td>
+            <td>
+              Use <code>mvn pluto:install -DinstallDir=/path/to/tomcat</code> 
+              to install the container and portal into Tomcat.
+            </td>
+          </tr>
+          <tr>
+            <td>Tomcat</td>
+            <td>6.0.13</td>
+            <td>Working</td>
+            <td>
+              Use <code>mvn pluto:install -DinstallDir=/path/to/tomcat</code> 
               to install the container and portal into Tomcat.  Make sure
               the &lt;Connector&gt; element in Tomcat's conf/server.xml file
               has the attribute <code>emptySessionPath=true</code> set.

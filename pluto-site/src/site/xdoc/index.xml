@@ -37,7 +37,7 @@ limitations under the License.
           Details on the specification work can be
           found at the <a href="http://jcp.org/en/jsr/detail?id=286">JSR-286 web
           site</a>. Drafts of the new portlet specification and API can
-		  be found at <a href="http://ipc658.inf-swt.uni-jena.de/spec/">http://ipc658.inf-swt.uni-jena.de/spec/</a>.
+          be found at <a href="http://hnsp.inf-bb.uni-jena.de/spec/">http://hnsp.inf-bb.uni-jena.de/spec/</a>.
 		  The Expert Group is very interested in feedback from the
           community. Send your comments to <a href="mailto:jsr-286-comments@jcp.org">
           jsr-286-comments@jcp.org</a>.
@@ -129,3 +129,4 @@ limitations under the License.
   </body>
   
 </document>
+

@@ -243,12 +243,14 @@ $> mvn install
         <source><![CDATA[
 <?xml version="1.0" encoding="utf-8"?>
 <tomcat-users>
+  <role rolename="manager"/>
   <role rolename="pluto"/>
   <role rolename="tomcat"/>
   <role rolename="role1"/>
-  <user username="tomcat" password="tomcat" roles="tomcat,pluto"/>
+  <user username="tomcat" password="tomcat" roles="tomcat,pluto,manager"/>
   <user username="role1" password="tomcat" roles="role1"/>
   <user username="both" password="tomcat" roles="tomcat,role1"/>
+  <user username="pluto" password="pluto" roles="pluto,manager"/>
 </tomcat-users>
         ]]></source>
       </p>
