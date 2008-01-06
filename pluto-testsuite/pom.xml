@@ -77,6 +77,12 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+	<dependency>
+		<groupId>javax.xml.bind</groupId>
+		<artifactId>jaxb-api</artifactId>
+		<version>${jaxb.version}</version>
+		<scope>compile</scope>
+	</dependency>
   </dependencies>
   
   
@@ -126,6 +132,32 @@
       		<source>1.5</source>
       		<target>1.5</target>
       	</configuration>
+      </plugin>
+       <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>integration-test</phase>
+            <configuration>
+              <tasks>
+                <!--
+                  Use this to build and deploy the testsuite war.
+                  PORTLET_DEPLOY_DIR is an environmental variable 
+                  pointing to the hot-deploy directory of your portal.
+                  You can also use -Ddeploy.dir=<path to deployment dir>
+                  on the command line when invoking maven:
+                  mvn -Ddeploy.dir=/pluto-1.1.4/webapps integration-test
+                -->
+					<property environment="env"/>
+					<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}"/>
+					<move file="target/${pom.build.finalName}.war" tofile="${deploy.dir}/testsuite.war"/>
+=              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
