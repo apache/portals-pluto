@@ -107,12 +107,14 @@ public class RelativePortalURLImplTest extends TestCase
             {
                 expected = paramOne;
                 matchCount++;
+                itr.remove();
             }
             
             if ( windowId.equals( paramTwo.getWindowId() ) )
             {
                 expected = paramTwo;
                 matchCount++;
+                itr.remove();
             }
             
             assertNotNull( expected );                            
