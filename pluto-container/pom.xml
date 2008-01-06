@@ -119,24 +119,6 @@
       <version>${jmock.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-        <groupId>jmock</groupId>
-        <artifactId>jmock-cglib</artifactId>
-        <version>${jmock.version}</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-mock</artifactId>
-        <version>${springframework.version}</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-core</artifactId>
-        <version>${springframework.version}</version>
-        <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
