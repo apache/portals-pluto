@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.ccpp.Profile;
@@ -40,7 +42,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -121,6 +126,9 @@ implements PortletRequest, InternalPortletRequest {
     
     /** The corresponding servlet request. */
     private HttpServletRequest servletRequest = null;
+    
+    /** The parameters including parameters appended to the dispatching URI. */
+    private Map parameters;
 
     // Constructors ------------------------------------------------------------
 
@@ -634,8 +642,14 @@ implements PortletRequest, InternalPortletRequest {
      * @return the base parameter map from which parameters are retrieved.
      */
     protected Map baseGetParameterMap() {
-        bodyAccessed = true;
-        return this.getHttpServletRequest().getParameterMap();
+    	if (isIncluded() && parameters != null) {
+    		setBodyAccessed();
+    		return parameters;
+    	} else {
+    		return this.getHttpServletRequest().getParameterMap();
+    	}
+//        bodyAccessed = true;
+//        return this.getHttpServletRequest().getParameterMap();
     }
 
     protected void setBodyAccessed() {
@@ -690,7 +704,8 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public RequestDispatcher getRequestDispatcher(String path) {
-        return getHttpServletRequest().getRequestDispatcher(path);
+    	
+        return new ServletRequestDispatcher(getHttpServletRequest().getRequestDispatcher(path));
     }
     
     /**
@@ -774,8 +789,11 @@ implements PortletRequest, InternalPortletRequest {
     
     public void setIncluded(boolean included) {
     	this.included = included;
+        if (!included) {
+        	this.parameters = null;
+        }
         if (LOG.isDebugEnabled()) {
-        	LOG.debug("Portlet request's included mode: " + included);
+        	LOG.debug("Render request's included mode: " + included);
         }
     }
 
@@ -791,10 +809,10 @@ implements PortletRequest, InternalPortletRequest {
     	}
     	if (queryString != null && queryString.trim().length() > 0) {
     		// Copy all the original render parameters.
-    		//parameters = new HashMap(super.getParameterMap());
+    		parameters = new HashMap(super.getParameterMap());
     		// Merge the appended parameters to the render parameter map.
     		// The original render parameters should not be overwritten.
-    		//mergeQueryString(parameters, queryString);
+    		mergeQueryString(parameters, queryString);
     		// Log the new render parameter map.
     		if (LOG.isDebugEnabled()) {
     			LOG.debug("Merged parameters: ");
@@ -803,6 +821,68 @@ implements PortletRequest, InternalPortletRequest {
     		if (LOG.isDebugEnabled()) {
     			LOG.debug("No query string appended to the included request.");
     		}
+    	}
+    }
+    
+    /**
+     * Parses the appended query string and merges the appended parameters to
+     * the original parameters. Query parameters are name-value pairs separated
+     * by the '<code>&amp;</code>' character.
+     * @param parameters  the original parameters map.
+     * @param queryString  the appended query string.
+     */
+    private void mergeQueryString(Map parameters, String queryString) {
+    	
+    	// Create the appended parameters map:
+    	//   key is the parameter name as a string,
+    	//   value is a List of parameter values (List of String).
+        Map appendedParameters = new HashMap();
+        
+        // Parse the appended query string.
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Parsing appended query string: " + queryString);
+    	}
+        StringTokenizer st = new StringTokenizer(queryString, "&", false);
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken();
+            int equalIndex = token.indexOf("=");
+            if (equalIndex > 0) {
+                String key = token.substring(0, equalIndex);
+                String value = null;
+                if (equalIndex < token.length() - 1) {
+                	value = token.substring(equalIndex + 1);
+                } else {                	value = "";
+                }
+                List values = (List) appendedParameters.get(key);
+                if (values == null) {
+                	values = new ArrayList();
+                }
+                values.add(value);
+                appendedParameters.put(key, values);
+            }
+        }
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(appendedParameters.size() + " parameters appended.");
+        }
+        
+        // Merge the appended parameters and the original parameters.
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Merging appended parameters and original parameters...");
+        }
+    	for (Iterator it = appendedParameters.keySet().iterator();
+    			it.hasNext(); ) {
+    		String key = (String) it.next();
+    		List values = (List) appendedParameters.get(key);
+    		// If the parameter name (key) exists, merge parameter values.
+    		if (parameters.containsKey(key)) {
+    			String[] originalValues = (String[]) parameters.get(key);
+    			if (originalValues != null) {
+    				for (int i = 0; i < originalValues.length; i++) {
+    					values.add(originalValues[i]);
+    				}
+    			}
+    		}
+    		parameters.put(key, values.toArray(new String[values.size()]));
     	}
     }
 
@@ -1018,5 +1098,21 @@ implements PortletRequest, InternalPortletRequest {
 	private void setCCPPProfile() {
 		Profile profile = container.getRequiredContainerServices().getCCPPProfileService().getCCPPProfile(servletRequest);
 		this.setAttribute(CCPP_PROFILE, profile);
+	}
+}
+
+class ServletRequestDispatcher implements RequestDispatcher {
+	javax.servlet.RequestDispatcher dispatcher;
+	public ServletRequestDispatcher(javax.servlet.RequestDispatcher dispatcher){
+		this.dispatcher = dispatcher;
+	}
+	
+	public void forward(ServletRequest arg0, ServletResponse arg1) throws ServletException, IOException {
+		dispatcher.include(arg0, arg1);
+		
+	}
+
+	public void include(ServletRequest arg0, ServletResponse arg1) throws ServletException, IOException {
+		dispatcher.include(arg0, arg1);
 	}
 }
