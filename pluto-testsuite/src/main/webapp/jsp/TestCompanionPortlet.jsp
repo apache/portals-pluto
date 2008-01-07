@@ -28,40 +28,16 @@ limitations under the License.
   It is designed to test interportlet coordination features of version 2.0 of the
   Java Portlet API (JSR-286) which include public render parameters and eventing.  
 </p>
-<%-- FIXME: This code does not work.
-    <table border="1">    
-        <thead>
-            <tr>
-	                <th colspan="2">Public Render Parameters</th>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <th>Value(s)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:choose>
-                <c:when test="${empty renderRequest.publicParameterMap}">
-                    <tr>
-                        <td>No public render parameters set.</td>
-                    </tr>
-                </c:when>
-                <c:otherwise>
-                    <c:forEach items="${renderRequest.publicParameterMap}" var="param">
-                        <tr>
-                            <td><c:out value="${param.key}" /></td>
-                            <td>
-                                <c:forEach items="${param.value}" var="val">
-                                    <div><c:out value="${val}" /></div>
-                                </c:forEach>
-                            </td>
-                        </tr>                    
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
-        </tbody>
-    </table>
- --%>
+
+<c:if test="${not empty param['public-render-param1']}">
+	<p>
+		<h4>Public Render Parameter Test Results:</h4>
+		<p>
+		checkPublicRenderParameter test: <b><c:out value="${param['public-render-param1']}"/></b>	
+		</p>
+	</p>
+</c:if>
+
 <c:if test="${not empty eventInfo}">
 	<p>
 		<h4>Information from last event:</h4>

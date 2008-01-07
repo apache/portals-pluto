@@ -206,6 +206,8 @@ limitations under the License.
   		<qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
   	</supported-publishing-event>
     
+    <supported-public-render-parameter>public-render-param1</supported-public-render-parameter>
+
   </portlet>
 
   <portlet>
@@ -239,6 +241,8 @@ limitations under the License.
   		<qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
   	</supported-processing-event>
     
+    <supported-public-render-parameter>public-render-param1</supported-public-render-parameter>
+
   </portlet>
 
   <filter>
@@ -312,5 +316,9 @@ limitations under the License.
   	<qname xmlns:pluto="http://portals.apache.org/pluto/altns">event-with-qname</qname>
   	<value-type>java.lang.Integer</value-type>	
   </event-definition>
+
+  <public-render-parameter>
+  	<identifier>public-render-param1</identifier>
+  </public-render-parameter>
 
 </portlet-app>
