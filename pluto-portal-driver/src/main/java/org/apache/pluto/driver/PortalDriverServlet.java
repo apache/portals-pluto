@@ -17,9 +17,7 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -28,33 +26,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.descriptors.portlet.EventDD;
-import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PublicRenderParamDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.impl.InternalPortletWindowImpl;
-import org.apache.pluto.spi.EventProvider;
-import org.apache.pluto.spi.PublicRenderParameterProvider;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
-
-import com.sun.jmx.snmp.Enumerated;
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.

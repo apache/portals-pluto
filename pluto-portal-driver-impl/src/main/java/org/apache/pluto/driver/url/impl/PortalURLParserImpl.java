@@ -17,6 +17,7 @@
 package org.apache.pluto.driver.url.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
@@ -351,6 +352,12 @@ public class PortalURLParserImpl implements PortalURLParser {
     private String encodeMultiValues(String[] values) {
     	StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < values.length; i++) {
+        	try {
+				values[i] = URLEncoder.encode(values[i], "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	buffer.append(values[i] != null ? values[i] : "");
             if (i + 1 < values.length) {
             	buffer.append(VALUE_DELIM);
@@ -424,7 +431,14 @@ public class PortalURLParserImpl implements PortalURLParser {
         
         // Split multiple values into a value array.
         String[] paramValues = value.split(VALUE_DELIM);
-        
+        for (int i = 0; i < paramValues.length;i++){
+        	try {
+        		paramValues[i] = URLDecoder.decode(paramValues[i], "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
         // Construct portal URL parameter and return.
         return new PortalURLParameter(windowId, paramName, paramValues);
     }
@@ -464,7 +478,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         	                             ENCODINGS[i][1],
         	                             ENCODINGS[i][0]);
         }
-        return string;
+		return string;
     }
 
 }

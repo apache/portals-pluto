@@ -150,7 +150,7 @@
                 -->
 					<property environment="env"/>
 					<property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}"/>
-					<move file="target/${pom.build.finalName}.war" tofile="${deploy.dir}/testsuite.war"/>
+					<copy file="target/${pom.build.finalName}.war" tofile="${deploy.dir}/testsuite.war"/>
 =              </tasks>
             </configuration>
             <goals>
