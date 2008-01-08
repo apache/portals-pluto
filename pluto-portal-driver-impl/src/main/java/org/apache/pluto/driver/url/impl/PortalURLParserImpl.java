@@ -353,7 +353,8 @@ public class PortalURLParserImpl implements PortalURLParser {
     	StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < values.length; i++) {
         	try {
-				values[i] = URLEncoder.encode(values[i], "UTF-8");
+        		if (values[i] != null)
+        			values[i] = URLEncoder.encode(values[i], "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
