@@ -348,7 +348,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link NameDD }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link EventDefinitionReferenceDD }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "supported-publishing-event", scope = PortletDD.class)
@@ -366,7 +366,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link NameDD }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link EventDefinitionReferenceDD }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "supported-processing-event", scope = PortletDD.class)
@@ -393,7 +393,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayNameDD }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "display-name", scope = PortletDD.class)
@@ -429,7 +429,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link PortletNameDD }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", name = "portlet-name", scope = PortletDD.class)
