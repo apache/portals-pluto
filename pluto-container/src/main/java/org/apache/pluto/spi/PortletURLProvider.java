@@ -19,14 +19,15 @@ package org.apache.pluto.spi;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
 import javax.portlet.PortletSecurityException;
+import javax.portlet.WindowState;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Defines the interface used by the portlet container to create Portal URLs.
  * This provider must be implemented by the Portal and provided via the
  * container services upon initialization of the container.
- *
+ * 
  * @version 1.0
  */
 public interface PortletURLProvider {
@@ -54,9 +55,23 @@ public interface PortletURLProvider {
     public void setAction(boolean action);
 
     /**
+     * Specifies whether or not this request should be considered an resource Serving
+     * request. 
+     * @since 2.0
+     */
+    public void setResourceServing(boolean resource);
+    
+    /**
+     * Shows you if the lifecycle is serveResource
+     * @return true if ResourceServing else false
+     * @since 2.0
+     */
+    public boolean isResourceServing();
+    
+    /**
      * By calling this method the URL is defined as a secure URL.
      */
-    public void setSecure() throws PortletSecurityException;
+    public void setSecure() throws PortletSecurityException ;
 
     /**
      * Determine whether or not this url provider
@@ -66,7 +81,7 @@ public interface PortletURLProvider {
      * @throws PortletSecurityException
      */
     public boolean isSecureSupported();
-
+    
     /**
      * Removes all pre-existing parameters in this URL
      */
@@ -81,9 +96,32 @@ public interface PortletURLProvider {
     public void setParameters(Map parameters);
 
     /**
+     * Sets the given public-render-parameters as parameters into the URL.
+     * @param parameters a map containing the name [java.lang.String] and value
+     *                   [java.lang.String[]] of the parameters.
+     */
+    public void setPublicRenderParameters(Map parameters);
+
+    /**
      * Returns the URL in string format. This method should only be called
      * once.
      * @return the URL
      */
     public String toString();
+    
+    public void savePortalURL(HttpServletRequest request);
+    
+    /**
+     * Gets the values from the current public-render-parameters from this request.
+     * @param name Parametername
+     * @return the values for the Parameter, can be null, if there is no Parameter with this name.
+     */
+    public String[] getPublicRenderParameters(String name);
+    
+    /**
+     * Gets the values from the parameters from this request. This is only used for ServeResource.
+     * @param name Parametername
+     * @return the values for the Parameter, can be null, if there is no Parameter with this name.
+     */
+    public String[] getPrivateRenderParameters(String name);
 }

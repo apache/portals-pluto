@@ -21,14 +21,16 @@ import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalActionRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
 
 /**
  * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
@@ -96,4 +98,26 @@ implements ActionRequest, InternalActionRequest {
         return portletPreferences;
     }
 
+	public String getLifecyclePhase() {
+		return ACTION_PHASE;
+	}
+
+	public Cookie[] getCookieProperties() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("This method needs to be implemented.");
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////
+	//for RequestDispatcher include and forward 
+	/////////////////////////////////////////////////////////////////////////////////////////	
+	
+    
+	
+    
+    public int getContentLength() {
+        return super.getContentLength();
+    }
+    
+    public ServletInputStream getInputStream() throws IOException {
+        return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
+    }
 }

@@ -50,6 +50,7 @@ limitations under the License.
           singleton="true">
       <constructor-arg><ref bean="PortalContext"/></constructor-arg>
       <constructor-arg><ref bean="DriverConfiguration"/></constructor-arg>
+      <constructor-arg><ref bean="CCPPProfileService"/></constructor-arg>
     </bean>
 
     <bean id="PortalContext"
@@ -127,6 +128,11 @@ limitations under the License.
     <bean id="PortalCallbackService"
           class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
           singleton="true">
+    </bean>
+    
+    <bean id="CCPPProfileService"
+    	  class="org.apache.pluto.spi.DummyCCPPProfileServiceImpl"
+    	  singleton="true">
     </bean>
 
 </beans>

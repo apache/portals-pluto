@@ -16,33 +16,50 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
-import java.util.List;
-import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
-/**
- *
- * @version $Id$
- * @since 1.1.0
- */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "custom-window-stateType", propOrder = {
+    "description","description1",
+    "windowState","windowState1"
+})
 public class CustomWindowStateDD {
+	
+	@XmlElement(name = "description")
+	private String description = null;
+	
+	@XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
+	private String description1 = null;
+	
+	@XmlElement(name = "window-state")
+	private String windowState = null;
 
-    private List descriptions = new ArrayList();
+	@XmlElement(name = "window-state", namespace = PortletDD.QNAME_JSR168)
+	private String windowState1 = null;
+	
+	public String getDescription() {
+		if (description != null)
+			return description;
+		return description1;
+	}
 
-    private String windowState;
+	public void setDescription(String description) {
+		this.description = description;
+		this.description1 = description;
+	}
 
-    public List getDescriptions() {
-        return descriptions;
-    }
+	public String getWindowState() {
+		if (windowState != null)
+			return windowState;
+		return windowState1;
+	}
 
-    public void setDescriptions(List descriptions) {
-        this.descriptions = descriptions;
-    }
+	public void setWindowState(String windowState) {
+		this.windowState = windowState;
+		this.windowState1 = windowState;
+	}
 
-    public String getWindowState() {
-        return windowState;
-    }
-
-    public void setWindowState(String windowState) {
-        this.windowState = windowState;
-    }
 }

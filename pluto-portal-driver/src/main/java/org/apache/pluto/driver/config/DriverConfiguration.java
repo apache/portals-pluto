@@ -1,10 +1,9 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2004 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -16,15 +15,15 @@
  */
 package org.apache.pluto.driver.config;
 
-import java.util.Collection;
-
-import javax.servlet.ServletContext;
-
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
+
+import javax.servlet.ServletContext;
+import java.util.Collection;
 
 /**
  * Interface defining a means for retrieving driver services
@@ -33,6 +32,7 @@ import org.apache.pluto.spi.optional.PortletPreferencesService;
  * the portal's ServletContext.
  *
  *
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
  * @since Sep 2, 2005
  *
  */
@@ -87,15 +87,17 @@ public interface DriverConfiguration {
     Collection getSupportedPortletModes();
 
     Collection getSupportedWindowStates();
+    
+//    Collection getPortletApplications();
 
     Collection getPages();
 
     PageConfig getPageConfig(String pageId);
-
+    
     boolean isPortletModeSupportedByPortal(String mode);
-
+    
     boolean isPortletModeSupportedByPortlet(String portletId, String mode);
-
+    
     boolean isPortletModeSupported(String portletId, String mode);
 
     boolean isWindowStateSupportedByPortal(String windowState);
@@ -114,4 +116,5 @@ public interface DriverConfiguration {
     PortalURLParser getPortalUrlParser();
     
     public RenderConfigService getRenderConfigService();
+
 }

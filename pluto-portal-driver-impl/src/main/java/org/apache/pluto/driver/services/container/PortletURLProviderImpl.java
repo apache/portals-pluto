@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -28,10 +29,13 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
+import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.apache.pluto.spi.PortletURLProvider;
 
 /**
- *
+ * 
  */
 public class PortletURLProviderImpl implements PortletURLProvider {
 
@@ -54,7 +58,22 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     public void setWindowState(WindowState state) {
         url.setWindowState(window, state);
     }
+    
+    public void setResourceServing(boolean resourceServing) {
+        if (resourceServing) {
+            url.setResourceWindow(window);
+        } else {
+            url.setResourceWindow(null);
+        }
+    }
 
+    public boolean isResourceServing(){
+    	if (url.getResourceWindow() != null)
+    		return true;
+    	else
+    		return false;
+    }
+    
     public void setAction(boolean action) {
         if (action) {
             url.setActionWindow(window);
@@ -64,7 +83,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     }
 
     public void setSecure() throws PortletSecurityException {
-        throw new PortletSecurityException("No Supported");
+        throw new PortletSecurityException("Secure URLs (via PortletURLProvider.setSecure()) is not supported.");
     }
 
     public boolean isSecureSupported() {
@@ -75,6 +94,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         url.clearParameters(window);
     }
 
+    
     public void setParameters(Map parameters) {
         Iterator it = parameters.entrySet().iterator();
         while (it.hasNext()) {
@@ -86,9 +106,43 @@ public class PortletURLProviderImpl implements PortletURLProvider {
             url.addParameter(param);
         }
     }
+    
+    public String[] getPrivateRenderParameters(String name){
+    	String[] values = null;
+    	for (Iterator it=url.getParameters().iterator();it.hasNext();){
+    		PortalURLParameter param = (PortalURLParameter)it.next();
+    		if (param.getName().equals(name))
+    			values = param.getValues();
+    	}
+    	return values;
+    }
+    
+    public String[] getPublicRenderParameters(String name){
+    	Map publicRenderParaMap = url.getPublicParameters();
+    	String[] values = null;
+    	for (Iterator it=publicRenderParaMap.keySet().iterator();it.hasNext();){
+    		String tmp = (String) it.next();
+    		if (tmp.equals(name)){
+    			values = (String[])publicRenderParaMap.get(tmp);
+    		}
+    	}
+    	return values;
+    }
+    
+    public void setPublicRenderParameters(Map parameters) {
+		url.addPublicRenderParametersNew(parameters);
+	}
 
     public String toString() {
         return url.toString();
     }
+
+	public void savePortalURL(HttpServletRequest request) {
+		PortalRequestContext ctx = (PortalRequestContext)
+			request.getAttribute(PortalRequestContext.REQUEST_KEY);
+		ctx.setPortalURL(url);		
+	}
+
+	
 
 }

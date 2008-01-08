@@ -51,7 +51,30 @@ public interface InternalPortletRequest extends PortletRequest {
     public PortletContainer getPortletContainer();
 
     public HttpServletRequest getHttpServletRequest();
+    
+    /**
+     * Is set true when a jsp, servlet is included.
+     * @param included true when included
+     */
+    public void setIncluded(boolean included);
+    
+    /**
+     * Returns true if a jsp or servlet is included.
+     * @return true if a jsp or servlet is included.
+     */
+    public boolean isIncluded();
+    
+    public void setIncludedQueryString(String queryString);
 
+    public void setForwarded(boolean forwarded);
+    
+    public boolean isForwarded();
+
+    public void setForwardedQueryString(String queryString);
+    
+    public void setAttribute(String name, Object object);
+    
+    public String getLifecyclePhase();
 }
 
 

@@ -17,6 +17,14 @@
 package org.apache.pluto.wrappers;
 
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
+import javax.servlet.http.Cookie;
+
+import org.apache.pluto.internal.impl.RenderResponseImpl;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
 
 public class PortletResponseWrapper
     extends javax.servlet.http.HttpServletResponseWrapper
@@ -47,6 +55,28 @@ public class PortletResponseWrapper
     public String encodeURL(String path) {
         return this.getPortletResponse().encodeURL(path);
     }
+    
+    // FIXME: can we delete this function?
+//    public void addProperty(String arg0, String arg1, int arg2) {
+//		this.getPortletResponse().addProperty(arg0, arg1, arg2);
+//	}
+
+	public PortletURL createActionURL() {
+		return ((RenderResponse) this.getPortletResponse()).createActionURL();
+	}
+
+	public PortletURL createRenderURL() {
+		return ((RenderResponse) this.getPortletResponse()).createRenderURL();
+	}
+
+	public ResourceURL createResourceURL() {
+		return ((RenderResponse) this.getPortletResponse()).createResourceURL(); 
+	}
+
+	public String getNamespace() {
+		return this.getPortletResponse().getNamespace();
+	}
+	
     // --------------------------------------------------------------------------------------------
 
     // additional methods -------------------------------------------------------------------------
@@ -68,6 +98,19 @@ public class PortletResponseWrapper
         }
         setResponse((javax.servlet.http.HttpServletResponse) response);
     }
-    // --------------------------------------------------------------------------------------------
+
+	public void addProperty(String key, Element element) {
+		this.getPortletResponse().addProperty(key, element);
+	}
+
+	public Element createElement(String tagName) throws DOMException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addProperty(Cookie cookie) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

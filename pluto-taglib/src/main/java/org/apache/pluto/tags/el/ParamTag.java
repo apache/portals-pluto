@@ -21,12 +21,10 @@ import javax.servlet.jsp.JspException;
 
 public class ParamTag extends org.apache.pluto.tags.ParamTag {
 
-    public String getValue() throws JspException {
+	private static final long serialVersionUID = 286L;
+
+	public String getValue() throws JspException {
         return ExpressionEvaluatorProxy.getProxy().evaluate(super.getValue(), pageContext);
     }
-    public String getName() throws JspException {
-        return ExpressionEvaluatorProxy.getProxy().evaluate(super.getName(), pageContext);
-    }
-
 
 }

@@ -17,7 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://portals.apache.org/pluto" prefix="pluto" %>
+<% pageContext.setAttribute("now", new java.util.Date()); %>
 
 <!--
 Portal page template for default theme used by the Pluto Portal Driver.
@@ -34,7 +36,9 @@ group (the left column) displays portlets with odd IDs, while the second group
         @import "<c:out value="${pageContext.request.contextPath}"/>/pluto.css";
         @import "<c:out value="${pageContext.request.contextPath}"/>/portlet-spec-1.0.css";
     </style>
-    <script type="text/javascript" src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js"></script>
+    <script type="text/javascript"
+            src="<c:out value="${pageContext.request.contextPath}"/>/pluto.js">
+    </script>
 </head>
 
 <body>
@@ -44,6 +48,7 @@ group (the left column) displays portlets with odd IDs, while the second group
     <!-- Header block: the Apache Pluto banner image and description -->
     <div id="header">
         <h1>Apache Pluto</h1>
+
         <p>An Apache Portals Project</p>
     </div>
 
@@ -94,7 +99,7 @@ group (the left column) displays portlets with odd IDs, while the second group
 
     <!-- Footer block: copyright -->
     <div id="footer">
-        &copy; 2003-2005 Apache Software Foundation
+       &copy; 2003-<fmt:formatDate value="${now}" pattern="yyyy"/> Apache Software Foundation
     </div>
 
 </div>

@@ -1,4 +1,5 @@
 /*
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -101,6 +102,8 @@ public interface PortletRegistryService {
     PortletConfig getPortletConfig(String applicationId, String portletName)
         throws PortletContainerException;
 
+    ClassLoader getClassLoader(String portletName);
+    
     /**
      * Add a listener which will recieve notifications of newly
      * registered applications.

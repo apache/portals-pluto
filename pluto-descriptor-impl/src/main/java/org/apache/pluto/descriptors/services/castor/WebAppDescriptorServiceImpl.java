@@ -80,14 +80,6 @@ public class WebAppDescriptorServiceImpl
     protected String getDTDUri() {
         return Constants.WEB_XML_DTD;
     }
-    
-    /**
-     * Retrieve the Web Application Schema location for a Servlet version 2.4 web.xml
-     * @return
-     */
-    protected String get24SchemaLocation() {
-        return Constants.WEB_XML_24_SCHEMA_LOCATION;
-    }
 
     /**
      * Read and Retrieve the Web Application's Castor Mapping
@@ -111,15 +103,13 @@ public class WebAppDescriptorServiceImpl
 
     protected void setCastorMarshallerOptions(Marshaller marshaller, Object beingMarshalled) {
         String servletVersion = ((WebAppDD)beingMarshalled).getServletVersion();
-        if ( "2.3".equals(servletVersion) )
-        {
-            marshaller.setDoctype(getPublicId(), getDTDUri());
-            marshaller.setSuppressNamespaces(true);
-        }
-        else if ( "2.4".equals(servletVersion) )
-        {
-            marshaller.setSchemaLocation(get24SchemaLocation());
-        }
+	    if ( "2.3".equals(servletVersion) ) {//JSR-168 based on servlet 2.3 
+	        marshaller.setDoctype(getPublicId(), getDTDUri());
+	    } else {//use schema for other versions (JSR-286 based on servlet 2.4)
+            marshaller.setNamespaceMapping(Constants.SCHEMA_PREFIX, Constants.SCHEMA_NAMESPACE_URI);
+            String schemaLocationVersion = servletVersion.replace('.', '_');
+            marshaller.setSchemaLocation(Constants.SCHEMA_LOCATION_FIRST_PART + schemaLocationVersion + ".xsd");
+	    }
     }
 
 }

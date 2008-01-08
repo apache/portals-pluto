@@ -21,9 +21,9 @@ package org.apache.pluto.driver.services.portal;
  * Configuration of a portlet window on the portal page.
  */
 public class PortletWindowConfig {
-
+	
 	// Private Member Variables ------------------------------------------------
-
+	
     /** The context path of the associated portlet. */
     private String contextPath;
 
@@ -34,12 +34,12 @@ public class PortletWindowConfig {
     private String metaInfo;
 
     // Constructor -------------------------------------------------------------
-
+    
     /**
      * No-arg constructor.
      */
     public PortletWindowConfig() {
-
+    	// Do nothing.
     }
 
     private PortletWindowConfig(String contextPath, String portletName, String metaInfo) {
@@ -49,7 +49,7 @@ public class PortletWindowConfig {
     }
 
     // Public Methods ----------------------------------------------------------
-
+    
     public String getId() {
     	return createPortletId(contextPath, portletName, metaInfo);
     }
@@ -79,15 +79,15 @@ public class PortletWindowConfig {
     }
 
     // Public Static Methods ---------------------------------------------------
-
+    
     /**
      * Creates the portlet ID from context path and portlet name. The portlet ID
      * is constructed by concatinating the context path and the portlet name
      * using a dot ('.').
-     *
+     * 
      * The method checks that the portlet name parameter does not have a dot. This check
      * is not done for the portlet ID.
-     *
+     * 
      * @param contextPath  the portlet context path.
      * @param portletName  the portlet name.
      * @throws IllegalArgumentException if the portletName has a dot
@@ -111,7 +111,7 @@ public class PortletWindowConfig {
         }
         return contextPath + "." + portletName + "!" + metaInfo;
     }
-
+    
     /**
      * Parses out the portlet context path from the portlet ID.
      * @param portletId  the portlet ID to parse.
@@ -121,7 +121,7 @@ public class PortletWindowConfig {
     	int index = getSeparatorIndex(portletId);
         return portletId.substring(0, index);
     }
-
+    
     /**
      * Parses out the portlet context path from the portlet ID.
      * @param portletId  the portlet ID to parse.
@@ -147,7 +147,7 @@ public class PortletWindowConfig {
 
 
     // Private Static Method ---------------------------------------------------
-
+    
     /**
      * Parses the portlet ID and returns the separator (".") index. The portlet
      * ID passed in should be a valid ID: not null, not starts with ".",

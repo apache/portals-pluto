@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +18,10 @@ package org.apache.pluto.internal.impl;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Set;
@@ -29,42 +33,48 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.descriptors.portlet.ContainerRuntimeOptionDD;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletContext;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
  * <code>InternalPortletContext</code> which provides container specific
  * information needed for processing.
- *
+ * 
  * @version 1.1
  */
 public class PortletContextImpl
-    implements PortletContext, InternalPortletContext {
-
-    /**
-     * Logger.
-     */
+implements PortletContext, InternalPortletContext {
+	
+	/**
+	 *  Logger.
+	 */
     private static final Log LOG = LogFactory.getLog(PortletContextImpl.class);
-
-
+    
+    
     // Private Member Variables ------------------------------------------------
+    
+    
+    /** Portlet Descriptor */
+    private PortletDD portletDD = null;
+
 
     private final String applicationId;
     private String applicationName;
-
+     
     private final PortletAppDD portletAppDD;
     private final ServletContext servletContext;
     private ClassLoader contextClassLoader;
 
+    
     // Constructor -------------------------------------------------------------
-
+    
     /**
      * Constructs an instance.
-     *
-     * @param servletContext the servlet context in which we are contained.
-     * @param portletAppDD   the portlet application descriptor.
-     * @param portletApplicationId applicationId
+     * @param servletContext  the servlet context in which we are contained.
+     * @param portletAppDD  the portlet application descriptor.
      */
     public PortletContextImpl(String portletApplicationId,
                               ServletContext servletContext,
@@ -79,6 +89,7 @@ public class PortletContextImpl
         }
         init();
     }
+    
 
     private void init() {
         setContextClassLoader(Thread.currentThread().getContextClassLoader());
@@ -108,11 +119,11 @@ public class PortletContextImpl
         this.contextClassLoader = contextClassLoader;
     }
 
+    
     // PortletContext Impl -----------------------------------------------------
-
+    
     /**
      * Retrieve the PortletContainer's server info.
-     *
      * @return the server info in the form of <i>Server/Version</i>
      * @see Environment#getServerInfo()
      */
@@ -121,63 +132,63 @@ public class PortletContextImpl
     }
 
     public PortletRequestDispatcher getRequestDispatcher(String path) {
-
+    	
         if (LOG.isDebugEnabled()) {
             LOG.debug("PortletRequestDispatcher requested: " + path);
         }
-
+        
         // Check if the path name is valid. A valid path name must not be null
         //   and must start with a slash '/' as defined by the portlet spec.
         if (path == null || !path.startsWith("/")) {
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Failed to retrieve PortletRequestDispatcher: "
-                    + "path name must begin with a slash '/'.");
-            }
-            return null;
+        	if (LOG.isInfoEnabled()) {
+        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
+        				+ "path name must begin with a slash '/'.");
+        	}
+        	return null;
         }
-
+        
         // Extract query string which contains appended parameters.
         String queryString = null;
         int index = path.indexOf("?");
         if (index > 0 && index < path.length() - 1) {
-            queryString = path.substring(index + 1);
+        	queryString = path.substring(index + 1);
         }
-
+        
         // Construct PortletRequestDispatcher.
         PortletRequestDispatcher portletRequestDispatcher = null;
         try {
             RequestDispatcher servletRequestDispatcher = servletContext
-                .getRequestDispatcher(path);
+            		.getRequestDispatcher(path);
             if (servletRequestDispatcher != null) {
-                portletRequestDispatcher = new PortletRequestDispatcherImpl(
-                    servletRequestDispatcher, queryString);
+            	portletRequestDispatcher = new PortletRequestDispatcherImpl(
+                		servletRequestDispatcher, path);
             } else {
-                if (LOG.isInfoEnabled()) {
-                    LOG.info("No matching request dispatcher found for: " + path);
-                }
+            	if (LOG.isInfoEnabled()) {
+            		LOG.info("No matching request dispatcher found for: " + path);
+            	}
             }
         } catch (Exception ex) {
             // We need to catch exception because of a Tomcat 4.x bug.
             //   Tomcat throws an exception instead of return null if the path
-            //   was not found.
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Failed to retrieve PortletRequestDispatcher: "
-                    + ex.getMessage());
-            }
-            portletRequestDispatcher = null;
+        	//   was not found.
+        	if (LOG.isInfoEnabled()) {
+        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
+        				+ ex.getMessage());
+        	}
+        	portletRequestDispatcher = null;
         }
         return portletRequestDispatcher;
     }
-
+    
     public PortletRequestDispatcher getNamedDispatcher(String name) {
         RequestDispatcher dispatcher = servletContext.getNamedDispatcher(name);
         if (dispatcher != null) {
             return new PortletRequestDispatcherImpl(dispatcher);
         } else {
-            if (LOG.isInfoEnabled()) {
-                LOG.info("No matching request dispatcher found for name: "
-                    + name);
-            }
+        	if (LOG.isInfoEnabled()) {
+        		LOG.info("No matching request dispatcher found for name: "
+        				+ name);
+        	}
         }
         return null;
     }
@@ -202,11 +213,11 @@ public class PortletContextImpl
         return servletContext.getRealPath(path);
     }
 
-    public Set getResourcePaths(String path) {
+    public java.util.Set getResourcePaths(String path) {
         return servletContext.getResourcePaths(path);
     }
 
-    public URL getResource(String path)
+    public java.net.URL getResource(String path)
         throws java.net.MalformedURLException {
         if (path == null || !path.startsWith("/")) {
             throw new MalformedURLException("path must start with a '/'");
@@ -214,7 +225,7 @@ public class PortletContextImpl
         return servletContext.getResource(path);
     }
 
-    public Object getAttribute(java.lang.String name) {
+    public java.lang.Object getAttribute(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -222,11 +233,11 @@ public class PortletContextImpl
         return servletContext.getAttribute(name);
     }
 
-    public Enumeration getAttributeNames() {
+    public java.util.Enumeration getAttributeNames() {
         return servletContext.getAttributeNames();
     }
 
-    public String getInitParameter(java.lang.String name) {
+    public java.lang.String getInitParameter(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Parameter name == null");
         }
@@ -234,7 +245,7 @@ public class PortletContextImpl
         return servletContext.getInitParameter(name);
     }
 
-    public Enumeration getInitParameterNames() {
+    public java.util.Enumeration getInitParameterNames() {
         return servletContext.getInitParameterNames();
     }
 
@@ -265,9 +276,10 @@ public class PortletContextImpl
     public String getPortletContextName() {
         return servletContext.getServletContextName();
     }
-
+    
+    
     // org.apache.pluto.core.InternalPortletContext Impl -----------------------
-
+    
     public ServletContext getServletContext() {
         return servletContext;
     }
@@ -276,5 +288,65 @@ public class PortletContextImpl
         return portletAppDD;
     }
 
+
+	public Map<String, String[]> getApplicationRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletAppDD.getContainerRuntimeOption() != null){
+			for (ContainerRuntimeOptionDD option : portletAppDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
+	}
+
+	public Map<String, String[]> getPortletRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletDD.getContainerRuntimeOption() != null) {
+			for (ContainerRuntimeOptionDD option : portletDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
+	}
+
+
+	public java.util.Enumeration<String> getContainerRuntimeOptions() {
+		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
+		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
+		
+		// merge these two, with portlet priority
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		
+		// first all entries in portletAppDD (without these in portletDD)
+		for (String option : appRuntimeOptions.keySet()) {
+			if (portletRuntimeOptions.containsKey(option))
+				resultMap.put(option, portletRuntimeOptions.get(option));
+			else
+				resultMap.put(option, appRuntimeOptions.get(option));
+		}
+		// and now the rest
+		if (portletRuntimeOptions != null){
+			for (String option : portletRuntimeOptions.keySet()) {
+				if (!appRuntimeOptions.containsKey(option))
+					resultMap.put(option, portletRuntimeOptions.get(option));
+			}
+		}
+		//return resultMap;
+		return null;
+	}
 }
 

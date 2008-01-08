@@ -18,44 +18,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <portlet-app
-    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
     version="1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
                         http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
-
-    <portlet>
-        <description>AboutPortletDescription</description>
-        <portlet-name>AboutPortlet</portlet-name>
-        <display-name>About Portlet</display-name>
-
-        <portlet-class>org.apache.pluto.driver.portlets.AboutPortlet</portlet-class>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-            <portlet-mode>EDIT</portlet-mode>
-            <portlet-mode>HELP</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>About Apache Pluto</title>
-        </portlet-info>
-    </portlet>
-
-    <portlet>
-        <description>AdminPortletDescription</description>
-        <portlet-name>AdminPortlet</portlet-name>
-        <display-name>Admin Portlet</display-name>
-        <portlet-class>org.apache.pluto.driver.portlets.AdminPortlet</portlet-class>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-            <portlet-mode>EDIT</portlet-mode>
-            <portlet-mode>HELP</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Apache Pluto Portal Admin</title>
-        </portlet-info>
-    </portlet>
+  
+  <portlet>
+    <description>AboutPortletDescription</description>
+    <portlet-name>AboutPortlet</portlet-name>
+    <display-name>About Portlet</display-name>
+    <portlet-class>org.apache.pluto.driver.portlets.AboutPortlet</portlet-class>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+      <portlet-mode>EDIT</portlet-mode>
+      <portlet-mode>HELP</portlet-mode>
+    </supports>
+    <portlet-info>
+      <title>About Apache Pluto</title>
+    </portlet-info>
+  </portlet>
+  
+  <portlet>
+    <description>AdminPortletDescription</description>
+    <portlet-name>AdminPortlet</portlet-name>
+    <display-name>Admin Portlet</display-name>
+    <portlet-class>org.apache.pluto.driver.portlets.AdminPortlet</portlet-class>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+      <portlet-mode>EDIT</portlet-mode>
+      <portlet-mode>HELP</portlet-mode>
+    </supports>
+    <portlet-info>
+      <title>Apache Pluto Portal Admin</title>
+    </portlet-info>
+  </portlet>
 
     <portlet>
         <description>Used to administer pluto pages</description>
@@ -71,7 +70,7 @@ limitations under the License.
         <portlet-info>
             <title>Pluto Page Administrator</title>
         </portlet-info>
-    </portlet>
+    </portlet>  
 </portlet-app>
 
 

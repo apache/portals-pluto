@@ -16,11 +16,6 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestUtils;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
@@ -36,6 +31,11 @@ import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 /**
  *
@@ -87,8 +87,8 @@ extends AbstractReflectivePortletTest {
      * Overwrites <code>super.getRenderParameters(..)</code> to set the
      * test-specific render parameter in the render URL.
      */
-    public Map getRenderParameters(PortletRequest request) {
-    	Map parameterMap = super.getRenderParameters(request);
+    public Map<String, String[]> getRenderParameters(PortletRequest request) {
+    	Map<String, String[]> parameterMap = super.getRenderParameters(request);
     	parameterMap.put(KEY_RENDER, new String[] { VALUE_RENDER });
     	return parameterMap;
     }
@@ -208,7 +208,9 @@ extends AbstractReflectivePortletTest {
 
         // GenericServlet Impl -------------------------------------------------
 
-        public String getServletInfo() {
+		private static final long serialVersionUID = -963706386141654216L;
+
+		public String getServletInfo() {
         	return getClass().getName();
         }
 

@@ -31,7 +31,7 @@ import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.util.ClasspathScanner;
-
+ 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.servlet.ServletConfig;
@@ -54,7 +54,7 @@ import java.util.Map;
  */
 public class PortletContextManager implements PortletRegistryService {
 
-    /**
+	/**
      * Log Instance
      */
     private static final Log LOG = LogFactory.getLog(PortletContextManager.class);
@@ -63,21 +63,25 @@ public class PortletContextManager implements PortletRegistryService {
      * The singleton manager instance.
      */
     private static final PortletContextManager MANAGER = new PortletContextManager();
+    
+    /**
+     * The PortletContext cache map: key is servlet context, and value is the
+     * associated portlet context.
+     */
+    private Map portletContexts = new HashMap();
 
     /**
      * List of application id resolvers. *
      */
     private static final List APP_ID_RESOLVERS = new ArrayList();
 
-    // Private Member Variables ------------------------------------------------
 
+    // Private Member Variables ------------------------------------------------
+    
     /**
      * The PortletContext cache map: key is servlet context, and value is the
      * associated portlet context.
      */
-    private final Map portletContexts = new HashMap();
-
-
     private final Map portletConfigs = new HashMap();
 
 
@@ -87,24 +91,29 @@ public class PortletContextManager implements PortletRegistryService {
      */
     private final List registryListeners = new ArrayList();
 
+    /**
+     * The classloader for the portal, key is portletWindow and value is the classloader.
+     */
+    private final Map classLoaders = new HashMap();
+    
     // Constructor -------------------------------------------------------------
-
+    
     /**
      * Private constructor that prevents external instantiation.
      */
     private PortletContextManager() {
-        // Do nothing.
+    	// Do nothing.
     }
 
     /**
      * Returns the singleton manager instance.
-     *
      * @return the singleton manager instance.
      */
     public static PortletContextManager getManager() {
         return MANAGER;
     }
-
+    
+    
     // Public Methods ----------------------------------------------------------
 
     /**
@@ -115,7 +124,7 @@ public class PortletContextManager implements PortletRegistryService {
      * @return the InternalPortletContext associated with the ServletContext.
      * @throws PortletContainerException
      */
-    public String register(ServletConfig config) throws PortletContainerException {
+	public String register(ServletConfig config) throws PortletContainerException {
         InternalPortletContext portletContext = register(config.getServletContext());
 
         PortletAppDD portletAppDD =
@@ -128,8 +137,9 @@ public class PortletContextManager implements PortletRegistryService {
             portletDD = (PortletDD) it.next();
             portletConfigs.put(
                 portletContext.getApplicationId() + "/" + portletDD.getPortletName(),
-                new PortletConfigImpl(config, portletContext, portletDD)
+                new PortletConfigImpl(config, portletContext, portletDD, portletAppDD)
             );
+            classLoaders.put(portletDD.getPortletName(), Thread.currentThread().getContextClassLoader());
         }
 
         return portletContext.getApplicationId();
@@ -167,11 +177,9 @@ public class PortletContextManager implements PortletRegistryService {
                 LOG.info("Portlet application with application id '" + applicationId + "' already registered.");
             }
         }
-
-
         return (InternalPortletContext) portletContexts.get(applicationId);
     }
-
+    
     public void remove(InternalPortletContext context) {
         portletContexts.remove(context.getApplicationId());
         Iterator configs = portletConfigs.keySet().iterator();
@@ -230,6 +238,11 @@ public class PortletContextManager implements PortletRegistryService {
         String msg = "Unable to retrieve portlet application descriptor: '"+applicationId+"'"; 
         LOG.warn(msg);
         throw new PortletContainerException(msg);
+    }
+    
+    public ClassLoader getClassLoader(String portletName){
+    	
+    	return (ClassLoader)classLoaders.get(portletName);
     }
 
     public void addPortletRegistryListener(PortletRegistryListener listener) {

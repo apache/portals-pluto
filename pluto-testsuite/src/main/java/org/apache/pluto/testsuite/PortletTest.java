@@ -22,6 +22,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * Interface for pluto portlet test classes.
@@ -50,7 +52,7 @@ public interface PortletTest {
      * @return a map of render parameters, key is the string name of the
      *         parameter, value is a string array.
      */
-    public Map getRenderParameters(PortletRequest request);
+    public Map<String, String[]> getRenderParameters(PortletRequest request);
 
     /**
      * Runs the test.
@@ -71,5 +73,17 @@ public interface PortletTest {
      */
     public TestConfig getConfig();
 
+    /**
+     * Called by TestPortlet.doHeaders()
+     * @param config
+     * @param context
+     * @param request
+     * @param response
+     */
+    public void doHeaders(PortletConfig config,
+                          PortletContext context,
+                          RenderRequest request,
+                          RenderResponse response);
+    
 }
 

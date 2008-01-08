@@ -34,14 +34,12 @@ class JSP21ExpressionEvaluatorProxy extends ExpressionEvaluatorProxy {
 
     public static Method evalMethod;
 
-    private static boolean initialized;
-
     private static Object jspFactory;
 
     static {
         try {
             jspFactory = Class.forName("javax.servlet.jsp.JspFactory")
-                .getMethod("getDefaultFactory", new Class[0]).invoke(null, null);
+                .getMethod("getDefaultFactory", new Class[0]).invoke(null);
             jspApplicationContextGetter = 
                 jspFactory.getClass().getMethod("getJspApplicationContext",
                     new Class[] { ServletContext.class });
@@ -71,7 +69,7 @@ class JSP21ExpressionEvaluatorProxy extends ExpressionEvaluatorProxy {
             Object expressionFactory = expressionFactoryGetter.invoke(
                     jspApplicationContext, new Object[] {});
 
-            Object elContext = elContextGetter.invoke(pageContext, null);
+            Object elContext = elContextGetter.invoke(pageContext);
 
             Object valueExpression = valueExpressionGetter.invoke(
                     expressionFactory, new Object[] { elContext, value,

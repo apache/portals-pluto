@@ -25,6 +25,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.*;
+
 /**
  */
 public class RenderConfig {
@@ -86,36 +88,36 @@ public class RenderConfig {
             pageId = defaultPageId;
         }
 //        return (PageConfig) pages.get(pageId);
-
-         // TODO: Make sure this is needed.
+         
+         // TODO: Make sure this is needed. 
          //This is the PLUTO-251 fix submitted by Charles Severence. Thank you!!!
-         // Sometimes pages come with a prefix of a slash - if the page is not
-         // found, and the first character of the pageId is a slash we attempt
-         // to look up the page without the slash.
-
-         PageConfig retval = (PageConfig) pages.get(pageId);
-
-         if ( retval == null && pageId.startsWith("/") && pageId.length() > 2 ) {
-        	 retval = (PageConfig) pages.get(pageId.substring(1));
+         // Sometimes pages come with a prefix of a slash - if the page is not 
+         // found, and the first character of the pageId is a slash we attempt 
+         // to look up the page without the slash. 
+         
+         PageConfig retval = (PageConfig) pages.get(pageId); 
+         
+         if ( retval == null && pageId.startsWith("/") && pageId.length() > 2 ) { 
+        	 retval = (PageConfig) pages.get(pageId.substring(1)); 
          }
 
-
+         
          if (retval == null)
-         {
+         {             
              LOG.warn("Couldn't find a PageConfig for page ID: [" + pageId + "]");
              if ((retval = (PageConfig)pages.get(defaultPageId)) != null)
              {
                  if (LOG.isDebugEnabled())
-                 {
+                 {                                      
                      LOG.debug("Returning default page ID: [" + defaultPageId + "]");
                  }
              }
              else
              {
-                 LOG.error("Could not find default page Id for render config!");
-             }
+                 LOG.error("Could not find default page Id for render config!");                 
+             }             
          }
-         return retval;
+         return retval; 
     }
 
     public void addPage(PageConfig config) {

@@ -24,6 +24,8 @@ import java.io.Serializable;
  */
 public class TestResult implements Serializable {
 
+	private static final long serialVersionUID = 5247797277017349129L;
+
 	/** The undefined return code. */
 	public static final int UNDEFINED = -1;
 

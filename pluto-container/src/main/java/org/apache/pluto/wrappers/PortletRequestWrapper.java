@@ -17,6 +17,7 @@
 package org.apache.pluto.wrappers;
 
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
@@ -24,6 +25,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
+import javax.servlet.http.Cookie;
 
 public class PortletRequestWrapper
     extends javax.servlet.http.HttpServletRequestWrapper
@@ -178,6 +180,10 @@ public class PortletRequestWrapper
     public int getServerPort() {
         return this.getPortletRequest().getServerPort();
     }
+    
+    public String getWindowID() {
+    	return this.getPortletRequest().getWindowID();
+	}
 
     // --------------------------------------------------------------------------------------------
     
@@ -201,5 +207,13 @@ public class PortletRequestWrapper
         setRequest((javax.servlet.http.HttpServletRequest) request);
     }
     // --------------------------------------------------------------------------------------------
+
+	public Map<String, String[]> getPrivateParameterMap() {
+		return this.getPortletRequest().getPrivateParameterMap();
+	}
+
+	public Map<String, String[]> getPublicParameterMap() {
+		return this.getPortletRequest().getPublicParameterMap();
+	}
 }
 

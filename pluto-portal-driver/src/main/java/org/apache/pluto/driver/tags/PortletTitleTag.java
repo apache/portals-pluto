@@ -1,10 +1,9 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2004 The Apache Software Foundation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -18,33 +17,33 @@ package org.apache.pluto.driver.tags;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 
 /**
  * The portlet title tag is used to print the dynamic portlet title to the page.
+ * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
+ * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
  * @version 1.0
  * @since Oct 4, 2004
  */
 public class PortletTitleTag extends TagSupport {
-
+	
 	// TagSupport Impl ---------------------------------------------------------
-
+	
 	/**
      * Method invoked when the start tag is encountered. This method retrieves
      * the portlet title and print it to the page.
-     *
+     * 
 	 * @see org.apache.pluto.services.PortalCallbackService#setTitle(HttpServletRequest, PortletWindow, String)
 	 * @see org.apache.pluto.driver.services.container.PortalCallbackServiceImpl#setTitle(HttpServletRequest, PortletWindow, String)
-	 *
+	 * 
 	 * @throws JspException
 	 */
     public int doStartTag() throws JspException {
-
+    	
     	// Ensure that the portlet title tag resides within a portlet tag.
         PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
         		this, PortletTag.class);
@@ -52,7 +51,7 @@ public class PortletTitleTag extends TagSupport {
             throw new JspException("Portlet title tag may only reside "
             		+ "within a pluto:portlet tag.");
         }
-
+        
         // Print out the portlet title to page.
         try {
             pageContext.getOut().print(pageContext.getRequest().getAttribute(

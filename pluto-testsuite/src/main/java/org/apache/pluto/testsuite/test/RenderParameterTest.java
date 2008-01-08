@@ -16,14 +16,14 @@
  */
 package org.apache.pluto.testsuite.test;
 
-import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestUtils;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+
+import org.apache.pluto.testsuite.TestResult;
+import org.apache.pluto.testsuite.TestUtils;
 
 /**
  */
@@ -35,8 +35,8 @@ public class RenderParameterTest extends AbstractReflectivePortletTest {
     private static final String RENDER_VALUE = "org.apache.pluto.testsuite.RENDER_VALUE";
 
 
-    public Map getRenderParameters(PortletRequest request) {
-        Map parameterMap = new HashMap();
+    public Map<String, String[]> getRenderParameters(PortletRequest request) {
+        Map<String, String[]> parameterMap = new HashMap<String, String[]>();
         parameterMap.put(RENDER_KEY, new String[] { RENDER_VALUE });
         return parameterMap;
     }
@@ -94,7 +94,7 @@ public class RenderParameterTest extends AbstractReflectivePortletTest {
         result.setDescription("Ensure that render request returns the correct "
         		+ "parameter map.");
 
-        Map parameterMap = request.getParameterMap();
+        Map<String, String[]> parameterMap = request.getParameterMap();
         String[] values = (String[]) parameterMap.get(RENDER_KEY);
         if (values != null && values.length == 1
         		&& RENDER_VALUE.equals(values[0])
@@ -121,9 +121,9 @@ public class RenderParameterTest extends AbstractReflectivePortletTest {
 
         boolean hasActionParameter = false;
         boolean hasRenderParameter = false;
-        for (Enumeration en = request.getParameterNames();
+        for (Enumeration<String> en = request.getParameterNames();
         		en.hasMoreElements(); ) {
-            String name = (String) en.nextElement();
+            String name = en.nextElement();
             if (ACTION_KEY.equals(name)) {
             	hasActionParameter = true;
             }

@@ -30,13 +30,13 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.services.castor.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.descriptors.services.castor.WebAppDescriptorServiceImpl;
+import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.descriptors.servlet.ServletDD;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
-import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 
 /**
  * This test assembles an EAR file which contains two portlet

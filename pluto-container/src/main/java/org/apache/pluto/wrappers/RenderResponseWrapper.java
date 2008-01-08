@@ -16,10 +16,16 @@
  */
 package org.apache.pluto.wrappers;
 
+import javax.portlet.CacheControl;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.Cookie;
+
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
+import java.util.Enumeration;
 
 public class RenderResponseWrapper extends PortletResponseWrapper
     implements RenderResponse {
@@ -102,6 +108,15 @@ public class RenderResponseWrapper extends PortletResponseWrapper
     }
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Returns an implementation of JSR-286 <code>CacheContol</code>.
+     *
+     * @since 2.0
+     */
+    public CacheControl getCacheControl() {
+    	return this.getRenderResponse().getCacheControl();
+	}
+    
     // additional methods -------------------------------------------------------------------------
     /**
      * Return the wrapped ServletResponse object.
@@ -111,5 +126,13 @@ public class RenderResponseWrapper extends PortletResponseWrapper
     }
     // --------------------------------------------------------------------------------------------
 
+	public void addProperty(Cookie cookie) {
+		this.getRenderResponse().addProperty(cookie);
+	}
+
+	public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
+		// TODO Auto-generated method stub
+		this.getRenderResponse().setNextPossiblePortletModes(portletModes);
+	}
 }
 

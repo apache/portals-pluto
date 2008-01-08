@@ -29,15 +29,15 @@ import org.apache.pluto.PortletWindowID;
  * processing.
  */
 public class PortletWindowIDImpl implements PortletWindowID, Serializable {
-
+	
 	// Private Member Variables ------------------------------------------------
-
-    private String stringId;
+	
+    private String stringId = null;
     private int intId;
-
-
+    
+    
     // Constructor -------------------------------------------------------------
-
+    
     /**
      * Private constructor that prevents external instantiation.
      * @param intId  the integer ID.
@@ -46,17 +46,17 @@ public class PortletWindowIDImpl implements PortletWindowID, Serializable {
     private PortletWindowIDImpl(int intId, String stringId) {
         this.stringId = stringId;
         this.intId = intId;
-    }
-
-
+    }   
+    
+    
     // PortletWindowID Impl ----------------------------------------------------
-
+    
     public String getStringId() {
         return stringId;
     }
-
+    
     // Internal Methods --------------------------------------------------------
-
+    
     private void readObject(ObjectInputStream stream) throws IOException {
     	intId = stream.readInt();
         stringId = String.valueOf(intId);
@@ -67,7 +67,7 @@ public class PortletWindowIDImpl implements PortletWindowID, Serializable {
     }
 
     // Common Object Methods ---------------------------------------------------
-
+    
     /**
     public boolean equals(Object object) {
         boolean result = false;
@@ -81,18 +81,18 @@ public class PortletWindowIDImpl implements PortletWindowID, Serializable {
         return (result);
     }
     **/
-
+    
     public int hashCode() {
         return intId;
     }
-
-
+    
+    
     // Additional Methods ------------------------------------------------------
-
+    
     public int intValue() {
         return intId;
     }
-
+    
     /**
      * Creates a portlet window ID instance from a string.
      * @param stringId  the string ID from which the instance is created.
@@ -111,5 +111,5 @@ public class PortletWindowIDImpl implements PortletWindowID, Serializable {
         }
         return new PortletWindowIDImpl(_id, stringId);
     }
-
+    
 }

@@ -115,15 +115,15 @@ public class DriverConfigurationImpl
     public PageConfig getPageConfig(String pageId) {
         return renderService.getPage(pageId);
     }
-
+    
     public boolean isPortletModeSupportedByPortal(String mode) {
         return supportedModesService.isPortletModeSupportedByPortal(mode);
     }
-
+    
     public boolean isPortletModeSupportedByPortlet(String portletId, String mode) {
         return supportedModesService.isPortletModeSupportedByPortlet(portletId, mode);
     }
-
+    
     public boolean isPortletModeSupported(String portletId, String mode) {
         return supportedModesService.isPortletModeSupported(portletId, mode);
     }
@@ -159,7 +159,7 @@ public class DriverConfigurationImpl
 
     public void setPortalUrlParser(PortalURLParser portalUrlParser) {
         this.portalUrlParser = portalUrlParser;
-    }
+    }       
 
 //
 // Container Services
@@ -198,5 +198,13 @@ public class DriverConfigurationImpl
     public RenderConfigService getRenderConfigService(){
     	return renderService;
     }
+
+    /**
+     * Standard Getter.
+     * @return the configuration data of all configured portlet applications.
+     */
+//    public Collection getPortletApplications() {
+//        return registryService.getPortletApplications();
+//    }
 }
 

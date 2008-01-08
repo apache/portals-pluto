@@ -16,26 +16,28 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.portlet.PreferencesValidator;
-import javax.portlet.ValidatorException;
-import javax.servlet.ServletContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.internal.PortletDescriptorRegistry;
+import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.internal.PreferencesValidatorRegistry;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.PortletPreferenceDD;
 import org.apache.pluto.descriptors.portlet.PortletPreferencesDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
-import org.apache.pluto.internal.InternalPortletPreference;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
-import org.apache.pluto.internal.PortletEntity;
-import org.apache.pluto.internal.PreferencesValidatorRegistry;
+
+import javax.portlet.PreferencesValidator;
+import javax.portlet.ValidatorException;
+import javax.servlet.ServletContext;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -43,42 +45,42 @@ import org.apache.pluto.internal.PreferencesValidatorRegistry;
  * PortletEntity consists of two primary peices of information, the Portlet
  * Definition as defined by the {@link PortletDD} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
- *
+ * 
  */
 public class PortletEntityImpl implements PortletEntity {
-
+	
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletEntityImpl.class);
-
+    
     /** URI prefix of the portlet invoker servlet. */
     private static final String PREFIX = "/PlutoInvoker/";
-
-
+    
+    
     // Private Member Variables ------------------------------------------------
-
+    
     /** The servlet context. */
     private final ServletContext servletContext;
-
+    
     /** The portlet window. */
-    private final String portletName;
+    private String portletName = null;
 
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
     private PortletDD portletDefinition;
-
+    
     /** Default portlet preferences defined for this portlet. */
     private InternalPortletPreference[] defaultPreferences;
-
-
+    
+    
     // Constructor -------------------------------------------------------------
-
+    
     PortletEntityImpl(ServletContext servletContext, String portletName) {
         this.servletContext = servletContext;
         this.portletName = portletName;
     }
-
-
+    
+    
     // PortletEntity Impl ------------------------------------------------------
-
+    
     /**
      * Returns the URI to the controller servlet that wraps this portlet.
      * @return the URI to the controller servlet that wraps this portlet.
@@ -91,7 +93,7 @@ public class PortletEntityImpl implements PortletEntity {
         // the portlet.
         return PREFIX + portletName;
     }
-
+    
     /**
      * Returns an array of default preferences of this portlet. The default
      * preferences are retrieved from the portlet application descriptor.
@@ -111,7 +113,7 @@ public class PortletEntityImpl implements PortletEntity {
      * may be null.
      * </p>
      * @return the preference set
-     *
+     * 
      * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
      */
     public InternalPortletPreference[] getDefaultPreferences() {
@@ -120,17 +122,21 @@ public class PortletEntityImpl implements PortletEntity {
             PortletPreferencesDD prefsDD = portletDD.getPortletPreferences();
             if (prefsDD != null) {
             	List prefs = new ArrayList();
-            	for (Iterator it = prefsDD.getPortletPreferences().iterator();
-            			it.hasNext(); ) {
-            		PortletPreferenceDD prefDD = (PortletPreferenceDD) it.next();
-            		String[] values = null;
-            		if (prefDD.getValues().size() > 0) {
-            			values = (String[]) prefDD.getValues().toArray(
-            					new String[prefDD.getValues().size()]);
-            		}
-            		PortletPreferenceImpl pref = new PortletPreferenceImpl(
-            				prefDD.getName(), values, prefDD.isReadOnly());
-            		prefs.add(pref);
+            	if (prefsDD.getPortletPreferences() != null){
+	            	for (Iterator it = prefsDD.getPortletPreferences().iterator();
+	            			it.hasNext(); ) {
+	            		PortletPreferenceDD prefDD = (PortletPreferenceDD) it.next();
+	            		String[] values = null;
+	            		if (prefDD.getValues()!=null){
+		            		if (prefDD.getValues().size() > 0) {
+		            			values = (String[]) prefDD.getValues().toArray(
+		            					new String[prefDD.getValues().size()]);
+		            		}
+	            		}
+	            		PortletPreferenceImpl pref = new PortletPreferenceImpl(
+	            				prefDD.getName(), values, prefDD.isReadOnly());
+	            		prefs.add(pref);
+	            	}
             	}
             	defaultPreferences = (InternalPortletPreference[])
             			prefs.toArray(new InternalPortletPreference[prefs.size()]);
@@ -149,7 +155,7 @@ public class PortletEntityImpl implements PortletEntity {
         }
         return portletDefinition;
     }
-
+    
     /**
      * Returns the preferences validator instance for this portlet.
      * One validator instance is created per portlet definition.
@@ -163,16 +169,16 @@ public class PortletEntityImpl implements PortletEntity {
     			.getPreferencesValidator(getPortletDefinition());
     	return validator;
     }
-
-
+    
+    
     // Private Methods ---------------------------------------------------------
-
+    
     /**
      * Loads the portlet definition.
      */
     private void load() {
-
-    	// Retrieve the cross servlet context for the portlet.
+    	
+    	//Retrieve the cross servlet context for the portlet.
         ServletContext crossContext = servletContext;
         if (LOG.isDebugEnabled()) {
             LOG.debug("Retrieved cross context: " + crossContext);

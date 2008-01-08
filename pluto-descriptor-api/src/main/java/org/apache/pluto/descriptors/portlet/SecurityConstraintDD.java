@@ -16,39 +16,70 @@
  */
 package org.apache.pluto.descriptors.portlet;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.apache.pluto.descriptors.common.UserDataConstraintDD;
 
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "security-constraintType", propOrder = {
+    "displayName","displayName1",
+    "portletCollection","portletCollection1",
+    "userDataConstraint",    "userDataConstraint1"
+})
 public class SecurityConstraintDD {
+	
+	@XmlElement (name = "display-name")
+	private String displayName = null;
+	
+	@XmlElement (name = "display-name", namespace = PortletDD.QNAME_JSR168)
+	private String displayName1 = null;
+	
+	@XmlElement ( name = "portlet-collection")
+	private PortletCollectionDD portletCollection = null; 
+	
+	@XmlElement ( name = "portlet-collection", namespace = PortletDD.QNAME_JSR168)
+	private PortletCollectionDD portletCollection1 = null; 
+	
+	@XmlElement ( name = "user-data-constraint")
+	private UserDataConstraintDD userDataConstraint = null;
+	
+	@XmlElement ( name = "user-data-constraint", namespace = PortletDD.QNAME_JSR168)
+	private UserDataConstraintDD userDataConstraint1 = null;
 
-    private List displayNames = new ArrayList();
-    private PortletCollectionDD portletCollection;
-    private UserDataConstraintDD userDataConstraint;
+	public String getDisplayName() {
+		if (displayName != null)
+			return displayName;
+		return displayName1;
+	}
 
-    public List getDisplayNames() {
-        return displayNames;
-    }
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+		this.displayName1 = displayName;
+	}
 
-    public void setDisplayNames(List displayNames) {
-        this.displayNames = displayNames;
-    }
+	public PortletCollectionDD getPortletCollection() {
+		if (portletCollection != null)
+			return portletCollection;
+		return portletCollection1;
+	}
 
-    public PortletCollectionDD getPortletCollection() {
-        return portletCollection;
-    }
+	public void setPortletCollection(PortletCollectionDD portletCollection) {
+		this.portletCollection = portletCollection;
+		this.portletCollection1 = portletCollection;
+	}
 
-    public void setPortletCollection(PortletCollectionDD portletCollection) {
-        this.portletCollection = portletCollection;
-    }
+	public UserDataConstraintDD getUserDataConstraint() {
+		if (userDataConstraint != null)
+			return userDataConstraint;
+		return userDataConstraint1;
+	}
 
-    public UserDataConstraintDD getUserDataConstraint() {
-        return userDataConstraint;
-    }
+	public void setUserDataConstraint(UserDataConstraintDD userDataConstraint) {
+		this.userDataConstraint = userDataConstraint;
+		this.userDataConstraint1 = userDataConstraint;
+	}
 
-    public void setUserDataConstraint(UserDataConstraintDD userDataConstraint) {
-        this.userDataConstraint = userDataConstraint;
-    }
 }

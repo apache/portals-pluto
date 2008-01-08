@@ -16,9 +16,10 @@
  */
 package org.apache.pluto;
 
-import org.apache.pluto.spi.PortalCallbackService;
-
 import javax.portlet.PortalContext;
+
+import org.apache.pluto.spi.CCPPProfileService;
+import org.apache.pluto.spi.PortalCallbackService;
 
 /**
  * This interface defines the services required for integration between the
@@ -36,9 +37,15 @@ public interface RequiredContainerServices {
 
     /**
      * Returns the portal callback service implementation instance associated
-     * with this group of portlet container services.
+     * with this group of portlet container services. 
      * @return a PortalCallbackService implementation.
      */
     PortalCallbackService getPortalCallbackService();
-
+    
+    /**
+     * Returns the CC/PP profile service implementation
+     * @return a CCPPProfileServiceImplementation
+     */
+    CCPPProfileService getCCPPProfileService();
+    
 }

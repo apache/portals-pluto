@@ -32,7 +32,7 @@ public abstract class ExpressionEvaluatorProxy {
 
     private static final Log LOG = LogFactory.getLog(ExpressionEvaluatorProxy.class);
 
-    private static final Map FACTORIES = new TreeMap();
+    private static final Map<String, String> FACTORIES = new TreeMap<String, String>();
 
     private static ExpressionEvaluatorProxy proxy;
 
@@ -42,9 +42,9 @@ public abstract class ExpressionEvaluatorProxy {
         // And finally, a default that should always be provided, but for which an additional jar is needed.
         FACTORIES.put("getRequest", "ApacheTaglibStandardExpressionEvaluatorProxy");
 
-        Iterator entrySetIterator = FACTORIES.entrySet().iterator();
+        Iterator<Map.Entry<String, String>> entrySetIterator = FACTORIES.entrySet().iterator();
         while(entrySetIterator.hasNext()) {
-            Map.Entry entry = (Map.Entry)entrySetIterator.next();
+            Map.Entry<String, String> entry = entrySetIterator.next();
             if(isPageContextMethodAvailable(entry.getKey().toString())) {
                 try {
                     String className =
@@ -54,7 +54,7 @@ public abstract class ExpressionEvaluatorProxy {
                         LOG.info("Attempting to utilize expression evaluator proxy '"+className+"'");
                     }
 
-                    Class proxyClass = Class.forName(className);
+                    Class<?> proxyClass = Class.forName(className);
                     proxy = (ExpressionEvaluatorProxy)proxyClass.newInstance();
 
                     if(proxy != null) {
@@ -84,7 +84,7 @@ public abstract class ExpressionEvaluatorProxy {
 
     private static boolean isPageContextMethodAvailable(String signature) {
          try {
-            Method method = PageContext.class.getMethod(signature, null);
+            Method method = PageContext.class.getMethod(signature);
             return method != null;
         } catch (NoSuchMethodException e) {
              return false;

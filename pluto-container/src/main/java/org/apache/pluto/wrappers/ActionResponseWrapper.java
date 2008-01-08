@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,13 +16,17 @@
  */
 package org.apache.pluto.wrappers;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
+import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.xml.namespace.QName;
 
 public class ActionResponseWrapper extends PortletResponseWrapper
     implements ActionResponse {
@@ -55,7 +59,7 @@ public class ActionResponseWrapper extends PortletResponseWrapper
         this.getActionResponse().sendRedirect(location);
     }
 
-    public void setRenderParameters(Map parameters) {
+    public void setRenderParameters(Map<String, String[]> parameters) {
         this.getActionResponse().setRenderParameters(parameters);
     }
 
@@ -77,6 +81,44 @@ public class ActionResponseWrapper extends PortletResponseWrapper
         return (ActionResponse) getPortletResponse();
     }
 
+    public StateAwareResponse getStateAwareResponse(){
+    	return (StateAwareResponse) getPortletResponse();
+    }
+
+	public void setEvent(QName qname, java.io.Serializable value) {
+		this.getStateAwareResponse().setEvent(qname, value);
+	}
+
+//	public void setEvents(Map<javax.xml.namespace.QName, java.io.Serializable> events) {
+//		// TODO look for setEvents in StateAwareResponse
+////		this.getStateAwareResponse().setEvents(events);		
+//	}
     // --------------------------------------------------------------------------------------------
+
+	public PortletMode getPortletMode() {
+		return this.getStateAwareResponse().getPortletMode();
+	}
+
+	public Map getRenderParameterMap() {
+		return this.getStateAwareResponse().getRenderParameterMap();
+	}
+
+	public WindowState getWindowState() {
+		return this.getStateAwareResponse().getWindowState();
+	}
+
+	public void setEvent(String name, java.io.Serializable value) {
+		this.getStateAwareResponse().setEvent(name, value);
+	}
+
+	public void sendRedirect(String location, String renderUrlParamName) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removePublicRenderParameter(String name) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

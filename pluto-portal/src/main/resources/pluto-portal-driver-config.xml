@@ -51,9 +51,9 @@ limitations under the License.
       <portlet context="/testsuite" name="TestPortlet1"/>
       <portlet context="/testsuite" name="TestPortlet2"/>
     </page>
-    <page name="Secondary Page" uri="/WEB-INF/themes/pluto-default-theme.jsp">
-      <portlet context="/testsuite" name="TestPortlet1"/>
-      <portlet context="/testsuite" name="TestPortlet2"/>
+    <page name="JSR 286 Tests" uri="/WEB-INF/themes/pluto-default-theme.jsp">
+      <portlet context="/testsuite" name="286TestPortlet"/>
+      <portlet context="/testsuite" name="286TestCompanionPortlet"/>
     </page>
     <page name="Pluto Admin" uri="/WEB-INF/themes/pluto-default-theme.jsp">
       <portlet context="/pluto" name="PlutoPageAdmin"/>
@@ -62,5 +62,3 @@ limitations under the License.
   </render-config>
   
 </pluto-portal-driver>
-
-

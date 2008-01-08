@@ -158,13 +158,13 @@ abstract class AbstractCastorDescriptorService {
             castorConfig.getProperties().setProperty("org.exolab.castor.indent", "true");
             setCastorMarshallerOptions(marshaller, object);
             marshaller.marshal(object);
-        } catch (IOException e) {
+        } catch(IOException e) {
             LOG.error(e.getMessage(), e);
             throw e;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             IOException ioe = new IOException(e.getMessage());
-            ioe.initCause(e);            
+            ioe.initCause(e);
             throw ioe;
         }
         finally {

@@ -36,12 +36,12 @@ import java.text.DecimalFormat;
  * @since Dec 11, 2005
  */
 public class TCKDriverServlet extends PortalDriverServlet {
-
+	
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(TCKDriverServlet.class);
-
+    
     private int pageCounter = 0;
-
+    
     public String getServletInfo() {
         return "Pluto TCK Driver Servlet";
     }
@@ -52,7 +52,7 @@ public class TCKDriverServlet extends PortalDriverServlet {
         container = (PortletContainer) servletContext.getAttribute(
                 AttributeKeys.PORTLET_CONTAINER);
     }
-
+    
     /**
      * Overwrites <code>super.doGet(..)</code>. If <code>portletName</code>
      * (multiple occurrences) parameter is received, the driver is attempting
@@ -80,10 +80,10 @@ public class TCKDriverServlet extends PortalDriverServlet {
     throws IOException, ServletException {
         super.doGet(req, response);
     }
-
-
+    
+    
     // Private Methods ---------------------------------------------------------
-
+    
     private void doSetup(HttpServletRequest request,
                          HttpServletResponse response)
     throws IOException, ServletException {
@@ -101,7 +101,7 @@ public class TCKDriverServlet extends PortalDriverServlet {
                 		+ "an AdminConfiguration must be specified "
                 		+ "to run the TCK.");
             }
-
+            
             pageName = (new DecimalFormat("TCK00000")).format(pageCounter++);
             PageConfig pageConfig = new PageConfig();
             pageConfig.setName(pageName);
@@ -112,8 +112,8 @@ public class TCKDriverServlet extends PortalDriverServlet {
                 String contextPath = "/" + portletNames[i].substring(0, index);
                 String portletName = portletNames[i].substring(index + 1);
                 pageConfig.addPortlet(contextPath, portletName);
-                adminConfig.getPortletRegistryAdminService()
-                		.addPortletApplication(contextPath);
+//                adminConfig.getPortletRegistryAdminService()
+//                		.addPortletApplication(contextPath);
             }
 
             adminConfig.getRenderConfigAdminService().addPage(pageConfig);
@@ -131,7 +131,7 @@ public class TCKDriverServlet extends PortalDriverServlet {
         debugWithName("Sending redirect to: " + buffer.toString());
         response.sendRedirect(buffer.toString());
     }
-
+    
     /**
      * Prints debug message with a <code>[Pluto TCK Driver]</code> prefix.
      * @param message  message to debug.
@@ -141,5 +141,5 @@ public class TCKDriverServlet extends PortalDriverServlet {
     		LOG.debug("[Pluto TCK Driver] " + message);
     	}
     }
-
+    
 }

@@ -22,10 +22,10 @@ package org.apache.pluto.driver.services.portal;
  *
  * @version $Id$
  * @since September 9, 2006
- * @see javax.portlet.PortletMode
+ * @see PortletMode
  */
 public interface SupportedModesService extends DriverConfigurationService {
-
+    
     /**
      * Returns true if the portlet and the portal support the supplied mode.
      * @param portletId the id uniquely identifiying the portlet
@@ -33,14 +33,14 @@ public interface SupportedModesService extends DriverConfigurationService {
      * @return true if the portlet and portal both support the supplied mode
      */
     boolean isPortletModeSupported(String portletId, String mode);
-
+    
     /**
      * Returns true if the portal supports the supplied mode.
      * @param mode the portlet mode
      * @return true if the portal supports the supplied mode
      */
     boolean isPortletModeSupportedByPortal(String mode);
-
+    
     /**
      * Returns true if the portlet supports the supplied mode.
      * @param portletId the id uniquely identifying the portlet
@@ -49,4 +49,15 @@ public interface SupportedModesService extends DriverConfigurationService {
      */
     boolean isPortletModeSupportedByPortlet(String portletId, String mode);
 
+    /**
+     * For PTL.8.4 implementation of portlet-managed modes, defined in
+     * portlet.xml where portlet child element custom-portlet-mode/portal-managed 
+     * value is false.
+     * 
+     * @param portletId the ID of the portlet
+     * @param mode the portlet mode as defined in the custom-portlet-mode/portlet-mode
+     * and supports/portlet-mode elements.
+     * @return
+     */
+    boolean isPortletManagedMode(String portletId, String mode);    
 }

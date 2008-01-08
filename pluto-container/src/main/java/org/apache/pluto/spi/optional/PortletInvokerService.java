@@ -16,31 +16,45 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.internal.InternalPortletWindow;
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletException;
-import java.io.IOException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.FilterManager;
 
 /**
  * Service used to invoke portlets.
  */
 public interface PortletInvokerService {
+	
+    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window, FilterManager filterManager)
+    	throws IOException, PortletException;
+    
+    public void event(EventRequest request, EventResponse response, InternalPortletWindow window, FilterManager filterManager)
+		throws IOException, PortletException;
 
-    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window)
-    throws IOException, PortletException;
-
-    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window)
-    throws IOException, PortletException;
+    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window, FilterManager filterManager)
+    	throws IOException, PortletException;
+    
+    public void serveResource(ResourceRequest req, ResourceResponse res, InternalPortletWindow window, FilterManager filterManager)
+		throws IOException, PortletException;
 
     public void load(PortletRequest req, PortletResponse res, InternalPortletWindow window)
-    throws IOException, PortletException;
-
+    	throws IOException, PortletException;
+    
     public void admin(PortletRequest req, PortletResponse res, InternalPortletWindow window)
-    throws IOException, PortletException;
+    	throws IOException, PortletException;
 }

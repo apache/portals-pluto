@@ -16,16 +16,15 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.ServletContext;
-
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
+
+import javax.servlet.ServletContext;
+import java.util.List;
+import java.util.Set;
+import java.io.InputStream;
 
 /**
  * Default implementation of all of the portal Services.

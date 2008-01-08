@@ -36,6 +36,15 @@ public class RenderRequestWrapper extends PortletRequestWrapper
 
     // javax.portlet.RenderRequest implementation -------------------------------------------------
 
+    /**
+     * Returns an implementation of JSR-286 <code>ETag</code>.
+     *
+     * @since 2.0
+     */
+    public String getETag() {
+		return getRenderRequest().getETag();
+	}
+    
     // --------------------------------------------------------------------------------------------
     
     // additional methods -------------------------------------------------------------------------

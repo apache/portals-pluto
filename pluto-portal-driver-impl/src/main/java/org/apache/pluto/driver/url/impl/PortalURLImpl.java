@@ -16,18 +16,30 @@
  */
 package org.apache.pluto.driver.url.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.services.container.EventProviderImpl;
+import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.util.StringUtils;
 
 /**
  * The portal URL.
@@ -35,31 +47,35 @@ import org.apache.pluto.driver.url.PortalURLParser;
  * @deprecated replaced by {@link RelativePortalURLImpl}
  */
 public class PortalURLImpl implements PortalURL {
-
+	
 	/** Server URI contains protocol, host name, and (optional) port. */
-    private String serverURI;
-
-    private String servletPath;
-    private String renderPath;
-    private String actionWindow;
+    private String serverURI = null;
     
-    /**
-     * PortalURLParser used to construct the string
-     * representation of this portal url.
-     */
-    private PortalURLParser urlParser;
-
+    private String servletPath = null;
+    private String renderPath = null;
+    private String actionWindow = null;
+    private String resourceWindow = null;
+    
     /** The window states: key is the window ID, value is WindowState. */
     private Map windowStates = new HashMap();
-
+    
     private Map portletModes = new HashMap();
-
+    
     /** Parameters of the portlet windows. */
     private Map parameters = new HashMap();
+    
+    private Map<String, String[]> publicParameterCurrent = new HashMap<String, String[]>();
+    
+    private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
+    
+    /** Logger. */
+    private static final Log LOG = LogFactory.getLog(PortalURLImpl.class);
 
-
+	private static final String KEY = PortalURL.class.getName();
+    
+    
     // Constructors ------------------------------------------------------------
-
+    
     /**
      * Constructs a PortalURLImpl instance using default port.
      * @param protocol  the protocol.
@@ -70,11 +86,10 @@ public class PortalURLImpl implements PortalURL {
     public PortalURLImpl(String protocol,
                          String hostName,
                          String contextPath,
-                         String servletName,
-                         PortalURLParser urlParser) {
-    	this(protocol, hostName, -1, contextPath, servletName, urlParser);
+                         String servletName) {
+    	this(protocol, hostName, -1, contextPath, servletName);
     }
-
+    
     /**
      * Constructs a PortalURLImpl instance using customized port.
      * @param protocol  the protocol.
@@ -87,8 +102,7 @@ public class PortalURLImpl implements PortalURL {
                          String hostName,
                          int port,
                          String contextPath,
-                         String servletName,
-                         PortalURLParser urlParser) {
+                         String servletName) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(protocol);
     	buffer.append(hostName);
@@ -96,14 +110,13 @@ public class PortalURLImpl implements PortalURL {
     		buffer.append(":").append(port);
     	}
     	serverURI = buffer.toString();
-
+    	
     	buffer = new StringBuffer();
     	buffer.append(contextPath);
     	buffer.append(servletName);
         servletPath = buffer.toString();
-        this.urlParser = urlParser;
     }
-
+    
     /**
      * Internal private constructor used by method <code>clone()</code>.
      * @see #clone()
@@ -111,9 +124,9 @@ public class PortalURLImpl implements PortalURL {
     private PortalURLImpl() {
     	// Do nothing.
     }
-
+    
     // Public Methods ----------------------------------------------------------
-
+    
     public void setRenderPath(String renderPath) {
         this.renderPath = renderPath;
     }
@@ -125,9 +138,63 @@ public class PortalURLImpl implements PortalURL {
     public void addParameter(PortalURLParameter param) {
         parameters.put(param.getWindowId() + param.getName(), param);
     }
+    
+    public void addPublicRenderParametersNew(Map parameters){
+    	for (Iterator iter=parameters.keySet().iterator(); iter.hasNext();) {
+			String key = (String) iter.next();
+			if (publicParameterNew.containsKey(key)){
+				publicParameterNew.remove(key);
+			}
+			String[] values = (String[])parameters.get(key);
+			if (values[0]!= null){
+				publicParameterNew.put(key, values);
+			}
+		}
+    }
 
     public Collection getParameters() {
         return parameters.values();
+    }
+    
+    public void addPublicParameterCurrent(String name, String[] values){
+    	publicParameterCurrent.put(name, values);
+    }
+    
+    public void addPublicParameterActionResourceParameter(String parameterName, String value) {
+    	//add at the first position
+		if (publicParameterCurrent.containsKey(parameterName)){
+			String[] tmp = publicParameterCurrent.get(parameterName);
+			
+			String[] values = new String[tmp.length + 1];
+			values[0] = value;
+			for (int i = 0; i < tmp.length; i++) {
+				values[i+1] = tmp[i];
+			}
+			publicParameterCurrent.remove(parameterName);
+			publicParameterCurrent.put(parameterName, StringUtils.copy(values));
+		}
+		else
+			publicParameterCurrent.put(parameterName, new String[]{value});
+	}
+    
+    public Map<String, String[]> getPublicParameters() {
+    	Map<String,String[]> tmp = new HashMap<String, String[]>();
+		
+		for (Iterator iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
+           String paramname = (String) iter.next();
+           if (!publicParameterNew.containsKey(paramname)){
+               String[] paramvalue = publicParameterCurrent.get(paramname);
+               tmp.put(paramname, paramvalue);
+           }
+        }
+		for (Iterator iter = publicParameterNew.keySet().iterator();iter.hasNext();){
+			String paramname = (String) iter.next();
+			String[] paramvalue = publicParameterNew.get(paramname);
+			if (paramvalue[0]!=null){
+				tmp.put(paramname, paramvalue);
+			}
+		}
+		return tmp;
     }
 
     public void setActionWindow(String actionWindow) {
@@ -137,6 +204,14 @@ public class PortalURLImpl implements PortalURL {
     public String getActionWindow() {
         return actionWindow;
     }
+    
+    public String getResourceWindow() {
+		return resourceWindow;
+	}
+
+	public void setResourceWindow(String resourceWindow) {
+		this.resourceWindow = resourceWindow;
+	}
 
     public Map getPortletModes() {
         return Collections.unmodifiableMap(portletModes);
@@ -157,7 +232,7 @@ public class PortalURLImpl implements PortalURL {
     public Map getWindowStates() {
         return Collections.unmodifiableMap(windowStates);
     }
-
+    
     /**
      * Returns the window state of the specified window.
      * @param windowId  the window ID.
@@ -179,7 +254,7 @@ public class PortalURLImpl implements PortalURL {
     public void setWindowState(String windowId, WindowState windowState) {
         this.windowStates.put(windowId, windowState);
     }
-
+    
     /**
      * Clear parameters of the specified window.
      * @param windowId  the window ID.
@@ -193,14 +268,14 @@ public class PortalURLImpl implements PortalURL {
             }
         }
     }
-
+    
     /**
      * Converts to a string representing the portal URL.
      * @return a string representing the portal URL.
      * @see org.apache.pluto.driver.url.impl.PortalURLParserImpl#toString(PortalURL)
-     */
-    public String toString() {
-        return urlParser.toString(this);
+     */ 
+    public String toString(){
+    	return PortalURLParserImpl.getParser().toString(this); 
     }
 
 
@@ -211,7 +286,7 @@ public class PortalURLImpl implements PortalURL {
     public String getServerURI() {
         return serverURI;
     }
-
+    
     /**
      * Returns the servlet path (context path + servlet name).
      * @return the servlet path.
@@ -219,7 +294,7 @@ public class PortalURLImpl implements PortalURL {
     public String getServletPath() {
         return servletPath;
     }
-
+    
     /**
      * Clone a copy of itself.
      * @return a copy of itself.
@@ -233,6 +308,17 @@ public class PortalURLImpl implements PortalURL {
     	portalURL.windowStates = new HashMap(windowStates);
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
+    	portalURL.resourceWindow = resourceWindow;
+    	portalURL.publicParameterCurrent = publicParameterCurrent;
         return portalURL;
     }
+
+	public PageConfig getPageConfig(ServletContext servletContext) {
+		String requestedPageId = getRenderPath();
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Requested Page: " + requestedPageId);
+        }
+        return ((DriverConfiguration) servletContext.getAttribute(
+        		AttributeKeys.DRIVER_CONFIG)).getPageConfig(requestedPageId);
+	}
 }

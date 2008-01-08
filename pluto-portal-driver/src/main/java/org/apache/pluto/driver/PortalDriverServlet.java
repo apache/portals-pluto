@@ -17,6 +17,7 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -30,13 +31,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
-
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
@@ -47,26 +48,29 @@ import org.apache.pluto.driver.url.PortalURL;
 public class PortalDriverServlet extends HttpServlet {
 
     /** Internal Logger. */
-    private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);
-
+    private static final Log LOG = LogFactory.getLog(PortalDriverServlet.class);    
+    
     /** The Portal Driver sServlet Context */
-    private ServletContext servletContext;
-
+    private ServletContext servletContext = null;
+    
+    /** Is the SupportedModesService initialized? */
+    private boolean isSupportedModesServiceInitialized = false;
+        
     public static final String DEFAULT_PAGE_URI =
     		"/WEB-INF/themes/pluto-default-theme.jsp";
-
+    
     /** The portlet container to which we will forward all portlet requests. */
-    protected PortletContainer container;
-
-
-
-
+    protected PortletContainer container = null;
+    
+    
+    
+    
     // HttpServlet Impl --------------------------------------------------------
-
+    
     public String getServletInfo() {
         return "Pluto Portal Driver Servlet";
     }
-
+    
     /**
      * Initialize the Portal Driver. This method retrieves the portlet container
      * instance from the servlet context scope.
@@ -75,9 +79,9 @@ public class PortalDriverServlet extends HttpServlet {
     public void init() {
         servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
-        		AttributeKeys.PORTLET_CONTAINER);
+        		AttributeKeys.PORTLET_CONTAINER);        
     }
-
+    
 
     /**
      * Handle all requests. All POST requests are passed to this method.
@@ -94,14 +98,28 @@ public class PortalDriverServlet extends HttpServlet {
 
         PortalURL portalURL = portalRequestContext.getRequestedPortalURL();
         String actionWindowId = portalURL.getActionWindow();
-
-        PortletWindowConfig actionWindowConfig =
-            actionWindowId == null
-                ? null
-                : PortletWindowConfig.fromId(actionWindowId);
+        String resourceWindowId = portalURL.getResourceWindow();
+        
+        PortletWindowConfig actionWindowConfig = null;
+        PortletWindowConfig resourceWindowConfig = null;
+        
+		if (resourceWindowId != null){
+			resourceWindowConfig = PortletWindowConfig.fromId(resourceWindowId);
+		}
+		else if(actionWindowId != null){
+			 actionWindowConfig = PortletWindowConfig.fromId(actionWindowId);
+		}
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
+        	try {
+        		if (request.getParameterNames().hasMoreElements()){
+        			setPublicRenderParameter(request, portalURL, portalURL.getActionWindow());
+        		}
+			} catch (PortletContainerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             PortletWindowImpl portletWindow = new PortletWindowImpl(
             		actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
@@ -119,19 +137,44 @@ public class PortalDriverServlet extends HttpServlet {
             	LOG.debug("Action request processed.\n\n");
             }
         }
-
+        //Resource request
+        else if (resourceWindowConfig != null) {
+        	try {
+        		if (request.getParameterNames().hasMoreElements())
+				setPublicRenderParameter(request, portalURL, portalURL.getResourceWindow());
+			} catch (PortletContainerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            PortletWindowImpl portletWindow = new PortletWindowImpl(
+                               resourceWindowConfig, portalURL);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Processing resource Serving request for window: "
+                               + portletWindow.getId().getStringId());
+            }
+            try {
+                container.doServeResource(portletWindow, request, response);
+            } catch (PortletContainerException ex) {
+                throw new ServletException(ex);
+            } catch (PortletException ex) {
+                throw new ServletException(ex);
+            }
+            if (LOG.isDebugEnabled()) {
+               LOG.debug("Action request processed.\n\n");
+            }
+        }
         // Otherwise (actionWindowConfig == null), handle the render request.
         else {
         	if (LOG.isDebugEnabled()) {
         		LOG.debug("Processing render request.");
         	}
-            PageConfig pageConfig = getPageConfig(portalURL);
+            PageConfig pageConfig = portalURL.getPageConfig(servletContext);
             if (pageConfig == null)
             {
                 // TODO Shouldn't we throw an exception here?
                 LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
             }
-
+            
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);
             String uri = (pageConfig.getUri() != null)
             		? pageConfig.getUri() : DEFAULT_PAGE_URI;
@@ -146,6 +189,25 @@ public class PortalDriverServlet extends HttpServlet {
         }
     }
 
+    private void setPublicRenderParameter(HttpServletRequest request, PortalURL portalURL, String portletID)throws ServletException, PortletContainerException {    		
+		String applicationId = PortletWindowConfig.parseContextPath(portletID);
+		String portletName = PortletWindowConfig.parsePortletName(portletID);
+		PortletDD portletDD = container.getOptionalContainerServices().getPortletRegistryService()
+								.getPortletDescriptor(applicationId, portletName);    		
+		Enumeration<String> parameterNames = request.getParameterNames();
+		if (parameterNames != null){
+			while(parameterNames.hasMoreElements()){
+				String parameterName = parameterNames.nextElement();
+				if (portletDD.getPublicRenderParameter() != null){
+					if (portletDD.getPublicRenderParameter().contains(parameterName)){
+						String value = request.getParameter(parameterName);
+						portalURL.addPublicParameterActionResourceParameter(parameterName, value);
+					}	
+				}
+			}
+		}
+    }
+    
     /**
      * Pass all POST requests to {@link #doGet(HttpServletRequest, HttpServletResponse)}.
      * @param request  the incoming servlet request.
@@ -157,9 +219,10 @@ public class PortalDriverServlet extends HttpServlet {
     throws ServletException, IOException {
         doGet(request, response);
     }
-
-
+    
+    
     // Private Methods ---------------------------------------------------------
+    
 
     /**
      * Returns the config of the portal page to be rendered.
@@ -181,7 +244,7 @@ public class PortalDriverServlet extends HttpServlet {
     private DriverConfiguration getDriverConfiguration() {
         return (DriverConfiguration) getServletContext().getAttribute(
         		AttributeKeys.DRIVER_CONFIG);
-    }
-
+    }    
+        
 }
 

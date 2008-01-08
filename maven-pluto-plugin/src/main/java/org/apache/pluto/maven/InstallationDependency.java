@@ -23,6 +23,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+//import sun.security.provider.SHA;
+
+//import com.sun.corba.se.impl.protocol.SharedCDRClientRequestDispatcherImpl;
+
 /**
  *
  */
@@ -78,17 +82,77 @@ class InstallationDependency {
             new InstallationDependency("commons-logging", "commons-logging-api",
                     VERSION_PROPERTIES.getProperty("commons-logging.version"));
 
+    public static final InstallationDependency  XERCES =
+            new InstallationDependency("xerces", "xercesImpl", 
+                    VERSION_PROPERTIES.getProperty("xercesImpl.version"));
+
+    public static final InstallationDependency  XML_PARSER_APIS =
+            new InstallationDependency("xerces", "xmlParserAPIs", 
+                    VERSION_PROPERTIES.getProperty("xmlParserAPIs.version"));
+    
+    
+    public static final InstallationDependency JAXB_API =
+		new InstallationDependency("javax.xml.bind","jaxb-api",
+				VERSION_PROPERTIES.getProperty("jaxb.version"));
+    public static final InstallationDependency JAXB_IMPL =
+		new InstallationDependency("com.sun.xml.bind","jaxb-impl",
+				VERSION_PROPERTIES.getProperty("jaxb-impl.version"));
+    
+    public static final InstallationDependency STAX_API =
+		new InstallationDependency("stax","stax-api",
+				VERSION_PROPERTIES.getProperty("stax.api.version"));
+    public static final InstallationDependency STAX_IMPL =
+		new InstallationDependency("stax","stax",
+				VERSION_PROPERTIES.getProperty("stax.impl.version"));
+    
+    public static final InstallationDependency XALAN =
+		new InstallationDependency("xalan","xalan",
+				VERSION_PROPERTIES.getProperty("xalan.version"));
+    public static final InstallationDependency ACTIVATION =
+		new InstallationDependency("javax.activation","activation",
+				VERSION_PROPERTIES.getProperty("activation.version"));
+
+    public static final InstallationDependency CCPP_API =
+		new InstallationDependency("javax.ccpp","ccpp",
+				VERSION_PROPERTIES.getProperty("ccpp-api.version"));
+//    public static final InstallationDependency CCPP_IMPL=
+//		new InstallationDependency("com.sun.ccpp","ccpp-ri",
+//				VERSION_PROPERTIES.getProperty("ccpp-ri.version"));
+//    public static final InstallationDependency RDF_FILTER =
+//		new InstallationDependency("com.megginson.sax.rdf.rdffilter","rdffilter",
+//				VERSION_PROPERTIES.getProperty("rdffilter.version"));
+//    public static final InstallationDependency JENA =
+//		new InstallationDependency("com.hp.hpl.jena","jena",
+//				VERSION_PROPERTIES.getProperty("jena.version"));
+ 
+    
+
     private static final List ENDORSED = new ArrayList();
     private static final List SHARED = new ArrayList();
 
     static {
+//        ENDORSED.add(XERCES);
+//        ENDORSED.add(XML_PARSER_APIS);
+        SHARED.add(XERCES);
+        SHARED.add(XML_PARSER_APIS);
+
         SHARED.add(PORTLET_API);
         SHARED.add(DESCRIPTOR_API);
         SHARED.add(DESCRIPTOR_IMPL);
         SHARED.add(CONTAINER);
         SHARED.add(TAGLIB);
         SHARED.add(CASTOR);
-        SHARED.add(COMMONS_LOGGING_API);
+        
+        SHARED.add(JAXB_API);
+        SHARED.add(JAXB_IMPL);
+        
+        SHARED.add(STAX_API);
+        SHARED.add(STAX_IMPL);
+        
+        SHARED.add(ACTIVATION);
+
+        SHARED.add(CCPP_API);
+
     }
 
 

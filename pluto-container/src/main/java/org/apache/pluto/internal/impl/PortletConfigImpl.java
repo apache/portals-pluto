@@ -16,16 +16,30 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.descriptors.common.InitParamDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.servlet.ServletConfig;
-import java.util.*;
+import javax.xml.XMLConstants;
+import javax.xml.namespace.QName;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.apache.pluto.internal.InternalPortletConfig;
+import org.apache.pluto.descriptors.common.InitParamDD;
+import org.apache.pluto.descriptors.portlet.ContainerRuntimeOptionDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
@@ -45,15 +59,22 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
      * The portlet descriptor.
      */
     protected PortletDD portletDD;
+    
+    /**
+     * The portlet application descriptor.
+     */
+    private PortletAppDD portletAppDD;
 
     private ResourceBundleFactory bundles;
 
     public PortletConfigImpl(ServletConfig servletConfig,
                              PortletContext portletContext,
-                             PortletDD portletDD) {
+                             PortletDD portletDD,
+                             PortletAppDD portletAppDD) {
         this.servletConfig = servletConfig;
         this.portletContext = portletContext;
         this.portletDD = portletDD;
+        this.portletAppDD = portletAppDD;
     }
 
     public String getPortletName() {
@@ -79,9 +100,9 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
             throw new IllegalArgumentException("Parameter name == null");
         }
 
-        Iterator parms = portletDD.getInitParams().iterator();
+        Iterator<InitParamDD> parms = portletDD.getInitParams().iterator();
         while(parms.hasNext()) {
-            InitParamDD param = (InitParamDD)parms.next();
+            InitParamDD param = parms.next();
             if (param.getParamName().equals(name)) {
                 return param.getParamValue();
             }
@@ -89,24 +110,24 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return null;
     }
 
-    public Enumeration getInitParameterNames() {
-        return new java.util.Enumeration() {
-            private Iterator iterator =
-                new ArrayList(portletDD.getInitParams()).iterator();
+    public Enumeration<String> getInitParameterNames() {
+        return new java.util.Enumeration<String>() {
+            private Iterator<InitParamDD> iterator =
+                new ArrayList<InitParamDD>(portletDD.getInitParams()).iterator();
 
             public boolean hasMoreElements() {
                 return iterator.hasNext();
             }
 
-            public Object nextElement() {
+            public String nextElement() {
                 if (iterator.hasNext()) {
-                    return ((InitParamDD) iterator.next()).getParamName();
-                } else {
-                    return null;
-                }
+                    return iterator.next().getParamName();
+                } 
+                return null;
             }
         };
     }
+
 
     public javax.servlet.ServletConfig getServletConfig() {
         return servletConfig;
@@ -115,5 +136,131 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     public PortletDD getPortletDefinition() {
         return portletDD;
     }
+    // --------------------------------------------------------------------------------------------
 
+	public Enumeration<String> getPublicRenderParameterNames() {
+		if (portletDD.getPublicRenderParameter() != null){
+			return Collections.enumeration(portletDD.getPublicRenderParameter());
+		}
+		return  Collections.enumeration(new ArrayList<String>());
+	}
+
+	public String getDefaultNamespace() {
+		if (portletAppDD.getDefaultNamespace() == null)
+			return XMLConstants.XML_NS_URI;
+		return portletAppDD.getDefaultNamespace();
+	}
+
+	public Enumeration<QName> getProcessingEventQNames() {
+		List<QName> qnameList = portletDD.getProcessingEvents();
+		if (qnameList != null){
+			for (int index = 0; index < qnameList.size();index++) {
+				QName qname = qnameList.get(index);
+				if (qname.getNamespaceURI().equals("")){
+					qnameList.remove(index);
+					qnameList.add(index, new QName(portletAppDD.getDefaultNamespace(),qname.getLocalPart()));
+				}
+			}
+			return Collections.enumeration(qnameList);
+		}
+		else
+			return Collections.enumeration(new ArrayList<QName>());
+		
+//		return (portletDD.getProcessingEvents() != null) ? 
+//				Collections.enumeration(portletDD.getProcessingEvents()) :
+//					Collections.enumeration(new ArrayList<QName>());
+	}
+
+	public Enumeration<QName> getPublishingEventQNames() {
+		List<QName> qnameList = portletDD.getPublishingEvents();
+		if (qnameList != null){
+			for (int index = 0; index < qnameList.size();index++) {
+				QName qname = qnameList.get(index);
+				if (qname.getNamespaceURI().equals("")){
+					qnameList.remove(index);
+					qnameList.add(index, new QName(portletAppDD.getDefaultNamespace(),qname.getLocalPart()));
+				}
+			}
+			return Collections.enumeration(qnameList);
+		}
+		else
+			return Collections.enumeration(new ArrayList<QName>());
+		
+//		return (portletDD.getPublishingEvents() != null) ?
+//				Collections.enumeration(portletDD.getPublishingEvents()) :
+//					Collections.enumeration(new ArrayList<QName>());
+	}
+
+	public Enumeration<Locale> getSupportedLocales() {
+		// for each String entry in SupportedLocales (portletDD)
+		// add an entry in the resut list (new Locale(string))
+		List<Locale> locals = new ArrayList<Locale>();
+		List<String> localsAsStrings = portletDD.getSupportedLocale();
+		if (localsAsStrings!=null){
+			for (String string : localsAsStrings) {
+				locals.add(new Locale(string));
+			}
+		}
+		return Collections.enumeration(locals);
+	}
+	
+	public Map<String, String[]> getApplicationRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletAppDD.getContainerRuntimeOption() != null){
+			for (ContainerRuntimeOptionDD option : portletAppDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
+	}
+	
+	public Map<String, String[]> getPortletRuntimeOptions() {
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		if (portletDD.getContainerRuntimeOption() != null) {
+			for (ContainerRuntimeOptionDD option : portletDD.getContainerRuntimeOption()) {
+				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValue();
+					String [] tempValues = new String[values.size()];
+					for (int i=0;i<values.size();i++){
+						tempValues[i] = values.get(i);
+					}
+					resultMap.put(option.getName(),tempValues);
+				}
+			}
+		}
+		return resultMap;
+	}
+
+	public Map<String, String[]> getContainerRuntimeOptions() {
+		
+		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
+		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
+		
+		// merge these two, with portlet priority
+		Map<String, String[]> resultMap = new HashMap<String, String[]>();
+		
+		// first all entries in portletAppDD (without these in portletDD)
+		for (String option : appRuntimeOptions.keySet()) {
+			if (portletRuntimeOptions.containsKey(option))
+				resultMap.put(option, portletRuntimeOptions.get(option));
+			else
+				resultMap.put(option, appRuntimeOptions.get(option));
+		}
+		// and now the rest
+		if (portletRuntimeOptions != null){
+			for (String option : portletRuntimeOptions.keySet()) {
+				if (!appRuntimeOptions.containsKey(option))
+					resultMap.put(option, portletRuntimeOptions.get(option));
+			}
+		}
+		//return resultMap;
+		return null;
+	}
 }

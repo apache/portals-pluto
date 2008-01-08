@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -69,7 +69,7 @@ public interface PortletContainer {
 
     /**
      * Calls the render method of the given portlet window.
-     * @param portletWindow  the portlet Window
+     * @param internalPortletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -78,16 +78,15 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    void doRender(PortletWindow portletWindow,
-                  HttpServletRequest request,
-                  HttpServletResponse response)
-    throws PortletException, IOException, PortletContainerException;
-
+    void doRender(PortletWindow internalPortletWindow,
+                         HttpServletRequest request,
+                         HttpServletResponse response)
+        throws PortletException, IOException, PortletContainerException;
 
     /**
-     * Indicates that a portlet action occured in the current request and calls
-     * the processAction method of this portlet.
-     * @param portletWindow the portlet Window
+     * Indicates that a portlet resource Serving occured in the current request and calls
+     * the processServeResource method of this portlet.
+     * @param internalPortletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -95,14 +94,30 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    void doAction(PortletWindow portletWindow,
-                  HttpServletRequest request,
-                  HttpServletResponse response)
-    throws PortletException, IOException, PortletContainerException;
+    void doServeResource(PortletWindow internalPortletWindow,
+                         HttpServletRequest request,
+                         HttpServletResponse response)
+        throws PortletException, IOException, PortletContainerException;
+
+    /**
+     * Indicates that a portlet action occured in the current request and calls
+     * the processAction method of this portlet.
+     * @param internalPortletWindow the portlet Window
+     * @param request               the servlet request
+     * @param response              the servlet response
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
+     */
+    void doAction(PortletWindow internalPortletWindow,
+                         HttpServletRequest request,
+                         HttpServletResponse response)
+        throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that the portlet must be initialized
-     * @param portletWindow the portlet Window
+     * @param internalPortletWindow the portlet Window
      * @param servletRequest        the servlet request
      * @param servletResponse       the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -110,10 +125,10 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    void doLoad(PortletWindow portletWindow,
-                HttpServletRequest servletRequest,
-                HttpServletResponse servletResponse)
-    throws PortletException, IOException, PortletContainerException;
+    void doLoad(PortletWindow internalPortletWindow,
+                       HttpServletRequest servletRequest,
+                       HttpServletResponse servletResponse)
+        throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that the portal needs to perform administrative
@@ -153,19 +168,22 @@ public interface PortletContainer {
      * @return the container services provided by either the portal or the defaults.
      */
     OptionalContainerServices getOptionalContainerServices();
-
+    
     /**
      * Retrieve the {@link PortletAppDD} for the portlet
      * located at the supplied context.
-     *
+     * 
      * Must not return null.
-     *
+     * 
      * @param context the context of the portlet
      * @return the portlet application descriptor
      * @throws PortletContainerException if the container has trouble obtaining
      *                                   the context of the portlet, or retrieving
      *                                   the <code>PortletAppDD</code>
-     */
+     */    
     PortletAppDD getPortletApplicationDescriptor(String context)
-    throws PortletContainerException;
+        throws PortletContainerException;
+
+	public ServletContext getServletContext();
+    
 }

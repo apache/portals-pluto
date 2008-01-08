@@ -1,10 +1,9 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2005 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -17,18 +16,21 @@
 package org.apache.pluto.descriptors.services;
 
 /**
- *
+ * 
  * @version $Id: Constants.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Mar 7, 2005
  */
 public class Constants {
-
+	
+	//For JSR-168 web.xml
     public static final String WEB_XML_PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN";
     public static final String WEB_XML_DTD = "http://java.sun.com/dtd/web-app_2_3.dtd";
 
-    public static final String WEB_XML_24_SCHEMA_NAMESPACE = "http://java.sun.com/xml/ns/j2ee";
-    public static final String WEB_XML_24_SCHEMA_LOCATION = WEB_XML_24_SCHEMA_NAMESPACE + " http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd";
-
+    //For JSR-286 web.xml
+    public static final String SCHEMA_PREFIX = "xsi";
+    public static final String SCHEMA_NAMESPACE_URI = "http://www.w3.org/2001/XMLSchema-instance";
+    public static final String SCHEMA_LOCATION_FIRST_PART = "http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_";
+    
     public static final String PORLTET_XML_PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD PortletApplication 1.0//EN";
     public static final String PORTLET_XML_DTD = "http://java.sun.com/dtd/portlet-app_1_0.dtd";
 

@@ -118,4 +118,18 @@ public class PortalRequestContext {
     public PortalURL createPortalURL() {
         return (PortalURL)getRequestedPortalURL().clone();
     }
+    
+    public void setPortalURL(PortalURL portalURL){
+    	requestedPortalURL = portalURL;
+    }
+
+	public static String getREQUEST_KEY() {
+		return REQUEST_KEY;
+	}
+
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+    
+    
 }

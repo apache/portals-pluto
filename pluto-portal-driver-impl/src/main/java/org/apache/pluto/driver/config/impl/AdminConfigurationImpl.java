@@ -33,7 +33,7 @@ public class AdminConfigurationImpl implements AdminConfiguration {
     private RenderConfigAdminService renderConfigAdminService;
 
     public void init(ServletContext context) {
-
+        
     }
 
     public void destroy() {

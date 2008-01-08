@@ -30,21 +30,12 @@ limitations under the License.
         </p>
 
         <p>
-          Pluto 1.2.x is currently under development. The primary
-          chanages between 1.1.x and 1.2.x is that the 1.2 series
-          will require Java1.5. If you are looking for generics
-          support and other Java5 features, you may want to become
-          an early adopter of 1.2.x.
+          Pluto 2.x is currently under development. This is the 
+          reference implementation of JSR-286, the 2nd version
+          of the Java Portlet Specification. Pluto 2.x requires
+          the use of Java 5(a.k.a 1.5).
         </p>
 
-        <p>
-          There is also a branch which has been created to foster
-          the development of JSR-286 support. We hope that this
-          branch eventually becomes the 2.x series, however, the
-          development is currently very immature. If you are
-          looking for JSR-286 support, we recommend that you
-          utilize and help us flush out this version.
-        </p>
       </answer>
     </faq>
 
@@ -68,9 +59,9 @@ limitations under the License.
           Now that Pluto 1.1.0 has been released, our team highly
           recommends that you migrate to it. Pluto 1.0.x development
           has been stagnant for some time and there are no plans to
-          support it in the future. Pluto 1.1.0 on the otherhand
-          will be the basis for all development currently envisioned
-          (including jsr 286 support).
+          support it in the future. Pluto 1.1.x is also the basis for
+          Pluto 2.x, which is the reference implementation for
+          JSR-286 (Portlet 2.0).
         </p>
       </answer>
     </faq>

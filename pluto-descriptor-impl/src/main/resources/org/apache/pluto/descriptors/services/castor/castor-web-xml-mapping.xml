@@ -56,12 +56,6 @@
            type="java.lang.String">
         <bind-xml name="version" node="attribute"/>
     </field>
-    
-    <field name="XmlNs"
-           handler="org.apache.pluto.descriptors.services.castor.ServletNamespaceCastorFieldHandler"
-           type="java.lang.String">
-        <bind-xml name="xmlns" node="attribute"/>
-    </field>
         
     <field name="Icon"
            type="org.apache.pluto.descriptors.common.IconDD"/>
@@ -92,12 +86,6 @@
       <bind-xml name="filter" node="element"/>
     </field>
 
-    <field name="FilterMappings"
-           type="org.apache.pluto.descriptors.servlet.FilterMappingDD"
-           collection="arraylist">
-      <bind-xml name="filter-mapping" node="element"/>
-    </field>
-
     <field name="Listeners"
         type="org.apache.pluto.descriptors.servlet.ListenerDD"
         collection="arraylist">
@@ -108,6 +96,12 @@
            type="org.apache.pluto.descriptors.servlet.ServletDD"
            collection="arraylist">
       <bind-xml name="servlet" node="element"/>
+    </field>
+
+    <field name="FilterMappings"
+           type="org.apache.pluto.descriptors.servlet.FilterMappingDD"
+           collection="arraylist">
+      <bind-xml name="filter-mapping" node="element"/>
     </field>
 
     <field name="ServletMappings"
@@ -308,36 +302,23 @@
                type="org.apache.pluto.descriptors.common.UserDataConstraintDD"/>
     </class>
     <class name="org.apache.pluto.descriptors.servlet.WebResourceCollectionDD">
-        <field name="webResourceName" type="java.lang.String"/>
         <field name="description" type="java.lang.String"/>
-        <field name="urlPatterns" type="java.lang.String" collection="arraylist">
-            <bind-xml name="url-pattern" node="element"/>
-        </field>
+        <field name="webResourceName" type="java.lang.String"/>
         <field name="httpMethods" type="java.lang.String" collection="arraylist">
           <bind-xml name="http-method" node="element"/>
         </field>
-    </class>
-    <class name="org.apache.pluto.descriptors.servlet.AuthConstraintDD">
-        <field name="Description">
-            <bind-xml name="description" node="element"/>
-        </field>
-        
-        <field name="RoleName">
-            <bind-xml name="role-name" node="element"/>
+        <field name="urlPatterns" type="java.lang.String" collection="arraylist">
+            <bind-xml name="url-pattern" node="element"/>
         </field>
     </class>
 
     <class name="org.apache.pluto.descriptors.servlet.LoginConfigDD">
         <field name="AuthMethod" type="java.lang.String"/>
-        <field name="RealmName" type="java.lang.String"/>
         <field name="FormLoginConfig"
                type="org.apache.pluto.descriptors.servlet.FormLoginConfigDD">
           <bind-xml name="form-login-config" node="element"/>
         </field>
-    </class>
-    <class name="org.apache.pluto.descriptors.servlet.FormLoginConfigDD">
-        <field name="FormLoginPage" type="java.lang.String"/>
-        <field name="FormErrorPage" type="java.lang.String"/>
+        <field name="RealmName" type="java.lang.String"/>
     </class>
 
     <class name="org.apache.pluto.descriptors.servlet.LoadOnStartupDD">
@@ -347,6 +328,10 @@
     </class>
     
     <class name="org.apache.pluto.descriptors.common.DescriptionDD">
+        <field name="Lang">
+            <bind-xml name="lang" node="attribute"/>
+        </field>
+
         <field name="Description">
             <bind-xml name="description" node="text"/>
         </field>
@@ -398,44 +383,5 @@
          </field>
     </class>        
 
-    <class name="org.apache.pluto.descriptors.servlet.MimeMappingDD">
-        <field name="Extension" type="java.lang.String"/>
-        <field name="MimeType" type="java.lang.String"/>
-    </class>
-    
-    <class name="org.apache.pluto.descriptors.servlet.ErrorPageDD">
-        <field name="ErrorCode" type="java.lang.String"/>
-        <field name="ExceptionType" type="java.lang.String"/>
-        <field name="Location" type="java.lang.String"/>
-    </class>
-    
-    <class name="org.apache.pluto.descriptors.servlet.ResourceRefDD">
-        <field name="Description" type="java.lang.String"/>
-        <field name="ResRefName" type="java.lang.String"/>
-        <field name="ResType" type="java.lang.String"/>
-        <field name="ResAuth" type="java.lang.String"/>
-        <field name="ResSharingScope" type="java.lang.String"/>
-    </class>
-    
-    <class name="org.apache.pluto.descriptors.servlet.SecurityRoleDD">
-        <field name="Description" type="java.lang.String"/>
-        <field name="RoleName" type="java.lang.String"/>
-    </class>
-    
-    <class name="org.apache.pluto.descriptors.servlet.EnvEntryDD">
-        <field name="Description" type="java.lang.String"/>
-        <field name="EnvEntryName" type="java.lang.String"/>
-        <field name="EnvEntryValue" type="java.lang.String"/>
-        <field name="EnvEntryType" type="java.lang.String"/>
-    </class>
-    
-    <class name="org.apache.pluto.descriptors.servlet.EjbRefDD">
-        <field name="Description" type="java.lang.String"/>
-        <field name="EjbRefName" type="java.lang.String"/>
-        <field name="EjbRefType" type="java.lang.String"/>
-        <field name="Home" type="java.lang.String"/>
-        <field name="Remote" type="java.lang.String"/>
-        <field name="EjbLink" type="java.lang.String"/>
-    </class>
 </mapping>
 

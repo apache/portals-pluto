@@ -16,8 +16,10 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletMode;
@@ -32,6 +34,8 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.container.FilterManagerImpl;
+import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
@@ -53,6 +57,12 @@ public class SupportedModesServiceImpl implements SupportedModesService
     /** Logger */
     private static final Log LOG = LogFactory.getLog(SupportedModesServiceImpl.class);
 
+    /** PortletApplicationConfig objects keyed by their String context path */
+    private Map portletApps = new HashMap();
+
+    /** Sets containing PortletMode objects keyed by String portlet Id */
+    private Map supportedPortletModesByPortlet = new HashMap();
+    
     /** PortletMode objects supported by the portal */
     private Set supportedPortletModesByPortal = new HashSet();
 
@@ -77,8 +87,8 @@ public class SupportedModesServiceImpl implements SupportedModesService
     //  SupportedModesService Implementation -----------------
 
     public boolean isPortletModeSupported(String portletId, String mode)  {
-        return isPortletModeSupportedByPortal(mode) &&
-            isPortletModeSupportedByPortlet(portletId, mode);
+        return isPortletManagedMode(portletId, mode) || (isPortletModeSupportedByPortal(mode) &&
+            isPortletModeSupportedByPortlet(portletId, mode));
     }
 
     public boolean isPortletModeSupportedByPortal(String mode)  {
@@ -111,11 +121,17 @@ public class SupportedModesServiceImpl implements SupportedModesService
                     Iterator i2 = dd.getSupports().iterator();
                     while(i2.hasNext()) {
                         SupportsDD sd = (SupportsDD)i2.next();
-                        Iterator pd = sd.getPortletModes().iterator();
-                        while(pd.hasNext()) {
-                            if(mode.equalsIgnoreCase((String)pd.next())) {
-                                return true;
-                            }
+                        if (sd.getPortletModes()==null){
+                        	if (mode.equalsIgnoreCase(PortletMode.VIEW.toString()))
+                        		return true;
+                        }
+                        else{
+	                        Iterator pd = sd.getPortletModes().iterator();
+	                        while(pd.hasNext()) {
+	                            if(mode.equalsIgnoreCase((String)pd.next())) {
+	                                return true;
+	                            }
+	                        }
                         }
                     }
                 }
@@ -135,14 +151,18 @@ public class SupportedModesServiceImpl implements SupportedModesService
         LOG.debug("Destroying Supported Modes Service...");
         supportedPortletModesByPortal = null;
         portletRegistry = null;
+        portletApps = null;        
         propertyService = null;
+//        FilterManagerImpl.removeAllFilterApps();
         LOG.debug("Supported Modes Service destroyed.");
     }
 
     public void init(ServletContext ctx) throws DriverConfigurationException {
         this.servletContext = ctx;
         loadPortalModes();
-    }
+        loadPortletModes();        
+    }    
+    
 
     /** Populates the supportedPortletModesByPortal set. */
     private void loadPortalModes()
@@ -158,6 +178,80 @@ public class SupportedModesServiceImpl implements SupportedModesService
         }
         LOG.debug("Loaded [" + supportedPortletModesByPortal.size() + "] supported portal modes");
     }
+    
+    /** 
+     * Populates the supportedPortletModesByPortlet map, which contains
+     * Sets of PortletMode objects keyed by String portlet Ids.
+     */
+    private void loadPortletModes()
+    {                
+        // Add the PortletModes supported by each portlet to
+        // the supportedPortletModesByPortlet map.
+        LOG.debug("Loading modes supported by each Portlet...");
+        Iterator apps = portletApps.values().iterator();
+        while (apps.hasNext())
+        {
+            PortletApplicationConfig app = (PortletApplicationConfig)apps.next();            
+            PortletAppDD portletAppDD;
+            try {
+            	PortletContainer container = (PortletContainer)servletContext
+                	.getAttribute(AttributeKeys.PORTLET_CONTAINER);
+                portletAppDD = container
+                    .getPortletApplicationDescriptor(app.getContextPath());
+            } catch (PortletContainerException e) {
+                LOG.warn(e);
+                continue;
+            }
+            Iterator portlets = portletAppDD.getPortlets().iterator();
+            while (portlets.hasNext()) {                
+                PortletDD portlet = (PortletDD)portlets.next();
+                LOG.debug("Loading modes supported by portlet [" + app.getContextPath() + "]." +
+                        "[" + portlet.getPortletName() + "]");
+                Iterator supports = portlet.getSupports().iterator();
+                Set pModes = new HashSet();
+                while (supports.hasNext())
+                {
+                    SupportsDD supportsDD = (SupportsDD)supports.next();
+                    if (supportsDD.getPortletModes()!=null){
+                    	Iterator portletModes = supportsDD.getPortletModes().iterator();
+                    
+	                    while (portletModes.hasNext())
+	                    {
+	                        PortletMode pMode = new PortletMode((String)portletModes.next());
+	                        LOG.debug("Adding mode [" + pMode + "]");
+	                        pModes.add(pMode);                                
+	                    }
+                    }
+                }
+                
+                supportedPortletModesByPortlet.put(
+                        PortletWindowConfig.createPortletId(app.getContextPath(), portlet.getPortletName(), null), 
+                        pModes);                     
+            } 
+        }
+    }
+    
+
+	public boolean isPortletManagedMode(String portletId, String mode) {
+		//FIXME: This needs to be implemented properly:
+		// 1. Need to create a Map of custom modes (CustomModeDD) keyed by portlet ID in init().
+		//		a. Each mode has a 'portal-managed' property (true is default)
+		// 2. Add code to this method like this:
+//		PortletMode oMode = null;		
+//		CustomModeDD cmode = null;		
+//		if (mode != null) {
+//			oMode = new PortletMode(mode);		
+//		}
+//		cmode = customModes.get(portletId);		
+//		if (portletId != null && mode != null && cmode != null 
+//			&& supportedPortletModesByPortlet.get(portletId).equals(oMode)
+//			&& cmode.getPortletMode().equals(mode) && !cmode.isPortalManaged()) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+			return false;
+	}
 
 
 }

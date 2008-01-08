@@ -30,15 +30,15 @@ import javax.servlet.jsp.tagext.TagSupport;
  * @since Oct 4, 2004
  */
 public class PortletRenderTag extends TagSupport {
-
+	
 	// TagSupport Impl ---------------------------------------------------------
-
+	
 	/**
-	 *
+	 * 
 	 * @see PortletTag
 	 */
     public int doEndTag() throws JspException {
-
+    	
     	// Ensure that the portlet render tag resides within a portlet tag.
         PortletTag parentTag = (PortletTag) TagSupport.findAncestorWithClass(
         		this, PortletTag.class);
@@ -46,7 +46,7 @@ public class PortletRenderTag extends TagSupport {
             throw new JspException("Portlet render tag may only reside "
             		+ "within a pluto:portlet tag.");
         }
-
+        
         // If the portlet is rendered successfully, print the rendering result.
         if (parentTag.getStatus() == PortletTag.SUCCESS) {
             try {
@@ -69,7 +69,7 @@ public class PortletRenderTag extends TagSupport {
                 throw new JspException(ex);
             }
         }
-
+        
         // Return.
         return SKIP_BODY;
     }

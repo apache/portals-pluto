@@ -16,43 +16,73 @@
  */
 package org.apache.pluto.descriptors.common;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
+
+import org.apache.pluto.descriptors.portlet.PortletDD;
 
 /**
  * User Data Constraint descriptor.
  *
  * @version $Id: UserDataConstraintDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
+ * 
+ * TODO: Convert TransportGuarantee to a Java 5 enum
+ * and annotate with @XmlEnum(String.class)
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "user-data-constraintType", propOrder = {
+		"descriptions","descriptions1",
+		"transportGuarantee", "transportGuarantee1"
+})
 public class UserDataConstraintDD {
 
     public static final String NONE = "NONE";
     public static final String INTEGRAL = "INTEGRAL";
     public static final String CONFIDENTIAL = "CONFIDENTIAL";
 
-    private List descriptions = new ArrayList();
+    @XmlElement(name = "description")
+    private List<String> descriptions = new ArrayList<String>();
+    
+    @XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
+	private List<String> descriptions1 = new ArrayList<String>();
 
+    @XmlElement(name = "transport-guarantee")
     private String transportGuarantee;
+    
+    @XmlElement(name = "transport-guarantee", namespace = PortletDD.QNAME_JSR168)
+	private String transportGuarantee1 = null;
 
     public UserDataConstraintDD() {
 
     }
 
-    public List getDescriptions() {
-        return descriptions;
+    public List<String> getDescriptions() {
+    	if (descriptions.size() > 0) 
+    		return descriptions;
+        return descriptions1;
     }
 
-    public void setDescriptions(List descriptions) {
+    public void setDescriptions(List<String> descriptions) {
         this.descriptions = descriptions;
+        this.descriptions1 = descriptions;
     }
 
     public String getTransportGuarantee() {
-        return transportGuarantee;
+    	if (transportGuarantee != null)
+			return transportGuarantee;
+		return transportGuarantee1;
     }
 
     public void setTransportGuarantee(String transportGuarantee) {
         this.transportGuarantee = transportGuarantee;
+        this.transportGuarantee1 = transportGuarantee;
     }
 
 }

@@ -105,14 +105,15 @@ public class MiscTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure the expected portlet modes are returned.");
 
-        List requiredPortletModes = new ArrayList();
+        List<PortletMode> requiredPortletModes = new ArrayList<PortletMode>();
         requiredPortletModes.add(PortletMode.VIEW);
         requiredPortletModes.add(PortletMode.EDIT);
         requiredPortletModes.add(PortletMode.HELP);
 
-        for (Enumeration en = request.getPortalContext().getSupportedPortletModes();
+        for (Enumeration<PortletMode> en = 
+        		request.getPortalContext().getSupportedPortletModes();
         		en.hasMoreElements(); ) {
-            PortletMode portletMode = (PortletMode) en.nextElement();
+            PortletMode portletMode = en.nextElement();
             requiredPortletModes.remove(portletMode);
         }
 
@@ -121,7 +122,7 @@ public class MiscTest extends AbstractReflectivePortletTest {
         } else {
         	result.setReturnCode(TestResult.FAILED);
         	StringBuffer buffer = new StringBuffer();
-        	for (Iterator it = requiredPortletModes.iterator();
+        	for (Iterator<PortletMode> it = requiredPortletModes.iterator();
         			it.hasNext(); ) {
         		buffer.append(it.next()).append(", ");
         	}
@@ -135,12 +136,13 @@ public class MiscTest extends AbstractReflectivePortletTest {
         TestResult result = new TestResult();
         result.setDescription("Ensure the expected window states are returned.");
 
-        List requiredWindowStates = new ArrayList();
+        List<WindowState> requiredWindowStates = new ArrayList<WindowState>();
         requiredWindowStates.add(WindowState.MINIMIZED);
         requiredWindowStates.add(WindowState.MAXIMIZED);
         requiredWindowStates.add(WindowState.NORMAL);
 
-        for (Enumeration en = request.getPortalContext().getSupportedWindowStates();
+        for (Enumeration<WindowState> en = 
+        		request.getPortalContext().getSupportedWindowStates();
         		en.hasMoreElements(); ) {
             WindowState windowState = (WindowState) en.nextElement();
             requiredWindowStates.remove(windowState);
@@ -151,7 +153,7 @@ public class MiscTest extends AbstractReflectivePortletTest {
         } else {
         	result.setReturnCode(TestResult.FAILED);
             StringBuffer buffer = new StringBuffer();
-            for (Iterator it = requiredWindowStates.iterator();
+            for (Iterator<WindowState> it = requiredWindowStates.iterator();
             		it.hasNext(); ) {
             	buffer.append(it.next()).append(", ");
             }

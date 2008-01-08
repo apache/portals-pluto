@@ -32,7 +32,7 @@ limitations under the License.
   <skin>  
       <groupId>org.apache.pluto</groupId>
       <artifactId>pluto-site-skin</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>2.0.0-SNAPSHOT</version>
   </skin> 
   
   <body>
@@ -40,7 +40,6 @@ limitations under the License.
     <links>
       <item name="JSR 168" href="http://jcp.org/en/jsr/detail?id=168"/>
       <item name="JSR 286" href="http://jcp.org/en/jsr/detail?id=286"/>
-      <item name="Chinese Translation" href="http://people.apache.org/~zheng/pluto/chinese/"/>
     </links>
     
     <menu name="The Pluto Project">
@@ -54,7 +53,7 @@ limitations under the License.
       <item name="Get Involved" href="/helping.html"/>
     </menu>
     
-    <menu name="Pluto 1.1">
+    <menu name="Pluto 1.1 and 2.0">
       <item name="Getting Started" href="/v11/getting-started.html"/>
       <item name="Release Notes" href="/v11/release-notes.html"/>
       <item name="Deploying" href="/v11/deploying.html"/>

@@ -22,6 +22,8 @@ package org.apache.pluto.testsuite;
  */
 public class InvalidConfigurationException extends RuntimeException {
 
+	private static final long serialVersionUID = -7010299791708559054L;
+
 	public InvalidConfigurationException(String message) {
 		super(message);
 	}

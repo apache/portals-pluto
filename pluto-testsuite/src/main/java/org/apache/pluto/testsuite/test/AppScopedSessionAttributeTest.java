@@ -17,15 +17,15 @@
 
 package org.apache.pluto.testsuite.test;
 
+import javax.portlet.PortletSession;
+
 import org.apache.pluto.testsuite.TestResult;
 import org.apache.pluto.testsuite.TestUtils;
-
-import javax.portlet.PortletSession;
 
 /**
  */
 public class AppScopedSessionAttributeTest
-extends AbstractReflectivePortletTest {
+extends AbstractReflectivePortletTest  {
 
     private static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
     private static final String KEY = "org.apache.pluto.testsuite.KEY";

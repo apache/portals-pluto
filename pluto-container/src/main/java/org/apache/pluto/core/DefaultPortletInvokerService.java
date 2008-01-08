@@ -1,4 +1,5 @@
 /*
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -16,27 +17,33 @@
  */
 package org.apache.pluto.core;
 
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.impl.PortletRequestImpl;
 import org.apache.pluto.internal.impl.PortletResponseImpl;
+import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.util.StringManager;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Used internally to invoke/dispatch requests from the container to
@@ -77,12 +84,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,javax.portlet.ActionResponse)
      */
-    public void action(ActionRequest request, ActionResponse response, InternalPortletWindow window)
+    public void action(ActionRequest request, ActionResponse response, InternalPortletWindow window, FilterManager filterManager)
         throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Action Invocation");
         }
-        invoke(request, response, window, Constants.METHOD_ACTION);
+        invoke(request, response, window, filterManager, Constants.METHOD_ACTION);
     }
 
     /**
@@ -93,12 +100,44 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
-    public void render(RenderRequest request, RenderResponse response, InternalPortletWindow window)
+    public void render(RenderRequest request, RenderResponse response, InternalPortletWindow window, FilterManager filterManager)
         throws IOException, PortletException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");
         }
-        invoke(request, response, window, Constants.METHOD_RENDER);
+        invoke(request, response, window, filterManager, Constants.METHOD_RENDER);
+    }
+    
+    /**
+     * Invoke the portlet with a render request.
+     *
+     * @param request  action request used for the invocation.
+     * @param response action response used for the invocation.
+     * @see PortletServlet
+     * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
+     */
+    public void event(EventRequest request, EventResponse response, InternalPortletWindow window, FilterManager filterManager)
+        throws IOException, PortletException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Performing Render Invocation");
+        }
+        invoke((PortletRequest)request, (PortletResponse)response, window, filterManager, Constants.METHOD_EVENT);
+    }
+    
+    /**
+     * Invoke the portlet with a resource request.
+     *
+     * @param request  resource request used for the invocation.
+     * @param response resource response used for the invocation.
+     * @see PortletServlet
+     * @see javax.portlet.Portlet#resource(javax.portlet.ResourceRequest,javax.portlet.ResourceResponse)
+     */
+    public void serveResource(ResourceRequest request, ResourceResponse response, InternalPortletWindow window, FilterManager filterManager)
+        throws IOException, PortletException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Performing Resource Invocation");
+        }
+        invoke(request, response, window, filterManager, Constants.METHOD_RESOURCE);
     }
 
     /**
@@ -127,6 +166,15 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
 
     // Private Invoke Method ---------------------------------------------------
 
+    private final void invoke(PortletRequest request,
+                                PortletResponse response,
+                                InternalPortletWindow portletWindow,
+                                Integer methodID)
+    	throws PortletException, IOException{
+    	
+    	invoke(request, response, portletWindow, null, methodID);
+    }
+    
     /**
      * Perform the invocation.
      *
@@ -140,6 +188,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     protected final void invoke(PortletRequest request,
                                 PortletResponse response,
                                 InternalPortletWindow portletWindow,
+                                FilterManager filterManager,
                                 Integer methodID)
         throws PortletException, IOException {
 
@@ -163,6 +212,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 servletRequest.setAttribute(Constants.METHOD_ID, methodID);
                 servletRequest.setAttribute(Constants.PORTLET_REQUEST, request);
                 servletRequest.setAttribute(Constants.PORTLET_RESPONSE, response);
+                servletRequest.setAttribute(Constants.FILTER_MANAGER, filterManager);
 
                 dispatcher.include(servletRequest, servletResponse);
 

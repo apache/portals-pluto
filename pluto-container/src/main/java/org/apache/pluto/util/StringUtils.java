@@ -132,4 +132,17 @@ public class StringUtils {
         return strippedType.trim();
     }
 
+    public static void encode(StringBuffer url){
+    	bla(url,"|","%7C");
+    	bla(url,"\"","%22");
+    }
+    private static void bla(StringBuffer url, String character, String change){
+    	boolean contains = url.toString().contains(character);
+    	while (contains){
+    		int index = url.indexOf(character);
+    		url.deleteCharAt(index);
+    		url.insert(index, change, 0, 3);
+    		contains = url.toString().contains(character);
+    	}
+    }
 }
