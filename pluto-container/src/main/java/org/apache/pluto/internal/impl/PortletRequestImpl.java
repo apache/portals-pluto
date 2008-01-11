@@ -157,7 +157,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     public boolean isWindowStateAllowed(WindowState state) {
         for (Enumeration en = portalContext.getSupportedWindowStates();
              en.hasMoreElements();) {
-            if (en.nextElement().toString().equals(state.toString())) {
+            if (en.nextElement().toString().equalsIgnoreCase(state.toString())) {
                 return true;
             }
         }
@@ -667,7 +667,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
             Iterator modes = ((SupportsDD) mimes.next()).getPortletModes().iterator();
             while (modes.hasNext()) {
                 String m = (String) modes.next();
-                if (m.equals(mode.toString())) {
+                if (m.equalsIgnoreCase(mode.toString())) {
                     return true;
                 }
             }
