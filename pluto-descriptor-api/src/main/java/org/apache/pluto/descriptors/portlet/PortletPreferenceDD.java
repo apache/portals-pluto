@@ -32,7 +32,7 @@ public class PortletPreferenceDD {
     private String name;
 
     /** The preference values. */
-    private List values = new ArrayList();
+    private List values = null;
 
     /** Flag indicating if this preference is marked as read-only. */
     private boolean readOnly = false;

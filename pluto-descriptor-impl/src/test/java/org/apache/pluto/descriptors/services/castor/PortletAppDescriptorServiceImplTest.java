@@ -16,17 +16,21 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.apache.pluto.descriptors.common.DisplayNameDD;
-import org.apache.pluto.descriptors.common.InitParamDD;
+import org.apache.pluto.descriptors.portlet.CustomPortletModeDD;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.PortletInfoDD;
+import org.apache.pluto.descriptors.portlet.PortletPreferenceDD;
+import org.apache.pluto.descriptors.portlet.PortletPreferencesDD;
 import org.apache.pluto.descriptors.portlet.SecurityConstraintDD;
+import org.apache.pluto.descriptors.portlet.SupportsDD;
 
 /**
  *
@@ -41,120 +45,73 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         service = new PortletAppDescriptorServiceImpl();
     }
 
-    public void testParse() throws IOException {
-        InputStream in = new ByteArrayInputStream(xml.toString().getBytes());
+    public void testParseMinimal() throws IOException {
+        InputStream in = this.getClass().getResourceAsStream("/portlet-minimal.xml");
 
         PortletAppDD dd = service.read(in);
         assertEquals("1.0", dd.getVersion());
-        assertEquals(1, dd.getPortlets().size());
-
-        PortletDD pd = (PortletDD)dd.getPortlets().get(0);
-        assertEquals(2, pd.getDisplayNames().size());
-        assertEquals(1, pd.getDescriptions().size());
-        assertEquals("About Portlet", ((DisplayNameDD)pd.getDisplayNames().get(0)).getDisplayName());
-        assertEquals("en", ((DisplayNameDD)pd.getDisplayNames().get(0)).getLang());
-        assertEquals("fr", ((DisplayNameDD)pd.getDisplayNames().get(1)).getLang());
-        assertEquals(30, pd.getExpirationCache());
-        assertEquals(1, pd.getSupportedLocales().size());
-        assertEquals("en", pd.getSupportedLocales().get(0));
-        assertEquals(1, pd.getInitParams().size());
-        assertEquals(1, ((InitParamDD)pd.getInitParams().get(0)).getDescriptions().size());
-
-        assertEquals(2, dd.getCustomPortletModes().size());
-        assertEquals(2, dd.getCustomWindowStates().size());
-        assertEquals(1, dd.getUserAttributes().size());
-        assertEquals(1, dd.getSecurityConstraints().size());
-
-        SecurityConstraintDD sc = (SecurityConstraintDD)dd.getSecurityConstraints().get(0);
-        assertNotNull(sc.getPortletCollection());
-        assertEquals(1, sc.getDisplayNames().size());
-        assertEquals(3, sc.getPortletCollection().getPortletNames().size());
-        assertEquals("a", sc.getPortletCollection().getPortletNames().get(0));
-        assertEquals("b", sc.getPortletCollection().getPortletNames().get(1));
-        assertEquals("c", sc.getPortletCollection().getPortletNames().get(2));
-
-        assertNotNull(sc.getUserDataConstraint());
-        assertEquals(1, sc.getUserDataConstraint().getDescriptions().size());
-        assertEquals("NONE", sc.getUserDataConstraint().getTransportGuarantee());
-
-    }
-
-
-
-    private final String xml = "<portlet-app\n" +
-        "    xmlns=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\"\n" +
-        "    version=\"1.0\"\n" +
-        "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-        "    xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\n" +
-        "                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\">" +
-        "<portlet>"+
-        "<description>AboutPortletDescription</description>"+
-        "<portlet-name>AboutPortlet</portlet-name>"+
-        "<display-name>About Portlet</display-name>"+
-        "<display-name xml:lang=\"fr\">About Portlet</display-name>"+
-        "<portlet-class>org.apache.pluto.driver.portlets.AboutPortlet</portlet-class>"+
-        "        <init-param>\n" +
-        "            <description>a</description>\n" +
-        "            <name>b</name>\n" +
-        "            <value>v</value>\n" +
-        "        </init-param>" +
-        "<expiration-cache>30</expiration-cache>"+
-        "<supports>"+
-        "<mime-type>text/html</mime-type>"+
-        "<portlet-mode>VIEW</portlet-mode>"+
-        "<portlet-mode>EDIT</portlet-mode>"+
-        "<portlet-mode>HELP</portlet-mode>"+
-        "</supports>"+
-        "<supported-locale>en</supported-locale>"+
-        "<portlet-info>"+
-        "<title>About Apache Pluto</title>"+
-        "</portlet-info>"+
-        "</portlet>"+
-        " <custom-portlet-mode><description>Test</description><portlet-mode>customMode</portlet-mode></custom-portlet-mode>" +
-        " <custom-portlet-mode><description>Test2</description><portlet-mode>customMode2</portlet-mode></custom-portlet-mode>" +
-        " <custom-window-state><description>Test</description><window-state>customWindow</window-state></custom-window-state>" +
-        " <custom-window-state><description>Test2</description><window-state>customWindow2</window-state></custom-window-state>" +
-        " <user-attribute><description>Test2</description><name>user</name></user-attribute>" +
-        "    <security-constraint>\n" +
-        "        <display-name>description</display-name>\n" +
-        "        <portlet-collection>\n" +
-        "            <portlet-name>a</portlet-name>\n" +
-        "            <portlet-name>b</portlet-name>\n" +
-        "            <portlet-name>c</portlet-name>\n" +
-        "        </portlet-collection>\n" +
-        "        <user-data-constraint>\n" +
-        "            <description>scdescription</description>\n" +
-        "            <transport-guarantee>NONE</transport-guarantee>\n" +
-        "        </user-data-constraint>\n" +
-        "    </security-constraint>" +
-        "</portlet-app>";
-    
-    
-    
-    public void testParseNoExpirationCache() throws IOException {
-        InputStream in = new ByteArrayInputStream(xmlNoCache.toString().getBytes());
-
-        PortletAppDD dd = service.read(in);
-        assertEquals("1.0", dd.getVersion());
-        assertEquals(1, dd.getPortlets().size());
-
-        PortletDD pd = (PortletDD)dd.getPortlets().get(0);
-        assertEquals(2, pd.getDisplayNames().size());
-        assertEquals(1, pd.getDescriptions().size());
-        assertEquals("About Portlet", ((DisplayNameDD)pd.getDisplayNames().get(0)).getDisplayName());
-        assertEquals("en", ((DisplayNameDD)pd.getDisplayNames().get(0)).getLang());
-        assertEquals("fr", ((DisplayNameDD)pd.getDisplayNames().get(1)).getLang());
+        assertEquals(0, dd.getCustomPortletModes().size());
+        assertEquals(0, dd.getCustomWindowStates().size());
+        assertEquals(0, dd.getUserAttributes().size());
+        assertEquals(0, dd.getSecurityConstraints().size());
+        
+        List portlets = dd.getPortlets();
+        assertEquals(1, portlets.size());
+        PortletDD pd = (PortletDD)portlets.get(0);
+        
+        assertEquals(0, pd.getDescriptions().size());
+        assertEquals(0, pd.getDisplayNames().size());
         assertEquals(PortletDD.EXPIRATION_CACHE_UNSET, pd.getExpirationCache());
-        assertEquals(1, pd.getSupportedLocales().size());
-        assertEquals("en", pd.getSupportedLocales().get(0));
-        assertEquals(1, pd.getInitParams().size());
-        assertEquals(1, ((InitParamDD)pd.getInitParams().get(0)).getDescriptions().size());
-
-        assertEquals(2, dd.getCustomPortletModes().size());
+        assertEquals(0, pd.getInitParams().size());
+        assertEquals("org.apache.pluto.driver.portlets.AboutPortlet", pd.getPortletClass());
+        
+        PortletInfoDD pi = pd.getPortletInfo();
+        assertNotNull(pi);
+        assertEquals("About Apache Pluto", pi.getTitle());
+        assertNull(pi.getShortTitle());
+        assertNull(pi.getKeywords());
+        
+        assertEquals("AboutPortlet", pd.getPortletName());
+        
+        PortletPreferencesDD pp = pd.getPortletPreferences();
+        assertNotNull(pp);
+        assertNull(pp.getPreferencesValidator());
+        assertEquals(0, pp.getPortletPreferences().size());
+        
+        assertNull(pd.getResourceBundle());
+        assertEquals(0, pd.getSecurityRoleRefs().size());
+        assertEquals(0, pd.getSupportedLocales().size());
+        
+        List supports = pd.getSupports();
+        assertEquals(1, supports.size());
+        SupportsDD sd = (SupportsDD)supports.get(0);
+        
+        assertEquals("text/html", sd.getMimeType());
+        assertEquals(0, sd.getPortletModes().size());
+    }
+    
+    public void testParseFull() throws IOException {
+        InputStream in = this.getClass().getResourceAsStream("/portlet-full.xml");
+        
+        PortletAppDD dd = service.read(in);
+        assertEquals("1.0", dd.getVersion());
+        
+        
+        List customPortletModes = dd.getCustomPortletModes();
+        assertEquals(2, customPortletModes.size());
+        
+        CustomPortletModeDD cpm1 = (CustomPortletModeDD)customPortletModes.get(0);
+        assertEquals("customMode", cpm1.getPortletMode());
+        assertEquals(1, cpm1.getDescriptions().size());
+        
+        CustomPortletModeDD cpm2 = (CustomPortletModeDD)customPortletModes.get(1);
+        assertEquals("customMode2", cpm2.getPortletMode());
+        assertEquals(1, cpm2.getDescriptions().size());
+        
         assertEquals(2, dd.getCustomWindowStates().size());
         assertEquals(1, dd.getUserAttributes().size());
-        assertEquals(1, dd.getSecurityConstraints().size());
 
+        assertEquals(1, dd.getSecurityConstraints().size());
         SecurityConstraintDD sc = (SecurityConstraintDD)dd.getSecurityConstraints().get(0);
         assertNotNull(sc.getPortletCollection());
         assertEquals(1, sc.getDisplayNames().size());
@@ -166,55 +123,58 @@ public class PortletAppDescriptorServiceImplTest extends TestCase {
         assertNotNull(sc.getUserDataConstraint());
         assertEquals(1, sc.getUserDataConstraint().getDescriptions().size());
         assertEquals("NONE", sc.getUserDataConstraint().getTransportGuarantee());
-
+        
+        List portlets = dd.getPortlets();
+        assertEquals(1, portlets.size());
+        PortletDD pd = (PortletDD)portlets.get(0);
+        
+        assertEquals(1, pd.getDescriptions().size());
+        assertEquals(2, pd.getDisplayNames().size());
+        assertEquals(30, pd.getExpirationCache());
+        assertEquals(1, pd.getInitParams().size());
+        assertEquals("org.apache.pluto.driver.portlets.AboutPortlet", pd.getPortletClass());
+        
+        PortletInfoDD pi = pd.getPortletInfo();
+        assertNotNull(pi);
+        assertEquals("About Apache Pluto", pi.getTitle());
+        assertNull(pi.getShortTitle());
+        assertNull(pi.getKeywords());
+        
+        assertEquals("AboutPortlet", pd.getPortletName());
+        
+        PortletPreferencesDD pp = pd.getPortletPreferences();
+        assertNotNull(pp);
+        assertNull(pp.getPreferencesValidator());
+        
+        List prefs = pp.getPortletPreferences();
+        assertEquals(4, prefs.size());
+        
+        PortletPreferenceDD pref1 = (PortletPreferenceDD)prefs.get(0);
+        assertEquals("noValues", pref1.getName());
+        assertNull(pref1.getValues());
+        
+        PortletPreferenceDD pref2 = (PortletPreferenceDD)prefs.get(1);
+        assertEquals("oneEmptyValue", pref2.getName());
+        assertEquals(Arrays.asList(new String[] {""}), pref2.getValues());
+        
+        PortletPreferenceDD pref3 = (PortletPreferenceDD)prefs.get(2);
+        assertEquals("oneValue", pref3.getName());
+        assertEquals(Arrays.asList(new String[] {"value1"}), pref3.getValues());
+        
+        PortletPreferenceDD pref4 = (PortletPreferenceDD)prefs.get(3);
+        assertEquals("fourValues", pref4.getName());
+        assertEquals(Arrays.asList(new String[] {"value1", "", "value3", ""}), pref4.getValues());
+        
+        
+        assertNull(pd.getResourceBundle());
+        assertEquals(0, pd.getSecurityRoleRefs().size());
+        assertEquals(1, pd.getSupportedLocales().size());
+        
+        List supports = pd.getSupports();
+        assertEquals(1, supports.size());
+        SupportsDD sd = (SupportsDD)supports.get(0);
+        
+        assertEquals("text/html", sd.getMimeType());
+        assertEquals(3, sd.getPortletModes().size());
     }
-
-
-
-    private final String xmlNoCache = "<portlet-app\n" +
-        "    xmlns=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\"\n" +
-        "    version=\"1.0\"\n" +
-        "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-        "    xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\n" +
-        "                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\">" +
-        "<portlet>"+
-        "<description>AboutPortletDescription</description>"+
-        "<portlet-name>AboutPortlet</portlet-name>"+
-        "<display-name>About Portlet</display-name>"+
-        "<display-name xml:lang=\"fr\">About Portlet</display-name>"+
-        "<portlet-class>org.apache.pluto.driver.portlets.AboutPortlet</portlet-class>"+
-        "        <init-param>\n" +
-        "            <description>a</description>\n" +
-        "            <name>b</name>\n" +
-        "            <value>v</value>\n" +
-        "        </init-param>" +
-        "<supports>"+
-        "<mime-type>text/html</mime-type>"+
-        "<portlet-mode>VIEW</portlet-mode>"+
-        "<portlet-mode>EDIT</portlet-mode>"+
-        "<portlet-mode>HELP</portlet-mode>"+
-        "</supports>"+
-        "<supported-locale>en</supported-locale>"+
-        "<portlet-info>"+
-        "<title>About Apache Pluto</title>"+
-        "</portlet-info>"+
-        "</portlet>"+
-        " <custom-portlet-mode><description>Test</description><portlet-mode>customMode</portlet-mode></custom-portlet-mode>" +
-        " <custom-portlet-mode><description>Test2</description><portlet-mode>customMode2</portlet-mode></custom-portlet-mode>" +
-        " <custom-window-state><description>Test</description><window-state>customWindow</window-state></custom-window-state>" +
-        " <custom-window-state><description>Test2</description><window-state>customWindow2</window-state></custom-window-state>" +
-        " <user-attribute><description>Test2</description><name>user</name></user-attribute>" +
-        "    <security-constraint>\n" +
-        "        <display-name>description</display-name>\n" +
-        "        <portlet-collection>\n" +
-        "            <portlet-name>a</portlet-name>\n" +
-        "            <portlet-name>b</portlet-name>\n" +
-        "            <portlet-name>c</portlet-name>\n" +
-        "        </portlet-collection>\n" +
-        "        <user-data-constraint>\n" +
-        "            <description>scdescription</description>\n" +
-        "            <transport-guarantee>NONE</transport-guarantee>\n" +
-        "        </user-data-constraint>\n" +
-        "    </security-constraint>" +
-        "</portlet-app>";
 }

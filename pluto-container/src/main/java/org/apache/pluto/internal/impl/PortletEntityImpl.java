@@ -124,7 +124,7 @@ public class PortletEntityImpl implements PortletEntity {
             			it.hasNext(); ) {
             		PortletPreferenceDD prefDD = (PortletPreferenceDD) it.next();
             		String[] values = null;
-            		if (prefDD.getValues().size() > 0) {
+            		if (prefDD.getValues() != null && prefDD.getValues().size() > 0) {
             			values = (String[]) prefDD.getValues().toArray(
             					new String[prefDD.getValues().size()]);
             		}
