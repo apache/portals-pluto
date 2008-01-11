@@ -30,6 +30,7 @@ import org.apache.pluto.descriptors.servlet.WebAppDD;
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLTestCase;
+import org.custommonkey.xmlunit.XMLUnit;
 
 /**
  * Base test for doing a read and read/write/read test on specific versions
@@ -85,6 +86,8 @@ public abstract class AbstractVersionedWebAppDescriptorTest extends XMLTestCase
 
     public final void testWrite() throws Exception
     {
+        XMLUnit.setIgnoreWhitespace(true);
+        
         File outputFile = File.createTempFile("web-app-descriptor-test", ".xml");
         OutputStream out = new FileOutputStream(outputFile);
         final InputStream descriptorStream = this.getDescriptorStream();
