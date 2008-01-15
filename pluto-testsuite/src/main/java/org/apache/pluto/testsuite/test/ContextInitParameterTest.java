@@ -77,7 +77,7 @@ public class ContextInitParameterTest extends AbstractReflectivePortletTest {
     }
 
     /**
-     * FIXME: should this test reside in this class?  -- ZHENG Zhong
+     * 
      */
     protected TestResult checkGetContextFromSession(PortletSession session) {
         TestResult result = new TestResult();
