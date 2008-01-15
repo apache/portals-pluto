@@ -45,8 +45,7 @@ public class EventResponseImpl extends StateAwareResponseImpl
     }
 
 	public void setRenderParameters(EventRequest request) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		super.setEventRequest(request);
 	}
 
 	@Override

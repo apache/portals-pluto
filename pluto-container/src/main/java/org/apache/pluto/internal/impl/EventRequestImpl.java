@@ -49,9 +49,6 @@ public class EventRequestImpl extends PortletRequestImpl
 	
 	//	 Private Member Variables ------------------------------------------------	
     
-	/** FIXME: The portlet preferences. 
-	 * @see (ActionRequestImpl) 
-	 */
 	private PortletPreferences portletPreferences = null;
 	
 	private Event event; 
@@ -77,11 +74,8 @@ public class EventRequestImpl extends PortletRequestImpl
     
     //  PortletRequestImpl impl -------------------------------------------------
     
-	/**
-    * FIXME: (see ActionRequestImpl)
-    */
+	
     public PortletPreferences getPreferences() {
-    	// TODO: Are there any changes to do in PortletPreferences?
        if (portletPreferences == null) {
            portletPreferences = new PortletPreferencesImpl(
            		getPortletContainer(),
@@ -97,8 +91,7 @@ public class EventRequestImpl extends PortletRequestImpl
 	}
 
 	public Cookie[] getCookieProperties() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(super.getHttpServletRequest(), super.getInternalPortletWindow());
 	}
 	
 	

@@ -18,7 +18,6 @@ public class DummyCCPPProfileServiceImpl implements CCPPProfileService {
 	 */
 	public Profile getCCPPProfile(HttpServletRequest httpServletRequest) {
 		return new DummyProfile();
-		// FIXME: Here we have to return a "real" javax.ccpp.Profile
 	}
 
 }

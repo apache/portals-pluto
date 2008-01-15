@@ -29,16 +29,21 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.DummyPrintWriter;
 import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -73,6 +78,8 @@ implements PortletResponse, InternalPortletResponse {
     /** True if we are in an forwarded call. */
     private boolean forwarded = false;
     
+    private boolean requestForwarded = false;
+    
     // Constructor -------------------------------------------------------------
     
     public PortletResponseImpl(PortletContainer container,
@@ -99,7 +106,6 @@ implements PortletResponse, InternalPortletResponse {
     }
     
     public void addProperty(String name, String value, int scope) {
-    	// FIXME: What should this do? (scope seems to be new)
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
         		.getPortalCallbackService()
@@ -110,14 +116,12 @@ implements PortletResponse, InternalPortletResponse {
     }
     
     public void addProperty(String key, Element element) {
-    	// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+    	container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), internalPortletWindow, key, element);
 	}
 
 
 	public void addProperty(Cookie cookie) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), internalPortletWindow, cookie);
 	}
 
     public void setProperty(String name, String value) {
@@ -129,17 +133,6 @@ implements PortletResponse, InternalPortletResponse {
                         internalPortletWindow,
                         name, value);
     }
-    
-//    public void setProperty(String name, String value, int scope) {
-//    	// FIXME: What should this do? (scope seems to be new)
-//    	ArgumentUtility.validateNotNull("propertyName", name);
-//        container.getRequiredContainerServices()
-//                .getPortalCallbackService()
-//                .setResponseProperty(
-//                        getHttpServletRequest(),
-//                        internalPortletWindow,
-//                        name, value);
-//    }
 
     public String encodeURL(String path) {
         if (path.indexOf("://") == -1 && !path.startsWith("/")) {
@@ -203,7 +196,6 @@ implements PortletResponse, InternalPortletResponse {
     }
     
     /**
-     * TODO: javadoc about why we are using a wrapped writer here.
      * @see org.apache.pluto.util.PrintWriterServletOutputStream
      */
     public ServletOutputStream getOutputStream()
@@ -229,6 +221,9 @@ implements PortletResponse, InternalPortletResponse {
             		+ "after getOutputStream was invoked.");
         }
         usingWriter = true;
+        if (isRequestForwarded()&& !isForwarded() && !isIncluded()){
+			return new DummyPrintWriter(super.getWriter());
+		}
         return getHttpServletResponse().getWriter();
     }
 
@@ -254,7 +249,6 @@ implements PortletResponse, InternalPortletResponse {
 
 	/**
 	 * Creates a portlet URL.
-	 * TODO: make dynamic? as service?
 	 * @param isAction  true for an action URL, false for a render URL.
 	 * @return the created portlet (action/render) URL.
 	 */
@@ -341,8 +335,16 @@ implements PortletResponse, InternalPortletResponse {
 	}
 	
 	public Element createElement(String tagName) throws DOMException {
-		// TODO Auto-generated method stub
-		return null;
+        DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder;
+		try {
+			docBuilder = dbfac.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			return doc.createElement(tagName);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		throw new DOMException((short) 0, "Initialization fail");
 	}
 // InternalRenderResponse Impl ---------------------------------------------
 
@@ -370,4 +372,16 @@ implements PortletResponse, InternalPortletResponse {
 		else
 			return true;
 	}
+
+
+	public boolean isRequestForwarded() {
+		return requestForwarded;
+	}
+
+
+	public void setRequestForwarded() {
+		requestForwarded = true;
+	}
+	
+	
 }

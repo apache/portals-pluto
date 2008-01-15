@@ -107,10 +107,8 @@ implements ActionResponse, InternalActionResponse {
 				}
 			}
 		} catch (PortletModeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (WindowStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return renderURL.toString();

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.EventRequest;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
@@ -76,6 +77,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     private PortletMode portletMode = null;
 	protected PortalCallbackService callback;
     private PortalContext context;
+    private EventRequest eventRequest;
     
 	public StateAwareResponseImpl(PortletContainer container,
 			            InternalPortletWindow internalPortletWindow,
@@ -108,7 +110,6 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         String contextPath = getInternalPortletWindow().getContextPath();
         String defaultNamespace;
         try {
-            // TODO defaultNamespace = getContainer().getOptionalContainerServices().getPortletRegistryService().getPortletApplicationDescriptor(contextPath).getDefaultNamespace();
             defaultNamespace = getContainer().getPortletApplicationDescriptor(contextPath).getDefaultNamespace();
         } catch (PortletContainerException e) { 
             LOG.error(contextPath, e); 
@@ -369,11 +370,6 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         }
         return false;
     }
-
-	public void setNextPossiblePortletModes(Enumeration portletModes) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
 	
 	//	 access to a limited set of HttpServletResponse methods ------------------
 	
@@ -600,4 +596,9 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	    	}
 		}
 	}
+
+	public void setEventRequest(EventRequest eventRequest) {
+		this.eventRequest = eventRequest;
+	}
+	
 }

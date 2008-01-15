@@ -75,6 +75,8 @@ public interface InternalPortletRequest extends PortletRequest {
     public void setAttribute(String name, Object object);
     
     public String getLifecyclePhase();
+    
+    public void setNamedRequestDispatcher(boolean named);
 }
 
 

@@ -19,7 +19,6 @@ public class DummyProfile implements Profile {
 	 * @see javax.ccpp.Profile#getAttribute(java.lang.String)
 	 */
 	public Attribute getAttribute(String arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -27,7 +26,6 @@ public class DummyProfile implements Profile {
 	 * @see javax.ccpp.Profile#getAttributes()
 	 */
 	public Set getAttributes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -35,7 +33,6 @@ public class DummyProfile implements Profile {
 	 * @see javax.ccpp.Profile#getComponent(java.lang.String)
 	 */
 	public Component getComponent(String arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -43,7 +40,6 @@ public class DummyProfile implements Profile {
 	 * @see javax.ccpp.Profile#getComponents()
 	 */
 	public Set getComponents() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -51,7 +47,6 @@ public class DummyProfile implements Profile {
 	 * @see javax.ccpp.Profile#getDescription()
 	 */
 	public ProfileDescription getDescription() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

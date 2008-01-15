@@ -140,9 +140,12 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         	internalRequest.setForwardedQueryString(queryString);
         	if (!namedDispatcher){
         		setAttributesForward(internalRequest);
+        		internalRequest.setNamedRequestDispatcher(false);
         	}
-        	else
+        	else{
         		removeAttributes(internalRequest);
+        		internalRequest.setNamedRequestDispatcher(true);
+        	}
         	internalResponse.setForwarded(true);
 
             requestDispatcher.include((HttpServletRequest) internalRequest,
@@ -158,6 +161,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         } finally {
         	internalRequest.setForwarded(isForwarded);
         	internalResponse.setForwarded(isForwarded);
+        	internalResponse.setRequestForwarded();
         }
 	}
 	
@@ -171,8 +175,10 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         	if (!namedDispatcher){
         		setAttributesInclude(internalRequest);
         	}
-        	else
+        	else{
+        		
         		removeAttributes(internalRequest);
+        	}
         	internalResponse.setIncluded(true);
 
             requestDispatcher.include(

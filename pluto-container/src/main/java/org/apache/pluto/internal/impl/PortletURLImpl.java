@@ -63,7 +63,6 @@ public class PortletURLImpl extends BaseURLImpl implements PortletURL {
     }
 
 	public void removePublicRenderParameter(String name) {
-		// TODO Auto-generated method stub
 		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
 	    
 	    if (publicRenderParameterNames != null){

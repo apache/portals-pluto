@@ -131,7 +131,6 @@ public class RenderResponseWrapper extends PortletResponseWrapper
 	}
 
 	public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
-		// TODO Auto-generated method stub
 		this.getRenderResponse().setNextPossiblePortletModes(portletModes);
 	}
 }

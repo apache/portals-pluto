@@ -171,11 +171,12 @@ public class MimeResponseImpl extends PortletResponseImpl implements
      */
 	public OutputStream getPortletOutputStream() throws IOException {
 		if (getContentType() == null) {
-            String message = EXCEPTIONS.getString("error.contenttype.null");
-            if (LOG.isWarnEnabled()) {
-            	LOG.warn("Current content type is not set.");
-            }
-            throw new IllegalStateException(message);
+			setContentType("text/html");
+//            String message = EXCEPTIONS.getString("error.contenttype.null");
+//            if (LOG.isWarnEnabled()) {
+//            	LOG.warn("Current content type is not set.");
+//            }
+//            throw new IllegalStateException(message);
         }
         return super.getOutputStream();
 	}
@@ -332,7 +333,6 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 		else
 		super.setStatus(arg0);
 	}
-    
     
     // Private Methods ---------------------------------------------------------
     

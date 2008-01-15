@@ -43,35 +43,29 @@ public class NullPortlet implements EventPortlet, ResourceServingPortlet,
 
        public void processEvent(EventRequest arg0, EventResponse arg1)
                        throws PortletException, IOException {
-               // TODO Auto-generated method stub
 
        }
 
        public void serveResource(ResourceRequest arg0, ResourceResponse arg1)
                        throws PortletException, IOException {
-               // TODO Auto-generated method stub
 
        }
 
        public void destroy() {
-               // TODO Auto-generated method stub
 
        }
 
        public void init(PortletConfig arg0) throws PortletException {
-               // TODO Auto-generated method stub
 
        }
 
        public void processAction(ActionRequest arg0, ActionResponse arg1)
                        throws PortletException, IOException {
-               // TODO Auto-generated method stub
 
        }
 
        public void render(RenderRequest arg0, RenderResponse arg1)
                        throws PortletException, IOException {
-               // TODO Auto-generated method stub
 
        }
 

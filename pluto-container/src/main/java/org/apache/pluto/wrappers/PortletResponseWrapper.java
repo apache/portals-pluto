@@ -55,11 +55,6 @@ public class PortletResponseWrapper
     public String encodeURL(String path) {
         return this.getPortletResponse().encodeURL(path);
     }
-    
-    // FIXME: can we delete this function?
-//    public void addProperty(String arg0, String arg1, int arg2) {
-//		this.getPortletResponse().addProperty(arg0, arg1, arg2);
-//	}
 
 	public PortletURL createActionURL() {
 		return ((RenderResponse) this.getPortletResponse()).createActionURL();
@@ -104,12 +99,11 @@ public class PortletResponseWrapper
 	}
 
 	public Element createElement(String tagName) throws DOMException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getPortletResponse().createElement(tagName);
 	}
 
 	public void addProperty(Cookie cookie) {
-		// TODO Auto-generated method stub
+		this.getPortletResponse().addProperty(cookie);
 		
 	}
 }

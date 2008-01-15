@@ -45,5 +45,9 @@ public interface InternalPortletResponse extends PortletResponse {
     public boolean isForwarded();
     
     public boolean isForwardedAllowed();
+    
+    public boolean isRequestForwarded();
+    
+    public void setRequestForwarded();
 
 }

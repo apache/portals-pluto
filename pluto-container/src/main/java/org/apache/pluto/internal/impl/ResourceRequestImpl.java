@@ -44,8 +44,8 @@ implements ResourceRequest, InternalResourceRequest {
     
     
     // Private Member Variables ------------------------------------------------
-    
-    /** FIXME: The portlet preferences. */
+
+
     private PortletPreferences portletPreferences = null;
     
     
@@ -63,7 +63,6 @@ implements ResourceRequest, InternalResourceRequest {
     // ResourceRequest impl ------------------------------------------------------
     
     /* (non-Javadoc)
-     * FIXME: should we set the bodyAccessed flag?
      * @see org.apache.pluto.core.InternalActionResponse#getPortletInputStream()
      */
     public InputStream getPortletInputStream() throws IOException {
@@ -132,9 +131,7 @@ implements ResourceRequest, InternalResourceRequest {
     
     // PortletRequestImpl impl -------------------------------------------------
     
-    /**
-     * FIXME: 
-     */
+    
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
@@ -147,9 +144,7 @@ implements ResourceRequest, InternalResourceRequest {
     }
 
 	public String getETag() {
-		// TODO Auto-generated method stub
-//		return null;
-		throw new UnsupportedOperationException("This method needs to be implemented");
+		return null;
 	}
 
 	public String getLifecyclePhase() {
@@ -161,8 +156,7 @@ implements ResourceRequest, InternalResourceRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(this, internalPortletWindow);
 	}
 	
 	public ServletInputStream getInputStream() throws IOException {
@@ -174,7 +168,6 @@ implements ResourceRequest, InternalResourceRequest {
 	}
 
 	public String getCacheability() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

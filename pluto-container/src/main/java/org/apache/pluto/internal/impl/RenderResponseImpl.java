@@ -20,7 +20,11 @@ import java.util.Collection;
 import java.util.Locale;
 
 import javax.portlet.PortletMode;
+import javax.portlet.PortletModeException;
+import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.StateAwareResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,9 +62,26 @@ implements RenderResponse, InternalRenderResponse {
     }
 
 	public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
-		//TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-		
+		PortletMode tmpPortletMode = super.getInternalPortletWindow().getPortletMode();
+		PortletMode portletMode = PortletMode.VIEW;
+		boolean next = false;
+		boolean first = true;
+		for (PortletMode mode : portletModes) {
+			if (first)
+				portletMode = mode;
+			if (next){
+				portletMode = mode;
+				next = false;
+			}
+			if (mode.equals(tmpPortletMode)){
+				next = true;
+			}
+		}
+		try {
+			((StateAwareResponse)(super.getResponse())).setPortletMode(portletMode) ;
+		} catch (PortletModeException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

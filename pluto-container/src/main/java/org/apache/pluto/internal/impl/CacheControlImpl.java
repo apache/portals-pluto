@@ -17,57 +17,64 @@
 package org.apache.pluto.internal.impl;
 
 import javax.portlet.CacheControl;
+import javax.portlet.MimeResponse;
 
 /**
  * Implementation of JSR-286 <code>CacheControl</code>.
  *
  * @since 2.0
- * TODO: Implement this class ;-)
  */
 public class CacheControlImpl implements CacheControl {
 
-	public String getETag() {
-		// TODO Auto-generated method stub
-//		return null;
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
+	MimeResponseImpl mimeResponseImpl;
+	private String eTag;
 
-	public int getExpirationTime() {
-		// TODO Auto-generated method stub
-//		return 0;
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
+	private int expirationTime;
 
-	public boolean isPublicScope() {
-		// TODO Auto-generated method stub
-//		return false;
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
+	private boolean publicScope;
 
-	public void setETag(String arg0) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
+	private boolean cachedContent;
 
-	public void setExpirationTime(int arg0) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
-	public void setPublicScope(boolean arg0) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
-	}
-
-	public void setUseCachedContent(boolean arg0) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+	public CacheControlImpl(MimeResponseImpl mimeResponseImpl) {
+		this.mimeResponseImpl = mimeResponseImpl;
 	}
 
 	public boolean useCachedContent() {
-		// TODO Auto-generated method stub
-//		return false;
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return this.cachedContent;
+	}
+
+	public String getETag() {
+		return this.eTag;
+	}
+
+	public int getExpirationTime() {
+		return this.expirationTime;
+	}
+
+	public boolean isPublicScope() {
+		return this.publicScope;
+	}
+
+	public void setETag(String eTag) {
+		this.eTag = eTag;
+	}
+
+	public void setExpirationTime(int expirationTime) {
+		this.expirationTime = expirationTime;
+		mimeResponseImpl.setProperty(MimeResponse.EXPIRATION_CACHE, String
+				.valueOf(expirationTime));
+	}
+
+	public void setPublicScope(boolean publicScope) {
+		this.publicScope = publicScope;
+		mimeResponseImpl.setProperty(MimeResponse.PUBLIC_SCOPE,
+				publicScope ? MimeResponse.PUBLIC_SCOPE : MimeResponse.PRIVATE_SCOPE);
+	}
+
+	public void setUseCachedContent(boolean cachedContent) {
+		this.cachedContent = cachedContent;
+		mimeResponseImpl.setProperty(MimeResponse.USE_CACHED_CONTENT,
+				cachedContent ? Boolean.TRUE.toString() : null);
 	}
 
 }

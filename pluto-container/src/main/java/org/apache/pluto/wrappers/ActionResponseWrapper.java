@@ -89,10 +89,6 @@ public class ActionResponseWrapper extends PortletResponseWrapper
 		this.getStateAwareResponse().setEvent(qname, value);
 	}
 
-//	public void setEvents(Map<javax.xml.namespace.QName, java.io.Serializable> events) {
-//		// TODO look for setEvents in StateAwareResponse
-////		this.getStateAwareResponse().setEvents(events);		
-//	}
     // --------------------------------------------------------------------------------------------
 
 	public PortletMode getPortletMode() {
@@ -112,12 +108,12 @@ public class ActionResponseWrapper extends PortletResponseWrapper
 	}
 
 	public void sendRedirect(String location, String renderUrlParamName) throws IOException {
-		// TODO Auto-generated method stub
+		this.getActionResponse().sendRedirect(location, renderUrlParamName);
 		
 	}
 
 	public void removePublicRenderParameter(String name) {
-		// TODO Auto-generated method stub
+		this.getStateAwareResponse().removePublicRenderParameter(name);
 		
 	}
 }

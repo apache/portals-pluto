@@ -56,6 +56,7 @@ public class BaseURLImpl implements BaseURL {
 
 	private static final Log LOG = LogFactory.getLog(BaseURLImpl.class);
 	private static final StringManager EXCEPTIONS = StringManager.getManager(PortletURLImpl.class.getPackage().getName());
+	private boolean escapeXML;
 	protected Map parameters = new HashMap();
 	protected Map<String, String[]> publicRenderParameters = new HashMap<String, String[]>();
 	protected boolean secure;
@@ -217,7 +218,6 @@ public class BaseURLImpl implements BaseURL {
 //			PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
 			portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
 		} catch (PortletContainerException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         
@@ -332,26 +332,76 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void write(Writer out) throws IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		StringBuffer url = new StringBuffer(200);
+		
+	    PortletURLProvider urlProvider = container
+	    		.getRequiredContainerServices()
+	    		.getPortalCallbackService()
+	    		.getPortletURLProvider(servletRequest, internalPortletWindow);
+	
+	    PortletURLListener portletURLFilterListener = portletURLFilterListener = container
+			.getRequiredContainerServices()
+			.getPortalCallbackService().getPortletURLListener();
+	    if (mode != null) {
+	        urlProvider.setPortletMode(mode);
+	    }
+	    if (state != null) {
+	        urlProvider.setWindowState(state);
+	    }
+	    if (isAction) {
+	        urlProvider.setAction(true);
+	    }
+	    else if (isResourceServing){
+	    	urlProvider.setResourceServing(true);
+	    }
+	    try {
+	    	
+	    	PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
+//	    	container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
+//			PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
+			portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
+		} catch (PortletContainerException e1) {
+			e1.printStackTrace();
+		}
+        
+	    
+        if (secure && urlProvider.isSecureSupported()) {
+            try {
+                urlProvider.setSecure();
+            } catch (PortletSecurityException e) {
+                throw new IllegalStateException("URL Provider is misconfigured." +
+                    "  It claims to support secure urls," +
+                    " yet it threw a PortletSecurityException");
+            }
+	    }
+	    if (!isResourceServing)
+	    	urlProvider.clearParameters();
+	    
+			
+	    urlProvider.setParameters(parameters);
+	    
+	    urlProvider.setPublicRenderParameters(publicRenderParameters);
+	    
+	    url.append(urlProvider.toString());
+	
+	    out.write(url.toString());
 	}
 
 	public void write(Writer out, boolean escapeXML) throws IOException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		this.escapeXML = escapeXML;
+		write(out);
 	}
 
 	public void addProperty(String key, String value) {
-		// TODO Auto-generated method stub
+		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(servletRequest, internalPortletWindow, key, value);
 		
 	}
 
 	public void setProperty(String key, String value) {
-		// TODO Auto-generated method stub
+		container.getRequiredContainerServices().getPortalCallbackService().setResponseProperty(servletRequest, internalPortletWindow, key, value);
 		
 	}
 
-	//TODO:This two methods should be deleted, when the CACHABILITY parameter gets his own prefix
 	private String[] getRenderParameters(String name){
 		int lenght = 0;
 		String[] tmp1 = this.servletRequest.getParameterValues(name);

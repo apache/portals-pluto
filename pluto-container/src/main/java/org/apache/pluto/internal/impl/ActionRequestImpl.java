@@ -44,7 +44,6 @@ implements ActionRequest, InternalActionRequest {
 
     // Private Member Variables ------------------------------------------------
 
-    /** FIXME: The portlet preferences. */
     private PortletPreferences portletPreferences;
 
 
@@ -62,7 +61,6 @@ implements ActionRequest, InternalActionRequest {
     // ActionRequest impl ------------------------------------------------------
 
     /* (non-Javadoc)
-     * FIXME: should we set the bodyAccessed flag?
      * @see org.apache.pluto.core.InternalActionResponse#getPortletInputStream()
      */
     public InputStream getPortletInputStream() throws IOException {
@@ -84,9 +82,7 @@ implements ActionRequest, InternalActionRequest {
 
     // PortletRequestImpl impl -------------------------------------------------
 
-    /**
-     * FIXME:
-     */
+    
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
@@ -103,8 +99,7 @@ implements ActionRequest, InternalActionRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(getHttpServletRequest(), internalPortletWindow);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 	//for RequestDispatcher include and forward 

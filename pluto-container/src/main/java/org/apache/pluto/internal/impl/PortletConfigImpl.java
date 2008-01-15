@@ -147,7 +147,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
 	public String getDefaultNamespace() {
 		if (portletAppDD.getDefaultNamespace() == null)
-			return XMLConstants.XML_NS_URI;
+			return XMLConstants.NULL_NS_URI;
 		return portletAppDD.getDefaultNamespace();
 	}
 

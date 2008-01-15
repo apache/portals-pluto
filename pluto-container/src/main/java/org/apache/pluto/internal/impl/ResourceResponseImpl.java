@@ -96,7 +96,6 @@ implements ResourceResponse, InternalResourceResponse {
     }
 
 	public String getCacheability() {
-		// TODO Auto-generated method stub
 		return null;
 	}	
 }

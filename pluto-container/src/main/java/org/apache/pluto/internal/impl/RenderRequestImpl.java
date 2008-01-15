@@ -256,9 +256,7 @@ implements RenderRequest, InternalRenderRequest {
     }
 
 	public String getETag() {
-		// TODO Auto-generated method stub
-//		return null;
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return null;
 	}
 	
 	public String getLifecyclePhase() {
@@ -266,7 +264,6 @@ implements RenderRequest, InternalRenderRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(this, internalPortletWindow);
 	}
 }

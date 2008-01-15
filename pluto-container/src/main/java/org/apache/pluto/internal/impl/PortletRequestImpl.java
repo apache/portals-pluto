@@ -53,6 +53,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
@@ -114,7 +115,7 @@ implements PortletRequest, InternalPortletRequest {
     /** TODO: javadoc */
     private NamespaceMapper mapper = new NamespaceMapperImpl();
 
-    /** FIXME: do we really need this?
+    /**
      * Flag indicating if the HTTP-Body has been accessed. */
     private boolean bodyAccessed = false;
 
@@ -124,11 +125,18 @@ implements PortletRequest, InternalPortletRequest {
     /** True if we are in an forwarded call. */
     private boolean forwarded = false;
     
+    private boolean namedRequestDispatcher;
+    
     /** The corresponding servlet request. */
     private HttpServletRequest servletRequest = null;
     
     /** The parameters including parameters appended to the dispatching URI. */
     private Map parameters;
+    
+    /**
+     * 
+     */
+    PortletPreferencesImpl portletPreferences;
 
     // Constructors ------------------------------------------------------------
 
@@ -416,7 +424,13 @@ implements PortletRequest, InternalPortletRequest {
 
     public Object getAttribute(String name) {
     	ArgumentUtility.validateNotNull("attributeName", name);
-    	
+    	if (isForwarded() && namedRequestDispatcher){
+    		if (name.equals("javax.servlet.forward.request_uri")||name.equals("javax.servlet.forward.context_path")||
+    						name.equals("javax.servlet.forward.servlet_path")||name.equals("javax.servlet.forward.path_info")||
+    						name.equals("javax.servlet.forward.query_string")){
+    			return null;
+    		}
+    	}
         if (PortletRequest.USER_INFO.equals(name)) {
             return createUserInfoMap();
         }
@@ -678,15 +692,11 @@ implements PortletRequest, InternalPortletRequest {
         setLifecyclePhase();
     }
 
-	/**
-     * TODO: Implement this properly.  Not required now
-     */
     public void release() {
-    	// FIXME: This needs to be implemented
     }
     
     
-    // TODO: Additional Methods of HttpServletRequestWrapper -------------------
+    // Additional Methods of HttpServletRequestWrapper -------------------
     
     public BufferedReader getReader()
     throws UnsupportedEncodingException, IOException {
@@ -708,9 +718,7 @@ implements PortletRequest, InternalPortletRequest {
         return new ServletRequestDispatcher(getHttpServletRequest().getRequestDispatcher(path));
     }
     
-    /**
-     * TODO: why check bodyAccessed?
-     */
+    
     public void setCharacterEncoding(String encoding)
     throws UnsupportedEncodingException {
         if (bodyAccessed) {
@@ -783,7 +791,25 @@ implements PortletRequest, InternalPortletRequest {
 	}
 
 	public void setForwardedQueryString(String queryString) {
-		// TODO Auto-generated method stub
+		if (!forwarded) {
+    		throw new IllegalStateException("Parameters cannot be appended to "
+    				+ "render request which is not included in a dispatch.");
+    	}
+    	if (queryString != null && queryString.trim().length() > 0) {
+    		// Copy all the original render parameters.
+    		parameters = new HashMap(super.getParameterMap());
+    		// Merge the appended parameters to the render parameter map.
+    		// The original render parameters should not be overwritten.
+    		mergeQueryString(parameters, queryString);
+    		// Log the new render parameter map.
+    		if (LOG.isDebugEnabled()) {
+    			LOG.debug("Merged parameters: ");
+    		}
+    	} else {
+    		if (LOG.isDebugEnabled()) {
+    			LOG.debug("No query string appended to the included request.");
+    		}
+    	}
 		
 	}
     
@@ -887,8 +913,14 @@ implements PortletRequest, InternalPortletRequest {
     }
 
 	public PortletPreferences getPreferences() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("This method needs to be implemented.");
+		if (portletPreferences == null) {
+            portletPreferences = new PortletPreferencesImpl(
+            		getPortletContainer(),
+            		getInternalPortletWindow(),
+            		this,
+            		Constants.METHOD_ACTION);
+        }
+        return portletPreferences;
 	}
 
 	public Map<String, String[]> getPrivateParameterMap() {
@@ -964,7 +996,6 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Cookie[] getCookies() {
 		if (isIncluded() || isForwarded()){
-			// TODO:return Cookies from properties
 			return super.getCookies();
 		}
 		else
@@ -974,7 +1005,6 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public long getDateHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return header from properties
 			return 0;
 		}
 		else
@@ -984,7 +1014,6 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public String getHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return Cookies from properties
 			return null;
 		}
 		else
@@ -994,7 +1023,6 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Enumeration getHeaderNames() {
 		if (isIncluded() || isForwarded()){
-			// TODO:return Cookies from properties
 			return null;
 		}
 		else
@@ -1004,7 +1032,6 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Enumeration getHeaders(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return Cookies from properties
 			return null;
 		}
 		else
@@ -1014,7 +1041,6 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public int getIntHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return Cookies from properties
 			return 0;
 		}
 		else
@@ -1091,13 +1117,16 @@ implements PortletRequest, InternalPortletRequest {
 	// ============= private methods ==================
 
 	public String getLifecyclePhase() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	private void setCCPPProfile() {
 		Profile profile = container.getRequiredContainerServices().getCCPPProfileService().getCCPPProfile(servletRequest);
 		this.setAttribute(CCPP_PROFILE, profile);
+	}
+	
+	public void setNamedRequestDispatcher(boolean named){
+		namedRequestDispatcher = named;
 	}
 }
 
