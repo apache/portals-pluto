@@ -356,7 +356,6 @@ public class PortalURLParserImpl implements PortalURLParser {
         		if (values[i] != null)
         			values[i] = URLEncoder.encode(values[i], "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	buffer.append(values[i] != null ? values[i] : "");
@@ -436,7 +435,6 @@ public class PortalURLParserImpl implements PortalURLParser {
         	try {
         		paramValues[i] = URLDecoder.decode(paramValues[i], "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

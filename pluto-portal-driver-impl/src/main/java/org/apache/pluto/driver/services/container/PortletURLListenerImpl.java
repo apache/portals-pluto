@@ -71,8 +71,8 @@ public class PortletURLListenerImpl implements PortletURLListener {
 					String message = "The instantiation fail.";
 					LOG.error(message);
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					String message = "IllegalAccessException";
+					LOG.error(message);
 				}
 			}
 		}

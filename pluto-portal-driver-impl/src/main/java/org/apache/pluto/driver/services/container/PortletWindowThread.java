@@ -137,13 +137,10 @@ public class PortletWindowThread extends Thread {
 					eventContainer.fireEvent(req, res, portletWindow, event);	
 //				}
 			} catch (PortletException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (PortletContainerException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 		}

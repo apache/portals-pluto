@@ -20,6 +20,7 @@ package org.apache.pluto.driver.services.container;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
@@ -31,6 +32,7 @@ import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
+import org.w3c.dom.Element;
 
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -77,7 +79,6 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
 
     public Map getRequestProperties(HttpServletRequest request,
                                     PortletWindow portletWindow) {
-    	// TODO: currently this method returns an empty map.
         return Collections.EMPTY_MAP;
     }
 
@@ -85,14 +86,59 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
                                     PortletWindow portletWindow,
                                     String property,
                                     String value) {
-    	// TODO: currently this method does nothing.
+    	request.setAttribute(property + portletWindow.getId().getStringId() + "__str", value);
     }
 
     public void addResponseProperty(HttpServletRequest request,
                                     PortletWindow portletWindow,
                                     String property,
                                     String value) {
-    	// TODO: currently this method does nothing.
+    	if(request.getAttribute(property+portletWindow.getId().getStringId())== null){
+    		request.setAttribute(property + portletWindow.getId().getStringId(), value);
+    	}
+    	else{
+    		String[] tmp = (String[]) request.getAttribute(property+portletWindow.getId().getStringId()+"__str");
+    		String[] values = new String[tmp.length];
+    		for (int i = 0; i < tmp.length;i++) {
+				values[i] = tmp[i];
+			}
+    		values[tmp.length]= value;
+    	}
+    }
+    
+    public void addResponseProperty(HttpServletRequest request, PortletWindow portletWindow, String property, Element value) {
+    	if(request.getAttribute(property+portletWindow.getId().getStringId())== null){
+    		request.setAttribute(property + portletWindow.getId().getStringId(), value);
+    	}
+    	else{
+    		String[] tmp = (String[]) request.getAttribute(property+portletWindow.getId().getStringId()+"__str");
+    		String[] values = new String[tmp.length];
+    		for (int i = 0; i < tmp.length;i++) {
+				values[i] = tmp[i];
+			}
+    		values[tmp.length]= value.toString();
+    	}
+		
+	}
+    
+    public void addResponseProperty(HttpServletRequest request,
+            PortletWindow portletWindow,
+            Cookie cookie){
+    	if(request.getAttribute(portletWindow.getId().getStringId()+"__coo")== null){
+    		request.setAttribute(portletWindow.getId().getStringId()+"__coo", cookie);
+    	}
+    	else{
+    		Cookie[] tmp = (Cookie[]) request.getAttribute(portletWindow.getId().getStringId()+"__coo");
+    		Cookie[] values = new Cookie[tmp.length];
+    		for (int i = 0; i < tmp.length;i++) {
+				values[i] = tmp[i];
+			}
+    		values[tmp.length]= cookie;
+    	}
+    }
+    
+    public Cookie[] getRequestPropertyCookie(HttpServletRequest request, PortletWindow portletWindow){
+    	return (Cookie[]) request.getAttribute(portletWindow.getId().getStringId()+"__coo");
     }
     
     public EventProvider getEventProvider(

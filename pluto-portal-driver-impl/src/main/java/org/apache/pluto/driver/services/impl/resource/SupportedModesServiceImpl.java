@@ -233,23 +233,6 @@ public class SupportedModesServiceImpl implements SupportedModesService
     
 
 	public boolean isPortletManagedMode(String portletId, String mode) {
-		//FIXME: This needs to be implemented properly:
-		// 1. Need to create a Map of custom modes (CustomModeDD) keyed by portlet ID in init().
-		//		a. Each mode has a 'portal-managed' property (true is default)
-		// 2. Add code to this method like this:
-//		PortletMode oMode = null;		
-//		CustomModeDD cmode = null;		
-//		if (mode != null) {
-//			oMode = new PortletMode(mode);		
-//		}
-//		cmode = customModes.get(portletId);		
-//		if (portletId != null && mode != null && cmode != null 
-//			&& supportedPortletModesByPortlet.get(portletId).equals(oMode)
-//			&& cmode.getPortletMode().equals(mode) && !cmode.isPortalManaged()) {
-//			return true;
-//		} else {
-//			return false;
-//		}
 			return false;
 	}
 

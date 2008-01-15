@@ -127,7 +127,6 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 	/**
 	 * factory method, for accessing the static elements without a request /
-	 * response FIXME: bad idea
 	 * 
 	 * @return The EventProvider for accessing the static elements
 	 */
@@ -188,14 +187,10 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				}
 			} catch (JAXBException e) {
 				// maybe there is no valid jaxb binding
-				// TODO wsrp:eventHandlingFailed
+				// wsrp:eventHandlingFailed
 				LOG.error("Event handling failed", e);
 			} catch (FactoryConfigurationError e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				// } catch (ClassNotFoundException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
 			}
 		}
 	}
@@ -253,7 +248,6 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			try {
 				Thread.sleep(WAITING_CYCLE);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -332,7 +326,6 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 					}
 				}
 			} catch (PortletContainerException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -394,17 +387,12 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				try {
 					portletWindowThread.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				portletWindowThreads.remove(portletWindowThread);
 				portletWindowThread = new PortletWindowThread(threadGroup, config
 						.getId(), this, window, eventContainer,portletRegistry);
 				portletWindowThreads.put(windowID, portletWindowThread);
-				// } catch (InterruptedException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
-				// }
 			}
 			return portletWindowThread;
 		}
@@ -425,7 +413,6 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				}
 				Thread.sleep(WAITING_CYCLE);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -533,7 +520,6 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			events = portletRegistry.getPortletDescriptor(applicationId,
 					portletName).getPublishingEvents();
 		} catch (PortletContainerException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		if (events != null) {
