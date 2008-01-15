@@ -15,7 +15,6 @@ import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 /** 
  *  JAXB implementation of the xml2java binding
  *  @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
- *  TODO: better error handling
  */
 
 public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorService{
