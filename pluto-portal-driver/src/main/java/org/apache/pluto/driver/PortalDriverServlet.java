@@ -117,7 +117,6 @@ public class PortalDriverServlet extends HttpServlet {
         			setPublicRenderParameter(request, portalURL, portalURL.getActionWindow());
         		}
 			} catch (PortletContainerException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             PortletWindowImpl portletWindow = new PortletWindowImpl(
@@ -141,9 +140,8 @@ public class PortalDriverServlet extends HttpServlet {
         else if (resourceWindowConfig != null) {
         	try {
         		if (request.getParameterNames().hasMoreElements())
-				setPublicRenderParameter(request, portalURL, portalURL.getResourceWindow());
+        			setPublicRenderParameter(request, portalURL, portalURL.getResourceWindow());
 			} catch (PortletContainerException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             PortletWindowImpl portletWindow = new PortletWindowImpl(
@@ -171,7 +169,6 @@ public class PortalDriverServlet extends HttpServlet {
             PageConfig pageConfig = portalURL.getPageConfig(servletContext);
             if (pageConfig == null)
             {
-                // TODO Shouldn't we throw an exception here?
                 LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
             }
             
