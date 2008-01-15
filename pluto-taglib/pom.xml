@@ -33,6 +33,12 @@
     <description>Pluto's Java Portlet Specification Tag Library implementation</description>
 
     <dependencies>
+	    <dependency>
+            <groupId>org.apache.pluto</groupId>
+            <artifactId>pluto-container</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
