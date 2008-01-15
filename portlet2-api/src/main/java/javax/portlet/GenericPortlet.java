@@ -673,6 +673,8 @@ public abstract class GenericPortlet implements Portlet, PortletConfig, EventPor
 	 * <p>
 	 * The default implemention of this method is emtpy.
 	 * 
+	 * @param request  the render request
+	 * @param response the render response
 	 * @since 2.0
 	 */
 	protected void doHeaders(RenderRequest request, RenderResponse response) {

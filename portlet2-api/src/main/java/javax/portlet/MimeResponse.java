@@ -178,12 +178,15 @@ public interface MimeResponse extends PortletResponse {
     public String getContentType();
 
     /**
-     * Sets the MIME type for the response. The portlet must set the
+     * Sets the MIME type for the response. The portlet should set the
      * content type before calling {@link #getWriter} or
-     * {@link #getPortletOutputStream}.
+     * {@link #getPortletOutputStream}. If the content type is not 
+     * the {@link PortletRequest#getResponseContentType} value is
+     * set as response content type by the portlet container.
      * <p>
      * Calling <code>setContentType</code> after <code>getWriter</code> or
      * <code>getOutputStream</code> does not change the content type.
+     * <p>
      * 
      * @param type
      *            the content MIME type

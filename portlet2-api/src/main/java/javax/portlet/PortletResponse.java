@@ -104,6 +104,12 @@ public interface PortletResponse {
      * The <code>encodeURL</code> method may include the session ID and other
      * portal/portlet-container specific information into the URL. If encoding
      * is not needed, it returns the URL unchanged.
+     * <p>
+     * Portlet developer should be aware that the returned URL might not be a well formed
+     * URL but a special token at the time the portlet is generating its content. 
+     * Thus portlets should not add additional parameters on the resulting URL or 
+     * expect to be able to parse the URL. As a result, the outcome of the encodeURL 
+     * call may be different than calling encodeURL in the servlet world.
      * 
      * @param path
      *            the URI path to the resource. This must be either an absolute
@@ -116,7 +122,7 @@ public interface PortletResponse {
      *                if path doesn't have a leading slash or is not an absolute
      *                URL
      * 
-     * @return the encoded resource URL as string
+     * @return the encoded resource URL as string, may not be a valid URL
      */
 
 	public String encodeURL(String path);

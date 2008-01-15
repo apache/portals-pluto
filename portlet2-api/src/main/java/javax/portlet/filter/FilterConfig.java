@@ -80,5 +80,5 @@ public interface FilterConfig {
      * @return the names of the filter's initialization parameters, 
      *         or an empty Enumeration if the filter has no initialization parameters.
      */
-    public Enumeration getInitParameterNames();
+    public Enumeration<String> getInitParameterNames();
 }

@@ -96,13 +96,13 @@ public interface PortalContext
 
   /**
    * Returns all supported window states by the portal
-   * as an enumertation of <code>WindowState</code> objects.
+   * as an enumeration of <code>WindowState</code> objects.
    * <p>
    * The window states must at least include the
    * standard window states <code> MINIMIZED, NORMAL, MAXIMIZED</code>.
    *
    * @return  All supported window states by the portal
-   *          as an enumertation of <code>WindowState</code> objects.
+   *          as an enumeration of <code>WindowState</code> objects.
    */
 
   public java.util.Enumeration<WindowState> getSupportedWindowStates();

@@ -164,7 +164,8 @@ public interface CacheControl {
      * This call is equivalent to calling
      * <code>setProperty(USE_CACHED_CONTENT, "true")</code>.
      *        
-     * @param useCachedContent
+     * @param useCachedContent  boolean indication whether the
+     *          the cached content is still valid or not
      */
     public void setUseCachedContent(boolean useCachedContent);
 
