@@ -33,7 +33,6 @@ import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 /**
  * Bare bones implementation of the Portlet descriptor.
  * 
- * FIXME: Hmmm... What do you mean, David?  --ZHENG Zhong
  * 
  * Eventually this should be flushed out :), but for the sake of timing I'll be lazy for now.
  *
@@ -231,7 +230,6 @@ public class PortletDD {
     
     /**
      * Returns a string representation of this instance.
-     * FIXME: more info!
      * @return a string representation of this instance.
      */
     public String toString() {
@@ -239,7 +237,6 @@ public class PortletDD {
     	buffer.append(getClass().getName());
     	buffer.append("[portletName=").append(portletName);
     	buffer.append(",portletClass=").append(portletClass);
-    	// TODO:
     	return buffer.toString();
     }
     
