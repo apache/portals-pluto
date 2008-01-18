@@ -26,7 +26,10 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.testsuite.TestResult;
 import org.apache.pluto.testsuite.TestUtils;
 
-
+/**
+ * FIXME: separate the two check methods to two classes.
+ *
+ */
 public class RenderResponseNoContentTypeTest
 extends AbstractReflectivePortletTest {
 

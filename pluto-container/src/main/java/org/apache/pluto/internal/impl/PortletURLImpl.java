@@ -61,6 +61,13 @@ public class PortletURLImpl extends BaseURLImpl implements PortletURL {
         isPortletModeAllowed(portletMode);
         mode = portletMode;
     }
+    
+    public javax.portlet.PortletMode getPortletMode(){
+    	return super.getPortletMode();
+    }
+    public javax.portlet.WindowState getWindowState(){
+    	return super.getWindowState();
+    }
 
 	public void removePublicRenderParameter(String name) {
 		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();

@@ -36,7 +36,7 @@ import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringUtils;
 
-public class ResourceRequestImpl extends PortletRequestImpl
+public class ResourceRequestImpl extends ClientDataRequestImpl
 implements ResourceRequest, InternalResourceRequest {
 
 	/** Logger. */
@@ -44,8 +44,8 @@ implements ResourceRequest, InternalResourceRequest {
     
     
     // Private Member Variables ------------------------------------------------
-
-
+    
+    /** FIXME: The portlet preferences. */
     private PortletPreferences portletPreferences = null;
     
     
@@ -62,26 +62,15 @@ implements ResourceRequest, InternalResourceRequest {
 
     // ResourceRequest impl ------------------------------------------------------
     
-    /* (non-Javadoc)
-     * @see org.apache.pluto.core.InternalActionResponse#getPortletInputStream()
-     */
-    public InputStream getPortletInputStream() throws IOException {
-        HttpServletRequest servletRequest = (HttpServletRequest) getRequest();
-        if (servletRequest.getMethod().equals("POST")) {
-            String contentType = servletRequest.getContentType();
-            if (contentType == null ||
-                contentType.equals("application/x-www-form-urlencoded")) {
-                throw new IllegalStateException(
-                		"User request HTTP POST data is of type "
-                		+ "application/x-www-form-urlencoded. "
-                		+ "This data has been already processed "
-                		+ "by the portal/portlet-container and is available "
-                		+ "as request parameters.");
-            }
-        }
-        return servletRequest.getInputStream();
+    public String getResponseContentType(){
+    	return super.getResponseContentType();
     }
-
+    
+    @SuppressWarnings("unchecked")
+	public java.util.Enumeration getResponseContentTypes(){
+    	return super.getResponseContentTypes();
+    }
+    
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
     	String values1[] = super.getParameterValues(name);
@@ -131,7 +120,9 @@ implements ResourceRequest, InternalResourceRequest {
     
     // PortletRequestImpl impl -------------------------------------------------
     
-    
+    /**
+     * FIXME: 
+     */
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
@@ -144,6 +135,7 @@ implements ResourceRequest, InternalResourceRequest {
     }
 
 	public String getETag() {
+		// TODO: get ETag
 		return null;
 	}
 

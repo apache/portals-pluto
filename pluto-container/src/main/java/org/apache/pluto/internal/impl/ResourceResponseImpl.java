@@ -98,4 +98,14 @@ implements ResourceResponse, InternalResourceResponse {
 	public String getCacheability() {
 		return null;
 	}	
+	
+	public javax.portlet.PortletURL createRenderURL() throws java.lang.IllegalStateException{
+		return super.createRenderURL();
+	}
+	public javax.portlet.PortletURL createActionURL() throws java.lang.IllegalStateException{
+		return super.createActionURL();
+	}
+	public javax.portlet.ResourceURL createResourceURL() throws java.lang.IllegalStateException{
+		return super.createResourceURL();
+	}
 }

@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
@@ -36,6 +38,8 @@ import org.apache.pluto.spi.ResourceURLProvider;
 public class ActionResponseImpl extends StateAwareResponseImpl
 implements ActionResponse, InternalActionResponse {
 
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(ActionResponseImpl.class);
 
     public ActionResponseImpl(PortletContainer container,
                               InternalPortletWindow internalPortletWindow,
@@ -107,9 +111,9 @@ implements ActionResponse, InternalActionResponse {
 				}
 			}
 		} catch (PortletModeException e) {
-			e.printStackTrace();
+            LOG.warn(e);
 		} catch (WindowStateException e) {
-			e.printStackTrace();
+            LOG.warn(e);
 		}
 		return renderURL.toString();
 	}

@@ -118,17 +118,6 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         QName qname = new QName(defaultNamespace, name);
         setEvent(qname, value);
 	}
-	
-	/* (non-Javadoc)
-	 * @see javax.portlet.StateAwareResponse#setEvents(java.util.Map)
-	 */
-// Not in API anymore
-//	public void setEvents(Map events) {
-//		Set keys = events.keySet();
-//		for (Object key : keys) {
-//			setEvent((QName)key,(Serializable)events.get(key));
-//		}
-//	}
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.String)
@@ -577,7 +566,10 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 
 	@Override
 	public boolean isCommitted() {
-		if (super.isForwarded() || super.isIncluded()){
+		if (super.isForwarded()){
+			return false;
+		}
+		else if (super.isIncluded()){
 			return true;
 		}
 		else

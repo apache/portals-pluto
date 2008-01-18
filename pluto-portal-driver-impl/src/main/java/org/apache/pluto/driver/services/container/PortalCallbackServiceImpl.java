@@ -79,6 +79,7 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
 
     public Map getRequestProperties(HttpServletRequest request,
                                     PortletWindow portletWindow) {
+    	// TODO: currently this method returns an empty map.
         return Collections.EMPTY_MAP;
     }
 

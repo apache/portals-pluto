@@ -402,6 +402,7 @@ public class BaseURLImpl implements BaseURL {
 		
 	}
 
+	//TODO:This two methods should be deleted, when the CACHABILITY parameter gets his own prefix
 	private String[] getRenderParameters(String name){
 		int lenght = 0;
 		String[] tmp1 = this.servletRequest.getParameterValues(name);

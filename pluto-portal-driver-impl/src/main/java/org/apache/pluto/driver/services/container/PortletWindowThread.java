@@ -36,6 +36,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
@@ -45,11 +47,15 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
+import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 public class PortletWindowThread extends Thread {
 	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(PortletWindowThread.class);
+    
 	private EventProviderImpl eventProvider;
 	
 	private PortletWindow portletWindow;
@@ -137,11 +143,11 @@ public class PortletWindowThread extends Thread {
 					eventContainer.fireEvent(req, res, portletWindow, event);	
 //				}
 			} catch (PortletException e) {
-				e.printStackTrace();
+				LOG.warn(e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOG.warn(e);
 			} catch (PortletContainerException e) {
-				e.printStackTrace();
+				LOG.warn(e);
 			}	
 		}
 	}

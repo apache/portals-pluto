@@ -73,6 +73,7 @@ public class PreferenceInActionTest extends PreferenceCommonTest {
         } catch (ValidatorException ex) {
         	// We are expecting this exception!
             exceptionThrown = true;
+            // FIXME: what is going on below?
             try {
             	//get rid of spaces because it causes problems with reset() call.
                 preferences.setValue("TEST", "OK");

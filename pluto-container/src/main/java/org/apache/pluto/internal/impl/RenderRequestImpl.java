@@ -256,6 +256,7 @@ implements RenderRequest, InternalRenderRequest {
     }
 
 	public String getETag() {
+		// TODO Return ETag
 		return null;
 	}
 	

@@ -55,6 +55,11 @@ public class PortletResponseWrapper
     public String encodeURL(String path) {
         return this.getPortletResponse().encodeURL(path);
     }
+    
+    // FIXME: can we delete this function?
+//    public void addProperty(String arg0, String arg1, int arg2) {
+//		this.getPortletResponse().addProperty(arg0, arg1, arg2);
+//	}
 
 	public PortletURL createActionURL() {
 		return ((RenderResponse) this.getPortletResponse()).createActionURL();

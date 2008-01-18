@@ -23,6 +23,7 @@ import javax.portlet.MimeResponse;
  * Implementation of JSR-286 <code>CacheControl</code>.
  *
  * @since 2.0
+ * TODO: Move CachControlImpl from inner Class to this implementation
  */
 public class CacheControlImpl implements CacheControl {
 

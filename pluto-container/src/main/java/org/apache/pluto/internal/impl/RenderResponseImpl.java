@@ -28,9 +28,12 @@ import javax.portlet.StateAwareResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalRenderResponse;
+import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringUtils;
@@ -43,6 +46,8 @@ import org.apache.pluto.util.StringUtils;
 public class RenderResponseImpl extends MimeResponseImpl
 implements RenderResponse, InternalRenderResponse {
 	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(RenderResponseImpl.class);
 	private String contenType;
     
     public RenderResponseImpl(PortletContainer container,
@@ -80,7 +85,7 @@ implements RenderResponse, InternalRenderResponse {
 		try {
 			((StateAwareResponse)(super.getResponse())).setPortletMode(portletMode) ;
 		} catch (PortletModeException e) {
-			e.printStackTrace();
+            LOG.warn(e);
 		}
 	}
 	

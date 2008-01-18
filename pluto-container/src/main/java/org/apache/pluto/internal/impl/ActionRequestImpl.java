@@ -35,7 +35,7 @@ import org.apache.pluto.internal.InternalPortletWindow;
 /**
  * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
  */
-public class ActionRequestImpl extends PortletRequestImpl
+public class ActionRequestImpl extends ClientDataRequestImpl
 implements ActionRequest, InternalActionRequest {
 
 	/** Logger. */
@@ -44,6 +44,7 @@ implements ActionRequest, InternalActionRequest {
 
     // Private Member Variables ------------------------------------------------
 
+    /** FIXME: The portlet preferences. */
     private PortletPreferences portletPreferences;
 
 
@@ -60,29 +61,13 @@ implements ActionRequest, InternalActionRequest {
 
     // ActionRequest impl ------------------------------------------------------
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.core.InternalActionResponse#getPortletInputStream()
-     */
-    public InputStream getPortletInputStream() throws IOException {
-        HttpServletRequest servletRequest = (HttpServletRequest) getRequest();
-        if (servletRequest.getMethod().equals("POST")) {
-            String contentType = servletRequest.getContentType();
-            if (contentType == null ||
-                contentType.equals("application/x-www-form-urlencoded")) {
-                throw new IllegalStateException(
-                		"User request HTTP POST data is of type "
-                		+ "application/x-www-form-urlencoded. "
-                		+ "This data has been already processed "
-                		+ "by the portal/portlet-container and is available "
-                		+ "as request parameters.");
-            }
-        }
-        return servletRequest.getInputStream();
-    }
+    
 
     // PortletRequestImpl impl -------------------------------------------------
 
-    
+    /**
+     * FIXME:
+     */
     public PortletPreferences getPreferences() {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(

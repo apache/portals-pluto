@@ -115,7 +115,7 @@ implements PortletRequest, InternalPortletRequest {
     /** TODO: javadoc */
     private NamespaceMapper mapper = new NamespaceMapperImpl();
 
-    /**
+    /** FIXME: do we really need this?
      * Flag indicating if the HTTP-Body has been accessed. */
     private boolean bodyAccessed = false;
 
@@ -692,11 +692,15 @@ implements PortletRequest, InternalPortletRequest {
         setLifecyclePhase();
     }
 
+	/**
+     * TODO: Implement this properly.  Not required now
+     */
     public void release() {
+    	// FIXME: This needs to be implemented
     }
     
     
-    // Additional Methods of HttpServletRequestWrapper -------------------
+    // TODO: Additional Methods of HttpServletRequestWrapper -------------------
     
     public BufferedReader getReader()
     throws UnsupportedEncodingException, IOException {
@@ -718,7 +722,9 @@ implements PortletRequest, InternalPortletRequest {
         return new ServletRequestDispatcher(getHttpServletRequest().getRequestDispatcher(path));
     }
     
-    
+    /**
+     * TODO: why check bodyAccessed?
+     */
     public void setCharacterEncoding(String encoding)
     throws UnsupportedEncodingException {
         if (bodyAccessed) {
@@ -996,6 +1002,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Cookie[] getCookies() {
 		if (isIncluded() || isForwarded()){
+			// TODO:return Cookies from properties
 			return super.getCookies();
 		}
 		else
@@ -1005,6 +1012,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public long getDateHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
+			// TODO:return header from properties
 			return 0;
 		}
 		else
@@ -1014,6 +1022,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public String getHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
+			// TODO:return header from properties
 			return null;
 		}
 		else
@@ -1023,6 +1032,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Enumeration getHeaderNames() {
 		if (isIncluded() || isForwarded()){
+			// TODO:return header from properties
 			return null;
 		}
 		else
@@ -1032,6 +1042,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Enumeration getHeaders(String arg0) {
 		if (isIncluded() || isForwarded()){
+			// TODO:return header from properties
 			return null;
 		}
 		else
@@ -1041,6 +1052,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public int getIntHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
+			// TODO:return header from properties
 			return 0;
 		}
 		else

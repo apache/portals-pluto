@@ -75,6 +75,7 @@ public class StringUtils {
     }
 
     /**
+     * TODO: can't we just use String[].clone()?
      * @param source
      * @return
      */

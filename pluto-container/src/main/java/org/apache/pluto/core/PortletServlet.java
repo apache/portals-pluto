@@ -300,7 +300,7 @@ public class PortletServlet extends HttpServlet {
                 // Don't care for Exception
             }
             
-            // Handle everything as permanently for now.
+            // TODO: Handle everything as permanently for now.
             throw new javax.servlet.UnavailableException(ex.getMessage());
             
         } catch (PortletException ex) {

@@ -33,6 +33,8 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
  * @version $Id: UserDataConstraintDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  * 
+ * TODO: Convert TransportGuarantee to a Java 5 enum
+ * and annotate with @XmlEnum(String.class)
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user-data-constraintType", propOrder = {

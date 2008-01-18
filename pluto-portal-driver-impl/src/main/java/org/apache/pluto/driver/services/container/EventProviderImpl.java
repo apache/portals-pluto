@@ -127,6 +127,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 	/**
 	 * factory method, for accessing the static elements without a request /
+	 * response FIXME: bad idea
 	 * 
 	 * @return The EventProvider for accessing the static elements
 	 */
@@ -187,10 +188,10 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				}
 			} catch (JAXBException e) {
 				// maybe there is no valid jaxb binding
-				// wsrp:eventHandlingFailed
+				// TODO wsrp:eventHandlingFailed
 				LOG.error("Event handling failed", e);
 			} catch (FactoryConfigurationError e) {
-				e.printStackTrace();
+				LOG.warn(e);
 			}
 		}
 	}
@@ -248,7 +249,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			try {
 				Thread.sleep(WAITING_CYCLE);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				LOG.warn(e);
 			}
 		}
 		waitForEventExecution();
@@ -326,7 +327,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 					}
 				}
 			} catch (PortletContainerException e) {
-				e.printStackTrace();
+				LOG.warn(e);
 			}
 		}
 
@@ -387,7 +388,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				try {
 					portletWindowThread.join();
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					LOG.warn(e);
 				}
 				portletWindowThreads.remove(portletWindowThread);
 				portletWindowThread = new PortletWindowThread(threadGroup, config
@@ -413,7 +414,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				}
 				Thread.sleep(WAITING_CYCLE);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				LOG.warn(e);
 			}
 		}
 	}

@@ -199,6 +199,7 @@ public class PortletEntityImpl implements PortletEntity {
         	String message = "Unable to load Portlet App Deployment Descriptor:"
         			+ ex.getMessage();
         	LOG.error(message, ex);
+        	// FIXME: should this be a NullPointerException?
             throw new NullPointerException(message);
         }
     }

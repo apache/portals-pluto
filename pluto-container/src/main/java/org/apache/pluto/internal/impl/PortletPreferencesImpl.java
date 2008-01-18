@@ -142,8 +142,10 @@ public class PortletPreferencesImpl implements PortletPreferences {
         	
         } catch (PortletContainerException ex) {
             LOG.error("Error retrieving preferences.", ex);
+            //TODO: Rethrow up the stack????
         } catch (IOException ex) {
-            LOG.error("Error retrieving preferences.", ex);
+            LOG.error("Error retrieving preferences.", ex);        	
+            //TODO: Rethrow up the stack????
         } catch (ValidatorException ex) {
             LOG.warn("ValidatorException initializing portlet preferences. "
             		+ "This is not illegal at this point "

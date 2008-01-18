@@ -33,9 +33,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.DummyPrintWriter;
@@ -54,6 +57,8 @@ import org.w3c.dom.Element;
 public abstract class PortletResponseImpl extends HttpServletResponseWrapper
 implements PortletResponse, InternalPortletResponse {
 	
+	/** Logger. */
+    private static final Log LOG = LogFactory.getLog(PortletResponseImpl.class);
 	// Private Member Variables ------------------------------------------------
 	
 	/** The portlet container. */
@@ -106,6 +111,7 @@ implements PortletResponse, InternalPortletResponse {
     }
     
     public void addProperty(String name, String value, int scope) {
+    	// FIXME: What should this do? (scope seems to be new)
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
         		.getPortalCallbackService()
@@ -196,6 +202,7 @@ implements PortletResponse, InternalPortletResponse {
     }
     
     /**
+     * TODO: javadoc about why we are using a wrapped writer here.
      * @see org.apache.pluto.util.PrintWriterServletOutputStream
      */
     public ServletOutputStream getOutputStream()
@@ -249,6 +256,7 @@ implements PortletResponse, InternalPortletResponse {
 
 	/**
 	 * Creates a portlet URL.
+	 * TODO: make dynamic? as service?
 	 * @param isAction  true for an action URL, false for a render URL.
 	 * @return the created portlet (action/render) URL.
 	 */
@@ -342,7 +350,7 @@ implements PortletResponse, InternalPortletResponse {
 			Document doc = docBuilder.newDocument();
 			return doc.createElement(tagName);
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+            LOG.warn(e);
 		}
 		throw new DOMException((short) 0, "Initialization fail");
 	}

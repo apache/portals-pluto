@@ -181,19 +181,21 @@ public class MimeResponseImpl extends PortletResponseImpl implements
         return super.getOutputStream();
 	}
 	
+	
+	public String getContentType(){
+		return super.getContentType();
+	}
+	public void setContentType(String arg0){
+		super.setContentType(arg0);
+	}
 	/**
      * @see PortletResponseImpl#getWriter()
      * @see #getPortletOutputStream()
      */
 	@Override
-    public PrintWriter getWriter() throws IOException, IllegalStateException {
+    public PrintWriter getWriter() throws IOException {
         if (getContentType() == null) {
         	setContentType("text/html");
-//            String message = EXCEPTIONS.getString("error.contenttype.null");
-//            if (LOG.isWarnEnabled()) {
-//            	LOG.warn("Current content type is not set.");
-//            }
-//            throw new IllegalStateException(message);
         }
         return super.getWriter();
     }
@@ -213,6 +215,10 @@ public class MimeResponseImpl extends PortletResponseImpl implements
         getHttpServletResponse().resetBuffer();
     }
     
+	public int getBufferSize(){
+		return super.getBufferSize();
+	}
+	
 	@Override
     public void setBufferSize(int size) {
     	getHttpServletResponse().setBufferSize(size);
@@ -334,6 +340,16 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 		super.setStatus(arg0);
 	}
     
+	public javax.portlet.PortletURL createRenderURL(){
+		return super.createRenderURL();
+	}
+	public javax.portlet.PortletURL createActionURL(){
+		return super.createActionURL();
+	}
+	public javax.portlet.ResourceURL createResourceURL(){
+		return super.createResourceURL();
+	}
+	
     // Private Methods ---------------------------------------------------------
     
     /**

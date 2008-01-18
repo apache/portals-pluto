@@ -86,7 +86,14 @@ public class RenderConfig {
                     defaultPageId);
             }
             pageId = defaultPageId;
-        } 
+        }
+//        return (PageConfig) pages.get(pageId);
+         
+         // TODO: Make sure this is needed. 
+         //This is the PLUTO-251 fix submitted by Charles Severence. Thank you!!!
+         // Sometimes pages come with a prefix of a slash - if the page is not 
+         // found, and the first character of the pageId is a slash we attempt 
+         // to look up the page without the slash. 
          
          PageConfig retval = (PageConfig) pages.get(pageId); 
          

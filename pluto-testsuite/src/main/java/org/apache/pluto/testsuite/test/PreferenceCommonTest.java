@@ -395,7 +395,9 @@ public class PreferenceCommonTest extends AbstractReflectivePortletTest {
         return result;
     }
 
-    
+    /**
+     * FIXME:
+     */
     protected TestResult checkGetPreferenceMap(PortletRequest request) {
         TestResult result = checkGetPreferenceNames(request);
         result.setDescription("Ensure returned map is valid.");
