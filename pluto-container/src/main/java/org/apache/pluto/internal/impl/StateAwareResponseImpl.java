@@ -92,7 +92,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	/* (non-Javadoc)
 	 * @see javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.lang.Object)
 	 */
-	public void setEvent(QName qname, Serializable value) throws IllegalArgumentException {
+	public void setEvent(QName qname, Serializable value){
 		if (qname == null) {
 			throw new IllegalArgumentException();
 		}

@@ -122,8 +122,7 @@ implements RenderResponse, InternalRenderResponse {
 	}
 	
 	@Override
-    public void setContentType(String contentType)
-    		throws IllegalArgumentException {
+    public void setContentType(String contentType){
     	
     	if (super.isIncluded()){
     		//no operation

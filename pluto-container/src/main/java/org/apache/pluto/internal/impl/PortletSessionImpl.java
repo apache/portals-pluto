@@ -184,11 +184,11 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
         return httpSession.getMaxInactiveInterval();
     }
 
-    public void invalidate() throws IllegalStateException {
+    public void invalidate(){
         httpSession.invalidate();
     }
 
-    public boolean isNew() throws IllegalStateException {
+    public boolean isNew(){
         return httpSession.isNew();
     }
     

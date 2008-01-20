@@ -290,7 +290,7 @@ implements PortletRequest, InternalPortletRequest {
         return portletSession;
     }
     
-    public String getProperty(String name) throws IllegalArgumentException {
+    public String getProperty(String name){
     	ArgumentUtility.validateNotNull("propertyName", name);
         String property = this.getHttpServletRequest().getHeader(name);
         if (property == null) {
