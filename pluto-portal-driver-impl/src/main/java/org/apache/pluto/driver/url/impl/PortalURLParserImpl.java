@@ -181,11 +181,11 @@ public class PortalURLParserImpl implements PortalURLParser {
         		PortalURLParameter param = decodePublicParameter(token, value);
         		if( param != null )
         		{
-        			portalURL.addParameter( param );
+        			//set public parameter in portalURL
+    	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
         		}
 	    		
-	    		// set public parameter in portalURL
-	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
+	    		
         	}
         }
         if (renderPath.length() > 0) {
@@ -284,11 +284,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         }
 
         StringUtils.encode(buffer);
-        // Construct the string representing the portal URL.
-        // Fix for PLUTO-247 - check if query string contains parameters
-        if ( query.length() > 1 ) {
-            return buffer.append(query).toString();
-        }
+        
         
         Map<String, String[]> publicParamList = portalURL.getPublicParameters();
         if (publicParamList!=null){
@@ -301,6 +297,12 @@ public class PortalURLParserImpl implements PortalURLParser {
 	        		buffer.append("/").append(valueString);
 	        	}
 	        }
+        }
+        
+        // Construct the string representing the portal URL.
+        // Fix for PLUTO-247 - check if query string contains parameters
+        if ( query.length() > 1 ) {
+            return buffer.append(query).toString();
         }
         
         // Construct the string representing the portal URL.
