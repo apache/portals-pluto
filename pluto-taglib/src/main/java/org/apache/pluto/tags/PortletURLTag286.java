@@ -19,6 +19,7 @@ package org.apache.pluto.tags;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.servlet.jsp.JspException;
 
@@ -46,25 +47,21 @@ public abstract class PortletURLTag286 extends PortletURLTag168 {
 	 */
 	@Override
     public int doStartTag() throws JspException {    	    	  
-        
-       //FIXME:implement escapeXml-container-runtime-option check! 
-        /*PortletConfig portletConfig = 
+         
+        PortletConfig portletConfig = 
         	(PortletConfig) pageContext.getRequest().getAttribute(Constants.PORTLET_CONFIG);
-        
-        if(portletConfig != null){
-        	PortletContext portletContext = portletConfig.getPortletContext();
-        	if(portletContext != null){
-        		System.out.println(portletContext.getContainerRuntimeOptions());
-        		/*Map<String, String[]> containerOptions = portletContext.getContainerRuntimeOptions(); 
-        		if(containerOptions != null){
-        			String[] escapeXmlOption = 
-        				containerOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
-        			if(escapeXmlOption != null){
-        				System.out.println(escapeXmlOption);
-        			}
+        Map<String,String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
+        if (containerRuntimeOptions != null){
+        	String[] result = containerRuntimeOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
+        	if (result != null){
+        		if (result.length > 0){
+        			if (result[0].equals(true))
+        				escapeXml = true;
+        			else if (result[0].equals(false))
+        				escapeXml = false;
         		}
         	}
-        }*/
+        }
         
         return super.doStartTag();
     }
