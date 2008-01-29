@@ -41,7 +41,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
-import javax.servlet.http.Cookie;
 
 /**
  * The <code>RenderResponseWrapper</code> provides a convenient 

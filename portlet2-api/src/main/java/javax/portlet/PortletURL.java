@@ -134,6 +134,9 @@ public interface PortletURL extends BaseURL
 	* in the portlet deployment descriptor under the
 	* <code>public-render-parameter</code> element with the
 	* <code>identifier</code> mapping to the parameter name.
+	* <p>
+	* Note that calling this method on a PortletURL of type
+	* Action URL does not have any effect.
 	* 
 	* @param name			a <code>String</code> specifying 
 	*					the name of the public render parameter to be removed

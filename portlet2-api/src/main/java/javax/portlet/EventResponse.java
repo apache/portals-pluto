@@ -59,7 +59,8 @@ public interface EventResponse extends StateAwareResponse {
      *
      * @param  request   The request the portlet has been provided
      *                   with by the portlet container for the current
-     *                   <code>processEvent</code> call.
+     *                   <code>processEvent</code> call, must not be 
+     *                   <code>null</code>.
      */
     public void setRenderParameters(EventRequest request);
 

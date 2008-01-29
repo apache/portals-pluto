@@ -39,7 +39,6 @@ import javax.portlet.CacheControl;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
-import javax.servlet.http.Cookie;
 
 /**
  * The <code>ResourceResponseWrapper</code> provides a convenient 
@@ -178,7 +177,7 @@ public class ResourceResponseWrapper extends PortletResponseWrapper implements R
      * <code>setCharacterEncoding(String charset)</code> on the wrapped response object.
      */
     public void setCharacterEncoding(String charset) {
-        this.setCharacterEncoding(charset);
+        response.setCharacterEncoding(charset);
         return;
     }
 
@@ -187,7 +186,7 @@ public class ResourceResponseWrapper extends PortletResponseWrapper implements R
      * <code>setLocale(Locale loc)</code> on the wrapped response object.
      */
     public void setLocale(Locale loc) {
-        this.setLocale(loc);
+        response.setLocale(loc);
         return;
     }
 
