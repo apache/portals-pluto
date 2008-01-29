@@ -112,13 +112,6 @@ public class PortalDriverServlet extends HttpServlet {
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
-        	try {
-        		if (request.getParameterNames().hasMoreElements()){
-        			setPublicRenderParameter(request, portalURL, portalURL.getActionWindow());
-        		}
-			} catch (PortletContainerException e) {
-				LOG.warn(e);
-			}
             PortletWindowImpl portletWindow = new PortletWindowImpl(
             		actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
