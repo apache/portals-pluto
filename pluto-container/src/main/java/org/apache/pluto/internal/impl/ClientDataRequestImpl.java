@@ -19,6 +19,11 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ClientDataRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -81,4 +86,65 @@ public class ClientDataRequestImpl extends PortletRequestImpl
 	public String getMethod(){
 		return super.getMethod();
 	}
+
+	@Override
+	public String getParameter(String name) {
+		if (super.getPrivateParameterMap().get(name) != null){
+			if (super.getPrivateParameterMap().get(name).length > 0){
+				return super.getPrivateParameterMap().get(name)[0];
+			}
+		}
+		return super.getParameter(name);
+	}
+
+	@Override
+	public Map getParameterMap() {
+		return Collections.unmodifiableMap(mergeParameter());
+	}
+
+	@Override
+	public String[] getParameterValues(String name) {
+		return mergeParameter().get(name);
+	}
+	
+	/**
+	 * Iterate over the private and the public parameter list and merge it.
+	 * @return merged list
+	 */
+	private Map<String, String[]> mergeParameter(){
+		Map<String,String[]> mergedParameterMap = new HashMap<String, String[]>();
+		//Put the private list first into the map, because it is required, this parameters are the first in the value array.
+		if (super.getPrivateParameterMap() != null)
+			mergedParameterMap.putAll(super.getPrivateParameterMap());
+		Map<String, String[]> publicParameterMap = super.getPublicParameterMap();
+		//Iterate over the public parameter list
+		if (publicParameterMap != null){
+			Set keySet = publicParameterMap.keySet();
+			if (keySet != null){
+				Iterator<String> iterator = keySet.iterator();
+				while (iterator.hasNext()){
+					String name = iterator.next();
+					//tests if the name already exist
+					if (mergedParameterMap.containsKey(name)){
+						String[] tmp = mergedParameterMap.get(name);
+						String[] tmp2 = publicParameterMap.get(name);
+						String[] values = new String[tmp.length + tmp2.length];
+						int length = tmp.length;
+						for (int i = 0; i < length; i++){
+							values[i] = tmp[i];
+						}
+						for (int i = 0; i < tmp2.length;i++){
+							values[i+length] = tmp2[i];
+						}
+						mergedParameterMap.put(name, values);
+					}
+					else{
+						mergedParameterMap.put(name,publicParameterMap.get(name));
+					}
+				}
+			}
+		}
+		return mergedParameterMap;
+	}
+	
 }

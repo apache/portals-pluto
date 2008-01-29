@@ -110,7 +110,7 @@ public class BaseURLImpl implements BaseURL {
 	    	parameters.put(name, new String[]{value});
 	    }
 	    else{
-	    	if (publicRenderParameterNames.contains(name)){
+	    	if (publicRenderParameterNames.contains(name) && !this.isAction && !this.isResourceServing){
 		    	publicRenderParameters.put(name,new String[] {value});
 		    }
 		    else{
@@ -130,7 +130,7 @@ public class BaseURLImpl implements BaseURL {
 			parameters.put(name, StringUtils.copy(values));
 	    }
 		else{
-			if (publicRenderParameterNames.contains(name)){
+			if (publicRenderParameterNames.contains(name)&& !this.isAction && !this.isResourceServing){
 		    	publicRenderParameters.put(name,StringUtils.copy(values));
 		    }
 		    else{
@@ -167,7 +167,7 @@ public class BaseURLImpl implements BaseURL {
         			this.setParameter((String)key, (String[])parameters.get(key));
         		else{
         			//test if this is a public parameter
-        			if (publicPortletRenderParameterNames.contains(key))
+        			if (publicPortletRenderParameterNames.contains(key)&& !this.isAction && !this.isResourceServing)
         				publicRenderParameters.put((String)key, (String[])parameters.get(key));
         			else
         				this.setParameter((String)key, (String[])parameters.get(key));

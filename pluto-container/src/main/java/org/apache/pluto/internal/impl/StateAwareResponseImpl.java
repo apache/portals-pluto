@@ -101,6 +101,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 				getHttpServletRequest(),getInternalPortletWindow());
  	
 		provider.registerToFireEvent(qname, value);
+		redirectAllowed = false;
 	}
 
 	/* (non-Javadoc)
@@ -117,6 +118,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         }
         QName qname = new QName(defaultNamespace, name);
         setEvent(qname, value);
+        redirectAllowed = false;
 	}
 
 	/* (non-Javadoc)
@@ -587,6 +589,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	    			"name and values must not be null or values be an empty array");
 	    	}
 		}
+		redirectAllowed = false;
 	}
 
 	public void setEventRequest(EventRequest eventRequest) {

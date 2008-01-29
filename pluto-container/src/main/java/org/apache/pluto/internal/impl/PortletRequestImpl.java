@@ -941,10 +941,12 @@ implements PortletRequest, InternalPortletRequest {
 			.getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
 		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
 		String[] values = null;
-		for (String string : publicRenderParameterNames) {
-			values = urlProvider.getPublicRenderParameters(string);
-			if (values != null){
-				map.put(string, values);
+		if (publicRenderParameterNames != null){
+			for (String string : publicRenderParameterNames) {
+				values = urlProvider.getPublicRenderParameters(string);
+				if (values != null){
+					map.put(string, values);
+				}
 			}
 		}
 		return Collections.unmodifiableMap(map);
