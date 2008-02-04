@@ -354,13 +354,15 @@ public class PortalURLParserImpl implements PortalURLParser {
     private String encodeMultiValues(String[] values) {
     	StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < values.length; i++) {
+        	// Do not operate on the array reference
+        	String currentValue = values[i];
         	try {
-        		if (values[i] != null)
-        			values[i] = URLEncoder.encode(values[i], "UTF-8");
+        		if (currentValue != null)
+        			currentValue = URLEncoder.encode(values[i], "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				LOG.warn(e);
 			}
-        	buffer.append(values[i] != null ? values[i] : "");
+        	buffer.append(currentValue != null ? currentValue : "");
             if (i + 1 < values.length) {
             	buffer.append(VALUE_DELIM);
             }
