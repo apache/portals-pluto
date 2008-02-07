@@ -125,7 +125,7 @@ public interface PortletRequestDispatcher {
      * is automatically cleared before the forward.
      * <p>
      * The request and response parameters must be either the same objects as were passed to 
-     * the calling portletor be wrapped versions of these.
+     * the calling portlet or be wrapped versions of these.
      * 
      * @param request  a request object that represents the request to the 
      *                 portlet
@@ -141,7 +141,7 @@ public interface PortletRequestDispatcher {
      * @since 2.0
      */
     public void forward(PortletRequest request, PortletResponse response)
-            throws PortletException, java.io.IOException, java.lang.IllegalStateException;
+    throws PortletException, java.io.IOException;
 
     
 

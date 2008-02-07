@@ -158,7 +158,7 @@ public interface PortletSession
    *                            if no attributes are available in the given scope.
    *
    * @exception java.lang.IllegalStateException	if this method is called on an
-   *					invalidated session, or the scope is unkown to the container.   
+   *					invalidated session, or the scope is unknown to the container.      
    */
   
   public java.util.Enumeration<String> getAttributeNames(int scope);
