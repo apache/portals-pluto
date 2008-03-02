@@ -16,12 +16,6 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.exolab.castor.mapping.Mapping;
@@ -29,6 +23,12 @@ import org.exolab.castor.mapping.MappingException;
 import org.exolab.castor.util.LocalConfiguration;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.Unmarshaller;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * Abstract deployment descriptor support class.
@@ -63,14 +63,41 @@ abstract class AbstractCastorDescriptorService {
      * In Pluto 1.2.x it should be "true".  In Pluto 1.1.4 and up (but still
      * within the 1.1 line) it should be "false".
      */
-    private static final String JAXP_DEFAULT = "false";
+    private static final boolean JAXP_DEFAULT = false;
 
     /**
      * Whether or not Castor should use JAXP.  If Castor is not using
      * JAXP, then default to the parser specified by 
      * <code>org.exolab.castor.parser</code>.
      */
-    protected static boolean USING_JAXP = System.getProperty(JAXP_PROPERTY, JAXP_DEFAULT).equalsIgnoreCase("true");
+    protected static final boolean USING_JAXP;
+    
+    static {
+        final String useJaxpStr = System.getProperty(JAXP_PROPERTY);
+        
+        //No system property, try JDK version detection
+        if (useJaxpStr == null) {
+            final String javaSpecVersionStr = System.getProperty("java.specification.version");
+            
+            Double javaSpecVersion = null;
+            try {
+                javaSpecVersion = Double.valueOf(javaSpecVersionStr);
+            }
+            catch (NumberFormatException nfe) {
+                //ignore, the null javaSpecVersion is handled correctly below
+            }
+
+            if (javaSpecVersion != null && javaSpecVersion.doubleValue() >= 1.5) {
+                USING_JAXP = true;
+            }
+            else {
+                USING_JAXP = JAXP_DEFAULT;
+            }
+        }
+        else {
+            USING_JAXP = Boolean.valueOf(useJaxpStr).booleanValue();
+        }
+    }
     
     /**
      * Read the and convert the descriptor into it's Object graph.
