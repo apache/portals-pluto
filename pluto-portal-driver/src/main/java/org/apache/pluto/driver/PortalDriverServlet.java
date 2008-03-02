@@ -38,6 +38,7 @@ import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
  * to this servlet will be processed as Portal Requests.
@@ -61,10 +62,11 @@ public class PortalDriverServlet extends HttpServlet {
     
     /** The portlet container to which we will forward all portlet requests. */
     protected PortletContainer container = null;
-    
-    
-    
-    
+
+    /** Character encoding and content type of the response */
+    private String contentType = "";
+
+
     // HttpServlet Impl --------------------------------------------------------
     
     public String getServletInfo() {
@@ -80,6 +82,11 @@ public class PortalDriverServlet extends HttpServlet {
         servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
         		AttributeKeys.PORTLET_CONTAINER);        
+        String charset = getServletConfig().getInitParameter("charset");
+        if (charset != null && charset.length() > 0) {
+            contentType = "text/html; charset=" + charset;
+        }
+
     }
     
 
@@ -92,6 +99,10 @@ public class PortalDriverServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+
+        if ( contentType != "" ) {
+            response.setContentType( contentType );
+        }
 
         PortalRequestContext portalRequestContext =
             new PortalRequestContext(getServletContext(), request, response);

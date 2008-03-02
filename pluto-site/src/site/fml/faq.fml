@@ -136,5 +136,25 @@ limitations under the License.
       </answer>
     </faq>
 
+    <faq id="encoding">
+        <question>How can I change the default encoding of the Pluto Portal</question>
+        <answer>
+            <p>As of Pluto 1.1.5 you can change the default encoding of the Pluto Portal by
+               editing the Pluto Portlet Servlet's web.xml.  Add an init-param with
+               the name of "charset" and set the value to the desired character set.</p>
+            <textarea style="border:0; width: 100%; background:transparent; color:#555555" rows="15" readonly="true">
+  <servlet>
+    <servlet-name>plutoPortalDriver</servlet-name>
+    <display-name>Pluto Portal Driver</display-name>
+    <description>Pluto Portal Driver Controller</description>
+    <servlet-class>org.apache.pluto.driver.PortalDriverServlet</servlet-class>
+    <init-param>
+      <param-name>charset</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </servlet>
+            </textarea>
+        </answer>
+    </faq>
   </part>
 </faqs>
