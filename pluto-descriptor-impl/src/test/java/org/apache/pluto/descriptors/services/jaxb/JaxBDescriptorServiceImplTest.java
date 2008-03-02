@@ -44,8 +44,12 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 	private StringBuffer xmlBegin168 = new StringBuffer();
 	private StringBuffer portlet168 = new StringBuffer();
 	private StringBuffer attrs168 = new StringBuffer();
-	
-	PortletAppDescriptorServiceImpl jaxb = new PortletAppDescriptorServiceImpl();
+
+    private StringBuffer portlet286NoCache = new StringBuffer();
+    private StringBuffer portlet168NoCache = new StringBuffer();
+    private StringBuffer portletNoCache = new StringBuffer();
+
+    PortletAppDescriptorServiceImpl jaxb = new PortletAppDescriptorServiceImpl();
 
 	/**
 	 * @throws java.lang.Exception
@@ -254,7 +258,35 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			  "</security-constraint>\n" +
 			  "<resource-bundle>resource-bundle</resource-bundle>\n" +
 		"" );
-	}
+
+        portletNoCache.append(
+            "<portlet>"+
+            "<description>AboutPortletDescription</description>"+
+            "<portlet-name>AboutPortlet</portlet-name>"+
+            "<display-name>About Portlet</display-name>"+
+            "<display-name xml:lang=\"fr\">About Portlet</display-name>"+
+            "<portlet-class>org.apache.pluto.driver.portlets.AboutPortlet</portlet-class>"+
+            "        <init-param>\n" +
+            "            <description>a</description>\n" +
+            "            <name>b</name>\n" +
+            "            <value>v</value>\n" +
+            "        </init-param>" +
+            "<supports>"+
+            "<mime-type>text/html</mime-type>"+
+            "<portlet-mode>VIEW</portlet-mode>"+
+            "<portlet-mode>EDIT</portlet-mode>"+
+            "<portlet-mode>HELP</portlet-mode>"+
+            "</supports>"+
+            "<supported-locale>en</supported-locale>"+
+            "<portlet-info>"+
+            "<title>About Apache Pluto</title>"+
+            "</portlet-info>"+
+            "</portlet>"
+            );
+
+        portlet286NoCache.append( xmlBegin286 ).append( portletNoCache ).append( attrs286 ).append( xmlEnd );
+        portlet168NoCache.append( xmlBegin168 ).append( portletNoCache ).append( attrs168 ).append( xmlEnd );
+    }
 
 	/**
 	 * @throws java.lang.Exception
@@ -358,6 +390,28 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 		} catch (IOException ioe){
 			
 		}
+    }
+
+    public void testParseNoExpirationCache168() throws IOException {
+        InputStream inputStream = new ByteArrayInputStream(portlet168NoCache.toString().getBytes());
+        PortletAppDD portletDD = jaxb.read( inputStream );
+
+        assertEquals( "1.0", portletDD.getVersion() );
+        assertEquals( 1, portletDD.getPortlets().size() );
+
+        PortletDD pd = (PortletDD) portletDD.getPortlets().get( 0 );
+        assertNull( pd.getExpirationCacheDD() );
+    }
+
+    public void testParseNoExpirationCache286() throws IOException {
+        InputStream inputStream = new ByteArrayInputStream(portlet286NoCache.toString().getBytes());
+        PortletAppDD portletDD = jaxb.read( inputStream );
+
+        assertEquals( "2.0", portletDD.getVersion() );
+        assertEquals( 1, portletDD.getPortlets().size() );
+
+        PortletDD pd = (PortletDD) portletDD.getPortlets().get( 0 );
+        assertNull( pd.getExpirationCacheDD() );
     }
 
 }
