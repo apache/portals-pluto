@@ -16,14 +16,15 @@
  */
 package org.apache.pluto.util.assemble.file;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.pluto.util.assemble.AssemblerConfig;
+import org.apache.pluto.util.assemble.ResourceEntityResolver;
+import org.custommonkey.xmlunit.XMLTestCase;
+import org.custommonkey.xmlunit.XMLUnit;
+
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.pluto.util.assemble.AssemblerConfig;
-import org.custommonkey.xmlunit.XMLTestCase;
-import org.custommonkey.xmlunit.XMLUnit;
 
 /**
  * @version $Revision$
@@ -36,6 +37,8 @@ public class FileAssemblerTest extends XMLTestCase {
 
     protected void setUp() throws Exception {
         XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setControlEntityResolver( new ResourceEntityResolver() );
+        XMLUnit.setTestEntityResolver( new ResourceEntityResolver() );
 
         final URL webXmlUrl = this.getClass().getResource("/org/apache/pluto/util/assemble/file/web.xml");
         this.webXmlFile = new File(webXmlUrl.getFile());
