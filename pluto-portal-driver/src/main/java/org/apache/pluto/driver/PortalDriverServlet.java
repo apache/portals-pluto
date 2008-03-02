@@ -16,16 +16,6 @@
  */
 package org.apache.pluto.driver;
 
-import java.io.IOException;
-
-import javax.portlet.PortletException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
@@ -36,6 +26,15 @@ import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+
+import javax.portlet.PortletException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -58,7 +57,8 @@ public class PortalDriverServlet extends HttpServlet {
     /** The portlet container to which we will forward all portlet requests. */
     protected PortletContainer container;
 
-
+    /** Character encoding and content type of the response */
+    private String contentType = "";
 
 
     // HttpServlet Impl --------------------------------------------------------
@@ -76,6 +76,11 @@ public class PortalDriverServlet extends HttpServlet {
         servletContext = getServletContext();
         container = (PortletContainer) servletContext.getAttribute(
         		AttributeKeys.PORTLET_CONTAINER);
+        String charset = getServletConfig().getInitParameter("charset");
+        if (charset != null && charset.length() > 0) {
+            contentType = "text/html; charset=" + charset;
+        }
+
     }
 
 
@@ -88,6 +93,10 @@ public class PortalDriverServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+
+        if ( contentType != "" ) {
+            response.setContentType( contentType );
+        }
 
         PortalRequestContext portalRequestContext =
             new PortalRequestContext(getServletContext(), request, response);
