@@ -32,6 +32,36 @@ For information on deploying portlets, building the portal from source
  
   http://portals.apache.org/pluto
 
+Release Notes - Pluto - Version 1.1.5
+=====================================
+
+** Bug
+    * [PLUTO-356] - Pluto Driver not using injected Portal URL Parser
+    * [PLUTO-361] - Error when parsing the portal url
+    * [PLUTO-397] - Copyright at bottom of Portal Driver content needs to be updated to 2007
+    * [PLUTO-399] - Link and documentation on source-repository.html page is incorrect
+    * [PLUTO-421] - PortletRequest.getParameterMap() must return an unmodifiable map (PLT.11.1.1)
+    * [PLUTO-439] - Assembly code cannot parse Servlet 2.4 web.xml containing <jsp-config> tags
+    * [PLUTO-446] - No way to set default page encoding for Pluto
+    * [PLUTO-447] - Old version of junit included via commons-cli in pluto-util
+    * [PLUTO-448] - No way to know if expiration cache value was set via PortletDD
+    * [PLUTO-449] - portlet-skin.jsp does not have the JSTL core taglib directive
+    * [PLUTO-450] - ExternalAppScopedAttributeTest.jsp has a minor javascript error
+    * [PLUTO-451] - JSP21ExpressionEvaluatorProxy is causing an exception in Tomcat 6.0 if compiled using JDK 5.0
+    * [PLUTO-452] - Assembler ant task fails on WAR with no manifest
+    * [PLUTO-455] - Assembler emitts non-validating web.xml for servlet 2.3 and 2.4
+    * [PLUTO-457] - PortletContainerException doesn't chain Throwable
+    * [PLUTO-460] - PortletPreferenceDD doesn't descriminate between no (null) values and empty values (new String[0])
+    * [PLUTO-461] - AbstractVersionedWebAppDescriptorTest based tests may fails based on available XML libraries
+    * [PLUTO-462] - isPortletModeAllowed and isWindowStateAllowed do case-sensitve checks
+
+** Improvement
+    * [PLUTO-360] - FileAssemblerTest cannot be executed offline
+    * [PLUTO-394] - o.a.p.tags.el.ParamTag does not evaluate EL on "name" attribute
+    * [PLUTO-417] - PortletResponseImpl doesn't allow wsrp rewrite urls
+    * [PLUTO-456] - fix line endings on files.
+    * [PLUTO-458] - Improve exception handling with AbstractCastorDescriptorService
+    * [PLUTO-465] - Automatic determination of JAXP usage
 
 Release Notes - Pluto - Version 1.1.4
 =====================================
