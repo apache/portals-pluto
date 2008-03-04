@@ -50,8 +50,8 @@
         <mailingList>
             <name>Pluto User List</name>
             <subscribe>pluto-user-subscribe@portals.apache.org</subscribe>
-            <unsubscribe>pluto-users-unsubscribe@portals.apache.org</unsubscribe>
-            <post>pluto-users@portals.apache.org</post>
+            <unsubscribe>pluto-user-unsubscribe@portals.apache.org</unsubscribe>
+            <post>pluto-user@portals.apache.org</post>
             <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-user</archive>
         </mailingList>
         <mailingList>
