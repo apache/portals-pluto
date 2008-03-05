@@ -15,6 +15,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
+<!--
+    Maven 2 assembly describing a distribution which contains a working installation of Pluto
+    with Tomcat.  Includes site documentation.
+    
+    By the time this assembly descriptor is used, the 'assembly/target/pluto-tomcat' directory
+    will contain Tomcat that has been configured for Pluto, and Pluto will have been installed.
+-->
 <assembly>
 
     <id>bundle</id>
@@ -26,21 +34,20 @@
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
 
+    <componentDescriptors>
+        <componentDescriptor>assembly/src/main/assembly/license-and-notice-component.xml</componentDescriptor>
+        <componentDescriptor>assembly/src/main/assembly/site-documentation-component.xml</componentDescriptor>
+    </componentDescriptors>
+    
     <fileSets>
-        <!-- Pluto root files -->
+        <!--
+            Include the bundled Tomcat, which already has Pluto installed and
+            configured.
+        -->
         <fileSet>
-            <directory>../</directory>
+            <directory>assembly/target/pluto-tomcat</directory>
             <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>README*</include>
-                <include>LICENSE*</include>
-                <include>NOTICE*</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>target/pluto-tomcat</directory>
-            <outputDirectory>/</outputDirectory>
+            <useStrictFiltering>true</useStrictFiltering>
             <includes>
                 <include>*</include>
                 <include>**/*</include>
@@ -51,22 +58,15 @@
         </fileSet>
 
         <fileSet>
-            <directory>target/pluto-tomcat</directory>
+            <directory>assembly/target/pluto-tomcat</directory>
             <outputDirectory>/</outputDirectory>
+            <useStrictFiltering>true</useStrictFiltering>
             <includes>
                 <include>bin/*.sh</include>
             </includes>
            <fileMode>0755</fileMode>
         </fileSet>
 
-        <fileSet>
-            <directory>../pluto-site/target/site</directory>
-            <outputDirectory>docs</outputDirectory>
-            <includes>
-                <include>*</include>
-                <include>**/*</include>
-            </includes>
-        </fileSet>
     </fileSets>
 
 </assembly>

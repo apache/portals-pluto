@@ -17,8 +17,11 @@
       <id>build-assemblies</id>
       <build>
         <plugins>
+            
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.1</version>
             <executions>
               <execution>
                 <goals>
@@ -47,6 +50,7 @@
               </dependency>
             </dependencies>
           </plugin>
+            
           <plugin>
             <groupId>org.apache.pluto</groupId>
             <artifactId>maven-pluto-plugin</artifactId>
@@ -64,9 +68,10 @@
               <installationDirectory>${project.build.directory}/pluto-tomcat</installationDirectory>
             </configuration>
           </plugin>
-          <plugin>
+            
+<!--          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>  
             <artifactId>maven-assembly-plugin</artifactId>
-            <version>2.1</version>
             <executions>
               <execution>
                 <id>make-assemblies</id>
@@ -76,18 +81,7 @@
                 </goals>
               </execution>
             </executions>
-            <configuration>
-              <descriptors>
-                <descriptor>${basedir}/src/main/assembly/src.xml</descriptor>
-                <descriptor>${basedir}/src/main/assembly/bin.xml</descriptor>
-                <descriptor>${basedir}/src/main/assembly/container-bin.xml</descriptor>
-                <descriptor>${basedir}/src/main/assembly/bundled.xml</descriptor>
-              </descriptors>
-              <finalName>pluto-${pom.version}</finalName>
-              <outputDirectory>target/assembly/out</outputDirectory>
-              <workDirectory>target/assembly/work</workDirectory>
-            </configuration>
-          </plugin>
+          </plugin>-->
         </plugins>
       </build>
     </profile>

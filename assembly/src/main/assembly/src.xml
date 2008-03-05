@@ -19,153 +19,51 @@
  */
 -->
 
+<!--
+    Maven 2 assembly describing a distribution which packages up all of the Pluto 
+    code modules, including the source code and Maven 2 POMs.  The result
+    is an assembly that users can download and build with Maven.
+-->
 <assembly>
-
+    
     <id>src</id>
     <formats>
         <format>zip</format>
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
-
+    
+    <componentDescriptors>
+        <componentDescriptor>assembly/src/main/assembly/license-and-notice-component.xml</componentDescriptor>
+    </componentDescriptors>
+    
+    <moduleSets>
+        <moduleSet>
+            <includes>
+                <include>org.apache.pluto:*</include>
+            </includes>
+            <sources>
+                <fileSets>
+                    <fileSet>
+                        <useDefaultExcludes>true</useDefaultExcludes>
+                        <includes>
+                            <include>pom.xml</include>
+                            <include>src/**</include>
+                        </includes>
+                        <useStrictFiltering>true</useStrictFiltering>
+                    </fileSet>
+                </fileSets>                            
+            </sources>
+        </moduleSet>
+    </moduleSets>
+    
     <fileSets>
         <fileSet>
-            <directory>src/main/resources</directory>
-            <outputDirectory></outputDirectory>
-            <includes>
-                <include>README*</include>
-                <include>LICENSE*</include>
-                <include>NOTICE*</include>
-            </includes>
-        </fileSet>
-
-        <!-- Include the source code in the assembly -->
-        <fileSet>
-            <directory>../</directory>
-            <outputDirectory>/</outputDirectory>
+            <directory/>
+            <useStrictFiltering>true</useStrictFiltering>
             <includes>
                 <include>pom.xml</include>
             </includes>
         </fileSet>
-
-        <!-- Start Container Src -->
-        <fileSet>
-            <directory>../pluto-descriptor-api</directory>
-            <outputDirectory>/pluto-descriptor-api</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-descriptor-impl</directory>
-            <outputDirectory>/pluto-descriptor-impl</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-container</directory>
-            <outputDirectory>/pluto-container</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-taglib</directory>
-            <outputDirectory>/pluto-taglib</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <!-- Start Portal Src -->
-
-        <fileSet>
-            <directory>../pluto-portal-driver</directory>
-            <outputDirectory>/pluto-portal-driver</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-portal-driver-impl</directory>
-            <outputDirectory>/pluto-portal-driver-impl</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-portal</directory>
-            <outputDirectory>/pluto-portal</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-testsuite</directory>
-            <outputDirectory>/pluto-testsuite</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <!-- Start Util Src -->
-
-        <fileSet>
-            <directory>../pluto-util</directory>
-            <outputDirectory>/pluto-util</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../maven-pluto-plugin</directory>
-            <outputDirectory>/maven-pluto-plugin</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-ant-tasks</directory>
-            <outputDirectory>/pluto-ant-tasks</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <!-- Docs -->
-        <fileSet>
-            <directory>../pluto-site</directory>
-            <outputDirectory>/pluto-site</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-site-skin</directory>
-            <outputDirectory>/pluto-site-skin</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-    </fileSets>
+    </fileSets>        
+    
 </assembly>

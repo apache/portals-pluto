@@ -325,6 +325,30 @@
                   </execution>
                 </executions>
               </plugin>
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-gpg-plugin</artifactId>
+                  <version>1.0-alpha-4</version>
+                  <executions>
+                      <execution>
+                          <id>sign-artifacts</id>
+                          <phase>verify</phase>
+                          <goals>
+                              <goal>sign</goal>
+                          </goals>
+                      </execution>
+                  </executions>
+              </plugin>
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-release-plugin</artifactId>
+                  <version>2.0-beta-7</version>
+              </plugin>
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-assembly-plugin</artifactId>
+                  <version>2.2-beta-2</version>
+              </plugin>
           </plugins>
         </pluginManagement>
     </build>
@@ -353,16 +377,26 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <descriptors>
+                                <!-- binary libraries and webapps, no external dependencies -->
+                                <descriptor>assembly/src/main/assembly/bin.xml</descriptor>
+                                <!-- portal and testsuite, all bundled and configured with Tomcat -->
+                                <descriptor>assembly/src/main/assembly/bundled.xml</descriptor>
+                                <!-- Buildable source distribution (includes Maven 2 poms) -->
+                                <descriptor>assembly/src/main/assembly/src.xml</descriptor>
+                                <!-- Container binaries only, no external dependencies -->
+                                <descriptor>assembly/src/main/assembly/container-bin.xml</descriptor>
+                            </descriptors>
+                            <finalName>pluto-${pom.version}</finalName>
+                            <outputDirectory>${project.build.directory}/assembly/out</outputDirectory>
+                            <workDirectory>${project.build.directory}/assembly/work</workDirectory>
+                        </configuration>                        
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>                
             </build>        

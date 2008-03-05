@@ -15,6 +15,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
+<!--
+    Maven 2 assembly describing a distribution which contains Pluto container binary artifacts (with no
+    external dependencies) and site documentation.
+-->
 <assembly>
 
     <id>container-bin</id>
@@ -24,68 +29,39 @@
         <format>tar.bz2</format>
         <format>zip</format>
     </formats>
+    
     <includeBaseDirectory>true</includeBaseDirectory>
 
-    <!--
-    <dependencySets>
-        <dependencySet>
-            <outputDirectory>lib</outputDirectory>
-            <scope>compile</scope>
-            <excludes>
-                <exclude>org.apache.pluto:pluto-descriptor-api</exclude>
-                <exclude>org.apache.pluto:pluto-descriptor-impl</exclude>
-                <exclude>org.apache.pluto:pluto-container</exclude>
-                <exclude>org.springframework:*</exclude>
-            </excludes>
-        </dependencySet>
-    </dependencySets>
+    <componentDescriptors>
+        <componentDescriptor>assembly/src/main/assembly/license-and-notice-component.xml</componentDescriptor>
+    </componentDescriptors>
+    
+    <moduleSets>
+        <moduleSet>
+            <includes>
+                <include>org.apache.pluto:pluto-descriptor-api:*</include>
+                <include>org.apache.pluto:pluto-descriptor-impl:*</include>
+                <include>org.apache.pluto:pluto-container:*</include>
+                <include>org.apache.pluto:pluto-taglib:*</include>
+            </includes>
+            <binaries>
+                <outputDirectory>/lib</outputDirectory>
+                <includeDependencies>false</includeDependencies>
+                <unpack>false</unpack>
+                <useStrictFiltering>true</useStrictFiltering>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+    
+    <!-- 
+        Container Documentation
+        (requires that 'site' has been run)
     -->
-
     <fileSets>
-        <!-- Pluto root files -->
         <fileSet>
-            <directory>../</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>README*</include>
-                <include>LICENSE*</include>
-                <include>NOTICE*</include>
-            </includes>
-        </fileSet>
-        <!-- Pluto library files -->
-        <fileSet>
-            <directory>../pluto-descriptor-api/target</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-descriptor-impl/target</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-container/target</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-taglib/target</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-
-        <!-- Container Documentation -->
-        <fileSet>
-            <directory>../pluto-container/target/site</directory>
+            <directory>pluto-container/target/site</directory>
             <outputDirectory>docs</outputDirectory>
+            <useStrictFiltering>true</useStrictFiltering>
             <includes>
                 <include>**/*</include>
             </includes>

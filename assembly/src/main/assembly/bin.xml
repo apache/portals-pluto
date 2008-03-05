@@ -15,6 +15,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
+<!--
+    Maven 2 assembly describing a distribution which contains Pluto binary artifacts (with no
+    external dependencies) - including the Pluto Portal and Testsuite, and site documentation.
+-->
 <assembly>
 
     <id>bin</id>
@@ -25,103 +30,59 @@
         <format>zip</format>
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
-
-    <fileSets>
-        <!-- Pluto root files -->
-        <fileSet>
-            <directory>../</directory>
-            <outputDirectory>/</outputDirectory>
+    
+    <componentDescriptors>
+        <componentDescriptor>assembly/src/main/assembly/license-and-notice-component.xml</componentDescriptor>
+        <componentDescriptor>assembly/src/main/assembly/site-documentation-component.xml</componentDescriptor>
+    </componentDescriptors>
+    
+    <moduleSets>        
+        
+        <moduleSet>
             <includes>
-                <include>README*</include>
-                <include>LICENSE*</include>
-                <include>NOTICE*</include>
+                <include>org.apache.pluto:pluto-descriptor-api:*</include>
+                <include>org.apache.pluto:pluto-descriptor-impl:*</include>
+                <include>org.apache.pluto:pluto-container:*</include>
+                <include>org.apache.pluto:pluto-taglib:*</include>
             </includes>
-        </fileSet>
-        <!-- Pluto library files -->
-        <fileSet>
-            <directory>../pluto-descriptor-api/target</directory>
-            <outputDirectory>lib</outputDirectory>
+            <binaries>
+                <outputDirectory>/lib</outputDirectory>
+                <includeDependencies>false</includeDependencies>
+                <unpack>false</unpack>
+                <useStrictFiltering>true</useStrictFiltering>
+            </binaries>
+        </moduleSet>
+                
+        <!-- Pluto Portal and testsuite webapps (no dependencies) -->
+        <moduleSet>
             <includes>
-                <include>*.jar</include>
+                <include>org.apache.pluto:pluto-portal:*</include>
+                <include>org.apache.pluto:pluto-testsuite:*</include>
             </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-descriptor-impl/target</directory>
-            <outputDirectory>lib</outputDirectory>
+            <binaries>
+                <outputDirectory>/webapps</outputDirectory>
+                <includeDependencies>false</includeDependencies>
+                <unpack>false</unpack>
+                <useStrictFiltering>true</useStrictFiltering>
+            </binaries>                
+        </moduleSet>
+        
+        <!-- Pluto ant tasks, maven plugin, assembler (utils) -->
+        <moduleSet>
             <includes>
-                <include>*.jar</include>
+                <include>org.apache.pluto:pluto-util:*</include>
+                <include>org.apache.pluto:maven-pluto-plugin:*</include>
+                <include>org.apache.pluto:pluto-ant-tasks:*</include>
             </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-container/target</directory>
-            <outputDirectory>lib</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-taglib/target</directory>
-            <outputDirectory>lib</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-
-        <!-- Pluto webapp files (pluto-portal and pluto-testsuite) -->
-        <fileSet>
-            <directory>../pluto-portal/target</directory>
-            <outputDirectory>webapps</outputDirectory>
-            <includes>
-                <include>*.war</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-testsuite/target</directory>
-            <outputDirectory>webapps</outputDirectory>
-            <includes>
-                <include>*.war</include>
-            </includes>
-        </fileSet>
-
-        <!-- Pluto utility files (util, maven/ant plugins) -->
-        <fileSet>
-            <directory>../pluto-util/target</directory>
-            <outputDirectory>util</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-ant-tasks/target</directory>
-            <outputDirectory>util</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>maven-pluto-plugin/target</directory>
-            <outputDirectory>util</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-
-        <!-- Pluto Documentation -->
-        <fileSet>
-            <directory>../pluto-site/target/site</directory>
-            <outputDirectory>docs</outputDirectory>
-            <includes>
-                <include>*</include>
-                <include>**</include>
-                <include>**/*</include>
-            </includes>
-        </fileSet>
-    </fileSets>
-
-
-    <dependencySets>
-        <!-- We specifically exclude dependencies from bin -->
-    </dependencySets>
+            <binaries>
+                <outputDirectory>/util</outputDirectory>
+                <includeDependencies>false</includeDependencies>
+                <unpack>false</unpack>
+                <useStrictFiltering>true</useStrictFiltering>
+            </binaries>                
+        </moduleSet>
+           
+    </moduleSets>        
 
 </assembly>
 

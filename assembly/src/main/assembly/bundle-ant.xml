@@ -16,28 +16,9 @@
 -->
 
 <!--
-	Builds a binary and source distribution of Pluto 1.1, bundling it into zip, gzip and bzip2 files.
-
-	NOTE: Only build the binary through maven
-	
-	Run the binary build using the command line:
-		ant -f dist-build.xml
-				
-	The binary distribution is done in the following way:
-	1. prepare-bin-dist: Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
-		build:
-		a. Adds emptySessionPath="true" to server.xml.
-		b. Uncomments SingleSignOn Valve so that Tomcat manager app can be used without additional login.
-		c. Adds a pluto user with pluto and manager role to tomcat-users.xml.
-		d. Adds a pluto and manager role to the tomcat user in tomcat-users.xml.
-	2. run-maven: Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
-		and installs them into the Tomcat dist in the working directory.
-	3. Bundles up the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
-	
-	Run the source build using the command line:
-		ant -f dist-build.xml src-dist	
-
-	All built distributions end up in target/dist.				
+	Downloads Tomcat, unpacks it, and edits the configuration suitable for
+	running pluto.  Later the Maven 2 assembly will install Pluto into
+	this unpacked copy of Tomcat and prepare the bundled release.
 -->
 <project name="PlutoDistributions" default="package">
 
@@ -126,16 +107,5 @@
 			summary="true"
 		/>
     </target>
-
-
-	<target name="run-maven" description="Runs maven2 goals">
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
-			<arg line="install"/>
-		</exec>
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
-			<arg line="pluto:install -DinstallDir=${package.dir}"/>
-		</exec>
-	</target>
-
 
 </project>
