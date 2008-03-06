@@ -100,7 +100,7 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
             tag.append(ToolTips.forWindowState(new WindowState(state)));
             tag.append("\" ");
             tag.append("href=\"" + portalUrl.toString() + "\">");
-            tag.append("<span class=\"" + state + "\"></span>");
+            tag.append("<span class=\"" + state + "\">");
             tag.append("</span></a>");
 
             // Print the mode anchor tag.
