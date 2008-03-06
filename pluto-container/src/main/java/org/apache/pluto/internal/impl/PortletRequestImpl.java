@@ -217,10 +217,10 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         if (httpSession != null) {
             // HttpSession is not null does NOT mean that it is valid.
             int maxInactiveInterval = httpSession.getMaxInactiveInterval();
-            if (maxInactiveInterval >= 0) {    // < 0 => Never expires.
+            long lastAccesstime = httpSession.getLastAccessedTime();
+            if (maxInactiveInterval >= 0 && lastAccesstime > 0) {    // < 0 => Never expires.
                 long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
-                long currentInactiveTime = System.currentTimeMillis()
-                    - httpSession.getLastAccessedTime();
+                long currentInactiveTime = System.currentTimeMillis() - lastAccesstime;
                 if (currentInactiveTime > maxInactiveTime) {
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("The underlying HttpSession is expired and "
@@ -228,6 +228,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
                     }
                     httpSession.invalidate();
                     httpSession = getHttpServletRequest().getSession(create);
+                    // a cached portletSession is no longer useable.
+                    // a new one will be created below.
+                    portletSession = null;
                 }
             }
         }
