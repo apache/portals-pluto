@@ -23,7 +23,7 @@ limitations under the License.
 <pluto:portlet portletId="${portlet}">
 
   <!-- Assemble the rendering result -->
-  <div class="portlet" id='<c:out value="${portlet}"/>'>
+  <div class="portlet">
     <div class="header">
       <!-- Portlet Mode Controls -->
       <pluto:modeAnchor portletMode="view"/>
@@ -33,9 +33,6 @@ limitations under the License.
       <pluto:windowStateAnchor windowState="minimized"/>
       <pluto:windowStateAnchor windowState="maximized"/>
       <pluto:windowStateAnchor windowState="normal"/>
-      <a href="<pluto:url windowState="minimized"/>"><span class="min"></span></a>
-      <a href="<pluto:url windowState="maximized"/>"><span class="max"></span></a>
-      <a href="<pluto:url windowState="normal"/>"><span class="norm"></span></a>
       <!-- Portlet Title -->
       <h2 class="title"><pluto:title/></h2>
     </div>
