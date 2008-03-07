@@ -136,12 +136,12 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 	  then the <code>pluto:install</code> will fail.
 	</p>
         <p>
-          <code>&lt;PLUTO-SRCHOME&gt;</code> is the local directory where the
+          <code>&lt;PLUTO_SRCHOME&gt;</code> is the local directory where the
           Pluto 1.1 source distribution has been checked out or unzipped into.
         </p>
         <p>
           <source><![CDATA[
-$> cd <PLUTO-SRCHOME>
+$> cd <PLUTO_SRCHOME>
 $> mvn install
 $> mvn pluto:install -DinstallDir=path/to/appserver
           ]]></source>
@@ -173,12 +173,12 @@ C:\pluto> mvn pluto:install -DinstallDir="C:\Program Files\Apache Software Found
         <p>
         This section documents the manual installation of Pluto 1.1 and 2.0 into Tomcat. It replaces 
         the pluto:install goal, but requires that the built-in Maven 2 install goal 
-        (<code>mvn install</code>) be run from <code>&lt;PLUTO-SRCHOME&gt;</code>.
+        (<code>mvn install</code>) be run from <code>&lt;PLUTO_SRCHOME&gt;</code>.
         </p>
         <p>
           <b>Step 1:</b>
           <source><![CDATA[
-$> cd <PLUTO-SRCHOME>
+$> cd <PLUTO_SRCHOME>
 $> mvn install
           ]]></source>
         </p>
@@ -210,7 +210,7 @@ $> mvn install
           </ul>
         </p>
         <p>
-          <b>Step 3:</b> For Pluto 1.1 copy the following to
+          <b>Step 3:</b> For Pluto 1.1, copy the following to
           <code>&lt;TOMCAT_HOME&gt;/common/endorsed</code>:
           <ul>
             <li>xercesImpl-2.6.2.jar</li>
