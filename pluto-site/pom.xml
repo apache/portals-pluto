@@ -3,7 +3,7 @@
     <parent>
         <artifactId>pluto</artifactId>
         <groupId>org.apache.pluto</groupId>
-        <version>1.1.5</version>
+        <version>1.1.6-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -48,9 +48,9 @@
     </reporting>
     <!-- repeated here so that pluto-site is not appended -->
     <scm>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.5</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.5</developerConnection>
-        <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/tags/pluto-1.1.5</url>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.1</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.1</developerConnection>
+        <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/tags/pluto-1.1.1</url>
     </scm>
 
 </project>
