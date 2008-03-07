@@ -30,6 +30,9 @@ limitations under the License.
       <div class="highlightBox">
         <h4>About Pluto Distributions</h4>
         <p>
+            Currently, only Pluto 1.1 has a binary distribution.
+        </p>
+        <p>
           There are a number of distributions to choose from depending
           on your needs.
           <ul>
@@ -58,21 +61,21 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 	        	<li>Use shutdown.bat/shutdown.sh to stop the portal</li>
 			</ol>
         <li>Browse to <a href="http://localhost:8080/pluto/portal">http://localhost:8080/pluto/portal</a></li>
-        <li>Login as the user pluto (password=pluto).</li>
+        <li>Login as user pluto (password=pluto) or tomcat (password=tomcat).</li>
       </ol>
 
     </section>
 	    
-    <section name="Building Pluto from Source">
+    <section name="Building Pluto 1.1 and 2.0 from Source">
       
       <p>
         Maven 2 is utilized as the project management and build system for
-        Pluto 1.1. Pluto currently provides Maven plugins which can be used to
+        Pluto 1.1 and 2.0. Pluto currently provides Maven plugins which can be used to
         install the Pluto Portal, assemble portlet applications, deploy
         applications, and publish portlet applications to the Pluto Portal.
       </p>
 
-      <subsection name="Obtaining Pluto 1.1 Source Code">
+      <subsection name="Obtaining Pluto 1.1/2.0 Source Code">
 		<p>The Pluto project uses the
 		<a href="http://subversion.tigris.org/">Subversion</a> version control
 		system.  If you're new to Subversion, you can check out the
@@ -84,7 +87,7 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
     	<p><b>Web Access to Subversion</b></p>
     	
 		<p>
-		To browse the Pluto 1.1 source code, you can use the
+		To browse the Pluto source code, you can use the
 		<a href="http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk?root=Apache-SVN">ViewCVS
 		web interface</a> to Subversion. This is current at all times.
 		</p>
@@ -98,7 +101,7 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 
 		<h3>Check out from Subversion</h3>
 		
-		<p>Again, anyone can do this.  To check out the latest distribution of Pluto 1.1 (trunk) to a directory 
+		<p>Again, anyone can do this.  To check out the latest distribution of Pluto 2.0 (trunk) to a directory 
 		called 'pluto' use this command:
 		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/trunk/ pluto</pre>
 		</p>
@@ -108,7 +111,7 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 		</p>
 
         <p>
-          Zipped up Pluto source distributions can also be downloaded from
+          Zipped up Pluto 1.1 source distributions can also be downloaded from
         a <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">distribution mirror</a>.  
         </p>          
 
@@ -133,12 +136,12 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 	  then the <code>pluto:install</code> will fail.
 	</p>
         <p>
-          <code>&lt;PLUTO-1.1-SRCHOME&gt;</code> is the local directory where the
+          <code>&lt;PLUTO_SRCHOME&gt;</code> is the local directory where the
           Pluto 1.1 source distribution has been checked out or unzipped into.
         </p>
         <p>
           <source><![CDATA[
-$> cd <PLUTO-1.1-SRCHOME>
+$> cd <PLUTO_SRCHOME>
 $> mvn install
 $> mvn pluto:install -DinstallDir=path/to/appserver
           ]]></source>
@@ -151,7 +154,7 @@ $> mvn pluto:install -DinstallDir=path/to/appserver
         <p>
           The <code>pluto:install</code> goal will take the resulting artifacts
           and properly deploy them within the configured Tomcat installation.
-          Currently, the Pluto 1.1 install has been tested on Tomcat 5.5.9, 5.5.17 and 5.5.20, 5.5.23, and 6.0.13.
+          Currently, the Pluto install has been tested on Tomcat 5.5.9, 5.5.17 and 5.5.20, 5.5.23, and 6.0.13.
           The Tomcat 5 archive can be found <a href="http://archive.apache.org/dist/tomcat/tomcat-5/archive">here</a>.
         </p>
         <p>
@@ -168,14 +171,14 @@ C:\pluto> mvn pluto:install -DinstallDir="C:\Program Files\Apache Software Found
       
       <subsection name="Installing Pluto Manually">
         <p>
-        This section documents the manual installation of Pluto into Tomcat. It replaces 
+        This section documents the manual installation of Pluto 1.1 and 2.0 into Tomcat. It replaces 
         the pluto:install goal, but requires that the built-in Maven 2 install goal 
-        (<code>mvn install</code>) be run from <code>&lt;PLUTO-1.1-SRCHOME&gt;</code>.
+        (<code>mvn install</code>) be run from <code>&lt;PLUTO_SRCHOME&gt;</code>.
         </p>
         <p>
           <b>Step 1:</b>
           <source><![CDATA[
-$> cd <PLUTO-1.1-SRCHOME>
+$> cd <PLUTO_SRCHOME>
 $> mvn install
           ]]></source>
         </p>
@@ -183,6 +186,21 @@ $> mvn install
           <b>Step 2:</b> Copy the following to
           <code>&lt;TOMCAT_HOME&gt;/shared/lib</code>:
           <ul>
+            <li>activation-1.1.jar (Pluto 2.0 only)</li>
+            <li>castor-1.1.1.jar</li>
+            <li>portlet-api-1.0.jar or portlet-api-2.0.jar</li>
+            <li>jaxb-api-2.1.jar (Pluto 2.0 only)</li>
+            <li>jaxb-impl-2.1.2.jar (Pluto 2.0 only)</li>
+            <li>ccpp-1.0.jar (Pluto 2.0 only)</li>
+            <li>stax-1.2.0.jar (Pluto 2.0 only)</li>
+            <li>stax-api-1.0.1.jar (Pluto 2.0 only)</li>
+            <li>xercesImpl-2.6.2.jar (Pluto 2.0 only)</li>
+            <li>xmlParserAPIs-2.6.2.jar (Pluto 2.0 only)</li>
+            <li>pluto-container-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
+            <li>pluto-descriptor-api-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
+            <li>pluto-descriptor-impl-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
+            <li>pluto-taglib-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
+              
             <li>castor-1.0.jar</li>
             <li>portlet-api-1.0.jar</li>
             <li>pluto-container-1.1.4.jar</li>
@@ -192,7 +210,7 @@ $> mvn install
           </ul>
         </p>
         <p>
-          <b>Step 3:</b> Copy the following to
+          <b>Step 3:</b> For Pluto 1.1, copy the following to
           <code>&lt;TOMCAT_HOME&gt;/common/endorsed</code>:
           <ul>
             <li>xercesImpl-2.6.2.jar</li>
@@ -214,14 +232,6 @@ $> mvn install
             <li>&lt;PLUTO_SRCHOME&gt;/pluto-portal/target/pluto-portal.war</li>
             <li>&lt;PLUTO_SRCHOME&gt;/pluto-testsuite/target/pluto-testsuite.war</li>
           </ul>
-        </p>
-      </subsection>
-      
-      <subsection name="Installing Pluto with a Windows EXE">
-        <p>
-          The NSIS Installer is not yet complete, but we hope to have a fully
-          functional one soon.  Anyone is more than welcome to assist us in
-          this process.
         </p>
       </subsection>
           

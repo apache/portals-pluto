@@ -45,13 +45,13 @@ limitations under the License.
       </div>
       
       <div class="highlightBox">
-        <h5>Get Pluto 1.1.4</h5>
+        <h5>Get Pluto 1.1.5</h5>
         <p>
           <a href="http://www.apache.org/dyn/closer.cgi/portals/pluto/">
             <img valign="top" src="images/download.gif" border="0" title="download"/>
             Download
           </a>
-          Pluto 1.1.4 GA
+          Pluto 1.1.5 GA
         </p>
         <ul>
           <li><a href="v11/getting-started.html">Installation Guide</a></li>
@@ -60,7 +60,8 @@ limitations under the License.
      
       <p>
         Pluto is the Reference Implementation of the Java Portlet Specfication.
-        The current version of this specification is JSR 168.
+        The current version (1.0) of this specification is JSR-168. Version 2.0
+        of the Specification is under development by the JSR-286 Expert Group. 
       </p>
       <p>
         Portlets are designed to run in the context of a portal. They are
@@ -100,9 +101,18 @@ limitations under the License.
     <section name="Project Status">
       <p>
         Apache Pluto is a subproject of the Apache Portals Project. The current
-        stable release of Apache Pluto is version 1.1.4.  Pluto 1.1 is being
-        actively developed as the Reference Implementation of JSR-286.
+        stable release of Apache Pluto is version 1.1.5.
       </p>
+      <subsection name="Pluto 2.0">
+        <p>
+           Pluto 2.0, built from the Pluto 1.1 code-base, is the reference implementation
+           of version 2.0 of the Java Portlet API specification (JSR-286). The JSR-286
+           specification adds interportlet coordination (events and shared render parameters), 
+           portlet filters and resource serving to the Portlet API in addition to 
+           numerous other changes from version 1.0.
+        </p>
+     </subsection>
+        
       <subsection name="Pluto 1.1">
         <p>
           Pluto 1.1 introduces a new container architecture. If you are
