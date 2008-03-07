@@ -25,6 +25,45 @@ limitations under the License.
   </properties>
   
   <body>
+    <section name="Pluto 1.1.5 Release Notes">
+      <subsection name="Bug">
+        <ul>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-356'>PLUTO-356</a> - Pluto Driver not using injected Portal URL Parser</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-361'>PLUTO-361</a> - Error when parsing the portal url</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-397'>PLUTO-397</a> - Copyright at bottom of Portal Driver content needs to be updated to 2007</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-399'>PLUTO-399</a> - Link and documentation on source-repository.html page is incorrect</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-421'>PLUTO-421</a> - PortletRequest.getParameterMap() must return an unmodifiable map (PLT.11.1.1)</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-439'>PLUTO-439</a> - Assembly code cannot parse Servlet 2.4 web.xml containing &lt;jsp-config&gt; tags</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-446'>PLUTO-446</a> - No way to set default page encoding for Pluto</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-447'>PLUTO-447</a> - Old version of junit included via commons-cli in pluto-util</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-448'>PLUTO-448</a> - No way to know if expiration cache value was set via PortletDD</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-449'>PLUTO-449</a> - portlet-skin.jsp does not have the JSTL core taglib directive</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-450'>PLUTO-450</a> - ExternalAppScopedAttributeTest.jsp has a minor javascript error</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-451'>PLUTO-451</a> - JSP21ExpressionEvaluatorProxy is causing an exception in Tomcat 6.0 if compiled using JDK 5.0</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-452'>PLUTO-452</a> - Assembler ant task fails on WAR with no manifest</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-455'>PLUTO-455</a> - Assembler emitts non-validating web.xml for servlet 2.3 and 2.4</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-457'>PLUTO-457</a> - PortletContainerException doesn't chain Throwable</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-460'>PLUTO-460</a> - PortletPreferenceDD doesn't descriminate between no (null) values and empty values (new String[0])</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-461'>PLUTO-461</a> - AbstractVersionedWebAppDescriptorTest based tests may fails based on available XML libraries</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-462'>PLUTO-462</a> - isPortletModeAllowed and isWindowStateAllowed do case-sensitve checks</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-473'>PLUTO-473</a> - XML Schema Location for pluto-portal-driver-config.xsd points to obsolete schema definition</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-474'>PLUTO-474</a> - CLONE -portlet session should not be invalidated when lastAccessedTime is 0</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-475'>PLUTO-475</a> - Default Portlet Skin and WindowStateAnchorTag emit invalid markup</li>
+        </ul>
+      </subsection>
+      <subsection name="Improvement">
+        <ul>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-360'>PLUTO-360</a> - FileAssemblerTest cannot be executed offline</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-394'>PLUTO-394</a> - o.a.p.tags.el.ParamTag does not evaluate EL on &quot;name&quot; attribute</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-417'>PLUTO-417</a> - PortletResponseImpl doesn't allow wsrp rewrite urls</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-456'>PLUTO-456</a> - fix line endings on files.</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-458'>PLUTO-458</a> - Improve exception handling with AbstractCastorDescriptorService</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-465'>PLUTO-465</a> - Automatic determination of JAXP usage</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-472'>PLUTO-472</a> - Fix Pluto Maven 2 release assemblies so they actually work.</li>
+        </ul>
+      </subsection>
+    </section>
+      
     <section name="Pluto 1.1.4 Release Notes">
       <subsection name="Bug">
         <ul>

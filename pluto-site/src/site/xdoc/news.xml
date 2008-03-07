@@ -25,8 +25,17 @@ limitations under the License.
   </properties>
   
   <body>
-    
-    <section name="News and Status">
+
+    <section name="News and Status">      
+        <h4>7 January 2008 - JSR-286 RI work moves to the Subversion trunk</h4>
+        <p>
+            The work on the JSR-286 (Portlet 2.0) reference implementation that began in January 2007 in 
+            the 1.1-286-COMPATIBILITY branch of the Pluto Subversion repository has now been merged
+            back into the current Pluto 1.1 code and moved into the SVN trunk. This code is the 
+            basis for a future Pluto 2.0 release. It has been given a version number of 2.0.0-SNAPSHOT
+            in the root Maven 2 pom.xml.
+        </p>
+       
         <h4>7 August 2007 - Portals Pluto 1.1.4</h4>
         <p>
             The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.4. 
