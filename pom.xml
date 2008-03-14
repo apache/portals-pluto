@@ -165,6 +165,16 @@
             <organizationUrl>http://www.library.jhu.edu</organizationUrl>
         </developer>
 
+        <developer>
+            <name>Eric Dalquist</name>
+            <id>edalquist</id>
+            <email>edalquist#a@T#apache.d0t.org</email>
+            <timezone>-5</timezone>
+            <url>http://erics-notes.blogspot.com/</url>
+            <organization>University of Wisconsin - Madison, DoIT</organization>
+            <organizationUrl>http://www.doit.wisc.edu</organizationUrl>
+        </developer>
+
     </developers>
 
 
