@@ -141,7 +141,7 @@ public class RenderResponseImpl extends PortletResponseImpl
     public OutputStream getPortletOutputStream()
         throws IOException, IllegalStateException {
         if (currentContentType == null) {
-            String message = EXCEPTIONS.getString("error.contenttype.null");
+            String message = EXCEPTIONS.getString("error.contenttype.null", "getPortletOutputStream");
             if (LOG.isWarnEnabled()) {
                 LOG.warn("Current content type is not set.");
             }
@@ -156,7 +156,7 @@ public class RenderResponseImpl extends PortletResponseImpl
      */
     public PrintWriter getWriter() throws IOException, IllegalStateException {
         if (currentContentType == null) {
-            String message = EXCEPTIONS.getString("error.contenttype.null");
+            String message = EXCEPTIONS.getString("error.contenttype.null", "getWriter");
             if (LOG.isWarnEnabled()) {
                 LOG.warn("Current content type is not set.");
             }
