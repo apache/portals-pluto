@@ -54,6 +54,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
+import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
@@ -65,6 +66,8 @@ import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.UserInfoService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.NamespaceMapper;
@@ -476,15 +479,21 @@ implements PortletRequest, InternalPortletRequest {
         Map userInfoMap = new HashMap();
         try {
 
-            PortletAppDD dd = container.getOptionalContainerServices()
-                .getPortletRegistryService()
-                .getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
-
-            Map allMap = container.getOptionalContainerServices()
-            	//PLUTO-388 fix:
-            	//The PortletWindow is currently ignored in the implementing class
-            	// See: org.apache.pluto.core.DefaultUserInfoService
-            	.getUserInfoService().getUserInfo( this, this.internalPortletWindow );
+            final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+            final UserInfoService userInfoService = optionalContainerServices.getUserInfoService();
+            
+            //PLUTO-388 fix:
+            //The PortletWindow is currently ignored in the implementing class
+            // See: org.apache.pluto.core.DefaultUserInfoService
+            final Map allMap = userInfoService.getUserInfo( this, this.internalPortletWindow );
+            
+            //PLUTO-477 null attribute maps are ok
+            if (null == allMap) {
+                return null;
+            }
+            
+            final PortletRegistryService portletRegistryService = optionalContainerServices.getPortletRegistryService();
+            final PortletAppDD dd = portletRegistryService.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
 
             Iterator i = dd.getUserAttribute().iterator();
             while(i.hasNext()) {

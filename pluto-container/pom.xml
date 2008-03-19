@@ -119,6 +119,12 @@
       <version>${jmock.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>jmock</groupId>
+      <artifactId>jmock-cglib</artifactId>
+      <version>${jmock.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
