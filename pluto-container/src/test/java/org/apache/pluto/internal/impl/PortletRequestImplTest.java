@@ -16,19 +16,24 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.util.Map;
+
+import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
+import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.optional.UserInfoService;
 import org.jmock.Mock;
 import org.jmock.cglib.MockObjectTestCase;
-
-import javax.portlet.PortalContext;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,6 +47,8 @@ public class PortletRequestImplTest extends MockObjectTestCase
     // Mock Objects
     private Mock mockContainer = null;
     private Mock mockServices = null;
+    private Mock mockOptionalServices = null;
+    private Mock mockUserInfoService = null;
     private Mock mockPortalContext = null;
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
@@ -57,6 +64,8 @@ public class PortletRequestImplTest extends MockObjectTestCase
 
         // Create mocks
         mockServices = mock( RequiredContainerServices.class );
+        mockOptionalServices = mock( OptionalContainerServices.class );
+        mockUserInfoService = mock( UserInfoService.class );
         mockPortalContext = mock( PortalContext.class );
         mockPortletContext = mock( PortletContext.class );
         mockContainer = mock( PortletContainerImpl.class,
@@ -108,5 +117,36 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockHttpSession.expects( never() ).method( "invalidate" );
         
         PortletSession s = request.getPortletSession( true );
+    }
+    
+    /**
+     * Test for PLUTO-477
+     */
+    public void testUnAuthenticatedCreateUserInfoMap() throws Exception {
+        this.mockUserInfoService.expects(once()).method("getUserInfo").will(returnValue(null));
+        
+        this.mockOptionalServices.expects(once()).method("getUserInfoService").will(returnValue(this.mockUserInfoService.proxy()));
+        
+        this.mockContainer.expects(once()).method("getOptionalContainerServices").will(returnValue(this.mockOptionalServices.proxy()));
+        
+        final TestPortletRequestImpl portletRequest = new TestPortletRequestImpl((PortletContainer)this.mockContainer.proxy(), 
+                                                                                 this.window, 
+                                                                                 (HttpServletRequest)this.mockHttpServletRequest.proxy());
+        final Map userInfoMap = portletRequest.createUserInfoMap();
+        assertNull(userInfoMap);
+    }
+    
+    private static class TestPortletRequestImpl extends PortletRequestImpl {
+        public TestPortletRequestImpl(InternalPortletRequest internalPortletRequest) {
+            super(internalPortletRequest);
+        }
+
+        public TestPortletRequestImpl(PortletContainer container, InternalPortletWindow internalPortletWindow, HttpServletRequest servletRequest) {
+            super(container, internalPortletWindow, servletRequest);
+        }
+
+        public PortletPreferences getPreferences() {
+            return null;
+        }
     }
 }
