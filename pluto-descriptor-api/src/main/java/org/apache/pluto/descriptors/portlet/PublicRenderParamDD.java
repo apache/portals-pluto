@@ -44,14 +44,14 @@ import javax.xml.namespace.QName;
  * 
  * <pre>
  * <complexType name="public-render-parameterType">
- *		<annotation>
+ *		&lt;annotation&gt;
  *			<documentation>
  *			The public-render-parameters defines a render parameter that is allowed to be public
  * 			and thus be shared with other portlets.
  *			The identifier must be used for referencing this public render parameter in the portlet code.
  *			Used in: portlet-app
  *			</documentation>
- *		</annotation>
+ *		&lt;/annotation&gt;
  * 		<sequence>
  *			<element name="description" type="portlet:descriptionType" minOccurs="0" maxOccurs="unbounded"/>
  *			<element name="identifier" type="string"/>

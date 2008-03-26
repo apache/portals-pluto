@@ -10,13 +10,13 @@ import javax.xml.namespace.QName;
  * the event definition reference type
  * 
  * <complexType name="event-definition-referenceType">
- *		<annotation>
+ *		&lt;annotation&gt;
  *			<documentation>
  * 			The event-definition-referenceType is used to refernece events 
  *			declared with the event-definition element on application level.
  *			Used in: portlet
  *			</documentation>
- *		</annotation>
+ *		&lt;/annotation&gt;
  *		<choice>
  *			<element name="qname" type="xs:QName"/>
  *			<element name="name" type="string"/>
