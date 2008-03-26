@@ -30,7 +30,7 @@ limitations under the License.
       <div class="highlightBox">
         <h4>About Pluto Distributions</h4>
         <p>
-          Currently, only Pluto 1.1 has a binary distribution.
+            Currently, only Pluto 1.1 has a binary distribution.
         </p>
         <p>
           There are a number of distributions to choose from depending
@@ -137,7 +137,7 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 	</p>
         <p>
           <code>&lt;PLUTO_SRCHOME&gt;</code> is the local directory where the
-          Pluto 1.1/2.0 source distribution has been checked out or unzipped into.
+          Pluto 1.1 source distribution has been checked out or unzipped into.
         </p>
         <p>
           <source><![CDATA[
@@ -200,6 +200,13 @@ $> mvn install
             <li>pluto-descriptor-api-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
             <li>pluto-descriptor-impl-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
             <li>pluto-taglib-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
+              
+            <li>castor-1.0.jar</li>
+            <li>portlet-api-1.0.jar</li>
+            <li>pluto-container-1.1.4.jar</li>
+            <li>pluto-descriptor-api-1.1.4.jar</li>
+            <li>pluto-descriptor-impl-1.1.4.jar</li>
+            <li>pluto-taglib-1.1.4.jar</li>
           </ul>
         </p>
         <p>
@@ -227,7 +234,7 @@ $> mvn install
           </ul>
         </p>
       </subsection>
-      
+          
     <subsection name="Configuring Source-Built Pluto for Application Scope PortletSession Attributes">
     <p>To be able to use application-scoped <code>PortletSession</code> attributes in Pluto, modify
     the Connector element for port 8080 in <code>&lt;TOMCAT_HOME&gt;/conf/server.xml</code> by

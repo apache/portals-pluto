@@ -30,12 +30,11 @@ limitations under the License.
         </p>
 
         <p>
-          Pluto 2.x is currently under development. This is the 
-          reference implementation of JSR-286, the 2nd version
-          of the Java Portlet Specification. Pluto 2.x requires
-          the use of Java 5(a.k.a 1.5).
+            Pluto 2.x is currently under development. This is the 
+            reference implementation of JSR-286, the 2nd version
+            of the Java Portlet Specification. Pluto 2.x requires
+            the use of Java 5(a.k.a 1.5).
         </p>
-
       </answer>
     </faq>
 

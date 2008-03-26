@@ -217,4 +217,12 @@ limitations under the License.
             </organization>
         </project>
     </supplement>
+    <supplement>
+        <project>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-full</artifactId>
+            <name>Code Generation Library (cglib)</name>
+            <url>http://cglib.sourceforge.net/</url>
+        </project>
+    </supplement>
 </supplementalDataModels>

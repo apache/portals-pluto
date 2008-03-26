@@ -25,8 +25,25 @@ limitations under the License.
   </properties>
   
   <body>
-    
+
     <section name="News and Status">
+        <h4>7 March 2008 - Portals Pluto 1.1.5</h4>
+        <p>
+            The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.5. 
+            This is the sixth GA release of the 1.1 line of Pluto, which is a major refactoring of 
+            Pluto 1.0.1 to allow for easier integration of Pluto's portlet container into a portal.
+        </p>
+        <p>
+            Pluto 1.1.5 includes a number of minor bugfixes and improvements, thanks to a number of 
+            contributions from the community.  They include enhancements to the Assembler, the Descriptor 
+            implementation now uses JAXP when running on Java 1.5 or greater, Container support has been
+            improved for other servlet containers besides Tomcat, and addtional enhancements have been made
+            to the Pluto tag libraries.
+        </p>
+        <p>
+            Full release notes can be found <a href="http://portals.apache.org/pluto/v11/release-notes.html">here.</a>
+        </p>
+        
         <h4>7 January 2008 - JSR-286 RI work moves to the Subversion trunk</h4>
         <p>
             The work on the JSR-286 (Portlet 2.0) reference implementation that began in January 2007 in 
@@ -35,7 +52,7 @@ limitations under the License.
             basis for a future Pluto 2.0 release. It has been given a version number of 2.0.0-SNAPSHOT
             in the root Maven 2 pom.xml.
         </p>
-
+       
         <h4>7 August 2007 - Portals Pluto 1.1.4</h4>
         <p>
             The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.4. 
