@@ -32,15 +32,6 @@
         <system>jira</system>
         <url>http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10560</url>
     </issueManagement>
-    <ciManagement>
-        <system>continuum</system>
-        <notifiers>
-            <notifier>
-                <type>mail</type>
-                <address>pluto-dev@portals.apache.org</address>
-            </notifier>
-        </notifiers>
-    </ciManagement>
     <inceptionYear>2003</inceptionYear>
 
 
