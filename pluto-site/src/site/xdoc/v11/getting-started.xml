@@ -137,7 +137,7 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 	</p>
         <p>
           <code>&lt;PLUTO_SRCHOME&gt;</code> is the local directory where the
-          Pluto 1.1 source distribution has been checked out or unzipped into.
+          Pluto 1.1/2.0 source distribution has been checked out or unzipped into.
         </p>
         <p>
           <source><![CDATA[
@@ -187,7 +187,7 @@ $> mvn install
           <code>&lt;TOMCAT_HOME&gt;/shared/lib</code>:
           <ul>
             <li>activation-1.1.jar (Pluto 2.0 only)</li>
-            <li>castor-1.1.1.jar</li>
+            <li>castor-1.1.1.jar (Pluto 1.1.x only)</li>
             <li>portlet-api-1.0.jar or portlet-api-2.0.jar</li>
             <li>jaxb-api-2.1.jar (Pluto 2.0 only)</li>
             <li>jaxb-impl-2.1.2.jar (Pluto 2.0 only)</li>
@@ -200,18 +200,12 @@ $> mvn install
             <li>pluto-descriptor-api-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
             <li>pluto-descriptor-impl-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
             <li>pluto-taglib-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
-              
-            <li>castor-1.0.jar</li>
-            <li>portlet-api-1.0.jar</li>
-            <li>pluto-container-1.1.4.jar</li>
-            <li>pluto-descriptor-api-1.1.4.jar</li>
-            <li>pluto-descriptor-impl-1.1.4.jar</li>
-            <li>pluto-taglib-1.1.4.jar</li>
           </ul>
         </p>
         <p>
-          <b>Step 3:</b> For Pluto 1.1, copy the following to
-          <code>&lt;TOMCAT_HOME&gt;/common/endorsed</code>:
+          <b>Step 3:</b> For platforms running on Java 1.4 and Pluto 1.1, copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/common/endorsed</code> (if you are running Java 1.5+, or you are 
+          running Pluto 2.0, it is recommended to skip this step):
           <ul>
             <li>xercesImpl-2.6.2.jar</li>
             <li>xmlParserAPIs-2.6.2.jar</li>
