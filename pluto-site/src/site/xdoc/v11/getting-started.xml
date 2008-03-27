@@ -106,8 +106,9 @@ in &lt;PLUTO-1.1-HOME&gt;/bin.</li>
 		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/trunk/ pluto</pre>
 		</p>
 
-		<p>To check out Pluto 1.1.4 source to the 'pluto' directory use this command:
-		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.4 pluto</pre>
+		<p>To check out Pluto 1.1.<code>x</code> source to the 'pluto' directory use this command (substituting '<code>x</code>' for the 
+        current release number, e.g. 1.1.<code>5</code>):
+		<pre>svn checkout https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.x pluto</pre>
 		</p>
 
         <p>

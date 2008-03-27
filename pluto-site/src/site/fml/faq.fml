@@ -155,5 +155,21 @@ limitations under the License.
             </textarea>
         </answer>
     </faq>
+      
+    <faq id="xml-parsing">
+        <question>
+            Do I need to have xml parsers in an endorsed classloader? (e.g.in
+            Tomcat's 5.5 common/endorsed directory)
+        </question>
+        <answer>
+            <p>If you have installed Pluto 1.1.5 or greater, and are running on
+            Java 5 or greater, then you do not need to endorse any XML
+            libraries.  Pluto will use JAXP.</p>
+            <p>The Pluto 1.1.x codebase targets Java 1.4, and so the bundled
+            distribution of Pluto includes Tomcat with XML libraries in
+            <code>common/endorsed</code>.  Simply remove the XML libraries
+            from <code>common/endorsed</code> if you meet the above requirements.</p>
+        </answer>
+    </faq>
   </part>
 </faqs>

@@ -49,6 +49,7 @@ limitations under the License.
       <item name="News" href="/news.html"/>
       <item name="FAQ" href="/faq.html"/>
       <item name="Wiki" href="http://wiki.apache.org/portals/Pluto"/>
+      <item name="Issue Tracker (JIRA)" href="https://issues.apache.org/jira/browse/PLUTO"/>
       <item name="Powered By Pluto" href="/powered.html"/>
       <item name="Get Involved" href="/helping.html"/>
     </menu>
