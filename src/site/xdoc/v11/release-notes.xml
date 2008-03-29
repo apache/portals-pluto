@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<document>
+  
+  <properties>
+    <title>Release Notes</title>
+  </properties>
+  
+  <body>
+    <section name="Pluto 1.1.5 Release Notes">
+      <subsection name="Bug">
+        <ul>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-356'>PLUTO-356</a> - Pluto Driver not using injected Portal URL Parser</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-361'>PLUTO-361</a> - Error when parsing the portal url</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-397'>PLUTO-397</a> - Copyright at bottom of Portal Driver content needs to be updated to 2007</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-399'>PLUTO-399</a> - Link and documentation on source-repository.html page is incorrect</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-421'>PLUTO-421</a> - PortletRequest.getParameterMap() must return an unmodifiable map (PLT.11.1.1)</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-439'>PLUTO-439</a> - Assembly code cannot parse Servlet 2.4 web.xml containing &lt;jsp-config&gt; tags</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-446'>PLUTO-446</a> - No way to set default page encoding for Pluto</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-447'>PLUTO-447</a> - Old version of junit included via commons-cli in pluto-util</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-448'>PLUTO-448</a> - No way to know if expiration cache value was set via PortletDD</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-449'>PLUTO-449</a> - portlet-skin.jsp does not have the JSTL core taglib directive</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-450'>PLUTO-450</a> - ExternalAppScopedAttributeTest.jsp has a minor javascript error</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-451'>PLUTO-451</a> - JSP21ExpressionEvaluatorProxy is causing an exception in Tomcat 6.0 if compiled using JDK 5.0</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-452'>PLUTO-452</a> - Assembler ant task fails on WAR with no manifest</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-455'>PLUTO-455</a> - Assembler emitts non-validating web.xml for servlet 2.3 and 2.4</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-457'>PLUTO-457</a> - PortletContainerException doesn't chain Throwable</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-460'>PLUTO-460</a> - PortletPreferenceDD doesn't descriminate between no (null) values and empty values (new String[0])</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-461'>PLUTO-461</a> - AbstractVersionedWebAppDescriptorTest based tests may fails based on available XML libraries</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-462'>PLUTO-462</a> - isPortletModeAllowed and isWindowStateAllowed do case-sensitve checks</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-473'>PLUTO-473</a> - XML Schema Location for pluto-portal-driver-config.xsd points to obsolete schema definition</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-474'>PLUTO-474</a> - CLONE -portlet session should not be invalidated when lastAccessedTime is 0</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-475'>PLUTO-475</a> - Default Portlet Skin and WindowStateAnchorTag emit invalid markup</li>
+        </ul>
+      </subsection>
+      <subsection name="Improvement">
+        <ul>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-360'>PLUTO-360</a> - FileAssemblerTest cannot be executed offline</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-394'>PLUTO-394</a> - o.a.p.tags.el.ParamTag does not evaluate EL on &quot;name&quot; attribute</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-417'>PLUTO-417</a> - PortletResponseImpl doesn't allow wsrp rewrite urls</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-456'>PLUTO-456</a> - fix line endings on files.</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-458'>PLUTO-458</a> - Improve exception handling with AbstractCastorDescriptorService</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-465'>PLUTO-465</a> - Automatic determination of JAXP usage</li>
+           <li><a href='https://issues.apache.org/jira/browse/PLUTO-472'>PLUTO-472</a> - Fix Pluto Maven 2 release assemblies so they actually work.</li>
+        </ul>
+      </subsection>
+    </section>
+      
+    <section name="Pluto 1.1.4 Release Notes">
+      <subsection name="Bug">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-341'>PLUTO-341</a> - Page Admin Portlet does not work with Internet Explorer ver 6</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-356'>PLUTO-356</a> - Pluto Driver not using injected Portal URL Parser</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-361'>PLUTO-361</a> - Error when parsing the portal url</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-369'>PLUTO-369</a> - Inconsistency in PortletRequest attribute handling</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-370'>PLUTO-370</a> - Cannot build 1.1.3 GA release from source</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-381'>PLUTO-381</a> - Not able to Add Portal page to a new application</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-383'>PLUTO-383</a> - DefaultUserInfo service returns null userinfo map</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-386'>PLUTO-386</a> - Src distribution does not contain Pluto-AntTask.jar</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-389'>PLUTO-389</a> - Pluto-Ant-Task can not be built because of missing junit dependency</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-390'>PLUTO-390</a> - EarAssemblerTest failure</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-393'>PLUTO-393</a> - Maximize Window State formatting problems in Firefox 2.0</li>
+        </ul>
+      </subsection>
+      <subsection name="Improvement"> 
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-347'>PLUTO-347</a> - Remove dependency on shared/lib xerces and xmlAPIs</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-358'>PLUTO-358</a> - Upgrade to Castor 1.1.1</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-375'>PLUTO-375</a> - The ExpressionEvaluatorProxy for JSP 2.1 is unimplemented</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-376'>PLUTO-376</a> - Update Pluto to work with Tomcat 6.x</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-384'>PLUTO-384</a> - PortletContextManager.getPortletApplicationDescriptor returns null when a portlet context cannot be found.</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-385'>PLUTO-385</a> - Use CSS-based tab navigation for Pluto Portal</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-387'>PLUTO-387</a> - Provide add/remove page functionality to Pluto Portal Driver</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-388'>PLUTO-388</a> - Removed use of deprecated method</li>
+        </ul>
+      </subsection>
+      <subsection name="New Feature"> 
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-186'>PLUTO-186</a> - ToolTips to Portlet Controls</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-359'>PLUTO-359</a> - Add ability to assemble EAR files</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-382'>PLUTO-382</a> - Have Page Administrator portlet persist new page configurations</li>
+        </ul>
+      </subsection>
+    </section>
+
+    <section name="Pluto 1.1.3 Release Notes">
+      <subsection name="Bug">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-351'>PLUTO-351</a> - Method removeAttribute in PortletRequestImpl causes NullPointerException in Resin 3.0.17 </li>
+        </ul>
+      </subsection> 
+      
+      <subsection name="Improvement">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-350'>PLUTO-350</a> - Remove absolute url dependency</li>
+        </ul>
+      </subsection>
+   
+      <subsection name="New Feature">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-352'>PLUTO-352</a> - Implement "Simple" Portlet Page Support</li>
+        </ul>
+      </subsection>
+          
+      <subsection name="Task">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-348'>PLUTO-348</a> - Automate PGP key signing of M2 artifacts.</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-349'>PLUTO-349</a> - Include META-INF/LICENSE and META-INF/NOTICE in maven artifacts</li>
+        </ul>
+      </subsection>    
+    </section>
+
+    <section name="Pluto 1.1.2 Release Notes">
+
+      <subsection name="Bug">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-331'>PLUTO-331</a> - Page Admin Portlet fails in Pluto 1.1.1</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-332'>PLUTO-332</a> - PortletContextManager.remove(InternalPortletContext) fails</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-336'>PLUTO-336</a> - Provide alternate ways for deriving applicationId</li>
+        </ul>
+      </subsection>    
+      <subsection name="Improvement">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-334'>PLUTO-334</a> - UserInfoService should provide PortletWindow in getUserInfo()</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-335'>PLUTO-335</a> - Use proper namespacing for JavaScript in Page Admin Portlet</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-338'>PLUTO-338</a> - Remove dependency to plexus file utils, commons httpclient and commons beanutils</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-344'>PLUTO-344</a> - Update maven pluto plugin to accept a list of war files to assemble.</li>
+        </ul>
+      </subsection>    
+      <subsection name="New Feature">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-328'>PLUTO-328</a> - Add support for a callback right before Render and Action in PortletServlet</li>
+        </ul>
+      </subsection>                
+      <subsection name="Task">
+        <ul>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-339'>PLUTO-339</a> - Deprecate PortletEntity getControllerServletUri() so it can be removed in future versions of Pluto.</li>
+          <li><a href='https://issues.apache.org/jira/browse/PLUTO-345'>PLUTO-345</a> - Fix link to distribution website on http://portals.apache.org/pluto/v11/getting-started.html</li>
+        </ul>
+      </subsection> 
+    </section>
+	    
+  </body>
+  
+</document>
+

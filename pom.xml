@@ -278,7 +278,7 @@
         <module>pluto-ant-tasks</module>
 
         <!-- Pluto Documentations -->
-        <module>pluto-site</module>
+        <!--module>pluto-site</module-->
         <module>pluto-site-skin</module>
     </modules>
 
@@ -359,8 +359,20 @@
                   <artifactId>maven-assembly-plugin</artifactId>
                   <version>2.2-beta-2</version>
               </plugin>
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-site-plugin</artifactId>
+                  <version>2.0-beta-7-SNAPSHOT</version>
+              </plugin>
           </plugins>
         </pluginManagement>
+        
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+          </plugin>
+        </plugins>
     </build>
 
     <reporting>
