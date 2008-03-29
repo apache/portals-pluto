@@ -68,24 +68,11 @@
     
   </dependencies>
 
-  <distributionManagement>
-    <site>
-      <id>website</id>
-      <url>scp://people.apache.org/www/portals.apache.org/pluto/pluto-1.1</url>
-    </site>
-  </distributionManagement>
-  
   <reporting>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-site-plugin</artifactId>
-        <configuration>
-          <resourcesDirectory>${basedir}/../pluto-site/src/site/resources</resourcesDirectory>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

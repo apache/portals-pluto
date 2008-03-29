@@ -15,30 +15,16 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="Maven">
-  <bannerLeft>
-    <name>Pluto</name>
-    <src>http://portals.apache.org/pluto/images/pluto11.png</src>
-    <href>http://portals.apache.org/pluto</href>
-  </bannerLeft>
-  <bannerRight>
-    <src>http://portals.apache.org/pluto/images/banner.png</src>
-  </bannerRight>
-
-  <skin>  
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto-site-skin</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
-  </skin> 
+<project name="Pluto Descriptor API">
 
   <body>
-    <links>
-      <item name="Pluto Home" href="http://portals.apache.org/pluto"/>
-      <item name="JSR 168" href="http://jcp.org/en/jsr/detail?id=168"/>
-	  <item name="Chinese Translation" href="http://heavyz.sourceforge.net/pluto_zh/pluto-container"/>
-    </links>
+    <menu name="Pluto Descriptor API">
+      <item name="About" href="/index.html"/>
+    </menu> 
 
-    ${reports}
+    <menu ref="parent"/>
+
+    <menu ref="reports"/>
 
   </body>
 </project>
