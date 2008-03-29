@@ -211,9 +211,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.1</connection>
-        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.1</developerConnection>
-        <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/tags/pluto-1.1.1</url>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.5</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-1.1.5</developerConnection>
+        <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/tags/pluto-1.1.5</url>
     </scm>
 
     <organization>
@@ -362,7 +362,7 @@
               <plugin>
                   <groupId>org.apache.maven.plugins</groupId>
                   <artifactId>maven-site-plugin</artifactId>
-                  <version>2.0-beta-6</version>
+                  <version>2.0-beta-7-SNAPSHOT</version>
               </plugin>
           </plugins>
         </pluginManagement>
