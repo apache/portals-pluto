@@ -16,10 +16,17 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.portlet.PreferencesValidator;
+import javax.portlet.ValidatorException;
+import javax.servlet.ServletContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.PortletEntity;
@@ -28,16 +35,6 @@ import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.om.portlet.PortletPreference;
 import org.apache.pluto.om.portlet.PortletPreferences;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.servlet.ServletDD;
-
-import javax.portlet.PreferencesValidator;
-import javax.portlet.ValidatorException;
-import javax.servlet.ServletContext;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 
 /**
@@ -66,7 +63,7 @@ public class PortletEntityImpl implements PortletEntity {
     private String portletName = null;
 
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
-    private PortletDD portletDefinition;
+    private Portlet portletDefinition;
     
     /** Default portlet preferences defined for this portlet. */
     private InternalPortletPreference[] defaultPreferences;
@@ -150,7 +147,7 @@ public class PortletEntityImpl implements PortletEntity {
      * Returns the portlet description. The return value cannot be NULL.
      * @return the portlet description.
      */
-    public PortletDD getPortletDefinition() {
+    public Portlet getPortletDefinition() {
         if (portletDefinition == null) {
             load();
         }
@@ -190,7 +187,7 @@ public class PortletEntityImpl implements PortletEntity {
             PortletApp appDD = PortletDescriptorRegistry.getRegistry()
             		.getPortletAppDD(crossContext);
             for (Iterator it = appDD.getPortlets().iterator(); it.hasNext(); ) {
-                PortletDD portletDD = (PortletDD) it.next();
+                Portlet portletDD = (Portlet) it.next();
                 if (portletDD.getPortletName().equals(portletName)) {
                 	portletDefinition = portletDD;
                 	break;

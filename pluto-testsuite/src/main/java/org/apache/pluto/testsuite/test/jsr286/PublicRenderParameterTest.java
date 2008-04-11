@@ -1,15 +1,11 @@
 package org.apache.pluto.testsuite.test.jsr286;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.apache.pluto.testsuite.TestResult;
-import org.apache.pluto.testsuite.TestUtils;
-import org.apache.pluto.testsuite.annotations.DefaultTestPhase;
 import org.apache.pluto.testsuite.test.AbstractReflectivePortletTest;
 
 /**

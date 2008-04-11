@@ -17,13 +17,14 @@
  */
 package org.apache.pluto.spi.optional;
 
+import java.util.Iterator;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
-import org.apache.pluto.PortletContainerException;
-
-import javax.portlet.PortletContext;
-import javax.portlet.PortletConfig;
-import java.util.Iterator;
 
 /**
  * Interface defining the services used by the container

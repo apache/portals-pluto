@@ -16,12 +16,12 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.util.StringManager;
-
-import java.util.ResourceBundle;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.Vector;
+
+import org.apache.pluto.util.StringManager;
 
 /**
  *

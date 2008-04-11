@@ -16,10 +16,10 @@
  */
 package org.apache.pluto.driver.config;
 
+import javax.servlet.ServletContext;
+
 import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
-
-import javax.servlet.ServletContext;
 
 /**
  * Interface defining a means for obtaining administrative

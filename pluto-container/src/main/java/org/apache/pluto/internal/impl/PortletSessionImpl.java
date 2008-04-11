@@ -26,14 +26,14 @@ import java.util.Vector;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletSessionUtil;
-import javax.servlet.http.HttpSessionContext;
-import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.util.ArgumentUtility;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Implementation of the <code>javax.portlet.PortletSession</code> interface.

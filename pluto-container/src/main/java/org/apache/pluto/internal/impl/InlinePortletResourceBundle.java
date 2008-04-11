@@ -16,10 +16,10 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.Constants;
-
-import java.util.ListResourceBundle;
 import java.util.ArrayList;
+import java.util.ListResourceBundle;
+
+import org.apache.pluto.Constants;
 
 /**
  * InlinePortletResourceBundle implementation which provides the

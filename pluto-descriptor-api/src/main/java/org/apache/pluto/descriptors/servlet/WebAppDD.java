@@ -16,6 +16,10 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.pluto.om.common.Icon;
 import org.apache.pluto.om.servlet.Distributable;
 import org.apache.pluto.om.servlet.LoginConfig;
@@ -24,10 +28,6 @@ import org.apache.pluto.om.servlet.ServletMapping;
 import org.apache.pluto.om.servlet.SessionConfig;
 import org.apache.pluto.om.servlet.WebApp;
 import org.apache.pluto.om.servlet.WelcomeFileList;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * WebApplication configuration as contained

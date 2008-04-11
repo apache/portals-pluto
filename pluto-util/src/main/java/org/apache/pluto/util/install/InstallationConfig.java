@@ -16,11 +16,9 @@
  */
 package org.apache.pluto.util.install;
 
-import org.apache.pluto.util.install.ServerConfig;
-
+import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.io.File;
 
 /**
  * The installation configuration used to install Pluto to servlet container.

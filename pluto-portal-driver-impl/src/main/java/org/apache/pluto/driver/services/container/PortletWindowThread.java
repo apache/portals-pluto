@@ -45,7 +45,6 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.om.portlet.EventDefinition;
 import org.apache.pluto.om.portlet.PortletApp;

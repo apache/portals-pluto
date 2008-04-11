@@ -24,7 +24,7 @@ import javax.portlet.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.om.portlet.Portlet;
 
 /**
  * The portlet preferences validator registry. This class caches the portlet
@@ -78,7 +78,7 @@ public class PreferencesValidatorRegistry {
 	 * @return the preferences validator if defined for the portlet definition.
 	 * @throw ValidatorException  if fail to instantiate validator instance.
 	 */
-	public PreferencesValidator getPreferencesValidator(PortletDD portletDD)
+	public PreferencesValidator getPreferencesValidator(Portlet portletDD)
 	throws ValidatorException {
 
 		// Try to retrieve the validator from cache.

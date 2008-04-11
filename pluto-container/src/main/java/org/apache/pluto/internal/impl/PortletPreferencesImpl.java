@@ -30,17 +30,17 @@ import javax.portlet.PreferencesValidator;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.util.StringManager;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
+import org.apache.pluto.util.StringManager;
 
 /**
  * Implementation of the <code>javax.portlet.PortletPreferences</code>

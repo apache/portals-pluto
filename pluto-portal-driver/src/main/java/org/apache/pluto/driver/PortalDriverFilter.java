@@ -16,14 +16,7 @@
  */
 package org.apache.pluto.driver;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.driver.core.PortalRequestContext;
-import org.apache.pluto.driver.core.PortletWindowImpl;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-import org.apache.pluto.driver.url.PortalURL;
+import java.io.IOException;
 
 import javax.portlet.PortletException;
 import javax.servlet.Filter;
@@ -35,7 +28,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.core.PortletWindowImpl;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.url.PortalURL;
 
 /**
  * The controller filter used to drive static portlet pages.

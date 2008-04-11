@@ -15,8 +15,8 @@
  */
 package org.apache.pluto.driver.services.portal.admin;
 
-import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.portal.PageConfig;
 
 /**
  *

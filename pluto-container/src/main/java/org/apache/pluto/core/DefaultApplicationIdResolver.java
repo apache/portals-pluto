@@ -17,12 +17,13 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.servlet.ServletContext;
-import java.net.URL;
-import java.net.MalformedURLException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class DefaultApplicationIdResolver implements ApplicationIdResolver {

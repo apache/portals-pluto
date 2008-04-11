@@ -16,9 +16,9 @@
  */
 package org.apache.pluto.driver.services.portal;
 
-import org.apache.pluto.driver.config.DriverConfigurationException;
-
 import javax.servlet.ServletContext;
+
+import org.apache.pluto.driver.config.DriverConfigurationException;
 
 /**
  * Abstract interface defining lifecycle methods for

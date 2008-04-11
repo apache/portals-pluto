@@ -17,10 +17,10 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.Constants;
-
 import javax.portlet.PortletRequest;
+
+import org.apache.pluto.Constants;
+import org.apache.pluto.PortletWindow;
 
 
 public class PortletInvocationEvent {

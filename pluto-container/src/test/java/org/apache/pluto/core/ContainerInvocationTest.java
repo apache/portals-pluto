@@ -1,11 +1,12 @@
 package org.apache.pluto.core;
 
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
+
 import junit.framework.TestCase;
+
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletWindowID;
-
-import javax.portlet.WindowState;
-import javax.portlet.PortletMode;
 
 
 public class ContainerInvocationTest extends TestCase

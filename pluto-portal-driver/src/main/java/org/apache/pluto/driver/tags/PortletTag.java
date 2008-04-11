@@ -30,15 +30,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.driver.core.PortalServletResponse;
 import org.apache.pluto.driver.core.PortletWindowImpl;
-import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
 
 /**
  * The portlet tag is used to render a portlet specified by the portlet ID.

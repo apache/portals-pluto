@@ -18,9 +18,7 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -38,7 +36,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.DummyPrintWriter;

@@ -16,6 +16,20 @@
  */
 package org.apache.pluto.core;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
@@ -31,19 +45,6 @@ import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.util.ClasspathScanner;
- 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Manager used to cache the portlet configurations which have

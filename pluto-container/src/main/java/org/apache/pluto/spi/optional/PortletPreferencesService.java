@@ -18,8 +18,8 @@ package org.apache.pluto.spi.optional;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.spi.ContainerService;
 

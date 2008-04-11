@@ -16,14 +16,14 @@
  */
 package org.apache.pluto.ant;
 
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.BuildException;
+import java.io.File;
+
 import org.apache.pluto.util.UtilityException;
 import org.apache.pluto.util.assemble.Assembler;
-import org.apache.pluto.util.assemble.AssemblerFactory;
 import org.apache.pluto.util.assemble.AssemblerConfig;
-
-import java.io.File;
+import org.apache.pluto.util.assemble.AssemblerFactory;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
 
 /**
  * TODO JavaDoc

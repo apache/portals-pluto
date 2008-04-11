@@ -16,8 +16,8 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.pluto.om.servlet.WebResourceCollection;
 

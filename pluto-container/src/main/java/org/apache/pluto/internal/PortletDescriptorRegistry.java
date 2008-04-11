@@ -16,18 +16,18 @@
  */
 package org.apache.pluto.internal;
 
-import org.apache.pluto.PlutoConfigurationException;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.om.portlet.PortletApp;
-import org.apache.pluto.util.StringManager;
-
-import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.WeakHashMap;
+
+import javax.servlet.ServletContext;
+
+import org.apache.pluto.PlutoConfigurationException;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.util.StringManager;
 
 /**
  * Simple caching mechanism used to manage portlet descriptors. This mechanism

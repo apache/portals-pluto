@@ -16,12 +16,12 @@
  */
 package org.apache.pluto;
 
-import org.apache.pluto.spi.optional.PortletPreferencesService;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.PortletInvokerService;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 /**

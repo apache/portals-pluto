@@ -16,8 +16,8 @@
  */
 package org.apache.pluto.util;
 
-import java.util.Map;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Test Class

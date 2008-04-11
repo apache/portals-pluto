@@ -16,17 +16,17 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+
 import org.apache.pluto.descriptors.services.Constants;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.om.servlet.WebApp;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
 import org.exolab.castor.xml.Marshaller;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 
 /**
  * Abstract Implementation of the Web Application Deployment

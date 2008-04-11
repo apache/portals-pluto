@@ -18,6 +18,7 @@ package org.apache.pluto;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import org.apache.pluto.om.portlet.Portlet;
 
 /**
  * Thin representation of the portlet window for which the container
@@ -25,7 +26,7 @@ import javax.portlet.WindowState;
  * to map the request to the configured Portlet Application and Portlet.
  *
  * @see org.apache.pluto.internal.impl.InternalPortletWindowImpl
- * @see org.apache.pluto.descriptors.portlet.PortletDD
+ * @see org.apache.pluto.om.portlet.Portlet
  *
  * @version 1.0
  * @since Sep 22, 2004

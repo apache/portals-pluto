@@ -23,7 +23,6 @@ import java.util.List;
 import javax.portlet.PortletContext;
 import javax.portlet.filter.FilterConfig;
 
-import org.apache.pluto.descriptors.common.InitParamDD;
 import org.apache.pluto.om.common.InitParam;
 
 /**

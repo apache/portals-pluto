@@ -16,11 +16,11 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import java.util.List;
+
 import org.apache.pluto.om.common.UserDataConstraint;
 import org.apache.pluto.om.servlet.AuthConstraint;
 import org.apache.pluto.om.servlet.SecurityConstraint;
-
-import java.util.List;
 
 /**
  * <B>TODO</B>: Document

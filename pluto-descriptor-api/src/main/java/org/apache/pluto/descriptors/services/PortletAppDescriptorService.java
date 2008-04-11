@@ -16,12 +16,11 @@
 
 package org.apache.pluto.descriptors.services;
 
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.om.portlet.PortletApp;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.apache.pluto.om.portlet.PortletApp;
 
 /**
  * Read/Write services for Portlet Application configuration

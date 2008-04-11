@@ -30,7 +30,6 @@ import java.util.jar.JarOutputStream;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.services.castor.WebAppDescriptorServiceImpl;

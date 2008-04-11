@@ -16,12 +16,12 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Entity Resolver which first looks for dtd and xls

@@ -18,9 +18,9 @@ package org.apache.pluto.internal;
 
 import java.util.Map;
 
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.portlet.ActionResponse;
 
 /**
  * The internal action response interface extends the internal portlet response

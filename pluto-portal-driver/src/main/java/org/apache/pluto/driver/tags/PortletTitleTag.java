@@ -17,9 +17,11 @@ package org.apache.pluto.driver.tags;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 
 /**

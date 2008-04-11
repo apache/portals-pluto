@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
-
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
@@ -40,7 +39,6 @@ import org.apache.pluto.internal.impl.ActionRequestImpl;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.EventRequestImpl;
 import org.apache.pluto.internal.impl.EventResponseImpl;
-import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.internal.impl.ResourceRequestImpl;

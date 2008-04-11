@@ -16,9 +16,9 @@
  */
 package org.apache.pluto.util.install;
 
-import org.apache.pluto.util.UtilityException;
-
 import java.io.File;
+
+import org.apache.pluto.util.UtilityException;
 
 public interface PortalInstaller {
 

@@ -26,7 +26,6 @@ import javax.portlet.ResourceURL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.om.portlet.Listener;
 import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.spi.PortletURLListener;

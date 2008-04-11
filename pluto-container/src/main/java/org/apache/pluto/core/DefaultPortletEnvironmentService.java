@@ -17,8 +17,10 @@
  */
 package org.apache.pluto.core;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.internal.InternalActionRequest;
 import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
@@ -32,9 +34,7 @@ import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.internal.impl.ResourceRequestImpl;
 import org.apache.pluto.internal.impl.ResourceResponseImpl;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
 
 /**
  *

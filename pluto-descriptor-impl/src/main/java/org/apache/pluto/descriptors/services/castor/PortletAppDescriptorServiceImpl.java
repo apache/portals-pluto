@@ -16,17 +16,16 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+
 import org.apache.pluto.descriptors.services.Constants;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.om.portlet.PortletApp;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 
 /**
  * Abstract Implementation of the Web Application Deployment
@@ -50,9 +49,9 @@ public class PortletAppDescriptorServiceImpl
      * @return WebAppDD instance representing the descriptor.
      * @throws java.io.IOException
      */
-    public PortletAppDD read(InputStream in) throws IOException {
-        PortletAppDD portlet =
-            (PortletAppDD) readInternal(in);
+    public PortletApp read(InputStream in) throws IOException {
+        PortletApp portlet =
+            (PortletApp) readInternal(in);
         return portlet;
     }
 

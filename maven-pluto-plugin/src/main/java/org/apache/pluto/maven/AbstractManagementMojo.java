@@ -16,25 +16,25 @@
  */
 package org.apache.pluto.maven;
 
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
-import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
-import org.apache.maven.artifact.resolver.ArtifactResolutionException;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.pluto.util.install.ServerConfig;
-import org.apache.pluto.util.install.InstallationConfig;
-import org.apache.pluto.util.install.PortalInstallerFactory;
-import org.apache.pluto.util.install.PortalInstaller;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 import java.util.Collection;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.pluto.util.install.InstallationConfig;
+import org.apache.pluto.util.install.PortalInstaller;
+import org.apache.pluto.util.install.PortalInstallerFactory;
+import org.apache.pluto.util.install.ServerConfig;
 
 /**
  * Abstract Mojo for installation tasks.

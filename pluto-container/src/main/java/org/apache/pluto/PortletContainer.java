@@ -23,7 +23,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.om.portlet.PortletApp;
 
 /**
@@ -171,7 +170,7 @@ public interface PortletContainer {
     OptionalContainerServices getOptionalContainerServices();
     
     /**
-     * Retrieve the {@link PortletAppDD} for the portlet
+     * Retrieve the {@link PortletApp} for the portlet
      * located at the supplied context.
      * 
      * Must not return null.

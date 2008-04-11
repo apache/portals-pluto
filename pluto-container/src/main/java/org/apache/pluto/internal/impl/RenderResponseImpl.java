@@ -21,8 +21,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
-import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.StateAwareResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +31,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalRenderResponse;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringUtils;

@@ -15,12 +15,12 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import junit.framework.TestCase;
-import junit.framework.Assert;
-
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
 import org.apache.pluto.om.servlet.WebApp;
 

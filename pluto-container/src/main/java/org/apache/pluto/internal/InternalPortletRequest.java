@@ -16,11 +16,11 @@
  */
 package org.apache.pluto.internal;
 
-import org.apache.pluto.PortletContainer;
-
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.pluto.PortletContainer;
 
 /**
  * The internal portlet request interface extends PortletRequest and adds

@@ -16,8 +16,6 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import org.apache.pluto.descriptors.servlet.DistributableDD;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
 import org.apache.pluto.om.servlet.Distributable;
 import org.apache.pluto.om.servlet.WebApp;
 import org.exolab.castor.mapping.AbstractFieldHandler;
@@ -27,9 +25,9 @@ public class DistributableDDCastorFieldHandler extends AbstractFieldHandler
 
     public Object getValue(Object webAppDD) throws IllegalStateException
     {
-        if (! ( webAppDD instanceof WebAppDD ) )
+        if (! ( webAppDD instanceof WebApp ) )
         {
-            throw new ClassCastException("Error: was expecting a " + WebAppDD.class.getName() +
+            throw new ClassCastException("Error: was expecting a " + WebApp.class.getName() +
                     " but got a " + webAppDD.getClass().getName());
         }
         
@@ -68,14 +66,14 @@ public class DistributableDDCastorFieldHandler extends AbstractFieldHandler
     public void setValue(Object webAppDD, Object distributableDD)
             throws IllegalStateException, IllegalArgumentException
     {
-        if (! ( webAppDD instanceof WebAppDD ) )
+        if (! ( webAppDD instanceof WebApp ) )
         {
-            throw new ClassCastException("Error: was expecting a " + WebAppDD.class.getName() +
+            throw new ClassCastException("Error: was expecting a " + WebApp.class.getName() +
                     " but got a " + webAppDD.getClass().getName());
         }
-        if (! ( distributableDD instanceof DistributableDD ) )
+        if (! ( distributableDD instanceof Distributable ) )
         {
-            throw new ClassCastException("Error: was expecting a " + DistributableDD.class.getName() +
+            throw new ClassCastException("Error: was expecting a " + Distributable.class.getName() +
                     " but got a " + distributableDD.getClass().getName());
         }
         

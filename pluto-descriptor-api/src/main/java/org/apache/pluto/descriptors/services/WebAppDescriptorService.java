@@ -15,11 +15,11 @@
  */
 package org.apache.pluto.descriptors.services;
 
-import org.apache.pluto.om.servlet.WebApp;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.apache.pluto.om.servlet.WebApp;
 
 /**
  * WebApplication configuration as contained

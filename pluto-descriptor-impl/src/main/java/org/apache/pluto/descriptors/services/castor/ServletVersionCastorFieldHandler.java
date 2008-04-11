@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import org.apache.pluto.descriptors.servlet.WebAppDD;
 import org.apache.pluto.om.servlet.WebApp;
 import org.exolab.castor.mapping.AbstractFieldHandler;
 
@@ -35,10 +34,10 @@ public class ServletVersionCastorFieldHandler extends AbstractFieldHandler
 
     public Object getValue(Object webAppDD) throws IllegalStateException
     {
-        if (! ( webAppDD instanceof WebAppDD ) )
+        if (! ( webAppDD instanceof WebApp ) )
         {
             throw new ClassCastException( "Error: was expecting a " +
-                    WebAppDD.class.getName() + " but received a " + webAppDD.getClass().getName() );
+                    WebApp.class.getName() + " but received a " + webAppDD.getClass().getName() );
         }
 
         String servletVersion = ((WebApp)webAppDD).getServletVersion();
@@ -77,10 +76,10 @@ public class ServletVersionCastorFieldHandler extends AbstractFieldHandler
     public void setValue(Object webAppDD, Object servletVersionValue)
             throws IllegalStateException, IllegalArgumentException
     {
-        if (! ( webAppDD instanceof WebAppDD ) )
+        if (! ( webAppDD instanceof WebApp ) )
         {
             throw new ClassCastException( "Error: was expecting a " +
-                    WebAppDD.class.getName() + " but received a " + webAppDD.getClass().getName() );
+                    WebApp.class.getName() + " but received a " + webAppDD.getClass().getName() );
         }
         if (! ( servletVersionValue instanceof String) )
         {

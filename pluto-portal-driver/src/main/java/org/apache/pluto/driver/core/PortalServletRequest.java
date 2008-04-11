@@ -25,11 +25,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.url.PortalURLParameter;
-import org.apache.pluto.driver.url.PortalURL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
 
 public class PortalServletRequest extends HttpServletRequestWrapper {
 

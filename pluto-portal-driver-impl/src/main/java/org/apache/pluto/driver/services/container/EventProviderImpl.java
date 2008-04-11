@@ -47,7 +47,6 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.PortletContainerImpl;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
@@ -269,7 +268,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			try {
 				portletAppDD = container
 						.getPortletApplicationDescriptor(contextPath);
-				List<PortletDD> portletDDs = portletAppDD.getPortlets();
+				List<Portlet> portletDDs = portletAppDD.getPortlets();
 				List<QName> aliases = getAllAliases(eventName, portletAppDD);
 				for (Portlet portletDD : portletDDs) {
 					List<QName> processingEvents = portletDD

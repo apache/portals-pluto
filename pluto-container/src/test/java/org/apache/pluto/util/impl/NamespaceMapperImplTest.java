@@ -17,8 +17,8 @@
 package org.apache.pluto.util.impl;
 
 import org.apache.pluto.PortletWindowID;
-import org.apache.pluto.util.PlutoTestCase;
 import org.apache.pluto.util.NamespaceMapper;
+import org.apache.pluto.util.PlutoTestCase;
 
 /**
  * Test Class

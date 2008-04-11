@@ -16,13 +16,13 @@
  */
 package org.apache.pluto.internal.impl;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.wrappers.PortletRequestWrapper;
 import org.apache.pluto.wrappers.PortletResponseWrapper;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 /**
  * Static class that provides utility methods to convert a generic

@@ -16,15 +16,16 @@
  */
 package org.apache.pluto.driver;
 
-import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
-import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
-import org.apache.pluto.driver.config.AdminConfiguration;
+import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-import java.io.IOException;
+
+import org.apache.pluto.driver.config.AdminConfiguration;
+import org.apache.pluto.driver.services.portal.admin.DriverAdministrationException;
+import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
 
 
 /**

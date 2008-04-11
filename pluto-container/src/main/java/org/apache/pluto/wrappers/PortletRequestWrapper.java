@@ -25,7 +25,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
-import javax.servlet.http.Cookie;
 
 public class PortletRequestWrapper
     extends javax.servlet.http.HttpServletRequestWrapper

@@ -16,15 +16,15 @@
  */
 package org.apache.pluto.testsuite;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @version 1.0

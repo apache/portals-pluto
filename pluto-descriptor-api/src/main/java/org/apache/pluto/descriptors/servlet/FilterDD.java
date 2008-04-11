@@ -16,10 +16,10 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import java.util.List;
+
 import org.apache.pluto.om.common.Icon;
 import org.apache.pluto.om.servlet.Filter;
-
-import java.util.List;
 
 /**
  * Filter DD() uration as contained within the

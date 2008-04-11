@@ -17,12 +17,13 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.spi.ContainerService;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import java.util.Map;
+
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.spi.ContainerService;
 
 /**
  * Used to access user information attributes as described in

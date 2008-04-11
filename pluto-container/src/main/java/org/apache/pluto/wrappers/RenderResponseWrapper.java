@@ -16,16 +16,15 @@
  */
 package org.apache.pluto.wrappers;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Collection;
+
 import javax.portlet.CacheControl;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.Cookie;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Enumeration;
 
 public class RenderResponseWrapper extends PortletResponseWrapper
     implements RenderResponse {

@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.descriptors.services.castor;
 
-import org.apache.pluto.descriptors.servlet.DistributableDD;
 import org.apache.pluto.om.servlet.Distributable;
 import org.exolab.castor.mapping.AbstractFieldHandler;
 
@@ -52,9 +51,9 @@ public class DistributableCastorFieldHandler extends AbstractFieldHandler
     public void setValue(Object distributableDD, Object value)
             throws IllegalStateException, IllegalArgumentException
     {
-        if (! (distributableDD instanceof DistributableDD) )
+        if (! (distributableDD instanceof Distributable) )
         {
-            throw new ClassCastException("Error: was expecting " + DistributableDD.class.getName() +
+            throw new ClassCastException("Error: was expecting " + Distributable.class.getName() +
                         " but got a " + distributableDD.getClass().getName() );
         }
         

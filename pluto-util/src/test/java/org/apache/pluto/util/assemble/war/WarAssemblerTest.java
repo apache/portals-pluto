@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
-import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 
 /**
  * @version $Revision$

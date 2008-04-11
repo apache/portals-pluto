@@ -16,6 +16,8 @@
  */
 package org.apache.pluto.driver.services.portal;
 
+import javax.portlet.PortletMode;
+
 /**
  * Allows clients to determine if a particular PortletMode is supported
  * by the portal, a particular portlet, or both.

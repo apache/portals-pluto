@@ -22,7 +22,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 import javax.servlet.http.Cookie;
 
-import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 

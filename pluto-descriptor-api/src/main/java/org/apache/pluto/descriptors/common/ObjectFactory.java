@@ -13,8 +13,6 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.descriptors.common.InitParamDD;
-import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 
 

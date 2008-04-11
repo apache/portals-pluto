@@ -17,7 +17,6 @@
 package org.apache.pluto.wrappers;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.ActionResponse;

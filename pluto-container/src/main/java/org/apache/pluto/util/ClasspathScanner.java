@@ -16,9 +16,6 @@
  */
 package org.apache.pluto.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,6 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class ClasspathScanner {
 

@@ -16,11 +16,11 @@
  */
 package org.apache.pluto.maven;
 
+import java.io.File;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-
-import java.io.File;
 
 /**
  * @todo Document
