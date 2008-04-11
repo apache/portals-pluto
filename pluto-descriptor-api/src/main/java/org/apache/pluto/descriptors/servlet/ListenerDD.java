@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.Listener;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: ListenerDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class ListenerDD {
+public class ListenerDD implements Listener {
 
     private String listenerClass;
 
@@ -29,10 +31,16 @@ public class ListenerDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Listener#getListenerClass()
+	 */
     public String getListenerClass() {
         return listenerClass;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Listener#setListenerClass(java.lang.String)
+	 */
     public void setListenerClass(String listenerClass) {
         this.listenerClass = listenerClass;
     }

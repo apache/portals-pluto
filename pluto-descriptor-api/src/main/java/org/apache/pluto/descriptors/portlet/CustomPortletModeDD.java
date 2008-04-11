@@ -21,6 +21,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.CustomPortletMode;
+import org.apache.pluto.om.portlet.Portlet;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "custom-portlet-modeType", propOrder = {
     "description","description1",
@@ -28,18 +31,18 @@ import javax.xml.bind.annotation.XmlType;
     "portalManaged",
     "decorationName"
 })
-public class CustomPortletModeDD {
+public class CustomPortletModeDD implements CustomPortletMode {
 	
 	@XmlElement(name = "description")
 	private String description = null;
 	
-	@XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "description", namespace = Portlet.QNAME_JSR168)
 	private String description1 = null;
 	
 	@XmlElement(name = "portlet-mode")
 	private String portletMode = null;
 	
-	@XmlElement(name = "portlet-mode", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "portlet-mode", namespace = Portlet.QNAME_JSR168)
 	private String portletMode1 = null;
 	
 	@XmlElement(name = "portal-managed")
@@ -48,35 +51,56 @@ public class CustomPortletModeDD {
 	@XmlElement(name = "decoration-name")
 	private String decorationName = null;
 	
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.CustomPortletMode#isPortalManaged()
+	 */
 	public boolean isPortalManaged(){
 		return portalManaged.equals("true")?true:false;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.CustomPortletMode#getDecorationName()
+	 */
 	public String getDecorationName() {
 		return decorationName;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.CustomPortletMode#setDecorationName(java.lang.String)
+	 */
 	public void setDecorationName(String decorationName) {
 		this.decorationName = decorationName;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.CustomPortletMode#getDescription()
+	 */
 	public String getDescription() {
 		if (description != null)
 			return description;
 		return description1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.CustomPortletMode#setDescription(java.lang.String)
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 		this.description1 = description;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.CustomPortletMode#getPortletMode()
+	 */
 	public String getPortletMode() {
 		if (portletMode != null)
 			return portletMode;
 		return portletMode1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.CustomPortletMode#setPortletMode(java.lang.String)
+	 */
 	public void setPortletMode(String portletMode) {
 		this.portletMode = portletMode;
 		this.portletMode1 = portletMode;

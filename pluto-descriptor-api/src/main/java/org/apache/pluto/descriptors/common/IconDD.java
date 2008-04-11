@@ -16,13 +16,15 @@
  */
 package org.apache.pluto.descriptors.common;
 
+import org.apache.pluto.om.common.Icon;
+
 /**
  * Resource Icon configuration.
  *
  * @version $Id: IconDD.java 157038 2005-03-11 03:44:40Z ddewolf $
  * @since Feb 28, 2005
  */
-public class IconDD{
+public class IconDD implements Icon{
 
     /** The large icon uri. */
     private String largeIcon;
@@ -37,34 +39,30 @@ public class IconDD{
 
     }
 
-    /**
-     * Retrieve the large icon uri.
-     * @return the uri to the large icon (relative to the context path).
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Icon#getLargeIcon()
+	 */
     public String getLargeIcon() {
         return largeIcon;
     }
 
-    /**
-     * Set the large icon uri.
-     * @param largeIcon the relative path to the icon resource.
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Icon#setLargeIcon(java.lang.String)
+	 */
     public void setLargeIcon(String largeIcon) {
         this.largeIcon = largeIcon;
     }
 
-    /**
-     * Retrieve the small icon uri.
-     * @return the uri to the small icon (relative to the context path).
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Icon#getSmallIcon()
+	 */
     public String getSmallIcon() {
         return smallIcon;
     }
 
-    /**
-     * Set the small Icon uri.
-     * @param smallIcon the relative path to the icon resource.
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Icon#setSmallIcon(java.lang.String)
+	 */
     public void setSmallIcon(String smallIcon) {
         this.smallIcon = smallIcon;
     }

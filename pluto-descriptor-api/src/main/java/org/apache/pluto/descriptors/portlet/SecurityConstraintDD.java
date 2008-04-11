@@ -22,6 +22,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.pluto.descriptors.common.UserDataConstraintDD;
+import org.apache.pluto.om.common.UserDataConstraint;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletCollection;
+import org.apache.pluto.om.portlet.SecurityConstraint;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "security-constraintType", propOrder = {
@@ -29,55 +33,73 @@ import org.apache.pluto.descriptors.common.UserDataConstraintDD;
     "portletCollection","portletCollection1",
     "userDataConstraint",    "userDataConstraint1"
 })
-public class SecurityConstraintDD {
+public class SecurityConstraintDD implements SecurityConstraint {
 	
 	@XmlElement (name = "display-name")
 	private String displayName = null;
 	
-	@XmlElement (name = "display-name", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement (name = "display-name", namespace = Portlet.QNAME_JSR168)
 	private String displayName1 = null;
 	
-	@XmlElement ( name = "portlet-collection")
-	private PortletCollectionDD portletCollection = null; 
+	@XmlElement ( name = "portlet-collection", type=PortletCollectionDD.class)
+	private PortletCollection portletCollection = null; 
 	
-	@XmlElement ( name = "portlet-collection", namespace = PortletDD.QNAME_JSR168)
-	private PortletCollectionDD portletCollection1 = null; 
+	@XmlElement ( name = "portlet-collection", namespace = Portlet.QNAME_JSR168, type=PortletCollectionDD.class)
+	private PortletCollection portletCollection1 = null; 
 	
-	@XmlElement ( name = "user-data-constraint")
-	private UserDataConstraintDD userDataConstraint = null;
+	@XmlElement ( name = "user-data-constraint", type=UserDataConstraintDD.class)
+	private UserDataConstraint userDataConstraint = null;
 	
-	@XmlElement ( name = "user-data-constraint", namespace = PortletDD.QNAME_JSR168)
-	private UserDataConstraintDD userDataConstraint1 = null;
+	@XmlElement ( name = "user-data-constraint", namespace = Portlet.QNAME_JSR168, type=UserDataConstraintDD.class)
+	private UserDataConstraint userDataConstraint1 = null;
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.SecurityConstraint#getDisplayName()
+	 */
 	public String getDisplayName() {
 		if (displayName != null)
 			return displayName;
 		return displayName1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.SecurityConstraint#setDisplayName(java.lang.String)
+	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 		this.displayName1 = displayName;
 	}
 
-	public PortletCollectionDD getPortletCollection() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.SecurityConstraint#getPortletCollection()
+	 */
+	public PortletCollection getPortletCollection() {
 		if (portletCollection != null)
 			return portletCollection;
 		return portletCollection1;
 	}
 
-	public void setPortletCollection(PortletCollectionDD portletCollection) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.SecurityConstraint#setPortletCollection(org.apache.pluto.descriptors.portlet.PortletCollection)
+	 */
+	public void setPortletCollection(PortletCollection portletCollection) {
 		this.portletCollection = portletCollection;
 		this.portletCollection1 = portletCollection;
 	}
 
-	public UserDataConstraintDD getUserDataConstraint() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.SecurityConstraint#getUserDataConstraint()
+	 */
+	public UserDataConstraint getUserDataConstraint() {
 		if (userDataConstraint != null)
 			return userDataConstraint;
 		return userDataConstraint1;
 	}
 
-	public void setUserDataConstraint(UserDataConstraintDD userDataConstraint) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.SecurityConstraint#setUserDataConstraint(org.apache.pluto.descriptors.common.UserDataConstraint)
+	 */
+	public void setUserDataConstraint(UserDataConstraint userDataConstraint) {
 		this.userDataConstraint = userDataConstraint;
 		this.userDataConstraint1 = userDataConstraint;
 	}

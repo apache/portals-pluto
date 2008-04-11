@@ -17,6 +17,7 @@
 package org.apache.pluto.descriptors.services.castor;
 
 import org.apache.pluto.descriptors.servlet.DistributableDD;
+import org.apache.pluto.om.servlet.Distributable;
 import org.exolab.castor.mapping.AbstractFieldHandler;
 
 public class DistributableCastorFieldHandler extends AbstractFieldHandler
@@ -63,7 +64,7 @@ public class DistributableCastorFieldHandler extends AbstractFieldHandler
                         " but got a " + value.getClass().getName() );
         }
         
-        ((DistributableDD)distributableDD).setDistributable(((Boolean)value).booleanValue());
+        ((Distributable)distributableDD).setDistributable(((Boolean)value).booleanValue());
     }
 
 }

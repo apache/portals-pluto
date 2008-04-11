@@ -19,13 +19,15 @@ package org.apache.pluto.descriptors.servlet;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.apache.pluto.om.servlet.WebResourceCollection;
+
 /**
  * Web Resource Collection configuration.
  *
  * @version $Id: WebResourceCollectionDD.java 157475 2005-03-14 22:13:18Z ddewolf $
  * @since Mar 4, 2005
  */
-public class WebResourceCollectionDD {
+public class WebResourceCollectionDD implements WebResourceCollection {
 
     private String webResourceName;
     private String description;
@@ -36,34 +38,58 @@ public class WebResourceCollectionDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#getWebResourceName()
+	 */
     public String getWebResourceName() {
         return webResourceName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#setWebResourceName(java.lang.String)
+	 */
     public void setWebResourceName(String webResourceName) {
         this.webResourceName = webResourceName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#getDescription()
+	 */
     public String getDescription() {
         return description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#getHttpMethods()
+	 */
     public List getHttpMethods() {
         return httpMethods;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#setHttpMethods(java.util.List)
+	 */
     public void setHttpMethods(List httpMethods) {
         this.httpMethods = httpMethods;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#getUrlPatterns()
+	 */
     public List getUrlPatterns() {
         return urlPatterns;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WebResourceCollection#setUrlPatterns(java.util.List)
+	 */
     public void setUrlPatterns(List urlPatterns) {
         this.urlPatterns = urlPatterns;
     }

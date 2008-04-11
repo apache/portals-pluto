@@ -16,6 +16,8 @@
  */
 package org.apache.pluto.internal.impl;
 
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.util.PlutoTestCase;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.PortletInfoDD;
@@ -32,14 +34,14 @@ import junit.framework.Assert;
  */
 public class ResourceBundleFactoryTest extends PlutoTestCase {
 
-    private PortletDD validDD;
+    private Portlet validDD;
 
     public void setUp() throws Exception {
         super.setUp();
 
         validDD = new PortletDD();
 
-        PortletInfoDD info = new PortletInfoDD();
+        PortletInfo info = new PortletInfoDD();
         info.setTitle("Info Title");
         info.setShortTitle("Info Short Title");
         info.setKeywords("Info Keywords");

@@ -57,14 +57,14 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.descriptors.portlet.UserAttributeDD;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.om.common.SecurityRoleRef;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.Supports;
+import org.apache.pluto.om.portlet.UserAttribute;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.UserInfoService;
@@ -403,12 +403,12 @@ implements PortletRequest, InternalPortletRequest {
      */
     public boolean isUserInRole(String roleName) {
         PortletEntity entity = internalPortletWindow.getPortletEntity();
-        PortletDD def = entity.getPortletDefinition();
+        Portlet def = entity.getPortletDefinition();
 
-        SecurityRoleRefDD ref = null;
+        SecurityRoleRef ref = null;
         Iterator refs = def.getSecurityRoleRefs().iterator();
         while (refs.hasNext()) {
-            SecurityRoleRefDD r = (SecurityRoleRefDD) refs.next();
+            SecurityRoleRef r = (SecurityRoleRef) refs.next();
             if (r.getRoleName().equals(roleName)) {
                 ref = r;
                 break;
@@ -493,11 +493,11 @@ implements PortletRequest, InternalPortletRequest {
             }
             
             final PortletRegistryService portletRegistryService = optionalContainerServices.getPortletRegistryService();
-            final PortletAppDD dd = portletRegistryService.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
+            final PortletApp dd = portletRegistryService.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
 
             Iterator i = dd.getUserAttribute().iterator();
             while(i.hasNext()) {
-                UserAttributeDD udd = (UserAttributeDD)i.next();
+                UserAttribute udd = (UserAttribute)i.next();
                 userInfoMap.put(udd.getName(), allMap.get(udd.getName()));
             }
         } catch (PortletContainerException e) {
@@ -621,10 +621,10 @@ implements PortletRequest, InternalPortletRequest {
     public Enumeration getResponseContentTypes() {
         if (contentTypes == null) {
             contentTypes = new Vector();
-            PortletDD dd = internalPortletWindow.getPortletEntity().getPortletDefinition();
+            Portlet dd = internalPortletWindow.getPortletEntity().getPortletDefinition();
             Iterator supports = dd.getSupports().iterator();
             while (supports.hasNext()) {
-                SupportsDD sup = (SupportsDD) supports.next();
+                Supports sup = (Supports) supports.next();
                 contentTypes.add(sup.getMimeType());
             }
             if (contentTypes.size() < 1) {
@@ -760,12 +760,12 @@ implements PortletRequest, InternalPortletRequest {
             return true;
         }
 
-        PortletDD dd = internalPortletWindow.getPortletEntity()
+        Portlet dd = internalPortletWindow.getPortletEntity()
                 .getPortletDefinition();
 
         Iterator mimes = dd.getSupports().iterator();
         while (mimes.hasNext()) {
-            Iterator modes = ((SupportsDD) mimes.next()).getPortletModes().iterator();
+            Iterator modes = ((Supports) mimes.next()).getPortletModes().iterator();
             while (modes.hasNext()) {
                 String m = (String) modes.next();
                 if (m.equals(mode.toString())) {

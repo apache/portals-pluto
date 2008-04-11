@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
+import org.apache.pluto.om.portlet.EventDefinition;
+
 /**
  * Initialization Event Definitions
  * 
@@ -68,7 +70,7 @@ import javax.xml.namespace.QName;
     "alias",
     "javaClass"
 })
-public class EventDefinitionDD {
+public class EventDefinitionDD implements EventDefinition {
 	
 	/**
 	 * Descripton of the Event
@@ -110,99 +112,99 @@ public class EventDefinitionDD {
 	@XmlAttribute ( name = "id")
 	private String iD;
 
-	/**
-	 * @return Returns the alias.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#getAlias()
 	 */
 	public List<QName> getAlias() {
 		return alias;
 	}
 
-	/**
-	 * @param alias The alias to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#setAlias(java.util.List)
 	 */
 	public void setAlias(List<QName> alias) {
 		this.alias = alias;
 	}
 
-	/**
-	 * @return Returns the description.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#getDescription()
 	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description The description to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#setDescription(java.lang.String)
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * @return Returns the iD.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#getID()
 	 */
 	public String getID() {
 		return iD;
 	}
 
-	/**
-	 * @param id The iD to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#setID(java.lang.String)
 	 */
 	public void setID(String id) {
 		iD = id;
 	}
 
-	/**
-	 * @return Returns the javaType.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#getJavaClass()
 	 */
 	public String getJavaClass() {
 		return javaClass.trim();
 	}
 
-	/**
-	 * @param javaType The javaType to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#setJavaClass(java.lang.String)
 	 */
 	public void setJavaClass(String javaType) {
 		this.javaClass = javaType;
 	}
 
-	/**
-	 * @return Returns the qName.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#getQName()
 	 */
 	public QName getQName() {
 		return qname; 
 	}
 
-	/**
-	 * @param name The qName to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#setQName(javax.xml.namespace.QName)
 	 */
 	public void setQName(QName qname) {
 		this.qname = qname;
 	}
 	
-	/**
-	 * @return Returns the name.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#getName()
 	 */
 	public String getName() {
 		return name; 
 	}
 
-	/**
-	 * @param name The qName to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#setName(java.lang.String)
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return Returns the xmlType.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#getXmlType()
 	 */
 	public String getXmlType() {
 		return xmlType.trim();
 	}
 
-	/**
-	 * @param xmlType The xmlType to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinition#setXmlType(java.lang.String)
 	 */
 	public void setXmlType(String xmlType) {
 		this.xmlType = xmlType;

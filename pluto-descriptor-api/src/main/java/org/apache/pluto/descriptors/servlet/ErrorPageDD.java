@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.ErrorPage;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: ErrorPageDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Mar 4, 2005
  */
-public class ErrorPageDD {
+public class ErrorPageDD implements ErrorPage {
 
     private String errorCode;
     private String exceptionType;
@@ -31,26 +33,44 @@ public class ErrorPageDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ErrorPage#getErrorCode()
+	 */
     public String getErrorCode() {
         return errorCode;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ErrorPage#setErrorCode(java.lang.String)
+	 */
     public void setErrorCode(String errorCode) {
         this.errorCode = errorCode;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ErrorPage#getExceptionType()
+	 */
     public String getExceptionType() {
         return exceptionType;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ErrorPage#setExceptionType(java.lang.String)
+	 */
     public void setExceptionType(String exceptionType) {
         this.exceptionType = exceptionType;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ErrorPage#getLocation()
+	 */
     public String getLocation() {
         return location;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ErrorPage#setLocation(java.lang.String)
+	 */
     public void setLocation(String location) {
         this.location = location;
     }

@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.Taglib;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: TaglibDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class TaglibDD {
+public class TaglibDD implements Taglib {
 
     private String taglibUri;
     private String taglibLocation;
@@ -30,18 +32,30 @@ public class TaglibDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Taglib#getTaglibUri()
+	 */
     public String getTaglibUri() {
         return taglibUri;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Taglib#setTaglibUri(java.lang.String)
+	 */
     public void setTaglibUri(String taglibUri) {
         this.taglibUri = taglibUri;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Taglib#getTaglibLocation()
+	 */
     public String getTaglibLocation() {
         return taglibLocation;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Taglib#setTaglibLocation(java.lang.String)
+	 */
     public void setTaglibLocation(String taglibLocation) {
         this.taglibLocation = taglibLocation;
     }

@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+
 /**
  * <pre>
  * &lt;complexType name="container-runtime-optionType">
@@ -34,16 +36,22 @@ import javax.xml.bind.annotation.XmlType;
     "name",
     "value"
 })
-public class ContainerRuntimeOptionDD {
+public class ContainerRuntimeOptionDD implements ContainerRuntimeOption {
 
 	private String name = null;
 	
 	private List<String> value = null;
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.ContainerRuntimeOption#getName()
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.ContainerRuntimeOption#getValue()
+	 */
 	public List<String> getValue() {
 		return value;
 	}

@@ -21,6 +21,7 @@ import javax.portlet.ValidatorException;
 
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
+import org.apache.pluto.om.portlet.Portlet;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -72,7 +73,7 @@ public interface PortletEntity {
      * Returns the portlet description. The return value cannot be NULL.
      * @return the portlet description.
      */
-    public PortletDD getPortletDefinition();
+    public Portlet getPortletDefinition();
 
     /**
      * Returns the preferences validator instance for this portlet.

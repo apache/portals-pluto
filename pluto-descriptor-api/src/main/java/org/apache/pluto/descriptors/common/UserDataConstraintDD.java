@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.om.common.UserDataConstraint;
+import org.apache.pluto.om.portlet.Portlet;
 
 /**
  * User Data Constraint descriptor.
@@ -41,45 +42,53 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
 		"descriptions","descriptions1",
 		"transportGuarantee", "transportGuarantee1"
 })
-public class UserDataConstraintDD {
-
-    public static final String NONE = "NONE";
-    public static final String INTEGRAL = "INTEGRAL";
-    public static final String CONFIDENTIAL = "CONFIDENTIAL";
+public class UserDataConstraintDD implements UserDataConstraint {
 
     @XmlElement(name = "description")
     private List<String> descriptions = new ArrayList<String>();
     
-    @XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
+    @XmlElement(name = "description", namespace = Portlet.QNAME_JSR168)
 	private List<String> descriptions1 = new ArrayList<String>();
 
     @XmlElement(name = "transport-guarantee")
     private String transportGuarantee;
     
-    @XmlElement(name = "transport-guarantee", namespace = PortletDD.QNAME_JSR168)
+    @XmlElement(name = "transport-guarantee", namespace = Portlet.QNAME_JSR168)
 	private String transportGuarantee1 = null;
 
     public UserDataConstraintDD() {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.UserDataConstraint#getDescriptions()
+	 */
     public List<String> getDescriptions() {
     	if (descriptions.size() > 0) 
     		return descriptions;
         return descriptions1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.UserDataConstraint#setDescriptions(java.util.List)
+	 */
     public void setDescriptions(List<String> descriptions) {
         this.descriptions = descriptions;
         this.descriptions1 = descriptions;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.UserDataConstraint#getTransportGuarantee()
+	 */
     public String getTransportGuarantee() {
     	if (transportGuarantee != null)
 			return transportGuarantee;
 		return transportGuarantee1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.UserDataConstraint#setTransportGuarantee(java.lang.String)
+	 */
     public void setTransportGuarantee(String transportGuarantee) {
         this.transportGuarantee = transportGuarantee;
         this.transportGuarantee1 = transportGuarantee;

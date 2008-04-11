@@ -20,6 +20,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.Event;
+
 /**
  * Initialization Event
  * 
@@ -49,7 +51,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "nameType", propOrder = {
     "name"
 })
-public class EventDD {
+public class EventDD implements Event {
 	
 	/** 
 	 * Name of the Event
@@ -57,15 +59,15 @@ public class EventDD {
 	@XmlElement(name = "value")
 	private String name;
 	
-	/**
-	 * @return Returns the name.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Event#getName()
 	 */
 	public String getName() {
 		return name;
 	}
 	
-	/**
-	 * @param name The name to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Event#setName(java.lang.String)
 	 */
 	public void setName(String name) {
 		this.name = name;

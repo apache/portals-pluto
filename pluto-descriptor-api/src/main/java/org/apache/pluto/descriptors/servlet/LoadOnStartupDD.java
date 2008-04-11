@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.LoadOnStartup;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: LoadOnStartupDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Mar 8, 2005
  */
-public class LoadOnStartupDD {
+public class LoadOnStartupDD implements LoadOnStartup {
 
     private int priority;
 
@@ -29,10 +31,16 @@ public class LoadOnStartupDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoadOnStartup#getPriority()
+	 */
     public int getPriority() {
         return priority;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoadOnStartup#setPriority(int)
+	 */
     public void setPriority(int priority) {
         this.priority = priority;
     }

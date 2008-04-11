@@ -41,7 +41,7 @@ import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
-import org.apache.pluto.descriptors.portlet.FilterDD;
+import org.apache.pluto.om.portlet.Filter;
 
 /**
  * A <code>FilterChain</code> is an object provided by the portlet container 
@@ -54,7 +54,7 @@ import org.apache.pluto.descriptors.portlet.FilterDD;
  */
 public class FilterChainImpl implements FilterChain {
 
-	private List<FilterDD> filterList = new ArrayList<FilterDD>();
+	private List<Filter> filterList = new ArrayList<Filter>();
 	private String lifeCycle;
 	Portlet portlet;
 	EventPortlet eventPortlet;
@@ -91,20 +91,20 @@ public class FilterChainImpl implements FilterChain {
 		}
 	}
 	
-	public void addFilter(FilterDD filterDD){
-		filterList.add(filterDD);
+	public void addFilter(Filter filter){
+		filterList.add(filter);
 	}
 	
 	public void doFilter(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 		if (filterListIndex <filterList.size()){
-			FilterDD filterDD = filterList.get(filterListIndex);
+			Filter filter = filterList.get(filterListIndex);
 			filterListIndex++;
 			try {
-				ActionFilter filter = (ActionFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
-				filter.init(filterConfig);
-				filter.doFilter(request, response, this);
-				filter.destroy();
+				ActionFilter actionFilter = (ActionFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				actionFilter.init(filterConfig);
+				actionFilter.doFilter(request, response, this);
+				actionFilter.destroy();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -120,14 +120,14 @@ public class FilterChainImpl implements FilterChain {
 	
 	public void doFilter(EventRequest request, EventResponse response) throws IOException, PortletException {
 		if (filterListIndex <filterList.size()){
-			FilterDD filterDD = filterList.get(filterListIndex);
+			Filter filter = filterList.get(filterListIndex);
 			filterListIndex++;
 			try {
-				EventFilter filter = (EventFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
-				filter.init(filterConfig);
-				filter.doFilter(request, response, this);
-				filter.destroy();
+				EventFilter eventFilter = (EventFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				eventFilter.init(filterConfig);
+				eventFilter.doFilter(request, response, this);
+				eventFilter.destroy();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -143,14 +143,14 @@ public class FilterChainImpl implements FilterChain {
 
 	public void doFilter(RenderRequest request, RenderResponse response) throws IOException, PortletException {
 		if (filterListIndex <filterList.size()){
-			FilterDD filterDD = filterList.get(filterListIndex);
+			Filter filter = filterList.get(filterListIndex);
 			filterListIndex++;
 			try {
-				RenderFilter filter = (RenderFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
-				filter.init(filterConfig);
-				filter.doFilter(request, response, this);
-				filter.destroy();
+				RenderFilter renderFilter = (RenderFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				renderFilter.init(filterConfig);
+				renderFilter.doFilter(request, response, this);
+				renderFilter.destroy();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -166,14 +166,14 @@ public class FilterChainImpl implements FilterChain {
 
 	public void doFilter(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 		if (filterListIndex <filterList.size()){
-			FilterDD filterDD = filterList.get(filterListIndex);
+			Filter filter = filterList.get(filterListIndex);
 			filterListIndex++;
 			try {
-				ResourceFilter filter = (ResourceFilter) loader.loadClass(filterDD.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filterDD.getFilterName(),filterDD.getInitParam(),portletContext);
-				filter.init(filterConfig);
-				filter.doFilter(request, response, this);
-				filter.destroy();
+				ResourceFilter resourceFilter = (ResourceFilter) loader.loadClass(filter.getFilterClass()).newInstance();
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				resourceFilter.init(filterConfig);
+				resourceFilter.doFilter(request, response, this);
+				resourceFilter.destroy();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

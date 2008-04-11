@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.ExpirationCache;
+
 /**
  * 
  * 			Expriation-cache defines expiration-based caching for this
@@ -37,20 +39,32 @@ import javax.xml.bind.annotation.XmlType;
     "expirationTime",
     "scope"
 })
-public class ExpirationCacheDD {
+public class ExpirationCacheDD implements ExpirationCache {
 	
 	@XmlElement(name = "expiration-time")
     protected int expirationTime;
     protected String scope;
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.ExpirationCache#getExpirationTime()
+	 */
 	public int getExpirationTime() {
 		return expirationTime;
 	}
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.ExpirationCache#setExpirationTime(int)
+	 */
 	public void setExpirationTime(int expirationTime) {
 		this.expirationTime = expirationTime;
 	}
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.ExpirationCache#getScope()
+	 */
 	public String getScope() {
 		return scope;
 	}
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.ExpirationCache#setScope(java.lang.String)
+	 */
 	public void setScope(String scope) {
 		this.scope = scope;
 	}

@@ -18,24 +18,38 @@ package org.apache.pluto.descriptors.common;
 
 import java.util.Locale;
 
-public class DescriptionDD {
+import org.apache.pluto.om.common.Description;
+
+public class DescriptionDD implements Description {
 
     private String description;
 
     private String lang = Locale.ENGLISH.toString();
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Description#getDescription()
+	 */
     public String getDescription() {
         return description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Description#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Description#getLang()
+	 */
     public String getLang() {
         return lang;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.Description#setLang(java.lang.String)
+	 */
     public void setLang(String lang) {
         this.lang = lang;
     }

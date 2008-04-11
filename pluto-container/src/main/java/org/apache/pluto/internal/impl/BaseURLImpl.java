@@ -37,10 +37,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.util.StringManager;
@@ -213,7 +213,7 @@ public class BaseURLImpl implements BaseURL {
 	    }
 	    try {
 	    	
-	    	PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
+	    	PortletApp portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
 //	    	container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
 //			PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
 			portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
@@ -284,11 +284,11 @@ public class BaseURLImpl implements BaseURL {
 	        return true;
 	    }
 	
-	    PortletDD dd = internalPortletWindow.getPortletEntity()
+	    Portlet dd = internalPortletWindow.getPortletEntity()
 	        .getPortletDefinition();
 	    Iterator supports = dd.getSupports().iterator();
 	    while(supports.hasNext()) {
-	        SupportsDD support = (SupportsDD)supports.next();
+	        Supports support = (Supports)supports.next();
 	        if (support.getPortletModes() != null){
 	        	Iterator modes = support.getPortletModes().iterator();
 		        while(modes.hasNext()) {
@@ -356,7 +356,7 @@ public class BaseURLImpl implements BaseURL {
 	    }
 	    try {
 	    	
-	    	PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
+	    	PortletApp portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
 //	    	container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
 //			PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
 			portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);

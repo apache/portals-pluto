@@ -24,10 +24,11 @@ import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.internal.PreferencesValidatorRegistry;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletPreference;
+import org.apache.pluto.om.portlet.PortletPreferences;
 import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletPreferenceDD;
-import org.apache.pluto.descriptors.portlet.PortletPreferencesDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
 
 import javax.portlet.PreferencesValidator;
@@ -118,14 +119,14 @@ public class PortletEntityImpl implements PortletEntity {
      */
     public InternalPortletPreference[] getDefaultPreferences() {
         if (defaultPreferences == null) {
-            PortletDD portletDD = getPortletDefinition();
-            PortletPreferencesDD prefsDD = portletDD.getPortletPreferences();
+            Portlet portletDD = getPortletDefinition();
+            PortletPreferences prefsDD = portletDD.getPortletPreferences();
             if (prefsDD != null) {
             	List prefs = new ArrayList();
             	if (prefsDD.getPortletPreferences() != null){
 	            	for (Iterator it = prefsDD.getPortletPreferences().iterator();
 	            			it.hasNext(); ) {
-	            		PortletPreferenceDD prefDD = (PortletPreferenceDD) it.next();
+	            		PortletPreference prefDD = (PortletPreference) it.next();
 	            		String[] values = null;
 	            		if (prefDD.getValues()!=null){
 		            		if (prefDD.getValues().size() > 0) {
@@ -186,7 +187,7 @@ public class PortletEntityImpl implements PortletEntity {
 
         // Load PortletAppDD and find out the portlet definition.
         try {
-            PortletAppDD appDD = PortletDescriptorRegistry.getRegistry()
+            PortletApp appDD = PortletDescriptorRegistry.getRegistry()
             		.getPortletAppDD(crossContext);
             for (Iterator it = appDD.getPortlets().iterator(); it.hasNext(); ) {
                 PortletDD portletDD = (PortletDD) it.next();

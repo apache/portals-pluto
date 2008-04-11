@@ -26,8 +26,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.ContainerInvocation;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletInfoDD;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.util.StringManager;
 
@@ -60,13 +60,13 @@ class ResourceBundleFactory {
      */
     private String bundleName;
 
-    public ResourceBundleFactory(PortletDD dd) {
+    public ResourceBundleFactory(Portlet dd) {
         bundleName = dd.getResourceBundle();
         if(LOG.isDebugEnabled()) {
             LOG.debug("Resource Bundle Created: "+bundleName);
         }
 
-        PortletInfoDD info = dd.getPortletInfo();
+        PortletInfo info = dd.getPortletInfo();
 
         PortletInfoService infoService = getPortletInfoService();
         PortletWindow window = getWindow();

@@ -24,6 +24,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletPreference;
+
 /**
  * Portlet preference definition in portlet.xml.
  * 
@@ -64,14 +67,14 @@ import javax.xml.bind.annotation.XmlType;
     "values","values1",
     "readOnly","readOnly1"
 })
-public class PortletPreferenceDD {
+public class PortletPreferenceDD implements PortletPreference {
 	
 	/** The preference name. */
 	@XmlElement(name = "name")
     private String name = null;
     
     /** The preference name. */
-	@XmlElement(name = "name", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "name", namespace = Portlet.QNAME_JSR168)
     private String name1 = null;
     
     /** The preference values. */
@@ -79,7 +82,7 @@ public class PortletPreferenceDD {
     private List<String> values = null;
     
     /** The preference values. */
-    @XmlElement(name = "value", namespace = PortletDD.QNAME_JSR168)
+    @XmlElement(name = "value", namespace = Portlet.QNAME_JSR168)
     private List<String> values1 = null;
     
     /** Flag indicating if this preference is marked as read-only. */
@@ -87,38 +90,56 @@ public class PortletPreferenceDD {
     private boolean readOnly = false;
     
     /** Flag indicating if this preference is marked as read-only. */
-    @XmlElement(name = "read-only", namespace = PortletDD.QNAME_JSR168)
+    @XmlElement(name = "read-only", namespace = Portlet.QNAME_JSR168)
     private boolean readOnly1 = false;
     
     
     // Public Methods ----------------------------------------------------------
     
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletPreference#getName()
+	 */
     public String getName() {
     	if (name != null)
     		return name;
     	return name1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletPreference#setName(java.lang.String)
+	 */
     public void setName(String name) {
     	this.name = name;
     	this.name1 = name;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletPreference#getValues()
+	 */
     public List<String> getValues() {
     	if (values != null)
     		return values;
     	return values1;
     }
     
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletPreference#setValues(java.util.List)
+	 */
     public void setValues(List<String> values) {
     	this.values = values;
     	this.values1 = values;
     }
     
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletPreference#isReadOnly()
+	 */
     public boolean isReadOnly() {
     	return readOnly || readOnly1;
     }
     
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletPreference#setReadOnly(boolean)
+	 */
     public void setReadOnly(boolean readOnly) {
     	this.readOnly = readOnly;
     	this.readOnly1 = readOnly;

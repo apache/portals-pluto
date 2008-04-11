@@ -16,13 +16,15 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.ServletMapping;
+
 /**
  * ServletMapping configuration as contained within the
  * web.xml Deployment Descriptor.
  * @version $Id: ServletMappingDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class ServletMappingDD {
+public class ServletMappingDD implements ServletMapping {
 
     private String filterName;
     private String urlPattern;
@@ -31,18 +33,30 @@ public class ServletMappingDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ServletMapping#getServletName()
+	 */
     public String getServletName() {
         return filterName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ServletMapping#setServletName(java.lang.String)
+	 */
     public void setServletName(String filterName) {
         this.filterName = filterName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ServletMapping#getUrlPattern()
+	 */
     public String getUrlPattern() {
         return urlPattern;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.ServletMapping#setUrlPattern(java.lang.String)
+	 */
     public void setUrlPattern(String urlPattern) {
         this.urlPattern = urlPattern;
     }

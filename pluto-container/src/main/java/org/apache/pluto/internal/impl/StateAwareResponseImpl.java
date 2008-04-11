@@ -44,9 +44,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
@@ -321,12 +321,12 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     }
 
     protected boolean isPortletModeAllowedByPortlet(PortletMode mode) {
-        PortletDD dd = getInternalPortletWindow().getPortletEntity()
+        Portlet dd = getInternalPortletWindow().getPortletEntity()
             .getPortletDefinition();
 
         Iterator supports = dd.getSupports().iterator();
         while(supports.hasNext()) {
-            SupportsDD sup = (SupportsDD)supports.next();
+            Supports sup = (Supports)supports.next();
             List<String> portletModes = sup.getPortletModes();
             if (portletModes == null)
             	return false;

@@ -19,6 +19,7 @@ package org.apache.pluto.descriptors.services.castor;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.services.Constants;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
 
@@ -60,7 +61,7 @@ public class PortletAppDescriptorServiceImpl
      * @param portlet
      * @throws java.io.IOException
      */
-    public void write(PortletAppDD portlet, OutputStream out) throws IOException {
+    public void write(PortletApp portlet, OutputStream out) throws IOException {
         writeInternal(portlet, out);
     }
 

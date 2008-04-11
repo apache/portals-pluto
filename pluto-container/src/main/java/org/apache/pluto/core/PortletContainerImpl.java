@@ -42,7 +42,6 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.RequiredContainerServices;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 //import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.InternalPortletRequest;
@@ -57,6 +56,7 @@ import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.internal.InternalResourceRequest;
 import org.apache.pluto.internal.InternalResourceResponse;
 import org.apache.pluto.internal.impl.StateAwareResponseImpl;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortletURLProvider;
@@ -431,7 +431,7 @@ public class PortletContainerImpl implements PortletContainer,
         return optionalContainerServices;
     }
     
-    public PortletAppDD getPortletApplicationDescriptor(String context) 
+    public PortletApp getPortletApplicationDescriptor(String context) 
         throws PortletContainerException {
         
         // make sure the container has initialized
@@ -456,7 +456,7 @@ public class PortletContainerImpl implements PortletContainer,
         
         // obtain the portlet application descriptor for the portlet
         // context.
-        PortletAppDD portletAppDD = PortletDescriptorRegistry
+        PortletApp portletAppDD = PortletDescriptorRegistry
                                         .getRegistry()
                                         .getPortletAppDD(portletCtx);
         
@@ -654,7 +654,7 @@ public class PortletContainerImpl implements PortletContainer,
 	 * @throws PortletContainerException
 	 */
 	private FilterManager filterInitialisation(InternalPortletWindow internalPortletWindow,String lifeCycle) throws PortletContainerException{
-    	PortletAppDD portletAppDD = getOptionalContainerServices().getPortletRegistryService().getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
+    	PortletApp portletAppDD = getOptionalContainerServices().getPortletRegistryService().getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
         String portletName = internalPortletWindow.getPortletName();
         
         return requiredContainerServices.getPortalCallbackService().getFilterManager(portletAppDD,portletName,lifeCycle);

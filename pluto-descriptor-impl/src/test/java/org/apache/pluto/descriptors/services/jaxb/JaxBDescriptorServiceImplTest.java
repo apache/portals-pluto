@@ -24,8 +24,8 @@ import java.io.InputStream;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -313,16 +313,16 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			
 	        InputStream in = new ByteArrayInputStream(xml286.toString().getBytes());
 	        
-			PortletAppDD portletApp286 = jaxb.read(in);
+			PortletApp portletApp286 = jaxb.read(in);
 			
 			in = new ByteArrayInputStream(xml168.toString().getBytes());
-			PortletAppDD portletApp168 = jaxb.read(in);
+			PortletApp portletApp168 = jaxb.read(in);
 			
 			// test if portlet has the right params:
 			
 			// test jsr168 compliant portlets
-			PortletDD portlet168 = (PortletDD)portletApp168.getPortlets().get(0);
-			assertTrue(portlet168.getExpirationCacheDD().getExpirationTime()==-1);
+			Portlet portlet168 = (Portlet)portletApp168.getPortlets().get(0);
+			assertTrue(portlet168.getExpirationCache().getExpirationTime()==-1);
 			assertEquals(portlet168.getPortletName(),"portlet168");
 			assertEquals(portlet168.getInitParams().get(0).getParamValue(),"value");
 			assertEquals(portlet168.getSecurityRoleRefs().get(0).getRoleLink(), "role-link");
@@ -336,7 +336,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 //			assertTrue(portletApp.getId().equals("id1"));
 			
 			// portlet id
-			PortletDD portlet286 = (PortletDD)portletApp286.getPortlets().get(0);
+			Portlet portlet286 = (Portlet)portletApp286.getPortlets().get(0);
 //			assertTrue(portlet1.getId().equals("id2"));
 			
 			// portlet class
@@ -394,24 +394,24 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 
     public void testParseNoExpirationCache168() throws IOException {
         InputStream inputStream = new ByteArrayInputStream(portlet168NoCache.toString().getBytes());
-        PortletAppDD portletDD = jaxb.read( inputStream );
+        PortletApp portletDD = jaxb.read( inputStream );
 
         assertEquals( "1.0", portletDD.getVersion() );
         assertEquals( 1, portletDD.getPortlets().size() );
 
-        PortletDD pd = (PortletDD) portletDD.getPortlets().get( 0 );
-        assertNull( pd.getExpirationCacheDD() );
+        Portlet pd = (Portlet) portletDD.getPortlets().get( 0 );
+        assertNull( pd.getExpirationCache() );
     }
 
     public void testParseNoExpirationCache286() throws IOException {
         InputStream inputStream = new ByteArrayInputStream(portlet286NoCache.toString().getBytes());
-        PortletAppDD portletDD = jaxb.read( inputStream );
+        PortletApp portletDD = jaxb.read( inputStream );
 
         assertEquals( "2.0", portletDD.getVersion() );
         assertEquals( 1, portletDD.getPortlets().size() );
 
-        PortletDD pd = (PortletDD) portletDD.getPortlets().get( 0 );
-        assertNull( pd.getExpirationCacheDD() );
+        Portlet pd = (Portlet) portletDD.getPortlets().get( 0 );
+        assertNull( pd.getExpirationCache() );
     }
 
 }

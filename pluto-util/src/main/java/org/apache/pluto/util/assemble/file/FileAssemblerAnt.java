@@ -15,11 +15,11 @@
  */
 package org.apache.pluto.util.assemble.file;
 
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
 import org.apache.pluto.util.UtilityException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.castor.EntityResolverImpl;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
@@ -157,13 +157,13 @@ public class FileAssemblerAnt implements Assembler {
 
         PortletAppDescriptorService portletAppDescriptorService =
             	new PortletAppDescriptorServiceImpl();
-        PortletAppDD portletAppDD = portletAppDescriptorService.read(portletXmlIn);
+        PortletApp portletAppDD = portletAppDescriptorService.read(portletXmlIn);
         
         for (Iterator it = portletAppDD.getPortlets().iterator();
         		it.hasNext(); ) {
             
         	// Read portlet definition.
-        	PortletDD portlet = (PortletDD) it.next();
+        	Portlet portlet = (Portlet) it.next();
             String name = portlet.getPortletName();
             
             // Create servlet definition element.

@@ -16,7 +16,9 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import org.apache.pluto.descriptors.common.IconDD;
+import org.apache.pluto.om.common.Icon;
+import org.apache.pluto.om.servlet.LoadOnStartup;
+import org.apache.pluto.om.servlet.Servlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +30,16 @@ import java.util.List;
  * @version $Id: ServletDD.java 156743 2005-03-10 05:50:30Z ddewolf $
  * @since Feb 28, 2005
  */
-public class ServletDD {
+public class ServletDD implements Servlet {
 
     private String servletName;
     private String servletClass;
     private String displayName;
     private String description;
     private String jspFile;
-    private LoadOnStartupDD loadOnStartup;
+    private LoadOnStartup loadOnStartup;
 
-    private IconDD icon;
+    private Icon icon;
     private List initParams = new ArrayList();
     private List securityRoleRefs = new ArrayList();
 
@@ -45,74 +47,128 @@ public class ServletDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getServletName()
+	 */
     public String getServletName() {
         return servletName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setServletName(java.lang.String)
+	 */
     public void setServletName(String servletName) {
         this.servletName = servletName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getServletClass()
+	 */
     public String getServletClass() {
         return servletClass;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setServletClass(java.lang.String)
+	 */
     public void setServletClass(String servletClass) {
         this.servletClass = servletClass;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getDisplayName()
+	 */
     public String getDisplayName() {
         return displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setDisplayName(java.lang.String)
+	 */
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getJspFile()
+	 */
     public String getJspFile() {
         return jspFile;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setJspFile(java.lang.String)
+	 */
     public void setJspFile(String jspFile) {
         this.jspFile = jspFile;
     }
 
-    public LoadOnStartupDD getLoadOnStartup() {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getLoadOnStartup()
+	 */
+    public LoadOnStartup getLoadOnStartup() {
         return loadOnStartup;
     }
 
-    public void setLoadOnStartup(LoadOnStartupDD loadOnStartup) {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setLoadOnStartup(org.apache.pluto.descriptors.servlet.LoadOnStartup)
+	 */
+    public void setLoadOnStartup(LoadOnStartup loadOnStartup) {
         this.loadOnStartup = loadOnStartup;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getDescription()
+	 */
     public String getDescription() {
         return description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public IconDD getIcon() {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getIcon()
+	 */
+    public Icon getIcon() {
         return icon;
     }
 
-    public void setIcon(IconDD icon) {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setIcon(org.apache.pluto.om.common.Icon)
+	 */
+    public void setIcon(Icon icon) {
         this.icon = icon;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getInitParams()
+	 */
     public List getInitParams() {
         return initParams;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setInitParams(java.util.List)
+	 */
     public void setInitParams(List initParams) {
         this.initParams = initParams;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#getSecurityRoleRefs()
+	 */
     public List getSecurityRoleRefs() {
         return securityRoleRefs;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Servlet#setSecurityRoleRefs(java.util.List)
+	 */
     public void setSecurityRoleRefs(List securityRoleRefs) {
         this.securityRoleRefs = securityRoleRefs;
     }

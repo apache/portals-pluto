@@ -24,6 +24,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.Supports;
+
 /**
  * Representation of the supports element within the portlet.xml
  * 
@@ -60,37 +63,49 @@ import javax.xml.bind.annotation.XmlType;
     "mimeType","mimeType1",
     "portletModes","portletModes1"
 })
-public class SupportsDD {
+public class SupportsDD implements Supports {
 
 	@XmlElement(name = "mime-type")
     private String mimeType;
 	
-	@XmlElement(name = "mime-type", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "mime-type", namespace = Portlet.QNAME_JSR168)
     private String mimeType1;
 	
 	@XmlElement(name = "portlet-mode")
     private List<String> portletModes = null;
 	
-	@XmlElement(name = "portlet-mode", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "portlet-mode", namespace = Portlet.QNAME_JSR168)
     private List<String> portletModes1 = null;
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Supports#getMimeType()
+	 */
     public String getMimeType() {
     	if (mimeType != null)
     		return mimeType;
     	return mimeType1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Supports#setMimeType(java.lang.String)
+	 */
     public void setMimeType(String mimeType) {
     	this.mimeType = mimeType;
     	this.mimeType1 = mimeType;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Supports#getPortletModes()
+	 */
     public List<String> getPortletModes() {
     	if (portletModes != null)
     		return portletModes;
     	return portletModes1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Supports#setPortletModes(java.util.List)
+	 */
     public void setPortletModes(List<String> portletModes) {
     	this.portletModes = portletModes;
     	this.portletModes1 = portletModes;

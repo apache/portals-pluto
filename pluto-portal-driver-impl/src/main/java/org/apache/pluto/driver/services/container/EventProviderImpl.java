@@ -47,8 +47,6 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.PortletContainerImpl;
-import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
@@ -61,6 +59,9 @@ import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.internal.impl.InternalPortletWindowImpl;
+import org.apache.pluto.om.portlet.EventDefinition;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
@@ -264,13 +265,13 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 		for (PortletWindowConfig portlet : portlets) {
 			String contextPath = portlet.getContextPath();
-			PortletAppDD portletAppDD = null;
+			PortletApp portletAppDD = null;
 			try {
 				portletAppDD = container
 						.getPortletApplicationDescriptor(contextPath);
 				List<PortletDD> portletDDs = portletAppDD.getPortlets();
 				List<QName> aliases = getAllAliases(eventName, portletAppDD);
-				for (PortletDD portletDD : portletDDs) {
+				for (Portlet portletDD : portletDDs) {
 					List<QName> processingEvents = portletDD
 							.getProcessingEvents();
 					if ((processingEvents != null)
@@ -338,10 +339,10 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 		return resultList;
 	}
 
-	private List<QName> getAllAliases(QName eventName, PortletAppDD portletAppDD) {
+	private List<QName> getAllAliases(QName eventName, PortletApp portletAppDD) {
 		if (portletAppDD.getEvents() != null) {
 			
-			for (EventDefinitionDD def : portletAppDD.getEvents()){
+			for (EventDefinition def : portletAppDD.getEvents()){
 				if (def.getQName() != null){
 					if (def.getQName().equals(eventName))
 						return def.getAlias();
@@ -526,7 +527,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 		if (events != null) {
 			String contextPath = portletWindow.getContextPath();
 			try {
-				PortletAppDD portletAppDD = container
+				PortletApp portletAppDD = container
 						.getPortletApplicationDescriptor(contextPath);
 				String defaultNamespace = portletAppDD.getDefaultNamespace();
 				if (defaultNamespace == null) {
@@ -550,7 +551,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 	private boolean isValueInstanceOfDefinedClass(QName qname,
 			Serializable value) {
-		PortletAppDD portletAppDD = null;
+		PortletApp portletAppDD = null;
 		try {
 			portletAppDD = container
 					.getPortletApplicationDescriptor(portletWindow
@@ -558,7 +559,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			if (portletAppDD.getEvents() != null) {
 				
 				
-				for (EventDefinitionDD def : portletAppDD.getEvents()){
+				for (EventDefinition def : portletAppDD.getEvents()){
 					if (def.getQName() != null){
 						if (def.getQName().equals(qname))
 							return value.getClass().getName().equals(

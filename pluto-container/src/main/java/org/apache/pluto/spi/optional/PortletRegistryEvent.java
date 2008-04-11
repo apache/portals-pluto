@@ -17,7 +17,7 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.om.portlet.PortletApp;
 
 /**
  * Encapsulation of event information.
@@ -27,7 +27,7 @@ import org.apache.pluto.descriptors.portlet.PortletAppDD;
 public class PortletRegistryEvent {
 
     private String applicationId;
-    private PortletAppDD portletApplicationDescriptor;
+    private PortletApp portletApplicationDescriptor;
 
 
     public String getApplicationId() {
@@ -38,11 +38,11 @@ public class PortletRegistryEvent {
         this.applicationId = applicationId;
     }
 
-    public PortletAppDD getPortletApplicationDescriptor() {
+    public PortletApp getPortletApplicationDescriptor() {
         return portletApplicationDescriptor;
     }
 
-    public void setPortletApplicationDescriptor(PortletAppDD portletApplicationDescriptor) {
+    public void setPortletApplicationDescriptor(PortletApp portletApplicationDescriptor) {
         this.portletApplicationDescriptor = portletApplicationDescriptor;
     }
 }

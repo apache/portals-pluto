@@ -22,7 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
-import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.om.servlet.WebApp;
 
 /**
  *
@@ -295,7 +295,7 @@ public class WebAppDescriptorServiceImplTest extends TestCase {
 
         InputStream in = new ByteArrayInputStream(xml.toString().getBytes());
 
-        WebAppDD dd = impl.read(in);
+        WebApp dd = impl.read(in);
 
         Assert.assertEquals("DisplayName not as expected", "Test Web XML", dd.getDisplayName());
         Assert.assertEquals("Description does not match", "This is a test web.xml file.", dd.getDescription());

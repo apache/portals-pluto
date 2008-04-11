@@ -32,7 +32,6 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.InternalPortletRequest;
@@ -119,7 +118,7 @@ public class PortletServlet extends HttpServlet {
             throw new ServletException(ex);
         }
 
-        PortletDD portletDD = portletConfig.getPortletDefinition();
+        org.apache.pluto.om.portlet.Portlet portletDD = portletConfig.getPortletDefinition();
         
         // Create and initialize the portlet wrapped in the servlet.
         try {

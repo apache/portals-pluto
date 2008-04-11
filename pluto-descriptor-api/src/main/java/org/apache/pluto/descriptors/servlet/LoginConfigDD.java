@@ -16,41 +16,62 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.FormLoginConfig;
+import org.apache.pluto.om.servlet.LoginConfig;
+
 /**
  * @version $Id: LoginConfigDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class LoginConfigDD  {
+public class LoginConfigDD implements LoginConfig  {
 
     private String authMethod;
     private String realmName;
-    private FormLoginConfigDD formLoginConfig;
+    private FormLoginConfig formLoginConfig;
 
     public LoginConfigDD() {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoginConfig#getAuthMethod()
+	 */
     public String getAuthMethod() {
         return authMethod;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoginConfig#setAuthMethod(java.lang.String)
+	 */
     public void setAuthMethod(String authMethod) {
         this.authMethod = authMethod;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoginConfig#getRealmName()
+	 */
     public String getRealmName() {
         return realmName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoginConfig#setRealmName(java.lang.String)
+	 */
     public void setRealmName(String realmName) {
         this.realmName = realmName;
     }
 
-    public FormLoginConfigDD getFormLoginConfig() {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoginConfig#getFormLoginConfig()
+	 */
+    public FormLoginConfig getFormLoginConfig() {
         return formLoginConfig ;
     }
 
-    public void setFormLoginConfig(FormLoginConfigDD formLoginConfig) {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.LoginConfig#setFormLoginConfig(org.apache.pluto.descriptors.servlet.FormLoginConfig)
+	 */
+    public void setFormLoginConfig(FormLoginConfig formLoginConfig) {
         this.formLoginConfig = formLoginConfig;
     }
 }

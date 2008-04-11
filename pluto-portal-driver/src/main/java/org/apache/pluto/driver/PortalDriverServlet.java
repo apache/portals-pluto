@@ -31,13 +31,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.om.portlet.Portlet;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -194,7 +194,7 @@ public class PortalDriverServlet extends HttpServlet {
     private void setPublicRenderParameter(HttpServletRequest request, PortalURL portalURL, String portletID)throws ServletException, PortletContainerException {    		
 		String applicationId = PortletWindowConfig.parseContextPath(portletID);
 		String portletName = PortletWindowConfig.parsePortletName(portletID);
-		PortletDD portletDD = container.getOptionalContainerServices().getPortletRegistryService()
+		Portlet portletDD = container.getOptionalContainerServices().getPortletRegistryService()
 								.getPortletDescriptor(applicationId, portletName);    		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		if (parameterNames != null){

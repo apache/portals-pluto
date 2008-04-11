@@ -23,23 +23,32 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletCollection;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "portlet-collectionType", propOrder = {
     "portletName","portletName1"
 })
-public class PortletCollectionDD {
+public class PortletCollectionDD implements PortletCollection {
 	@XmlElement (name = "portlet-name")
 	private List<String> portletName = null;
 	
-	@XmlElement (name = "portlet-name", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement (name = "portlet-name", namespace = Portlet.QNAME_JSR168)
 	private List<String> portletName1 = null;
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletCollection#getPortletName()
+	 */
 	public List<String> getPortletName() {
 		if (portletName != null)
 			return portletName;
 		return portletName1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletCollection#setPortletName(java.util.List)
+	 */
 	public void setPortletName(List<String> portletName) {
 		this.portletName = portletName;
 		this.portletName1 = portletName;

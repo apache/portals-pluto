@@ -16,7 +16,9 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import org.apache.pluto.descriptors.common.UserDataConstraintDD;
+import org.apache.pluto.om.common.UserDataConstraint;
+import org.apache.pluto.om.servlet.AuthConstraint;
+import org.apache.pluto.om.servlet.SecurityConstraint;
 
 import java.util.List;
 
@@ -25,47 +27,71 @@ import java.util.List;
  * @version $Id: SecurityConstraintDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class SecurityConstraintDD {
+public class SecurityConstraintDD implements SecurityConstraint {
 
     private String displayName;
     private List webResourceCollection;
-    private AuthConstraintDD authConstraint;
-    private UserDataConstraintDD userDataConstraint;
+    private AuthConstraint authConstraint;
+    private UserDataConstraint userDataConstraint;
 
     public SecurityConstraintDD() {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#getDisplayName()
+	 */
     public String getDisplayName() {
         return displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#setDisplayName(java.lang.String)
+	 */
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#getWebResourceCollections()
+	 */
     public List getWebResourceCollections() {
         return webResourceCollection;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#setWebResourceCollections(java.util.List)
+	 */
     public void setWebResourceCollections(List webResourceCollection) {
         this.webResourceCollection = webResourceCollection;
     }
 
-    public AuthConstraintDD getAuthConstraint() {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#getAuthConstraint()
+	 */
+    public AuthConstraint getAuthConstraint() {
         return authConstraint;
     }
 
-    public void setAuthConstraint(AuthConstraintDD authConstraint) {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#setAuthConstraint(org.apache.pluto.descriptors.servlet.AuthConstraint)
+	 */
+    public void setAuthConstraint(AuthConstraint authConstraint) {
         this.authConstraint = authConstraint;
     }
 
-    public UserDataConstraintDD getUserDataConstraint() {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#getUserDataConstraint()
+	 */
+    public UserDataConstraint getUserDataConstraint() {
         return userDataConstraint;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityConstraint#setUserDataConstraint(org.apache.pluto.om.common.UserDataConstraint)
+	 */
     public void setUserDataConstraint(
-        UserDataConstraintDD userDataConstraint) {
+        UserDataConstraint userDataConstraint) {
         this.userDataConstraint = userDataConstraint;
     }
 

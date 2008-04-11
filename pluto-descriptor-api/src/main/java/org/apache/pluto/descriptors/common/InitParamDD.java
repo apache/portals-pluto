@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.om.common.InitParam;
+import org.apache.pluto.om.portlet.Portlet;
 
 /**
  * Initialization Parameter configuration.
@@ -69,14 +70,14 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
     "paramValue", "paramValue1",
     "descriptions", "descriptions1"
 })
-public class InitParamDD {
+public class InitParamDD implements InitParam {
 	
 	/** The description of the parameter. */
 	@XmlElement(name = "description")
     private String description;
 	
 	/** The description of the parameter. */
-	@XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "description", namespace = Portlet.QNAME_JSR168)
     private String description1;
 
 	/** The description list. */
@@ -84,7 +85,7 @@ public class InitParamDD {
     private List<String> descriptions;
 	
 	/** The description list. */
-	@XmlElement(name = "descriptions", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "descriptions", namespace = Portlet.QNAME_JSR168)
     private List descriptions1;
 
 	/** The name of the parameter. */
@@ -92,7 +93,7 @@ public class InitParamDD {
     private String paramName;
 	
 	/** The name of the parameter. */
-	@XmlElement(name = "name", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "name", namespace = Portlet.QNAME_JSR168)
     private String paramName1;
 
     /** The value of the parameter. */
@@ -100,7 +101,7 @@ public class InitParamDD {
     private String paramValue;
 	
 	/** The value of the parameter. */
-	@XmlElement(name = "value", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "value", namespace = Portlet.QNAME_JSR168)
     private String paramValue1;
 
     
@@ -112,77 +113,69 @@ public class InitParamDD {
 
     }
 
-    /**
-     * Retrieve the name of the parameter.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#getParamName()
+	 */
     public String getParamName() {
     	if (paramName!= null)
     		return paramName;
     	return paramName1;
     }
 
-    /**
-     * Set the name of the parameter.
-     * @param paramName
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#setParamName(java.lang.String)
+	 */
     public void setParamName(String paramName) {
     	this.paramName = paramName;
     	this.paramName1 = paramName;
     }
 
-    /**
-     * Get the name of the parameter.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#getParamValue()
+	 */
     public String getParamValue() {
     	if (paramValue != null)
     		return paramValue;
     	return paramValue1;
     }
 
-    /**
-     * Set the value of the parameter.
-     * @param paramValue
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#setParamValue(java.lang.String)
+	 */
     public void setParamValue(String paramValue) {
     	this.paramValue = paramValue;
     	this.paramValue1 = paramValue;
     }
 
-    /**
-     * Retrieve the description.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#getDescription()
+	 */
     public String getDescription() {
     	if (description != null)
     		return description;
     	return description1;
     }
 
-    /**
-     * Set the description of the parameter.
-     * @param description
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
     	this.description = description;
     	this.description1 = description;
     }
 
-    /**
-     * Retrieve the description list.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#getDescriptions()
+	 */
     public List getDescriptions() {
     	if (descriptions != null)
     		return descriptions;
     	return descriptions1;
     }
 
-    /**
-     * Set the description list.
-     * @param description
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.InitParam#setDescriptions(java.util.List)
+	 */
     public void setDescriptions(List<String> descriptions) {
     	this.descriptions = descriptions;
     	this.descriptions1 = descriptions;

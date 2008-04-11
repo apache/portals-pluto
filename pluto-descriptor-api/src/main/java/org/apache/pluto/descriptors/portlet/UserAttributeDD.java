@@ -21,42 +21,57 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.UserAttribute;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user-attributeType", propOrder = {
     "description","description1",
     "name","name1"
 })
-public class UserAttributeDD {
+public class UserAttributeDD implements UserAttribute {
 	
 	@XmlElement(name = "description")
 	private String description = null;
 	
-	@XmlElement(name = "description", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "description", namespace = Portlet.QNAME_JSR168)
 	private String description1 = null;
 	
 	@XmlElement ( name = "name")
 	private String name = null;
 	
-	@XmlElement ( name = "name", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement ( name = "name", namespace = Portlet.QNAME_JSR168)
 	private String name1 = null;
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.UserAttribute#getDescription()
+	 */
 	public String getDescription() {
 		if (description != null)
 			return description;
 		return description1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.UserAttribute#setDescription(java.lang.String)
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 		this.description1 = description;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.UserAttribute#getName()
+	 */
 	public String getName() {
 		if (name != null)
 			return name;
 		return name1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.UserAttribute#setName(java.lang.String)
+	 */
 	public void setName(String name) {
 		this.name = name;
 		this.name1 = name;

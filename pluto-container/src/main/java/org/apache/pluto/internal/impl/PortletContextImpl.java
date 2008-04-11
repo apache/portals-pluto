@@ -33,10 +33,10 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.descriptors.portlet.ContainerRuntimeOptionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
@@ -58,13 +58,13 @@ implements PortletContext, InternalPortletContext {
     
     
     /** Portlet Descriptor */
-    private PortletDD portletDD = null;
+    private Portlet portletDD = null;
 
 
     private final String applicationId;
     private String applicationName;
      
-    private final PortletAppDD portletAppDD;
+    private final PortletApp portletAppDD;
     private final ServletContext servletContext;
     private ClassLoader contextClassLoader;
 
@@ -78,7 +78,7 @@ implements PortletContext, InternalPortletContext {
      */
     public PortletContextImpl(String portletApplicationId,
                               ServletContext servletContext,
-                              PortletAppDD portletAppDD) {
+                              PortletApp portletAppDD) {
         this.servletContext = servletContext;
         this.portletAppDD = portletAppDD;
         this.applicationId = portletApplicationId;
@@ -284,7 +284,7 @@ implements PortletContext, InternalPortletContext {
         return servletContext;
     }
 
-    public PortletAppDD getPortletApplicationDefinition() {
+    public PortletApp getPortletApplicationDefinition() {
         return portletAppDD;
     }
 
@@ -292,7 +292,7 @@ implements PortletContext, InternalPortletContext {
 	public Map<String, String[]> getApplicationRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
 		if (portletAppDD.getContainerRuntimeOption() != null){
-			for (ContainerRuntimeOptionDD option : portletAppDD.getContainerRuntimeOption()) {
+			for (ContainerRuntimeOption option : portletAppDD.getContainerRuntimeOption()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValue();
 					String [] tempValues = new String[values.size()];
@@ -309,7 +309,7 @@ implements PortletContext, InternalPortletContext {
 	public Map<String, String[]> getPortletRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
 		if (portletDD.getContainerRuntimeOption() != null) {
-			for (ContainerRuntimeOptionDD option : portletDD.getContainerRuntimeOption()) {
+			for (ContainerRuntimeOption option : portletDD.getContainerRuntimeOption()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValue();
 					String [] tempValues = new String[values.size()];

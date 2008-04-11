@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.MimeMapping;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id:$
  * @since Feb 28, 2005
  */
-public class MimeMappingDD {
+public class MimeMappingDD implements MimeMapping {
 
     private String extension;
     private String mimeType;
@@ -30,18 +32,30 @@ public class MimeMappingDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.MimeMapping#getMimeType()
+	 */
     public String getMimeType() {
         return mimeType;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.MimeMapping#setMimeType(java.lang.String)
+	 */
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.MimeMapping#getExtension()
+	 */
     public String getExtension() {
         return extension;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.MimeMapping#setExtension(java.lang.String)
+	 */
     public void setExtension(String extension) {
         this.extension = extension;
     }

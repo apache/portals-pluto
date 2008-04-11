@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
+import org.apache.pluto.om.portlet.EventDefinitionReference;
+
 /**
  * 
  * the event definition reference type
@@ -29,7 +31,7 @@ import javax.xml.namespace.QName;
     "qname",
     "name"
 })
-public class EventDefinitionReferenceDD {
+public class EventDefinitionReferenceDD implements EventDefinitionReference {
 	
 	/**
 	 * Name of the Event
@@ -41,8 +43,8 @@ public class EventDefinitionReferenceDD {
 	private QName qname;	
 	private String name;
 	
-	/**
-	 * @return Returns the name.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinitionReference#getName()
 	 */
 	public QName getName() {
 		if ((qname == null) && (name == null))
@@ -50,8 +52,8 @@ public class EventDefinitionReferenceDD {
 		return (qname==null) ? new QName(name) : qname; 
 	}
 
-	/**
-	 * @param name The name to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.EventDefinitionReference#setName(javax.xml.namespace.QName)
 	 */
 	public void setName(QName qname) {
 		this.qname = qname;

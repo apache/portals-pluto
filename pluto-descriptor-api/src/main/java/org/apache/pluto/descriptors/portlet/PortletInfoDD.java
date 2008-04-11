@@ -25,6 +25,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletInfo;
+
 /**
  * Implementation of the Portlet Info descriptor element.
  * @since 1.1.0-SNAPSHOT
@@ -56,53 +59,71 @@ import javax.xml.bind.annotation.XmlType;
     "shortTitle","shortTitle1",
     "keywords","keywords1"
 })
-public class PortletInfoDD {
+public class PortletInfoDD implements PortletInfo {
 	@XmlElement (name = "title")
     private String title;
 	
-	@XmlElement (name = "title", namespace =PortletDD.QNAME_JSR168)
+	@XmlElement (name = "title", namespace =Portlet.QNAME_JSR168)
     private String title1;
     
     @XmlElement (name = "short-title")
     private String shortTitle;
     
-    @XmlElement (name = "short-title", namespace =PortletDD.QNAME_JSR168)
+    @XmlElement (name = "short-title", namespace =Portlet.QNAME_JSR168)
     private String shortTitle1;
     
     @XmlElement (name="keywords")
     private String keywords;
     
-    @XmlElement (name="keywords", namespace =PortletDD.QNAME_JSR168)
+    @XmlElement (name="keywords", namespace =Portlet.QNAME_JSR168)
     private String keywords1;
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletInfo#getTitle()
+	 */
     public String getTitle() {
     	if (title != null)
     		return title;
     	return title1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletInfo#setTitle(java.lang.String)
+	 */
     public void setTitle(String title) {
     	this.title = title;
     	this.title1 = title;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletInfo#getKeywords()
+	 */
     public String getKeywords() {
     	if (keywords != null)
     		return keywords;
     	return keywords1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletInfo#setKeywords(java.lang.String)
+	 */
     public void setKeywords(String keywords) {
     	this.keywords = keywords;
     	this.keywords1 = keywords;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletInfo#getShortTitle()
+	 */
     public String getShortTitle() {
     	if (shortTitle != null)
     		return shortTitle;
     	return shortTitle1;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletInfo#setShortTitle(java.lang.String)
+	 */
     public void setShortTitle(String shortTitle) {
     	this.shortTitle = shortTitle;
     	this.shortTitle1 = shortTitle;

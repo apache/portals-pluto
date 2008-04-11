@@ -19,12 +19,24 @@ package org.apache.pluto.descriptors.portlet;
 
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.om.portlet.CustomPortletMode;
+import org.apache.pluto.om.portlet.CustomWindowState;
+import org.apache.pluto.om.portlet.EventDefinition;
+import org.apache.pluto.om.portlet.Filter;
+import org.apache.pluto.om.portlet.FilterMapping;
+import org.apache.pluto.om.portlet.Listener;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PublicRenderParam;
+import org.apache.pluto.om.portlet.SecurityConstraint;
+import org.apache.pluto.om.portlet.UserAttribute;
 
 /**
  * Portlet Application Configuration.
@@ -78,39 +90,39 @@ import javax.xml.bind.annotation.XmlType;
     "render",
     "containerRuntimeOption"
 })
-public class PortletAppDD {
+public class PortletAppDD implements PortletApp {
 
     /** The defined portlets within the system. */
-	@XmlElement(name = "portlet", namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd")
-    private List<PortletDD> portlets = null;
+	@XmlElement(name = "portlet", type=PortletDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd")
+    private List<Portlet> portlets = null;
 	
 	/** The defined portlets (jsr 168) within the system. */
-	@XmlElement(name = "portlet", namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
-    private List<PortletDD> portlets1 = null;
+	@XmlElement(name = "portlet", type=PortletDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
+    private List<Portlet> portlets1 = null;
 	
-	@XmlElement(name = "custom-portlet-mode")
-	private List<CustomPortletModeDD> customPortletMode = null;
+	@XmlElement(name = "custom-portlet-mode", type=CustomPortletModeDD.class)
+	private List<CustomPortletMode> customPortletMode = null;
 	
-	@XmlElement(name = "custom-portlet-mode", namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
-	private List<CustomPortletModeDD> customPortletMode1 = null;
+	@XmlElement(name = "custom-portlet-mode", type=CustomPortletModeDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
+	private List<CustomPortletMode> customPortletMode1 = null;
 	
-	@XmlElement(name = "custom-window-state")
-	private List<CustomWindowStateDD> customWindowState = null;
+	@XmlElement(name = "custom-window-state", type=CustomWindowStateDD.class)
+	private List<CustomWindowState> customWindowState = null;
 	
-	@XmlElement(name = "custom-window-state", namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
-	private List<CustomWindowStateDD> customWindowState1 = null;
+	@XmlElement(name = "custom-window-state", type=CustomWindowStateDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
+	private List<CustomWindowState> customWindowState1 = null;
 	
-	@XmlElement(name = "user-attribute")
-	private List<UserAttributeDD> userAttribute = null;
+	@XmlElement(name = "user-attribute", type=UserAttributeDD.class)
+	private List<UserAttribute> userAttribute = null;
 
-	@XmlElement(name = "user-attribute", namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
-	private List<UserAttributeDD> userAttribute1 = null;
+	@XmlElement(name = "user-attribute", type=UserAttributeDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
+	private List<UserAttribute> userAttribute1 = null;
 	
-	@XmlElement(name = "security-constraint")
-	private List<SecurityConstraintDD> securityConstraint = null;
+	@XmlElement(name = "security-constraint", type=SecurityConstraintDD.class)
+	private List<SecurityConstraint> securityConstraint = null;
 	
-	@XmlElement(name = "security-constraint", namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
-	private List<SecurityConstraintDD> securityConstraint1 = null;
+	@XmlElement(name = "security-constraint", type=SecurityConstraintDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd")
+	private List<SecurityConstraint> securityConstraint1 = null;
 	
 	@XmlElement ( name = "resource-bundle")
 	private String resourceBundle = null;
@@ -123,28 +135,28 @@ public class PortletAppDD {
 	private String defaultNamespace = null; 
 	
     /** The defined Portlet Events within the system. */
-	@XmlElement(name = "event-definition")
-    private List<EventDefinitionDD> events = null;
+	@XmlElement(name = "event-definition", type=EventDefinitionDD.class)
+    private List<EventDefinition> events = null;
     
     /** The defined public Render Parameter within the system. */
-	@XmlElement(name = "public-render-parameter")
-    private List<PublicRenderParamDD> render =null;
+	@XmlElement(name = "public-render-parameter", type=PublicRenderParamDD.class)
+    private List<PublicRenderParam> render =null;
 	
-	@XmlElement ( name = "filter")
-	private List<FilterDD> filter = null;
+	@XmlElement ( name = "filter", type=FilterDD.class)
+	private List<Filter> filter = null;
 	
-	@XmlElement ( name = "filter-mapping")
-	private List<FilterMappingDD> filterMapping = null;
+	@XmlElement ( name = "filter-mapping", type=FilterMappingDD.class)
+	private List<FilterMapping> filterMapping = null;
 	
-	@XmlElement ( name = "listener")
-	private List<ListenerDD> listener = null;
+	@XmlElement ( name = "listener", type=ListenerDD.class)
+	private List<Listener> listener = null;
 	
 	@XmlAttribute(name = "version")
 	private String version;
 
 	/** the container runtime options of this portlet application */
-	@XmlElement(name = "container-runtime-option")
-	private List<ContainerRuntimeOptionDD> containerRuntimeOption = null;
+	@XmlElement(name = "container-runtime-option", type=ContainerRuntimeOptionDD.class)
+	private List<ContainerRuntimeOption> containerRuntimeOption = null;
 	
     /**
      * Default Constructor.
@@ -152,10 +164,9 @@ public class PortletAppDD {
     public PortletAppDD() {
     }
 
-    /**
-     * Retrieve the portlets which exist within this application.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getPortlets()
+	 */
     public List getPortlets() {
     	if (portlets != null)
     		return portlets;
@@ -163,139 +174,201 @@ public class PortletAppDD {
     	return portlets1;
     }
 
-    /**
-     * Set the portlets that exist within this application.
-     * @param portlets
-     */
-    public void setPortlets(List<PortletDD> portlets) {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setPortlets(java.util.List)
+	 */
+    public void setPortlets(List<Portlet> portlets) {
     	this.portlets = portlets;
     	this.portlets1 = portlets;
     }
     
-    /**
-	 * @return Returns the events.
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getEvents()
 	 */
-	public List<EventDefinitionDD> getEvents() {
+	public List<EventDefinition> getEvents() {
 		return events;
 	}
 
-	/**
-	 * @param events The events to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setEvents(java.util.List)
 	 */
-	public void setEvents(List<EventDefinitionDD> events) {
+	public void setEvents(List<EventDefinition> events) {
 		this.events = events;
 	}
 
-	/**
-	 * @return Returns the public render parameter.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getRender()
 	 */
-	public List<PublicRenderParamDD> getRender() {
+	public List<PublicRenderParam> getRender() {
 		return render;
 	}
 
-	/**
-	 * @param render The public render parameter to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setRender(java.util.List)
 	 */
-	public void setRender(List<PublicRenderParamDD> render) {
+	public void setRender(List<PublicRenderParam> render) {
 		this.render = render;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getVersion()
+	 */
 	public String getVersion() {
 		return version;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setVersion(java.lang.String)
+	 */
 	public void setVersion(String version) {
 		this.version = version;
 	}
 
-	public List<CustomPortletModeDD> getCustomPortletMode() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getCustomPortletMode()
+	 */
+	public List<CustomPortletMode> getCustomPortletMode() {
 		if (customPortletMode != null)
 			return customPortletMode;
 		return customPortletMode1;
 	}
 
-	public void setCustomPortletMode(List<CustomPortletModeDD> customPortletMode) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setCustomPortletMode(java.util.List)
+	 */
+	public void setCustomPortletMode(List<CustomPortletMode> customPortletMode) {
 		this.customPortletMode = customPortletMode;
 		this.customPortletMode1 = customPortletMode;
 	}
 
-	public List<CustomWindowStateDD> getCustomWindowState() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getCustomWindowState()
+	 */
+	public List<CustomWindowState> getCustomWindowState() {
 		if (customWindowState != null)
 			return customWindowState;
 		return customWindowState1;
 	}
 
-	public void setCustomWindowState(List<CustomWindowStateDD> customWindowState) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setCustomWindowState(java.util.List)
+	 */
+	public void setCustomWindowState(List<CustomWindowState> customWindowState) {
 		this.customWindowState = customWindowState;
 		this.customWindowState1 = customWindowState;
 	}
 
-	public List<UserAttributeDD> getUserAttribute() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getUserAttribute()
+	 */
+	public List<UserAttribute> getUserAttribute() {
 		if (userAttribute != null)
 			return userAttribute;
 		return userAttribute1;
 	}
 
-	public void setUserAttribute(List<UserAttributeDD> userAttribute) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setUserAttribute(java.util.List)
+	 */
+	public void setUserAttribute(List<UserAttribute> userAttribute) {
 		this.userAttribute = userAttribute;
 		this.userAttribute1 = userAttribute;
 	}
 
-	public List<SecurityConstraintDD> getSecurityConstraint() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getSecurityConstraint()
+	 */
+	public List<SecurityConstraint> getSecurityConstraint() {
 		if (securityConstraint != null)
 			return securityConstraint;
 		return securityConstraint1;
 	}
 
-	public void setSecurityConstraint(List<SecurityConstraintDD> securityConstraint) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setSecurityConstraint(java.util.List)
+	 */
+	public void setSecurityConstraint(List<SecurityConstraint> securityConstraint) {
 		this.securityConstraint = securityConstraint;
 		this.securityConstraint1 = securityConstraint;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getResourceBundle()
+	 */
 	public String getResourceBundle() {
 		if (resourceBundle != null)
 			return resourceBundle;
 		return resourceBundle1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setResourceBundle(java.lang.String)
+	 */
 	public void setResourceBundle(String resourceBundle) {
 		this.resourceBundle = resourceBundle;
 		this.resourceBundle1 = resourceBundle;
 	}
 
-	public List<FilterDD> getFilter() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getFilter()
+	 */
+	public List<Filter> getFilter() {
 		return filter;
 	}
 
-	public void setFilter(List<FilterDD> filter) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setFilter(java.util.List)
+	 */
+	public void setFilter(List<Filter> filter) {
 		this.filter = filter;
 	}
 
-	public List<FilterMappingDD> getFilterMapping() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getFilterMapping()
+	 */
+	public List<FilterMapping> getFilterMapping() {
 		return filterMapping;
 	}
 
-	public void setFilterMapping(List<FilterMappingDD> filterMapping) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setFilterMapping(java.util.List)
+	 */
+	public void setFilterMapping(List<FilterMapping> filterMapping) {
 		this.filterMapping = filterMapping;
 	}
 
-	public List<ListenerDD> getListener() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getListener()
+	 */
+	public List<Listener> getListener() {
 		return listener;
 	}
 
-	public void setListener(List<ListenerDD> listener) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setListener(java.util.List)
+	 */
+	public void setListener(List<Listener> listener) {
 		this.listener = listener;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getDefaultNamespace()
+	 */
 	public String getDefaultNamespace() {
 		return defaultNamespace;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#setDefaultNamespace(java.lang.String)
+	 */
 	public void setDefaultNamespace(String defaultNamespace) {
 		this.defaultNamespace = defaultNamespace;
 	}
 
-	public List<ContainerRuntimeOptionDD> getContainerRuntimeOption() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getContainerRuntimeOption()
+	 */
+	public List<ContainerRuntimeOption> getContainerRuntimeOption() {
 		return containerRuntimeOption;
 	}
 }

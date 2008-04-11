@@ -31,13 +31,14 @@ import junit.framework.TestCase;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.services.castor.WebAppDescriptorServiceImpl;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
-import org.apache.pluto.descriptors.servlet.ServletDD;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.servlet.Servlet;
+import org.apache.pluto.om.servlet.WebApp;
 import org.apache.pluto.util.assemble.Assembler;
 
 /**
@@ -88,8 +89,8 @@ public class AssemblyStreamTest extends TestCase {
     protected void verifyAssembly( InputStream webXml, InputStream portletXml ) throws Exception {
         WebAppDescriptorService webSvc = new WebAppDescriptorServiceImpl();
         PortletAppDescriptorService portletSvc = new PortletAppDescriptorServiceImpl();
-        WebAppDD webApp = webSvc.read( webXml ) ;
-        PortletAppDD portletApp = portletSvc.read( portletXml );
+        WebApp webApp = webSvc.read( webXml ) ;
+        PortletApp portletApp = portletSvc.read( portletXml );
         
         assertNotNull( "Web Application Descripter was null.", webApp );
         assertNotNull( "Portlet Application Descriptor was null.", portletApp );
@@ -97,10 +98,10 @@ public class AssemblyStreamTest extends TestCase {
         assertTrue( "Web Application Descriptor doesn't define any servlets.", webApp.getServlets().size() > 0 );
         assertTrue( "Web Application Descriptor doesn't define any servlet mappings.", webApp.getServletMappings().size() > 0 );
         
-        PortletDD portlet = (PortletDD) portletApp.getPortlets().iterator().next();
+        Portlet portlet = (Portlet) portletApp.getPortlets().iterator().next();
         assertTrue( "Unable to retrieve test portlet named [" + testPortletName + "]", portlet.getPortletName().equals( testPortletName ) );
         
-        ServletDD servlet = webApp.getServlet( testPortletName );
+        Servlet servlet = webApp.getServlet( testPortletName );
         assertNotNull( "Unable to retrieve portlet dispatch for portlet named [" + testPortletName + "]", servlet );        
         assertEquals( "Dispatcher servlet incorrect for test portlet [" + testPortletName + "]",  Assembler.DISPATCH_SERVLET_CLASS, servlet.getServletClass() );        
     }
@@ -111,8 +112,8 @@ public class AssemblyStreamTest extends TestCase {
         int entryCount = 0;
         ByteArrayOutputStream portletXmlBytes = new ByteArrayOutputStream();
         ByteArrayOutputStream webXmlBytes = new ByteArrayOutputStream();
-        WebAppDD webApp = null;
-        PortletAppDD portletApp = null;        
+        WebApp webApp = null;
+        PortletApp portletApp = null;        
                 
         JarInputStream assembledWarIn = new JarInputStream( new FileInputStream( warFile ) );
         JarEntry tempEntry;
@@ -137,10 +138,10 @@ public class AssemblyStreamTest extends TestCase {
         assertTrue( "Web Application Descriptor doesn't define any servlets.", webApp.getServlets().size() > 0 );
         assertTrue( "Web Application Descriptor doesn't define any servlet mappings.", webApp.getServletMappings().size() > 0 );
 
-        PortletDD portlet = (PortletDD) portletApp.getPortlets().iterator().next();
+        Portlet portlet = (Portlet) portletApp.getPortlets().iterator().next();
         assertTrue( "Unable to retrieve test portlet named [" + testPortletName + "]", portlet.getPortletName().equals( testPortletName ) );
 
-        ServletDD servlet = webApp.getServlet( testPortletName );
+        Servlet servlet = webApp.getServlet( testPortletName );
         assertNotNull( "Unable to retrieve portlet dispatch for portlet named [" + testPortletName + "]", servlet );        
         assertEquals( "Dispatcher servlet incorrect for test portlet [" + testPortletName + "]",  Assembler.DISPATCH_SERVLET_CLASS, servlet.getServletClass() );
     }

@@ -18,12 +18,14 @@ package org.apache.pluto.descriptors.servlet;
 
 import java.util.List;
 
+import org.apache.pluto.om.servlet.WelcomeFileList;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: WelcomeFileListDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class WelcomeFileListDD {
+public class WelcomeFileListDD implements WelcomeFileList {
 
     private List welcomeFiles;
 
@@ -31,10 +33,16 @@ public class WelcomeFileListDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WelcomeFileList#getWelcomeFiles()
+	 */
     public List getWelcomeFiles() {
         return welcomeFiles;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.WelcomeFileList#setWelcomeFiles(java.util.List)
+	 */
     public void setWelcomeFiles(List welcomeFiles) {
         this.welcomeFiles = welcomeFiles;
     }

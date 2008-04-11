@@ -22,8 +22,6 @@ import java.io.OutputStream;
 import java.util.Iterator;
 
 import org.apache.pluto.descriptors.common.InitParamDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
 import org.apache.pluto.descriptors.services.castor.WebAppDescriptorServiceImpl;
@@ -31,7 +29,13 @@ import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImp
 import org.apache.pluto.descriptors.servlet.LoadOnStartupDD;
 import org.apache.pluto.descriptors.servlet.ServletDD;
 import org.apache.pluto.descriptors.servlet.ServletMappingDD;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.om.common.InitParam;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.servlet.LoadOnStartup;
+import org.apache.pluto.om.servlet.Servlet;
+import org.apache.pluto.om.servlet.ServletMapping;
+import org.apache.pluto.om.servlet.WebApp;
 import org.apache.pluto.util.assemble.Assembler;
 
 /** 
@@ -63,32 +67,32 @@ public class WebXmlStreamingAssembly {
       WebAppDescriptorService descriptorSvc = new WebAppDescriptorServiceImpl();  
       PortletAppDescriptorService portletAppDescriptorSvc = new PortletAppDescriptorServiceImpl();
         
-        WebAppDD webAppDDIn = descriptorSvc.read(webXmlIn);
-        PortletAppDD portletAppDD = portletAppDescriptorSvc.read(portletXmlIn);
+        WebApp webAppDDIn = descriptorSvc.read(webXmlIn);
+        PortletApp portletAppDD = portletAppDescriptorSvc.read(portletXmlIn);
         portletXmlIn.close();
 
         for (Iterator it = portletAppDD.getPortlets().iterator();
                 it.hasNext(); ) {
 
             // Read portlet definition.
-            PortletDD portlet = (PortletDD) it.next();
+            Portlet portlet = (Portlet) it.next();
             String name = portlet.getPortletName();
 
-            ServletDD servlet = new ServletDD();
+            Servlet servlet = new ServletDD();
             servlet.setServletName(name);
 
             servlet.setServletClass(dispatchServletClass);
 
-            InitParamDD initParam = new InitParamDD();
+            InitParam initParam = new InitParamDD();
             initParam.setParamName("portlet-name");
             initParam.setParamValue(name);
             servlet.getInitParams().add(initParam);
 
-            LoadOnStartupDD onStartup = new LoadOnStartupDD();
+            LoadOnStartup onStartup = new LoadOnStartupDD();
             onStartup.setPriority(1);
             servlet.setLoadOnStartup(onStartup);
 
-            ServletMappingDD servletMapping = new ServletMappingDD();
+            ServletMapping servletMapping = new ServletMappingDD();
             servletMapping.setServletName(name);
             servletMapping.setUrlPattern("/PlutoInvoker/" + name);
 

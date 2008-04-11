@@ -23,7 +23,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.om.common.SecurityRoleRef;
+import org.apache.pluto.om.portlet.Portlet;
 
 /**
  * Security Role Reference Configuration.
@@ -74,14 +75,14 @@ import org.apache.pluto.descriptors.portlet.PortletDD;
     "descriptions", "descriptions1"
 })
 
-public class SecurityRoleRefDD {
+public class SecurityRoleRefDD implements SecurityRoleRef {
 	
 	/** The description of what the role is utilized for. */
 	@XmlElement( name = "description")
     private String description;
 	
 	/** The description of what the role is utilized for. */
-	@XmlElement( name = "description", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement( name = "description", namespace = Portlet.QNAME_JSR168)
     private String description1;
 
 	/** The description list. */
@@ -89,7 +90,7 @@ public class SecurityRoleRefDD {
     private List<String> descriptions;
 	
 	/** The description list. */
-	@XmlElement(name = "descriptions", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement(name = "descriptions", namespace = Portlet.QNAME_JSR168)
     private List descriptions1;
 
     /** The name of the role reference. */
@@ -97,7 +98,7 @@ public class SecurityRoleRefDD {
     private String roleName;
 	
 	/** The name of the role reference. */
-	@XmlElement( name = "role-name", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement( name = "role-name", namespace = Portlet.QNAME_JSR168)
     private String roleName1;
 
     /** The role to which the reference is linked. */
@@ -105,7 +106,7 @@ public class SecurityRoleRefDD {
     private String roleLink;    
 	
 	/** The role to which the reference is linked. */
-	@XmlElement( name = "role-link", namespace = PortletDD.QNAME_JSR168)
+	@XmlElement( name = "role-link", namespace = Portlet.QNAME_JSR168)
     private String roleLink1;    
 
     /**
@@ -115,77 +116,69 @@ public class SecurityRoleRefDD {
 
     }
 
-    /**
-     * Retrieve the name of the role reference.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#getRoleName()
+	 */
     public String getRoleName() {
     	if (roleName != null)
     		return roleName;
     	return roleName1;
     }
 
-    /**
-     * Set the name of the role reference.
-     * @param roleName
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#setRoleName(java.lang.String)
+	 */
     public void setRoleName(String roleName) {
     	this.roleName = roleName;
     	this.roleName1 = roleName;
     }
 
-    /**
-     * Retrieve then role to which the reference is linked.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#getRoleLink()
+	 */
     public String getRoleLink() {
     	if (roleLink != null)
     		return roleLink;
     	return roleLink1;
     }
 
-    /**
-     * Set the role to which the reference is linked.
-     * @param roleLink
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#setRoleLink(java.lang.String)
+	 */
     public void setRoleLink(String roleLink) {
     	this.roleLink = roleLink;
     	this.roleLink1 = roleLink;
     }
 
-    /**
-     * Retrieve the description of the role reference.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#getDescription()
+	 */
     public String getDescription() {
     	if (description != null)
     		return description;
     	return description1;
     }
 
-    /**
-     * Set the description of the role reference.
-     * @param description
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
     	this.description = description;
     	this.description1 = description;
     }
 
-    /**
-     * Retrieve the description list.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#getDescriptions()
+	 */
     public List getDescriptions() {
     	if (descriptions != null)
     		return descriptions;
     	return descriptions1;
     }
 
-    /**
-     * Set the description list.
-     * @param description
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.SecurityRoleRef#setDescriptions(java.util.List)
+	 */
     public void setDescriptions(List<String> descriptions) {
     	this.descriptions = descriptions;
     	this.descriptions1 = descriptions;

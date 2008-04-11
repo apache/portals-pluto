@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.SecurityRole;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: SecurityRoleDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class SecurityRoleDD {
+public class SecurityRoleDD implements SecurityRole {
 
     private String description;
     private String roleName;
@@ -30,18 +32,30 @@ public class SecurityRoleDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityRole#getDescription()
+	 */
     public String getDescription() {
         return description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityRole#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityRole#getRoleName()
+	 */
     public String getRoleName() {
         return roleName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SecurityRole#setRoleName(java.lang.String)
+	 */
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }

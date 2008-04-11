@@ -17,8 +17,8 @@
  */
 package org.apache.pluto.spi.optional;
 
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.PortletContainerException;
 
 import javax.portlet.PortletContext;
@@ -68,7 +68,7 @@ public interface PortletRegistryService {
      * @throws PortletContainerException if the descriptor
      *         can not be found or if the portlet.xml can not be parsed.
      */
-    PortletAppDD getPortletApplicationDescriptor(String name)
+    PortletApp getPortletApplicationDescriptor(String name)
         throws PortletContainerException;
 
     /**
@@ -89,7 +89,7 @@ public interface PortletRegistryService {
      * @return descriptor
      * @throws PortletContainerException if unexpected error
      */
-    PortletDD getPortletDescriptor(String applicationId, String portletName)
+    Portlet getPortletDescriptor(String applicationId, String portletName)
         throws PortletContainerException;
 
     /**

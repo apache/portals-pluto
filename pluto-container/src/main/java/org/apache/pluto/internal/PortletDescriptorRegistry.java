@@ -20,6 +20,7 @@ import org.apache.pluto.PlutoConfigurationException;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.util.StringManager;
 
 import javax.servlet.ServletContext;
@@ -115,14 +116,14 @@ public class PortletDescriptorRegistry {
      * @return The portlet application deployment descriptor.
      * @throws PortletContainerException if the descriptor can not be found or parsed
      */
-    public PortletAppDD getPortletAppDD(ServletContext servletContext)
+    public PortletApp getPortletAppDD(ServletContext servletContext)
     throws PortletContainerException {
-        PortletAppDD portletAppDD = (PortletAppDD) cache.get(servletContext);
-        if (portletAppDD == null) {
-        	portletAppDD = createDefinition(servletContext);
-            cache.put(servletContext, portletAppDD);
+        PortletApp portletApp = (PortletApp) cache.get(servletContext);
+        if (portletApp == null) {
+        	portletApp = createDefinition(servletContext);
+            cache.put(servletContext, portletApp);
         }
-        return portletAppDD;
+        return portletApp;
     }
 
 
@@ -135,19 +136,19 @@ public class PortletDescriptorRegistry {
      * @return the Portlet Application Deployment Descriptor.
      * @throws PortletContainerException
      */
-    private PortletAppDD createDefinition(ServletContext servletContext)
+    private PortletApp createDefinition(ServletContext servletContext)
     throws PortletContainerException {
-        PortletAppDD portletAppDD = null;
+        PortletApp portletApp = null;
         try {
             InputStream in = servletContext.getResourceAsStream(PORTLET_XML);
-            portletAppDD = portletDDService.read(in);
+            portletApp = portletDDService.read(in);
         } catch (IOException ex) {
             throw new PortletContainerException(EXCEPTIONS.getString(
                     "error.context.descriptor.load",
                     new String[] { servletContext.getServletContextName() }),
                     ex);
         }
-        return portletAppDD;
+        return portletApp;
     }
 
 }

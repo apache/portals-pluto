@@ -63,6 +63,12 @@
 			<version>${jaxb.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		 <dependency>
+           <groupId>org.apache.pluto</groupId>
+           <artifactId>pluto-container-api</artifactId>
+           <version>${pom.version}</version>
+           <scope>compile</scope>
+        </dependency>
 	</dependencies>
 
 	<build>

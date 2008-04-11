@@ -17,6 +17,7 @@
 package org.apache.pluto.descriptors.services;
 
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.om.portlet.PortletApp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +40,7 @@ public interface PortletAppDescriptorService {
      * @return Object representation of the descriptor.
      * @throws IOException if an IO error occurs.
      */
-    PortletAppDD read(InputStream in) throws IOException;
+    PortletApp read(InputStream in) throws IOException;
 
     /**
      * Write the PortletApp deployment descriptor
@@ -48,5 +49,5 @@ public interface PortletAppDescriptorService {
      * @param out
      * @throws IOException if an IO error occurs.
      */
-    void write(PortletAppDD portletDescriptor, OutputStream out) throws IOException;
+    void write(PortletApp portletDescriptor, OutputStream out) throws IOException;
 }

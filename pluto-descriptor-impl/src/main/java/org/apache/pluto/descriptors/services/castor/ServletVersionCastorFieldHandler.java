@@ -17,6 +17,7 @@
 package org.apache.pluto.descriptors.services.castor;
 
 import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.om.servlet.WebApp;
 import org.exolab.castor.mapping.AbstractFieldHandler;
 
 /**
@@ -40,7 +41,7 @@ public class ServletVersionCastorFieldHandler extends AbstractFieldHandler
                     WebAppDD.class.getName() + " but received a " + webAppDD.getClass().getName() );
         }
 
-        String servletVersion = ((WebAppDD)webAppDD).getServletVersion();
+        String servletVersion = ((WebApp)webAppDD).getServletVersion();
 
         // if the servlet version is 2.3, we don't want to include it in the
         // XML output as a version attribute.  Only servlet 2.4 and higher
@@ -87,7 +88,7 @@ public class ServletVersionCastorFieldHandler extends AbstractFieldHandler
                     String.class.getName() + " but received a " + servletVersionValue.getClass().getName() );
         }
 
-        ((WebAppDD)webAppDD).setServletVersion((String)servletVersionValue);
+        ((WebApp)webAppDD).setServletVersion((String)servletVersionValue);
     }
 
 }

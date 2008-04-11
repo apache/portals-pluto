@@ -16,7 +16,8 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
-import org.apache.pluto.descriptors.common.IconDD;
+import org.apache.pluto.om.common.Icon;
+import org.apache.pluto.om.servlet.Filter;
 
 import java.util.List;
 
@@ -27,68 +28,107 @@ import java.util.List;
  * @version $Id: FilterDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class FilterDD {
+public class FilterDD implements Filter {
 
     private String filterName;
     private String filterClass;
     private String displayName;
 
     private String description;
-    private IconDD icon;
+    private Icon icon;
     private List initParams;
 
     public FilterDD() {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#getFilterName()
+	 */
     public String getFilterName() {
         return filterName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#setFilterName(java.lang.String)
+	 */
     public void setFilterName(String filterName) {
         this.filterName = filterName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#getFilterClass()
+	 */
     public String getFilterClass() {
         return filterClass;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#setFilterClass(java.lang.String)
+	 */
     public void setFilterClass(String filterClass) {
         this.filterClass = filterClass;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#getDisplayName()
+	 */
     public String getDisplayName() {
         return displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#setDisplayName(java.lang.String)
+	 */
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#getDescription()
+	 */
     public String getDescription() {
         return description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public IconDD getIcon() {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#getIcon()
+	 */
+    public Icon getIcon() {
         return icon;
     }
 
-    public void setIcon(IconDD icon) {
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#setIcon(org.apache.pluto.om.common.Icon)
+	 */
+    public void setIcon(Icon icon) {
         this.icon = icon;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#getInitParams()
+	 */
     public List getInitParams() {
         return initParams;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#setInitParams(java.util.List)
+	 */
     public void setInitParams(List initParams) {
         this.initParams = initParams;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Filter#isValid()
+	 */
     public boolean isValid() {
         return filterName != null && filterClass != null;
     }

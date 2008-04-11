@@ -15,13 +15,15 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.AuthConstraint;
+
 /**
  * <B>TODO</B>: Document
  * @author <a href="ddewolf@apache.org">David H. DeWolf</a>
  * @version $Id: AuthConstraintDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class AuthConstraintDD {
+public class AuthConstraintDD implements AuthConstraint {
 
     private String description;
     private String roleName;
@@ -30,18 +32,30 @@ public class AuthConstraintDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.AuthConstraint#getDescription()
+	 */
     public String getDescription() {
         return description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.AuthConstraint#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.AuthConstraint#getRoleName()
+	 */
     public String getRoleName() {
         return roleName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.AuthConstraint#setRoleName(java.lang.String)
+	 */
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }

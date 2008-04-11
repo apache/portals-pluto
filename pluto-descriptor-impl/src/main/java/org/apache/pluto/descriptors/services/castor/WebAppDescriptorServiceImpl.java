@@ -18,7 +18,7 @@ package org.apache.pluto.descriptors.services.castor;
 
 import org.apache.pluto.descriptors.services.Constants;
 import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.om.servlet.WebApp;
 import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.mapping.MappingException;
 import org.exolab.castor.xml.Marshaller;
@@ -49,8 +49,8 @@ public class WebAppDescriptorServiceImpl
      * @return WebAppDD instance representing the descriptor.
      * @throws IOException
      */
-    public WebAppDD read(InputStream in) throws IOException {
-        WebAppDD webApp = (WebAppDD) readInternal(in);
+    public WebApp read(InputStream in) throws IOException {
+        WebApp webApp = (WebApp) readInternal(in);
        return webApp;
     }
 
@@ -59,7 +59,7 @@ public class WebAppDescriptorServiceImpl
      * @param webApp
      * @throws IOException
      */
-    public void write(WebAppDD webApp, OutputStream out) throws IOException {
+    public void write(WebApp webApp, OutputStream out) throws IOException {
         writeInternal(webApp, out);
     }
 
@@ -102,7 +102,7 @@ public class WebAppDescriptorServiceImpl
     }
 
     protected void setCastorMarshallerOptions(Marshaller marshaller, Object beingMarshalled) {
-        String servletVersion = ((WebAppDD)beingMarshalled).getServletVersion();
+        String servletVersion = ((WebApp)beingMarshalled).getServletVersion();
 	    if ( "2.3".equals(servletVersion) ) {//JSR-168 based on servlet 2.3 
 	        marshaller.setDoctype(getPublicId(), getDTDUri());
 	    } else {//use schema for other versions (JSR-286 based on servlet 2.4)

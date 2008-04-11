@@ -24,6 +24,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.filter.FilterConfig;
 
 import org.apache.pluto.descriptors.common.InitParamDD;
+import org.apache.pluto.om.common.InitParam;
 
 /**
  * 
@@ -33,9 +34,9 @@ import org.apache.pluto.descriptors.common.InitParamDD;
 public class FilterConfigImpl implements FilterConfig {
 
 	private String filterName = null;
-	private List<InitParamDD> initParameters = null;
+	private List<InitParam> initParameters = null;
 	private PortletContext portletContext = null;
-	public FilterConfigImpl(String filterName, List<InitParamDD> initParameters, PortletContext portletContext){
+	public FilterConfigImpl(String filterName, List<InitParam> initParameters, PortletContext portletContext){
 		this.filterName = filterName;
 		this.initParameters = initParameters;
 		this.portletContext = portletContext;
@@ -45,7 +46,7 @@ public class FilterConfigImpl implements FilterConfig {
 	}
 
 	public String getInitParameter(String name) {
-		for (InitParamDD initParameter2 : initParameters) {
+		for (InitParam initParameter2 : initParameters) {
 			if (initParameter2.getParamName().equals(name)){
 				return initParameter2.getParamValue();
 			}

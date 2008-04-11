@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
+import org.apache.pluto.om.portlet.PublicRenderParam;
+
 /**
  * Initialization Event Definitions
  * 
@@ -74,7 +76,7 @@ import javax.xml.namespace.QName;
     "alias"
 })
 
-public class PublicRenderParamDD {
+public class PublicRenderParamDD implements PublicRenderParam {
 	
 	/**
 	 * Descripton of the public render Parameter
@@ -98,57 +100,57 @@ public class PublicRenderParamDD {
 	@XmlElement ( name = "alias")
 	private List<QName> alias;
 
-	/**
-	 * @return the description
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#getDescription()
 	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description The description to set
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#setDescription(java.lang.String)
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * @return the ID
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#getIdentifier()
 	 */
 	public String getIdentifier() {
 		return identifier;
 	}
 
-	/**
-	 * @param id The ID to set
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#setIdentifier(java.lang.String)
 	 */
 	public void setIdentifier(String id) {
 		identifier = id;
 	}
 
-	/**
-	 * @return the name
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#getName()
 	 */
 	public QName getName() {
 		return (qname==null) ? new QName(name) : qname; 
 	}
 
-	/**
-	 * @param name The name to set
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#setName(javax.xml.namespace.QName)
 	 */
 	public void setName(QName qname) {
 		this.qname = qname;
 	}
 	
-	/**
-	 * @return Returns the alias.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#getAlias()
 	 */
 	public List<QName> getAlias() {
 		return alias;
 	}
 
-	/**
-	 * @param alias The alias to set.
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.PublicRenderParam#setAlias(java.util.List)
 	 */
 	public void setAlias(List<QName> alias) {
 		this.alias = alias;

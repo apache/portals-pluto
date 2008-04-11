@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.SessionConfig;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: SessionConfigDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class SessionConfigDD {
+public class SessionConfigDD implements SessionConfig {
 
     private int sessionTimeout;
 
@@ -29,10 +31,16 @@ public class SessionConfigDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SessionConfig#getSessionTimeout()
+	 */
     public int getSessionTimeout() {
         return sessionTimeout;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.SessionConfig#setSessionTimeout(int)
+	 */
     public void setSessionTimeout(int sessionTimeout) {
         this.sessionTimeout = sessionTimeout;
     }

@@ -17,6 +17,8 @@ package org.apache.pluto.descriptors.servlet;
 
 import java.util.List;
 
+import org.apache.pluto.om.servlet.FilterMapping;
+
 /**
  * FilterMapping configuration as contained within the
  * web.xml Deployment Descriptor.
@@ -24,7 +26,7 @@ import java.util.List;
  * @version $Id: FilterMappingDD.java 157475 2005-03-14 22:13:18Z ddewolf $
  * @since Feb 28, 2005
  */
-public class FilterMappingDD {
+public class FilterMappingDD implements FilterMapping {
 
     private String filterName;
     private String servletName;
@@ -35,34 +37,58 @@ public class FilterMappingDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#getFilterName()
+	 */
     public String getFilterName() {
         return filterName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#setFilterName(java.lang.String)
+	 */
     public void setFilterName(String filterName) {
         this.filterName = filterName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#getUrlPatterns()
+	 */
     public List getUrlPatterns() {
         return urlPattern;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#setUrlPatterns(java.util.List)
+	 */
     public void setUrlPatterns(List urlPattern) {
         this.urlPattern = urlPattern;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#getServletName()
+	 */
     public String getServletName() {
         return servletName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#setServletName(java.lang.String)
+	 */
     public void setServletName(String servletName) {
         this.servletName = servletName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#getDispatchers()
+	 */
     public List getDispatchers() {
         return dispatchers;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FilterMapping#setDispatchers(java.util.List)
+	 */
     public void setDispatchers(List dispatchers) {
         this.dispatchers = dispatchers;
     }

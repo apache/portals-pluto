@@ -18,8 +18,8 @@
 package org.apache.pluto.core;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.spi.optional.PortletInfoService;
 
 
@@ -49,7 +49,7 @@ public class DefaultPortletInfoService implements PortletInfoService {
         return null;
     }
 
-    private PortletDD getPortletDefinition(InternalPortletWindow window) {
+    private Portlet getPortletDefinition(InternalPortletWindow window) {
         return window.getPortletEntity().getPortletDefinition();
     }
 }

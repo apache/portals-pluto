@@ -19,7 +19,6 @@ package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -29,6 +28,15 @@ import javax.xml.namespace.QName;
 
 import org.apache.pluto.descriptors.common.InitParamDD;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
+import org.apache.pluto.om.common.InitParam;
+import org.apache.pluto.om.common.SecurityRoleRef;
+import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.om.portlet.EventDefinitionReference;
+import org.apache.pluto.om.portlet.ExpirationCache;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletInfo;
+import org.apache.pluto.om.portlet.PortletPreferences;
+import org.apache.pluto.om.portlet.Supports;
 
 /**
  * Bare bones implementation of the Portlet descriptor.
@@ -102,36 +110,27 @@ import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
     "publicRenderParameter",
     "containerRuntimeOption"
 })
-public class PortletDD {
+public class PortletDD implements Portlet {
 	
-	// Private Member Variables ------------------------------------------------
-    /**
-     * The value of the expirationCache property when no expiration cache was configured
-     * in portlet.xml for this portlet descriptor.
-     */
-    public static final int EXPIRATION_CACHE_UNSET = Integer.MIN_VALUE;
-//	private static final int EXPIRATION_CACHE_DEFAULT = -2;
-	
-	public static final String QNAME_JSR168 = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd";
 	private static final String QNAME_JSR286 = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
 
-	@XmlElement(name = "supports")
-	private List<SupportsDD> supports = null;
+	@XmlElement(name = "supports",type=SupportsDD.class)
+	private List<Supports> supports = null;
 	
-	@XmlElement(name = "supports",namespace = QNAME_JSR168)
-	private List<SupportsDD> supports1 = null;
-	
-	/** All security role references. */
-	@XmlElement(name = "security-role-ref")
-    private List<SecurityRoleRefDD> securityRoleRefs = null;
+	@XmlElement(name = "supports",namespace = QNAME_JSR168,type=SupportsDD.class)
+	private List<Supports> supports1 = null;
 	
 	/** All security role references. */
-	@XmlElement(name = "security-role-ref",namespace = QNAME_JSR168)
-    private List<SecurityRoleRefDD> securityRoleRefs1 = null;
+	@XmlElement(name = "security-role-ref",type=SecurityRoleRefDD.class)
+    private List<SecurityRoleRef> securityRoleRefs = null;
+	
+	/** All security role references. */
+	@XmlElement(name = "security-role-ref",namespace = QNAME_JSR168,type=SecurityRoleRefDD.class)
+    private List<SecurityRoleRef> securityRoleRefs1 = null;
 	
 	/** the supported processing Events */
-	@XmlElement(name = "supported-processing-event")
-    private List<EventDefinitionReferenceDD> processingEvents = null;
+	@XmlElement(name = "supported-processing-event",type=EventDefinitionReferenceDD.class)
+    private List<EventDefinitionReference> processingEvents = null;
 	
     /** The unique name of the portlet. */
 	@XmlElement(name = "portlet-name")
@@ -140,22 +139,22 @@ public class PortletDD {
 	@XmlElement (name = "portlet-name", namespace = QNAME_JSR168)
 	private String portletName1 = null;
 	
-	@XmlElement(name = "init-param")
-    private List<InitParamDD> initParams = null;
+	@XmlElement(name = "init-param",type=InitParamDD.class)
+    private List<InitParam> initParams = null;
 	
-	@XmlElement(name = "init-param",namespace = QNAME_JSR168)
-    private List<InitParamDD> initParams1 = null;
+	@XmlElement(name = "init-param",namespace = QNAME_JSR168,type=InitParamDD.class)
+    private List<InitParam> initParams1 = null;
 	
-	@XmlElement(name = "expiration-cache", namespace = QNAME_JSR286)
-	private ExpirationCacheDD expirationCacheDD = null;
+	@XmlElement(name = "expiration-cache", namespace = QNAME_JSR286,type=ExpirationCacheDD.class)
+	private ExpirationCache expirationCacheDD = null;
 	
 	@XmlElement(name = "expiration-cache", namespace = QNAME_JSR168)
 //	private int expirationCache = EXPIRATION_CACHE_DEFAULT;
     private int expirationCache = EXPIRATION_CACHE_UNSET;
 	
 	/** the supported publishing Events */
-	@XmlElement(name = "supported-publishing-event")
-    private List<EventDefinitionReferenceDD> publishingEvents = null;
+	@XmlElement(name = "supported-publishing-event",type=EventDefinitionReferenceDD.class)
+    private List<EventDefinitionReference> publishingEvents = null;
 	
 	@XmlElement (name = "supported-locale")
 	private List<String> supportedLocale = null;
@@ -163,11 +162,11 @@ public class PortletDD {
 	@XmlElement (name = "supported-locale", namespace = QNAME_JSR168)
 	private List<String> supportedLocale1 = null;
 	
-	@XmlElement(name = "portlet-info")
-    private PortletInfoDD portletInfo = null;
+	@XmlElement(name = "portlet-info",type=PortletInfoDD.class)
+    private PortletInfo portletInfo = null;
 	
-	@XmlElement(name = "portlet-info", namespace = QNAME_JSR168)
-    private PortletInfoDD portletInfo1 = null;
+	@XmlElement(name = "portlet-info", namespace = QNAME_JSR168,type=PortletInfoDD.class)
+    private PortletInfo portletInfo1 = null;
 	
 	@XmlElement(name = "resource-bundle")
     private String resourceBundle = null;
@@ -183,11 +182,11 @@ public class PortletDD {
 	@XmlElement(name = "portlet-class", namespace = QNAME_JSR168)
     private String portletClass1 = null;
 	
-	@XmlElement(name = "portlet-preferences")
-    private PortletPreferencesDD portletPreferences = null;
+	@XmlElement(name = "portlet-preferences",type=PortletPreferencesDD.class)
+    private PortletPreferences portletPreferences = null;
 	
-	@XmlElement(name = "portlet-preferences", namespace = QNAME_JSR168)
-    private PortletPreferencesDD portletPreferences1 = null;
+	@XmlElement(name = "portlet-preferences", namespace = QNAME_JSR168,type=PortletPreferencesDD.class)
+    private PortletPreferences portletPreferences1 = null;
 	
 	@XmlElement(name = "description")
 	private String description = null;
@@ -207,8 +206,8 @@ public class PortletDD {
 	
 		
 	/** the container runtime options of this portlet */
-	@XmlElement(name = "container-runtime-option")
-	private List<ContainerRuntimeOptionDD> containerRuntimeOption = null;
+	@XmlElement(name = "container-runtime-option",type=ContainerRuntimeOptionDD.class)
+	private List<ContainerRuntimeOption> containerRuntimeOption = null;
     
     
     // Constructor -------------------------------------------------------------
@@ -229,11 +228,9 @@ public class PortletDD {
     
     // Object Methods ----------------------------------------------------------
     
-    /**
-     * Returns a string representation of this instance.
-     * FIXME: more info!
-     * @return a string representation of this instance.
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#toString()
+	 */
     public String toString() {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(getClass().getName());
@@ -243,23 +240,28 @@ public class PortletDD {
     	return buffer.toString();
     }
     
-    /**
-     * Returns the hash code for this instance.
-     * @return the hash code for this instance.
-     */
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#hashCode()
+	 */
     public int hashCode() {
     	return toString().hashCode();
     }
 
 
-	public List<InitParamDD> getInitParams() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getInitParams()
+	 */
+	public List<InitParam> getInitParams() {
 		if (initParams != null)
 			return initParams;
 		return initParams1;
 	}
 
 
-	public void setInitParams(List<InitParamDD> initParams) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setInitParams(java.util.List)
+	 */
+	public void setInitParams(List<InitParam> initParams) {
 		if (initParams != null)
 			this.initParams = initParams;
 		else
@@ -267,6 +269,9 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getPortletClass()
+	 */
 	public String getPortletClass() {
 		if (portletClass != null)
 			return portletClass.trim();
@@ -274,6 +279,9 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setPortletClass(java.lang.String)
+	 */
 	public void setPortletClass(String portletClass) {
 		if (portletClass != null)
 			this.portletClass = portletClass;
@@ -282,14 +290,20 @@ public class PortletDD {
 	}
 
 
-	public PortletInfoDD getPortletInfo() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getPortletInfo()
+	 */
+	public PortletInfo getPortletInfo() {
 		if (portletInfo != null)
 			return portletInfo;
 		return portletInfo1;
 	}
 
 
-	public void setPortletInfo(PortletInfoDD portletInfo) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setPortletInfo(org.apache.pluto.descriptors.portlet.PortletInfoDD)
+	 */
+	public void setPortletInfo(PortletInfo portletInfo) {
 		if (portletInfo != null)
 			this.portletInfo = portletInfo;
 		else
@@ -297,6 +311,9 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getPortletName()
+	 */
 	public String getPortletName() {
 		if (portletName != null)
 			return portletName.trim();
@@ -304,29 +321,41 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setPortletName(java.lang.String)
+	 */
 	public void setPortletName(String portletName) {
 		this.portletName = portletName;
 		this.portletName1 = portletName;
 	}
 
 
-	public PortletPreferencesDD getPortletPreferences() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getPortletPreferences()
+	 */
+	public PortletPreferences getPortletPreferences() {
 		if (portletPreferences!= null)
 			return portletPreferences;
 		return portletPreferences1;
 	}
 
 
-	public void setPortletPreferences(PortletPreferencesDD portletPreferences) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setPortletPreferences(org.apache.pluto.descriptors.portlet.PortletPreferences)
+	 */
+	public void setPortletPreferences(PortletPreferences portletPreferences) {
 		this.portletPreferences = portletPreferences;
 		this.portletPreferences1 = portletPreferences;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getProcessingEvents()
+	 */
 	public List<QName> getProcessingEvents() {
 		List<QName> list = new ArrayList<QName>();
 		if (processingEvents != null) {
-			for (EventDefinitionReferenceDD ref : processingEvents) {
+			for (EventDefinitionReference ref : processingEvents) {
 				list.add(ref.getName());
 			}
 			return list;
@@ -335,15 +364,21 @@ public class PortletDD {
 	}
 
 
-	public void setProcessingEvents(List<EventDefinitionReferenceDD> processingEvents) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setProcessingEvents(java.util.List)
+	 */
+	public void setProcessingEvents(List<EventDefinitionReference> processingEvents) {
 		this.processingEvents = processingEvents;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getPublishingEvents()
+	 */
 	public List<QName> getPublishingEvents() {
 		List<QName> list = new ArrayList<QName>();
 		if (publishingEvents != null) {
-			for (EventDefinitionReferenceDD ref : publishingEvents) {
+			for (EventDefinitionReference ref : publishingEvents) {
 				list.add(ref.getName());
 			}
 			return list;
@@ -352,21 +387,33 @@ public class PortletDD {
 	}
 
 
-	public void setPublishingEvents(List<EventDefinitionReferenceDD> publishingEvents) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setPublishingEvents(java.util.List)
+	 */
+	public void setPublishingEvents(List<EventDefinitionReference> publishingEvents) {
 		this.publishingEvents = publishingEvents;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getPublicRenderParameter()
+	 */
 	public List<String> getPublicRenderParameter() {
 		return publicRenderParameter;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setPublicRenderParameter(java.util.List)
+	 */
 	public void setPublicRenderParameter(List<String> publicRenderParameter) {
 		this.publicRenderParameter = publicRenderParameter;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getResourceBundle()
+	 */
 	public String getResourceBundle() {
 		if (resourceBundle!= null)
 			return resourceBundle;
@@ -374,37 +421,55 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setResourceBundle(java.lang.String)
+	 */
 	public void setResourceBundle(String resourceBundle) {
 		this.resourceBundle = resourceBundle;
 		this.resourceBundle1 = resourceBundle;
 	}
 
 
-	public List<SecurityRoleRefDD> getSecurityRoleRefs() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getSecurityRoleRefs()
+	 */
+	public List<SecurityRoleRef> getSecurityRoleRefs() {
 		if (securityRoleRefs!= null)
 			return securityRoleRefs;
 		return securityRoleRefs1;
 	}
 
 
-	public void setSecurityRoleRefs(List<SecurityRoleRefDD> securityRoleRefs) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setSecurityRoleRefs(java.util.List)
+	 */
+	public void setSecurityRoleRefs(List<SecurityRoleRef> securityRoleRefs) {
 		this.securityRoleRefs = securityRoleRefs;
 		this.securityRoleRefs1 = securityRoleRefs;
 	}
 
 
-	public List<SupportsDD> getSupports() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getSupports()
+	 */
+	public List<Supports> getSupports() {
 		if (supports!= null)
 			return supports;
 		return supports1;
 	}
 
-	public void setSupports(List<SupportsDD> supports) {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setSupports(java.util.List)
+	 */
+	public void setSupports(List<Supports> supports) {
 		this.supports = supports;
 		this.supports1 = supports;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getDescription()
+	 */
 	public String getDescription() {
 		if (description != null)
 			return description;
@@ -412,12 +477,18 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setDescription(java.lang.String)
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 		this.description1 = description;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getDisplayName()
+	 */
 	public String getDisplayName() {
 		if (displayName != null)
 			return displayName;
@@ -425,12 +496,18 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setDisplayName(java.lang.String)
+	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 		this.displayName1 = displayName;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getSupportedLocale()
+	 */
 	public List<String> getSupportedLocale() {
 		if (supportedLocale != null)
 			return supportedLocale;
@@ -438,18 +515,24 @@ public class PortletDD {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setSupportedLocale(java.util.List)
+	 */
 	public void setSupportedLocale(List<String> supportedLocale) {
 		this.supportedLocale = supportedLocale;
 		this.supportedLocale1 = supportedLocale;
 	}
 
 
-	public ExpirationCacheDD getExpirationCacheDD() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getExpirationCache()
+	 */
+	public ExpirationCache getExpirationCache() {
 		// use old style expiration cache (JSR 168)
 		if (expirationCache != EXPIRATION_CACHE_UNSET){
-			ExpirationCacheDD result = new ExpirationCacheDD();
-			result.expirationTime = expirationCache;
-			result.scope = "";
+			ExpirationCache result = new ExpirationCacheDD();
+			result.setExpirationTime(expirationCache);
+			result.setScope("");
 			return result;
 		}
 		
@@ -457,13 +540,19 @@ public class PortletDD {
 	}
 
 
-	public void setExpirationCacheDD(ExpirationCacheDD expirationCacheDD) {
-		expirationCache = expirationCacheDD.getExpirationTime();
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#setExpirationCache(org.apache.pluto.descriptors.portlet.ExpirationCache)
+	 */
+	public void setExpirationCache(ExpirationCache expirationCache) {
+		this.expirationCache = expirationCacheDD.getExpirationTime();
 		this.expirationCacheDD = expirationCacheDD;
 	}
 
 
-	public List<ContainerRuntimeOptionDD> getContainerRuntimeOption() {
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.portlet.Portlet#getContainerRuntimeOption()
+	 */
+	public List<ContainerRuntimeOption> getContainerRuntimeOption() {
 		return containerRuntimeOption;
 	}
 }

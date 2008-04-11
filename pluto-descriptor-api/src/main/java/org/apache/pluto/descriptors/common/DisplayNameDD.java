@@ -18,27 +18,41 @@ package org.apache.pluto.descriptors.common;
 
 import java.util.Locale;
 
+import org.apache.pluto.om.common.DisplayName;
+
 /**
  *
  * @since 1.1.0
  */
-public class DisplayNameDD {
+public class DisplayNameDD implements DisplayName {
 
     private String displayName;
     private String lang = Locale.ENGLISH.toString();
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.DisplayName#getDisplayName()
+	 */
     public String getDisplayName() {
         return displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.DisplayName#setDisplayName(java.lang.String)
+	 */
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.DisplayName#getLang()
+	 */
     public String getLang() {
         return lang;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.common.DisplayName#setLang(java.lang.String)
+	 */
     public void setLang(String lang) {
         this.lang = lang;
     }

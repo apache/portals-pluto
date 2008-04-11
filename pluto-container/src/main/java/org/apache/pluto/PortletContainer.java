@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.om.portlet.PortletApp;
 
 /**
  * The publicized entry point into Pluto. The base functionality of the portlet
@@ -181,7 +182,7 @@ public interface PortletContainer {
      *                                   the context of the portlet, or retrieving
      *                                   the <code>PortletAppDD</code>
      */    
-    PortletAppDD getPortletApplicationDescriptor(String context)
+    PortletApp getPortletApplicationDescriptor(String context)
         throws PortletContainerException;
 
 	public ServletContext getServletContext();

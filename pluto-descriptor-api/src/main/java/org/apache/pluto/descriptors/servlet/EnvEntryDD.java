@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.EnvEntry;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: EnvEntryDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Feb 28, 2005
  */
-public class EnvEntryDD {
+public class EnvEntryDD implements EnvEntry {
 
     private String description;
     private String envEntryName;
@@ -32,34 +34,58 @@ public class EnvEntryDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#getDescription()
+	 */
     public String getDescription() {
         return description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#setDescription(java.lang.String)
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#getEnvEntryName()
+	 */
     public String getEnvEntryName() {
         return envEntryName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#setEnvEntryName(java.lang.String)
+	 */
     public void setEnvEntryName(String envEntryName) {
         this.envEntryName = envEntryName;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#getEnvEntryValue()
+	 */
     public String getEnvEntryValue() {
         return envEntryValue;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#setEnvEntryValue(java.lang.String)
+	 */
     public void setEnvEntryValue(String envEntryValue) {
         this.envEntryValue = envEntryValue;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#getEnvEntryType()
+	 */
     public String getEnvEntryType() {
         return envEntryType;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.EnvEntry#setEnvEntryType(java.lang.String)
+	 */
     public void setEnvEntryType(String envEntryType) {
         this.envEntryType = envEntryType;
     }

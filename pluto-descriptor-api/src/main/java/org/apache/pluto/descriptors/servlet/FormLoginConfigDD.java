@@ -16,12 +16,14 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.FormLoginConfig;
+
 /**
  * <B>TODO</B>: Document
  * @version $Id: FormLoginConfigDD.java 156636 2005-03-09 12:16:31Z cziegeler $
  * @since Mar 4, 2005
  */
-public class FormLoginConfigDD {
+public class FormLoginConfigDD implements FormLoginConfig {
 
     private String formLoginPage;
     private String formErrorPage;
@@ -30,18 +32,30 @@ public class FormLoginConfigDD {
 
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FormLoginConfig#getFormLoginPage()
+	 */
     public String getFormLoginPage() {
         return formLoginPage;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FormLoginConfig#setFormLoginPage(java.lang.String)
+	 */
     public void setFormLoginPage(String formLoginPage) {
         this.formLoginPage = formLoginPage;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FormLoginConfig#getFormErrorPage()
+	 */
     public String getFormErrorPage() {
         return formErrorPage;
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.FormLoginConfig#setFormErrorPage(java.lang.String)
+	 */
     public void setFormErrorPage(String formErrorPage) {
         this.formErrorPage = formErrorPage;
     }

@@ -29,9 +29,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.container.FilterManagerImpl;
@@ -39,6 +36,9 @@ import org.apache.pluto.driver.services.portal.PortletApplicationConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 /**
@@ -113,14 +113,14 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 LOG.error("Optional Portlet Registry Service not found.");
                 throw new PortletContainerException("Optional Portlet Registry Service not found.");
             }
-            PortletAppDD ctx = portletRegistry.getPortletApplicationDescriptor(applicationId);
+            PortletApp ctx = portletRegistry.getPortletApplicationDescriptor(applicationId);
             Iterator i = ctx.getPortlets().iterator();
             while(i.hasNext()) {
-                PortletDD dd = (PortletDD)i.next();
+                Portlet dd = (Portlet)i.next();
                 if(portletName.equals(dd.getPortletName())) {
                     Iterator i2 = dd.getSupports().iterator();
                     while(i2.hasNext()) {
-                        SupportsDD sd = (SupportsDD)i2.next();
+                        Supports sd = (Supports)i2.next();
                         if (sd.getPortletModes()==null){
                         	if (mode.equalsIgnoreCase(PortletMode.VIEW.toString()))
                         		return true;
@@ -192,7 +192,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
         while (apps.hasNext())
         {
             PortletApplicationConfig app = (PortletApplicationConfig)apps.next();            
-            PortletAppDD portletAppDD;
+            PortletApp portletAppDD;
             try {
             	PortletContainer container = (PortletContainer)servletContext
                 	.getAttribute(AttributeKeys.PORTLET_CONTAINER);
@@ -204,14 +204,14 @@ public class SupportedModesServiceImpl implements SupportedModesService
             }
             Iterator portlets = portletAppDD.getPortlets().iterator();
             while (portlets.hasNext()) {                
-                PortletDD portlet = (PortletDD)portlets.next();
+                Portlet portlet = (Portlet)portlets.next();
                 LOG.debug("Loading modes supported by portlet [" + app.getContextPath() + "]." +
                         "[" + portlet.getPortletName() + "]");
                 Iterator supports = portlet.getSupports().iterator();
                 Set pModes = new HashSet();
                 while (supports.hasNext())
                 {
-                    SupportsDD supportsDD = (SupportsDD)supports.next();
+                    Supports supportsDD = (Supports)supports.next();
                     if (supportsDD.getPortletModes()!=null){
                     	Iterator portletModes = supportsDD.getPortletModes().iterator();
                     

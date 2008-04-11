@@ -36,10 +36,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.apache.pluto.internal.InternalPortletConfig;
+import org.apache.pluto.om.common.InitParam;
+import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.descriptors.common.InitParamDD;
-import org.apache.pluto.descriptors.portlet.ContainerRuntimeOptionDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
@@ -58,19 +59,19 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     /**
      * The portlet descriptor.
      */
-    protected PortletDD portletDD;
+    protected Portlet portletDD;
     
     /**
      * The portlet application descriptor.
      */
-    private PortletAppDD portletAppDD;
+    private PortletApp portletAppDD;
 
     private ResourceBundleFactory bundles;
 
     public PortletConfigImpl(ServletConfig servletConfig,
                              PortletContext portletContext,
-                             PortletDD portletDD,
-                             PortletAppDD portletAppDD) {
+                             Portlet portletDD,
+                             PortletApp portletAppDD) {
         this.servletConfig = servletConfig;
         this.portletContext = portletContext;
         this.portletDD = portletDD;
@@ -100,9 +101,9 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
             throw new IllegalArgumentException("Parameter name == null");
         }
 
-        Iterator<InitParamDD> parms = portletDD.getInitParams().iterator();
+        Iterator<InitParam> parms = portletDD.getInitParams().iterator();
         while(parms.hasNext()) {
-            InitParamDD param = parms.next();
+            InitParam param = parms.next();
             if (param.getParamName().equals(name)) {
                 return param.getParamValue();
             }
@@ -112,8 +113,8 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
     public Enumeration<String> getInitParameterNames() {
         return new java.util.Enumeration<String>() {
-            private Iterator<InitParamDD> iterator =
-                new ArrayList<InitParamDD>(portletDD.getInitParams()).iterator();
+            private Iterator<InitParam> iterator =
+                new ArrayList<InitParam>(portletDD.getInitParams()).iterator();
 
             public boolean hasMoreElements() {
                 return iterator.hasNext();
@@ -133,7 +134,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return servletConfig;
     }
 
-    public PortletDD getPortletDefinition() {
+    public Portlet getPortletDefinition() {
         return portletDD;
     }
     // --------------------------------------------------------------------------------------------
@@ -207,7 +208,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 	public Map<String, String[]> getApplicationRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
 		if (portletAppDD.getContainerRuntimeOption() != null){
-			for (ContainerRuntimeOptionDD option : portletAppDD.getContainerRuntimeOption()) {
+			for (ContainerRuntimeOption option : portletAppDD.getContainerRuntimeOption()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValue();
 					String [] tempValues = new String[values.size()];
@@ -224,7 +225,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 	public Map<String, String[]> getPortletRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
 		if (portletDD.getContainerRuntimeOption() != null) {
-			for (ContainerRuntimeOptionDD option : portletDD.getContainerRuntimeOption()) {
+			for (ContainerRuntimeOption option : portletDD.getContainerRuntimeOption()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValue();
 					String [] tempValues = new String[values.size()];

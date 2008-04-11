@@ -42,13 +42,13 @@ import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.EventImpl;
+import org.apache.pluto.om.portlet.EventDefinition;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 public class PortletWindowThread extends Thread {
@@ -117,7 +117,7 @@ public class PortletWindowThread extends Thread {
 			        		//provider.getEventDefinition(event.getQName());
 			        	try {
 			        		// now test if object is jaxb
-			        		EventDefinitionDD eventDefinitionDD = getEventDefintion(event.getQName()); 
+			        		EventDefinition eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
 			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletName());//Thread.currentThread().getContextClassLoader();
 			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getJavaClass()).asSubclass(Serializable.class);
@@ -156,12 +156,12 @@ public class PortletWindowThread extends Thread {
 		this.events.add(event);	
 	}
 
-	private EventDefinitionDD getEventDefintion(QName name) throws PortletContainerException {
+	private EventDefinition getEventDefintion(QName name) throws PortletContainerException {
 		PortalRequestContext context = PortalRequestContext.getContext(eventProvider.getRequest());
 		ServletContext servletContext = context.getServletContext();
 		PortletContainer container = (PortletContainer) servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
-		PortletAppDD appDD = container.getPortletApplicationDescriptor(portletWindow.getContextPath());
-		for (EventDefinitionDD def : appDD.getEvents()){
+		PortletApp appDD = container.getPortletApplicationDescriptor(portletWindow.getContextPath());
+		for (EventDefinition def : appDD.getEvents()){
 			if (def.getQName() != null){
 				if (def.getQName().equals(name))
 					return def;

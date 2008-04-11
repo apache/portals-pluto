@@ -11,6 +11,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
+import org.apache.pluto.om.portlet.PortletApp;
 
 /** 
  *  JAXB implementation of the xml2java binding
@@ -26,8 +27,8 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      * @throws java.io.IOException
      */
     
-    public PortletAppDD read(InputStream in) throws IOException {
-    	JAXBElement<PortletAppDD> portletApp = null;
+    public PortletApp read(InputStream in) throws IOException {
+    	JAXBElement<PortletApp> portletApp = null;
     	try {
     		JAXBContext jc = JAXBContext.newInstance( 
     				"org.apache.pluto.descriptors.portlet" + ":" +
@@ -36,7 +37,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     		Unmarshaller u = jc.createUnmarshaller();
     		u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 
-    		portletApp = (JAXBElement<PortletAppDD>) u.unmarshal(in);	            
+    		portletApp = (JAXBElement<PortletApp>) u.unmarshal(in);	            
     	}catch (JAXBException jaxbEx){
     		jaxbEx.printStackTrace();
     		throw new IOException(jaxbEx.getMessage());
@@ -53,7 +54,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      * @param portlet
      * @throws java.io.IOException
      */
-    public void write(PortletAppDD portlet, OutputStream out) throws IOException {
+    public void write(PortletApp portlet, OutputStream out) throws IOException {
     	throw new UnsupportedOperationException("writing jaxb content not yet supported");
     }
 }

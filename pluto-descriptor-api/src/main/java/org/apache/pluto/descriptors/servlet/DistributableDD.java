@@ -16,22 +16,30 @@
  */
 package org.apache.pluto.descriptors.servlet;
 
+import org.apache.pluto.om.servlet.Distributable;
+
 /**
  * Models the &lt;distributable&gt; web.xml element.
  *
  * @since Mar 3, 2007
  * @version $Id$
  */
-public class DistributableDD
+public class DistributableDD implements Distributable
 {
 
     private boolean distributable = false;
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Distributable#isDistributable()
+	 */
     public Boolean isDistributable()
     {
         return Boolean.valueOf(distributable);
     }
 
+    /* (non-Javadoc)
+	 * @see org.apache.pluto.descriptors.servlet.Distributable#setDistributable(boolean)
+	 */
     public void setDistributable(boolean distributable)
     {
         this.distributable = distributable;

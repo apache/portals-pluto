@@ -18,6 +18,8 @@ package org.apache.pluto.descriptors.services.castor;
 
 import org.apache.pluto.descriptors.servlet.DistributableDD;
 import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.om.servlet.Distributable;
+import org.apache.pluto.om.servlet.WebApp;
 import org.exolab.castor.mapping.AbstractFieldHandler;
 
 public class DistributableDDCastorFieldHandler extends AbstractFieldHandler
@@ -31,7 +33,7 @@ public class DistributableDDCastorFieldHandler extends AbstractFieldHandler
                     " but got a " + webAppDD.getClass().getName());
         }
         
-        DistributableDD distributableDD = ((WebAppDD)webAppDD).getDistributable();
+        Distributable distributableDD = ((WebApp)webAppDD).getDistributable();
         Boolean distributable = distributableDD.isDistributable();
         
         // if the webapp is not distributable, return null so Castor won't emit a
@@ -77,7 +79,7 @@ public class DistributableDDCastorFieldHandler extends AbstractFieldHandler
                     " but got a " + distributableDD.getClass().getName());
         }
         
-        ((WebAppDD)webAppDD).setDistributable(((DistributableDD)distributableDD).isDistributable().booleanValue());
+        ((WebApp)webAppDD).setDistributable(((Distributable)distributableDD).isDistributable().booleanValue());
     }
 
 }

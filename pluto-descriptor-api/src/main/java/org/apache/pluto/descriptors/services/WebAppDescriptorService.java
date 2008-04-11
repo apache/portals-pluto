@@ -15,7 +15,7 @@
  */
 package org.apache.pluto.descriptors.services;
 
-import org.apache.pluto.descriptors.servlet.WebAppDD;
+import org.apache.pluto.om.servlet.WebApp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +37,7 @@ public interface WebAppDescriptorService {
      * @return Object representation of the descriptor.
      * @throws IOException if an IO error occurs.
      */ 
-    WebAppDD read(InputStream in) throws IOException;
+    WebApp read(InputStream in) throws IOException;
 
     /**
      * Write the WebApp deployment descriptor
@@ -46,5 +46,5 @@ public interface WebAppDescriptorService {
      * @param out output stream to which the descriptor should be written
      * @throws IOException if an IO error occurs.
      */
-    void write(WebAppDD dd, OutputStream out) throws IOException;
+    void write(WebApp dd, OutputStream out) throws IOException;
 }
