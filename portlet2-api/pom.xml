@@ -58,7 +58,30 @@
 				<source>1.5</source>
 				<target>1.5</target>
 			</configuration>
-		</plugin>  
+		</plugin>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifestEntries>
+                        <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                        <Bundle-SymbolicName>javax.portlet</Bundle-SymbolicName>
+                        <Bundle-Name>JSR 286</Bundle-Name>
+                        <Bundle-DocURL>http://www.jcp.org/en/jsr/detail?id=286</Bundle-DocURL>
+                        <Export-Package>
+                            javax.portlet;version="2.0.0",
+                            javax.portlet.filter;version="2.0.0"
+                        </Export-Package>
+                        <Import-Package>
+                            org.w3c.dom,
+                            javax.xml.namespace,
+                            javax.servlet.http; version="2.4.0"
+                        </Import-Package>
+                    </manifestEntries>
+                </archive>
+            </configuration>
+        </plugin>
 	</plugins>
   </build>
 </project>
