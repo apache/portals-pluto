@@ -18,8 +18,8 @@ package org.apache.pluto.internal.impl;
 
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletResponse;
-import org.apache.pluto.wrappers.PortletRequestWrapper;
-import org.apache.pluto.wrappers.PortletResponseWrapper;
+import javax.portlet.filter.PortletRequestWrapper;
+import javax.portlet.filter.PortletResponseWrapper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -52,7 +52,7 @@ class InternalImplConverter {
     public static InternalPortletRequest getInternalRequest(
     		PortletRequest request) {
         while (!(request instanceof InternalPortletRequest)) {
-            request = ((PortletRequestWrapper) request).getPortletRequest();
+            request = ((PortletRequestWrapper) request).getRequest();
             if (request == null) {
                 throw new IllegalStateException(
                 		"The internal portlet request cannot be found.");
@@ -72,7 +72,7 @@ class InternalImplConverter {
     public static InternalPortletResponse getInternalResponse(
     		PortletResponse response) {
         while (!(response instanceof InternalPortletResponse)) {
-            response = ((PortletResponseWrapper) response).getPortletResponse();
+            response = ((PortletResponseWrapper) response).getResponse();
             if (response == null) {
                 throw new IllegalStateException(
                 		"The internal portlet response cannot be found.");
