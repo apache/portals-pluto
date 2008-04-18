@@ -82,10 +82,12 @@ implements ResourceResponse, InternalResourceResponse {
     	else{
     		ArgumentUtility.validateNotNull("contentType", contentType);
             String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
+          /*
             if (!isValidContentType(mimeType)) {
                 throw new IllegalArgumentException("Specified content type '"
                 		+ mimeType + "' is not supported.");
             }
+          */
             getHttpServletResponse().setContentType(mimeType);
     	}
     }
