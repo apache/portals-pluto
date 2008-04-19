@@ -22,7 +22,7 @@ limitations under the License.
 <%@ page import="org.apache.pluto.testsuite.TestConfig" %>
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet"%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
 <portlet:defineObjects/>
 
