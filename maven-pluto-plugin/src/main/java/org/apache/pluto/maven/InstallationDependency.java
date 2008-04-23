@@ -50,6 +50,10 @@ class InstallationDependency {
         new InstallationDependency("javax.portlet", "portlet-api", 
                 VERSION_PROPERTIES.getProperty("portlet-api.version"));
 
+    public static final InstallationDependency CONTAINER_API =
+        new InstallationDependency("org.apache.pluto", "pluto-container-api", 
+                VERSION_PROPERTIES.getProperty("pluto.version"));
+
     public static final InstallationDependency  DESCRIPTOR_API =
         new InstallationDependency("org.apache.pluto", "pluto-descriptor-api", 
                 VERSION_PROPERTIES.getProperty("pluto.version"));
@@ -137,6 +141,7 @@ class InstallationDependency {
         SHARED.add(XML_PARSER_APIS);
 
         SHARED.add(PORTLET_API);
+        SHARED.add(CONTAINER_API);
         SHARED.add(DESCRIPTOR_API);
         SHARED.add(DESCRIPTOR_IMPL);
         SHARED.add(CONTAINER);
