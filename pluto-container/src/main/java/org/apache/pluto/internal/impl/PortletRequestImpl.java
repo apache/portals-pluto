@@ -476,35 +476,17 @@ implements PortletRequest, InternalPortletRequest {
 
     public Map createUserInfoMap() {
 
-        Map userInfoMap = new HashMap();
+        Map userInfoMap = null;
         try {
 
             final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
             final UserInfoService userInfoService = optionalContainerServices.getUserInfoService();
             
-            //PLUTO-388 fix:
-            //The PortletWindow is currently ignored in the implementing class
-            // See: org.apache.pluto.core.DefaultUserInfoService
-            final Map allMap = userInfoService.getUserInfo( this, this.internalPortletWindow );
-            
-            //PLUTO-477 null attribute maps are ok
-            if (null == allMap) {
-                return null;
-            }
-            
-            final PortletRegistryService portletRegistryService = optionalContainerServices.getPortletRegistryService();
-            final PortletApp dd = portletRegistryService.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
-
-            Iterator i = dd.getUserAttribute().iterator();
-            while(i.hasNext()) {
-                UserAttribute udd = (UserAttribute)i.next();
-                userInfoMap.put(udd.getName(), allMap.get(udd.getName()));
-            }
+            userInfoMap = userInfoService.getUserInfo( this, this.internalPortletWindow );
         } catch (PortletContainerException e) {
             LOG.warn("Unable to retrieve user attribute map for user " + getRemoteUser() + ".  Returning null.");
             return null;
         }
-
         return Collections.unmodifiableMap(userInfoMap);
     }
 
