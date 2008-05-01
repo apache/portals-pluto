@@ -32,22 +32,13 @@ import org.apache.pluto.spi.ContainerService;
  *
  */
 public interface UserInfoService extends ContainerService {
-
     /**
-     * To access user information attributes as defined in PLT.17
-     * of JSR-168.
-     *
-     * @deprecated use {@link #getUserInfo(PortletRequest, PortletWindow)}
-     */
-    Map getUserInfo(PortletRequest request) throws PortletContainerException;
-
-    /**
-     * Retrieve the user attribues associated with the given
+     * Retrieve the user attribues and their values associated with the given
      * request and window. This can return null if the user associated with the
      * request is un-authenticated.
      * 
-     * The results of this call will be filtered using the the UserAttributeDDs
-     * from the PortletAppDD for the PortletWindow.
+     * The result map will contain only the named attributes as defined on the
+     * portlet definition for the PortletWindow.
      *  
      * @param request Used to extract the authenticated user name.
      * @param window The portlet window to get user attributes for.
