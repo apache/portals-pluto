@@ -57,8 +57,8 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.om.common.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Portlet;
@@ -98,7 +98,7 @@ implements PortletRequest, InternalPortletRequest {
     protected PortletContainer container;
     
     /** The portlet window which is the target of this portlet request. */
-    protected InternalPortletWindow internalPortletWindow;
+    protected PortletWindow portletWindow;
 
     /**
      * The PortletContext associated with this Request. This PortletContext must
@@ -145,22 +145,22 @@ implements PortletRequest, InternalPortletRequest {
 
     public PortletRequestImpl(InternalPortletRequest internalPortletRequest) {
         this(internalPortletRequest.getPortletContainer(),
-             internalPortletRequest.getInternalPortletWindow(),
+             internalPortletRequest.getPortletWindow(),
              internalPortletRequest.getHttpServletRequest());
     }
 
     /**
      * Creates a PortletRequestImpl instance.
      * @param container  the portlet container.
-     * @param internalPortletWindow  the internal portlet window.
+     * @param portletWindow  the internal portlet window.
      * @param servletRequest  the underlying servlet request.
      */
     public PortletRequestImpl(PortletContainer container,
-                              InternalPortletWindow internalPortletWindow,
+                              PortletWindow portletWindow,
                               HttpServletRequest servletRequest) {
         super(servletRequest);
         this.container = container;
-        this.internalPortletWindow = internalPortletWindow;
+        this.portletWindow = portletWindow;
         this.portalContext = container.getRequiredContainerServices().getPortalContext();
         this.servletRequest = servletRequest;
     }
@@ -172,7 +172,7 @@ implements PortletRequest, InternalPortletRequest {
 	 * @see javax.portlet.PortletRequest#getWindowId()
 	 */
 	public String getWindowId() {
-		return internalPortletWindow.getId().getStringId();
+		return portletWindow.getId().getStringId();
 	}
     
     /**
@@ -198,11 +198,11 @@ implements PortletRequest, InternalPortletRequest {
     }
     
     public PortletMode getPortletMode() {
-        return internalPortletWindow.getPortletMode();
+        return portletWindow.getPortletMode();
     }
     
     public WindowState getWindowState() {
-        return internalPortletWindow.getWindowState();
+        return portletWindow.getWindowState();
     }
     
     public PortletSession getPortletSession() {
@@ -281,7 +281,7 @@ implements PortletRequest, InternalPortletRequest {
         	}
             portletSession = new PortletSessionImpl(
                     portletContext,
-                    internalPortletWindow,
+                    portletWindow,
                     httpSession);
         }
         //for RequestDispatcher
@@ -301,7 +301,7 @@ implements PortletRequest, InternalPortletRequest {
                     .getPortalCallbackService()
                     .getRequestProperties(
                     		getHttpServletRequest(),
-                    		internalPortletWindow);
+                    		portletWindow);
 
             if (propertyMap != null) {
                 String[] properties = (String[]) propertyMap.get(name);
@@ -328,7 +328,7 @@ implements PortletRequest, InternalPortletRequest {
                 .getPortalCallbackService()
                 .getRequestProperties(
                 		getHttpServletRequest(),
-                		internalPortletWindow);
+                		portletWindow);
 
         if (map != null) {
             String[] properties = (String[]) map.get(name);
@@ -350,7 +350,7 @@ implements PortletRequest, InternalPortletRequest {
         // get properties from PropertyManager
         Map map = container.getRequiredContainerServices()
                 .getPortalCallbackService()
-                .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
+                .getRequestProperties(getHttpServletRequest(), portletWindow);
 
         if (map != null) {
             v.addAll(map.keySet());
@@ -376,7 +376,7 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public String getContextPath() {
-        String contextPath = internalPortletWindow.getContextPath();
+        String contextPath = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getContextPath();
         if ("/".equals(contextPath)) {
             contextPath = "";
         }
@@ -402,7 +402,7 @@ implements PortletRequest, InternalPortletRequest {
      * @return true if it is determined the user has the given role.
      */
     public boolean isUserInRole(String roleName) {
-        PortletEntity entity = internalPortletWindow.getPortletEntity();
+        PortletEntity entity = portletWindow.getPortletEntity();
         Portlet def = entity.getPortletDefinition();
 
         SecurityRoleRef ref = null;
@@ -440,7 +440,7 @@ implements PortletRequest, InternalPortletRequest {
         
         String encodedName = isNameReserved(name) ?
                 name :
-                mapper.encode(internalPortletWindow.getId(), name);
+                mapper.encode(portletWindow.getId(), name);
 
         Object attribute = getHttpServletRequest()
                 .getAttribute(encodedName);
@@ -464,7 +464,7 @@ implements PortletRequest, InternalPortletRequest {
             String portletAttribute = isNameReserved(attribute) ?
             		attribute :
             	mapper.decode(
-                internalPortletWindow.getId(), attribute);
+                portletWindow.getId(), attribute);
             
             if (portletAttribute != null) { // it is in the portlet's namespace
                 portletAttributes.add(portletAttribute);
@@ -482,7 +482,7 @@ implements PortletRequest, InternalPortletRequest {
             final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
             final UserInfoService userInfoService = optionalContainerServices.getUserInfoService();
             
-            userInfoMap = userInfoService.getUserInfo( this, this.internalPortletWindow );
+            userInfoMap = userInfoService.getUserInfo( this, this.portletWindow );
         } catch (PortletContainerException e) {
             LOG.warn("Unable to retrieve user attribute map for user " + getRemoteUser() + ".  Returning null.");
             return null;
@@ -493,8 +493,8 @@ implements PortletRequest, InternalPortletRequest {
     
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
-    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), portletWindow);
     	String[] values = null;
     	if (publicRenderParameterNames != null){
     		if (publicRenderParameterNames.contains(name))
@@ -518,10 +518,10 @@ implements PortletRequest, InternalPortletRequest {
 
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
     	PortletURLProvider urlProvider = container.getRequiredContainerServices()
     											  .getPortalCallbackService()
-    											  .getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    											  .getPortletURLProvider(getHttpServletRequest(), portletWindow);
     	
     	String[] values = null;
     	if (publicRenderParameterNames != null){
@@ -542,12 +542,12 @@ implements PortletRequest, InternalPortletRequest {
     
     public Map getParameterMap() {
     	Map<String, String[]>map = StringUtils.copyParameters(baseGetParameterMap());
-    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
     	if (publicRenderParameterNames!=null){
     		PortletURLProvider urlProvider = container
     			.getRequiredContainerServices()
     			.getPortalCallbackService()
-    			.getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    			.getPortletURLProvider(getHttpServletRequest(), portletWindow);
     		String[] values = null;
     		for (String string : publicRenderParameterNames) {
     			values = urlProvider.getPublicRenderParameters(string);
@@ -566,7 +566,7 @@ implements PortletRequest, InternalPortletRequest {
     public void setAttribute(String name, Object value) {
     	ArgumentUtility.validateNotNull("attributeName", name);
         String encodedName = isNameReserved(name) ?
-                name : mapper.encode(internalPortletWindow.getId(), name);
+                name : mapper.encode(portletWindow.getId(), name);
         if (value == null) {
             removeAttribute(name);
         } else {
@@ -577,7 +577,7 @@ implements PortletRequest, InternalPortletRequest {
     public void removeAttribute(String name) {
     	ArgumentUtility.validateNotNull("attributeName", name);
         String encodedName = isNameReserved(name) ?
-                name : mapper.encode(internalPortletWindow.getId(), name);
+                name : mapper.encode(portletWindow.getId(), name);
         getHttpServletRequest().removeAttribute(encodedName);
     }
 
@@ -603,7 +603,7 @@ implements PortletRequest, InternalPortletRequest {
     public Enumeration getResponseContentTypes() {
         if (contentTypes == null) {
             contentTypes = new Vector();
-            Portlet dd = internalPortletWindow.getPortletEntity().getPortletDefinition();
+            Portlet dd = portletWindow.getPortletEntity().getPortletDefinition();
             Iterator supports = dd.getSupports().iterator();
             while (supports.hasNext()) {
                 Supports sup = (Supports) supports.next();
@@ -664,8 +664,8 @@ implements PortletRequest, InternalPortletRequest {
     
     // InternalPortletRequest Impl ---------------------------------------------
 
-    public InternalPortletWindow getInternalPortletWindow() {
-        return internalPortletWindow;
+    public PortletWindow getPortletWindow() {
+        return portletWindow;
     }
 
     public PortletContainer getPortletContainer() {
@@ -742,7 +742,7 @@ implements PortletRequest, InternalPortletRequest {
             return true;
         }
 
-        Portlet dd = internalPortletWindow.getPortletEntity()
+        Portlet dd = portletWindow.getPortletEntity()
                 .getPortletDefinition();
 
         Iterator mimes = dd.getSupports().iterator();
@@ -913,7 +913,7 @@ implements PortletRequest, InternalPortletRequest {
 		if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
             		getPortletContainer(),
-            		getInternalPortletWindow(),
+            		getPortletWindow(),
             		this,
             		Constants.METHOD_ACTION);
         }
@@ -929,8 +929,8 @@ implements PortletRequest, InternalPortletRequest {
 		PortletURLProvider urlProvider = container
 			.getRequiredContainerServices()
 			.getPortalCallbackService()
-			.getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
-		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+			.getPortletURLProvider(getHttpServletRequest(), portletWindow);
+		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
 		String[] values = null;
 		if (publicRenderParameterNames != null){
 			for (String string : publicRenderParameterNames) {
@@ -944,7 +944,7 @@ implements PortletRequest, InternalPortletRequest {
 	}
 	
 	public String getWindowID() {
-		return internalPortletWindow.getId().getStringId();
+		return portletWindow.getId().getStringId();
 	}
 	
 	private void setLifecyclePhase() {

@@ -137,7 +137,7 @@ implements PortletPreferencesService {
                                    PortletRequest request) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append("user=").append(request.getRemoteUser()).append(";");
-    	buffer.append("portletName=").append(portletWindow.getPortletName());
+    	buffer.append("portletName=").append(portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     	return buffer.toString();
     }
 

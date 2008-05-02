@@ -92,6 +92,8 @@ import org.apache.pluto.om.portlet.UserAttribute;
 })
 public class PortletAppDD implements PortletApp {
 
+    private String contextPath;
+    
     /** The defined portlets within the system. */
 	@XmlElement(name = "portlet", type=PortletDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd")
     private List<Portlet> portlets = null;
@@ -162,6 +164,22 @@ public class PortletAppDD implements PortletApp {
      * Default Constructor.
      */
     public PortletAppDD() {
+    }
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.om.portlet.PortletApp#getContextPath()
+     */
+    public String getContextPath()
+    {
+        return contextPath;
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.pluto.om.portlet.PortletApp#setContextPath(java.lang.String)
+     */
+    public void setContextPath(String contextPath)
+    {
+        this.contextPath = contextPath;
     }
 
     /* (non-Javadoc)

@@ -159,6 +159,7 @@ public class PortletContextManager implements PortletRegistryService {
 
             PortletApp portletAppDD = PortletDescriptorRegistry.getRegistry()
                 .getPortletAppDD(servletContext);
+            portletAppDD.setContextPath(applicationId);
 
             PortletContextImpl portletContext = new PortletContextImpl(
                 applicationId, servletContext, portletAppDD);

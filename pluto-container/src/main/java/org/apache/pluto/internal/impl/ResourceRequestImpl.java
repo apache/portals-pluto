@@ -29,7 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalResourceRequest;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
@@ -51,11 +51,11 @@ implements ResourceRequest, InternalResourceRequest {
     // Constructor -------------------------------------------------------------
     
     public ResourceRequestImpl(PortletContainer container,
-                             InternalPortletWindow internalPortletWindow,
+                             PortletWindow portletWindow,
                              HttpServletRequest servletRequest) {
-        super(container, internalPortletWindow, servletRequest);
+        super(container, portletWindow, servletRequest);
         if (LOG.isDebugEnabled()) {
-        	LOG.debug("Created action request for: " + internalPortletWindow);
+        	LOG.debug("Created action request for: " + portletWindow);
         }
     }
 
@@ -73,7 +73,7 @@ implements ResourceRequest, InternalResourceRequest {
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
     	String values1[] = super.getParameterValues(name);
-    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), portletWindow);
     	String values2[] = urlProvider.getPrivateRenderParameters(name);
     	String values[] = null;
     	int length1 = 0;
@@ -106,7 +106,7 @@ implements ResourceRequest, InternalResourceRequest {
     	ArgumentUtility.validateNotNull("parameterName", name);
     	String value = super.getParameter(name);
     	if (value == null){
-    		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), portletWindow);
         	String[] values1 = urlProvider.getPrivateRenderParameters(name);
         	if (values1!= null){
         		if (values1.length>0){
@@ -126,7 +126,7 @@ implements ResourceRequest, InternalResourceRequest {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
             		getPortletContainer(),
-            		getInternalPortletWindow(),
+            		getPortletWindow(),
             		this,
             		Constants.METHOD_ACTION);
         }
@@ -147,7 +147,7 @@ implements ResourceRequest, InternalResourceRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(this, internalPortletWindow);
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(this, portletWindow);
 	}
 	
 	public ServletInputStream getInputStream() throws IOException {

@@ -21,6 +21,7 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 
 /**
  * The internal portlet request interface extends PortletRequest and adds
@@ -46,7 +47,7 @@ public interface InternalPortletRequest extends PortletRequest {
      */
     public void release();
 
-    public InternalPortletWindow getInternalPortletWindow();
+    public PortletWindow getPortletWindow();
 
     public PortletContainer getPortletContainer();
 

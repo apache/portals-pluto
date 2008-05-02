@@ -20,8 +20,10 @@ package org.apache.pluto.descriptors.portlet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
@@ -34,6 +36,7 @@ import org.apache.pluto.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
 import org.apache.pluto.om.portlet.ExpirationCache;
 import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.om.portlet.PortletPreferences;
 import org.apache.pluto.om.portlet.Supports;
@@ -113,6 +116,9 @@ import org.apache.pluto.om.portlet.Supports;
 public class PortletDD implements Portlet {
 	
 	private static final String QNAME_JSR286 = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
+	
+	@XmlTransient
+	private PortletAppDD application;
 
 	@XmlElement(name = "supports",type=SupportsDD.class)
 	private List<Supports> supports = null;
@@ -247,8 +253,16 @@ public class PortletDD implements Portlet {
     	return toString().hashCode();
     }
 
-
 	/* (non-Javadoc)
+     * @see org.apache.pluto.om.portlet.Portlet#getApplication()
+     */
+    public PortletApp getApplication()
+    {
+        return application;
+    }
+
+
+    /* (non-Javadoc)
 	 * @see org.apache.pluto.descriptors.portlet.Portlet#getInitParams()
 	 */
 	public List<InitParam> getInitParams() {
@@ -554,6 +568,10 @@ public class PortletDD implements Portlet {
 	 */
 	public List<ContainerRuntimeOption> getContainerRuntimeOption() {
 		return containerRuntimeOption;
+	}
+	
+	public void afterUnmarshal(Unmarshaller u, Object parent) {
+	    application = (PortletAppDD)parent;
 	}
 }
 

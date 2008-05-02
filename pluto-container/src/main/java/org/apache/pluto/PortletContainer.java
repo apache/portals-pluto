@@ -69,7 +69,7 @@ public interface PortletContainer {
 
     /**
      * Calls the render method of the given portlet window.
-     * @param internalPortletWindow the portlet Window
+     * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -78,7 +78,7 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    void doRender(PortletWindow internalPortletWindow,
+    void doRender(PortletWindow portletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
         throws PortletException, IOException, PortletContainerException;
@@ -86,7 +86,7 @@ public interface PortletContainer {
     /**
      * Indicates that a portlet resource Serving occured in the current request and calls
      * the processServeResource method of this portlet.
-     * @param internalPortletWindow the portlet Window
+     * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -94,7 +94,7 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    void doServeResource(PortletWindow internalPortletWindow,
+    void doServeResource(PortletWindow portletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
         throws PortletException, IOException, PortletContainerException;
@@ -102,7 +102,7 @@ public interface PortletContainer {
     /**
      * Indicates that a portlet action occured in the current request and calls
      * the processAction method of this portlet.
-     * @param internalPortletWindow the portlet Window
+     * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -110,14 +110,14 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    void doAction(PortletWindow internalPortletWindow,
+    void doAction(PortletWindow portletWindow,
                          HttpServletRequest request,
                          HttpServletResponse response)
         throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that the portlet must be initialized
-     * @param internalPortletWindow the portlet Window
+     * @param portletWindow the portlet Window
      * @param servletRequest        the servlet request
      * @param servletResponse       the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -125,7 +125,7 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    void doLoad(PortletWindow internalPortletWindow,
+    void doLoad(PortletWindow portletWindow,
                        HttpServletRequest servletRequest,
                        HttpServletResponse servletResponse)
         throws PortletException, IOException, PortletContainerException;

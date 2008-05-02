@@ -154,7 +154,7 @@ public class PortalDriverFilter implements Filter {
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
-            PortletWindowImpl portletWindow = new PortletWindowImpl(
+            PortletWindowImpl portletWindow = new PortletWindowImpl(container,
                 actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing action request for window: "

@@ -34,8 +34,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletResponse;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.DummyPrintWriter;
@@ -61,8 +61,8 @@ implements PortletResponse, InternalPortletResponse {
 	/** The portlet container. */
     private PortletContainer container;
     
-    /** The internal portlet window. */
-    private InternalPortletWindow internalPortletWindow;
+    /** The portlet window. */
+    private PortletWindow portletWindow;
 
     /** The servlet request of the target/portlet's web module. */
     private HttpServletRequest httpServletRequest;
@@ -85,13 +85,13 @@ implements PortletResponse, InternalPortletResponse {
     // Constructor -------------------------------------------------------------
     
     public PortletResponseImpl(PortletContainer container,
-                               InternalPortletWindow internalPortletWindow,
+                               PortletWindow portletWindow,
                                HttpServletRequest servletRequest,
                                HttpServletResponse servletResponse) {
         super(servletResponse);
         this.container = container;
         this.httpServletRequest = servletRequest;
-        this.internalPortletWindow = internalPortletWindow;
+        this.portletWindow = portletWindow;
     }
     
     
@@ -103,7 +103,7 @@ implements PortletResponse, InternalPortletResponse {
         		.getPortalCallbackService()
         		.addResponseProperty(
         				getHttpServletRequest(),
-        				internalPortletWindow,
+        				portletWindow,
         				name, value);
     }
     
@@ -114,17 +114,17 @@ implements PortletResponse, InternalPortletResponse {
         		.getPortalCallbackService()
         		.addResponseProperty(
         				getHttpServletRequest(),
-        				internalPortletWindow,
+        				portletWindow,
         				name, value);
     }
     
     public void addProperty(String key, Element element) {
-    	container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), internalPortletWindow, key, element);
+    	container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), portletWindow, key, element);
 	}
 
 
 	public void addProperty(Cookie cookie) {
-		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), internalPortletWindow, cookie);
+		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), portletWindow, cookie);
 	}
 
     public void setProperty(String name, String value) {
@@ -133,7 +133,7 @@ implements PortletResponse, InternalPortletResponse {
                 .getPortalCallbackService()
                 .setResponseProperty(
                         getHttpServletRequest(),
-                        internalPortletWindow,
+                        portletWindow,
                         name, value);
     }
 
@@ -148,7 +148,7 @@ implements PortletResponse, InternalPortletResponse {
         		.getPortalCallbackService()
         		.getResourceURLProvider(
         				httpServletRequest,
-        				internalPortletWindow);
+        				portletWindow);
         if (path.indexOf("://") != -1) {
             provider.setAbsoluteURL(path);
         } else {
@@ -160,8 +160,8 @@ implements PortletResponse, InternalPortletResponse {
     
     // InternalPortletResponse impl --------------------------------------------
     
-    public InternalPortletWindow getInternalPortletWindow() {
-        return internalPortletWindow;
+    public PortletWindow getPortletWindow() {
+        return portletWindow;
     }
     
     
@@ -242,7 +242,7 @@ implements PortletResponse, InternalPortletResponse {
 	
 	public ResourceURL createResourceURL(){
 		return new ResourceURLImpl(getContainer(),
-	                              getInternalPortletWindow(),
+	                              getPortletWindow(),
 	                              getHttpServletRequest(),
 	                              getHttpServletResponse());
 	}
@@ -259,7 +259,7 @@ implements PortletResponse, InternalPortletResponse {
 	 */
 	private PortletURL createURL(boolean isAction, boolean isResourceServing) {
 	    return new PortletURLImpl(getContainer(),
-	                              getInternalPortletWindow(),
+	                              getPortletWindow(),
 	                              getHttpServletRequest(),
 	                              getHttpServletResponse(),
 	                              isAction);
@@ -267,7 +267,7 @@ implements PortletResponse, InternalPortletResponse {
 
 
 	public String getNamespace() {
-	     String namespace = mapper.encode(getInternalPortletWindow().getId(), "");
+	     String namespace = mapper.encode(getPortletWindow().getId(), "");
 	     StringBuffer validNamespace = new StringBuffer();
 	     for (int i = 0; i < namespace.length(); i++) {
 	     	char ch = namespace.charAt(i);

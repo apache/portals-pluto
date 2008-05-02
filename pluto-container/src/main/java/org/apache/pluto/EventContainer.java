@@ -33,7 +33,7 @@ public interface EventContainer {
 	/**
      * Indicates that an event should be fired in the current request and calls
      * the processEvent method of this portlet.
-     * @param internalPortletWindow the portlet Window
+     * @param PortletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
 	 * @param eventNumber 

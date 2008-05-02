@@ -39,12 +39,12 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     private String window;
 
     public PortletURLProviderImpl(HttpServletRequest request,
-                                  PortletWindow internalPortletWindow) {
+                                  PortletWindow portletWindow) {
         PortalRequestContext ctx = (PortalRequestContext)
             request.getAttribute(PortalRequestContext.REQUEST_KEY);
         url = ctx.createPortalURL();
 
-        this.window = internalPortletWindow.getId().getStringId();
+        this.window = portletWindow.getId().getStringId();
     }
 
     public void setPortletMode(PortletMode mode) {

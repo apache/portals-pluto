@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalActionResponse;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.ResourceURLProvider;
 
 public class ActionResponseImpl extends StateAwareResponseImpl
@@ -41,10 +41,10 @@ implements ActionResponse, InternalActionResponse {
     private static final Log LOG = LogFactory.getLog(ActionResponseImpl.class);
 
     public ActionResponseImpl(PortletContainer container,
-                              InternalPortletWindow internalPortletWindow,
+                              PortletWindow portletWindow,
                               HttpServletRequest servletRequest,
                               HttpServletResponse servletResponse) {
-        super(container, internalPortletWindow, servletRequest,
+        super(container, portletWindow, servletRequest,
               servletResponse);
     }
 
@@ -67,7 +67,7 @@ implements ActionResponse, InternalActionResponse {
 
             ResourceURLProvider provider = super.callback.getResourceURLProvider(
                             getHttpServletRequest(),
-                            getInternalPortletWindow()
+                            getPortletWindow()
             );
 
             if (location.indexOf("://") != -1) {

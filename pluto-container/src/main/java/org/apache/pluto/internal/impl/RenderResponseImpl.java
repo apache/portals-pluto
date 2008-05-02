@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.util.ArgumentUtility;
@@ -48,10 +48,10 @@ implements RenderResponse, InternalRenderResponse {
 	private String contenType;
     
     public RenderResponseImpl(PortletContainer container,
-                              InternalPortletWindow internalPortletWindow,
+                              PortletWindow portletWindow,
                               HttpServletRequest servletRequest,
                               HttpServletResponse servletResponse) {
-        super(container, internalPortletWindow, servletRequest, servletResponse);
+        super(container, portletWindow, servletRequest, servletResponse);
     }
 
     public void setTitle(String title) {
@@ -59,12 +59,12 @@ implements RenderResponse, InternalRenderResponse {
         		.getRequiredContainerServices()
         		.getPortalCallbackService();
         callback.setTitle(this.getHttpServletRequest(),
-                          getInternalPortletWindow(),
+                          getPortletWindow(),
                           title);
     }
 
 	public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
-		PortletMode tmpPortletMode = super.getInternalPortletWindow().getPortletMode();
+		PortletMode tmpPortletMode = super.getPortletWindow().getPortletMode();
 		PortletMode portletMode = PortletMode.VIEW;
 		boolean next = false;
 		boolean first = true;

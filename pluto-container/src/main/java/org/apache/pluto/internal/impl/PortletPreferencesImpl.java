@@ -35,9 +35,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.util.StringManager;
@@ -63,7 +63,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     /** The portlet preferences service provided by the portal. */
     private PortletPreferencesService preferencesService;
 
-    private InternalPortletWindow window;
+    private PortletWindow window;
 
     private InternalPortletRequest request;
     
@@ -93,7 +93,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * @param methodId  the request method ID: render request or action request.
      */
     public PortletPreferencesImpl(PortletContainer container,
-                                  InternalPortletWindow window,
+                                  PortletWindow window,
                                   InternalPortletRequest request,
                                   Integer methodId) {
         this.window = window;

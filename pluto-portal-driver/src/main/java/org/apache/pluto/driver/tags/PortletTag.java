@@ -121,8 +121,12 @@ public class PortletTag extends BodyTagSupport {
                 (HttpServletRequest) pageContext.getRequest());
         PortalURL portalURL = portalEnv.getRequestedPortalURL();
         
+        // Retrieve the portlet container from servlet context.
+        PortletContainer container = (PortletContainer)
+                servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
+        
         // Create the portlet window to render.
-        PortletWindow window = new PortletWindowImpl(windowConfig, portalURL);
+        PortletWindow window = new PortletWindowImpl(container, windowConfig, portalURL);
         
         // Check if someone else is maximized. If yes, don't show content.
         Map windowStates = portalURL.getWindowStates();
@@ -141,10 +145,6 @@ public class PortletTag extends BodyTagSupport {
         		(HttpServletRequest) pageContext.getRequest(), window);
         PortalServletResponse portalResponse = new PortalServletResponse(
                 (HttpServletResponse) pageContext.getResponse());
-        
-        // Retrieve the portlet container from servlet context.
-        PortletContainer container = (PortletContainer)
-            	servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
         
         // Render the portlet and cache the response.
         try {

@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalEventResponse;
-import org.apache.pluto.internal.InternalPortletWindow;
 
 /**
  * Implementation of JSR-286 <code>EventResponse</code>.
@@ -37,10 +37,10 @@ public class EventResponseImpl extends StateAwareResponseImpl
 	implements EventResponse,InternalEventResponse {
 
     public EventResponseImpl(PortletContainer container,
-                              InternalPortletWindow internalPortletWindow,
+                              PortletWindow portletWindow,
                               HttpServletRequest servletRequest,
                               HttpServletResponse servletResponse) {
-        super(container, internalPortletWindow, servletRequest,
+        super(container, portletWindow, servletRequest,
               servletResponse);
     }
 

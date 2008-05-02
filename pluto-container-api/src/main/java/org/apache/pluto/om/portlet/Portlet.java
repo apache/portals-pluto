@@ -45,6 +45,8 @@ public interface Portlet {
 	 * @return the hash code for this instance.
 	 */
 	public abstract int hashCode();
+	
+	public PortletApp getApplication();
 
 	public abstract List<InitParam> getInitParams();
 

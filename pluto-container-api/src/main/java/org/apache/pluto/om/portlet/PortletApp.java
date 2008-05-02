@@ -20,6 +20,18 @@ import java.util.List;
 
 public interface PortletApp {
 
+    /**
+     * The contextPath for this Portlet (web) Application
+     * @return
+     */
+    public String getContextPath();
+    
+    /**
+     * Set the contextPath for this Portlet (web) Application
+     * @param contextPath
+     */
+    public void setContextPath(String contextPath);
+    
 	/**
 	 * Retrieve the portlets which exist within this application.
 	 * @return

@@ -27,7 +27,7 @@ public class ResourceURLProviderImpl implements ResourceURLProvider {
     private String base = "";
 
     public ResourceURLProviderImpl(HttpServletRequest req,
-                                   PortletWindow internalPortletWindow) {
+                                   PortletWindow portletWindow) {
     }
 
     public void setAbsoluteURL(String path) {

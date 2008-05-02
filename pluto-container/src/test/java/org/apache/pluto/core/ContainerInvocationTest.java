@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletWindowID;
+import org.apache.pluto.internal.PortletEntity;
 
 
 public class ContainerInvocationTest extends TestCase
@@ -35,6 +36,9 @@ public class ContainerInvocationTest extends TestCase
             }
 
             public PortletMode getPortletMode() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+            public PortletEntity getPortletEntity() {
                 return null;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });

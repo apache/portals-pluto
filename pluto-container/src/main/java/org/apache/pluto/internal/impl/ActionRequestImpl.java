@@ -28,8 +28,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalActionRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
 
 /**
  * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
@@ -50,11 +50,11 @@ implements ActionRequest, InternalActionRequest {
     // Constructor -------------------------------------------------------------
 
     public ActionRequestImpl(PortletContainer container,
-                             InternalPortletWindow internalPortletWindow,
+                             PortletWindow portletWindow,
                              HttpServletRequest servletRequest) {
-        super(container, internalPortletWindow, servletRequest);
+        super(container, portletWindow, servletRequest);
         if (LOG.isDebugEnabled()) {
-        	LOG.debug("Created action request for: " + internalPortletWindow);
+        	LOG.debug("Created action request for: " + portletWindow);
         }
     }
 
@@ -71,7 +71,7 @@ implements ActionRequest, InternalActionRequest {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
             		getPortletContainer(),
-            		getInternalPortletWindow(),
+            		getPortletWindow(),
             		this,
             		Constants.METHOD_ACTION);
         }
@@ -83,7 +83,7 @@ implements ActionRequest, InternalActionRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(getHttpServletRequest(), internalPortletWindow);
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(getHttpServletRequest(), portletWindow);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 	//for RequestDispatcher include and forward 

@@ -39,11 +39,8 @@ import javax.xml.stream.XMLStreamReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.EventContainer;
-import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.om.portlet.EventDefinition;
@@ -118,7 +115,7 @@ public class PortletWindowThread extends Thread {
 			        		// now test if object is jaxb
 			        		EventDefinition eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
-			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletName());//Thread.currentThread().getContextClassLoader();
+			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getJavaClass()).asSubclass(Serializable.class);
 
 			        		JAXBContext jc = JAXBContext.newInstance(clazz);
@@ -156,10 +153,7 @@ public class PortletWindowThread extends Thread {
 	}
 
 	private EventDefinition getEventDefintion(QName name) throws PortletContainerException {
-		PortalRequestContext context = PortalRequestContext.getContext(eventProvider.getRequest());
-		ServletContext servletContext = context.getServletContext();
-		PortletContainer container = (PortletContainer) servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
-		PortletApp appDD = container.getPortletApplicationDescriptor(portletWindow.getContextPath());
+		PortletApp appDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
 		for (EventDefinition def : appDD.getEvents()){
 			if (def.getQName() != null){
 				if (def.getQName().equals(name))

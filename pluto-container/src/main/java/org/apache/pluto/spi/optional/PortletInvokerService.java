@@ -29,8 +29,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.ServletContext;
 
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.spi.FilterManager;
 
 /**
@@ -38,21 +39,21 @@ import org.apache.pluto.spi.FilterManager;
  */
 public interface PortletInvokerService {
 	
-    public void action(ActionRequest req, ActionResponse res, InternalPortletWindow window, FilterManager filterManager)
+    public void action(ServletContext containerContext, ActionRequest req, ActionResponse res, PortletWindow window, FilterManager filterManager)
     	throws IOException, PortletException;
     
-    public void event(EventRequest request, EventResponse response, InternalPortletWindow window, FilterManager filterManager)
+    public void event(ServletContext containerContext, EventRequest request, EventResponse response, PortletWindow window, FilterManager filterManager)
 		throws IOException, PortletException;
 
-    public void render(RenderRequest req, RenderResponse res, InternalPortletWindow window, FilterManager filterManager)
+    public void render(ServletContext containerContext, RenderRequest req, RenderResponse res, PortletWindow window, FilterManager filterManager)
     	throws IOException, PortletException;
     
-    public void serveResource(ResourceRequest req, ResourceResponse res, InternalPortletWindow window, FilterManager filterManager)
+    public void serveResource(ServletContext containerContext, ResourceRequest req, ResourceResponse res, PortletWindow window, FilterManager filterManager)
 		throws IOException, PortletException;
 
-    public void load(PortletRequest req, PortletResponse res, InternalPortletWindow window)
+    public void load(ServletContext containerContext, PortletRequest req, PortletResponse res, PortletWindow window)
     	throws IOException, PortletException;
     
-    public void admin(PortletRequest req, PortletResponse res, InternalPortletWindow window)
+    public void admin(ServletContext containerContext, PortletRequest req, PortletResponse res, PortletWindow window)
     	throws IOException, PortletException;
 }

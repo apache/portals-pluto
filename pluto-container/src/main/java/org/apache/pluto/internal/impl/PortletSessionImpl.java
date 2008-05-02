@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSessionContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**
@@ -62,8 +62,8 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     /** The portlet context. */
     private PortletContext portletContext;
     
-    /** The internal portlet window. */
-    private InternalPortletWindow internalPortletWindow;
+    /** The portlet window. */
+    private PortletWindow portletWindow;
     
     //
     private boolean isIncludeOrForward = false;
@@ -74,10 +74,10 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
      * Constructs an instance.
      */
     public PortletSessionImpl(PortletContext portletContext,
-                              InternalPortletWindow internalPortletWindow,
+                              PortletWindow portletWindow,
                               HttpSession httpSession) {
         this.portletContext = portletContext;
-        this.internalPortletWindow = internalPortletWindow;
+        this.portletWindow = portletWindow;
         this.httpSession = httpSession;
     }
     
@@ -229,7 +229,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     private String createPortletScopedId(String name) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(PORTLET_SCOPE_NAMESPACE);
-    	buffer.append(internalPortletWindow.getId().getStringId());
+    	buffer.append(portletWindow.getId().getStringId());
     	buffer.append(ID_NAME_SEPARATOR);
     	buffer.append(name);
     	return buffer.toString();
@@ -249,7 +249,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     			&& name.indexOf(ID_NAME_SEPARATOR) > -1) {
         	String id = name.substring(PORTLET_SCOPE_NAMESPACE.length(),
         	                           name.indexOf(ID_NAME_SEPARATOR));
-        	return (id.equals(internalPortletWindow.getId().getStringId()));
+        	return (id.equals(portletWindow.getId().getStringId()));
         }
     	// Application-scoped attribute names are not in portlet scope.
     	else {

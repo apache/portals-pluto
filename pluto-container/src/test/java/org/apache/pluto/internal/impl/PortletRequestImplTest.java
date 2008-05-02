@@ -30,7 +30,7 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.optional.UserInfoService;
 import org.jmock.Mock;
@@ -55,7 +55,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
 
-    private InternalPortletWindow window = null;
+    private PortletWindow window = null;
 
     /* (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
@@ -74,7 +74,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockContainer = mock( PortletContainerImpl.class,
                 new Class[] { String.class, RequiredContainerServices.class, OptionalContainerServices.class },
                 new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), null } );
-        window = (InternalPortletWindow) mock( InternalPortletWindow.class ).proxy();
+        window = (PortletWindow) mock( PortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
 
         // Constructor expectations for RenderRequestImpl
@@ -153,8 +153,8 @@ public class PortletRequestImplTest extends MockObjectTestCase
             super(internalPortletRequest);
         }
 
-        public TestPortletRequestImpl(PortletContainer container, InternalPortletWindow internalPortletWindow, HttpServletRequest servletRequest) {
-            super(container, internalPortletWindow, servletRequest);
+        public TestPortletRequestImpl(PortletContainer container, PortletWindow portletWindow, HttpServletRequest servletRequest) {
+            super(container, portletWindow, servletRequest);
         }
 
         public PortletPreferences getPreferences() {

@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.om.portlet.ExpirationCache;
 import org.apache.pluto.om.portlet.Portlet;
@@ -105,14 +105,14 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 	private CacheControl cacheControl;
 
 	public MimeResponseImpl(PortletContainer container,
-            InternalPortletWindow internalPortletWindow,
+            PortletWindow portletWindow,
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse) {
 		
-		super(container, internalPortletWindow, servletRequest,
+		super(container, portletWindow, servletRequest,
 				servletResponse);
 		this.cacheControl = new CacheControlImpl();
-		PortletEntity portletEntity = internalPortletWindow.getPortletEntity();
+		PortletEntity portletEntity = portletWindow.getPortletEntity();
 		Portlet portletDefinition = portletEntity.getPortletDefinition();
 		ExpirationCache expirationCacheDD = portletDefinition
 				.getExpirationCache();
@@ -362,7 +362,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements
     protected boolean isValidContentType(String contentType) {
     	boolean valid = false;
     	
-        Portlet portletDD = getInternalPortletWindow().getPortletEntity()
+        Portlet portletDD = getPortletWindow().getPortletEntity()
         		.getPortletDefinition();
         for (Iterator it = portletDD.getSupports().iterator();
         		!valid && it.hasNext(); ) {

@@ -18,6 +18,8 @@ package org.apache.pluto.internal;
 
 import javax.portlet.PortletResponse;
 
+import org.apache.pluto.PortletWindow;
+
 /**
  * The internal portlet response interface extends PortletResponse and adds
  * some methods used by Pluto.
@@ -25,7 +27,7 @@ import javax.portlet.PortletResponse;
  */
 public interface InternalPortletResponse extends PortletResponse {
 
-    public InternalPortletWindow getInternalPortletWindow();
+    public PortletWindow getPortletWindow();
     
 
     /**

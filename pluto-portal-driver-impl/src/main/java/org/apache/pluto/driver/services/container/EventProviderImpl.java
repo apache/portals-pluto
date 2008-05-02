@@ -46,7 +46,6 @@ import org.apache.pluto.EventContainer;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
@@ -55,9 +54,7 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.impl.EventImpl;
-import org.apache.pluto.internal.impl.InternalPortletWindowImpl;
 import org.apache.pluto.om.portlet.EventDefinition;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
@@ -224,7 +221,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 			// iterate all portlets in the portal
 			for (PortletWindowConfig config : portlets) {
-				PortletWindow window = new PortletWindowImpl(config, portalURL);
+				PortletWindow window = new PortletWindowImpl(container, config, portalURL);
 				if (portletNames != null) {
 					for (String portlet : portletNames) {
 						if (portlet.equals(config.getId())) {
@@ -505,12 +502,10 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	private boolean isDeclaredAsPublishingEvent(QName qname) {
 		ServletContext servletContext = PortalRequestContext
 				.getContext(request).getServletContext();
-		InternalPortletWindow internalPortletWindow = new InternalPortletWindowImpl(
-				servletContext, this.portletWindow);
 		String applicationId = PortletWindowConfig
-				.parseContextPath(internalPortletWindow.getId().getStringId());
+				.parseContextPath(portletWindow.getId().getStringId());
 		String portletName = PortletWindowConfig
-				.parsePortletName(internalPortletWindow.getId().getStringId());
+				.parsePortletName(portletWindow.getId().getStringId());
 		if (portletRegistry == null) {
 			portletRegistry = ((PortletContainer) servletContext
 					.getAttribute(AttributeKeys.PORTLET_CONTAINER))
@@ -524,57 +519,44 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			e1.printStackTrace();
 		}
 		if (events != null) {
-			String contextPath = portletWindow.getContextPath();
-			try {
-				PortletApp portletAppDD = container
-						.getPortletApplicationDescriptor(contextPath);
-				String defaultNamespace = portletAppDD.getDefaultNamespace();
-				if (defaultNamespace == null) {
-					defaultNamespace = XMLConstants.NULL_NS_URI;
-				}
-				for (QName name : events) {
-					String namespaceURI = name.getNamespaceURI();
-					if (XMLConstants.NULL_NS_URI.equals(namespaceURI)) {
-						name = new QName(defaultNamespace, name.getLocalPart());
-					}
-					if (qname.equals(name)) {
-						return true;
-					}
-				}
-			} catch (PortletContainerException e) {
-				LOG.error(qname, e);
-			}
+            String defaultNamespace = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getDefaultNamespace();
+            if (defaultNamespace == null) {
+                defaultNamespace = XMLConstants.NULL_NS_URI;
+            }
+            for (QName name : events) {
+                String namespaceURI = name.getNamespaceURI();
+                if (XMLConstants.NULL_NS_URI.equals(namespaceURI)) {
+                    name = new QName(defaultNamespace, name.getLocalPart());
+                }
+                if (qname.equals(name)) {
+                    return true;
+                }
+            }
 		}
 		return false;
 	}
 
 	private boolean isValueInstanceOfDefinedClass(QName qname,
 			Serializable value) {
-		PortletApp portletAppDD = null;
-		try {
-			portletAppDD = container
-					.getPortletApplicationDescriptor(portletWindow
-							.getContextPath());
-			if (portletAppDD.getEvents() != null) {
-				
-				
-				for (EventDefinition def : portletAppDD.getEvents()){
-					if (def.getQName() != null){
-						if (def.getQName().equals(qname))
-							return value.getClass().getName().equals(
-									def.getJavaClass());
-					}
-					else{
-						QName tmp = new QName(portletAppDD.getDefaultNamespace(),def.getName());
-						if (tmp.equals(qname))
-							return value.getClass().getName().equals(
-									def.getJavaClass());
-					}
-				}
-			}
-		} catch (PortletContainerException e) {
-			LOG.error(qname, e);
-		}
+        PortletApp app = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
+        List<EventDefinition> events = app.getEvents();
+        if (events != null) {
+            
+            
+            for (EventDefinition def : events){
+                if (def.getQName() != null){
+                    if (def.getQName().equals(qname))
+                        return value.getClass().getName().equals(
+                                def.getJavaClass());
+                }
+                else{
+                    QName tmp = new QName(app.getDefaultNamespace(),def.getName());
+                    if (tmp.equals(qname))
+                        return value.getClass().getName().equals(
+                                def.getJavaClass());
+                }
+            }
+        }
 		// event not declared
 		return true;
 	}

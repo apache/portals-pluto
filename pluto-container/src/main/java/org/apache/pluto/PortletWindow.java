@@ -18,14 +18,14 @@ package org.apache.pluto;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import org.apache.pluto.om.portlet.Portlet;
+
+import org.apache.pluto.internal.PortletEntity;
 
 /**
  * Thin representation of the portlet window for which the container
  * request should be processed.  The PortletWindow is used internally
  * to map the request to the configured Portlet Application and Portlet.
  *
- * @see org.apache.pluto.internal.impl.InternalPortletWindowImpl
  * @see org.apache.pluto.om.portlet.Portlet
  *
  * @version 1.0
@@ -41,19 +41,6 @@ public interface PortletWindow {
     public PortletWindowID getId();
 
     /**
-     * Retrieve the context path in which the Portlet resides.
-     * @return context path
-     */
-    public String getContextPath();
-
-    /**
-     * Retrieve the name of the portlet as configured in the
-     * <code>portlet.xml</code>.
-     * @return the name of the portlet.
-     */
-    public String getPortletName();
-
-    /**
      * Retrieve the current window state for this window.
      * @return the current window state.
      */
@@ -65,4 +52,9 @@ public interface PortletWindow {
      */
     public PortletMode getPortletMode();
 
+    /**
+     * Returns the portlet entity. The return value cannot be NULL.
+     * @return the portlet entity
+     */
+    public PortletEntity getPortletEntity();
 }

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalActionRequest;
 import org.apache.pluto.internal.InternalActionResponse;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalRenderRequest;
 import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.internal.InternalResourceRequest;
@@ -39,35 +39,35 @@ public interface PortletEnvironmentService {
         PortletContainer container,
         HttpServletRequest servletRequest,
         HttpServletResponse servletResponse,
-        InternalPortletWindow internalPortletWindow);
+        PortletWindow portletWindow);
 
     InternalActionResponse createActionResponse(
         PortletContainer container,
         HttpServletRequest servletRequest,
         HttpServletResponse servletResponse,
-        InternalPortletWindow internalPortletWindow);
+        PortletWindow portletWindow);
 
     InternalRenderRequest createRenderRequest(
         PortletContainer container,
         HttpServletRequest servletRequest,
         HttpServletResponse servletResponse,
-        InternalPortletWindow internalPortletWindow);
+        PortletWindow portletWindow);
 
     InternalRenderResponse createRenderResponse(
         PortletContainer container,
         HttpServletRequest servletRequest,
         HttpServletResponse servletResponse,
-        InternalPortletWindow internalPortletWindow);
+        PortletWindow portletWindow);
     
     InternalResourceRequest createResourceRequest(
             PortletContainer container,
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse,
-            InternalPortletWindow internalPortletWindow);
+            PortletWindow portletWindow);
     
     InternalResourceResponse createResourceResponse(
             PortletContainer container,
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse,
-            InternalPortletWindow internalPortletWindow);
+            PortletWindow portletWindow);
 }

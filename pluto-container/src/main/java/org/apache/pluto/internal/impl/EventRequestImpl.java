@@ -32,8 +32,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalEventRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
 
 /**
  * <code>javax.portlet.EventRequest</code> implementation.
@@ -59,12 +59,12 @@ public class EventRequestImpl extends PortletRequestImpl
 	//	 Constructor -------------------------------------------------------------
     
     public EventRequestImpl(PortletContainer container,
-                             InternalPortletWindow internalPortletWindow,
+                             PortletWindow portletWindow,
                              HttpServletRequest servletRequest, Event event) {
-        super(container, internalPortletWindow, servletRequest);
+        super(container, portletWindow, servletRequest);
         this.event = event;
         if (LOG.isDebugEnabled()) {
-        	LOG.debug("Created Event request for: " + internalPortletWindow);
+        	LOG.debug("Created Event request for: " + portletWindow);
         }
    
     }
@@ -85,7 +85,7 @@ public class EventRequestImpl extends PortletRequestImpl
        if (portletPreferences == null) {
            portletPreferences = new PortletPreferencesImpl(
            		getPortletContainer(),
-           		getInternalPortletWindow(),
+           		getPortletWindow(),
            		this,
            		Constants.METHOD_EVENT);
        }
@@ -97,7 +97,7 @@ public class EventRequestImpl extends PortletRequestImpl
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(super.getHttpServletRequest(), super.getInternalPortletWindow());
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(super.getHttpServletRequest(), super.getPortletWindow());
 	}
 	
 	public String getMethod(){

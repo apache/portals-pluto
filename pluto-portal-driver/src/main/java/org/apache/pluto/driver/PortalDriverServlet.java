@@ -123,7 +123,7 @@ public class PortalDriverServlet extends HttpServlet {
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
-            PortletWindowImpl portletWindow = new PortletWindowImpl(
+            PortletWindowImpl portletWindow = new PortletWindowImpl(container,
             		actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing action request for window: "
@@ -148,7 +148,7 @@ public class PortalDriverServlet extends HttpServlet {
 			} catch (PortletContainerException e) {
 				LOG.warn(e);
 			}
-            PortletWindowImpl portletWindow = new PortletWindowImpl(
+            PortletWindowImpl portletWindow = new PortletWindowImpl(container,
                                resourceWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing resource Serving request for window: "

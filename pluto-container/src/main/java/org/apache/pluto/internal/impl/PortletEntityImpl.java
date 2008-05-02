@@ -22,17 +22,13 @@ import java.util.List;
 
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
-import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.internal.InternalPortletPreference;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.internal.PreferencesValidatorRegistry;
 import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.om.portlet.PortletPreference;
 import org.apache.pluto.om.portlet.PortletPreferences;
 
@@ -50,18 +46,8 @@ public class PortletEntityImpl implements PortletEntity {
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletEntityImpl.class);
     
-    /** URI prefix of the portlet invoker servlet. */
-    private static final String PREFIX = "/PlutoInvoker/";
-    
-    
     // Private Member Variables ------------------------------------------------
     
-    /** The servlet context. */
-    private final ServletContext servletContext;
-    
-    /** The portlet window. */
-    private String portletName = null;
-
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
     private Portlet portletDefinition;
     
@@ -71,26 +57,12 @@ public class PortletEntityImpl implements PortletEntity {
     
     // Constructor -------------------------------------------------------------
     
-    PortletEntityImpl(ServletContext servletContext, String portletName) {
-        this.servletContext = servletContext;
-        this.portletName = portletName;
+    public PortletEntityImpl(Portlet portletDefinition) {
+        this.portletDefinition = portletDefinition;
     }
     
     
     // PortletEntity Impl ------------------------------------------------------
-    
-    /**
-     * Returns the URI to the controller servlet that wraps this portlet.
-     * @return the URI to the controller servlet that wraps this portlet.
-     * @deprecated
-     */
-    public String getControllerServletUri() {
-        // this method is deprecated as of pluto 1.1.2, so that
-        // we can remove it in the future.  The PortletInvokerService
-        // will be responsible for resolving the URI used to invoke
-        // the portlet.
-        return PREFIX + portletName;
-    }
     
     /**
      * Returns an array of default preferences of this portlet. The default
@@ -148,9 +120,6 @@ public class PortletEntityImpl implements PortletEntity {
      * @return the portlet description.
      */
     public Portlet getPortletDefinition() {
-        if (portletDefinition == null) {
-            load();
-        }
         return portletDefinition;
     }
     
@@ -167,39 +136,4 @@ public class PortletEntityImpl implements PortletEntity {
     			.getPreferencesValidator(getPortletDefinition());
     	return validator;
     }
-    
-    
-    // Private Methods ---------------------------------------------------------
-    
-    /**
-     * Loads the portlet definition.
-     */
-    private void load() {
-    	
-    	//Retrieve the cross servlet context for the portlet.
-        ServletContext crossContext = servletContext;
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Retrieved cross context: " + crossContext);
-        }
-
-        // Load PortletAppDD and find out the portlet definition.
-        try {
-            PortletApp appDD = PortletDescriptorRegistry.getRegistry()
-            		.getPortletAppDD(crossContext);
-            for (Iterator it = appDD.getPortlets().iterator(); it.hasNext(); ) {
-                Portlet portletDD = (Portlet) it.next();
-                if (portletDD.getPortletName().equals(portletName)) {
-                	portletDefinition = portletDD;
-                	break;
-                }
-            }
-        } catch (PortletContainerException ex) {
-        	String message = "Unable to load Portlet App Deployment Descriptor:"
-        			+ ex.getMessage();
-        	LOG.error(message, ex);
-        	// FIXME: should this be a NullPointerException?
-            throw new NullPointerException(message);
-        }
-    }
-
 }
