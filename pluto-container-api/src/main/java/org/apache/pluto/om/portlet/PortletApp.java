@@ -21,16 +21,24 @@ import java.util.List;
 public interface PortletApp {
 
     /**
-     * The contextPath for this Portlet (web) Application
+     * The name of the Portlet Application (web application context name)
+     * <br/>
+     * Note: this equals to the context name of the corresponding Web Application
+     *       and is also the unique identifier of the application (within the container)
+     */
+    public String getName();
+    
+    /**
+     * Set the name for the Portlet Application
+     * @param name
+     */
+    public void setName(String name);
+    
+    /**
+     * The contextPath of the Portlet Application
      * @return
      */
     public String getContextPath();
-    
-    /**
-     * Set the contextPath for this Portlet (web) Application
-     * @param contextPath
-     */
-    public void setContextPath(String contextPath);
     
 	/**
 	 * Retrieve the portlets which exist within this application.
