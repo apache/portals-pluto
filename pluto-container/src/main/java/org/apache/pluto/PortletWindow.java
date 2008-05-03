@@ -19,7 +19,6 @@ package org.apache.pluto;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import org.apache.pluto.internal.PortletEntity;
 
 /**
  * Thin representation of the portlet window for which the container

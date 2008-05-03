@@ -5,9 +5,9 @@ import javax.portlet.WindowState;
 
 import junit.framework.TestCase;
 
+import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletWindowID;
-import org.apache.pluto.internal.PortletEntity;
 
 
 public class ContainerInvocationTest extends TestCase
