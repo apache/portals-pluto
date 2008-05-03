@@ -155,7 +155,7 @@ public class SupportedWindowStateServiceImpl implements
         
         try
         {
-            portletAppDD = portletRegistry.getPortletApplicationDescriptor(appId);
+            portletAppDD = portletRegistry.getPortletApplication(appId);
         }
         catch ( PortletContainerException e )
         {

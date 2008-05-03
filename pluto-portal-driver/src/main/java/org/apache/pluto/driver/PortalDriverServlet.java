@@ -195,7 +195,7 @@ public class PortalDriverServlet extends HttpServlet {
 		String applicationId = PortletWindowConfig.parseContextPath(portletID);
 		String portletName = PortletWindowConfig.parsePortletName(portletID);
 		Portlet portletDD = container.getOptionalContainerServices().getPortletRegistryService()
-								.getPortletDescriptor(applicationId, portletName);    		
+								.getPortlet(applicationId, portletName);    		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		if (parameterNames != null){
 			while(parameterNames.hasMoreElements()){

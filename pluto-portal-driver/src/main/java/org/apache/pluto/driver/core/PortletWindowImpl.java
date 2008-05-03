@@ -58,7 +58,7 @@ public class PortletWindowImpl implements PortletWindow {
         this.portalURL = portalURL;
         try
         {
-            this.entity = new PortletEntityImpl(container.getOptionalContainerServices().getPortletRegistryService().getPortletDescriptor(config.getContextPath(), config.getPortletName()));
+            this.entity = new PortletEntityImpl(container.getOptionalContainerServices().getPortletRegistryService().getPortlet(config.getContextPath(), config.getPortletName()));
         }
         catch (PortletContainerException ex)
         {

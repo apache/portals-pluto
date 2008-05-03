@@ -513,7 +513,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 		}
 		List<QName> events = null;
 		try {
-			events = portletRegistry.getPortletDescriptor(applicationId,
+			events = portletRegistry.getPortlet(applicationId,
 					portletName).getPublishingEvents();
 		} catch (PortletContainerException e1) {
 			e1.printStackTrace();

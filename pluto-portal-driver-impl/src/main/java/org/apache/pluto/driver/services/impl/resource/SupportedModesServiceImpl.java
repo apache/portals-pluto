@@ -112,7 +112,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 LOG.error("Optional Portlet Registry Service not found.");
                 throw new PortletContainerException("Optional Portlet Registry Service not found.");
             }
-            PortletApp ctx = portletRegistry.getPortletApplicationDescriptor(applicationId);
+            PortletApp ctx = portletRegistry.getPortletApplication(applicationId);
             Iterator i = ctx.getPortlets().iterator();
             while(i.hasNext()) {
                 Portlet dd = (Portlet)i.next();
