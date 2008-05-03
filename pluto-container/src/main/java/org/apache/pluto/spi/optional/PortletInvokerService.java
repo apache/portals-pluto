@@ -39,21 +39,21 @@ import org.apache.pluto.spi.FilterManager;
  */
 public interface PortletInvokerService {
 	
-    public void action(ServletContext containerContext, ActionRequest req, ActionResponse res, PortletWindow window, FilterManager filterManager)
+    public void action(ServletContext servletContext, ActionRequest req, ActionResponse res, PortletWindow window, FilterManager filterManager)
     	throws IOException, PortletException;
     
-    public void event(ServletContext containerContext, EventRequest request, EventResponse response, PortletWindow window, FilterManager filterManager)
+    public void event(ServletContext servletContext, EventRequest request, EventResponse response, PortletWindow window, FilterManager filterManager)
 		throws IOException, PortletException;
 
-    public void render(ServletContext containerContext, RenderRequest req, RenderResponse res, PortletWindow window, FilterManager filterManager)
+    public void render(ServletContext servletContext, RenderRequest req, RenderResponse res, PortletWindow window, FilterManager filterManager)
     	throws IOException, PortletException;
     
-    public void serveResource(ServletContext containerContext, ResourceRequest req, ResourceResponse res, PortletWindow window, FilterManager filterManager)
+    public void serveResource(ServletContext servletContext, ResourceRequest req, ResourceResponse res, PortletWindow window, FilterManager filterManager)
 		throws IOException, PortletException;
 
-    public void load(ServletContext containerContext, PortletRequest req, PortletResponse res, PortletWindow window)
+    public void load(ServletContext servletContext, PortletRequest req, PortletResponse res, PortletWindow window)
     	throws IOException, PortletException;
     
-    public void admin(ServletContext containerContext, PortletRequest req, PortletResponse res, PortletWindow window)
+    public void admin(ServletContext servletContext, PortletRequest req, PortletResponse res, PortletWindow window)
     	throws IOException, PortletException;
 }
