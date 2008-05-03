@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import javax.portlet.Event;
 import javax.portlet.PortletException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

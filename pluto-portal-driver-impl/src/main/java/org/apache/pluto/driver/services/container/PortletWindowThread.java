@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.portlet.Event;
 import javax.portlet.PortletException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
@@ -72,14 +71,6 @@ public class PortletWindowThread extends Thread {
 		this.portletRegistry = portletRegistry;
 	}
 
-	public PortletWindowThread(String name, 
-			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer) {
-		super(name);
-		this.eventProvider = eventProvider;
-		this.portletWindow = window;
-		this.eventContainer = eventContainer;
-	}
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Thread#run()
 	 */
