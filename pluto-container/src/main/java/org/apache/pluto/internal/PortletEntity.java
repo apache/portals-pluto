@@ -16,9 +16,6 @@
  */
 package org.apache.pluto.internal;
 
-import javax.portlet.PreferencesValidator;
-import javax.portlet.ValidatorException;
-
 import org.apache.pluto.om.portlet.Portlet;
 
 /**
@@ -30,46 +27,11 @@ import org.apache.pluto.om.portlet.Portlet;
  *
  */
 public interface PortletEntity {
-
-    /**
-     * Returns an array of default preferences of this portlet. The default
-     * preferences are retrieved from the portlet application descriptor.
-     * <p>
-     * Data retrieved from <code>portlet.xml</code> are injected into the domain
-     * object <code>PortletPreferenceDD</code>. This method converts the domain
-     * objects into <code>PortletPreference</code> objects.
-     * </p>
-     * <p>
-     * Note that if no value is bound to a given preference key,
-     * <code>PortletPreferenceDD.getValues()</code> will return an empty string
-     * list, but the value array of <code>PortletPreference</code> should be set
-     * to null (instead of an empty array).
-     * </p>
-     * <p>
-     * This method never returns null, but the values held by PortletPreference
-     * may be null.
-     * </p>
-     * @return the preference set
-     *
-     * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
-     */
-    public InternalPortletPreference[] getDefaultPreferences();
-
     /**
      * Returns the portlet description. The return value cannot be NULL.
      * @return the portlet description.
      */
     public Portlet getPortletDefinition();
-
-    /**
-     * Returns the preferences validator instance for this portlet.
-     * One validator instance is created per portlet definition.
-     * @return the preferences validator instance for this portlet.
-     * @throws ValidatorException  if fail to instantiate the validator.
-     */
-    public PreferencesValidator getPreferencesValidator()
-    throws ValidatorException;
-
 }
 
 

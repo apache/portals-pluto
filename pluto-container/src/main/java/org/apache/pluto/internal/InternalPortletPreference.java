@@ -50,6 +50,6 @@ public interface InternalPortletPreference {
      * Clone a copy of itself.
      * @return a copy of itself.
      */
-    public Object clone();
+    public InternalPortletPreference clone();
 
 }

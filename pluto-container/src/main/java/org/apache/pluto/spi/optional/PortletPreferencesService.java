@@ -30,6 +30,18 @@ import org.apache.pluto.spi.ContainerService;
  */
 public interface PortletPreferencesService extends ContainerService {
 
+    /**
+     * Returns the default portlet preferences.
+     * @param portletWindow  the portlet window.
+     * @param request  the portlet request.
+     * @return the default portlet preferences.
+     * @throws PortletContainerException  if fail to get default preferences.
+     */
+    public InternalPortletPreference[] getDefaultPreferences(
+            PortletWindow portletWindow,
+            PortletRequest request)
+    throws PortletContainerException;
+
 	/**
 	 * Returns the stored portlet preferences.
 	 * @param portletWindow  the portlet window.

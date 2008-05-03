@@ -26,6 +26,10 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.internal.impl.PortletPreferenceImpl;
+import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletPreference;
+import org.apache.pluto.om.portlet.PortletPreferences;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 
 /**
@@ -51,7 +55,7 @@ implements PortletPreferencesService {
 	 * The in-memory portlet preferences storage: key is the preference name as
 	 * a string, value is an array of PortletPreference objects.
 	 */
-	private Map storage = new HashMap();
+	private Map<String,InternalPortletPreference[]> storage = new HashMap<String,InternalPortletPreference[]>();
 
 
 	// Constructor -------------------------------------------------------------
@@ -65,6 +69,48 @@ implements PortletPreferencesService {
 
 
 	// PortletPreferencesService Impl ------------------------------------------
+
+    /**
+     * Returns an array of default preferences for a PortletWindow. The default
+     * preferences are retrieved from the portlet application descriptor.
+     * <p>
+     * Data retrieved from <code>portlet.xml</code> are injected into the domain
+     * object <code>PortletPreferenceDefinition</code>. This method converts the domain
+     * objects into <code>PortletPreference</code> objects.
+     * </p>
+     * <p>
+     * Note that if no value is bound to a given preference key,
+     * <code>PortletPreferenceDefinition.getValues()</code> will return an empty string
+     * list, but the value array of <code>PortletPreference</code> should be set
+     * to null (instead of an empty array).
+     * </p>
+     * <p>
+     * This method never returns null, but the values held by PortletPreference
+     * may be null.
+     * </p>
+     * @return the preference set
+     * 
+     * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
+     */
+    public InternalPortletPreference[] getDefaultPreferences( PortletWindow portletWindow,
+                                                              PortletRequest request )
+      throws PortletContainerException {
+        InternalPortletPreference[] preferences = null;
+        Portlet portletD = portletWindow.getPortletEntity().getPortletDefinition();
+        PortletPreferences prefsD = portletD.getPortletPreferences();
+        if (prefsD != null && prefsD.getPortletPreferences() != null) {
+            preferences = new InternalPortletPreference[prefsD.getPortletPreferences().size()];
+            int index = 0;
+            for (PortletPreference prefD : prefsD.getPortletPreferences()) {
+                String[] values = null;
+                if (prefD.getValues() != null && prefD.getValues().size() > 0) {
+                    values = prefD.getValues().toArray(new String[prefD.getValues().size()]);
+                }
+                preferences[index++] = new PortletPreferenceImpl(prefD.getName(), values, prefD.isReadOnly());
+            }
+        }
+        return preferences;
+    }
 
 	/**
 	 * Returns the stored portlet preferences array. The preferences managed by
@@ -81,8 +127,7 @@ implements PortletPreferencesService {
 			PortletRequest request)
 	throws PortletContainerException {
         String key = getFormattedKey(portletWindow, request);
-        InternalPortletPreference[] preferences = (InternalPortletPreference[])
-        		storage.get(key);
+        InternalPortletPreference[] preferences = storage.get(key);
         if (preferences == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("No portlet preferences found for: " + key);
@@ -159,14 +204,11 @@ implements PortletPreferencesService {
     			new InternalPortletPreference[preferences.length];
     	for (int i = 0; i < preferences.length; i++) {
     		if (preferences[i] != null) {
-    			copy[i] = (InternalPortletPreference) preferences[i].clone();
+    			copy[i] = preferences[i].clone();
     		} else {
     			copy[i] = null;
     		}
     	}
     	return copy;
     }
-
 }
-
-

@@ -16,22 +16,12 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.core.PreferencesValidatorRegistry;
-import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletPreference;
-import org.apache.pluto.om.portlet.PortletPreferences;
-
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -43,17 +33,10 @@ import org.apache.pluto.om.portlet.PortletPreferences;
  */
 public class PortletEntityImpl implements PortletEntity {
 	
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletEntityImpl.class);
-    
     // Private Member Variables ------------------------------------------------
     
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
     private Portlet portletDefinition;
-    
-    /** Default portlet preferences defined for this portlet. */
-    private InternalPortletPreference[] defaultPreferences;
-    
     
     // Constructor -------------------------------------------------------------
     
@@ -65,75 +48,10 @@ public class PortletEntityImpl implements PortletEntity {
     // PortletEntity Impl ------------------------------------------------------
     
     /**
-     * Returns an array of default preferences of this portlet. The default
-     * preferences are retrieved from the portlet application descriptor.
-     * <p>
-     * Data retrieved from <code>portlet.xml</code> are injected into the domain
-     * object <code>PortletPreferenceDD</code>. This method converts the domain
-     * objects into <code>PortletPreference</code> objects.
-     * </p>
-     * <p>
-     * Note that if no value is bound to a given preference key,
-     * <code>PortletPreferenceDD.getValues()</code> will return an empty string
-     * list, but the value array of <code>PortletPreference</code> should be set
-     * to null (instead of an empty array).
-     * </p>
-     * <p>
-     * This method never returns null, but the values held by PortletPreference
-     * may be null.
-     * </p>
-     * @return the preference set
-     * 
-     * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
-     */
-    public InternalPortletPreference[] getDefaultPreferences() {
-        if (defaultPreferences == null) {
-            Portlet portletDD = getPortletDefinition();
-            PortletPreferences prefsDD = portletDD.getPortletPreferences();
-            if (prefsDD != null) {
-            	List prefs = new ArrayList();
-            	if (prefsDD.getPortletPreferences() != null){
-	            	for (Iterator it = prefsDD.getPortletPreferences().iterator();
-	            			it.hasNext(); ) {
-	            		PortletPreference prefDD = (PortletPreference) it.next();
-	            		String[] values = null;
-	            		if (prefDD.getValues()!=null){
-		            		if (prefDD.getValues().size() > 0) {
-		            			values = (String[]) prefDD.getValues().toArray(
-		            					new String[prefDD.getValues().size()]);
-		            		}
-	            		}
-	            		PortletPreferenceImpl pref = new PortletPreferenceImpl(
-	            				prefDD.getName(), values, prefDD.isReadOnly());
-	            		prefs.add(pref);
-	            	}
-            	}
-            	defaultPreferences = (InternalPortletPreference[])
-            			prefs.toArray(new InternalPortletPreference[prefs.size()]);
-            }
-        }
-        return defaultPreferences;
-    }
-
-    /**
      * Returns the portlet description. The return value cannot be NULL.
      * @return the portlet description.
      */
     public Portlet getPortletDefinition() {
         return portletDefinition;
-    }
-    
-    /**
-     * Returns the preferences validator instance for this portlet.
-     * One validator instance is created per portlet definition.
-     * @return the preferences validator instance for this portlet.
-     * @throws ValidatorException  if fail to instantiate the validator.
-     */
-    public PreferencesValidator getPreferencesValidator()
-    throws ValidatorException {
-    	PreferencesValidator validator = PreferencesValidatorRegistry
-    			.getRegistry()
-    			.getPreferencesValidator(getPortletDefinition());
-    	return validator;
     }
 }
