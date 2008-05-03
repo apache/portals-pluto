@@ -53,14 +53,12 @@ implements PortletContext, InternalPortletContext {
     // Private Member Variables ------------------------------------------------
     
     
-    /** Portlet Descriptor */
-    private Portlet portletDD = null;
+    /** Portlet */
+    private Portlet portlet = null;
 
-
-    private final String applicationId;
-    private String applicationName;
-     
-    private final PortletApp portletAppDD;
+	private String applicationName;
+	
+    private final PortletApp portletApp;
     private final ServletContext servletContext;
     private ClassLoader contextClassLoader;
 
@@ -72,29 +70,26 @@ implements PortletContext, InternalPortletContext {
      * @param servletContext  the servlet context in which we are contained.
      * @param portletAppDD  the portlet application descriptor.
      */
-    public PortletContextImpl(String portletApplicationId,
-                              ServletContext servletContext,
-                              PortletApp portletAppDD) {
+    public PortletContextImpl(ServletContext servletContext,
+                              PortletApp portletApp) {
         this.servletContext = servletContext;
-        this.portletAppDD = portletAppDD;
-        this.applicationId = portletApplicationId;
+        this.portletApp = portletApp;
         this.applicationName = servletContext.getServletContextName();
 
         if(applicationName == null) {
-            applicationName = applicationId;
+            applicationName = portletApp.getId();
         }
         init();
     }
     
-
     private void init() {
         setContextClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
     public String getApplicationId() {
-        return applicationId;
+        return portletApp.getId();
     }
-
+    
     public String getApplicationName() {
         return applicationName;
     }
@@ -281,14 +276,14 @@ implements PortletContext, InternalPortletContext {
     }
 
     public PortletApp getPortletApplicationDefinition() {
-        return portletAppDD;
+        return portletApp;
     }
 
 
 	public Map<String, String[]> getApplicationRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portletAppDD.getContainerRuntimeOption() != null){
-			for (ContainerRuntimeOption option : portletAppDD.getContainerRuntimeOption()) {
+		if (portletApp.getContainerRuntimeOption() != null){
+			for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOption()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValue();
 					String [] tempValues = new String[values.size()];
@@ -304,8 +299,8 @@ implements PortletContext, InternalPortletContext {
 
 	public Map<String, String[]> getPortletRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portletDD.getContainerRuntimeOption() != null) {
-			for (ContainerRuntimeOption option : portletDD.getContainerRuntimeOption()) {
+		if (portlet.getContainerRuntimeOption() != null) {
+			for (ContainerRuntimeOption option : portlet.getContainerRuntimeOption()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValue();
 					String [] tempValues = new String[values.size()];
