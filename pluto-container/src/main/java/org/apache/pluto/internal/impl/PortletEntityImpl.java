@@ -25,9 +25,9 @@ import javax.portlet.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.core.PreferencesValidatorRegistry;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.PortletEntity;
-import org.apache.pluto.internal.PreferencesValidatorRegistry;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletPreference;
 import org.apache.pluto.om.portlet.PortletPreferences;

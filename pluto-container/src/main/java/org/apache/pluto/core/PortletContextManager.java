@@ -33,7 +33,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.PortletContextImpl;
 import org.apache.pluto.om.portlet.Portlet;
