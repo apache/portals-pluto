@@ -1,12 +1,13 @@
 /**
  * 
  */
-package org.apache.pluto.spi;
+package org.apache.pluto.core;
 
 import javax.ccpp.Profile;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.internal.impl.DummyProfile;
+import org.apache.pluto.spi.CCPPProfileService;
 
 /**
  *
