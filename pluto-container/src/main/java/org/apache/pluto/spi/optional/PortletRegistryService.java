@@ -75,7 +75,8 @@ public interface PortletRegistryService {
      * @param applicationId portlet application id
      * @return portlet context or null if not registered
      */
-    InternalPortletContext getPortletContext(String applicationId);
+    InternalPortletContext getPortletContext(String applicationId)
+        throws PortletContainerException;
 
     /**
      * Retreive the Portlet for the specified portlet.
@@ -103,7 +104,8 @@ public interface PortletRegistryService {
      * @param applicationId portlet application id
      * @return classLoader
      */
-    ClassLoader getClassLoader(String applicationId);
+    ClassLoader getClassLoader(String applicationId)
+        throws PortletContainerException;
     
     /**
      * Add a listener which will recieve notifications of newly
