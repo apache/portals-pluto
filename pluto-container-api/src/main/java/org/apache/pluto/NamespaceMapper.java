@@ -20,12 +20,6 @@ package org.apache.pluto;
 /**
  **/
 public interface NamespaceMapper {
-
-
     public String encode(PortletWindowID namespace, String name);
-
-    public String encode(PortletWindowID ns1, PortletWindowID ns2, String name);
-
     public String decode(PortletWindowID ns, String name);
-
 }

@@ -28,26 +28,12 @@ public class NamespaceMapperImpl implements NamespaceMapper {
     	// Do nothing.
     }
 
-
     // NamespaceMapper Impl ----------------------------------------------------
 
     public String encode(PortletWindowID portletWindowId, String name) {
         StringBuffer buffer = new StringBuffer(50);
         buffer.append("Pluto_");
         buffer.append(portletWindowId.getStringId());
-        buffer.append('_');
-        buffer.append(name);
-        return buffer.toString();
-    }
-
-    public String encode(PortletWindowID portletWindowId1,
-                         PortletWindowID portletWindowId2,
-                         String name) {
-        StringBuffer buffer = new StringBuffer(50);
-        buffer.append("Pluto_");
-        buffer.append(portletWindowId1.getStringId());
-        buffer.append('_');
-        buffer.append(portletWindowId2.getStringId());
         buffer.append('_');
         buffer.append(name);
         return buffer.toString();
@@ -66,5 +52,4 @@ public class NamespaceMapperImpl implements NamespaceMapper {
         }
         return name.substring(buffer.length());
     }
-
 }
