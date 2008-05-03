@@ -95,4 +95,10 @@ public interface OptionalContainerServices {
      */
     UserInfoService getUserInfoService();
 
+    /**
+     * Returns the NamespaceMapper used to retrieve the Portal
+     * specific PortletWindow namespace and encoding/decoding
+     * of PortletWindow parameters in a PortalURL
+     */
+    NamespaceMapper getNamespaceMapper();
 }

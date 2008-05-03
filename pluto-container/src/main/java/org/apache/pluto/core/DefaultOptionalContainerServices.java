@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.core;
 
+import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
@@ -24,6 +25,7 @@ import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.UserInfoService;
+import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 /**
  * Default Optional Container Services implementation.
@@ -40,6 +42,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletInfoService portletInfoService;
     private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
+    private NamespaceMapper namespaceMapper;
 
 
     /**
@@ -54,6 +57,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
+        namespaceMapper = new NamespaceMapperImpl();
     }
 
     /**
@@ -92,10 +96,13 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
             portalAdministrationService = root.getPortalAdministrationService();
         }
 
-		 if(root.getUserInfoService() != null) {
-			 userInfoService = root.getUserInfoService();
-		 }
-
+		if(root.getUserInfoService() != null) {
+            userInfoService = root.getUserInfoService();
+		}
+		 
+        if(root.getNamespaceMapper() != null) {
+            namespaceMapper = root.getNamespaceMapper();
+        }
     }
 
 
@@ -130,5 +137,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         return userInfoService;
     }
 
+    public NamespaceMapper getNamespaceMapper() {
+        return namespaceMapper;
+    }
 }
 

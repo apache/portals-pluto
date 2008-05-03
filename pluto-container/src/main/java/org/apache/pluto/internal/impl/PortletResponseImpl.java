@@ -33,13 +33,13 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.DummyPrintWriter;
-import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
 import org.w3c.dom.DOMException;
@@ -72,7 +72,7 @@ implements PortletResponse, InternalPortletResponse {
 
     private ServletOutputStream wrappedWriter;
     
-    private NamespaceMapper mapper = new NamespaceMapperImpl();
+    private NamespaceMapper mapper;
     
     /** True if we are in an include call. */
     private boolean included = false;
@@ -92,6 +92,7 @@ implements PortletResponse, InternalPortletResponse {
         this.container = container;
         this.httpServletRequest = servletRequest;
         this.portletWindow = portletWindow;
+        this.mapper = container.getOptionalContainerServices().getNamespaceMapper();
     }
     
     

@@ -18,6 +18,7 @@ package org.apache.pluto.driver.services.container;
 
 import javax.portlet.PortalContext;
 
+import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.driver.config.DriverConfiguration;
@@ -117,5 +118,8 @@ implements RequiredContainerServices, OptionalContainerServices {
     	return null;
     }
 
+    public NamespaceMapper getNamespaceMapper() {
+        return null;
+    }
 }
 

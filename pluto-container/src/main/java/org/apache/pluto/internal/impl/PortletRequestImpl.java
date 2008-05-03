@@ -54,6 +54,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
+import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
@@ -70,7 +71,6 @@ import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.UserInfoService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
-import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
 import org.apache.pluto.util.impl.NamespaceMapperImpl;
@@ -116,7 +116,7 @@ implements PortletRequest, InternalPortletRequest {
     private Vector contentTypes;
     
     /** TODO: javadoc */
-    private NamespaceMapper mapper = new NamespaceMapperImpl();
+    private NamespaceMapper mapper;
 
     /** FIXME: do we really need this?
      * Flag indicating if the HTTP-Body has been accessed. */
@@ -163,6 +163,7 @@ implements PortletRequest, InternalPortletRequest {
         this.portletWindow = portletWindow;
         this.portalContext = container.getRequiredContainerServices().getPortalContext();
         this.servletRequest = servletRequest;
+        this.mapper = container.getOptionalContainerServices().getNamespaceMapper();
     }
     
     
