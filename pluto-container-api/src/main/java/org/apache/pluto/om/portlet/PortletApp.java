@@ -21,10 +21,8 @@ import java.util.List;
 public interface PortletApp {
 
     /**
-     * The name of the Portlet Application (web application context name)
+     * The name of the Portlet Application
      * <br/>
-     * Note: this equals to the context name of the corresponding Web Application
-     *       and is also the unique identifier of the application (within the container)
      */
     public String getName();
     
@@ -35,16 +33,28 @@ public interface PortletApp {
     public void setName(String name);
     
     /**
-     * The contextPath of the Portlet Application
+     * The id the Portlet Application
+     * <br/>
+     * Note: for the Pluto container default descriptor implementation this equals
+     *       to the contextPath of the Web Applications
      * @return
      */
-    public String getContextPath();
+    public String getId();
+    
+    /**
+     * Set the id the Portlet Application
+     * <br/>
+     * Note: for the Pluto container default descriptor implementation this equals
+     *       to the contextPath of the Web Applications
+     * @return
+     */
+    public void setId(String id);
     
 	/**
 	 * Retrieve the portlets which exist within this application.
 	 * @return
 	 */
-	public abstract List getPortlets();
+	public abstract List<Portlet> getPortlets();
 
 	/**
 	 * Set the portlets that exist within this application.

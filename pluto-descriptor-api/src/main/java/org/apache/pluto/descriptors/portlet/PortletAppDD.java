@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.pluto.om.portlet.ContainerRuntimeOption;
@@ -92,7 +93,11 @@ import org.apache.pluto.om.portlet.UserAttribute;
 })
 public class PortletAppDD implements PortletApp {
 
+    @XmlTransient
     private String name;
+    
+    @XmlTransient
+    private String id;
     
     /** The defined portlets within the system. */
 	@XmlElement(name = "portlet", type=PortletDD.class, namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd")
@@ -185,15 +190,23 @@ public class PortletAppDD implements PortletApp {
     /* (non-Javadoc)
      * @see org.apache.pluto.om.portlet.PortletApp#getContextPath()
      */
-    public String getContextPath()
+    public String getId()
     {
-        return "/" + (name != null ? name : "");
+        return id;
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.pluto.om.portlet.PortletApp#setId(java.lang.String)
+     */
+    public void setId(String id)
+    {
+        this.id = id;
     }
 
     /* (non-Javadoc)
 	 * @see org.apache.pluto.descriptors.portlet.PortletApp#getPortlets()
 	 */
-    public List getPortlets() {
+    public List<Portlet> getPortlets() {
     	if (portlets != null)
     		return portlets;
     	
