@@ -122,39 +122,15 @@ public class PortletContextManager implements PortletRegistryService {
      * @throws PortletContainerException
      */
 	public String register(ServletConfig config) throws PortletContainerException {
-        InternalPortletContext portletContext = register(config.getServletContext());
-
-        PortletApp portletApp = portletContext.getPortletApplicationDefinition();
-
-        LOG.info("Registering "+portletApp.getPortlets().size()+" portlets for context "+portletContext.getApplicationId());
-
-        classLoaders.put(portletApp.getId(), Thread.currentThread().getContextClassLoader());
-        for (Portlet portlet: portletApp.getPortlets()) {
-            portletConfigs.put(
-                portletContext.getApplicationId() + "/" + portlet.getPortletName(),
-                new PortletConfigImpl(config, portletContext, portlet, portletApp)
-            );
-        }
-        return portletContext.getApplicationId();
-    }
-
-    /**
-     * @param servletContext
-     * @return
-     * @throws PortletContainerException
-     * @deprecated Use {@link #register(ServletConfig)}
-     */
-    public InternalPortletContext register(ServletContext servletContext)
-        throws PortletContainerException {
+	    ServletContext servletContext = config.getServletContext();
         String applicationId = getContextPath(servletContext);
-        InternalPortletContext portletContext = portletContexts.get(applicationId);
-        if (portletContext == null) {
+        if (!portletContexts.containsKey(applicationId)) {
 
             PortletApp portletApp = PortletDescriptorRegistry.getRegistry().getPortletAppDD(servletContext);
             portletApp.setId(applicationId);
             portletApp.setName(applicationId.substring(1));
 
-            portletContext = new PortletContextImpl(servletContext, portletApp);
+            InternalPortletContext portletContext = new PortletContextImpl(servletContext, portletApp);
 
             portletContexts.put(applicationId, portletContext);
 
@@ -162,15 +138,25 @@ public class PortletContextManager implements PortletRegistryService {
 
             if (LOG.isInfoEnabled()) {
                 LOG.info("Registered portlet application with application id '" + applicationId + "'");
+
+                LOG.info("Registering "+portletApp.getPortlets().size()+" portlets for context "+portletContext.getApplicationId());
+
+                classLoaders.put(portletApp.getId(), Thread.currentThread().getContextClassLoader());
+                for (Portlet portlet: portletApp.getPortlets()) {
+                    portletConfigs.put(
+                        portletContext.getApplicationId() + "/" + portlet.getPortletName(),
+                        new PortletConfigImpl(config, portletContext, portlet, portletApp)
+                    );
+                }
             }
         } else {
              if (LOG.isInfoEnabled()) {
                 LOG.info("Portlet application with application id '" + applicationId + "' already registered.");
             }
         }
-        return portletContext;
+        return applicationId;
     }
-    
+
     public void remove(InternalPortletContext context) {
         portletContexts.remove(context.getApplicationId());
         classLoaders.remove(context.getApplicationId());
