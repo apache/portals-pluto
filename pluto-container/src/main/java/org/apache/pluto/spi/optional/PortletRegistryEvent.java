@@ -27,22 +27,22 @@ import org.apache.pluto.om.portlet.PortletApp;
 public class PortletRegistryEvent {
 
     private String applicationId;
-    private PortletApp portletApplicationDescriptor;
+    private PortletApp portletApplication;
 
 
     public String getApplicationId() {
-        return applicationId;
+        return applicationId != null ? applicationId : portletApplication.getId();
     }
 
     public void setApplicationId(String applicationId) {
         this.applicationId = applicationId;
     }
 
-    public PortletApp getPortletApplicationDescriptor() {
-        return portletApplicationDescriptor;
+    public PortletApp getPortletApplication() {
+        return portletApplication;
     }
 
-    public void setPortletApplicationDescriptor(PortletApp portletApplicationDescriptor) {
-        this.portletApplicationDescriptor = portletApplicationDescriptor;
+    public void setPortletApplication(PortletApp portletApplication) {
+        this.portletApplication = portletApplication;
     }
 }
