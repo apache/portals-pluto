@@ -376,7 +376,7 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public String getContextPath() {
-        String contextPath = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getContextPath();
+        String contextPath = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId();
         if ("/".equals(contextPath)) {
             contextPath = "";
         }
@@ -483,11 +483,14 @@ implements PortletRequest, InternalPortletRequest {
             final UserInfoService userInfoService = optionalContainerServices.getUserInfoService();
             
             userInfoMap = userInfoService.getUserInfo( this, this.portletWindow );
+            if (userInfoMap != null)
+            {
+                userInfoMap = Collections.unmodifiableMap(userInfoMap);
+            }
         } catch (PortletContainerException e) {
             LOG.warn("Unable to retrieve user attribute map for user " + getRemoteUser() + ".  Returning null.");
-            return null;
         }
-        return Collections.unmodifiableMap(userInfoMap);
+        return userInfoMap;
     }
 
     
