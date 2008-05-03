@@ -47,7 +47,7 @@ public interface PortletRegistryService {
     Iterator<InternalPortletContext> getPortletContexts();
 
     /**
-     * Retrieve the names of all registered applications.
+     * Retrieve the ids of all registered applications.
      * This list will only contain those applications
      * which have been registered with the container.
      * Others may or may not be available within
