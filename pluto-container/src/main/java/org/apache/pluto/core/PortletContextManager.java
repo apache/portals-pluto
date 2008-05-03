@@ -25,15 +25,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.internal.Configuration;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.PortletDescriptorRegistry;
@@ -264,19 +261,6 @@ public class PortletContextManager implements PortletRegistryService {
         }
 
         LOG.info("Portlet Context '" + context.getApplicationId() + "' removed.");
-    }
-
-//
-// Utility
-
-    public static ServletContext getPortletContext(ServletContext portalContext, String portletContextPath) {
-        if (Configuration.preventUnecessaryCrossContext()) {
-            String portalPath = getContextPath(portalContext);
-            if (portalPath.equals(portletContextPath)) {
-                return portalContext;
-            }
-        }
-        return portalContext.getContext(portletContextPath);
     }
 
     /**

@@ -46,13 +46,6 @@ public class Configuration {
     private static final String BUFFER_SUPPORT =
         "org.apache.pluto.ALLOW_BUFFER";
 
-    /**
-     * org.apache.pluto.PREVENT_UNECESSARY_CROSS_CONTEXT
-     */
-    private static final String PREVENT_UNECESSARY_CROSS_CONTEXT =
-        "org.apache.pluto.PREVENT_UNECESSARY_CROSS_CONTEXT";
-
-
     public static String getPortletAppDescriptorServiceImpl() {
         String impl = BUNDLE.getString(DESCRIPTOR_SERVICE);
         if (LOG.isDebugEnabled()) {
@@ -72,19 +65,5 @@ public class Configuration {
             }
         }
         return buffering.booleanValue();
-    }
-
-    private static Boolean prevent;
-
-    public static boolean preventUnecessaryCrossContext() {
-        if (prevent == null) {
-            try {
-                String test = BUNDLE.getString(PREVENT_UNECESSARY_CROSS_CONTEXT);
-                prevent = new Boolean(test);
-            } catch (MissingResourceException mre) {
-                prevent = Boolean.FALSE;
-            }
-        }
-        return prevent.booleanValue();
     }
 }

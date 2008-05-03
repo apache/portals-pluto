@@ -45,6 +45,4 @@ public interface EventContainer {
      */
 	public void fireEvent(HttpServletRequest request, HttpServletResponse response, 
 			PortletWindow window, Event event) throws PortletException, IOException, PortletContainerException;
-	
-	public ServletContext getServletContext();
 }

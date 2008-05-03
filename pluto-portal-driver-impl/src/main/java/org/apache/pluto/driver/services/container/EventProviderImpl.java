@@ -201,8 +201,8 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	 *            The {@link PortletContainerImpl} to fire the events
 	 */
 	public void fireEvents(EventContainer eventContainer) {
-		ServletContext servletContext = eventContainer.getServletContext();
-		DriverConfiguration driverConfig = (DriverConfiguration) servletContext
+        ServletContext containerServletContext = PortalRequestContext.getContext(request).getServletContext();
+		DriverConfiguration driverConfig = (DriverConfiguration) containerServletContext
 				.getAttribute(AttributeKeys.DRIVER_CONFIG);
 
 		PortalURL portalURL = PortalURLParserImpl.getParser().parse(request);
@@ -215,7 +215,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			this.savedEvents.setProcessed(eActual);
 
 			List<String> portletNames = getAllPortletsRegisteredForEvent(
-					eActual, driverConfig);
+					eActual, driverConfig, containerServletContext);
 
 			Collection<PortletWindowConfig> portlets = getAllPortlets(driverConfig);
 
@@ -232,7 +232,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 							
 
 							PortletWindowThread portletWindowThread = getPortletWindowThread(
-									eventContainer, config, window);
+									eventContainer, config, window, containerServletContext);
 
 							// is this event
 							portletWindowThread.addEvent(eActual);
@@ -253,18 +253,22 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	}
 
 	private List<String> getAllPortletsRegisteredForEvent(Event event,
-			DriverConfiguration driverConfig) {
+			DriverConfiguration driverConfig, ServletContext containerServletContext) {
 		Set<String> resultSet = new HashSet<String>();
 		List<String> resultList = new ArrayList<String>();
 		QName eventName = event.getQName();
 		Collection<PortletWindowConfig> portlets = getAllPortlets(driverConfig);
+        if (portletRegistry == null) {
+            portletRegistry = ((PortletContainer) containerServletContext
+                    .getAttribute(AttributeKeys.PORTLET_CONTAINER))
+                    .getOptionalContainerServices().getPortletRegistryService();
+        }
 
 		for (PortletWindowConfig portlet : portlets) {
 			String contextPath = portlet.getContextPath();
 			PortletApp portletAppDD = null;
 			try {
-				portletAppDD = container
-						.getPortletApplicationDescriptor(contextPath);
+				portletAppDD = portletRegistry.getPortletApplication(contextPath);
 				List<Portlet> portletDDs = portletAppDD.getPortlets();
 				List<QName> aliases = getAllAliases(eventName, portletAppDD);
 				for (Portlet portletDD : portletDDs) {
@@ -363,10 +367,9 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	 */
 	private PortletWindowThread getPortletWindowThread(
 			EventContainer eventContainer, PortletWindowConfig config,
-			PortletWindow window) {
-		ServletContext servletContext = eventContainer.getServletContext();
+			PortletWindow window, ServletContext containerServletContext) {
 		if (portletRegistry == null) {
-			portletRegistry = ((PortletContainer) servletContext
+			portletRegistry = ((PortletContainer) containerServletContext
 					.getAttribute(AttributeKeys.PORTLET_CONTAINER))
 					.getOptionalContainerServices().getPortletRegistryService();
 		}

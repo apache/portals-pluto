@@ -28,7 +28,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -50,14 +49,12 @@ import org.apache.pluto.internal.InternalRenderRequest;
 import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.internal.InternalResourceRequest;
 import org.apache.pluto.internal.InternalResourceResponse;
-import org.apache.pluto.internal.PortletDescriptorRegistry;
 import org.apache.pluto.internal.PortletEntity;
 import org.apache.pluto.internal.impl.EventRequestImpl;
 import org.apache.pluto.internal.impl.EventResponseImpl;
 import org.apache.pluto.internal.impl.PortletRequestImpl;
 import org.apache.pluto.internal.impl.PortletResponseImpl;
 import org.apache.pluto.internal.impl.StateAwareResponseImpl;
-import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortletURLProvider;
@@ -92,9 +89,6 @@ public class PortletContainerImpl implements PortletContainer,
     /** The optional container services associated with this container. */
     private final OptionalContainerServices optionalContainerServices;
     
-    /** The servlet context associated with this container. */
-    private ServletContext servletContext;
-
     /** Flag indicating whether or not we've been initialized. */
     private boolean initialized = false;
     
@@ -123,14 +117,8 @@ public class PortletContainerImpl implements PortletContainer,
      * Initialize the container for use within the given configuration scope.
      * @param servletContext  the servlet context of the portal webapp.
      */
-    public void init(ServletContext servletContext)
+    public void init()
     throws PortletContainerException {
-    	if (servletContext == null) {
-    		throw new PortletContainerException(
-    				"Unable to initialize portlet container [" + name + "]: "
-    				+ "servlet context is null.");
-    	}
-        this.servletContext = servletContext;
         this.initialized = true;
         infoWithName("Container initialized successfully.");
     }
@@ -147,7 +135,6 @@ public class PortletContainerImpl implements PortletContainer,
      * Destroy this container.
      */
     public void destroy() {
-        this.servletContext = null;
         this.initialized = false;
         infoWithName("Container destroyed.");
     }
@@ -412,50 +399,6 @@ public class PortletContainerImpl implements PortletContainer,
     public OptionalContainerServices getOptionalContainerServices() {
         return optionalContainerServices;
     }
-    
-    public PortletApp getPortletApplicationDescriptor(String context) 
-        throws PortletContainerException {
-        
-        // make sure the container has initialized
-        ensureInitialized();
-        
-        // sanity check
-        if (context == null || context.trim().equals("")) {
-            final String msg = "Context was null or the empty string.";
-            errorWithName(msg);
-            throw new PortletContainerException(msg);
-        }
-        
-        // obtain the context of the portlet
-        ServletContext portletCtx = PortletContextManager.getPortletContext(servletContext, context);
-        if (portletCtx == null) {
-            final String msg = "Unable to obtain the servlet context for " +
-                "portlet context [" + context + "].  Ensure the portlet has " +
-                "been deployed and that cross context support is enabled.";
-            errorWithName(msg);
-            throw new PortletContainerException(msg);
-        }
-        
-        // obtain the portlet application descriptor for the portlet
-        // context.
-        PortletApp portletAppDD = PortletDescriptorRegistry
-                                        .getRegistry()
-                                        .getPortletAppDD(portletCtx);
-        
-        // we can't return null
-        if (portletAppDD == null) {
-            final String msg = "Obtained a null portlet application description for " +
-                "portlet context [" + context + "]";
-            errorWithName(msg);
-            throw new PortletContainerException(msg);
-        }
-        
-        return portletAppDD;        
-    }
-    
-    public ServletContext getServletContext() {
-		return servletContext;
-	}
     
     /**
      * Fire Event for the portlet associated with the given portlet window and eventName

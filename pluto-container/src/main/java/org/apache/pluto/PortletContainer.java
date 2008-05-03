@@ -19,11 +19,8 @@ package org.apache.pluto;
 import java.io.IOException;
 
 import javax.portlet.PortletException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.pluto.om.portlet.PortletApp;
 
 /**
  * The publicized entry point into Pluto. The base functionality of the portlet
@@ -52,12 +49,10 @@ import org.apache.pluto.om.portlet.PortletApp;
 public interface PortletContainer {
 
     /**
-     * Initializes the container for use within the given servlet context.
-     * @param servletContext  the servlet context.
+     * Initializes the container
      * @throws PortletContainerException if an error occurs.
      */
-    void init(ServletContext servletContext)
-    throws PortletContainerException;
+    void init() throws PortletContainerException;
 
     /**
      * Shuts down the container. After calling this method it is no longer valid
@@ -168,22 +163,4 @@ public interface PortletContainer {
      * @return the container services provided by either the portal or the defaults.
      */
     OptionalContainerServices getOptionalContainerServices();
-    
-    /**
-     * Retrieve the {@link PortletApp} for the portlet
-     * located at the supplied context.
-     * 
-     * Must not return null.
-     * 
-     * @param context the context of the portlet
-     * @return the portlet application descriptor
-     * @throws PortletContainerException if the container has trouble obtaining
-     *                                   the context of the portlet, or retrieving
-     *                                   the <code>PortletAppDD</code>
-     */    
-    PortletApp getPortletApplicationDescriptor(String context)
-        throws PortletContainerException;
-
-	public ServletContext getServletContext();
-    
 }
