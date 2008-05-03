@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.util.impl;
+package org.apache.pluto.core;
 
 import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.PortletWindowID;
@@ -27,7 +27,7 @@ import org.apache.pluto.util.PlutoTestCase;
  * @version 1.0
  * @since June 1, 2005
  */
-public class NamespaceMapperImplTest extends PlutoTestCase {
+public class DefaultNamespaceMapperTest extends PlutoTestCase {
 
     private NamespaceMapper mapper = new DefaultNamespaceMapper();
     private PortletWindowID id1;
