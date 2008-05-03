@@ -25,7 +25,6 @@ import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.UserInfoService;
-import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 /**
  * Default Optional Container Services implementation.
@@ -57,7 +56,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
-        namespaceMapper = new NamespaceMapperImpl();
+        namespaceMapper = new DefaultNamespaceMapper();
     }
 
     /**

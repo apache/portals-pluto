@@ -18,6 +18,7 @@ package org.apache.pluto.util.impl;
 
 import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.PortletWindowID;
+import org.apache.pluto.core.DefaultNamespaceMapper;
 import org.apache.pluto.util.PlutoTestCase;
 
 /**
@@ -28,7 +29,7 @@ import org.apache.pluto.util.PlutoTestCase;
  */
 public class NamespaceMapperImplTest extends PlutoTestCase {
 
-    private NamespaceMapper mapper = new NamespaceMapperImpl();
+    private NamespaceMapper mapper = new DefaultNamespaceMapper();
     private PortletWindowID id1;
     private PortletWindowID id2;
 

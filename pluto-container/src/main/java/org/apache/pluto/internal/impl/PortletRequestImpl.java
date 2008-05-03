@@ -63,17 +63,13 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.om.common.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.om.portlet.Supports;
-import org.apache.pluto.om.portlet.UserAttribute;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.UserInfoService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
-import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 
 /**

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.util.impl;
+package org.apache.pluto.core;
 
 import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.PortletWindowID;
@@ -22,9 +22,9 @@ import org.apache.pluto.PortletWindowID;
 /**
  * Default implementation of <code>NamespaceMapper</code> interface.
  */
-public class NamespaceMapperImpl implements NamespaceMapper {
+public class DefaultNamespaceMapper implements NamespaceMapper {
 
-    public NamespaceMapperImpl() {
+    public DefaultNamespaceMapper() {
     	// Do nothing.
     }
 

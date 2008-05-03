@@ -41,7 +41,6 @@ import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.DummyPrintWriter;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
-import org.apache.pluto.util.impl.NamespaceMapperImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
