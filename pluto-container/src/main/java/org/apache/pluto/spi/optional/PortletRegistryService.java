@@ -19,17 +19,16 @@ package org.apache.pluto.spi.optional;
 
 import java.util.Iterator;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.internal.InternalPortletConfig;
+import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
 
 /**
  * Interface defining the services used by the container
- * to access portlet application descriptors.  The registry
- * acts as both internally as descriptor cache and publically
+ * to access portlet applications.  The registry
+ * acts as both registry and publically
  * as a mechanism for notifying the container of new applications.
  *
  * @since 1.1.0
@@ -45,65 +44,66 @@ public interface PortletRegistryService {
      *
      * @return iterator of all application descriptors.
      */
-    Iterator getRegisteredPortletApplications();
+    Iterator<InternalPortletContext> getPortletContexts();
 
     /**
-     * Retrieve the ids of all registered applications.
+     * Retrieve the names of all registered applications.
      * This list will only contain those applications
      * which have been registered with the container.
      * Others may or may not be available within
      * the servers.
      *
-     * @return iterator of all ids (strings).
+     * @return iterator of all PortletApp ids (strings).
      */
-    Iterator getRegisteredPortletApplicationIds();
+    Iterator<String> getRegisteredPortletApplicationIds();
 
     /**
-     * Retrieve the portlet descriptor for the specified
-     * portlet application. If the name does not match
-     * the name of a contextPath registered with the container
-     * the portlet application name must be checked.
+     * Retrieve the PortletApp for the specified
+     * portlet application id.
      *
-     * @param name the name of the portlet application.
-     * @return the named portlet application descriptor.
-     * @throws PortletContainerException if the descriptor
-     *         can not be found or if the portlet.xml can not be parsed.
+     * @param applicationId the id of the portlet application.
+     * @return the named PortletApp.
+     * @throws PortletContainerException if the portlet application 
+     *         isn't registered.
      */
-    PortletApp getPortletApplicationDescriptor(String name)
+    PortletApp getPortletApplication(String applicationId)
         throws PortletContainerException;
 
     /**
-     * Retrieve the PortletContext for the specified applicationId
+     * Retrieve the InternalPortletContext for the specified portlet application id
      *
-     * @param applicationId context identifier
-     * @return portlet context
-     * @throws PortletContainerException if internal error occurs
+     * @param applicationId portlet application id
+     * @return portlet context or null if not registered
      */
-    PortletContext getPortletContext(String applicationId)
-        throws PortletContainerException;
+    InternalPortletContext getPortletContext(String applicationId);
 
     /**
-     * Retreive the portlet descriptor for the given portlet.
+     * Retreive the Portlet for the specified portlet.
      *
-     * @param applicationId context identifier
+     * @param applicationId portlet application id
      * @param portletName portlet name
-     * @return descriptor
-     * @throws PortletContainerException if unexpected error
+     * @return portlet
+     * @throws PortletContainerException if portlet or application unknown
      */
-    Portlet getPortletDescriptor(String applicationId, String portletName)
+    Portlet getPortlet(String applicationId, String portletName)
         throws PortletContainerException;
 
     /**
      * Retrieve the portlet configuration for the specified portlet
-     * @param applicationId context identifier
+     * @param applicationIid portlet application id
      * @param portletName portlet name
      * @return portletconfig
-     * @throws PortletContainerException if internal error occurs
+     * @throws PortletContainerException if portlet or application unknown
      */
-    PortletConfig getPortletConfig(String applicationId, String portletName)
+    InternalPortletConfig getPortletConfig(String applicationId, String portletName)
         throws PortletContainerException;
 
-    ClassLoader getClassLoader(String portletName);
+    /**
+     * Retrieve the ClassLoader of the specified portlet application
+     * @param applicationId portlet application id
+     * @return classLoader
+     */
+    ClassLoader getClassLoader(String applicationId);
     
     /**
      * Add a listener which will recieve notifications of newly
@@ -119,7 +119,4 @@ public interface PortletRegistryService {
      * @param listener the listener to remove
      */
     void removePortletRegistryListener(PortletRegistryListener listener);
-
-
-
 }
