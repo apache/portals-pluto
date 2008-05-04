@@ -138,13 +138,6 @@ implements PortletContext, InternalPortletContext {
         	return null;
         }
         
-        // Extract query string which contains appended parameters.
-        String queryString = null;
-        int index = path.indexOf("?");
-        if (index > 0 && index < path.length() - 1) {
-        	queryString = path.substring(index + 1);
-        }
-        
         // Construct PortletRequestDispatcher.
         PortletRequestDispatcher portletRequestDispatcher = null;
         try {
