@@ -189,8 +189,6 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public String toString(){
-	    StringBuffer url = new StringBuffer(200);
-	
 	    PortletURLProvider urlProvider = container
 	    		.getRequiredContainerServices()
 	    		.getPortalCallbackService()
@@ -233,9 +231,7 @@ public class BaseURLImpl implements BaseURL {
 	    
 	    urlProvider.setPublicRenderParameters(publicRenderParameters);
 	    
-	    url.append(urlProvider.toString());
-	
-	    return url.toString();
+	    return urlProvider.toString();
 	}
 	// --------------------------------------------------------------------------------------------
 
@@ -326,7 +322,6 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void write(Writer out) throws IOException {
-		StringBuffer url = new StringBuffer(200);
 		
 	    PortletURLProvider urlProvider = container
 	    		.getRequiredContainerServices()
@@ -370,9 +365,7 @@ public class BaseURLImpl implements BaseURL {
 	    
 	    urlProvider.setPublicRenderParameters(publicRenderParameters);
 	    
-	    url.append(urlProvider.toString());
-	
-	    out.write(url.toString());
+	    out.write(urlProvider.toString());
 	}
 
 	public void write(Writer out, boolean escapeXML) throws IOException {
