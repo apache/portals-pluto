@@ -25,6 +25,7 @@ import javax.portlet.PortletSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.RequiredContainerServices;
@@ -54,6 +55,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockPortalContext = null;
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
+    private Mock mockNamespaceMapper = null;
 
     private PortletWindow window = null;
 
@@ -76,6 +78,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
                 new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), null } );
         window = (PortletWindow) mock( PortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
+        mockNamespaceMapper = mock (NamespaceMapper.class );
 
         // Constructor expectations for RenderRequestImpl
         mockContainer.expects( once() ).method( "getRequiredContainerServices" ).will( returnValue( mockServices.proxy() ) );
@@ -101,6 +104,9 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockServices.expects(once()).method("getCCPPProfileService").will(returnValue( mockCCPPProfileService.proxy() ));
         
         mockContainer.expects(once()).method("getRequiredContainerServices").will(returnValue( mockServices.proxy() ));
+        mockContainer.expects(once()).method("getOptionalContainerServices").will(returnValue( mockOptionalServices.proxy() ));
+        
+        this.mockOptionalServices.expects(once()).method("getNamespaceMapper").will(returnValue(this.mockNamespaceMapper.proxy()));
         
         mockHttpServletRequest.expects(once()).method("removeAttribute");
         mockHttpServletRequest.expects(once()).method("setAttribute");
@@ -139,7 +145,9 @@ public class PortletRequestImplTest extends MockObjectTestCase
         
         this.mockOptionalServices.expects(once()).method("getUserInfoService").will(returnValue(this.mockUserInfoService.proxy()));
         
-        this.mockContainer.expects(once()).method("getOptionalContainerServices").will(returnValue(this.mockOptionalServices.proxy()));
+        this.mockOptionalServices.expects(once()).method("getNamespaceMapper").will(returnValue(this.mockNamespaceMapper.proxy()));
+        
+        this.mockContainer.expects(exactly(2)).method("getOptionalContainerServices").will(returnValue(this.mockOptionalServices.proxy()));
         
         final TestPortletRequestImpl portletRequest = new TestPortletRequestImpl((PortletContainer)this.mockContainer.proxy(), 
                                                                                  this.window, 

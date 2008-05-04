@@ -51,6 +51,28 @@
 
 
 	<dependencies>
+    <!-- Specification Libraries =========================================== -->
+    <dependency>
+      <groupId>javax.portlet</groupId>
+      <artifactId>portlet-api</artifactId>
+      <version>${portlet-api.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>${servlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!--  CCPP Libraries -->
+    <dependency>
+      <groupId>javax.ccpp</groupId>
+      <artifactId>ccpp</artifactId>
+      <version>${ccpp-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
 	</dependencies>
 
 	<build>
