@@ -196,7 +196,7 @@ public class BaseURLImpl implements BaseURL {
 	    		.getPortalCallbackService()
 	    		.getPortletURLProvider(servletRequest, portletWindow);
 	
-	    PortletURLListener portletURLFilterListener = portletURLFilterListener = container
+	    PortletURLListener portletURLFilterListener = container
 			.getRequiredContainerServices()
 			.getPortalCallbackService().getPortletURLListener();
 	    if (mode != null) {
