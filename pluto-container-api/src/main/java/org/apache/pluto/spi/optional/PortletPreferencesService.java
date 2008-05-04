@@ -16,6 +16,8 @@
  */
 package org.apache.pluto.spi.optional;
 
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletContainerException;
@@ -37,7 +39,7 @@ public interface PortletPreferencesService extends ContainerService {
      * @return the default portlet preferences.
      * @throws PortletContainerException  if fail to get default preferences.
      */
-    public InternalPortletPreference[] getDefaultPreferences(
+    public Map<String, InternalPortletPreference> getDefaultPreferences(
             PortletWindow portletWindow,
             PortletRequest request)
     throws PortletContainerException;
@@ -49,7 +51,7 @@ public interface PortletPreferencesService extends ContainerService {
 	 * @return the stored portlet preferences.
 	 * @throws PortletContainerException  if fail to get stored preferences.
 	 */
-    public InternalPortletPreference[] getStoredPreferences(
+    public Map<String, InternalPortletPreference> getStoredPreferences(
     		PortletWindow portletWindow,
     		PortletRequest request)
     throws PortletContainerException;
@@ -63,7 +65,7 @@ public interface PortletPreferencesService extends ContainerService {
      */
     public void store(PortletWindow portletWindow,
                       PortletRequest request,
-                      InternalPortletPreference[] preferences)
+                      Map<String, InternalPortletPreference> preferences)
     throws PortletContainerException;
 
 }

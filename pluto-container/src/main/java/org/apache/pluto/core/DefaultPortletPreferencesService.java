@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.core;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ implements PortletPreferencesService {
 	 * The in-memory portlet preferences storage: key is the preference name as
 	 * a string, value is an array of PortletPreference objects.
 	 */
-	private Map<String,InternalPortletPreference[]> storage = new HashMap<String,InternalPortletPreference[]>();
+	private Map<String,Map<String,InternalPortletPreference>> storage = new HashMap<String,Map<String,InternalPortletPreference>>();
 
 
 	// Constructor -------------------------------------------------------------
@@ -71,16 +72,16 @@ implements PortletPreferencesService {
 	// PortletPreferencesService Impl ------------------------------------------
 
     /**
-     * Returns an array of default preferences for a PortletWindow. The default
+     * Returns a map of default preferences for a PortletWindow. The default
      * preferences are retrieved from the portlet application descriptor.
      * <p>
      * Data retrieved from <code>portlet.xml</code> are injected into the domain
-     * object <code>PortletPreferenceDefinition</code>. This method converts the domain
+     * object <code>PortletPreference</code>. This method converts the domain
      * objects into <code>PortletPreference</code> objects.
      * </p>
      * <p>
      * Note that if no value is bound to a given preference key,
-     * <code>PortletPreferenceDefinition.getValues()</code> will return an empty string
+     * <code>PortletPreference.getValues()</code> will return an empty string
      * list, but the value array of <code>PortletPreference</code> should be set
      * to null (instead of an empty array).
      * </p>
@@ -88,54 +89,53 @@ implements PortletPreferencesService {
      * This method never returns null, but the values held by PortletPreference
      * may be null.
      * </p>
-     * @return the preference set
+     * @return the default preferences set
      * 
      * @see org.apache.pluto.descriptors.portlet.PortletPreferenceDD
      */
-    public InternalPortletPreference[] getDefaultPreferences( PortletWindow portletWindow,
+    public Map<String,InternalPortletPreference> getDefaultPreferences( PortletWindow portletWindow,
                                                               PortletRequest request )
       throws PortletContainerException {
-        InternalPortletPreference[] preferences = null;
-        Portlet portletD = portletWindow.getPortletEntity().getPortletDefinition();
-        PortletPreferences prefsD = portletD.getPortletPreferences();
-        if (prefsD != null && prefsD.getPortletPreferences() != null) {
-            preferences = new InternalPortletPreference[prefsD.getPortletPreferences().size()];
-            int index = 0;
-            for (PortletPreference prefD : prefsD.getPortletPreferences()) {
+        Map<String,InternalPortletPreference> preferences = null;
+        Portlet portlet = portletWindow.getPortletEntity().getPortletDefinition();
+        PortletPreferences prefs = portlet.getPortletPreferences();
+        if (prefs != null && prefs.getPortletPreferences() != null) {
+            preferences = new HashMap<String,InternalPortletPreference>(prefs.getPortletPreferences().size());
+            for (PortletPreference pref : prefs.getPortletPreferences()) {
                 String[] values = null;
-                if (prefD.getValues() != null && prefD.getValues().size() > 0) {
-                    values = prefD.getValues().toArray(new String[prefD.getValues().size()]);
+                if (pref.getValues() != null && pref.getValues().size() > 0) {
+                    values = pref.getValues().toArray(new String[pref.getValues().size()]);
                 }
-                preferences[index++] = new PortletPreferenceImpl(prefD.getName(), values, prefD.isReadOnly());
+                preferences.put(pref.getName(), new PortletPreferenceImpl(pref.getName(), values, pref.isReadOnly()));
             }
         }
         return preferences;
     }
 
 	/**
-	 * Returns the stored portlet preferences array. The preferences managed by
+	 * Returns the stored portlet preferences map. The preferences managed by
 	 * this service should be protected from being directly accessed, so this
 	 * method returns a cloned copy of the stored preferences.
 	 *
 	 * @param portletWindow  the portlet window.
 	 * @param request  the portlet request from which the remote user is retrieved.
-	 * @return a copy of the stored portlet preferences array.
+	 * @return a copy of the stored portlet preferences map.
 	 * @throws PortletContainerException
 	 */
-	public InternalPortletPreference[] getStoredPreferences(
+	public Map<String,InternalPortletPreference> getStoredPreferences(
 			PortletWindow portletWindow,
 			PortletRequest request)
 	throws PortletContainerException {
         String key = getFormattedKey(portletWindow, request);
-        InternalPortletPreference[] preferences = storage.get(key);
+        Map<String,InternalPortletPreference> preferences = storage.get(key);
         if (preferences == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("No portlet preferences found for: " + key);
             }
-            return new InternalPortletPreference[0];
+            return Collections.emptyMap();
         } else {
         	if (LOG.isDebugEnabled()) {
-        		LOG.debug("Got " + preferences.length + " stored preferences.");
+        		LOG.debug("Got " + preferences.size() + " stored preferences.");
         	}
         	return clonePreferences(preferences);
         }
@@ -147,7 +147,7 @@ implements PortletPreferencesService {
 	 * preference validator (if defined).
 	 * <p>
 	 * The preferences managed by this service should be protected from being
-	 * directly accessed, so this method clones the passed-in preferences array
+	 * directly accessed, so this method clones the passed-in preferences map
 	 * and saves it.
 	 * </p>
 	 *
@@ -160,7 +160,7 @@ implements PortletPreferencesService {
 	 */
     public void store(PortletWindow portletWindow,
                       PortletRequest request,
-                      InternalPortletPreference[] preferences)
+                      Map<String,InternalPortletPreference> preferences)
     throws PortletContainerException {
         String key = getFormattedKey(portletWindow, request);
         storage.put(key, clonePreferences(preferences));
@@ -187,27 +187,23 @@ implements PortletPreferencesService {
     }
 
     /**
-     * Clones a PortletPreference array. This method performs a deep clone on
-     * the passed-in portlet preferences array. Every PortletPreference object
-     * in the array are cloned (via the <code>PortletPreference.clone()</code>
-     * method) and injected into the new array.
+     * Clones a PortletPreference map. This method performs a deep clone on
+     * the passed-in portlet preferences map. Every PortletPreference object
+     * in the map are cloned (via the <code>PortletPreference.clone()</code>
+     * method) and injected into the new map.
      *
-     * @param preferences  the portlet preferences array to clone.
-     * @return a deep-cloned copy of the portlet preferences array.
+     * @param preferences  the portlet preferences map to clone.
+     * @return a deep-cloned copy of the portlet preferences map.
      */
-    private InternalPortletPreference[] clonePreferences(
-    		InternalPortletPreference[] preferences) {
+    private Map<String,InternalPortletPreference> clonePreferences(
+    		Map <String,InternalPortletPreference> preferences) {
     	if (preferences == null) {
     		return null;
     	}
-    	InternalPortletPreference[] copy =
-    			new InternalPortletPreference[preferences.length];
-    	for (int i = 0; i < preferences.length; i++) {
-    		if (preferences[i] != null) {
-    			copy[i] = preferences[i].clone();
-    		} else {
-    			copy[i] = null;
-    		}
+    	Map <String,InternalPortletPreference> copy =
+    			new HashMap<String,InternalPortletPreference>(preferences.size());
+    	for (InternalPortletPreference p : preferences.values()) {
+    	    copy.put(p.getName(), p.clone());
     	}
     	return copy;
     }

@@ -70,7 +70,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * Default portlet preferences retrieved from portlet.xml, and used for
      * resetting portlet preferences.
      */
-    private InternalPortletPreference[] defaultPreferences;
+    private Map<String,InternalPortletPreference> defaultPreferences;
     
     /**
      * Current portlet preferences: key is the preference name as a string,
@@ -111,7 +111,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             // Put default portlet preferences into preferences map.
             defaultPreferences = preferencesService.getDefaultPreferences(window, request);
             if (defaultPreferences != null) {
-                for (InternalPortletPreference p : defaultPreferences) {
+                for (InternalPortletPreference p : defaultPreferences.values()) {
                     preferences.put(p.getName(), p.clone());
                 }
             }
@@ -121,20 +121,16 @@ public class PortletPreferencesImpl implements PortletPreferences {
             
             // Merge stored portlet preferences into preferences map.
             
-            InternalPortletPreference[] storedPreferences = preferencesService
+            Map<String,InternalPortletPreference> storedPreferences = preferencesService
             		.getStoredPreferences(window, request);
-            for (InternalPortletPreference p : storedPreferences) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Merging stored preference: "
-                            + p.getName());
-                }
-                preferences.put(p.getName(), p);
-            }
+            preferences.putAll(storedPreferences);
+
         	// Store the preferences retrieved from portlet.xml.
             //   Portlet preferences are stored everytime when a
             //   PortletPreferencesImpl instance is created.
+            // TODO Ate: why?
             //   So here we do not check the portlet request method ID.
-            if (storedPreferences.length > 0)
+            if (storedPreferences.size() > 0)
             	internalStore();
         	
         } catch (PortletContainerException ex) {
@@ -241,19 +237,15 @@ public class PortletPreferencesImpl implements PortletPreferences {
             		"error.preference.readonly", "Preference key "));
         }
         // Try to reset preference to the default values.
-        boolean resetDone = false;
-        for (InternalPortletPreference p : defaultPreferences) {
-            if (key.equals(p.getName())) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Resetting preference for key: " + key);
-                }
-                preferences.put(key,p.clone());
-                resetDone = true;
-                break;
+        InternalPortletPreference p = defaultPreferences.get(key);
+        if (p != null) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Resetting preference for key: " + key);
             }
-        }
+            preferences.put(key,p.clone());
+        }       
         // Remove preference if default values are not defined (PLT.14.1).
-        if (!resetDone) {
+        else {
         	if (LOG.isDebugEnabled()) {
         		LOG.debug("Resetting preference to null for key: " + key);
         	}
@@ -305,13 +297,8 @@ public class PortletPreferencesImpl implements PortletPreferences {
         	validator.validate(this);
         }
         // Store the portlet preferences.
-        InternalPortletPreference[] prefs = new InternalPortletPreference[preferences.size()];
-        int index = 0;
-        for (InternalPortletPreference p : preferences.values()) {
-            prefs[index++] = p;
-        }
         try {
-        	preferencesService.store(window, request, prefs);
+        	preferencesService.store(window, request, preferences);
         } catch (PortletContainerException ex) {
             LOG.error("Error storing preferences.", ex);
             throw new IOException("Error storing perferences: " + ex.getMessage());
