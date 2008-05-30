@@ -152,11 +152,10 @@ public class PortletContainerImpl implements PortletContainer {
 
         ensureInitialized();
 
+        ServletContext portletAppCtx = getPortletAppContext(portletWindow.getContextPath());
         InternalPortletWindow internalPortletWindow =
-        		new InternalPortletWindowImpl(
-                    PortletContextManager.getPortletContext(servletContext,
-                        portletWindow.getContextPath()),
-                    portletWindow);
+          new InternalPortletWindowImpl(portletAppCtx, portletWindow);
+        
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletName());
 
@@ -198,10 +197,9 @@ public class PortletContainerImpl implements PortletContainer {
 
     	ensureInitialized();
 
-        InternalPortletWindow internalPortletWindow =
-            	new InternalPortletWindowImpl(
-                    PortletContextManager.getPortletContext(servletContext,
-                        portletWindow.getContextPath()), portletWindow);
+    	  ServletContext portletAppCtx = getPortletAppContext(portletWindow.getContextPath());
+    	  InternalPortletWindow internalPortletWindow =
+    	    new InternalPortletWindowImpl(portletAppCtx, portletWindow);
 
         debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletName());
@@ -287,11 +285,9 @@ public class PortletContainerImpl implements PortletContainer {
 
     	ensureInitialized();
 
-        InternalPortletWindow internalPortletWindow =
-        		new InternalPortletWindowImpl(
-                    PortletContextManager.getPortletContext(servletContext,
-                        portletWindow.getContextPath()),
-                    portletWindow);
+    	  ServletContext portletAppCtx = getPortletAppContext(portletWindow.getContextPath());
+    	  InternalPortletWindow internalPortletWindow =
+    	    new InternalPortletWindowImpl(portletAppCtx, portletWindow);
 
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletName());
@@ -323,10 +319,9 @@ public class PortletContainerImpl implements PortletContainer {
     throws PortletException, IOException, PortletContainerException {
         ensureInitialized();
 
+        ServletContext portletAppCtx = getPortletAppContext(portletWindow.getContextPath());
         InternalPortletWindow internalPortletWindow =
-            new InternalPortletWindowImpl(
-                PortletContextManager.getPortletContext(servletContext,
-                    portletWindow.getContextPath()), portletWindow);
+          new InternalPortletWindowImpl(portletAppCtx, portletWindow);
 
         debugWithName("Admin request received for portlet: "
             +portletWindow.getPortletName());
@@ -383,14 +378,7 @@ public class PortletContainerImpl implements PortletContainer {
         }
 
         // obtain the context of the portlet
-        ServletContext portletCtx = PortletContextManager.getPortletContext(servletContext, context);
-        if (portletCtx == null) {
-            final String msg = "Unable to obtain the servlet context for " +
-                "portlet context [" + context + "].  Ensure the portlet has " +
-                "been deployed and that cross context support is enabled.";
-            errorWithName(msg);
-            throw new PortletContainerException(msg);
-        }
+        ServletContext portletCtx = getPortletAppContext(context);
 
         // obtain the portlet application descriptor for the portlet
         // context.
@@ -420,6 +408,27 @@ public class PortletContainerImpl implements PortletContainer {
     		throw new IllegalStateException(
     				"Portlet container [" + name + "] is not initialized.");
     	}
+    }
+    
+    /**
+     * Retrieve the servlet context of the portlet web app.
+     * @param portletAppContextPath The context path of the portlet web app.
+     * @return The servlet context of the portlet web app.
+     * @throws PortletContainerException if the servlet context cannot be
+     * retrieved for the given context path
+     */
+    private ServletContext getPortletAppContext(String portletAppContextPath)
+    throws PortletContainerException {
+      ServletContext portletAppCtx = PortletContextManager.getPortletContext(
+        servletContext, portletAppContextPath);
+      if (portletAppCtx == null) {
+          final String msg = "Unable to obtain the servlet context for the " +
+            "portlet app context path [" + portletAppContextPath + "]. Make " +
+            "sure that the portlet app has been deployed, and that cross " +
+            "context support is enabled for the portal app.";
+          throw new PortletContainerException(msg);
+      }
+      return portletAppCtx;
     }
 
     /**
