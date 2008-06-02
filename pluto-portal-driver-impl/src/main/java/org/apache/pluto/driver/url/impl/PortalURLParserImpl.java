@@ -57,6 +57,8 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String PORTLET_MODE = "pm";
     private static final String VALUE_DELIM = "0x0";
 
+    //This is a list of characters that need to be encoded  to be protected
+    //The ? is necessary to protect URI's with a query portion that is being passed as a parameter
     private static final String[][] ENCODINGS = new String[][] {
     		new String[] { "_",  "0x1" },
             new String[] { ".",  "0x2" },
@@ -67,6 +69,9 @@ public class PortalURLParserImpl implements PortalURLParser {
             new String[] { ">",  "0x7" },
             new String[] { " ",  "0x8" },
             new String[] { "#",  "0x9" },
+            new String[] { "?",  "0xa" },
+            new String[] { "\\", "0xb" },
+            new String[] { "%",  "0xc" },
     };
 
     // Constructor -------------------------------------------------------------
