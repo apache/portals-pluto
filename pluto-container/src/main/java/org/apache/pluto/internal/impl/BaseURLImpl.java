@@ -37,10 +37,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
-import org.apache.pluto.om.portlet.Supports;
+import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.descriptors.portlet.PortletDD;
+import org.apache.pluto.descriptors.portlet.SupportsDD;
+import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.util.StringManager;
@@ -62,7 +62,7 @@ public class BaseURLImpl implements BaseURL {
 	protected boolean secure;
 	protected PortletContainer container;
 	protected PortletMode mode = null;
-	protected PortletWindow portletWindow;
+	protected InternalPortletWindow internalPortletWindow;
 	protected javax.servlet.http.HttpServletRequest servletRequest;
 	protected javax.servlet.http.HttpServletResponse servletResponse;
 	protected WindowState state;
@@ -71,12 +71,12 @@ public class BaseURLImpl implements BaseURL {
 	protected PortalContext context;
 	
 	public BaseURLImpl(PortletContainer container,
-			PortletWindow portletWindow,
+			InternalPortletWindow internalPortletWindow,
 			javax.servlet.http.HttpServletRequest servletRequest,
 			javax.servlet.http.HttpServletResponse servletResponse,
 			boolean isAction, boolean isResourceServing) {
 		this.container = container;
-		this.portletWindow = portletWindow;
+		this.internalPortletWindow = internalPortletWindow;
 		this.servletRequest = servletRequest;
 		this.servletResponse = servletResponse;
 		secure = servletRequest.isSecure();
@@ -105,7 +105,7 @@ public class BaseURLImpl implements BaseURL {
 	        throw new IllegalArgumentException(
 	            "name and value must not be null");
 	    }
-	    List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+	    List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
 	    if (publicRenderParameterNames == null){
 	    	parameters.put(name, new String[]{value});
 	    }
@@ -124,7 +124,7 @@ public class BaseURLImpl implements BaseURL {
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
 	    
 		if (publicRenderParameterNames == null){
 			parameters.put(name, StringUtils.copy(values));
@@ -160,7 +160,7 @@ public class BaseURLImpl implements BaseURL {
         
         this.parameters.clear();
         this.publicRenderParameters.clear();
-        List<String> publicPortletRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+        List<String> publicPortletRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
         if (parameters.keySet()!= null){
         	for (Object key : parameters.keySet()) {
         		if (publicPortletRenderParameterNames == null)
@@ -182,19 +182,23 @@ public class BaseURLImpl implements BaseURL {
         PortletURLProvider urlProvider = container
         		.getRequiredContainerServices()
         		.getPortalCallbackService()
-        		.getPortletURLProvider(servletRequest, portletWindow);
-        if(urlProvider.isSecureSupported()) {
+        		.getPortletURLProvider(servletRequest, internalPortletWindow);
+        if (urlProvider.isSecureSupported()) {
+            urlProvider.setSecure();
+        } else {
             throw new PortletSecurityException("Secure URLs not supported.");
         }
 	}
 
 	public String toString(){
+	    StringBuffer url = new StringBuffer(200);
+	
 	    PortletURLProvider urlProvider = container
 	    		.getRequiredContainerServices()
 	    		.getPortalCallbackService()
-	    		.getPortletURLProvider(servletRequest, portletWindow);
+	    		.getPortletURLProvider(servletRequest, internalPortletWindow);
 	
-	    PortletURLListener portletURLFilterListener = container
+	    PortletURLListener portletURLFilterListener = portletURLFilterListener = container
 			.getRequiredContainerServices()
 			.getPortalCallbackService().getPortletURLListener();
 	    if (mode != null) {
@@ -209,10 +213,16 @@ public class BaseURLImpl implements BaseURL {
 	    else if (isResourceServing){
 	    	urlProvider.setResourceServing(true);
 	    }
-        PortletApp portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
-//      container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
-//      PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
-        portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
+	    try {
+	    	
+	    	PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
+//	    	container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
+//			PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
+			portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
+		} catch (PortletContainerException e1) {
+			e1.printStackTrace();
+		}
+        
 	    
         if (secure && urlProvider.isSecureSupported()) {
             try {
@@ -231,7 +241,9 @@ public class BaseURLImpl implements BaseURL {
 	    
 	    urlProvider.setPublicRenderParameters(publicRenderParameters);
 	    
-	    return urlProvider.toString();
+	    url.append(urlProvider.toString());
+	
+	    return url.toString();
 	}
 	// --------------------------------------------------------------------------------------------
 
@@ -274,11 +286,11 @@ public class BaseURLImpl implements BaseURL {
 	        return true;
 	    }
 	
-	    Portlet dd = portletWindow.getPortletEntity()
+	    PortletDD dd = internalPortletWindow.getPortletEntity()
 	        .getPortletDefinition();
 	    Iterator supports = dd.getSupports().iterator();
 	    while(supports.hasNext()) {
-	        Supports support = (Supports)supports.next();
+	        SupportsDD support = (SupportsDD)supports.next();
 	        if (support.getPortletModes() != null){
 	        	Iterator modes = support.getPortletModes().iterator();
 		        while(modes.hasNext()) {
@@ -322,11 +334,12 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void write(Writer out) throws IOException {
+		StringBuffer url = new StringBuffer(200);
 		
 	    PortletURLProvider urlProvider = container
 	    		.getRequiredContainerServices()
 	    		.getPortalCallbackService()
-	    		.getPortletURLProvider(servletRequest, portletWindow);
+	    		.getPortletURLProvider(servletRequest, internalPortletWindow);
 	
 	    PortletURLListener portletURLFilterListener = portletURLFilterListener = container
 			.getRequiredContainerServices()
@@ -343,10 +356,16 @@ public class BaseURLImpl implements BaseURL {
 	    else if (isResourceServing){
 	    	urlProvider.setResourceServing(true);
 	    }
-        PortletApp portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
-//      container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
-//      PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
-        portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
+	    try {
+	    	
+	    	PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());  
+//	    	container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
+//			PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
+			portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
+		} catch (PortletContainerException e1) {
+			e1.printStackTrace();
+		}
+        
 	    
         if (secure && urlProvider.isSecureSupported()) {
             try {
@@ -365,7 +384,9 @@ public class BaseURLImpl implements BaseURL {
 	    
 	    urlProvider.setPublicRenderParameters(publicRenderParameters);
 	    
-	    out.write(urlProvider.toString());
+	    url.append(urlProvider.toString());
+	
+	    out.write(url.toString());
 	}
 
 	public void write(Writer out, boolean escapeXML) throws IOException {
@@ -374,12 +395,12 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void addProperty(String key, String value) {
-		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(servletRequest, portletWindow, key, value);
+		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(servletRequest, internalPortletWindow, key, value);
 		
 	}
 
 	public void setProperty(String key, String value) {
-		container.getRequiredContainerServices().getPortalCallbackService().setResponseProperty(servletRequest, portletWindow, key, value);
+		container.getRequiredContainerServices().getPortalCallbackService().setResponseProperty(servletRequest, internalPortletWindow, key, value);
 		
 	}
 
@@ -389,7 +410,7 @@ public class BaseURLImpl implements BaseURL {
 		String[] tmp1 = this.servletRequest.getParameterValues(name);
 		if (tmp1!=null)
 			lenght += tmp1.length;
-		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(servletRequest, portletWindow);
+		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(servletRequest, internalPortletWindow);
 		String[] tmp2 = urlProvider.getPrivateRenderParameters(name);
 		if (tmp2!=null)
 			lenght += tmp2.length;
