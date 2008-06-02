@@ -132,11 +132,16 @@ public class PortletURLImpl implements PortletURL {
     }
 
     public void setSecure(boolean secure) throws PortletSecurityException {
+        if (!secure) {
+            return;
+        }
         PortletURLProvider urlProvider = container
         		.getRequiredContainerServices()
         		.getPortalCallbackService()
         		.getPortletURLProvider(servletRequest, internalPortletWindow);
-        if(urlProvider.isSecureSupported()) {
+        if (urlProvider.isSecureSupported()) {
+            urlProvider.setSecure();
+        } else {
             throw new PortletSecurityException("Secure URLs not supported.");
         }
     }
