@@ -618,7 +618,7 @@ public class PortletContainerImpl implements PortletContainer,
 		redirectURL.setAction(false);
 
 		// Set secure of the redirect URL if necessary.
-		if (request.isSecure()) {
+		if (redirectURL.isSecureSupported()) {
 			try {
 				redirectURL.setSecure();
 			} catch (PortletSecurityException e) {
