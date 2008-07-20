@@ -51,4 +51,13 @@ public class PortletContextManagerTest extends TestCase {
             assertEquals("/my-test-context", manager.computeContextPath(context));
         */
         }
+    
+    /* Java5 Required!
+    public void testGetPortletContext_InvalidPortletAppContextPath() throws Exception {
+      try {
+        PortletContextManager.getPortletContext(context, "/my-invalid-context");
+        fail();
+      } catch (PortletContainerException expected) {}
+    }
+    */
 }

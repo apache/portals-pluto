@@ -446,13 +446,6 @@ public class PortletContainerImpl implements PortletContainer,
         
         // obtain the context of the portlet
         ServletContext portletCtx = PortletContextManager.getPortletContext(servletContext, context);
-        if (portletCtx == null) {
-            final String msg = "Unable to obtain the servlet context for " +
-                "portlet context [" + context + "].  Ensure the portlet has " +
-                "been deployed and that cross context support is enabled.";
-            errorWithName(msg);
-            throw new PortletContainerException(msg);
-        }
         
         // obtain the portlet application descriptor for the portlet
         // context.

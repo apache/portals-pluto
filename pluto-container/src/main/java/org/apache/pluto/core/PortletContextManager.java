@@ -282,14 +282,32 @@ public class PortletContextManager implements PortletRegistryService {
 //
 // Utility
 
-    public static ServletContext getPortletContext(ServletContext portalContext, String portletContextPath) {
+    /**
+     * Retrieve the servlet context of the portlet web app.
+     * @param portalContext The servlet context of the portal web app.
+     * @param portletContextPath The context path of the portlet web app.
+     * The given path must be begin with "/" (see {@link ServletContext#getContext(String)}).
+     * @return The servlet context of the portlet web app.
+     * @throws PortletContainerException if the servlet context cannot be
+     * retrieved for the given context path
+     */
+    public static ServletContext getPortletContext(ServletContext portalContext,
+        String portletContextPath) throws PortletContainerException {
         if (Configuration.preventUnecessaryCrossContext()) {
             String portalPath = getContextPath(portalContext);
             if (portalPath.equals(portletContextPath)) {
                 return portalContext;
             }
         }
-        return portalContext.getContext(portletContextPath);
+        ServletContext portletAppCtx = portalContext.getContext(portletContextPath);
+        if (portletAppCtx == null) {
+            final String msg = "Unable to obtain the servlet context for the " +
+              "portlet app context path [" + portletContextPath + "]. Make " +
+              "sure that the portlet app has been deployed and that cross " +
+              "context support is enabled for the portal app.";
+            throw new PortletContainerException(msg);
+        }
+        return portletAppCtx;
     }
 
     /**
