@@ -33,6 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.internal.impl.Configuration;
 import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.PortletContextImpl;
 import org.apache.pluto.om.portlet.Portlet;
@@ -246,6 +247,37 @@ public class PortletContextManager implements PortletRegistryService {
         }
 
         LOG.info("Portlet Context '" + context.getApplicationId() + "' removed.");
+    }
+
+//
+// Utility
+
+    /**
+     * Retrieve the servlet context of the portlet web app.
+     * @param portalContext The servlet context of the portal web app.
+     * @param portletContextPath The context path of the portlet web app.
+     * The given path must be begin with "/" (see {@link ServletContext#getContext(String)}).
+     * @return The servlet context of the portlet web app.
+     * @throws PortletContainerException if the servlet context cannot be
+     * retrieved for the given context path
+     */
+    public static ServletContext getPortletContext(ServletContext portalContext,
+        String portletContextPath) throws PortletContainerException {
+        if (Configuration.preventUnecessaryCrossContext()) {
+            String portalPath = getContextPath(portalContext);
+            if (portalPath.equals(portletContextPath)) {
+                return portalContext;
+            }
+        }
+        ServletContext portletAppCtx = portalContext.getContext(portletContextPath);
+        if (portletAppCtx == null) {
+            final String msg = "Unable to obtain the servlet context for the " +
+              "portlet app context path [" + portletContextPath + "]. Make " +
+              "sure that the portlet app has been deployed and that cross " +
+              "context support is enabled for the portal app.";
+            throw new PortletContainerException(msg);
+        }
+        return portletAppCtx;
     }
 
     /**
