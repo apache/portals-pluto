@@ -27,23 +27,7 @@ limitations under the License.
   <body>
     
     <section name="Welcome to Pluto">
-      
-      <div class="highlightBox">
-        <h5>JSR-286 - The Java Portlet API 2.0</h5>
-        <p>
-          The Java Portlet API version 2.0 specification is now under
-          development by the JSR-286 Expert Group under the auspices of the
-          <a href="http://www.jcp.org">Java Community Process</a>.
-          Details on the specification work can be
-          found at the <a href="http://jcp.org/en/jsr/detail?id=286">JSR-286 web
-          site</a>. Drafts of the new portlet specification and API can
-          be found at <a href="http://hnsp.inf-bb.uni-jena.de/spec/">http://hnsp.inf-bb.uni-jena.de/spec/</a>.
-		  The Expert Group is very interested in feedback from the
-          community. Send your comments to <a href="mailto:jsr-286-comments@jcp.org">
-          jsr-286-comments@jcp.org</a>.
-        </p>
-      </div>
-      
+            
       <div class="highlightBox">
         <h5>Get Pluto 1.1.5</h5>
         <p>
@@ -60,8 +44,8 @@ limitations under the License.
      
       <p>
         Pluto is the Reference Implementation of the Java Portlet Specfication.
-        The current version (1.0) of this specification is JSR-168. Version 2.0
-        of the Specification is under development by the JSR-286 Expert Group. 
+        The current version (2.0) of this specification is JSR-286. JSR-168 covers
+        version 1.0 of the specification. 
       </p>
       <p>
         Portlets are designed to run in the context of a portal. They are
@@ -70,13 +54,13 @@ limitations under the License.
       <p>
         In contrast to servlets, portlets may not do things like sending
         redirects or errors to browsers directly, forwarding requests or writing
-        arbitrary markup to the output stream to assure that they don?t distract
+        arbitrary markup to the output stream to assure that they don't distract
         the portal web application which uses them. Another difference compared
         to servlets is that portlets rely on portal specific infrastructure
         functions such as access to user profile information, standard interface
         for storing/retrieving persistent settings, getting client information,
         etc. Generally, portlets are administrated more dynamically than
-        servlets typically are.
+        servlets.
       </p>
       <p>
         A portlet container provides a runtime environment for portlets
@@ -101,7 +85,7 @@ limitations under the License.
     <section name="Project Status">
       <p>
         Apache Pluto is a subproject of the Apache Portals Project. The current
-        stable release of Apache Pluto is version 1.1.5.
+        stable release of Apache Pluto is version 1.1.5, a JSR-168 implementation.
       </p>
       <subsection name="Pluto 2.0">
         <p>
