@@ -124,25 +124,10 @@ public class PortletPreferencesImpl implements PortletPreferences {
             Map<String,InternalPortletPreference> storedPreferences = preferencesService
             		.getStoredPreferences(window, request);
             preferences.putAll(storedPreferences);
-
-        	// Store the preferences retrieved from portlet.xml.
-            //   Portlet preferences are stored everytime when a
-            //   PortletPreferencesImpl instance is created.
-            // TODO Ate: why?
-            //   So here we do not check the portlet request method ID.
-            if (storedPreferences.size() > 0)
-            	internalStore();
         	
         } catch (PortletContainerException ex) {
             LOG.error("Error retrieving preferences.", ex);
             //TODO: Rethrow up the stack????
-        } catch (IOException ex) {
-            LOG.error("Error retrieving preferences.", ex);        	
-            //TODO: Rethrow up the stack????
-        } catch (ValidatorException ex) {
-            LOG.warn("ValidatorException initializing portlet preferences. "
-            		+ "This is not illegal at this point "
-            		+ "since we are just retreiving from portlet.xml.", ex);    	
         }
         if (LOG.isDebugEnabled()) {
         	LOG.debug("Merged stored preferences: " + toString());
@@ -286,7 +271,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * @throws ValidatorException  if the portlet preferences are not valid.
      * @throws IOException  if an error occurs with the persistence mechanism.
      */
-    private void internalStore() throws IOException, ValidatorException {
+    protected final void internalStore() throws IOException, ValidatorException {
         // Validate the preferences before storing, if a validator is defined.
         //   If the preferences cannot pass the validation,
         //   an ValidatorException will be thrown out.
