@@ -17,12 +17,13 @@
 package org.apache.pluto.core;
 
 import org.apache.pluto.OptionalContainerServices;
-import org.apache.pluto.spi.optional.PortletPreferencesService;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.PortletInvokerService;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
@@ -40,6 +41,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletInfoService portletInfoService;
     private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
+    private RequestAttributeService requestAttributeService;
 
 
     /**
@@ -54,6 +56,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
+        requestAttributeService = new DefaultRequestAttributeService(this);
     }
 
     /**
@@ -92,9 +95,13 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
             portalAdministrationService = root.getPortalAdministrationService();
         }
 
-		 if(root.getUserInfoService() != null) {
-			 userInfoService = root.getUserInfoService();
-		 }
+		if(root.getUserInfoService() != null) {
+		    userInfoService = root.getUserInfoService();
+		}
+
+        if(root.getRequestAttributeService() != null) {
+            requestAttributeService = root.getRequestAttributeService();
+        }
 
     }
 
@@ -130,5 +137,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         return userInfoService;
     }
 
+    public RequestAttributeService getRequestAttributeService() {
+        return requestAttributeService;
+    }
 }
 

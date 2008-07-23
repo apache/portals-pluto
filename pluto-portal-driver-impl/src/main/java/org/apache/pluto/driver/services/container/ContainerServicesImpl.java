@@ -24,11 +24,12 @@ import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
-import org.apache.pluto.spi.optional.PortletInfoService;
-import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
@@ -117,5 +118,8 @@ implements RequiredContainerServices, OptionalContainerServices {
     	return null;
     }
 
+    public RequestAttributeService getRequestAttributeService() {
+        return null;
+    }
 }
 
