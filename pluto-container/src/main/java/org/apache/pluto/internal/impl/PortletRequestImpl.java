@@ -22,7 +22,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
@@ -46,23 +45,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.descriptors.portlet.UserAttributeDD;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.UserInfoService;
+import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
-import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.StringManager;
 import org.apache.pluto.util.StringUtils;
-import org.apache.pluto.util.impl.NamespaceMapperImpl;
 
 /**
  * Abstract <code>javax.portlet.PortletRequest</code> implementation.
@@ -112,11 +105,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      * Response content types.
      */
     private Vector contentTypes;
-
-    /**
-     * TODO: javadoc
-     */
-    private final NamespaceMapper mapper = new NamespaceMapperImpl();
 
     /**
      * FIXME: do we really need this?
@@ -398,77 +386,15 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     public Object getAttribute(String name) {
         ArgumentUtility.validateNotNull("attributeName", name);
 
-        if (PortletRequest.USER_INFO.equals(name)) {
-            return createUserInfoMap();
-        }
-
-        String encodedName = isNameReserved(name) ?
-            name :
-            mapper.encode(internalPortletWindow.getId(), name);
-
-        Object attribute = getHttpServletRequest()
-            .getAttribute(encodedName);
-
-        if (attribute == null) {
-            attribute = getHttpServletRequest().getAttribute(name);
-        }
-        return attribute;
+        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
+        return requestAttributeService.getAttribute(this, this.getHttpServletRequest(), this.internalPortletWindow, name);
     }
 
     public Enumeration getAttributeNames() {
-        Enumeration attributes = this.getHttpServletRequest()
-            .getAttributeNames();
-
-        Vector portletAttributes = new Vector();
-
-        while (attributes.hasMoreElements()) {
-            String attribute = (String) attributes.nextElement();
-            
-            //Fix for PLUTO-369
-            String portletAttribute = isNameReserved(attribute) ?
-            		attribute :
-            	mapper.decode(
-                internalPortletWindow.getId(), attribute);
-
-            if (portletAttribute != null) { // it is in the portlet's namespace
-                portletAttributes.add(portletAttribute);
-            }
-        }
-
-        return portletAttributes.elements();
-    }
-
-    public Map createUserInfoMap() {
-        Map userInfoMap = new HashMap();
-        try {
-
-            final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
-            final UserInfoService userInfoService = optionalContainerServices.getUserInfoService();
-            
-            //PLUTO-388 fix:
-            //The PortletWindow is currently ignored in the implementing class
-            // See: org.apache.pluto.core.DefaultUserInfoService
-            final Map allMap = userInfoService.getUserInfo( this, this.internalPortletWindow );
-            
-            //PLUTO-477 null attribute maps are ok
-            if (null == allMap) {
-                return null;
-            }
-            
-            final PortletRegistryService portletRegistryService = optionalContainerServices.getPortletRegistryService();
-            final PortletAppDD dd = portletRegistryService.getPortletApplicationDescriptor(internalPortletWindow.getContextPath());
-
-            Iterator i = dd.getUserAttributes().iterator();
-            while(i.hasNext()) {
-                UserAttributeDD udd = (UserAttributeDD)i.next();
-                userInfoMap.put(udd.getName(), allMap.get(udd.getName()));
-            }
-        } catch (PortletContainerException e) {
-            LOG.warn("Unable to retrieve user attribute map for user " + getRemoteUser() + ".  Returning null.");
-            return null;
-        }
-
-        return Collections.unmodifiableMap(userInfoMap);
+        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
+        return requestAttributeService.getAttributeNames(this, this.getHttpServletRequest(), this.internalPortletWindow);
     }
 
     public String getParameter(String name) {
@@ -504,20 +430,18 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
     public void setAttribute(String name, Object value) {
         ArgumentUtility.validateNotNull("attributeName", name);
-        String encodedName = isNameReserved(name) ?
-            name : mapper.encode(internalPortletWindow.getId(), name);
-        if (value == null) {
-            removeAttribute(name);
-        } else {
-            getHttpServletRequest().setAttribute(encodedName, value);
-        }
+
+        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
+        requestAttributeService.setAttribute(this, this.getHttpServletRequest(), this.internalPortletWindow, name, value);
     }
 
     public void removeAttribute(String name) {
         ArgumentUtility.validateNotNull("attributeName", name);
-        String encodedName = isNameReserved(name) ?
-            name : mapper.encode(internalPortletWindow.getId(), name);
-        getHttpServletRequest().removeAttribute(encodedName);
+
+        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
+        requestAttributeService.removeAttribute(this, this.getHttpServletRequest(), this.internalPortletWindow, name);
     }
 
     public String getRequestedSessionId() {
@@ -655,15 +579,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
     // Private Methods ---------------------------------------------------------
 
-    /**
-     * Is this attribute name a reserved name (by the J2EE spec)?. Reserved
-     * names begin with "java." or "javax.".
-     *
-     * @return true if the name is reserved.
-     */
-    private boolean isNameReserved(String name) {
-        return name.startsWith("java.") || name.startsWith("javax.");
-    }
 
     private boolean isPortletModeAllowedByPortlet(PortletMode mode) {
         if (isPortletModeMandatory(mode)) {
