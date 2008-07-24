@@ -30,6 +30,7 @@ import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
@@ -117,7 +118,11 @@ implements RequiredContainerServices, OptionalContainerServices {
     public UserInfoService getUserInfoService() {
     	return null;
     }
-
+    
+    public RequestAttributeService getRequestAttributeService() {
+        return null;
+    }
+    
     public NamespaceMapper getNamespaceMapper() {
         return null;
     }

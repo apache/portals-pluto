@@ -51,7 +51,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockServices = null;
     private Mock mockCCPPProfileService = null;
     private Mock mockOptionalServices = null;
-    private Mock mockUserInfoService = null;
     private Mock mockPortalContext = null;
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
@@ -70,7 +69,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockServices = mock( RequiredContainerServices.class );
         mockCCPPProfileService = mock( CCPPProfileService.class );
         mockOptionalServices = mock( OptionalContainerServices.class );
-        mockUserInfoService = mock( UserInfoService.class );
         mockPortalContext = mock( PortalContext.class );
         mockPortletContext = mock( PortletContext.class );
         mockContainer = mock( PortletContainerImpl.class,
@@ -135,25 +133,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockHttpSession.expects( never() ).method( "invalidate" );
         
         PortletSession s = request.getPortletSession( true );
-    }
-    
-    /**
-     * Test for PLUTO-477
-     */
-    public void testUnAuthenticatedCreateUserInfoMap() throws Exception {
-        this.mockUserInfoService.expects(once()).method("getUserInfo").will(returnValue(null));
-        
-        this.mockOptionalServices.expects(once()).method("getUserInfoService").will(returnValue(this.mockUserInfoService.proxy()));
-        
-        this.mockOptionalServices.expects(once()).method("getNamespaceMapper").will(returnValue(this.mockNamespaceMapper.proxy()));
-        
-        this.mockContainer.expects(exactly(2)).method("getOptionalContainerServices").will(returnValue(this.mockOptionalServices.proxy()));
-        
-        final TestPortletRequestImpl portletRequest = new TestPortletRequestImpl((PortletContainer)this.mockContainer.proxy(), 
-                                                                                 this.window, 
-                                                                                 (HttpServletRequest)this.mockHttpServletRequest.proxy());
-        final Map userInfoMap = portletRequest.createUserInfoMap();
-        assertNull(userInfoMap);
     }
     
     private static class TestPortletRequestImpl extends PortletRequestImpl {

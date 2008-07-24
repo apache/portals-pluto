@@ -24,6 +24,7 @@ import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
@@ -41,6 +42,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletInfoService portletInfoService;
     private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
+    private RequestAttributeService requestAttributeService;
     private NamespaceMapper namespaceMapper;
 
 
@@ -56,6 +58,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
+        requestAttributeService = new DefaultRequestAttributeService(this);
         namespaceMapper = new DefaultNamespaceMapper();
     }
 
@@ -98,7 +101,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 		if(root.getUserInfoService() != null) {
             userInfoService = root.getUserInfoService();
 		}
-		 
+		
+        if(root.getRequestAttributeService() != null) {
+            requestAttributeService = root.getRequestAttributeService();
+        }
+        
         if(root.getNamespaceMapper() != null) {
             namespaceMapper = root.getNamespaceMapper();
         }
@@ -135,7 +142,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public UserInfoService getUserInfoService() {
         return userInfoService;
     }
-
+    
+    public RequestAttributeService getRequestAttributeService() {
+        return requestAttributeService;
+    }
+    
     public NamespaceMapper getNamespaceMapper() {
         return namespaceMapper;
     }

@@ -22,6 +22,7 @@ import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
@@ -94,6 +95,14 @@ public interface OptionalContainerServices {
      * @return user info service
      */
     UserInfoService getUserInfoService();
+    
+    /**
+     * Returns the request attribute service implementation used by the
+     * container.
+     * 
+     * @return request attribute service
+     */
+    RequestAttributeService getRequestAttributeService();  
 
     /**
      * Returns the NamespaceMapper used to retrieve the Portal

@@ -45,5 +45,5 @@ public interface UserInfoService extends ContainerService {
      * @return A map of names and values of user information attributes
      *         for a particular authenticated user. null if the user is not authenticated.
      */
-    Map getUserInfo(PortletRequest request, PortletWindow window) throws PortletContainerException;
+    Map<String, String> getUserInfo(PortletRequest request, PortletWindow window) throws PortletContainerException;
 }
