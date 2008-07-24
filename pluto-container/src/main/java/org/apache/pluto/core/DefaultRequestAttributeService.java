@@ -74,7 +74,13 @@ public class DefaultRequestAttributeService implements RequestAttributeService {
      */
     public Object getAttribute(PortletRequest portletRequest, HttpServletRequest httpServletRequest, PortletWindow portletWindow, String name) {
         if (PortletRequest.USER_INFO.equals(name)) {
-            return this.createUserInfoMap(portletRequest, portletWindow);
+            Map<String, String> userInfo = (Map<String, String>)httpServletRequest.getAttribute(PortletRequest.USER_INFO);
+            // Fix for PLUTO-486, cache the user_info map as a request attribute
+            if (userInfo == null) {
+                userInfo = this.createUserInfoMap(portletRequest, portletWindow);
+                httpServletRequest.setAttribute(PortletRequest.USER_INFO, userInfo);
+            }
+            return userInfo;
         }
         
         final String encodedName = this.encodeAttributeName(portletWindow, name);
