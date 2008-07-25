@@ -150,13 +150,12 @@ public class PortletWindowConfig {
     
     /**
      * Parses the portlet ID and returns the separator (".") index. The portlet
-     * ID passed in should be a valid ID: not null, not starts with ".",
-     * not ends with ".", and contains ".". The portlet ID can have more than
-     * one dot, but the last one is taken to be the separator.
+     * ID passed in should be a valid ID: not null and contains ".". The portlet 
+     * ID can have more than one dot, but the last one is taken to be the separator.
      *
      * @param portletId  the portlet ID to parse.
      * @return the separator index.
-     * @throws IllegalArgumentException if portlet ID does not contain a dot or the dot is the first or last character.
+     * @throws IllegalArgumentException if portlet ID does not contain a dot.
      * @throws NullPointerException if the portlet ID is null
      */
     private static int getSeparatorIndex(String portletId)
@@ -166,9 +165,9 @@ public class PortletWindowConfig {
     	}
 
         int index = portletId.lastIndexOf(".");
-    	if (index <= 0 || index == portletId.length() - 1) {
-    		throw new IllegalArgumentException("Portlet ID '" + portletId + "' does not contain a dot or the dot is the first or last character");
-    	}
+        if (index < 0 || index == (portletId.length() - 1)) {
+        	throw new IllegalArgumentException("Portlet ID '" + portletId + "' does not contain a dot");
+        }
     	return index;
     }
 

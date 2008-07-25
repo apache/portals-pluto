@@ -299,6 +299,12 @@ public class PortletContextManager implements PortletRegistryService {
                 return portalContext;
             }
         }
+        
+        //Hack to deal with inconsistence in root context handling between
+        //ServletContext.getContextPath and ServletContext.getContext
+        if ("".equals(portletContextPath)) {
+            portletContextPath = "/";
+        }
         ServletContext portletAppCtx = portalContext.getContext(portletContextPath);
         if (portletAppCtx == null) {
             final String msg = "Unable to obtain the servlet context for the " +
