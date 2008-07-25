@@ -53,7 +53,6 @@ public class PortletWindowConfigTest extends TestCase {
     }
 
     public void testParseInvalidId() {
-        testParseInvalid(".NoContext");
         testParseInvalid("Use/Slash");
         testParseInvalid("NoPortlet.");
     }
