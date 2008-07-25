@@ -176,7 +176,7 @@ implements PortletRequest, InternalPortletRequest {
     public boolean isWindowStateAllowed(WindowState state) {
     	for (Enumeration en = portalContext.getSupportedWindowStates();
     			en.hasMoreElements(); ) {
-            if (en.nextElement().toString().equals(state.toString())) {
+            if (en.nextElement().toString().equalsIgnoreCase(state.toString())) {
                 return true;
             }
         }
@@ -675,7 +675,7 @@ implements PortletRequest, InternalPortletRequest {
             Iterator modes = ((Supports) mimes.next()).getPortletModes().iterator();
             while (modes.hasNext()) {
                 String m = (String) modes.next();
-                if (m.equals(mode.toString())) {
+                if (m.equalsIgnoreCase(mode.toString())) {
                     return true;
                 }
             }
@@ -686,7 +686,7 @@ implements PortletRequest, InternalPortletRequest {
     private boolean isPortletModeAllowedByPortal(PortletMode mode) {
         Enumeration supportedModes = portalContext.getSupportedPortletModes();
         while (supportedModes.hasMoreElements()) {
-            if (supportedModes.nextElement().toString().equals(
+            if (supportedModes.nextElement().toString().equalsIgnoreCase(
                     (mode.toString()))) {
                 return true;
             }
