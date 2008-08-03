@@ -29,6 +29,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.descriptors.portlet.SupportsDD;
@@ -39,6 +41,8 @@ import org.apache.pluto.util.StringUtils;
 
 public class PortletURLImpl implements PortletURL {
 
+	private static final Log LOG = LogFactory.getLog(PortletURLImpl.class);
+	
     private static final StringManager EXCEPTIONS =
         StringManager.getManager(PortletURLImpl.class.getPackage().getName());
 
@@ -142,7 +146,7 @@ public class PortletURLImpl implements PortletURL {
         if (urlProvider.isSecureSupported()) {
             urlProvider.setSecure();
         } else {
-            throw new PortletSecurityException("Secure URLs not supported.");
+        	LOG.info("Secure URLs not supported.");
         }
     }
 
