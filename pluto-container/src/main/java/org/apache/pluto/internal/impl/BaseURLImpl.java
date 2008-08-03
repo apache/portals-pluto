@@ -186,7 +186,7 @@ public class BaseURLImpl implements BaseURL {
         if (urlProvider.isSecureSupported()) {
             urlProvider.setSecure();
         } else {
-            throw new PortletSecurityException("Secure URLs not supported.");
+        	LOG.info("Secure URLs not supported.");
         }
 	}
 
