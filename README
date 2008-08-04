@@ -32,6 +32,26 @@ For information on deploying portlets, building the portal from source
  
   http://portals.apache.org/pluto
 
+
+Release Notes - Pluto - Version 1.1.6
+=====================================
+
+** Bug
+
+    * [PLUTO-476] - Unused LocalStrings.properties with better messages
+    * [PLUTO-477] - PortletRequestImpl throws a NullPointerException when getting USER_INFO for unauthenticated users
+    * [PLUTO-484] - PortletURLImpl.setSecure() throws PortletSecurityException when PortletURLProvider.isSecureSupported() returns true
+    * [PLUTO-485] - Need to handle URIs that contain a question mark
+    * [PLUTO-490] - Cannot deploy portlets to ROOT context
+
+**Improvement
+
+    * [PLUTO-486] - The USER_INFO map is re-created every time the USER_INFO attribute is retrieved using getAttribute() on org.apache.pluto.internal.impl.PortletRequestImpl
+    * [PLUTO-487] - PortletPreferencesImpl should not store the preferences every time it is instantiated
+    * [PLUTO-488] - When executing doAction/doRender/doLoad/doAdmin and retrieving the servlet context of the portlet app fails, a generic NullPointerException is thrown
+    * [PLUTO-489] - Refactor request attribute handling into optional service interface
+    * [PLUTO-491] - Attach source jars to maven deployed artifacts
+
 Release Notes - Pluto - Version 1.1.5
 =====================================
 
