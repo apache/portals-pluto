@@ -25,6 +25,27 @@ limitations under the License.
   </properties>
   
   <body>
+    <section name="Pluto 1.1.6 Release Notes">
+      <subsection name="Bug">
+        <ul>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-476'>PLUTO-476</a> - Unused LocalStrings.properties with better messages</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-477'>PLUTO-477</a> - PortletRequestImpl throws a NullPointerException when getting USER_INFO for unauthenticated users</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-484'>PLUTO-484</a> - PortletURLImpl.setSecure() throws PortletSecurityException when PortletURLProvider.isSecureSupported() returns true</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-485'>PLUTO-485</a> - Need to handle URIs that contain a question mark</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-490'>PLUTO-490</a> - Cannot deploy portlets to ROOT context</li>
+        </ul>
+    </subsection>
+      <subsection name="Improvement">
+        <ul>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-486'>PLUTO-486</a> - The USER_INFO map is re-created every time the USER_INFO attribute is retrieved using getAttribute() on org.apache.pluto.internal.impl.PortletRequestImpl</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-487'>PLUTO-487</a> - PortletPreferencesImpl should not store the preferences every time it is instantiated</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-488'>PLUTO-488</a> - When executing doAction/doRender/doLoad/doAdmin and retrieving the servlet context of the portlet app fails, a generic NullPointerException is thrown</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-489'>PLUTO-489</a> - Refactor request attribute handling into optional service interface</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-491'>PLUTO-491</a> - Attach source jars to maven deployed artifacts</li>
+        </ul>
+      </subsection>
+    </section>
+
     <section name="Pluto 1.1.5 Release Notes">
       <subsection name="Bug">
         <ul>
