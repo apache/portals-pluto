@@ -14,12 +14,12 @@
   limitations under the License.
 -->
 <!--
-	Builds a binary and source distribution of Pluto 1.1, bundling it into zip, gzip and bzip2 files.
+	Builds bundled and source distribution of Pluto, archiving it in zip, gzip and bzip2 files.
 	
 	Run the binary build using the command line:
 		ant -f dist-build.xml
 				
-	The binary distribution is done in the following way:
+	The bundled distribution is done in the following way:
 	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
 		build:
 		a. Adds emptySessionPath="true" to server.xml.
@@ -27,16 +27,16 @@
 		c. Adds a pluto role to the tomcat user in tomcat-users.xml.
 	2. Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
 		and installs them into the Tomcat dist in the working directory.
-	3. Bundles up the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
+	3. Archives the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
 	
 	Run the source build using the command line:
 		ant -f dist-build.xml src-dist	
 
 	All built distributions end up in target/dist.				
 -->
-<project name="PlutoDistributions" default="bin-dist">
+<project name="PlutoDistributions" default="bundle-dist">
 
-    <property name="tomcat.version" value="5.5.23" description="Version of Tomcat to deploy Pluto"/>
+    <property name="tomcat.version" value="5.5.26" description="Version of Tomcat to deploy Pluto"/>
 
     <xmlproperty file="pom.xml"/> <!-- picks up version from pom file -->
     <property name="pluto.version" value="${project.version}" description="Version of Pluto 1.1 to build"/>
@@ -99,30 +99,30 @@
 		<mkdir dir="${dist.basedir}"/>		
 	</target>
 
-	<target name="bin-dist" depends="prepare-bin-dist,run-maven" description="Creates zip, gzip, and bzip2 distributions">
+	<target name="bundle-dist" depends="prepare-bundle-dist,run-maven" description="Creates zip, gzip, and bzip2 distributions">
 		<!-- Copy over jars needed to deploy custom portlets -->
 		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
 		<copy file="pluto-descriptor-api/target/pluto-descriptor-api-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
 		<copy file="pluto-descriptor-impl/target/pluto-descriptor-impl-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
 
 		<!-- Zip everything up -->
-		<zip destfile="${dist.basedir}/${pluto.name}-bin.zip">
+		<zip destfile="${dist.basedir}/${pluto.name}-bundle.zip">
 			<zipfileset prefix="${pluto.name}" dir="${dist.dir}" includes="**/*"/>
 		</zip>
 
 		<antcall target="tar-nocompress"/>
 		
-		<gzip src="${dist.basedir}/${pluto.name}-bin.tar" 
-			destfile="${dist.basedir}/${pluto.name}-bin.tar.gz"/>
+		<gzip src="${dist.basedir}/${pluto.name}-bundle.tar" 
+			destfile="${dist.basedir}/${pluto.name}-bundle.tar.gz"/>
 		
-		<bzip2 src="${dist.basedir}/${pluto.name}-bin.tar" 
-			destfile="${dist.basedir}/${pluto.name}-bin.tar.bz2"/>
+		<bzip2 src="${dist.basedir}/${pluto.name}-bundle.tar" 
+			destfile="${dist.basedir}/${pluto.name}-bundle.tar.bz2"/>
 				
 		<antcall target="clean"/>	
 	</target>
 	
-	<target name="tar-nocompress" description="Creates tar binary distributions">
-		<tar destfile="${dist.basedir}/${pluto.name}-bin.tar">
+	<target name="tar-nocompress" description="Creates tar bundled distribution">
+		<tar destfile="${dist.basedir}/${pluto.name}-bundle.tar">
 			<tarfileset prefix="${pluto.name}" dir="${dist.dir}" mode="755" username="pluto" group="pluto">
 		    	<include name="bin/*.sh"/>
 			</tarfileset>
@@ -133,8 +133,8 @@
 		</tar>		
 	</target>
 	
-	<target name="prepare-bin-dist">
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+	<target name="prepare-bundle-dist">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
 			<arg line="clean:clean"/>
 		</exec>
 		<mkdir dir="${dist.basedir}"/>
@@ -179,10 +179,10 @@
 	</target>
 
 	<target name="run-maven" description="Runs maven2 goals">
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
 			<arg line="install"/>
 		</exec>
-		<exec executable="mvn" vmlauncher="false" dir="${basedir}">
+		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
 			<arg line="pluto:install -DinstallDir=${user.dir}/${dist.dir}"/>
 		</exec>
 	</target>
