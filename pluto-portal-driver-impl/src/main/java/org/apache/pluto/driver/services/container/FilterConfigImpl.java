@@ -45,9 +45,11 @@ public class FilterConfigImpl implements FilterConfig {
 	}
 
 	public String getInitParameter(String name) {
-		for (InitParamDD initParameter2 : initParameters) {
-			if (initParameter2.getParamName().equals(name)){
-				return initParameter2.getParamValue();
+		if (initParameters != null) {
+			for (InitParamDD initParameter2 : initParameters) {
+				if (initParameter2.getParamName().equals(name)){
+					return initParameter2.getParamValue();
+				}
 			}
 		}
 		return null;
