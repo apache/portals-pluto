@@ -164,7 +164,7 @@ public abstract class BasicURLTag extends TagSupport {
             }
         }
 
-        return EVAL_PAGE;
+        return EVAL_BODY_INCLUDE;
     }
 
     protected abstract PortletURL createPortletURL();
