@@ -66,7 +66,6 @@ public class PortalDriverServlet extends HttpServlet {
     /** Character encoding and content type of the response */
     private String contentType = "";
 
-
     // HttpServlet Impl --------------------------------------------------------
     
     public String getServletInfo() {
@@ -99,6 +98,9 @@ public class PortalDriverServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        if (LOG.isDebugEnabled()) {
+        	LOG.debug("Start of PortalDriverServlet.doGet() to process portlet request . . .");
+        }
 
         if ( contentType != "" ) {
             response.setContentType( contentType );
@@ -107,7 +109,15 @@ public class PortalDriverServlet extends HttpServlet {
         PortalRequestContext portalRequestContext =
             new PortalRequestContext(getServletContext(), request, response);
 
-        PortalURL portalURL = portalRequestContext.getRequestedPortalURL();
+        PortalURL portalURL = null;
+        
+        try {
+        	portalURL = portalRequestContext.getRequestedPortalURL();
+        } catch(Exception ex) {
+        	String msg = "Cannot handle request for portal URL. Problem: "  + ex.getMessage();
+        	LOG.error(msg, ex);
+        	throw new ServletException(msg, ex);
+        }
         String actionWindowId = portalURL.getActionWindow();
         String resourceWindowId = portalURL.getResourceWindow();
         
@@ -116,8 +126,7 @@ public class PortalDriverServlet extends HttpServlet {
         
 		if (resourceWindowId != null){
 			resourceWindowConfig = PortletWindowConfig.fromId(resourceWindowId);
-		}
-		else if(actionWindowId != null){
+		} else if(actionWindowId != null){
 			 actionWindowConfig = PortletWindowConfig.fromId(actionWindowId);
 		}
 
@@ -132,8 +141,10 @@ public class PortalDriverServlet extends HttpServlet {
             try {
                 container.doAction(portletWindow, request, response);
             } catch (PortletContainerException ex) {
+            	LOG.error(ex.getMessage(), ex);
                 throw new ServletException(ex);
             } catch (PortletException ex) {
+            	LOG.error(ex.getMessage(), ex);
                 throw new ServletException(ex);
             }
             if (LOG.isDebugEnabled()) {
@@ -145,36 +156,35 @@ public class PortalDriverServlet extends HttpServlet {
         	try {
         		if (request.getParameterNames().hasMoreElements())
         			setPublicRenderParameter(request, portalURL, portalURL.getResourceWindow());
-			} catch (PortletContainerException e) {
-				LOG.warn(e);
-			}
-            PortletWindowImpl portletWindow = new PortletWindowImpl(
+        		PortletWindowImpl portletWindow = new PortletWindowImpl(
                                resourceWindowConfig, portalURL);
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Processing resource Serving request for window: "
-                               + portletWindow.getId().getStringId());
-            }
-            try {
+	            if (LOG.isDebugEnabled()) {
+	                LOG.debug("Processing resource serving request for window: "
+	                               + portletWindow.getId().getStringId());
+	            }
                 container.doServeResource(portletWindow, request, response);
             } catch (PortletContainerException ex) {
+				LOG.error(ex);
                 throw new ServletException(ex);
             } catch (PortletException ex) {
+				LOG.error(ex);
                 throw new ServletException(ex);
             }
             if (LOG.isDebugEnabled()) {
-               LOG.debug("Action request processed.\n\n");
+               LOG.debug("Resource request processed.\n\n");
             }
         }
-        // Otherwise (actionWindowConfig == null), handle the render request.
+        //render request
         else {
         	if (LOG.isDebugEnabled()) {
         		LOG.debug("Processing render request.");
         	}
             PageConfig pageConfig = portalURL.getPageConfig(servletContext);
-            if (pageConfig == null)
-            {
-                // TODO Shouldn't we throw an exception here?
-                LOG.error("PageConfig for render path [" + portalURL.getRenderPath() + "] could not be found.");
+            if (pageConfig == null) {
+            	String renderPath = (portalURL == null ? "" : portalURL.getRenderPath());
+                String msg = "PageConfig for render path [" + renderPath + "] could not be found.";
+                LOG.error(msg);
+                throw new ServletException(msg);
             }
             
             request.setAttribute(AttributeKeys.CURRENT_PAGE, pageConfig);

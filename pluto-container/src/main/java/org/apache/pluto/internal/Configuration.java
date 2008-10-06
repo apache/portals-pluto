@@ -54,10 +54,18 @@ public class Configuration {
 
 
     public static String getPortletAppDescriptorServiceImpl() {
-        String impl = BUNDLE.getString(DESCRIPTOR_SERVICE);
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Using Descriptor Service Impl: " + impl);
-        }
+    	String impl = null;
+    	try {
+    			impl = BUNDLE.getString(DESCRIPTOR_SERVICE);
+    	        if (LOG.isDebugEnabled()) {
+    	            LOG.debug("Using Descriptor Service Impl: " + impl);
+    	        }	
+    	} catch (RuntimeException ex) {
+    		LOG.error("Can't get descriptor service '" + DESCRIPTOR_SERVICE + "' Error: " 
+    				+ ex.getMessage(), ex);
+    		throw ex;
+    	}
+      
         return impl;
     }
 
@@ -68,6 +76,7 @@ public class Configuration {
                 String buffer = BUNDLE.getString(BUFFER_SUPPORT);
                 buffering = new Boolean(buffer);
             } catch (MissingResourceException mre) {
+            	LOG.warn(mre.getMessage());
                 buffering = Boolean.FALSE;
             }
         }
@@ -82,6 +91,7 @@ public class Configuration {
                 String test = BUNDLE.getString(PREVENT_UNECESSARY_CROSS_CONTEXT);
                 prevent = new Boolean(test);
             } catch (MissingResourceException mre) {
+            	LOG.warn(mre.getMessage());
                 prevent = Boolean.FALSE;
             }
         }

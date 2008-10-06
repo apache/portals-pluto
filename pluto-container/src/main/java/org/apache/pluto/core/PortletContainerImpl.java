@@ -17,6 +17,7 @@
 package org.apache.pluto.core;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -178,11 +179,32 @@ public class PortletContainerImpl implements PortletContainer,
     	
     	ensureInitialized();
     	
+    	
+    	ServletContext srvCtx = null;
+    	
+    	try
+    	{
+    		srvCtx = PortletContextManager.getPortletContext(servletContext,
+                    portletWindow.getContextPath());
+    		
+    	} catch(PortletContainerException ex)
+    	{
+    		LOG.error("Can get portlet context for: " + portletWindow.getContextPath(), ex); 		
+    	}
+    
+    	if (srvCtx == null) 
+		{
+    		PrintWriter writer=null;
+    		writer = response.getWriter();
+    		writer.write("<div class=\"portlet-msg-error\">Portlet '" + portletWindow.getContextPath() + "' cannot be loaded because of problems getting servlet context. Pleae check your configuration.</div>");
+    		return; // Can't get portlet context!
+		}
+    		
+    	
+    	
         InternalPortletWindow internalPortletWindow =
-        	new InternalPortletWindowImpl(
-		                    PortletContextManager.getPortletContext(servletContext,
-		                        portletWindow.getContextPath()),
-		                    portletWindow);
+        	new InternalPortletWindowImpl(srvCtx, portletWindow);
+        
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletName());
         

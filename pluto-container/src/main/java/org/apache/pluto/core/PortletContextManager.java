@@ -125,8 +125,10 @@ public class PortletContextManager implements PortletRegistryService {
      * @throws PortletContainerException
      */
 	public String register(ServletConfig config) throws PortletContainerException {
-        InternalPortletContext portletContext = register(config.getServletContext());
+        InternalPortletContext portletContext = this.register(config.getServletContext());
 
+        
+        
         PortletAppDD portletAppDD =
             portletContext.getPortletApplicationDefinition();
         PortletDD portletDD = null;
@@ -155,9 +157,9 @@ public class PortletContextManager implements PortletRegistryService {
         throws PortletContainerException {
         String applicationId = getContextPath(servletContext);
         if (!portletContexts.containsKey(applicationId)) {
+        	PortletDescriptorRegistry portletRegistry = PortletDescriptorRegistry.getRegistry();
 
-            PortletAppDD portletAppDD = PortletDescriptorRegistry.getRegistry()
-                .getPortletAppDD(servletContext);
+            PortletAppDD portletAppDD = portletRegistry.getPortletAppDD(servletContext);
 
             PortletContextImpl portletContext = new PortletContextImpl(
                 applicationId, servletContext, portletAppDD);

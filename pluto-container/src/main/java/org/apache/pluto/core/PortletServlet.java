@@ -23,11 +23,14 @@ import javax.portlet.EventPortlet;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceServingPortlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
 
@@ -41,7 +44,6 @@ import org.apache.pluto.internal.impl.ActionRequestImpl;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.EventRequestImpl;
 import org.apache.pluto.internal.impl.EventResponseImpl;
-import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.internal.impl.ResourceRequestImpl;
@@ -63,6 +65,9 @@ public class PortletServlet extends HttpServlet {
 	
 
     // Private Member Variables ------------------------------------------------
+
+    /** Internal Logger. */
+    private static final Log LOG = LogFactory.getLog(PortletServlet.class);    
 
     /**
      * The portlet name as defined in the portlet app descriptor.
@@ -111,11 +116,18 @@ public class PortletServlet extends HttpServlet {
         // Retrieve the associated internal portlet context.
         PortletContextManager mgr = PortletContextManager.getManager();
         try {
-            String applicationId = mgr.register(getServletConfig());
+        	ServletConfig sConfig = getServletConfig();
+        	if (sConfig == null) {
+        		String msg = "Problem obtaining servlet configuration(getServletConfig() returns null).";
+        		throw new PortletContainerException(msg);
+        	}
+        	
+            String applicationId = mgr.register(sConfig);
             portletContext = (InternalPortletContext) mgr.getPortletContext(applicationId);
             portletConfig = (InternalPortletConfig) mgr.getPortletConfig(applicationId, portletName);
 
         } catch (PortletContainerException ex) {
+    		LOG.error(ex.getMessage(), ex);   
             throw new ServletException(ex);
         }
 
@@ -130,16 +142,16 @@ public class PortletServlet extends HttpServlet {
             initializeEventPortlet();
             initializeResourceServingPortlet();
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+    		LOG.error(ex.getMessage(), ex);   
             throw new ServletException(ex);
         } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
+    		LOG.error(ex.getMessage(), ex);   
             throw new ServletException(ex);
         } catch (InstantiationException ex) {
-            ex.printStackTrace();
+    		LOG.error(ex.getMessage(), ex);   
             throw new ServletException(ex);
         } catch (PortletException ex) {
-            ex.printStackTrace();
+    		LOG.error(ex.getMessage(), ex);   
             throw new ServletException(ex);
         }
     }
@@ -285,7 +297,7 @@ public class PortletServlet extends HttpServlet {
 
 
         } catch (javax.portlet.UnavailableException ex) {
-            ex.printStackTrace();
+    		LOG.error(ex.getMessage(), ex);   
             /*
             if (e.isPermanent()) {
                 throw new UnavailableException(e.getMessage());
@@ -297,6 +309,7 @@ public class PortletServlet extends HttpServlet {
             try {
                 portlet.destroy();
             } catch (Throwable th) {
+        		LOG.error(th.getMessage(), th);   
                 // Don't care for Exception
             }
             
@@ -305,7 +318,7 @@ public class PortletServlet extends HttpServlet {
             
         } catch (PortletException ex) {
             notify(event, false, ex);
-            ex.printStackTrace();
+    		LOG.error(ex.getMessage(), ex);   
             throw new ServletException(ex);
             
         } finally {
@@ -350,7 +363,10 @@ public class PortletServlet extends HttpServlet {
        if (portlet instanceof ResourceServingPortlet) {
                resourceServingPortlet = (ResourceServingPortlet) portlet;
        }
-       else{
+       else {
+    	   if (LOG.isDebugEnabled()) {
+        	   LOG.debug("Not resource serving portlet.");    		   
+    	   }
     	   resourceServingPortlet = new NullPortlet();
        }
     }

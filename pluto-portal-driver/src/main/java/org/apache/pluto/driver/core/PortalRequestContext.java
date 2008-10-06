@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletContext;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.driver.AttributeKeys;
@@ -35,6 +37,9 @@ import org.apache.pluto.driver.config.DriverConfiguration;
  *
  */
 public class PortalRequestContext {
+
+    /** Internal Logger. */
+    private static final Log LOG = LogFactory.getLog(PortalRequestContext.class);    
 
     /**
      * The attribute key to bind the portal environment instance to servlet
@@ -109,8 +114,14 @@ public class PortalRequestContext {
         if(requestedPortalURL == null) {
             DriverConfiguration config = (DriverConfiguration)
                 servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
-            PortalURLParser parser = config.getPortalUrlParser();
-            requestedPortalURL = parser.parse(request);
+            if (config != null) {
+            	PortalURLParser parser = config.getPortalUrlParser();
+            	requestedPortalURL = parser.parse(request);
+            } else {
+            	String msg = "Driver configuration not found while parsing portal URL!";
+            	LOG.error(msg);
+            	throw new IllegalStateException(msg);
+            }
         }
         return requestedPortalURL;
     }
