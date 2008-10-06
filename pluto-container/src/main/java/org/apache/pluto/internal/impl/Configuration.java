@@ -45,6 +45,7 @@ public class Configuration {
                 String test = BUNDLE.getString(PREVENT_UNECESSARY_CROSS_CONTEXT);
                 prevent = new Boolean(test);
             } catch (MissingResourceException mre) {
+            	LOG.warn(mre.getMessage());
                 prevent = Boolean.FALSE;
             }
         }

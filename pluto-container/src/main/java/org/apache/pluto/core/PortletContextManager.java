@@ -125,12 +125,16 @@ public class PortletContextManager implements PortletRegistryService {
 	    ServletContext servletContext = config.getServletContext();
         String applicationId = getContextPath(servletContext);
         if (!portletContexts.containsKey(applicationId)) {
+        	PortletDescriptorRegistry portletRegistry = PortletDescriptorRegistry.getRegistry();
 
-            PortletApp portletApp = PortletDescriptorRegistry.getRegistry().getPortletAppDD(servletContext);
+            PortletApp portletApp = portletRegistry.getPortletAppDD(servletContext);
             portletApp.setId(applicationId);
             portletApp.setName(applicationId.substring(1));
 
             InternalPortletContext portletContext = new PortletContextImpl(servletContext, portletApp);
+            if (portletContext.getApplicationId() == null) {
+                throw new IllegalStateException("Unable to resolve unique identifier for portlet context.");
+            }
 
             portletContexts.put(applicationId, portletContext);
 

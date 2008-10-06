@@ -95,9 +95,18 @@ public class PortalStartupListener implements ServletContextListener {
 
         ServletContext servletContext = event.getServletContext();
 
-        WebApplicationContext springContext = (WebApplicationContext)
-                servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-
+        WebApplicationContext springContext = null;
+        
+        try {
+        	springContext = (WebApplicationContext)
+        		servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        	
+        } catch (RuntimeException ex) {
+        	String msg = "Problem getting Spring context: " + ex.getMessage();
+        	LOG.error(msg, ex);
+        	throw ex;
+        }
+     
         LOG.debug(" [1a] Loading DriverConfiguration. . . ");
         DriverConfiguration driverConfiguration = (DriverConfiguration)
                 springContext.getBean("DriverConfiguration");
