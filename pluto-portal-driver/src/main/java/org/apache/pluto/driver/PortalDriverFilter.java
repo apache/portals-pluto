@@ -38,7 +38,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The controller filter used to drive static portlet pages.
+ * The controller filter used to drive static portlet pages (see
+ * <a href="http://portals.apache.org/pluto/faq.html#simple-embed">
+ * http://portals.apache.org/pluto/faq.html#simple-embed</a> in Pluto FAQ).
  *
  * @version 1.0
  * @since March 28, 2006
@@ -104,11 +106,10 @@ public class PortalDriverFilter implements Filter {
             //  filter dispatchers.  B/C of this, we make sure we haven't
             //  allready processed this request. No infinite loops for us!!!!
             if (PortalRequestContext.getContext(req) == null) {
-                PortalRequestContext ctx = doPortletPrepare(req, (HttpServletResponse) response);
-                LOG.debug("Render Path: " + ctx.getRequestedPortalURL().getRenderPath());
-                LOG.debug("Servlet Path: " + ctx.getRequestedPortalURL().getServletPath());
-                PortalURL url = ctx.getRequestedPortalURL();
-                if (url.getActionWindow() != null) {
+                boolean actionRequestProcessed = 
+                	doPortletPrepare(req, (HttpServletResponse) response);
+
+                if (actionRequestProcessed) {
                     return;
                 }
 
@@ -136,10 +137,16 @@ public class PortalDriverFilter implements Filter {
      * @param response
      * @throws java.io.IOException            if an io exception occurs
      * @throws javax.servlet.ServletException if a servlet exception occurs
+     * @return A boolean flag indicating whether or not an action request was
+     * processed. A value of true indicates than an action request was 
+     * processed while a value of false indicates that an action request was
+     * NOT processed.
      */
-    public PortalRequestContext doPortletPrepare(HttpServletRequest request, HttpServletResponse response)
+    public boolean doPortletPrepare(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
 
+    	boolean actionRequestProcessed = false;
+    	
         PortalRequestContext portalRequestContext =
             new PortalRequestContext(getServletContext(), request, response);
 
@@ -169,8 +176,15 @@ public class PortalDriverFilter implements Filter {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Action request processed.\n\n");
             }
+            
+            actionRequestProcessed = true;
+        }
+        
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Render Path: " + portalURL.getRenderPath());
+            LOG.debug("Servlet Path: " + portalURL.getServletPath());        	
         }
 
-        return portalRequestContext;
+        return actionRequestProcessed;
     }
 }
