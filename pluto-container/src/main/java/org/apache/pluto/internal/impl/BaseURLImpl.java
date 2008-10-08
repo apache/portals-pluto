@@ -184,7 +184,9 @@ public class BaseURLImpl implements BaseURL {
         		.getPortalCallbackService()
         		.getPortletURLProvider(servletRequest, portletWindow);
         if(urlProvider.isSecureSupported()) {
-            throw new PortletSecurityException("Secure URLs not supported.");
+            urlProvider.setSecure();
+        } else {
+            LOG.info("Secure URLs not supported.");
         }
 	}
 
