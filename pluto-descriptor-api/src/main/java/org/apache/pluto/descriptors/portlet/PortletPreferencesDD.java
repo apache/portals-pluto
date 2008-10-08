@@ -92,7 +92,7 @@ public class PortletPreferencesDD {
 
     public String getPreferencesValidator() {
     	if (preferencesValidator != null)
-    		return preferencesValidator;
+    		return preferencesValidator.trim();
     	return preferencesValidator1;
     }
 
