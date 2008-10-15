@@ -13,23 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.om.common;
+package org.apache.pluto.om.portlet;
 
-import org.apache.pluto.om.ElementFactoryList;
+public interface DisplayName {
 
-public interface UserDataConstraint {
+	String getDisplayName();
 
-	String NONE = "NONE";
-	String INTEGRAL = "INTEGRAL";
-	String CONFIDENTIAL = "CONFIDENTIAL";
+	void setDisplayName(String displayName);
 
-	ElementFactoryList<Description> getDescriptions();
+	String getLang();
 
-	String getTransportGuarantee();
-
-	void setTransportGuarantee(String transportGuarantee);
-	
-	String getId();
-	
-	void setId(String id);
+	void setLang(String lang);
 }

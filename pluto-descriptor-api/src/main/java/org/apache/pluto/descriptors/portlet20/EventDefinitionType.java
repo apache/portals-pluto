@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
+import org.apache.pluto.om.portlet.Description;
 import org.apache.pluto.om.portlet.EventDefinition;
 
 /**

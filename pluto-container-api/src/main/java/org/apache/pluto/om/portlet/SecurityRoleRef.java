@@ -13,15 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.om.common;
+package org.apache.pluto.om.portlet;
 
-public interface DisplayName {
+import org.apache.pluto.om.ElementFactoryList;
 
-	String getDisplayName();
+public interface SecurityRoleRef {
 
-	void setDisplayName(String displayName);
+	String getRoleName();
 
-	String getLang();
+	void setRoleName(String roleName);
 
-	void setLang(String lang);
+	String getRoleLink();
+
+	void setRoleLink(String roleLink);
+
+	ElementFactoryList<Description> getDescriptions();
+	
+	String getId();
+	
+	void setId(String id);
 }

@@ -35,9 +35,9 @@ import javax.xml.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.om.common.InitParam;
 import org.apache.pluto.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
+import org.apache.pluto.om.portlet.InitParam;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
 

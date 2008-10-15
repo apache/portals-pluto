@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
 import org.apache.pluto.om.portlet.CustomPortletMode;
+import org.apache.pluto.om.portlet.Description;
 
 /**
  * A custom portlet mode that one or more portlets in this portlet application supports. If the portal does not need to

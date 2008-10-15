@@ -20,7 +20,6 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
 
 public interface EventDefinition
 {

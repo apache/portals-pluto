@@ -16,8 +16,6 @@
 package org.apache.pluto.om.portlet;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
-import org.apache.pluto.om.common.DisplayName;
 
 public interface Listener {
 

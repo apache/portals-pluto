@@ -30,16 +30,16 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
-import org.apache.pluto.om.common.DisplayName;
-import org.apache.pluto.om.common.InitParam;
-import org.apache.pluto.om.common.SecurityRoleRef;
 import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.om.portlet.Description;
+import org.apache.pluto.om.portlet.DisplayName;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
+import org.apache.pluto.om.portlet.InitParam;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.om.portlet.PortletPreferences;
+import org.apache.pluto.om.portlet.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Supports;
 
 /**

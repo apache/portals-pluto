@@ -18,10 +18,6 @@ package org.apache.pluto.om.portlet;
 import java.util.List;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
-import org.apache.pluto.om.common.DisplayName;
-import org.apache.pluto.om.common.InitParam;
-import org.apache.pluto.om.common.SecurityRoleRef;
 
 public interface Portlet {
     

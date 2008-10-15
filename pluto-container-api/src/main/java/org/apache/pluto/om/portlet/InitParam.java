@@ -13,31 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.om.common;
+package org.apache.pluto.om.portlet;
 
-public interface Icon {
+import org.apache.pluto.om.ElementFactoryList;
 
-	/**
-	 * Retrieve the large icon uri.
-	 * @return the uri to the large icon (relative to the context path).
-	 */
-	String getLargeIcon();
+public interface InitParam {
 
 	/**
-	 * Set the large icon uri.
-	 * @param largeIcon the relative path to the icon resource.
+	 * Retrieve the name of the parameter.
+	 * @return
 	 */
-	void setLargeIcon(String largeIcon);
+	String getParamName();
 
 	/**
-	 * Retrieve the small icon uri.
-	 * @return the uri to the small icon (relative to the context path).
+	 * Set the name of the parameter.
+	 * @param paramName
 	 */
-	String getSmallIcon();
+	void setParamName(String paramName);
 
 	/**
-	 * Set the small Icon uri.
-	 * @param smallIcon the relative path to the icon resource.
+	 * Get the name of the parameter.
+	 * @return
 	 */
-	void setSmallIcon(String smallIcon);
+	String getParamValue();
+
+	/**
+	 * Set the value of the parameter.
+	 * @param paramValue
+	 */
+	void setParamValue(String paramValue);
+
+	/**
+	 * Retrieve the description list.
+	 * @return
+	 */
+	public ElementFactoryList<Description> getDescriptions();
+	
+	String getId();
+	
+	void setId(String id);
 }

@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
+import org.apache.pluto.om.portlet.Description;
 import org.apache.pluto.om.portlet.UserAttribute;
 
 /**

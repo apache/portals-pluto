@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.common.Description;
-import org.apache.pluto.om.common.InitParam;
+import org.apache.pluto.om.portlet.Description;
+import org.apache.pluto.om.portlet.InitParam;
 
 /**
  * The init-param element contains a name/value pair as an initialization param of the portlet Used in:portlet <p>Java

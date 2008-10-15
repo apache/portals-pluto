@@ -13,41 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.om.common;
+package org.apache.pluto.om.portlet;
 
 import org.apache.pluto.om.ElementFactoryList;
 
-public interface InitParam {
+public interface UserDataConstraint {
 
-	/**
-	 * Retrieve the name of the parameter.
-	 * @return
-	 */
-	String getParamName();
+	String NONE = "NONE";
+	String INTEGRAL = "INTEGRAL";
+	String CONFIDENTIAL = "CONFIDENTIAL";
 
-	/**
-	 * Set the name of the parameter.
-	 * @param paramName
-	 */
-	void setParamName(String paramName);
+	ElementFactoryList<Description> getDescriptions();
 
-	/**
-	 * Get the name of the parameter.
-	 * @return
-	 */
-	String getParamValue();
+	String getTransportGuarantee();
 
-	/**
-	 * Set the value of the parameter.
-	 * @param paramValue
-	 */
-	void setParamValue(String paramValue);
-
-	/**
-	 * Retrieve the description list.
-	 * @return
-	 */
-	public ElementFactoryList<Description> getDescriptions();
+	void setTransportGuarantee(String transportGuarantee);
 	
 	String getId();
 	
