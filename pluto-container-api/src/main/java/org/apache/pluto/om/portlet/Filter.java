@@ -17,32 +17,28 @@ package org.apache.pluto.om.portlet;
 
 import java.util.List;
 
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.Description;
+import org.apache.pluto.om.common.DisplayName;
 import org.apache.pluto.om.common.InitParam;
 
 public interface Filter {
 
-	public abstract String getDescription();
+	ElementFactoryList<Description> getDescriptions();
 
-	public abstract void setDescription(String description);
+	ElementFactoryList<DisplayName> getDisplayNames();
 
-	public abstract String getDisplayName();
+	String getFilterClass();
 
-	public abstract void setDisplayName(String displayName);
+	void setFilterClass(String filterClass);
 
-	public abstract String getFilterClass();
+	String getFilterName();
 
-	public abstract void setFilterClass(String filterClass);
+	void setFilterName(String filterName);
 
-	public abstract String getFilterName();
+	ElementFactoryList<InitParam> getInitParams();
 
-	public abstract void setFilterName(String filterName);
+	List<String> getLifecycles();
 
-	public abstract List<InitParam> getInitParam();
-
-	public abstract void setInitParam(List<InitParam> initParam);
-
-	public abstract List<String> getLifecycle();
-
-	public abstract void setLifecycle(List<String> lifecycle);
-
+	void setLifecycles(List<String> lifecycles);
 }

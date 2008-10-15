@@ -70,7 +70,7 @@ public class PortletURLImpl extends BaseURLImpl implements PortletURL {
     }
 
 	public void removePublicRenderParameter(String name) {
-		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 	    
 	    if (publicRenderParameterNames != null){
 	    	if (publicRenderParameterNames.contains(name)){

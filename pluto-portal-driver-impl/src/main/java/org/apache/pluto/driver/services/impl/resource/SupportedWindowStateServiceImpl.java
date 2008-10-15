@@ -165,7 +165,7 @@ public class SupportedWindowStateServiceImpl implements
             LOG.error( msg, e );
         }
         
-        List customWindowStates = portletAppDD.getCustomWindowState();
+        List customWindowStates = portletAppDD.getCustomWindowStates();
         if ( customWindowStates != null )
         {
             for ( Iterator i = customWindowStates.iterator(); i.hasNext(); )

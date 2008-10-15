@@ -101,7 +101,7 @@ public class FilterChainImpl implements FilterChain {
 			filterListIndex++;
 			try {
 				ActionFilter actionFilter = (ActionFilter) loader.loadClass(filter.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParams(),portletContext);
 				actionFilter.init(filterConfig);
 				actionFilter.doFilter(request, response, this);
 				actionFilter.destroy();
@@ -124,7 +124,7 @@ public class FilterChainImpl implements FilterChain {
 			filterListIndex++;
 			try {
 				EventFilter eventFilter = (EventFilter) loader.loadClass(filter.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParams(),portletContext);
 				eventFilter.init(filterConfig);
 				eventFilter.doFilter(request, response, this);
 				eventFilter.destroy();
@@ -147,7 +147,7 @@ public class FilterChainImpl implements FilterChain {
 			filterListIndex++;
 			try {
 				RenderFilter renderFilter = (RenderFilter) loader.loadClass(filter.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParams(),portletContext);
 				renderFilter.init(filterConfig);
 				renderFilter.doFilter(request, response, this);
 				renderFilter.destroy();
@@ -170,7 +170,7 @@ public class FilterChainImpl implements FilterChain {
 			filterListIndex++;
 			try {
 				ResourceFilter resourceFilter = (ResourceFilter) loader.loadClass(filter.getFilterClass()).newInstance();
-				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParam(),portletContext);
+				FilterConfigImpl filterConfig = new FilterConfigImpl(filter.getFilterName(),filter.getInitParams(),portletContext);
 				resourceFilter.init(filterConfig);
 				resourceFilter.doFilter(request, response, this);
 				resourceFilter.destroy();

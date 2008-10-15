@@ -275,10 +275,10 @@ implements PortletContext, InternalPortletContext {
 
 	public Map<String, String[]> getApplicationRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portletApp.getContainerRuntimeOption() != null){
-			for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOption()) {
+		if (portletApp.getContainerRuntimeOptions() != null){
+			for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOptions()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValue();
+					List<String> values = option.getValues();
 					String [] tempValues = new String[values.size()];
 					for (int i=0;i<values.size();i++){
 						tempValues[i] = values.get(i);
@@ -292,10 +292,10 @@ implements PortletContext, InternalPortletContext {
 
 	public Map<String, String[]> getPortletRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portlet.getContainerRuntimeOption() != null) {
-			for (ContainerRuntimeOption option : portlet.getContainerRuntimeOption()) {
+		if (portlet.getContainerRuntimeOptions() != null) {
+			for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions()) {
 				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValue();
+					List<String> values = option.getValues();
 					String [] tempValues = new String[values.size()];
 					for (int i=0;i<values.size();i++){
 						tempValues[i] = values.get(i);

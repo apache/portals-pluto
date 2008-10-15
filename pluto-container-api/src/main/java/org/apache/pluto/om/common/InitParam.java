@@ -15,7 +15,7 @@
  */
 package org.apache.pluto.om.common;
 
-import java.util.List;
+import org.apache.pluto.om.ElementFactoryList;
 
 public interface InitParam {
 
@@ -23,48 +23,33 @@ public interface InitParam {
 	 * Retrieve the name of the parameter.
 	 * @return
 	 */
-	public abstract String getParamName();
+	String getParamName();
 
 	/**
 	 * Set the name of the parameter.
 	 * @param paramName
 	 */
-	public abstract void setParamName(String paramName);
+	void setParamName(String paramName);
 
 	/**
 	 * Get the name of the parameter.
 	 * @return
 	 */
-	public abstract String getParamValue();
+	String getParamValue();
 
 	/**
 	 * Set the value of the parameter.
 	 * @param paramValue
 	 */
-	public abstract void setParamValue(String paramValue);
-
-	/**
-	 * Retrieve the description.
-	 * @return
-	 */
-	public abstract String getDescription();
-
-	/**
-	 * Set the description of the parameter.
-	 * @param description
-	 */
-	public abstract void setDescription(String description);
+	void setParamValue(String paramValue);
 
 	/**
 	 * Retrieve the description list.
 	 * @return
 	 */
-	public abstract List getDescriptions();
-
-	/**
-	 * Set the description list.
-	 * @param description
-	 */
-	public abstract void setDescriptions(List<String> descriptions);
-
+	public ElementFactoryList<Description> getDescriptions();
+	
+	String getId();
+	
+	void setId(String id);
 }

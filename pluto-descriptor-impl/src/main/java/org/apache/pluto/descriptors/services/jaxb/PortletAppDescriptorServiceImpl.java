@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
@@ -26,12 +27,13 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      * @throws java.io.IOException
      */
     
+    @SuppressWarnings("unchecked")
     public PortletApp read(InputStream in) throws IOException {
     	JAXBElement<PortletApp> portletApp = null;
     	try {
     		JAXBContext jc = JAXBContext.newInstance( 
-    				"org.apache.pluto.descriptors.portlet" + ":" +
-    				"org.apache.pluto.descriptors.common");
+    				"org.apache.pluto.descriptors.portlet10" + ":" +
+    				"org.apache.pluto.descriptors.portlet20");
 
     		Unmarshaller u = jc.createUnmarshaller();
     		u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
@@ -54,6 +56,26 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      * @throws java.io.IOException
      */
     public void write(PortletApp portlet, OutputStream out) throws IOException {
-    	throw new UnsupportedOperationException("writing jaxb content not yet supported");
+        try {
+            JAXBContext jc = null;
+            if (portlet.getVersion().equals("1.0"))
+            {
+                jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet10");
+            }
+            else
+            {
+                jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet20");
+            }
+            Marshaller m = jc.createMarshaller();
+            m.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
+            m.marshal(portlet,out);
+        }catch (JAXBException jaxbEx){
+            jaxbEx.printStackTrace();
+            throw new IOException(jaxbEx.getMessage());
+        }
+        catch(Exception me) {
+            throw new IOException(me.getLocalizedMessage());
+        }
     }
 }

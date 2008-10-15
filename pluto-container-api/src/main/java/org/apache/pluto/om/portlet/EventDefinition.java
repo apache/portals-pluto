@@ -19,76 +19,30 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-public interface EventDefinition {
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.Description;
 
-	/**
-	 * @return Returns the alias.
-	 */
-	public abstract List<QName> getAlias();
+public interface EventDefinition
+{
+	List<QName> getAliases();
 
-	/**
-	 * @param alias The alias to set.
-	 */
-	public abstract void setAlias(List<QName> alias);
+	ElementFactoryList<Description> getDescriptions();
 
-	/**
-	 * @return Returns the description.
-	 */
-	public abstract String getDescription();
+	String getId();
 
-	/**
-	 * @param description The description to set.
-	 */
-	public abstract void setDescription(String description);
+	void setId(String id);
 
-	/**
-	 * @return Returns the iD.
-	 */
-	public abstract String getID();
+	String getValueType();
 
-	/**
-	 * @param id The iD to set.
-	 */
-	public abstract void setID(String id);
+	void setValueType(String valueType);
 
-	/**
-	 * @return Returns the javaType.
-	 */
-	public abstract String getJavaClass();
+	QName getQName();
 
-	/**
-	 * @param javaType The javaType to set.
-	 */
-	public abstract void setJavaClass(String javaType);
+	void setQName(QName qname);
 
-	/**
-	 * @return Returns the qName.
-	 */
-	public abstract QName getQName();
+	String getName();
 
-	/**
-	 * @param name The qName to set.
-	 */
-	public abstract void setQName(QName qname);
-
-	/**
-	 * @return Returns the name.
-	 */
-	public abstract String getName();
-
-	/**
-	 * @param name The qName to set.
-	 */
-	public abstract void setName(String name);
-
-	/**
-	 * @return Returns the xmlType.
-	 */
-	public abstract String getXmlType();
-
-	/**
-	 * @param xmlType The xmlType to set.
-	 */
-	public abstract void setXmlType(String xmlType);
-
+	void setName(String name);
+	
+	QName getQualifiedName(String defaultNamespace);
 }

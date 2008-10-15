@@ -216,8 +216,8 @@ public class PortalDriverServlet extends HttpServlet {
 		if (parameterNames != null){
 			while(parameterNames.hasMoreElements()){
 				String parameterName = parameterNames.nextElement();
-				if (portletDD.getPublicRenderParameter() != null){
-					if (portletDD.getPublicRenderParameter().contains(parameterName)){
+				if (portletDD.getSupportedPublicRenderParameters() != null){
+					if (portletDD.getSupportedPublicRenderParameters().contains(parameterName)){
 						String value = request.getParameter(parameterName);
 						portalURL.addPublicParameterActionResourceParameter(parameterName, value);
 					}	

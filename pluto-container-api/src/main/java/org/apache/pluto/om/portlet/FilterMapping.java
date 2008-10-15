@@ -19,12 +19,12 @@ import java.util.List;
 
 public interface FilterMapping {
 
-	public abstract String getFilterName();
+	String getFilterName();
 
-	public abstract void setFilterName(String filterName);
+	void setFilterName(String filterName);
 
-	public abstract List<String> getPortletName();
+	List<String> getPortletNames();
 
-	public abstract void setPortletName(List<String> portletName);
+	void setPortletNames(List<String> portletNames);
 
 }

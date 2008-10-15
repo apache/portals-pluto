@@ -15,14 +15,18 @@
  */
 package org.apache.pluto.om.portlet;
 
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.Description;
+
 public interface CustomWindowState {
 
-	public abstract String getDescription();
+	ElementFactoryList<Description> getDescriptions();
 
-	public abstract void setDescription(String description);
+	String getWindowState();
 
-	public abstract String getWindowState();
-
-	public abstract void setWindowState(String windowState);
-
+	void setWindowState(String windowState);
+	
+	String getId();
+	
+	void setId(String id);
 }

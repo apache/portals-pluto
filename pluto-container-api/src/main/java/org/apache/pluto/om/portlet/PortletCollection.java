@@ -19,8 +19,8 @@ import java.util.List;
 
 public interface PortletCollection {
 
-	public abstract List<String> getPortletName();
+	List<String> getPortletNames();
 
-	public abstract void setPortletName(List<String> portletName);
+	void setPortletNames(List<String> portletNames);
 
 }

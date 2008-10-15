@@ -17,12 +17,11 @@ package org.apache.pluto.om.common;
 
 public interface DisplayName {
 
-	public abstract String getDisplayName();
+	String getDisplayName();
 
-	public abstract void setDisplayName(String displayName);
+	void setDisplayName(String displayName);
 
-	public abstract String getLang();
+	String getLang();
 
-	public abstract void setLang(String lang);
-
+	void setLang(String lang);
 }

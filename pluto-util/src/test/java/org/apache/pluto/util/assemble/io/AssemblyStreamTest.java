@@ -31,14 +31,11 @@ import junit.framework.TestCase;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.services.castor.WebAppDescriptorServiceImpl;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
-import org.apache.pluto.om.servlet.Servlet;
-import org.apache.pluto.om.servlet.WebApp;
 import org.apache.pluto.util.assemble.Assembler;
+import org.apache.pluto.util.descriptors.web.PlutoWebXmlRewriter;
 
 /**
  * This test class directly tests the Jar streaming assembly,
@@ -86,32 +83,30 @@ public class AssemblyStreamTest extends TestCase {
     }
     
     protected void verifyAssembly( InputStream webXml, InputStream portletXml ) throws Exception {
-        WebAppDescriptorService webSvc = new WebAppDescriptorServiceImpl();
         PortletAppDescriptorService portletSvc = new PortletAppDescriptorServiceImpl();
-        WebApp webApp = webSvc.read( webXml ) ;
+        PlutoWebXmlRewriter webXmlRewriter = new PlutoWebXmlRewriter( webXml );
         PortletApp portletApp = portletSvc.read( portletXml );
         
-        assertNotNull( "Web Application Descripter was null.", webApp );
+        assertNotNull( "Web Application Descripter was null.", webXmlRewriter );
         assertNotNull( "Portlet Application Descriptor was null.", portletApp );
         assertTrue( "Portlet Application Descriptor doesn't define any portlets.", portletApp.getPortlets().size() > 0 );
-        assertTrue( "Web Application Descriptor doesn't define any servlets.", webApp.getServlets().size() > 0 );
-        assertTrue( "Web Application Descriptor doesn't define any servlet mappings.", webApp.getServletMappings().size() > 0 );
+        assertTrue( "Web Application Descriptor doesn't define any servlets.", webXmlRewriter.hasServlets() );
+        assertTrue( "Web Application Descriptor doesn't define any servlet mappings.", webXmlRewriter.hasServletMappings() );
         
         Portlet portlet = (Portlet) portletApp.getPortlets().iterator().next();
         assertTrue( "Unable to retrieve test portlet named [" + testPortletName + "]", portlet.getPortletName().equals( testPortletName ) );
         
-        Servlet servlet = webApp.getServlet( testPortletName );
-        assertNotNull( "Unable to retrieve portlet dispatch for portlet named [" + testPortletName + "]", servlet );        
-        assertEquals( "Dispatcher servlet incorrect for test portlet [" + testPortletName + "]",  Assembler.DISPATCH_SERVLET_CLASS, servlet.getServletClass() );        
+        String servletClassName = webXmlRewriter.getServletClass( testPortletName );
+        assertNotNull( "Unable to retrieve portlet dispatch for portlet named [" + testPortletName + "]", servletClassName );        
+        assertEquals( "Dispatcher servlet incorrect for test portlet [" + testPortletName + "]",  Assembler.DISPATCH_SERVLET_CLASS, servletClassName );        
     }
 
     protected void verifyAssembly( File warFile ) throws Exception {
-        WebAppDescriptorService webSvc = new WebAppDescriptorServiceImpl();
+        PlutoWebXmlRewriter webXmlRewriter = null;
         PortletAppDescriptorService portletSvc = new PortletAppDescriptorServiceImpl();
         int entryCount = 0;
         ByteArrayOutputStream portletXmlBytes = new ByteArrayOutputStream();
         ByteArrayOutputStream webXmlBytes = new ByteArrayOutputStream();
-        WebApp webApp = null;
         PortletApp portletApp = null;        
                 
         JarInputStream assembledWarIn = new JarInputStream( new FileInputStream( warFile ) );
@@ -126,22 +121,22 @@ public class AssemblyStreamTest extends TestCase {
             }
             if ( Assembler.SERVLET_XML.equals( tempEntry.getName() ) ) {
                 IOUtils.copy( assembledWarIn, webXmlBytes );
-                webApp = webSvc.read( new ByteArrayInputStream( webXmlBytes.toByteArray() ) );
+                webXmlRewriter = new PlutoWebXmlRewriter( new ByteArrayInputStream( webXmlBytes.toByteArray() ) );
             }
         }
         
         assertTrue( "Assembled WAR file was empty.", entryCount > 0 );
-        assertNotNull( "Web Application Descripter was null.", webApp );
+        assertNotNull( "Web Application Descripter was null.", webXmlRewriter );
         assertNotNull( "Portlet Application Descriptor was null.", portletApp );
         assertTrue( "Portlet Application Descriptor doesn't define any portlets.", portletApp.getPortlets().size() > 0 );
-        assertTrue( "Web Application Descriptor doesn't define any servlets.", webApp.getServlets().size() > 0 );
-        assertTrue( "Web Application Descriptor doesn't define any servlet mappings.", webApp.getServletMappings().size() > 0 );
+        assertTrue( "Web Application Descriptor doesn't define any servlets.", webXmlRewriter.hasServlets() );
+        assertTrue( "Web Application Descriptor doesn't define any servlet mappings.", webXmlRewriter.hasServletMappings() );
 
         Portlet portlet = (Portlet) portletApp.getPortlets().iterator().next();
         assertTrue( "Unable to retrieve test portlet named [" + testPortletName + "]", portlet.getPortletName().equals( testPortletName ) );
 
-        Servlet servlet = webApp.getServlet( testPortletName );
-        assertNotNull( "Unable to retrieve portlet dispatch for portlet named [" + testPortletName + "]", servlet );        
-        assertEquals( "Dispatcher servlet incorrect for test portlet [" + testPortletName + "]",  Assembler.DISPATCH_SERVLET_CLASS, servlet.getServletClass() );
+        String servletClassName = webXmlRewriter.getServletClass( testPortletName );
+        assertNotNull( "Unable to retrieve portlet dispatch for portlet named [" + testPortletName + "]", servletClassName );        
+        assertEquals( "Dispatcher servlet incorrect for test portlet [" + testPortletName + "]",  Assembler.DISPATCH_SERVLET_CLASS, servletClassName );
     }
 }

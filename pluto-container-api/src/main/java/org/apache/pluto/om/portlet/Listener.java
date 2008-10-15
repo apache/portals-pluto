@@ -15,24 +15,22 @@
  */
 package org.apache.pluto.om.portlet;
 
-import java.util.List;
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.Description;
+import org.apache.pluto.om.common.DisplayName;
 
 public interface Listener {
 
-	public abstract String getDescription();
+	ElementFactoryList<Description> getDescriptions();
+	
+	ElementFactoryList<DisplayName> getDisplayNames();
+	
+	String getId();
 
-	public abstract void setDescription(String description);
+	void setId(String id);
 
-	public abstract List<String> getDisplayName();
+	String getListenerClass();
 
-	public abstract void setDisplayName(List<String> displayName);
-
-	public abstract String getID();
-
-	public abstract void setID(String id);
-
-	public abstract String getListenerClass();
-
-	public abstract void setListenerClass(String listenerClass);
+	void setListenerClass(String listenerClass);
 
 }

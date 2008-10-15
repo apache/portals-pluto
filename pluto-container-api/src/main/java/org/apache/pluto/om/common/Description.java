@@ -17,12 +17,11 @@ package org.apache.pluto.om.common;
 
 public interface Description {
 
-	public abstract String getDescription();
+	String getDescription();
 
-	public abstract void setDescription(String description);
+	void setDescription(String description);
 
-	public abstract String getLang();
+	String getLang();
 
-	public abstract void setLang(String lang);
-
+	void setLang(String lang);
 }

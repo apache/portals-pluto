@@ -31,7 +31,6 @@ import javax.portlet.Event;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -56,6 +55,7 @@ import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.om.portlet.EventDefinition;
+import org.apache.pluto.om.portlet.EventDefinitionReference;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
 import org.apache.pluto.spi.EventProvider;
@@ -272,54 +272,41 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				List<Portlet> portletDDs = portletAppDD.getPortlets();
 				List<QName> aliases = getAllAliases(eventName, portletAppDD);
 				for (Portlet portletDD : portletDDs) {
-					List<QName> processingEvents = portletDD
-							.getProcessingEvents();
-					if ((processingEvents != null)
-							&& processingEvents.contains(eventName)) {
-						if (portletDD.getPortletName().equals(
-								portlet.getPortletName())) {
-							resultSet.add(portlet.getId());
-						}
+					List<EventDefinitionReference> processingEvents = portletDD.getSupportedProcessingEvents();
+					if (isEventSupported(processingEvents, eventName, portletAppDD.getDefaultNamespace())) {
+                        if (portletDD.getPortletName().equals(portlet.getPortletName())) {
+                                                          resultSet.add(portlet.getId());
+                        }
 					} else {
 
 						if (processingEvents != null) {
-							for (QName name : processingEvents) {
+							for (EventDefinitionReference ref : processingEvents) {
+							    QName name = ref.getQualifiedName(portletAppDD.getDefaultNamespace());
+							    if (name == null)
+							    {
+							        continue;
+							    }
 								// add also grouped portlets, that ends with "."
 								if (name.toString().endsWith(".")
-										&& eventName.toString().startsWith(
-												name.toString())
-										&& portletDD.getPortletName().equals(
-												portlet.getPortletName())) {
+										&& eventName.toString().startsWith(name.toString())
+										&& portletDD.getPortletName().equals(portlet.getPortletName())) {
 									resultSet.add(portlet.getId());
 								}
 								// also look for alias names:
 								if (aliases != null) {
 									for (QName alias : aliases) {
-										if (alias.toString().equals(
-												name.toString())
-												&& portletDD
-														.getPortletName()
-														.equals(
-																portlet
-																		.getPortletName())) {
+										if (alias.toString().equals(name.toString())
+												&& portletDD.getPortletName().equals(portlet.getPortletName())) {
 											resultSet.add(portlet.getId());
 										}
 									}
 								}
 								// also look for default namespaced events
-								if (name.getNamespaceURI() == null
-										|| name.getNamespaceURI().equals("")) {
-									String defaultNamespace = portletAppDD
-											.getDefaultNamespace();
-									QName qname = new QName(defaultNamespace,
-											name.getLocalPart());
-									if (eventName.toString().equals(
-											qname.toString())
-											&& portletDD
-													.getPortletName()
-													.equals(
-															portlet
-																	.getPortletName())) {
+								if (name.getNamespaceURI() == null || name.getNamespaceURI().equals("")) {
+									String defaultNamespace = portletAppDD.getDefaultNamespace();
+									QName qname = new QName(defaultNamespace, name.getLocalPart());
+									if (eventName.toString().equals(qname.toString())
+											&& portletDD.getPortletName().equals(portlet.getPortletName())) {
 										resultSet.add(portlet.getId());
 									}
 								}
@@ -338,19 +325,30 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 		}
 		return resultList;
 	}
+	
+	private boolean isEventSupported(List<EventDefinitionReference> supportedEvents, QName eventName, String defaultNamespace)
+	{
+	    if (supportedEvents != null)
+	    {
+	        for (EventDefinitionReference ref : supportedEvents)
+	        {
+	            QName refQName = ref.getQualifiedName(defaultNamespace);
+	            if (refQName != null && refQName.equals(eventName))
+	            {
+	                return true;
+	            }
+	        }
+	    }
+	    return false;
+	}
 
 	private List<QName> getAllAliases(QName eventName, PortletApp portletAppDD) {
-		if (portletAppDD.getEvents() != null) {
+		if (portletAppDD.getEventDefinitions() != null) {
 			
-			for (EventDefinition def : portletAppDD.getEvents()){
-				if (def.getQName() != null){
-					if (def.getQName().equals(eventName))
-						return def.getAlias();
-				}
-				else{
-					QName tmp = new QName(portletAppDD.getDefaultNamespace(),def.getName());
-					if (tmp.equals(eventName))
-						return def.getAlias();
+			for (EventDefinition def : portletAppDD.getEventDefinitions()){
+			    QName defQName = def.getQualifiedName(portletAppDD.getDefaultNamespace());
+				if (defQName != null && defQName.equals(eventName)){
+						return def.getAliases();
 				}
 			}
 		}
@@ -514,22 +512,20 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 					.getAttribute(AttributeKeys.PORTLET_CONTAINER))
 					.getOptionalContainerServices().getPortletRegistryService();
 		}
-		List<QName> events = null;
+		List<EventDefinitionReference> events = null;
 		try {
 			events = portletRegistry.getPortlet(applicationId,
-					portletName).getPublishingEvents();
+					portletName).getSupportedPublishingEvents();
 		} catch (PortletContainerException e1) {
 			e1.printStackTrace();
 		}
 		if (events != null) {
             String defaultNamespace = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getDefaultNamespace();
-            if (defaultNamespace == null) {
-                defaultNamespace = XMLConstants.NULL_NS_URI;
-            }
-            for (QName name : events) {
-                String namespaceURI = name.getNamespaceURI();
-                if (XMLConstants.NULL_NS_URI.equals(namespaceURI)) {
-                    name = new QName(defaultNamespace, name.getLocalPart());
+            for (EventDefinitionReference ref : events) {
+                QName name = ref.getQualifiedName(defaultNamespace);
+                if (name == null)
+                {
+                    continue;
                 }
                 if (qname.equals(name)) {
                     return true;
@@ -542,7 +538,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	private boolean isValueInstanceOfDefinedClass(QName qname,
 			Serializable value) {
         PortletApp app = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
-        List<EventDefinition> events = app.getEvents();
+        List<EventDefinition> events = app.getEventDefinitions();
         if (events != null) {
             
             
@@ -550,13 +546,13 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
                 if (def.getQName() != null){
                     if (def.getQName().equals(qname))
                         return value.getClass().getName().equals(
-                                def.getJavaClass());
+                                def.getValueType());
                 }
                 else{
                     QName tmp = new QName(app.getDefaultNamespace(),def.getName());
                     if (tmp.equals(qname))
                         return value.getClass().getName().equals(
-                                def.getJavaClass());
+                                def.getValueType());
                 }
             }
         }

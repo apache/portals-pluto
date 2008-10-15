@@ -15,17 +15,17 @@
  */
 package org.apache.pluto.om.portlet;
 
-import java.util.List;
+import org.apache.pluto.om.ElementFactoryList;
 
 public interface PortletPreferences {
 
-	public abstract List<PortletPreference> getPortletPreferences();
+	ElementFactoryList<PortletPreference> getPortletPreferences();
 
-	public abstract void setPortletPreferences(
-			List<PortletPreference> portletPreferences);
+	String getPreferencesValidator();
 
-	public abstract String getPreferencesValidator();
-
-	public abstract void setPreferencesValidator(String preferencesValidator);
-
+	void setPreferencesValidator(String preferencesValidator);
+	
+	String getId();
+	
+	void setId(String id);
 }

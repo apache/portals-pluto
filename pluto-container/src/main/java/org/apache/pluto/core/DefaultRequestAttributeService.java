@@ -33,7 +33,6 @@ import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletWindowID;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.om.portlet.UserAttribute;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.RequestAttributeService;

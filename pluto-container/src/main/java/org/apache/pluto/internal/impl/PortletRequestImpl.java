@@ -432,7 +432,7 @@ implements PortletRequest, InternalPortletRequest {
     
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
     	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), portletWindow);
     	String[] values = null;
     	if (publicRenderParameterNames != null){
@@ -457,7 +457,7 @@ implements PortletRequest, InternalPortletRequest {
 
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
     	PortletURLProvider urlProvider = container.getRequiredContainerServices()
     											  .getPortalCallbackService()
     											  .getPortletURLProvider(getHttpServletRequest(), portletWindow);
@@ -481,7 +481,7 @@ implements PortletRequest, InternalPortletRequest {
     
     public Map getParameterMap() {
     	Map<String, String[]>map = StringUtils.copyParameters(baseGetParameterMap());
-    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
     	if (publicRenderParameterNames!=null){
     		PortletURLProvider urlProvider = container
     			.getRequiredContainerServices()
@@ -855,7 +855,7 @@ implements PortletRequest, InternalPortletRequest {
 			.getRequiredContainerServices()
 			.getPortalCallbackService()
 			.getPortletURLProvider(getHttpServletRequest(), portletWindow);
-		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 		String[] values = null;
 		if (publicRenderParameterNames != null){
 			for (String string : publicRenderParameterNames) {

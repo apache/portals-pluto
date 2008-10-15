@@ -239,7 +239,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
             throw new IllegalArgumentException(
                 "Render parameter key must not be null.");
         }
-        List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+        List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
         if (publicRenderParameterNames != null){
 	    	if (publicRenderParameterNames.contains(key)){
 	        	publicRenderParameter.put(key, new String[] {value});
@@ -264,7 +264,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-	    List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+	    List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 	    if (publicRenderParameterNames != null){
 		    if (publicRenderParameterNames.contains(key)){
 		    	publicRenderParameter.put(key,StringUtils.copy(values));
@@ -572,7 +572,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	}
 
 	public void removePublicRenderParameter(String name) {
-		List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 		if (publicRenderParameterNames != null){
 			if (publicRenderParameterNames.contains(name)){
 	    		publicRenderParameter.put(name,new String[] {null});

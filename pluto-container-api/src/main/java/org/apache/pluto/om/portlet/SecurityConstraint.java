@@ -15,22 +15,19 @@
  */
 package org.apache.pluto.om.portlet;
 
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.DisplayName;
 import org.apache.pluto.om.common.UserDataConstraint;
 
 public interface SecurityConstraint {
 
-	public abstract String getDisplayName();
+	ElementFactoryList<DisplayName> getDisplayNames();
+	
+	PortletCollection getPortletCollection();
 
-	public abstract void setDisplayName(String displayName);
+	UserDataConstraint getUserDataConstraint();
 
-	public abstract PortletCollection getPortletCollection();
-
-	public abstract void setPortletCollection(
-			PortletCollection portletCollection);
-
-	public abstract UserDataConstraint getUserDataConstraint();
-
-	public abstract void setUserDataConstraint(
-			UserDataConstraint userDataConstraint);
-
+    String getId();
+    
+    void setId(String id);
 }

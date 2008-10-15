@@ -15,20 +15,20 @@
  */
 package org.apache.pluto.om.portlet;
 
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.Description;
+
 public interface CustomPortletMode {
 
-	public abstract boolean isPortalManaged();
+	boolean isPortalManaged();
 
-	public abstract String getDecorationName();
+	ElementFactoryList<Description> getDescriptions();
 
-	public abstract void setDecorationName(String decorationName);
+	String getPortletMode();
 
-	public abstract String getDescription();
-
-	public abstract void setDescription(String description);
-
-	public abstract String getPortletMode();
-
-	public abstract void setPortletMode(String portletMode);
-
+	void setPortletMode(String portletMode);
+	
+	String getId();
+	
+	void setId(String id);
 }

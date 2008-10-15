@@ -19,8 +19,7 @@ import java.util.List;
 
 public interface ContainerRuntimeOption {
 
-	public abstract String getName();
+	String getName();
 
-	public abstract List<String> getValue();
-
+	List<String> getValues();
 }

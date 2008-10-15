@@ -27,16 +27,13 @@ import java.util.jar.JarInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.descriptors.services.WebAppDescriptorService;
-import org.apache.pluto.descriptors.services.castor.WebAppDescriptorServiceImpl;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletApp;
-import org.apache.pluto.om.servlet.Servlet;
-import org.apache.pluto.om.servlet.WebApp;
 import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
+import org.apache.pluto.util.descriptors.web.PlutoWebXmlRewriter;
 
 /**
  * This test assembles an EAR file which contains two portlet
@@ -97,13 +94,13 @@ public class ComplexEarAssemblerTest extends ArchiveBasedAssemblyTest {
                 earFile.exists() && earFile.canRead() );
         
         PortletAppDescriptorService portletSvc = new PortletAppDescriptorServiceImpl();
-        WebAppDescriptorService webSvc = new WebAppDescriptorServiceImpl();
         PortletApp portletApp = null;
-        WebApp webAppDD = null;
         
-        List portletWarEntries = Arrays.asList( testWarEntryNames );
-        List unassembledWarEntries = Arrays.asList( unassembledWarEntryName );
-        List testPortlets = Arrays.asList( testPortletNames );
+        PlutoWebXmlRewriter webXmlRewriter = null;
+        
+        List<String> portletWarEntries = Arrays.asList( testWarEntryNames );
+        List<String> unassembledWarEntries = Arrays.asList( unassembledWarEntryName );
+        List<String> testPortlets = Arrays.asList( testPortletNames );
         
         int earEntryCount = 0;
         int totalWarEntryCount = 0;
@@ -128,33 +125,32 @@ public class ComplexEarAssemblerTest extends ArchiveBasedAssemblyTest {
                                 new ByteArrayInputStream( IOUtils.toByteArray( warIn ) ) );
                     }
                     if ( Assembler.SERVLET_XML.equals( warEntry.getName() ) ) {
-                        webAppDD = webSvc.read( 
-                                new ByteArrayInputStream( IOUtils.toByteArray( warIn ) ) );
+                        webXmlRewriter = new PlutoWebXmlRewriter( new ByteArrayInputStream( IOUtils.toByteArray( warIn ) ) );
                     }
                 }
                 
                 if ( portletWarEntries.contains( earEntry.getName() ) ) {
                     portletWarEntryCount++;
                     assertNotNull( "WAR archive did not contain a portlet.xml", portletApp );
-                    assertNotNull( "WAR archive did not contain a servlet.xml", webAppDD );
-                    assertTrue( "WAR archive did not contain any servlets", webAppDD.getServlets().size() > 0 );
-                    assertTrue( "WAR archive did not contain any servlet mappings", webAppDD.getServletMappings().size() > 0 );
+                    assertNotNull( "WAR archive did not contain a servlet.xml", webXmlRewriter );
+                    assertTrue( "WAR archive did not contain any servlets", webXmlRewriter.hasServlets() );
+                    assertTrue( "WAR archive did not contain any servlet mappings", webXmlRewriter.hasServletMappings() );
                     assertTrue( "WAR archive did not contain any portlets", portletApp.getPortlets().size() > 0 );
                     
-                    for ( Iterator iter = portletApp.getPortlets().iterator(); iter.hasNext(); ) {
-                        Portlet portlet = (Portlet) iter.next();
+                    for ( Iterator<Portlet> iter = portletApp.getPortlets().iterator(); iter.hasNext(); ) {
+                        Portlet portlet = iter.next();
                         if (! testPortlets.contains( portlet.getPortletName() ) ) {
                             fail( "Unexpected test portlet name encountered: [" + portlet.getPortletName() + "]" );
                         }
-                        Servlet servlet = webAppDD.getServlet( portlet.getPortletName() );
-                        assertNotNull( "web.xml does not contain assembly for test portlet", servlet );
+                        String servletClassName = webXmlRewriter.getServletClass( portlet.getPortletName() );
+                        assertNotNull( "web.xml does not contain assembly for test portlet", servletClassName );
                         assertEquals( "web.xml does not contain correct dispatch servet", Assembler.DISPATCH_SERVLET_CLASS, 
-                                servlet.getServletClass() );
+                                servletClassName );
                     } 
                     
                 }
                 
-                webAppDD = null;
+                webXmlRewriter = null;
                 portletApp = null;
                                 
             }
@@ -175,5 +171,4 @@ public class ComplexEarAssemblerTest extends ArchiveBasedAssemblyTest {
     protected File getFileToAssemble() {
         return earFile;
     }
-
 }

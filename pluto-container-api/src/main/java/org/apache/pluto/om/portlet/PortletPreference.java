@@ -19,16 +19,19 @@ import java.util.List;
 
 public interface PortletPreference {
 
-	public abstract String getName();
+	String getName();
 
-	public abstract void setName(String name);
+	void setName(String name);
 
-	public abstract List<String> getValues();
+	List<String> getValues();
 
-	public abstract void setValues(List<String> values);
+	void setValues(List<String> values);
 
-	public abstract boolean isReadOnly();
+	boolean isReadOnly();
 
-	public abstract void setReadOnly(boolean readOnly);
-
+	void setReadOnly(boolean readOnly);
+	
+	String getId();
+	
+	void setId(String id);
 }

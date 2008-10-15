@@ -34,7 +34,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.ExpirationCache;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.util.StringManager;
@@ -114,15 +113,8 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 		this.cacheControl = new CacheControlImpl();
 		PortletEntity portletEntity = portletWindow.getPortletEntity();
 		Portlet portletDefinition = portletEntity.getPortletDefinition();
-		ExpirationCache expirationCacheDD = portletDefinition
-				.getExpirationCache();
-		if (expirationCacheDD != null) {
-			int expirationTime = expirationCacheDD.getExpirationTime();
-			this.setProperty(EXPIRATION_CACHE, String.valueOf(expirationTime));
-			String scope = expirationCacheDD.getScope();
-			this.setProperty(CACHE_SCOPE, scope);
-		}
-
+        this.setProperty(EXPIRATION_CACHE, String.valueOf(portletDefinition.getExpirationCache()));
+        this.setProperty(CACHE_SCOPE, portletDefinition.getCacheScope());
 	}
 	
 	@Override

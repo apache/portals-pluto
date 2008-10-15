@@ -107,7 +107,7 @@ public class PortletWindowThread extends Thread {
 			        		EventDefinition eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
 			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId());
-			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getJavaClass()).asSubclass(Serializable.class);
+			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getValueType()).asSubclass(Serializable.class);
 
 			        		JAXBContext jc = JAXBContext.newInstance(clazz);
 			        		Unmarshaller unmarshaller  = jc.createUnmarshaller();
@@ -145,7 +145,7 @@ public class PortletWindowThread extends Thread {
 
 	private EventDefinition getEventDefintion(QName name) throws PortletContainerException {
 		PortletApp appDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
-		for (EventDefinition def : appDD.getEvents()){
+		for (EventDefinition def : appDD.getEventDefinitions()){
 			if (def.getQName() != null){
 				if (def.getQName().equals(name))
 					return def;

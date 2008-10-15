@@ -15,56 +15,21 @@
  */
 package org.apache.pluto.om.common;
 
-import java.util.List;
+import org.apache.pluto.om.ElementFactoryList;
 
 public interface SecurityRoleRef {
 
-	/**
-	 * Retrieve the name of the role reference.
-	 * @return
-	 */
-	public abstract String getRoleName();
+	String getRoleName();
 
-	/**
-	 * Set the name of the role reference.
-	 * @param roleName
-	 */
-	public abstract void setRoleName(String roleName);
+	void setRoleName(String roleName);
 
-	/**
-	 * Retrieve then role to which the reference is linked.
-	 * @return
-	 */
-	public abstract String getRoleLink();
+	String getRoleLink();
 
-	/**
-	 * Set the role to which the reference is linked.
-	 * @param roleLink
-	 */
-	public abstract void setRoleLink(String roleLink);
+	void setRoleLink(String roleLink);
 
-	/**
-	 * Retrieve the description of the role reference.
-	 * @return
-	 */
-	public abstract String getDescription();
-
-	/**
-	 * Set the description of the role reference.
-	 * @param description
-	 */
-	public abstract void setDescription(String description);
-
-	/**
-	 * Retrieve the description list.
-	 * @return
-	 */
-	public abstract List getDescriptions();
-
-	/**
-	 * Set the description list.
-	 * @param description
-	 */
-	public abstract void setDescriptions(List<String> descriptions);
-
+	ElementFactoryList<Description> getDescriptions();
+	
+	String getId();
+	
+	void setId(String id);
 }

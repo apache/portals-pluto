@@ -17,16 +17,19 @@ package org.apache.pluto.om.portlet;
 
 public interface PortletInfo {
 
-	public abstract String getTitle();
+	String getTitle();
 
-	public abstract void setTitle(String title);
+	void setTitle(String title);
 
-	public abstract String getKeywords();
+	String getKeywords();
 
-	public abstract void setKeywords(String keywords);
+	void setKeywords(String keywords);
 
-	public abstract String getShortTitle();
+	String getShortTitle();
 
-	public abstract void setShortTitle(String shortTitle);
-
+	void setShortTitle(String shortTitle);
+	
+	String getId();
+	
+	void setId(String id);
 }

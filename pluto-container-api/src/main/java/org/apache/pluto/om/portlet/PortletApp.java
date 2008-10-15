@@ -15,7 +15,7 @@
  */
 package org.apache.pluto.om.portlet;
 
-import java.util.List;
+import org.apache.pluto.om.ElementFactoryList;
 
 
 public interface PortletApp {
@@ -24,13 +24,13 @@ public interface PortletApp {
      * The name of the Portlet Application
      * <br/>
      */
-    public String getName();
+    String getName();
     
     /**
      * Set the name for the Portlet Application
      * @param name
      */
-    public void setName(String name);
+    void setName(String name);
     
     /**
      * The id the Portlet Application
@@ -39,7 +39,7 @@ public interface PortletApp {
      *       to the contextPath of the Web Applications
      * @return
      */
-    public String getId();
+    String getId();
     
     /**
      * Set the id the Portlet Application
@@ -48,83 +48,49 @@ public interface PortletApp {
      *       to the contextPath of the Web Applications
      * @return
      */
-    public void setId(String id);
+    void setId(String id);
     
 	/**
 	 * Retrieve the portlets which exist within this application.
 	 * @return
 	 */
-	public abstract List<Portlet> getPortlets();
-
-	/**
-	 * Set the portlets that exist within this application.
-	 * @param portlets
-	 */
-	public abstract void setPortlets(List<Portlet> portlets);
+	ElementFactoryList<Portlet> getPortlets();
 
 	/**
 	 * @return Returns the events.
 	 */
-	public abstract List<EventDefinition> getEvents();
-
-	/**
-	 * @param events The events to set.
-	 */
-	public abstract void setEvents(List<EventDefinition> events);
+	ElementFactoryList<EventDefinition> getEventDefinitions();
 
 	/**
 	 * @return Returns the public render parameter.
 	 */
-	public abstract List<PublicRenderParam> getRender();
+	ElementFactoryList<PublicRenderParameter> getPublicRenderParameters();
 
-	/**
-	 * @param render The public render parameter to set.
-	 */
-	public abstract void setRender(List<PublicRenderParam> render);
+	String getVersion();
 
-	public abstract String getVersion();
+	void setVersion(String version);
 
-	public abstract void setVersion(String version);
+	ElementFactoryList<CustomPortletMode> getCustomPortletModes();
 
-	public abstract List<CustomPortletMode> getCustomPortletMode();
+	ElementFactoryList<CustomWindowState> getCustomWindowStates();
 
-	public abstract void setCustomPortletMode(
-			List<CustomPortletMode> customPortletMode);
+	ElementFactoryList<UserAttribute> getUserAttributes();
 
-	public abstract List<CustomWindowState> getCustomWindowState();
+	ElementFactoryList<SecurityConstraint> getSecurityConstraints();
 
-	public abstract void setCustomWindowState(
-			List<CustomWindowState> customWindowState);
+	String getResourceBundle();
 
-	public abstract List<UserAttribute> getUserAttribute();
+	void setResourceBundle(String resourceBundle);
 
-	public abstract void setUserAttribute(List<UserAttribute> userAttribute);
+	ElementFactoryList<Filter> getFilters();
 
-	public abstract List<SecurityConstraint> getSecurityConstraint();
+	ElementFactoryList<FilterMapping> getFilterMappings();
 
-	public abstract void setSecurityConstraint(
-			List<SecurityConstraint> securityConstraint);
+	ElementFactoryList<Listener> getListeners();
 
-	public abstract String getResourceBundle();
+	String getDefaultNamespace();
 
-	public abstract void setResourceBundle(String resourceBundle);
+	void setDefaultNamespace(String defaultNamespace);
 
-	public abstract List<Filter> getFilter();
-
-	public abstract void setFilter(List<Filter> filter);
-
-	public abstract List<FilterMapping> getFilterMapping();
-
-	public abstract void setFilterMapping(List<FilterMapping> filterMapping);
-
-	public abstract List<Listener> getListener();
-
-	public abstract void setListener(List<Listener> listener);
-
-	public abstract String getDefaultNamespace();
-
-	public abstract void setDefaultNamespace(String defaultNamespace);
-
-	public abstract List<ContainerRuntimeOption> getContainerRuntimeOption();
-
+	ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions();
 }

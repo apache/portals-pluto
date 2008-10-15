@@ -19,12 +19,15 @@ import java.util.List;
 
 public interface Supports {
 
-	public abstract String getMimeType();
+	String getMimeType();
 
-	public abstract void setMimeType(String mimeType);
+	void setMimeType(String mimeType);
 
-	public abstract List<String> getPortletModes();
+	List<String> getPortletModes();
 
-	public abstract void setPortletModes(List<String> portletModes);
-
+	void setPortletModes(List<String> portletModes);
+	
+	String getId();
+	
+	void setId(String id);
 }

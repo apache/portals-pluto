@@ -105,7 +105,7 @@ public class BaseURLImpl implements BaseURL {
 	        throw new IllegalArgumentException(
 	            "name and value must not be null");
 	    }
-	    List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+	    List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 	    if (publicRenderParameterNames == null){
 	    	parameters.put(name, new String[]{value});
 	    }
@@ -124,7 +124,7 @@ public class BaseURLImpl implements BaseURL {
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 	    
 		if (publicRenderParameterNames == null){
 			parameters.put(name, StringUtils.copy(values));
@@ -160,7 +160,7 @@ public class BaseURLImpl implements BaseURL {
         
         this.parameters.clear();
         this.publicRenderParameters.clear();
-        List<String> publicPortletRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+        List<String> publicPortletRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
         if (parameters.keySet()!= null){
         	for (Object key : parameters.keySet()) {
         		if (publicPortletRenderParameterNames == null)

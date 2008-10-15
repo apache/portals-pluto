@@ -25,15 +25,12 @@
 Pluto Descriptor Service Implementation
 
     The Pluto descriptor services provide an entry point for reading and 
-writing object models representing the web and portlet descriptor files
-(<<<WEB-INF/web.xml>>> and <<<WEB-INF/portlet.xml>>>).  The Pluto 1.1
- implementation uses {{{http://www.castor.org}Castor}} for marshalling 
-and unmarshalling the object models.  Pluto 2.0 uses JAXB.
+writing object models representing the portlet descriptor files
+(<<<WEB-INF/portlet.xml>>>).   Pluto 2.0 uses JAXB for marshalling and unmarshalling the object models.
 
     If you use the Pluto descriptor services in your own project, be
-sure to code to the interfaces <<<org.apache.pluto.descriptors.services.PortletAppDescriptorService>>>
-and <<<org.apache.pluto.descriptors.services.WebAppDescriptorService>>> and 
-not directly to the implementation classes.
+sure to code to the interface <<<org.apache.pluto.descriptors.services.PortletAppDescriptorService>>>
+and not directly to the implementation classes.
 
 * XML parsing in Pluto 2.x
 

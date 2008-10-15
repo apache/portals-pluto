@@ -17,103 +17,82 @@ package org.apache.pluto.om.portlet;
 
 import java.util.List;
 
-import javax.xml.namespace.QName;
-
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.Description;
+import org.apache.pluto.om.common.DisplayName;
 import org.apache.pluto.om.common.InitParam;
 import org.apache.pluto.om.common.SecurityRoleRef;
 
 public interface Portlet {
-
-	// Private Member Variables ------------------------------------------------
-	/**
-	 * The value of the expirationCache property when no expiration cache was configured
-	 * in portlet.xml for this portlet descriptor.
-	 */
-	public static final int EXPIRATION_CACHE_UNSET = Integer.MIN_VALUE;
-	//	private static final int EXPIRATION_CACHE_DEFAULT = -2;
-	public static final String QNAME_JSR168 = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd";
-
+    
 	/**
 	 * Returns a string representation of this instance.
 	 * FIXME: more info!
 	 * @return a string representation of this instance.
 	 */
-	public abstract String toString();
+	String toString();
 
 	/**
 	 * Returns the hash code for this instance.
 	 * @return the hash code for this instance.
 	 */
-	public abstract int hashCode();
+	int hashCode();
 	
-	public PortletApp getApplication();
+	String getId();
+	
+	void setId(String id);
+	
+	PortletApp getApplication();
 
-	public abstract List<InitParam> getInitParams();
+	ElementFactoryList<InitParam> getInitParams();
 
-	public abstract void setInitParams(List<InitParam> initParams);
+	String getPortletClass();
 
-	public abstract String getPortletClass();
+	void setPortletClass(String portletClass);
 
-	public abstract void setPortletClass(String portletClass);
+	PortletInfo getPortletInfo();
 
-	public abstract PortletInfo getPortletInfo();
+    PortletInfo getPortletInfo(boolean create);
 
-	public abstract void setPortletInfo(PortletInfo portletInfo);
+	String getPortletName();
 
-	public abstract String getPortletName();
+	void setPortletName(String portletName);
 
-	public abstract void setPortletName(String portletName);
+	PortletPreferences getPortletPreferences();
 
-	public abstract PortletPreferences getPortletPreferences();
+    PortletPreferences getPortletPreferences(boolean create);
 
-	public abstract void setPortletPreferences(
-			PortletPreferences portletPreferences);
+    ElementFactoryList<EventDefinitionReference> getSupportedProcessingEvents();
 
-	public abstract List<QName> getProcessingEvents();
+    ElementFactoryList<EventDefinitionReference> getSupportedPublishingEvents();
 
-	public abstract void setProcessingEvents(
-			List<EventDefinitionReference> processingEvents);
+	List<String> getSupportedPublicRenderParameters();
 
-	public abstract List<QName> getPublishingEvents();
+	void setSupportedPublicRenderParameters(List<String> publicRenderParameters);
 
-	public abstract void setPublishingEvents(
-			List<EventDefinitionReference> publishingEvents);
+	String getResourceBundle();
 
-	public abstract List<String> getPublicRenderParameter();
+	void setResourceBundle(String resourceBundle);
 
-	public abstract void setPublicRenderParameter(
-			List<String> publicRenderParameter);
+	ElementFactoryList<SecurityRoleRef> getSecurityRoleRefs();
 
-	public abstract String getResourceBundle();
+	ElementFactoryList<Supports> getSupports();
 
-	public abstract void setResourceBundle(String resourceBundle);
+	ElementFactoryList<Description> getDescriptions();
 
-	public abstract List<SecurityRoleRef> getSecurityRoleRefs();
+    ElementFactoryList<DisplayName> getDisplayNames();
 
-	public abstract void setSecurityRoleRefs(
-			List<SecurityRoleRef> securityRoleRefs);
+	List<String> getSupportedLocales();
 
-	public abstract List<Supports> getSupports();
+	void setSupportedLocales(List<String> supportedLocales);
 
-	public abstract void setSupports(List<Supports> supports);
+	int getExpirationCache();
+	
+	String getCacheScope();
+	
+	void setCacheScope(String cacheScope);
 
-	public abstract String getDescription();
+	void setExpirationCache(int expirationCache);
 
-	public abstract void setDescription(String description);
-
-	public abstract String getDisplayName();
-
-	public abstract void setDisplayName(String displayName);
-
-	public abstract List<String> getSupportedLocale();
-
-	public abstract void setSupportedLocale(List<String> supportedLocale);
-
-	public abstract ExpirationCache getExpirationCache();
-
-	public abstract void setExpirationCache(
-			ExpirationCache expirationCache);
-
-	public abstract List<ContainerRuntimeOption> getContainerRuntimeOption();
-
+	ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions();
 }

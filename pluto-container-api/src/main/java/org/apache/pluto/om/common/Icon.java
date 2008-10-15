@@ -21,24 +21,23 @@ public interface Icon {
 	 * Retrieve the large icon uri.
 	 * @return the uri to the large icon (relative to the context path).
 	 */
-	public abstract String getLargeIcon();
+	String getLargeIcon();
 
 	/**
 	 * Set the large icon uri.
 	 * @param largeIcon the relative path to the icon resource.
 	 */
-	public abstract void setLargeIcon(String largeIcon);
+	void setLargeIcon(String largeIcon);
 
 	/**
 	 * Retrieve the small icon uri.
 	 * @return the uri to the small icon (relative to the context path).
 	 */
-	public abstract String getSmallIcon();
+	String getSmallIcon();
 
 	/**
 	 * Set the small Icon uri.
 	 * @param smallIcon the relative path to the icon resource.
 	 */
-	public abstract void setSmallIcon(String smallIcon);
-
+	void setSmallIcon(String smallIcon);
 }

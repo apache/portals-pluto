@@ -19,14 +19,17 @@ import javax.xml.namespace.QName;
 
 public interface EventDefinitionReference {
 
-	/**
-	 * @return Returns the name.
-	 */
-	public abstract QName getName();
+	QName getQName();
 
-	/**
-	 * @param name The name to set.
-	 */
-	public abstract void setName(QName qname);
+	void setQName(QName qname);
 
+	String getName();
+	
+	void setName(String name);
+	
+	String getId();
+	
+	void setId(String id);
+	
+	QName getQualifiedName(String defaultNamespace);	
 }

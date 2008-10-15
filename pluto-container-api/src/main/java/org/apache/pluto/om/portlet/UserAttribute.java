@@ -15,14 +15,18 @@
  */
 package org.apache.pluto.om.portlet;
 
+import org.apache.pluto.om.ElementFactoryList;
+import org.apache.pluto.om.common.Description;
+
 public interface UserAttribute {
 
-	public abstract String getDescription();
+	ElementFactoryList<Description> getDescriptions();
+	
+	String getName();
 
-	public abstract void setDescription(String description);
+	void setName(String name);
 
-	public abstract String getName();
-
-	public abstract void setName(String name);
-
+	String getId();
+	
+	void setId(String id);
 }

@@ -22,8 +22,8 @@ import java.util.ResourceBundle;
 
 import junit.framework.Assert;
 
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletInfoDD;
+import org.apache.pluto.descriptors.portlet20.PortletType;
+import org.apache.pluto.descriptors.portlet20.PortletInfoType;
 import org.apache.pluto.om.portlet.Portlet;
 import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.util.PlutoTestCase;
@@ -39,14 +39,12 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
     public void setUp() throws Exception {
         super.setUp();
 
-        validDD = new PortletDD();
+        validDD = new PortletType();
 
-        PortletInfo info = new PortletInfoDD();
+        PortletInfo info = validDD.getPortletInfo(true);
         info.setTitle("Info Title");
         info.setShortTitle("Info Short Title");
         info.setKeywords("Info Keywords");
-        validDD.setPortletInfo(info);
-
         validDD.setResourceBundle(TestResourceBundle.class.getName());
     }
 
@@ -75,7 +73,6 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
     }
 
     public void testGetResourceBundleNoInfo() {
-        validDD.setPortletInfo(null);
         ResourceBundleFactory factory = new ResourceBundleFactory(validDD);
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 

@@ -57,12 +57,12 @@ public class FilterManagerImpl implements FilterManager{
 	}
 	
 	private void initFilterChain(){
-		List<FilterMapping> filterMappingList = portletApp.getFilterMapping();
+		List<FilterMapping> filterMappingList = portletApp.getFilterMappings();
 		if (filterMappingList!= null){
 			for (FilterMapping filterMapping : filterMappingList) {
 				if (isFilter(filterMapping, portletName)){
 					//the filter is specified for the portlet, check the filter for the lifecycle
-					List<Filter> filterList = portletApp.getFilter();
+					List<Filter> filterList = portletApp.getFilters();
 					for (Filter filter : filterList) {
 						//search for the filter in the filter
 						if (filter.getFilterName().equals(filterMapping.getFilterName())){
@@ -91,7 +91,7 @@ public class FilterManagerImpl implements FilterManager{
 	}
 	
 	private boolean isLifeCycle(Filter filter, String lifeCycle){
-		List <String> lifeCyclesList = filter.getLifecycle();
+		List <String> lifeCyclesList = filter.getLifecycles();
 		for (String string : lifeCyclesList) {
 			if (string.equals(lifeCycle))
 				return true;
@@ -100,7 +100,7 @@ public class FilterManagerImpl implements FilterManager{
 	}
 	
 	private boolean isFilter(FilterMapping filterMapping,String portletName){
-		List <String> portletNamesList = filterMapping.getPortletName();
+		List <String> portletNamesList = filterMapping.getPortletNames();
 		for (String portletNameFromFilterList : portletNamesList) {
 			if (portletNameFromFilterList.endsWith("*")){
 				if (portletNameFromFilterList.length()==1){

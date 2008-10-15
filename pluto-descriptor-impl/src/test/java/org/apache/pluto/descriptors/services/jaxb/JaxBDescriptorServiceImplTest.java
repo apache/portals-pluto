@@ -75,10 +75,8 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 				"<name>name</name>\n" +
 				"<value>value</value>\n" +
 				"</init-param>\n" +
-				"<expiration-cache id=\"exp1\">\n" +
-				" <expiration-time>-1</expiration-time>\n" +
-				"<scope>scope</scope>\n" +
-				"</expiration-cache>\n" +
+				"<expiration-cache>100</expiration-cache>\n" +
+				"<cache-scope>private</cache-scope>\n" +
 				" <supports id=\"sup1\">\n" +
 				"<mime-type>mime-type</mime-type>\n" +
 				"<portlet-mode>portlet-mode</portlet-mode>\n" +
@@ -197,9 +195,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 				"<name>name</name>\n" +
 				"<value>value</value>\n" +
 				"</init-param>\n" +
-				"<expiration-cache id=\"exp1\">\n" +
-				"-1" +
-				"</expiration-cache>\n" +
+				"<expiration-cache>50</expiration-cache>\n" +
 				" <supports id=\"sup1\">\n" +
 				"<mime-type>mime-type</mime-type>\n" +
 				"<portlet-mode>portlet-mode</portlet-mode>\n" +
@@ -256,7 +252,6 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			      "<transport-guarantee>NONE</transport-guarantee>\n" +
 			    "</user-data-constraint>\n" +
 			  "</security-constraint>\n" +
-			  "<resource-bundle>resource-bundle</resource-bundle>\n" +
 		"" );
 
         portletNoCache.append(
@@ -322,19 +317,20 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			
 			// test jsr168 compliant portlets
 			Portlet portlet168 = (Portlet)portletApp168.getPortlets().get(0);
-			assertTrue(portlet168.getExpirationCache().getExpirationTime()==-1);
+			assertTrue(portlet168.getExpirationCache()==50);
 			assertEquals(portlet168.getPortletName(),"portlet168");
 			assertEquals(portlet168.getInitParams().get(0).getParamValue(),"value");
 			assertEquals(portlet168.getSecurityRoleRefs().get(0).getRoleLink(), "role-link");
-			assertEquals(portletApp168.getCustomPortletMode().get(0).getPortletMode(), "portlet-mode");
-			assertEquals(portletApp168.getCustomWindowState().get(0).getWindowState(), "window-state");
-			assertEquals(portletApp168.getUserAttribute().get(0).getName(), "name" );
-			assertEquals(portletApp168.getSecurityConstraint().get(0).getPortletCollection().getPortletName().get(0), "portlet-name");
-			
+			assertEquals(portletApp168.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
+			assertEquals(portletApp168.getCustomWindowStates().get(0).getWindowState(), "window-state");
+			assertEquals(portletApp168.getUserAttributes().get(0).getName(), "name" );
+			assertEquals(portletApp168.getSecurityConstraints().get(0).getPortletCollection().getPortletNames().get(0), "portlet-name");
+			assertEquals(portlet168.getExpirationCache(), 50);
 			// id (isn't supported yet)
 //			assertFalse(portletApp.getId().equals("id2"));
 //			assertTrue(portletApp.getId().equals("id1"));
 			
+			jaxb.write(portletApp168, System.out);
 			// portlet id
 			Portlet portlet286 = (Portlet)portletApp286.getPortlets().get(0);
 //			assertTrue(portlet1.getId().equals("id2"));
@@ -349,26 +345,28 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			
 			assertEquals("supports size should be 3", 3, portlet286.getSupports().size());
 			
-			assertEquals(portletApp286.getCustomPortletMode().get(0).getPortletMode(), "portlet-mode");
-			assertEquals(portletApp286.getCustomWindowState().get(0).getWindowState(), "window-state");
-			assertEquals(portletApp286.getUserAttribute().get(0).getName(), "name" );
-			assertEquals(portletApp286.getSecurityConstraint().get(0).getPortletCollection().getPortletName().get(0), "portlet-name");
-			assertEquals(portletApp286.getEvents().get(0).getJavaClass(), "java-class");
+			assertEquals(portletApp286.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
+			assertEquals(portletApp286.getCustomWindowStates().get(0).getWindowState(), "window-state");
+			assertEquals(portletApp286.getUserAttributes().get(0).getName(), "name" );
+			assertEquals(portletApp286.getSecurityConstraints().get(0).getPortletCollection().getPortletNames().get(0), "portlet-name");
+			assertEquals(portletApp286.getEventDefinitions().get(0).getValueType(), "java-class");
 //			assertEquals(portletApp286.getRender().get(0).getName(), "QName");
-			assertEquals(portletApp286.getFilter().get(0).getLifecycle().get(0), "lifecycle");
-			assertEquals(portletApp286.getFilterMapping().get(0).getPortletName().get(0), "portlet-name");
+			assertEquals(portletApp286.getFilters().get(0).getLifecycles().get(0), "lifecycle");
+			assertEquals(portletApp286.getFilterMappings().get(0).getPortletNames().get(0), "portlet-name");
 			assertEquals(portletApp286.getResourceBundle(), "resource-bundle");
 			assertEquals(portletApp286.getVersion(), "2.0");
 			
 			// test container runtime options
-			assertEquals(portletApp286.getContainerRuntimeOption().size(),1);
-			assertEquals(portletApp286.getContainerRuntimeOption().get(0).getName(),"Runtime-Option-Portlet-App");
-			assertEquals(portletApp286.getContainerRuntimeOption().get(0).getValue().get(0),"false");
+			assertEquals(portletApp286.getContainerRuntimeOptions().size(),1);
+			assertEquals(portletApp286.getContainerRuntimeOptions().get(0).getName(),"Runtime-Option-Portlet-App");
+			assertEquals(portletApp286.getContainerRuntimeOptions().get(0).getValues().get(0),"false");
 			
-			assertEquals(portlet286.getContainerRuntimeOption().size(),1);
-			assertEquals(portlet286.getContainerRuntimeOption().get(0).getName(),"Runtime-Option");
-			assertEquals(portlet286.getContainerRuntimeOption().get(0).getValue().get(0),"true");
+			assertEquals(portlet286.getContainerRuntimeOptions().size(),1);
+			assertEquals(portlet286.getContainerRuntimeOptions().get(0).getName(),"Runtime-Option");
+			assertEquals(portlet286.getContainerRuntimeOptions().get(0).getValues().get(0),"true");
+            assertEquals(portlet286.getExpirationCache(), 100);
 			
+            jaxb.write(portletApp286, System.out);
 			
 		} catch (IOException e) {
 			fail("exception was thrown");
@@ -400,7 +398,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
         assertEquals( 1, portletDD.getPortlets().size() );
 
         Portlet pd = (Portlet) portletDD.getPortlets().get( 0 );
-        assertNull( pd.getExpirationCache() );
+        assertEquals( pd.getExpirationCache(), 0 );
     }
 
     public void testParseNoExpirationCache286() throws IOException {
@@ -411,7 +409,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
         assertEquals( 1, portletDD.getPortlets().size() );
 
         Portlet pd = (Portlet) portletDD.getPortlets().get( 0 );
-        assertNull( pd.getExpirationCache() );
+        assertEquals( pd.getExpirationCache(), 0 );
     }
 
 }

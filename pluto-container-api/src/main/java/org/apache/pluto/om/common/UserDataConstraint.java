@@ -15,20 +15,21 @@
  */
 package org.apache.pluto.om.common;
 
-import java.util.List;
+import org.apache.pluto.om.ElementFactoryList;
 
 public interface UserDataConstraint {
 
-	public static final String NONE = "NONE";
-	public static final String INTEGRAL = "INTEGRAL";
-	public static final String CONFIDENTIAL = "CONFIDENTIAL";
+	String NONE = "NONE";
+	String INTEGRAL = "INTEGRAL";
+	String CONFIDENTIAL = "CONFIDENTIAL";
 
-	public abstract List<String> getDescriptions();
+	ElementFactoryList<Description> getDescriptions();
 
-	public abstract void setDescriptions(List<String> descriptions);
+	String getTransportGuarantee();
 
-	public abstract String getTransportGuarantee();
-
-	public abstract void setTransportGuarantee(String transportGuarantee);
-
+	void setTransportGuarantee(String transportGuarantee);
+	
+	String getId();
+	
+	void setId(String id);
 }
