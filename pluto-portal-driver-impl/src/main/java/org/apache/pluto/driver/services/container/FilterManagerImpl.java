@@ -29,7 +29,7 @@ import javax.portlet.ResourceServingPortlet;
 
 import org.apache.pluto.om.portlet.Filter;
 import org.apache.pluto.om.portlet.FilterMapping;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.FilterManager;
 
 /**
@@ -40,11 +40,11 @@ import org.apache.pluto.spi.FilterManager;
  */
 public class FilterManagerImpl implements FilterManager{
 	private FilterChainImpl filterchain;
-	private PortletApp portletApp;
+	private PortletApplicationDefinition portletApp;
 	private String portletName;
 	private String lifeCycle;
 	
-	public FilterManagerImpl(PortletApp portletApp, String portletName, String lifeCycle){
+	public FilterManagerImpl(PortletApplicationDefinition portletApp, String portletName, String lifeCycle){
 		this.portletApp = portletApp;
 		this.portletName =  portletName;
 		this.lifeCycle = lifeCycle;
@@ -52,7 +52,7 @@ public class FilterManagerImpl implements FilterManager{
 		initFilterChain();
 	}
 	
-	public static FilterManager getFilterManager(PortletApp portletApp, String portletName, String lifeCycle){
+	public static FilterManager getFilterManager(PortletApplicationDefinition portletApp, String portletName, String lifeCycle){
 		return new FilterManagerImpl(portletApp,portletName,lifeCycle);
 	}
 	

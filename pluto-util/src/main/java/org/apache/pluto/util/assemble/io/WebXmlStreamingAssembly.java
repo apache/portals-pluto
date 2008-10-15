@@ -21,8 +21,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.descriptors.web.PlutoWebXmlRewriter;
 
@@ -66,9 +66,9 @@ public class WebXmlStreamingAssembly
             }
             throw new IOException(e.getMessage());
         }
-        PortletApp portletAppDD = new PortletAppDescriptorServiceImpl().read(portletXmlIn);
+        PortletApplicationDefinition portletAppDD = new PortletAppDescriptorServiceImpl().read(portletXmlIn);
         portletXmlIn.close();
-        for (Portlet portlet : portletAppDD.getPortlets())
+        for (PortletDefinition portlet : portletAppDD.getPortlets())
         {
             webXmlRewriter.injectPortletServlet(dispatchServletClass, portlet.getPortletName());
         }

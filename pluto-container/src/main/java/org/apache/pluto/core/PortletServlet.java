@@ -129,7 +129,7 @@ public class PortletServlet extends HttpServlet {
             throw new ServletException(ex);
         }
 
-        org.apache.pluto.om.portlet.Portlet portletDD = portletConfig.getPortletDefinition();
+        org.apache.pluto.om.portlet.PortletDefinition portletDD = portletConfig.getPortletDefinition();
         
         // Create and initialize the portlet wrapped in the servlet.
         try {

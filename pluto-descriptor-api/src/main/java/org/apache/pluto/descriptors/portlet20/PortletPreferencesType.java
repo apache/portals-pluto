@@ -25,8 +25,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.PortletPreference;
-import org.apache.pluto.om.portlet.PortletPreferences;
+import org.apache.pluto.om.portlet.Preference;
+import org.apache.pluto.om.portlet.Preferences;
 
 /**
  * Portlet persistent preference store. Used in: portlet <p>Java class for portlet-preferencesType complex type. <p>The
@@ -50,28 +50,28 @@ import org.apache.pluto.om.portlet.PortletPreferences;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "portlet-preferencesType", propOrder = { "preference", "preferencesValidator" })
-public class PortletPreferencesType implements PortletPreferences
+public class PortletPreferencesType implements Preferences
 {
     @XmlElement(name = "preference", type=PreferenceType.class)
-    protected List<PortletPreference> preference;
+    protected List<Preference> preference;
     @XmlElement(name = "preferences-validator")
     protected String preferencesValidator;
     @XmlAttribute
     protected String id;
 
-    public ElementFactoryList<PortletPreference> getPortletPreferences()
+    public ElementFactoryList<Preference> getPortletPreferences()
     {
         if (preference == null || !(preference instanceof ElementFactoryList))
         {
-            ElementFactoryList<PortletPreference> lf = 
-                new ElementFactoryList<PortletPreference>( new ElementFactoryList.Factory<PortletPreference>()
+            ElementFactoryList<Preference> lf = 
+                new ElementFactoryList<Preference>( new ElementFactoryList.Factory<Preference>()
                 {
-                    public Class<? extends PortletPreference> getElementClass()
+                    public Class<? extends Preference> getElementClass()
                     {
                         return PreferenceType.class;
                     }
 
-                    public PortletPreference newElement()
+                    public Preference newElement()
                     {
                         return new PreferenceType();
                     }
@@ -82,7 +82,7 @@ public class PortletPreferencesType implements PortletPreferences
             }
             preference = lf;
         }
-        return (ElementFactoryList<PortletPreference>)preference;
+        return (ElementFactoryList<Preference>)preference;
     }
 
     public String getPreferencesValidator()

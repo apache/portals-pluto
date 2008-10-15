@@ -25,7 +25,7 @@ import javax.portlet.WindowState;
  * request should be processed.  The PortletWindow is used internally
  * to map the request to the configured Portlet Application and Portlet.
  *
- * @see org.apache.pluto.om.portlet.Portlet
+ * @see org.apache.pluto.om.portlet.PortletDefinition
  *
  * @version 1.0
  * @since Sep 22, 2004

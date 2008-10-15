@@ -19,13 +19,13 @@ package org.apache.pluto.internal;
 import javax.portlet.PortletConfig;
 import javax.servlet.ServletConfig;
 
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 
 public interface InternalPortletConfig extends PortletConfig {
 
     public ServletConfig getServletConfig();
 
-    public Portlet getPortletDefinition();
+    public PortletDefinition getPortletDefinition();
 }
 
 

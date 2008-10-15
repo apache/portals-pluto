@@ -27,7 +27,7 @@ import javax.portlet.ResourceURL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.om.portlet.Listener;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.PortletURLListener;
 
 public class PortletURLListenerImpl implements PortletURLListener {
@@ -40,7 +40,7 @@ public class PortletURLListenerImpl implements PortletURLListener {
 	}
 	
 	
-	public synchronized void callListener(PortletApp portletApp, BaseURL baseURL, boolean isAction, boolean isResource){
+	public synchronized void callListener(PortletApplicationDefinition portletApp, BaseURL baseURL, boolean isAction, boolean isResource){
 		if (isAction&&isResource){
 			String message = "It is not allowed to set both values from isAction and isResource to true";
 			LOG.error(message, new IllegalArgumentException(message));

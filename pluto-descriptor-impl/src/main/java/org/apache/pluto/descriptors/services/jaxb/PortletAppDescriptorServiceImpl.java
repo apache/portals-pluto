@@ -11,7 +11,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 /** 
  *  JAXB implementation of the xml2java binding
@@ -28,8 +28,8 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      */
     
     @SuppressWarnings("unchecked")
-    public PortletApp read(InputStream in) throws IOException {
-    	JAXBElement<PortletApp> portletApp = null;
+    public PortletApplicationDefinition read(InputStream in) throws IOException {
+    	JAXBElement<PortletApplicationDefinition> portletApp = null;
     	try {
     		JAXBContext jc = JAXBContext.newInstance( 
     				"org.apache.pluto.descriptors.portlet10" + ":" +
@@ -38,7 +38,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     		Unmarshaller u = jc.createUnmarshaller();
     		u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 
-    		portletApp = (JAXBElement<PortletApp>) u.unmarshal(in);	            
+    		portletApp = (JAXBElement<PortletApplicationDefinition>) u.unmarshal(in);	            
     	}catch (JAXBException jaxbEx){
     		jaxbEx.printStackTrace();
     		throw new IOException(jaxbEx.getMessage());
@@ -55,7 +55,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      * @param portlet
      * @throws java.io.IOException
      */
-    public void write(PortletApp portlet, OutputStream out) throws IOException {
+    public void write(PortletApplicationDefinition portlet, OutputStream out) throws IOException {
         try {
             JAXBContext jc = null;
             if (portlet.getVersion().equals("1.0"))

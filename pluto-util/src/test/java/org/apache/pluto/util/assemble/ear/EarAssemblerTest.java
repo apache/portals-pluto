@@ -26,8 +26,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
@@ -85,7 +85,7 @@ public class EarAssemblerTest extends ArchiveBasedAssemblyTest {
                 earFile.exists() && earFile.canRead() );
         
         PortletAppDescriptorService portletSvc = new PortletAppDescriptorServiceImpl();
-        PortletApp portletApp = null;
+        PortletApplicationDefinition portletApp = null;
 
         PlutoWebXmlRewriter webXmlRewriter = null;
         
@@ -122,7 +122,7 @@ public class EarAssemblerTest extends ArchiveBasedAssemblyTest {
         assertTrue( "WAR archive did not contain any servlet mappings", webXmlRewriter.hasServletMappings() );
         assertTrue( "WAR archive did not contain any portlets", portletApp.getPortlets().size() > 0 );
         
-        Portlet portlet = (Portlet) portletApp.getPortlets().iterator().next();
+        PortletDefinition portlet = (PortletDefinition) portletApp.getPortlets().iterator().next();
         assertEquals( "Unexpected test portlet name.", testPortletName, portlet.getPortletName() );
         
         String servletClassName = webXmlRewriter.getServletClass( portlet.getPortletName() );

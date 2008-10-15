@@ -43,7 +43,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
@@ -314,7 +314,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     }
 
     protected boolean isPortletModeAllowedByPortlet(PortletMode mode) {
-        Portlet dd = getPortletWindow().getPortletEntity()
+        PortletDefinition dd = getPortletWindow().getPortletEntity()
             .getPortletDefinition();
 
         Iterator supports = dd.getSupports().iterator();

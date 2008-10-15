@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.apache.pluto.om.ElementFactoryList;
 
-public interface Portlet {
+public interface PortletDefinition {
     
 	/**
 	 * Returns a string representation of this instance.
@@ -38,7 +38,7 @@ public interface Portlet {
 	
 	void setId(String id);
 	
-	PortletApp getApplication();
+	PortletApplicationDefinition getApplication();
 
 	ElementFactoryList<InitParam> getInitParams();
 
@@ -54,9 +54,9 @@ public interface Portlet {
 
 	void setPortletName(String portletName);
 
-	PortletPreferences getPortletPreferences();
+	Preferences getPortletPreferences();
 
-    PortletPreferences getPortletPreferences(boolean create);
+    Preferences getPortletPreferences(boolean create);
 
     ElementFactoryList<EventDefinitionReference> getSupportedProcessingEvents();
 

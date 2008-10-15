@@ -34,8 +34,8 @@ import org.apache.pluto.om.portlet.EventDefinition;
 import org.apache.pluto.om.portlet.Filter;
 import org.apache.pluto.om.portlet.FilterMapping;
 import org.apache.pluto.om.portlet.Listener;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.om.portlet.PublicRenderParameter;
 import org.apache.pluto.om.portlet.SecurityConstraint;
 import org.apache.pluto.om.portlet.UserAttribute;
@@ -68,10 +68,10 @@ import org.apache.pluto.om.portlet.UserAttribute;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "portlet-appType", propOrder = { "portlet", "customPortletMode", "customWindowState", "userAttribute",
                                                 "securityConstraint" })
-public class PortletAppType implements PortletApp
+public class PortletAppType implements PortletApplicationDefinition
 {
     @XmlElement(name = "portlet", type = PortletType.class)
-    protected List<Portlet> portlet;
+    protected List<PortletDefinition> portlet;
     @XmlElement(name = "custom-portlet-mode", type = CustomPortletModeType.class)
     protected List<CustomPortletMode> customPortletMode;
     @XmlElement(name = "custom-window-state", type = CustomWindowStateType.class)
@@ -97,18 +97,18 @@ public class PortletAppType implements PortletApp
         this.name = name;
     }
 
-    public ElementFactoryList<Portlet> getPortlets()
+    public ElementFactoryList<PortletDefinition> getPortlets()
     {
         if (portlet == null || !(portlet instanceof ElementFactoryList))
         {
-            ElementFactoryList<Portlet> lf = new ElementFactoryList<Portlet>(new ElementFactoryList.Factory<Portlet>()
+            ElementFactoryList<PortletDefinition> lf = new ElementFactoryList<PortletDefinition>(new ElementFactoryList.Factory<PortletDefinition>()
             {
-                public Class<? extends Portlet> getElementClass()
+                public Class<? extends PortletDefinition> getElementClass()
                 {
                     return PortletType.class;
                 }
 
-                public Portlet newElement()
+                public PortletDefinition newElement()
                 {
                     return new PortletType();
                 }
@@ -119,7 +119,7 @@ public class PortletAppType implements PortletApp
             }
             portlet = lf;
         }
-        return (ElementFactoryList<Portlet>) portlet;
+        return (ElementFactoryList<PortletDefinition>) portlet;
     }
 
     public ElementFactoryList<CustomPortletMode> getCustomPortletModes()

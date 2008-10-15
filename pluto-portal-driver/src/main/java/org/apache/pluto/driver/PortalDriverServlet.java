@@ -37,7 +37,7 @@ import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -210,7 +210,7 @@ public class PortalDriverServlet extends HttpServlet {
     private void setPublicRenderParameter(HttpServletRequest request, PortalURL portalURL, String portletID)throws ServletException, PortletContainerException {    		
 		String applicationId = PortletWindowConfig.parseContextPath(portletID);
 		String portletName = PortletWindowConfig.parsePortletName(portletID);
-		Portlet portletDD = container.getOptionalContainerServices().getPortletRegistryService()
+		PortletDefinition portletDD = container.getOptionalContainerServices().getPortletRegistryService()
 								.getPortlet(applicationId, portletName);    		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		if (parameterNames != null){

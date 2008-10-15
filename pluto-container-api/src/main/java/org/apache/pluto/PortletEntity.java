@@ -16,7 +16,7 @@
  */
 package org.apache.pluto;
 
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -31,7 +31,7 @@ public interface PortletEntity {
      * Returns the portlet description. The return value cannot be NULL.
      * @return the portlet description.
      */
-    public Portlet getPortletDefinition();
+    public PortletDefinition getPortletDefinition();
 }
 
 

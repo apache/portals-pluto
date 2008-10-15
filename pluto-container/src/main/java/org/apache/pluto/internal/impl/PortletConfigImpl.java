@@ -38,8 +38,8 @@ import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
 import org.apache.pluto.om.portlet.InitParam;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
@@ -58,19 +58,19 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     /**
      * The portlet descriptor.
      */
-    protected Portlet portletDD;
+    protected PortletDefinition portletDD;
     
     /**
      * The portlet application descriptor.
      */
-    private PortletApp portletAppDD;
+    private PortletApplicationDefinition portletAppDD;
 
     private ResourceBundleFactory bundles;
 
     public PortletConfigImpl(ServletConfig servletConfig,
                              PortletContext portletContext,
-                             Portlet portletDD,
-                             PortletApp portletAppDD) {
+                             PortletDefinition portletDD,
+                             PortletApplicationDefinition portletAppDD) {
         this.servletConfig = servletConfig;
         this.portletContext = portletContext;
         this.portletDD = portletDD;
@@ -133,7 +133,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return servletConfig;
     }
 
-    public Portlet getPortletDefinition() {
+    public PortletDefinition getPortletDefinition() {
         return portletDD;
     }
     // --------------------------------------------------------------------------------------------

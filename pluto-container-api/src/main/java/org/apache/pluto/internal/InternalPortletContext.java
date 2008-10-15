@@ -19,7 +19,7 @@ package org.apache.pluto.internal;
 import javax.portlet.PortletContext;
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 public interface InternalPortletContext extends PortletContext {
 
@@ -39,7 +39,7 @@ public interface InternalPortletContext extends PortletContext {
      *
      * @return application config
      */
-    public PortletApp getPortletApplicationDefinition();
+    public PortletApplicationDefinition getPortletApplicationDefinition();
 }
 
 

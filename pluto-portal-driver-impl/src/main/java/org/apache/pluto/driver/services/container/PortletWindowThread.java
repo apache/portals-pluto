@@ -43,7 +43,7 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.om.portlet.EventDefinition;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 public class PortletWindowThread extends Thread {
@@ -144,7 +144,7 @@ public class PortletWindowThread extends Thread {
 	}
 
 	private EventDefinition getEventDefintion(QName name) throws PortletContainerException {
-		PortletApp appDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
+		PortletApplicationDefinition appDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
 		for (EventDefinition def : appDD.getEventDefinitions()){
 			if (def.getQName() != null){
 				if (def.getQName().equals(name))

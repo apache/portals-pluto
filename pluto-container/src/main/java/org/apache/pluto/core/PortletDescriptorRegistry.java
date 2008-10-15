@@ -26,7 +26,7 @@ import javax.servlet.ServletContext;
 import org.apache.pluto.PlutoConfigurationException;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.util.StringManager;
 
 /**
@@ -116,9 +116,9 @@ public class PortletDescriptorRegistry {
      * @return The portlet application deployment descriptor.
      * @throws PortletContainerException if the descriptor can not be found or parsed
      */
-    public PortletApp getPortletAppDD(ServletContext servletContext)
+    public PortletApplicationDefinition getPortletAppDD(ServletContext servletContext)
     throws PortletContainerException {
-        PortletApp portletApp = (PortletApp) cache.get(servletContext);
+        PortletApplicationDefinition portletApp = (PortletApplicationDefinition) cache.get(servletContext);
         if (portletApp == null) {
         	portletApp = createDefinition(servletContext);
             cache.put(servletContext, portletApp);
@@ -136,9 +136,9 @@ public class PortletDescriptorRegistry {
      * @return the Portlet Application Deployment Descriptor.
      * @throws PortletContainerException
      */
-    private PortletApp createDefinition(ServletContext servletContext)
+    private PortletApplicationDefinition createDefinition(ServletContext servletContext)
     throws PortletContainerException {
-        PortletApp portletApp = null;
+        PortletApplicationDefinition portletApp = null;
         try {
             InputStream in = servletContext.getResourceAsStream(PORTLET_XML);
             portletApp = portletDDService.read(in);

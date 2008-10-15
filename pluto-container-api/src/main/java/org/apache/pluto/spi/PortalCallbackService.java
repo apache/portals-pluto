@@ -22,7 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.w3c.dom.Element;
 
 /**
@@ -96,7 +96,7 @@ public interface PortalCallbackService extends ContainerService {
      * Returns the FilterManager, this is used to process the filter.
      * @return FilterManager
      */
-    public FilterManager getFilterManager(PortletApp portletAppDD, String portletName, String lifeCycle); 
+    public FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName, String lifeCycle); 
     
     /**
      * Returns the PortletURLListener which calls the Filter for the URL.

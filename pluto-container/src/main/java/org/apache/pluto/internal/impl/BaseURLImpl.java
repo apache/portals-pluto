@@ -38,8 +38,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
@@ -211,7 +211,7 @@ public class BaseURLImpl implements BaseURL {
 	    else if (isResourceServing){
 	    	urlProvider.setResourceServing(true);
 	    }
-        PortletApp portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
+        PortletApplicationDefinition portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
 //      container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
 //      PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
         portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
@@ -276,7 +276,7 @@ public class BaseURLImpl implements BaseURL {
 	        return true;
 	    }
 	
-	    Portlet dd = portletWindow.getPortletEntity()
+	    PortletDefinition dd = portletWindow.getPortletEntity()
 	        .getPortletDefinition();
 	    Iterator supports = dd.getSupports().iterator();
 	    while(supports.hasNext()) {
@@ -345,7 +345,7 @@ public class BaseURLImpl implements BaseURL {
 	    else if (isResourceServing){
 	    	urlProvider.setResourceServing(true);
 	    }
-        PortletApp portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
+        PortletApplicationDefinition portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
 //      container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
 //      PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
         portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);

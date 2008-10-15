@@ -22,8 +22,8 @@ import java.util.Iterator;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 /**
  * Interface defining the services used by the container
@@ -66,7 +66,7 @@ public interface PortletRegistryService {
      * @throws PortletContainerException if the portlet application 
      *         isn't registered.
      */
-    PortletApp getPortletApplication(String applicationId)
+    PortletApplicationDefinition getPortletApplication(String applicationId)
         throws PortletContainerException;
 
     /**
@@ -86,7 +86,7 @@ public interface PortletRegistryService {
      * @return portlet
      * @throws PortletContainerException if portlet or application unknown
      */
-    Portlet getPortlet(String applicationId, String portletName)
+    PortletDefinition getPortlet(String applicationId, String portletName)
         throws PortletContainerException;
 
     /**

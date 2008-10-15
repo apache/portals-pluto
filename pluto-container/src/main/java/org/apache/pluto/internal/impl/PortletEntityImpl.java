@@ -21,7 +21,7 @@ import javax.portlet.ValidatorException;
 
 import org.apache.pluto.PortletEntity;
 import org.apache.pluto.core.PreferencesValidatorRegistry;
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet
@@ -36,11 +36,11 @@ public class PortletEntityImpl implements PortletEntity {
     // Private Member Variables ------------------------------------------------
     
     /** The cached PortletDD retrieved from the portlet descriptor registry. */
-    private Portlet portletDefinition;
+    private PortletDefinition portletDefinition;
     
     // Constructor -------------------------------------------------------------
     
-    public PortletEntityImpl(Portlet portletDefinition) {
+    public PortletEntityImpl(PortletDefinition portletDefinition) {
         this.portletDefinition = portletDefinition;
     }
     
@@ -51,7 +51,7 @@ public class PortletEntityImpl implements PortletEntity {
      * Returns the portlet description. The return value cannot be NULL.
      * @return the portlet description.
      */
-    public Portlet getPortletDefinition() {
+    public PortletDefinition getPortletDefinition() {
         return portletDefinition;
     }
 }

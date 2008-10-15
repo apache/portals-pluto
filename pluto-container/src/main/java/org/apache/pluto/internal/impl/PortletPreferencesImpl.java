@@ -37,7 +37,7 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.PreferencesValidatorRegistry;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.util.StringManager;
 
@@ -275,7 +275,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         // Validate the preferences before storing, if a validator is defined.
         //   If the preferences cannot pass the validation,
         //   an ValidatorException will be thrown out.
-        Portlet portletD = window.getPortletEntity().getPortletDefinition();
+        PortletDefinition portletD = window.getPortletEntity().getPortletDefinition();
         PreferencesValidator validator = PreferencesValidatorRegistry.getRegistry()
                                            .getPreferencesValidator(portletD);
         if (validator != null) {

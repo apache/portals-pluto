@@ -34,7 +34,7 @@ import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
 import org.apache.pluto.om.portlet.CustomWindowState;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 public class SupportedWindowStateServiceImpl implements
@@ -142,7 +142,7 @@ public class SupportedWindowStateServiceImpl implements
         // we look to see if it is a custom window state.
         
         String appId = PortletWindowConfig.parseContextPath(portletId);
-        PortletApp portletAppDD = null;
+        PortletApplicationDefinition portletAppDD = null;
         
         if (portletRegistry == null) 
         {                        

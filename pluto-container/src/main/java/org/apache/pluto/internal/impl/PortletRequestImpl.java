@@ -59,7 +59,7 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLProvider;
@@ -394,7 +394,7 @@ implements PortletRequest, InternalPortletRequest {
      */
     public boolean isUserInRole(String roleName) {
         PortletEntity entity = portletWindow.getPortletEntity();
-        Portlet def = entity.getPortletDefinition();
+        PortletDefinition def = entity.getPortletDefinition();
 
         SecurityRoleRef ref = null;
         Iterator refs = def.getSecurityRoleRefs().iterator();
@@ -538,7 +538,7 @@ implements PortletRequest, InternalPortletRequest {
     public Enumeration getResponseContentTypes() {
         if (contentTypes == null) {
             contentTypes = new Vector();
-            Portlet dd = portletWindow.getPortletEntity().getPortletDefinition();
+            PortletDefinition dd = portletWindow.getPortletEntity().getPortletDefinition();
             Iterator supports = dd.getSupports().iterator();
             while (supports.hasNext()) {
                 Supports sup = (Supports) supports.next();
@@ -667,7 +667,7 @@ implements PortletRequest, InternalPortletRequest {
             return true;
         }
 
-        Portlet dd = portletWindow.getPortletEntity()
+        PortletDefinition dd = portletWindow.getPortletEntity()
                 .getPortletDefinition();
 
         Iterator mimes = dd.getSupports().iterator();

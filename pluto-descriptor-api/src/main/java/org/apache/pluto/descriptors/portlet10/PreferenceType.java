@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.PortletPreference;
+import org.apache.pluto.om.portlet.Preference;
 
 /**
  * Persistent preference values that may be used for customization and personalization by the portlet. Used in:
@@ -53,7 +53,7 @@ import org.apache.pluto.om.portlet.PortletPreference;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "preferenceType", propOrder = { "name", "value", "readOnly" })
-public class PreferenceType implements PortletPreference
+public class PreferenceType implements Preference
 {
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)

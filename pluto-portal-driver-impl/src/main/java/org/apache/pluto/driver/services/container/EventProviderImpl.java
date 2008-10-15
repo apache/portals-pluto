@@ -56,8 +56,8 @@ import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.om.portlet.EventDefinition;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
@@ -266,12 +266,12 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 		for (PortletWindowConfig portlet : portlets) {
 			String contextPath = portlet.getContextPath();
-			PortletApp portletAppDD = null;
+			PortletApplicationDefinition portletAppDD = null;
 			try {
 				portletAppDD = portletRegistry.getPortletApplication(contextPath);
-				List<Portlet> portletDDs = portletAppDD.getPortlets();
+				List<PortletDefinition> portletDDs = portletAppDD.getPortlets();
 				List<QName> aliases = getAllAliases(eventName, portletAppDD);
-				for (Portlet portletDD : portletDDs) {
+				for (PortletDefinition portletDD : portletDDs) {
 					List<EventDefinitionReference> processingEvents = portletDD.getSupportedProcessingEvents();
 					if (isEventSupported(processingEvents, eventName, portletAppDD.getDefaultNamespace())) {
                         if (portletDD.getPortletName().equals(portlet.getPortletName())) {
@@ -342,7 +342,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	    return false;
 	}
 
-	private List<QName> getAllAliases(QName eventName, PortletApp portletAppDD) {
+	private List<QName> getAllAliases(QName eventName, PortletApplicationDefinition portletAppDD) {
 		if (portletAppDD.getEventDefinitions() != null) {
 			
 			for (EventDefinition def : portletAppDD.getEventDefinitions()){
@@ -537,7 +537,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 	private boolean isValueInstanceOfDefinedClass(QName qname,
 			Serializable value) {
-        PortletApp app = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
+        PortletApplicationDefinition app = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
         List<EventDefinition> events = app.getEventDefinitions();
         if (events != null) {
             

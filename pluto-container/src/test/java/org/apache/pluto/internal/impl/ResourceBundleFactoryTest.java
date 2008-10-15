@@ -24,7 +24,7 @@ import junit.framework.Assert;
 
 import org.apache.pluto.descriptors.portlet20.PortletType;
 import org.apache.pluto.descriptors.portlet20.PortletInfoType;
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.util.PlutoTestCase;
 
@@ -34,7 +34,7 @@ import org.apache.pluto.util.PlutoTestCase;
  */
 public class ResourceBundleFactoryTest extends PlutoTestCase {
 
-    private Portlet validDD;
+    private PortletDefinition validDD;
 
     public void setUp() throws Exception {
         super.setUp();

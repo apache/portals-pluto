@@ -31,8 +31,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.om.portlet.ContainerRuntimeOption;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
@@ -54,11 +54,11 @@ implements PortletContext, InternalPortletContext {
     
     
     /** Portlet */
-    private Portlet portlet = null;
+    private PortletDefinition portlet = null;
 
 	private String applicationName;
 	
-    private final PortletApp portletApp;
+    private final PortletApplicationDefinition portletApp;
     private final ServletContext servletContext;
     private ClassLoader contextClassLoader;
 
@@ -71,7 +71,7 @@ implements PortletContext, InternalPortletContext {
      * @param portletAppDD  the portlet application descriptor.
      */
     public PortletContextImpl(ServletContext servletContext,
-                              PortletApp portletApp) {
+                              PortletApplicationDefinition portletApp) {
         this.servletContext = servletContext;
         this.portletApp = portletApp;
         this.applicationName = servletContext.getServletContextName();
@@ -268,7 +268,7 @@ implements PortletContext, InternalPortletContext {
         return servletContext;
     }
 
-    public PortletApp getPortletApplicationDefinition() {
+    public PortletApplicationDefinition getPortletApplicationDefinition() {
         return portletApp;
     }
 

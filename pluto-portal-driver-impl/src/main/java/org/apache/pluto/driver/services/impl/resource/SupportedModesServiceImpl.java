@@ -34,8 +34,8 @@ import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
@@ -108,10 +108,10 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 LOG.error("Optional Portlet Registry Service not found.");
                 throw new PortletContainerException("Optional Portlet Registry Service not found.");
             }
-            PortletApp ctx = portletRegistry.getPortletApplication(applicationId);
+            PortletApplicationDefinition ctx = portletRegistry.getPortletApplication(applicationId);
             Iterator i = ctx.getPortlets().iterator();
             while(i.hasNext()) {
-                Portlet dd = (Portlet)i.next();
+                PortletDefinition dd = (PortletDefinition)i.next();
                 if(portletName.equals(dd.getPortletName())) {
                     Iterator i2 = dd.getSupports().iterator();
                     while(i2.hasNext()) {

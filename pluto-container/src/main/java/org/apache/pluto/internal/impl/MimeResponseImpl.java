@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.Portlet;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.util.StringManager;
 
@@ -112,7 +112,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 				servletResponse);
 		this.cacheControl = new CacheControlImpl();
 		PortletEntity portletEntity = portletWindow.getPortletEntity();
-		Portlet portletDefinition = portletEntity.getPortletDefinition();
+		PortletDefinition portletDefinition = portletEntity.getPortletDefinition();
         this.setProperty(EXPIRATION_CACHE, String.valueOf(portletDefinition.getExpirationCache()));
         this.setProperty(CACHE_SCOPE, portletDefinition.getCacheScope());
 	}
@@ -354,7 +354,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements
     protected boolean isValidContentType(String contentType) {
     	boolean valid = false;
     	
-        Portlet portletDD = getPortletWindow().getPortletEntity()
+        PortletDefinition portletDD = getPortletWindow().getPortletEntity()
         		.getPortletDefinition();
         for (Iterator it = portletDD.getSupports().iterator();
         		!valid && it.hasNext(); ) {

@@ -18,7 +18,7 @@ package org.apache.pluto.om.portlet;
 import org.apache.pluto.om.ElementFactoryList;
 
 
-public interface PortletApp {
+public interface PortletApplicationDefinition {
 
     /**
      * The name of the Portlet Application
@@ -54,7 +54,7 @@ public interface PortletApp {
 	 * Retrieve the portlets which exist within this application.
 	 * @return
 	 */
-	ElementFactoryList<Portlet> getPortlets();
+	ElementFactoryList<PortletDefinition> getPortlets();
 
 	/**
 	 * @return Returns the events.

@@ -28,9 +28,9 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.impl.PortletPreferenceImpl;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletPreference;
-import org.apache.pluto.om.portlet.PortletPreferences;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.Preference;
+import org.apache.pluto.om.portlet.Preferences;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 
 /**
@@ -97,11 +97,11 @@ implements PortletPreferencesService {
                                                               PortletRequest request )
       throws PortletContainerException {
         Map<String,InternalPortletPreference> preferences = null;
-        Portlet portlet = portletWindow.getPortletEntity().getPortletDefinition();
-        PortletPreferences prefs = portlet.getPortletPreferences();
+        PortletDefinition portlet = portletWindow.getPortletEntity().getPortletDefinition();
+        Preferences prefs = portlet.getPortletPreferences();
         if (prefs != null && prefs.getPortletPreferences() != null) {
             preferences = new HashMap<String,InternalPortletPreference>(prefs.getPortletPreferences().size());
-            for (PortletPreference pref : prefs.getPortletPreferences()) {
+            for (Preference pref : prefs.getPortletPreferences()) {
                 String[] values = null;
                 if (pref.getValues() != null && pref.getValues().size() > 0) {
                     values = pref.getValues().toArray(new String[pref.getValues().size()]);

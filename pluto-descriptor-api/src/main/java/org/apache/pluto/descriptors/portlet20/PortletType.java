@@ -35,10 +35,10 @@ import org.apache.pluto.om.portlet.Description;
 import org.apache.pluto.om.portlet.DisplayName;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
 import org.apache.pluto.om.portlet.InitParam;
-import org.apache.pluto.om.portlet.Portlet;
-import org.apache.pluto.om.portlet.PortletApp;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.om.portlet.PortletInfo;
-import org.apache.pluto.om.portlet.PortletPreferences;
+import org.apache.pluto.om.portlet.Preferences;
 import org.apache.pluto.om.portlet.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Supports;
 
@@ -83,7 +83,7 @@ import org.apache.pluto.om.portlet.Supports;
                                             "resourceBundle", "portletInfo", "portletPreferences", "securityRoleRef",
                                             "supportedProcessingEvent", "supportedPublishingEvent",
                                             "supportedPublicRenderParameter", "containerRuntimeOption" })
-public class PortletType implements Portlet
+public class PortletType implements PortletDefinition
 {
     @XmlElement(name = "description", type=DescriptionType.class)
     protected List<Description> description;
@@ -128,18 +128,18 @@ public class PortletType implements Portlet
     protected String id;
     
     @XmlTransient
-    private PortletApp application;
+    private PortletApplicationDefinition application;
     
     public PortletType()
     {
     }
     
-    public PortletType(PortletApp application)
+    public PortletType(PortletApplicationDefinition application)
     {
         this.application = application;
     }
     
-    public PortletApp getApplication()
+    public PortletApplicationDefinition getApplication()
     {
         return application;
     }
@@ -325,12 +325,12 @@ public class PortletType implements Portlet
         return portletInfo;
     }
 
-    public PortletPreferences getPortletPreferences()
+    public Preferences getPortletPreferences()
     {
         return getPortletPreferences(false);
     }
 
-    public PortletPreferences getPortletPreferences(boolean create)
+    public Preferences getPortletPreferences(boolean create)
     {
         if (create && portletPreferences == null)
         {
@@ -473,6 +473,6 @@ public class PortletType implements Portlet
     }
 
     public void afterUnmarshal(Unmarshaller u, Object parent) {
-        application = (PortletApp)parent;
+        application = (PortletApplicationDefinition)parent;
     }
 }
