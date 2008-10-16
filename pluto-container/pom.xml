@@ -41,21 +41,6 @@
       <scope>compile</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto-commons</artifactId>
-      <version>${pom.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <!-- Pluto Support Libraries ===========================================  -->
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto-descriptor-api</artifactId>
-      <version>${pom.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
     <!-- Other Support Libraries =========================================== -->
     <dependency>
       <groupId>commons-logging</groupId>

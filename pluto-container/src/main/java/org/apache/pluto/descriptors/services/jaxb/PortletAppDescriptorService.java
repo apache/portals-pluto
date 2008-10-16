@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.descriptors.services;
+package org.apache.pluto.descriptors.services.jaxb;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -39,20 +39,6 @@
         </fileSet>
         <!-- Pluto library files -->
         <fileSet>
-            <directory>../pluto-descriptor-api/target</directory>
-            <outputDirectory>lib</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-descriptor-impl/target</directory>
-            <outputDirectory>lib</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
             <directory>../pluto-container/target</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>

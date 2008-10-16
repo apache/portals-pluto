@@ -49,24 +49,6 @@
 
         <!-- Start Container Src -->
         <fileSet>
-            <directory>../pluto-descriptor-api</directory>
-            <outputDirectory>/pluto-descriptor-api</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../pluto-descriptor-impl</directory>
-            <outputDirectory>/pluto-descriptor-impl</outputDirectory>
-            <includes>
-                <include>pom.xml</include>
-                <include>src/</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
             <directory>../pluto-container</directory>
             <outputDirectory>/pluto-container</outputDirectory>
             <includes>

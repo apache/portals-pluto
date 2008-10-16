@@ -263,8 +263,6 @@
         <module>pluto-container-api</module>
         
       <!-- Pluto Core Modules -->
-        <module>pluto-descriptor-api</module>
-        <module>pluto-descriptor-impl</module>
         <module>pluto-container</module>
         <module>pluto-taglib</module>
 

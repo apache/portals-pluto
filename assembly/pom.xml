@@ -105,16 +105,6 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto-descriptor-api</artifactId>
-      <version>${pom.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto-descriptor-impl</artifactId>
-      <version>${pom.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
       <artifactId>pluto-container</artifactId>
       <version>${pom.version}</version>
     </dependency>

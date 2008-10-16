@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.pluto.descriptors.services.PortletAppDescriptorService;
+import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorService;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 /** 
