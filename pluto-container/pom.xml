@@ -48,18 +48,7 @@
       <version>${commons-logging.version}</version>
       <scope>compile</scope>
     </dependency>
-<!-- 
-	<dependency>
-	  <groupId>stax</groupId>
-	  <artifactId>stax</artifactId>
-	  <version>${stax.impl.version}</version>
-	</dependency>
-	<dependency>
-	  <groupId>stax</groupId>
-	  <artifactId>stax</artifactId>
-	  <version>${stax.impl.version}</version>
-	</dependency>
-    -->
+
     <!-- Specification Libraries =========================================== -->
     <dependency>
       <groupId>javax.portlet</groupId>
