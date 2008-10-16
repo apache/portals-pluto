@@ -26,16 +26,16 @@ import org.apache.pluto.om.portlet.PortletApplicationDefinition;
  */
 public class PortletRegistryEvent {
 
-    private String applicationId;
+    private String applicationName;
     private PortletApplicationDefinition portletApplication;
 
 
-    public String getApplicationId() {
-        return applicationId != null ? applicationId : portletApplication.getId();
+    public String getApplicationName() {
+        return applicationName != null ? applicationName : portletApplication.getName();
     }
 
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
     }
 
     public PortletApplicationDefinition getPortletApplication() {

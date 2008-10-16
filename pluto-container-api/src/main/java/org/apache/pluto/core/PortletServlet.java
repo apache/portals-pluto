@@ -145,11 +145,11 @@ public class PortletServlet extends HttpServlet
                 throw new PortletContainerException(msg);
             }
 
-            String applicationId = registryService.register(sConfig);
+            String applicationName = registryService.register(sConfig);
             portletContext = (InternalPortletContext) registryService
-                    .getPortletContext(applicationId);
+                    .getPortletContext(applicationName);
             portletConfig = (InternalPortletConfig) registryService
-                    .getPortletConfig(applicationId, portletName);
+                    .getPortletConfig(applicationName, portletName);
 
         }
         catch (PortletContainerException ex)

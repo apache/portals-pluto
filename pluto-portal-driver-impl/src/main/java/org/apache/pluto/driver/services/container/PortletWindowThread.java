@@ -106,7 +106,7 @@ public class PortletWindowThread extends Thread {
 			        		// now test if object is jaxb
 			        		EventDefinition eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
-			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId());
+			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
 			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getValueType()).asSubclass(Serializable.class);
 
 			        		JAXBContext jc = JAXBContext.newInstance(clazz);

@@ -50,64 +50,64 @@ public interface PortletRegistryService
     Iterator<InternalPortletContext> getPortletContexts();
 
     /**
-     * Retrieve the ids of all registered applications.
+     * Retrieve the names of all registered applications.
      * This list will only contain those applications
      * which have been registered with the container.
      * Others may or may not be available within
      * the servers.
      *
-     * @return iterator of all PortletApp ids (strings).
+     * @return iterator of all PortletApp names (strings).
      */
-    Iterator<String> getRegisteredPortletApplicationIds();
+    Iterator<String> getRegisteredPortletApplicationNames();
 
     /**
      * Retrieve the PortletApp for the specified
-     * portlet application id.
+     * portlet application Name.
      *
-     * @param applicationId the id of the portlet application.
+     * @param applicationName the name of the portlet application.
      * @return the named PortletApp.
      * @throws PortletContainerException if the portlet application 
      *         isn't registered.
      */
-    PortletApplicationDefinition getPortletApplication(String applicationId)
+    PortletApplicationDefinition getPortletApplication(String applicationName)
         throws PortletContainerException;
 
     /**
-     * Retrieve the InternalPortletContext for the specified portlet application id
+     * Retrieve the InternalPortletContext for the specified portlet application name
      *
-     * @param applicationId portlet application id
+     * @param applicationName portlet application name
      * @return portlet context or null if not registered
      */
-    InternalPortletContext getPortletContext(String applicationId)
+    InternalPortletContext getPortletContext(String applicationName)
         throws PortletContainerException;
 
     /**
      * Retreive the Portlet for the specified portlet.
      *
-     * @param applicationId portlet application id
+     * @param applicationId portlet application name
      * @param portletName portlet name
      * @return portlet
      * @throws PortletContainerException if portlet or application unknown
      */
-    PortletDefinition getPortlet(String applicationId, String portletName)
+    PortletDefinition getPortlet(String applicationName, String portletName)
         throws PortletContainerException;
 
     /**
      * Retrieve the portlet configuration for the specified portlet
-     * @param applicationIid portlet application id
+     * @param applicationName portlet application name
      * @param portletName portlet name
      * @return portletconfig
      * @throws PortletContainerException if portlet or application unknown
      */
-    InternalPortletConfig getPortletConfig(String applicationId, String portletName)
+    InternalPortletConfig getPortletConfig(String applicationName, String portletName)
         throws PortletContainerException;
 
     /**
      * Retrieve the ClassLoader of the specified portlet application
-     * @param applicationId portlet application id
+     * @param applicationId portlet application name
      * @return classLoader
      */
-    ClassLoader getClassLoader(String applicationId)
+    ClassLoader getClassLoader(String applicationName)
         throws PortletContainerException;
     
     /**

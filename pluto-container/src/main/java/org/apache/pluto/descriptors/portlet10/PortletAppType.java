@@ -83,8 +83,6 @@ public class PortletAppType implements PortletApplicationDefinition
     @XmlAttribute(required = true)
     protected String version;
     @XmlTransient
-    protected String id;
-    @XmlTransient
     protected String name;
 
     public String getName()
@@ -353,15 +351,5 @@ public class PortletAppType implements PortletApplicationDefinition
     public void setVersion(String value)
     {
         version = value;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

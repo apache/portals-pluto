@@ -367,11 +367,11 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public String getContextPath() {
-        String contextPath = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId();
-        if ("/".equals(contextPath)) {
-            contextPath = "";
+        String name = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        if (!name.equals("")) {
+            name = "/" + name;
         }
-        return contextPath;
+        return name;
     }
 
     public String getRemoteUser() {

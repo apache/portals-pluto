@@ -27,7 +27,7 @@ public interface InternalPortletContext extends PortletContext {
      * Retrieve the unique identifier for the portlet context.
      * @return unique identifier.
      */
-    public String getApplicationId();
+    public String getApplicationName();
 
     /**
      *

@@ -170,8 +170,8 @@ public class PortletContainerImpl implements PortletContainer,
         InternalRenderResponse renderResponse = getOptionalContainerServices().getPortletEnvironmentService()
             .createRenderResponse(this, request, response, portletWindow);
 
-        String appId = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId();
-        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appId);
+        String appName = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appName);
         
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -215,8 +215,8 @@ public class PortletContainerImpl implements PortletContainer,
         InternalResourceResponse resourceResponse = getOptionalContainerServices().getPortletEnvironmentService()
             .createResourceResponse(this, request, response, portletWindow);
 
-        String appId = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId();
-        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appId);
+        String appName = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appName);
         
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -259,8 +259,8 @@ public class PortletContainerImpl implements PortletContainer,
         InternalActionResponse actionResponse = getOptionalContainerServices().getPortletEnvironmentService()
             .createActionResponse(this, request, response, portletWindow);
 
-        String appId = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId();
-        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appId);
+        String appName = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appName);
 
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -336,8 +336,8 @@ public class PortletContainerImpl implements PortletContainer,
             getOptionalContainerServices().getPortletEnvironmentService()
                 .createRenderResponse(this, request, response, portletWindow);
 
-        String appId = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId();
-        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appId);
+        String appName = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appName);
 
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -367,8 +367,8 @@ public class PortletContainerImpl implements PortletContainer,
         InternalPortletResponse internalResponse =
             new AdminResponse(this, portletWindow, servletRequest, servletResponse);
 
-        String appId = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getId();
-        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appId);
+        String appName = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appName);
         
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -429,8 +429,8 @@ public class PortletContainerImpl implements PortletContainer,
     			this, window, request, response);
 
     	
-        String appId = window.getPortletEntity().getPortletDefinition().getApplication().getId();
-        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appId);
+        String appName = window.getPortletEntity().getPortletDefinition().getApplication().getName();
+        InternalPortletContext portletContext = optionalContainerServices.getPortletRegistryService().getPortletContext(appName);
 
     	PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 

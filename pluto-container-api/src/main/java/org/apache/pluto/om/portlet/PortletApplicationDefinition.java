@@ -32,24 +32,6 @@ public interface PortletApplicationDefinition {
      */
     void setName(String name);
     
-    /**
-     * The id the Portlet Application
-     * <br/>
-     * Note: for the Pluto container default descriptor implementation this equals
-     *       to the contextPath of the Web Applications
-     * @return
-     */
-    String getId();
-    
-    /**
-     * Set the id the Portlet Application
-     * <br/>
-     * Note: for the Pluto container default descriptor implementation this equals
-     *       to the contextPath of the Web Applications
-     * @return
-     */
-    void setId(String id);
-    
     PortletDefinition getPortlet(String portletName);
 	/**
 	 * Retrieve the portlets which exist within this application.

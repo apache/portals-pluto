@@ -18,9 +18,12 @@ package org.apache.pluto.internal.impl;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
@@ -56,8 +59,6 @@ implements PortletContext, InternalPortletContext {
     /** Portlet */
     private PortletDefinition portlet = null;
 
-	private String applicationName;
-	
     private final PortletApplicationDefinition portletApp;
     private final ServletContext servletContext;
     private ClassLoader contextClassLoader;
@@ -74,11 +75,6 @@ implements PortletContext, InternalPortletContext {
                               PortletApplicationDefinition portletApp) {
         this.servletContext = servletContext;
         this.portletApp = portletApp;
-        this.applicationName = servletContext.getServletContextName();
-
-        if(applicationName == null) {
-            applicationName = portletApp.getId();
-        }
         init();
     }
     
@@ -86,14 +82,10 @@ implements PortletContext, InternalPortletContext {
         setContextClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
-    public String getApplicationId() {
-        return portletApp.getId();
+    public String getApplicationName() {
+        return portletApp.getName();
     }
     
-    public String getApplicationName() {
-        return applicationName;
-    }
-
     /**
      * ClassLoader associated with this context.
      * @return
@@ -197,11 +189,12 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getRealPath(path);
     }
 
-    public java.util.Set getResourcePaths(String path) {
+    @SuppressWarnings("unchecked")
+    public Set<String> getResourcePaths(String path) {
         return servletContext.getResourcePaths(path);
     }
 
-    public java.net.URL getResource(String path)
+    public URL getResource(String path)
         throws java.net.MalformedURLException {
         if (path == null || !path.startsWith("/")) {
             throw new MalformedURLException("path must start with a '/'");
@@ -209,7 +202,7 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getResource(path);
     }
 
-    public java.lang.Object getAttribute(java.lang.String name) {
+    public Object getAttribute(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -217,11 +210,12 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getAttribute(name);
     }
 
-    public java.util.Enumeration getAttributeNames() {
+    @SuppressWarnings("unchecked")
+    public Enumeration<String> getAttributeNames() {
         return servletContext.getAttributeNames();
     }
 
-    public java.lang.String getInitParameter(java.lang.String name) {
+    public String getInitParameter(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Parameter name == null");
         }
@@ -229,7 +223,8 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getInitParameter(name);
     }
 
-    public java.util.Enumeration getInitParameterNames() {
+    @SuppressWarnings("unchecked")
+    public Enumeration<String> getInitParameterNames() {
         return servletContext.getInitParameterNames();
     }
 
@@ -237,11 +232,11 @@ implements PortletContext, InternalPortletContext {
         servletContext.log(msg);
     }
 
-    public void log(java.lang.String message, java.lang.Throwable throwable) {
+    public void log(java.lang.String message, Throwable throwable) {
         servletContext.log(message, throwable);
     }
 
-    public void removeAttribute(java.lang.String name) {
+    public void removeAttribute(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -249,7 +244,7 @@ implements PortletContext, InternalPortletContext {
         servletContext.removeAttribute(name);
     }
 
-    public void setAttribute(java.lang.String name, java.lang.Object object) {
+    public void setAttribute(String name, Object object) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -308,7 +303,7 @@ implements PortletContext, InternalPortletContext {
 	}
 
 
-	public java.util.Enumeration<String> getContainerRuntimeOptions() {
+	public Enumeration<String> getContainerRuntimeOptions() {
 		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
 		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
 		

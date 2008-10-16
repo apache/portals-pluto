@@ -114,8 +114,6 @@ public class PortletAppType implements PortletApplicationDefinition
     protected List<ContainerRuntimeOption> containerRuntimeOption;
     @XmlAttribute(required = true)
     protected String version;
-    @XmlTransient
-    protected String id;
     
     @XmlTransient
     protected String name;
@@ -540,15 +538,5 @@ public class PortletAppType implements PortletApplicationDefinition
     public void setVersion(String value)
     {
         version = value;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }
