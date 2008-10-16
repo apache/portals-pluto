@@ -18,6 +18,7 @@ package org.apache.pluto.descriptors.portlet20;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -75,6 +76,18 @@ public class FilterType implements Filter
     @XmlElement(name = "init-param", type=InitParamType.class)
     protected List<InitParam> initParam;
 
+    public Description getDescription(Locale locale)
+    {
+        for (Description d : getDescriptions())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Description> getDescriptions()
     {
         if (description == null || !(description instanceof ElementFactoryList))
@@ -101,6 +114,18 @@ public class FilterType implements Filter
         return (ElementFactoryList<Description>)description;
     }
 
+    public DisplayName getDisplayName(Locale locale)
+    {
+        for (DisplayName d : getDisplayNames())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<DisplayName> getDisplayNames()
     {
         if (displayName == null || !(displayName instanceof ElementFactoryList))
@@ -155,6 +180,18 @@ public class FilterType implements Filter
         }
         return lifecycle;
     }
+    
+    public InitParam getInitParam(String name)
+    {
+        for (InitParam param : getInitParams())
+        {
+            if (param.getParamName().equals(name))
+            {
+                return param;
+            }
+        }
+        return null;
+    }
 
     public ElementFactoryList<InitParam> getInitParams()
     {
@@ -180,10 +217,5 @@ public class FilterType implements Filter
             initParam = lf;
         }
         return (ElementFactoryList<InitParam>)initParam;
-    }
-
-    public void setLifecycles(List<String> lifecycles)
-    {
-        this.lifecycle = lifecycles;
     }
 }

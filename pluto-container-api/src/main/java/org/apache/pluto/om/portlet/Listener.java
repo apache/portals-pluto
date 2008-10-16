@@ -15,20 +15,18 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.Locale;
+
 import org.apache.pluto.om.ElementFactoryList;
 
 public interface Listener {
 
+    Description getDescription(Locale locale);
 	ElementFactoryList<Description> getDescriptions();
 	
+	DisplayName getDisplayName(Locale locale);
 	ElementFactoryList<DisplayName> getDisplayNames();
 	
-	String getId();
-
-	void setId(String id);
-
 	String getListenerClass();
-
 	void setListenerClass(String listenerClass);
-
 }

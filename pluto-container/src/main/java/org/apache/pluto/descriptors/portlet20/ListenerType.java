@@ -16,12 +16,11 @@
  */
 package org.apache.pluto.descriptors.portlet20;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -62,9 +61,19 @@ public class ListenerType implements Listener
     protected List<DisplayName> displayName;
     @XmlElement(name = "listener-class", required = true)
     protected String listenerClass;
-    @XmlAttribute
-    protected String id;
 
+    public Description getDescription(Locale locale)
+    {
+        for (Description d : getDescriptions())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Description> getDescriptions()
     {
         if (description == null || !(description instanceof ElementFactoryList))
@@ -91,6 +100,18 @@ public class ListenerType implements Listener
         return (ElementFactoryList<Description>)description;
     }
 
+    public DisplayName getDisplayName(Locale locale)
+    {
+        for (DisplayName d : getDisplayNames())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<DisplayName> getDisplayNames()
     {
         if (displayName == null || !(displayName instanceof ElementFactoryList))
@@ -125,15 +146,5 @@ public class ListenerType implements Listener
     public void setListenerClass(String value)
     {
         listenerClass = value;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

@@ -26,8 +26,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.PortletCollection;
-
 /**
  * The portlet-collectionType is used to identify a subset of portlets within a portlet application to which a security
  * constraint applies. Used in: security-constraint <p>Java class for portlet-collectionType complex type. <p>The
@@ -49,7 +47,7 @@ import org.apache.pluto.om.portlet.PortletCollection;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "portlet-collectionType", propOrder = { "portletName" })
-public class PortletCollectionType implements PortletCollection
+public class PortletCollectionType
 {
     @XmlElement(name = "portlet-name", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
@@ -62,10 +60,5 @@ public class PortletCollectionType implements PortletCollection
             portletName = new ArrayList<String>();
         }
         return portletName;
-    }
-
-    public void setPortletNames(List<String> portletName)
-    {
-        this.portletName = portletName;
     }
 }

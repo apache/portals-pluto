@@ -21,7 +21,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -62,8 +61,6 @@ public class PreferenceType implements Preference
     protected List<String> value;
     @XmlElement(name = "read-only")
     protected Boolean readOnly;
-    @XmlAttribute
-    protected String id;
 
     public String getName()
     {
@@ -92,20 +89,5 @@ public class PreferenceType implements Preference
     public void setReadOnly(boolean value)
     {
         readOnly = value ? Boolean.TRUE : Boolean.FALSE;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
-    }
-
-    public void setValues(List<String> value)
-    {
-        this.value = value;
     }
 }

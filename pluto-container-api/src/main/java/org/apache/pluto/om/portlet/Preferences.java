@@ -19,13 +19,9 @@ import org.apache.pluto.om.ElementFactoryList;
 
 public interface Preferences {
 
+    Preference getPortletPreference(String name);
 	ElementFactoryList<Preference> getPortletPreferences();
 
 	String getPreferencesValidator();
-
 	void setPreferencesValidator(String preferencesValidator);
-	
-	String getId();
-	
-	void setId(String id);
 }

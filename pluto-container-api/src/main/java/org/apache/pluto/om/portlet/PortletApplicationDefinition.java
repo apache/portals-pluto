@@ -50,6 +50,7 @@ public interface PortletApplicationDefinition {
      */
     void setId(String id);
     
+    PortletDefinition getPortlet(String portletName);
 	/**
 	 * Retrieve the portlets which exist within this application.
 	 * @return
@@ -61,36 +62,40 @@ public interface PortletApplicationDefinition {
 	 */
 	ElementFactoryList<EventDefinition> getEventDefinitions();
 
+	PublicRenderParameter getPublicRenderParameter(String identifier);
 	/**
 	 * @return Returns the public render parameter.
 	 */
 	ElementFactoryList<PublicRenderParameter> getPublicRenderParameters();
 
 	String getVersion();
-
 	void setVersion(String version);
 
+	CustomPortletMode getCustomPortletMode(String name);
 	ElementFactoryList<CustomPortletMode> getCustomPortletModes();
 
+    CustomWindowState getCustomWindowState(String name);
 	ElementFactoryList<CustomWindowState> getCustomWindowStates();
 
+	UserAttribute getUserAttribute(String name);
 	ElementFactoryList<UserAttribute> getUserAttributes();
 
 	ElementFactoryList<SecurityConstraint> getSecurityConstraints();
 
 	String getResourceBundle();
-
 	void setResourceBundle(String resourceBundle);
 
+	Filter getFilter(String filterName);
 	ElementFactoryList<Filter> getFilters();
 
+	FilterMapping getFilterMapping(String filterName);
 	ElementFactoryList<FilterMapping> getFilterMappings();
 
 	ElementFactoryList<Listener> getListeners();
 
 	String getDefaultNamespace();
-
 	void setDefaultNamespace(String defaultNamespace);
 
+	ContainerRuntimeOption getContainerRuntimeOption(String name);
 	ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions();
 }

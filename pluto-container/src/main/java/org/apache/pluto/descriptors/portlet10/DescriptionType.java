@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -59,6 +60,8 @@ public class DescriptionType implements Description
     protected String value;
     @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace")
     protected String lang = null;
+    @XmlTransient
+    protected Locale locale;
 
     public String getDescription()
     {
@@ -78,5 +81,40 @@ public class DescriptionType implements Description
     public void setLang(String value)
     {
         lang = value;
+        deriveLocale();
+    }
+    
+    public Locale getLocale()
+    {
+        return locale == null ? deriveLocale() : locale;
+    }
+    
+    protected Locale deriveLocale()
+    {
+        Locale locale = null;
+        String lang = this.getLang();
+        if (lang != null)
+        {
+            String country = "";
+            String variant = "";
+            String[] localeArray = lang.split("[-|_]");
+            for (int i = 0; i < localeArray.length; i++)
+            {
+                if (i == 0)
+                {
+                    lang = localeArray[i];
+                }
+                else if (i == 1)
+                {
+                    country = localeArray[i];
+                }
+                else if (i == 2)
+                {
+                    variant = localeArray[i];
+                }
+            }
+            locale = new Locale(lang, country, variant);
+        }
+        return this.locale = locale;
     }
 }

@@ -20,6 +20,7 @@ import java.util.List;
 public interface ContainerRuntimeOption {
 
 	String getName();
+	void setName(String name);
 
 	List<String> getValues();
 }

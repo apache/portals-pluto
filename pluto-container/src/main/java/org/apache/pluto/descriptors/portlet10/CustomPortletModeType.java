@@ -17,6 +17,7 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -60,9 +61,19 @@ public class CustomPortletModeType implements CustomPortletMode
     @XmlElement(name = "portlet-mode", required = true)
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
     protected String portletMode;
-    @XmlAttribute
-    protected String id;
 
+    public Description getDescription(Locale locale)
+    {
+        for (Description d : getDescriptions())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Description> getDescriptions()
     {
         if (description == null || !(description instanceof ElementFactoryList))
@@ -90,31 +101,21 @@ public class CustomPortletModeType implements CustomPortletMode
 
     public String getPortletMode()
     {
-        return portletMode;
+        return portletMode != null ? portletMode.toLowerCase() : null;
     }
 
     public void setPortletMode(String value)
     {
-        portletMode = value;
+        portletMode = value != null ? value.toLowerCase() : null;
     }
 
     public boolean isPortalManaged()
     {
-        return true;
+        throw new UnsupportedOperationException();
     }
 
     public void setPortalManaged(boolean value)
     {
         throw new UnsupportedOperationException();
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

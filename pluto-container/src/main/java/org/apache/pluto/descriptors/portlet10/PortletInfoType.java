@@ -18,7 +18,6 @@ package org.apache.pluto.descriptors.portlet10;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -60,8 +59,6 @@ public class PortletInfoType implements PortletInfo
     @XmlElement(name = "keywords")
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
     protected String keywords;
-    @XmlAttribute
-    protected String id;
 
     public String getTitle()
     {
@@ -91,15 +88,5 @@ public class PortletInfoType implements PortletInfo
     public void setKeywords(String value)
     {
         keywords = value;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

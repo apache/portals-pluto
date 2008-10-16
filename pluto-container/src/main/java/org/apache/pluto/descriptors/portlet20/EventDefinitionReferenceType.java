@@ -18,7 +18,6 @@ package org.apache.pluto.descriptors.portlet20;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -56,8 +55,6 @@ public class EventDefinitionReferenceType implements EventDefinitionReference
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NCName")
     protected String name;
-    @XmlAttribute
-    protected String id;
 
     public QName getQName()
     {
@@ -81,16 +78,6 @@ public class EventDefinitionReferenceType implements EventDefinitionReference
         qname = null;
     }
 
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
-    }
-    
     public QName getQualifiedName(String defaultNamespace)
     {
         return qname != null ? qname : name != null ? new QName(defaultNamespace, name) : null;

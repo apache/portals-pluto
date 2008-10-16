@@ -16,6 +16,7 @@
 package org.apache.pluto.om.portlet;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.namespace.QName;
 
@@ -23,25 +24,17 @@ import org.apache.pluto.om.ElementFactoryList;
 
 public interface PublicRenderParameter {
 
+    Description getDescription(Locale locale);
 	ElementFactoryList<Description> getDescriptions();
 
 	String getIdentifier();
-
 	void setIdentifier(String id);
 
 	QName getQName();
-
     void setQName(QName qname);
 
 	List<QName> getAliases();
 	
     String getName();
-    
 	void setName(String name);
-
-	void setAliases(List<QName> aliases);
-	
-	String getId();
-	
-	void setId(String id);
 }

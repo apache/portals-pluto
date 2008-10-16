@@ -17,10 +17,10 @@
 package org.apache.pluto.descriptors.portlet20;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -64,8 +64,18 @@ public class CustomPortletModeType implements CustomPortletMode
     protected String portletMode;
     @XmlElement(name = "portal-managed")
     protected Boolean portalManaged;
-    @XmlAttribute
-    protected String id;
+    
+    public Description getDescription(Locale locale)
+    {
+        for (Description d : getDescriptions())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
     
     public ElementFactoryList<Description> getDescriptions()
     {
@@ -95,12 +105,12 @@ public class CustomPortletModeType implements CustomPortletMode
 
     public String getPortletMode()
     {
-        return portletMode;
+        return portletMode != null ? portletMode.toLowerCase() : null;
     }
 
     public void setPortletMode(String value)
     {
-        portletMode = value;
+        portletMode = value != null ? value.toLowerCase() : null;
     }
 
     public boolean isPortalManaged()
@@ -111,15 +121,5 @@ public class CustomPortletModeType implements CustomPortletMode
     public void setPortalManaged(boolean value)
     {
         portalManaged = value ? Boolean.TRUE : Boolean.FALSE;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

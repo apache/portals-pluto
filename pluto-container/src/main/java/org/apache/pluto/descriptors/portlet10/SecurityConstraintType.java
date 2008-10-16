@@ -17,16 +17,15 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.pluto.om.ElementFactoryList;
 import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.PortletCollection;
 import org.apache.pluto.om.portlet.SecurityConstraint;
 import org.apache.pluto.om.portlet.UserDataConstraint;
 
@@ -62,9 +61,19 @@ public class SecurityConstraintType implements SecurityConstraint
     protected PortletCollectionType portletCollection;
     @XmlElement(name = "user-data-constraint", required = true)
     protected UserDataConstraintType userDataConstraint;
-    @XmlAttribute
-    protected String id;
 
+    public DisplayName getDisplayName(Locale locale)
+    {
+        for (DisplayName d : getDisplayNames())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<DisplayName> getDisplayNames()
     {
         if (displayName == null || !(displayName instanceof ElementFactoryList))
@@ -91,13 +100,13 @@ public class SecurityConstraintType implements SecurityConstraint
         return (ElementFactoryList<DisplayName>)displayName;
     }
 
-    public PortletCollection getPortletCollection()
+    public List<String> getPortletNames()
     {
         if (portletCollection == null)
         {
             portletCollection = new PortletCollectionType();
         }
-        return portletCollection;
+        return portletCollection.getPortletNames();
     }
 
     public UserDataConstraint getUserDataConstraint()
@@ -107,15 +116,5 @@ public class SecurityConstraintType implements SecurityConstraint
             userDataConstraint = new UserDataConstraintType();
         }
         return userDataConstraint;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

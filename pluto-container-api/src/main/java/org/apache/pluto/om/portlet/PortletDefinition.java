@@ -16,79 +16,58 @@
 package org.apache.pluto.om.portlet;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.pluto.om.ElementFactoryList;
 
 public interface PortletDefinition {
     
-	/**
-	 * Returns a string representation of this instance.
-	 * FIXME: more info!
-	 * @return a string representation of this instance.
-	 */
-	String toString();
-
-	/**
-	 * Returns the hash code for this instance.
-	 * @return the hash code for this instance.
-	 */
-	int hashCode();
-	
-	String getId();
-	
-	void setId(String id);
-	
 	PortletApplicationDefinition getApplication();
+	void setApplication(PortletApplicationDefinition application);
 
+    InitParam getInitParam(String paramName);
 	ElementFactoryList<InitParam> getInitParams();
-
+	
 	String getPortletClass();
-
 	void setPortletClass(String portletClass);
 
 	PortletInfo getPortletInfo();
-
     PortletInfo getPortletInfo(boolean create);
 
 	String getPortletName();
-
 	void setPortletName(String portletName);
 
 	Preferences getPortletPreferences();
-
     Preferences getPortletPreferences(boolean create);
 
     ElementFactoryList<EventDefinitionReference> getSupportedProcessingEvents();
-
     ElementFactoryList<EventDefinitionReference> getSupportedPublishingEvents();
 
 	List<String> getSupportedPublicRenderParameters();
 
-	void setSupportedPublicRenderParameters(List<String> publicRenderParameters);
-
 	String getResourceBundle();
-
 	void setResourceBundle(String resourceBundle);
 
+	SecurityRoleRef getSecurityRoleRef(String roleName);
 	ElementFactoryList<SecurityRoleRef> getSecurityRoleRefs();
 
+	Supports getSupports(String mimeType);
 	ElementFactoryList<Supports> getSupports();
 
+	Description getDescription(Locale locale);
 	ElementFactoryList<Description> getDescriptions();
 
+	DisplayName getDisplayName(Locale locale);
     ElementFactoryList<DisplayName> getDisplayNames();
 
 	List<String> getSupportedLocales();
 
-	void setSupportedLocales(List<String> supportedLocales);
-
 	int getExpirationCache();
-	
+    void setExpirationCache(int expirationCache);
+
 	String getCacheScope();
-	
 	void setCacheScope(String cacheScope);
 
-	void setExpirationCache(int expirationCache);
-
+	ContainerRuntimeOption getContainerRuntimeOption(String name);
 	ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions();
 }

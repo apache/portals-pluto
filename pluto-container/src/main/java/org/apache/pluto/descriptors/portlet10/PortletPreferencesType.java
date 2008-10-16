@@ -20,7 +20,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -56,9 +55,19 @@ public class PortletPreferencesType implements Preferences
     protected List<Preference> preference;
     @XmlElement(name = "preferences-validator")
     protected String preferencesValidator;
-    @XmlAttribute
-    protected String id;
 
+    public Preference getPortletPreference(String name)
+    {
+        for (Preference p : getPortletPreferences())
+        {
+            if (p.getName().equals(name))
+            {
+                return p;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Preference> getPortletPreferences()
     {
         if (preference == null || !(preference instanceof ElementFactoryList))
@@ -93,15 +102,5 @@ public class PortletPreferencesType implements Preferences
     public void setPreferencesValidator(String value)
     {
         preferencesValidator = value;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

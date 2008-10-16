@@ -79,9 +79,4 @@ public class FilterMappingType implements FilterMapping
         }
         return portletName;
     }
-    
-    public void setPortletNames(List<String> portletNames)
-    {
-        this.portletName = portletNames;
-    }
 }

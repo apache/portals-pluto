@@ -18,11 +18,11 @@ package org.apache.pluto.descriptors.portlet10;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -111,8 +111,6 @@ public class PortletType implements PortletDefinition
     protected PortletPreferencesType portletPreferences;
     @XmlElement(name = "security-role-ref", type = SecurityRoleRefType.class)
     protected List<SecurityRoleRef> securityRoleRef;
-    @XmlAttribute
-    protected String id;
     @XmlTransient
     private PortletApplicationDefinition application;
 
@@ -130,6 +128,23 @@ public class PortletType implements PortletDefinition
         return application;
     }
 
+    public void setApplication(PortletApplicationDefinition app)
+    {
+        this.application = app;
+    }
+
+    public Description getDescription(Locale locale)
+    {
+        for (Description d : getDescriptions())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Description> getDescriptions()
     {
         if (description == null || !(description instanceof ElementFactoryList))
@@ -165,6 +180,18 @@ public class PortletType implements PortletDefinition
         portletName = value;
     }
 
+    public DisplayName getDisplayName(Locale locale)
+    {
+        for (DisplayName d : getDisplayNames())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<DisplayName> getDisplayNames()
     {
         if (displayName == null || !(displayName instanceof ElementFactoryList))
@@ -198,6 +225,18 @@ public class PortletType implements PortletDefinition
     public void setPortletClass(String value)
     {
         portletClass = value;
+    }
+
+    public InitParam getInitParam(String name)
+    {
+        for (InitParam param : getInitParams())
+        {
+            if (param.getParamName().equals(name))
+            {
+                return param;
+            }
+        }
+        return null;
     }
 
     public ElementFactoryList<InitParam> getInitParams()
@@ -237,7 +276,7 @@ public class PortletType implements PortletDefinition
 
     public String getCacheScope()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public void setCacheScope(String cacheScope)
@@ -245,6 +284,18 @@ public class PortletType implements PortletDefinition
         throw new UnsupportedOperationException();
     }
 
+    public Supports getSupports(String mimeType)
+    {
+        for (Supports s : getSupports())
+        {
+            if (s.getMimeType().equals(mimeType))
+            {
+                return s;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Supports> getSupports()
     {
         if (supports == null || !(supports instanceof ElementFactoryList))
@@ -317,6 +368,18 @@ public class PortletType implements PortletDefinition
         return portletPreferences;
     }
 
+    public SecurityRoleRef getSecurityRoleRef(String roleName)
+    {
+        for (SecurityRoleRef ref : getSecurityRoleRefs())
+        {
+            if (ref.getRoleName().equals(roleName))
+            {
+                return ref;
+            }
+        }
+        return null;
+    }
+
     public ElementFactoryList<SecurityRoleRef> getSecurityRoleRefs()
     {
         if (securityRoleRef == null || !(securityRoleRef instanceof ElementFactoryList))
@@ -345,40 +408,32 @@ public class PortletType implements PortletDefinition
 
     public ElementFactoryList<EventDefinitionReference> getSupportedProcessingEvents()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public ElementFactoryList<EventDefinitionReference> getSupportedPublishingEvents()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public List<String> getSupportedPublicRenderParameters()
     {
+        throw new UnsupportedOperationException();
+    }
+    
+    public ContainerRuntimeOption getContainerRuntimeOption(String name)
+    {
+        for (ContainerRuntimeOption cro : getContainerRuntimeOptions())
+        {
+            if (cro.getName().equals(name))
+            {
+                return cro;
+            }
+        }
         return null;
     }
 
     public ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions()
-    {
-        return null;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
-    }
-
-    public void setSupportedLocales(List<String> supportedLocales)
-    {
-        this.supportedLocale = supportedLocales;
-    }
-
-    public void setSupportedPublicRenderParameters(List<String> supportedPublicRenderParameters)
     {
         throw new UnsupportedOperationException();
     }

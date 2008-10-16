@@ -16,26 +16,26 @@
 package org.apache.pluto.om.portlet;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.pluto.om.ElementFactoryList;
 
 public interface Filter {
 
+    Description getDescription(Locale locale);
 	ElementFactoryList<Description> getDescriptions();
 
+	DisplayName getDisplayName(Locale locale);
 	ElementFactoryList<DisplayName> getDisplayNames();
 
 	String getFilterClass();
-
 	void setFilterClass(String filterClass);
 
 	String getFilterName();
-
 	void setFilterName(String filterName);
 
+	InitParam getInitParam(String paramName);
 	ElementFactoryList<InitParam> getInitParams();
 
 	List<String> getLifecycles();
-
-	void setLifecycles(List<String> lifecycles);
 }

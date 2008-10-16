@@ -15,13 +15,15 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.Locale;
+
 public interface DisplayName {
 
 	String getDisplayName();
-
 	void setDisplayName(String displayName);
 
 	String getLang();
-
 	void setLang(String lang);
+	
+	Locale getLocale();
 }

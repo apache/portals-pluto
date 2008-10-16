@@ -18,18 +18,11 @@ package org.apache.pluto.om.portlet;
 public interface PortletInfo {
 
 	String getTitle();
-
 	void setTitle(String title);
 
 	String getKeywords();
-
 	void setKeywords(String keywords);
 
 	String getShortTitle();
-
 	void setShortTitle(String shortTitle);
-	
-	String getId();
-	
-	void setId(String id);
 }

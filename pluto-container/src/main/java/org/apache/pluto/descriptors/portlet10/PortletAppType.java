@@ -82,7 +82,7 @@ public class PortletAppType implements PortletApplicationDefinition
     protected List<SecurityConstraint> securityConstraint;
     @XmlAttribute(required = true)
     protected String version;
-    @XmlAttribute
+    @XmlTransient
     protected String id;
     @XmlTransient
     protected String name;
@@ -95,6 +95,18 @@ public class PortletAppType implements PortletApplicationDefinition
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public PortletDefinition getPortlet(String portletName)
+    {
+        for (PortletDefinition pd : getPortlets())
+        {
+            if (pd.getPortletName().equals(portletName))
+            {
+                return pd;
+            }
+        }
+        return null;
     }
 
     public ElementFactoryList<PortletDefinition> getPortlets()
@@ -122,6 +134,18 @@ public class PortletAppType implements PortletApplicationDefinition
         return (ElementFactoryList<PortletDefinition>) portlet;
     }
 
+    public CustomPortletMode getCustomPortletMode(String name)
+    {
+        for (CustomPortletMode cpm : getCustomPortletModes())
+        {
+            if (cpm.getPortletMode().equalsIgnoreCase(name))
+            {
+                return cpm;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<CustomPortletMode> getCustomPortletModes()
     {
         if (customPortletMode == null || !(customPortletMode instanceof ElementFactoryList))
@@ -148,6 +172,18 @@ public class PortletAppType implements PortletApplicationDefinition
         return (ElementFactoryList<CustomPortletMode>)customPortletMode;
     }
 
+    public CustomWindowState getCustomWindowState(String name)
+    {
+        for (CustomWindowState cws : getCustomWindowStates())
+        {
+            if (cws.getWindowState().equalsIgnoreCase(name))
+            {
+                return cws;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<CustomWindowState> getCustomWindowStates()
     {
         if (customWindowState == null || !(customWindowState instanceof ElementFactoryList))
@@ -174,6 +210,18 @@ public class PortletAppType implements PortletApplicationDefinition
         return (ElementFactoryList<CustomWindowState>)customWindowState;
     }
 
+    public UserAttribute getUserAttribute(String name)
+    {
+        for (UserAttribute ua : getUserAttributes())
+        {
+            if (ua.getName().equals(name))
+            {
+                return ua;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<UserAttribute> getUserAttributes()
     {
         if (userAttribute == null || !(userAttribute instanceof ElementFactoryList))
@@ -236,19 +284,29 @@ public class PortletAppType implements PortletApplicationDefinition
         throw new UnsupportedOperationException();
     }
 
+    public Filter getFilter(String name)
+    {
+        throw new UnsupportedOperationException();
+    }
+    
     public ElementFactoryList<Filter> getFilters()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
+    public FilterMapping getFilterMapping(String name)
+    {
+        throw new UnsupportedOperationException();
+    }
+    
     public ElementFactoryList<FilterMapping> getFilterMappings()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public String getDefaultNamespace()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public void setDefaultNamespace(String value)
@@ -258,22 +316,33 @@ public class PortletAppType implements PortletApplicationDefinition
 
     public ElementFactoryList<EventDefinition> getEventDefinitions()
     {
-        return null;
+        throw new UnsupportedOperationException();
+    }
+    
+    public PublicRenderParameter getPublicRenderParameter(String identifier)
+    {
+        throw new UnsupportedOperationException();
     }
 
     public ElementFactoryList<PublicRenderParameter> getPublicRenderParameters()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public ElementFactoryList<Listener> getListeners()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
+    public ContainerRuntimeOption getContainerRuntimeOption(String name)
+    {
+        throw new UnsupportedOperationException();
+    }
+    
+    
     public ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions()
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public String getVersion()

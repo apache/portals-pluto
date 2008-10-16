@@ -15,17 +15,15 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.Locale;
+
 import org.apache.pluto.om.ElementFactoryList;
 
 public interface UserAttribute {
 
+    Description getDescription(Locale locale);
 	ElementFactoryList<Description> getDescriptions();
 	
 	String getName();
-
 	void setName(String name);
-
-	String getId();
-	
-	void setId(String id);
 }

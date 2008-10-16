@@ -324,7 +324,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			assertEquals(portletApp168.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
 			assertEquals(portletApp168.getCustomWindowStates().get(0).getWindowState(), "window-state");
 			assertEquals(portletApp168.getUserAttributes().get(0).getName(), "name" );
-			assertEquals(portletApp168.getSecurityConstraints().get(0).getPortletCollection().getPortletNames().get(0), "portlet-name");
+			assertEquals(portletApp168.getSecurityConstraints().get(0).getPortletNames().get(0), "portlet-name");
 			assertEquals(portlet168.getExpirationCache(), 50);
 			// id (isn't supported yet)
 //			assertFalse(portletApp.getId().equals("id2"));
@@ -348,7 +348,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			assertEquals(portletApp286.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
 			assertEquals(portletApp286.getCustomWindowStates().get(0).getWindowState(), "window-state");
 			assertEquals(portletApp286.getUserAttributes().get(0).getName(), "name" );
-			assertEquals(portletApp286.getSecurityConstraints().get(0).getPortletCollection().getPortletNames().get(0), "portlet-name");
+			assertEquals(portletApp286.getSecurityConstraints().get(0).getPortletNames().get(0), "portlet-name");
 			assertEquals(portletApp286.getEventDefinitions().get(0).getValueType(), "java-class");
 //			assertEquals(portletApp286.getRender().get(0).getName(), "QName");
 			assertEquals(portletApp286.getFilters().get(0).getLifecycles().get(0), "lifecycle");

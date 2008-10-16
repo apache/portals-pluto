@@ -15,6 +15,8 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.Locale;
+
 import org.apache.pluto.om.ElementFactoryList;
 
 public interface InitParam {
@@ -43,13 +45,10 @@ public interface InitParam {
 	 */
 	void setParamValue(String paramValue);
 
+	Description getDescription(Locale locale);
 	/**
 	 * Retrieve the description list.
 	 * @return
 	 */
 	public ElementFactoryList<Description> getDescriptions();
-	
-	String getId();
-	
-	void setId(String id);
 }

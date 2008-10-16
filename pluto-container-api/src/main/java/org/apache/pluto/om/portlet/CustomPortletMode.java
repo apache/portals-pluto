@@ -15,19 +15,18 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.Locale;
+
 import org.apache.pluto.om.ElementFactoryList;
 
 public interface CustomPortletMode {
 
 	boolean isPortalManaged();
+	void setPortalManaged(boolean portalManaged);
 
+	Description getDescription(Locale locale);
 	ElementFactoryList<Description> getDescriptions();
 
 	String getPortletMode();
-
 	void setPortletMode(String portletMode);
-	
-	String getId();
-	
-	void setId(String id);
 }

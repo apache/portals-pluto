@@ -15,21 +15,18 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.Locale;
+
 import org.apache.pluto.om.ElementFactoryList;
 
 public interface SecurityRoleRef {
 
 	String getRoleName();
-
 	void setRoleName(String roleName);
 
 	String getRoleLink();
-
 	void setRoleLink(String roleLink);
 
+	Description getDescription(Locale locale);
 	ElementFactoryList<Description> getDescriptions();
-	
-	String getId();
-	
-	void setId(String id);
 }

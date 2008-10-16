@@ -21,7 +21,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -64,8 +63,6 @@ public class SupportsType implements Supports
     @XmlElement(name = "window-state")
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
     protected List<String> windowState;
-    @XmlAttribute
-    protected String id;
 
     public String getMimeType()
     {
@@ -86,32 +83,12 @@ public class SupportsType implements Supports
         return portletMode;
     }
 
-    public List<String> getWindowState()
+    public List<String> getWindowStates()
     {
         if (windowState == null)
         {
             windowState = new ArrayList<String>();
         }
         return windowState;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
-    }
-
-    public void setPortletModes(List<String> portletModes)
-    {
-        this.portletMode = portletModes;
-    }
-
-    public void setWindowStates(List<String> windowStates)
-    {
-        this.windowState = windowStates;
     }
 }

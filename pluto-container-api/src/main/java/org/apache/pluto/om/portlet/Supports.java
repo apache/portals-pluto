@@ -20,14 +20,8 @@ import java.util.List;
 public interface Supports {
 
 	String getMimeType();
-
 	void setMimeType(String mimeType);
 
 	List<String> getPortletModes();
-
-	void setPortletModes(List<String> portletModes);
-	
-	String getId();
-	
-	void setId(String id);
+    List<String> getWindowStates();
 }

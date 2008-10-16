@@ -17,10 +17,10 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -61,9 +61,19 @@ public class UserAttributeType implements UserAttribute
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
     protected String name;
-    @XmlAttribute
-    protected String id;
 
+    public Description getDescription(Locale locale)
+    {
+        for (Description d : getDescriptions())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Description> getDescriptions()
     {
         if (description == null || !(description instanceof ElementFactoryList))
@@ -98,15 +108,5 @@ public class UserAttributeType implements UserAttribute
     public void setName(String value)
     {
         name = value;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
     }
 }

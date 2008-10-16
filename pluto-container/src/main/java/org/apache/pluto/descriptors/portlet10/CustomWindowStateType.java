@@ -17,10 +17,10 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -60,9 +60,19 @@ public class CustomWindowStateType implements CustomWindowState
     @XmlElement(name = "window-state", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
     protected String windowState;
-    @XmlAttribute
-    protected String id;
 
+    public Description getDescription(Locale locale)
+    {
+        for (Description d : getDescriptions())
+        {
+            if (d.getLocale().equals(locale))
+            {
+                return d;
+            }
+        }
+        return null;
+    }
+    
     public ElementFactoryList<Description> getDescriptions()
     {
         if (description == null || !(description instanceof ElementFactoryList))
@@ -91,21 +101,11 @@ public class CustomWindowStateType implements CustomWindowState
 
     public String getWindowState()
     {
-        return windowState;
+        return windowState != null ? windowState.toLowerCase() : null;
     }
 
     public void setWindowState(String value)
     {
-        windowState = value;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
+        windowState = value != null ? value.toLowerCase() : null;
     }
 }

@@ -20,18 +20,10 @@ import java.util.List;
 public interface Preference {
 
 	String getName();
-
 	void setName(String name);
 
 	List<String> getValues();
 
-	void setValues(List<String> values);
-
 	boolean isReadOnly();
-
 	void setReadOnly(boolean readOnly);
-	
-	String getId();
-	
-	void setId(String id);
 }
