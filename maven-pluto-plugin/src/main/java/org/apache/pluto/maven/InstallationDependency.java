@@ -54,14 +54,6 @@ class InstallationDependency {
         new InstallationDependency("org.apache.pluto", "pluto-container-api", 
                 VERSION_PROPERTIES.getProperty("pluto.version"));
 
-    public static final InstallationDependency  DESCRIPTOR_API =
-        new InstallationDependency("org.apache.pluto", "pluto-descriptor-api", 
-                VERSION_PROPERTIES.getProperty("pluto.version"));
-
-    public static final InstallationDependency  DESCRIPTOR_IMPL =
-            new InstallationDependency("org.apache.pluto", "pluto-descriptor-impl", 
-                    VERSION_PROPERTIES.getProperty("pluto.version"));
-
     public static final InstallationDependency  CONTAINER =
             new InstallationDependency("org.apache.pluto", "pluto-container", 
                     VERSION_PROPERTIES.getProperty("pluto.version"));
@@ -137,27 +129,20 @@ class InstallationDependency {
     static {
 //        ENDORSED.add(XERCES);
 //        ENDORSED.add(XML_PARSER_APIS);
-        SHARED.add(XERCES);
-        SHARED.add(XML_PARSER_APIS);
 
+//        SHARED.add(XERCES);
+//        SHARED.add(XML_PARSER_APIS);
+//      SHARED.add(CONTAINER);
+//      SHARED.add(CASTOR);
+//      SHARED.add(JAXB_IMPL);
+//      SHARED.add(STAX_API);
+//      SHARED.add(STAX_IMPL);
+//      SHARED.add(ACTIVATION);
         SHARED.add(PORTLET_API);
         SHARED.add(CONTAINER_API);
-        SHARED.add(DESCRIPTOR_API);
-        SHARED.add(DESCRIPTOR_IMPL);
-        SHARED.add(CONTAINER);
         SHARED.add(TAGLIB);
-        SHARED.add(CASTOR);
-        
-        SHARED.add(JAXB_API);
-        SHARED.add(JAXB_IMPL);
-        
-        SHARED.add(STAX_API);
-        SHARED.add(STAX_IMPL);
-        
-        SHARED.add(ACTIVATION);
-
+//        SHARED.add(JAXB_API);
         SHARED.add(CCPP_API);
-
     }
 
 
