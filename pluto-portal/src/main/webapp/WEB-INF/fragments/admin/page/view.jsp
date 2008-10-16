@@ -96,10 +96,10 @@ limitations under the License.
     <script type="text/javascript">
         var <portlet:namespace/>portlets = new Array();
         <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.portletContexts}" var="app">
-            <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'] = new Array();
-            <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'][0] = 'Select. . .';
+            <portlet:namespace/>portlets['<c:out value="${app.applicationName}"/>'] = new Array();
+            <portlet:namespace/>portlets['<c:out value="${app.applicationName}"/>'][0] = 'Select. . .';
           <c:forEach items="${app.portletApplicationDefinition.portlets}" var="portlet" varStatus="loopStatus">
-            <portlet:namespace/>portlets['<c:out value="${app.applicationId}"/>'][<c:out value="${loopStatus.index + 1}"/>] = '<c:out value="${portlet.portletName}"/>';
+            <portlet:namespace/>portlets['<c:out value="${app.applicationName}"/>'][<c:out value="${loopStatus.index + 1}"/>] = '<c:out value="${portlet.portletName}"/>';
           </c:forEach>
         </c:forEach>
 
@@ -129,7 +129,7 @@ limitations under the License.
     <select name="applications" onChange="<portlet:namespace/>doSwitch(this)">
       <option value='-'>Select. . .</option>
       <c:forEach items="${portletContainer.optionalContainerServices.portletRegistryService.portletContexts}" var="app">
-      <option value="<c:out value="${app.applicationId}"/>"><c:out value="${app.applicationName}"/></option>
+      <option value="<c:out value="${app.applicationName}"/>"><c:out value="${app.applicationName}"/></option>
       </c:forEach>
     </select>
 

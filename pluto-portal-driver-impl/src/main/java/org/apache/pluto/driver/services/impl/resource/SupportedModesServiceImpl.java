@@ -92,6 +92,11 @@ public class SupportedModesServiceImpl implements SupportedModesService
 
     public boolean isPortletModeSupportedByPortlet(String portletId, String mode) {
         String applicationId = PortletWindowConfig.parseContextPath(portletId);
+        String applicationName = applicationId;
+        if (applicationName.length() >0 )
+        {
+            applicationName = applicationName.substring(1);
+        }
         String portletName = PortletWindowConfig.parsePortletName(portletId);
         // since SupportedModesService is consulted per portal portal mode per portlet
         // per render request, store a reference to the registry instead of looking
@@ -108,7 +113,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
                 LOG.error("Optional Portlet Registry Service not found.");
                 throw new PortletContainerException("Optional Portlet Registry Service not found.");
             }
-            PortletApplicationDefinition ctx = portletRegistry.getPortletApplication(applicationId);
+            PortletApplicationDefinition ctx = portletRegistry.getPortletApplication(applicationName);
             Iterator i = ctx.getPortlets().iterator();
             while(i.hasNext()) {
                 PortletDefinition dd = (PortletDefinition)i.next();

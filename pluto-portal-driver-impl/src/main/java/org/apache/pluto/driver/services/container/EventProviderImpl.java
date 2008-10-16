@@ -266,9 +266,14 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 		for (PortletWindowConfig portlet : portlets) {
 			String contextPath = portlet.getContextPath();
+            String applicationName = contextPath;
+            if (applicationName.length() >0 )
+            {
+                applicationName = applicationName.substring(1);
+            }
 			PortletApplicationDefinition portletAppDD = null;
 			try {
-				portletAppDD = portletRegistry.getPortletApplication(contextPath);
+				portletAppDD = portletRegistry.getPortletApplication(applicationName);
 				List<PortletDefinition> portletDDs = portletAppDD.getPortlets();
 				List<QName> aliases = getAllAliases(eventName, portletAppDD);
 				for (PortletDefinition portletDD : portletDDs) {
@@ -505,6 +510,12 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				.getContext(request).getServletContext();
 		String applicationId = PortletWindowConfig
 				.parseContextPath(portletWindow.getId().getStringId());
+        String applicationName = applicationId;
+        if (applicationId.length() >0 )
+        {
+            applicationName = applicationId.substring(1);
+        }
+
 		String portletName = PortletWindowConfig
 				.parsePortletName(portletWindow.getId().getStringId());
 		if (portletRegistry == null) {
@@ -514,7 +525,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 		}
 		List<EventDefinitionReference> events = null;
 		try {
-			events = portletRegistry.getPortlet(applicationId,
+			events = portletRegistry.getPortlet(applicationName,
 					portletName).getSupportedPublishingEvents();
 		} catch (PortletContainerException e1) {
 			e1.printStackTrace();

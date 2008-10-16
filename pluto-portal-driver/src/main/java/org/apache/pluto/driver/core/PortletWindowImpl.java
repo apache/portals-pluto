@@ -58,11 +58,17 @@ public class PortletWindowImpl implements PortletWindow {
         this.portalURL = portalURL;
         try
         {
-            this.entity = new PortletEntityImpl(container.getOptionalContainerServices().getPortletRegistryService().getPortlet(config.getContextPath(), config.getPortletName()));
+            String applicationName = config.getContextPath();
+            if (applicationName.length() >0 )
+            {
+                applicationName = applicationName.substring(1);
+            }
+            this.entity = new PortletEntityImpl(container.getOptionalContainerServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName()));
         }
         catch (PortletContainerException ex)
         {
             String message = "Unable to load Portlet App Deployment Descriptor:"+ ex.getMessage();
+            ex.printStackTrace();
             LOG.error(message, ex);
             throw new RuntimeException(message);
         }

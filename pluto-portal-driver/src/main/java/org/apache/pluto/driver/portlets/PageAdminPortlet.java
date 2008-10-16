@@ -74,13 +74,18 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
 
     public void doAddPortlet(ActionRequest request) {
         String page = request.getParameter("page");
-        String applicationId = request.getParameter("applications");
-        String portletId = request.getParameter("availablePortlets");
+        String applicationName = request.getParameter("applications");
+        String portletName = request.getParameter("availablePortlets");
 
-        LOG.info("Request: Add [applicationId=" + applicationId + ":portletId=" + portletId + "] to page '" + page + "'");
+        LOG.info("Request: Add [applicationName=" + applicationName + ":portletName=" + portletName + "] to page '" + page + "'");
 
+        String contextPath = applicationName;
+        if (contextPath.length() > 0)
+        {
+            contextPath = "/" + contextPath;
+        }
         PageConfig config = getPageConfig(page);
-        config.addPortlet(applicationId, portletId);
+        config.addPortlet(contextPath, portletName);
 
     }
 

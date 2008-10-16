@@ -84,7 +84,7 @@ public interface PortletRegistryService
     /**
      * Retreive the Portlet for the specified portlet.
      *
-     * @param applicationId portlet application name
+     * @param applicationName portlet application name
      * @param portletName portlet name
      * @return portlet
      * @throws PortletContainerException if portlet or application unknown
@@ -104,7 +104,7 @@ public interface PortletRegistryService
 
     /**
      * Retrieve the ClassLoader of the specified portlet application
-     * @param applicationId portlet application name
+     * @param applicationName portlet application name
      * @return classLoader
      */
     ClassLoader getClassLoader(String applicationName)

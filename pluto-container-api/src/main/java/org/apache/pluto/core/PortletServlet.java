@@ -18,6 +18,8 @@ package org.apache.pluto.core;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -32,6 +34,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -99,6 +102,9 @@ public class PortletServlet extends HttpServlet
 
     private ContainerInvocationService containerInvocationService;
 
+    private boolean started = false;
+    private Timer   startTimer = null;
+    
     // HttpServlet Impl --------------------------------------------------------
 
     public String getServletInfo()
@@ -112,92 +118,99 @@ public class PortletServlet extends HttpServlet
      * @throws ServletException
      *             if an error occurs while loading portlet.
      */
-    public void init() throws ServletException
+    public void init(ServletConfig config) throws ServletException
     {
 
         // Call the super initialization method.
-        super.init();
+        super.init(config);
 
         // Retrieve portlet name as defined as an initialization parameter.
         portletName = getInitParameter("portlet-name");
 
-        registryService = PlutoServices.getServices()
-                .getPortletRegistryService();
-        if (registryService == null) // TODO: wait for Pluto to come on line
-        { throw new ServletException(
-                "Pluto container has not yet come online, startup sequence error, registry service not available");
+        started = false;
 
-        }
-        containerInvocationService = PlutoServices.getServices()
-                .getContainerInvocationService();
-        if (containerInvocationService == null) // TODO: wait for Pluto to come
-        // on line
-        { throw new ServletException(
-                "Pluto container has not yet come online, startup sequence error, container invocation service not available");
-
-        }
-        try
+        startTimer = new Timer(true);
+        final ServletContext servletContext = getServletContext();
+        final ClassLoader paClassLoader = Thread.currentThread().getContextClassLoader();
+        startTimer.schedule(new TimerTask()
         {
-            ServletConfig sConfig = getServletConfig();
-            if (sConfig == null)
+            public void run()
             {
-                String msg = "Problem obtaining servlet configuration(getServletConfig() returns null).";
-                throw new PortletContainerException(msg);
+                if (startTimer != null)
+                {
+                    if (attemptRegistration(servletContext, paClassLoader ))
+                    {
+                        startTimer.cancel();
+                        startTimer = null;
+                    }
+                }
+            }
+        }, 1, 10000);
+    }
+    
+    protected boolean attemptRegistration(ServletContext context, ClassLoader paClassLoader)
+    {
+        if (PlutoServices.getServices() != null) 
+        {
+            registryService = PlutoServices.getServices().getPortletRegistryService();
+            containerInvocationService = PlutoServices.getServices().getContainerInvocationService();
+            try
+            {
+                ServletConfig sConfig = getServletConfig();
+                if (sConfig == null)
+                {
+                    String msg = "Problem obtaining servlet configuration(getServletConfig() returns null).";
+                    context.log(msg);
+                    return true;
+                }
+
+                String applicationName = registryService.register(sConfig);
+                portletContext = (InternalPortletContext) registryService.getPortletContext(applicationName);
+                portletConfig = (InternalPortletConfig) registryService.getPortletConfig(applicationName, portletName);
+
+            }
+            catch (PortletContainerException ex)
+            {
+                context.log(ex.getMessage(),ex);
+                return true;
             }
 
-            String applicationName = registryService.register(sConfig);
-            portletContext = (InternalPortletContext) registryService
-                    .getPortletContext(applicationName);
-            portletConfig = (InternalPortletConfig) registryService
-                    .getPortletConfig(applicationName, portletName);
+            PortletDefinition portletDD = portletConfig.getPortletDefinition();
 
+//          Create and initialize the portlet wrapped in the servlet.
+            try
+            {
+                Class clazz = paClassLoader.loadClass((portletDD.getPortletClass()));
+                portlet = (Portlet) clazz.newInstance();
+                portlet.init(portletConfig);
+                initializeEventPortlet();
+                initializeResourceServingPortlet();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                context.log(ex.getMessage(),ex);
+                return true;
+            }
         }
-        catch (PortletContainerException ex)
-        {
-            System.err.println(ex.getMessage());
-            throw new ServletException(ex);
-        }
-
-        PortletDefinition portletDD = portletConfig.getPortletDefinition();
-
-        // Create and initialize the portlet wrapped in the servlet.
-        try
-        {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            Class clazz = loader.loadClass((portletDD.getPortletClass()));
-            portlet = (Portlet) clazz.newInstance();
-            portlet.init(portletConfig);
-            initializeEventPortlet();
-            initializeResourceServingPortlet();
-        }
-        catch (ClassNotFoundException ex)
-        {
-            System.err.println(ex.getMessage());
-            throw new ServletException(ex);
-        }
-        catch (IllegalAccessException ex)
-        {
-            System.err.println(ex.getMessage());
-            throw new ServletException(ex);
-        }
-        catch (InstantiationException ex)
-        {
-            System.err.println(ex.getMessage());
-            throw new ServletException(ex);
-        }
-        catch (PortletException ex)
-        {
-            System.err.println(ex.getMessage());
-            throw new ServletException(ex);
-        }
+        return false;
     }
 
     public void destroy()
     {
-        registryService.remove(portletContext);
-        if (portlet != null)
+        if ( startTimer != null )
         {
-            portlet.destroy();
+          startTimer.cancel();
+          startTimer = null;
+        }
+        else if ( started )
+        {
+          started = false;
+          registryService.remove(portletContext);
+          if (portlet != null)
+          {
+              portlet.destroy();
+          }
         }
         super.destroy();
     }

@@ -209,9 +209,15 @@ public class PortalDriverServlet extends HttpServlet {
 
     private void setPublicRenderParameter(HttpServletRequest request, PortalURL portalURL, String portletID)throws ServletException, PortletContainerException {    		
 		String applicationId = PortletWindowConfig.parseContextPath(portletID);
+        String applicationName = applicationId;
+        if (applicationName.length() >0 )
+        {
+            applicationName = applicationName.substring(1);
+        }
+
 		String portletName = PortletWindowConfig.parsePortletName(portletID);
 		PortletDefinition portletDD = container.getOptionalContainerServices().getPortletRegistryService()
-								.getPortlet(applicationId, portletName);    		
+								.getPortlet(applicationName, portletName);    		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		if (parameterNames != null){
 			while(parameterNames.hasMoreElements()){
