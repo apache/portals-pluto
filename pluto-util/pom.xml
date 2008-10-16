@@ -13,6 +13,13 @@
        are those which need to be installed!
   -->
   <dependencies>
+
+<dependency>
+      <groupId>org.apache.pluto</groupId>
+      <artifactId>pluto-container</artifactId>
+      <version>${pom.version}</version>
+      <scope>compile</scope>
+    </dependency>
         
     <dependency>
       <groupId>commons-cli</groupId>

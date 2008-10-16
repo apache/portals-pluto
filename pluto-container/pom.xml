@@ -74,6 +74,20 @@
       <scope>provided</scope>
     </dependency>
     
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb-impl.version}</version>
+			<scope>compile</scope>
+		</dependency>
+    
+    
     <!--  CCPP Libraries -->
     <dependency>
       <groupId>javax.ccpp</groupId>
