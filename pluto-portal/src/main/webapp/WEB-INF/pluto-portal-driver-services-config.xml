@@ -44,6 +44,12 @@ limitations under the License.
 
 <beans>
 
+	<bean id="PlutoServices"
+	      class="org.apache.pluto.services.PlutoServices"
+          singleton="true">
+      <constructor-arg><ref bean="RequiredContainerServices"/></constructor-arg>          	      
+	</bean>  
+	
     <bean id="RequiredContainerServices"
           name="OptionalContainerServices"
           class="org.apache.pluto.driver.services.container.ContainerServicesImpl"
@@ -51,6 +57,7 @@ limitations under the License.
       <constructor-arg><ref bean="PortalContext"/></constructor-arg>
       <constructor-arg><ref bean="DriverConfiguration"/></constructor-arg>
       <constructor-arg><ref bean="CCPPProfileService"/></constructor-arg>
+      <constructor-arg><ref bean="ContainerInvocationService"/></constructor-arg>
     </bean>
 
     <bean id="PortalContext"
@@ -77,6 +84,8 @@ limitations under the License.
       <constructor-arg><ref bean="PortalCallbackService"/></constructor-arg>
 
       <!--  Optional Container Services -->
+      <property name="portletRegistryService"><ref bean="PortletRegistryService"/></property>
+      
       <!--
       <property name="portletPreferencesService"><ref bean="PortletPreferencesService"/></property>
       <property name="userAttributeService"><ref bean="UserAttributeService"/></property>
@@ -135,4 +144,14 @@ limitations under the License.
     	  singleton="true">
     </bean>
 
+	<bean id='ContainerInvocationService'
+	      class='org.apache.pluto.core.ContainerInvocationServiceImpl'
+	      singleton='true'>
+	</bean>
+	
+	<bean id="PortletRegistryService"
+		  class="org.apache.pluto.core.PortletContextManager"
+		  singleton="true">
+    </bean>
+    
 </beans>

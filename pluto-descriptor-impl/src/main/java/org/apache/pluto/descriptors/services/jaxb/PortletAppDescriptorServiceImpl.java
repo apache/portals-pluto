@@ -33,7 +33,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     	try {
     		JAXBContext jc = JAXBContext.newInstance( 
     				"org.apache.pluto.descriptors.portlet10" + ":" +
-    				"org.apache.pluto.descriptors.portlet20");
+    				"org.apache.pluto.descriptors.portlet20", PortletAppDescriptorServiceImpl.class.getClassLoader());
 
     		Unmarshaller u = jc.createUnmarshaller();
     		u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());

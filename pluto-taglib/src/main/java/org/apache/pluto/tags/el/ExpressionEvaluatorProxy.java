@@ -24,14 +24,8 @@ import java.util.TreeMap;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-
-public abstract class ExpressionEvaluatorProxy {
-
-    private static final Log LOG = LogFactory.getLog(ExpressionEvaluatorProxy.class);
-
+public abstract class ExpressionEvaluatorProxy 
+{
     private static final Map<String, String> FACTORIES = new TreeMap<String, String>();
 
     private static ExpressionEvaluatorProxy proxy;
@@ -49,11 +43,6 @@ public abstract class ExpressionEvaluatorProxy {
                 try {
                     String className =
                         ExpressionEvaluatorProxy.class.getPackage().getName()+"."+entry.getValue();
-
-                    if(LOG.isInfoEnabled()) {
-                        LOG.info("Attempting to utilize expression evaluator proxy '"+className+"'");
-                    }
-
                     Class<?> proxyClass = Class.forName(className);
                     proxy = (ExpressionEvaluatorProxy)proxyClass.newInstance();
 
@@ -70,11 +59,10 @@ public abstract class ExpressionEvaluatorProxy {
                 }
             }
         }
-        if(proxy == null) {
+        if(proxy == null) 
+        {
             throw new RuntimeException("Unable to find a supported proxy");
-        } else {
-            LOG.info("ExpressionEvaluator Proxy Found: "+proxy.getClass().getName());
-        }
+        } 
     }
 
 

@@ -29,6 +29,7 @@ import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
+import org.apache.pluto.spi.optional.PortletRegistryService;
 
 /**
  * Encapsulation of the Pluto Driver ResourceConfig.
@@ -48,7 +49,8 @@ public class DriverConfigurationImpl
     // Container Services
     private PortalCallbackService portalCallbackService;
     private PortletPreferencesService portletPreferencesService;
-
+    private PortletRegistryService registryService;
+    
     public DriverConfigurationImpl(PortalURLParser portalUrlParser,
                                    PropertyConfigService propertyService,
                                    RenderConfigService renderService,
@@ -199,6 +201,16 @@ public class DriverConfigurationImpl
     	return renderService;
     }
 
+    public PortletRegistryService getPortletRegistryService()
+    {
+        return registryService;
+    }
+    
+    public void setPortletRegistryService(PortletRegistryService registryService)
+    {
+        this.registryService = registryService;
+    }
+    
     /**
      * Standard Getter.
      * @return the configuration data of all configured portlet applications.

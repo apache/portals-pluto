@@ -32,13 +32,7 @@
     <name>Pluto Portlet Tag Library</name>
     <description>Pluto's Java Portlet Specification Tag Library implementation</description>
 
-    <dependencies>
-	    <dependency>
-            <groupId>org.apache.pluto</groupId>
-            <artifactId>pluto-container</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>
+    <dependencies>    
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
@@ -57,11 +51,6 @@
             <version>${jsp-api.version}</version>
             <scope>provided</scope>
         </dependency>
-      <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging-api</artifactId>
-        <version>${commons-logging.version}</version>
-      </dependency>
 
         <dependency>
             <groupId>junit</groupId>

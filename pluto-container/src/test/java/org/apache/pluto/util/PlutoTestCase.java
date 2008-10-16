@@ -19,6 +19,9 @@ package org.apache.pluto.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.pluto.core.PlutoContainerServices;
+import org.apache.pluto.services.ContainerServices;
+import org.apache.pluto.services.PlutoServices;
 import org.jmock.MockObjectTestCase;
 
 /**
@@ -32,6 +35,8 @@ public abstract class PlutoTestCase extends MockObjectTestCase {
     public void setUp() throws Exception {
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
         System.setProperty("org.apache.commons.logging.simplelog.defaultlog", "ERROR");
+        ContainerServices containerServices = new PlutoContainerServices();
+        new PlutoServices(containerServices);
     }
 
     protected void assertException(Object target, String methodName,

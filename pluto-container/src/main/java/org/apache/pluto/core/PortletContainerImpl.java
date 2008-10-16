@@ -55,6 +55,7 @@ import org.apache.pluto.internal.impl.EventResponseImpl;
 import org.apache.pluto.internal.impl.PortletRequestImpl;
 import org.apache.pluto.internal.impl.PortletResponseImpl;
 import org.apache.pluto.internal.impl.StateAwareResponseImpl;
+import org.apache.pluto.spi.ContainerInvocationService;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortletURLProvider;
@@ -88,6 +89,7 @@ public class PortletContainerImpl implements PortletContainer,
     
     /** The optional container services associated with this container. */
     private final OptionalContainerServices optionalContainerServices;
+    
     
     /** Flag indicating whether or not we've been initialized. */
     private boolean initialized = false;
@@ -174,12 +176,12 @@ public class PortletContainerImpl implements PortletContainer,
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
-            ContainerInvocation.setInvocation(this, portletWindow);
+            getInvocationService().setInvocation(this, portletWindow);
             //Filter initialisation
             FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RENDER_PHASE);
             invoker.render(portletContext.getServletContext(), renderRequest, renderResponse, portletWindow, filterManager);
         } finally {
-            ContainerInvocation.clearInvocation();
+            getInvocationService().clearInvocation();
         }
         
         debugWithName("Portlet rendered for: "
@@ -219,11 +221,11 @@ public class PortletContainerImpl implements PortletContainer,
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
-            ContainerInvocation.setInvocation(this, portletWindow);
+            getInvocationService().setInvocation(this, portletWindow);
             FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
             invoker.serveResource(portletContext.getServletContext(), resourceRequest, resourceResponse, portletWindow, filterManager);
         } finally {
-            ContainerInvocation.clearInvocation();
+            getInvocationService().clearInvocation();
         }
         
         debugWithName("Portlet resource for: "
@@ -263,12 +265,12 @@ public class PortletContainerImpl implements PortletContainer,
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
-            ContainerInvocation.setInvocation(this, portletWindow);
+            getInvocationService().setInvocation(this, portletWindow);
             FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.ACTION_PHASE);
             invoker.action(portletContext.getServletContext(), actionRequest, actionResponse, portletWindow, filterManager);
         }
         finally {
-            ContainerInvocation.clearInvocation();
+            getInvocationService().clearInvocation();
         }
 
         debugWithName("Portlet action processed for: "
@@ -340,10 +342,10 @@ public class PortletContainerImpl implements PortletContainer,
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
-            ContainerInvocation.setInvocation(this, portletWindow);
+            getInvocationService().setInvocation(this, portletWindow);
             invoker.load(portletContext.getServletContext(), renderRequest, renderResponse, portletWindow);
         } finally {
-            ContainerInvocation.clearInvocation();
+            getInvocationService().clearInvocation();
         }
 
         debugWithName("Portlet loaded for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
@@ -371,10 +373,10 @@ public class PortletContainerImpl implements PortletContainer,
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
-            ContainerInvocation.setInvocation(this, portletWindow);
+            getInvocationService().setInvocation(this, portletWindow);
             invoker.admin(portletContext.getServletContext(), internalRequest, internalResponse, portletWindow);
         } finally {
-            ContainerInvocation.clearInvocation();
+            getInvocationService().clearInvocation();
         }
 
         debugWithName("Admin request complete.");
@@ -433,12 +435,12 @@ public class PortletContainerImpl implements PortletContainer,
     	PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
         try {
-            ContainerInvocation.setInvocation(this, window);
+            getInvocationService().setInvocation(this, window);
             FilterManager filterManager = filterInitialisation(window,PortletRequest.EVENT_PHASE);
             invoker.event(portletContext.getServletContext(), eventRequest, eventResponse, window, filterManager);
         }
         finally {
-            ContainerInvocation.clearInvocation();
+            getInvocationService().clearInvocation();
         }
 
     	debugWithName("Portlet event processed for: "
@@ -462,6 +464,10 @@ public class PortletContainerImpl implements PortletContainer,
     	}
     }
     
+    private ContainerInvocationService getInvocationService()
+    {
+        return requiredContainerServices.getContainerInvocationService();
+    }
     
     // Private Methods ---------------------------------------------------------
     

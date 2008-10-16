@@ -19,6 +19,8 @@ package org.apache.pluto.spi.optional;
 
 import java.util.Iterator;
 
+import javax.servlet.ServletConfig;
+
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
@@ -34,7 +36,8 @@ import org.apache.pluto.om.portlet.PortletApplicationDefinition;
  * @since 1.1.0
  *
  */
-public interface PortletRegistryService {
+public interface PortletRegistryService 
+{
 
     /**
      * Retrieve all registered applications.  This list
@@ -121,4 +124,8 @@ public interface PortletRegistryService {
      * @param listener the listener to remove
      */
     void removePortletRegistryListener(PortletRegistryListener listener);
+    
+    String register(ServletConfig config) throws PortletContainerException;
+    
+    void remove(InternalPortletContext context);
 }

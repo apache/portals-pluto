@@ -56,11 +56,6 @@ public class PortletContextManager implements PortletRegistryService {
      * Log Instance
      */
     private static final Log LOG = LogFactory.getLog(PortletContextManager.class);
-
-    /**
-     * The singleton manager instance.
-     */
-    private static final PortletContextManager MANAGER = new PortletContextManager();
     
     /**
      * The PortletContext cache map: key is servlet context, and value is the
@@ -99,17 +94,10 @@ public class PortletContextManager implements PortletRegistryService {
     /**
      * Private constructor that prevents external instantiation.
      */
-    private PortletContextManager() {
+    public PortletContextManager() {
     	// Do nothing.
     }
 
-    /**
-     * Returns the singleton manager instance.
-     * @return the singleton manager instance.
-     */
-    public static PortletContextManager getManager() {
-        return MANAGER;
-    }
     
     // Public Methods ----------------------------------------------------------
 

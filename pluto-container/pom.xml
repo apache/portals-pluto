@@ -34,18 +34,26 @@
   
   <dependencies>
 
-    <!-- Pluto Support Libraries =========================================== -->
+    <dependency>
+      <groupId>org.apache.pluto</groupId>
+      <artifactId>pluto-container-api</artifactId>
+      <version>${pom.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.pluto</groupId>
+      <artifactId>pluto-commons</artifactId>
+      <version>${pom.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Pluto Support Libraries ===========================================  -->
     <dependency>
       <groupId>org.apache.pluto</groupId>
       <artifactId>pluto-descriptor-api</artifactId>
       <version>${pom.version}</version>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-       <groupId>org.apache.pluto</groupId>
-       <artifactId>pluto-descriptor-impl</artifactId>
-       <version>${pom.version}</version>
-       <scope>runtime</scope>
     </dependency>
 
     <!-- Other Support Libraries =========================================== -->
@@ -55,6 +63,7 @@
       <version>${commons-logging.version}</version>
       <scope>compile</scope>
     </dependency>
+<!-- 
 	<dependency>
 	  <groupId>stax</groupId>
 	  <artifactId>stax</artifactId>
@@ -65,7 +74,7 @@
 	  <artifactId>stax</artifactId>
 	  <version>${stax.impl.version}</version>
 	</dependency>
-    
+    -->
     <!-- Specification Libraries =========================================== -->
     <dependency>
       <groupId>javax.portlet</groupId>

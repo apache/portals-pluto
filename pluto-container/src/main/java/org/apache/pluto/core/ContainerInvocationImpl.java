@@ -17,6 +17,7 @@
  */
 package org.apache.pluto.core;
 
+import org.apache.pluto.ContainerInvocation;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 
@@ -35,40 +36,13 @@ import org.apache.pluto.PortletWindow;
  * @since 1.1
  *
  */
-public class ContainerInvocation {
-
-    private static final InheritableThreadLocal CONTAINERS =
-        new InheritableThreadLocal();
-
-    /**
-     * Retrieve the container which is currently
-     * executing.
-     *
-     * @return the currently executing portlet container.
-     */
-    public static ContainerInvocation getInvocation() {
-        return (ContainerInvocation)CONTAINERS.get();
-    }
-
-    /**
-     * Set the container currently under execution.
-     *
-     * @param container the container invoked
-     * @param window used in the invocation
-     */
-    public static void setInvocation(PortletContainer container, PortletWindow window) {
-        CONTAINERS.set(new ContainerInvocation(window, container));
-    }
-
-    public static void clearInvocation() {
-        CONTAINERS.set(null);
-    }
-
-
+public class ContainerInvocationImpl implements ContainerInvocation
+{
     private PortletWindow window;
     private PortletContainer container;
 
-    public ContainerInvocation(PortletWindow window, PortletContainer container) {
+    public ContainerInvocationImpl(PortletWindow window, PortletContainer container) 
+    {
         this.window = window;
         this.container = container;
     }

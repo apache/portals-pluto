@@ -52,7 +52,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
     private Mock mockRequestAttributeService = null;
-
+    
     private PortletWindow window = null;
 
     /* (non-Javadoc)
@@ -76,7 +76,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockRequestAttributeService = mock (RequestAttributeService.class);
 
         // Constructor expectations for RenderRequestImpl
-        mockContainer.expects( once() ).method( "getRequiredContainerServices" ).will( returnValue( mockServices.proxy() ) );
+        mockContainer.expects( atLeastOnce() ).method( "getRequiredContainerServices" ).will( returnValue( mockServices.proxy() ) );
         mockServices.expects( once() ).method( "getPortalContext" ).will( returnValue( mockPortalContext.proxy() ) );
     }
 
