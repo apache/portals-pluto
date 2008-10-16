@@ -127,21 +127,9 @@ class InstallationDependency {
     private static final List SHARED = new ArrayList();
 
     static {
-//        ENDORSED.add(XERCES);
-//        ENDORSED.add(XML_PARSER_APIS);
-
-//        SHARED.add(XERCES);
-//        SHARED.add(XML_PARSER_APIS);
-//      SHARED.add(CONTAINER);
-//      SHARED.add(CASTOR);
-//      SHARED.add(JAXB_IMPL);
-//      SHARED.add(STAX_API);
-//      SHARED.add(STAX_IMPL);
-//      SHARED.add(ACTIVATION);
         SHARED.add(PORTLET_API);
         SHARED.add(CONTAINER_API);
         SHARED.add(TAGLIB);
-//        SHARED.add(JAXB_API);
         SHARED.add(CCPP_API);
     }
 
