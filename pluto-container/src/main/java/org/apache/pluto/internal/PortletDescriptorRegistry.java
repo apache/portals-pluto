@@ -140,6 +140,10 @@ public class PortletDescriptorRegistry {
         PortletAppDD portletAppDD = null;
         try {
             InputStream in = servletContext.getResourceAsStream(PORTLET_XML);
+            if (in == null) {
+	            throw new PortletContainerException("Cannot find '" + PORTLET_XML +
+	            	"'. Are you sure it is in the deployed package?");
+            }
             portletAppDD = portletDDService.read(in);
         } catch (IOException ex) {
             throw new PortletContainerException(EXCEPTIONS.getString(
