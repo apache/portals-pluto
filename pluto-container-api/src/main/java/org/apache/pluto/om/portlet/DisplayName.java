@@ -19,11 +19,10 @@ import java.util.Locale;
 
 public interface DisplayName {
 
+    String getLang();
+
 	String getDisplayName();
 	void setDisplayName(String displayName);
-
-	String getLang();
-	void setLang(String lang);
 	
 	Locale getLocale();
 }

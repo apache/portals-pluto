@@ -20,23 +20,20 @@ import java.util.Locale;
 
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.ElementFactoryList;
-
 public interface EventDefinition
 {
+    QName getQName();
+    String getName();
+    
 	List<QName> getAliases();
+	void addAlias(QName qName);
 
 	Description getDescription(Locale locale);
-	ElementFactoryList<Description> getDescriptions();
+    List<? extends Description> getDescriptions();
+    Description addDescription(String lang);
 	
 	String getValueType();
 	void setValueType(String valueType);
 
-	QName getQName();
-	void setQName(QName qname);
-
-	String getName();
-	void setName(String name);
-	
 	QName getQualifiedName(String defaultNamespace);
 }

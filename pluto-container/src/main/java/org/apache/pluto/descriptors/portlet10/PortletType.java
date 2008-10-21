@@ -16,31 +16,14 @@
  */
 package org.apache.pluto.descriptors.portlet10;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.ContainerRuntimeOption;
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.EventDefinitionReference;
-import org.apache.pluto.om.portlet.InitParam;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.om.portlet.PortletInfo;
-import org.apache.pluto.om.portlet.Preferences;
-import org.apache.pluto.om.portlet.SecurityRoleRef;
-import org.apache.pluto.om.portlet.Supports;
 
 /**
  * The portlet element contains the declarative data of a portlet. Used in: portlet-app <p>Java class for portletType
@@ -81,365 +64,34 @@ import org.apache.pluto.om.portlet.Supports;
 @XmlType(name = "portletType", propOrder = { "description", "portletName", "displayName", "portletClass", "initParam",
                                             "expirationCache", "supports", "supportedLocale", "resourceBundle",
                                             "portletInfo", "portletPreferences", "securityRoleRef" })
-public class PortletType implements PortletDefinition
+public class PortletType
 {
-    @XmlElement(name = "description", type = DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    List<DescriptionType> description;
     @XmlElement(name = "portlet-name", required = true)
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String portletName;
-    @XmlElement(name = "display-name", type = DisplayNameType.class)
-    protected List<DisplayName> displayName;
+    String portletName;
+    @XmlElement(name = "display-name")
+    List<DisplayNameType> displayName;
     @XmlElement(name = "portlet-class", required = true)
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String portletClass;
-    @XmlElement(name = "init-param", type = InitParamType.class)
-    protected List<InitParam> initParam;
+    String portletClass;
+    @XmlElement(name = "init-param")
+    List<InitParamType> initParam;
     @XmlElement(name = "expiration-cache")
-    protected Integer expirationCache;
-    @XmlElement(required = true, type = SupportsType.class)
-    protected List<Supports> supports;
+    Integer expirationCache;
+    @XmlElement(required = true)
+    List<SupportsType> supports;
     @XmlElement(name = "supported-locale")
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected List<String> supportedLocale;
+    List<String> supportedLocale;
     @XmlElement(name = "resource-bundle")
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String resourceBundle;
+    String resourceBundle;
     @XmlElement(name = "portlet-info")
-    protected PortletInfoType portletInfo;
+    PortletInfoType portletInfo;
     @XmlElement(name = "portlet-preferences")
-    protected PortletPreferencesType portletPreferences;
-    @XmlElement(name = "security-role-ref", type = SecurityRoleRefType.class)
-    protected List<SecurityRoleRef> securityRoleRef;
-    @XmlTransient
-    private PortletApplicationDefinition application;
-
-    public PortletType()
-    {
-    }
-
-    public PortletType(PortletApplicationDefinition application)
-    {
-        this.application = application;
-    }
-
-    public PortletApplicationDefinition getApplication()
-    {
-        return application;
-    }
-
-    public void setApplication(PortletApplicationDefinition app)
-    {
-        this.application = app;
-    }
-
-    public Description getDescription(Locale locale)
-    {
-        for (Description d : getDescriptions())
-        {
-            if (d.getLocale().equals(locale))
-            {
-                return d;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<Description> getDescriptions()
-    {
-        if (description == null || !(description instanceof ElementFactoryList))
-        {
-            ElementFactoryList<Description> lf = new ElementFactoryList<Description>(new ElementFactoryList.Factory<Description>()
-            {
-                public Class<? extends Description> getElementClass()
-                {
-                    return DescriptionType.class;
-                }
-
-                public Description newElement()
-                {
-                    return new DescriptionType();
-                }
-            });
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
-        }
-        return (ElementFactoryList<Description>) description;
-    }
-
-    public String getPortletName()
-    {
-        return portletName;
-    }
-
-    public void setPortletName(String value)
-    {
-        portletName = value;
-    }
-
-    public DisplayName getDisplayName(Locale locale)
-    {
-        for (DisplayName d : getDisplayNames())
-        {
-            if (d.getLocale().equals(locale))
-            {
-                return d;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<DisplayName> getDisplayNames()
-    {
-        if (displayName == null || !(displayName instanceof ElementFactoryList))
-        {
-            ElementFactoryList<DisplayName> lf = new ElementFactoryList<DisplayName>(new ElementFactoryList.Factory<DisplayName>()
-            {
-                public Class<? extends DisplayName> getElementClass()
-                {
-                    return DisplayNameType.class;
-                }
-
-                public DisplayName newElement()
-                {
-                    return new DisplayNameType();
-                }
-            });
-            if (displayName != null)
-            {
-                lf.addAll(displayName);
-            }
-            displayName = lf;
-        }
-        return (ElementFactoryList<DisplayName>) displayName;
-    }
-
-    public String getPortletClass()
-    {
-        return portletClass;
-    }
-
-    public void setPortletClass(String value)
-    {
-        portletClass = value;
-    }
-
-    public InitParam getInitParam(String name)
-    {
-        for (InitParam param : getInitParams())
-        {
-            if (param.getParamName().equals(name))
-            {
-                return param;
-            }
-        }
-        return null;
-    }
-
-    public ElementFactoryList<InitParam> getInitParams()
-    {
-        if (initParam == null || !(initParam instanceof ElementFactoryList))
-        {
-            ElementFactoryList<InitParam> lf = new ElementFactoryList<InitParam>(new ElementFactoryList.Factory<InitParam>()
-            {
-                public Class<? extends InitParam> getElementClass()
-                {
-                    return InitParamType.class;
-                }
-
-                public InitParam newElement()
-                {
-                    return new InitParamType();
-                }
-            });
-            if (initParam != null)
-            {
-                lf.addAll(initParam);
-            }
-            initParam = lf;
-        }
-        return (ElementFactoryList<InitParam>) initParam;
-    }
-
-    public int getExpirationCache()
-    {
-        return expirationCache != null ? expirationCache.intValue() : 0;
-    }
-
-    public void setExpirationCache(int value)
-    {
-        expirationCache = new Integer(value);
-    }
-
-    public String getCacheScope()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public void setCacheScope(String cacheScope)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public Supports getSupports(String mimeType)
-    {
-        for (Supports s : getSupports())
-        {
-            if (s.getMimeType().equals(mimeType))
-            {
-                return s;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<Supports> getSupports()
-    {
-        if (supports == null || !(supports instanceof ElementFactoryList))
-        {
-            ElementFactoryList<Supports> lf = new ElementFactoryList<Supports>(new ElementFactoryList.Factory<Supports>()
-            {
-                public Class<? extends Supports> getElementClass()
-                {
-                    return SupportsType.class;
-                }
-
-                public Supports newElement()
-                {
-                    return new SupportsType();
-                }
-            });
-            if (supports != null)
-            {
-                lf.addAll(supports);
-            }
-            supports = lf;
-        }
-        return (ElementFactoryList<Supports>) supports;
-    }
-
-    public List<String> getSupportedLocales()
-    {
-        if (supportedLocale == null)
-        {
-            supportedLocale = new ArrayList<String>();
-        }
-        return supportedLocale;
-    }
-
-    public String getResourceBundle()
-    {
-        return resourceBundle;
-    }
-
-    public void setResourceBundle(String value)
-    {
-        resourceBundle = value;
-    }
-
-    public PortletInfo getPortletInfo()
-    {
-        return getPortletInfo(false);
-    }
-
-    public PortletInfo getPortletInfo(boolean create)
-    {
-        if (create && portletInfo == null)
-        {
-            portletInfo = new PortletInfoType();
-        }
-        return portletInfo;
-    }
-
-    public Preferences getPortletPreferences()
-    {
-        return getPortletPreferences(false);
-    }
-
-    public Preferences getPortletPreferences(boolean create)
-    {
-        if (create && portletPreferences == null)
-        {
-            portletPreferences = new PortletPreferencesType();
-        }
-        return portletPreferences;
-    }
-
-    public SecurityRoleRef getSecurityRoleRef(String roleName)
-    {
-        for (SecurityRoleRef ref : getSecurityRoleRefs())
-        {
-            if (ref.getRoleName().equals(roleName))
-            {
-                return ref;
-            }
-        }
-        return null;
-    }
-
-    public ElementFactoryList<SecurityRoleRef> getSecurityRoleRefs()
-    {
-        if (securityRoleRef == null || !(securityRoleRef instanceof ElementFactoryList))
-        {
-            ElementFactoryList<SecurityRoleRef> lf = new ElementFactoryList<SecurityRoleRef>(
-                                                                                   new ElementFactoryList.Factory<SecurityRoleRef>()
-                                                                                   {
-                                                                                       public Class<? extends SecurityRoleRef> getElementClass()
-                                                                                       {
-                                                                                           return SecurityRoleRefType.class;
-                                                                                       }
-
-                                                                                       public SecurityRoleRef newElement()
-                                                                                       {
-                                                                                           return new SecurityRoleRefType();
-                                                                                       }
-                                                                                   });
-            if (securityRoleRef != null)
-            {
-                lf.addAll(securityRoleRef);
-            }
-            securityRoleRef = lf;
-        }
-        return (ElementFactoryList<SecurityRoleRef>) securityRoleRef;
-    }
-
-    public ElementFactoryList<EventDefinitionReference> getSupportedProcessingEvents()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public ElementFactoryList<EventDefinitionReference> getSupportedPublishingEvents()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public List<String> getSupportedPublicRenderParameters()
-    {
-        throw new UnsupportedOperationException();
-    }
-    
-    public ContainerRuntimeOption getContainerRuntimeOption(String name)
-    {
-        for (ContainerRuntimeOption cro : getContainerRuntimeOptions())
-        {
-            if (cro.getName().equals(name))
-            {
-                return cro;
-            }
-        }
-        return null;
-    }
-
-    public ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public void afterUnmarshal(Unmarshaller u, Object parent)
-    {
-        application = (PortletApplicationDefinition) parent;
-    }
+    PortletPreferencesType portletPreferences;
+    @XmlElement(name = "security-role-ref")
+    List<SecurityRoleRefType> securityRoleRef;
 }

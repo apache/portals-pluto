@@ -274,10 +274,10 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 			PortletApplicationDefinition portletAppDD = null;
 			try {
 				portletAppDD = portletRegistry.getPortletApplication(applicationName);
-				List<PortletDefinition> portletDDs = portletAppDD.getPortlets();
+				List<? extends PortletDefinition> portletDDs = portletAppDD.getPortlets();
 				List<QName> aliases = getAllAliases(eventName, portletAppDD);
 				for (PortletDefinition portletDD : portletDDs) {
-					List<EventDefinitionReference> processingEvents = portletDD.getSupportedProcessingEvents();
+					List<? extends EventDefinitionReference> processingEvents = portletDD.getSupportedProcessingEvents();
 					if (isEventSupported(processingEvents, eventName, portletAppDD.getDefaultNamespace())) {
                         if (portletDD.getPortletName().equals(portlet.getPortletName())) {
                                                           resultSet.add(portlet.getId());
@@ -331,7 +331,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 		return resultList;
 	}
 	
-	private boolean isEventSupported(List<EventDefinitionReference> supportedEvents, QName eventName, String defaultNamespace)
+	private boolean isEventSupported(List<? extends EventDefinitionReference> supportedEvents, QName eventName, String defaultNamespace)
 	{
 	    if (supportedEvents != null)
 	    {
@@ -523,7 +523,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 					.getAttribute(AttributeKeys.PORTLET_CONTAINER))
 					.getOptionalContainerServices().getPortletRegistryService();
 		}
-		List<EventDefinitionReference> events = null;
+		List<? extends EventDefinitionReference> events = null;
 		try {
 			events = portletRegistry.getPortlet(applicationName,
 					portletName).getSupportedPublishingEvents();
@@ -549,7 +549,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	private boolean isValueInstanceOfDefinedClass(QName qname,
 			Serializable value) {
         PortletApplicationDefinition app = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
-        List<EventDefinition> events = app.getEventDefinitions();
+        List<? extends EventDefinition> events = app.getEventDefinitions();
         if (events != null) {
             
             

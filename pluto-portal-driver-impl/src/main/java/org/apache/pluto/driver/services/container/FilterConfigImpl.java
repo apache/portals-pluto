@@ -33,9 +33,9 @@ import org.apache.pluto.om.portlet.InitParam;
 public class FilterConfigImpl implements FilterConfig {
 
 	private String filterName = null;
-	private List<InitParam> initParameters = null;
+	private List<? extends InitParam> initParameters = null;
 	private PortletContext portletContext = null;
-	public FilterConfigImpl(String filterName, List<InitParam> initParameters, PortletContext portletContext){
+	public FilterConfigImpl(String filterName, List<? extends InitParam> initParameters, PortletContext portletContext){
 		this.filterName = filterName;
 		this.initParameters = initParameters;
 		this.portletContext = portletContext;

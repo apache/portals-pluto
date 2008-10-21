@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,7 +24,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.ElementFactoryList;
 import org.apache.pluto.om.portlet.Preference;
 import org.apache.pluto.om.portlet.Preferences;
 
@@ -51,8 +51,8 @@ import org.apache.pluto.om.portlet.Preferences;
 @XmlType(name = "portlet-preferencesType", propOrder = { "preference", "preferencesValidator" })
 public class PortletPreferencesType implements Preferences
 {
-    @XmlElement(name = "preference", type=PreferenceType.class)
-    protected List<Preference> preference;
+    @XmlElement(name = "preference")
+    protected List<PreferenceType> preference;
     @XmlElement(name = "preferences-validator")
     protected String preferencesValidator;
 
@@ -68,32 +68,27 @@ public class PortletPreferencesType implements Preferences
         return null;
     }
     
-    public ElementFactoryList<Preference> getPortletPreferences()
+    public List<? extends Preference> getPortletPreferences()
     {
-        if (preference == null || !(preference instanceof ElementFactoryList))
+        if (preference == null)
         {
-            ElementFactoryList<Preference> lf = 
-                new ElementFactoryList<Preference>( new ElementFactoryList.Factory<Preference>()
-                {
-                    public Class<? extends Preference> getElementClass()
-                    {
-                        return PreferenceType.class;
-                    }
-
-                    public Preference newElement()
-                    {
-                        return new PreferenceType();
-                    }
-                }); 
-            if (preference != null)
-            {
-                lf.addAll(preference);
-            }
-            preference = lf;
+            preference = new ArrayList<PreferenceType>();
         }
-        return (ElementFactoryList<Preference>)preference;
+        return preference;
     }
-
+    
+    public Preference addPreference(String name)
+    {
+        if (getPortletPreference(name) != null)
+        {
+            throw new IllegalArgumentException("Portlet preference with name: "+name+" already defined");
+        }
+        PreferenceType pref = new PreferenceType();
+        pref.setName(name);
+        preference.add(pref);
+        return pref;        
+    }
+    
     public String getPreferencesValidator()
     {
         return preferencesValidator;

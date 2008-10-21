@@ -17,17 +17,11 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.SecurityConstraint;
-import org.apache.pluto.om.portlet.UserDataConstraint;
 
 /**
  * The security-constraintType is used to associate intended security constraints with one or more portlets. Used in:
@@ -53,68 +47,12 @@ import org.apache.pluto.om.portlet.UserDataConstraint;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "security-constraintType", propOrder = { "displayName", "portletCollection", "userDataConstraint" })
-public class SecurityConstraintType implements SecurityConstraint
+public class SecurityConstraintType
 {
-    @XmlElement(name = "display-name", type=DisplayNameType.class)
-    protected List<DisplayName> displayName;
+    @XmlElement(name = "display-name")
+    List<DisplayNameType> displayName;
     @XmlElement(name = "portlet-collection", required = true)
-    protected PortletCollectionType portletCollection;
+    PortletCollectionType portletCollection;
     @XmlElement(name = "user-data-constraint", required = true)
-    protected UserDataConstraintType userDataConstraint;
-
-    public DisplayName getDisplayName(Locale locale)
-    {
-        for (DisplayName d : getDisplayNames())
-        {
-            if (d.getLocale().equals(locale))
-            {
-                return d;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<DisplayName> getDisplayNames()
-    {
-        if (displayName == null || !(displayName instanceof ElementFactoryList))
-        {
-            ElementFactoryList<DisplayName> lf = 
-                new ElementFactoryList<DisplayName>( new ElementFactoryList.Factory<DisplayName>()
-                {
-                    public Class<? extends DisplayName> getElementClass()
-                    {
-                        return DisplayNameType.class;
-                    }
-
-                    public DisplayName newElement()
-                    {
-                        return new DisplayNameType();
-                    }
-                }); 
-            if (displayName != null)
-            {
-                lf.addAll(displayName);
-            }
-            displayName = lf;
-        }
-        return (ElementFactoryList<DisplayName>)displayName;
-    }
-
-    public List<String> getPortletNames()
-    {
-        if (portletCollection == null)
-        {
-            portletCollection = new PortletCollectionType();
-        }
-        return portletCollection.getPortletNames();
-    }
-
-    public UserDataConstraint getUserDataConstraint()
-    {
-        if (userDataConstraint == null)
-        {
-            userDataConstraint = new UserDataConstraintType();
-        }
-        return userDataConstraint;
-    }
+    UserDataConstraintType userDataConstraint;
 }

@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.descriptors.portlet10;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,21 +24,21 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.om.portlet.CustomPortletMode;
 import org.apache.pluto.om.portlet.CustomWindowState;
-import org.apache.pluto.om.portlet.EventDefinition;
-import org.apache.pluto.om.portlet.Filter;
-import org.apache.pluto.om.portlet.FilterMapping;
-import org.apache.pluto.om.portlet.Listener;
+import org.apache.pluto.om.portlet.Description;
+import org.apache.pluto.om.portlet.DisplayName;
+import org.apache.pluto.om.portlet.InitParam;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.om.portlet.PublicRenderParameter;
+import org.apache.pluto.om.portlet.PortletInfo;
+import org.apache.pluto.om.portlet.Preference;
+import org.apache.pluto.om.portlet.Preferences;
 import org.apache.pluto.om.portlet.SecurityConstraint;
+import org.apache.pluto.om.portlet.SecurityRoleRef;
+import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.om.portlet.UserAttribute;
 
 /**
@@ -68,288 +69,272 @@ import org.apache.pluto.om.portlet.UserAttribute;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "portlet-appType", propOrder = { "portlet", "customPortletMode", "customWindowState", "userAttribute",
                                                 "securityConstraint" })
-public class PortletAppType implements PortletApplicationDefinition
+public class PortletAppType
 {
-    @XmlElement(name = "portlet", type = PortletType.class)
-    protected List<PortletDefinition> portlet;
-    @XmlElement(name = "custom-portlet-mode", type = CustomPortletModeType.class)
-    protected List<CustomPortletMode> customPortletMode;
-    @XmlElement(name = "custom-window-state", type = CustomWindowStateType.class)
-    protected List<CustomWindowState> customWindowState;
-    @XmlElement(name = "user-attribute", type = UserAttributeType.class)
-    protected List<UserAttribute> userAttribute;
-    @XmlElement(name = "security-constraint", type = SecurityConstraintType.class)
-    protected List<SecurityConstraint> securityConstraint;
+    @XmlElement(name = "portlet")
+    List<PortletType> portlet;
+    @XmlElement(name = "custom-portlet-mode")
+    List<CustomPortletModeType> customPortletMode;
+    @XmlElement(name = "custom-window-state")
+    List<CustomWindowStateType> customWindowState;
+    @XmlElement(name = "user-attribute")
+    List<UserAttributeType> userAttribute;
+    @XmlElement(name = "security-constraint")
+    List<SecurityConstraintType> securityConstraint;
     @XmlAttribute(required = true)
-    protected String version;
-    @XmlTransient
-    protected String name;
-
-    public String getName()
+    String version = PortletApplicationDefinition.JSR_168_VERSION;
+    
+    public PortletAppType()
     {
-        return name;
     }
-
-    public void setName(String name)
+    
+    public PortletAppType(PortletApplicationDefinition app)
     {
-        this.name = name;
-    }
-
-    public PortletDefinition getPortlet(String portletName)
-    {
-        for (PortletDefinition pd : getPortlets())
+        // downgrade
+        for (PortletDefinition pd : app.getPortlets())
         {
-            if (pd.getPortletName().equals(portletName))
+            if (portlet == null)
             {
-                return pd;
+                portlet = new ArrayList<PortletType>();
             }
+            PortletType pt = new PortletType();
+            downgradePortlet(pd, pt);
+            portlet.add(pt);            
         }
-        return null;
-    }
-
-    public ElementFactoryList<PortletDefinition> getPortlets()
-    {
-        if (portlet == null || !(portlet instanceof ElementFactoryList))
+        for (CustomPortletMode cpm : app.getCustomPortletModes())
         {
-            ElementFactoryList<PortletDefinition> lf = new ElementFactoryList<PortletDefinition>(new ElementFactoryList.Factory<PortletDefinition>()
+            if (customPortletMode == null)
             {
-                public Class<? extends PortletDefinition> getElementClass()
+                customPortletMode = new ArrayList<CustomPortletModeType>();
+            }
+            CustomPortletModeType cpmt = new CustomPortletModeType();
+            cpmt.portletMode = cpm.getPortletMode();
+            for (Description d : cpm.getDescriptions())
+            {
+                if (cpmt.description == null)
                 {
-                    return PortletType.class;
+                    cpmt.description = new ArrayList<DescriptionType>();
                 }
-
-                public PortletDefinition newElement()
+                DescriptionType dt = new DescriptionType();
+                dt.lang = d.getLang();
+                dt.value = d.getDescription();
+                cpmt.description.add(dt);
+            }
+        }
+        for (CustomWindowState cws : app.getCustomWindowStates())
+        {
+            if (customWindowState == null)
+            {
+                customWindowState = new ArrayList<CustomWindowStateType>();
+            }
+            CustomWindowStateType cwst = new CustomWindowStateType();
+            cwst.windowState = cws.getWindowState();
+            for (Description d : cws.getDescriptions())
+            {
+                if (cwst.description == null)
                 {
-                    return new PortletType();
+                    cwst.description = new ArrayList<DescriptionType>();
                 }
-            });
-            if (portlet != null)
-            {
-                lf.addAll(portlet);
-            }
-            portlet = lf;
-        }
-        return (ElementFactoryList<PortletDefinition>) portlet;
-    }
-
-    public CustomPortletMode getCustomPortletMode(String name)
-    {
-        for (CustomPortletMode cpm : getCustomPortletModes())
-        {
-            if (cpm.getPortletMode().equalsIgnoreCase(name))
-            {
-                return cpm;
+                DescriptionType dt = new DescriptionType();
+                dt.lang = d.getLang();
+                dt.value = d.getDescription();
+                cwst.description.add(dt);
             }
         }
-        return null;
     }
     
-    public ElementFactoryList<CustomPortletMode> getCustomPortletModes()
+    public PortletApplicationDefinition upgrade()
     {
-        if (customPortletMode == null || !(customPortletMode instanceof ElementFactoryList))
+        PortletApplicationDefinition app = new org.apache.pluto.descriptors.portlet.PortletAppType();
+        if (portlet != null)
         {
-            ElementFactoryList<CustomPortletMode> lf = 
-                new ElementFactoryList<CustomPortletMode>( new ElementFactoryList.Factory<CustomPortletMode>()
+            for (PortletType src : portlet)
+            {
+                PortletDefinition target = app.addPortlet(src.portletName);
+                upgradePortlet(src, target);
+            }
+        }
+        if (customPortletMode != null)
+        {
+            for (CustomPortletModeType src : customPortletMode)
+            {
+                CustomPortletMode target = app.addCustomPortletMode(src.portletMode);
+                if (src.description != null)
                 {
-                    public Class<? extends CustomPortletMode> getElementClass()
+                    for (DescriptionType d : src.description)
                     {
-                        return CustomPortletModeType.class;
+                        Description desc = target.addDescription(d.lang);
+                        desc.setDescription(d.value);
                     }
-
-                    public CustomPortletMode newElement()
-                    {
-                        return new CustomPortletModeType();
-                    }
-                }); 
-            if (customPortletMode != null)
-            {
-                lf.addAll(customPortletMode);
-            }
-            customPortletMode = lf;
-        }
-        return (ElementFactoryList<CustomPortletMode>)customPortletMode;
-    }
-
-    public CustomWindowState getCustomWindowState(String name)
-    {
-        for (CustomWindowState cws : getCustomWindowStates())
-        {
-            if (cws.getWindowState().equalsIgnoreCase(name))
-            {
-                return cws;
+                }
             }
         }
-        return null;
-    }
-    
-    public ElementFactoryList<CustomWindowState> getCustomWindowStates()
-    {
-        if (customWindowState == null || !(customWindowState instanceof ElementFactoryList))
+        if (customWindowState != null)
         {
-            ElementFactoryList<CustomWindowState> lf = 
-                new ElementFactoryList<CustomWindowState>( new ElementFactoryList.Factory<CustomWindowState>()
+            for (CustomWindowStateType src : customWindowState)
+            {
+                CustomWindowState target = app.addCustomWindowState(src.windowState);
+                if (src.description != null)
                 {
-                    public Class<? extends CustomWindowState> getElementClass()
+                    for (DescriptionType d : src.description)
                     {
-                        return CustomWindowStateType.class;
+                        Description desc = target.addDescription(d.lang);
+                        desc.setDescription(d.value);
                     }
-
-                    public CustomWindowState newElement()
-                    {
-                        return new CustomWindowStateType();
-                    }
-                }); 
-            if (customWindowState != null)
-            {
-                lf.addAll(customWindowState);
-            }
-            customWindowState = lf;
-        }
-        return (ElementFactoryList<CustomWindowState>)customWindowState;
-    }
-
-    public UserAttribute getUserAttribute(String name)
-    {
-        for (UserAttribute ua : getUserAttributes())
-        {
-            if (ua.getName().equals(name))
-            {
-                return ua;
+                }
             }
         }
-        return null;
-    }
-    
-    public ElementFactoryList<UserAttribute> getUserAttributes()
-    {
-        if (userAttribute == null || !(userAttribute instanceof ElementFactoryList))
+        if (userAttribute != null)
         {
-            ElementFactoryList<UserAttribute> lf = 
-                new ElementFactoryList<UserAttribute>( new ElementFactoryList.Factory<UserAttribute>()
+            for (UserAttributeType src : userAttribute)
+            {
+                UserAttribute target = app.addUserAttribute(src.name);
+                if (src.description != null)
                 {
-                    public Class<? extends UserAttribute> getElementClass()
+                    for (DescriptionType d : src.description)
                     {
-                        return UserAttributeType.class;
+                        Description desc = target.addDescription(d.lang);
+                        desc.setDescription(d.value);
                     }
-
-                    public UserAttribute newElement()
-                    {
-                        return new UserAttributeType();
-                    }
-                }); 
-            if (userAttribute != null)
-            {
-                lf.addAll(userAttribute);
+                }
             }
-            userAttribute = lf;
         }
-        return (ElementFactoryList<UserAttribute>)userAttribute;
-    }
-
-    public ElementFactoryList<SecurityConstraint> getSecurityConstraints()
-    {
-        if (securityConstraint == null || !(securityConstraint instanceof ElementFactoryList))
+        if (securityConstraint != null)
         {
-            ElementFactoryList<SecurityConstraint> lf = 
-                new ElementFactoryList<SecurityConstraint>( new ElementFactoryList.Factory<SecurityConstraint>()
-                {
-                    public Class<? extends SecurityConstraint> getElementClass()
-                    {
-                        return SecurityConstraintType.class;
-                    }
-
-                    public SecurityConstraint newElement()
-                    {
-                        return new SecurityConstraintType();
-                    }
-                }); 
-            if (securityConstraint != null)
+            for (SecurityConstraintType src : securityConstraint)
             {
-                lf.addAll(securityConstraint);
+                SecurityConstraint target = app.addSecurityConstraint(src.userDataConstraint.transportGuarantee);
+                if (src.displayName != null)
+                {
+                    for (DisplayNameType d : src.displayName)
+                    {
+                        DisplayName dname = target.addDisplayName(d.lang);
+                        dname.setDisplayName(d.value);
+                    }
+                }
+                if (src.portletCollection != null && src.portletCollection.portletName != null)
+                {
+                    for (String pname : src.portletCollection.portletName)
+                    {
+                        target.addPortletName(pname);
+                    }
+                }
             }
-            securityConstraint = lf;
         }
-        return (ElementFactoryList<SecurityConstraint>)securityConstraint;
-    }
-
-    public String getResourceBundle()
-    {
-        return null;
-    }
-
-    public void setResourceBundle(String value)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public Filter getFilter(String name)
-    {
-        throw new UnsupportedOperationException();
+        return app;
     }
     
-    public ElementFactoryList<Filter> getFilters()
+    private void downgradePortlet(PortletDefinition src, PortletType target)
     {
-        throw new UnsupportedOperationException();
-    }
-
-    public FilterMapping getFilterMapping(String name)
-    {
-        throw new UnsupportedOperationException();
+        // TODO
     }
     
-    public ElementFactoryList<FilterMapping> getFilterMappings()
+    private void upgradePortlet(PortletType src, PortletDefinition target)
     {
-        throw new UnsupportedOperationException();
-    }
-
-    public String getDefaultNamespace()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public void setDefaultNamespace(String value)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public ElementFactoryList<EventDefinition> getEventDefinitions()
-    {
-        throw new UnsupportedOperationException();
-    }
-    
-    public PublicRenderParameter getPublicRenderParameter(String identifier)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public ElementFactoryList<PublicRenderParameter> getPublicRenderParameters()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public ElementFactoryList<Listener> getListeners()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public ContainerRuntimeOption getContainerRuntimeOption(String name)
-    {
-        throw new UnsupportedOperationException();
-    }
-    
-    
-    public ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public String getVersion()
-    {
-        return version;
-    }
-
-    public void setVersion(String value)
-    {
-        version = value;
+        if (src.description != null)
+        {
+            for (DescriptionType d : src.description)
+            {
+                Description desc = target.addDescription(d.lang);
+                desc.setDescription(d.value);
+            }
+        }
+        if (src.displayName != null)
+        {
+            for (DisplayNameType d : src.displayName)
+            {
+                DisplayName dname = target.addDisplayName(d.lang);
+                dname.setDisplayName(d.value);
+            }
+        }
+        target.setPortletClass(src.portletClass);
+        if (src.expirationCache != null)
+        {
+            target.setExpirationCache(src.expirationCache.intValue());
+        }
+        if (src.initParam != null)
+        {
+            for (InitParamType p : src.initParam)
+            {
+                InitParam param = target.addInitParam(p.name);
+                param.setParamValue(p.value);
+                if (p.description != null)
+                {
+                    for (DescriptionType d : p.description)
+                    {
+                        Description desc = param.addDescription(d.lang);
+                        desc.setDescription(d.value);
+                    }
+                }
+            }
+        }
+        if (src.supports != null)
+        {
+            for (SupportsType st : src.supports)
+            {
+                Supports s = target.addSupports(st.mimeType);
+                if (st.portletMode != null)
+                {
+                    for (String mode : st.portletMode)
+                    {
+                        s.addPortletMode(mode);
+                    }
+                }
+            }
+        }
+        if (src.supportedLocale != null)
+        {
+            for (String lang : src.supportedLocale)
+            {
+                target.addSupportedLocale(lang);
+            }
+        }
+        target.setResourceBundle(src.resourceBundle);
+        if (src.portletInfo != null)
+        {
+            PortletInfo pi = target.getPortletInfo();
+            pi.setTitle(src.portletInfo.title);
+            pi.setShortTitle(src.portletInfo.shortTitle);
+            pi.setKeywords(src.portletInfo.keywords);
+        }
+        if (src.portletPreferences != null)
+        {
+            Preferences prefs = target.getPortletPreferences();
+            prefs.setPreferencesValidator(src.portletPreferences.preferencesValidator);
+            if (src.portletPreferences.preference != null)
+            {
+                for (PreferenceType p : src.portletPreferences.preference)
+                {
+                    Preference pref = prefs.addPreference(p.name);
+                    if (p.value != null)
+                    {
+                        for (String value : p.value)
+                        {
+                            pref.addValue(value);
+                        }
+                    }
+                    if (p.readOnly != null)
+                    {
+                        pref.setReadOnly(p.readOnly.booleanValue());
+                    }
+                }
+            }
+        }
+        if (src.securityRoleRef != null)
+        {
+            for (SecurityRoleRefType rrt : src.securityRoleRef)
+            {
+                SecurityRoleRef srr = target.addSecurityRoleRef(rrt.roleName);
+                srr.setRoleLink(rrt.roleLink);
+                if (rrt.description != null)
+                {
+                    for (DescriptionType d : rrt.description)
+                    {
+                        Description desc = srr.addDescription(d.lang);
+                        desc.setDescription(d.value);
+                    }
+                }
+            }
+        }
     }
 }

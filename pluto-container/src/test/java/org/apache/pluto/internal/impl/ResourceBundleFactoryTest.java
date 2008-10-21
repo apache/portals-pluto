@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 import junit.framework.Assert;
 
-import org.apache.pluto.descriptors.portlet20.PortletType;
+import org.apache.pluto.descriptors.portlet.PortletType;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.util.PlutoTestCase;
@@ -40,7 +40,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
 
         validDD = new PortletType();
 
-        PortletInfo info = validDD.getPortletInfo(true);
+        PortletInfo info = validDD.getPortletInfo();
         info.setTitle("Info Title");
         info.setShortTitle("Info Short Title");
         info.setKeywords("Info Keywords");

@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,7 +25,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.ElementFactoryList;
 import org.apache.pluto.om.portlet.Description;
 import org.apache.pluto.om.portlet.DisplayName;
 import org.apache.pluto.om.portlet.Listener;
@@ -55,10 +55,10 @@ import org.apache.pluto.om.portlet.Listener;
 @XmlType(name = "listenerType", propOrder = { "description", "displayName", "listenerClass" })
 public class ListenerType implements Listener
 {
-    @XmlElement(name = "description", type=DescriptionType.class)
-    protected List<Description> description;
-    @XmlElement(name = "display-name", type=DisplayNameType.class)
-    protected List<DisplayName> displayName;
+    @XmlElement(name = "description")
+    protected List<DescriptionType> description;
+    @XmlElement(name = "display-name")
+    protected List<DisplayNameType> displayName;
     @XmlElement(name = "listener-class", required = true)
     protected String listenerClass;
 
@@ -74,30 +74,26 @@ public class ListenerType implements Listener
         return null;
     }
     
-    public ElementFactoryList<Description> getDescriptions()
+    public List<? extends Description> getDescriptions()
     {
-        if (description == null || !(description instanceof ElementFactoryList))
+        if (description == null)
         {
-            ElementFactoryList<Description> lf = 
-                new ElementFactoryList<Description>( new ElementFactoryList.Factory<Description>()
-                {
-                    public Class<? extends Description> getElementClass()
-                    {
-                        return DescriptionType.class;
-                    }
-
-                    public Description newElement()
-                    {
-                        return new DescriptionType();
-                    }
-                }); 
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
+            description = new ArrayList<DescriptionType>();
         }
-        return (ElementFactoryList<Description>)description;
+        return description;
+    }
+    
+    public Description addDescription(String lang)
+    {
+        DescriptionType d = new DescriptionType();
+        d.setLang(lang);
+        if (getDescription(d.getLocale()) != null)
+        {
+            throw new IllegalArgumentException("Description for language: "+d.getLocale()+" already defined");
+        }
+        getDescriptions();
+        description.add(d);
+        return d;
     }
 
     public DisplayName getDisplayName(Locale locale)
@@ -112,30 +108,26 @@ public class ListenerType implements Listener
         return null;
     }
     
-    public ElementFactoryList<DisplayName> getDisplayNames()
+    public List<? extends DisplayName> getDisplayNames()
     {
-        if (displayName == null || !(displayName instanceof ElementFactoryList))
+        if (displayName == null)
         {
-            ElementFactoryList<DisplayName> lf = 
-                new ElementFactoryList<DisplayName>( new ElementFactoryList.Factory<DisplayName>()
-                {
-                    public Class<? extends DisplayName> getElementClass()
-                    {
-                        return DisplayNameType.class;
-                    }
-
-                    public DisplayName newElement()
-                    {
-                        return new DisplayNameType();
-                    }
-                }); 
-            if (displayName != null)
-            {
-                lf.addAll(displayName);
-            }
-            displayName = lf;
+            displayName = new ArrayList<DisplayNameType>();
         }
-        return (ElementFactoryList<DisplayName>)displayName;
+        return displayName;
+    }
+    
+    public DisplayName addDisplayName(String lang)
+    {
+        DisplayNameType d = new DisplayNameType();
+        d.setLang(lang);
+        if (getDisplayName(d.getLocale()) != null)
+        {
+            throw new IllegalArgumentException("DisplayName for language: "+d.getLocale()+" already defined");
+        }
+        getDisplayNames();
+        displayName.add(d);
+        return d;
     }
 
     public String getListenerClass()

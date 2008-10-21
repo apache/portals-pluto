@@ -17,7 +17,6 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,10 +24,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.CustomWindowState;
-import org.apache.pluto.om.portlet.Description;
 
 /**
  * A custom window state that one or more portlets in this portlet application supports. Used in: portlet-app <p>Java
@@ -53,59 +48,11 @@ import org.apache.pluto.om.portlet.Description;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "custom-window-stateType", propOrder = { "description", "windowState" })
-public class CustomWindowStateType implements CustomWindowState
+public class CustomWindowStateType
 {
-    @XmlElement(name = "description", type=DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    List<DescriptionType> description;
     @XmlElement(name = "window-state", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected String windowState;
-
-    public Description getDescription(Locale locale)
-    {
-        for (Description d : getDescriptions())
-        {
-            if (d.getLocale().equals(locale))
-            {
-                return d;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<Description> getDescriptions()
-    {
-        if (description == null || !(description instanceof ElementFactoryList))
-        {
-            ElementFactoryList<Description> lf = 
-                new ElementFactoryList<Description>( new ElementFactoryList.Factory<Description>()
-                {
-                    public Class<? extends Description> getElementClass()
-                    {
-                        return DescriptionType.class;
-                    }
-
-                    public Description newElement()
-                    {
-                        return new DescriptionType();
-                    }
-                }); 
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
-        }
-        return (ElementFactoryList<Description>)description;
-    }
-
-    public String getWindowState()
-    {
-        return windowState != null ? windowState.toLowerCase() : null;
-    }
-
-    public void setWindowState(String value)
-    {
-        windowState = value != null ? value.toLowerCase() : null;
-    }
+    String windowState;
 }

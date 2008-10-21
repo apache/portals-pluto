@@ -17,5 +17,5 @@
  * @version $Id$
  */
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 

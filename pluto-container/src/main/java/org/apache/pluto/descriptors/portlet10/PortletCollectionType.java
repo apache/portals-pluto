@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.descriptors.portlet10;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -51,14 +50,5 @@ public class PortletCollectionType
 {
     @XmlElement(name = "portlet-name", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected List<String> portletName;
-
-    public List<String> getPortletNames()
-    {
-        if (portletName == null)
-        {
-            portletName = new ArrayList<String>();
-        }
-        return portletName;
-    }
+    List<String> portletName;
 }

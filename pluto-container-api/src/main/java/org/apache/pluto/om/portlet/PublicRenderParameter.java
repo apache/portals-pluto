@@ -20,21 +20,16 @@ import java.util.Locale;
 
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.ElementFactoryList;
-
 public interface PublicRenderParameter {
 
+    QName getQName();
+    String getName();
+    String getIdentifier();
+
     Description getDescription(Locale locale);
-	ElementFactoryList<Description> getDescriptions();
-
-	String getIdentifier();
-	void setIdentifier(String id);
-
-	QName getQName();
-    void setQName(QName qname);
+    List<? extends Description> getDescriptions();
+    Description addDescription(String lang);
 
 	List<QName> getAliases();
-	
-    String getName();
-	void setName(String name);
+	void addAlias(QName alias);
 }

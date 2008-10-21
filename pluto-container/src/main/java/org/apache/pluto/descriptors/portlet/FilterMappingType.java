@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,5 +78,11 @@ public class FilterMappingType implements FilterMapping
             portletName = new ArrayList<String>();
         }
         return portletName;
+    }
+    
+    public void addPortletName(String name)
+    {
+        // TODO: check for duplicates
+        getPortletNames().add(name);
     }
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.ElementFactoryList;
 import org.apache.pluto.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.om.portlet.Description;
 import org.apache.pluto.om.portlet.DisplayName;
@@ -85,25 +85,25 @@ import org.apache.pluto.om.portlet.Supports;
                                             "supportedPublicRenderParameter", "containerRuntimeOption" })
 public class PortletType implements PortletDefinition
 {
-    @XmlElement(name = "description", type=DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    protected List<DescriptionType> description;
     @XmlElement(name = "portlet-name", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
     protected String portletName;
-    @XmlElement(name = "display-name", type=DisplayNameType.class)
-    protected List<DisplayName> displayName;
+    @XmlElement(name = "display-name")
+    protected List<DisplayNameType> displayName;
     @XmlElement(name = "portlet-class", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
     protected String portletClass;
-    @XmlElement(name = "init-param", type=InitParamType.class)
-    protected List<InitParam> initParam;
+    @XmlElement(name = "init-param")
+    protected List<InitParamType> initParam;
     @XmlElement(name = "expiration-cache")
     protected Integer expirationCache;
     @XmlElement(name = "cache-scope")
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
     protected String cacheScope;
-    @XmlElement(required = true, type=SupportsType.class)
-    protected List<Supports> supports;
+    @XmlElement(required = true)
+    protected List<SupportsType> supports;
     @XmlElement(name = "supported-locale")
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
     protected List<String> supportedLocale;
@@ -114,27 +114,22 @@ public class PortletType implements PortletDefinition
     protected PortletInfoType portletInfo;
     @XmlElement(name = "portlet-preferences")
     protected PortletPreferencesType portletPreferences;
-    @XmlElement(name = "security-role-ref", type=SecurityRoleRefType.class)
-    protected List<SecurityRoleRef> securityRoleRef;
-    @XmlElement(name = "supported-processing-event", type=EventDefinitionReferenceType.class)
-    protected List<EventDefinitionReference> supportedProcessingEvent;
-    @XmlElement(name = "supported-publishing-event", type=EventDefinitionReferenceType.class)
-    protected List<EventDefinitionReference> supportedPublishingEvent;
+    @XmlElement(name = "security-role-ref")
+    protected List<SecurityRoleRefType> securityRoleRef;
+    @XmlElement(name = "supported-processing-event")
+    protected List<EventDefinitionReferenceType> supportedProcessingEvent;
+    @XmlElement(name = "supported-publishing-event")
+    protected List<EventDefinitionReferenceType> supportedPublishingEvent;
     @XmlElement(name = "supported-public-render-parameter")
     protected List<String> supportedPublicRenderParameter;
-    @XmlElement(name = "container-runtime-option", type=ContainerRuntimeOptionType.class)
-    protected List<ContainerRuntimeOption> containerRuntimeOption;
+    @XmlElement(name = "container-runtime-option")
+    protected List<ContainerRuntimeOptionType> containerRuntimeOption;
     
     @XmlTransient
     private PortletApplicationDefinition application;
     
     public PortletType()
     {
-    }
-    
-    public PortletType(PortletApplicationDefinition application)
-    {
-        this.application = application;
     }
     
     public PortletApplicationDefinition getApplication()
@@ -159,40 +154,26 @@ public class PortletType implements PortletDefinition
         return null;
     }
     
-    public ElementFactoryList<Description> getDescriptions()
+    public List<? extends Description> getDescriptions()
     {
-        if (description == null || !(description instanceof ElementFactoryList))
+        if (description == null)
         {
-            ElementFactoryList<Description> lf = 
-                new ElementFactoryList<Description>( new ElementFactoryList.Factory<Description>()
-                {
-                    public Class<? extends Description> getElementClass()
-                    {
-                        return DescriptionType.class;
-                    }
-
-                    public Description newElement()
-                    {
-                        return new DescriptionType();
-                    }
-                }); 
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
+            description = new ArrayList<DescriptionType>();
         }
-        return (ElementFactoryList<Description>)description;
+        return description;
     }
-
-    public String getPortletName()
+    
+    public Description addDescription(String lang)
     {
-        return portletName;
-    }
-
-    public void setPortletName(String value)
-    {
-        portletName = value;
+        DescriptionType d = new DescriptionType();
+        d.setLang(lang);
+        if (getDescription(d.getLocale()) != null)
+        {
+            throw new IllegalArgumentException("Description for language: "+d.getLocale()+" already defined");
+        }
+        getDescriptions();
+        description.add(d);
+        return d;
     }
 
     public DisplayName getDisplayName(Locale locale)
@@ -207,30 +188,36 @@ public class PortletType implements PortletDefinition
         return null;
     }
     
-    public ElementFactoryList<DisplayName> getDisplayNames()
+    public List<? extends DisplayName> getDisplayNames()
     {
-        if (displayName == null || !(displayName instanceof ElementFactoryList))
+        if (displayName == null)
         {
-            ElementFactoryList<DisplayName> lf = 
-                new ElementFactoryList<DisplayName>( new ElementFactoryList.Factory<DisplayName>()
-                {
-                    public Class<? extends DisplayName> getElementClass()
-                    {
-                        return DisplayNameType.class;
-                    }
-
-                    public DisplayName newElement()
-                    {
-                        return new DisplayNameType();
-                    }
-                }); 
-            if (displayName != null)
-            {
-                lf.addAll(displayName);
-            }
-            displayName = lf;
+            displayName = new ArrayList<DisplayNameType>();
         }
-        return (ElementFactoryList<DisplayName>)displayName;
+        return displayName;
+    }
+    
+    public DisplayName addDisplayName(String lang)
+    {
+        DisplayNameType d = new DisplayNameType();
+        d.setLang(lang);
+        if (getDisplayName(d.getLocale()) != null)
+        {
+            throw new IllegalArgumentException("DisplayName for language: "+d.getLocale()+" already defined");
+        }
+        getDisplayNames();
+        displayName.add(d);
+        return d;
+    }
+
+    public String getPortletName()
+    {
+        return portletName;
+    }
+
+    public void setPortletName(String value)
+    {
+        portletName = value;
     }
 
     public String getPortletClass()
@@ -255,32 +242,28 @@ public class PortletType implements PortletDefinition
         return null;
     }
 
-    public ElementFactoryList<InitParam> getInitParams()
+    public List<? extends InitParam> getInitParams()
     {
-        if (initParam == null || !(initParam instanceof ElementFactoryList))
+        if (initParam == null)
         {
-            ElementFactoryList<InitParam> lf = 
-                new ElementFactoryList<InitParam>( new ElementFactoryList.Factory<InitParam>()
-                {
-                    public Class<? extends InitParam> getElementClass()
-                    {
-                        return InitParamType.class;
-                    }
-
-                    public InitParam newElement()
-                    {
-                        return new InitParamType();
-                    }
-                }); 
-            if (initParam != null)
-            {
-                lf.addAll(initParam);
-            }
-            initParam = lf;
+            initParam = new ArrayList<InitParamType>();
         }
-        return (ElementFactoryList<InitParam>)initParam;
+        return initParam;
     }
-
+    
+    public InitParam addInitParam(String paramName)
+    {
+        if (getInitParam(paramName) != null)
+        {
+            throw new IllegalArgumentException("Init parameter: "+paramName+" already defined");
+        }
+        InitParamType param = new InitParamType();
+        param.setParamName(paramName);
+        getInitParams();
+        initParam.add(param);
+        return param;
+    }
+    
     public int getExpirationCache()
     {
         return expirationCache != null ? expirationCache.intValue() : 0;
@@ -317,32 +300,27 @@ public class PortletType implements PortletDefinition
         return null;
     }
     
-    public ElementFactoryList<Supports> getSupports()
+    public List<? extends Supports> getSupports()
     {
-        if (supports == null || !(supports instanceof ElementFactoryList))
+        if (supports == null)
         {
-            ElementFactoryList<Supports> lf = 
-                new ElementFactoryList<Supports>( new ElementFactoryList.Factory<Supports>()
-                {
-                    public Class<? extends Supports> getElementClass()
-                    {
-                        return SupportsType.class;
-                    }
-
-                    public Supports newElement()
-                    {
-                        return new SupportsType();
-                    }
-                }); 
-            if (supports != null)
-            {
-                lf.addAll(supports);
-            }
-            supports = lf;
+            supports = new ArrayList<SupportsType>();
         }
-        return (ElementFactoryList<Supports>)supports;
+        return supports;
     }
-
+    
+    public Supports addSupports(String mimeType)
+    {
+        if (getSupports(mimeType) != null)
+        {
+            throw new IllegalArgumentException("Supports for mime type: "+mimeType+" already defined");
+        }
+        SupportsType s = new SupportsType();
+        s.setMimeType(mimeType);
+        supports.add(s);
+        return s;        
+    }
+    
     public List<String> getSupportedLocales()
     {
         if (supportedLocale == null)
@@ -350,6 +328,18 @@ public class PortletType implements PortletDefinition
             supportedLocale = new ArrayList<String>();
         }
         return supportedLocale;
+    }
+    
+    public void addSupportedLocale(String lang)
+    {
+        for (String l : getSupportedLocales())
+        {
+            if (l.equals(lang))
+            {
+                throw new IllegalArgumentException("Supported locale: "+lang+" already defined");
+            }
+        }
+        supportedLocale.add(lang);    
     }
 
     public String getResourceBundle()
@@ -364,12 +354,7 @@ public class PortletType implements PortletDefinition
 
     public PortletInfo getPortletInfo()
     {
-        return getPortletInfo(false);
-    }
-
-    public PortletInfo getPortletInfo(boolean create)
-    {
-        if (create && portletInfo == null)
+        if (portletInfo == null)
         {
             portletInfo = new PortletInfoType();
         }
@@ -378,12 +363,7 @@ public class PortletType implements PortletDefinition
 
     public Preferences getPortletPreferences()
     {
-        return getPortletPreferences(false);
-    }
-
-    public Preferences getPortletPreferences(boolean create)
-    {
-        if (create && portletPreferences == null)
+        if (portletPreferences == null)
         {
             portletPreferences = new PortletPreferencesType();
         }
@@ -402,84 +382,85 @@ public class PortletType implements PortletDefinition
         return null;
     }
 
-    public ElementFactoryList<SecurityRoleRef> getSecurityRoleRefs()
+    public List<? extends SecurityRoleRef> getSecurityRoleRefs()
     {
-        if (securityRoleRef == null || !(securityRoleRef instanceof ElementFactoryList))
+        if (securityRoleRef == null)
         {
-            ElementFactoryList<SecurityRoleRef> lf = 
-                new ElementFactoryList<SecurityRoleRef>( new ElementFactoryList.Factory<SecurityRoleRef>()
-                {
-                    public Class<? extends SecurityRoleRef> getElementClass()
-                    {
-                        return SecurityRoleRefType.class;
-                    }
-
-                    public SecurityRoleRef newElement()
-                    {
-                        return new SecurityRoleRefType();
-                    }
-                }); 
-            if (securityRoleRef != null)
-            {
-                lf.addAll(securityRoleRef);
-            }
-            securityRoleRef = lf;
+            securityRoleRef = new ArrayList<SecurityRoleRefType>();
         }
-        return (ElementFactoryList<SecurityRoleRef>)securityRoleRef;
+        return securityRoleRef;
+    }
+    
+    public SecurityRoleRef addSecurityRoleRef(String roleName)
+    {
+        if (getSecurityRoleRef(roleName) != null)
+        {
+            throw new IllegalArgumentException("Security role reference for role: "+roleName+" already defined");
+        }
+        SecurityRoleRefType srr = new SecurityRoleRefType();
+        srr.setRoleName(roleName);
+        securityRoleRef.add(srr);
+        return srr;        
+    }
+    
+    public List<? extends EventDefinitionReference> getSupportedProcessingEvents()
+    {
+        if (supportedProcessingEvent == null)
+        {
+            supportedProcessingEvent = new ArrayList<EventDefinitionReferenceType>();            
+        }
+        return supportedProcessingEvent;
     }
 
-    public ElementFactoryList<EventDefinitionReference> getSupportedProcessingEvents()
+    public EventDefinitionReference addSupportedProcessingEvent(QName qname)
     {
-        if (supportedProcessingEvent == null || !(supportedProcessingEvent instanceof ElementFactoryList))
+        // TODO: check duplicates
+        getSupportedProcessingEvents();
+        EventDefinitionReferenceType edr = new EventDefinitionReferenceType();
+        edr.setQName(qname);
+        supportedProcessingEvent.add(edr);
+        return edr;
+    }
+    
+    public EventDefinitionReference addSupportedProcessingEvent(String name)
+    {
+        // TODO check duplicates
+        getSupportedProcessingEvents();
+        EventDefinitionReferenceType edr = new EventDefinitionReferenceType();
+        edr.setName(name);
+        supportedProcessingEvent.add(edr);
+        return edr;
+    }
+        
+    public List<? extends EventDefinitionReference> getSupportedPublishingEvents()
+    {
+        if (supportedPublishingEvent == null)
         {
-            ElementFactoryList<EventDefinitionReference> lf = 
-                new ElementFactoryList<EventDefinitionReference>( new ElementFactoryList.Factory<EventDefinitionReference>()
-                {
-                    public Class<? extends EventDefinitionReference> getElementClass()
-                    {
-                        return EventDefinitionReferenceType.class;
-                    }
-
-                    public EventDefinitionReference newElement()
-                    {
-                        return new EventDefinitionReferenceType();
-                    }
-                }); 
-            if (supportedProcessingEvent != null)
-            {
-                lf.addAll(supportedProcessingEvent);
-            }
-            supportedProcessingEvent = lf;
+            supportedPublishingEvent = new ArrayList<EventDefinitionReferenceType>();            
         }
-        return (ElementFactoryList<EventDefinitionReference>)supportedProcessingEvent;
+        return supportedPublishingEvent;
     }
 
-    public ElementFactoryList<EventDefinitionReference> getSupportedPublishingEvents()
+    public EventDefinitionReference addSupportedPublishingEvent(QName qname)
     {
-        if (supportedPublishingEvent == null || !(supportedPublishingEvent instanceof ElementFactoryList))
-        {
-            ElementFactoryList<EventDefinitionReference> lf = 
-                new ElementFactoryList<EventDefinitionReference>( new ElementFactoryList.Factory<EventDefinitionReference>()
-                {
-                    public Class<? extends EventDefinitionReference> getElementClass()
-                    {
-                        return EventDefinitionReferenceType.class;
-                    }
-
-                    public EventDefinitionReference newElement()
-                    {
-                        return new EventDefinitionReferenceType();
-                    }
-                }); 
-            if (supportedPublishingEvent != null)
-            {
-                lf.addAll(supportedPublishingEvent);
-            }
-            supportedPublishingEvent = lf;
-        }
-        return (ElementFactoryList<EventDefinitionReference>)supportedPublishingEvent;
+        // TODO: check duplicates
+        getSupportedPublishingEvents();
+        EventDefinitionReferenceType edr = new EventDefinitionReferenceType();
+        edr.setQName(qname);
+        supportedPublishingEvent.add(edr);
+        return edr;
     }
-
+    
+    public EventDefinitionReference addSupportedPublishingEvent(String name)
+    {
+        // TODO check duplicates
+        getSupportedPublishingEvents();
+        EventDefinitionReferenceType edr = new EventDefinitionReferenceType();
+        edr.setName(name);
+        supportedPublishingEvent.add(edr);
+        return edr;
+    }
+        
     public List<String> getSupportedPublicRenderParameters()
     {
         if (supportedPublicRenderParameter == null)
@@ -487,6 +468,18 @@ public class PortletType implements PortletDefinition
             supportedPublicRenderParameter = new ArrayList<String>();
         }
         return supportedPublicRenderParameter;
+    }
+    
+    public void addSupportedPublicRenderParameter(String identifier)
+    {
+        for (String ident : getSupportedPublicRenderParameters())
+        {
+            if (ident.equals(identifier))
+            {
+                throw new IllegalArgumentException("Support for public render parameter with identifier: "+identifier+" already defined");
+            }
+        }
+        supportedPublicRenderParameter.add(identifier);
     }
 
     public ContainerRuntimeOption getContainerRuntimeOption(String name)
@@ -501,32 +494,27 @@ public class PortletType implements PortletDefinition
         return null;
     }
     
-    public ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions()
+    public List<? extends ContainerRuntimeOption> getContainerRuntimeOptions()
     {
-        if (containerRuntimeOption == null || !(containerRuntimeOption instanceof ElementFactoryList))
+        if (containerRuntimeOption == null)
         {
-            ElementFactoryList<ContainerRuntimeOption> lf = 
-                new ElementFactoryList<ContainerRuntimeOption>( new ElementFactoryList.Factory<ContainerRuntimeOption>()
-                {
-                    public Class<? extends ContainerRuntimeOption> getElementClass()
-                    {
-                        return ContainerRuntimeOptionType.class;
-                    }
-
-                    public ContainerRuntimeOption newElement()
-                    {
-                        return new ContainerRuntimeOptionType();
-                    }
-                }); 
-            if (containerRuntimeOption != null)
-            {
-                lf.addAll(containerRuntimeOption);
-            }
-            containerRuntimeOption = lf;
+            containerRuntimeOption = new ArrayList<ContainerRuntimeOptionType>();
         }
-        return (ElementFactoryList<ContainerRuntimeOption>)containerRuntimeOption;
+        return containerRuntimeOption;
     }
-
+    
+    public ContainerRuntimeOption addContainerRuntimeOption(String name)
+    {
+        if (getContainerRuntimeOption(name) != null)
+        {
+            throw new IllegalArgumentException("Container runtime option with name: "+name+" already defined");
+        }
+        ContainerRuntimeOptionType cro = new ContainerRuntimeOptionType();
+        cro.setName(name);
+        containerRuntimeOption.add(cro);
+        return cro;        
+    }
+    
     public void afterUnmarshal(Unmarshaller u, Object parent) {
         application = (PortletApplicationDefinition)parent;
     }

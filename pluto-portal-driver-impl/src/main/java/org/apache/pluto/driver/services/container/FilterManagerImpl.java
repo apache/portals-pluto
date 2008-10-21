@@ -57,12 +57,12 @@ public class FilterManagerImpl implements FilterManager{
 	}
 	
 	private void initFilterChain(){
-		List<FilterMapping> filterMappingList = portletApp.getFilterMappings();
+		List<? extends FilterMapping> filterMappingList = portletApp.getFilterMappings();
 		if (filterMappingList!= null){
 			for (FilterMapping filterMapping : filterMappingList) {
 				if (isFilter(filterMapping, portletName)){
 					//the filter is specified for the portlet, check the filter for the lifecycle
-					List<Filter> filterList = portletApp.getFilters();
+					List<? extends Filter> filterList = portletApp.getFilters();
 					for (Filter filter : filterList) {
 						//search for the filter in the filter
 						if (filter.getFilterName().equals(filterMapping.getFilterName())){

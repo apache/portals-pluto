@@ -23,10 +23,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.Preference;
-import org.apache.pluto.om.portlet.Preferences;
-
 /**
  * Portlet persistent preference store. Used in: portlet <p>Java class for portlet-preferencesType complex type. <p>The
  * following schema fragment specifies the expected content contained within this class.
@@ -49,58 +45,10 @@ import org.apache.pluto.om.portlet.Preferences;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "portlet-preferencesType", propOrder = { "preference", "preferencesValidator" })
-public class PortletPreferencesType implements Preferences
+public class PortletPreferencesType
 {
-    @XmlElement(name = "preference", type=PreferenceType.class)
-    protected List<Preference> preference;
+    @XmlElement(name = "preference")
+    List<PreferenceType> preference;
     @XmlElement(name = "preferences-validator")
-    protected String preferencesValidator;
-
-    public Preference getPortletPreference(String name)
-    {
-        for (Preference p : getPortletPreferences())
-        {
-            if (p.getName().equals(name))
-            {
-                return p;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<Preference> getPortletPreferences()
-    {
-        if (preference == null || !(preference instanceof ElementFactoryList))
-        {
-            ElementFactoryList<Preference> lf = 
-                new ElementFactoryList<Preference>( new ElementFactoryList.Factory<Preference>()
-                {
-                    public Class<? extends Preference> getElementClass()
-                    {
-                        return PreferenceType.class;
-                    }
-
-                    public Preference newElement()
-                    {
-                        return new PreferenceType();
-                    }
-                }); 
-            if (preference != null)
-            {
-                lf.addAll(preference);
-            }
-            preference = lf;
-        }
-        return (ElementFactoryList<Preference>)preference;
-    }
-
-    public String getPreferencesValidator()
-    {
-        return preferencesValidator;
-    }
-
-    public void setPreferencesValidator(String value)
-    {
-        preferencesValidator = value;
-    }
+    String preferencesValidator;
 }

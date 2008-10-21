@@ -15,69 +15,67 @@
  */
 package org.apache.pluto.om.portlet;
 
-import org.apache.pluto.om.ElementFactoryList;
+import java.util.List;
 
+import javax.xml.namespace.QName;
 
 public interface PortletApplicationDefinition {
 
-    /**
-     * The name of the Portlet Application
-     * <br/>
-     */
+    String JSR_168_VERSION = "1.0";
+    String JSR_286_VERSION = "2.0";
+
     String getName();
-    
-    /**
-     * Set the name for the Portlet Application
-     * @param name
-     */
     void setName(String name);
     
     PortletDefinition getPortlet(String portletName);
-	/**
-	 * Retrieve the portlets which exist within this application.
-	 * @return
-	 */
-	ElementFactoryList<PortletDefinition> getPortlets();
-
-	/**
-	 * @return Returns the events.
-	 */
-	ElementFactoryList<EventDefinition> getEventDefinitions();
+	List<? extends PortletDefinition> getPortlets();
+	PortletDefinition addPortlet(String name);
+	
+	List<? extends EventDefinition> getEventDefinitions();
+	EventDefinition addEventDefinition(String name);
+    EventDefinition addEventDefinition(QName qname);
 
 	PublicRenderParameter getPublicRenderParameter(String identifier);
-	/**
-	 * @return Returns the public render parameter.
-	 */
-	ElementFactoryList<PublicRenderParameter> getPublicRenderParameters();
+	List<? extends PublicRenderParameter> getPublicRenderParameters();
+	PublicRenderParameter addPublicRenderParameter(String name, String identifier);
+    PublicRenderParameter addPublicRenderParameter(QName qname, String identifier);
 
 	String getVersion();
 	void setVersion(String version);
 
 	CustomPortletMode getCustomPortletMode(String name);
-	ElementFactoryList<CustomPortletMode> getCustomPortletModes();
+	List<? extends CustomPortletMode> getCustomPortletModes();
+	CustomPortletMode addCustomPortletMode(String name);
 
     CustomWindowState getCustomWindowState(String name);
-	ElementFactoryList<CustomWindowState> getCustomWindowStates();
+	List<? extends CustomWindowState> getCustomWindowStates();
+	CustomWindowState addCustomWindowState(String name);
 
 	UserAttribute getUserAttribute(String name);
-	ElementFactoryList<UserAttribute> getUserAttributes();
+	List<? extends UserAttribute> getUserAttributes();
+	UserAttribute addUserAttribute(String name);
 
-	ElementFactoryList<SecurityConstraint> getSecurityConstraints();
+	List<? extends SecurityConstraint> getSecurityConstraints();
+	SecurityConstraint addSecurityConstraint(String transportGuarantee);
 
 	String getResourceBundle();
 	void setResourceBundle(String resourceBundle);
 
 	Filter getFilter(String filterName);
-	ElementFactoryList<Filter> getFilters();
+	List<? extends Filter> getFilters();
+	Filter addFilter(String filterName);
 
 	FilterMapping getFilterMapping(String filterName);
-	ElementFactoryList<FilterMapping> getFilterMappings();
+	List<? extends FilterMapping> getFilterMappings();
+	FilterMapping addFilterMapping(String filterName);
 
-	ElementFactoryList<Listener> getListeners();
+	List<? extends Listener> getListeners();
+	Listener addListener(String listenerClass);
 
 	String getDefaultNamespace();
 	void setDefaultNamespace(String defaultNamespace);
 
 	ContainerRuntimeOption getContainerRuntimeOption(String name);
-	ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions();
+	List<? extends ContainerRuntimeOption> getContainerRuntimeOptions();
+	ContainerRuntimeOption addContainerRuntimeOption(String name);
 }

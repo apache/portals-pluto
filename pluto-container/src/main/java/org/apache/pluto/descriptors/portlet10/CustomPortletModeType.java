@@ -17,19 +17,13 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.CustomPortletMode;
-import org.apache.pluto.om.portlet.Description;
 
 /**
  * A custom portlet mode that one or more portlets in this portlet application supports. Used in: portlet-app <p>Java
@@ -54,68 +48,11 @@ import org.apache.pluto.om.portlet.Description;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "custom-portlet-modeType", propOrder = { "description", "portletMode" })
-public class CustomPortletModeType implements CustomPortletMode
+public class CustomPortletModeType
 {
-    @XmlElement(name = "description", type = DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    List<DescriptionType> description;
     @XmlElement(name = "portlet-mode", required = true)
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String portletMode;
-
-    public Description getDescription(Locale locale)
-    {
-        for (Description d : getDescriptions())
-        {
-            if (d.getLocale().equals(locale))
-            {
-                return d;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<Description> getDescriptions()
-    {
-        if (description == null || !(description instanceof ElementFactoryList))
-        {
-            ElementFactoryList<Description> lf = new ElementFactoryList<Description>(new ElementFactoryList.Factory<Description>()
-            {
-                public Class<? extends Description> getElementClass()
-                {
-                    return DescriptionType.class;
-                }
-
-                public Description newElement()
-                {
-                    return new DescriptionType();
-                }
-            });
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
-        }
-        return (ElementFactoryList<Description>) description;
-    }
-
-    public String getPortletMode()
-    {
-        return portletMode != null ? portletMode.toLowerCase() : null;
-    }
-
-    public void setPortletMode(String value)
-    {
-        portletMode = value != null ? value.toLowerCase() : null;
-    }
-
-    public boolean isPortalManaged()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public void setPortalManaged(boolean value)
-    {
-        throw new UnsupportedOperationException();
-    }
+    String portletMode;
 }

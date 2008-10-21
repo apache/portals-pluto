@@ -18,14 +18,14 @@ package org.apache.pluto.om.portlet;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.pluto.om.ElementFactoryList;
-
 public interface SecurityConstraint {
+    
+    UserDataConstraint getUserDataConstraint();
 
     DisplayName getDisplayName(Locale locale);
-	ElementFactoryList<DisplayName> getDisplayNames();
+    List<? extends DisplayName> getDisplayNames();
+    DisplayName addDisplayName(String lang);
 	
     List<String> getPortletNames();
-    
-	UserDataConstraint getUserDataConstraint();
+    void addPortletName(String portletName);
 }

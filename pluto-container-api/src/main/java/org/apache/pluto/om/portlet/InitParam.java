@@ -15,40 +15,17 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.List;
 import java.util.Locale;
-
-import org.apache.pluto.om.ElementFactoryList;
 
 public interface InitParam {
 
-	/**
-	 * Retrieve the name of the parameter.
-	 * @return
-	 */
 	String getParamName();
 
-	/**
-	 * Set the name of the parameter.
-	 * @param paramName
-	 */
-	void setParamName(String paramName);
-
-	/**
-	 * Get the name of the parameter.
-	 * @return
-	 */
 	String getParamValue();
-
-	/**
-	 * Set the value of the parameter.
-	 * @param paramValue
-	 */
 	void setParamValue(String paramValue);
 
 	Description getDescription(Locale locale);
-	/**
-	 * Retrieve the description list.
-	 * @return
-	 */
-	public ElementFactoryList<Description> getDescriptions();
+    List<? extends Description> getDescriptions();
+    Description addDescription(String lang);
 }

@@ -17,7 +17,6 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,10 +24,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.UserDataConstraint;
 
 /**
  * The user-data-constraintType is used to indicate how data communicated between the client and portlet should be
@@ -53,59 +48,11 @@ import org.apache.pluto.om.portlet.UserDataConstraint;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user-data-constraintType", propOrder = { "description", "transportGuarantee" })
-public class UserDataConstraintType implements UserDataConstraint
+public class UserDataConstraintType
 {
-    @XmlElement(name = "description", type=DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    List<DescriptionType> description;
     @XmlElement(name = "transport-guarantee", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected String transportGuarantee;
-
-    public Description getDescription(Locale locale)
-    {
-        for (Description d : getDescriptions())
-        {
-            if (d.getLocale().equals(locale))
-            {
-                return d;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<Description> getDescriptions()
-    {
-        if (description == null || !(description instanceof ElementFactoryList))
-        {
-            ElementFactoryList<Description> lf = 
-                new ElementFactoryList<Description>( new ElementFactoryList.Factory<Description>()
-                {
-                    public Class<? extends Description> getElementClass()
-                    {
-                        return DescriptionType.class;
-                    }
-
-                    public Description newElement()
-                    {
-                        return new DescriptionType();
-                    }
-                }); 
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
-        }
-        return (ElementFactoryList<Description>)description;
-    }
-
-    public String getTransportGuarantee()
-    {
-        return transportGuarantee;
-    }
-
-    public void setTransportGuarantee(String value)
-    {
-        transportGuarantee = value;
-    }
+    String transportGuarantee;
 }

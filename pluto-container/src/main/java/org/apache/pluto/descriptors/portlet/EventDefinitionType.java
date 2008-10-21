@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.ElementFactoryList;
 import org.apache.pluto.om.portlet.Description;
 import org.apache.pluto.om.portlet.EventDefinition;
 
@@ -64,8 +63,8 @@ import org.apache.pluto.om.portlet.EventDefinition;
 @XmlType(name = "event-definitionType", propOrder = { "description", "qname", "name", "alias", "valueType" })
 public class EventDefinitionType implements EventDefinition
 {
-    @XmlElement(name = "description", type=DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    protected List<DescriptionType> description;
     protected QName qname;
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NCName")
@@ -86,30 +85,26 @@ public class EventDefinitionType implements EventDefinition
         return null;
     }
     
-    public ElementFactoryList<Description> getDescriptions()
+    public List<? extends Description> getDescriptions()
     {
-        if (description == null || !(description instanceof ElementFactoryList))
+        if (description == null)
         {
-            ElementFactoryList<Description> lf = 
-                new ElementFactoryList<Description>( new ElementFactoryList.Factory<Description>()
-                {
-                    public Class<? extends Description> getElementClass()
-                    {
-                        return DescriptionType.class;
-                    }
-
-                    public Description newElement()
-                    {
-                        return new DescriptionType();
-                    }
-                }); 
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
+            description = new ArrayList<DescriptionType>();
         }
-        return (ElementFactoryList<Description>)description;
+        return description;
+    }
+    
+    public Description addDescription(String lang)
+    {
+        DescriptionType d = new DescriptionType();
+        d.setLang(lang);
+        if (getDescription(d.getLocale()) != null)
+        {
+            throw new IllegalArgumentException("Description for language: "+d.getLocale()+" already defined");
+        }
+        getDescriptions();
+        description.add(d);
+        return d;
     }
 
     public QName getQName()
@@ -120,6 +115,7 @@ public class EventDefinitionType implements EventDefinition
     public void setQName(QName value)
     {
         qname = value;
+        name = null;
     }
 
     public String getName()
@@ -130,6 +126,7 @@ public class EventDefinitionType implements EventDefinition
     public void setName(String value)
     {
         name = value;
+        qname = null;
     }
 
     public List<QName> getAliases()
@@ -139,6 +136,12 @@ public class EventDefinitionType implements EventDefinition
             alias = new ArrayList<QName>();
         }
         return alias;
+    }
+    
+    public void addAlias(QName alias)
+    {
+        // TODO: check for duplicates
+        getAliases().add(alias);
     }
 
     public String getValueType()

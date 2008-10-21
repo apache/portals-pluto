@@ -19,10 +19,10 @@ import java.util.List;
 
 public interface Preference {
 
-	String getName();
-	void setName(String name);
+    String getName();
 
-	List<String> getValues();
+    List<String> getValues();
+	void addValue(String value);
 
 	boolean isReadOnly();
 	void setReadOnly(boolean readOnly);

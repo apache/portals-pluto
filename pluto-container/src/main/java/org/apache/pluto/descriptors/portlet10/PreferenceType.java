@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.descriptors.portlet10;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,8 +24,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.portlet.Preference;
 
 /**
  * Persistent preference values that may be used for customization and personalization by the portlet. Used in:
@@ -52,42 +49,13 @@ import org.apache.pluto.om.portlet.Preference;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "preferenceType", propOrder = { "name", "value", "readOnly" })
-public class PreferenceType implements Preference
+public class PreferenceType
 {
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected String name;
+    String name;
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected List<String> value;
+    List<String> value;
     @XmlElement(name = "read-only")
-    protected Boolean readOnly;
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String value)
-    {
-        name = value;
-    }
-
-    public List<String> getValues()
-    {
-        if (value == null)
-        {
-            value = new ArrayList<String>();
-        }
-        return value;
-    }
-
-    public boolean isReadOnly()
-    {
-        return readOnly != null ? readOnly.booleanValue() : false;
-    }
-
-    public void setReadOnly(boolean value)
-    {
-        readOnly = value ? Boolean.TRUE : Boolean.FALSE;
-    }
+    Boolean readOnly;
 }

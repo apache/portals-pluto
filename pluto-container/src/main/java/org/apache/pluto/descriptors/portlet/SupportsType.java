@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +82,18 @@ public class SupportsType implements Supports
         }
         return portletMode;
     }
+    
+    public void addPortletMode(String name)
+    {
+        for (String mode : getPortletModes())
+        {
+            if (mode.equals(name))
+            {
+                throw new IllegalArgumentException("Portlet mode: "+name+" already defined");
+            }
+        }
+        portletMode.add(name);
+    }
 
     public List<String> getWindowStates()
     {
@@ -90,5 +102,17 @@ public class SupportsType implements Supports
             windowState = new ArrayList<String>();
         }
         return windowState;
+    }
+
+    public void addWindowState(String name)
+    {
+        for (String state : getWindowStates())
+        {
+            if (state.equals(name))
+            {
+                throw new IllegalArgumentException("Window state: "+name+" already defined");
+            }
+        }
+        windowState.add(name);
     }
 }

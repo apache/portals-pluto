@@ -137,7 +137,7 @@ public class ComplexEarAssemblerTest extends ArchiveBasedAssemblyTest {
                     assertTrue( "WAR archive did not contain any servlet mappings", webXmlRewriter.hasServletMappings() );
                     assertTrue( "WAR archive did not contain any portlets", portletApp.getPortlets().size() > 0 );
                     
-                    for ( Iterator<PortletDefinition> iter = portletApp.getPortlets().iterator(); iter.hasNext(); ) {
+                    for ( Iterator<? extends PortletDefinition> iter = portletApp.getPortlets().iterator(); iter.hasNext(); ) {
                         PortletDefinition portlet = iter.next();
                         if (! testPortlets.contains( portlet.getPortletName() ) ) {
                             fail( "Unexpected test portlet name encountered: [" + portlet.getPortletName() + "]" );

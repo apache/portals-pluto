@@ -19,11 +19,10 @@ import java.util.Locale;
 
 public interface Description {
 
+    String getLang();
+    
 	String getDescription();
 	void setDescription(String description);
 
-	String getLang();
-	void setLang(String lang);
-	
 	Locale getLocale();
 }

@@ -18,49 +18,57 @@ package org.apache.pluto.om.portlet;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.pluto.om.ElementFactoryList;
+import javax.xml.namespace.QName;
 
 public interface PortletDefinition {
     
-	PortletApplicationDefinition getApplication();
-	void setApplication(PortletApplicationDefinition application);
+    String getPortletName();
+
+    PortletApplicationDefinition getApplication();
 
     InitParam getInitParam(String paramName);
-	ElementFactoryList<InitParam> getInitParams();
+	List<? extends InitParam> getInitParams();
+	InitParam addInitParam(String paramName);
 	
 	String getPortletClass();
 	void setPortletClass(String portletClass);
 
 	PortletInfo getPortletInfo();
-    PortletInfo getPortletInfo(boolean create);
-
-	String getPortletName();
-	void setPortletName(String portletName);
 
 	Preferences getPortletPreferences();
-    Preferences getPortletPreferences(boolean create);
 
-    ElementFactoryList<EventDefinitionReference> getSupportedProcessingEvents();
-    ElementFactoryList<EventDefinitionReference> getSupportedPublishingEvents();
+    List<? extends EventDefinitionReference> getSupportedProcessingEvents();
+    EventDefinitionReference addSupportedProcessingEvent(QName qname);
+    EventDefinitionReference addSupportedProcessingEvent(String name);
+    
+    List<? extends EventDefinitionReference> getSupportedPublishingEvents();
+    EventDefinitionReference addSupportedPublishingEvent(QName qname);
+    EventDefinitionReference addSupportedPublishingEvent(String name);
 
 	List<String> getSupportedPublicRenderParameters();
+	void addSupportedPublicRenderParameter(String identifier);
 
 	String getResourceBundle();
 	void setResourceBundle(String resourceBundle);
 
 	SecurityRoleRef getSecurityRoleRef(String roleName);
-	ElementFactoryList<SecurityRoleRef> getSecurityRoleRefs();
+	List<? extends SecurityRoleRef> getSecurityRoleRefs();
+	SecurityRoleRef addSecurityRoleRef(String roleName);
 
 	Supports getSupports(String mimeType);
-	ElementFactoryList<Supports> getSupports();
+	List<? extends Supports> getSupports();
+	Supports addSupports(String mimeType);
 
 	Description getDescription(Locale locale);
-	ElementFactoryList<Description> getDescriptions();
+    List<? extends Description> getDescriptions();
+    Description addDescription(String lang);
 
 	DisplayName getDisplayName(Locale locale);
-    ElementFactoryList<DisplayName> getDisplayNames();
+    List<? extends DisplayName> getDisplayNames();
+    DisplayName addDisplayName(String lang);
 
 	List<String> getSupportedLocales();
+	void addSupportedLocale(String lang);
 
 	int getExpirationCache();
     void setExpirationCache(int expirationCache);
@@ -69,5 +77,6 @@ public interface PortletDefinition {
 	void setCacheScope(String cacheScope);
 
 	ContainerRuntimeOption getContainerRuntimeOption(String name);
-	ElementFactoryList<ContainerRuntimeOption> getContainerRuntimeOptions();
+	List<? extends ContainerRuntimeOption> getContainerRuntimeOptions();
+	ContainerRuntimeOption addContainerRuntimeOption(String name);
 }

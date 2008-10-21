@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.pluto.descriptors.portlet.PortletAppType;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorService;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
@@ -20,6 +21,11 @@ import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorService{
 	
+    public PortletApplicationDefinition createPortletApplicationDefinition()
+    {
+        return new PortletAppType();
+    }
+    
 	/**
      * Read the Web Application Deployment Descriptor.
      *
@@ -29,16 +35,16 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     
     @SuppressWarnings("unchecked")
     public PortletApplicationDefinition read(InputStream in) throws IOException {
-    	JAXBElement<PortletApplicationDefinition> portletApp = null;
+    	JAXBElement app = null;
     	try {
     		JAXBContext jc = JAXBContext.newInstance( 
     				"org.apache.pluto.descriptors.portlet10" + ":" +
-    				"org.apache.pluto.descriptors.portlet20", PortletAppDescriptorServiceImpl.class.getClassLoader());
+    				"org.apache.pluto.descriptors.portlet", PortletAppDescriptorServiceImpl.class.getClassLoader());
 
     		Unmarshaller u = jc.createUnmarshaller();
     		u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 
-    		portletApp = (JAXBElement<PortletApplicationDefinition>) u.unmarshal(in);	            
+    		app = (JAXBElement) u.unmarshal(in);	            
     	}catch (JAXBException jaxbEx){
     		jaxbEx.printStackTrace();
     		throw new IOException(jaxbEx.getMessage());
@@ -46,30 +52,36 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     	catch(Exception me) {
     		throw new IOException(me.getLocalizedMessage());
     	}
-
-    	return portletApp.getValue();
+    	if (app.getValue() instanceof org.apache.pluto.descriptors.portlet10.PortletAppType)
+    	{
+    	    return ((org.apache.pluto.descriptors.portlet10.PortletAppType)app.getValue()).upgrade();
+    	}    	
+    	return (PortletApplicationDefinition)app.getValue();
     }
     
     /**
      * Write the deployment descriptor.
-     * @param portlet
+     * @param app
      * @throws java.io.IOException
      */
-    public void write(PortletApplicationDefinition portlet, OutputStream out) throws IOException {
+    public void write(PortletApplicationDefinition app, OutputStream out) throws IOException {
         try {
             JAXBContext jc = null;
-            if (portlet.getVersion().equals("1.0"))
-            {
-                jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet10");
+            Object desc = null;
+            if (PortletApplicationDefinition.JSR_168_VERSION.equals(app.getVersion()))
+            {                
+                jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet10");                
+                desc = new org.apache.pluto.descriptors.portlet10.PortletAppType(app);
             }
             else
             {
-                jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet20");
+                jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet");
+                desc = app;
             }
             Marshaller m = jc.createMarshaller();
             m.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-            m.marshal(portlet,out);
+            m.marshal(desc,out);
         }catch (JAXBException jaxbEx){
             jaxbEx.printStackTrace();
             throw new IOException(jaxbEx.getMessage());

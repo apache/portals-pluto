@@ -20,7 +20,7 @@ import java.util.List;
 public interface FilterMapping {
 
 	String getFilterName();
-	void setFilterName(String filterName);
 
 	List<String> getPortletNames();
+	void addPortletName(String portletName);
 }

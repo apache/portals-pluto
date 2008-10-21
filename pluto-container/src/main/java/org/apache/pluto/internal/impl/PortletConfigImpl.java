@@ -100,7 +100,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
             throw new IllegalArgumentException("Parameter name == null");
         }
 
-        Iterator<InitParam> parms = portletDD.getInitParams().iterator();
+        Iterator<? extends InitParam> parms = portletDD.getInitParams().iterator();
         while(parms.hasNext()) {
             InitParam param = parms.next();
             if (param.getParamName().equals(name)) {

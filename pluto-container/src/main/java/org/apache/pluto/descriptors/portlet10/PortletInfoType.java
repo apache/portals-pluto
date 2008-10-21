@@ -23,8 +23,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.PortletInfo;
-
 /**
  * <p>Java class for portlet-infoType complex type. <p>The following schema fragment specifies the expected content
  * contained within this class.
@@ -48,45 +46,15 @@ import org.apache.pluto.om.portlet.PortletInfo;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "portlet-infoType", propOrder = { "title", "shortTitle", "keywords" })
-public class PortletInfoType implements PortletInfo
+public class PortletInfoType
 {
     @XmlElement(name = "title")
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String title;
+    String title;
     @XmlElement(name = "short-title")
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String shortTitle;
+    String shortTitle;
     @XmlElement(name = "keywords")
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String keywords;
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public void setTitle(String value)
-    {
-        title = value;
-    }
-
-    public String getShortTitle()
-    {
-        return shortTitle;
-    }
-
-    public void setShortTitle(String value)
-    {
-        shortTitle = value;
-    }
-
-    public String getKeywords()
-    {
-        return keywords;
-    }
-
-    public void setKeywords(String value)
-    {
-        keywords = value;
-    }
+    String keywords;
 }

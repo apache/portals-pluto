@@ -17,7 +17,6 @@
 package org.apache.pluto.descriptors.portlet10;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,10 +24,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.ElementFactoryList;
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.SecurityRoleRef;
 
 /**
  * The security-role-ref element contains the declaration of a security role reference in the code of the web
@@ -58,72 +53,14 @@ import org.apache.pluto.om.portlet.SecurityRoleRef;
 */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "security-role-refType", propOrder = { "description", "roleName", "roleLink" })
-public class SecurityRoleRefType implements SecurityRoleRef
+public class SecurityRoleRefType
 {
-    @XmlElement(name = "description", type=DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    List<DescriptionType> description;
     @XmlElement(name = "role-name", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String roleName;
+    String roleName;
     @XmlElement(name = "role-link")
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected String roleLink;
-
-    public Description getDescription(Locale locale)
-    {
-        for (Description d : getDescriptions())
-        {
-            if (d.getLocale().equals(locale))
-            {
-                return d;
-            }
-        }
-        return null;
-    }
-    
-    public ElementFactoryList<Description> getDescriptions()
-    {
-        if (description == null || !(description instanceof ElementFactoryList))
-        {
-            ElementFactoryList<Description> lf = 
-                new ElementFactoryList<Description>( new ElementFactoryList.Factory<Description>()
-                {
-                    public Class<? extends Description> getElementClass()
-                    {
-                        return DescriptionType.class;
-                    }
-
-                    public Description newElement()
-                    {
-                        return new DescriptionType();
-                    }
-                }); 
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
-        }
-        return (ElementFactoryList<Description>)description;
-    }
-
-    public String getRoleName()
-    {
-        return roleName;
-    }
-
-    public void setRoleName(String value)
-    {
-        roleName = value;
-    }
-
-    public String getRoleLink()
-    {
-        return roleLink;
-    }
-
-    public void setRoleLink(String value)
-    {
-        roleLink = value;
-    }
+    String roleLink;
 }

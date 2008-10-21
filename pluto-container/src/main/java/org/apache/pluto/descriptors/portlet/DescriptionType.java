@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
 import java.util.Locale;
 
@@ -27,23 +27,20 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.DisplayName;
+import org.apache.pluto.om.portlet.Description;
 
 /**
- * The display-name type contains a short name that is intended to be displayed by tools. It is used by display-name
- * elements. The display name need not be unique. Example: ...
+ * The description element is used to provide text describing the parent element. The description element should include
+ * any information that the portlet application war file producer wants to provide to the consumer of the portlet
+ * application war file (i.e., to the Deployer). Typically, the tools used by the portlet application war file consumer
+ * will display the description when processing the parent element that contains the description. It has an optional
+ * attribute xml:lang to indicate which language is used in the description according to RFC 1766
+ * (http://www.ietf.org/rfc/rfc1766.txt). The default value of this attribute is English(“en”). Used in: init-param,
+ * portlet, portlet-app, security-role <p>Java class for descriptionType complex type. <p>The following schema
+ * fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;display-name xmlns="http://www.w3.org/2001/XMLSchema" xmlns:portlet="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xml:lang="en"&gt;Employee Self Service&lt;/display-name&gt;
- * </pre>
- * 
- * It has an optional attribute xml:lang to indicate which language is used in the description according to RFC 1766
- * (http://www.ietf.org/rfc/rfc1766.txt). The default value of this attribute is English(“en”). <p>Java class for
- * display-nameType complex type. <p>The following schema fragment specifies the expected content contained within this
- * class.
- * 
- * <pre>
- * &lt;complexType name=&quot;display-nameType&quot;&gt;
+ * &lt;complexType name=&quot;descriptionType&quot;&gt;
  *   &lt;simpleContent&gt;
  *     &lt;extension base=&quot;&lt;http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd&gt;string&quot;&gt;
  *       &lt;attribute ref=&quot;{http://www.w3.org/XML/1998/namespace}lang&quot;/&gt;
@@ -55,8 +52,8 @@ import org.apache.pluto.om.portlet.DisplayName;
  * @version $Id$
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "display-nameType", propOrder = { "value" })
-public class DisplayNameType implements DisplayName
+@XmlType(name = "descriptionType", propOrder = { "value" })
+public class DescriptionType implements Description
 {
     @XmlValue
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
@@ -66,12 +63,12 @@ public class DisplayNameType implements DisplayName
     @XmlTransient
     protected Locale locale;
 
-    public String getDisplayName()
+    public String getDescription()
     {
         return value;
     }
 
-    public void setDisplayName(String value)
+    public void setDescription(String value)
     {
         this.value = value;
     }
@@ -84,8 +81,9 @@ public class DisplayNameType implements DisplayName
     public void setLang(String value)
     {
         lang = value;
+        deriveLocale();
     }
-
+    
     public Locale getLocale()
     {
         return locale == null ? deriveLocale() : locale;

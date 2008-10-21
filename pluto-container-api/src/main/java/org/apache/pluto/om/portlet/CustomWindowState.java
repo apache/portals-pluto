@@ -15,15 +15,14 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.List;
 import java.util.Locale;
-
-import org.apache.pluto.om.ElementFactoryList;
 
 public interface CustomWindowState {
 
-    Description getDescription(Locale locale);
-	ElementFactoryList<Description> getDescriptions();
+    String getWindowState();
 
-	String getWindowState();
-	void setWindowState(String windowState);
+    Description getDescription(Locale locale);
+	List<? extends Description> getDescriptions();
+    Description addDescription(String lang);
 }

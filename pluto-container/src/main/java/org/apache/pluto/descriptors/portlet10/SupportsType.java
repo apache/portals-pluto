@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.descriptors.portlet10;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,8 +24,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.portlet.Supports;
 
 /**
  * Supports indicates the portlet modes a portlet supports for a specific content type. All portlets must support the
@@ -51,36 +48,12 @@ import org.apache.pluto.om.portlet.Supports;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "supportsType", propOrder = { "mimeType", "portletMode" })
-public class SupportsType implements Supports
+public class SupportsType
 {
     @XmlElement(name = "mime-type", required = true)
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected String mimeType;
+    String mimeType;
     @XmlElement(name = "portlet-mode")
     @XmlJavaTypeAdapter(value=CollapsedStringAdapter.class)
-    protected List<String> portletMode;
-
-    public String getMimeType()
-    {
-        return mimeType;
-    }
-
-    public void setMimeType(String value)
-    {
-        mimeType = value;
-    }
-
-    public List<String> getPortletModes()
-    {
-        if (portletMode == null)
-        {
-            portletMode = new ArrayList<String>();
-        }
-        return portletMode;
-    }
-
-    public List<String> getWindowStates()
-    {
-        throw new UnsupportedOperationException();
-    }
+    List<String> portletMode;
 }

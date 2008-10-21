@@ -46,7 +46,7 @@ public class PortletURLListenerImpl implements PortletURLListener {
 			LOG.error(message, new IllegalArgumentException(message));
 		}
 		//this list is needed for the classnames
-		List<Listener> portletURLFilterList = portletApp.getListeners();
+		List<? extends Listener> portletURLFilterList = portletApp.getListeners();
 		//Iterate over the classnames and for each entry in the list the filter..URL is called.
 		if (portletURLFilterList != null){
 			for (Listener listener : portletURLFilterList) {

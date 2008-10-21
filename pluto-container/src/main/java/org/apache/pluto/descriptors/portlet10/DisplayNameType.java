@@ -16,18 +16,13 @@
  */
 package org.apache.pluto.descriptors.portlet10;
 
-import java.util.Locale;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.pluto.om.portlet.DisplayName;
 
 /**
  * The display-name type contains a short name that is intended to be displayed by tools. It is used by display-name
@@ -56,67 +51,11 @@ import org.apache.pluto.om.portlet.DisplayName;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "display-nameType", propOrder = { "value" })
-public class DisplayNameType implements DisplayName
+public class DisplayNameType
 {
     @XmlValue
     @XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-    protected String value;
+    String value;
     @XmlAttribute(namespace = "http://www.w3.org/XML/1998/namespace")
-    protected String lang = null;
-    @XmlTransient
-    protected Locale locale;
-
-    public String getDisplayName()
-    {
-        return value;
-    }
-
-    public void setDisplayName(String value)
-    {
-        this.value = value;
-    }
-
-    public String getLang()
-    {
-        return lang == null ? Locale.ENGLISH.toString() : lang;
-    }
-
-    public void setLang(String value)
-    {
-        lang = value;
-    }
-
-    public Locale getLocale()
-    {
-        return locale == null ? deriveLocale() : locale;
-    }
-    
-    protected Locale deriveLocale()
-    {
-        Locale locale = null;
-        String lang = this.getLang();
-        if (lang != null)
-        {
-            String country = "";
-            String variant = "";
-            String[] localeArray = lang.split("[-|_]");
-            for (int i = 0; i < localeArray.length; i++)
-            {
-                if (i == 0)
-                {
-                    lang = localeArray[i];
-                }
-                else if (i == 1)
-                {
-                    country = localeArray[i];
-                }
-                else if (i == 2)
-                {
-                    variant = localeArray[i];
-                }
-            }
-            locale = new Locale(lang, country, variant);
-        }
-        return this.locale = locale;
-    }
+    String lang = null;
 }

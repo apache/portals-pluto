@@ -15,9 +15,8 @@
  */
 package org.apache.pluto.om.portlet;
 
+import java.util.List;
 import java.util.Locale;
-
-import org.apache.pluto.om.ElementFactoryList;
 
 public interface UserDataConstraint {
 
@@ -25,9 +24,9 @@ public interface UserDataConstraint {
 	String INTEGRAL = "INTEGRAL";
 	String CONFIDENTIAL = "CONFIDENTIAL";
 
+    String getTransportGuarantee();
+    
 	Description getDescription(Locale locale);
-	ElementFactoryList<Description> getDescriptions();
-
-	String getTransportGuarantee();
-	void setTransportGuarantee(String transportGuarantee);
+    List<? extends Description> getDescriptions();
+    Description addDescription(String lang);
 }

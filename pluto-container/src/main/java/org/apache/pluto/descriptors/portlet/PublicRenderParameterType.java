@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.descriptors.portlet20;
+package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -30,7 +29,6 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.ElementFactoryList;
 import org.apache.pluto.om.portlet.Description;
 import org.apache.pluto.om.portlet.PublicRenderParameter;
 
@@ -65,8 +63,8 @@ import org.apache.pluto.om.portlet.PublicRenderParameter;
 @XmlType(name = "public-render-parameterType", propOrder = { "description", "identifier", "qname", "name", "alias" })
 public class PublicRenderParameterType implements PublicRenderParameter
 {
-    @XmlElement(name = "description", type=DescriptionType.class)
-    protected List<Description> description;
+    @XmlElement(name = "description")
+    protected List<DescriptionType> description;
     @XmlElement(required = true)
     protected String identifier;
     protected QName qname;
@@ -74,8 +72,6 @@ public class PublicRenderParameterType implements PublicRenderParameter
     @XmlSchemaType(name = "NCName")
     protected String name;
     protected List<QName> alias;
-    @XmlAttribute
-    protected String id;
 
     public Description getDescription(Locale locale)
     {
@@ -89,30 +85,26 @@ public class PublicRenderParameterType implements PublicRenderParameter
         return null;
     }
     
-    public ElementFactoryList<Description> getDescriptions()
+    public List<? extends Description> getDescriptions()
     {
-        if (description == null || !(description instanceof ElementFactoryList))
+        if (description == null)
         {
-            ElementFactoryList<Description> lf = 
-                new ElementFactoryList<Description>( new ElementFactoryList.Factory<Description>()
-                {
-                    public Class<? extends Description> getElementClass()
-                    {
-                        return DescriptionType.class;
-                    }
-
-                    public Description newElement()
-                    {
-                        return new DescriptionType();
-                    }
-                }); 
-            if (description != null)
-            {
-                lf.addAll(description);
-            }
-            description = lf;
+            description = new ArrayList<DescriptionType>();
         }
-        return (ElementFactoryList<Description>)description;
+        return description;
+    }
+    
+    public Description addDescription(String lang)
+    {
+        DescriptionType d = new DescriptionType();
+        d.setLang(lang);
+        if (getDescription(d.getLocale()) != null)
+        {
+            throw new IllegalArgumentException("Description for language: "+d.getLocale()+" already defined");
+        }
+        getDescriptions();
+        description.add(d);
+        return d;
     }
 
     public String getIdentifier()
@@ -154,18 +146,9 @@ public class PublicRenderParameterType implements PublicRenderParameter
         return alias;
     }
 
-    public String getId()
+    public void addAlias(QName alias)
     {
-        return id;
-    }
-
-    public void setId(String value)
-    {
-        id = value;
-    }
-
-    public void setAliases(List<QName> aliases)
-    {
-        this.alias = aliases;
+        // TODO: check duplicates
+        getAliases().add(alias);
     }
 }
