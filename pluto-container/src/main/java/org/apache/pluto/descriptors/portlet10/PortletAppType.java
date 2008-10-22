@@ -146,6 +146,7 @@ public class PortletAppType
     public PortletApplicationDefinition upgrade()
     {
         PortletApplicationDefinition app = new org.apache.pluto.descriptors.portlet.PortletAppType();
+        app.setVersion(version);
         if (portlet != null)
         {
             for (PortletType src : portlet)
@@ -226,7 +227,137 @@ public class PortletAppType
     
     private void downgradePortlet(PortletDefinition src, PortletType target)
     {
-        // TODO
+        for (Description d : src.getDescriptions())
+        {
+            if (target.description == null)
+            {
+                target.description = new ArrayList<DescriptionType>();
+            }
+            DescriptionType dt = new DescriptionType();
+            dt.lang = d.getLang();
+            dt.value = d.getDescription();
+            target.description.add(dt);
+        }
+        for (DisplayName d : src.getDisplayNames())
+        {
+            if (target.displayName == null)
+            {
+                target.displayName = new ArrayList<DisplayNameType>();
+            }
+            DisplayNameType dnt = new DisplayNameType();
+            dnt.lang = d.getLang();
+            dnt.value = d.getDisplayName();
+            target.displayName.add(dnt);
+        }
+        target.portletClass = src.getPortletClass();
+        if (src.getExpirationCache() != 0)
+        {
+            target.expirationCache = new Integer(src.getExpirationCache());
+        }
+        for (InitParam p : src.getInitParams())
+        {
+            if (target.initParam == null)
+            {
+                target.initParam = new ArrayList<InitParamType>();
+            }
+            InitParamType pt = new InitParamType();
+            pt.name = p.getParamName();
+            pt.value = p.getParamValue();
+            for (Description d : p.getDescriptions())
+            {
+                if (pt.description == null)
+                {
+                    pt.description = new ArrayList<DescriptionType>();
+                }
+                DescriptionType dt = new DescriptionType();
+                dt.lang = d.getLang();
+                dt.value = d.getDescription();
+                pt.description.add(dt);
+            }
+            target.initParam.add(pt);
+        }
+        for (Supports s : src.getSupports())
+        {
+            if (target.supports == null)
+            {
+                target.supports = new ArrayList<SupportsType>();
+            }
+            SupportsType st = new SupportsType();
+            st.mimeType = s.getMimeType();
+            for (String name : s.getPortletModes())
+            {
+                if (st.portletMode == null)
+                {
+                    st.portletMode = new ArrayList<String>();
+                }
+                st.portletMode.add(name);
+            }
+            target.supports.add(st);
+        }
+        for (String lang : src.getSupportedLocales())
+        {
+            if (target.supportedLocale == null)
+            {
+                target.supportedLocale = new ArrayList<String>();
+            }
+            target.supportedLocale.add(lang);
+        }
+        target.resourceBundle = src.getResourceBundle();
+        PortletInfoType pit = new PortletInfoType();
+        pit.title = src.getPortletInfo().getTitle();
+        pit.shortTitle = src.getPortletInfo().getShortTitle();
+        pit.keywords = src.getPortletInfo().getKeywords();
+        if (pit.title != null || pit.shortTitle != null || pit.keywords != null)
+        {
+            target.portletInfo = pit;
+        }
+        PortletPreferencesType ppt = new PortletPreferencesType();
+        ppt.preferencesValidator = src.getPortletPreferences().getPreferencesValidator();
+        for (Preference p : src.getPortletPreferences().getPortletPreferences())
+        {
+            if (ppt.preference == null)
+            {
+                ppt.preference = new ArrayList<PreferenceType>();                
+            }
+            PreferenceType pt = new PreferenceType();
+            pt.name = p.getName();
+            pt.readOnly = p.isReadOnly() ? Boolean.TRUE : null;
+            for (String value : p.getValues())
+            {
+                if (pt.value == null)
+                {
+                    pt.value = new ArrayList<String>();
+                }
+                pt.value.add(value);
+            }
+            ppt.preference.add(pt);
+        }
+        if (ppt.preferencesValidator != null || ppt.preference != null)
+        {
+            target.portletPreferences = ppt;
+        }
+        for (SecurityRoleRef srr : src.getSecurityRoleRefs())
+        {
+            if (target.securityRoleRef == null)
+            {
+                target.securityRoleRef = new ArrayList<SecurityRoleRefType>();                
+            }
+            SecurityRoleRefType srrt = new SecurityRoleRefType();
+            srrt.roleName = srr.getRoleName();
+            srrt.roleLink = srr.getRoleLink();
+            for (Description d : srr.getDescriptions())
+            {
+                if (srrt.description == null)
+                {
+                    srrt.description = new ArrayList<DescriptionType>();
+                }
+                DescriptionType dt = new DescriptionType();
+                dt.lang = d.getLang();
+                dt.value = d.getDescription();
+                srrt.description.add(dt);
+            }
+            target.securityRoleRef.add(srrt);
+        }
     }
     
     private void upgradePortlet(PortletType src, PortletDefinition target)

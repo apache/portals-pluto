@@ -394,7 +394,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
         InputStream inputStream = new ByteArrayInputStream(portlet168NoCache.toString().getBytes());
         PortletApplicationDefinition portletDD = jaxb.read( inputStream );
 
-        assertEquals( "2.0", portletDD.getVersion() );
+        assertEquals( "1.0", portletDD.getVersion() );
         assertEquals( 1, portletDD.getPortlets().size() );
 
         PortletDefinition pd = (PortletDefinition) portletDD.getPortlets().get( 0 );

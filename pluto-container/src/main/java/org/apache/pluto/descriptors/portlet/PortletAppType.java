@@ -158,6 +158,7 @@ public class PortletAppType implements PortletApplicationDefinition
         }
         PortletType p = new PortletType();
         p.setPortletName(portletName);
+        p.setApplication(this);
         portlet.add(p);
         return p;
     }

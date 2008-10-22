@@ -67,21 +67,21 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     public void write(PortletApplicationDefinition app, OutputStream out) throws IOException {
         try {
             JAXBContext jc = null;
-            Object desc = null;
+            Object src = null;
             if (PortletApplicationDefinition.JSR_168_VERSION.equals(app.getVersion()))
             {                
                 jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet10");                
-                desc = new org.apache.pluto.descriptors.portlet10.PortletAppType(app);
+                src = new org.apache.pluto.descriptors.portlet10.PortletAppType(app);
             }
             else
             {
                 jc = JAXBContext.newInstance("org.apache.pluto.descriptors.portlet");
-                desc = app;
+                src = app;
             }
             Marshaller m = jc.createMarshaller();
             m.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-            m.marshal(desc,out);
+            m.marshal(src,out);
         }catch (JAXBException jaxbEx){
             jaxbEx.printStackTrace();
             throw new IOException(jaxbEx.getMessage());
