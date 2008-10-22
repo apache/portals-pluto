@@ -55,6 +55,12 @@
             <artifactId>commons-digester</artifactId>
             <version>${commons-digester.version}</version>
             <scope>compile</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -97,6 +103,12 @@
             <artifactId>spring-core</artifactId>
             <version>${springframework.version}</version>
             <scope>compile</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -117,6 +129,12 @@
             <artifactId>spring-web</artifactId>
             <version>${springframework.version}</version>
             <scope>compile</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

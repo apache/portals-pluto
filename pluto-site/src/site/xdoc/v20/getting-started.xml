@@ -36,8 +36,8 @@ limitations under the License.
           <ul>
             <li>portlet-api-2.0.jar</li>
             <li>ccpp-1.0.jar (Pluto 2.0 only)</li>
-            <li>pluto-container-api-2.0.jar (or the build version of Pluto you are using)</li>
-            <li>pluto-taglib-2.0.jar (or the build version of Pluto you are using)</li>
+            <li>pluto-container-api-2.0.0.jar (or the build version of Pluto you are using)</li>
+            <li>pluto-taglib-2.0.0.jar (or the build version of Pluto you are using)</li>
           </ul>
         </p>
         <p>
@@ -47,8 +47,9 @@ limitations under the License.
             <li>commons-logging-api-1.1.jar</li>
 			<li>jaxb-api-2.1.jar</li>
 			<li>jaxb-impl-2.1.8.jar</li>
-			<li>pluto-container-2.0.0-SNAPSHOT.jar</li>
-			<li>stax-api-1.0-2.jar</li>
+			<li>pluto-container-2.0.0.jar (or the build version of Pluto you are using)</li>
+			<li>stax-api-1.0.1.jar</li>
+            <li>stax-1.2.0.jar</li>
           </ul>
         </p>
     </section>

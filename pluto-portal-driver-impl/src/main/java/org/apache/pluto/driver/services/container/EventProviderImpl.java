@@ -163,18 +163,27 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 							"Object payload must implement Serializable");
 				} else {
 
+                    Writer out = new StringWriter();
+
 					Class clazz = value.getClass();
 
-					JAXBContext jc = JAXBContext.newInstance(clazz);
+					ClassLoader cl = Thread.currentThread().getContextClassLoader();
+					try
+					{
+					    Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+	                    JAXBContext jc = JAXBContext.newInstance(clazz);
 
-					Marshaller marshaller = jc.createMarshaller();
+	                    Marshaller marshaller = jc.createMarshaller();
 
-					Writer out = new StringWriter();
-
-					JAXBElement<Serializable> element = new JAXBElement<Serializable>(
-							qname, clazz, value);
-					marshaller.marshal(element, out);
-					// marshaller.marshal(value, out);
+	                    JAXBElement<Serializable> element = new JAXBElement<Serializable>(
+	                            qname, clazz, value);
+	                    marshaller.marshal(element, out);
+	                    // marshaller.marshal(value, out);
+					}
+					finally
+					{
+					    Thread.currentThread().setContextClassLoader(cl);
+					}
 
 					if (out != null) {
 						savedEvents.addEvent(new EventImpl(qname,
