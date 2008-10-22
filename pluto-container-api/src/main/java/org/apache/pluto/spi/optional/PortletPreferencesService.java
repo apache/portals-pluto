@@ -19,10 +19,13 @@ package org.apache.pluto.spi.optional;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PreferencesValidator;
+import javax.portlet.ValidatorException;
 
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.spi.ContainerService;
 
 /**
@@ -68,4 +71,17 @@ public interface PortletPreferencesService extends ContainerService {
                       Map<String, InternalPortletPreference> preferences)
     throws PortletContainerException;
 
+    /**
+     * Returns the preferences validator instance for the given portlet
+     * definition. If no preferences validator class is defined for the portlet
+     * definition, null is returned. This method caches the validator instances
+     * in the cache to ensure that only one validator instance is created per
+     * portlet definition.
+     * @param portletDefinition  the portlet definition.
+     * @return the preferences validator if defined for the portlet definition.
+     * @throw ValidatorException  if fail to instantiate validator instance.
+     */    
+    public PreferencesValidator getPreferencesValidator(PortletDefinition portletDefinition)
+    throws ValidatorException;
+    
 }

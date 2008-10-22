@@ -16,11 +16,7 @@
  */
 package org.apache.pluto.internal.impl;
 
-import javax.portlet.PreferencesValidator;
-import javax.portlet.ValidatorException;
-
 import org.apache.pluto.PortletEntity;
-import org.apache.pluto.core.PreferencesValidatorRegistry;
 import org.apache.pluto.om.portlet.PortletDefinition;
 
 /**

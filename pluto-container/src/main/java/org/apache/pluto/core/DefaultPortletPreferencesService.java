@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PreferencesValidator;
+import javax.portlet.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,6 +59,12 @@ implements PortletPreferencesService {
 	 * a string, value is an array of PortletPreference objects.
 	 */
 	private Map<String,Map<String,InternalPortletPreference>> storage = new HashMap<String,Map<String,InternalPortletPreference>>();
+
+   /**
+     * The preferences validator cache: key is the portlet definition, value is
+     * the portlet preferences validator instance.
+     */
+    private Map<PortletDefinition, PreferencesValidator> cache = new HashMap<PortletDefinition, PreferencesValidator>();
 
 
 	// Constructor -------------------------------------------------------------
@@ -207,4 +215,47 @@ implements PortletPreferencesService {
     	}
     	return copy;
     }
+    
+    public PreferencesValidator getPreferencesValidator(PortletDefinition portletDD)
+    throws ValidatorException {
+
+        // Try to retrieve the validator from cache.
+        PreferencesValidator validator = (PreferencesValidator)
+                cache.get(portletDD);
+        if (validator != null) {
+            return validator;
+        }
+
+        // Try to construct the validator instance for the portlet definition.
+        Preferences portletPreferencesDD = portletDD.getPortletPreferences();
+        
+        if (portletPreferencesDD != null) {
+            String className = portletPreferencesDD.getPreferencesValidator();
+            if (className != null) {
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Creating preferences validator: " + className);
+                }
+                ClassLoader loader = Thread.currentThread().getContextClassLoader();
+                try {
+                    Class clazz = loader.loadClass(className);
+                    validator = (PreferencesValidator) clazz.newInstance();
+                    cache.put(portletDD, validator);
+                } catch (InstantiationException ex) {
+                    LOG.error("Error instantiating validator.", ex);
+                    throw new ValidatorException(ex, null);
+                } catch (IllegalAccessException ex) {
+                    LOG.error("Error instantiating validator.", ex);
+                    throw new ValidatorException(ex, null);
+                } catch (ClassNotFoundException ex) {
+                    LOG.error("Error instantiating validator.", ex);
+                    throw new ValidatorException(ex, null);
+                } catch (ClassCastException ex) {
+                    LOG.error("Error casting instance to PreferencesValidator.", ex);
+                    throw new ValidatorException(ex, null);
+                }
+            }
+        }
+        return validator;
+    }
+    
 }

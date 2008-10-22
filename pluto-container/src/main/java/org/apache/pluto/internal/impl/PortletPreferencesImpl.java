@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PreferencesValidator;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
@@ -34,7 +33,6 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.core.PreferencesValidatorRegistry;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.om.portlet.PortletDefinition;
@@ -276,11 +274,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         //   If the preferences cannot pass the validation,
         //   an ValidatorException will be thrown out.
         PortletDefinition portletD = window.getPortletEntity().getPortletDefinition();
-        PreferencesValidator validator = PreferencesValidatorRegistry.getRegistry()
-                                           .getPreferencesValidator(portletD);
-        if (validator != null) {
-        	validator.validate(this);
-        }
+       	preferencesService.getPreferencesValidator(portletD).validate(this);
         // Store the portlet preferences.
         try {
         	preferencesService.store(window, request, preferences);
