@@ -125,7 +125,19 @@ public interface PortletRegistryService
      */
     void removePortletRegistryListener(PortletRegistryListener listener);
     
+    /**
+     * Register a portlet application
+     * 
+     * @param config
+     * @return
+     * @throws PortletContainerException
+     */
     String register(ServletConfig config) throws PortletContainerException;
     
-    void remove(InternalPortletContext context);
+    /**
+     * Unregister a portlet application
+     * 
+     * @param context
+     */
+    void unregister(InternalPortletContext context);
 }

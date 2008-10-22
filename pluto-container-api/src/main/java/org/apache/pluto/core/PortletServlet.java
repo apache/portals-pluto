@@ -206,7 +206,7 @@ public class PortletServlet extends HttpServlet
         else if ( started )
         {
           started = false;
-          registryService.remove(portletContext);
+          registryService.unregister(portletContext);
           if (portlet != null)
           {
               portlet.destroy();
