@@ -104,7 +104,7 @@ implements PortletRequest, InternalPortletRequest {
     private PortalContext portalContext;
 
     /** The portlet session. */
-    private PortletSession portletSession;
+    private PortletSessionImpl portletSession;
 
     /** Response content types. */
     private Vector contentTypes;
@@ -275,11 +275,6 @@ implements PortletRequest, InternalPortletRequest {
                     portletWindow,
                     httpSession);
         }
-        //for RequestDispatcher
-        if (isForwarded() || isIncluded())
-        	((PortletSessionImpl)portletSession).setIncludeOrForward(true);
-        else
-        	((PortletSessionImpl)portletSession).setIncludeOrForward(false);
         
         return portletSession;
     }
@@ -1029,17 +1024,33 @@ implements PortletRequest, InternalPortletRequest {
     @Override
 	public HttpSession getSession() {
 		if (isIncluded() || isForwarded()){
-			PortletSession session = getPortletSession();
-			return (HttpSession)session;
+		    // ensure cached PortletSession is created (with proper HttpSession invalidation check performed)
+			getPortletSession();
+			if (portletSession != null)
+			{
+			    return portletSession.getHttpSession();
+			}
+			else
+			{
+			    return null;
+			}
 		}
 		return super.getSession();
 	}
     
     @Override
-	public HttpSession getSession(boolean arg0) {
+	public HttpSession getSession(boolean create) {
 		if (isIncluded() || isForwarded()){
-			PortletSession session = getPortletSession(arg0); 
-			return (HttpSession)session;
+            // ensure cached PortletSession is created (with proper HttpSession invalidation check performed)
+			getPortletSession(create); 
+            if (portletSession != null)
+            {
+                return portletSession.getHttpSession();
+            }
+            else
+            {
+                return null;
+            }
 		}
 		return super.getSession();
 	}
