@@ -265,6 +265,6 @@ implements RenderRequest, InternalRenderRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(this, portletWindow);
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(this, portletWindow);
 	}
 }

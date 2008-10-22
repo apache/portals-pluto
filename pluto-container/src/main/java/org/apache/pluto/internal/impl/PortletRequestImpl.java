@@ -284,8 +284,8 @@ implements PortletRequest, InternalPortletRequest {
         String property = this.getHttpServletRequest().getHeader(name);
         if (property == null) {
             Map propertyMap = container.getRequiredContainerServices()
-                    .getPortalCallbackService()
-                    .getRequestProperties(
+                    .getPortalCallbackService().getRequestPropertyProvider()
+                    .getProperties(
                     		getHttpServletRequest(),
                     		portletWindow);
 
@@ -311,11 +311,7 @@ implements PortletRequest, InternalPortletRequest {
 
         // get properties from PropertyManager
         Map map = container.getRequiredContainerServices()
-                .getPortalCallbackService()
-                .getRequestProperties(
-                		getHttpServletRequest(),
-                		portletWindow);
-
+                .getPortalCallbackService().getRequestPropertyProvider().getProperties(getHttpServletRequest(), portletWindow);
         if (map != null) {
             String[] properties = (String[]) map.get(name);
 
@@ -335,8 +331,8 @@ implements PortletRequest, InternalPortletRequest {
 
         // get properties from PropertyManager
         Map map = container.getRequiredContainerServices()
-                .getPortalCallbackService()
-                .getRequestProperties(getHttpServletRequest(), portletWindow);
+                .getPortalCallbackService().getRequestPropertyProvider()
+                .getProperties(getHttpServletRequest(), portletWindow);
 
         if (map != null) {
             v.addAll(map.keySet());

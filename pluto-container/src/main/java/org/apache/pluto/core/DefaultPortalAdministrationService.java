@@ -24,35 +24,38 @@ import org.apache.pluto.spi.optional.AdministrativeRequestListener;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
 import org.apache.pluto.spi.optional.PortletInvocationListener;
 
-public class DefaultPortalAdministrationService implements PortalAdministrationService {
+public class DefaultPortalAdministrationService implements PortalAdministrationService 
+{
+    private List<AdministrativeRequestListener> administrativeRequestListeners =new ArrayList<AdministrativeRequestListener>();
+    private List<PortletInvocationListener> portletInvocationListeners = new ArrayList<PortletInvocationListener>();
 
-    private List administrativeRequestListeners =
-        new ArrayList();
-
-    private List portletInvocationListeners =
-        new ArrayList();
-
-    public List getAdministrativeRequestListeners() {
+    public List<AdministrativeRequestListener> getAdministrativeRequestListeners() 
+    {
         return administrativeRequestListeners;
     }
 
-    public void setAdministrativeRequestListeners(List administrativeRequestListeners) {
+    public void setAdministrativeRequestListeners(List<AdministrativeRequestListener> administrativeRequestListeners) 
+    {
         this.administrativeRequestListeners = administrativeRequestListeners;
     }
 
-    public void addAdministrativeRequestListener(AdministrativeRequestListener listener) {
+    public void addAdministrativeRequestListener(AdministrativeRequestListener listener) 
+    {
         administrativeRequestListeners.add(listener);
     }
 
-    public List getPortletInvocationListeners() {
+    public List<PortletInvocationListener> getPortletInvocationListeners() 
+    {
         return portletInvocationListeners;
     }
 
-    public void setPortletInvocationListeners(List portletInvocationListeners) {
+    public void setPortletInvocationListeners(List<PortletInvocationListener> portletInvocationListeners) 
+    {
         this.portletInvocationListeners = portletInvocationListeners;
     }
 
-    public void addPortletInvocationListener(PortletInvocationListener listener) {
+    public void addPortletInvocationListener(PortletInvocationListener listener) 
+    {
         portletInvocationListeners.add(listener);
     }
 }

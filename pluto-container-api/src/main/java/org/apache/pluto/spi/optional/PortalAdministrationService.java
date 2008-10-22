@@ -44,10 +44,8 @@ import java.util.List;
  *   </li>
  * </ul>
  */
-public interface PortalAdministrationService {
-
-    List getAdministrativeRequestListeners();
-
-    List getPortletInvocationListeners();
-
+public interface PortalAdministrationService 
+{
+    List<AdministrativeRequestListener> getAdministrativeRequestListeners();
+    List<PortletInvocationListener> getPortletInvocationListeners();
 }

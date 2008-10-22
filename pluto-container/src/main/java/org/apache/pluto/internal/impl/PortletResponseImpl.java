@@ -100,8 +100,8 @@ implements PortletResponse, InternalPortletResponse {
     public void addProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-        		.getPortalCallbackService()
-        		.addResponseProperty(
+        		.getPortalCallbackService().getRequestPropertyProvider()
+        		.addProperty(
         				getHttpServletRequest(),
         				portletWindow,
         				name, value);
@@ -111,27 +111,27 @@ implements PortletResponse, InternalPortletResponse {
     	// FIXME: What should this do? (scope seems to be new)
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-        		.getPortalCallbackService()
-        		.addResponseProperty(
+        		.getPortalCallbackService().getRequestPropertyProvider()
+        		.addProperty(
         				getHttpServletRequest(),
         				portletWindow,
         				name, value);
     }
     
     public void addProperty(String key, Element element) {
-    	container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), portletWindow, key, element);
+    	container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addProperty(getHttpServletRequest(), portletWindow, key, element);
 	}
 
 
 	public void addProperty(Cookie cookie) {
-		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), portletWindow, cookie);
+		container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addCookieProperty(getHttpServletRequest(), portletWindow, cookie);
 	}
 
     public void setProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-                .getPortalCallbackService()
-                .setResponseProperty(
+                .getPortalCallbackService().getRequestPropertyProvider()
+                .setProperty(
                         getHttpServletRequest(),
                         portletWindow,
                         name, value);

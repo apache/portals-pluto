@@ -114,7 +114,7 @@ public class PlutoContainerServices implements ContainerServices
             userInfoService = new DefaultUserInfoService();
         requestAttributeService = optionalServices.getRequestAttributeService();
         if (requestAttributeService == null)
-            requestAttributeService = new DefaultRequestAttributeService(this);
+            requestAttributeService = new DefaultRequestAttributeService(optionalServices.getNamespaceMapper(), optionalServices.getUserInfoService());
         namespaceMapper = optionalServices.getNamespaceMapper();
         if (namespaceMapper == null)
             namespaceMapper = new DefaultNamespaceMapper();        
@@ -130,8 +130,9 @@ public class PlutoContainerServices implements ContainerServices
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
-        requestAttributeService = new DefaultRequestAttributeService(this);
         namespaceMapper = new DefaultNamespaceMapper();
+        requestAttributeService = new DefaultRequestAttributeService(namespaceMapper, userInfoService);
+
     }
 
     protected void createDefaultRequiredServices() 

@@ -147,7 +147,7 @@ implements ResourceRequest, InternalResourceRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(this, portletWindow);
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(this, portletWindow);
 	}
 	
 	public ServletInputStream getInputStream() throws IOException {

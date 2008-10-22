@@ -18,7 +18,6 @@ package org.apache.pluto.core;
 
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.NamespaceMapper;
-import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletWindowID;
-import org.apache.pluto.om.portlet.UserAttribute;
-import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
@@ -49,21 +45,19 @@ public class DefaultRequestAttributeService implements RequestAttributeService {
     private static final Log LOG = LogFactory.getLog(DefaultRequestAttributeService.class);
 
     
-    private OptionalContainerServices optionalContainerServices;
+    private NamespaceMapper namespaceMapper;
+    private UserInfoService userInfoService;
     
-    public DefaultRequestAttributeService() {
-    }
-    
-    public DefaultRequestAttributeService(OptionalContainerServices optionalContainerServices) {
-        this.optionalContainerServices = optionalContainerServices;
+    public DefaultRequestAttributeService() 
+    {
     }
     
-    public OptionalContainerServices getOptionalContainerServices() {
-        return optionalContainerServices;
+    public DefaultRequestAttributeService(NamespaceMapper namespaceMapper, UserInfoService userInfoService) 
+    {
+        this.namespaceMapper = namespaceMapper;
+        this.userInfoService = userInfoService;
     }
-    public void setOptionalContainerServices(OptionalContainerServices optionalContainerServices) {
-        this.optionalContainerServices = optionalContainerServices;
-    }
+    
 
     /* (non-Javadoc)
      * @see org.apache.pluto.spi.optional.RequestAttributeService#getAttribute(javax.portlet.PortletRequest, javax.servlet.http.HttpServletRequest, org.apache.pluto.PortletWindow, java.lang.String)
@@ -105,7 +99,7 @@ public class DefaultRequestAttributeService implements RequestAttributeService {
             }
             else {
                 final PortletWindowID portletWindowId = portletWindow.getId();
-                final NamespaceMapper namespaceMapper = this.optionalContainerServices.getNamespaceMapper();
+                final NamespaceMapper namespaceMapper = this.namespaceMapper;
                 portletAttribute = namespaceMapper.decode(portletWindowId, attribute);
             }
 
@@ -162,7 +156,7 @@ public class DefaultRequestAttributeService implements RequestAttributeService {
         }
         else {
             final PortletWindowID portletWindowId = portletWindow.getId();
-            final NamespaceMapper namespaceMapper = this.optionalContainerServices.getNamespaceMapper();
+            final NamespaceMapper namespaceMapper = this.namespaceMapper;
             encodedName = namespaceMapper.encode(portletWindowId, name);
         }
         return encodedName;
@@ -175,7 +169,7 @@ public class DefaultRequestAttributeService implements RequestAttributeService {
     protected Map<String, String> createUserInfoMap(PortletRequest portletRequest, PortletWindow portletWindow) {
         Map<String, String> userInfoMap = null;
         try {
-            final UserInfoService userInfoService = this.optionalContainerServices.getUserInfoService();
+            final UserInfoService userInfoService = this.userInfoService;
             userInfoMap = userInfoService.getUserInfo(portletRequest, portletWindow);
             if (userInfoMap != null) {
                 userInfoMap = Collections.unmodifiableMap(userInfoMap);

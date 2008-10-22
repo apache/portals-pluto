@@ -97,7 +97,7 @@ public class EventRequestImpl extends PortletRequestImpl
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(super.getHttpServletRequest(), super.getPortletWindow());
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(super.getHttpServletRequest(), super.getPortletWindow());
 	}
 	
 	public String getMethod(){

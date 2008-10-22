@@ -376,12 +376,12 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void addProperty(String key, String value) {
-		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(servletRequest, portletWindow, key, value);
+		container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addProperty(servletRequest, portletWindow, key, value);
 		
 	}
 
 	public void setProperty(String key, String value) {
-		container.getRequiredContainerServices().getPortalCallbackService().setResponseProperty(servletRequest, portletWindow, key, value);
+		container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().setProperty(servletRequest, portletWindow, key, value);
 		
 	}
 

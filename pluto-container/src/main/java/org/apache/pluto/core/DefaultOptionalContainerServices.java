@@ -58,8 +58,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
-        requestAttributeService = new DefaultRequestAttributeService(this);
         namespaceMapper = new DefaultNamespaceMapper();
+        requestAttributeService = new DefaultRequestAttributeService(namespaceMapper, userInfoService);        
     }
 
     /**

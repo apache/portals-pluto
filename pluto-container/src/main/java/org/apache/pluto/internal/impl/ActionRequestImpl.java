@@ -83,7 +83,7 @@ implements ActionRequest, InternalActionRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(getHttpServletRequest(), portletWindow);
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(getHttpServletRequest(), portletWindow);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 	//for RequestDispatcher include and forward 

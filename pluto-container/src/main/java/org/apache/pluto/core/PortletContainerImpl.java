@@ -279,11 +279,12 @@ public class PortletContainerImpl implements PortletContainer,
         PortletURLProvider portletURLProvider = requiredContainerServices.getPortalCallbackService().getPortletURLProvider(request, portletWindow);
         
         portletURLProvider.savePortalURL(request);
-        saveChangedParameters((PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, portletURLProvider);
+        saveChangedParameters(request, (PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, portletURLProvider);
         
         EventProvider provider = this.getRequiredContainerServices().getPortalCallbackService().
 			getEventProvider(request,portletWindow);
         provider.fireEvents(this);
+        
         
         // After processing action, send a redirect URL for rendering.
         String location = actionResponse.getRedirectLocation();
@@ -296,18 +297,23 @@ public class PortletContainerImpl implements PortletContainer,
             		.getPortalCallbackService()
             		.getPortletURLProvider(request, portletWindow);
             
-            saveChangedParameters((PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, redirectURL);
+            saveChangedParameters(request, (PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, redirectURL);
             
             // Encode the redirect URL to a string.
             location = actionResponse.encodeRedirectURL(redirectURL.toString());
         }
 
-        // Here we intentionally use the original response
-        // instead of the wrapped internal response.
-        response.sendRedirect(location);
-        debugWithName("Redirect URL sent.");
+        redirect(request, response, location);
     }
 
+    protected void redirect(HttpServletRequest request, HttpServletResponse response, String location) throws IOException
+    {
+        // Here we intentionally use the original response
+        // instead of the wrapped internal response.        
+        response.sendRedirect(location);
+        debugWithName("Redirect URL sent.");        
+    }
+    
     /**
      * Loads the portlet associated with the specified portlet window.
      * @param portletWindow  the portlet window.
@@ -457,7 +463,7 @@ public class PortletContainerImpl implements PortletContainer,
     		.getPortalCallbackService()
     		.getPortletURLProvider(request, window);
 
-    		saveChangedParameters(eventRequest, eventResponse, redirectURL);
+    		saveChangedParameters(request, eventRequest, eventResponse, redirectURL);
 
     		// save redirectURL in request
     		redirectURL.savePortalURL(request);
@@ -517,7 +523,8 @@ public class PortletContainerImpl implements PortletContainer,
 	 * @param response
 	 * @param redirectURL
 	 */
-	private void saveChangedParameters(PortletRequest request, StateAwareResponseImpl response, PortletURLProvider redirectURL) {
+	protected void saveChangedParameters(HttpServletRequest servletRequest, PortletRequest request, StateAwareResponseImpl response, PortletURLProvider redirectURL) 
+	{
 		// Encode portlet mode if it is changed.
 		if (response.getChangedPortletMode() != null) {
 			redirectURL.setPortletMode(
@@ -564,7 +571,8 @@ public class PortletContainerImpl implements PortletContainer,
 	 * 
 	 * @return true, if already cleared
 	 */
-	private boolean isAlreadyCleared(PortletRequest request) {
+	protected boolean isAlreadyCleared(PortletRequest request) 
+	{
 		String cleared = (String) request.getAttribute(Constants.RENDER_ALREADY_CLEARED);
 		if (cleared == null || cleared.equals("false")) {
 			request.setAttribute(Constants.RENDER_ALREADY_CLEARED,"true");

@@ -16,14 +16,10 @@
  */
 package org.apache.pluto.spi;
 
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.w3c.dom.Element;
 
 /**
  * The callback service interface defining callback methods that will be invoked
@@ -62,35 +58,13 @@ public interface PortalCallbackService extends ContainerService {
     public ResourceURLProvider getResourceURLProvider(HttpServletRequest request,
                                                       PortletWindow portletWindow);
 
-    public Map getRequestProperties(HttpServletRequest request,
-                                    PortletWindow portletWindow);
-
-    public void setResponseProperty(HttpServletRequest request,
-                                    PortletWindow portletWindow,
-                                    String property,
-                                    String value);
-
-    public void addResponseProperty(HttpServletRequest request,
-                                    PortletWindow portletWindow,
-                                    String property,
-                                    String value);
-    public void addResponseProperty(HttpServletRequest request,
-            PortletWindow portletWindow,
-            String property,
-            Element value);
-    
-    public void addResponseProperty(HttpServletRequest request,
-            PortletWindow portletWindow,
-            Cookie cookie);
-    
-    public Cookie[] getRequestPropertyCookie(HttpServletRequest request, PortletWindow portletWindow);
+    public RequestPropertyProvider getRequestPropertyProvider();
+       
     
     public EventProvider getEventProvider(HttpServletRequest request,
 			PortletWindow portletWindow);
     
     public EventProvider getEventProvider();
-    
-    
     
     /**
      * Returns the FilterManager, this is used to process the filter.
