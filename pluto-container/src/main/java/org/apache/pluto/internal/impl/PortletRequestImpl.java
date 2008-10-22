@@ -498,6 +498,7 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public void setAttribute(String name, Object value) {
+        ArgumentUtility.validateNotNull("attributeName", name);
         final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
         final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
         requestAttributeService.setAttribute(this, this.getHttpServletRequest(), this.portletWindow, name, value);
