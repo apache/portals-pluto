@@ -17,6 +17,7 @@
 package org.apache.pluto.internal;
 
 import javax.portlet.PortletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletWindow;
 
@@ -52,4 +53,6 @@ public interface InternalPortletResponse extends PortletResponse {
     
     public void setRequestForwarded();
 
+    public HttpServletResponse getHttpServletResponse();
+    
 }
