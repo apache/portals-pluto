@@ -17,9 +17,13 @@
 package org.apache.pluto.driver.config.impl;
 
 import java.util.Collection;
+import java.util.Set;
 
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
 import javax.servlet.ServletContext;
 
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -218,5 +222,17 @@ public class DriverConfigurationImpl
 //    public Collection getPortletApplications() {
 //        return registryService.getPortletApplications();
 //    }
+
+    public Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException {
+    	return supportedModesService.getSupportedPortletModes(portletId);
+    }
+
+	public boolean isPortletManagedMode(String portletId, String mode) {
+		return supportedModesService.isPortletManagedMode(portletId, mode);
+	}
+	
+    public PortletConfig getPortletConfig(String portletId)  throws PortletContainerException {
+    	return supportedModesService.getPortletConfig(portletId);
+    }
 }
 

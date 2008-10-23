@@ -16,7 +16,12 @@
  */
 package org.apache.pluto.driver.services.portal;
 
+import java.util.Set;
+
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
+
+import org.apache.pluto.PortletContainerException;
 
 /**
  * Allows clients to determine if a particular PortletMode is supported
@@ -62,4 +67,17 @@ public interface SupportedModesService extends DriverConfigurationService {
      * @return
      */
     boolean isPortletManagedMode(String portletId, String mode);    
+
+	/**
+	 * Gets all modes supported by a portlet that are defined in the portlet's supports child element 
+	 * in portlet.xml.
+	 * 
+     * @param portletId Id of the portlet of interest
+	 * @return all portlet modes supported by a portlet.
+	 * @throws PortletContainerException
+     */
+    Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException;
+
+	PortletConfig getPortletConfig(String portletId) throws PortletContainerException;
+
 }
