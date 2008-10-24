@@ -57,11 +57,11 @@ implements PortletContext, InternalPortletContext {
     
     
     /** Portlet */
-    private PortletDefinition portlet = null;
+    protected PortletDefinition portlet = null;
 
-    private final PortletApplicationDefinition portletApp;
-    private final ServletContext servletContext;
-    private ClassLoader contextClassLoader;
+    protected final PortletApplicationDefinition portletApp;
+    protected final ServletContext servletContext;
+    protected ClassLoader contextClassLoader;
 
     
     // Constructor -------------------------------------------------------------
@@ -272,7 +272,7 @@ implements PortletContext, InternalPortletContext {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
 		if (portletApp.getContainerRuntimeOptions() != null){
 			for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOptions()) {
-				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+				if (getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValues();
 					String [] tempValues = new String[values.size()];
 					for (int i=0;i<values.size();i++){
@@ -289,7 +289,7 @@ implements PortletContext, InternalPortletContext {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
 		if (portlet.getContainerRuntimeOptions() != null) {
 			for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions()) {
-				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
+				if (this.getSupportedContainerRuntimeOptions().contains(option.getName())){
 					List<String> values = option.getValues();
 					String [] tempValues = new String[values.size()];
 					for (int i=0;i<values.size();i++){
@@ -326,6 +326,11 @@ implements PortletContext, InternalPortletContext {
 		}
 		//return resultMap;
 		return null;
+	}
+	
+	protected List<String> getSupportedContainerRuntimeOptions()
+	{
+	    return Configuration.getSupportedContainerRuntimeOptions();
 	}
 }
 
