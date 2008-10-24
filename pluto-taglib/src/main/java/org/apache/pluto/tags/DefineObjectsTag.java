@@ -17,7 +17,7 @@
 package org.apache.pluto.tags;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -41,7 +41,7 @@ public class DefineObjectsTag extends TagSupport {
      * @return <CODE>SKIP_BODY</CODE>
      */
     public int doStartTag() throws JspException {
-        PortletRequest renderRequest = (PortletRequest) pageContext.getRequest()
+        RenderRequest renderRequest = (RenderRequest) pageContext.getRequest()
             .getAttribute(Constants.PORTLET_REQUEST);
         RenderResponse renderResponse = (RenderResponse) pageContext.getRequest()
             .getAttribute(Constants.PORTLET_RESPONSE);
@@ -75,7 +75,7 @@ public class DefineObjectsTag extends TagSupport {
         public VariableInfo[] getVariableInfo(TagData tagData) {
             VariableInfo[] info = new VariableInfo[]{
                 new VariableInfo("renderRequest",
-                                 "javax.portlet.PortletRequest",
+                                 "javax.portlet.RenderRequest",
                                  true,
                                  VariableInfo.AT_BEGIN),
                 new VariableInfo("renderResponse",
