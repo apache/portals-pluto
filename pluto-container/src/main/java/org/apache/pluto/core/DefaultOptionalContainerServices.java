@@ -18,7 +18,9 @@ package org.apache.pluto.core;
 
 import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.OptionalContainerServices;
+import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletAppDescriptorService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -44,7 +46,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private UserInfoService userInfoService;
     private RequestAttributeService requestAttributeService;
     private NamespaceMapper namespaceMapper;
-
+    private PortletAppDescriptorService descriptorService;
 
     /**
      * Constructs an instance using the default portlet preferences service
@@ -60,6 +62,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         userInfoService = new DefaultUserInfoService();
         namespaceMapper = new DefaultNamespaceMapper();
         requestAttributeService = new DefaultRequestAttributeService(namespaceMapper, userInfoService);        
+        descriptorService = new PortletAppDescriptorServiceImpl();                        
     }
 
     /**
@@ -109,6 +112,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         if(root.getNamespaceMapper() != null) {
             namespaceMapper = root.getNamespaceMapper();
         }
+        
+        if (descriptorService == null) 
+        {
+            descriptorService = new PortletAppDescriptorServiceImpl();
+        }
     }
 
 
@@ -150,5 +158,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public NamespaceMapper getNamespaceMapper() {
         return namespaceMapper;
     }
+
+    public PortletAppDescriptorService getDescriptorService()
+    {
+        return this.descriptorService;
+    }
+    
 }
 

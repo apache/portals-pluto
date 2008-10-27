@@ -25,8 +25,8 @@ import javax.servlet.ServletContext;
 
 import org.apache.pluto.PlutoConfigurationException;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorService;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.spi.optional.PortletAppDescriptorService;
 import org.apache.pluto.util.StringManager;
 
 /**
