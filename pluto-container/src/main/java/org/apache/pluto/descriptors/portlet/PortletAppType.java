@@ -453,7 +453,7 @@ public class PortletAppType implements PortletApplicationDefinition
     
     public Listener addListener(String listenerClass)
     {
-        for (Listener l : listener)
+        for (Listener l : getListeners())
         {
             if (l.getListenerClass().equals(listenerClass))
             {
