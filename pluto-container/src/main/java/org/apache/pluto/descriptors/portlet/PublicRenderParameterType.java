@@ -125,6 +125,7 @@ public class PublicRenderParameterType implements PublicRenderParameter
     public void setQName(QName value)
     {
         qname = value;
+        name = null;
     }
 
     public String getName()
@@ -135,6 +136,7 @@ public class PublicRenderParameterType implements PublicRenderParameter
     public void setName(String value)
     {
         name = value;
+        qname = null;
     }
 
     public List<QName> getAliases()
