@@ -21,13 +21,11 @@ import javax.portlet.PortalContext;
 import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.RequiredContainerServices;
-import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.services.ContainerServices;
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.ContainerInvocationService;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
-import org.apache.pluto.spi.optional.PortletAppDescriptorService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -59,7 +57,6 @@ public class PlutoContainerServices implements ContainerServices
     private UserInfoService userInfoService;
     private RequestAttributeService requestAttributeService;
     private NamespaceMapper namespaceMapper;
-    private PortletAppDescriptorService descriptorService;
         
     public PlutoContainerServices()
     {
@@ -121,9 +118,6 @@ public class PlutoContainerServices implements ContainerServices
         namespaceMapper = optionalServices.getNamespaceMapper();
         if (namespaceMapper == null)
             namespaceMapper = new DefaultNamespaceMapper();
-        descriptorService = optionalServices.getDescriptorService();
-        if (descriptorService == null)
-            descriptorService = new PortletAppDescriptorServiceImpl();                
     }
     
     protected void createDefaultOptionalServices() 
@@ -138,7 +132,6 @@ public class PlutoContainerServices implements ContainerServices
         userInfoService = new DefaultUserInfoService();
         namespaceMapper = new DefaultNamespaceMapper();
         requestAttributeService = new DefaultRequestAttributeService(namespaceMapper, userInfoService);
-        descriptorService = new PortletAppDescriptorServiceImpl();                
     }
 
     protected void createDefaultRequiredServices() 
@@ -228,10 +221,4 @@ public class PlutoContainerServices implements ContainerServices
     {
         return this.namespaceMapper;
     }
-    
-    public PortletAppDescriptorService getDescriptorService()
-    {
-        return this.descriptorService;
-    }
-
 }

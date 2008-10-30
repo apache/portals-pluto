@@ -12,7 +12,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.pluto.descriptors.portlet.PortletAppType;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.optional.PortletAppDescriptorService;
+import org.apache.pluto.services.PortletAppDescriptorService;
 
 /** 
  *  JAXB implementation of the xml2java binding

@@ -29,7 +29,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.optional.PortletAppDescriptorService;
+import org.apache.pluto.services.PortletAppDescriptorService;
 import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;

@@ -23,7 +23,6 @@ import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.ContainerInvocationService;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
-import org.apache.pluto.spi.optional.PortletAppDescriptorService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -111,10 +110,5 @@ public class PlutoServices implements ContainerServices
     public UserInfoService getUserInfoService()
     {
         return provider.getUserInfoService();
-    }
-
-    public PortletAppDescriptorService getDescriptorService()
-    {
-        return provider.getDescriptorService();
     }
 }

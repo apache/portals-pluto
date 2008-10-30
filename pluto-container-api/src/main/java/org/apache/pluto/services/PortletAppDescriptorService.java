@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.spi.optional;
+package org.apache.pluto.services;
 
 import java.io.IOException;
 import java.io.InputStream;

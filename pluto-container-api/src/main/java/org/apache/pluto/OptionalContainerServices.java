@@ -17,7 +17,6 @@
 package org.apache.pluto;
 
 import org.apache.pluto.spi.optional.PortalAdministrationService;
-import org.apache.pluto.spi.optional.PortletAppDescriptorService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -111,12 +110,4 @@ public interface OptionalContainerServices {
      * of PortletWindow parameters in a PortalURL
      */
     NamespaceMapper getNamespaceMapper();
-    
-    /**
-     * Returns the portlet application descriptor service used to marshall descriptor streams
-     * 
-     * @return the descriptor service 
-     */
-    PortletAppDescriptorService getDescriptorService();
-    
 }
