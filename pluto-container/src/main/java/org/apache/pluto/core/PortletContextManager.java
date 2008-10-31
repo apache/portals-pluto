@@ -31,6 +31,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.impl.Configuration;
@@ -38,6 +39,7 @@ import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.PortletContextImpl;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletRegistryEvent;
 import org.apache.pluto.spi.optional.PortletRegistryListener;
 import org.apache.pluto.spi.optional.PortletRegistryService;
@@ -50,7 +52,7 @@ import org.apache.pluto.util.ClasspathScanner;
  * @version 1.0
  * @since Sep 20, 2004
  */
-public class PortletContextManager implements PortletRegistryService {
+public class PortletContextManager implements PortletRegistryService, PortletContextService {
 
 	/**
      * Log Instance
@@ -133,7 +135,7 @@ public class PortletContextManager implements PortletRegistryService {
                 for (PortletDefinition portlet: portletApp.getPortlets()) {
                     portletConfigs.put(
                         portletContext.getApplicationName() + "/" + portlet.getPortletName(),
-                        new PortletConfigImpl(config, portletContext, portlet, portletApp)
+                        new PortletConfigImpl(portletContext, portlet, portletApp)
                     );
                 }
             }
@@ -173,6 +175,15 @@ public class PortletContextManager implements PortletRegistryService {
     public InternalPortletContext getPortletContext(String applicationName) {
         return portletContexts.get(applicationName);
     }
+    
+    /* (non-Javadoc)
+     * @see org.apache.pluto.services.PortletContextService#getPortletContext(org.apache.pluto.PortletWindow)
+     */
+    public InternalPortletContext getPortletContext(PortletWindow portletWindow) throws PortletContainerException
+    {
+        return portletContexts.get(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
+    }
+
 
     public InternalPortletConfig getPortletConfig(String applicationName, String portletName) throws PortletContainerException {
         InternalPortletConfig ipc = portletConfigs.get(applicationName + "/" + portletName);

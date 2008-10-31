@@ -19,11 +19,7 @@ package org.apache.pluto.spi.optional;
 
 import java.util.Iterator;
 
-import javax.servlet.ServletConfig;
-
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
@@ -38,17 +34,6 @@ import org.apache.pluto.om.portlet.PortletApplicationDefinition;
  */
 public interface PortletRegistryService 
 {
-
-    /**
-     * Retrieve all registered applications.  This list
-     * will only contain those applications which have
-     * been registered with the container.  Others may
-     * or may not be available within the servers.
-     *
-     * @return iterator of all application descriptors.
-     */
-    Iterator<InternalPortletContext> getPortletContexts();
-
     /**
      * Retrieve the names of all registered applications.
      * This list will only contain those applications
@@ -73,15 +58,6 @@ public interface PortletRegistryService
         throws PortletContainerException;
 
     /**
-     * Retrieve the InternalPortletContext for the specified portlet application name
-     *
-     * @param applicationName portlet application name
-     * @return portlet context or null if not registered
-     */
-    InternalPortletContext getPortletContext(String applicationName)
-        throws PortletContainerException;
-
-    /**
      * Retreive the Portlet for the specified portlet.
      *
      * @param applicationName portlet application name
@@ -92,24 +68,6 @@ public interface PortletRegistryService
     PortletDefinition getPortlet(String applicationName, String portletName)
         throws PortletContainerException;
 
-    /**
-     * Retrieve the portlet configuration for the specified portlet
-     * @param applicationName portlet application name
-     * @param portletName portlet name
-     * @return portletconfig
-     * @throws PortletContainerException if portlet or application unknown
-     */
-    InternalPortletConfig getPortletConfig(String applicationName, String portletName)
-        throws PortletContainerException;
-
-    /**
-     * Retrieve the ClassLoader of the specified portlet application
-     * @param applicationName portlet application name
-     * @return classLoader
-     */
-    ClassLoader getClassLoader(String applicationName)
-        throws PortletContainerException;
-    
     /**
      * Add a listener which will recieve notifications of newly
      * registered applications.
@@ -125,19 +83,4 @@ public interface PortletRegistryService
      */
     void removePortletRegistryListener(PortletRegistryListener listener);
     
-    /**
-     * Register a portlet application
-     * 
-     * @param config
-     * @return
-     * @throws PortletContainerException
-     */
-    String register(ServletConfig config) throws PortletContainerException;
-    
-    /**
-     * Unregister a portlet application
-     * 
-     * @param context
-     */
-    void unregister(InternalPortletContext context);
 }

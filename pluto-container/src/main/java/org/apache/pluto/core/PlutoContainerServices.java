@@ -26,6 +26,7 @@ import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.ContainerInvocationService;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -50,6 +51,7 @@ public class PlutoContainerServices implements ContainerServices
      */
     private PortletPreferencesService portletPreferencesService;
     private PortletRegistryService portletRegistryService;
+    private PortletContextService portletContextService;
     private PortletInvokerService portletInvokerService;
     private PortletEnvironmentService portletEnvironmentService;
     private PortletInfoService portletInfoService;
@@ -97,9 +99,14 @@ public class PlutoContainerServices implements ContainerServices
         portletRegistryService = optionalServices.getPortletRegistryService();
         if (portletRegistryService == null)
             portletRegistryService = new PortletContextManager();
+        portletContextService = optionalServices.getPortletContextService();
+        if (portletContextService == null && portletRegistryService instanceof PortletContextService)
+        {
+            portletContextService = (PortletContextService)portletRegistryService;
+        }
         portletInvokerService = optionalServices.getPortletInvokerService();
         if (portletInvokerService == null)
-            portletInvokerService = new DefaultPortletInvokerService();
+            portletInvokerService = new DefaultPortletInvokerService(portletContextService);
         portletEnvironmentService = optionalServices.getPortletEnvironmentService();
         if (portletEnvironmentService == null)
             portletEnvironmentService = new DefaultPortletEnvironmentService();
@@ -124,8 +131,8 @@ public class PlutoContainerServices implements ContainerServices
     {
         portletPreferencesService = new DefaultPortletPreferencesService();
         portletRegistryService = new PortletContextManager();
-
-        portletInvokerService = new DefaultPortletInvokerService();
+        portletContextService = (PortletContextManager)portletRegistryService;
+        portletInvokerService = new DefaultPortletInvokerService(portletContextService);
         portletEnvironmentService = new DefaultPortletEnvironmentService();
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
@@ -180,6 +187,11 @@ public class PlutoContainerServices implements ContainerServices
     public PortletRegistryService getPortletRegistryService() 
     {
         return this.portletRegistryService;
+    }
+
+    public PortletContextService getPortletContextService() 
+    {
+        return this.portletContextService;
     }
 
     public PortletEnvironmentService getPortletEnvironmentService() 

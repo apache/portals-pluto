@@ -58,6 +58,7 @@ import org.apache.pluto.om.portlet.EventDefinition;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
@@ -87,6 +88,9 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 
 	/** PortletRegistryService used to obtain PortletApplicationConfig objects */
 	private PortletRegistryService portletRegistry;
+
+	/** PortletContextService used to obtain PortletContext objects */
+    private PortletContextService portletContextService;
 
 	/**
 	 * factory method gets the EventProvider out of the Request, or sets a new
@@ -380,18 +384,16 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 	private PortletWindowThread getPortletWindowThread(
 			EventContainer eventContainer, PortletWindowConfig config,
 			PortletWindow window, ServletContext containerServletContext) {
-		if (portletRegistry == null) {
-			portletRegistry = ((PortletContainer) containerServletContext
-					.getAttribute(AttributeKeys.PORTLET_CONTAINER))
-					.getOptionalContainerServices().getPortletRegistryService();
+		if (portletContextService == null) {
+			portletContextService = container.getOptionalContainerServices().getPortletContextService();
 		}
-		if (portletRegistry != null){
+		if (portletContextService != null){
 			String windowID = window.getId().getStringId();
 			PortletWindowThread portletWindowThread = portletWindowThreads
 					.get(windowID);
 			if (portletWindowThread == null) {
 				portletWindowThread = new PortletWindowThread(threadGroup, config
-						.getId(), this, window, eventContainer,portletRegistry);
+						.getId(), this, window, eventContainer,portletContextService);
 				portletWindowThreads.put(windowID, portletWindowThread);
 			} else {
 				// a thread could be started twice, so we make a new one,
@@ -404,7 +406,7 @@ public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
 				}
 				portletWindowThreads.remove(portletWindowThread);
 				portletWindowThread = new PortletWindowThread(threadGroup, config
-						.getId(), this, window, eventContainer,portletRegistry);
+						.getId(), this, window, eventContainer,portletContextService);
 				portletWindowThreads.put(windowID, portletWindowThread);
 			}
 			return portletWindowThread;

@@ -44,7 +44,7 @@ import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.internal.impl.EventImpl;
 import org.apache.pluto.om.portlet.EventDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.spi.optional.PortletContextService;
 
 public class PortletWindowThread extends Thread {
 	
@@ -58,17 +58,17 @@ public class PortletWindowThread extends Thread {
 	private EventContainer eventContainer;
 	
 	/** PortletRegistryService used to obtain PortletApplicationConfig objects */
-	private PortletRegistryService portletRegistry;
+	private PortletContextService portletContextService;
 	
 	private List<Event> events = new ArrayList<Event>();
 
 	public PortletWindowThread(ThreadGroup group, String name,
-			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer, PortletRegistryService portletRegistry) {
+			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer, PortletContextService portletContextService) {
 		super(group, name);
 		this.eventProvider = eventProvider;
 		this.portletWindow = window;
 		this.eventContainer = eventContainer;
-		this.portletRegistry = portletRegistry;
+		this.portletContextService = portletContextService;
 	}
 
 	/* (non-Javadoc)
@@ -106,7 +106,7 @@ public class PortletWindowThread extends Thread {
 			        		// now test if object is jaxb
 			        		EventDefinition eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
-			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
+			        		ClassLoader loader = portletContextService.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
 			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getValueType()).asSubclass(Serializable.class);
 
 			        		JAXBContext jc = JAXBContext.newInstance(clazz);

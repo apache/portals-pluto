@@ -28,7 +28,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
-import javax.servlet.ServletConfig;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
@@ -44,11 +43,6 @@ import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
     private static final Log LOG = LogFactory.getLog(PortletConfigImpl.class);
-
-    /**
-     * The servlet config for which we exist.
-     */
-    protected ServletConfig servletConfig;
 
     /**
      * The Portlet Application Context within which we exist.
@@ -67,11 +61,9 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
     protected ResourceBundleFactory bundles;
 
-    public PortletConfigImpl(ServletConfig servletConfig,
-                             PortletContext portletContext,
+    public PortletConfigImpl(PortletContext portletContext,
                              PortletDefinition portletDD,
                              PortletApplicationDefinition portletAppDD) {
-        this.servletConfig = servletConfig;
         this.portletContext = portletContext;
         this.portlet = portletDD;
         this.portletApp = portletAppDD;
@@ -126,11 +118,6 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
                 return null;
             }
         };
-    }
-
-
-    public javax.servlet.ServletConfig getServletConfig() {
-        return servletConfig;
     }
 
     public PortletDefinition getPortletDefinition() {

@@ -23,8 +23,6 @@ import org.apache.pluto.om.portlet.PortletDefinition;
 
 public interface InternalPortletConfig extends PortletConfig {
 
-    public ServletConfig getServletConfig();
-
     public PortletDefinition getPortletDefinition();
 }
 

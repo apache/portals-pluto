@@ -37,6 +37,8 @@ import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.om.portlet.Supports;
+import org.apache.pluto.services.PlutoServices;
+import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 /**
@@ -67,6 +69,8 @@ public class SupportedModesServiceImpl implements SupportedModesService
 
     /** The portal's servletContext **/
     private ServletContext servletContext;
+    
+    private PortletContextService portletContextService;
 
     /**
      * Constructs a SupportedModesService with its dependencies.
@@ -156,6 +160,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
 
     public void init(ServletContext ctx) throws DriverConfigurationException {
         this.servletContext = ctx;
+        this.portletContextService = portletContextService = PlutoServices.getServices().getPortletContextService();
         loadPortalModes();
     }    
     
@@ -284,6 +289,6 @@ public class SupportedModesServiceImpl implements SupportedModesService
 	                    .getPortletRegistryService();
 	        }
 	        
-		return portletRegistry.getPortletConfig(applicationName, portletName);
+		return portletContextService.getPortletConfig(applicationName, portletName);
 	}
 }

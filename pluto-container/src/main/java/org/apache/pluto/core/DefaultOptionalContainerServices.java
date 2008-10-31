@@ -21,6 +21,7 @@ import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.services.PortletAppDescriptorService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -39,6 +40,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
     private PortletPreferencesService portletPreferencesService;
     private PortletRegistryService portletRegistryService;
+    private PortletContextService portletContextService;
     private PortletInvokerService portletInvokerService;
     private PortletEnvironmentService portletEnvironmentService;
     private PortletInfoService portletInfoService;
@@ -55,7 +57,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public DefaultOptionalContainerServices() {
         portletPreferencesService = new DefaultPortletPreferencesService();
         portletRegistryService = new PortletContextManager();
-        portletInvokerService = new DefaultPortletInvokerService();
+        portletContextService = (PortletContextManager)portletRegistryService;
+        portletInvokerService = new DefaultPortletInvokerService(portletContextService);
         portletEnvironmentService = new DefaultPortletEnvironmentService();
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
@@ -79,6 +82,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
         if (root.getPortletRegistryService() != null) {
             portletRegistryService = root.getPortletRegistryService();
+        }
+
+        if (root.getPortletContextService() != null) {
+            portletContextService = root.getPortletContextService();
         }
 
         if(root.getPortletEnvironmentService() != null) {
@@ -129,6 +136,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
     public PortletRegistryService getPortletRegistryService() {
         return portletRegistryService;
+    }
+
+    public PortletContextService getPortletContextService() {
+        return portletContextService;
     }
 
     public PortletEnvironmentService getPortletEnvironmentService() {

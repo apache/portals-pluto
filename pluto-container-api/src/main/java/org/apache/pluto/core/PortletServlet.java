@@ -54,9 +54,9 @@ import org.apache.pluto.spi.ContainerInvocationService;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.optional.AdministrativeRequestListener;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletInvocationEvent;
 import org.apache.pluto.spi.optional.PortletInvocationListener;
-import org.apache.pluto.spi.optional.PortletRegistryService;
 
 /**
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
@@ -98,7 +98,7 @@ public class PortletServlet extends HttpServlet
     /** The resource serving portlet instance wrapped by this servlet. */
     private ResourceServingPortlet resourceServingPortlet = null;
 
-    private PortletRegistryService registryService;
+    private PortletContextService contextService;
 
     private ContainerInvocationService containerInvocationService;
 
@@ -155,7 +155,7 @@ public class PortletServlet extends HttpServlet
     {
         if (PlutoServices.getServices() != null) 
         {
-            registryService = PlutoServices.getServices().getPortletRegistryService();
+            contextService = PlutoServices.getServices().getPortletContextService();
             containerInvocationService = PlutoServices.getServices().getContainerInvocationService();
             try
             {
@@ -167,9 +167,10 @@ public class PortletServlet extends HttpServlet
                     return true;
                 }
 
-                String applicationName = registryService.register(sConfig);
-                portletContext = (InternalPortletContext) registryService.getPortletContext(applicationName);
-                portletConfig = (InternalPortletConfig) registryService.getPortletConfig(applicationName, portletName);
+                String applicationName = contextService.register(sConfig);
+                started = true;
+                portletContext = (InternalPortletContext) contextService.getPortletContext(applicationName);
+                portletConfig = (InternalPortletConfig) contextService.getPortletConfig(applicationName, portletName);
 
             }
             catch (PortletContainerException ex)

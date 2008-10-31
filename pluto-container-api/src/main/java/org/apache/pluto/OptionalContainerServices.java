@@ -17,6 +17,7 @@
 package org.apache.pluto;
 
 import org.apache.pluto.spi.optional.PortalAdministrationService;
+import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
@@ -62,6 +63,15 @@ public interface OptionalContainerServices {
      * @return registry service implementation
      */
     PortletRegistryService getPortletRegistryService();
+
+
+    /**
+     * Returns the portlet context services implementation
+     * used by the container.
+     *
+     * @return registry service implementation
+     */
+    PortletContextService getPortletContextService();
 
 
     /**
