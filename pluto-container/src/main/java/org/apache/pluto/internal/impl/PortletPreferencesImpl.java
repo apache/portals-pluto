@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PreferencesValidator;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
@@ -274,7 +275,11 @@ public class PortletPreferencesImpl implements PortletPreferences {
         //   If the preferences cannot pass the validation,
         //   an ValidatorException will be thrown out.
         PortletDefinition portletD = window.getPortletEntity().getPortletDefinition();
-       	preferencesService.getPreferencesValidator(portletD).validate(this);
+        PreferencesValidator validator = preferencesService.getPreferencesValidator(portletD);
+        if (validator != null)
+        {
+            validator.validate(this);
+        }
         // Store the portlet preferences.
         try {
         	preferencesService.store(window, request, preferences);

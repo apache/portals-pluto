@@ -136,12 +136,15 @@ public class PortletServlet extends HttpServlet
         {
             public void run()
             {
-                if (startTimer != null)
+                synchronized(servletContext)
                 {
-                    if (attemptRegistration(servletContext, paClassLoader ))
+                    if (startTimer != null)
                     {
-                        startTimer.cancel();
-                        startTimer = null;
+                        if (attemptRegistration(servletContext, paClassLoader ))
+                        {
+                            startTimer.cancel();
+                            startTimer = null;
+                        }
                     }
                 }
             }
@@ -198,21 +201,24 @@ public class PortletServlet extends HttpServlet
 
     public void destroy()
     {
-        if ( startTimer != null )
+        synchronized(getServletContext())
         {
-          startTimer.cancel();
-          startTimer = null;
+            if ( startTimer != null )
+            {
+              startTimer.cancel();
+              startTimer = null;
+            }
+            else if ( started && portletContext != null)
+            {
+              started = false;
+              contextService.unregister(portletContext);
+              if (portlet != null)
+              {
+                  portlet.destroy();
+              }
+            }
+            super.destroy();
         }
-        else if ( started )
-        {
-          started = false;
-          registryService.unregister(portletContext);
-          if (portlet != null)
-          {
-              portlet.destroy();
-          }
-        }
-        super.destroy();
     }
 
     protected void doGet(HttpServletRequest request,
