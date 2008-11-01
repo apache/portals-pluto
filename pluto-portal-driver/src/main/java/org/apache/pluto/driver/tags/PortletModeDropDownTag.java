@@ -116,7 +116,7 @@ public class PortletModeDropDownTag extends BodyTagSupport {
         StringBuffer tag = new StringBuffer();
 //        String strCurrentMode = currentMode.toString();        
 //        tag.append("Current mode: " + currentMode.toString());
-        tag.append("<form style=\"display:inline\"><select onchange=\"self.location=this.options[this.selectedIndex].value\">");
+        tag.append("<form action=\"\" name=\"modeSelectionForm\" style=\"display:inline\"><select onchange=\"self.location=this.options[this.selectedIndex].value\">");
         Set<PortletMode> modeSet = null;
 		try {
 			modeSet = driverConfig.getSupportedPortletModes(evaluatedPortletId);
@@ -148,7 +148,7 @@ public class PortletModeDropDownTag extends BodyTagSupport {
 	            tag.append("</option>");
 	        }
 		}
-        tag.append("</select><form>");
+        tag.append("</select></form>");
         // Print the mode anchor tag.
         try {
             JspWriter out = pageContext.getOut();
