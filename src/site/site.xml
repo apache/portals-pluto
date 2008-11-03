@@ -44,6 +44,7 @@ limitations under the License.
       <item name="JSR 168 (Portlet 1.0)" href="http://jcp.org/en/jsr/detail?id=168"/>
       <item name="Portlet 1.0 API (Javadoc)" href="http://portals.apache.org/pluto/portlet-1.0-apidocs"/>
       <item name="JSR 286 (Portlet 2.0)" href="http://jcp.org/en/jsr/detail?id=286"/>
+      <item name="Portlet 2.0 API (Javadoc)" href="http://portals.apache.org/pluto/portlet-2.0-apidocs"/>
     </links>
     
     <menu name="The Pluto Project">

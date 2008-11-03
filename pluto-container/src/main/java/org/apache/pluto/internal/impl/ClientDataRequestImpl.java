@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 
 /**
  * Implementation of the <code>javax.portlet.ClientDataRequest</code> interface.
@@ -42,8 +42,8 @@ public class ClientDataRequestImpl extends PortletRequestImpl
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(ClientDataRequestImpl.class);
 	
-	public ClientDataRequestImpl(PortletContainer container, InternalPortletWindow internalPortletWindow, HttpServletRequest servletRequest) {
-		super(container, internalPortletWindow, servletRequest);
+	public ClientDataRequestImpl(PortletContainer container, PortletWindow portletWindow, HttpServletRequest servletRequest) {
+		super(container, portletWindow, servletRequest);
 	}
 
 	public InputStream getPortletInputStream() throws IOException {

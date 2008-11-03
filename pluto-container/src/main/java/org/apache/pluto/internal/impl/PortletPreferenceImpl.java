@@ -89,7 +89,7 @@ public class PortletPreferenceImpl implements InternalPortletPreference {
         this.readOnly = readOnly;
     }
 
-    public Object clone() {
+    public InternalPortletPreference clone() {
     	PortletPreferenceImpl copy = new PortletPreferenceImpl();
     	copy.name = this.name;
     	if (this.values != null) {

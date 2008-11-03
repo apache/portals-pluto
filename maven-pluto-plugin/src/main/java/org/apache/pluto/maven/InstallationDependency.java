@@ -50,13 +50,9 @@ class InstallationDependency {
         new InstallationDependency("javax.portlet", "portlet-api", 
                 VERSION_PROPERTIES.getProperty("portlet-api.version"));
 
-    public static final InstallationDependency  DESCRIPTOR_API =
-        new InstallationDependency("org.apache.pluto", "pluto-descriptor-api", 
+    public static final InstallationDependency CONTAINER_API =
+        new InstallationDependency("org.apache.pluto", "pluto-container-api", 
                 VERSION_PROPERTIES.getProperty("pluto.version"));
-
-    public static final InstallationDependency  DESCRIPTOR_IMPL =
-            new InstallationDependency("org.apache.pluto", "pluto-descriptor-impl", 
-                    VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  CONTAINER =
             new InstallationDependency("org.apache.pluto", "pluto-container", 
@@ -131,28 +127,10 @@ class InstallationDependency {
     private static final List SHARED = new ArrayList();
 
     static {
-//        ENDORSED.add(XERCES);
-//        ENDORSED.add(XML_PARSER_APIS);
-        SHARED.add(XERCES);
-        SHARED.add(XML_PARSER_APIS);
-
         SHARED.add(PORTLET_API);
-        SHARED.add(DESCRIPTOR_API);
-        SHARED.add(DESCRIPTOR_IMPL);
-        SHARED.add(CONTAINER);
+        SHARED.add(CONTAINER_API);
         SHARED.add(TAGLIB);
-        SHARED.add(CASTOR);
-        
-        SHARED.add(JAXB_API);
-        SHARED.add(JAXB_IMPL);
-        
-        SHARED.add(STAX_API);
-        SHARED.add(STAX_IMPL);
-        
-        SHARED.add(ACTIVATION);
-
         SHARED.add(CCPP_API);
-
     }
 
 

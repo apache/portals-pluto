@@ -16,15 +16,16 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.util.PlutoTestCase;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletInfoDD;
-
 import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import junit.framework.Assert;
+
+import org.apache.pluto.descriptors.portlet.PortletType;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletInfo;
+import org.apache.pluto.util.PlutoTestCase;
 
 /**
  * Unit test for the resource bundle factory.
@@ -32,19 +33,17 @@ import junit.framework.Assert;
  */
 public class ResourceBundleFactoryTest extends PlutoTestCase {
 
-    private PortletDD validDD;
+    private PortletDefinition validDD;
 
     public void setUp() throws Exception {
         super.setUp();
 
-        validDD = new PortletDD();
+        validDD = new PortletType();
 
-        PortletInfoDD info = new PortletInfoDD();
+        PortletInfo info = validDD.getPortletInfo();
         info.setTitle("Info Title");
         info.setShortTitle("Info Short Title");
         info.setKeywords("Info Keywords");
-        validDD.setPortletInfo(info);
-
         validDD.setResourceBundle(TestResourceBundle.class.getName());
     }
 
@@ -73,7 +72,6 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
     }
 
     public void testGetResourceBundleNoInfo() {
-        validDD.setPortletInfo(null);
         ResourceBundleFactory factory = new ResourceBundleFactory(validDD);
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 

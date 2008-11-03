@@ -27,9 +27,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceServingPortlet;
 
-import org.apache.pluto.descriptors.portlet.FilterDD;
-import org.apache.pluto.descriptors.portlet.FilterMappingDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
+import org.apache.pluto.om.portlet.Filter;
+import org.apache.pluto.om.portlet.FilterMapping;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.FilterManager;
 
 /**
@@ -40,36 +40,36 @@ import org.apache.pluto.spi.FilterManager;
  */
 public class FilterManagerImpl implements FilterManager{
 	private FilterChainImpl filterchain;
-	private PortletAppDD portletAppDD;
+	private PortletApplicationDefinition portletApp;
 	private String portletName;
 	private String lifeCycle;
 	
-	public FilterManagerImpl(PortletAppDD portletAppDD, String portletName, String lifeCycle){
-		this.portletAppDD = portletAppDD;
+	public FilterManagerImpl(PortletApplicationDefinition portletApp, String portletName, String lifeCycle){
+		this.portletApp = portletApp;
 		this.portletName =  portletName;
 		this.lifeCycle = lifeCycle;
 		filterchain = new FilterChainImpl(lifeCycle);
 		initFilterChain();
 	}
 	
-	public static FilterManager getFilterManager(PortletAppDD portletAppDD, String portletName, String lifeCycle){
-		return new FilterManagerImpl(portletAppDD,portletName,lifeCycle);
+	public static FilterManager getFilterManager(PortletApplicationDefinition portletApp, String portletName, String lifeCycle){
+		return new FilterManagerImpl(portletApp,portletName,lifeCycle);
 	}
 	
 	private void initFilterChain(){
-		List<FilterMappingDD> filterMappingList = portletAppDD.getFilterMapping();
+		List<? extends FilterMapping> filterMappingList = portletApp.getFilterMappings();
 		if (filterMappingList!= null){
-			for (FilterMappingDD filterMappingDD : filterMappingList) {
-				if (isFilter(filterMappingDD, portletName)){
+			for (FilterMapping filterMapping : filterMappingList) {
+				if (isFilter(filterMapping, portletName)){
 					//the filter is specified for the portlet, check the filter for the lifecycle
-					List<FilterDD> filterList = portletAppDD.getFilter();
-					for (FilterDD filterDD : filterList) {
+					List<? extends Filter> filterList = portletApp.getFilters();
+					for (Filter filter : filterList) {
 						//search for the filter in the filter
-						if (filterDD.getFilterName().equals(filterMappingDD.getFilterName())){
+						if (filter.getFilterName().equals(filterMapping.getFilterName())){
 							//check the lifecycle
-							if (isLifeCycle(filterDD, lifeCycle)){
+							if (isLifeCycle(filter, lifeCycle)){
 								//the filter match to the portlet and has the specified lifecycle -> add to chain
-								filterchain.addFilter(filterDD);
+								filterchain.addFilter(filter);
 							}
 						}
 					}
@@ -90,8 +90,8 @@ public class FilterManagerImpl implements FilterManager{
 		filterchain.processFilter(req, res, loader, portlet, portletContext);
 	}
 	
-	private boolean isLifeCycle(FilterDD filterDD, String lifeCycle){
-		List <String> lifeCyclesList = filterDD.getLifecycle();
+	private boolean isLifeCycle(Filter filter, String lifeCycle){
+		List <String> lifeCyclesList = filter.getLifecycles();
 		for (String string : lifeCyclesList) {
 			if (string.equals(lifeCycle))
 				return true;
@@ -99,8 +99,8 @@ public class FilterManagerImpl implements FilterManager{
 		return false;
 	}
 	
-	private boolean isFilter(FilterMappingDD filterMappingDD,String portletName){
-		List <String> portletNamesList = filterMappingDD.getPortletName();
+	private boolean isFilter(FilterMapping filterMapping,String portletName){
+		List <String> portletNamesList = filterMapping.getPortletNames();
 		for (String portletNameFromFilterList : portletNamesList) {
 			if (portletNameFromFilterList.endsWith("*")){
 				if (portletNameFromFilterList.length()==1){

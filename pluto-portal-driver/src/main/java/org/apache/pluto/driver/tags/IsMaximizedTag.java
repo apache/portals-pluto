@@ -16,15 +16,16 @@
  */
 package org.apache.pluto.driver.tags;
 
-import org.apache.pluto.driver.core.PortalRequestContext;
-import org.apache.pluto.driver.url.PortalURL;
-
-import javax.servlet.jsp.tagext.TagSupport;
-import javax.servlet.jsp.JspException;
-import javax.servlet.http.HttpServletRequest;
-import javax.portlet.WindowState;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.portlet.WindowState;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.url.PortalURL;
 
 /**
  * Determine whether the one of the portlets

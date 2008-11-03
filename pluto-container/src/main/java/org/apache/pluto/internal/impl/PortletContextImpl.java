@@ -18,12 +18,11 @@ package org.apache.pluto.internal.impl;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.net.URL;
-import java.util.Enumeration;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
@@ -33,10 +32,10 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.descriptors.portlet.ContainerRuntimeOptionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the
@@ -57,16 +56,12 @@ implements PortletContext, InternalPortletContext {
     // Private Member Variables ------------------------------------------------
     
     
-    /** Portlet Descriptor */
-    private PortletDD portletDD = null;
+    /** Portlet */
+    protected PortletDefinition portlet = null;
 
-
-    private final String applicationId;
-    private String applicationName;
-     
-    private final PortletAppDD portletAppDD;
-    private final ServletContext servletContext;
-    private ClassLoader contextClassLoader;
+    protected final PortletApplicationDefinition portletApp;
+    protected final ServletContext servletContext;
+    protected ClassLoader contextClassLoader;
 
     
     // Constructor -------------------------------------------------------------
@@ -76,33 +71,21 @@ implements PortletContext, InternalPortletContext {
      * @param servletContext  the servlet context in which we are contained.
      * @param portletAppDD  the portlet application descriptor.
      */
-    public PortletContextImpl(String portletApplicationId,
-                              ServletContext servletContext,
-                              PortletAppDD portletAppDD) {
+    public PortletContextImpl(ServletContext servletContext,
+                              PortletApplicationDefinition portletApp) {
         this.servletContext = servletContext;
-        this.portletAppDD = portletAppDD;
-        this.applicationId = portletApplicationId;
-        this.applicationName = servletContext.getServletContextName();
-
-        if(applicationName == null) {
-            applicationName = applicationId;
-        }
+        this.portletApp = portletApp;
         init();
     }
     
-
     private void init() {
         setContextClassLoader(Thread.currentThread().getContextClassLoader());
     }
 
-    public String getApplicationId() {
-        return applicationId;
-    }
-
     public String getApplicationName() {
-        return applicationName;
+        return portletApp.getName();
     }
-
+    
     /**
      * ClassLoader associated with this context.
      * @return
@@ -145,13 +128,6 @@ implements PortletContext, InternalPortletContext {
         				+ "path name must begin with a slash '/'.");
         	}
         	return null;
-        }
-        
-        // Extract query string which contains appended parameters.
-        String queryString = null;
-        int index = path.indexOf("?");
-        if (index > 0 && index < path.length() - 1) {
-        	queryString = path.substring(index + 1);
         }
         
         // Construct PortletRequestDispatcher.
@@ -213,11 +189,12 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getRealPath(path);
     }
 
-    public java.util.Set getResourcePaths(String path) {
+    @SuppressWarnings("unchecked")
+    public Set<String> getResourcePaths(String path) {
         return servletContext.getResourcePaths(path);
     }
 
-    public java.net.URL getResource(String path)
+    public URL getResource(String path)
         throws java.net.MalformedURLException {
         if (path == null || !path.startsWith("/")) {
             throw new MalformedURLException("path must start with a '/'");
@@ -225,7 +202,7 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getResource(path);
     }
 
-    public java.lang.Object getAttribute(java.lang.String name) {
+    public Object getAttribute(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -233,11 +210,12 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getAttribute(name);
     }
 
-    public java.util.Enumeration getAttributeNames() {
+    @SuppressWarnings("unchecked")
+    public Enumeration<String> getAttributeNames() {
         return servletContext.getAttributeNames();
     }
 
-    public java.lang.String getInitParameter(java.lang.String name) {
+    public String getInitParameter(java.lang.String name) {
         if (name == null) {
             throw new IllegalArgumentException("Parameter name == null");
         }
@@ -245,7 +223,8 @@ implements PortletContext, InternalPortletContext {
         return servletContext.getInitParameter(name);
     }
 
-    public java.util.Enumeration getInitParameterNames() {
+    @SuppressWarnings("unchecked")
+    public Enumeration<String> getInitParameterNames() {
         return servletContext.getInitParameterNames();
     }
 
@@ -253,11 +232,11 @@ implements PortletContext, InternalPortletContext {
         servletContext.log(msg);
     }
 
-    public void log(java.lang.String message, java.lang.Throwable throwable) {
+    public void log(java.lang.String message, Throwable throwable) {
         servletContext.log(message, throwable);
     }
 
-    public void removeAttribute(java.lang.String name) {
+    public void removeAttribute(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -265,7 +244,7 @@ implements PortletContext, InternalPortletContext {
         servletContext.removeAttribute(name);
     }
 
-    public void setAttribute(java.lang.String name, java.lang.Object object) {
+    public void setAttribute(String name, Object object) {
         if (name == null) {
             throw new IllegalArgumentException("Attribute name == null");
         }
@@ -284,17 +263,17 @@ implements PortletContext, InternalPortletContext {
         return servletContext;
     }
 
-    public PortletAppDD getPortletApplicationDefinition() {
-        return portletAppDD;
+    public PortletApplicationDefinition getPortletApplicationDefinition() {
+        return portletApp;
     }
 
 
 	public Map<String, String[]> getApplicationRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portletAppDD.getContainerRuntimeOption() != null){
-			for (ContainerRuntimeOptionDD option : portletAppDD.getContainerRuntimeOption()) {
-				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValue();
+		if (portletApp.getContainerRuntimeOptions() != null){
+			for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOptions()) {
+				if (getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValues();
 					String [] tempValues = new String[values.size()];
 					for (int i=0;i<values.size();i++){
 						tempValues[i] = values.get(i);
@@ -308,10 +287,10 @@ implements PortletContext, InternalPortletContext {
 
 	public Map<String, String[]> getPortletRuntimeOptions() {
 		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portletDD.getContainerRuntimeOption() != null) {
-			for (ContainerRuntimeOptionDD option : portletDD.getContainerRuntimeOption()) {
-				if (Configuration.getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValue();
+		if (portlet.getContainerRuntimeOptions() != null) {
+			for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions()) {
+				if (this.getSupportedContainerRuntimeOptions().contains(option.getName())){
+					List<String> values = option.getValues();
 					String [] tempValues = new String[values.size()];
 					for (int i=0;i<values.size();i++){
 						tempValues[i] = values.get(i);
@@ -324,7 +303,7 @@ implements PortletContext, InternalPortletContext {
 	}
 
 
-	public java.util.Enumeration<String> getContainerRuntimeOptions() {
+	public Enumeration<String> getContainerRuntimeOptions() {
 		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
 		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
 		
@@ -347,6 +326,11 @@ implements PortletContext, InternalPortletContext {
 		}
 		//return resultMap;
 		return null;
+	}
+	
+	protected List<String> getSupportedContainerRuntimeOptions()
+	{
+	    return Configuration.getSupportedContainerRuntimeOptions();
 	}
 }
 

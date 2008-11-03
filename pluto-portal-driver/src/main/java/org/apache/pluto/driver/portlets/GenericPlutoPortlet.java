@@ -16,13 +16,14 @@
  */
 package org.apache.pluto.driver.portlets;
 
+import java.io.IOException;
+
 import javax.portlet.GenericPortlet;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.PortletException;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
-import java.io.IOException;
 
 
 public abstract class GenericPlutoPortlet extends GenericPortlet {

@@ -102,8 +102,6 @@
 	<target name="bundle-dist" depends="prepare-bundle-dist,run-maven" description="Creates zip, gzip, and bzip2 distributions">
 		<!-- Copy over jars needed to deploy custom portlets -->
 		<copy file="pluto-util/target/pluto-util-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
-		<copy file="pluto-descriptor-api/target/pluto-descriptor-api-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
-		<copy file="pluto-descriptor-impl/target/pluto-descriptor-impl-${pluto.version}.jar" todir="${dist.dir}/PlutoDomain"/>			
 
 		<!-- Zip everything up -->
 		<zip destfile="${dist.basedir}/${pluto.name}-bundle.zip">

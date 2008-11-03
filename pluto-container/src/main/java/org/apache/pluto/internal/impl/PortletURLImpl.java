@@ -25,7 +25,7 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 
 /**
  * Refactoring where functionality was pushed into JSR-286 <code>BaseURL</code>.
@@ -35,11 +35,11 @@ import org.apache.pluto.internal.InternalPortletWindow;
 public class PortletURLImpl extends BaseURLImpl implements PortletURL {
 
     public PortletURLImpl(PortletContainer container,
-                          InternalPortletWindow internalPortletWindow,
+                          PortletWindow portletWindow,
                           javax.servlet.http.HttpServletRequest servletRequest,
                           javax.servlet.http.HttpServletResponse servletResponse,
                           boolean isAction) {
-    	super(container,internalPortletWindow,servletRequest,
+    	super(container,portletWindow,servletRequest,
     			servletResponse,isAction,false);
     }
 
@@ -70,7 +70,7 @@ public class PortletURLImpl extends BaseURLImpl implements PortletURL {
     }
 
 	public void removePublicRenderParameter(String name) {
-		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 	    
 	    if (publicRenderParameterNames != null){
 	    	if (publicRenderParameterNames.contains(name)){

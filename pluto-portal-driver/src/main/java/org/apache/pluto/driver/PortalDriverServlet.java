@@ -31,13 +31,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletDD;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.om.portlet.PortletDefinition;
 
 /**
  * The controller servlet used to drive the Portal Driver. All requests mapped
@@ -132,7 +132,7 @@ public class PortalDriverServlet extends HttpServlet {
 
         // Action window config will only exist if there is an action request.
         if (actionWindowConfig != null) {
-            PortletWindowImpl portletWindow = new PortletWindowImpl(
+            PortletWindowImpl portletWindow = new PortletWindowImpl(container,
             		actionWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Processing action request for window: "
@@ -156,31 +156,37 @@ public class PortalDriverServlet extends HttpServlet {
         	try {
         		if (request.getParameterNames().hasMoreElements())
         			setPublicRenderParameter(request, portalURL, portalURL.getResourceWindow());
-        		PortletWindowImpl portletWindow = new PortletWindowImpl(
+			} catch (PortletContainerException e) {
+				LOG.error(e);
+				throw new ServletException(e);
+			}
+            PortletWindowImpl portletWindow = new PortletWindowImpl(container,
                                resourceWindowConfig, portalURL);
-	            if (LOG.isDebugEnabled()) {
-	                LOG.debug("Processing resource serving request for window: "
-	                               + portletWindow.getId().getStringId());
-	            }
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Processing resource Serving request for window: "
+                               + portletWindow.getId().getStringId());
+            }
+            try {
                 container.doServeResource(portletWindow, request, response);
             } catch (PortletContainerException ex) {
-				LOG.error(ex);
+            	LOG.error(ex.getMessage(), ex);
                 throw new ServletException(ex);
             } catch (PortletException ex) {
-				LOG.error(ex);
+            	LOG.error(ex.getMessage(), ex);
                 throw new ServletException(ex);
             }
             if (LOG.isDebugEnabled()) {
-               LOG.debug("Resource request processed.\n\n");
+               LOG.debug("Resource serving request processed.\n\n");
             }
         }
-        //render request
+        // Otherwise (actionWindowConfig == null), handle the render request.
         else {
         	if (LOG.isDebugEnabled()) {
         		LOG.debug("Processing render request.");
         	}
             PageConfig pageConfig = portalURL.getPageConfig(servletContext);
-            if (pageConfig == null) {
+            if (pageConfig == null)
+            {
             	String renderPath = (portalURL == null ? "" : portalURL.getRenderPath());
                 String msg = "PageConfig for render path [" + renderPath + "] could not be found.";
                 LOG.error(msg);
@@ -203,15 +209,21 @@ public class PortalDriverServlet extends HttpServlet {
 
     private void setPublicRenderParameter(HttpServletRequest request, PortalURL portalURL, String portletID)throws ServletException, PortletContainerException {    		
 		String applicationId = PortletWindowConfig.parseContextPath(portletID);
+        String applicationName = applicationId;
+        if (applicationName.length() >0 )
+        {
+            applicationName = applicationName.substring(1);
+        }
+
 		String portletName = PortletWindowConfig.parsePortletName(portletID);
-		PortletDD portletDD = container.getOptionalContainerServices().getPortletRegistryService()
-								.getPortletDescriptor(applicationId, portletName);    		
+		PortletDefinition portletDD = container.getOptionalContainerServices().getPortletRegistryService()
+								.getPortlet(applicationName, portletName);    		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		if (parameterNames != null){
 			while(parameterNames.hasMoreElements()){
 				String parameterName = parameterNames.nextElement();
-				if (portletDD.getPublicRenderParameter() != null){
-					if (portletDD.getPublicRenderParameter().contains(parameterName)){
+				if (portletDD.getSupportedPublicRenderParameters() != null){
+					if (portletDD.getSupportedPublicRenderParameters().contains(parameterName)){
 						String value = request.getParameter(parameterName);
 						portalURL.addPublicParameterActionResourceParameter(parameterName, value);
 					}	

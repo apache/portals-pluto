@@ -19,21 +19,31 @@ package org.apache.pluto.driver.core;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.PortletWindowID;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.internal.impl.PortletEntityImpl;
 
 /**
  * Implementation of <code>PortletWindow</code> interface.
  */
 public class PortletWindowImpl implements PortletWindow {
 
+    /** Logger. */
+    private static final Log LOG = LogFactory.getLog(PortletWindowImpl.class);
+    
     // Private Member Variables ------------------------------------------------
 
     private PortletWindowConfig config;
     private PortalURL portalURL;
     private PortletWindowIDImpl objectIdImpl;
+    private PortletEntity entity;
 
 
     // Constructor -------------------------------------------------------------
@@ -43,9 +53,25 @@ public class PortletWindowImpl implements PortletWindow {
      * @param config  the portlet window configuration.
      * @param portalURL  the portal URL.
      */
-    public PortletWindowImpl(PortletWindowConfig config, PortalURL portalURL) {
+    public PortletWindowImpl(PortletContainer container, PortletWindowConfig config, PortalURL portalURL) {
         this.config = config;
         this.portalURL = portalURL;
+        try
+        {
+            String applicationName = config.getContextPath();
+            if (applicationName.length() >0 )
+            {
+                applicationName = applicationName.substring(1);
+            }
+            this.entity = new PortletEntityImpl(container.getOptionalContainerServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName()));
+        }
+        catch (PortletContainerException ex)
+        {
+            String message = "Unable to load Portlet App Deployment Descriptor:"+ ex.getMessage();
+            ex.printStackTrace();
+            LOG.error(message, ex);
+            throw new RuntimeException(message);
+        }
     }
 
 
@@ -72,5 +98,9 @@ public class PortletWindowImpl implements PortletWindow {
             objectIdImpl = PortletWindowIDImpl.createFromString(config.getId());
         }
         return objectIdImpl;
+    }
+
+    public PortletEntity getPortletEntity() {
+        return entity;
     }
 }

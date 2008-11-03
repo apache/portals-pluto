@@ -18,9 +18,7 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -35,16 +33,14 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletResponse;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.DummyPrintWriter;
-import org.apache.pluto.util.NamespaceMapper;
 import org.apache.pluto.util.PrintWriterServletOutputStream;
-import org.apache.pluto.util.impl.NamespaceMapperImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -64,8 +60,8 @@ implements PortletResponse, InternalPortletResponse {
 	/** The portlet container. */
     private PortletContainer container;
     
-    /** The internal portlet window. */
-    private InternalPortletWindow internalPortletWindow;
+    /** The portlet window. */
+    private PortletWindow portletWindow;
 
     /** The servlet request of the target/portlet's web module. */
     private HttpServletRequest httpServletRequest;
@@ -75,7 +71,7 @@ implements PortletResponse, InternalPortletResponse {
 
     private ServletOutputStream wrappedWriter;
     
-    private NamespaceMapper mapper = new NamespaceMapperImpl();
+    private NamespaceMapper mapper;
     
     /** True if we are in an include call. */
     private boolean included = false;
@@ -88,13 +84,14 @@ implements PortletResponse, InternalPortletResponse {
     // Constructor -------------------------------------------------------------
     
     public PortletResponseImpl(PortletContainer container,
-                               InternalPortletWindow internalPortletWindow,
+                               PortletWindow portletWindow,
                                HttpServletRequest servletRequest,
                                HttpServletResponse servletResponse) {
         super(servletResponse);
         this.container = container;
         this.httpServletRequest = servletRequest;
-        this.internalPortletWindow = internalPortletWindow;
+        this.portletWindow = portletWindow;
+        this.mapper = container.getOptionalContainerServices().getNamespaceMapper();
     }
     
     
@@ -103,10 +100,10 @@ implements PortletResponse, InternalPortletResponse {
     public void addProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-        		.getPortalCallbackService()
-        		.addResponseProperty(
+        		.getPortalCallbackService().getRequestPropertyProvider()
+        		.addProperty(
         				getHttpServletRequest(),
-        				internalPortletWindow,
+        				portletWindow,
         				name, value);
     }
     
@@ -114,29 +111,29 @@ implements PortletResponse, InternalPortletResponse {
     	// FIXME: What should this do? (scope seems to be new)
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-        		.getPortalCallbackService()
-        		.addResponseProperty(
+        		.getPortalCallbackService().getRequestPropertyProvider()
+        		.addProperty(
         				getHttpServletRequest(),
-        				internalPortletWindow,
+        				portletWindow,
         				name, value);
     }
     
     public void addProperty(String key, Element element) {
-    	container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), internalPortletWindow, key, element);
+    	container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addProperty(getHttpServletRequest(), portletWindow, key, element);
 	}
 
 
 	public void addProperty(Cookie cookie) {
-		container.getRequiredContainerServices().getPortalCallbackService().addResponseProperty(getHttpServletRequest(), internalPortletWindow, cookie);
+		container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addCookieProperty(getHttpServletRequest(), portletWindow, cookie);
 	}
 
     public void setProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-                .getPortalCallbackService()
-                .setResponseProperty(
+                .getPortalCallbackService().getRequestPropertyProvider()
+                .setProperty(
                         getHttpServletRequest(),
-                        internalPortletWindow,
+                        portletWindow,
                         name, value);
     }
 
@@ -151,7 +148,7 @@ implements PortletResponse, InternalPortletResponse {
         		.getPortalCallbackService()
         		.getResourceURLProvider(
         				httpServletRequest,
-        				internalPortletWindow);
+        				portletWindow);
         if (path.indexOf("://") != -1) {
             provider.setAbsoluteURL(path);
         } else {
@@ -163,8 +160,8 @@ implements PortletResponse, InternalPortletResponse {
     
     // InternalPortletResponse impl --------------------------------------------
     
-    public InternalPortletWindow getInternalPortletWindow() {
-        return internalPortletWindow;
+    public PortletWindow getPortletWindow() {
+        return portletWindow;
     }
     
     
@@ -245,7 +242,7 @@ implements PortletResponse, InternalPortletResponse {
 	
 	public ResourceURL createResourceURL(){
 		return new ResourceURLImpl(getContainer(),
-	                              getInternalPortletWindow(),
+	                              getPortletWindow(),
 	                              getHttpServletRequest(),
 	                              getHttpServletResponse());
 	}
@@ -262,7 +259,7 @@ implements PortletResponse, InternalPortletResponse {
 	 */
 	private PortletURL createURL(boolean isAction, boolean isResourceServing) {
 	    return new PortletURLImpl(getContainer(),
-	                              getInternalPortletWindow(),
+	                              getPortletWindow(),
 	                              getHttpServletRequest(),
 	                              getHttpServletResponse(),
 	                              isAction);
@@ -270,7 +267,7 @@ implements PortletResponse, InternalPortletResponse {
 
 
 	public String getNamespace() {
-	     String namespace = mapper.encode(getInternalPortletWindow().getId(), "");
+	     String namespace = mapper.encode(getPortletWindow().getId(), "");
 	     StringBuffer validNamespace = new StringBuffer();
 	     for (int i = 0; i < namespace.length(); i++) {
 	     	char ch = namespace.charAt(i);

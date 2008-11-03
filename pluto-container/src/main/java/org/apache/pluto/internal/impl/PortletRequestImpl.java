@@ -56,12 +56,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.descriptors.common.SecurityRoleRefDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
+import org.apache.pluto.PortletEntity;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.SecurityRoleRef;
+import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.util.ArgumentUtility;
@@ -92,7 +92,7 @@ implements PortletRequest, InternalPortletRequest {
     protected PortletContainer container;
     
     /** The portlet window which is the target of this portlet request. */
-    protected InternalPortletWindow internalPortletWindow;
+    protected PortletWindow portletWindow;
 
     /**
      * The PortletContext associated with this Request. This PortletContext must
@@ -136,22 +136,22 @@ implements PortletRequest, InternalPortletRequest {
 
     public PortletRequestImpl(InternalPortletRequest internalPortletRequest) {
         this(internalPortletRequest.getPortletContainer(),
-             internalPortletRequest.getInternalPortletWindow(),
+             internalPortletRequest.getPortletWindow(),
              internalPortletRequest.getHttpServletRequest());
     }
 
     /**
      * Creates a PortletRequestImpl instance.
      * @param container  the portlet container.
-     * @param internalPortletWindow  the internal portlet window.
+     * @param portletWindow  the internal portlet window.
      * @param servletRequest  the underlying servlet request.
      */
     public PortletRequestImpl(PortletContainer container,
-                              InternalPortletWindow internalPortletWindow,
+                              PortletWindow portletWindow,
                               HttpServletRequest servletRequest) {
         super(servletRequest);
         this.container = container;
-        this.internalPortletWindow = internalPortletWindow;
+        this.portletWindow = portletWindow;
         this.portalContext = container.getRequiredContainerServices().getPortalContext();
         this.servletRequest = servletRequest;
     }
@@ -163,7 +163,7 @@ implements PortletRequest, InternalPortletRequest {
 	 * @see javax.portlet.PortletRequest#getWindowId()
 	 */
 	public String getWindowId() {
-		return internalPortletWindow.getId().getStringId();
+		return portletWindow.getId().getStringId();
 	}
     
     /**
@@ -189,11 +189,11 @@ implements PortletRequest, InternalPortletRequest {
     }
     
     public PortletMode getPortletMode() {
-        return internalPortletWindow.getPortletMode();
+        return portletWindow.getPortletMode();
     }
     
     public WindowState getWindowState() {
-        return internalPortletWindow.getWindowState();
+        return portletWindow.getWindowState();
     }
     
     public PortletSession getPortletSession() {
@@ -272,9 +272,10 @@ implements PortletRequest, InternalPortletRequest {
         	}
             portletSession = new PortletSessionImpl(
                     portletContext,
-                    internalPortletWindow,
+                    portletWindow,
                     httpSession);
         }
+        
         return portletSession;
     }
     
@@ -283,10 +284,10 @@ implements PortletRequest, InternalPortletRequest {
         String property = this.getHttpServletRequest().getHeader(name);
         if (property == null) {
             Map propertyMap = container.getRequiredContainerServices()
-                    .getPortalCallbackService()
-                    .getRequestProperties(
+                    .getPortalCallbackService().getRequestPropertyProvider()
+                    .getProperties(
                     		getHttpServletRequest(),
-                    		internalPortletWindow);
+                    		portletWindow);
 
             if (propertyMap != null) {
                 String[] properties = (String[]) propertyMap.get(name);
@@ -310,11 +311,7 @@ implements PortletRequest, InternalPortletRequest {
 
         // get properties from PropertyManager
         Map map = container.getRequiredContainerServices()
-                .getPortalCallbackService()
-                .getRequestProperties(
-                		getHttpServletRequest(),
-                		internalPortletWindow);
-
+                .getPortalCallbackService().getRequestPropertyProvider().getProperties(getHttpServletRequest(), portletWindow);
         if (map != null) {
             String[] properties = (String[]) map.get(name);
 
@@ -334,8 +331,8 @@ implements PortletRequest, InternalPortletRequest {
 
         // get properties from PropertyManager
         Map map = container.getRequiredContainerServices()
-                .getPortalCallbackService()
-                .getRequestProperties(getHttpServletRequest(), internalPortletWindow);
+                .getPortalCallbackService().getRequestPropertyProvider()
+                .getProperties(getHttpServletRequest(), portletWindow);
 
         if (map != null) {
             v.addAll(map.keySet());
@@ -361,11 +358,11 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public String getContextPath() {
-        String contextPath = internalPortletWindow.getContextPath();
-        if ("/".equals(contextPath)) {
-            contextPath = "";
+        String name = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        if (!name.equals("")) {
+            name = "/" + name;
         }
-        return contextPath;
+        return name;
     }
 
     public String getRemoteUser() {
@@ -387,13 +384,13 @@ implements PortletRequest, InternalPortletRequest {
      * @return true if it is determined the user has the given role.
      */
     public boolean isUserInRole(String roleName) {
-        PortletEntity entity = internalPortletWindow.getPortletEntity();
-        PortletDD def = entity.getPortletDefinition();
+        PortletEntity entity = portletWindow.getPortletEntity();
+        PortletDefinition def = entity.getPortletDefinition();
 
-        SecurityRoleRefDD ref = null;
+        SecurityRoleRef ref = null;
         Iterator refs = def.getSecurityRoleRefs().iterator();
         while (refs.hasNext()) {
-            SecurityRoleRefDD r = (SecurityRoleRefDD) refs.next();
+            SecurityRoleRef r = (SecurityRoleRef) refs.next();
             if (r.getRoleName().equals(roleName)) {
                 ref = r;
                 break;
@@ -412,29 +409,22 @@ implements PortletRequest, InternalPortletRequest {
 
     public Object getAttribute(String name) {
     	ArgumentUtility.validateNotNull("attributeName", name);
-    	if (isForwarded() && namedRequestDispatcher){
-    		if (name.equals("javax.servlet.forward.request_uri")||name.equals("javax.servlet.forward.context_path")||
-    						name.equals("javax.servlet.forward.servlet_path")||name.equals("javax.servlet.forward.path_info")||
-    						name.equals("javax.servlet.forward.query_string")){
-    			return null;
-    		}
-    	}
-    	
+
         final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
         final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        return requestAttributeService.getAttribute(this, this.getHttpServletRequest(), this.internalPortletWindow, name);
+        return requestAttributeService.getAttribute(this, this.getHttpServletRequest(), this.portletWindow, name);
     }
 
     public Enumeration getAttributeNames() {
         final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
         final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        return requestAttributeService.getAttributeNames(this, this.getHttpServletRequest(), this.internalPortletWindow);
+        return requestAttributeService.getAttributeNames(this, this.getHttpServletRequest(), this.portletWindow);
     }
     
     public String getParameter(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
-    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
+    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), portletWindow);
     	String[] values = null;
     	if (publicRenderParameterNames != null){
     		if (publicRenderParameterNames.contains(name))
@@ -458,10 +448,10 @@ implements PortletRequest, InternalPortletRequest {
 
     public String[] getParameterValues(String name) {
     	ArgumentUtility.validateNotNull("parameterName", name);
-    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
     	PortletURLProvider urlProvider = container.getRequiredContainerServices()
     											  .getPortalCallbackService()
-    											  .getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    											  .getPortletURLProvider(getHttpServletRequest(), portletWindow);
     	
     	String[] values = null;
     	if (publicRenderParameterNames != null){
@@ -482,12 +472,12 @@ implements PortletRequest, InternalPortletRequest {
     
     public Map getParameterMap() {
     	Map<String, String[]>map = StringUtils.copyParameters(baseGetParameterMap());
-    	List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+    	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
     	if (publicRenderParameterNames!=null){
     		PortletURLProvider urlProvider = container
     			.getRequiredContainerServices()
     			.getPortalCallbackService()
-    			.getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
+    			.getPortletURLProvider(getHttpServletRequest(), portletWindow);
     		String[] values = null;
     		for (String string : publicRenderParameterNames) {
     			values = urlProvider.getPublicRenderParameters(string);
@@ -504,17 +494,18 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public void setAttribute(String name, Object value) {
+        ArgumentUtility.validateNotNull("attributeName", name);
         final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
         final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        requestAttributeService.setAttribute(this, this.getHttpServletRequest(), this.internalPortletWindow, name, value);
+        requestAttributeService.setAttribute(this, this.getHttpServletRequest(), this.portletWindow, name, value);
     }
 
     public void removeAttribute(String name) {
     	ArgumentUtility.validateNotNull("attributeName", name);
-
+    	
         final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
         final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        requestAttributeService.removeAttribute(this, this.getHttpServletRequest(), this.internalPortletWindow, name);
+        requestAttributeService.removeAttribute(this, this.getHttpServletRequest(), this.portletWindow, name);
     }
 
     public String getRequestedSessionId() {
@@ -539,10 +530,10 @@ implements PortletRequest, InternalPortletRequest {
     public Enumeration getResponseContentTypes() {
         if (contentTypes == null) {
             contentTypes = new Vector();
-            PortletDD dd = internalPortletWindow.getPortletEntity().getPortletDefinition();
+            PortletDefinition dd = portletWindow.getPortletEntity().getPortletDefinition();
             Iterator supports = dd.getSupports().iterator();
             while (supports.hasNext()) {
-                SupportsDD sup = (SupportsDD) supports.next();
+                Supports sup = (Supports) supports.next();
                 contentTypes.add(sup.getMimeType());
             }
             if (contentTypes.size() < 1) {
@@ -600,8 +591,8 @@ implements PortletRequest, InternalPortletRequest {
     
     // InternalPortletRequest Impl ---------------------------------------------
 
-    public InternalPortletWindow getInternalPortletWindow() {
-        return internalPortletWindow;
+    public PortletWindow getPortletWindow() {
+        return portletWindow;
     }
 
     public PortletContainer getPortletContainer() {
@@ -668,12 +659,12 @@ implements PortletRequest, InternalPortletRequest {
             return true;
         }
 
-        PortletDD dd = internalPortletWindow.getPortletEntity()
+        PortletDefinition dd = portletWindow.getPortletEntity()
                 .getPortletDefinition();
 
         Iterator mimes = dd.getSupports().iterator();
         while (mimes.hasNext()) {
-            Iterator modes = ((SupportsDD) mimes.next()).getPortletModes().iterator();
+            Iterator modes = ((Supports) mimes.next()).getPortletModes().iterator();
             while (modes.hasNext()) {
                 String m = (String) modes.next();
                 if (m.equalsIgnoreCase(mode.toString())) {
@@ -839,7 +830,7 @@ implements PortletRequest, InternalPortletRequest {
 		if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
             		getPortletContainer(),
-            		getInternalPortletWindow(),
+            		getPortletWindow(),
             		this,
             		Constants.METHOD_ACTION);
         }
@@ -855,8 +846,8 @@ implements PortletRequest, InternalPortletRequest {
 		PortletURLProvider urlProvider = container
 			.getRequiredContainerServices()
 			.getPortalCallbackService()
-			.getPortletURLProvider(getHttpServletRequest(), internalPortletWindow);
-		List<String> publicRenderParameterNames = internalPortletWindow.getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+			.getPortletURLProvider(getHttpServletRequest(), portletWindow);
+		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 		String[] values = null;
 		if (publicRenderParameterNames != null){
 			for (String string : publicRenderParameterNames) {
@@ -870,7 +861,7 @@ implements PortletRequest, InternalPortletRequest {
 	}
 	
 	public String getWindowID() {
-		return internalPortletWindow.getId().getStringId();
+		return portletWindow.getId().getStringId();
 	}
 	
 	private void setLifecyclePhase() {
@@ -1028,27 +1019,27 @@ implements PortletRequest, InternalPortletRequest {
     }
     
     @Override
-    public HttpSession getSession() {
-        if (isIncluded() || isForwarded()){
-            // ensure cached PortletSession is created (with proper HttpSession invalidation check performed)
-            getPortletSession();
-            if (portletSession != null)
-            {
-                return portletSession.getHttpSession();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        return super.getSession();
-    }
+	public HttpSession getSession() {
+		if (isIncluded() || isForwarded()){
+		    // ensure cached PortletSession is created (with proper HttpSession invalidation check performed)
+			getPortletSession();
+			if (portletSession != null)
+			{
+			    return portletSession.getHttpSession();
+			}
+			else
+			{
+			    return null;
+			}
+		}
+		return super.getSession();
+	}
     
     @Override
-    public HttpSession getSession(boolean create) {
-        if (isIncluded() || isForwarded()){
+	public HttpSession getSession(boolean create) {
+		if (isIncluded() || isForwarded()){
             // ensure cached PortletSession is created (with proper HttpSession invalidation check performed)
-            getPortletSession(create); 
+			getPortletSession(create); 
             if (portletSession != null)
             {
                 return portletSession.getHttpSession();
@@ -1057,9 +1048,9 @@ implements PortletRequest, InternalPortletRequest {
             {
                 return null;
             }
-        }
-        return super.getSession();
-    }
+		}
+		return super.getSession();
+	}
 	
 	// ============= private methods ==================
 

@@ -32,11 +32,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.descriptors.portlet.ExpirationCacheDD;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.PortletEntity;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.util.StringManager;
 
 public class MimeResponseImpl extends PortletResponseImpl implements
@@ -105,24 +104,17 @@ public class MimeResponseImpl extends PortletResponseImpl implements
 	private CacheControl cacheControl;
 
 	public MimeResponseImpl(PortletContainer container,
-            InternalPortletWindow internalPortletWindow,
+            PortletWindow portletWindow,
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse) {
 		
-		super(container, internalPortletWindow, servletRequest,
+		super(container, portletWindow, servletRequest,
 				servletResponse);
 		this.cacheControl = new CacheControlImpl();
-		PortletEntity portletEntity = internalPortletWindow.getPortletEntity();
-		PortletDD portletDefinition = portletEntity.getPortletDefinition();
-		ExpirationCacheDD expirationCacheDD = portletDefinition
-				.getExpirationCacheDD();
-		if (expirationCacheDD != null) {
-			int expirationTime = expirationCacheDD.getExpirationTime();
-			this.setProperty(EXPIRATION_CACHE, String.valueOf(expirationTime));
-			String scope = expirationCacheDD.getScope();
-			this.setProperty(CACHE_SCOPE, scope);
-		}
-
+		PortletEntity portletEntity = portletWindow.getPortletEntity();
+		PortletDefinition portletDefinition = portletEntity.getPortletDefinition();
+        this.setProperty(EXPIRATION_CACHE, String.valueOf(portletDefinition.getExpirationCache()));
+        this.setProperty(CACHE_SCOPE, portletDefinition.getCacheScope());
 	}
 	
 	@Override
@@ -362,12 +354,12 @@ public class MimeResponseImpl extends PortletResponseImpl implements
     protected boolean isValidContentType(String contentType) {
     	boolean valid = false;
     	
-        PortletDD portletDD = getInternalPortletWindow().getPortletEntity()
+        PortletDefinition portletDD = getPortletWindow().getPortletEntity()
         		.getPortletDefinition();
         for (Iterator it = portletDD.getSupports().iterator();
         		!valid && it.hasNext(); ) {
             
-        	SupportsDD supportsDD = (SupportsDD) it.next();
+        	Supports supportsDD = (Supports) it.next();
             String supportedType = supportsDD.getMimeType();
             
             // Content type is supported by an exact match.

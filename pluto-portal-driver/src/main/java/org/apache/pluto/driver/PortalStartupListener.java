@@ -190,7 +190,7 @@ public class PortalStartupListener implements ServletContextListener {
 
             // Initialize portlet container.
             LOG.debug(" [4] Initializing portlet container...");
-            container.init(servletContext);
+            container.init();
 
             // Save portlet container to the servlet context scope.
             servletContext.setAttribute(CONTAINER_KEY, container);

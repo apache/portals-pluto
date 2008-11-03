@@ -16,16 +16,15 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.services.portal.*;
+import java.io.InputStream;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.io.InputStream;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
 /**
  * Default implementation of all of the portal Services.
@@ -50,37 +49,15 @@ public class PropertyConfigServiceImpl implements
      * Initialization Lifecycle Method
      * @param ctx
      */
-    @SuppressWarnings("unchecked")
     public void init(ServletContext ctx) {
-    	
         try {
             InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
-            if (in != null) {
-            	config = ResourceConfigReader.getFactory().parse(in);
-            } else {
-            	Set<String> resourcePaths = ctx.getResourcePaths("/"); // This should be servlet path
-            	String msg = "Cannot find resource path for context [" + ctx.getServletContextName() + "] " +
-    			" due to problems reading configuration file (pluto-portal-driver-config.xml).";
-            	LOG.error(msg);
-            	// Show current resource paths...
-            	LOG.error("Current resource paths:");
-                for (Iterator<String> iterator = resourcePaths.iterator(); iterator.hasNext();) 
-                { 
-                    String definiton = iterator.next();
-                    LOG.error(definiton);
-                }
-                throw new IllegalStateException(msg);
-            }
-        } catch (IllegalStateException e) {
-        	throw e;//already logged above
-        } catch(Exception e) {
-        	String msg = "Unable to parse resource config [" + ResourceConfigReader.CONFIG_FILE + "]: " +
-        			e.getMessage();
-            LOG.error(msg, e);
-            throw new DriverConfigurationException(msg, e);
+            config = ResourceConfigReader.getFactory().parse(in);
         }
-	
-    	
+        catch(Exception e) {
+            LOG.error("Unable to parse resource config "+e.getMessage(), e);
+            throw new DriverConfigurationException(e);
+        }
     }
 
     /**

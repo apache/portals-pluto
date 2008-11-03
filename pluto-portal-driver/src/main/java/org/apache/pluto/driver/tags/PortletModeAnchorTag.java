@@ -31,7 +31,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
-//import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 

@@ -39,7 +39,7 @@ public class ResourceURLProviderImpl implements ResourceURLProvider {
     private String base = "";
 
     public ResourceURLProviderImpl(HttpServletRequest req,
-                                   PortletWindow internalPortletWindow) {
+                                   PortletWindow portletWindow) {
         PortalRequestContext ctx = (PortalRequestContext)
             req.getAttribute(PortalRequestContext.REQUEST_KEY);
 

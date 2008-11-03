@@ -37,16 +37,14 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.SupportsDD;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
@@ -80,10 +78,10 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     private EventRequest eventRequest;
     
 	public StateAwareResponseImpl(PortletContainer container,
-			            InternalPortletWindow internalPortletWindow,
+			            PortletWindow portletWindow,
 			            HttpServletRequest servletRequest,
 			            HttpServletResponse servletResponse) {
-		super(container, internalPortletWindow, servletRequest,
+		super(container, portletWindow, servletRequest,
 		servletResponse);
 		context = container.getRequiredContainerServices().getPortalContext();
 		callback = container.getRequiredContainerServices().getPortalCallbackService();
@@ -98,7 +96,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		}
 		
 		EventProvider provider = callback.getEventProvider(
-				getHttpServletRequest(),getInternalPortletWindow());
+				getHttpServletRequest(),getPortletWindow());
  	
 		provider.registerToFireEvent(qname, value);
 		redirectAllowed = false;
@@ -108,14 +106,9 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	 * @see javax.portlet.StateAwareResponse#setEvent(java.lang.String, java.lang.Object)
 	 */
 	public void setEvent(String name, Serializable value) {
-        String contextPath = getInternalPortletWindow().getContextPath();
+	    PortletWindow window = getPortletWindow();
         String defaultNamespace;
-        try {
-            defaultNamespace = getContainer().getPortletApplicationDescriptor(contextPath).getDefaultNamespace();
-        } catch (PortletContainerException e) { 
-            LOG.error(contextPath, e); 
-            defaultNamespace = XMLConstants.NULL_NS_URI;
-        }
+        defaultNamespace = window.getPortletEntity().getPortletDefinition().getApplication().getDefaultNamespace();
         QName qname = new QName(defaultNamespace, name);
         setEvent(qname, value);
         redirectAllowed = false;
@@ -135,7 +128,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 
                 ResourceURLProvider provider = callback.getResourceURLProvider(
                                 getHttpServletRequest(),
-                                getInternalPortletWindow()
+                                getPortletWindow()
                 );
 
                 if (location.indexOf("://") != -1) {
@@ -246,7 +239,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
             throw new IllegalArgumentException(
                 "Render parameter key must not be null.");
         }
-        List<String> publicRenderParameterNames = super.getInternalPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+        List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
         if (publicRenderParameterNames != null){
 	    	if (publicRenderParameterNames.contains(key)){
 	        	publicRenderParameter.put(key, new String[] {value});
@@ -271,7 +264,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
 	    }
-	    List<String> publicRenderParameterNames = super.getInternalPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+	    List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 	    if (publicRenderParameterNames != null){
 		    if (publicRenderParameterNames.contains(key)){
 		    	publicRenderParameter.put(key,StringUtils.copy(values));
@@ -321,12 +314,12 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     }
 
     protected boolean isPortletModeAllowedByPortlet(PortletMode mode) {
-        PortletDD dd = getInternalPortletWindow().getPortletEntity()
+        PortletDefinition dd = getPortletWindow().getPortletEntity()
             .getPortletDefinition();
 
         Iterator supports = dd.getSupports().iterator();
         while(supports.hasNext()) {
-            SupportsDD sup = (SupportsDD)supports.next();
+            Supports sup = (Supports)supports.next();
             List<String> portletModes = sup.getPortletModes();
             if (portletModes == null)
             	return false;
@@ -579,7 +572,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	}
 
 	public void removePublicRenderParameter(String name) {
-		List<String> publicRenderParameterNames = super.getInternalPortletWindow().getPortletEntity().getPortletDefinition().getPublicRenderParameter();
+		List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 		if (publicRenderParameterNames != null){
 			if (publicRenderParameterNames.contains(name)){
 	    		publicRenderParameter.put(name,new String[] {null});

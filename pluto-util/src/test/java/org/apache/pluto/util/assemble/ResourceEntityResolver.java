@@ -16,12 +16,12 @@
  */
 package org.apache.pluto.util.assemble;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Resolves entities by parsing the path from the System ID and resolving

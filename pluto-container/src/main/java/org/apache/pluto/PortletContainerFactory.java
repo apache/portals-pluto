@@ -18,8 +18,8 @@ package org.apache.pluto;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.core.DefaultOptionalContainerServices;
+import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**
@@ -81,10 +81,8 @@ public class PortletContainerFactory {
         ArgumentUtility.validateNotNull("requiredServices", requiredServices);
         ArgumentUtility.validateNotEmpty("containerName", containerName);
 
-        DefaultOptionalContainerServices optionalServicesWrapper =
-        		new DefaultOptionalContainerServices(optionalServices);
         PortletContainer container = new PortletContainerImpl(
-        		containerName, requiredServices, optionalServicesWrapper);
+        		containerName, requiredServices, optionalServices);
 
         if (LOG.isInfoEnabled()) {
             LOG.info("Portlet Container [" + containerName + "] created.");

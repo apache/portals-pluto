@@ -16,10 +16,11 @@
  */
 package org.apache.pluto.tags.el;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 class JSP20ExpressionEvaluatorProxy extends ExpressionEvaluatorProxy {
 

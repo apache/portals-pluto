@@ -24,10 +24,11 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.ContainerInvocation;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.core.ContainerInvocation;
-import org.apache.pluto.descriptors.portlet.PortletDD;
-import org.apache.pluto.descriptors.portlet.PortletInfoDD;
+import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.om.portlet.PortletInfo;
+import org.apache.pluto.services.PlutoServices;
 import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.util.StringManager;
 
@@ -60,13 +61,13 @@ class ResourceBundleFactory {
      */
     private String bundleName;
 
-    public ResourceBundleFactory(PortletDD dd) {
+    public ResourceBundleFactory(PortletDefinition dd) {
         bundleName = dd.getResourceBundle();
         if(LOG.isDebugEnabled()) {
             LOG.debug("Resource Bundle Created: "+bundleName);
         }
 
-        PortletInfoDD info = dd.getPortletInfo();
+        PortletInfo info = dd.getPortletInfo();
 
         PortletInfoService infoService = getPortletInfoService();
         PortletWindow window = getWindow();
@@ -119,16 +120,20 @@ class ResourceBundleFactory {
     }
 
 
-    private PortletInfoService getPortletInfoService() {
-        ContainerInvocation invocation = ContainerInvocation.getInvocation();
+    private PortletInfoService getPortletInfoService() 
+    {
+        ContainerInvocation invocation = PlutoServices.getServices().getContainerInvocationService().getInvocation();
+        //ContainerInvocationImpl invocation = ContainerInvocationImpl.getInvocation();
         if(invocation != null) {
             return invocation.getPortletContainer().getOptionalContainerServices().getPortletInfoService();
         }
         return null;
     }
 
-    private PortletWindow getWindow() {
-        ContainerInvocation invocation = ContainerInvocation.getInvocation();
+    private PortletWindow getWindow() 
+    {
+        ContainerInvocation invocation = PlutoServices.getServices().getContainerInvocationService().getInvocation();
+//        ContainerInvocationImpl invocation = ContainerInvocationImpl.getInvocation();
         if(invocation != null) {
             return invocation.getPortletWindow();
         }

@@ -30,7 +30,7 @@ limitations under the License.
     <portlet:renderURL windowState="<%=WindowState.MAXIMIZED.toString()%>" secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
                        var="url">
       <portlet:param name="maxInactiveIntervalSet" value="<%= Boolean.TRUE.toString() %>"/>
-      <portlet:param name="testId" value="<%= renderRequest.getParameter("testId") %>"/>
+      <portlet:param name="testId" value='<%= renderRequest.getParameter("testId") %>'/>
     </portlet:renderURL>
     <%-- Generate portlet action URL: End ================================= --%>
   

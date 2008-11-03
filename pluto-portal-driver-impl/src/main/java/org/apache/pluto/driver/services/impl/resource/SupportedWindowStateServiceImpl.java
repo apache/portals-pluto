@@ -28,14 +28,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.descriptors.portlet.CustomWindowStateDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
+import org.apache.pluto.om.portlet.CustomWindowState;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
 public class SupportedWindowStateServiceImpl implements
@@ -143,7 +142,12 @@ public class SupportedWindowStateServiceImpl implements
         // we look to see if it is a custom window state.
         
         String appId = PortletWindowConfig.parseContextPath(portletId);
-        PortletAppDD portletAppDD = null;
+        String applicationName = appId;
+        if (applicationName.length() >0 )
+        {
+            applicationName = applicationName.substring(1);
+        }
+        PortletApplicationDefinition portletAppDD = null;
         
         if (portletRegistry == null) 
         {                        
@@ -156,7 +160,7 @@ public class SupportedWindowStateServiceImpl implements
         
         try
         {
-            portletAppDD = portletRegistry.getPortletApplicationDescriptor(appId);
+            portletAppDD = portletRegistry.getPortletApplication(applicationName);
         }
         catch ( PortletContainerException e )
         {
@@ -166,12 +170,12 @@ public class SupportedWindowStateServiceImpl implements
             LOG.error( msg, e );
         }
         
-        List customWindowStates = portletAppDD.getCustomWindowState();
+        List customWindowStates = portletAppDD.getCustomWindowStates();
         if ( customWindowStates != null )
         {
             for ( Iterator i = customWindowStates.iterator(); i.hasNext(); )
             {
-                CustomWindowStateDD customState = (CustomWindowStateDD)i.next();
+                CustomWindowState customState = (CustomWindowState)i.next();
                 if ( customState.getWindowState().equals(state))
                 {
                     return true;

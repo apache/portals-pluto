@@ -36,8 +36,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.InternalRenderRequest;
 
 /**
@@ -69,11 +69,11 @@ implements RenderRequest, InternalRenderRequest {
     }
 
     public RenderRequestImpl(PortletContainer container,
-                             InternalPortletWindow internalPortletWindow,
+                             PortletWindow portletWindow,
                              HttpServletRequest servletRequest) {
-        super(container, internalPortletWindow, servletRequest);
+        super(container, portletWindow, servletRequest);
         if (LOG.isDebugEnabled()) {
-        	LOG.debug("Created render request for: " + internalPortletWindow);
+        	LOG.debug("Created render request for: " + portletWindow);
         }
     }
 
@@ -84,7 +84,7 @@ implements RenderRequest, InternalRenderRequest {
         if (portletPreferences == null) {
             portletPreferences = new PortletPreferencesImpl(
             		getPortletContainer(),
-            		getInternalPortletWindow(),
+            		getPortletWindow(),
             		this,
             		Constants.METHOD_RENDER);
         }
@@ -265,6 +265,6 @@ implements RenderRequest, InternalRenderRequest {
 	}
 
 	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyCookie(this, internalPortletWindow);
+		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(this, portletWindow);
 	}
 }

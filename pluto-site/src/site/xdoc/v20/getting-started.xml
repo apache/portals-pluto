@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<document>
+  
+  <properties>
+    <title>Embedding the Pluto 2.0 Container</title>
+  </properties>
+  
+  <body>
+
+    <section name="Embedding the Pluto 2.0 Container">
+        <p>
+            To embed the Pluto container in your portal or development environment, you will need the following jar files...
+        </p>
+        <p>
+          <b>Shared Lib:</b> Copy the following to
+          <code>&lt;TOMCAT_HOME&gt;/shared/lib</code>:
+          <ul>
+            <li>portlet-api-2.0.jar</li>
+            <li>ccpp-1.0.jar (Pluto 2.0 only)</li>
+            <li>pluto-container-api-2.0.0.jar (or the build version of Pluto you are using)</li>
+            <li>pluto-taglib-2.0.0.jar (or the build version of Pluto you are using)</li>
+          </ul>
+        </p>
+        <p>
+          <b>Implementation:</b> Copy into your portal implementation such as WEB-INF/lib:
+          <ul>
+            <li>commons-logging-1.1.jar</li>
+            <li>commons-logging-api-1.1.jar</li>
+			<li>jaxb-api-2.1.jar</li>
+			<li>jaxb-impl-2.1.8.jar</li>
+			<li>pluto-container-2.0.0.jar (or the build version of Pluto you are using)</li>
+			<li>stax-api-1.0.1.jar</li>
+            <li>stax-1.2.0.jar</li>
+          </ul>
+        </p>
+    </section>
+    
+  </body>
+  
+</document>
+

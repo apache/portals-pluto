@@ -15,15 +15,19 @@
  */
 package org.apache.pluto.driver.config;
 
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import java.util.Collection;
+import java.util.Set;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
+import javax.servlet.ServletContext;
+
+import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURLParser;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
-
-import javax.servlet.ServletContext;
-import java.util.Collection;
 
 /**
  * Interface defining a means for retrieving driver services
@@ -117,4 +121,10 @@ public interface DriverConfiguration {
     
     public RenderConfigService getRenderConfigService();
 
+    public Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException; 
+    
+    public PortletConfig getPortletConfig(String portletId)  throws PortletContainerException;
+
+	public boolean isPortletManagedMode(String portletId, String mode);
+    
 }

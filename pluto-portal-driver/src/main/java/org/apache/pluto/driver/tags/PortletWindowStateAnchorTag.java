@@ -48,8 +48,12 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
 
 
     // Private Member Variables ------------------------------------------------
+    /** Window state name */
     private String state;
 
+    /** Context-relative URL to icon representing window state */
+	private String icon;
+    
     /** The portlet ID attribute obtained from parent tag. */
     private String portletId;
 
@@ -100,8 +104,8 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
             tag.append(ToolTips.forWindowState(new WindowState(state)));
             tag.append("\" ");
             tag.append("href=\"" + portalUrl.toString() + "\">");
-            tag.append("<span class=\"" + state + "\">");
-            tag.append("</span></a>");
+            tag.append("<img border=\"0\" src=\"" + icon + "\" />");
+            tag.append("</a>");
 
             // Print the mode anchor tag.
             try {
@@ -161,6 +165,15 @@ public class PortletWindowStateAnchorTag extends BodyTagSupport {
         this.state = state;
     }
 
+    public String getIcon() {
+		return icon;
+	}
+
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+    
     private boolean isWindowStateAllowed(DriverConfiguration config, String state) {
         LOG.debug("Testing if PortletWindowConfig [" + getEvaluatedPortletId() + "] supports window state [" + state + "]");
         return config.isWindowStateSupported(getEvaluatedPortletId(), state);

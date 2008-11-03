@@ -28,10 +28,10 @@ import javax.portlet.PortletSession;
 import javax.portlet.PortletSessionUtil;
 import javax.servlet.http.HttpSession;
 
-import org.apache.pluto.internal.InternalPortletWindow;
-import org.apache.pluto.util.ArgumentUtility;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Implementation of the <code>javax.portlet.PortletSession</code> interface.
@@ -60,8 +60,8 @@ public class PortletSessionImpl implements PortletSession {
     /** The portlet context. */
     private PortletContext portletContext;
     
-    /** The internal portlet window. */
-    private InternalPortletWindow internalPortletWindow;
+    /** The portlet window. */
+    private PortletWindow portletWindow;
     
     // Constructor -------------------------------------------------------------
     
@@ -69,10 +69,10 @@ public class PortletSessionImpl implements PortletSession {
      * Constructs an instance.
      */
     public PortletSessionImpl(PortletContext portletContext,
-                              InternalPortletWindow internalPortletWindow,
+                              PortletWindow portletWindow,
                               HttpSession httpSession) {
         this.portletContext = portletContext;
-        this.internalPortletWindow = internalPortletWindow;
+        this.portletWindow = portletWindow;
         this.httpSession = httpSession;
     }
     
@@ -129,7 +129,7 @@ public class PortletSessionImpl implements PortletSession {
     }
     
     public void removeAttribute(String name) {
-    		removeAttribute(name, DEFAULT_SCOPE);
+        removeAttribute(name, DEFAULT_SCOPE);
     }
 
     public void removeAttribute(String name, int scope) {
@@ -142,7 +142,7 @@ public class PortletSessionImpl implements PortletSession {
     }
     
     public void setAttribute(String name, Object value) {
-    		setAttribute(name, value, DEFAULT_SCOPE);
+    	setAttribute(name, value, DEFAULT_SCOPE);
     }
 
     public void setAttribute(String name, Object value, int scope) {
@@ -222,7 +222,7 @@ public class PortletSessionImpl implements PortletSession {
     private String createPortletScopedId(String name) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(PORTLET_SCOPE_NAMESPACE);
-    	buffer.append(internalPortletWindow.getId().getStringId());
+    	buffer.append(portletWindow.getId().getStringId());
     	buffer.append(ID_NAME_SEPARATOR);
     	buffer.append(name);
     	return buffer.toString();
@@ -242,13 +242,16 @@ public class PortletSessionImpl implements PortletSession {
     			&& name.indexOf(ID_NAME_SEPARATOR) > -1) {
         	String id = name.substring(PORTLET_SCOPE_NAMESPACE.length(),
         	                           name.indexOf(ID_NAME_SEPARATOR));
-        	return (id.equals(internalPortletWindow.getId().getStringId()));
+        	return (id.equals(portletWindow.getId().getStringId()));
         }
     	// Application-scoped attribute names are not in portlet scope.
     	else {
         	return false;
         }
     }
+    
+    
+    // HttpSession Impl --------------------------------------------------------
     
 	public Map<String, Object> getMap() {
 		List<String> paramNames = getAttributeNamesAsList(DEFAULT_SCOPE);		
@@ -287,7 +290,6 @@ public class PortletSessionImpl implements PortletSession {
 		}
 		return resultMap;
 	}
-
 
 	/** 
 	   * Returns a <code>Map</code> of the session attributes in

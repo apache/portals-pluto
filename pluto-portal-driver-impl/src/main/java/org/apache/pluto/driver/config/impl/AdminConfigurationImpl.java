@@ -16,11 +16,11 @@
  */
 package org.apache.pluto.driver.config.impl;
 
-import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
-import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
-import org.apache.pluto.driver.config.AdminConfiguration;
-
 import javax.servlet.ServletContext;
+
+import org.apache.pluto.driver.config.AdminConfiguration;
+import org.apache.pluto.driver.services.portal.admin.PortletRegistryAdminService;
+import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
 
 /**
  *

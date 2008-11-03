@@ -16,15 +16,15 @@
  */
 package org.apache.pluto.util.assemble.file;
 
+import java.io.File;
+import java.io.FileReader;
+import java.net.URL;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.pluto.util.assemble.AssemblerConfig;
 import org.apache.pluto.util.assemble.ResourceEntityResolver;
 import org.custommonkey.xmlunit.XMLTestCase;
 import org.custommonkey.xmlunit.XMLUnit;
-
-import java.io.File;
-import java.io.FileReader;
-import java.net.URL;
 
 /**
  * @version $Revision$

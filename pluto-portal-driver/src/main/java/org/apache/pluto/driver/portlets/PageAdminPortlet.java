@@ -16,6 +16,18 @@
  */
 package org.apache.pluto.driver.portlets;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,18 +37,6 @@ import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 
 public class PageAdminPortlet extends GenericPlutoPortlet {
@@ -74,13 +74,18 @@ public class PageAdminPortlet extends GenericPlutoPortlet {
 
     public void doAddPortlet(ActionRequest request) {
         String page = request.getParameter("page");
-        String applicationId = request.getParameter("applications");
-        String portletId = request.getParameter("availablePortlets");
+        String applicationName = request.getParameter("applications");
+        String portletName = request.getParameter("availablePortlets");
 
-        LOG.info("Request: Add [applicationId=" + applicationId + ":portletId=" + portletId + "] to page '" + page + "'");
+        LOG.info("Request: Add [applicationName=" + applicationName + ":portletName=" + portletName + "] to page '" + page + "'");
 
+        String contextPath = applicationName;
+        if (contextPath.length() > 0)
+        {
+            contextPath = "/" + contextPath;
+        }
         PageConfig config = getPageConfig(page);
-        config.addPortlet(applicationId, portletId);
+        config.addPortlet(contextPath, portletName);
 
     }
 

@@ -26,8 +26,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.url.PortalURL;
 
 /**
  * The portlet URL tag is used to generate portal URL pointing to the current

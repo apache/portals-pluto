@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.portlet.Event;
 import javax.portlet.PortletException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
@@ -39,17 +38,13 @@ import javax.xml.stream.XMLStreamReader;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.EventContainer;
-import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.descriptors.portlet.EventDefinitionDD;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
-import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
-import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.EventImpl;
-import org.apache.pluto.spi.optional.PortletRegistryService;
+import org.apache.pluto.om.portlet.EventDefinition;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.spi.optional.PortletContextService;
 
 public class PortletWindowThread extends Thread {
 	
@@ -63,27 +58,19 @@ public class PortletWindowThread extends Thread {
 	private EventContainer eventContainer;
 	
 	/** PortletRegistryService used to obtain PortletApplicationConfig objects */
-	private PortletRegistryService portletRegistry;
+	private PortletContextService portletContextService;
 	
 	private List<Event> events = new ArrayList<Event>();
 
 	public PortletWindowThread(ThreadGroup group, String name,
-			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer, PortletRegistryService portletRegistry) {
+			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer, PortletContextService portletContextService) {
 		super(group, name);
 		this.eventProvider = eventProvider;
 		this.portletWindow = window;
 		this.eventContainer = eventContainer;
-		this.portletRegistry = portletRegistry;
+		this.portletContextService = portletContextService;
 	}
 
-	public PortletWindowThread(String name, 
-			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer) {
-		super(name);
-		this.eventProvider = eventProvider;
-		this.portletWindow = window;
-		this.eventContainer = eventContainer;
-	}
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Thread#run()
 	 */
@@ -117,10 +104,10 @@ public class PortletWindowThread extends Thread {
 			        		//provider.getEventDefinition(event.getQName());
 			        	try {
 			        		// now test if object is jaxb
-			        		EventDefinitionDD eventDefinitionDD = getEventDefintion(event.getQName()); 
+			        		EventDefinition eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
-			        		ClassLoader loader = portletRegistry.getClassLoader(portletWindow.getPortletName());//Thread.currentThread().getContextClassLoader();
-			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getJavaClass()).asSubclass(Serializable.class);
+			        		ClassLoader loader = portletContextService.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
+			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getValueType()).asSubclass(Serializable.class);
 
 			        		JAXBContext jc = JAXBContext.newInstance(clazz);
 			        		Unmarshaller unmarshaller  = jc.createUnmarshaller();
@@ -156,12 +143,9 @@ public class PortletWindowThread extends Thread {
 		this.events.add(event);	
 	}
 
-	private EventDefinitionDD getEventDefintion(QName name) throws PortletContainerException {
-		PortalRequestContext context = PortalRequestContext.getContext(eventProvider.getRequest());
-		ServletContext servletContext = context.getServletContext();
-		PortletContainer container = (PortletContainer) servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
-		PortletAppDD appDD = container.getPortletApplicationDescriptor(portletWindow.getContextPath());
-		for (EventDefinitionDD def : appDD.getEvents()){
+	private EventDefinition getEventDefintion(QName name) throws PortletContainerException {
+		PortletApplicationDefinition appDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
+		for (EventDefinition def : appDD.getEventDefinitions()){
 			if (def.getQName() != null){
 				if (def.getQName().equals(name))
 					return def;

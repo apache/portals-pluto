@@ -24,13 +24,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.descriptors.portlet.PortletAppDD;
 import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.RequestPropertyProvider;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.w3c.dom.Element;
 
@@ -40,20 +41,15 @@ import org.w3c.dom.Element;
  * @version 1.0
  * @since Sep 22, 2004
  */
-public class PortalCallbackServiceImpl implements PortalCallbackService {
+public class PortalCallbackServiceImpl implements PortalCallbackService 
+{
+	RequestPropertyProvider propertyProvider;	
 
-	// Constructor -------------------------------------------------------------
-	
-	/**
-	 * Default no-arg constructor.
-	 */
-    public PortalCallbackServiceImpl() {
-    	// Do nothing.
+	public PortalCallbackServiceImpl(RequestPropertyProvider provider) 
+    {
+        this.propertyProvider = provider;
     }
-    
-    
-    // PortalCallbackService Impl ----------------------------------------------
-    
+	
     /**
      * Method invoked by the container when the portlet sets its title. This
      * method binds the dynamic portlet title to the servlet request for later
@@ -77,69 +73,9 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
         return new ResourceURLProviderImpl(request, portletWindow);
     }
 
-    public Map getRequestProperties(HttpServletRequest request,
-                                    PortletWindow portletWindow) {
-    	// TODO: currently this method returns an empty map.
-        return Collections.EMPTY_MAP;
-    }
-
-    public void setResponseProperty(HttpServletRequest request,
-                                    PortletWindow portletWindow,
-                                    String property,
-                                    String value) {
-    	request.setAttribute(property + portletWindow.getId().getStringId() + "__str", value);
-    }
-
-    public void addResponseProperty(HttpServletRequest request,
-                                    PortletWindow portletWindow,
-                                    String property,
-                                    String value) {
-    	if(request.getAttribute(property+portletWindow.getId().getStringId())== null){
-    		request.setAttribute(property + portletWindow.getId().getStringId(), value);
-    	}
-    	else{
-    		String[] tmp = (String[]) request.getAttribute(property+portletWindow.getId().getStringId()+"__str");
-    		String[] values = new String[tmp.length];
-    		for (int i = 0; i < tmp.length;i++) {
-				values[i] = tmp[i];
-			}
-    		values[tmp.length]= value;
-    	}
-    }
-    
-    public void addResponseProperty(HttpServletRequest request, PortletWindow portletWindow, String property, Element value) {
-    	if(request.getAttribute(property+portletWindow.getId().getStringId())== null){
-    		request.setAttribute(property + portletWindow.getId().getStringId(), value);
-    	}
-    	else{
-    		String[] tmp = (String[]) request.getAttribute(property+portletWindow.getId().getStringId()+"__str");
-    		String[] values = new String[tmp.length];
-    		for (int i = 0; i < tmp.length;i++) {
-				values[i] = tmp[i];
-			}
-    		values[tmp.length]= value.toString();
-    	}
-		
-	}
-    
-    public void addResponseProperty(HttpServletRequest request,
-            PortletWindow portletWindow,
-            Cookie cookie){
-    	if(request.getAttribute(portletWindow.getId().getStringId()+"__coo")== null){
-    		request.setAttribute(portletWindow.getId().getStringId()+"__coo", cookie);
-    	}
-    	else{
-    		Cookie[] tmp = (Cookie[]) request.getAttribute(portletWindow.getId().getStringId()+"__coo");
-    		Cookie[] values = new Cookie[tmp.length];
-    		for (int i = 0; i < tmp.length;i++) {
-				values[i] = tmp[i];
-			}
-    		values[tmp.length]= cookie;
-    	}
-    }
-    
-    public Cookie[] getRequestPropertyCookie(HttpServletRequest request, PortletWindow portletWindow){
-    	return (Cookie[]) request.getAttribute(portletWindow.getId().getStringId()+"__coo");
+    public RequestPropertyProvider getRequestPropertyProvider()
+    {
+        return propertyProvider;
     }
     
     public EventProvider getEventProvider(
@@ -157,7 +93,7 @@ public class PortalCallbackServiceImpl implements PortalCallbackService {
      * Returns the FilterManager, this is used to process the filter.
      * @return FilterManager
      */
-	public FilterManager getFilterManager(PortletAppDD portletAppDD, String portletName, String lifeCycle) {
+	public FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName, String lifeCycle) {
 		return FilterManagerImpl.getFilterManager(portletAppDD,portletName,lifeCycle);
 	}
 

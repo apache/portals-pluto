@@ -67,8 +67,6 @@ limitations under the License.
         <item name="Portal Driver" href="/pluto-portal-driver/index.html"/>
         <item name="Portal" href="/pluto-portal/index.html"/>
         <item name="Testsuite" href="/pluto-testsuite/index.html"/>
-        <item name="Descriptor API" href="/pluto-descriptor-api/index.html"/>
-        <item name="Descriptor Impl" href="/pluto-descriptor-impl/index.html"/>
         <!--item name="Optional Services" href="/pluto-optional-services/index.html"/-->
         <item name="Maven Plugin" href="/maven-pluto-plugin/getting-started.html"/>
         <item name="Ant Tasks" href="/pluto-ant-tasks/getting-started.html"/>

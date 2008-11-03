@@ -64,33 +64,10 @@ limitations under the License.
             <a href="http://www.developer.com/java/web/article.php/3563411">Embedding Apache Pluto 1.1</a>
             by David H. DeWolf, September 2005
           </li>
-          <li>
-            <a href="http://portletwork.blogspot.com/2007/08/testing-portlets-with-jetty-pluto-and.html">
-             Testing Portlets with Jetty, Pluto and JWebUnit</a>
-            by Nils-Helge Garli, August 2007
-          </li>
-         <li>
-            <a href="http://portletwork.blogspot.com/2007/07/mvnjetty-and-portlets.html">
- 			maven-jetty-plugin and JSR168 portlets</a> and 
- 			<a href="http://portletwork.blogspot.com/2007/08/maven-jetty-plugin-and-jsr168-portlets.html">
- 			maven-jetty-plugin and JSR168 portlets - Part 2</a>
-            by Nils-Helge Garli, August 2007
-          </li>
- 
         </ul>
       </p>
     </section>
     
-    <section name="Other Resources">
-      <p>
-        <ul>
-          <li>
-            <a href="http://code.google.com/p/pluto-server-plugin/">Pluto Server Plugin for Eclipse</a>
-            maintained by Marcus Christie
-          </li>
-        </ul>
-      </p>
-    </section>
   </body>
   
 </document>

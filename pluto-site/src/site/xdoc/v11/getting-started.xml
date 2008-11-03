@@ -198,8 +198,6 @@ $> mvn install
             <li>xercesImpl-2.6.2.jar (Pluto 2.0 only)</li>
             <li>xmlParserAPIs-2.6.2.jar (Pluto 2.0 only)</li>
             <li>pluto-container-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
-            <li>pluto-descriptor-api-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
-            <li>pluto-descriptor-impl-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
             <li>pluto-taglib-x.x.x.jar (x.x.x is the version of Pluto you built)</li>
           </ul>
         </p>

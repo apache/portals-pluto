@@ -24,18 +24,23 @@ limitations under the License.
 
   <!-- Assemble the rendering result -->
   <div class="portlet">
-    <div class="header">
-      <!-- Portlet Mode Controls -->
-      <pluto:modeAnchor portletMode="view"/>
-      <pluto:modeAnchor portletMode="edit"/>
-      <pluto:modeAnchor portletMode="help"/>
-      <!-- Window State Controls -->
-      <pluto:windowStateAnchor windowState="minimized"/>
-      <pluto:windowStateAnchor windowState="maximized"/>
-      <pluto:windowStateAnchor windowState="normal"/>
-      <!-- Portlet Title -->
-      <h2 class="title"><pluto:title/></h2>
-    </div>
+    <table class="header" width="100%">
+    	<tr>
+    	<td class="header" align="left">
+	      <!-- Portlet Title -->
+	      <h2 class="title"><pluto:title/></h2>
+	</td>
+        <td class="header" align="right">
+	      <!-- Portlet Mode Controls -->
+	      <pluto:modeDropDown />
+	
+	      <!-- Window State Controls -->
+	      <pluto:windowStateAnchor windowState="minimized" icon='<%= request.getContextPath() + "/images/controls/min.png"%>' />
+	      <pluto:windowStateAnchor windowState="maximized" icon='<%= request.getContextPath() + "/images/controls/max.png"%>' />
+	      <pluto:windowStateAnchor windowState="normal" icon='<%= request.getContextPath() + "/images/controls/norm.png"%>' />
+    	</td>
+    	</tr>
+    </table>
     <div class="body">
       <pluto:render/>
     </div>

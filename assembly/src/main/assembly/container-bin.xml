@@ -32,8 +32,6 @@
             <outputDirectory>lib</outputDirectory>
             <scope>compile</scope>
             <excludes>
-                <exclude>org.apache.pluto:pluto-descriptor-api</exclude>
-                <exclude>org.apache.pluto:pluto-descriptor-impl</exclude>
                 <exclude>org.apache.pluto:pluto-container</exclude>
                 <exclude>org.springframework:*</exclude>
             </excludes>
@@ -53,20 +51,6 @@
             </includes>
         </fileSet>
         <!-- Pluto library files -->
-        <fileSet>
-            <directory>../pluto-descriptor-api/target</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../pluto-descriptor-impl/target</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-        </fileSet>
         <fileSet>
             <directory>../pluto-container/target</directory>
             <outputDirectory>/</outputDirectory>

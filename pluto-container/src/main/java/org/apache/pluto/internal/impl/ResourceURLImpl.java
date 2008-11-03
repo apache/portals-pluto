@@ -20,7 +20,7 @@ import java.util.Map;
 import javax.portlet.ResourceURL;
 
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.spi.PortletURLProvider;
 
 /**
@@ -30,10 +30,10 @@ import org.apache.pluto.spi.PortletURLProvider;
  */
 public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 	public ResourceURLImpl(PortletContainer container,
-	        InternalPortletWindow internalPortletWindow,
+	        PortletWindow portletWindow,
 	        javax.servlet.http.HttpServletRequest servletRequest,
 	        javax.servlet.http.HttpServletResponse servletResponse) {
-			super(container,internalPortletWindow,servletRequest,
+			super(container,portletWindow,servletRequest,
 				servletResponse,false,true);
 	}
 
@@ -109,7 +109,7 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL {
 		String[] tmp1 = this.servletRequest.getParameterValues(name);
 		if (tmp1!=null)
 			lenght += tmp1.length;
-		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(super.servletRequest, internalPortletWindow);
+		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(super.servletRequest, portletWindow);
 		String[] tmp2 = urlProvider.getPrivateRenderParameters(name);
 		if (tmp2!=null)
 			lenght += tmp2.length;

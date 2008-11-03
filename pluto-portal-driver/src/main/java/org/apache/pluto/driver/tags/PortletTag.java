@@ -30,15 +30,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
 import org.apache.pluto.driver.AttributeKeys;
-import org.apache.pluto.driver.services.portal.PortletWindowConfig;
-import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.driver.core.PortalServletResponse;
 import org.apache.pluto.driver.core.PortletWindowImpl;
-import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
 
 /**
  * The portlet tag is used to render a portlet specified by the portlet ID.
@@ -122,8 +121,12 @@ public class PortletTag extends BodyTagSupport {
                 (HttpServletRequest) pageContext.getRequest());
         PortalURL portalURL = portalEnv.getRequestedPortalURL();
         
+        // Retrieve the portlet container from servlet context.
+        PortletContainer container = (PortletContainer)
+                servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
+        
         // Create the portlet window to render.
-        PortletWindow window = new PortletWindowImpl(windowConfig, portalURL);
+        PortletWindow window = new PortletWindowImpl(container, windowConfig, portalURL);
         
         // Check if someone else is maximized. If yes, don't show content.
         Map windowStates = portalURL.getWindowStates();
@@ -142,10 +145,6 @@ public class PortletTag extends BodyTagSupport {
         		(HttpServletRequest) pageContext.getRequest(), window);
         PortalServletResponse portalResponse = new PortalServletResponse(
                 (HttpServletResponse) pageContext.getResponse());
-        
-        // Retrieve the portlet container from servlet context.
-        PortletContainer container = (PortletContainer)
-            	servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
         
         // Render the portlet and cache the response.
         try {
