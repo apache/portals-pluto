@@ -15,6 +15,7 @@
 -->
 <!--
 	Builds bundled and source distribution of Pluto, archiving it in zip, gzip and bzip2 files.
+	Prerequisites for this build includes an installed Java 5+ JDK, Maven 2.0+ and Ant 1.6+.
 	
 	Run the binary build using the command line:
 		ant -f dist-build.xml
@@ -23,26 +24,31 @@
 	1. Downloads Tomcat from Apache and unzips it into a working directory. To this distribution, the
 		build:
 		a. Adds emptySessionPath="true" to server.xml.
-		b. Adds a pluto user with pluto role to tomcat-users.xml.
-		c. Adds a pluto role to the tomcat user in tomcat-users.xml.
+		b. Adds a pluto and tomcat users with pluto and manager roles to tomcat-users.xml.
 	2. Runs 'mvn install' and 'mvn pluto:install' to create the	Pluto driver and testsuite 
 		and installs them into the Tomcat dist in the working directory.
 	3. Archives the altered Tomcat dist with Pluto into a zip, gzip and bzip2 file.
 	
-	Run the source build using the command line:
-		ant -f dist-build.xml src-dist	
-
-	All built distributions end up in target/dist.				
+	All built distributions end up in target/dist.
+	
+	After unarchiving the built distribution into a directory, invoke the startup script in the bin
+	directory and browse to: http://localhost:8080/pluto/portal/
+	
+	Login as 'pluto' (password=pluto) to the portal. You will need to login again into the manager
+	application linked at the bottom of the Pluto Admin page in order to upload portlet application
+	war files to be able to deploy them to Pluto using the admin portlet. The 'tomcat' (password=tomcat)
+	user can also be used to deploy portlets.					
 -->
 <project name="PlutoDistributions" default="bundle-dist">
 
-    <property name="tomcat.version" value="5.5.26" description="Version of Tomcat to deploy Pluto"/>
+    <property name="tomcat.major.version" value="6" description="Major version of Tomcat to deploy Pluto war files."/>
+    <property name="tomcat.full.version" value="6.0.9" description="Full version of Tomcat to deploy Pluto war files."/>
 
-    <xmlproperty file="pom.xml"/> <!-- picks up version from pom file -->
-    <property name="pluto.version" value="${project.version}" description="Version of Pluto 1.1 to build"/>
+    <xmlproperty file="pom.xml"/> <!-- picks up pluto build version from pom file -->
+    <property name="pluto.version" value="${project.version}" description="Version of Pluto to build"/>
 
 	<property name="dist.basedir" value="target/dist" description="Base working directory"/>
-	<property name="base.name" value="apache-tomcat-${tomcat.version}"/>
+	<property name="base.name" value="apache-tomcat-${tomcat.full.version}"/>
 	<property name="dist.dir" value="${dist.basedir}/${base.name}"/>
 	<property name="pluto.name" value="pluto-${pluto.version}"/>
 	<property name="pluto.dir" value="${dist.basedir}/${pluto.name}"/>
@@ -137,7 +143,7 @@
 		</exec>
 		<mkdir dir="${dist.basedir}"/>
 		
-		<get src="http://archive.apache.org/dist/tomcat/tomcat-5/v${tomcat.version}/bin/${base.name}.tar.gz"
+		<get src="http://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${tomcat.full.version}/bin/${base.name}.tar.gz"
 		     dest="${unzip.file}"
 		/>
 		
@@ -156,22 +162,15 @@
 
 		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
 		<replace file="${dist.dir}/conf/server.xml"
-			token="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; /&gt;" 
-			value="connectionTimeout=&quot;20000&quot; disableUploadTimeout=&quot;true&quot; emptySessionPath=&quot;true&quot; /&gt;" 
-			summary="true"
-		/>
-
-		<!-- Put tomcat user in 'pluto' role in tomcat-users.xml -->
-		<replace file="${dist.dir}/conf/tomcat-users.xml"
-			token="roles=&quot;tomcat&quot;" 
-			value="roles=&quot;tomcat,pluto&quot;" 
+			token="redirectPort=&quot;8443&quot; /&gt;" 
+			value="redirectPort=&quot;8443&quot; emptySessionPath=&quot;true&quot; /&gt;" 
 			summary="true"
 		/>
 		
-		<!-- Add 'pluto' user to tomcat-users.xml -->
+		<!-- Add 'pluto' and 'tomcat' users to tomcat-users.xml -->
 		<replace file="${dist.dir}/conf/tomcat-users.xml"
 			token="&lt;/tomcat-users&gt;" 
-			value="&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
+			value="&lt;user name=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;tomcat,pluto,manager&quot; /&gt;${line.separator}&lt;user name=&quot;pluto&quot; password=&quot;pluto&quot; roles=&quot;pluto,manager&quot; /&gt;${line.separator}&lt;/tomcat-users&gt;" 
 			summary="true"
 		/>
 	</target>
