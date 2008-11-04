@@ -13,18 +13,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License
 
-Pluto 2.0 is the first version of the JSR-286 Reference Implementation (Java Portlet API 2.0).
+Pluto 2.0 is the first version of the JSR-286 Reference Implementation (Java Portlet API 2.0). This 
+version was based on Pluto 1.1 and was refactored in the 1.1-286-COMPATIBILITY branch to add 
+JSR-286 features and create the official JSR-286 RI submitted to the Java Community Process.
 
-The starting point for Pluto 2.0 was the 1.1-286-COMPATIBILITY branch with a few modules from the original 
-Pluto 1.1.x trunk that is not in the 1.1-286-COMPATIBILITY branch or has not been used in developing
-the 1.1-286-COMPATIBILITY branch. In addition, all the files in the root of this branch including the
-root pom.xml have come over from the trunk. The 1.1-286-COMPATIBILITY branch is based on Pluto 1.1. It was 
-created from the SVN trunk in January, 2007.
-
-The merge of 1.1-286-COMPATIBILITY branch with SVN trunk began on 8/9/2007 in the 1.1-286-trunk-merge branch.
-On 1/7/2008, the 1.1-286-trunk-merge branch was moved to the Subversion trunk as the starting point
-for Pluto 2.0.
+The Pluto 2.0 code was subsequently refactored within the 2.0-spi-refactoring branch to make the descriptor
+API more flexible and fix other issues. This branch became the new trunk on 11/3/2008. 
 
 See the Getting Started page on the Pluto web site (http://portals.apache.org/pluto/v11/getting-started.html)
-for instructions on how to build Pluto from source. Currently there is not a binary or bundled 
-distribution of Pluto 2.0.
+for instructions on how to build Pluto from source. Currently there is no binary or bundled 
+distribution of Pluto 2.0. 
+
+A simplified way to build a bundled Pluto 2.0 distribution is to use the dist-build.xml Ant build which downloads 
+Tomcat and calls the appropriate maven commands to create a distribution with Pluto embedded in Tomcat. The 
+built distribution, which contains this file, when started via the startup script in the bin directory will 
+start the Pluto portal by browsing to http://localhost:8080/pluto/portal/ and logging in as pluto/pluto 
+(or tomcat/tomcat). See the documentation in dist-build.xml for more details. Also invoke the Help mode on the
+Pluto Admin page for instructions on how to use the admin portlet to deploy custom portlets.
+
