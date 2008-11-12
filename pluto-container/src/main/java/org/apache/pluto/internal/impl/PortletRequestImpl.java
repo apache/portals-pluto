@@ -20,8 +20,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -85,6 +88,22 @@ implements PortletRequest, InternalPortletRequest {
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
     
+    /**
+     * Cache for parsed dateHeader values.
+     */
+    protected static final HashMap<String,Long> dateHeaderParseCache = new HashMap<String,Long>();
+    
+    /**
+     * The set of SimpleDateFormat formats to use in getDateHeader().
+     *
+     * Notice that because SimpleDateFormat is not thread-safe, we can't
+     * declare formats[] as a static variable.
+     */
+    protected SimpleDateFormat dateHeaderFormats[] = {
+        new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US),
+        new SimpleDateFormat("EEEEEE, dd-MMM-yy HH:mm:ss zzz", Locale.US),
+        new SimpleDateFormat("EEE MMMM d HH:mm:ss yyyy", Locale.US)
+    };
     
     // Private Member Variables ------------------------------------------------
     
@@ -912,7 +931,6 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Cookie[] getCookies() {
 		if (isIncluded() || isForwarded()){
-			// TODO:return Cookies from properties
 			return super.getCookies();
 		}
 		else
@@ -922,8 +940,14 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public long getDateHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return header from properties
-			return 0;
+			
+	     String value = getHeader(arg0);
+         if (value == null)
+         {
+             return (-1L);
+         }
+	     // Attempt to convert the date header in a variety of formats
+	     return parseDateHeader(value);
 		}
 		else
 			return super.getDateHeader(arg0);
@@ -932,8 +956,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public String getHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return header from properties
-			return null;
+		    return getProperty(arg0);
 		}
 		else
 			return super.getHeader(arg0);
@@ -942,8 +965,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Enumeration getHeaderNames() {
 		if (isIncluded() || isForwarded()){
-			// TODO:return header from properties
-			return null;
+		    return getPropertyNames();
 		}
 		else
 			return super.getHeaderNames();
@@ -952,8 +974,7 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public Enumeration getHeaders(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return header from properties
-			return null;
+		    return getProperties(arg0);
 		}
 		else
 			return super.getHeaders(arg0);
@@ -962,8 +983,15 @@ implements PortletRequest, InternalPortletRequest {
 	@Override
 	public int getIntHeader(String arg0) {
 		if (isIncluded() || isForwarded()){
-			// TODO:return header from properties
-			return 0;
+		    String property = getProperty(arg0);
+		    if (property == null)
+		    {
+		        return -1;
+		    }
+		    else
+		    {
+		        return Integer.parseInt(property);
+		    }
 		}
 		else
 			return super.getIntHeader(arg0);
@@ -1054,6 +1082,52 @@ implements PortletRequest, InternalPortletRequest {
 	
 	// ============= private methods ==================
 
+    /**
+     * Try to parse the given date as a HTTP date.
+     * Borrowed and adapted from Tomcat FastHttpDateFormat
+     */
+    private long parseDateHeader(String value)
+    {
+        Long dateValue = null;
+        try 
+        {
+            dateValue = (Long) dateHeaderParseCache.get(value);
+        } 
+        catch (Exception e)
+        {
+        }
+        if (dateValue == null)
+        {
+            for (int i = 0; i < dateHeaderFormats.length; i++)
+            {
+                try
+                {
+                    Date date = dateHeaderFormats[i].parse(value);
+                    dateValue = new Long(date.getTime());
+                }
+                catch (ParseException e)
+                {
+                }
+            }
+            if (dateValue != null)
+            {
+                synchronized (dateHeaderParseCache)
+                {
+                    if (dateHeaderParseCache.size() > 1000)
+                    {
+                        dateHeaderParseCache.clear();
+                    }
+                    dateHeaderParseCache.put(value, dateValue);
+                }
+            }
+            else
+            {
+                throw new IllegalArgumentException(value);
+            }
+        }
+        return dateValue.longValue();
+    }
+    
 	public String getLifecyclePhase() {
 		return null;
 	}
