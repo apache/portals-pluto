@@ -102,6 +102,13 @@ implements PortletContext, InternalPortletContext {
         this.contextClassLoader = contextClassLoader;
     }
 
+    public String getContextPath() {
+        String path = portletApp.getName();
+        if (!path.equals("")) {
+            path = "/" + path;
+        }
+        return path;
+    }
     
     // PortletContext Impl -----------------------------------------------------
     

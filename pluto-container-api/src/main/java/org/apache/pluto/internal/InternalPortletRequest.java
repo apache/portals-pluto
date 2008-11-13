@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.internal;
 
-import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,7 +38,7 @@ public interface InternalPortletRequest extends PortletRequest {
      * @param context  the target portlet context.
      * @param request  the servlet request.
      */
-    public void init(PortletContext context, HttpServletRequest request);
+    public void init(InternalPortletContext context, HttpServletRequest request);
 
     /**
      * Recycle the request by rolling the underlying request

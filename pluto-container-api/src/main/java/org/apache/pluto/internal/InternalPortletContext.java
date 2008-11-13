@@ -34,6 +34,12 @@ public interface InternalPortletContext extends PortletContext {
      * @return servlet context within which we belong
      */
     public ServletContext getServletContext();
+    
+    /**
+     *
+     * @return the context path for this PortletContext
+     */
+    public String getContextPath();
 
     /**
      *

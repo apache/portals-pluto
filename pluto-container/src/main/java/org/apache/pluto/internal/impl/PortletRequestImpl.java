@@ -61,6 +61,7 @@ import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.SecurityRoleRef;
@@ -117,7 +118,7 @@ implements PortletRequest, InternalPortletRequest {
      * The PortletContext associated with this Request. This PortletContext must
      * be initialized from within the <code>PortletServlet</code>.
      */
-    private PortletContext portletContext;
+    private InternalPortletContext portletContext;
 
     /** The PortalContext within which this request is occuring. */
     private PortalContext portalContext;
@@ -377,11 +378,7 @@ implements PortletRequest, InternalPortletRequest {
     }
 
     public String getContextPath() {
-        String name = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
-        if (!name.equals("")) {
-            name = "/" + name;
-        }
-        return name;
+        return portletContext.getContextPath();
     }
 
     public String getRemoteUser() {
@@ -622,7 +619,7 @@ implements PortletRequest, InternalPortletRequest {
         return (HttpServletRequest) super.getRequest();
     }
     
-    public void init(PortletContext portletContext, HttpServletRequest req) {
+    public void init(InternalPortletContext portletContext, HttpServletRequest req) {
         this.portletContext = portletContext;
         setRequest(req);
         setCCPPProfile();

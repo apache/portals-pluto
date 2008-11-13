@@ -17,7 +17,6 @@
 package org.apache.pluto.internal;
 
 import javax.portlet.PortletConfig;
-import javax.servlet.ServletConfig;
 
 import org.apache.pluto.om.portlet.PortletDefinition;
 

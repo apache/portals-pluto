@@ -17,7 +17,6 @@
 package org.apache.pluto.internal.impl;
 
 import javax.portlet.PortalContext;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +26,7 @@ import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
+import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.spi.CCPPProfileService;
@@ -67,7 +67,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockCCPPProfileService = mock( CCPPProfileService.class );
         mockOptionalServices = mock( OptionalContainerServices.class );
         mockPortalContext = mock( PortalContext.class );
-        mockPortletContext = mock( PortletContext.class );
+        mockPortletContext = mock( InternalPortletContext.class );
         mockContainer = mock( PortletContainerImpl.class,
                 new Class[] { String.class, RequiredContainerServices.class, OptionalContainerServices.class },
                 new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), null } );
@@ -107,7 +107,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
 
         // Create the render request that is under test, and initialize its state
         RenderRequestImpl request = new RenderRequestImpl( (PortletContainer)mockContainer.proxy(), window, (HttpServletRequest)mockHttpServletRequest.proxy() );
-        request.init( (PortletContext)mockPortletContext.proxy(), ( HttpServletRequest)mockHttpServletRequest.proxy() );
+        request.init( (InternalPortletContext)mockPortletContext.proxy(), ( HttpServletRequest)mockHttpServletRequest.proxy() );
 
         // Mock the HttpSession, and set its expectations: it will return 0 for the last accessed time, and 5
         // for the maximum inactive interval
