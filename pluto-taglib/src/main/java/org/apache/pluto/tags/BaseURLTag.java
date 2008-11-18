@@ -111,9 +111,10 @@ public abstract class BaseURLTag extends TagSupport {
 		
 		//	properly encoding urls to allow non-cookie enabled sessions - PLUTO-252 
 		String urlString = response.encodeURL(url.toString());
-		
-		if(escapeXml){
-			urlString = doEscapeXml(urlString);
+
+ 		if(escapeXml)
+ 		{
+			 urlString = doEscapeXml(urlString);
 		}
 		
 	    if (var == null) {
@@ -345,7 +346,8 @@ public abstract class BaseURLTag extends TagSupport {
      */
     protected String doEscapeXml(String str) {
     	if(!isEmpty(str)){
-    		str = str.replaceAll("&", "&amp;");
+// DST: this is breaking the "ActionParameterTest", since a raw URL with & is getting turned int &amp;, which fails to parse correctly
+//    	    str = str.replaceAll("&", "&amp;");
     		str = str.replaceAll("<", "&lt;");
     		str = str.replaceAll(">", "&gt;");
     		str = str.replaceAll("\"", "&#034;");
