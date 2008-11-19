@@ -16,8 +16,11 @@
  */
 package org.apache.pluto.spi.optional;
 
+import javax.portlet.PortletContext;
+import javax.portlet.PortletSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.internal.InternalActionRequest;
@@ -55,6 +58,13 @@ public interface PortletEnvironmentService {
         PortletContainer container,
         HttpServletRequest servletRequest,
         HttpServletResponse servletResponse,
+        InternalPortletWindow internalPortletWindow);
+
+    public PortletSession createPortletSession(
+        PortletContainer container,
+        HttpServletRequest servletRequest,
+        PortletContext portletContext,
+        HttpSession httpSession,
         InternalPortletWindow internalPortletWindow);
 
 }

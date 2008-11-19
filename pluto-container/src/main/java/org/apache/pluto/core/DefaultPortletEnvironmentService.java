@@ -16,8 +16,13 @@
  */
 package org.apache.pluto.core;
 
+import javax.portlet.PortletContext;
+import javax.portlet.PortletSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.internal.InternalActionRequest;
 import org.apache.pluto.internal.InternalActionResponse;
 import org.apache.pluto.internal.InternalPortletWindow;
@@ -25,11 +30,10 @@ import org.apache.pluto.internal.InternalRenderRequest;
 import org.apache.pluto.internal.InternalRenderResponse;
 import org.apache.pluto.internal.impl.ActionRequestImpl;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
+import org.apache.pluto.internal.impl.PortletSessionImpl;
 import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
 
 /**
  *
@@ -65,5 +69,12 @@ public class DefaultPortletEnvironmentService implements PortletEnvironmentServi
         return new RenderResponseImpl(container, internalPortletWindow, request, response);
     }
 
+    public PortletSession createPortletSession(PortletContainer container, 
+                                               HttpServletRequest servletRequest,
+                                               PortletContext portletContext,
+                                               HttpSession httpSession,
+                                               InternalPortletWindow internalPortletWindow) {
 
+        return new PortletSessionImpl(portletContext, internalPortletWindow, httpSession);
+    }
 }

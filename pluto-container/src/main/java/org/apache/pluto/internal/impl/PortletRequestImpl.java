@@ -51,6 +51,7 @@ import org.apache.pluto.descriptors.portlet.SupportsDD;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
 import org.apache.pluto.internal.PortletEntity;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
@@ -243,10 +244,14 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Creating new portlet session...");
             }
-            portletSession = new PortletSessionImpl(
-                portletContext,
-                internalPortletWindow,
-                httpSession);
+            final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+            final PortletEnvironmentService portletEnvironmentService = optionalContainerServices.getPortletEnvironmentService();
+            
+            portletSession = portletEnvironmentService.createPortletSession(container, 
+                                                                            getHttpServletRequest(),
+                                                                            portletContext, 
+                                                                            httpSession, 
+                                                                            internalPortletWindow);
         }
         return portletSession;
     }

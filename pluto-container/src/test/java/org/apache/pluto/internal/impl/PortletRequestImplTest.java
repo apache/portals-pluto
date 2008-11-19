@@ -29,6 +29,7 @@ import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.internal.InternalPortletWindow;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.UserInfoService;
 import org.jmock.Mock;
 import org.jmock.cglib.MockObjectTestCase;
@@ -45,6 +46,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
     // Mock Objects
     private Mock mockContainer = null;
     private Mock mockServices = null;
+    private Mock mockOptionalServices = null;
     private Mock mockPortalContext = null;
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
@@ -60,11 +62,12 @@ public class PortletRequestImplTest extends MockObjectTestCase
 
         // Create mocks
         mockServices = mock( RequiredContainerServices.class );
+        mockOptionalServices = mock( OptionalContainerServices.class );
         mockPortalContext = mock( PortalContext.class );
         mockPortletContext = mock( PortletContext.class );
         mockContainer = mock( PortletContainerImpl.class,
                 new Class[] { String.class, RequiredContainerServices.class, OptionalContainerServices.class },
-                new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), null } );
+                new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), (OptionalContainerServices) mockOptionalServices.proxy() } );
         window = (InternalPortletWindow) mock( InternalPortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
 
@@ -86,6 +89,12 @@ public class PortletRequestImplTest extends MockObjectTestCase
         // of a servlet container that doesn't initialize
         // its value.
         long lastAccessedTime = 0L;  // in milliseconds
+        
+        Mock mockPortletEnvironmentService = mock( PortletEnvironmentService.class );
+        
+        mockOptionalServices.expects( once() ).method( "getPortletEnvironmentService" ).will( returnValue( mockPortletEnvironmentService.proxy() ));
+        
+        mockContainer.expects( once() ).method( "getOptionalContainerServices" ).will( returnValue( mockOptionalServices.proxy() ));
 
         // Create the render request that is under test, and initialize its state
         RenderRequestImpl request = new RenderRequestImpl( (PortletContainer)mockContainer.proxy(), window, (HttpServletRequest)mockHttpServletRequest.proxy() );
@@ -109,6 +118,9 @@ public class PortletRequestImplTest extends MockObjectTestCase
         //
         // After applying PLUTO-474, invalidate() should never be called
         mockHttpSession.expects( never() ).method( "invalidate" );
+        
+        Mock mockPortletSession = mock( PortletSession.class );
+        mockPortletEnvironmentService.expects( once() ).method( "createPortletSession" ).will( returnValue( mockPortletSession.proxy() ));
         
         PortletSession s = request.getPortletSession( true );
     }
