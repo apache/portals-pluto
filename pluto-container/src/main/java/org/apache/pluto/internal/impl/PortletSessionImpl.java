@@ -41,13 +41,13 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
     private static final Log LOG = LogFactory.getLog(PortletSessionImpl.class);
 
     /** The default scope (<code>PORTLET_SCOPE</code>) for storing objects. */
-    private static final int DEFAULT_SCOPE = PortletSession.PORTLET_SCOPE;
+    protected static final int DEFAULT_SCOPE = PortletSession.PORTLET_SCOPE;
 
     /** The portlet scope namespace as defined in PLT. 15.3. */
-    private static final String PORTLET_SCOPE_NAMESPACE = "javax.portlet.p.";
+    protected static final String PORTLET_SCOPE_NAMESPACE = "javax.portlet.p.";
 
     /** The portlet window ID / attribute name separator as defined in PLT. 15.3. */
-    private static final char ID_NAME_SEPARATOR = '?';
+    protected static final char ID_NAME_SEPARATOR = '?';
 
 
     // Private Member Variables ------------------------------------------------
@@ -211,7 +211,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
      * @param name  the attribute name.
      * @return portlet-scoped ID for the attribute name.
      */
-    private String createPortletScopedId(String name) {
+    protected String createPortletScopedId(String name) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(PORTLET_SCOPE_NAMESPACE);
     	buffer.append(internalPortletWindow.getId().getStringId());
@@ -227,7 +227,7 @@ public class PortletSessionImpl implements PortletSession, HttpSession {
      * @return true if the attribute name is in the current portlet scope.
      * @see #createPortletScopedId(String)
      */
-    private boolean isInCurrentPortletScope(String name) {
+    protected boolean isInCurrentPortletScope(String name) {
     	// Portlet-scoped attribute names MUST start with "javax.portlet.p.",
     	//   and contain the ID-name separator '?'.
     	if (name.startsWith(PORTLET_SCOPE_NAMESPACE)
