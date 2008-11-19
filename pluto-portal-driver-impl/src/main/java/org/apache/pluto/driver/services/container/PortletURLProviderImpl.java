@@ -156,10 +156,10 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
     public Map<String, String[]> parseRenderParameters(Map<String, String[]> parentMap, String queryString)
     {
+        // Copy all the original render parameters.
+        parameters = new HashMap<String, String[]>(parentMap);        
         if (queryString != null && queryString.trim().length() > 0)
         {
-            // Copy all the original render parameters.
-            parameters = new HashMap(parentMap);
             // Merge the appended parameters to the render parameter map.
             // The original render parameters should not be overwritten.
             mergeQueryString(parameters, queryString);
