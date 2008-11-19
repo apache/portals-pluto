@@ -38,7 +38,6 @@ import java.util.Vector;
 
 import javax.ccpp.Profile;
 import javax.portlet.PortalContext;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -63,10 +62,12 @@ import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.InternalPortletRequest;
+import org.apache.pluto.internal.InternalPortletSession;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
@@ -124,7 +125,7 @@ implements PortletRequest, InternalPortletRequest {
     private PortalContext portalContext;
 
     /** The portlet session. */
-    private PortletSessionImpl portletSession;
+    private InternalPortletSession portletSession;
 
     /** Response content types. */
     private Vector contentTypes;
@@ -290,10 +291,14 @@ implements PortletRequest, InternalPortletRequest {
         	if (LOG.isDebugEnabled()) {
         		LOG.debug("Creating new portlet session...");
         	}
-            portletSession = new PortletSessionImpl(
-                    portletContext,
-                    portletWindow,
-                    httpSession);
+            final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+            final PortletEnvironmentService portletEnvironmentService = optionalContainerServices.getPortletEnvironmentService();
+            
+            portletSession = portletEnvironmentService.createPortletSession(container, 
+                                                                            getHttpServletRequest(),
+                                                                            portletContext, 
+                                                                            httpSession, 
+                                                                            portletWindow);
         }
         
         return portletSession;

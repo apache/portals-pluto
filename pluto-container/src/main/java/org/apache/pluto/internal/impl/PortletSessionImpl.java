@@ -31,13 +31,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.internal.InternalPortletSession;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Implementation of the <code>javax.portlet.PortletSession</code> interface.
  * 
  */
-public class PortletSessionImpl implements PortletSession {
+public class PortletSessionImpl implements InternalPortletSession {
 	
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletSessionImpl.class);
@@ -76,11 +77,9 @@ public class PortletSessionImpl implements PortletSession {
         this.httpSession = httpSession;
     }
     
-    /**
-     * Packaged scope access to the wrapped HttpSession for usage from PortletRequestImpl.getSession()
-     * @return wrapped HttpSession
-     */
-    HttpSession getHttpSession()
+    // InternalPortletSession Impl -----------------------------------------
+    
+    public HttpSession getHttpSession()
     {
         return httpSession;
     }

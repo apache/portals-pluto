@@ -24,12 +24,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.internal.InternalPortletSession;
 import org.apache.pluto.spi.CCPPProfileService;
+import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.jmock.Mock;
 import org.jmock.cglib.MockObjectTestCase;
@@ -70,7 +72,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockPortletContext = mock( InternalPortletContext.class );
         mockContainer = mock( PortletContainerImpl.class,
                 new Class[] { String.class, RequiredContainerServices.class, OptionalContainerServices.class },
-                new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), null } );
+                new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), (OptionalContainerServices) mockOptionalServices.proxy() } );
         window = (PortletWindow) mock( PortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
         mockRequestAttributeService = mock (RequestAttributeService.class);
@@ -93,6 +95,10 @@ public class PortletRequestImplTest extends MockObjectTestCase
         // of a servlet container that doesn't initialize
         // its value.
         long lastAccessedTime = 0L;  // in milliseconds
+                
+        Mock mockPortletEnvironmentService = mock( PortletEnvironmentService.class );
+        
+        mockOptionalServices.expects( once() ).method( "getPortletEnvironmentService" ).will( returnValue( mockPortletEnvironmentService.proxy() ));
         
         mockCCPPProfileService.expects(once()).method("getCCPPProfile").will(returnValue( null ));
         
@@ -128,6 +134,9 @@ public class PortletRequestImplTest extends MockObjectTestCase
         // After applying PLUTO-474, invalidate() should never be called
         mockHttpSession.expects( never() ).method( "invalidate" );
         
+        Mock mockPortletSession = mock( InternalPortletSession.class );
+        mockPortletEnvironmentService.expects( once() ).method( "createPortletSession" ).will( returnValue( mockPortletSession.proxy() ));
+
         PortletSession s = request.getPortletSession( true );
     }
     
