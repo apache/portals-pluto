@@ -573,8 +573,14 @@ public class PortletContainerImpl implements PortletContainer,
         return requiredContainerServices.getPortalCallbackService().getFilterManager(pe.getPortletDefinition().getApplication(),pe.getPortletDefinition().getPortletName(),lifeCycle);
     }
 	
-	class AdminRequest extends PortletRequestImpl {
+	class AdminRequest extends PortletRequestImpl 
+	{
 
+	    public Integer getRequestMethod()
+	    {
+	        return Constants.METHOD_ADMIN;
+	    }
+	     
         public AdminRequest(PortletContainer container,
                             PortletWindow portletWindow,
                             HttpServletRequest servletRequest) {

@@ -19,7 +19,6 @@ package org.apache.pluto.internal.impl;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
@@ -41,13 +40,7 @@ implements ResourceRequest, InternalResourceRequest {
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(ResourceRequestImpl.class);
     
-    
-    // Private Member Variables ------------------------------------------------
-    
-    /** FIXME: The portlet preferences. */
-    private PortletPreferences portletPreferences = null;
-    
-    
+        
     // Constructor -------------------------------------------------------------
     
     public ResourceRequestImpl(PortletContainer container,
@@ -60,6 +53,11 @@ implements ResourceRequest, InternalResourceRequest {
     }
 
     // ResourceRequest impl ------------------------------------------------------
+
+    protected Integer getRequestMethod()
+    {
+        return Constants.METHOD_RESOURCE; 
+    }
     
     public String getResponseContentType(){
     	return super.getResponseContentType();
@@ -119,35 +117,18 @@ implements ResourceRequest, InternalResourceRequest {
     
     // PortletRequestImpl impl -------------------------------------------------
     
-    /**
-     * FIXME: 
-     */
-    public PortletPreferences getPreferences() {
-        if (portletPreferences == null) {
-            portletPreferences = new PortletPreferencesImpl(
-            		getPortletContainer(),
-            		getPortletWindow(),
-            		this,
-            		Constants.METHOD_ACTION);
-        }
-        return portletPreferences;
-    }
-
 	public String getETag() {
 		// TODO: get ETag
 		return null;
 	}
 
-	public String getLifecyclePhase() {
+	public String getLifecyclePhase() 
+	{
 		return RESOURCE_PHASE;
 	}
 
 	public String getResourceID() {
 		return getParameter("resourceID");
-	}
-
-	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(this, portletWindow);
 	}
 	
 	public ServletInputStream getInputStream() throws IOException {

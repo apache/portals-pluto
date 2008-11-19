@@ -19,7 +19,6 @@ package org.apache.pluto.internal.impl;
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletPreferences;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -35,68 +34,33 @@ import org.apache.pluto.internal.InternalActionRequest;
  * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
  */
 public class ActionRequestImpl extends ClientDataRequestImpl
-implements ActionRequest, InternalActionRequest {
-
-	/** Logger. */
+                               implements ActionRequest, InternalActionRequest 
+{
     private static final Log LOG = LogFactory.getLog(ActionRequestImpl.class);
-
-
-    // Private Member Variables ------------------------------------------------
-
-    /** FIXME: The portlet preferences. */
-    private PortletPreferences portletPreferences;
-
-
-    // Constructor -------------------------------------------------------------
 
     public ActionRequestImpl(PortletContainer container,
                              PortletWindow portletWindow,
-                             HttpServletRequest servletRequest) {
+                             HttpServletRequest servletRequest) 
+    {
         super(container, portletWindow, servletRequest);
-        if (LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) 
+        {
         	LOG.debug("Created action request for: " + portletWindow);
         }
     }
 
-    // ActionRequest impl ------------------------------------------------------
-
-    
-
-    // PortletRequestImpl impl -------------------------------------------------
-
-    /**
-     * FIXME:
-     */
-    public PortletPreferences getPreferences() {
-        if (portletPreferences == null) {
-            portletPreferences = new PortletPreferencesImpl(
-            		getPortletContainer(),
-            		getPortletWindow(),
-            		this,
-            		Constants.METHOD_ACTION);
-        }
-        return portletPreferences;
+    protected Integer getRequestMethod()
+    {
+        return Constants.METHOD_ACTION; 
     }
-
-	public String getLifecyclePhase() {
+    
+	public String getLifecyclePhase() 
+	{
 		return ACTION_PHASE;
 	}
-
-	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(getHttpServletRequest(), portletWindow);
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////
-	//for RequestDispatcher include and forward 
-	/////////////////////////////////////////////////////////////////////////////////////////	
-	
-    
-	
-    
-    public int getContentLength() {
-        return super.getContentLength();
-    }
-    
-    public ServletInputStream getInputStream() throws IOException {
+	    
+    public ServletInputStream getInputStream() throws IOException 
+    {
         return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
     }
 }

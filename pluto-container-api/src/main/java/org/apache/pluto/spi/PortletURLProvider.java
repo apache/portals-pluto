@@ -124,4 +124,8 @@ public interface PortletURLProvider {
      * @return the values for the Parameter, can be null, if there is no Parameter with this name.
      */
     public String[] getPrivateRenderParameters(String name);
+
+    public Map<String, String[]> parseRenderParameters(Map<String, String[]> parentMap, String queryString);
+    
+    public Map<String, String[]> getRenderParameters();
 }

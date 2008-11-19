@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
 
 public interface RequestPropertyProvider
 {
-    public Map getProperties(HttpServletRequest request,
+    public Map<String, String[]> getProperties(HttpServletRequest request,
             PortletWindow portletWindow);
 
     public void setProperty(HttpServletRequest request,

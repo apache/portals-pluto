@@ -23,9 +23,7 @@ import java.io.UnsupportedEncodingException;
 
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
-import javax.portlet.PortletPreferences;
 import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -48,12 +46,7 @@ public class EventRequestImpl extends PortletRequestImpl
     private static final Log LOG = LogFactory.getLog(ActionRequestImpl.class);
 	
 	//	 Private Member Variables ------------------------------------------------	
-    
-	/** FIXME: The portlet preferences. 
-	 * @see (ActionRequestImpl) 
-	 */
-	private PortletPreferences portletPreferences = null;
-	
+    	
 	private Event event; 
 	
 	//	 Constructor -------------------------------------------------------------
@@ -71,38 +64,22 @@ public class EventRequestImpl extends PortletRequestImpl
     
     //  EventRequest impl -------------------------------------------------------
     
+    protected Integer getRequestMethod()
+    {
+        return Constants.METHOD_EVENT; 
+    }
+    
     public Event getEvent(){
         return event;
     }
     
     //  PortletRequestImpl impl -------------------------------------------------
     
-	/**
-    * FIXME: (see ActionRequestImpl)
-    */
-    public PortletPreferences getPreferences() {
-    	// TODO: Are there any changes to do in PortletPreferences?
-       if (portletPreferences == null) {
-           portletPreferences = new PortletPreferencesImpl(
-           		getPortletContainer(),
-           		getPortletWindow(),
-           		this,
-           		Constants.METHOD_EVENT);
-       }
-       return portletPreferences;
-   }
-
 	public String getLifecyclePhase() {
 		return EVENT_PHASE;
 	}
 
-	public Cookie[] getCookieProperties() {
-		return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(super.getHttpServletRequest(), super.getPortletWindow());
-	}
 	
-	public String getMethod(){
-		return super.getMethod();
-	}
     
     //////////////////////////////////////////////////////////////////
 	//for forward and include
