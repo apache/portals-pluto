@@ -47,7 +47,7 @@ limitations under the License.
         </td>
         
         <%-- Generate portlet action URL: Start =========================== --%>
-        <portlet:actionURL secure='<%= renderRequest.isSecure() ? "True" : "False" %>'
+        <portlet:actionURL secure='<%= renderRequest.isSecure() ? "True" : "False" %>' escapeXml="true"
                            var="url">
           <portlet:param name="testId"
                          value='<%= ((LoopTagStatus) pageContext.getAttribute("status")).getIndex() + "" %>'/>
@@ -65,7 +65,7 @@ limitations under the License.
         <%-- Generate portlet action URL: End ============================= --%>
         
         <td>
-          <a href="<c:out value="${url}"/>">Test</a>
+          <a href="<c:out value="${url}" escapeXml="false"/>">Test</a>
         </td>
       </tr>
     </c:forEach>

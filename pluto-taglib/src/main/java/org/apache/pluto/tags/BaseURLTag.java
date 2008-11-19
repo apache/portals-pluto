@@ -346,8 +346,7 @@ public abstract class BaseURLTag extends TagSupport {
      */
     protected String doEscapeXml(String str) {
     	if(!isEmpty(str)){
-// DST: this is breaking the "ActionParameterTest", since a raw URL with & is getting turned int &amp;, which fails to parse correctly
-//    	    str = str.replaceAll("&", "&amp;");
+    	    str = str.replaceAll("&", "&amp;");
     		str = str.replaceAll("<", "&lt;");
     		str = str.replaceAll(">", "&gt;");
     		str = str.replaceAll("\"", "&#034;");
