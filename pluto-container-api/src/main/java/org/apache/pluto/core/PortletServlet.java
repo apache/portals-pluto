@@ -194,6 +194,9 @@ public class PortletServlet extends HttpServlet
             catch (Exception ex)
             {
                 context.log(ex.getMessage(),ex);
+                // take out of service
+                portlet = null;
+                portletConfig = null;
                 return true;
             }
         }
@@ -215,7 +218,15 @@ public class PortletServlet extends HttpServlet
               contextService.unregister(portletContext);
               if (portlet != null)
               {
-                  portlet.destroy();
+                  try
+                  {
+                      portlet.destroy();
+                  }
+                  catch (Exception e)
+                  {
+                      // ignore
+                  }
+                  portlet = null;
               }
             }
             super.destroy();
@@ -262,6 +273,10 @@ public class PortletServlet extends HttpServlet
     private void dispatch(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException
     {
+        if (portlet == null)
+        {
+            throw new javax.servlet.UnavailableException("Portlet "+portletName+" unavailable");
+        }
         InternalPortletRequest portletRequest = null;
         InternalPortletResponse portletResponse = null;
         // Save portlet config into servlet request.
@@ -384,6 +399,8 @@ public class PortletServlet extends HttpServlet
                 System.err.println(ex.getMessage());
                 // Don't care for Exception
             }
+            // take portlet out of service
+            portlet = null;
 
             // TODO: Handle everything as permanently for now.
             throw new javax.servlet.UnavailableException(ex.getMessage());
