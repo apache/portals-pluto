@@ -147,10 +147,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
     public Map<String, String[]> getRenderParameters()
     {
-        if (this.parameters == null)
-        {
-            this.parameters = new HashMap<String, String[]>();
-        }
         return this.parameters;
     }
 

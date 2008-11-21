@@ -471,6 +471,24 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     {
     	ArgumentUtility.validateNotNull("attributeName", name);
 
+        if (namedRequestDispatcher && (name.startsWith("javax.servlet.forward") || name.startsWith("javax.servlet.include")))
+        {
+            // PLT.19.3.1
+            if (name.equals("javax.servlet.include.request_uri")||name.equals("javax.servlet.include.context_path")||
+                            name.equals("javax.servlet.include.servlet_path")||name.equals("javax.servlet.include.path_info")||
+                            name.equals("javax.servlet.include.query_string"))
+            {
+                return null;
+            }
+            // PLT.19.4.2, ccxlii
+            if (name.equals("javax.servlet.forward.request_uri")||name.equals("javax.servlet.forward.context_path")||
+                            name.equals("javax.servlet.forward.servlet_path")||name.equals("javax.servlet.forward.path_info")||
+                            name.equals("javax.servlet.forward.query_string"))
+            {
+                return null;
+            }
+        }
+        
         final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
         final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
         return requestAttributeService.getAttribute(this, this.getHttpServletRequest(), this.portletWindow, name);
@@ -485,6 +503,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     
     public String getParameter(String name) 
     {
+        ArgumentUtility.validateNotNull("parameterName", name);
         String[] values  = null;
         if (parameters != null)
         {
@@ -492,7 +511,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         }
         else
         {
-        	ArgumentUtility.validateNotNull("parameterName", name);
         	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
         	if (publicRenderParameterNames != null)
         	{
@@ -518,15 +536,12 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
     public Enumeration<String> getParameterNames() 
     {
-        if (parameters != null)
-        {
-            return Collections.enumeration(parameters.keySet());
-        }
         return Collections.enumeration(baseGetParameterMap().keySet());
     }
 
     public String[] getParameterValues(String name) 
     {
+        ArgumentUtility.validateNotNull("parameterName", name);
         String[] values  = null;
         if (parameters != null)
         {
@@ -871,13 +886,13 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         if (isIncluded())
         {
             setBodyAccessed();
-            this.parameters = urlProvider.getRenderParameters();
         }
-        else
+        Map<String, String[]> parameters = urlProvider.getRenderParameters();
+        if (parameters == null)
         {
-            this.parameters = this.getHttpServletRequest().getParameterMap(); 
+            parameters = urlProvider.parseRenderParameters(this.getHttpServletRequest().getParameterMap(),null); 
         }
-        return this.parameters;
+        return parameters;
     }
     
 	public void setForwardedQueryString(String queryString)

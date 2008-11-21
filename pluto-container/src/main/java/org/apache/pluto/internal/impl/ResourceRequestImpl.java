@@ -30,8 +30,6 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalResourceRequest;
-import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringUtils;
 
 public class ResourceRequestImpl extends ClientDataRequestImpl
@@ -69,9 +67,7 @@ implements ResourceRequest, InternalResourceRequest {
     }
     
     public String[] getParameterValues(String name) {
-    	ArgumentUtility.validateNotNull("parameterName", name);
     	String values1[] = super.getParameterValues(name);
-    	PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), portletWindow);
     	String values2[] = urlProvider.getPrivateRenderParameters(name);
     	String values[] = null;
     	int length1 = 0;
@@ -100,11 +96,8 @@ implements ResourceRequest, InternalResourceRequest {
     }
     
     public String getParameter(String name) {
-    	
-    	ArgumentUtility.validateNotNull("parameterName", name);
     	String value = super.getParameter(name);
     	if (value == null){
-    		PortletURLProvider urlProvider = container.getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(getHttpServletRequest(), portletWindow);
         	String[] values1 = urlProvider.getPrivateRenderParameters(name);
         	if (values1!= null){
         		if (values1.length>0){

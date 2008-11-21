@@ -143,7 +143,6 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         		internalRequest.setNamedRequestDispatcher(false);
         	}
         	else{
-        		removeAttributes(internalRequest);
         		internalRequest.setNamedRequestDispatcher(true);
         	}
         	internalResponse.setForwarded(true);
@@ -177,7 +176,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         	}
         	else{
         		
-        		removeAttributes(internalRequest);
+                internalRequest.setNamedRequestDispatcher(true);
         	}
         	internalResponse.setIncluded(true);
 
@@ -197,13 +196,6 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         	internalResponse.setIncluded(isIncluded);
         }
     }
-	private void removeAttributes(InternalPortletRequest internalRequest){
-		internalRequest.removeAttribute("javax.servlet.forward.request_uri");
-		internalRequest.removeAttribute("javax.servlet.forward.context_path");
-		internalRequest.removeAttribute("javax.servlet.forward.servlet_path");
-		internalRequest.removeAttribute("javax.servlet.forward.path_info");
-		internalRequest.removeAttribute("javax.servlet.forward.query_string");
-	}
 	private void setAttributesForward(InternalPortletRequest internalRequest){
 		String context_path = internalRequest.getContextPath();
 		String request_uri = context_path + servlet_path + path_info;

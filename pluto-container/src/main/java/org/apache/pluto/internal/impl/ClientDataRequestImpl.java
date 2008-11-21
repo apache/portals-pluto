@@ -33,6 +33,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Implementation of the <code>javax.portlet.ClientDataRequest</code> interface.
@@ -103,6 +104,7 @@ public abstract class ClientDataRequestImpl extends PortletRequestImpl
     @Override
     public String getParameter(String name)
     {
+        ArgumentUtility.validateNotNull("parameterName", name);
         String[] values  = null;
         if (parameters != null)
         {
@@ -143,6 +145,7 @@ public abstract class ClientDataRequestImpl extends PortletRequestImpl
     @Override
     public String[] getParameterValues(String name)
     {
+        ArgumentUtility.validateNotNull("parameterName", name);
         String[] values  = null;
         if (parameters != null)
         {
@@ -204,8 +207,6 @@ public abstract class ClientDataRequestImpl extends PortletRequestImpl
                 }
             }
         }
-        // merge with post parameters
-        mergedParameterMap.putAll(this.servletRequest.getParameterMap());
         this.parameters = mergedParameterMap;
         return this.parameters;
     }
