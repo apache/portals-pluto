@@ -129,7 +129,7 @@ public class DefaultRequestAttributeService implements RequestAttributeService {
         final String encodedName = this.encodeAttributeName(portletWindow, name);
         
         if (value == null) {
-            httpServletRequest.removeAttribute(name);
+            httpServletRequest.removeAttribute(encodedName);
         }
         else {
             httpServletRequest.setAttribute(encodedName, value);
