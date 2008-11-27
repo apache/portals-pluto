@@ -53,6 +53,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.Constants;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletEntity;
@@ -145,6 +146,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     protected PortletURLProvider urlProvider;
     
     protected Map<String, String[]> parameters = null;
+    
+    protected String queryString = null;
     
     // Constructors ------------------------------------------------------------
 
@@ -890,7 +893,15 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         Map<String, String[]> parameters = urlProvider.getRenderParameters();
         if (parameters == null)
         {
-            parameters = urlProvider.parseRenderParameters(this.getHttpServletRequest().getParameterMap(),null); 
+            if (getRequestMethod().equals(Constants.METHOD_RENDER) || getRequestMethod().equals(Constants.METHOD_EVENT))
+            {
+                parameters = urlProvider.parseRenderParameters(this.getHttpServletRequest().getParameterMap(), queryString); 
+                queryString = null;
+            }
+            else
+            {
+                parameters = urlProvider.parseRenderParameters(this.getHttpServletRequest().getParameterMap(), null); 
+            }
         }
         return parameters;
     }
@@ -904,7 +915,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
                         + "render request which is not included in a dispatch."); 
         }
         this.parameters = null;
-        this.urlProvider.parseRenderParameters(super.getParameterMap(), queryString);
+        this.queryString = queryString;
+//        this.urlProvider.parseRenderParameters(super.getParameterMap(), queryString);
+        this.urlProvider.parseRenderParameters(null,null);
     }
 
     public void setIncludedQueryString(String queryString)
@@ -917,7 +930,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
                         + "render request which is not included in a dispatch."); 
         }
         this.parameters = null;
-        this.urlProvider.parseRenderParameters(super.getParameterMap(), queryString);        
+        this.queryString = queryString;
+//        this.urlProvider.parseRenderParameters(super.getParameterMap(), queryString);        
+        this.urlProvider.parseRenderParameters(null,null);
     }
 
 
