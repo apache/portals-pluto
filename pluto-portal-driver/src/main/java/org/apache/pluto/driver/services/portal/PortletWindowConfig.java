@@ -109,6 +109,10 @@ public class PortletWindowConfig {
         if(metaInfo == null) {
             metaInfo = "";
         }
+        if (contextPath.charAt(0) == '/')
+        {
+            contextPath = contextPath.substring(1);
+        }
         return contextPath + "." + portletName + "!" + metaInfo;
     }
     
@@ -119,7 +123,14 @@ public class PortletWindowConfig {
      */
     public static String parseContextPath(String portletId) {
     	int index = getSeparatorIndex(portletId);
-        return portletId.substring(0, index);
+    	if (portletId.charAt(0) != '/')
+    	{
+            return "/" + portletId.substring(0, index);
+    	}
+    	else
+    	{
+            return portletId.substring(0, index);
+    	}
     }
     
     /**

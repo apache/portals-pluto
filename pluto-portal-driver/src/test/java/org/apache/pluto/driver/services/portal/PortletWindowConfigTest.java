@@ -42,10 +42,10 @@ public class PortletWindowConfigTest extends TestCase {
     }
 
     public void testParseContextPath() {
-        assertEquals("context", PortletWindowConfig.parseContextPath("context.PortletName"));
-        assertEquals("c", PortletWindowConfig.parseContextPath("c.PortletName"));
-        assertEquals("context", PortletWindowConfig.parseContextPath("context.P"));
-        assertEquals("c", PortletWindowConfig.parseContextPath("c.P"));
+        assertEquals("/context", PortletWindowConfig.parseContextPath("context.PortletName"));
+        assertEquals("/c", PortletWindowConfig.parseContextPath("c.PortletName"));
+        assertEquals("/context", PortletWindowConfig.parseContextPath("context.P"));
+        assertEquals("/c", PortletWindowConfig.parseContextPath("c.P"));
     }
 
     public void testParseInvalidId() {
