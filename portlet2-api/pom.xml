@@ -29,7 +29,7 @@
   <artifactId>portlet-api</artifactId>
   <version>2.0</version>
   <packaging>jar</packaging>
-  <name>Portlet 2.0 API</name> 
+  <name>Java Portlet Specification V2.0</name> 
   <description>The Java Portlet API version 2.0 developed by the Java Community Process JSR-286 Expert Group.</description>
   <url>http://www.jcp.org/en/jsr/detail?id=286</url>
   <distributionManagement>
@@ -76,6 +76,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <doctitle>${pom.name}</doctitle>
+            <windowtitle>${pom.name}</windowtitle>
+            <splitindex>true</splitindex>
+            <bottom>&nbsp;</bottom>
+          </configuration>
           <executions>
             <execution>
               <id>attach-javadocs</id>
