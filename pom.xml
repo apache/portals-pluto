@@ -258,7 +258,6 @@
     <!-- Pluto Modules ======================================================= -->
 
     <modules>
-      <module>portlet2-api</module>
       <!-- Pluto Container API -->
         <module>pluto-container-api</module>
         
@@ -351,6 +350,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
+                    <inherited>true</inherited>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -364,6 +364,11 @@
         </pluginManagement>
         
         <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <inherited>true</inherited>
+          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
