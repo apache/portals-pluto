@@ -314,6 +314,12 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     }
 
     protected boolean isPortletModeAllowedByPortlet(PortletMode mode) {
+        
+        //Not checking for VIEW mode in portetlDefinition, as VIEW mode is default
+        // as per specs.
+        if(PortletMode.VIEW.equals(mode))
+            return true;
+        
         PortletDefinition dd = getPortletWindow().getPortletEntity()
             .getPortletDefinition();
 
