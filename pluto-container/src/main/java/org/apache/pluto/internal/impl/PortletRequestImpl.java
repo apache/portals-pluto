@@ -788,7 +788,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     
     private boolean isPortletModeAllowedByPortlet(PortletMode mode) 
     {
-        if (isPortletModeMandatory(mode)) 
+        if(PortletMode.VIEW.equals(mode))
         {
             return true;
         }
@@ -825,12 +825,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         }
         return false;
     }
-
-    private boolean isPortletModeMandatory(PortletMode mode) 
-    {
-        return PortletMode.VIEW.equals(mode) || PortletMode.EDIT.equals(mode) || PortletMode.HELP.equals(mode);
-    }
-
 
 // InternalRenderRequest Impl ----------------------------------------------
 
