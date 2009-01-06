@@ -31,33 +31,34 @@ import org.apache.pluto.spi.optional.UserInfoService;
  *
  */
 public class DefaultUserInfoService implements UserInfoService {
-
     private Map userInfoMap = new HashMap();
 
-    public Map getUserInfo(PortletRequest request)
-        throws PortletContainerException {
+    /**
+     * @deprecated
+     */
+    public Map getUserInfo(PortletRequest request) throws PortletContainerException {
         if ( request.getRemoteUser() != null ) {
-        	Map info = (Map)userInfoMap.get(request.getRemoteUser());
+        	final Map info = (Map)this.userInfoMap.get(request.getRemoteUser());
             if ( info == null ) {
                 return Collections.EMPTY_MAP;
-            } else {
-                return info;
             }
+            
+            return info;
         }
-        return new HashMap();
+
+        return null;
     }
 
-    public Map getUserInfo(PortletRequest request, PortletWindow window)
-        throws PortletContainerException {
+    public Map getUserInfo(PortletRequest request, PortletWindow window) throws PortletContainerException {
         return getUserInfo(request);
     }
 
     public void setUserInfo(String userName, Map userInfoMap) {
-        userInfoMap.put(userName, userInfoMap);
+        this.userInfoMap.put(userName, userInfoMap);
     }
 
     public void removeUserInfo(String userName) {
-        userInfoMap.remove(userName);
+        this.userInfoMap.remove(userName);
     }
     
 }
