@@ -210,8 +210,15 @@ implements PortletResponse, InternalPortletResponse {
             		+ "after getWriter was invoked.");
         }
         if (wrappedWriter == null) {
-            wrappedWriter = new PrintWriterServletOutputStream(
-            		getHttpServletResponse().getWriter());
+            try {
+                wrappedWriter = getHttpServletResponse().getOutputStream();
+            }
+            catch (IllegalStateException ise) {
+                // handle situation where underlying ServletResponse its getWriter()
+                // has been called already anyway: return a wrapped PrintWriter in that case
+                wrappedWriter = new PrintWriterServletOutputStream(getHttpServletResponse().getWriter(),
+                                                                   getHttpServletResponse().getCharacterEncoding());
+            }
         }
         usingStream = true;
         return wrappedWriter;
