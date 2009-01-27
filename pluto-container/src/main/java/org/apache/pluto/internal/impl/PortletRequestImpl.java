@@ -22,6 +22,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -65,6 +67,7 @@ import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLProvider;
+import org.apache.pluto.spi.PropertyManager;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
 import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.apache.pluto.util.ArgumentUtility;
@@ -85,7 +88,8 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
-    
+ 
+    private static final List<String> EMPTY_STRING_LIST = Collections.unmodifiableList(new ArrayList<String>(0));
     /**
      * Cache for parsed dateHeader values.
      */
@@ -146,6 +150,11 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     protected PortletURLProvider urlProvider;
     
     protected Map<String, String[]> parameters = null;
+    
+    protected Map<String, String[]> requestProperties = null;
+    protected List<String> requestPropertyNames = null;
+    
+    protected Cookie[] requestCookies = null;
     
     protected String queryString = null;
     
@@ -325,26 +334,31 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         return portletSession;
     }
     
+    protected void retrieveRequestProperties()
+    {
+        PropertyManager propertyManager = container.getRequiredContainerServices().getPortalCallbackService().getPropertyManager();
+        Map<String, String[]> properties = propertyManager.getRequestProperties(getHttpServletRequest(), portletWindow);
+        requestPropertyNames = new ArrayList<String>(properties.size());
+        requestProperties = new HashMap<String, String[]>(properties.size());
+        for (Map.Entry<String, String[]> entry : properties.entrySet())
+        {
+            requestPropertyNames.add(entry.getKey());
+            requestProperties.put(entry.getKey().toLowerCase(), entry.getValue());
+        }
+    }
+    
     public String getProperty(String name)
     {
     	ArgumentUtility.validateNotNull("propertyName", name);
-        String property = this.getHttpServletRequest().getHeader(name);
-        if (property == null) 
+    	if (requestProperties == null)
+    	{
+    	    retrieveRequestProperties();
+    	}
+    	String property = null;
+        String[] properties = requestProperties.get(name.toLowerCase());
+        if (properties != null && properties.length > 0) 
         {
-            Map<String, String[]> propertyMap = container.getRequiredContainerServices()
-                    .getPortalCallbackService().getRequestPropertyProvider()
-                    .getProperties(
-                    		getHttpServletRequest(),
-                    		portletWindow);
-
-            if (propertyMap != null) 
-            {
-                String[] properties = (String[]) propertyMap.get(name);
-                if (properties != null && properties.length > 0) 
-                {
-                	property = properties[0];
-                }
-            }
+            property = properties[0];
         }
         return property;
     }
@@ -352,59 +366,25 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     public Enumeration<String> getProperties(String name) 
     {
     	ArgumentUtility.validateNotNull("propertyName", name);
-        Set<String> v = new HashSet<String>();
-        Enumeration<String> props = this.getHttpServletRequest().getHeaders(name);
-        if (props != null) 
+        if (requestProperties == null)
         {
-            while (props.hasMoreElements()) 
-            {
-                v.add(props.nextElement());
-            }
+            retrieveRequestProperties();
         }
-
-        // get properties from PropertyManager
-        Map<String, String[]> map = container.getRequiredContainerServices()
-                .getPortalCallbackService().getRequestPropertyProvider().getProperties(getHttpServletRequest(), portletWindow);
-        if (map != null) 
+        String[] properties = requestProperties.get(name.toLowerCase());
+        if (properties == null)
         {
-            String[] properties = (String[]) map.get(name);
-
-            if (properties != null) 
-            {
-                // add properties to vector
-                for (int i = 0; i < properties.length; i++) 
-                {
-                    v.add(properties[i]);
-                }
-            }
+            return Collections.enumeration(EMPTY_STRING_LIST);
         }
-        return new Enumerator(v.iterator());
+        return Collections.enumeration(Arrays.asList(properties));
     }
 
     public Enumeration<String> getPropertyNames() 
     {
-        Set<String> v = new HashSet<String>();
-
-        // get properties from PropertyManager
-        Map<String, String[]> map = container.getRequiredContainerServices()
-                .getPortalCallbackService().getRequestPropertyProvider()
-                .getProperties(getHttpServletRequest(), portletWindow);
-
-        if (map != null) 
+        if (requestProperties == null)
         {
-            v.addAll(map.keySet());
+            retrieveRequestProperties();
         }
-
-        // get properties from request header
-        Enumeration<String> props = this.getHttpServletRequest().getHeaderNames();
-        if (props != null) 
-        {
-            while (props.hasMoreElements()) 
-            {
-                v.add(props.nextElement());
-            }
-        }
-        return new Enumerator(v.iterator());
+        return Collections.enumeration(requestPropertyNames);
     }
 
     public PortalContext getPortalContext() 
@@ -828,11 +808,6 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
 
 // InternalRenderRequest Impl ----------------------------------------------
 
-    public Cookie[] getCookieProperties() 
-    {
-        return container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().getCookieProperty(getHttpServletRequest(), portletWindow);
-    }
-    
     public String getMethod()
     {
         return super.getMethod();
@@ -1019,12 +994,16 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
     @Override
     public Cookie[] getCookies()
     {
-        if (isIncluded() || isForwarded())
+        if (requestCookies == null)
         {
-            return super.getCookies();
+            PropertyManager propertyManager = container.getRequiredContainerServices().getPortalCallbackService().getPropertyManager();
+            requestCookies = propertyManager.getRequestCookies(getHttpServletRequest(), portletWindow);
+            if (requestCookies == null)
+            {
+                requestCookies = new Cookie[0];
+            }
         }
-        else
-            return super.getCookies();
+        return requestCookies.length > 0 ? requestCookies.clone() : null;
     }
 
     @Override

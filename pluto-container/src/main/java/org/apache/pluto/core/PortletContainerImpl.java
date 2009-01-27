@@ -163,16 +163,17 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        InternalRenderRequest renderRequest = getOptionalContainerServices().getPortletEnvironmentService()
+        try {
+            getInvocationService().setInvocation(this, portletWindow, Method.RENDER);
+            
+            InternalRenderRequest renderRequest = getOptionalContainerServices().getPortletEnvironmentService()
             .createRenderRequest(this, request, response, portletWindow);
 
-        InternalRenderResponse renderResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            InternalRenderResponse renderResponse = getOptionalContainerServices().getPortletEnvironmentService()
             .createRenderResponse(this, request, response, portletWindow);
 
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
-        try {
-            getInvocationService().setInvocation(this, portletWindow);
             //Filter initialisation
             FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RENDER_PHASE);
             invoker.render(renderRequest, renderResponse, portletWindow, filterManager);
@@ -180,8 +181,7 @@ public class PortletContainerImpl implements PortletContainer,
             getInvocationService().clearInvocation();
         }
         
-        debugWithName("Portlet rendered for: "
-        		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
+        debugWithName("Portlet render done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     }
 
     /**
@@ -205,24 +205,24 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Resource request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        InternalResourceRequest resourceRequest = getOptionalContainerServices().getPortletEnvironmentService()
+        try {
+            getInvocationService().setInvocation(this, portletWindow, Method.RESOURCE);
+
+            InternalResourceRequest resourceRequest = getOptionalContainerServices().getPortletEnvironmentService()
             .createResourceRequest(this, request, response, portletWindow);
 
-        InternalResourceResponse resourceResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            InternalResourceResponse resourceResponse = getOptionalContainerServices().getPortletEnvironmentService()
             .createResourceResponse(this, request, response, portletWindow);
 
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
-        try {
-            getInvocationService().setInvocation(this, portletWindow);
             FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
             invoker.serveResource(resourceRequest, resourceResponse, portletWindow, filterManager);
         } finally {
             getInvocationService().clearInvocation();
         }
         
-        debugWithName("Portlet resource for: "
-        		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
+        debugWithName("Portlet resource done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 	}
     
     /**
@@ -246,54 +246,65 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     	
-        InternalActionRequest actionRequest = getOptionalContainerServices().getPortletEnvironmentService()
+        try {
+            getInvocationService().setInvocation(this, portletWindow, Method.ACTION);
+
+            InternalActionRequest actionRequest = getOptionalContainerServices().getPortletEnvironmentService()
             .createActionRequest(this, request, response, portletWindow);
 
-        InternalActionResponse actionResponse = getOptionalContainerServices().getPortletEnvironmentService()
+            InternalActionResponse actionResponse = getOptionalContainerServices().getPortletEnvironmentService()
             .createActionResponse(this, request, response, portletWindow);
 
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
-        try {
-            getInvocationService().setInvocation(this, portletWindow);
             FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.ACTION_PHASE);
             invoker.action(actionRequest, actionResponse, portletWindow, filterManager);
+            
+            debugWithName("Portlet action processed for: "
+                          + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
+
+            PortletURLProvider portletURLProvider = requiredContainerServices.getPortalCallbackService().getPortletURLProvider(request, portletWindow);
+
+            portletURLProvider.savePortalURL(request);
+            saveChangedParameters(request, (PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, portletURLProvider);
+
+            EventProvider provider = this.getRequiredContainerServices().getPortalCallbackService().
+            getEventProvider(request,portletWindow);
+            
+            try {
+                provider.fireEvents(this);
+            }
+            finally {
+                // restore/recreate current ContainerInvocation as fireEvents will have overridden and then cleared it
+                // TODO: investigate if nested invocations like these shouldn't be handled differently?
+                getInvocationService().setInvocation(this, portletWindow, Method.ACTION);
+            }
+
+
+            // After processing action, send a redirect URL for rendering.
+            String location = actionResponse.getRedirectLocation();
+
+            if (location == null) {
+
+                // Create portlet URL provider to encode redirect URL.
+                debugWithName("No redirect location specified.");
+                PortletURLProvider redirectURL = requiredContainerServices
+                .getPortalCallbackService()
+                .getPortletURLProvider(request, portletWindow);
+
+                saveChangedParameters(request, (PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, redirectURL);
+
+                // Encode the redirect URL to a string.
+                location = actionResponse.encodeRedirectURL(redirectURL.toString());
+            }
+
+            redirect(request, response, location);
         }
         finally {
             getInvocationService().clearInvocation();
         }
 
-        debugWithName("Portlet action processed for: "
-        		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
-        
-        PortletURLProvider portletURLProvider = requiredContainerServices.getPortalCallbackService().getPortletURLProvider(request, portletWindow);
-        
-        portletURLProvider.savePortalURL(request);
-        saveChangedParameters(request, (PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, portletURLProvider);
-        
-        EventProvider provider = this.getRequiredContainerServices().getPortalCallbackService().
-			getEventProvider(request,portletWindow);
-        provider.fireEvents(this);
-        
-        
-        // After processing action, send a redirect URL for rendering.
-        String location = actionResponse.getRedirectLocation();
-
-        if (location == null) {
-        	
-        	// Create portlet URL provider to encode redirect URL.
-        	debugWithName("No redirect location specified.");
-            PortletURLProvider redirectURL = requiredContainerServices
-            		.getPortalCallbackService()
-            		.getPortletURLProvider(request, portletWindow);
-            
-            saveChangedParameters(request, (PortletRequest)actionRequest, (StateAwareResponseImpl)actionResponse, redirectURL);
-            
-            // Encode the redirect URL to a string.
-            location = actionResponse.encodeRedirectURL(redirectURL.toString());
-        }
-
-        redirect(request, response, location);
+        debugWithName("Portlet action done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     }
 
     protected void redirect(HttpServletRequest request, HttpServletResponse response, String location) throws IOException
@@ -323,25 +334,25 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
+        try {
+            getInvocationService().setInvocation(this, portletWindow, Method.LOAD);
 
-        InternalRenderRequest renderRequest =
-            getOptionalContainerServices().getPortletEnvironmentService()
+            InternalRenderRequest renderRequest =
+                getOptionalContainerServices().getPortletEnvironmentService()
                 .createRenderRequest(this, request, response, portletWindow);
 
-        InternalRenderResponse renderResponse =
-            getOptionalContainerServices().getPortletEnvironmentService()
+            InternalRenderResponse renderResponse =
+                getOptionalContainerServices().getPortletEnvironmentService()
                 .createRenderResponse(this, request, response, portletWindow);
 
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
-        try {
-            getInvocationService().setInvocation(this, portletWindow);
             invoker.load(renderRequest, renderResponse, portletWindow);
         } finally {
             getInvocationService().clearInvocation();
         }
 
-        debugWithName("Portlet loaded for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
+        debugWithName("Portlet load done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     }
     
 
@@ -354,22 +365,23 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Admin request received for portlet: "
             +portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 
-        InternalPortletRequest internalRequest =
-            new AdminRequest(this, portletWindow, servletRequest) { };
-
-        InternalPortletResponse internalResponse =
-            new AdminResponse(this, portletWindow, servletRequest, servletResponse);
-
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
-
         try {
-            getInvocationService().setInvocation(this, portletWindow);
+            getInvocationService().setInvocation(this, portletWindow, Method.EVENT);
+            
+            InternalPortletRequest internalRequest =
+                new AdminRequest(this, portletWindow, servletRequest) { };
+
+            InternalPortletResponse internalResponse =
+                new AdminResponse(this, portletWindow, servletRequest, servletResponse);
+
+            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
             invoker.admin(internalRequest, internalResponse, portletWindow);
         } finally {
             getInvocationService().clearInvocation();
         }
 
-        debugWithName("Admin request complete.");
+        debugWithName("Portlet admin request done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     }
 
 
@@ -410,44 +422,47 @@ public class PortletContainerImpl implements PortletContainer,
 
     	ensureInitialized();
 
-    	debugWithName("Event request received for portlet: "
+    	debugWithName("Event: "+event.getName()+" received for portlet: "
     			+ window.getPortletEntity().getPortletDefinition().getPortletName());
 
-    	EventRequestImpl eventRequest = new EventRequestImpl(
+        try {
+            getInvocationService().setInvocation(this, window, Method.EVENT);
+            
+            EventRequestImpl eventRequest = new EventRequestImpl(
     			this, window, request, event);
-    	EventResponseImpl eventResponse = new EventResponseImpl(
+            EventResponseImpl eventResponse = new EventResponseImpl(
     			this, window, request, response);
 
-    	PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
-        try {
-            getInvocationService().setInvocation(this, window);
             FilterManager filterManager = filterInitialisation(window,PortletRequest.EVENT_PHASE);
             invoker.event(eventRequest, eventResponse, window, filterManager);
+            
+            debugWithName("Portlet event processed for: "
+                          + window.getPortletEntity().getPortletDefinition().getPortletName());
+
+            // After processing event, change the redirect URL for rendering.
+            String location = eventResponse.getRedirectLocation();
+
+            if (location == null) {
+
+                // Create portlet URL provider to encode redirect URL.
+                debugWithName("No redirect location specified.");
+                PortletURLProvider redirectURL = requiredContainerServices
+                .getPortalCallbackService()
+                .getPortletURLProvider(request, window);
+
+                saveChangedParameters(request, eventRequest, eventResponse, redirectURL);
+
+                // save redirectURL in request
+                redirectURL.savePortalURL(request);
+            }
         }
         finally {
             getInvocationService().clearInvocation();
         }
 
-    	debugWithName("Portlet event processed for: "
-    			+ window.getPortletEntity().getPortletDefinition().getPortletName());
-
-    	// After processing event, change the redirect URL for rendering.
-    	String location = eventResponse.getRedirectLocation();
-
-    	if (location == null) {
-
-    		// Create portlet URL provider to encode redirect URL.
-    		debugWithName("No redirect location specified.");
-    		PortletURLProvider redirectURL = requiredContainerServices
-    		.getPortalCallbackService()
-    		.getPortletURLProvider(request, window);
-
-    		saveChangedParameters(request, eventRequest, eventResponse, redirectURL);
-
-    		// save redirectURL in request
-    		redirectURL.savePortalURL(request);
-    	}
+        debugWithName("Portlet event: "+ event.getName() +" fired for: " + window.getPortletEntity().getPortletDefinition().getPortletName());
     }
     
     private ContainerInvocationService getInvocationService()

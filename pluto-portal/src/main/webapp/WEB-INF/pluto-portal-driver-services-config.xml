@@ -137,11 +137,11 @@ limitations under the License.
     <bean id="PortalCallbackService"
           class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
           singleton="true">
-          <constructor-arg><ref bean="RequestPropertyProvider"/></constructor-arg>          
+          <constructor-arg><ref bean="PropertyManager"/></constructor-arg>          
     </bean>
 
-    <bean id="RequestPropertyProvider"
-          class="org.apache.pluto.driver.services.container.RequestPropertyProviderImpl"
+    <bean id="PropertyManager"
+          class="org.apache.pluto.core.DefaultPropertyManager"
           singleton="true">
     </bean>
     

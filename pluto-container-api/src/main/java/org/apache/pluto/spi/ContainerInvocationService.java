@@ -24,6 +24,6 @@ import org.apache.pluto.ContainerInvocation;
 public interface ContainerInvocationService
 {
     ContainerInvocation getInvocation();
-    void setInvocation(PortletContainer container, PortletWindow window);
+    void setInvocation(PortletContainer container, PortletWindow window, PortletContainer.Method method);
     void clearInvocation();
 }

@@ -100,10 +100,11 @@ implements PortletResponse, InternalPortletResponse {
     public void addProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-        		.getPortalCallbackService().getRequestPropertyProvider()
-        		.addProperty(
-        				getHttpServletRequest(),
-        				portletWindow,
+        		.getPortalCallbackService().getPropertyManager()
+        		.addResponseProperty(
+        				getHttpServletRequest(), getHttpServletResponse(),
+        				portletWindow, 
+        				container.getRequiredContainerServices().getContainerInvocationService().getInvocation().getMethod(),
         				name, value);
     }
     
@@ -111,30 +112,44 @@ implements PortletResponse, InternalPortletResponse {
     	// FIXME: What should this do? (scope seems to be new)
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-        		.getPortalCallbackService().getRequestPropertyProvider()
-        		.addProperty(
-        				getHttpServletRequest(),
+        		.getPortalCallbackService().getPropertyManager()
+        		.addResponseProperty(
+        		        getHttpServletRequest(), getHttpServletResponse(),
         				portletWindow,
+                        container.getRequiredContainerServices().getContainerInvocationService().getInvocation().getMethod(),
         				name, value);
     }
     
     public void addProperty(String key, Element element) {
-    	container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addProperty(getHttpServletRequest(), portletWindow, key, element);
+        container.getRequiredContainerServices()
+        .getPortalCallbackService().getPropertyManager()
+        .addResponseProperty(
+                getHttpServletRequest(), getHttpServletResponse(),
+                portletWindow,
+                container.getRequiredContainerServices().getContainerInvocationService().getInvocation().getMethod(),
+                key, element);
 	}
 
 
 	public void addProperty(Cookie cookie) {
-		container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addCookieProperty(getHttpServletRequest(), portletWindow, cookie);
+        container.getRequiredContainerServices()
+        .getPortalCallbackService().getPropertyManager()
+        .addResponseProperty(
+                getHttpServletRequest(), getHttpServletResponse(),
+                portletWindow,
+                container.getRequiredContainerServices().getContainerInvocationService().getInvocation().getMethod(),
+                cookie);
 	}
 
     public void setProperty(String name, String value) {
     	ArgumentUtility.validateNotNull("propertyName", name);
         container.getRequiredContainerServices()
-                .getPortalCallbackService().getRequestPropertyProvider()
-                .setProperty(
-                        getHttpServletRequest(),
-                        portletWindow,
-                        name, value);
+        .getPortalCallbackService().getPropertyManager()
+        .setResponseProperty(
+                getHttpServletRequest(), getHttpServletResponse(),
+                portletWindow,
+                container.getRequiredContainerServices().getContainerInvocationService().getInvocation().getMethod(),
+                name, value);
     }
 
     public String encodeURL(String path) {

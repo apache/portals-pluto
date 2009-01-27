@@ -20,28 +20,30 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.w3c.dom.Element;
 
-public interface RequestPropertyProvider
+public interface PropertyManager
 {
-    public Map<String, String[]> getProperties(HttpServletRequest request,
+    public Map<String, String[]> getRequestProperties(HttpServletRequest request,
             PortletWindow portletWindow);
 
-    public void setProperty(HttpServletRequest request,
-            PortletWindow portletWindow, String property, String value);
+    public void setResponseProperty(HttpServletRequest request, HttpServletResponse response,
+            PortletWindow portletWindow, PortletContainer.Method method, String property, String value);
 
-    public void addProperty(HttpServletRequest request,
-            PortletWindow portletWindow, String property, String value);
+    public void addResponseProperty(HttpServletRequest request, HttpServletResponse response,
+            PortletWindow portletWindow, PortletContainer.Method method, String property, String value);
 
-    public void addProperty(HttpServletRequest request,
-            PortletWindow portletWindow, String property, Element value);
+    public void addResponseProperty(HttpServletRequest request, HttpServletResponse response,
+            PortletWindow portletWindow, PortletContainer.Method method, String property, Element value);
 
-    public void addCookieProperty(HttpServletRequest request,
-            PortletWindow portletWindow, Cookie cookie);
+    public void addResponseProperty(HttpServletRequest request, HttpServletResponse response,
+            PortletWindow portletWindow, PortletContainer.Method method, Cookie cookie);
 
-    public Cookie[] getCookieProperty(
+    public Cookie[] getRequestCookies(
             HttpServletRequest request, PortletWindow portletWindow);
-
 }
 

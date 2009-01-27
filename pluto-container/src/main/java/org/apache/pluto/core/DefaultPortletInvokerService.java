@@ -226,8 +226,16 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 servletRequest.setAttribute(Constants.PORTLET_REQUEST, request);
                 servletRequest.setAttribute(Constants.PORTLET_RESPONSE, response);
                 servletRequest.setAttribute(Constants.FILTER_MANAGER, filterManager);
+                
+                if (methodID.equals(Constants.METHOD_RESOURCE))
+                {
+                    dispatcher.forward(servletRequest, servletResponse);
+                }
+                else
+                {
+                    dispatcher.include(servletRequest, servletResponse);
+                }
 
-                dispatcher.include(servletRequest, servletResponse);
 
             } catch (javax.servlet.UnavailableException ex) {
                 int seconds = ex.isPermanent() ? -1 : ex.getUnavailableSeconds();

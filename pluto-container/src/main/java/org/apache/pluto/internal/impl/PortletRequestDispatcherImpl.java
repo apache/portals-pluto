@@ -147,7 +147,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
         	}
         	internalResponse.setForwarded(true);
 
-            requestDispatcher.include((HttpServletRequest) internalRequest,
+            requestDispatcher.forward((HttpServletRequest) internalRequest,
             		(HttpServletResponse) internalResponse);
         } catch (IOException ex) {
             throw ex;

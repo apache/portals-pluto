@@ -17,10 +17,6 @@
  */
 package org.apache.pluto.driver.services.container;
 
-import java.util.Collections;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.PortletWindow;
@@ -31,9 +27,8 @@ import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.RequestPropertyProvider;
+import org.apache.pluto.spi.PropertyManager;
 import org.apache.pluto.spi.ResourceURLProvider;
-import org.w3c.dom.Element;
 
 /**
  * @author <a href="mailto:ddewolf@apache.org">David H. DeWolf</a>
@@ -43,11 +38,11 @@ import org.w3c.dom.Element;
  */
 public class PortalCallbackServiceImpl implements PortalCallbackService 
 {
-	RequestPropertyProvider propertyProvider;	
+	PropertyManager propertyManager;	
 
-	public PortalCallbackServiceImpl(RequestPropertyProvider provider) 
+	public PortalCallbackServiceImpl(PropertyManager propertyManager) 
     {
-        this.propertyProvider = provider;
+        this.propertyManager = propertyManager;
     }
 	
     /**
@@ -73,9 +68,9 @@ public class PortalCallbackServiceImpl implements PortalCallbackService
         return new ResourceURLProviderImpl(request, portletWindow);
     }
 
-    public RequestPropertyProvider getRequestPropertyProvider()
+    public PropertyManager getPropertyManager()
     {
-        return propertyProvider;
+        return propertyManager;
     }
     
     public EventProvider getEventProvider(

@@ -48,6 +48,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PortletContainer {
 
+    public enum Method { LOAD, ACTION, EVENT, RENDER, RESOURCE, ADMIN };
+    
     /**
      * Initializes the container
      * @throws PortletContainerException if an error occurs.

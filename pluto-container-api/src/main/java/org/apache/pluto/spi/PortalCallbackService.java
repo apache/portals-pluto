@@ -58,7 +58,7 @@ public interface PortalCallbackService extends ContainerService {
     public ResourceURLProvider getResourceURLProvider(HttpServletRequest request,
                                                       PortletWindow portletWindow);
 
-    public RequestPropertyProvider getRequestPropertyProvider();
+    public PropertyManager getPropertyManager();
        
     
     public EventProvider getEventProvider(HttpServletRequest request,

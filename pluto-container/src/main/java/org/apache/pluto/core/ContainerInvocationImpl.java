@@ -40,11 +40,13 @@ public class ContainerInvocationImpl implements ContainerInvocation
 {
     private PortletWindow window;
     private PortletContainer container;
+    private PortletContainer.Method method;
 
-    public ContainerInvocationImpl(PortletWindow window, PortletContainer container) 
+    public ContainerInvocationImpl(PortletWindow window, PortletContainer container, PortletContainer.Method method)
     {
         this.window = window;
         this.container = container;
+        this.method = method;
     }
 
     public PortletWindow getPortletWindow() {
@@ -61,5 +63,15 @@ public class ContainerInvocationImpl implements ContainerInvocation
 
     public void setContainer(PortletContainer container) {
         this.container = container;
+    }
+
+    public PortletContainer.Method getMethod()
+    {
+        return method;
+    }
+
+    public void setMethod(PortletContainer.Method method)
+    {
+        this.method = method;
     }
 }

@@ -18,6 +18,7 @@ package org.apache.pluto;
 
 public interface ContainerInvocation
 {
+    PortletContainer.Method getMethod();
     PortletWindow getPortletWindow();
     void setWindow(PortletWindow window);
     PortletContainer getPortletContainer();

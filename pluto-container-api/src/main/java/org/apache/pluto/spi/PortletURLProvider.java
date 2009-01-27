@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.spi;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
@@ -128,4 +129,16 @@ public interface PortletURLProvider {
     public Map<String, String[]> parseRenderParameters(Map<String, String[]> parentMap, String queryString);
     
     public Map<String, String[]> getRenderParameters();
+    
+    /**
+     * Provides the BaseURL vendor-specific properties
+     * @param parameters a map containing the name and value(s) of the properties.
+     */
+    public void setProperties(Map<String, List<String>> properties);
+    
+    /**
+     * Gets the vendor-specific properties as set on the BaseURL
+     * @return parameters a map containing the name and value(s) of the properties (may return null)
+     */
+    public Map<String, List<String>> getProperties();
 }

@@ -235,6 +235,15 @@ public class PortletURLProviderImpl implements PortletURLProvider {
             parameters.put(key, values.toArray(new String[values.size()]));
         }
     }
-    
-    
+
+    public void setProperties(Map<String, List<String>> properties)
+    {
+        // No vendor specific properties handling
+    }
+
+    public Map<String, List<String>> getProperties()
+    {
+        // No vendor specific properties handling
+        return null;
+    }
 }

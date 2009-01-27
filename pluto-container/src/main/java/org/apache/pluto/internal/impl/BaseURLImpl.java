@@ -19,6 +19,7 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,7 +37,6 @@ import javax.portlet.WindowState;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
@@ -57,6 +57,7 @@ public class BaseURLImpl implements BaseURL {
 	private static final Log LOG = LogFactory.getLog(BaseURLImpl.class);
 	private static final StringManager EXCEPTIONS = StringManager.getManager(PortletURLImpl.class.getPackage().getName());
 	private boolean escapeXML;
+	protected Map<String,List<String>> properties = null;
 	protected Map parameters = new HashMap();
 	protected Map<String, String[]> publicRenderParameters = new HashMap<String, String[]>();
 	protected boolean secure;
@@ -212,8 +213,6 @@ public class BaseURLImpl implements BaseURL {
 	    	urlProvider.setResourceServing(true);
 	    }
         PortletApplicationDefinition portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
-//      container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
-//      PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
         portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
 	    
         if (secure && urlProvider.isSecureSupported()) {
@@ -233,6 +232,8 @@ public class BaseURLImpl implements BaseURL {
 	    
 	    urlProvider.setPublicRenderParameters(publicRenderParameters);
 	    
+        urlProvider.setProperties(properties);
+        
 	    return urlProvider.toString();
 	}
 	// --------------------------------------------------------------------------------------------
@@ -324,50 +325,7 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void write(Writer out) throws IOException {
-		
-	    PortletURLProvider urlProvider = container
-	    		.getRequiredContainerServices()
-	    		.getPortalCallbackService()
-	    		.getPortletURLProvider(servletRequest, portletWindow);
-	
-	    PortletURLListener portletURLFilterListener = portletURLFilterListener = container
-			.getRequiredContainerServices()
-			.getPortalCallbackService().getPortletURLListener();
-	    if (mode != null) {
-	        urlProvider.setPortletMode(mode);
-	    }
-	    if (state != null) {
-	        urlProvider.setWindowState(state);
-	    }
-	    if (isAction) {
-	        urlProvider.setAction(true);
-	    }
-	    else if (isResourceServing){
-	    	urlProvider.setResourceServing(true);
-	    }
-        PortletApplicationDefinition portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
-//      container.getOptionalContainerServices().getPortletRegistryService().getRegisteredPortletApplications()
-//      PortletAppDD portletAppDD = container.getPortletApplicationDescriptor(  );
-        portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
-	    
-        if (secure && urlProvider.isSecureSupported()) {
-            try {
-                urlProvider.setSecure();
-            } catch (PortletSecurityException e) {
-                throw new IllegalStateException("URL Provider is misconfigured." +
-                    "  It claims to support secure urls," +
-                    " yet it threw a PortletSecurityException");
-            }
-	    }
-	    if (!isResourceServing)
-	    	urlProvider.clearParameters();
-	    
-			
-	    urlProvider.setParameters(parameters);
-	    
-	    urlProvider.setPublicRenderParameters(publicRenderParameters);
-	    
-	    out.write(urlProvider.toString());
+	    out.write(toString());
 	}
 
 	public void write(Writer out, boolean escapeXML) throws IOException {
@@ -376,13 +334,36 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void addProperty(String key, String value) {
-		container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().addProperty(servletRequest, portletWindow, key, value);
-		
+	    if (key == null) {
+	        throw new IllegalArgumentException("Required property key is null");
+	    }
+	    if (properties == null) {
+	        properties = new HashMap<String,List<String>>();
+	    }
+	    List<String> values = properties.get(key);
+	    if (values == null) {
+	        values = new ArrayList<String>();
+	        properties.put(key, values);
+	    }
+	    values.add(value);
 	}
 
 	public void setProperty(String key, String value) {
-		container.getRequiredContainerServices().getPortalCallbackService().getRequestPropertyProvider().setProperty(servletRequest, portletWindow, key, value);
-		
+        if (key == null) {
+            throw new IllegalArgumentException("Required property key is null");
+        }
+        if (properties == null) {
+            properties = new HashMap<String,List<String>>();
+        }
+        List<String> values = properties.get(key);
+        if (values == null) {
+            values = new ArrayList<String>();
+            properties.put(key, values);
+        }
+        else {
+            values.clear();
+        }            
+        values.add(value);
 	}
 
 	//TODO:This two methods should be deleted, when the CACHABILITY parameter gets his own prefix
