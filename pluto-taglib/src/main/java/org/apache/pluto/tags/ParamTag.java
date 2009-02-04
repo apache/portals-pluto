@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.tags;
 
-import javax.portlet.PortletURL;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -46,10 +45,8 @@ public class ParamTag extends TagSupport {
                 "the 'param' Tag must have actionURL or renderURL as a parent");
         }
 
-        PortletURL url = urlTag.getUrl();
-
         if (getName() != null) {
-            url.setParameter(getName(), getValue());
+            urlTag.addParameter(getName(), getValue());
         }
 
         return SKIP_BODY;

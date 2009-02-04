@@ -16,12 +16,22 @@
  */
 package org.apache.pluto.tags;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -29,10 +39,6 @@ import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.TagSupport;
 import javax.servlet.jsp.tagext.VariableInfo;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Hashtable;
 
 /**
  * Supporting class for the <CODE>actionURL</CODE> and <CODE>renderURL</CODE>
@@ -115,6 +121,7 @@ public abstract class BasicURLTag extends TagSupport {
     protected String windowState;
     protected PortletURL url;
     protected String var;
+    protected Map parameters;
 
     /**
      * Processes the <CODE>actionURL</CODE> or <CODE>renderURL</CODE> tag.
@@ -131,6 +138,7 @@ public abstract class BasicURLTag extends TagSupport {
         }
 
         url = createPortletURL();
+        parameters = new LinkedHashMap();
 
         if (portletMode != null) {
             try {
@@ -168,11 +176,28 @@ public abstract class BasicURLTag extends TagSupport {
     }
 
     protected abstract PortletURL createPortletURL();
+    
+    protected void addParameter(String name, String value) {
+        List values = (List)this.parameters.get(name);
+        if (values == null) {
+            values = new LinkedList();
+            this.parameters.put(name, values);
+        }
+        values.add(value);
+    }
 
     /**
      * @return int
      */
     public int doEndTag() throws JspException {
+        //Add all parameters to the URL
+        for (final Iterator paramEntryItr = this.parameters.entrySet().iterator(); paramEntryItr.hasNext();) {
+            final Map.Entry paramEntry = (Map.Entry)paramEntryItr.next();
+            final String name = (String)paramEntry.getKey();
+            final List values = (List)paramEntry.getValue();
+            url.setParameter(name, (String[])values.toArray(new String[values.size()]));
+        }
+        
         HttpServletResponse response = (HttpServletResponse)pageContext.getResponse();
         if (var == null) {
             try {
@@ -186,6 +211,10 @@ public abstract class BasicURLTag extends TagSupport {
             pageContext.setAttribute(var, response.encodeURL(url.toString()),
                 PageContext.PAGE_SCOPE);
         }
+        
+        this.url = null;
+        this.parameters = null;
+        
         return EVAL_PAGE;
     }
 
