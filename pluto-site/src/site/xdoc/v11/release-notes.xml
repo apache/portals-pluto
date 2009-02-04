@@ -25,6 +25,24 @@ limitations under the License.
   </properties>
   
   <body>
+    <section name="Pluto 1.1.7 Release Notes">
+      <subsection name="Bug">
+        <ul>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-440'>PLUTO-440</a> - portlet:actionURL not wrapping portlet:param</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-518'>PLUTO-518</a> - DefineObjectsTag defines PortletRequest instead of RenderRequest</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-524'>PLUTO-524</a> - Error in org.apache.pluto.core.DefaultUserInfoService</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-526'>PLUTO-526</a> - portlet:param JSP tag doesn't handle multi-valued parameters</li>
+        </ul>
+    </subsection>
+      <subsection name="Improvement">
+        <ul>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-501'>PLUTO-501</a> - Configuration errors are not much descriptive</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-503'>PLUTO-503</a> - Expose createPortletScopedId and isInCurrentPortletScope of PortletSessionImpl as protected</li>
+            <li><a href='https://issues.apache.org/jira/browse/PLUTO-504'>PLUTO-504</a> - Create PortletSession via PortletEnvironmentService</li>
+        </ul>
+      </subsection>
+    </section>
+  
     <section name="Pluto 1.1.6 Release Notes">
       <subsection name="Bug">
         <ul>
