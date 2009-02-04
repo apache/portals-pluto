@@ -33,6 +33,21 @@ For information on deploying portlets, building the portal from source
   http://portals.apache.org/pluto
 
 
+
+Release Notes - Pluto - Version 1.1.7
+=====================================
+
+** Bug
+    * [PLUTO-440] - portlet:actionURL not wrapping portlet:param
+    * [PLUTO-518] - DefineObjectsTag defines PortletRequest instead of RenderRequest
+    * [PLUTO-524] - Error in org.apache.pluto.core.DefaultUserInfoService
+    * [PLUTO-526] - portlet:param JSP tag doesn't handle multi-valued parameters
+
+** Improvement
+    * [PLUTO-501] - Configuration errors are not much descriptive
+    * [PLUTO-503] - Expose createPortletScopedId and isInCurrentPortletScope of PortletSessionImpl as protected
+    * [PLUTO-504] - Create PortletSession via PortletEnvironmentService
+
 Release Notes - Pluto - Version 1.1.6
 =====================================
 
