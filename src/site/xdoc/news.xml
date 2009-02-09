@@ -27,6 +27,21 @@ limitations under the License.
   <body>
 
     <section name="News and Status">
+        <h4>9 February 2009 - Portals Pluto 1.1.7</h4>
+        <p>
+            The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.7. 
+            This is the eighth GA release of the 1.1 line of Pluto, which is a major refactoring of 
+            Pluto 1.0.1 to allow for easier integration of Pluto's portlet container into a portal.
+        </p>
+        <p>
+            Pluto 1.1.7 includes a number of minor bugfixes and improvements, thanks to a number of 
+            contributions from the community. They include fixing support of multivalued URL parameters
+            from the portlet tag library, better session handling hooks for portals and other enhancements.
+        </p>
+        <p>
+            Full release notes can be found <a href="http://portals.apache.org/pluto/v11/release-notes.html">here.</a>
+        </p>
+        
         <h4>11 August 2008 - Portals Pluto 1.1.6</h4>
         <p>
             The Apache Pluto project is proud to announce the General Availability release of Pluto 1.1.6. 
