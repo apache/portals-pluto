@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -30,20 +29,21 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalActionRequest;
 
+
 /**
  * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
  */
 public class ActionRequestImpl extends ClientDataRequestImpl
-                               implements ActionRequest, InternalActionRequest 
+                               implements ActionRequest, InternalActionRequest
 {
     private static final Log LOG = LogFactory.getLog(ActionRequestImpl.class);
 
     public ActionRequestImpl(PortletContainer container,
                              PortletWindow portletWindow,
-                             HttpServletRequest servletRequest) 
+                             HttpServletRequest servletRequest)
     {
         super(container, portletWindow, servletRequest);
-        if (LOG.isDebugEnabled()) 
+        if (LOG.isDebugEnabled())
         {
         	LOG.debug("Created action request for: " + portletWindow);
         }
@@ -51,15 +51,15 @@ public class ActionRequestImpl extends ClientDataRequestImpl
 
     protected Integer getRequestMethod()
     {
-        return Constants.METHOD_ACTION; 
+        return Constants.METHOD_ACTION;
     }
-    
-	public String getLifecyclePhase() 
+
+	public String getLifecyclePhase()
 	{
 		return ACTION_PHASE;
 	}
-	    
-    public ServletInputStream getInputStream() throws IOException 
+
+    public ServletInputStream getInputStream() throws IOException
     {
         return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
     }

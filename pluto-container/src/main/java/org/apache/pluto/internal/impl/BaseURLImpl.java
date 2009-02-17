@@ -38,8 +38,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
@@ -70,7 +70,7 @@ public class BaseURLImpl implements BaseURL {
 	protected boolean isAction;
 	protected boolean isResourceServing;
 	protected PortalContext context;
-	
+
 	public BaseURLImpl(PortletContainer container,
 			PortletWindow portletWindow,
 			javax.servlet.http.HttpServletRequest servletRequest,
@@ -95,12 +95,12 @@ public class BaseURLImpl implements BaseURL {
 		else
 			return cacheLevel[0];
 	}
-	
+
 	private void checkCacheLevel(){
 		if (getCacheability().equals(ResourceURL.FULL) || getCacheability().equals(ResourceURL.PORTLET))
 			throw new IllegalStateException("Action or RenderURLs have no FULL or PORTLET cache level.");
 	}
-	
+
 	public void setParameter(String name, String value) {
 	    if (name == null || value == null) {
 	        throw new IllegalArgumentException(
@@ -126,7 +126,7 @@ public class BaseURLImpl implements BaseURL {
 	        	"name and values must not be null or values be an empty array");
 	    }
 		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
-	    
+
 		if (publicRenderParameterNames == null){
 			parameters.put(name, StringUtils.copy(values));
 	    }
@@ -141,12 +141,12 @@ public class BaseURLImpl implements BaseURL {
 	}
 
 	public void setParameters(Map<String, String[]> parameters) {
-		
+
         if (parameters == null) {
             throw new IllegalArgumentException(
                 "Render parameters must not be null.");
         }
-        
+
         for (Iterator iter = parameters.entrySet().iterator(); iter.hasNext();) {
             Map.Entry entry = (Map.Entry) iter.next();
             if (!(entry.getKey() instanceof String)) {
@@ -158,25 +158,25 @@ public class BaseURLImpl implements BaseURL {
                     "Value must not be null and of type java.lang.String[].");
             }
         }
-        
+
         this.parameters.clear();
         this.publicRenderParameters.clear();
         List<String> publicPortletRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
         if (parameters.keySet()!= null){
         	for (Object key : parameters.keySet()) {
         		if (publicPortletRenderParameterNames == null)
-        			this.setParameter((String)key, (String[])parameters.get(key));
+        			this.setParameter((String)key, parameters.get(key));
         		else{
         			//test if this is a public parameter
         			if (publicPortletRenderParameterNames.contains(key)&& !this.isAction && !this.isResourceServing)
-        				publicRenderParameters.put((String)key, (String[])parameters.get(key));
+        				publicRenderParameters.put((String)key, parameters.get(key));
         			else
-        				this.setParameter((String)key, (String[])parameters.get(key));
+        				this.setParameter((String)key, parameters.get(key));
         		}
     		}
         }
-        
-        
+
+
 	}
 
 	public void setSecure(boolean secure) throws PortletSecurityException {
@@ -196,7 +196,7 @@ public class BaseURLImpl implements BaseURL {
 	    		.getRequiredContainerServices()
 	    		.getPortalCallbackService()
 	    		.getPortletURLProvider(servletRequest, portletWindow);
-	
+
 	    PortletURLListener portletURLFilterListener = container
 			.getRequiredContainerServices()
 			.getPortalCallbackService().getPortletURLListener();
@@ -212,9 +212,9 @@ public class BaseURLImpl implements BaseURL {
 	    else if (isResourceServing){
 	    	urlProvider.setResourceServing(true);
 	    }
-        PortletApplicationDefinition portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();  
+        PortletApplicationDefinition portletAppDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
         portletURLFilterListener.callListener(portletAppDD,this,isAction,isResourceServing);
-	    
+
         if (secure && urlProvider.isSecureSupported()) {
             try {
                 urlProvider.setSecure();
@@ -226,14 +226,14 @@ public class BaseURLImpl implements BaseURL {
 	    }
 	    if (!isResourceServing)
 	    	urlProvider.clearParameters();
-	    
-			
+
+
 	    urlProvider.setParameters(parameters);
-	    
+
 	    urlProvider.setPublicRenderParameters(publicRenderParameters);
-	    
+
         urlProvider.setProperties(properties);
-        
+
 	    return urlProvider.toString();
 	}
 	// --------------------------------------------------------------------------------------------
@@ -245,7 +245,7 @@ public class BaseURLImpl implements BaseURL {
 	public String[] getParameters(String name) {
 	    return (String[]) parameters.get(name);
 	}
-	
+
 	public Map getParameterMap() {
 		return parameters;
 	}
@@ -265,7 +265,7 @@ public class BaseURLImpl implements BaseURL {
 	            EXCEPTIONS.getString("javax.portlet.PortletModeException.null"),
 	            null);
 	    }
-	
+
 	    return isPortletModeAllowedByPortlet(mode)
 	           && isPortletModeAllowedByPortal(mode);
 	}
@@ -276,7 +276,7 @@ public class BaseURLImpl implements BaseURL {
 	    if (mode.equals(PortletMode.VIEW)) {
 	        return true;
 	    }
-	
+
 	    PortletDefinition dd = portletWindow.getPortletEntity()
 	        .getPortletDefinition();
 	    Iterator supports = dd.getSupports().iterator();
@@ -295,7 +295,7 @@ public class BaseURLImpl implements BaseURL {
 	    }
 	    String message = EXCEPTIONS.getString(
 	        "javax.portlet.PortletModeException.portlet", mode.toString());
-	
+
 	    throw new PortletModeException(message, mode);
 	}
 
@@ -309,7 +309,7 @@ public class BaseURLImpl implements BaseURL {
 	    }
 	    String message = EXCEPTIONS.getString(
 	        "javax.portlet.PortletModeException.portal", mode.toString());
-	
+
 	    throw new PortletModeException(message, mode);
 	}
 
@@ -362,7 +362,7 @@ public class BaseURLImpl implements BaseURL {
         }
         else {
             values.clear();
-        }            
+        }
         values.add(value);
 	}
 
