@@ -46,26 +46,26 @@ public class RelativePortalURLImpl implements PortalURL {
 
     private String servletPath;
     private String renderPath;
-    private String actionWindow;    
+    private String actionWindow;
     private String resourceWindow;
 
     private Map<String, String[]> publicParameterCurrent = new HashMap<String, String[]>();
-    
+
     private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
-    
-    /** 
+
+    /**
      * PortalURLParser used to construct the string
      * representation of this portal url.
      */
     private PortalURLParser urlParser;
 
     /** The window states: key is the window ID, value is WindowState. */
-    private Map windowStates = new HashMap();
+    private Map<String, WindowState> windowStates = new HashMap<String, WindowState>();
 
-    private Map portletModes = new HashMap();
+    private Map<String, PortletMode> portletModes = new HashMap<String, PortletMode>();
 
     /** Parameters of the portlet windows. */
-    private Map parameters = new HashMap();
+    private Map<String, PortalURLParameter> parameters = new HashMap<String, PortalURLParameter>();
 
     /**
      * Constructs a PortalURLImpl instance using customized port.
@@ -103,7 +103,7 @@ public class RelativePortalURLImpl implements PortalURL {
         parameters.put(param.getWindowId() + param.getName(), param);
     }
 
-    public Collection getParameters() {
+    public Collection<PortalURLParameter> getParameters() {
         return parameters.values();
     }
 
@@ -115,12 +115,12 @@ public class RelativePortalURLImpl implements PortalURL {
         return actionWindow;
     }
 
-    public Map getPortletModes() {
+    public Map<String, PortletMode> getPortletModes() {
         return Collections.unmodifiableMap(portletModes);
     }
 
     public PortletMode getPortletMode(String windowId) {
-        PortletMode mode = (PortletMode) portletModes.get(windowId);
+        PortletMode mode = portletModes.get(windowId);
         if (mode == null) {
             mode = PortletMode.VIEW;
         }
@@ -131,7 +131,7 @@ public class RelativePortalURLImpl implements PortalURL {
         portletModes.put(windowId, portletMode);
     }
 
-    public Map getWindowStates() {
+    public Map<String, WindowState> getWindowStates() {
         return Collections.unmodifiableMap(windowStates);
     }
 
@@ -141,7 +141,7 @@ public class RelativePortalURLImpl implements PortalURL {
      * @return the window state. Default to NORMAL.
      */
     public WindowState getWindowState(String windowId) {
-        WindowState state = (WindowState) windowStates.get(windowId);
+        WindowState state = windowStates.get(windowId);
         if (state == null) {
             state = WindowState.NORMAL;
         }
@@ -162,9 +162,9 @@ public class RelativePortalURLImpl implements PortalURL {
      * @param windowId  the window ID.
      */
     public void clearParameters(String windowId) {
-    	for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            PortalURLParameter param = (PortalURLParameter) entry.getValue();
+    	for (Iterator<Map.Entry<String, PortalURLParameter>> it = parameters.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, PortalURLParameter> entry = it.next();
+            PortalURLParameter param = entry.getValue();
             if (param.getWindowId()!=null){
             	if (param.getWindowId().equals(windowId)) {
                 	it.remove();
@@ -186,8 +186,9 @@ public class RelativePortalURLImpl implements PortalURL {
     /**
      * Returns the server URI (protocol, name, port).
      * @return the server URI portion of the portal URL.
-     * @deprecated 
+     * @deprecated
      */
+    @Deprecated
     public String getServerURI() {
         return null;
     }
@@ -207,9 +208,9 @@ public class RelativePortalURLImpl implements PortalURL {
     public Object clone() {
     	RelativePortalURLImpl portalURL = new RelativePortalURLImpl();
     	portalURL.servletPath = this.servletPath;
-    	portalURL.parameters = new HashMap(parameters);
-    	portalURL.portletModes = new HashMap(portletModes);
-    	portalURL.windowStates = new HashMap(windowStates);
+    	portalURL.parameters = new HashMap<String, PortalURLParameter>(parameters);
+    	portalURL.portletModes = new HashMap<String, PortletMode>(portletModes);
+    	portalURL.windowStates = new HashMap<String, WindowState>(windowStates);
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
         portalURL.urlParser = urlParser;
@@ -218,30 +219,30 @@ public class RelativePortalURLImpl implements PortalURL {
         return portalURL;
     }
 //JSR-286 methods
-    
-    public void addPublicRenderParametersNew(Map parameters){
-    	for (Iterator iter=parameters.keySet().iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
+
+    public void addPublicRenderParametersNew(Map<String, String[]> parameters){
+    	for (Iterator<String> iter=parameters.keySet().iterator(); iter.hasNext();) {
+			String key = iter.next();
 			if (publicParameterNew.containsKey(key)){
 				publicParameterNew.remove(key);
 			}
-			String[] values = (String[])parameters.get(key);
+			String[] values = parameters.get(key);
 			if (values[0]!= null){
 				publicParameterNew.put(key, values);
 			}
 		}
     }
-    
-    
+
+
     public void addPublicParameterCurrent(String name, String[] values){
     	publicParameterCurrent.put(name, values);
     }
-    
+
     public void addPublicParameterActionResourceParameter(String parameterName, String value) {
     	//add at the first position
 		if (publicParameterCurrent.containsKey(parameterName)){
 			String[] tmp = publicParameterCurrent.get(parameterName);
-			
+
 			String[] values = new String[tmp.length + 1];
 			values[0] = value;
 			for (int i = 0; i < tmp.length; i++) {
@@ -253,19 +254,19 @@ public class RelativePortalURLImpl implements PortalURL {
 		else
 			publicParameterCurrent.put(parameterName, new String[]{value});
 	}
-    
+
     public Map<String, String[]> getPublicParameters() {
     	Map<String,String[]> tmp = new HashMap<String, String[]>();
-		
-		for (Iterator iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
-           String paramname = (String) iter.next();
+
+		for (Iterator<String> iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
+           String paramname = iter.next();
            if (!publicParameterNew.containsKey(paramname)){
                String[] paramvalue = publicParameterCurrent.get(paramname);
                tmp.put(paramname, paramvalue);
            }
         }
-		for (Iterator iter = publicParameterNew.keySet().iterator();iter.hasNext();){
-			String paramname = (String) iter.next();
+		for (Iterator<String> iter = publicParameterNew.keySet().iterator();iter.hasNext();){
+			String paramname = iter.next();
 			String[] paramvalue = publicParameterNew.get(paramname);
 			if (paramvalue[0]!=null){
 				tmp.put(paramname, paramvalue);
@@ -283,7 +284,7 @@ public class RelativePortalURLImpl implements PortalURL {
         return ((DriverConfiguration) servletContext.getAttribute(
         		AttributeKeys.DRIVER_CONFIG)).getPageConfig(requestedPageId);
 	}
-    
+
     public String getResourceWindow() {
 		return resourceWindow;
 	}
@@ -292,5 +293,5 @@ public class RelativePortalURLImpl implements PortalURL {
 		this.resourceWindow = resourceWindow;
 	}
 
-	
+
 }

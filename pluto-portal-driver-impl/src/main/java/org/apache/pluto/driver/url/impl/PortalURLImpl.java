@@ -40,36 +40,34 @@ import org.apache.pluto.util.StringUtils;
  * @since 1.0
  * @deprecated replaced by {@link RelativePortalURLImpl}
  */
+@Deprecated
 public class PortalURLImpl implements PortalURL {
-	
+
 	/** Server URI contains protocol, host name, and (optional) port. */
     private String serverURI = null;
-    
+
     private String servletPath = null;
     private String renderPath = null;
     private String actionWindow = null;
     private String resourceWindow = null;
-    
+
     /** The window states: key is the window ID, value is WindowState. */
-    private Map windowStates = new HashMap();
-    
-    private Map portletModes = new HashMap();
-    
+    private Map<String, WindowState> windowStates = new HashMap<String, WindowState>();
+
+    private Map<String, PortletMode> portletModes = new HashMap<String, PortletMode>();
+
     /** Parameters of the portlet windows. */
-    private Map parameters = new HashMap();
-    
+    private Map<String, PortalURLParameter> parameters = new HashMap<String, PortalURLParameter>();
+
     private Map<String, String[]> publicParameterCurrent = new HashMap<String, String[]>();
-    
+
     private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
-    
+
     /** Logger. */
     private static final Log LOG = LogFactory.getLog(PortalURLImpl.class);
 
-	private static final String KEY = PortalURL.class.getName();
-    
-    
     // Constructors ------------------------------------------------------------
-    
+
     /**
      * Constructs a PortalURLImpl instance using default port.
      * @param protocol  the protocol.
@@ -83,7 +81,7 @@ public class PortalURLImpl implements PortalURL {
                          String servletName) {
     	this(protocol, hostName, -1, contextPath, servletName);
     }
-    
+
     /**
      * Constructs a PortalURLImpl instance using customized port.
      * @param protocol  the protocol.
@@ -104,13 +102,13 @@ public class PortalURLImpl implements PortalURL {
     		buffer.append(":").append(port);
     	}
     	serverURI = buffer.toString();
-    	
+
     	buffer = new StringBuffer();
     	buffer.append(contextPath);
     	buffer.append(servletName);
         servletPath = buffer.toString();
     }
-    
+
     /**
      * Internal private constructor used by method <code>clone()</code>.
      * @see #clone()
@@ -118,9 +116,9 @@ public class PortalURLImpl implements PortalURL {
     private PortalURLImpl() {
     	// Do nothing.
     }
-    
+
     // Public Methods ----------------------------------------------------------
-    
+
     public void setRenderPath(String renderPath) {
         this.renderPath = renderPath;
     }
@@ -132,33 +130,33 @@ public class PortalURLImpl implements PortalURL {
     public void addParameter(PortalURLParameter param) {
         parameters.put(param.getWindowId() + param.getName(), param);
     }
-    
-    public void addPublicRenderParametersNew(Map parameters){
-    	for (Iterator iter=parameters.keySet().iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
+
+    public void addPublicRenderParametersNew(Map<String, String[]> parameters){
+    	for (Iterator<String> iter=parameters.keySet().iterator(); iter.hasNext();) {
+			String key = iter.next();
 			if (publicParameterNew.containsKey(key)){
 				publicParameterNew.remove(key);
 			}
-			String[] values = (String[])parameters.get(key);
+			String[] values = parameters.get(key);
 			if (values[0]!= null){
 				publicParameterNew.put(key, values);
 			}
 		}
     }
 
-    public Collection getParameters() {
+    public Collection<PortalURLParameter> getParameters() {
         return parameters.values();
     }
-    
+
     public void addPublicParameterCurrent(String name, String[] values){
     	publicParameterCurrent.put(name, values);
     }
-    
+
     public void addPublicParameterActionResourceParameter(String parameterName, String value) {
     	//add at the first position
 		if (publicParameterCurrent.containsKey(parameterName)){
 			String[] tmp = publicParameterCurrent.get(parameterName);
-			
+
 			String[] values = new String[tmp.length + 1];
 			values[0] = value;
 			for (int i = 0; i < tmp.length; i++) {
@@ -170,19 +168,19 @@ public class PortalURLImpl implements PortalURL {
 		else
 			publicParameterCurrent.put(parameterName, new String[]{value});
 	}
-    
+
     public Map<String, String[]> getPublicParameters() {
     	Map<String,String[]> tmp = new HashMap<String, String[]>();
-		
-		for (Iterator iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
-           String paramname = (String) iter.next();
+
+		for (Iterator<String> iter = publicParameterCurrent.keySet().iterator(); iter.hasNext();) {
+           String paramname = iter.next();
            if (!publicParameterNew.containsKey(paramname)){
                String[] paramvalue = publicParameterCurrent.get(paramname);
                tmp.put(paramname, paramvalue);
            }
         }
-		for (Iterator iter = publicParameterNew.keySet().iterator();iter.hasNext();){
-			String paramname = (String) iter.next();
+		for (Iterator<String> iter = publicParameterNew.keySet().iterator();iter.hasNext();){
+			String paramname = iter.next();
 			String[] paramvalue = publicParameterNew.get(paramname);
 			if (paramvalue[0]!=null){
 				tmp.put(paramname, paramvalue);
@@ -198,7 +196,7 @@ public class PortalURLImpl implements PortalURL {
     public String getActionWindow() {
         return actionWindow;
     }
-    
+
     public String getResourceWindow() {
 		return resourceWindow;
 	}
@@ -207,12 +205,12 @@ public class PortalURLImpl implements PortalURL {
 		this.resourceWindow = resourceWindow;
 	}
 
-    public Map getPortletModes() {
+    public Map<String, PortletMode> getPortletModes() {
         return Collections.unmodifiableMap(portletModes);
     }
 
     public PortletMode getPortletMode(String windowId) {
-        PortletMode mode = (PortletMode) portletModes.get(windowId);
+        PortletMode mode = portletModes.get(windowId);
         if (mode == null) {
             mode = PortletMode.VIEW;
         }
@@ -223,17 +221,17 @@ public class PortalURLImpl implements PortalURL {
         portletModes.put(windowId, portletMode);
     }
 
-    public Map getWindowStates() {
+    public Map<String, WindowState> getWindowStates() {
         return Collections.unmodifiableMap(windowStates);
     }
-    
+
     /**
      * Returns the window state of the specified window.
      * @param windowId  the window ID.
      * @return the window state. Default to NORMAL.
      */
     public WindowState getWindowState(String windowId) {
-        WindowState state = (WindowState) windowStates.get(windowId);
+        WindowState state = windowStates.get(windowId);
         if (state == null) {
             state = WindowState.NORMAL;
         }
@@ -248,28 +246,28 @@ public class PortalURLImpl implements PortalURL {
     public void setWindowState(String windowId, WindowState windowState) {
         this.windowStates.put(windowId, windowState);
     }
-    
+
     /**
      * Clear parameters of the specified window.
      * @param windowId  the window ID.
      */
     public void clearParameters(String windowId) {
-    	for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            PortalURLParameter param = (PortalURLParameter) entry.getValue();
+    	for (Iterator<Map.Entry<String, PortalURLParameter>> it = parameters.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, PortalURLParameter> entry = it.next();
+            PortalURLParameter param = entry.getValue();
             if (param.getWindowId().equals(windowId)) {
             	it.remove();
             }
         }
     }
-    
+
     /**
      * Converts to a string representing the portal URL.
      * @return a string representing the portal URL.
      * @see org.apache.pluto.driver.url.impl.PortalURLParserImpl#toString(PortalURL)
-     */ 
+     */
     public String toString(){
-    	return PortalURLParserImpl.getParser().toString(this); 
+    	return PortalURLParserImpl.getParser().toString(this);
     }
 
 
@@ -280,7 +278,7 @@ public class PortalURLImpl implements PortalURL {
     public String getServerURI() {
         return serverURI;
     }
-    
+
     /**
      * Returns the servlet path (context path + servlet name).
      * @return the servlet path.
@@ -288,7 +286,7 @@ public class PortalURLImpl implements PortalURL {
     public String getServletPath() {
         return servletPath;
     }
-    
+
     /**
      * Clone a copy of itself.
      * @return a copy of itself.
@@ -297,9 +295,9 @@ public class PortalURLImpl implements PortalURL {
     	PortalURLImpl portalURL = new PortalURLImpl();
     	portalURL.serverURI = this.serverURI;
     	portalURL.servletPath = this.servletPath;
-    	portalURL.parameters = new HashMap(parameters);
-    	portalURL.portletModes = new HashMap(portletModes);
-    	portalURL.windowStates = new HashMap(windowStates);
+    	portalURL.parameters = new HashMap<String, PortalURLParameter>(parameters);
+    	portalURL.portletModes = new HashMap<String, PortletMode>(portletModes);
+    	portalURL.windowStates = new HashMap<String, WindowState>(windowStates);
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
     	portalURL.resourceWindow = resourceWindow;

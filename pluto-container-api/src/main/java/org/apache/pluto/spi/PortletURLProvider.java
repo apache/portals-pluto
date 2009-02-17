@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * Defines the interface used by the portlet container to create Portal URLs.
  * This provider must be implemented by the Portal and provided via the
  * container services upon initialization of the container.
- * 
+ *
  * @version 1.0
  */
 public interface PortletURLProvider {
@@ -57,18 +57,18 @@ public interface PortletURLProvider {
 
     /**
      * Specifies whether or not this request should be considered an resource Serving
-     * request. 
+     * request.
      * @since 2.0
      */
     public void setResourceServing(boolean resource);
-    
+
     /**
      * Shows you if the lifecycle is serveResource
      * @return true if ResourceServing else false
      * @since 2.0
      */
     public boolean isResourceServing();
-    
+
     /**
      * By calling this method the URL is defined as a secure URL.
      */
@@ -77,12 +77,11 @@ public interface PortletURLProvider {
     /**
      * Determine whether or not this url provider
      * supports secure urls.
-     * 
-     * @return
-     * @throws PortletSecurityException
+     *
+     * @return <code>true</code> if secure urls are supported.
      */
     public boolean isSecureSupported();
-    
+
     /**
      * Removes all pre-existing parameters in this URL
      */
@@ -94,14 +93,14 @@ public interface PortletURLProvider {
      * @param parameters a map containing the name [java.lang.String] and value
      *                   [java.lang.String[]] of the parameters.
      */
-    public void setParameters(Map parameters);
+    public void setParameters(Map<String, String[]> parameters);
 
     /**
      * Sets the given public-render-parameters as parameters into the URL.
      * @param parameters a map containing the name [java.lang.String] and value
      *                   [java.lang.String[]] of the parameters.
      */
-    public void setPublicRenderParameters(Map parameters);
+    public void setPublicRenderParameters(Map<String, String[]> parameters);
 
     /**
      * Returns the URL in string format. This method should only be called
@@ -109,16 +108,16 @@ public interface PortletURLProvider {
      * @return the URL
      */
     public String toString();
-    
+
     public void savePortalURL(HttpServletRequest request);
-    
+
     /**
      * Gets the values from the current public-render-parameters from this request.
      * @param name Parametername
      * @return the values for the Parameter, can be null, if there is no Parameter with this name.
      */
     public String[] getPublicRenderParameters(String name);
-    
+
     /**
      * Gets the values from the parameters from this request. This is only used for ServeResource.
      * @param name Parametername
@@ -127,15 +126,15 @@ public interface PortletURLProvider {
     public String[] getPrivateRenderParameters(String name);
 
     public Map<String, String[]> parseRenderParameters(Map<String, String[]> parentMap, String queryString);
-    
+
     public Map<String, String[]> getRenderParameters();
-    
+
     /**
      * Provides the BaseURL vendor-specific properties
-     * @param parameters a map containing the name and value(s) of the properties.
+     * @param properties a map containing the name and value(s) of the properties.
      */
     public void setProperties(Map<String, List<String>> properties);
-    
+
     /**
      * Gets the vendor-specific properties as set on the BaseURL
      * @return parameters a map containing the name and value(s) of the properties (may return null)

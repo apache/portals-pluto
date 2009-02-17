@@ -40,33 +40,33 @@ public interface PortalURL extends Cloneable {
     String getRenderPath();
 
     void addParameter(PortalURLParameter param);
-    
-    void addPublicRenderParametersNew(Map parameters);
 
-    Collection getParameters();
-    
+    void addPublicRenderParametersNew(Map<String, String[]> parameters);
+
+    Collection<PortalURLParameter> getParameters();
+
     public void addPublicParameterCurrent(String name, String[] values);
-    
+
     public Map<String, String[]> getPublicParameters();
-    
+
     void setActionWindow(String actionWindow);
 
     String getActionWindow();
 
-    Map getPortletModes();
+    Map<String, PortletMode> getPortletModes();
 
     PortletMode getPortletMode(String windowId);
 
     void setPortletMode(String windowId, PortletMode portletMode);
 
-    Map getWindowStates();
+    Map<String, WindowState> getWindowStates();
 
     WindowState getWindowState(String windowId);
 
     void setWindowState(String windowId, WindowState windowState);
 
     void clearParameters(String windowId);
-    
+
     String toString();
 
     String getServerURI();
@@ -76,9 +76,9 @@ public interface PortalURL extends Cloneable {
     Object clone();
 
     String getResourceWindow();
-    
+
 	void setResourceWindow(String window);
-	
+
 	PageConfig getPageConfig(ServletContext servletContext);
 
 	void addPublicParameterActionResourceParameter(String parameterName, String value);

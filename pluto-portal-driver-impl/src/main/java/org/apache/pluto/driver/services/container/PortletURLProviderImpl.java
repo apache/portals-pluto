@@ -35,14 +35,14 @@ import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.spi.PortletURLProvider;
 
 /**
- * 
+ *
  */
 public class PortletURLProviderImpl implements PortletURLProvider {
 
     private PortalURL url;
     private String window;
     /** The parameters including parameters appended to the dispatching URI. */
-    protected Map<String, String[]> parameters = null;    
+    protected Map<String, String[]> parameters = null;
 
     public PortletURLProviderImpl(HttpServletRequest request,
                                   PortletWindow portletWindow) {
@@ -60,7 +60,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     public void setWindowState(WindowState state) {
         url.setWindowState(window, state);
     }
-    
+
     public void setResourceServing(boolean resourceServing) {
         if (resourceServing) {
             url.setResourceWindow(window);
@@ -70,12 +70,9 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     }
 
     public boolean isResourceServing(){
-    	if (url.getResourceWindow() != null)
-    		return true;
-    	else
-    		return false;
+    	return (url.getResourceWindow() != null);
     }
-    
+
     public void setAction(boolean action) {
         if (action) {
             url.setActionWindow(window);
@@ -96,29 +93,32 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         url.clearParameters(window);
     }
 
-    
-    public void setParameters(Map parameters) {
-        Iterator it = parameters.entrySet().iterator();
+
+    /**
+     * @see org.apache.pluto.spi.PortletURLProvider#setParameters(java.util.Map)
+     */
+    public void setParameters(Map<String, String[]> parameters) {
+        Iterator<Map.Entry<String, String[]>> it = parameters.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
+            Map.Entry<String, String[]> entry = it.next();
             PortalURLParameter param = new PortalURLParameter(
             		window,
-            		(String) entry.getKey(),
-            		(String[]) entry.getValue());
+            		entry.getKey(),
+            		entry.getValue());
             url.addParameter(param);
         }
     }
-    
+
     public String[] getPrivateRenderParameters(String name){
     	String[] values = null;
-    	for (Iterator it=url.getParameters().iterator();it.hasNext();){
-    		PortalURLParameter param = (PortalURLParameter)it.next();
+    	for (Iterator<PortalURLParameter> it=url.getParameters().iterator();it.hasNext();){
+    		PortalURLParameter param = it.next();
     		if (param.getName().equals(name))
     			values = param.getValues();
     	}
     	return values;
     }
-    
+
     public String[] getPublicRenderParameters(String name){
     	Map publicRenderParaMap = url.getPublicParameters();
     	String[] values = null;
@@ -130,7 +130,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     	}
     	return values;
     }
-    
+
     public void setPublicRenderParameters(Map parameters) {
 		url.addPublicRenderParametersNew(parameters);
 	}
@@ -142,7 +142,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 	public void savePortalURL(HttpServletRequest request) {
 		PortalRequestContext ctx = (PortalRequestContext)
 			request.getAttribute(PortalRequestContext.REQUEST_KEY);
-		ctx.setPortalURL(url);		
+		ctx.setPortalURL(url);
 	}
 
     public Map<String, String[]> getRenderParameters()
@@ -159,7 +159,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         else
         {
             // Copy all the original render parameters.
-            parameters = new HashMap<String, String[]>(parentMap);        
+            parameters = new HashMap<String, String[]>(parentMap);
             if (queryString != null && queryString.trim().length() > 0)
             {
                 // Merge the appended parameters to the render parameter map.
@@ -169,12 +169,12 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         }
         return parameters;
     }
-    
+
     /**
      * Parses the appended query string and merges the appended parameters to
      * the original parameters. Query parameters are name-value pairs separated
      * by the '<code>&amp;</code>' character.
-     * 
+     *
      * @param parameters
      *            the original parameters map.
      * @param queryString
