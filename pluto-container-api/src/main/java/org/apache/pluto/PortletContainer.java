@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * <p/>
  * <P> The methods of this class have to be called in the following order:
  * <TABLE> <TR><TH>Method</TH><TH>Description</TH><TH>Constraints</TH></TR>
- * <TR><TD>{@link #init(javax.servlet.ServletContext)}</TD> <TD>Initialized the
+ * <TR><TD>{@link #init()}</TD> <TD>Initialized the
  * portlet container.</TD> <TD>Performed only once per container
  * lifecycle.</TD></TR>
  * <p/>
@@ -49,7 +49,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface PortletContainer {
 
     public enum Method { LOAD, ACTION, EVENT, RENDER, RESOURCE, ADMIN };
-    
+
     /**
      * Initializes the container
      * @throws PortletContainerException if an error occurs.
