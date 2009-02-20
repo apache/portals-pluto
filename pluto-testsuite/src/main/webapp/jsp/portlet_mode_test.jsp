@@ -30,7 +30,7 @@ limitations under the License.
         and make sure that the specified mode is displayed.</TD></TR>
 
 <portlet:actionURL portletMode="<%=PortletMode.HELP.toString()%>" secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-	<portlet:param name="testId" value="<%=renderRequest.getParameter("testId")%>"/>
+	<portlet:param name="testId" value="<%=renderRequest.getParameter(\"testId\")%>"/>
 </portlet:actionURL>
 
 <TR><TD style="font-size: 12px" valign="top"><A href="<%=url%>">Help</A></TD>
@@ -38,7 +38,7 @@ limitations under the License.
         displayed.</TD></TR>
 
 <portlet:actionURL portletMode="<%=PortletMode.EDIT.toString()%>" secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-	<portlet:param name="testId" value="<%=renderRequest.getParameter("testId")%>"/>
+	<portlet:param name="testId" value="<%=renderRequest.getParameter(\"testId\")%>"/>
 </portlet:actionURL>
 
 <TR><TD style="font-size: 12px" valign="top"><A href="<%=url%>">Edit</A></TD>
@@ -46,7 +46,7 @@ limitations under the License.
     currently stored in this portlet.</TD></TR>
 
 <portlet:actionURL portletMode="<%=PortletMode.VIEW.toString()%>" secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-	<portlet:param name="testId" value="<%=renderRequest.getParameter("testId")%>"/>
+	<portlet:param name="testId" value="<%=renderRequest.getParameter(\"testId\")%>"/>
 </portlet:actionURL>
 
 <TR><TD style="font-size: 12px"><A href="<%=url%>">View</A></TD>

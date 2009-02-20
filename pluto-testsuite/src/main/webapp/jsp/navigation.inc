@@ -31,10 +31,10 @@ limitations under the License.
       <td align="center" nowrap="true">
         
         <%-- Run Previous Test ============================================ --%>
-        <portlet:actionURL secure="<%= renderRequest.isSecure() ? "True" : "False" %>"
+        <portlet:actionURL secure="<%= renderRequest.isSecure() ? \"True\" : \"False\" %>"
                            var="url">
           <portlet:param name="nextTestId"
-                         value="<%= renderRequest.getParameter("testId") %>"/>
+                         value="<%= renderRequest.getParameter(\"testId\") %>"/>
           <c:forEach var="param" items="${prevTest.actionParameters}">
             <%
                 TestConfig.Parameter parameter = (TestConfig.Parameter) pageContext.findAttribute("param");
@@ -50,7 +50,7 @@ limitations under the License.
         </a>
         
         <%-- Return to Introduction ======================================= --%>
-        <portlet:actionURL secure="<%= renderRequest.isSecure() ? "True" : "False" %>"
+        <portlet:actionURL secure="<%= renderRequest.isSecure() ? \"True\" : \"False\" %>"
                            var="url">
           <portlet:param name="testId" value="<%= null %>"/>
         </portlet:actionURL>
@@ -60,10 +60,10 @@ limitations under the License.
         </a>
         
         <%-- Run Next Test ================================================ --%>
-        <portlet:actionURL secure="<%= renderRequest.isSecure() ? "True" : "False" %>"
+        <portlet:actionURL secure="<%= renderRequest.isSecure() ? \"True\" : \"False\" %>"
                            var="url">
           <portlet:param name="previousTestId"
-                         value="<%= renderRequest.getParameter("testId") %>"/>
+                         value="<%= renderRequest.getParameter(\"testId\") %>"/>
           <c:forEach var="param" items="${nextTest.actionParameters}">
             <%
                 TestConfig.Parameter parameter = (TestConfig.Parameter) pageContext.findAttribute("param");

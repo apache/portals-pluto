@@ -30,7 +30,7 @@ limitations under the License.
         and make sure that the specified state is displayed.</TD></TR>
 
 <portlet:actionURL windowState="<%=WindowState.MAXIMIZED.toString()%>" secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-	<portlet:param name="testId" value="<%=renderRequest.getParameter("testId")%>"/>
+	<portlet:param name="testId" value="<%=renderRequest.getParameter(\"testId\")%>"/>
 </portlet:actionURL>
 
 <TR><TD style="font-size: 12px" valign="top"><A href="<%=url%>">Max</A></TD>
@@ -38,7 +38,7 @@ limitations under the License.
         displayed.</TD></TR>
 
 <portlet:actionURL windowState="<%=WindowState.MINIMIZED.toString()%>" secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-	<portlet:param name="testId" value="<%=renderRequest.getParameter("testId")%>"/>
+	<portlet:param name="testId" value="<%=renderRequest.getParameter(\"testId\")%>"/>
 </portlet:actionURL>
 
 <TR><TD style="font-size: 12px" valign="top"><A href="<%=url%>">Min</A></TD>
@@ -46,7 +46,7 @@ limitations under the License.
     currently stored in this portlet.</TD></TR>
 
 <portlet:actionURL windowState="<%=WindowState.NORMAL.toString()%>" secure="<%=renderRequest.isSecure()?"True":"False"%>" var="url">
-	<portlet:param name="testId" value="<%=renderRequest.getParameter("testId")%>"/>
+	<portlet:param name="testId" value="<%=renderRequest.getParameter(\"testId\")%>"/>
 </portlet:actionURL>
 
 <TR><TD style="font-size: 12px" valign="top"><A href="<%=url%>">Nor</A></TD>
