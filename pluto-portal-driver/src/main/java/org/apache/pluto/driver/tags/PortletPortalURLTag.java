@@ -90,8 +90,7 @@ public class PortletPortalURLTag extends BodyTagSupport {
         HttpServletResponse response = (HttpServletResponse)
                 pageContext.getResponse();
 
-        PortalRequestContext ctx = (PortalRequestContext)
-            request.getAttribute(PortalRequestContext.REQUEST_KEY);
+        PortalRequestContext ctx = PortalRequestContext.getContext(request);
 
         PortalURL portalUrl =  ctx.createPortalURL();
 

@@ -46,8 +46,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
     public PortletURLProviderImpl(HttpServletRequest request,
                                   PortletWindow portletWindow) {
-        PortalRequestContext ctx = (PortalRequestContext)
-            request.getAttribute(PortalRequestContext.REQUEST_KEY);
+        PortalRequestContext ctx = PortalRequestContext.getContext(request);
         url = ctx.createPortalURL();
 
         this.window = portletWindow.getId().getStringId();
@@ -140,8 +139,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     }
 
 	public void savePortalURL(HttpServletRequest request) {
-		PortalRequestContext ctx = (PortalRequestContext)
-			request.getAttribute(PortalRequestContext.REQUEST_KEY);
+        PortalRequestContext ctx = PortalRequestContext.getContext(request);
 		ctx.setPortalURL(url);
 	}
 

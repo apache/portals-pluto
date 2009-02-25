@@ -39,13 +39,13 @@ import org.apache.pluto.driver.url.PortalURLParser;
 public class PortalRequestContext {
 
     /** Internal Logger. */
-    private static final Log LOG = LogFactory.getLog(PortalRequestContext.class);    
+    private static final Log LOG = LogFactory.getLog(PortalRequestContext.class);
 
     /**
      * The attribute key to bind the portal environment instance to servlet
      * request.
      */
-    public final static String REQUEST_KEY =
+    private final static String REQUEST_KEY =
             PortalRequestContext.class.getName();
 
     /** The servletContext of execution. **/
@@ -129,18 +129,14 @@ public class PortalRequestContext {
     public PortalURL createPortalURL() {
         return (PortalURL)getRequestedPortalURL().clone();
     }
-    
+
     public void setPortalURL(PortalURL portalURL){
     	requestedPortalURL = portalURL;
     }
 
-	public static String getREQUEST_KEY() {
-		return REQUEST_KEY;
-	}
-
 	public ServletContext getServletContext() {
 		return servletContext;
 	}
-    
-    
+
+
 }
