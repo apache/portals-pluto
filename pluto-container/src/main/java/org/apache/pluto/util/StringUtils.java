@@ -17,7 +17,6 @@
 package org.apache.pluto.util;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -40,7 +39,7 @@ public class StringUtils {
     /**
      * TODO: can't we just use String[].clone()?
      * @param source
-     * @return
+     * @return The copied array
      */
     public static String[] copy(String[] source) {
         if (source == null) {
@@ -58,20 +57,10 @@ public class StringUtils {
      * @param parameters  the parameter map to deep-clone.
      * @return the deep-cloned parameter map.
      */
-    public static Map copyParameters(Map parameters) {
-        Map result = new HashMap(parameters);
-        for (Iterator it = result.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            if (!(entry.getKey() instanceof String)) {
-                throw new IllegalArgumentException("Parameter map keys "
-                		+ "must not be null and of type java.lang.String.");
-            }
-            try {
-                entry.setValue(copy((String[]) entry.getValue()));
-            } catch (ClassCastException ex) {
-                throw new IllegalArgumentException("Parameter map values "
-                		+ "must not be null and of type java.lang.String[].");
-            }
+    public static Map<String, String[]> copyParameters(Map<String, String[]> parameters) {
+        final Map<String, String[]> result = new HashMap<String, String[]>(parameters);
+        for( final Map.Entry<String, String[]> entry : result.entrySet()) {
+            entry.setValue(copy(entry.getValue()));
         }
         return result;
     }
