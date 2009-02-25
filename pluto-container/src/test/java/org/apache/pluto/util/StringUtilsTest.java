@@ -27,22 +27,6 @@ import java.util.Map;
  */
 public class StringUtilsTest extends PlutoTestCase {
 
-    public void testReplaceAtBegin() {
-        assertEquals("ReplacedValue", StringUtils.replace("___lacedValue", "___", "Rep"));
-    }
-
-    public void testReplaceAtEnd() {
-        assertEquals("ReplacedValue", StringUtils.replace("ReplacedVa***", "***", "lue"));
-    }
-
-    public void testReplaceInMiddle() {
-        assertEquals("ReplacedValue", StringUtils.replace("Rep(###)Value", "(###)", "laced"));
-    }
-
-    public void testReplaceMultiples() {
-        assertEquals("ReplacedValueReplacedValue", StringUtils.replace("Rep(###)ValueRep(###)Value", "(###)", "laced"));
-    }
-
     public void testCopy() {
         String[] original  = new String[] {"one", "two", "three", "four", "five"};
         String[] results = StringUtils.copy(original);

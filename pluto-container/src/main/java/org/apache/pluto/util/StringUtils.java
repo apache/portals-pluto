@@ -38,43 +38,6 @@ public class StringUtils {
 	// Static Utility Methods --------------------------------------------------
 
     /**
-     * Replaces all occurrences of a pattern within a string by a replacement.
-     * @param source  the string that should be searched.
-     * @param pattern  the pattern that should be replaced.
-     * @param replace  the replacement that should be inserted instead of the
-     *        pattern.
-     * @return The updated source string.
-     */
-    public static String replace(String source, String pattern, String replace) {
-        if (source == null || source.length() == 0
-        		|| pattern == null || pattern.length() == 0) {
-            return source;
-        }
-
-        int k = source.indexOf(pattern);
-
-        if (k == -1) {
-            return source;
-        }
-
-        StringBuffer out = new StringBuffer();
-        int i = 0, l = pattern.length();
-
-        while (k != -1) {
-            out.append(source.substring(i, k));
-
-            if (replace != null) {
-                out.append(replace);
-            }
-
-            i = k + l;
-            k = source.indexOf(pattern, i);
-        }
-        out.append(source.substring(i));
-        return out.toString();
-    }
-
-    /**
      * TODO: can't we just use String[].clone()?
      * @param source
      * @return
@@ -130,19 +93,5 @@ public class StringUtils {
             strippedType = mimeType.substring(0, index);
         }
         return strippedType.trim();
-    }
-
-    public static void encode(StringBuffer url){
-    	bla(url,"|","%7C");
-    	bla(url,"\"","%22");
-    }
-    private static void bla(StringBuffer url, String character, String change){
-    	boolean contains = url.toString().contains(character);
-    	while (contains){
-    		int index = url.indexOf(character);
-    		url.deleteCharAt(index);
-    		url.insert(index, change, 0, 3);
-    		contains = url.toString().contains(character);
-    	}
     }
 }

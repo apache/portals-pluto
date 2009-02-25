@@ -32,7 +32,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
-import org.apache.pluto.util.StringUtils;
 
 /**
  * @version 1.0
@@ -48,7 +47,7 @@ public class PortalURLParserImpl implements PortalURLParser {
 
 
     // Constants used for Encoding/Decoding ------------------------------------
-    
+
     private static final String PREFIX = "__";
     private static final String DELIM = "_";
     private static final String PORTLET_ID = "pd";
@@ -76,9 +75,9 @@ public class PortalURLParserImpl implements PortalURLParser {
             new String[] { "\\", "0xb" },
             new String[] { "%",  "0xc" },
     };
-    
+
     // Constructor -------------------------------------------------------------
-    
+
     /**
      * Private constructor that prevents external instantiation.
      */
@@ -93,24 +92,24 @@ public class PortalURLParserImpl implements PortalURLParser {
     public static PortalURLParser getParser() {
     	return PARSER;
     }
-    
-    
+
+
     // Public Methods ----------------------------------------------------------
-    
+
     /**
      * Parse a servlet request to a portal URL.
      * @param request  the servlet request to parse.
      * @return the portal URL.
      */
     public PortalURL parse(HttpServletRequest request) {
-        
+
     	if (LOG.isDebugEnabled()) {
             LOG.debug("Parsing URL: " + request.getRequestURI());
         }
 
         String contextPath = request.getContextPath();
         String servletName = request.getServletPath();
-        
+
         // Construct portal URL using info retrieved from servlet request.
         PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName, this);
 
@@ -126,7 +125,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                 return portalURL;
             }
         }
-        
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Parsing request pathInfo: " + pathInfo);
         }
@@ -134,9 +133,9 @@ public class PortalURLParserImpl implements PortalURLParser {
         StringBuffer renderPath = new StringBuffer();
         StringTokenizer st = new StringTokenizer(pathInfo, "/", false);
         while (st.hasMoreTokens()) {
-        	
+
         	String token = st.nextToken();
-        	
+
         	// Part of the render path: append to renderPath.
         	if (!token.startsWith(PREFIX)) {
 //        		renderPath.append(token);
@@ -167,11 +166,11 @@ public class PortalURLParserImpl implements PortalURLParser {
         		if (st.hasMoreTokens()) {
         			value = st.nextToken();
         		}
-        		//set the 
+        		//set the
         		PortalURLParameter param = decodeParameter(token, value);
         		portalURL.addParameter(param);
-        		
-        		
+
+
         	}
         	else{ // besser if PREFIX + PUBLIC_PARAM
         		String value = null;
@@ -184,19 +183,19 @@ public class PortalURLParserImpl implements PortalURLParser {
         			//set public parameter in portalURL
     	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
         		}
-	    		
-	    		
+
+
         	}
         }
         if (renderPath.length() > 0) {
             portalURL.setRenderPath(renderPath.toString());
         }
-        
+
         // Return the portal URL.
         return portalURL;
     }
-    
-    
+
+
     /**
      * Converts a portal URL to a URL string.
      * @param portalURL  the portal URL to convert.
@@ -205,7 +204,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     public String toString(PortalURL portalURL) {
 
     	StringBuffer buffer = new StringBuffer();
-    	
+
         // Append the server URI and the servlet path.
     	buffer.append(portalURL.getServletPath().startsWith("/")?"":"/")
             .append(portalURL.getServletPath());
@@ -214,7 +213,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         if (portalURL.getRenderPath() != null) {
         	buffer.append("/").append(portalURL.getRenderPath());
         }
-        //Append the resource window definition, if it exists.        
+        //Append the resource window definition, if it exists.
         if (portalURL.getResourceWindow() != null){
                buffer.append("/");
                buffer.append(PREFIX).append(RESOURCE)
@@ -226,7 +225,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         	buffer.append(PREFIX).append(ACTION)
         			.append(encodeCharacters(portalURL.getActionWindow()));
         }
-        
+
         // Append portlet mode definitions.
         for (Iterator it = portalURL.getPortletModes().entrySet().iterator();
         		it.hasNext(); ) {
@@ -235,7 +234,7 @@ public class PortalURLParserImpl implements PortalURLParser {
             		encodeControlParameter(PORTLET_MODE, entry.getKey().toString(),
                        entry.getValue().toString()));
         }
-        
+
         // Append window state definitions.
         for (Iterator it = portalURL.getWindowStates().entrySet().iterator();
         		it.hasNext(); ) {
@@ -244,15 +243,15 @@ public class PortalURLParserImpl implements PortalURLParser {
             		encodeControlParameter(WINDOW_STATE, entry.getKey().toString(),
                        entry.getValue().toString()));
         }
-        
+
         // Append action and render parameters.
         StringBuffer query = new StringBuffer("?");
         boolean firstParam = true;
         for (Iterator it = portalURL.getParameters().iterator();
         		it.hasNext(); ) {
-            
+
         	PortalURLParameter param = (PortalURLParameter) it.next();
-            
+
             // Encode action params in the query appended at the end of the URL.
             if (portalURL.getActionWindow() != null
             		&& portalURL.getActionWindow().equals(param.getWindowId())
@@ -269,7 +268,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                     		.append(encodeQueryParam(param.getValues()[i]));
                 }
             }
-            
+
             // Encode render params as a part of the URL.
             else if (param.getValues() != null
             		&& param.getValues().length > 0) {
@@ -283,14 +282,14 @@ public class PortalURLParserImpl implements PortalURLParser {
             }
         }
 
-        StringUtils.encode(buffer);
-        
-        
+        encode(buffer);
+
+
         Map<String, String[]> publicParamList = portalURL.getPublicParameters();
         if (publicParamList!=null){
 	        for (Iterator iter = publicParamList.keySet().iterator();iter.hasNext();){
 	        	String paramname = (String)iter.next();
-	        	String[] tmp = (String[])publicParamList.get(paramname);
+	        	String[] tmp = publicParamList.get(paramname);
 	        	String valueString = encodeMultiValues(tmp);
 	        	if (valueString.length()>0){
 	        		buffer.append("/").append(encodePublicParamname(PUBLIC_RENDER_PARAM, paramname));
@@ -298,15 +297,29 @@ public class PortalURLParserImpl implements PortalURLParser {
 	        	}
 	        }
         }
-        
+
         // Construct the string representing the portal URL.
         // Fix for PLUTO-247 - check if query string contains parameters
         if ( query.length() > 1 ) {
             return buffer.append(query).toString();
         }
-        
+
         // Construct the string representing the portal URL.
         return buffer.append(query).toString();
+    }
+
+    public static void encode(StringBuffer url){
+        replaceChar(url,"|","%7C");
+        replaceChar(url,"\"","%22");
+    }
+    private static void replaceChar(StringBuffer url, String character, String change){
+        boolean contains = url.toString().contains(character);
+        while (contains){
+            int index = url.indexOf(character);
+            url.deleteCharAt(index);
+            url.insert(index, change, 0, 3);
+            contains = url.toString().contains(character);
+        }
     }
 
     private String encodeQueryParam(String param) {
@@ -320,7 +333,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     }
 
     // Private Encoding/Decoding Methods ---------------------------------------
-    
+
     /**
      * Encode a control parameter.
      * @param type  the type of the control parameter, which may be:
@@ -337,14 +350,14 @@ public class PortalURLParserImpl implements PortalURLParser {
     			.append(DELIM).append(name);
     	return buffer.toString();
     }
-    
+
     private String encodePublicParamname(String type, String name){
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(PREFIX).append(type)
     	.append(DELIM).append(name);
     	return buffer.toString();
     }
-    
+
     /**
      * Encode a string array containing multiple values into a single string.
      * This method is used to encode multiple render parameter values.
@@ -369,7 +382,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         }
         return encodeCharacters(buffer.toString());
     }
-    
+
     /**
      * Encode special characters contained in the string value.
      * @param string  the string value to encode.
@@ -377,9 +390,7 @@ public class PortalURLParserImpl implements PortalURLParser {
      */
     private String encodeCharacters(String string) {
         for (int i = 0; i < ENCODINGS.length; i++) {
-            string = StringUtils.replace(string,
-                                         ENCODINGS[i][0],
-                                         ENCODINGS[i][1]);
+            string = string.replace(ENCODINGS[i][0], ENCODINGS[i][1]);
         }
         return string;
     }
@@ -416,23 +427,23 @@ public class PortalURLParserImpl implements PortalURLParser {
      * @return the decoded portal URL parameter.
      */
     private PortalURLParameter decodeParameter(String name, String value) {
-    	
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Decoding parameter: name=" + name
             		+ ", value=" + value);
         }
-    	
+
     	// Decode the name into window ID and parameter name.
         String noPrefix = name.substring((PREFIX + PORTLET_ID).length());
         String windowId = noPrefix.substring(0, noPrefix.indexOf(DELIM));
         String paramName = noPrefix.substring(noPrefix.indexOf(DELIM) + 1);
-        
+
         // Decode special characters in window ID and parameter value.
         windowId = decodeCharacters(windowId);
         if (value != null) {
         	value = decodeCharacters(value);
         }
-        
+
         // Split multiple values into a value array.
         String[] paramValues = value.split(VALUE_DELIM);
         for (int i = 0; i < paramValues.length;i++){
@@ -445,31 +456,31 @@ public class PortalURLParserImpl implements PortalURLParser {
         // Construct portal URL parameter and return.
         return new PortalURLParameter(windowId, paramName, paramValues);
     }
-    
+
     private PortalURLParameter decodePublicParameter(String name, String value) {
-    	
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Decoding parameter: name=" + name
             		+ ", value=" + value);
         }
-    	
+
 //    	// Decode the name into window ID and parameter name.
         String noPrefix = name.substring((PREFIX + PORTLET_ID).length());
         String paramName = noPrefix.substring(noPrefix.indexOf(DELIM) + 1);
-        
+
         // Decode special characters in parameter value.
 
         if (value != null) {
         	value = decodeCharacters(value);
         }
-        
+
         // Split multiple values into a value array.
         String[] paramValues = value.split(VALUE_DELIM);
-        
+
         // Construct portal URL parameter and return.
         return new PortalURLParameter(null, paramName, paramValues);
     }
-    
+
     /**
      * Decode special characters contained in the string value.
      * @param string  the string value to decode.
@@ -477,9 +488,7 @@ public class PortalURLParserImpl implements PortalURLParser {
      */
     private String decodeCharacters(String string) {
         for (int i = 0; i < ENCODINGS.length; i++) {
-        	string = StringUtils.replace(string,
-        	                             ENCODINGS[i][1],
-        	                             ENCODINGS[i][0]);
+        	string = string.replace(ENCODINGS[i][1], ENCODINGS[i][0]);
         }
 		return string;
     }
