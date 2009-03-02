@@ -50,7 +50,6 @@ import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
 import org.apache.pluto.util.DummyPrintWriter;
 import org.apache.pluto.util.DummyServletOutputStream;
-import org.apache.pluto.util.StringUtils;
 
 /**
  * Implementation of JSR-286 <code>StateAwareResponse</code>.
@@ -59,24 +58,24 @@ import org.apache.pluto.util.StringUtils;
  */
 public class StateAwareResponseImpl extends PortletResponseImpl implements
 		StateAwareResponse {
-	
+
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(StateAwareResponseImpl.class);
 
 	boolean redirectAllowed = true;
 	protected boolean redirected;
 	private String redirectLocation;
-    
+
 
 	private Map<String, String[]> publicRenderParameter = new HashMap<String, String[]>();
-	
+
     private Map<String, String[]> renderParameters = new HashMap<String, String[]>();
     private WindowState windowState = null;
     private PortletMode portletMode = null;
 	protected PortalCallbackService callback;
     private PortalContext context;
     private EventRequest eventRequest;
-    
+
 	public StateAwareResponseImpl(PortletContainer container,
 			            PortletWindow portletWindow,
 			            HttpServletRequest servletRequest,
@@ -86,7 +85,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		context = container.getRequiredContainerServices().getPortalContext();
 		callback = container.getRequiredContainerServices().getPortalCallbackService();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.lang.Object)
 	 */
@@ -94,10 +93,10 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 		if (qname == null) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		EventProvider provider = callback.getEventProvider(
 				getHttpServletRequest(),getPortletWindow());
- 	
+
 		provider.registerToFireEvent(qname, value);
 		redirectAllowed = false;
 	}
@@ -150,7 +149,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         }
     }
 
-    
+
 
     public String getRedirectLocation() {
         return redirectLocation;
@@ -173,7 +172,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         }
         redirectAllowed = false;
     }
-	    
+
     public void setPortletMode(PortletMode portletMode)
         throws PortletModeException {
         if (redirected) {
@@ -196,7 +195,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         redirectAllowed = false;
 
     }
-    
+
     public void setRenderParameters(java.util.Map<String, String[]> parameters) {
         if (redirected) {
             throw new IllegalStateException(
@@ -217,18 +216,18 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
                     "Value must not be null and of type java.lang.String[].");
             }
         }
-        
+
         renderParameters.clear();
         publicRenderParameter.clear();
         if (parameters.keySet()!= null){
         	for (Object key : parameters.keySet()) {
-        		this.setRenderParameter((String)key, (String[])parameters.get(key));
+        		this.setRenderParameter((String)key, parameters.get(key));
     		}
         }
-        
+
         redirectAllowed = false;
     }
-    
+
     public void setRenderParameter(String key, String value) {
         if (redirected) {
             throw new IllegalStateException(
@@ -253,13 +252,13 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         }
         redirectAllowed = false;
     }
-    
+
     public void setRenderParameter(String key, String[] values) {
     	if (redirected) {
             throw new IllegalStateException(
                 "Can't invoke setRenderParameter() after sendRedirect() has been called");
-        }        
-        
+        }
+
         if (key == null || values == null) {
 	        throw new IllegalArgumentException(
 	        	"name and values must not be null or values be an empty array");
@@ -267,27 +266,27 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	    List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 	    if (publicRenderParameterNames != null){
 		    if (publicRenderParameterNames.contains(key)){
-		    	publicRenderParameter.put(key,StringUtils.copy(values));
+		    	publicRenderParameter.put(key, values.clone());
 		    }
 		    else{
-		    	renderParameters.put(key, StringUtils.copy(values));
+		    	renderParameters.put(key, values.clone());
 		    }
 	    }
 	    else{
-	    	renderParameters.put(key, StringUtils.copy(values));
+	    	renderParameters.put(key, values.clone());
 	    }
     }
     // --------------------------------------------------------------------------------------------
-    
+
     // org.apache.pluto.core.InternalActionResponse implementation --------------------------------
     public Map getRenderParameters() {
         return renderParameters;
     }
-    
+
     public Map<String, String[]> getRenderParameterMap() {
 		return renderParameters;
 	}
-    
+
     public Map<String, String[]> getPublicRenderParameter(){
     	return publicRenderParameter;
     }
@@ -295,7 +294,7 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     public PortletMode getChangedPortletMode() {
         return this.portletMode;
     }
-    
+
     public PortletMode getPortletMode() {
 		return getChangedPortletMode();
 	}
@@ -303,23 +302,23 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
     public WindowState getChangedWindowState() {
         return this.windowState;
     }
-    
+
     public WindowState getWindowState() {
 		return getChangedWindowState();
 	}
-    
+
     protected boolean isPortletModeAllowed(PortletMode mode) {
         return isPortletModeAllowedByPortlet(mode)
                && isPortletModeAllowedByPortal(mode);
     }
 
     protected boolean isPortletModeAllowedByPortlet(PortletMode mode) {
-        
+
         //Not checking for VIEW mode in portetlDefinition, as VIEW mode is default
         // as per specs.
         if(PortletMode.VIEW.equals(mode))
             return true;
-        
+
         PortletDefinition dd = getPortletWindow().getPortletEntity()
             .getPortletDefinition();
 
@@ -360,9 +359,9 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
         }
         return false;
     }
-	
+
 	//	 access to a limited set of HttpServletResponse methods ------------------
-	
+
 	@Override
 	public void reset() {
 		if (super.isForwarded() || super.isIncluded()){
@@ -594,5 +593,5 @@ public class StateAwareResponseImpl extends PortletResponseImpl implements
 	public void setEventRequest(EventRequest eventRequest) {
 		this.eventRequest = eventRequest;
 	}
-	
+
 }

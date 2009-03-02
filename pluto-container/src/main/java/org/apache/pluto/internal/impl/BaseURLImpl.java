@@ -44,7 +44,6 @@ import org.apache.pluto.om.portlet.Supports;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.util.StringManager;
-import org.apache.pluto.util.StringUtils;
 
 /**
  * Implementation of JSR-286 <code>BaseURL</code>, which includes a refactoring
@@ -128,14 +127,14 @@ public class BaseURLImpl implements BaseURL {
 		List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
 
 		if (publicRenderParameterNames == null){
-			parameters.put(name, StringUtils.copy(values));
+			parameters.put(name, values.clone());
 	    }
 		else{
 			if (publicRenderParameterNames.contains(name)&& !this.isAction && !this.isResourceServing){
-		    	publicRenderParameters.put(name,StringUtils.copy(values));
+		    	publicRenderParameters.put(name, values.clone());
 		    }
 		    else{
-		    	parameters.put(name, StringUtils.copy(values));
+		    	parameters.put(name, values.clone());
 		    }
 		}
 	}

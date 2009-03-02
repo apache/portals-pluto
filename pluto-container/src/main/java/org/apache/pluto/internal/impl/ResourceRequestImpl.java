@@ -21,7 +21,6 @@ import java.util.Map;
 
 import javax.portlet.ResourceRequest;
 import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -30,17 +29,16 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalResourceRequest;
-import org.apache.pluto.util.StringUtils;
 
 public class ResourceRequestImpl extends ClientDataRequestImpl
 implements ResourceRequest, InternalResourceRequest {
 
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(ResourceRequestImpl.class);
-    
-        
+
+
     // Constructor -------------------------------------------------------------
-    
+
     public ResourceRequestImpl(PortletContainer container,
                              PortletWindow portletWindow,
                              HttpServletRequest servletRequest) {
@@ -54,18 +52,18 @@ implements ResourceRequest, InternalResourceRequest {
 
     protected Integer getRequestMethod()
     {
-        return Constants.METHOD_RESOURCE; 
+        return Constants.METHOD_RESOURCE;
     }
-    
+
     public String getResponseContentType(){
     	return super.getResponseContentType();
     }
-    
+
     @SuppressWarnings("unchecked")
 	public java.util.Enumeration getResponseContentTypes(){
     	return super.getResponseContentTypes();
     }
-    
+
     public String[] getParameterValues(String name) {
     	String values1[] = super.getParameterValues(name);
     	String values2[] = urlProvider.getPrivateRenderParameters(name);
@@ -82,7 +80,7 @@ implements ResourceRequest, InternalResourceRequest {
     	else if (length1>0){
     		values = new String[length1];
     	}
-    	
+
     	if (length1>0){
     		System.arraycopy(values1, 0, values, 0, length1);
     	}
@@ -90,11 +88,11 @@ implements ResourceRequest, InternalResourceRequest {
     		values = null;
     	}
         if (values != null) {
-            values = StringUtils.copy(values);
+            values = values.clone();
         }
         return values;
     }
-    
+
     public String getParameter(String name) {
     	String value = super.getParameter(name);
     	if (value == null){
@@ -107,15 +105,15 @@ implements ResourceRequest, InternalResourceRequest {
     	}
 		return value;
     }
-    
+
     // PortletRequestImpl impl -------------------------------------------------
-    
+
 	public String getETag() {
 		// TODO: get ETag
 		return null;
 	}
 
-	public String getLifecyclePhase() 
+	public String getLifecyclePhase()
 	{
 		return RESOURCE_PHASE;
 	}
@@ -123,7 +121,7 @@ implements ResourceRequest, InternalResourceRequest {
 	public String getResourceID() {
 		return getParameter("resourceID");
 	}
-	
+
 	public ServletInputStream getInputStream() throws IOException {
         return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
     }

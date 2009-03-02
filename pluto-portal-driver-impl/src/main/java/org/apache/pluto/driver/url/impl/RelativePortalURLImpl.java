@@ -34,7 +34,6 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
-import org.apache.pluto.util.StringUtils;
 
 /**
  * The portal URL.
@@ -249,7 +248,7 @@ public class RelativePortalURLImpl implements PortalURL {
 				values[i+1] = tmp[i];
 			}
 			publicParameterCurrent.remove(parameterName);
-			publicParameterCurrent.put(parameterName, StringUtils.copy(values));
+			publicParameterCurrent.put(parameterName, values.clone());
 		}
 		else
 			publicParameterCurrent.put(parameterName, new String[]{value});

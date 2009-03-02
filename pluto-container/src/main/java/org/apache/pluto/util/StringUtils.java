@@ -37,21 +37,6 @@ public class StringUtils {
 	// Static Utility Methods --------------------------------------------------
 
     /**
-     * TODO: can't we just use String[].clone()?
-     * @param source
-     * @return The copied array
-     */
-    public static String[] copy(String[] source) {
-        if (source == null) {
-            return null;
-        }
-        int length = source.length;
-        String[] result = new String[length];
-        System.arraycopy(source, 0, result, 0, length);
-        return result;
-    }
-
-    /**
      * Deep-clones a parameter map. The key is the parameter name as a String
      * instance, while the value is a String array (String[]) instance.
      * @param parameters  the parameter map to deep-clone.
@@ -60,7 +45,7 @@ public class StringUtils {
     public static Map<String, String[]> copyParameters(Map<String, String[]> parameters) {
         final Map<String, String[]> result = new HashMap<String, String[]>(parameters);
         for( final Map.Entry<String, String[]> entry : result.entrySet()) {
-            entry.setValue(copy(entry.getValue()));
+            entry.setValue(entry.getValue().clone());
         }
         return result;
     }

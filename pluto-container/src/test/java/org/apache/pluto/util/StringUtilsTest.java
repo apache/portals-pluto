@@ -27,14 +27,6 @@ import java.util.Map;
  */
 public class StringUtilsTest extends PlutoTestCase {
 
-    public void testCopy() {
-        String[] original  = new String[] {"one", "two", "three", "four", "five"};
-        String[] results = StringUtils.copy(original);
-        for(int i=0;i<original.length;i++) {
-            assertEquals(original[i], results[i]);
-        }
-    }
-
     public void testCopyMap() {
         Map original = new java.util.HashMap();
         original.put("one", new String[] { "two"});
