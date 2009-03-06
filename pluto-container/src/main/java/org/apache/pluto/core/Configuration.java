@@ -17,7 +17,6 @@
 package org.apache.pluto.core;
 
 import java.util.MissingResourceException;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
@@ -34,7 +33,7 @@ public class Configuration {
         LogFactory.getLog(Configuration.class);
 
     public static final ResourceBundle BUNDLE =
-        PropertyResourceBundle.getBundle("org.apache.pluto.core.pluto-configuration");
+        ResourceBundle.getBundle("org.apache.pluto.core.pluto-configuration");
 
     private static final String DESCRIPTOR_SERVICE =
         "org.apache.pluto.descriptors.services.PortletAppDescriptorService";

@@ -43,6 +43,9 @@ import org.apache.pluto.util.StringManager;
  */
 public class PortletDescriptorRegistry {
 
+    /** Web deployment descriptor location. */
+    private static final String WEB_XML = "/WEB-INF/web.xml";
+
     /** Portlet deployment descriptor location. */
     private static final String PORTLET_XML = "/WEB-INF/portlet.xml";
 
@@ -140,12 +143,18 @@ public class PortletDescriptorRegistry {
     throws PortletContainerException {
         PortletApplicationDefinition portletApp = null;
         try {
-            InputStream in = servletContext.getResourceAsStream(PORTLET_XML);
-            if (in == null) {
-	            throw new PortletContainerException("Cannot find '" + PORTLET_XML +
-	            	"'. Are you sure it is in the deployed package?");
+            InputStream paIn = servletContext.getResourceAsStream(PORTLET_XML);
+            InputStream webIn = servletContext.getResourceAsStream(WEB_XML);
+            if (paIn == null) {
+                throw new PortletContainerException("Cannot find '" + PORTLET_XML +
+                    "'. Are you sure it is in the deployed package?");
             }
-            portletApp = portletDDService.read(in);
+            if (webIn == null) {
+                throw new PortletContainerException("Cannot find '" + WEB_XML +
+                    "'. Are you sure it is in the deployed package?");
+            }
+            portletApp = portletDDService.read(paIn);
+            portletDDService.mergeWebDescriptor(portletApp, webIn);
         } catch (IOException ex) {
             throw new PortletContainerException(EXCEPTIONS.getString(
                     "error.context.descriptor.load",

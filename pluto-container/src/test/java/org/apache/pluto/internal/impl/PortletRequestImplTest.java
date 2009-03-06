@@ -17,25 +17,20 @@
 package org.apache.pluto.internal.impl;
 
 import javax.portlet.PortalContext;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.pluto.Constants;
 import org.apache.pluto.OptionalContainerServices;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.RequiredContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletSession;
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLProvider;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.RequestAttributeService;
 import org.jmock.Mock;
 import org.jmock.cglib.MockObjectTestCase;
 
@@ -56,7 +51,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockPortalContext = null;
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
-    private Mock mockRequestAttributeService = null;
     private Mock mockPortalCallbackService = null;
     private Mock mockPortletURLProvider = null;
     private PortletWindow window = null;
@@ -80,7 +74,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
                 new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), (OptionalContainerServices) mockOptionalServices.proxy() } );
         window = (PortletWindow) mock( PortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
-        mockRequestAttributeService = mock (RequestAttributeService.class);
         mockPortalCallbackService = mock (PortalCallbackService.class);
 
         // Constructor expectations for RenderRequestImpl
@@ -115,10 +108,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockContainer.expects(once()).method("getRequiredContainerServices").will(returnValue( mockServices.proxy() ));
         mockContainer.expects(atLeastOnce()).method("getOptionalContainerServices").will(returnValue( mockOptionalServices.proxy() ));
         
-        mockOptionalServices.expects(atLeastOnce()).method("getRequestAttributeService").will(returnValue(this.mockRequestAttributeService.proxy()));
-        
-        mockRequestAttributeService.expects(atLeastOnce()).method("setAttribute");
-
         // Create the render request that is under test, and initialize its state
         RenderRequestImpl request = new RenderRequestImpl( (PortletContainer)mockContainer.proxy(), window, (HttpServletRequest)mockHttpServletRequest.proxy() );
         request.init( (InternalPortletContext)mockPortletContext.proxy(), ( HttpServletRequest)mockHttpServletRequest.proxy() );
@@ -146,25 +135,5 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockPortletEnvironmentService.expects( once() ).method( "createPortletSession" ).will( returnValue( mockPortletSession.proxy() ));
 
         PortletSession s = request.getPortletSession( true );
-    }
-    
-    private static class TestPortletRequestImpl extends PortletRequestImpl {
-
-        public Integer getRequestMethod()
-        {
-            return Constants.METHOD_RENDER;
-        }
-        
-        public TestPortletRequestImpl(InternalPortletRequest internalPortletRequest) {
-            super(internalPortletRequest);
-        }
-
-        public TestPortletRequestImpl(PortletContainer container, PortletWindow portletWindow, HttpServletRequest servletRequest) {
-            super(container, portletWindow, servletRequest);
-        }
-
-        public PortletPreferences getPreferences() {
-            return null;
-        }
     }
 }

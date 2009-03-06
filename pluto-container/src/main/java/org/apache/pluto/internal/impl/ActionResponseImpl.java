@@ -17,103 +17,84 @@
 package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
-import java.util.Set;
 
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletModeException;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalActionResponse;
+import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.ResourceURLProvider;
+import org.apache.pluto.spi.optional.PortletActionResponseContext;
+import org.apache.pluto.util.ArgumentUtility;
 
-public class ActionResponseImpl extends StateAwareResponseImpl
-implements ActionResponse, InternalActionResponse {
-
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(ActionResponseImpl.class);
-
-    public ActionResponseImpl(PortletContainer container,
-                              PortletWindow portletWindow,
-                              HttpServletRequest servletRequest,
-                              HttpServletResponse servletResponse) {
-        super(container, portletWindow, servletRequest,
-              servletResponse);
+public class ActionResponseImpl extends StateAwareResponseImpl implements ActionResponse
+{
+    private boolean stateChanged;
+    protected boolean redirected;
+    
+    public ActionResponseImpl(PortletActionResponseContext responseContext)
+    {
+        super(responseContext);
     }
 
-	@Override
-	public void sendRedirect(String location) throws IOException {
-		if (super.isIncluded()){
-			// no operation
-		}
-		super.sendRedirect(location);
-	}
-
-	public void sendRedirect(String location, String renderUrlParamName) throws IOException {
-		
-        if (location != null) {
-            HttpServletResponse redirectResponse = getHttpServletResponse();
-            while (redirectResponse instanceof HttpServletResponseWrapper) {
-                redirectResponse = (HttpServletResponse)
-                    ((HttpServletResponseWrapper)redirectResponse).getResponse();
-            }
-
-            ResourceURLProvider provider = super.callback.getResourceURLProvider(
-                            getHttpServletRequest(),
-                            getPortletWindow()
-            );
-
-            if (location.indexOf("://") != -1) {
-                provider.setAbsoluteURL(location);
-            } else {
-                provider.setFullPath(location);
-            }
-            location =
-            	redirectResponse.encodeRedirectURL(provider.toString());
-            //add the currently windows state, portlet mode, render parameter and current public parameter
-            String renderURL = getCurrentRenderURL();
-            if (location.indexOf("?") != -1){
-            	//add the URL to the other Parameters
-            	location += "&" + renderUrlParamName + "=" +renderURL;
-            }
-            else{
-            	//first Query Parameter
-            	location += "?" + renderUrlParamName + "=" +renderURL;
-            }
-            
-            redirectResponse.sendRedirect(location);
-            super.redirected = true;
+    protected void checkSetRedirected()
+    {
+        if (stateChanged)
+        {
+            throw new IllegalStateException("sendRedirect no longer allowed after navigational state changes");
         }
-	}
-	private String getCurrentRenderURL(){
-        PortletURL renderURL = createRenderURL();
-		try {
-			if (getPortletMode()!= null)
-				renderURL.setPortletMode(getPortletMode());
-			if (getWindowState() != null)
-				renderURL.setWindowState(getWindowState());
-			if (getRenderParameterMap()!= null)
-				renderURL.setParameters(getRenderParameterMap());
-			if (getPublicRenderParameter() != null){
-				Set<String> keys = getPublicRenderParameter().keySet();
-				if (keys != null){
-					for (String string : keys) {
-						renderURL.setParameter(string, getPublicRenderParameter().get(string));
-					}
-				}
-			}
-		} catch (PortletModeException e) {
-            LOG.warn(e);
-		} catch (WindowStateException e) {
-            LOG.warn(e);
-		}
-		return renderURL.toString();
+        if (redirected)
+        {
+            throw new IllegalStateException("sendRedirect already called");
+        }
+        redirected = true;
+    }
+    
+    protected void checkSetStateChanged()
+    {
+        if (redirected)
+        {
+            throw new IllegalStateException("State change no longer allowed after a sendRedirect");
+        }
+        stateChanged = true;
+    }
+    
+    protected String getRedirectLocation(String location)
+    {
+        ArgumentUtility.validateNotEmpty("location", location);
+        PortalCallbackService callback = getPortletContainer().getRequiredContainerServices().getPortalCallbackService();
+        ResourceURLProvider provider = callback.getResourceURLProvider(getServletRequest(),getPortletWindow());
+
+        if (location.indexOf("://") != -1)
+        {
+            provider.setAbsoluteURL(location);
+        } 
+        else 
+        {
+            provider.setFullPath(location);
+        }
+        location = getServletResponse().encodeRedirectURL(provider.toString());
+        if (location.indexOf("/") == -1)
+        {
+            throw new IllegalArgumentException("There is a relative path given, an IllegalArgumentException must be thrown.");
+        }
+        return location;
+    }
+    
+    public void sendRedirect(String location) throws IOException
+    {
+        location = getRedirectLocation(location);
+        checkSetRedirected();
+        ((PortletActionResponseContext)getResponseContext()).setRedirect(location);
+    }
+    
+	public void sendRedirect(String location, String renderUrlParamName) throws IOException 
+	{
+        ArgumentUtility.validateNotEmpty("renderUrlParamName", renderUrlParamName);
+        location = getRedirectLocation(location);
+        if (!redirected)
+        {
+            stateChanged = false;
+        }
+        checkSetRedirected();
+        ((PortletActionResponseContext)getResponseContext()).setRedirect(location, renderUrlParamName);
 	}
 }

@@ -220,8 +220,7 @@ implements PortletPreferencesService {
     throws ValidatorException {
 
         // Try to retrieve the validator from cache.
-        PreferencesValidator validator = (PreferencesValidator)
-                cache.get(portletDD);
+        PreferencesValidator validator = cache.get(portletDD);
         if (validator != null) {
             return validator;
         }
@@ -237,7 +236,7 @@ implements PortletPreferencesService {
                 }
                 ClassLoader loader = Thread.currentThread().getContextClassLoader();
                 try {
-                    Class clazz = loader.loadClass(className);
+                    Class<?> clazz = loader.loadClass(className);
                     validator = (PreferencesValidator) clazz.newInstance();
                     cache.put(portletDD, validator);
                 } catch (InstantiationException ex) {

@@ -17,198 +17,92 @@
 
 package org.apache.pluto.internal.impl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.io.UnsupportedEncodingException;
 
 import javax.portlet.ClientDataRequest;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.spi.optional.PortletRequestContext;
 
 /**
  * Implementation of the <code>javax.portlet.ClientDataRequest</code> interface.
  */
-public abstract class ClientDataRequestImpl extends PortletRequestImpl
-        implements ClientDataRequest
+public abstract class ClientDataRequestImpl extends PortletRequestImpl implements ClientDataRequest
 {
+    /** Flag indicating if the HTTP body reader has been accessed. */
+    protected boolean readerAccessed = false;
 
-    /** Logger. */
-    private static final Log LOG = LogFactory
-            .getLog(ClientDataRequestImpl.class);
-
-    public ClientDataRequestImpl(PortletContainer container,
-            PortletWindow portletWindow, HttpServletRequest servletRequest)
+    public ClientDataRequestImpl(PortletRequestContext requestContext, String lifecyclePhase)
     {
-        super(container, portletWindow, servletRequest);
+        super(requestContext, lifecyclePhase);
     }
 
-    public InputStream getPortletInputStream() throws IOException
+    private void checkPostedFormData() 
     {
-        HttpServletRequest servletRequest = (HttpServletRequest) getRequest();
-        if (servletRequest.getMethod().equals("POST"))
+        if (getMethod().equals("POST"))
         {
-            String contentType = servletRequest.getContentType();
-            if (contentType == null
-                    || contentType.equals("application/x-www-form-urlencoded")) { throw new IllegalStateException(
-                    "User request HTTP POST data is of type "
-                            + "application/x-www-form-urlencoded. "
-                            + "This data has been already processed "
-                            + "by the portal/portlet-container and is available "
-                            + "as request parameters."); }
+            String contentType = getContentType();
+            if (contentType == null || contentType.equals("application/x-www-form-urlencoded"))
+            {
+                throw new IllegalStateException("User request HTTP POST data is of type "
+                                                + "application/x-www-form-urlencoded. "
+                                                + "This data has been already processed "
+                                                + "by the portlet-container and is available "
+                                                + "as request parameters.");
+            }
         }
-        return servletRequest.getInputStream();
     }
-
-    public void setCharacterEncoding(String encoding)
-            throws java.io.UnsupportedEncodingException
-    {
-        super.setCharacterEncoding(encoding);
-    }
-
-    public java.io.BufferedReader getReader()
-            throws java.io.UnsupportedEncodingException, java.io.IOException
-    {
-        return super.getReader();
-    }
-
+        
     public java.lang.String getCharacterEncoding()
     {
-        return super.getCharacterEncoding();
-    }
-
-    public java.lang.String getContentType()
-    {
-        return super.getContentType();
+        return getServletRequest().getCharacterEncoding();
     }
 
     public int getContentLength()
     {
-        return super.getContentLength();
+        return getServletRequest().getContentLength();
     }
 
+    public java.lang.String getContentType()
+    {
+        return getServletRequest().getContentType();
+    }
+    
     public String getMethod()
     {
-        return super.getMethod();
+        return getServletRequest().getMethod();
     }
 
-    @Override
-    public String getParameter(String name)
+    public InputStream getPortletInputStream() throws IOException
     {
-        ArgumentUtility.validateNotNull("parameterName", name);
-        String[] values  = null;
-        if (parameters != null)
-        {
-            values = parameters.get(name);
-        }
-        else
-        {
-            values = mergeParameters().get(name);
-        }
-        if (values != null && values.length > 0) 
-        {
-            return values[0];
-        } 
-        return null;
+        checkPostedFormData();
+        // the HttpServletRequest will ensure that a IllegalStateException is thrown
+        //   if getReader() was called earlier        
+        return getServletRequest().getInputStream();
+    }
+
+    public BufferedReader getReader()
+    throws UnsupportedEncodingException, IOException 
+    {
+        checkPostedFormData();
+        // the HttpServletRequest will ensure that a IllegalStateException is thrown
+        //   if getInputStream() was called earlier
+        BufferedReader reader = getServletRequest().getReader();
+        readerAccessed = true;
+        return reader;
+
     }
     
-    @Override
-    public Enumeration<String> getParameterNames() 
+    public void setCharacterEncoding(String encoding)
+    throws UnsupportedEncodingException 
     {
-        if (parameters != null)
+        if (readerAccessed) 
         {
-            return Collections.enumeration(parameters.keySet());
+            throw new IllegalStateException("Cannot set character encoding "
+                    + "after HTTP body reader is accessed.");
         }
-        return Collections.enumeration(mergeParameters().keySet());
+        getServletRequest().setCharacterEncoding(encoding);
     }
-    
-
-    @Override
-    public Map<String, String[]> getParameterMap()
-    {
-        if (parameters != null)
-        {
-            return parameters;
-        }
-        return Collections.unmodifiableMap(mergeParameters());
-    }
-
-    @Override
-    public String[] getParameterValues(String name)
-    {
-        ArgumentUtility.validateNotNull("parameterName", name);
-        String[] values  = null;
-        if (parameters != null)
-        {
-            values = parameters.get(name);
-        }
-        else
-        {
-            values = mergeParameters().get(name);
-        }
-        return values;
-    }
-
-    /**
-     * Iterate over the private and the public parameter list and merge it.
-     * 
-     * @return merged list
-     */
-    private Map<String, String[]> mergeParameters()
-    {
-        Map<String, String[]> mergedParameterMap = new HashMap<String, String[]>();
-        // Put the private list first into the map, because it is required, this
-        // parameters are the first in the value array.
-        if (super.getPrivateParameterMap() != null)
-            mergedParameterMap.putAll(super.getPrivateParameterMap());
-        Map<String, String[]> publicParameterMap = super
-                .getPublicParameterMap();
-         //Iterate over the public parameter list
-        if (publicParameterMap != null)
-        {
-            Set keySet = publicParameterMap.keySet();
-            if (keySet != null)
-            {
-                Iterator<String> iterator = keySet.iterator();
-                while (iterator.hasNext())
-                {
-                    String name = iterator.next();
-                     //tests if the name already exist
-                    if (mergedParameterMap.containsKey(name))
-                    {
-                        String[] tmp = mergedParameterMap.get(name);
-                        String[] tmp2 = publicParameterMap.get(name);
-                        String[] values = new String[tmp.length + tmp2.length];
-                        int length = tmp.length;
-                        for (int i = 0; i < length; i++)
-                        {
-                            values[i] = tmp[i];
-                        }
-                        for (int i = 0; i < tmp2.length; i++)
-                        {
-                            values[i + length] = tmp2[i];
-                        }
-                        mergedParameterMap.put(name, values);
-                    }
-                    else
-                    {
-                        mergedParameterMap.put(name, publicParameterMap
-                                .get(name));
-                    }
-                }
-            }
-        }
-        this.parameters = mergedParameterMap;
-        return this.parameters;
-    }
-
 }

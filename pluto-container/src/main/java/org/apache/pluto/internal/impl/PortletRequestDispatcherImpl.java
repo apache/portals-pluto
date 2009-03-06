@@ -18,6 +18,7 @@ package org.apache.pluto.internal.impl;
 
 import java.io.IOException;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
@@ -26,37 +27,33 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletResponse;
+import org.apache.pluto.Constants;
+import org.apache.pluto.internal.RequestDispatcherPathInfo;
+import org.apache.pluto.spi.optional.PortletRequestContext;
 
 /**
  * Implementation of the <code>PortletRequestDispatcher</code> interface.
- * The portlet request dispatcher is used to dispatch <b>RenderRequest</b> and
- * <b>RenderResponse</b> to a URI. Note that ActionRequest and ActionResponse
- * can never be dispatched.
+ * The portlet request dispatcher is used to dispatch <b>PortletRequest</b> and
+ * <b>PortletResponse</b> to a URI.
  * 
  */
-public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
-	
+public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, RequestDispatcher
+{	
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletRequestDispatcherImpl.class);
-    
     
     // Private Member Variables ------------------------------------------------
     
     /** The nested servlet request dispatcher instance. */
     private RequestDispatcher requestDispatcher;
-    
-    /** The included/forwarded query string. */
-    private String queryString;
-    private String servlet_path;
-    private String path_info;
-    private boolean namedDispatcher = true;
+    private RequestDispatcherPathInfo pathInfo;
     
     
     // Constructors ------------------------------------------------------------
@@ -69,7 +66,8 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
      */
     public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher) {
         this.requestDispatcher = requestDispatcher;
-        if (LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled())
+        {
         	LOG.debug("Named dispatcher created.");
         }
     }
@@ -78,141 +76,190 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
      * Creates an instance. This constructor should be called to construct a
      * portlet request dispatcher.
      * @param requestDispatcher  the servlet request dispatcher.
-     * @param queryString  the included query string.
+     * @param pathInfo 
      * @see javax.portlet.PortletContext#getRequestDispatcher(String)
      */
-    public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher,
-                                        String path) {
-    	this(requestDispatcher);
-    	namedDispatcher = false;
+    public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher, RequestDispatcherPathInfo pathInfo)
+    {
+        this.requestDispatcher = requestDispatcher;
+    	this.pathInfo = pathInfo;
     	
-    	//Extract servlet_path
-        int index1 = path.indexOf("/", 1);
-        if (index1 > 0 && index1 < path.length() - 1) {
-        	servlet_path = path.substring(0, index1);
-        }
-    	
-    	//Extract query string which contains appended parameters.
-    	queryString = null;
-        int index2 = path.indexOf("?");
-        if (index2 > 0 && index2 < path.length() - 1) {
-        	queryString = path.substring(index2 + 1);
-        }
-        
-        //Extract path_info        
-        if (index1 > 0 && index1 < index2 && index2 > 0 && index2 < path.length() - 1) {
-        	path_info = path.substring(index1, index2);
-        }
-        
-        if (LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled())
+        {
         	LOG.debug("Request dispatcher created.");
         }
     }
     
+    private static HttpServletPortletRequestWrapper getWrappedRequest(ServletRequest request)
+    {
+        HttpServletPortletRequestWrapper req = null;
+        
+        do
+        {
+            if (request instanceof HttpServletPortletRequestWrapper)
+            {
+                req = (HttpServletPortletRequestWrapper)request;
+            }
+            else if (request instanceof HttpServletRequestWrapper)
+            {
+                request = ((HttpServletRequestWrapper)request).getRequest();
+            }
+            else
+            {
+                request = null;
+            }                
+        }
+        while (request != null && req == null);
+        return req;
+    }
+
+    private static HttpServletPortletResponseWrapper getWrappedResponse(ServletResponse response)
+    {
+        HttpServletPortletResponseWrapper res = null;
+        
+        do
+        {
+            if (response instanceof HttpServletPortletResponseWrapper)
+            {
+                res = (HttpServletPortletResponseWrapper)response;
+            }
+            else if (response instanceof HttpServletResponseWrapper)
+            {
+                response = ((HttpServletResponseWrapper)response).getResponse();
+            }
+            else
+            {
+                response = null;
+            }                
+        }
+        while (response != null && res == null);
+        return res;
+    }
+    
+    private void doDispatch(PortletRequest request, PortletResponse response, boolean included) throws PortletException, IOException
+    {
+        if (!included)
+        {
+            String lifecyclePhase = (String)request.getAttribute(PortletRequest.LIFECYCLE_PHASE);
+            if (PortletRequest.RENDER_PHASE.equals(lifecyclePhase) || PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase))
+            {
+                ((MimeResponse)response).resetBuffer();
+            }
+        }
+        
+        PortletRequestContext requestContext = (PortletRequestContext)request.getAttribute(Constants.REQUEST_CONTEXT);
+        HttpServletPortletRequestWrapper req = new HttpServletPortletRequestWrapper(requestContext.getServletRequest(), 
+                                                                                    requestContext.getPortletConfig().getPortletContext().getServletContext(),
+                                                                                    null, // TODO: ProxySession if javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
+                                                                                    request,
+                                                                                    pathInfo,
+                                                                                    included);
+        HttpServletPortletResponseWrapper res = new HttpServletPortletResponseWrapper(requestContext.getServletResponse(),
+                                                                                      request,
+                                                                                      response,
+                                                                                      included);
+        try
+        {
+            if (!included && req.isForwardingPossible())
+            {
+                requestDispatcher.forward(req, res);
+            }
+            else
+            {
+                requestDispatcher.include(req, res);
+            }
+        }
+        catch (ServletException sex)
+        {
+            if (sex.getRootCause() != null)
+            {
+                throw new PortletException(sex.getRootCause());
+            } 
+            else 
+            {
+                throw new PortletException(sex);
+            }
+        }
+    }
+
+    private void doDispatch(ServletRequest request, ServletResponse response, HttpServletPortletRequestWrapper req,
+                            HttpServletPortletResponseWrapper res, boolean included) throws ServletException, IOException
+    {
+        if (!included)
+        {
+            res.resetBuffer();
+        }
+        
+        RequestDispatcherPathInfo currentMethodPathInfo = req.getMethodPathInfo();
+        RequestDispatcherPathInfo currentForwardedPathInfo = req.getForwardedPathInfo();
+        RequestDispatcherPathInfo currentIncludedPathInfo = req.getIncludedPathInfo();
+        boolean currentIncluded = req.isIncluded();
+        try
+        {
+            RequestDispatcherPathInfo methodPathInfo = null;
+            if (currentMethodPathInfo.isNamedRequestDispatcher() || !(included || pathInfo.isNamedRequestDispatcher()))
+            {
+                methodPathInfo = pathInfo;
+            }            
+            else
+            {
+                methodPathInfo = currentMethodPathInfo;
+            }
+            RequestDispatcherPathInfo attributesPathInfo = null;
+            if (included) 
+            {
+                attributesPathInfo = pathInfo;
+            }
+            else if (currentForwardedPathInfo != null && !currentForwardedPathInfo.isNamedRequestDispatcher())
+            {
+                attributesPathInfo = currentForwardedPathInfo;
+            }
+            else
+            {
+                attributesPathInfo = pathInfo;
+            }
+            req.setNewPathInfo(methodPathInfo, attributesPathInfo, included);
+            if (!included && req.isForwardingPossible())
+            {
+                requestDispatcher.forward(request, response);
+            }
+            else
+            {
+                requestDispatcher.include(request, response);
+            }
+        }
+        finally
+        {
+            req.restorePathInfo(currentMethodPathInfo, currentIncludedPathInfo, currentForwardedPathInfo, currentIncluded);
+        }
+    }    
     
     // PortletRequestDispatcher Impl -------------------------------------------
    
-	public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException {
-		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
-		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
-		internalInclude(internalRequest,internalResponse);
+    public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException
+    {
+        doDispatch(request, response, false);
+    }
+    
+	public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException
+	{
+	    doDispatch(request, response, true);
 	}
-
-
 	
-	public void include(RenderRequest request, RenderResponse response)
-    throws PortletException, IOException {
-		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
-		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
-		internalInclude(internalRequest,internalResponse);
+	public void include(RenderRequest request, RenderResponse response) throws PortletException, IOException
+	{
+	    doDispatch(request, response, true);
     }
 	
-	public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException, IllegalStateException {
-		InternalPortletRequest internalRequest = InternalImplConverter.getInternalRequest(request);
-		InternalPortletResponse internalResponse = InternalImplConverter.getInternalResponse(response);
-		if (!internalResponse.isForwardedAllowed()){
-			throw new IllegalStateException("Response has been committed, this isn't allowed before forward" +
-				" method. Content must delete before service from servlet is called.");
-		}
-		boolean isForwarded = (internalRequest.isForwarded()||internalResponse.isForwarded());
-        try {
-        	internalRequest.setForwarded(true);
-        	internalRequest.setForwardedQueryString(queryString);
-        	if (!namedDispatcher){
-        		setAttributesForward(internalRequest);
-        		internalRequest.setNamedRequestDispatcher(false);
-        	}
-        	else{
-        		internalRequest.setNamedRequestDispatcher(true);
-        	}
-        	internalResponse.setForwarded(true);
-
-            requestDispatcher.forward((HttpServletRequest) internalRequest,
-            		(HttpServletResponse) internalResponse);
-        } catch (IOException ex) {
-            throw ex;
-        } catch (ServletException ex) {
-            if (ex.getRootCause() != null) {
-                throw new PortletException(ex.getRootCause());
-            } else {
-                throw new PortletException(ex);
-            }
-        } finally {
-        	internalRequest.setForwarded(isForwarded);
-        	internalResponse.setForwarded(isForwarded);
-        	internalResponse.setRequestForwarded();
-        }
-	}
+    // RequestDispatcher Impl -------------------------------------------
 	
-	private void internalInclude(InternalPortletRequest internalRequest, InternalPortletResponse internalResponse)
-    throws PortletException, IOException {
-    	boolean isIncluded = (internalRequest.isIncluded()
-        		|| internalResponse.isIncluded());
-        try {
-        	internalRequest.setIncluded(true);
-        	internalRequest.setIncludedQueryString(queryString);
-        	if (!namedDispatcher){
-        		setAttributesInclude(internalRequest);
-        	}
-        	else{
-        		
-                internalRequest.setNamedRequestDispatcher(true);
-        	}
-        	internalResponse.setIncluded(true);
-
-            requestDispatcher.include(
-            		(HttpServletRequest) internalRequest,
-            		(HttpServletResponse) internalResponse);
-        } catch (IOException ex) {
-            throw ex;
-        } catch (ServletException ex) {
-            if (ex.getRootCause() != null) {
-                throw new PortletException(ex.getRootCause());
-            } else {
-                throw new PortletException(ex);
-            }
-        } finally {
-        	internalRequest.setIncluded(isIncluded);
-        	internalResponse.setIncluded(isIncluded);
-        }
+    public void forward(ServletRequest request, ServletResponse response) throws ServletException, IOException
+    {
+        doDispatch(request, response, getWrappedRequest(request), getWrappedResponse(response), false);
     }
-	private void setAttributesForward(InternalPortletRequest internalRequest){
-		String context_path = internalRequest.getContextPath();
-		String request_uri = context_path + servlet_path + path_info;
-		internalRequest.setAttribute("javax.servlet.forward.request_uri", request_uri);
-		internalRequest.setAttribute("javax.servlet.forward.context_path", context_path);
-		internalRequest.setAttribute("javax.servlet.forward.servlet_path", servlet_path);
-		internalRequest.setAttribute("javax.servlet.forward.path_info", path_info);
-		internalRequest.setAttribute("javax.servlet.forward.query_string", queryString);
-	}
-	
-	private void setAttributesInclude(InternalPortletRequest internalRequest){
-		String context_path = internalRequest.getContextPath();
-		String request_uri = context_path + servlet_path + path_info;
-		internalRequest.setAttribute("javax.servlet.include.request_uri", request_uri);
-		internalRequest.setAttribute("javax.servlet.include.context_path", context_path);
-		internalRequest.setAttribute("javax.servlet.include.servlet_path", servlet_path);
-		internalRequest.setAttribute("javax.servlet.include.path_info", path_info);
-		internalRequest.setAttribute("javax.servlet.include.query_string", queryString);
-	}
+
+    public void include(ServletRequest request, ServletResponse response) throws ServletException, IOException
+    {
+        doDispatch(request, response, getWrappedRequest(request), getWrappedResponse(response), true);
+    }
 }

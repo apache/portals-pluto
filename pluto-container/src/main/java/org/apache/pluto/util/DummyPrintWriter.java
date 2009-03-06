@@ -16,34 +16,42 @@
  */
 package org.apache.pluto.util;
 
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Locale;
 
-public class DummyPrintWriter extends PrintWriter{
-
-	public DummyPrintWriter(Writer out) {
+public final class DummyPrintWriter extends PrintWriter
+{
+    private static final DummyPrintWriter instance = new DummyPrintWriter(DummyServletOutputStream.getInstance());
+    
+    public static PrintWriter getInstance()
+    {
+        return instance;
+    }
+    
+	private DummyPrintWriter(OutputStream out)
+	{
 		super(out);
 	}
 	
 	@Override
 	public PrintWriter append(char c) {
-		return super.append(null);
+		return this;
 	}
 
 	@Override
 	public PrintWriter append(CharSequence csq, int start, int end) {
-		return super.append(null);
+		return this;
 	}
 
 	@Override
 	public PrintWriter append(CharSequence csq) {
-		return super.append(null);
+		return this;
 	}
 
 	@Override
 	public boolean checkError() {
-		return super.checkError();
+		return false;
 	}
 
 	@Override
@@ -56,12 +64,12 @@ public class DummyPrintWriter extends PrintWriter{
 
 	@Override
 	public PrintWriter format(Locale l, String format, Object... args) {
-		return super.format(null, null, null);
+		return this;
 	}
 
 	@Override
 	public PrintWriter format(String format, Object... args) {
-		return super.format(null, null);
+		return this;
 	}
 
 	@Override
@@ -102,12 +110,12 @@ public class DummyPrintWriter extends PrintWriter{
 
 	@Override
 	public PrintWriter printf(Locale l, String format, Object... args) {
-		return super.printf(null, null, null);
+		return this;
 	}
 
 	@Override
 	public PrintWriter printf(String format, Object... args) {
-		return super.printf(null, null);
+        return this;
 	}
 
 	@Override
@@ -152,7 +160,6 @@ public class DummyPrintWriter extends PrintWriter{
 
 	@Override
 	protected void setError() {
-		super.setError();
 	}
 
 	@Override
@@ -174,5 +181,4 @@ public class DummyPrintWriter extends PrintWriter{
 	@Override
 	public void write(String s) {
 	}
-
 }

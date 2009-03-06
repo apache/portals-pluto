@@ -41,11 +41,10 @@ import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.core.PortletServlet;
-import org.apache.pluto.internal.impl.PortletRequestImpl;
-import org.apache.pluto.internal.impl.PortletResponseImpl;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
+import org.apache.pluto.spi.optional.PortletRequestContext;
 import org.apache.pluto.util.StringManager;
 
 /**
@@ -90,17 +89,18 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     /**
      * Invoke the portlet with an action request.
      *
+     * @param context request context used for the invocation
      * @param request  action request used for the invocation.
      * @param response action response used for the invocation.
      * @see PortletServlet
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,javax.portlet.ActionResponse)
      */
-    public void action(ActionRequest request, ActionResponse response, PortletWindow window, FilterManager filterManager)
+    public void action(PortletRequestContext context, ActionRequest request, ActionResponse response, FilterManager filterManager)
         throws IOException, PortletException, PortletContainerException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Action Invocation");
         }
-        invoke(request, response, window, filterManager, Constants.METHOD_ACTION);
+        invoke(context, request, response, filterManager, Constants.METHOD_ACTION);
     }
 
     /**
@@ -111,12 +111,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
-    public void render(RenderRequest request, RenderResponse response, PortletWindow window, FilterManager filterManager)
+    public void render(PortletRequestContext context, RenderRequest request, RenderResponse response, FilterManager filterManager)
         throws IOException, PortletException, PortletContainerException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");
         }
-        invoke(request, response, window, filterManager, Constants.METHOD_RENDER);
+        invoke(context, request, response, filterManager, Constants.METHOD_RENDER);        
     }
     
     /**
@@ -127,12 +127,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
      */
-    public void event(EventRequest request, EventResponse response, PortletWindow window, FilterManager filterManager)
+    public void event(PortletRequestContext context, EventRequest request, EventResponse response, FilterManager filterManager)
         throws IOException, PortletException, PortletContainerException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Render Invocation");
         }
-        invoke((PortletRequest)request, (PortletResponse)response, window, filterManager, Constants.METHOD_EVENT);
+        invoke(context, request, response, filterManager, Constants.METHOD_EVENT);
     }
     
     /**
@@ -143,12 +143,12 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @see PortletServlet
      * @see javax.portlet.Portlet#resource(javax.portlet.ResourceRequest,javax.portlet.ResourceResponse)
      */
-    public void serveResource(ResourceRequest request, ResourceResponse response, PortletWindow window, FilterManager filterManager)
+    public void serveResource(PortletRequestContext context, ResourceRequest request, ResourceResponse response, FilterManager filterManager)
         throws IOException, PortletException, PortletContainerException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Resource Invocation");
         }
-        invoke(request, response, window, filterManager, Constants.METHOD_RESOURCE);
+        invoke(context, request, response, filterManager, Constants.METHOD_RESOURCE);
     }
 
     /**
@@ -158,32 +158,32 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @param response action response used for the invocation.
      * @see PortletServlet
      */
-    public void load(PortletRequest request, PortletResponse response, PortletWindow window)
+    public void load(PortletRequestContext context, PortletRequest request, PortletResponse response)
         throws IOException, PortletException, PortletContainerException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Load Invocation.");
         }
-        invoke(request, response, window, Constants.METHOD_NOOP);
+        invoke(context, request, response, Constants.METHOD_NOOP);
     }
 
-    public void admin(PortletRequest request, PortletResponse response, PortletWindow window)
+    public void admin(PortletRequestContext context, PortletRequest request, PortletResponse response)
         throws IOException, PortletException, PortletContainerException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Performing Admin Invocation.");
         }
 
-        invoke(request, response, window, Constants.METHOD_ADMIN);
+        invoke(context, request, response, Constants.METHOD_ADMIN);
     }
 
     // Private Invoke Method ---------------------------------------------------
 
-    private final void invoke(PortletRequest request,
+    private final void invoke(PortletRequestContext context, 
+                                PortletRequest request,
                                 PortletResponse response,
-                                PortletWindow portletWindow,
                                 Integer methodID)
     	throws PortletException, IOException, PortletContainerException {
     	
-    	invoke(request, response, portletWindow, null, methodID);
+    	invoke(context, request, response, null, methodID);
     }
     
     /**
@@ -196,13 +196,14 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
      * @throws PortletException if a portlet exception occurs.
      * @throws IOException      if an error occurs writing to the response.
      */
-    protected final void invoke(PortletRequest request,
+    protected final void invoke(PortletRequestContext context,
+                                PortletRequest request,
                                 PortletResponse response,
-                                PortletWindow portletWindow,
                                 FilterManager filterManager,
                                 Integer methodID)
         throws PortletException, IOException, PortletContainerException {
 
+        PortletWindow portletWindow = context.getPortletWindow();
         String appName = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
         ServletContext servletContext = portletContextService.getPortletContext(appName).getServletContext();
         
@@ -215,13 +216,10 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
 
         if (dispatcher != null) {
             try {
-                // Tomcat does not like to properly include wrapped requests
-                // and responses. Thus we "unwrap" and then include.
-                HttpServletRequest servletRequest =
-                    ((PortletRequestImpl) request).getHttpServletRequest();
-                HttpServletResponse servletResponse =
-                    ((PortletResponseImpl) response).getHttpServletResponse();
+                HttpServletRequest servletRequest = context.getServletRequest();
+                HttpServletResponse servletResponse = context.getServletResponse();
 
+                servletRequest.setAttribute(Constants.REQUEST_CONTEXT, context);
                 servletRequest.setAttribute(Constants.METHOD_ID, methodID);
                 servletRequest.setAttribute(Constants.PORTLET_REQUEST, request);
                 servletRequest.setAttribute(Constants.PORTLET_RESPONSE, response);
@@ -265,9 +263,11 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
                 }
 
             } finally {
+                request.removeAttribute(Constants.REQUEST_CONTEXT);
                 request.removeAttribute(Constants.METHOD_ID);
                 request.removeAttribute(Constants.PORTLET_REQUEST);
                 request.removeAttribute(Constants.PORTLET_RESPONSE);
+                request.removeAttribute(Constants.FILTER_MANAGER);
             }
         } else {
             String msg = EXCEPTIONS.getString(

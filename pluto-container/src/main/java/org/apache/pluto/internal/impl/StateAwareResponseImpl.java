@@ -16,582 +16,223 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.EventRequest;
-import javax.portlet.PortalContext;
+import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import javax.xml.namespace.QName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.Supports;
-import org.apache.pluto.spi.EventProvider;
 import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.spi.ResourceURLProvider;
-import org.apache.pluto.util.DummyPrintWriter;
-import org.apache.pluto.util.DummyServletOutputStream;
+import org.apache.pluto.spi.optional.PortletStateAwareResponseContext;
+import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Implementation of JSR-286 <code>StateAwareResponse</code>.
  *
  * @since 2.0
  */
-public class StateAwareResponseImpl extends PortletResponseImpl implements
-		StateAwareResponse {
+public abstract class StateAwareResponseImpl extends PortletResponseImpl implements StateAwareResponse
+{
+    private PortletStateAwareResponseContext responseContext;
+    
+	public StateAwareResponseImpl(PortletStateAwareResponseContext responseContext)
+	{
+		super(responseContext);
+		this.responseContext = responseContext;
+	}
+	
+	private static String[] cloneParameterValues(String[] values)
+	{
+	    int count = 0;
+	    for (String s : values)
+	    {
+	        if (!(s == null || s.length() == 0))
+	        {
+	            count++;
+	        }
+	    }
+	    if (count == 0)
+	    {
+	        return null;
+	    }
+	    else if (count < values.length)
+	    {
+	        String[] copy = new String[count];
+	        count = 0;
+	        for (String s : values)
+	        {
+	            if (!(s == null || s.length() == 0))
+	            {
+	                copy[count++] = s;
+	            }
+	        }
+	        return copy;
+	    }
+	    else
+	    {
+	        return values.clone();
+	    }
+	}
+	
+	protected abstract void checkSetStateChanged();
+	
+    protected boolean isWindowStateAllowed(WindowState state)
+    {
+        Enumeration<WindowState> supportedStates = getPortalContext().getSupportedWindowStates();
+        while (supportedStates.hasMoreElements()) {
+            if (supportedStates.nextElement().equals(state))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public PortletMode getPortletMode()
+    {
+        return responseContext.getPortletMode();
+    }
 
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(StateAwareResponseImpl.class);
+    public Map<String, String[]> getRenderParameterMap()
+    {
+        Map<String, String[]> parameters = new HashMap<String, String[]>(responseContext.getRenderParameters());
+        for (Map.Entry<String,String[]> entry : parameters.entrySet())
+        {
+            entry.setValue(entry.getValue().clone());
+        }
+        return parameters;
+    }
+    
+    public WindowState getWindowState()
+    {
+        return responseContext.getWindowState();
+    }
+    
+    public void removePublicRenderParameter(String name)
+    {
+        ArgumentUtility.validateNotEmpty("name", name);
+        checkSetStateChanged();
+        responseContext.getRemovedPublicRenderParameters().add(name);
+        responseContext.getRenderParameters().remove(name);
+    }
 
-	boolean redirectAllowed = true;
-	protected boolean redirected;
-	private String redirectLocation;
-
-
-	private Map<String, String[]> publicRenderParameter = new HashMap<String, String[]>();
-
-    private Map<String, String[]> renderParameters = new HashMap<String, String[]>();
-    private WindowState windowState = null;
-    private PortletMode portletMode = null;
-	protected PortalCallbackService callback;
-    private PortalContext context;
-    private EventRequest eventRequest;
-
-	public StateAwareResponseImpl(PortletContainer container,
-			            PortletWindow portletWindow,
-			            HttpServletRequest servletRequest,
-			            HttpServletResponse servletResponse) {
-		super(container, portletWindow, servletRequest,
-		servletResponse);
-		context = container.getRequiredContainerServices().getPortalContext();
-		callback = container.getRequiredContainerServices().getPortalCallbackService();
+	public void setEvent(QName qname, Serializable value)
+	{
+        ArgumentUtility.validateNotNull("qname", qname);
+        PortalCallbackService callback = getPortletContainer().getRequiredContainerServices().getPortalCallbackService();
+		Event event = callback.getEventProvider(getServletRequest(),getPortletWindow()).createEvent(qname, value);
+		responseContext.getEvents().add(event);
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.portlet.StateAwareResponse#setEvent(javax.xml.namespace.QName, java.lang.Object)
-	 */
-	public void setEvent(QName qname, Serializable value){
-		if (qname == null) {
-			throw new IllegalArgumentException();
-		}
-
-		EventProvider provider = callback.getEventProvider(
-				getHttpServletRequest(),getPortletWindow());
-
-		provider.registerToFireEvent(qname, value);
-		redirectAllowed = false;
-	}
-
-	/* (non-Javadoc)
-	 * @see javax.portlet.StateAwareResponse#setEvent(java.lang.String, java.lang.Object)
-	 */
-	public void setEvent(String name, Serializable value) {
+	public void setEvent(String name, Serializable value)
+	{
 	    PortletWindow window = getPortletWindow();
         String defaultNamespace;
         defaultNamespace = window.getPortletEntity().getPortletDefinition().getApplication().getDefaultNamespace();
         QName qname = new QName(defaultNamespace, name);
         setEvent(qname, value);
-        redirectAllowed = false;
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.String)
-	 */
-	public void sendRedirect(String location) throws java.io.IOException {
-        if (redirectAllowed) {
-            if (location != null) {
-                HttpServletResponse redirectResponse = getHttpServletResponse();
-                while (redirectResponse instanceof HttpServletResponseWrapper) {
-                    redirectResponse = (HttpServletResponse)
-                        ((HttpServletResponseWrapper)redirectResponse).getResponse();
-                }
+    public void setPortletMode(PortletMode portletMode) throws PortletModeException 
+    {
+        ArgumentUtility.validateNotNull("portletMode", portletMode);
+        if (isPortletModeAllowed(portletMode))
+        {
+            checkSetStateChanged();
+            responseContext.setPortletMode(portletMode);
+        }
+        else 
+        {
+            throw new PortletModeException("Can't set this PortletMode", portletMode);
+        }
+    }
 
-                ResourceURLProvider provider = callback.getResourceURLProvider(
-                                getHttpServletRequest(),
-                                getPortletWindow()
-                );
-
-                if (location.indexOf("://") != -1) {
-                    provider.setAbsoluteURL(location);
-                } else {
-                    provider.setFullPath(location);
-                }
-                location =
-                redirectResponse.encodeRedirectURL(provider.toString());
-                if (location.indexOf("/") == -1)
-                	throw new IllegalArgumentException("There is a relative path given, an IllegalArgumentException must be thrown.");
-                //redirectResponse.sendRedirect(location);
-                redirectLocation = location;
-                redirected = true;
+    public void setWindowState(WindowState windowState) throws WindowStateException
+    {
+        ArgumentUtility.validateNotNull("windowState", windowState);
+        if (isWindowStateAllowed(windowState))
+        {
+            checkSetStateChanged();
+            responseContext.setWindowState(windowState);
+        }
+        else 
+        {
+            throw new WindowStateException("Can't set this WindowState", windowState);
+        }
+    }
+	    
+    public void setRenderParameters(java.util.Map<String, String[]> parameters)
+    {
+        ArgumentUtility.validateNotNull("parameters", parameters);
+        
+        // validate map first
+        for (Map.Entry<? extends Object, ? extends Object> entry : parameters.entrySet())
+        {
+            if (entry.getKey() == null || entry.getValue() == null)
+            {
+                throw new IllegalArgumentException("RenderParameters contains a null key or value entry");
             }
-        } else {
-            throw new java.lang.IllegalStateException(
-                "Can't invoke sendRedirect() after certain methods have been called");
-        }
-    }
-
-
-
-    public String getRedirectLocation() {
-        return redirectLocation;
-    }
-	//
-//	 javax.portlet.ActionResponse
-	//
-    public void setWindowState(WindowState windowState)
-        throws WindowStateException {
-        if (redirected) {
-            throw new IllegalStateException(
-                "it is not allowed to invoke setWindowState after sendRedirect has been called");
-        }
-
-        if (isWindowStateAllowed(windowState)) {
-            this.windowState = windowState;
-        } else {
-            throw new WindowStateException("Can't set this WindowState",
-                                           windowState);
-        }
-        redirectAllowed = false;
-    }
-
-    public void setPortletMode(PortletMode portletMode)
-        throws PortletModeException {
-        if (redirected) {
-            throw new IllegalStateException(
-                "it is not allowed to invoke setPortletMode after sendRedirect has been called");
-        }
-
-        // check if portal supports portlet mode
-        boolean supported = isPortletModeAllowed(portletMode);
-
-
-        // if porlet mode is allowed
-        if (supported) {
-            this.portletMode = portletMode;
-        } else {
-            throw new PortletModeException("Can't set this PortletMode",
-                                           portletMode);
-        }
-
-        redirectAllowed = false;
-
-    }
-
-    public void setRenderParameters(java.util.Map<String, String[]> parameters) {
-        if (redirected) {
-            throw new IllegalStateException(
-                "Can't invoke setRenderParameters() after sendRedirect() has been called");
-        }
-        if (parameters == null) {
-            throw new IllegalArgumentException(
-                "Render parameters must not be null.");
-        }
-        for (Iterator iter = parameters.entrySet().iterator(); iter.hasNext();) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            if (!(entry.getKey() instanceof String)) {
-                throw new IllegalArgumentException(
-                    "Key must not be null and of type java.lang.String.");
+            if (!(entry.getKey() instanceof String))
+            {
+                throw new IllegalArgumentException("RenderParameters contains a key which is not of type String");
             }
-            if (!(entry.getValue() instanceof String[])) {
-                throw new IllegalArgumentException(
-                    "Value must not be null and of type java.lang.String[].");
+            if (!(entry.getValue() instanceof String[]))
+            {
+                throw new IllegalArgumentException("RenderParameters contains a value which is not of type String[]");
             }
         }
-
-        renderParameters.clear();
-        publicRenderParameter.clear();
-        if (parameters.keySet()!= null){
-        	for (Object key : parameters.keySet()) {
-        		this.setRenderParameter((String)key, parameters.get(key));
-    		}
-        }
-
-        redirectAllowed = false;
-    }
-
-    public void setRenderParameter(String key, String value) {
-        if (redirected) {
-            throw new IllegalStateException(
-                "Can't invoke setRenderParameter() after sendRedirect() has been called");
-        }
-
-        if ((key == null || value == null)) {
-            throw new IllegalArgumentException(
-                "Render parameter key must not be null.");
-        }
-        List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
-        if (publicRenderParameterNames != null){
-	    	if (publicRenderParameterNames.contains(key)){
-	        	publicRenderParameter.put(key, new String[] {value});
-	        }
-	        else{
-	        	renderParameters.put(key, new String[]{value});
-	        }
-        }
-        else{
-        	renderParameters.put(key, new String[]{value});
-        }
-        redirectAllowed = false;
-    }
-
-    public void setRenderParameter(String key, String[] values) {
-    	if (redirected) {
-            throw new IllegalStateException(
-                "Can't invoke setRenderParameter() after sendRedirect() has been called");
-        }
-
-        if (key == null || values == null) {
-	        throw new IllegalArgumentException(
-	        	"name and values must not be null or values be an empty array");
-	    }
-	    List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
-	    if (publicRenderParameterNames != null){
-		    if (publicRenderParameterNames.contains(key)){
-		    	publicRenderParameter.put(key, values.clone());
-		    }
-		    else{
-		    	renderParameters.put(key, values.clone());
-		    }
-	    }
-	    else{
-	    	renderParameters.put(key, values.clone());
-	    }
-    }
-    // --------------------------------------------------------------------------------------------
-
-    // org.apache.pluto.core.InternalActionResponse implementation --------------------------------
-    public Map getRenderParameters() {
-        return renderParameters;
-    }
-
-    public Map<String, String[]> getRenderParameterMap() {
-		return renderParameters;
-	}
-
-    public Map<String, String[]> getPublicRenderParameter(){
-    	return publicRenderParameter;
-    }
-
-    public PortletMode getChangedPortletMode() {
-        return this.portletMode;
-    }
-
-    public PortletMode getPortletMode() {
-		return getChangedPortletMode();
-	}
-
-    public WindowState getChangedWindowState() {
-        return this.windowState;
-    }
-
-    public WindowState getWindowState() {
-		return getChangedWindowState();
-	}
-
-    protected boolean isPortletModeAllowed(PortletMode mode) {
-        return isPortletModeAllowedByPortlet(mode)
-               && isPortletModeAllowedByPortal(mode);
-    }
-
-    protected boolean isPortletModeAllowedByPortlet(PortletMode mode) {
-
-        //Not checking for VIEW mode in portetlDefinition, as VIEW mode is default
-        // as per specs.
-        if(PortletMode.VIEW.equals(mode))
-            return true;
-
-        PortletDefinition dd = getPortletWindow().getPortletEntity()
-            .getPortletDefinition();
-
-        Iterator supports = dd.getSupports().iterator();
-        while(supports.hasNext()) {
-            Supports sup = (Supports)supports.next();
-            List<String> portletModes = sup.getPortletModes();
-            if (portletModes == null)
-            	return false;
-            Iterator modes = portletModes.iterator();
-            while(modes.hasNext()) {
-                if (modes.next().toString().equalsIgnoreCase(mode.toString())) {
-                    return true;
-                }
+        checkSetStateChanged();
+        Map<String, String[]> map = responseContext.getRenderParameters();
+        map.clear();
+        for (Map.Entry<String,String[]> entry : parameters.entrySet())
+        {
+            String[] values = cloneParameterValues(entry.getValue());
+            if (values != null)
+            {
+                map.put(entry.getKey(), values);
+                responseContext.getRemovedPublicRenderParameters().remove(entry.getKey());
             }
         }
-        return false;
     }
-
-    protected boolean isPortletModeAllowedByPortal(PortletMode mode) {
-        Enumeration supportedModes = context.getSupportedPortletModes();
-        while (supportedModes.hasMoreElements()) {
-            if (supportedModes.nextElement().toString().equalsIgnoreCase(
-                (mode.toString()))) {
-                return true;
-            }
+    
+    public void setRenderParameter(String key, String value)
+    {
+        ArgumentUtility.validateNotEmpty("key", key);
+        
+        checkSetStateChanged();
+        if (value == null || value.length() == 0)
+        {
+            responseContext.getRenderParameters().remove(key);
         }
-        return false;
-    }
-
-    protected boolean isWindowStateAllowed(WindowState state) {
-        Enumeration supportedStates = context.getSupportedWindowStates();
-        while (supportedStates.hasMoreElements()) {
-            if (supportedStates.nextElement().toString().equalsIgnoreCase(
-                (state.toString()))) {
-                return true;
-            }
+        else
+        {
+            responseContext.getRenderParameters().put(key, new String[]{value});
+            responseContext.getRemovedPublicRenderParameters().remove(key);
         }
-        return false;
     }
-
-	//	 access to a limited set of HttpServletResponse methods ------------------
-
-	@Override
-	public void reset() {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.reset();
-	}
-
-	@Override
-	public void resetBuffer() {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.resetBuffer();
-	}
-
-	@Override
-	public void setBufferSize(int arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setBufferSize(arg0);
-	}
-
-	@Override
-	public void setCharacterEncoding(String arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setCharacterEncoding(arg0);
-	}
-
-	@Override
-	public void setContentLength(int arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setContentLength(arg0);
-	}
-
-	@Override
-	public void setContentType(String arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setContentType(arg0);
-	}
-
-	@Override
-	public void setLocale(Locale arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setLocale(arg0);
-	}
-
-	@Override
-	public ServletOutputStream getOutputStream() throws IllegalStateException, IOException {
-		if (super.isForwarded() || super.isIncluded()){
-			return new DummyServletOutputStream();
-		}
-		else
-			return super.getOutputStream();
-	}
-
-	@Override
-	public PrintWriter getWriter() throws IllegalStateException, IOException {
-		if (super.isForwarded() || super.isIncluded()){
-			return new DummyPrintWriter(super.getWriter());
-		}
-		else
-			return super.getWriter();
-	}
-
-	@Override
-	public void addDateHeader(String arg0, long arg1) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.addDateHeader(arg0, arg1);
-	}
-
-	@Override
-	public void addHeader(String arg0, String arg1) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.addHeader(arg0, arg1);
-	}
-
-	@Override
-	public void addIntHeader(String arg0, int arg1) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.addIntHeader(arg0, arg1);
-	}
-
-	@Override
-	public void setStatus(int arg0, String arg1) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setStatus(arg0, arg1);
-	}
-
-	@Override
-	public void setDateHeader(String arg0, long arg1) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setDateHeader(arg0, arg1);
-	}
-
-	@Override
-	public void setHeader(String arg0, String arg1) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setHeader(arg0, arg1);
-	}
-
-	@Override
-	public void setIntHeader(String arg0, int arg1) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setIntHeader(arg0, arg1);
-	}
-
-	@Override
-	public void setStatus(int arg0) {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.setStatus(arg0);
-	}
-
-	@Override
-	public void flushBuffer() throws IOException {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		else
-			super.flushBuffer();
-	}
-
-	/*
-	 * The pluto implementation don't works with buffering.
-	 * @see javax.servlet.ServletResponseWrapper#getBufferSize()
-	 */
-	@Override
-	public int getBufferSize() {
-		if (super.isForwarded() || super.isIncluded()){
-			return 0;
-		}
-		else
-			return 0;
-	}
-
-	@Override
-	public String getCharacterEncoding() {
-		if (super.isForwarded() || super.isIncluded()){
-			return null;
-		}
-		else
-			return super.getCharacterEncoding();
-	}
-
-	@Override
-	public String getContentType() {
-		if (super.isForwarded() || super.isIncluded()){
-			return null;
-		}
-		else
-			return super.getContentType();
-	}
-
-	@Override
-	public Locale getLocale() {
-		if (super.isForwarded() || super.isIncluded()){
-			return null;
-		}
-		else
-			return super.getLocale();
-	}
-
-	@Override
-	public boolean isCommitted() {
-		if (super.isForwarded()){
-			return false;
-		}
-		else if (super.isIncluded()){
-			return true;
-		}
-		else
-			return super.isCommitted();
-	}
-
-	public void removePublicRenderParameter(String name) {
-		List<String> publicRenderParameterNames = super.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
-		if (publicRenderParameterNames != null){
-			if (publicRenderParameterNames.contains(name)){
-	    		publicRenderParameter.put(name,new String[] {null});
-		    }
-	    	else{
-	    		throw new IllegalArgumentException(
-	    			"name and values must not be null or values be an empty array");
-	    	}
-		}
-		redirectAllowed = false;
-	}
-
-	public void setEventRequest(EventRequest eventRequest) {
-		this.eventRequest = eventRequest;
-	}
-
+    
+    public void setRenderParameter(String key, String[] values)
+    {
+        ArgumentUtility.validateNotEmpty("key", key);
+        ArgumentUtility.validateNotNull("values", values);
+        String[] copy = cloneParameterValues(values);
+        checkSetStateChanged();
+        if (copy == null)
+        {
+            responseContext.getRenderParameters().remove(key);
+        }
+        else
+        {
+            responseContext.getRenderParameters().put(key, copy);
+            responseContext.getRemovedPublicRenderParameters().remove(key);
+        }
+    }
 }

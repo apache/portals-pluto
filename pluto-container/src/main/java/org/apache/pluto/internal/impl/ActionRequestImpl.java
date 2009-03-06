@@ -16,51 +16,18 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.io.IOException;
-
 import javax.portlet.ActionRequest;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalActionRequest;
-
+import org.apache.pluto.spi.optional.PortletRequestContext;
 
 /**
  * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
  */
-public class ActionRequestImpl extends ClientDataRequestImpl
-                               implements ActionRequest, InternalActionRequest
+public class ActionRequestImpl extends ClientDataRequestImpl implements ActionRequest
 {
-    private static final Log LOG = LogFactory.getLog(ActionRequestImpl.class);
-
-    public ActionRequestImpl(PortletContainer container,
-                             PortletWindow portletWindow,
-                             HttpServletRequest servletRequest)
+    public ActionRequestImpl(PortletRequestContext requestContext)
     {
-        super(container, portletWindow, servletRequest);
-        if (LOG.isDebugEnabled())
-        {
-        	LOG.debug("Created action request for: " + portletWindow);
-        }
-    }
-
-    protected Integer getRequestMethod()
-    {
-        return Constants.METHOD_ACTION;
-    }
-
-	public String getLifecyclePhase()
-	{
-		return ACTION_PHASE;
-	}
-
-    public ServletInputStream getInputStream() throws IOException
-    {
-        return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
+        super(requestContext, PortletRequest.ACTION_PHASE);
     }
 }

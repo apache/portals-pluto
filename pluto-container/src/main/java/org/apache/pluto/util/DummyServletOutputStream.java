@@ -20,8 +20,19 @@ import java.io.IOException;
 
 import javax.servlet.ServletOutputStream;
 
-public class DummyServletOutputStream extends ServletOutputStream{
+public final class DummyServletOutputStream extends ServletOutputStream{
 
+    private static final ServletOutputStream instance = new DummyServletOutputStream();
+    
+    public static ServletOutputStream getInstance()
+    {
+        return instance;
+    }
+    
+    private DummyServletOutputStream()
+    {
+    }
+    
 	@Override
 	public void write(int b) throws IOException {
 	}

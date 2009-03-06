@@ -24,18 +24,17 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
-import org.apache.pluto.internal.InternalPortletRequest;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.util.StringManager;
@@ -63,7 +62,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
     private PortletWindow window;
 
-    private InternalPortletRequest request;
+    private PortletRequest request;
     
     /**
      * Default portlet preferences retrieved from portlet.xml, and used for
@@ -77,10 +76,6 @@ public class PortletPreferencesImpl implements PortletPreferences {
      */
     private final Map<String, InternalPortletPreference> preferences = new HashMap<String, InternalPortletPreference>();
 
-    /** Current method used for managing these preferences. */
-    private Integer methodId;
-    
-    
     // Constructor -------------------------------------------------------------
     
     /**
@@ -88,15 +83,13 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * @param container  the portlet container.
      * @param window  the internal portlet window.
      * @param request  the internal portlet request.
-     * @param methodId  the request method ID: render request or action request.
      */
     public PortletPreferencesImpl(PortletContainer container,
                                   PortletWindow window,
-                                  InternalPortletRequest request,
-                                  Integer methodId) {
+                                  PortletRequest request)
+    {
         this.window = window;
         this.request = request;
-        this.methodId = methodId;
         
         // Get the portlet preferences service from container.
         preferencesService = container.getOptionalContainerServices()
@@ -249,9 +242,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * @throws IOException  if an error occurs with the persistence mechanism.
      */
     public void store() throws IOException, ValidatorException {
-        if (!Constants.METHOD_ACTION.equals(methodId)) {
+        if (PortletRequest.RENDER_PHASE.equals(request.getAttribute(PortletRequest.LIFECYCLE_PHASE))) {
             throw new IllegalStateException(
-                	"store is only allowed inside a processAction call.");
+                	"store is not allowed during RENDER phase.");
         }
         internalStore();
     }

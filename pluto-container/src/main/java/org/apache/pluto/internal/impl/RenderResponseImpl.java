@@ -16,22 +16,13 @@
  */
 package org.apache.pluto.internal.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
 import javax.portlet.RenderResponse;
-import javax.portlet.StateAwareResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalRenderResponse;
-import org.apache.pluto.spi.PortalCallbackService;
+import org.apache.pluto.spi.optional.PortletRenderResponseContext;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.StringUtils;
 
@@ -40,104 +31,91 @@ import org.apache.pluto.util.StringUtils;
  * Implementation of the <code>javax.portlet.RenderResponse</code> interface.
  * 
  */
-public class RenderResponseImpl extends MimeResponseImpl
-implements RenderResponse, InternalRenderResponse {
-	
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(RenderResponseImpl.class);
-	private String contenType;
+public class RenderResponseImpl extends MimeResponseImpl implements RenderResponse
+{	
+    private PortletRenderResponseContext responseContext;
     
-    public RenderResponseImpl(PortletContainer container,
-                              PortletWindow portletWindow,
-                              HttpServletRequest servletRequest,
-                              HttpServletResponse servletResponse) {
-        super(container, portletWindow, servletRequest, servletResponse);
+    public RenderResponseImpl(PortletRenderResponseContext responseContext)
+    {
+        super(responseContext);
+        this.responseContext = responseContext;
     }
-
-    public void setTitle(String title) {
-        PortalCallbackService callback = getContainer()
-        		.getRequiredContainerServices()
-        		.getPortalCallbackService();
-        callback.setTitle(this.getHttpServletRequest(),
-                          getPortletWindow(),
-                          title);
-    }
-
-	public void setNextPossiblePortletModes(Collection<PortletMode> portletModes) {
-		PortletMode tmpPortletMode = super.getPortletWindow().getPortletMode();
-		PortletMode portletMode = PortletMode.VIEW;
-		boolean next = false;
-		boolean first = true;
-		for (PortletMode mode : portletModes) {
-			if (first)
-				portletMode = mode;
-			if (next){
-				portletMode = mode;
-				next = false;
-			}
-			if (mode.equals(tmpPortletMode)){
-				next = true;
-			}
-		}
-		try {
-			((StateAwareResponse)(super.getResponse())).setPortletMode(portletMode) ;
-		} catch (PortletModeException e) {
-            LOG.warn(e);
-		}
-	}
-	
-	@Override
-	public void setCharacterEncoding(String arg0) {
-		if (super.isIncluded() || super.isForwarded()){
-			//no operation
-		}
-		else
-			super.setCharacterEncoding(arg0);
-	}
-
-	@Override
-	public void setContentLength(int arg0) {
-		if (super.isIncluded() || super.isForwarded()){
-			//no operation
-		}
-		else
-			super.setContentLength(arg0);
-	}
-
-	@Override
-	public void setLocale(Locale arg0) {
-		if (super.isIncluded() || super.isForwarded()){
-			//no operation
-		}
-		else
-			super.setLocale(arg0);
-	}
-	
-	@Override
-	public int getBufferSize() {
-			return 0;
-	}
-	
-	@Override
-    public void setContentType(String contentType){
-    	
-    	if (super.isIncluded()){
-    		//no operation
-    	}
-    	else{
-    		ArgumentUtility.validateNotNull("contentType", contentType);
-            String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
-            if (!isValidContentType(mimeType)) {
-                throw new IllegalArgumentException("Specified content type '"
-                		+ mimeType + "' is not supported.");
+    
+    /**
+     * Checks if the specified content type is valid (supported by the portlet).
+     * The specified content type should be a tripped mime type without any
+     * character encoding suffix.
+     * @param contentType  the content type to check.
+     * @return true if the content type is valid, false otherwise.
+     */
+    protected boolean isValidContentType(String contentType)
+    {
+        boolean valid = false;
+        for (String supportedType : getResponseContentTypes())
+        {
+            // Content type is supported by an exact match.
+            if (supportedType.equals(contentType))
+            {
+                valid = true;
             }
-            getHttpServletResponse().setContentType(mimeType);
-            this.contenType = contentType;
-    	}
+            // The supported type contains a wildcard.
+            else if (supportedType.indexOf("*") >= 0)
+            {
+                int index = supportedType.indexOf("/");
+                String supportedPrefix = supportedType.substring(0, index);
+                String supportedSuffix = supportedType.substring(index + 1);
+                index = contentType.indexOf("/");
+                String typePrefix = contentType.substring(0, index);
+                String typeSuffix = contentType.substring(index + 1);
+                // Check if the prefixes match AND the suffixes match.
+                if (supportedPrefix.equals("*") || supportedPrefix.equals(typePrefix))
+                {
+                    if (supportedSuffix.equals("*") || supportedSuffix.equals(typeSuffix))
+                    {
+                        valid = true;
+                    }
+                }
+            }
+        }
+        // Return the check result.
+        return valid;
     }
-	
-	@Override
-	public String getContentType() {
-		return contenType;
+    
+    public void setContentType(String contentType)
+    {
+        ArgumentUtility.validateNotNull("contentType", contentType);
+        String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
+        if (!isValidContentType(mimeType))
+        {
+            throw new IllegalArgumentException("Specified content type '" + mimeType + "' is not supported.");
+        }
+        responseContext.setContentType(mimeType);
+    }
+    
+    public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)
+    {
+        ArgumentUtility.validateNotNull("portletModes", portletModes);
+        if (portletModes.isEmpty())
+        {
+            throw new IllegalArgumentException("At least one possible PortletMode should be specified.");            
+        }
+        ArrayList<PortletMode> modes = new ArrayList<PortletMode>();
+        for (PortletMode mode : portletModes)
+        {
+            if (isPortletModeAllowed(mode))
+            {
+                modes.add(mode);
+            }
+        }
+        if (modes.isEmpty())
+        {
+            modes.add(getPortletWindow().getPortletMode());
+        }
+        responseContext.setNextPossiblePortletModes(modes);
+    }
+    
+    public void setTitle(String title)
+    {
+        responseContext.setTitle(title);
     }
 }

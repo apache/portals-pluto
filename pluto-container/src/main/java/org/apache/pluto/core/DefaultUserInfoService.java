@@ -33,10 +33,10 @@ import org.apache.pluto.spi.optional.UserInfoService;
  */
 public class DefaultUserInfoService implements UserInfoService {
 
-    public Map getUserInfo(PortletRequest request, PortletWindow window)
+    public Map<String, String> getUserInfo(PortletRequest request, PortletWindow window)
         throws PortletContainerException {
         if ( request.getRemoteUser() != null ) {
-            return Collections.EMPTY_MAP;
+            return Collections.emptyMap();
         }
         return null;
     }

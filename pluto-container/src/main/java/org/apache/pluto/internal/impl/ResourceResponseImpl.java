@@ -18,96 +18,52 @@ package org.apache.pluto.internal.impl;
 
 import java.util.Locale;
 
+import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.ResourceURL;
 
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalResourceResponse;
-import org.apache.pluto.util.ArgumentUtility;
-import org.apache.pluto.util.StringUtils;
+import org.apache.pluto.spi.optional.PortletResourceResponseContext;
 
-public class ResourceResponseImpl extends MimeResponseImpl
-implements ResourceResponse, InternalResourceResponse {
-	
-
-    public ResourceResponseImpl(PortletContainer container,
-                              PortletWindow portletWindow,
-                              HttpServletRequest servletRequest,
-                              HttpServletResponse servletResponse) {
-        super(container, portletWindow, servletRequest,
-              servletResponse);
+public class ResourceResponseImpl extends MimeResponseImpl implements ResourceResponse
+{
+    private String requestCacheLevel;
+    private PortletResourceResponseContext responseContext;
+    
+    public ResourceResponseImpl(PortletResourceResponseContext responseContext, String requestCachelevel)
+    {
+        super(responseContext);
+        this.responseContext = responseContext;
+        this.requestCacheLevel = requestCachelevel;
     }
 	
-	@Override
-	public void setCharacterEncoding(String arg0) {
-		if (super.isIncluded()){
-			//no operation
-		}
-		else
-			super.setCharacterEncoding(arg0);
-	}
-
-	@Override
-	public void setContentLength(int arg0) {
-		if (super.isIncluded()){
-			//no operation
-		}
-		else
-			super.setContentLength(arg0);
-	}
-
-	@Override
-	public void setLocale(Locale arg0) {
-		if (super.isIncluded()){
-			//no operation
-		}
-		else
-			super.setLocale(arg0);
-	}
-	
-	@Override
-	public int getBufferSize() {
-		return 0;
-	}
-	
-	@Override
-    public void setContentType(String contentType)
-    		throws IllegalArgumentException {
-    	
-    	if (super.isIncluded()){
-    		//no operation
-    	}
-    	else{
-    		ArgumentUtility.validateNotNull("contentType", contentType);
-            String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
-          /*
-            if (!isValidContentType(mimeType)) {
-                throw new IllegalArgumentException("Specified content type '"
-                		+ mimeType + "' is not supported.");
-            }
-          */
-            getHttpServletResponse().setContentType(mimeType);
-    	}
+    public PortletURL createActionURL()
+    {
+        return new PortletURLImpl(responseContext, true, false, requestCacheLevel);
     }
-	
-	@Override
-	public String getContentType() {
-        return getHttpServletResponse().getContentType();
+    
+    public PortletURL createRenderURL()
+    {
+        return new PortletURLImpl(responseContext, false, false, requestCacheLevel);
     }
 
-	public String getCacheability() {
-		return null;
-	}	
-	
-	public javax.portlet.PortletURL createRenderURL() throws java.lang.IllegalStateException{
-		return super.createRenderURL();
+
+    public ResourceURL createResourceURL()
+    {
+        return new PortletURLImpl(responseContext, false, true, requestCacheLevel);
+    }
+    
+	public void setCharacterEncoding(String charset)
+	{
+	    responseContext.setCharacterEncoding(charset);
 	}
-	public javax.portlet.PortletURL createActionURL() throws java.lang.IllegalStateException{
-		return super.createActionURL();
+
+	public void setContentLength(int len)
+	{
+	    responseContext.setContentLength(len);
 	}
-	public javax.portlet.ResourceURL createResourceURL() throws java.lang.IllegalStateException{
-		return super.createResourceURL();
+
+	public void setLocale(Locale locale)
+	{
+	    responseContext.setLocale(locale);
 	}
 }

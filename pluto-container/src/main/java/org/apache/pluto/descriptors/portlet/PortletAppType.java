@@ -17,7 +17,12 @@
 package org.apache.pluto.descriptors.portlet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -118,6 +123,10 @@ public class PortletAppType implements PortletApplicationDefinition
     
     @XmlTransient
     protected String name;
+    @XmlTransient
+    protected Set<String> servletMappingURLPatterns;
+    @XmlTransient
+    protected Map<Locale, String> localeEncodingMappings;
     
     public String getName()
     {
@@ -514,5 +523,33 @@ public class PortletAppType implements PortletApplicationDefinition
         {
             throw new IllegalArgumentException("Application descriptor version: "+value+" unsupported.");
         }
+    }
+    
+    public Set<String> getServletMappingURLPatterns()
+    {
+        if (servletMappingURLPatterns == null)
+        {
+            servletMappingURLPatterns = new HashSet<String>();
+        }
+        return servletMappingURLPatterns;
+    }
+    
+    public void addServletMappingURLPattern(String servletMappingURLPattern)
+    {
+        getServletMappingURLPatterns().add(servletMappingURLPattern);
+    }
+    
+    public Map<Locale, String> getLocaleEncodingMappings()
+    {
+        if (localeEncodingMappings == null)
+        {
+            localeEncodingMappings = new HashMap<Locale,String>();
+        }
+        return localeEncodingMappings;
+    }
+    
+    public void addLocaleEncodingMapping(Locale locale, String encoding)
+    {
+        getLocaleEncodingMappings().put(locale, encoding);
     }
 }

@@ -17,99 +17,33 @@
 package org.apache.pluto.internal.impl;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalEventRequest;
+import org.apache.pluto.spi.optional.PortletRequestContext;
 
 /**
  * <code>javax.portlet.EventRequest</code> implementation.
- * This class also implements InternalEventRequest.
  *
- * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
  */
-public class EventRequestImpl extends PortletRequestImpl 
-		implements EventRequest, InternalEventRequest {
-
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(ActionRequestImpl.class);
+public class EventRequestImpl extends PortletRequestImpl implements EventRequest
+{
+	private final Event event; 
 	
-	//	 Private Member Variables ------------------------------------------------	
-    	
-	private Event event; 
-	
-	//	 Constructor -------------------------------------------------------------
-    
-    public EventRequestImpl(PortletContainer container,
-                             PortletWindow portletWindow,
-                             HttpServletRequest servletRequest, Event event) {
-        super(container, portletWindow, servletRequest);
-        this.event = event;
-        if (LOG.isDebugEnabled()) {
-        	LOG.debug("Created Event request for: " + portletWindow);
-        }
-   
-    }
-    
-    //  EventRequest impl -------------------------------------------------------
-    
-    protected Integer getRequestMethod()
+    public EventRequestImpl(PortletRequestContext requestContext, Event event)
     {
-        return Constants.METHOD_EVENT; 
+        super(requestContext, PortletRequest.EVENT_PHASE);
+        this.event = event;
     }
     
-    public Event getEvent(){
+    public Event getEvent()
+    {
         return event;
     }
-    
-    //  PortletRequestImpl impl -------------------------------------------------
-    
-	public String getLifecyclePhase() {
-		return EVENT_PHASE;
-	}
 
-	
-    
-    //////////////////////////////////////////////////////////////////
-	//for forward and include
-	//////////////////////////////////////////////////////////////////
-	
-	public String getCharacterEncoding() {
-        return (super.isIncluded() || super.isForwarded()) ? null : super.getCharacterEncoding();
-    }
-	
-	public int getContentLength() {
-        return (super.isIncluded() || super.isForwarded()) ? 0 : super.getContentLength();
-    }
-	
-	public String getContentType() {
-        return (super.isIncluded() || super.isForwarded()) ? null : super.getContentType();
-    }
-	
-	public ServletInputStream getInputStream() throws IOException {
-        return (super.isIncluded() || super.isForwarded()) ? null : super.getInputStream();
-    }
-	
-	public BufferedReader getReader()
-    throws UnsupportedEncodingException, IOException {
-        return (super.isIncluded() || super.isForwarded()) ? null : super.getReader();
-    }
-	
-	public void setCharacterEncoding(String encoding)
-    throws UnsupportedEncodingException {
-        if (!super.isIncluded() && !super.isForwarded()) {
-        	super.setCharacterEncoding(encoding);
-        }
+    public String getMethod()
+    {
+        return getServletRequest().getMethod();
     }
 }

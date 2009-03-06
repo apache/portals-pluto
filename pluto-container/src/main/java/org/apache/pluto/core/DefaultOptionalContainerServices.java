@@ -27,7 +27,7 @@ import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.RequestAttributeService;
+import org.apache.pluto.spi.optional.PortletRequestContextService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
@@ -42,11 +42,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletRegistryService portletRegistryService;
     private PortletContextService portletContextService;
     private PortletInvokerService portletInvokerService;
+    private PortletRequestContextService portletRequestContextService;
     private PortletEnvironmentService portletEnvironmentService;
     private PortletInfoService portletInfoService;
     private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
-    private RequestAttributeService requestAttributeService;
     private NamespaceMapper namespaceMapper;
     private PortletAppDescriptorService descriptorService;
 
@@ -59,12 +59,12 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletRegistryService = new PortletContextManager();
         portletContextService = (PortletContextManager)portletRegistryService;
         portletInvokerService = new DefaultPortletInvokerService(portletContextService);
+        portletRequestContextService = new DefaultPortletRequestContextService();
         portletEnvironmentService = new DefaultPortletEnvironmentService();
         portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
         namespaceMapper = new DefaultNamespaceMapper();
-        requestAttributeService = new DefaultRequestAttributeService(namespaceMapper, userInfoService);        
         descriptorService = new PortletAppDescriptorServiceImpl();                        
     }
 
@@ -96,6 +96,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
             portletInvokerService = root.getPortletInvokerService();
         }
 
+        if(root.getPortletRequestContextService() != null) {
+            portletRequestContextService = root.getPortletRequestContextService();
+        }
+
         if(root.getPortletEnvironmentService() != null) {
             portletEnvironmentService = root.getPortletEnvironmentService();
         }
@@ -112,10 +116,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
             userInfoService = root.getUserInfoService();
 		}
 		
-        if(root.getRequestAttributeService() != null) {
-            requestAttributeService = root.getRequestAttributeService();
-        }
-        
         if(root.getNamespaceMapper() != null) {
             namespaceMapper = root.getNamespaceMapper();
         }
@@ -142,6 +142,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         return portletContextService;
     }
 
+    public PortletRequestContextService getPortletRequestContextService() {
+        return portletRequestContextService;
+    }
+
     public PortletEnvironmentService getPortletEnvironmentService() {
         return portletEnvironmentService;
     }
@@ -162,10 +166,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         return userInfoService;
     }
     
-    public RequestAttributeService getRequestAttributeService() {
-        return requestAttributeService;
-    }
-    
     public NamespaceMapper getNamespaceMapper() {
         return namespaceMapper;
     }
@@ -174,6 +174,5 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     {
         return this.descriptorService;
     }
-    
 }
 

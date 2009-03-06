@@ -27,7 +27,6 @@ import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.PortletURLListener;
 import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.PropertyManager;
 import org.apache.pluto.spi.ResourceURLProvider;
 
 /**
@@ -38,23 +37,17 @@ import org.apache.pluto.spi.ResourceURLProvider;
  */
 public class PortalCallbackServiceImpl implements PortalCallbackService 
 {
-	PropertyManager propertyManager;	
-
-	public PortalCallbackServiceImpl(PropertyManager propertyManager) 
-    {
-        this.propertyManager = propertyManager;
-    }
-	
     /**
      * Method invoked by the container when the portlet sets its title. This
      * method binds the dynamic portlet title to the servlet request for later
      * use.
      */
-    public void setTitle(HttpServletRequest request,
-                         PortletWindow portletWindow,
-                         String title) {
-        request.setAttribute(AttributeKeys.PORTLET_TITLE, title);
-    }
+//TODO: reimplement in ResponseContext.setTitle()    
+//    public void setTitle(HttpServletRequest request,
+//                         PortletWindow portletWindow,
+//                         String title) {
+//        request.setAttribute(AttributeKeys.PORTLET_TITLE, title);
+//    }
 
     public PortletURLProvider getPortletURLProvider(
     		HttpServletRequest request,
@@ -68,21 +61,10 @@ public class PortalCallbackServiceImpl implements PortalCallbackService
         return new ResourceURLProviderImpl(request, portletWindow);
     }
 
-    public PropertyManager getPropertyManager()
-    {
-        return propertyManager;
-    }
-    
     public EventProvider getEventProvider(
 			HttpServletRequest request, PortletWindow portletWindow) {
 		return EventProviderImpl.getEventProviderImpl(request, portletWindow);
 	}
-
-
-	public EventProvider getEventProvider() {
-		return EventProviderImpl.getEventProviderImpl();
-	}
-
 
 	/**
      * Returns the FilterManager, this is used to process the filter.

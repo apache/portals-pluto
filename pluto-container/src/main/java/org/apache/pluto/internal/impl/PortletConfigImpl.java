@@ -27,13 +27,13 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.internal.InternalPortletConfig;
+import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.om.portlet.EventDefinitionReference;
 import org.apache.pluto.om.portlet.InitParam;
@@ -47,7 +47,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     /**
      * The Portlet Application Context within which we exist.
      */
-    protected PortletContext portletContext;
+    protected InternalPortletContext portletContext;
 
     /**
      * The portlet descriptor.
@@ -60,8 +60,10 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     protected PortletApplicationDefinition portletApp;
 
     protected ResourceBundleFactory bundles;
+    
+    protected Map<String, String[]> containerRuntimeOptions;
 
-    public PortletConfigImpl(PortletContext portletContext,
+    public PortletConfigImpl(InternalPortletContext portletContext,
                              PortletDefinition portletDD,
                              PortletApplicationDefinition portletAppDD) {
         this.portletContext = portletContext;
@@ -73,7 +75,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return portlet.getPortletName();
     }
 
-    public PortletContext getPortletContext() {
+    public InternalPortletContext getPortletContext() {
         return portletContext;
     }
 
@@ -185,64 +187,66 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 		return Collections.enumeration(locals);
 	}
 	
-	public Map<String, String[]> getApplicationRuntimeOptions() {
-		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portletApp.getContainerRuntimeOptions() != null){
-			for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOptions()) {
-				if (getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValues();
-					String [] tempValues = new String[values.size()];
-					for (int i=0;i<values.size();i++){
-						tempValues[i] = values.get(i);
-					}
-					resultMap.put(option.getName(),tempValues);
-				}
-			}
-		}
-		return resultMap;
-	}
-	
-	public Map<String, String[]> getPortletRuntimeOptions() {
-		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portlet.getContainerRuntimeOptions() != null) {
-			for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions()) {
-				if (getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValues();
-					String [] tempValues = new String[values.size()];
-					for (int i=0;i<values.size();i++){
-						tempValues[i] = values.get(i);
-					}
-					resultMap.put(option.getName(),tempValues);
-				}
-			}
-		}
-		return resultMap;
-	}
-
-	public Map<String, String[]> getContainerRuntimeOptions() {
-		
-		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
-		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
-		
-		// merge these two, with portlet priority
-		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		
-		// first all entries in portletAppDD (without these in portletDD)
-		for (String option : appRuntimeOptions.keySet()) {
-			if (portletRuntimeOptions.containsKey(option))
-				resultMap.put(option, portletRuntimeOptions.get(option));
-			else
-				resultMap.put(option, appRuntimeOptions.get(option));
-		}
-		// and now the rest
-		if (portletRuntimeOptions != null){
-			for (String option : portletRuntimeOptions.keySet()) {
-				if (!appRuntimeOptions.containsKey(option))
-					resultMap.put(option, portletRuntimeOptions.get(option));
-			}
-		}
-		//return resultMap;
-		return null;
+	public Map<String, String[]> getContainerRuntimeOptions()
+	{
+	    synchronized(this)
+	    {
+	        if (containerRuntimeOptions == null)
+	        {
+	            containerRuntimeOptions = new HashMap<String, String[]>();
+	            if (portletApp.getContainerRuntimeOptions() != null)
+	            {
+	                for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOptions())
+	                {
+	                    List<String> values = option.getValues();
+	                    String [] tempValues = new String[values.size()];
+	                    for (int i=0;i<values.size();i++)
+	                    {
+	                        tempValues[i] = values.get(i);
+	                    }
+	                    containerRuntimeOptions.put(option.getName(),tempValues);
+	                }
+	            }
+	            if (portlet.getContainerRuntimeOptions() != null)
+	            {
+	                for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions())
+	                {
+	                    List<String> values = option.getValues();
+	                    String [] tempValues = new String[values.size()];
+	                    for (int i=0;i<values.size();i++)
+	                    {
+	                        tempValues[i] = values.get(i);
+	                    }
+	                    containerRuntimeOptions.put(option.getName(),tempValues);
+	                }
+	            }
+	            for (Iterator<String> iter = containerRuntimeOptions.keySet().iterator(); iter.hasNext(); )
+	            {
+	                String key = iter.next();
+	                if (!getSupportedContainerRuntimeOptions().contains(key))
+	                {
+	                    iter.remove();
+	                }
+	            }
+	        }
+	    }
+	    
+        if (!containerRuntimeOptions.isEmpty())
+        {
+            Map<String, String[]> result = new HashMap<String, String[]>(containerRuntimeOptions.size());
+            for (Map.Entry<String,String[]> entry : containerRuntimeOptions.entrySet())
+            {
+                if (entry.getValue() != null)
+                {
+                    result.put(entry.getKey(), entry.getValue().clone());
+                }
+            }
+            return Collections.unmodifiableMap(result);
+        }
+        else
+        {
+            return Collections.emptyMap();
+        }
 	}
 	
     protected List<String> getSupportedContainerRuntimeOptions()

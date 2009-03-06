@@ -58,7 +58,13 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     	}    	
     	return (PortletApplicationDefinition)app.getValue();
     }
+
     
+    public void mergeWebDescriptor(PortletApplicationDefinition pa, InputStream webDescriptor) throws IOException
+    {
+        // TODO
+    }
+
     /**
      * Write the deployment descriptor.
      * @param app

@@ -31,14 +31,13 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalPortletSession;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Implementation of the <code>javax.portlet.PortletSession</code> interface.
  * 
  */
-public class PortletSessionImpl implements InternalPortletSession {
+public class PortletSessionImpl implements PortletSession {
 	
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletSessionImpl.class);
@@ -104,7 +103,7 @@ public class PortletSessionImpl implements InternalPortletSession {
     	return httpSession.getAttribute(key);
     }
     
-    public Enumeration getAttributeNames() {
+    public Enumeration<String> getAttributeNames() {
         return getAttributeNames(DEFAULT_SCOPE);
     }
     

@@ -16,121 +16,61 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Map;
 
+import javax.portlet.CacheControl;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalResourceRequest;
+import org.apache.pluto.spi.optional.PortletResourceRequestContext;
 
-public class ResourceRequestImpl extends ClientDataRequestImpl
-implements ResourceRequest, InternalResourceRequest {
-
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(ResourceRequestImpl.class);
-
-
-    // Constructor -------------------------------------------------------------
-
-    public ResourceRequestImpl(PortletContainer container,
-                             PortletWindow portletWindow,
-                             HttpServletRequest servletRequest) {
-        super(container, portletWindow, servletRequest);
-        if (LOG.isDebugEnabled()) {
-        	LOG.debug("Created action request for: " + portletWindow);
-        }
-    }
-
-    // ResourceRequest impl ------------------------------------------------------
-
-    protected Integer getRequestMethod()
+public class ResourceRequestImpl extends ClientDataRequestImpl implements ResourceRequest
+{
+    private PortletResourceRequestContext requestContext;
+    private CacheControl cacheControl;
+    
+    public ResourceRequestImpl(PortletResourceRequestContext requestContext, CacheControl cacheControl)
     {
-        return Constants.METHOD_RESOURCE;
+        super(requestContext, PortletRequest.RESOURCE_PHASE);
+        this.requestContext = requestContext;
+        this.cacheControl = cacheControl;
     }
 
-    public String getResponseContentType(){
-    	return super.getResponseContentType();
+    @Override
+    public String getProperty(String name)
+    {
+        return getMimeRequestProperty(name, cacheControl);
+    }
+
+    public String getCacheability()
+    {
+        return requestContext.getCacheability();
+    }
+
+    public String getETag()
+    {
+        return cacheControl.getETag();
+    }
+
+    public Map<String, String[]> getPrivateRenderParameterMap()
+    {
+        return cloneParameterMap(requestContext.getPrivateRenderParameterMap());
+    }
+
+    public String getResourceID()
+	{
+		return requestContext.getResourceID();
+	}
+
+    public String getResponseContentType()
+    {
+        return getServletRequest().getHeader("accept");
     }
 
     @SuppressWarnings("unchecked")
-	public java.util.Enumeration getResponseContentTypes(){
-    	return super.getResponseContentTypes();
+    public Enumeration<String> getResponseContentTypes()
+    {
+        return getServletRequest().getHeaders("accept");
     }
-
-    public String[] getParameterValues(String name) {
-    	String values1[] = super.getParameterValues(name);
-    	String values2[] = urlProvider.getPrivateRenderParameters(name);
-    	String values[] = null;
-    	int length1 = 0;
-    	int length2 = 0;
-    	if (values1 != null)
-    		length1 = values1.length;
-    	if (values2 != null){
-    		length2 += values2.length;
-    		values = new String[length1+length2];
-    		System.arraycopy(values2, 0, values, length1, length2);
-    	}
-    	else if (length1>0){
-    		values = new String[length1];
-    	}
-
-    	if (length1>0){
-    		System.arraycopy(values1, 0, values, 0, length1);
-    	}
-    	if ((length1+length2) == 0){
-    		values = null;
-    	}
-        if (values != null) {
-            values = values.clone();
-        }
-        return values;
-    }
-
-    public String getParameter(String name) {
-    	String value = super.getParameter(name);
-    	if (value == null){
-        	String[] values1 = urlProvider.getPrivateRenderParameters(name);
-        	if (values1!= null){
-        		if (values1.length>0){
-        			value = values1[0];
-        		}
-        	}
-    	}
-		return value;
-    }
-
-    // PortletRequestImpl impl -------------------------------------------------
-
-	public String getETag() {
-		// TODO: get ETag
-		return null;
-	}
-
-	public String getLifecyclePhase()
-	{
-		return RESOURCE_PHASE;
-	}
-
-	public String getResourceID() {
-		return getParameter("resourceID");
-	}
-
-	public ServletInputStream getInputStream() throws IOException {
-        return (super.isIncluded() || super.isForwarded()) ? (ServletInputStream)getPortletInputStream() : super.getInputStream();
-    }
-
-	public Map<String, String[]> getPrivateRenderParameterMap() {
-		return super.getPrivateParameterMap();
-	}
-
-	public String getCacheability() {
-		return null;
-	}
 }

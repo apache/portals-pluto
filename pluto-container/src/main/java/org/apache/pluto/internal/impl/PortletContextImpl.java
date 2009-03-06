@@ -19,10 +19,10 @@ package org.apache.pluto.internal.impl;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
@@ -33,8 +33,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.om.portlet.ContainerRuntimeOption;
-import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.internal.RequestDispatcherPathInfo;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 
 /**
@@ -55,14 +54,14 @@ implements PortletContext, InternalPortletContext {
     
     // Private Member Variables ------------------------------------------------
     
-    
-    /** Portlet */
-    protected PortletDefinition portlet = null;
-
     protected final PortletApplicationDefinition portletApp;
     protected final ServletContext servletContext;
     protected ClassLoader contextClassLoader;
 
+    protected List<String> exactServletMappingURLPatterns;
+    protected List<String> pathServletMappingURLPatterns;
+    protected List<String> extServletMappingURLPatterns;
+    protected boolean defaultServletMapping = false;
     
     // Constructor -------------------------------------------------------------
     
@@ -81,7 +80,7 @@ implements PortletContext, InternalPortletContext {
     private void init() {
         setContextClassLoader(Thread.currentThread().getContextClassLoader());
     }
-
+    
     public String getApplicationName() {
         return portletApp.getName();
     }
@@ -120,6 +119,106 @@ implements PortletContext, InternalPortletContext {
     public String getServerInfo() {
         return Environment.getServerInfo();
     }
+    
+    public RequestDispatcherPathInfo getPathInfo(String path)
+    {
+        String servletPath = null;
+        String pathInfo = null;
+        String queryString = null;
+        
+        int index = path.indexOf('?');
+        if (index != -1)
+        {
+            queryString = path.substring(index+1, path.length());
+            path = path.substring(0, index);
+        }
+        
+        synchronized (this)
+        {
+            if (exactServletMappingURLPatterns == null)
+            {
+                defaultServletMapping = false;
+                exactServletMappingURLPatterns = new ArrayList<String>();
+                pathServletMappingURLPatterns = new ArrayList<String>();
+                extServletMappingURLPatterns = new ArrayList<String>();
+                
+                for (String pat : portletApp.getServletMappingURLPatterns())
+                {                 
+                    if (pat.startsWith("/"))
+                    {
+                        if (pat.equals("/"))
+                        {
+                            defaultServletMapping = true;
+                        }
+                        else if (pat.endsWith("/*"))
+                        {
+                            pathServletMappingURLPatterns.add(pat.substring(0,-2));
+                        }
+                        else
+                        {
+                            exactServletMappingURLPatterns.add(pat);
+                        }
+                    }
+                    else if (pat.startsWith("*."))
+                    {
+                        extServletMappingURLPatterns.add(pat.substring(1));
+                    }
+                    else
+                    {
+                        exactServletMappingURLPatterns.add(pat);
+                    }
+                }
+            }
+        }
+        if (exactServletMappingURLPatterns.contains(path))
+        {
+            servletPath = path;
+            pathInfo = null;
+        }
+        else if ( path.charAt(0) == '/' && (index = path.lastIndexOf('/')) != -1)
+        {
+            if (path.length() == 1 && defaultServletMapping)
+            {
+                servletPath = path;
+                pathInfo = null;
+            }
+            else
+            {
+                String sub = path;
+                do
+                {
+                    sub = sub.substring(0, index);
+                    if (pathServletMappingURLPatterns.contains(sub))
+                    {
+                        servletPath = sub;
+                        pathInfo = path.substring(sub.length()+1);
+                        break;
+                    }
+                    index = sub.lastIndexOf('/');
+                }
+                while (index != -1);
+            }
+        }
+        if (servletPath == null)
+        {
+            ;            
+            if ((index = path.lastIndexOf('/')) != -1)
+            {
+                int ext = path.indexOf('.', index);
+                if (extServletMappingURLPatterns.contains(path.substring(index)))
+                {
+                    servletPath = path.substring(0, index);
+                    pathInfo = path.substring(index);
+                }
+            }
+        }
+        if (servletPath == null)
+        {
+            servletPath = path;            
+        }
+        
+        return new RequestDispatcherPathInfoImpl(getContextPath(),servletPath,pathInfo,queryString);
+    }
 
     public PortletRequestDispatcher getRequestDispatcher(String path) {
     	
@@ -143,8 +242,8 @@ implements PortletContext, InternalPortletContext {
             RequestDispatcher servletRequestDispatcher = servletContext
             		.getRequestDispatcher(path);
             if (servletRequestDispatcher != null) {
-            	portletRequestDispatcher = new PortletRequestDispatcherImpl(
-                		servletRequestDispatcher, path);
+
+            	portletRequestDispatcher = new PortletRequestDispatcherImpl(servletRequestDispatcher, getPathInfo(path));
             } else {
             	if (LOG.isInfoEnabled()) {
             		LOG.info("No matching request dispatcher found for: " + path);
@@ -274,70 +373,8 @@ implements PortletContext, InternalPortletContext {
         return portletApp;
     }
 
-
-	public Map<String, String[]> getApplicationRuntimeOptions() {
-		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portletApp.getContainerRuntimeOptions() != null){
-			for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOptions()) {
-				if (getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValues();
-					String [] tempValues = new String[values.size()];
-					for (int i=0;i<values.size();i++){
-						tempValues[i] = values.get(i);
-					}
-					resultMap.put(option.getName(),tempValues);
-				}
-			}
-		}
-		return resultMap;
-	}
-
-	public Map<String, String[]> getPortletRuntimeOptions() {
-		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		if (portlet.getContainerRuntimeOptions() != null) {
-			for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions()) {
-				if (this.getSupportedContainerRuntimeOptions().contains(option.getName())){
-					List<String> values = option.getValues();
-					String [] tempValues = new String[values.size()];
-					for (int i=0;i<values.size();i++){
-						tempValues[i] = values.get(i);
-					}
-					resultMap.put(option.getName(),tempValues);
-				}
-			}
-		}
-		return resultMap;
-	}
-
-
 	public Enumeration<String> getContainerRuntimeOptions() {
-		Map<String,String[]> appRuntimeOptions = getApplicationRuntimeOptions();
-		Map<String,String[]> portletRuntimeOptions = getPortletRuntimeOptions();
-		
-		// merge these two, with portlet priority
-		Map<String, String[]> resultMap = new HashMap<String, String[]>();
-		
-		// first all entries in portletAppDD (without these in portletDD)
-		for (String option : appRuntimeOptions.keySet()) {
-			if (portletRuntimeOptions.containsKey(option))
-				resultMap.put(option, portletRuntimeOptions.get(option));
-			else
-				resultMap.put(option, appRuntimeOptions.get(option));
-		}
-		// and now the rest
-		if (portletRuntimeOptions != null){
-			for (String option : portletRuntimeOptions.keySet()) {
-				if (!appRuntimeOptions.containsKey(option))
-					resultMap.put(option, portletRuntimeOptions.get(option));
-			}
-		}
-		//return resultMap;
-		return null;
-	}
-	
-	protected List<String> getSupportedContainerRuntimeOptions()
-	{
-	    return Configuration.getSupportedContainerRuntimeOptions();
+	    return Collections.enumeration(Configuration.getSupportedContainerRuntimeOptions());
 	}
 }
 

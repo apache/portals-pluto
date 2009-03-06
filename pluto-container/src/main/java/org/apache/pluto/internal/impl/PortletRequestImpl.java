@@ -16,39 +16,27 @@
  */
 package org.apache.pluto.internal.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.ccpp.Profile;
+import javax.portlet.CacheControl;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -59,18 +47,14 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletEntity;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletSession;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.SecurityRoleRef;
 import org.apache.pluto.om.portlet.Supports;
-import org.apache.pluto.spi.PortletURLProvider;
-import org.apache.pluto.spi.PropertyManager;
 import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.RequestAttributeService;
+import org.apache.pluto.spi.optional.PortletRequestContext;
 import org.apache.pluto.util.ArgumentUtility;
+import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.StringManager;
-import org.apache.pluto.util.StringUtils;
 
 
 /**
@@ -78,166 +62,333 @@ import org.apache.pluto.util.StringUtils;
  * This class also implements InternalPortletRequest.
  *
  */
-public abstract class PortletRequestImpl extends HttpServletRequestWrapper
-                implements PortletRequest, InternalPortletRequest
+public abstract class PortletRequestImpl implements PortletRequest 
 {
+    public static final String ACCEPT_LANGUAGE = "Accept-Language";
+    
     private static final Log LOG = LogFactory.getLog(PortletRequestImpl.class);
-
+    
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(PortletRequestImpl.class.getPackage().getName());
-
+ 
     private static final List<String> EMPTY_STRING_LIST = Collections.unmodifiableList(new ArrayList<String>(0));
-    /**
-     * Cache for parsed dateHeader values.
-     */
-    protected static final HashMap<String,Long> dateHeaderParseCache = new HashMap<String,Long>();
-
-    /**
-     * The set of SimpleDateFormat formats to use in getDateHeader().
-     *
-     * Notice that because SimpleDateFormat is not thread-safe, we can't
-     * declare formats[] as a static variable.
-     */
-    protected SimpleDateFormat dateHeaderFormats[] = {
-        new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US),
-        new SimpleDateFormat("EEEEEE, dd-MMM-yy HH:mm:ss zzz", Locale.US),
-        new SimpleDateFormat("EEE MMMM d HH:mm:ss yyyy", Locale.US)
-    };
-
+    
     // Private Member Variables ------------------------------------------------
-
-    /** The parent container within which this request was created. */
-    protected PortletContainer container;
-
-    /** The portlet window which is the target of this portlet request. */
-    protected PortletWindow portletWindow;
-
-    /**
-     * The PortletContext associated with this Request. This PortletContext must
-     * be initialized from within the <code>PortletServlet</code>.
-     */
-    protected InternalPortletContext portletContext;
-
+    
     /** The PortalContext within which this request is occuring. */
-    protected PortalContext portalContext;
-
+    private PortalContext portalContext;
+    
+    private PortletRequestContext requestContext;
+    
     /** The portlet session. */
-    private InternalPortletSession portletSession;
+    private PortletSession portletSession;
 
     /** Response content types. */
-    protected Vector<String> contentTypes;
+    private ArrayList<String> contentTypes;
+    
+    private PortletPreferences portletPreferences;
 
-    /** FIXME: do we really need this?
-     * Flag indicating if the HTTP-Body has been accessed. */
-    protected boolean bodyAccessed = false;
-
-    /** True if we are in an include call. */
-    protected boolean included = false;
-
-    /** True if we are in an forwarded call. */
-    protected boolean forwarded = false;
-
-    protected boolean namedRequestDispatcher;
-
-    /** The corresponding servlet request. */
-    protected HttpServletRequest servletRequest = null;
-
-    protected PortletPreferences portletPreferences;
-
-    protected PortletURLProvider urlProvider;
-
-    protected Map<String, String[]> parameters = null;
-
-    protected Map<String, String[]> requestProperties = null;
-    protected List<String> requestPropertyNames = null;
-
-    protected Cookie[] requestCookies = null;
-
-    protected String queryString = null;
-
-    // Constructors ------------------------------------------------------------
-
-    public PortletRequestImpl(InternalPortletRequest internalPortletRequest)
+    private Map<String, String[]> parameters = null;
+    
+    private Map<String, String[]> requestProperties = null;
+    private List<String> requestPropertyNames = null;
+    
+    private Cookie[] requestCookies = null;
+    
+    private Map<String, String> userInfo = null;
+    
+    private Profile ccppProfile = null;
+    
+    private final String lifecyclePhase;
+    
+    public PortletRequestImpl(PortletRequestContext requestContext, String lifecyclePhase) 
     {
-        this(internalPortletRequest.getPortletContainer(),
-             internalPortletRequest.getPortletWindow(),
-             internalPortletRequest.getHttpServletRequest());
+        this.requestContext = requestContext;
+        this.lifecyclePhase = lifecyclePhase;
+        this.portalContext = getPortletContainer().getRequiredContainerServices().getPortalContext();
+    }
+    
+    private void retrieveRequestProperties()
+    {
+        Map<String, String[]> properties = requestContext.getProperties();
+        requestPropertyNames = new ArrayList<String>(properties.size());
+        requestProperties = new HashMap<String, String[]>(properties.size());
+        for (Map.Entry<String, String[]> entry : properties.entrySet())
+        {
+            requestPropertyNames.add(entry.getKey());
+            requestProperties.put(entry.getKey().toLowerCase(), entry.getValue());
+        }
+    }
+    
+    private void checkInitParameterMap()
+    {
+        if (parameters == null)
+        {
+            parameters = initParameterMap();
+        }
     }
 
-    /**
-     * Creates a PortletRequestImpl instance.
-     * @param container  the portlet container.
-     * @param portletWindow  the internal portlet window.
-     * @param servletRequest  the underlying servlet request.
-     */
-    public PortletRequestImpl(PortletContainer container,
-                              PortletWindow portletWindow,
-                              HttpServletRequest servletRequest)
+    private boolean isPortletModeAllowedByPortlet(PortletMode mode) 
     {
-        super(servletRequest);
-        this.container = container;
-        this.portletWindow = portletWindow;
-        this.portalContext = container.getRequiredContainerServices().getPortalContext();
-        this.servletRequest = servletRequest;
-        this.urlProvider = container
-        .getRequiredContainerServices()
-        .getPortalCallbackService()
-        .getPortletURLProvider(getHttpServletRequest(), portletWindow);
-    }
+        if(PortletMode.VIEW.equals(mode))
+        {
+            return true;
+        }
 
-    protected abstract Integer getRequestMethod();
+        PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
 
-    // PortletRequest Impl -----------------------------------------------------
-
-    /* (non-Javadoc)
-	 * @see javax.portlet.PortletRequest#getWindowId()
-	 */
-	public String getWindowId()
-	{
-		return portletWindow.getId().getStringId();
-	}
-
-    /**
-     * Determine whether or not the specified WindowState is allowed for this
-     * portlet.
-     *
-     * @param state the state in question
-     * @return true if the state is allowed.
-     */
-    public boolean isWindowStateAllowed(WindowState state)
-    {
-    	for (Enumeration<WindowState> en = portalContext.getSupportedWindowStates();
-    			en.hasMoreElements(); )
-    	{
-            if (en.nextElement().toString().equalsIgnoreCase(state.toString()))
+        for (Supports sup : dd.getSupports())
+        {
+            for (String m : sup.getPortletModes())
             {
-                return true;
+                if (m.equalsIgnoreCase(mode.toString())) 
+                {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    public boolean isPortletModeAllowed(PortletMode mode)
+    private boolean isPortletModeAllowedByPortal(PortletMode mode) 
     {
-        return (isPortletModeAllowedByPortlet(mode)
-                && isPortletModeAllowedByPortal(mode));
+        Enumeration<PortletMode> supportedModes = portalContext.getSupportedPortletModes();
+        while (supportedModes.hasMoreElements()) 
+        {
+            if (supportedModes.nextElement().toString().equalsIgnoreCase(
+                    (mode.toString()))) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }    
+    
+    protected static Map<String, String[]> cloneParameterMap(Map<String, String[]> map)
+    {
+        if (!map.isEmpty())
+        {
+            Map<String, String[]> result = new HashMap<String, String[]>(map.size());
+            for (Map.Entry<String,String[]> entry : map.entrySet())
+            {
+                if (entry.getValue() != null)
+                {
+                    result.put(entry.getKey(), entry.getValue().clone());
+                }
+            }
+            return Collections.unmodifiableMap(result);
+        }
+        else
+        {
+            return Collections.emptyMap();
+        }
+    }
+    
+    protected Map<String, String[]> initParameterMap()
+    {
+        String[] values  = null;
+        Map<String, String[]> parameters = requestContext.getPrivateParameterMap();
+        Map<String, String[]> publicParameters = requestContext.getPublicParameterMap();
+        if (!publicParameters.isEmpty())
+        {
+            parameters = new HashMap<String, String[]>(parameters);
+            for (Map.Entry<String,String[]> entry : publicParameters.entrySet())
+            {
+                values = parameters.get(entry.getKey());
+                if (values == null)
+                {
+                    parameters.put(entry.getKey(), entry.getValue().clone());
+                }
+                else
+                {
+                    String[] copy = new String[values.length+entry.getValue().length];
+                    System.arraycopy(values, 0, copy, 0, values.length);
+                    System.arraycopy(entry.getValue(), 0, copy, values.length, entry.getValue().length);
+                    parameters.put(entry.getKey(), copy);
+                }
+            }
+        }
+        return parameters;
+    }
+    
+    protected PortletRequestContext getRequestContext()
+    {
+        return requestContext;
     }
 
-    public PortletMode getPortletMode()
+    protected InternalPortletContext getPortletContext()
     {
-        return portletWindow.getPortletMode();
+        return requestContext.getPortletConfig().getPortletContext();
+    }
+    
+    protected PortletWindow getPortletWindow() 
+    {
+        return requestContext.getPortletWindow();
     }
 
-    public WindowState getWindowState()
+    protected PortletContainer getPortletContainer() 
     {
-        return portletWindow.getWindowState();
+        return requestContext.getContainer();
     }
 
-    public PortletSession getPortletSession()
+    protected HttpServletRequest getServletRequest()
+    {
+        return requestContext.getServletRequest();
+    }
+    
+    protected String getMimeRequestProperty(String name, CacheControl cacheControl)
+    {
+        if (MimeResponse.ETAG.equals(name))
+        {
+            return cacheControl.getETag();
+        }
+        else if (MimeResponse.CACHE_SCOPE.equals(name))
+        {
+            return cacheControl.isPublicScope() ? MimeResponse.PUBLIC_SCOPE : MimeResponse.PRIVATE_SCOPE;
+        }
+        else if (MimeResponse.USE_CACHED_CONTENT.equals(name))
+        {
+            return cacheControl.useCachedContent() ? "true" : null;
+        }
+        else if (MimeResponse.EXPIRATION_CACHE.equals(name))
+        {
+            return Integer.toString(cacheControl.getExpirationTime());
+        }
+        return getProperty(name);
+    }
+    
+    // PortletRequest Impl -----------------------------------------------------
+
+    public Object getAttribute(String name) 
+    {
+        ArgumentUtility.validateNotNull("attributeName", name);
+        if (name.equals(PortletRequest.LIFECYCLE_PHASE))
+        {
+            return lifecyclePhase;
+        }
+        else if (name.equals(PortletRequest.USER_INFO))
+        {
+            if (userInfo == null)
+            {
+                try
+                {
+                    userInfo = getPortletContainer().getOptionalContainerServices().getUserInfoService().getUserInfo(this, getPortletWindow());
+                }
+                catch (Exception e)
+                {
+                    userInfo = Collections.emptyMap();
+                }
+            }
+            return userInfo;
+        }
+        else if (name.equals(Constants.REQUEST_CONTEXT))
+        {
+            return requestContext;
+        }
+        else if (name.equals(PortletRequest.CCPP_PROFILE))
+        {
+            if (ccppProfile == null)
+            {
+                ccppProfile = getPortletContainer().getRequiredContainerServices().getCCPPProfileService().getCCPPProfile(getServletRequest());
+            }
+            return ccppProfile;
+        }
+        return requestContext.getAttribute(name);
+    }
+
+    public Enumeration<String> getAttributeNames() 
+    {
+        return requestContext.getAttributeNames();
+    }
+    
+    public String getAuthType() 
+    {
+        return getServletRequest().getAuthType();
+    }
+
+    public String getContextPath() 
+    {
+        return getPortletContext().getContextPath();
+    }
+
+    public Cookie[] getCookies()
+    {
+        if (requestCookies == null)
+        {
+            requestCookies = requestContext.getCookies();
+            if (requestCookies == null)
+            {
+                requestCookies = new Cookie[0];
+            }
+        }
+        return requestCookies.length > 0 ? requestCookies.clone() : null;
+    }    
+
+    public Locale getLocale() 
+    {
+        return requestContext.getPreferredLocale();
+    }
+
+    @SuppressWarnings("unchecked")
+    public Enumeration<Locale> getLocales() 
+    {
+        Locale preferredLocale = getLocale();
+        ArrayList<Locale> locales = new ArrayList<Locale>();
+        locales.add(preferredLocale);
+        for (Enumeration e = getServletRequest().getLocales(); e.hasMoreElements(); )
+        {
+            Locale locale = (Locale)e.nextElement();
+            if (!locale.equals(preferredLocale))
+            {
+                locales.add((Locale)e.nextElement());
+            }
+        }
+        return Collections.enumeration(locales);
+    }
+
+    public String getParameter(String name) 
+    {
+        ArgumentUtility.validateNotNull("parameterName", name);
+        checkInitParameterMap();
+        String[] values = parameters.get(name);
+        return values != null && values.length > 0 ? values[0] : null;
+    }
+
+    public Map<String, String[]> getParameterMap()
+    {
+        checkInitParameterMap();
+        return cloneParameterMap(parameters);
+    }
+        
+    public Enumeration<String> getParameterNames() 
+    {
+        checkInitParameterMap();
+        return Collections.enumeration(parameters.keySet());
+    }
+
+    public String[] getParameterValues(String name) 
+    {
+        ArgumentUtility.validateNotNull("parameterName", name);
+        checkInitParameterMap();
+        String[] values =  parameters.get(name);
+        return values != null ? values.clone() : null;
+    }
+    
+    public PortalContext getPortalContext() 
+    {
+        return portalContext;
+    }
+
+    public PortletMode getPortletMode() 
+    {
+        return getPortletWindow().getPortletMode();
+    }
+    
+    public PortletSession getPortletSession() 
     {
         return getPortletSession(true);
     }
-
+    
     /**
      * Returns the portlet session.
      * <p>
@@ -246,9 +397,9 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      * by the request instance is also re-created for each incoming request.
      * </p>
      */
-    public PortletSession getPortletSession(boolean create)
+    public PortletSession getPortletSession(boolean create) 
     {
-        if (LOG.isDebugEnabled())
+        if (LOG.isDebugEnabled()) 
         {
             LOG.debug("Retreiving portlet session (create=" + create + ")");
         }
@@ -258,7 +409,7 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         //   having a cached version which is invalid for the context within
         //   which it exists.
         //
-        if (portletContext == null)
+        if (getPortletContext() == null) 
         {
             throw new IllegalStateException(
                     EXCEPTIONS.getString("error.session.illegalState"));
@@ -273,25 +424,25 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         //   true) -- We just cannot depend on the implementation of
         //   javax.servlet.http.HttpSession!
         //
-        HttpSession httpSession = getHttpServletRequest().getSession(create);
-        if (httpSession != null)
+        HttpSession httpSession = getServletRequest().getSession(create);
+        if (httpSession != null) 
         {
-        	// HttpSession is not null does NOT mean that it is valid.
+            // HttpSession is not null does NOT mean that it is valid.
             int maxInactiveInterval = httpSession.getMaxInactiveInterval();
             long lastAccesstime = httpSession.getLastAccessedTime();//lastAccesstime checks added for PLUTO-436
-            if (maxInactiveInterval >= 0 && lastAccesstime > 0)
+            if (maxInactiveInterval >= 0 && lastAccesstime > 0) 
             {    // < 0 => Never expires.
                 long maxInactiveTime = httpSession.getMaxInactiveInterval() * 1000L;
                 long currentInactiveTime = System.currentTimeMillis() - lastAccesstime;
-                if (currentInactiveTime > maxInactiveTime)
+                if (currentInactiveTime > maxInactiveTime) 
                 {
-                    if (LOG.isDebugEnabled())
+                    if (LOG.isDebugEnabled()) 
                     {
                         LOG.debug("The underlying HttpSession is expired and "
                             + "should be invalidated.");
                     }
                     httpSession.invalidate();
-                    httpSession = getHttpServletRequest().getSession(create);
+                    httpSession = getServletRequest().getSession(create);
                     //Added for PLUTO-436
                     // a cached portletSession is no longer useable.
                     // a new one will be created below.
@@ -299,12 +450,12 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
                 }
             }
         }
-        if (httpSession == null)
+        if (httpSession == null) 
         {
-            if (LOG.isDebugEnabled())
+            if (LOG.isDebugEnabled()) 
             {
                 LOG.debug("The underlying HttpSession is not available: "
-                		+ "no session will be returned.");
+                        + "no session will be returned.");
             }
             return null;
         }
@@ -313,56 +464,57 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         //   available. If we haven't created and cached a portlet session
         //   instance, we will create and cache one now.
         //
-        if (portletSession == null)
+        if (portletSession == null) 
         {
-        	if (LOG.isDebugEnabled())
-        	{
-        		LOG.debug("Creating new portlet session...");
-        	}
-            final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
+            if (LOG.isDebugEnabled()) 
+            {
+                LOG.debug("Creating new portlet session...");
+            }
+            final OptionalContainerServices optionalContainerServices = getPortletContainer().getOptionalContainerServices();
             final PortletEnvironmentService portletEnvironmentService = optionalContainerServices.getPortletEnvironmentService();
-
-            portletSession = portletEnvironmentService.createPortletSession(container,
-                                                                            getHttpServletRequest(),
-                                                                            portletContext,
-                                                                            httpSession,
-                                                                            portletWindow);
-        }
+            
+            portletSession = portletEnvironmentService.createPortletSession(getPortletContext(), getPortletWindow(), httpSession);
+        }        
         return portletSession;
     }
-
-    protected void retrieveRequestProperties()
+    
+    public PortletPreferences getPreferences() 
     {
-        PropertyManager propertyManager = container.getRequiredContainerServices().getPortalCallbackService().getPropertyManager();
-        Map<String, String[]> properties = propertyManager.getRequestProperties(getHttpServletRequest(), portletWindow);
-        requestPropertyNames = new ArrayList<String>(properties.size());
-        requestProperties = new HashMap<String, String[]>(properties.size());
-        for (Map.Entry<String, String[]> entry : properties.entrySet())
+        if (portletPreferences == null) 
         {
-            requestPropertyNames.add(entry.getKey());
-            requestProperties.put(entry.getKey().toLowerCase(), entry.getValue());
+            portletPreferences = new PortletPreferencesImpl(
+                    getPortletContainer(),getPortletWindow(),
+                    this);
         }
+        return portletPreferences;
+    }
+    
+    public Map<String, String[]> getPrivateParameterMap()
+    {
+        return cloneParameterMap(requestContext.getPrivateParameterMap());
     }
 
-    public String getProperty(String name)
+    @SuppressWarnings("unchecked")
+    public Enumeration<String> getProperties(String name) 
     {
-    	ArgumentUtility.validateNotNull("propertyName", name);
-    	if (requestProperties == null)
-    	{
-    	    retrieveRequestProperties();
-    	}
-    	String property = null;
-        String[] properties = requestProperties.get(name.toLowerCase());
-        if (properties != null && properties.length > 0)
+        ArgumentUtility.validateNotNull("propertyName", name);
+        
+        if(ACCEPT_LANGUAGE.equalsIgnoreCase(name))
         {
-            property = properties[0];
-        }
-        return property;
-    }
-
-    public Enumeration<String> getProperties(String name)
-    {
-    	ArgumentUtility.validateNotNull("propertyName", name);
+            Locale preferredLocale = getLocale();
+            ArrayList<String> locales = new ArrayList<String>();
+            locales.add(preferredLocale.toString());
+            for (Enumeration e = getServletRequest().getLocales(); e.hasMoreElements(); )
+            {
+                Locale locale = (Locale)e.nextElement();
+                if (!locale.equals(preferredLocale))
+                {
+                    locales.add(e.nextElement().toString());
+                }
+            }
+            return Collections.enumeration(locales);
+        }        
+        
         if (requestProperties == null)
         {
             retrieveRequestProperties();
@@ -375,7 +527,29 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         return Collections.enumeration(Arrays.asList(properties));
     }
 
-    public Enumeration<String> getPropertyNames()
+    public String getProperty(String name)
+    {
+        ArgumentUtility.validateNotNull("name", name);
+        
+        if(ACCEPT_LANGUAGE.equalsIgnoreCase(name))
+        {
+            return getLocale().toString();
+        }
+        
+        if (requestProperties == null)
+        {
+            retrieveRequestProperties();
+        }
+        String property = null;
+        String[] properties = requestProperties.get(name.toLowerCase());
+        if (properties != null && properties.length > 0) 
+        {
+            property = properties[0];
+        }
+        return property;
+    }
+
+    public Enumeration<String> getPropertyNames() 
     {
         if (requestProperties == null)
         {
@@ -384,29 +558,88 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
         return Collections.enumeration(requestPropertyNames);
     }
 
-    public PortalContext getPortalContext()
+    public Map<String, String[]> getPublicParameterMap()
     {
-        return container.getRequiredContainerServices().getPortalContext();
+        return cloneParameterMap(requestContext.getPublicParameterMap());
+    }
+    
+    public String getRemoteUser() 
+    {
+        return getServletRequest().getRemoteUser();
     }
 
-    public String getAuthType()
+    public String getRequestedSessionId() 
     {
-        return this.getHttpServletRequest().getAuthType();
+        return getServletRequest().getRequestedSessionId();
     }
 
-    public String getContextPath()
+    public String getResponseContentType() 
     {
-        return portletContext.getContextPath();
+        return getResponseContentTypes().nextElement();
     }
 
-    public String getRemoteUser()
+    public Enumeration<String> getResponseContentTypes() 
     {
-        return this.getHttpServletRequest().getRemoteUser();
+        if (contentTypes == null) 
+        {
+            contentTypes = new ArrayList<String>();
+            PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
+            for (Supports sup : dd.getSupports())
+            {
+                contentTypes.add(sup.getMimeType());
+            }
+            if (contentTypes.isEmpty()) 
+            {
+                contentTypes.add("text/html");
+            }
+        }
+        return Collections.enumeration(contentTypes);
+    }
+    
+    public String getScheme() 
+    {
+        return getServletRequest().getScheme();
     }
 
-    public Principal getUserPrincipal()
+    public String getServerName() 
     {
-        return this.getHttpServletRequest().getUserPrincipal();
+        return getServletRequest().getServerName();
+    }
+
+    public int getServerPort() 
+    {
+        return getServletRequest().getServerPort();
+    }
+    
+    public Principal getUserPrincipal() 
+    {
+        return getServletRequest().getUserPrincipal();
+    }
+
+    public String getWindowID()
+    {
+        return getPortletWindow().getId().getStringId();
+    }
+    
+    public WindowState getWindowState() 
+    {
+        return getPortletWindow().getWindowState();
+    }
+    
+    public boolean isPortletModeAllowed(PortletMode mode) 
+    {
+        return (isPortletModeAllowedByPortlet(mode)
+                && isPortletModeAllowedByPortal(mode));
+    }
+
+    public boolean isRequestedSessionIdValid() 
+    {
+        return getServletRequest().isRequestedSessionIdValid();
+    }
+    
+    public boolean isSecure() 
+    {
+        return getServletRequest().isSecure();
     }
 
     /**
@@ -419,848 +652,55 @@ public abstract class PortletRequestImpl extends HttpServletRequestWrapper
      * @param roleName the name of the role
      * @return true if it is determined the user has the given role.
      */
-    public boolean isUserInRole(String roleName)
+    public boolean isUserInRole(String roleName) 
     {
-        PortletEntity entity = portletWindow.getPortletEntity();
+        PortletEntity entity = getPortletWindow().getPortletEntity();
         PortletDefinition def = entity.getPortletDefinition();
+        String link = roleName;
 
-        SecurityRoleRef ref = null;
-        Iterator refs = def.getSecurityRoleRefs().iterator();
-        while (refs.hasNext())
+        for (SecurityRoleRef r : def.getSecurityRoleRefs())
         {
-            SecurityRoleRef r = (SecurityRoleRef) refs.next();
             if (r.getRoleName().equals(roleName))
             {
-                ref = r;
+                if (r.getRoleLink() != null)
+                {
+                    link = r.getRoleLink();
+                }
                 break;
             }
         }
-
-        String link;
-        if (ref != null && ref.getRoleLink() != null)
-        {
-            link = ref.getRoleLink();
-        } else
-        {
-            link = roleName;
-        }
-        return this.getHttpServletRequest().isUserInRole(link);
-    }
-
-    public Object getAttribute(String name)
-    {
-    	ArgumentUtility.validateNotNull("attributeName", name);
-
-        if (namedRequestDispatcher && (name.startsWith("javax.servlet.forward") || name.startsWith("javax.servlet.include")))
-        {
-            // PLT.19.3.1
-            if (name.equals("javax.servlet.include.request_uri")||name.equals("javax.servlet.include.context_path")||
-                            name.equals("javax.servlet.include.servlet_path")||name.equals("javax.servlet.include.path_info")||
-                            name.equals("javax.servlet.include.query_string"))
-            {
-                return null;
-            }
-            // PLT.19.4.2, ccxlii
-            if (name.equals("javax.servlet.forward.request_uri")||name.equals("javax.servlet.forward.context_path")||
-                            name.equals("javax.servlet.forward.servlet_path")||name.equals("javax.servlet.forward.path_info")||
-                            name.equals("javax.servlet.forward.query_string"))
-            {
-                return null;
-            }
-        }
-
-        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
-        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        return requestAttributeService.getAttribute(this, this.getHttpServletRequest(), this.portletWindow, name);
-    }
-
-    public Enumeration<String> getAttributeNames()
-    {
-        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
-        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        return requestAttributeService.getAttributeNames(this, this.getHttpServletRequest(), this.portletWindow);
-    }
-
-    public String getParameter(String name)
-    {
-        ArgumentUtility.validateNotNull("parameterName", name);
-        String[] values  = null;
-        if (parameters != null)
-        {
-            values = parameters.get(name);
-        }
-        else
-        {
-        	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
-        	if (publicRenderParameterNames != null)
-        	{
-        		if (publicRenderParameterNames.contains(name))
-        			values = urlProvider.getPublicRenderParameters(name);
-        		else
-        			values = baseGetParameterMap().get(name);
-        	}
-        	else
-        	{
-        	    values = baseGetParameterMap().get(name);
-        	}
-        }
-        if (values != null && values.length > 0)
-        {
-            return values[0];
-        }
-        else
-        {
-        	return null;
-        }
-    }
-
-    public Enumeration<String> getParameterNames()
-    {
-        return Collections.enumeration(baseGetParameterMap().keySet());
-    }
-
-    public String[] getParameterValues(String name)
-    {
-        ArgumentUtility.validateNotNull("parameterName", name);
-        String[] values  = null;
-        if (parameters != null)
-        {
-            values = parameters.get(name);
-        }
-        else
-        {
-        	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
-        	if (publicRenderParameterNames != null)
-        	{
-        		if (publicRenderParameterNames.contains(name))
-        			values = urlProvider.getPublicRenderParameters(name);
-        		else
-        			values = baseGetParameterMap().get(name);
-        	}
-        	else
-        	{
-    			values = baseGetParameterMap().get(name);
-        	}
-        }
-        if (values != null)
-        {
-            values = values.clone();
-        }
-        return values;
-    }
-
-    public Map<String, String[]> getParameterMap()
-    {
-        if (parameters != null)
-        {
-            return parameters;
-        }
-        else
-        {
-            String[] values  = null;
-            Map<String, String[]>map = StringUtils.copyParameters(baseGetParameterMap());
-        	List<String> publicRenderParameterNames = portletWindow.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
-        	if (publicRenderParameterNames!=null)
-        	{
-        		for (String string : publicRenderParameterNames)
-        		{
-        			values = urlProvider.getPublicRenderParameters(string);
-        			if (values != null)
-        			{
-        				map.put(string, values);
-        			}
-    			}
-        	}
-            parameters = Collections.unmodifiableMap(map);
-            return parameters;
-        }
-    }
-
-    public boolean isSecure()
-    {
-        return this.getHttpServletRequest().isSecure();
-    }
-
-    public void setAttribute(String name, Object value)
-    {
-        ArgumentUtility.validateNotNull("attributeName", name);
-        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
-        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        requestAttributeService.setAttribute(this, this.getHttpServletRequest(), this.portletWindow, name, value);
-    }
-
-    public void removeAttribute(String name)
-    {
-    	ArgumentUtility.validateNotNull("attributeName", name);
-
-        final OptionalContainerServices optionalContainerServices = container.getOptionalContainerServices();
-        final RequestAttributeService requestAttributeService = optionalContainerServices.getRequestAttributeService();
-        requestAttributeService.removeAttribute(this, this.getHttpServletRequest(), this.portletWindow, name);
-    }
-
-    public String getRequestedSessionId()
-    {
-        return this.getHttpServletRequest().getRequestedSessionId();
-    }
-
-    public boolean isRequestedSessionIdValid()
-    {
-        if (LOG.isDebugEnabled())
-        {
-            LOG.debug(" ***** IsRequestedSessionIdValid? "+getHttpServletRequest().isRequestedSessionIdValid());
-        }
-        return getHttpServletRequest().isRequestedSessionIdValid();
-    }
-
-    public String getResponseContentType()
-    {
-        Enumeration<String> enumeration = getResponseContentTypes();
-        while (enumeration.hasMoreElements())
-        {
-            return enumeration.nextElement();
-        }
-        return "text/html";
-    }
-
-    public Enumeration<String> getResponseContentTypes()
-    {
-        if (contentTypes == null)
-        {
-            contentTypes = new Vector<String>();
-            PortletDefinition dd = portletWindow.getPortletEntity().getPortletDefinition();
-            Iterator supports = dd.getSupports().iterator();
-            while (supports.hasNext())
-            {
-                Supports sup = (Supports) supports.next();
-                contentTypes.add(sup.getMimeType());
-            }
-            if (contentTypes.size() < 1)
-            {
-                contentTypes.add("text/html");
-            }
-        }
-        return contentTypes.elements();
-    }
-
-    public Locale getLocale()
-    {
-        return this.getHttpServletRequest().getLocale();
-    }
-
-    @SuppressWarnings("unchecked")
-    public Enumeration<Locale> getLocales()
-    {
-        return this.getHttpServletRequest().getLocales();
-    }
-
-    public String getScheme()
-    {
-        return this.getHttpServletRequest().getScheme();
-    }
-
-    public String getServerName()
-    {
-        return this.getHttpServletRequest().getServerName();
-    }
-
-    public int getServerPort()
-    {
-        return this.getHttpServletRequest().getServerPort();
-    }
-
-
-    // Protected Methods -------------------------------------------------------
-
-    protected void setBodyAccessed()
-    {
-    	bodyAccessed = true;
-    }
-
-    // InternalPortletRequest Impl ---------------------------------------------
-
-    public PortletWindow getPortletWindow()
-    {
-        return portletWindow;
-    }
-
-    public PortletContainer getPortletContainer()
-    {
-        return container;
-    }
-
-    public HttpServletRequest getHttpServletRequest()
-    {
-        return (HttpServletRequest) super.getRequest();
-    }
-
-    public void init(InternalPortletContext portletContext, HttpServletRequest req)
-    {
-        this.portletContext = portletContext;
-        setRequest(req);
-        setCCPPProfile();
-        setLifecyclePhase();
-    }
-
-    public PortletPreferences getPreferences()
-    {
-        if (portletPreferences == null)
-        {
-            portletPreferences = new PortletPreferencesImpl(
-                    getPortletContainer(),
-                    getPortletWindow(),
-                    this,
-                    this.getRequestMethod());
-        }
-        return portletPreferences;
-    }
-
-	/**
-     * TODO: Implement this properly.  Not required now
-     */
-    public void release()
-    {
-    	// FIXME: This needs to be implemented
-    }
-
-
-    // TODO: Additional Methods of HttpServletRequestWrapper -------------------
-
-    public BufferedReader getReader()
-    throws UnsupportedEncodingException, IOException
-    {
-    	// the super class will ensure that a IllegalStateException is thrown
-    	//   if getInputStream() was called earlier
-    	BufferedReader reader = getHttpServletRequest().getReader();
-    	bodyAccessed = true;
-    	return reader;
-    }
-
-    public ServletInputStream getInputStream() throws IOException
-    {
-    	ServletInputStream stream = getHttpServletRequest().getInputStream();
-    	bodyAccessed = true;
-    	return stream;
-    }
-
-    public RequestDispatcher getRequestDispatcher(String path)
-    {
-        return new ServletRequestDispatcher(getHttpServletRequest().getRequestDispatcher(path));
+        return getServletRequest().isUserInRole(link);
     }
 
     /**
-     * TODO: why check bodyAccessed?
+     * Determine whether or not the specified WindowState is allowed for this
+     * portlet.
+     *
+     * @param state the state in question
+     * @return true if the state is allowed.
      */
-    public void setCharacterEncoding(String encoding)
-    throws UnsupportedEncodingException
+    public boolean isWindowStateAllowed(WindowState state) 
     {
-        if (bodyAccessed)
-        {
-        	throw new IllegalStateException("Cannot set character encoding "
-        			+ "after HTTP body is accessed.");
-        }
-        super.setCharacterEncoding(encoding);
-    }
-
-    // Private Methods ---------------------------------------------------------
-
-    private boolean isPortletModeAllowedByPortlet(PortletMode mode)
-    {
-        if(PortletMode.VIEW.equals(mode))
-        {
-            return true;
-        }
-
-        PortletDefinition dd = portletWindow.getPortletEntity()
-                .getPortletDefinition();
-
-        Iterator mimes = dd.getSupports().iterator();
-        while (mimes.hasNext())
-        {
-            Iterator modes = ((Supports) mimes.next()).getPortletModes().iterator();
-            while (modes.hasNext())
-            {
-                String m = (String) modes.next();
-                if (m.equalsIgnoreCase(mode.toString()))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean isPortletModeAllowedByPortal(PortletMode mode)
-    {
-        Enumeration supportedModes = portalContext.getSupportedPortletModes();
-        while (supportedModes.hasMoreElements())
-        {
-            if (supportedModes.nextElement().toString().equalsIgnoreCase(
-                    (mode.toString())))
+    	for (Enumeration<WindowState> en = portalContext.getSupportedWindowStates();
+    			en.hasMoreElements(); ) 
+    	{
+            if (en.nextElement().toString().equalsIgnoreCase(state.toString())) 
             {
                 return true;
             }
         }
         return false;
     }
-
-// InternalRenderRequest Impl ----------------------------------------------
-
-    public String getMethod()
+    
+    public void setAttribute(String name, Object value) 
     {
-        return super.getMethod();
+        ArgumentUtility.validateNotEmpty("name", name);
+        requestContext.setAttribute(name, value);
     }
 
-
-    public boolean isForwarded()
+    public void removeAttribute(String name) 
     {
-        return forwarded;
+    	ArgumentUtility.validateNotEmpty("name", name);
+        requestContext.setAttribute(name, null);
     }
-
-    public void setForwarded(boolean forwarded)
-    {
-        this.forwarded = forwarded;
-        if (LOG.isDebugEnabled())
-        {
-            LOG.debug("Portlet request's forwarded mode: " + forwarded);
-        }
-    }
-
-    public void setIncluded(boolean included)
-    {
-        this.included = included;
-//        if (!included)
-//        {
-//            this.parameters = null;
-//        }
-        if (LOG.isDebugEnabled())
-        {
-            LOG.debug("Render request's included mode: " + included);
-        }
-    }
-
-    public boolean isIncluded()
-    {
-        return included;
-    }
-
-    /**
-     * The base method that returns the parameter map in this portlet request.
-     * All parameter-related methods call this base method. Subclasses may just
-     * overwrite this protected method to change behavior of all parameter-
-     * related methods.
-     * @return the base parameter map from which parameters are retrieved.
-     */
-    protected Map<String, String[]> baseGetParameterMap()
-    {
-        if (isIncluded())
-        {
-            setBodyAccessed();
-        }
-        Map<String, String[]> parameters = urlProvider.getRenderParameters();
-        if (parameters == null)
-        {
-            if (getRequestMethod().equals(Constants.METHOD_RENDER) || getRequestMethod().equals(Constants.METHOD_EVENT))
-            {
-                parameters = urlProvider.parseRenderParameters(this.getHttpServletRequest().getParameterMap(), queryString);
-                queryString = null;
-            }
-            else
-            {
-                parameters = urlProvider.parseRenderParameters(this.getHttpServletRequest().getParameterMap(), null);
-            }
-        }
-        return parameters;
-    }
-
-	public void setForwardedQueryString(String queryString)
-    {
-        if (!forwarded)
-        {
-            throw new IllegalStateException(
-                "Parameters cannot be appended to "
-                        + "render request which is not included in a dispatch.");
-        }
-        this.parameters = null;
-        this.queryString = queryString;
-//        this.urlProvider.parseRenderParameters(super.getParameterMap(), queryString);
-        this.urlProvider.parseRenderParameters(null,null);
-    }
-
-    public void setIncludedQueryString(String queryString)
-            throws IllegalStateException
-    {
-        if (!included)
-        {
-            throw new IllegalStateException(
-                "Parameters cannot be appended to "
-                        + "render request which is not included in a dispatch.");
-        }
-        this.parameters = null;
-        this.queryString = queryString;
-//        this.urlProvider.parseRenderParameters(super.getParameterMap(), queryString);
-        this.urlProvider.parseRenderParameters(null,null);
-    }
-
-
-    public Map<String, String[]> getPrivateParameterMap()
-    {
-        return Collections.unmodifiableMap(StringUtils
-                .copyParameters(baseGetParameterMap()));
-    }
-
-    public Map<String, String[]> getPublicParameterMap()
-    {
-        Map<String, String[]> map = new HashMap<String, String[]>();
-        List<String> publicRenderParameterNames = portletWindow
-                .getPortletEntity().getPortletDefinition()
-                .getSupportedPublicRenderParameters();
-        String[] values = null;
-        if (publicRenderParameterNames != null)
-        {
-            for (String string : publicRenderParameterNames)
-            {
-                values = urlProvider.getPublicRenderParameters(string);
-                if (values != null)
-                {
-                    map.put(string, values);
-                }
-            }
-        }
-        return Collections.unmodifiableMap(map);
-    }
-
-    public String getWindowID()
-    {
-        return portletWindow.getId().getStringId();
-    }
-
-    private void setLifecyclePhase()
-    {
-        String lifecyclePhase = getLifecyclePhase();
-        this.setAttribute(LIFECYCLE_PHASE, lifecyclePhase);
-    }
-
-    @Override
-    public String getLocalAddr()
-    {
-        return (isIncluded() || isForwarded()) ? null : super.getLocalAddr();
-    }
-
-    @Override
-    public String getLocalName()
-    {
-        return (isIncluded() || isForwarded()) ? null : super.getLocalName();
-    }
-
-    @Override
-    public int getLocalPort()
-    {
-        return (isIncluded() || isForwarded()) ? 0 : super.getLocalPort();
-    }
-
-    public String getProtocol()
-    {
-        return (isIncluded() || isForwarded()) ? "HTTP/1.1" : super
-                .getProtocol();
-    }
-
-    @Override
-    public String getRealPath(String arg0)
-    {
-        return (isIncluded() || isForwarded()) ? null : super.getRealPath(arg0);
-    }
-
-    @Override
-    public String getRemoteAddr()
-    {
-        return (isIncluded() || isForwarded()) ? null : super.getRemoteAddr();
-    }
-
-    @Override
-    public String getRemoteHost()
-    {
-        return (isIncluded() || isForwarded()) ? null : super.getRemoteHost();
-    }
-
-    @Override
-    public int getRemotePort()
-    {
-        return (isIncluded() || isForwarded()) ? 0 : super.getRemotePort();
-    }
-
-    @Override
-    public Cookie[] getCookies()
-    {
-        if (requestCookies == null)
-        {
-            PropertyManager propertyManager = container.getRequiredContainerServices().getPortalCallbackService().getPropertyManager();
-            requestCookies = propertyManager.getRequestCookies(getHttpServletRequest(), portletWindow);
-            if (requestCookies == null)
-            {
-                requestCookies = new Cookie[0];
-            }
-        }
-        return requestCookies.length > 0 ? requestCookies.clone() : null;
-    }
-
-    @Override
-    public long getDateHeader(String arg0)
-    {
-        if (isIncluded() || isForwarded())
-        {
-
-            String value = getHeader(arg0);
-            if (value == null) { return (-1L); }
-            // Attempt to convert the date header in a variety of formats
-            return parseDateHeader(value);
-        }
-        else
-            return super.getDateHeader(arg0);
-    }
-
-    @Override
-    public String getHeader(String arg0)
-    {
-        if (isIncluded() || isForwarded())
-        {
-            return getProperty(arg0);
-        }
-        else
-            return super.getHeader(arg0);
-    }
-
-    @Override
-    public Enumeration getHeaderNames()
-    {
-        if (isIncluded() || isForwarded())
-        {
-            return getPropertyNames();
-        }
-        else
-            return super.getHeaderNames();
-    }
-
-    @Override
-    public Enumeration getHeaders(String arg0)
-    {
-        if (isIncluded() || isForwarded())
-        {
-            return getProperties(arg0);
-        }
-        else
-            return super.getHeaders(arg0);
-    }
-
-    @Override
-    public int getIntHeader(String arg0)
-    {
-        if (isIncluded() || isForwarded())
-        {
-            String property = getProperty(arg0);
-            if (property == null)
-            {
-                return -1;
-            }
-            else
-            {
-                return Integer.parseInt(property);
-            }
-        }
-        else
-            return super.getIntHeader(arg0);
-    }
-
-    public String getPathInfo()
-    {
-        if (isIncluded())
-            return (String) super
-                    .getAttribute("javax.servlet.include.path_info");
-        else if (isForwarded())
-            return (String) super
-                    .getAttribute("javax.servlet.forward.path_info");
-        else
-            return super.getPathInfo();
-    }
-
-    public String getQueryString()
-    {
-        if (isIncluded())
-            return (String) super
-                    .getAttribute("javax.servlet.include.query_string");
-        else if (isForwarded())
-            return (String) super
-                    .getAttribute("javax.servlet.forward.query_string");
-        else
-            return super.getQueryString();
-    }
-
-    public String getPathTranslated()
-    {
-        if (isIncluded() || isForwarded())
-        {
-            String path = getServletPath() + getPathInfo() + "?"
-                    + getQueryString();
-            return getRealPath(path);
-        }
-        return super.getPathTranslated();
-    }
-
-    public String getRequestURI()
-    {
-        if (isIncluded())
-            return (String) super
-                    .getAttribute("javax.servlet.include.request_uri");
-        else if (isForwarded())
-            return (String) super
-                    .getAttribute("javax.servlet.forward.request_uri");
-        else
-            return super.getRequestURI();
-    }
-
-    public String getServletPath()
-    {
-        if (isIncluded())
-            return (String) super
-                    .getAttribute("javax.servlet.include.servlet_path");
-        else if (isForwarded())
-            return (String) super
-                    .getAttribute("javax.servlet.forward.servlet_path");
-        else
-            return super.getServletPath();
-    }
-
-    public StringBuffer getRequestURL()
-    {
-        return (isIncluded() || isForwarded()) ? null : super.getRequestURL();
-    }
-
-    @Override
-    public HttpSession getSession()
-    {
-        if (isIncluded() || isForwarded())
-        {
-            // ensure cached PortletSession is created (with proper HttpSession
-            // invalidation check performed)
-            getPortletSession();
-            if (portletSession != null)
-            {
-                return portletSession.getHttpSession();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        return super.getSession();
-    }
-
-    @Override
-    public HttpSession getSession(boolean create)
-    {
-        if (isIncluded() || isForwarded())
-        {
-            // ensure cached PortletSession is created (with proper HttpSession
-            // invalidation check performed)
-            getPortletSession(create);
-            if (portletSession != null)
-            {
-                return portletSession.getHttpSession();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        return super.getSession();
-    }
-
-    // ============= private methods ==================
-
-    /**
-     * Try to parse the given date as a HTTP date. Borrowed and adapted from
-     * Tomcat FastHttpDateFormat
-     */
-    private long parseDateHeader(String value)
-    {
-        Long dateValue = null;
-        try
-        {
-            dateValue = dateHeaderParseCache.get(value);
-        }
-        catch (Exception e)
-        {
-        }
-        if (dateValue == null)
-        {
-            for (int i = 0; i < dateHeaderFormats.length; i++)
-            {
-                try
-                {
-                    Date date = dateHeaderFormats[i].parse(value);
-                    dateValue = new Long(date.getTime());
-                }
-                catch (ParseException e)
-                {
-                }
-            }
-            if (dateValue != null)
-            {
-                synchronized (dateHeaderParseCache)
-                {
-                    if (dateHeaderParseCache.size() > 1000)
-                    {
-                        dateHeaderParseCache.clear();
-                    }
-                    dateHeaderParseCache.put(value, dateValue);
-                }
-            }
-            else
-            {
-                throw new IllegalArgumentException(value);
-            }
-        }
-        return dateValue.longValue();
-    }
-
-    public String getLifecyclePhase()
-    {
-        return null;
-    }
-
-    private void setCCPPProfile()
-    {
-        Profile profile = container.getRequiredContainerServices()
-                .getCCPPProfileService().getCCPPProfile(servletRequest);
-        this.setAttribute(CCPP_PROFILE, profile);
-    }
-
-    public void setNamedRequestDispatcher(boolean named)
-    {
-        namedRequestDispatcher = named;
-    }
-}
-
-class ServletRequestDispatcher implements RequestDispatcher
-{
-
-    javax.servlet.RequestDispatcher dispatcher;
-
-    public ServletRequestDispatcher(javax.servlet.RequestDispatcher dispatcher)
-    {
-        this.dispatcher = dispatcher;
-    }
-
-    public void forward(ServletRequest arg0, ServletResponse arg1)
-            throws ServletException, IOException
-    {
-        dispatcher.include(arg0, arg1);
-
-    }
-
-    public void include(ServletRequest arg0, ServletResponse arg1)
-            throws ServletException, IOException
-    {
-        dispatcher.include(arg0, arg1);
-    }
-
 }

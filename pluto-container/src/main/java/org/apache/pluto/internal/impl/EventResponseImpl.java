@@ -16,16 +16,14 @@
 
 package org.apache.pluto.internal.impl;
 
-import java.io.IOException;
+import java.util.Map;
 
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalEventResponse;
+import org.apache.pluto.spi.optional.PortletEventResponseContext;
+import org.apache.pluto.spi.optional.PortletStateAwareResponseContext;
+import org.apache.pluto.util.ArgumentUtility;
 
 /**
  * Implementation of JSR-286 <code>EventResponse</code>.
@@ -33,26 +31,22 @@ import org.apache.pluto.internal.InternalEventResponse;
  * @since 2.0
  */
 
-public class EventResponseImpl extends StateAwareResponseImpl
-	implements EventResponse,InternalEventResponse {
-
-    public EventResponseImpl(PortletContainer container,
-                              PortletWindow portletWindow,
-                              HttpServletRequest servletRequest,
-                              HttpServletResponse servletResponse) {
-        super(container, portletWindow, servletRequest,
-              servletResponse);
+public class EventResponseImpl extends StateAwareResponseImpl implements EventResponse
+{
+    public EventResponseImpl(PortletEventResponseContext responseContext)
+    {
+        super(responseContext);
+    }
+    
+    protected void checkSetStateChanged()
+    {
+        // nothing to check or do for EventResponse
     }
 
-	public void setRenderParameters(EventRequest request) {
-		super.setEventRequest(request);
-	}
-
-	@Override
-	public void sendRedirect(String location) throws IOException {
-		if (super.isForwarded() || super.isIncluded()){
-			// no operation
-		}
-		super.sendRedirect(location);
+	public void setRenderParameters(EventRequest request)
+	{
+        ArgumentUtility.validateNotNull("request", request);
+	    Map<String, String[]> parameters = ((PortletStateAwareResponseContext)getResponseContext()).getRenderParameters();
+	    parameters.putAll(request.getParameterMap());
 	}
 }

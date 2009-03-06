@@ -19,7 +19,7 @@ public class ContainerInvocationServiceImpl implements
 
     public ContainerInvocation getInvocation()
     {
-        return (ContainerInvocation)CONTAINERS.get();
+        return CONTAINERS.get();
     }
 
     public void setInvocation(PortletContainer container, PortletWindow window, PortletContainer.Method method)
