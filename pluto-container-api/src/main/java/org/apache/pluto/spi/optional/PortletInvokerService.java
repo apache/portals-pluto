@@ -31,7 +31,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
 import org.apache.pluto.spi.FilterManager;
 
 /**
@@ -39,21 +38,21 @@ import org.apache.pluto.spi.FilterManager;
  */
 public interface PortletInvokerService {
 	
-    public void action(ActionRequest req, ActionResponse res, PortletWindow window, FilterManager filterManager)
+    public void action(PortletRequestContext ctx, ActionRequest req, ActionResponse res, FilterManager filterManager)
     	throws IOException, PortletException, PortletContainerException;
     
-    public void event(EventRequest request, EventResponse response, PortletWindow window, FilterManager filterManager)
+    public void event(PortletRequestContext ctx, EventRequest request, EventResponse response, FilterManager filterManager)
         throws IOException, PortletException, PortletContainerException;
 
-    public void render(RenderRequest req, RenderResponse res, PortletWindow window, FilterManager filterManager)
+    public void render(PortletRequestContext ctx, RenderRequest req, RenderResponse res, FilterManager filterManager)
         throws IOException, PortletException, PortletContainerException;
     
-    public void serveResource(ResourceRequest req, ResourceResponse res, PortletWindow window, FilterManager filterManager)
+    public void serveResource(PortletRequestContext ctx, ResourceRequest req, ResourceResponse res, FilterManager filterManager)
         throws IOException, PortletException, PortletContainerException;
 
-    public void load(PortletRequest req, PortletResponse res, PortletWindow window)
+    public void load(PortletRequestContext ctx, PortletRequest req, PortletResponse res)
         throws IOException, PortletException, PortletContainerException;
     
-    public void admin(PortletRequest req, PortletResponse res, PortletWindow window)
+    public void admin(PortletRequestContext ctx, PortletRequest req, PortletResponse res)
         throws IOException, PortletException, PortletContainerException;
 }

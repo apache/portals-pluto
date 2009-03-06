@@ -14,16 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.pluto.internal;
 
-import javax.portlet.RenderResponse;
-
 /**
- * The internal render response interface extends the internal portlet response
- * interface and provides some render-specific methods.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @since 2006-02-17
+ * @version $Id$
+ *
  */
-public interface InternalRenderResponse extends InternalPortletResponse, RenderResponse {
-	
+public interface RequestDispatcherPathInfo
+{
+    boolean isNamedRequestDispatcher();
+    String getRequestURI();
+    String getServletPath();
+    String getPathInfo();
+    String getQueryString();
 }

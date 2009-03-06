@@ -14,15 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.internal;
 
-import javax.portlet.ResourceRequest;
+package org.apache.pluto.spi.optional;
+
+import java.util.Locale;
 
 /**
- * The internal resource request interface extends the internal portlet request
- * interface and provides some resource-specific methods.
- * @since 2.0
+ * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * @version $Id$
  */
-public interface InternalResourceRequest extends InternalPortletRequest,ResourceRequest {
-	
+public interface PortletResourceResponseContext extends PortletMimeResponseContext
+{
+    void setLocale(Locale locale);
+    void setCharacterEncoding(String charset);
+    void setContentLength(int len);
 }

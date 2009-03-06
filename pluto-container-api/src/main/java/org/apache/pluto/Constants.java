@@ -16,6 +16,8 @@
  */
 package org.apache.pluto;
 
+import org.apache.pluto.spi.optional.PortletRequestContext;
+
 /**
  * Constant values used to bind internal portlet objects as attributes,
  * typically to a request.
@@ -40,6 +42,11 @@ public class Constants {
      * PortletConfig.
      */
     public final static String PORTLET_CONFIG = "javax.portlet.config";
+
+    /**
+     * The <code>PortletRequest</code> key used to retrieve the <code>PortletRequestContext</code> instance
+     */
+    public final static String REQUEST_CONTEXT = PortletRequestContext.class.getName();
 
     /**
      *

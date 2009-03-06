@@ -24,6 +24,7 @@ package org.apache.pluto;
  * @version 1.0
  */
 public class PortletContainerException extends Exception {
+    private static final long serialVersionUID = 1737400909124312241L;
     private Throwable cause;
 
     /**

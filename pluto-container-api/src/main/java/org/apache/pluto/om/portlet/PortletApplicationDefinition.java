@@ -16,6 +16,9 @@
 package org.apache.pluto.om.portlet;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.namespace.QName;
 
@@ -78,4 +81,10 @@ public interface PortletApplicationDefinition {
 	ContainerRuntimeOption getContainerRuntimeOption(String name);
 	List<? extends ContainerRuntimeOption> getContainerRuntimeOptions();
 	ContainerRuntimeOption addContainerRuntimeOption(String name);
+
+    Set<String> getServletMappingURLPatterns();
+    void addServletMappingURLPattern(String servletMappingURLPattern);
+    
+    Map<Locale, String> getLocaleEncodingMappings();
+    void addLocaleEncodingMapping(Locale locale, String encoding);
 }

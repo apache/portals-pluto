@@ -40,12 +40,14 @@ public interface InternalPortletContext extends PortletContext {
      * @return the context path for this PortletContext
      */
     public String getContextPath();
-
+    
     /**
      *
      * @return application config
      */
     public PortletApplicationDefinition getPortletApplicationDefinition();
+    
+    RequestDispatcherPathInfo getPathInfo(String path);
 }
 
 

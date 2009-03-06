@@ -21,6 +21,7 @@ import javax.portlet.PortalContext;
 import org.apache.pluto.NamespaceMapper;
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.ContainerInvocationService;
+import org.apache.pluto.spi.EventCoordinationService;
 import org.apache.pluto.spi.PortalCallbackService;
 import org.apache.pluto.spi.optional.PortalAdministrationService;
 import org.apache.pluto.spi.optional.PortletContextService;
@@ -29,7 +30,7 @@ import org.apache.pluto.spi.optional.PortletInfoService;
 import org.apache.pluto.spi.optional.PortletInvokerService;
 import org.apache.pluto.spi.optional.PortletPreferencesService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.RequestAttributeService;
+import org.apache.pluto.spi.optional.PortletRequestContextService;
 import org.apache.pluto.spi.optional.UserInfoService;
 
 
@@ -104,11 +105,6 @@ public class PlutoServices implements ContainerServices
         return provider.getPortletRegistryService();
     }
 
-    public RequestAttributeService getRequestAttributeService()
-    {
-        return provider.getRequestAttributeService();
-    }
-
     public UserInfoService getUserInfoService()
     {
         return provider.getUserInfoService();
@@ -117,5 +113,15 @@ public class PlutoServices implements ContainerServices
     public PortletContextService getPortletContextService()
     {
         return provider.getPortletContextService();
+    }
+
+    public PortletRequestContextService getPortletRequestContextService()
+    {
+        return provider.getPortletRequestContextService();
+    }
+
+    public EventCoordinationService getEventCoordinationService()
+    {
+        return provider.getEventCoordinationService();
     }
 }

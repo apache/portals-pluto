@@ -14,30 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto;
+
+package org.apache.pluto.spi.optional;
 
 /**
- * Runtime exception thrown when an unexpected condition is encountered.
- *
- * @version 1.0
+ * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * @version $Id$
  */
-public class PortletContainerRuntimeException extends RuntimeException {
-
-    private static final long serialVersionUID = 5055187491167595228L;
-
-    public PortletContainerRuntimeException() {
-
-    }
-
-    public PortletContainerRuntimeException(String message) {
-        super(message);
-    }
-
-    public PortletContainerRuntimeException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public PortletContainerRuntimeException(Throwable cause) {
-        super(cause);
-    }
+public interface PortletEventRequestContext extends PortletRequestContext
+{
 }

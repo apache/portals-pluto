@@ -16,68 +16,40 @@
  */
 package org.apache.pluto.spi.optional;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.CacheControl;
+import javax.portlet.Event;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
 import javax.portlet.PortletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalActionRequest;
-import org.apache.pluto.internal.InternalActionResponse;
-import org.apache.pluto.internal.InternalPortletSession;
-import org.apache.pluto.internal.InternalRenderRequest;
-import org.apache.pluto.internal.InternalRenderResponse;
-import org.apache.pluto.internal.InternalResourceRequest;
-import org.apache.pluto.internal.InternalResourceResponse;
 
 /**
- * Factory Service for creating Portlet request and responses.
+ * Factory Service for creating Portlet request, responses and session.
  *
  * @since 1.1.0
  */
-public interface PortletEnvironmentService {
+public interface PortletEnvironmentService
+{    
+    ActionRequest createActionRequest(PortletRequestContext requestContext);
+    ActionResponse createActionResponse(PortletActionResponseContext responseContext);
 
-    InternalActionRequest createActionRequest(
-        PortletContainer container,
-        HttpServletRequest servletRequest,
-        HttpServletResponse servletResponse,
-        PortletWindow portletWindow);
-
-    InternalActionResponse createActionResponse(
-        PortletContainer container,
-        HttpServletRequest servletRequest,
-        HttpServletResponse servletResponse,
-        PortletWindow portletWindow);
-
-    InternalRenderRequest createRenderRequest(
-        PortletContainer container,
-        HttpServletRequest servletRequest,
-        HttpServletResponse servletResponse,
-        PortletWindow portletWindow);
-
-    InternalRenderResponse createRenderResponse(
-        PortletContainer container,
-        HttpServletRequest servletRequest,
-        HttpServletResponse servletResponse,
-        PortletWindow portletWindow);
+    EventRequest createEventRequest(PortletRequestContext requestContext, Event event);
+    EventResponse createEventResponse(PortletEventResponseContext responseContext);
     
-    InternalPortletSession createPortletSession(
-        PortletContainer container,
-        HttpServletRequest servletRequest,
-        PortletContext portletContext,
-        HttpSession httpSession,
-        PortletWindow portletWindow);
-
-    InternalResourceRequest createResourceRequest(
-            PortletContainer container,
-            HttpServletRequest servletRequest,
-            HttpServletResponse servletResponse,
-            PortletWindow portletWindow);
+    RenderRequest createRenderRequest(PortletRequestContext requestContext, CacheControl cacheControl);
+    RenderResponse createRenderResponse(PortletRenderResponseContext responseContext);
     
-    InternalResourceResponse createResourceResponse(
-            PortletContainer container,
-            HttpServletRequest servletRequest,
-            HttpServletResponse servletResponse,
-            PortletWindow portletWindow);
+    ResourceRequest createResourceRequest(PortletResourceRequestContext requestContext, CacheControl cacheControl);
+    ResourceResponse createResourceResponse(PortletResourceResponseContext responseContext, String requestCacheLevel);
+
+    PortletSession createPortletSession(PortletContext portletContext, PortletWindow portletWindow, HttpSession session);
 }

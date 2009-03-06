@@ -14,16 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.internal;
 
-import javax.portlet.ActionRequest;
+package org.apache.pluto.spi.optional;
+
+import java.util.Map;
 
 /**
- * The internal action request extends the internal portlet request and provides
- * some action-specific methods (currently, no specific methods are declared).
- * @since 2006-02-17
+ * @version $Id$
+ *
  */
-public interface InternalActionRequest extends InternalPortletRequest, ActionRequest {
-
-
+public interface PortletResourceRequestContext extends PortletRequestContext
+{
+    String getResourceID();
+    String getCacheability();
+    Map<String, String[]> getPrivateRenderParameterMap();
 }

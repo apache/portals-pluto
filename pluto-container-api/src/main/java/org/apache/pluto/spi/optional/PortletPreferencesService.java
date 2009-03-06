@@ -26,14 +26,13 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletPreference;
 import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.spi.ContainerService;
 
 /**
  * Portlet preferences service that should be implemented by the portal.
  * This is an optional container service.
  *
  */
-public interface PortletPreferencesService extends ContainerService {
+public interface PortletPreferencesService {
 
     /**
      * Returns the default portlet preferences.

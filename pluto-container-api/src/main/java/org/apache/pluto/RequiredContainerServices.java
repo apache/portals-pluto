@@ -20,6 +20,7 @@ import javax.portlet.PortalContext;
 
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.ContainerInvocationService;
+import org.apache.pluto.spi.EventCoordinationService;
 import org.apache.pluto.spi.PortalCallbackService;
 
 /**
@@ -50,4 +51,6 @@ public interface RequiredContainerServices {
     CCPPProfileService getCCPPProfileService();
     
     ContainerInvocationService getContainerInvocationService();
+    
+    EventCoordinationService getEventCoordinationService();
 }

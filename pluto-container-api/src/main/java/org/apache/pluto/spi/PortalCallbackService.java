@@ -27,17 +27,7 @@ import org.apache.pluto.om.portlet.PortletApplicationDefinition;
  * @version 1.0
  * @since Sep 21, 2004
  */
-public interface PortalCallbackService extends ContainerService {
-
-    /**
-     * Set the title to be used for this portlet.
-     * @param request  the servlet request.
-     * @param portletWindow  the portlet window.
-     * @param title  the title to set.
-     */
-    public void setTitle(HttpServletRequest request,
-                         PortletWindow portletWindow,
-                         String title);
+public interface PortalCallbackService {
 
     /**
      * Returns a URL provider used to constuct a URL to the given portlet.
@@ -58,13 +48,8 @@ public interface PortalCallbackService extends ContainerService {
     public ResourceURLProvider getResourceURLProvider(HttpServletRequest request,
                                                       PortletWindow portletWindow);
 
-    public PropertyManager getPropertyManager();
-       
-    
     public EventProvider getEventProvider(HttpServletRequest request,
 			PortletWindow portletWindow);
-    
-    public EventProvider getEventProvider();
     
     /**
      * Returns the FilterManager, this is used to process the filter.

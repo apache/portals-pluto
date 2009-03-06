@@ -44,6 +44,16 @@ public interface PortletAppDescriptorService {
     PortletApplicationDefinition read(InputStream in) throws IOException;
 
     /**
+     * Merge web.xml descriptor meta data with the PortletApplicationDefinition.
+     * The Portlet container needs access to (at a minimum) the servlet-mapping url-patterns (PLT.19.3.8)
+     * and the optional locale-encoding-mapping-list (PLT.12.7.1)
+     * @param pa the PortletApplicationDefinition
+     * @param webDescriptor the web.xml InputStream
+     * @throws IOException
+     */
+    void mergeWebDescriptor(PortletApplicationDefinition pa, InputStream webDescriptor) throws IOException;
+    
+    /**
      * Write the PortletApp deployment descriptor
      * (portlet.xml).
      * @param portletDescriptor

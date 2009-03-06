@@ -17,7 +17,6 @@
 package org.apache.pluto.core;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,11 +27,14 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
+import javax.portlet.UnavailableException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -46,8 +48,6 @@ import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.internal.InternalPortletRequest;
-import org.apache.pluto.internal.InternalPortletResponse;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.services.PlutoServices;
 import org.apache.pluto.spi.ContainerInvocationService;
@@ -57,6 +57,7 @@ import org.apache.pluto.spi.optional.PortalAdministrationService;
 import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletInvocationEvent;
 import org.apache.pluto.spi.optional.PortletInvocationListener;
+import org.apache.pluto.spi.optional.PortletRequestContext;
 
 /**
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
@@ -67,6 +68,7 @@ import org.apache.pluto.spi.optional.PortletInvocationListener;
  */
 public class PortletServlet extends HttpServlet
 {
+    private static final long serialVersionUID = -5096339022539360365L;
 
     // Private Member Variables ------------------------------------------------
     /**
@@ -103,7 +105,7 @@ public class PortletServlet extends HttpServlet
     private ContainerInvocationService containerInvocationService;
 
     private boolean started = false;
-    private Timer   startTimer = null;
+    Timer   startTimer = null;
 
     // HttpServlet Impl --------------------------------------------------------
 
@@ -184,7 +186,7 @@ public class PortletServlet extends HttpServlet
 //          Create and initialize the portlet wrapped in the servlet.
             try
             {
-                Class clazz = paClassLoader.loadClass((portletDD.getPortletClass()));
+                Class<?> clazz = paClassLoader.loadClass((portletDD.getPortletClass()));
                 portlet = (Portlet) clazz.newInstance();
                 portlet.init(portletConfig);
                 initializeEventPortlet();
@@ -284,19 +286,20 @@ public class PortletServlet extends HttpServlet
         // Retrieve attributes from the servlet request.
         Integer methodId = (Integer) request.getAttribute(Constants.METHOD_ID);
 
-        final InternalPortletRequest portletRequest = (InternalPortletRequest) request
+        final PortletRequest portletRequest = (PortletRequest) request
                 .getAttribute(Constants.PORTLET_REQUEST);
 
-        final InternalPortletResponse portletResponse = (InternalPortletResponse) request
+        final PortletResponse portletResponse = (PortletResponse) request
                 .getAttribute(Constants.PORTLET_RESPONSE);
-
+        
+        final PortletRequestContext requestContext = (PortletRequestContext)request.getAttribute(Constants.REQUEST_CONTEXT);
+        
         FilterManager filterManager = (FilterManager) request
                 .getAttribute(Constants.FILTER_MANAGER);
 
-        portletRequest.init(portletContext, request);
+        requestContext.init(portletConfig);
 
-        PortletWindow window = containerInvocationService.getInvocation()
-                .getPortletWindow();
+        PortletWindow window = requestContext.getPortletWindow();
 
         PortletInvocationEvent event = new PortletInvocationEvent(
                 portletRequest, window, methodId.intValue());
@@ -358,11 +361,8 @@ public class PortletServlet extends HttpServlet
                         .getOptionalContainerServices()
                         .getPortalAdministrationService();
 
-                Iterator<AdministrativeRequestListener> it = pas.getAdministrativeRequestListeners()
-                        .iterator();
-                while (it.hasNext())
+                for (AdministrativeRequestListener l : pas.getAdministrativeRequestListeners())
                 {
-                    AdministrativeRequestListener l = it.next();
                     l.administer(portletRequest, portletResponse);
                 }
             }
@@ -376,7 +376,7 @@ public class PortletServlet extends HttpServlet
             notify(event, false, null);
 
         }
-        catch (javax.portlet.UnavailableException ex)
+        catch (UnavailableException ex)
         {
             System.err.println(ex.getMessage());
             /*
@@ -413,7 +413,6 @@ public class PortletServlet extends HttpServlet
         finally
         {
             request.removeAttribute(Constants.PORTLET_CONFIG);
-            portletRequest.release();
         }
     }
 
@@ -424,10 +423,8 @@ public class PortletServlet extends HttpServlet
                 .getOptionalContainerServices()
                 .getPortalAdministrationService();
 
-        Iterator<PortletInvocationListener> i = pas.getPortletInvocationListeners().iterator();
-        while (i.hasNext())
+        for (PortletInvocationListener listener : pas.getPortletInvocationListeners())
         {
-            PortletInvocationListener listener = i.next();
             if (pre)
             {
                 listener.onBegin(event);
@@ -441,7 +438,6 @@ public class PortletServlet extends HttpServlet
                 listener.onError(event, e);
             }
         }
-
     }
 
     private void initializeEventPortlet()

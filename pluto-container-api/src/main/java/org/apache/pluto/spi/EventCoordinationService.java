@@ -14,16 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.internal;
 
-import javax.portlet.RenderRequest;
+package org.apache.pluto.spi;
+
+import java.util.List;
+
+import javax.portlet.Event;
+
+import org.apache.pluto.PortletWindow;
 
 /**
- * The internal render request interface extends the internal portlet request
- * interface and provides some render-specific methods.
- * @author <a href="mailto:zheng@apache.org">ZHENG Zhong</a>
- * @since 2006-02-17
+ * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * @version $Id$
  */
-public interface InternalRenderRequest extends InternalPortletRequest, RenderRequest {
-	
+public interface EventCoordinationService
+{
+    void processEvents(PortletWindow portletWindow, List<Event> events);
 }

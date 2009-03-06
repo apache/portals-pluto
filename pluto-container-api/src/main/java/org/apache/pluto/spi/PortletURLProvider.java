@@ -16,16 +16,17 @@
  */
 package org.apache.pluto.spi;
 
+import java.io.Writer;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
 
 /**
- * Defines the interface used by the portlet container to create Portal URLs.
+ * Defines the interface used by the portlet container to create Portlet URLs.
  * This provider must be implemented by the Portal and provided via the
  * container services upon initialization of the container.
  *
@@ -33,110 +34,54 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PortletURLProvider {
 
+    boolean isActionURL();
+    boolean isRenderURL();
+    boolean isResourceURL();
 
     /**
      * Sets the new portlet mode at the URL. If no mode is set at the URL the
      * currently active mode is used.
      * @param mode the new portlet mode
      */
-    public void setPortletMode(PortletMode mode);
+    void setPortletMode(PortletMode mode);
+    
+    PortletMode getPortletMode();
 
     /**
      * Sets the new window state at the URL. If no state is set at the URL the
      * currently active state is used.
      * @param state the new window state
      */
-    public void setWindowState(WindowState state);
+    void setWindowState(WindowState state);
+    
+    WindowState getWindowState();
 
-    /**
-     * Specifies whether or not this request should be considered an action
-     * request. If the value specified is false, a render request will be
-     * assumed.
-     */
-    public void setAction(boolean action);
+    void setSecure(boolean secure) throws PortletSecurityException;
+    boolean isSecure();
 
+    Map<String, String[]> getRenderParameters();
+    Set<String> getRemovedPublicRenderParameters();
+    
+    
+    String getCacheability();
+    void setCacheability(String cacheLevel);
+    
+    String getResourceID();
+    void setResourceID(String resourceID);
+    
     /**
-     * Specifies whether or not this request should be considered an resource Serving
-     * request.
-     * @since 2.0
-     */
-    public void setResourceServing(boolean resource);
-
-    /**
-     * Shows you if the lifecycle is serveResource
-     * @return true if ResourceServing else false
-     * @since 2.0
-     */
-    public boolean isResourceServing();
-
-    /**
-     * By calling this method the URL is defined as a secure URL.
-     */
-    public void setSecure() throws PortletSecurityException ;
-
-    /**
-     * Determine whether or not this url provider
-     * supports secure urls.
-     *
-     * @return <code>true</code> if secure urls are supported.
-     */
-    public boolean isSecureSupported();
-
-    /**
-     * Removes all pre-existing parameters in this URL
-     */
-    public void clearParameters();
-
-    /**
-     * Sets the given parameters as parameters into the URL, Removes all
-     * previously set parameters.
-     * @param parameters a map containing the name [java.lang.String] and value
-     *                   [java.lang.String[]] of the parameters.
-     */
-    public void setParameters(Map<String, String[]> parameters);
-
-    /**
-     * Sets the given public-render-parameters as parameters into the URL.
-     * @param parameters a map containing the name [java.lang.String] and value
-     *                   [java.lang.String[]] of the parameters.
-     */
-    public void setPublicRenderParameters(Map<String, String[]> parameters);
-
-    /**
-     * Returns the URL in string format. This method should only be called
-     * once.
+     * Returns the URL in string format
      * @return the URL
      */
-    public String toString();
-
-    public void savePortalURL(HttpServletRequest request);
-
-    /**
-     * Gets the values from the current public-render-parameters from this request.
-     * @param name Parametername
-     * @return the values for the Parameter, can be null, if there is no Parameter with this name.
-     */
-    public String[] getPublicRenderParameters(String name);
+    String toString();
+    
+    String toQueryStringValue();
+    
+    void write(Writer out);
+    void write(Writer out, boolean escapeXML);
 
     /**
-     * Gets the values from the parameters from this request. This is only used for ServeResource.
-     * @param name Parametername
-     * @return the values for the Parameter, can be null, if there is no Parameter with this name.
-     */
-    public String[] getPrivateRenderParameters(String name);
-
-    public Map<String, String[]> parseRenderParameters(Map<String, String[]> parentMap, String queryString);
-
-    public Map<String, String[]> getRenderParameters();
-
-    /**
-     * Provides the BaseURL vendor-specific properties
-     * @param properties a map containing the name and value(s) of the properties.
-     */
-    public void setProperties(Map<String, List<String>> properties);
-
-    /**
-     * Gets the vendor-specific properties as set on the BaseURL
+     * Gets the mutable map of vendor-specific properties as set on the BaseURL
      * @return parameters a map containing the name and value(s) of the properties (may return null)
      */
     public Map<String, List<String>> getProperties();

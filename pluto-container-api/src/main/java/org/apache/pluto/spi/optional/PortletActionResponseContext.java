@@ -14,15 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.internal;
 
-import javax.portlet.ResourceResponse;
+package org.apache.pluto.spi.optional;
 
 /**
- * The internal resource response interface extends the internal portlet response
- * interface and provides some resource-specific methods.
- * @since 2.0
+ * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * @version $Id$
  */
-public interface InternalResourceResponse extends InternalPortletResponse,ResourceResponse {
-	
+public interface PortletActionResponseContext extends PortletStateAwareResponseContext
+{
+    void setRedirect(String location);
+    void setRedirect(String location, String renderURLParamName);
+    boolean isRedirect();
+    String getResponseURL();
 }

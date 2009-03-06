@@ -17,9 +17,8 @@ package org.apache.pluto.spi;
 
 import java.io.Serializable;
 
+import javax.portlet.Event;
 import javax.xml.namespace.QName;
-
-import org.apache.pluto.EventContainer;
 
 	/**
 	 *
@@ -30,20 +29,6 @@ import org.apache.pluto.EventContainer;
 
 public interface EventProvider {
 
-	/**
-	 *
-	 * @param name
-	 * @param value
-	 * @throws IllegalArgumentException
-	 */
-	public abstract void registerToFireEvent(QName name, Serializable value)
+	public Event createEvent(QName name, Serializable value)
 			throws IllegalArgumentException;
-
-
-	/**
-	 * Fire events.
-	 *
-	 * @param container the event container
-	 */
-	public abstract void fireEvents(EventContainer container);
 }

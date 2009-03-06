@@ -14,30 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto;
+
+package org.apache.pluto.spi.optional;
+
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.Locale;
+
+import javax.portlet.CacheControl;
 
 /**
- * Runtime exception thrown when an unexpected condition is encountered.
- *
- * @version 1.0
+ * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * @version $Id$
  */
-public class PortletContainerRuntimeException extends RuntimeException {
-
-    private static final long serialVersionUID = 5055187491167595228L;
-
-    public PortletContainerRuntimeException() {
-
-    }
-
-    public PortletContainerRuntimeException(String message) {
-        super(message);
-    }
-
-    public PortletContainerRuntimeException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public PortletContainerRuntimeException(Throwable cause) {
-        super(cause);
-    }
+public interface PortletMimeResponseContext extends PortletResponseContext
+{
+    CacheControl getCacheControl();
+    Locale getLocale();
+    String getContentType();
+    void setContentType(String contentType);
+    String getCharacterEncoding();
+    OutputStream getOutputStream();
+    PrintWriter getWriter();
+    int getBufferSize();
+    void setBufferSize(int size);
+    void reset();
+    void resetBuffer();
+    void flushBuffer();
+    boolean isCommitted();
 }

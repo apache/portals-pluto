@@ -14,12 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.spi;
+
+package org.apache.pluto.spi.optional;
+
+import java.util.Collection;
+
+import javax.portlet.PortletMode;
 
 /**
- * Defines a service and needs to be implemented by all PortletContainerServices.
+ * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * @version $Id$
  */
-public interface ContainerService {
-
-
+public interface PortletRenderResponseContext extends PortletMimeResponseContext
+{
+    void setTitle(String title);
+    void setNextPossiblePortletModes(Collection<PortletMode> portletModes);
 }

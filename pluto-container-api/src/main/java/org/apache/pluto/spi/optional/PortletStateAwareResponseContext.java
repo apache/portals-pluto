@@ -14,19 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.internal;
 
-import javax.portlet.PortletSession;
-import javax.servlet.http.HttpSession;
+package org.apache.pluto.spi.optional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.Event;
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
 
 /**
- * The internal portlet session interface extends PortletSession and adds
- * some methods used by Pluto.
+ * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * @version $Id$
  */
-public interface InternalPortletSession extends PortletSession {
-    /**
-     * Access to the wrapped HttpSession
-     * @return The wrapped HttpSession
-     */
-    public HttpSession getHttpSession();
+public interface PortletStateAwareResponseContext extends PortletResponseContext
+{
+    PortletMode getPortletMode();
+    void setPortletMode(PortletMode portletMode);
+    WindowState getWindowState();
+    void setWindowState(WindowState windowState);
+    Map<String, String[]> getRenderParameters();
+    Set<String> getRemovedPublicRenderParameters();
+    List<Event> getEvents();
 }

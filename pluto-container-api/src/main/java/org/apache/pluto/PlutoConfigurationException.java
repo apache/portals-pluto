@@ -23,6 +23,8 @@ package org.apache.pluto;
  */
 public class PlutoConfigurationException extends RuntimeException {
 
+    private static final long serialVersionUID = 8159327269127050615L;
+
     public PlutoConfigurationException(String message) {
         super(message);
     }

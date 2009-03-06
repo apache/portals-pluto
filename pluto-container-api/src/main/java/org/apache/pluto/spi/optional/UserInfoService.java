@@ -23,7 +23,6 @@ import javax.portlet.PortletRequest;
 
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.spi.ContainerService;
 
 /**
  * Used to access user information attributes as described in
@@ -31,7 +30,7 @@ import org.apache.pluto.spi.ContainerService;
  * not covered by the spec so it is not done here.
  *
  */
-public interface UserInfoService extends ContainerService {
+public interface UserInfoService {
     /**
      * Retrieve the user attribues and their values associated with the given
      * request and window. This can return null if the user associated with the
