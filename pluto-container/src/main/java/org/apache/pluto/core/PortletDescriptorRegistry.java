@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.core;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -155,7 +154,7 @@ public class PortletDescriptorRegistry {
             }
             portletApp = portletDDService.read(paIn);
             portletDDService.mergeWebDescriptor(portletApp, webIn);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             throw new PortletContainerException(EXCEPTIONS.getString(
                     "error.context.descriptor.load",
                     new String[] { servletContext.getServletContextName() }),

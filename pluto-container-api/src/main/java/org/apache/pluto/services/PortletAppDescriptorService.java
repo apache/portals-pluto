@@ -51,7 +51,7 @@ public interface PortletAppDescriptorService {
      * @param webDescriptor the web.xml InputStream
      * @throws IOException
      */
-    void mergeWebDescriptor(PortletApplicationDefinition pa, InputStream webDescriptor) throws IOException;
+    void mergeWebDescriptor(PortletApplicationDefinition pa, InputStream webDescriptor) throws Exception;
     
     /**
      * Write the PortletApp deployment descriptor
