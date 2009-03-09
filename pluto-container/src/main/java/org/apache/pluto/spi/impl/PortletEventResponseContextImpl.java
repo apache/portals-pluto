@@ -15,12 +15,26 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.spi.optional;
+package org.apache.pluto.spi.impl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.pluto.PortletContainer;
+import org.apache.pluto.PortletWindow;
+import org.apache.pluto.spi.optional.PortletEventResponseContext;
 
 /**
- * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
  * @version $Id$
+ *
  */
-public interface PortletEventRequestContext extends PortletRequestContext
+public class PortletEventResponseContextImpl extends PortletStateAwareResponseContextImpl implements
+                PortletEventResponseContext
 {
+
+    public PortletEventResponseContextImpl(PortletContainer container, HttpServletRequest request,
+                                           HttpServletResponse response, PortletWindow window)
+    {
+        super(container, request, response, window);
+    }
 }

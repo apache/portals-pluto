@@ -22,6 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletWindow;
+import org.apache.pluto.spi.impl.PortletRenderResponseContextImpl;
+import org.apache.pluto.spi.impl.PortletActionResponseContextImpl;
+import org.apache.pluto.spi.impl.PortletEventResponseContextImpl;
+import org.apache.pluto.spi.impl.PortletRequestContextImpl;
+import org.apache.pluto.spi.impl.PortletResourceRequestContextImpl;
+import org.apache.pluto.spi.impl.PortletResourceResponseContextImpl;
 import org.apache.pluto.spi.optional.PortletActionResponseContext;
 import org.apache.pluto.spi.optional.PortletEventResponseContext;
 import org.apache.pluto.spi.optional.PortletRenderResponseContext;
@@ -39,8 +45,7 @@ public class DefaultPortletRequestContextService implements PortletRequestContex
     public PortletRequestContext getPortletActionRequestContext(PortletContainer container, HttpServletRequest request,
                                                                 HttpServletResponse response, PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletRequestContextImpl(container, request, response, window);
     }
 
     public PortletActionResponseContext getPortletActionResponseContext(PortletContainer container,
@@ -48,30 +53,26 @@ public class DefaultPortletRequestContextService implements PortletRequestContex
                                                                         HttpServletResponse response,
                                                                         PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletActionResponseContextImpl(container, request, response, window);
     }
 
     public PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest request,
                                                                HttpServletResponse response, PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletRequestContextImpl(container, request, response, window);
     }
 
     public PortletEventResponseContext getPortletEventResponseContext(PortletContainer container,
                                                                       HttpServletRequest request,
                                                                       HttpServletResponse response, PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletEventResponseContextImpl(container, request, response, window);
     }
 
     public PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest request,
                                                                 HttpServletResponse response, PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletRequestContextImpl(container, request, response, window);
     }
 
     public PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
@@ -79,8 +80,7 @@ public class DefaultPortletRequestContextService implements PortletRequestContex
                                                                         HttpServletResponse response,
                                                                         PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletRenderResponseContextImpl(container, request, response, window);
     }
 
     public PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
@@ -88,8 +88,7 @@ public class DefaultPortletRequestContextService implements PortletRequestContex
                                                                           HttpServletResponse response,
                                                                           PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletResourceRequestContextImpl(container, request, response, window);
     }
 
     public PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,
@@ -97,7 +96,6 @@ public class DefaultPortletRequestContextService implements PortletRequestContex
                                                                             HttpServletResponse response,
                                                                             PortletWindow window)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new PortletResourceResponseContextImpl(container, request, response, window);
     }
 }
