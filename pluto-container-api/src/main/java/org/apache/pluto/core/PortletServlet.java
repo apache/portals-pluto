@@ -26,6 +26,7 @@ import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -69,6 +70,37 @@ import org.apache.pluto.spi.optional.PortletRequestContext;
 public class PortletServlet extends HttpServlet
 {
     private static final long serialVersionUID = -5096339022539360365L;
+    
+    private static class NullPortlet implements EventPortlet, ResourceServingPortlet, Portlet
+    {
+        public void processEvent(EventRequest arg0, EventResponse arg1)
+        throws PortletException, IOException
+        {
+        }
+        
+        public void serveResource(ResourceRequest arg0, ResourceResponse arg1)
+        throws PortletException, IOException
+        {
+        }
+
+        public void destroy()
+        {
+        }
+
+        public void init(PortletConfig arg0) throws PortletException
+        {
+        }
+
+        public void processAction(ActionRequest arg0, ActionResponse arg1)
+        throws PortletException, IOException
+        {
+        }
+
+        public void render(RenderRequest arg0, RenderResponse arg1)
+        throws PortletException, IOException
+        {
+        }
+    }    
 
     // Private Member Variables ------------------------------------------------
     /**
