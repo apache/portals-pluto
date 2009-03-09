@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.services;
+package org.apache.pluto.driver;
 
 import javax.portlet.PortalContext;
 
 import org.apache.pluto.NamespaceMapper;
+import org.apache.pluto.services.ContainerServices;
 import org.apache.pluto.spi.CCPPProfileService;
 import org.apache.pluto.spi.ContainerInvocationService;
 import org.apache.pluto.spi.EventCoordinationService;

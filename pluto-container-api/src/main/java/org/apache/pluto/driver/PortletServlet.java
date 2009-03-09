@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.core;
+package org.apache.pluto.driver;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -50,7 +50,6 @@ import org.apache.pluto.PortletWindow;
 import org.apache.pluto.internal.InternalPortletConfig;
 import org.apache.pluto.internal.InternalPortletContext;
 import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.services.PlutoServices;
 import org.apache.pluto.spi.ContainerInvocationService;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.optional.AdministrativeRequestListener;

@@ -40,7 +40,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.Constants;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.PortletWindow;
-import org.apache.pluto.core.PortletServlet;
+import org.apache.pluto.driver.PortletServlet;
 import org.apache.pluto.spi.FilterManager;
 import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletInvokerService;

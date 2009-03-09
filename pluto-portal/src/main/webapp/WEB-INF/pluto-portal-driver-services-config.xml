@@ -45,7 +45,7 @@ limitations under the License.
 <beans>
 
 	<bean id="PlutoServices"
-	      class="org.apache.pluto.services.PlutoServices"
+	      class="org.apache.pluto.driver.PlutoServices"
           singleton="true">
       <constructor-arg><ref bean="RequiredContainerServices"/></constructor-arg>          	      
 	</bean>  

@@ -30,6 +30,7 @@ import org.apache.pluto.PortletContainer;
 import org.apache.pluto.PortletContainerException;
 import org.apache.pluto.descriptors.portlet.CustomPortletModeType;
 import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.PlutoServices;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -37,7 +38,6 @@ import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.om.portlet.PortletDefinition;
 import org.apache.pluto.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.om.portlet.Supports;
-import org.apache.pluto.services.PlutoServices;
 import org.apache.pluto.spi.optional.PortletContextService;
 import org.apache.pluto.spi.optional.PortletRegistryService;
 
