@@ -31,6 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
@@ -216,7 +217,7 @@ public class PortalDriverServlet extends HttpServlet {
         }
 
 		String portletName = PortletWindowConfig.parsePortletName(portletID);
-		PortletDefinition portletDD = container.getOptionalContainerServices().getPortletRegistryService()
+		PortletDefinition portletDD = PlutoServices.getServices().getPortletRegistryService()
 								.getPortlet(applicationName, portletName);    		
 		Enumeration<String> parameterNames = request.getParameterNames();
 		if (parameterNames != null){

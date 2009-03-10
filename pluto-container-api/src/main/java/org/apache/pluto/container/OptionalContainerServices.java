@@ -61,14 +61,6 @@ public interface OptionalContainerServices {
     PortletInvokerService getPortletInvokerService();
 
     /**
-     * Returns the portlet info service implementation used
-     * by the container.
-     *
-     * @return portlet info service implementation.
-     */
-    PortletInfoService getPortletInfoService();
-
-    /**
      * Returns the user info service implementation used
      * by the container.
      *

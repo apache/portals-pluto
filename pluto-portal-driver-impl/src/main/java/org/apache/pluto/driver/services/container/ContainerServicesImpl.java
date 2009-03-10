@@ -19,10 +19,9 @@ package org.apache.pluto.driver.services.container;
 import javax.portlet.PortalContext;
 
 import org.apache.pluto.container.CCPPProfileService;
-import org.apache.pluto.container.ContainerInvocationService;
+import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortalCallbackService;
-import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.RequiredContainerServices;
 import org.apache.pluto.core.PlutoContainerServices;
 import org.apache.pluto.driver.config.DriverConfiguration;
@@ -44,9 +43,9 @@ public class ContainerServicesImpl extends PlutoContainerServices implements Req
     public ContainerServicesImpl(PortalContext context,
                                  DriverConfiguration driverConfig,
                                  CCPPProfileService ccppProfileService,
-                                 ContainerInvocationService containerInvocation) 
+                                 EventCoordinationService  eventCoordinationService) 
     {
-        super(context, ccppProfileService, containerInvocation, driverConfig.getPortalCallbackService());
+        super(context, ccppProfileService, driverConfig.getPortalCallbackService(), eventCoordinationService);
         this.driverConfig = driverConfig;
     }
 

@@ -20,7 +20,6 @@ import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.PortletEnvironmentService;
-import org.apache.pluto.container.PortletInfoService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
@@ -45,7 +44,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletInvokerService portletInvokerService;
     private PortletRequestContextService portletRequestContextService;
     private PortletEnvironmentService portletEnvironmentService;
-    private PortletInfoService portletInfoService;
     private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
     private NamespaceMapper namespaceMapper;
@@ -62,7 +60,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletInvokerService = new DefaultPortletInvokerService(portletContextService);
         portletRequestContextService = new DefaultPortletRequestContextService();
         portletEnvironmentService = new DefaultPortletEnvironmentService();
-        portletInfoService = new DefaultPortletInfoService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
         namespaceMapper = new DefaultNamespaceMapper();
@@ -103,10 +100,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
         if(root.getPortletEnvironmentService() != null) {
             portletEnvironmentService = root.getPortletEnvironmentService();
-        }
-
-        if(root.getPortletInfoService() != null) {
-            portletInfoService = root.getPortletInfoService();
         }
 
         if(driverServices.getPortalAdministrationService() != null) {
@@ -153,10 +146,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
     public PortletInvokerService getPortletInvokerService() {
         return portletInvokerService;
-    }
-
-    public PortletInfoService getPortletInfoService() {
-        return portletInfoService;
     }
 
     public PortalAdministrationService getPortalAdministrationService() {

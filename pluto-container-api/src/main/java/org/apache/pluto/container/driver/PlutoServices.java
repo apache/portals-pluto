@@ -19,13 +19,11 @@ package org.apache.pluto.container.driver;
 import javax.portlet.PortalContext;
 
 import org.apache.pluto.container.CCPPProfileService;
-import org.apache.pluto.container.ContainerInvocationService;
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletEnvironmentService;
-import org.apache.pluto.container.PortletInfoService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
@@ -56,11 +54,6 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
         return containerServices.getCCPPProfileService();
     }
 
-    public ContainerInvocationService getContainerInvocationService()
-    {
-        return containerServices.getContainerInvocationService();
-    }
-
     public PortalCallbackService getPortalCallbackService()
     {
         return containerServices.getPortalCallbackService();
@@ -84,11 +77,6 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
     public PortletEnvironmentService getPortletEnvironmentService()
     {
         return containerServices.getPortletEnvironmentService();
-    }
-
-    public PortletInfoService getPortletInfoService()
-    {
-        return containerServices.getPortletInfoService();
     }
 
     public PortletInvokerService getPortletInvokerService()

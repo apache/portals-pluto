@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.Constants;
-import org.apache.pluto.container.ContainerInvocationService;
 import org.apache.pluto.container.EventContainer;
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.OptionalContainerServices;
@@ -158,35 +157,26 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
+        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
+        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
+        RenderResponse portletResponse = envService.createRenderResponse(responseContext);
+
+        FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RENDER_PHASE);
+        
         try
         {
-            getInvocationService().setInvocation(this, portletWindow, Method.RENDER);
-            
-            PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
-            PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
-
-            PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
-            PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
-            RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
-            RenderResponse portletResponse = envService.createRenderResponse(responseContext);
-
-            FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RENDER_PHASE);
-            
-            try
-            {
-                invoker.render(requestContext, portletRequest, portletResponse, filterManager);
-                // Mark portlet interaction is completed: backend implementation can flush response state now
-                responseContext.close();
-            }
-            finally
-            {
-                responseContext.release();
-            }
-        } 
+            invoker.render(requestContext, portletRequest, portletResponse, filterManager);
+            // Mark portlet interaction is completed: backend implementation can flush response state now
+            responseContext.close();
+        }
         finally
         {
-            getInvocationService().clearInvocation();
+            responseContext.release();
         }
         
         debugWithName("Portlet render done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
@@ -213,35 +203,26 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Resource request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
+        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow);
+        PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
+        ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext.getCacheControl());
+        ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
+
+        FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
+        
         try
         {
-            getInvocationService().setInvocation(this, portletWindow, Method.RESOURCE);
-
-            PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
-            PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
-
-            PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow);
-            PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
-            ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext.getCacheControl());
-            ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
-
-            FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
-            
-            try
-            {
-                invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
-                // Mark portlet interaction is completed: backend implementation can flush response state now
-                responseContext.close();
-            }
-            finally
-            {
-                responseContext.release();
-            }
-        } 
+            invoker.serveResource(requestContext, portletRequest, portletResponse, filterManager);
+            // Mark portlet interaction is completed: backend implementation can flush response state now
+            responseContext.close();
+        }
         finally
         {
-            getInvocationService().clearInvocation();
+            responseContext.release();
         }
         
         debugWithName("Portlet resource done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
@@ -268,65 +249,47 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     	
-        try 
+        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        PortletRequestContext requestContext = rcService.getPortletActionRequestContext(this, request, response, portletWindow);
+        PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow);
+        ActionRequest portletRequest = envService.createActionRequest(requestContext);
+        ActionResponse portletResponse = envService.createActionResponse(responseContext);
+
+        FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.ACTION_PHASE);
+
+        String location = null;
+        
+        try
         {
-            getInvocationService().setInvocation(this, portletWindow, Method.ACTION);
-
-            PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
-            PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
-
-            PortletRequestContext requestContext = rcService.getPortletActionRequestContext(this, request, response, portletWindow);
-            PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow);
-            ActionRequest portletRequest = envService.createActionRequest(requestContext);
-            ActionResponse portletResponse = envService.createActionResponse(responseContext);
-
-            FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.ACTION_PHASE);
-
-            String location = null;
+            invoker.action(requestContext, portletRequest, portletResponse, filterManager);
             
-            try
+            debugWithName("Portlet action processed for: "
+                          + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
+            
+            // Mark portlet interaction is completed: backend implementation can flush response state now
+            responseContext.close();
+            
+            if (!responseContext.isRedirect())
             {
-                invoker.action(requestContext, portletRequest, portletResponse, filterManager);
-                
-                debugWithName("Portlet action processed for: "
-                              + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
-                
-                // Mark portlet interaction is completed: backend implementation can flush response state now
-                responseContext.close();
-                
-                if (!responseContext.isRedirect())
+                List<Event> events = responseContext.getEvents();
+                if (!events.isEmpty())
                 {
-                    List<Event> events = responseContext.getEvents();
-                    if (!events.isEmpty())
-                    {
-                        try
-                        {
-                            requiredContainerServices.getEventCoordinationService().processEvents(portletWindow, events);
-                        }
-                        finally
-                        {
-                            // restore/recreate current ContainerInvocation as processEvents can have overridden and then cleared it
-                            // TODO: investigate if nested invocations like these shouldn't be handled differently?
-                            getInvocationService().setInvocation(this, portletWindow, Method.ACTION);
-                        }
-                    }
+                    requiredContainerServices.getEventCoordinationService().processEvents(portletWindow, events);
                 }
+            }
 
-                // After processing action and possible event handling, retrieve the target response URL to be redirected to
-                // This can either be a renderURL or an external URL (optionally containing a future renderURL as query parameter
-                location = response.encodeRedirectURL(responseContext.getResponseURL());
-            }
-            finally
-            {
-                responseContext.release();
-            }
-            redirect(request, response, location);
+            // After processing action and possible event handling, retrieve the target response URL to be redirected to
+            // This can either be a renderURL or an external URL (optionally containing a future renderURL as query parameter
+            location = response.encodeRedirectURL(responseContext.getResponseURL());
         }
         finally
         {
-            getInvocationService().clearInvocation();
+            responseContext.release();
         }
+        redirect(request, response, location);
 
         debugWithName("Portlet action done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     }
@@ -358,33 +321,24 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
+        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
+        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
+        RenderResponse portletResponse = envService.createRenderResponse(responseContext);
+
         try
         {
-            getInvocationService().setInvocation(this, portletWindow, Method.LOAD);
-
-            PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
-            PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
-
-            PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
-            PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
-            RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
-            RenderResponse portletResponse = envService.createRenderResponse(responseContext);
-
-            try
-            {
-                invoker.load(requestContext, portletRequest, portletResponse);
-                // Mark portlet interaction is completed: backend implementation can flush response state now
-                responseContext.close();
-            }
-            finally
-            {
-                responseContext.release();
-            }
+            invoker.load(requestContext, portletRequest, portletResponse);
+            // Mark portlet interaction is completed: backend implementation can flush response state now
+            responseContext.close();
         }
         finally
         {
-            getInvocationService().clearInvocation();
+            responseContext.release();
         }
 
         debugWithName("Portlet load done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
@@ -401,33 +355,24 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Admin request received for portlet: "
             +portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 
+        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
+        PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
+        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
+        RenderResponse portletResponse = envService.createRenderResponse(responseContext);
+
         try
         {
-            getInvocationService().setInvocation(this, portletWindow, Method.EVENT);
-            
-            PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
-            PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
-
-            PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
-            PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
-            RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
-            RenderResponse portletResponse = envService.createRenderResponse(responseContext);
-
-            try
-            {
-                invoker.admin(requestContext, portletRequest, portletResponse);
-                // Mark portlet interaction is completed: backend implementation can flush response state now
-                responseContext.close();
-            }
-            finally
-            {
-                responseContext.release();
-            }
-        } 
+            invoker.admin(requestContext, portletRequest, portletResponse);
+            // Mark portlet interaction is completed: backend implementation can flush response state now
+            responseContext.close();
+        }
         finally
         {
-            getInvocationService().clearInvocation();
+            responseContext.release();
         }
 
         debugWithName("Portlet admin request done for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
@@ -474,63 +419,40 @@ public class PortletContainerImpl implements PortletContainer,
     	debugWithName("Event: "+event.getName()+" received for portlet: "
     			+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 
+        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+
+        PortletRequestContext requestContext = rcService.getPortletEventRequestContext(this, request, response, portletWindow);
+        PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow);
+        EventRequest portletRequest = envService.createEventRequest(requestContext, event);
+        EventResponse portletResponse = envService.createEventResponse(responseContext);
+
+        FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.EVENT_PHASE);
+
+        List<Event> events = null;
         try
         {
-            getInvocationService().setInvocation(this, portletWindow, Method.EVENT);
+            invoker.event(requestContext, portletRequest, portletResponse, filterManager);
             
-            PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
-            PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-            PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
-
-            PortletRequestContext requestContext = rcService.getPortletEventRequestContext(this, request, response, portletWindow);
-            PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow);
-            EventRequest portletRequest = envService.createEventRequest(requestContext, event);
-            EventResponse portletResponse = envService.createEventResponse(responseContext);
-
-            FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.EVENT_PHASE);
-
-            List<Event> events = null;
-            try
-            {
-                invoker.event(requestContext, portletRequest, portletResponse, filterManager);
-                
-                debugWithName("Portlet event processed for: "
-                              + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
-                
-                // Mark portlet interaction is completed: backend implementation can flush response state now
-                responseContext.close();
-                events = responseContext.getEvents();
-            }
-            finally
-            {
-                responseContext.release();
-            }
-
-            if (events != null && !events.isEmpty())
-            {
-                try
-                {
-                    requiredContainerServices.getEventCoordinationService().processEvents(portletWindow, events);
-                }
-                finally
-                {
-                    // restore/recreate current ContainerInvocation as processEvents can have overridden and then cleared it
-                    // TODO: investigate if nested invocations like these shouldn't be handled differently?
-                    getInvocationService().setInvocation(this, portletWindow, Method.EVENT);
-                }
-            }
+            debugWithName("Portlet event processed for: "
+                          + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
+            
+            // Mark portlet interaction is completed: backend implementation can flush response state now
+            responseContext.close();
+            events = responseContext.getEvents();
         }
         finally
         {
-            getInvocationService().clearInvocation();
+            responseContext.release();
+        }
+
+        if (events != null && !events.isEmpty())
+        {
+            requiredContainerServices.getEventCoordinationService().processEvents(portletWindow, events);
         }
 
         debugWithName("Portlet event: "+ event.getName() +" fired for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
-    }
-    
-    private ContainerInvocationService getInvocationService()
-    {
-        return requiredContainerServices.getContainerInvocationService();
     }
     
     // Private Methods ---------------------------------------------------------

@@ -46,7 +46,5 @@ public interface RequiredContainerServices {
      */
     CCPPProfileService getCCPPProfileService();
     
-    ContainerInvocationService getContainerInvocationService();
-    
     EventCoordinationService getEventCoordinationService();
 }

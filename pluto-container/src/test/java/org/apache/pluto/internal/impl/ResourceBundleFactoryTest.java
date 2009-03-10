@@ -53,7 +53,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
     }
 
     public void testGetBundleAllSpecified() {
-        ResourceBundleFactory factory = new ResourceBundleFactory(validDD);
+        ResourceBundleFactory factory = new ResourceBundleFactory(validDD, validDD.getPortletInfo());
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
         Assert.assertEquals("Bundle Title", bundle.getString("javax.portlet.title"));
@@ -63,7 +63,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
 
     public void testGetResourceBundleNoBundle() {
         validDD.setResourceBundle(null);
-        ResourceBundleFactory factory = new ResourceBundleFactory(validDD);
+        ResourceBundleFactory factory = new ResourceBundleFactory(validDD, validDD.getPortletInfo());
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
         Assert.assertEquals("Info Title", bundle.getString("javax.portlet.title"));
@@ -72,7 +72,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
     }
 
     public void testGetResourceBundleNoInfo() {
-        ResourceBundleFactory factory = new ResourceBundleFactory(validDD);
+        ResourceBundleFactory factory = new ResourceBundleFactory(validDD, validDD.getPortletInfo());
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
         Assert.assertEquals("Bundle Title", bundle.getString("javax.portlet.title"));
@@ -85,7 +85,7 @@ public class ResourceBundleFactoryTest extends PlutoTestCase {
         validDD.getPortletInfo().setTitle(null);
         validDD.getPortletInfo().setShortTitle(null);
         validDD.getPortletInfo().setKeywords(null);
-        ResourceBundleFactory factory = new ResourceBundleFactory(validDD);
+        ResourceBundleFactory factory = new ResourceBundleFactory(validDD, validDD.getPortletInfo());
         ResourceBundle bundle = factory.getResourceBundle(Locale.getDefault());
 
         try {
