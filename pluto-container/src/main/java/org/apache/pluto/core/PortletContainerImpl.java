@@ -157,7 +157,7 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
         PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -203,7 +203,7 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Resource request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
         PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -249,7 +249,7 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     	
-        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
         PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -321,7 +321,7 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
         PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -355,7 +355,7 @@ public class PortletContainerImpl implements PortletContainer,
         debugWithName("Admin request received for portlet: "
             +portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 
-        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
         PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -419,7 +419,7 @@ public class PortletContainerImpl implements PortletContainer,
     	debugWithName("Event: "+event.getName()+" received for portlet: "
     			+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 
-        PortletRequestContextService rcService = getOptionalContainerServices().getPortletRequestContextService();
+        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
         PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
         PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
 
@@ -525,7 +525,7 @@ public class PortletContainerImpl implements PortletContainer,
 	 */
 	private FilterManager filterInitialisation(PortletWindow portletWindow,String lifeCycle) throws PortletContainerException{
 	    PortletEntity pe = portletWindow.getPortletEntity();
-        return requiredContainerServices.getPortalCallbackService().getFilterManager(pe.getPortletDefinition().getApplication(),pe.getPortletDefinition().getPortletName(),lifeCycle);
+        return requiredContainerServices.getFilterManagerService().getFilterManager(pe.getPortletDefinition().getApplication(),pe.getPortletDefinition().getPortletName(),lifeCycle);
     }
 }
 

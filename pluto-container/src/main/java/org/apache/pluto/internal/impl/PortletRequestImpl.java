@@ -53,7 +53,6 @@ import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.SecurityRoleRef;
 import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.util.ArgumentUtility;
-import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.StringManager;
 
 
@@ -289,7 +288,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         {
             if (ccppProfile == null)
             {
-                ccppProfile = getPortletContainer().getRequiredContainerServices().getCCPPProfileService().getCCPPProfile(getServletRequest());
+                ccppProfile = getPortletContainer().getOptionalContainerServices().getCCPPProfileService().getCCPPProfile(getServletRequest());
             }
             return ccppProfile;
         }

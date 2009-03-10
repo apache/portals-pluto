@@ -22,7 +22,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.driver.services.portal.PageConfig;
@@ -113,8 +112,6 @@ public interface DriverConfiguration {
 //
 // Utility methods for the container
 //
-    PortalCallbackService getPortalCallbackService();
-
     PortletPreferencesService getPortletPreferencesService();
 
     PortalURLParser getPortalUrlParser();

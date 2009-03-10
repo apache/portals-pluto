@@ -33,18 +33,23 @@ public interface RequiredContainerServices {
      */
     PortalContext getPortalContext();
 
-    /**
-     * Returns the portal callback service implementation instance associated
-     * with this group of portlet container services. 
-     * @return a PortalCallbackService implementation.
-     */
-    PortalCallbackService getPortalCallbackService();
-    
-    /**
-     * Returns the CC/PP profile service implementation
-     * @return a CCPPProfileServiceImplementation
-     */
-    CCPPProfileService getCCPPProfileService();
-    
     EventCoordinationService getEventCoordinationService();
+
+    /**
+     * Returns the portlet request context service implementation
+     * used by the container
+     * @return
+     */
+    PortletRequestContextService getPortletRequestContextService();
+
+    /**
+     * Returns the FilterManagerService
+     */
+    public FilterManagerService getFilterManagerService(); 
+    
+    /**
+     * Returns the PortletURLListener which calls the Filter for the URL.
+     * @return
+     */
+    public PortletURLListener getPortletURLListener();
 }

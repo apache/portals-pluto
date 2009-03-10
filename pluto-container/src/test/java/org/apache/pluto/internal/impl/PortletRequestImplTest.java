@@ -24,7 +24,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.pluto.container.CCPPProfileService;
 import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.OptionalContainerServices;
-import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletURLProvider;
@@ -51,7 +50,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockPortalContext = null;
     private Mock mockPortletContext = null;
     private Mock mockHttpServletRequest = null;
-    private Mock mockPortalCallbackService = null;
     private Mock mockPortletURLProvider = null;
     private PortletWindow window = null;
 
@@ -74,7 +72,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
                 new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), (OptionalContainerServices) mockOptionalServices.proxy() } );
         window = (PortletWindow) mock( PortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
-        mockPortalCallbackService = mock (PortalCallbackService.class);
 
         // Constructor expectations for RenderRequestImpl
         mockContainer.expects( atLeastOnce() ).method( "getRequiredContainerServices" ).will( returnValue( mockServices.proxy() ) );
@@ -102,8 +99,6 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockCCPPProfileService.expects(once()).method("getCCPPProfile").will(returnValue( null ));
         
         mockServices.expects(once()).method("getCCPPProfileService").will(returnValue( mockCCPPProfileService.proxy() ));
-        mockServices.expects(once()).method("getPortalCallbackService").will(returnValue( mockPortalCallbackService.proxy() ));
-        mockPortalCallbackService.expects(once()).method("getPortletURLProvider").will(returnValue( mockPortletURLProvider.proxy() ));
         
         mockContainer.expects(once()).method("getRequiredContainerServices").will(returnValue( mockServices.proxy() ));
         mockContainer.expects(atLeastOnce()).method("getOptionalContainerServices").will(returnValue( mockOptionalServices.proxy() ));

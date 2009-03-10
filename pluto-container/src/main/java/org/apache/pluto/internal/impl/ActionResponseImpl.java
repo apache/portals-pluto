@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import javax.portlet.ActionResponse;
 
-import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
@@ -60,8 +59,7 @@ public class ActionResponseImpl extends StateAwareResponseImpl implements Action
     protected String getRedirectLocation(String location)
     {
         ArgumentUtility.validateNotEmpty("location", location);
-        PortalCallbackService callback = getPortletContainer().getRequiredContainerServices().getPortalCallbackService();
-        ResourceURLProvider provider = callback.getResourceURLProvider(getServletRequest(),getPortletWindow());
+        ResourceURLProvider provider = getResponseContext().getResourceURLProvider();
 
         if (location.indexOf("://") != -1)
         {

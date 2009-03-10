@@ -32,8 +32,9 @@ public interface PortletResponseContext
     PortletContainer getContainer();
     HttpServletRequest getServletRequest();
     HttpServletResponse getServletResponse();
-    
     PortletWindow getPortletWindow();
+    
+    ResourceURLProvider getResourceURLProvider();
     void addProperty(Cookie cookie);
     void addProperty(String key, Element element);
     void addProperty(String key, String value);

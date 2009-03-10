@@ -18,11 +18,8 @@ package org.apache.pluto.driver.services.container;
 
 import javax.portlet.PortalContext;
 
-import org.apache.pluto.container.CCPPProfileService;
 import org.apache.pluto.container.EventCoordinationService;
-import org.apache.pluto.container.OptionalContainerServices;
-import org.apache.pluto.container.PortalCallbackService;
-import org.apache.pluto.container.RequiredContainerServices;
+import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.core.PlutoContainerServices;
 import org.apache.pluto.driver.config.DriverConfiguration;
 
@@ -33,7 +30,7 @@ import org.apache.pluto.driver.config.DriverConfiguration;
  * @version 1.0
  * @since Sep 21, 2004
  */
-public class ContainerServicesImpl extends PlutoContainerServices implements RequiredContainerServices, OptionalContainerServices 
+public class ContainerServicesImpl extends PlutoContainerServices
 {
     private DriverConfiguration driverConfig;
 
@@ -42,10 +39,10 @@ public class ContainerServicesImpl extends PlutoContainerServices implements Req
      */
     public ContainerServicesImpl(PortalContext context,
                                  DriverConfiguration driverConfig,
-                                 CCPPProfileService ccppProfileService,
+                                 PortletRequestContextService portletRequestContextService,
                                  EventCoordinationService  eventCoordinationService) 
     {
-        super(context, ccppProfileService, driverConfig.getPortalCallbackService(), eventCoordinationService);
+        super(context, portletRequestContextService, eventCoordinationService);
         this.driverConfig = driverConfig;
     }
 
@@ -59,16 +56,6 @@ public class ContainerServicesImpl extends PlutoContainerServices implements Req
 //    {
 //        return driverConfig.getPortletPreferencesService();
 //    }
-
-    /**
-     * The PortalCallbackService allows the container to communicate
-     * actions back to the portal.
-     * @return a PortalCallbackService implementation.
-     */
-    public PortalCallbackService getPortalCallbackService() 
-    {
-        return driverConfig.getPortalCallbackService();
-    }
 
 }
 

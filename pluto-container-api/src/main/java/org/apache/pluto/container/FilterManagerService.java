@@ -17,26 +17,18 @@
 
 package org.apache.pluto.container;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.portlet.Event;
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
- * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
+ * Service to retrieve a FilterManager for a specific Portlet in a lifecycle
  * @version $Id$
+ *
  */
-public interface PortletStateAwareResponseContext extends PortletResponseContext
+public interface FilterManagerService
 {
-    PortletMode getPortletMode();
-    void setPortletMode(PortletMode portletMode);
-    WindowState getWindowState();
-    void setWindowState(WindowState windowState);
-    Map<String, String[]> getRenderParameters();
-    Set<String> getRemovedPublicRenderParameters();
-    EventProvider getEventProvider();
-    List<Event> getEvents();
+    /**
+     * Returns the FilterManager, this is used to process the filter.
+     * @return FilterManager
+     */
+    public FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName, String lifeCycle); 
 }

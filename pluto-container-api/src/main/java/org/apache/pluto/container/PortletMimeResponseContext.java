@@ -30,6 +30,7 @@ import javax.portlet.CacheControl;
 public interface PortletMimeResponseContext extends PortletResponseContext
 {
     CacheControl getCacheControl();
+    PortletURLProvider getPortletURLProvider();
     Locale getLocale();
     String getContentType();
     void setContentType(String contentType);

@@ -172,11 +172,8 @@ public abstract class PortletResponseImpl implements PortletResponse
         {
             throw new IllegalArgumentException("only absolute URLs or full path URIs are allowed");
         }
-        
-        ResourceURLProvider provider = getPortletContainer()
-                .getRequiredContainerServices()
-                .getPortalCallbackService()
-                .getResourceURLProvider(getServletRequest(), getPortletWindow());
+                
+        ResourceURLProvider provider = responseContext.getResourceURLProvider();
         if (path.indexOf("://") != -1) {
             provider.setAbsoluteURL(path);
         } else {

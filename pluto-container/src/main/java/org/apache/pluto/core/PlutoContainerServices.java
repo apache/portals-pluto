@@ -21,13 +21,14 @@ import javax.portlet.PortalContext;
 import org.apache.pluto.container.CCPPProfileService;
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.EventCoordinationService;
+import org.apache.pluto.container.FilterManagerService;
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.OptionalContainerServices;
-import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
+import org.apache.pluto.container.PortletURLListener;
 import org.apache.pluto.container.RequiredContainerServices;
 import org.apache.pluto.container.UserInfoService;
 import org.apache.pluto.container.driver.PortalAdministrationService;
@@ -43,7 +44,6 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
      */
     private PortalContext context;
     private CCPPProfileService ccppProfileService;
-    private PortalCallbackService callbackService;
     
     /*
      * optional services
@@ -58,6 +58,9 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
     private UserInfoService userInfoService;
     private NamespaceMapper namespaceMapper;
     private EventCoordinationService eventCoordinationService;
+    private FilterManagerService filterManagerService;
+    private PortletURLListener portletURLListener;
+
         
     public PlutoContainerServices()
     {
@@ -68,33 +71,39 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
     
     public PlutoContainerServices(RequiredContainerServices required, OptionalContainerServices optional)
     {
-        this(required.getPortalContext(), required.getCCPPProfileService(),
-             required.getPortalCallbackService(), required.getEventCoordinationService(), optional,
+        this(required.getPortalContext(), required.getPortletRequestContextService(),
+             required.getEventCoordinationService(), required.getFilterManagerService(), 
+             required.getPortletURLListener(), optional,
              optional instanceof PortalDriverServices ? (PortalDriverServices) optional : null);
     }
 
     public PlutoContainerServices(PortalContext context,
-            CCPPProfileService ccppProfileService,
-            PortalCallbackService callbackService,
+            PortletRequestContextService portletRequestContextService,
+            FilterManagerService filterManagerService,
+            PortletURLListener portletURLListener,
             EventCoordinationService eventCoordinationService)
     {
         this.context = context;
-        this.ccppProfileService = ccppProfileService;
-        this.callbackService = callbackService;
         this.eventCoordinationService = eventCoordinationService;
         this.createDefaultPortalDriverServices();
         this.createDefaultOptionalServices();
     }            
             
     public PlutoContainerServices(PortalContext context,
-            CCPPProfileService ccppProfileService,
-            PortalCallbackService callbackService,
+            PortletRequestContextService portletRequestContextService,
             EventCoordinationService eventCoordinationService,
+            FilterManagerService filterManagerService,
+            PortletURLListener portletURLListener,
             OptionalContainerServices optionalServices,
             PortalDriverServices portalDriverServices)  
     {
         this.context = context;
-        this.ccppProfileService = ccppProfileService;
+        this.portletRequestContextService = portletRequestContextService;
+        this.filterManagerService = filterManagerService;
+        this.portletURLListener = portletURLListener;
+        ccppProfileService = optionalServices.getCCPPProfileService();
+        if (ccppProfileService == null)
+            ccppProfileService = new DummyCCPPProfileServiceImpl();
         this.eventCoordinationService = eventCoordinationService;
         
         portletPreferencesService = optionalServices.getPortletPreferencesService();
@@ -111,9 +120,6 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
         portletInvokerService = optionalServices.getPortletInvokerService();
         if (portletInvokerService == null)
             portletInvokerService = new DefaultPortletInvokerService(portletContextService);
-        portletRequestContextService = optionalServices.getPortletRequestContextService();
-        if (portletRequestContextService == null)
-            portletRequestContextService = new DefaultPortletRequestContextService();
         portletEnvironmentService = optionalServices.getPortletEnvironmentService();
         if (portletEnvironmentService == null)
             portletEnvironmentService = new DefaultPortletEnvironmentService();
@@ -137,9 +143,9 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
     
     protected void createDefaultOptionalServices() 
     {
+        ccppProfileService = new DummyCCPPProfileServiceImpl();
         portletPreferencesService = new DefaultPortletPreferencesService();
         portletInvokerService = new DefaultPortletInvokerService(portletContextService);
-        portletRequestContextService = new DefaultPortletRequestContextService();
         portletEnvironmentService = new DefaultPortletEnvironmentService();
         userInfoService = new DefaultUserInfoService();
         namespaceMapper = new DefaultNamespaceMapper();
@@ -147,10 +153,11 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
 
     protected void createDefaultRequiredServices() 
     {
-        context = null; // TODO
-        ccppProfileService = new DummyCCPPProfileServiceImpl();
-        callbackService = null; // TODO
-        eventCoordinationService = null; // TODO
+        this.context = null; // TODO
+        this.portletRequestContextService = null; // TODO
+        this.eventCoordinationService = null; // TODO
+        this.filterManagerService = null; // TODO
+        this.portletURLListener = null; // TODO
     }
     
     public PortalContext getPortalContext() 
@@ -167,17 +174,6 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
     {
         return this.portletPreferencesService;
     }
-
-    /**
-     * The PortalCallbackService allows the container to communicate
-     * actions back to the portal.
-     * @return a PortalCallbackService implementation.
-     */
-    public PortalCallbackService getPortalCallbackService() 
-    {
-        return callbackService;
-    }
-
 
     /**
      * Returns null to use pluto's default
@@ -233,13 +229,18 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
         return ccppProfileService;
     }
 
-    public PortalCallbackService getCallbackService()
-    {
-        return callbackService;
-    }
-
     public EventCoordinationService getEventCoordinationService()
     {
         return eventCoordinationService;
     }
+
+    public FilterManagerService getFilterManagerService()
+    {
+        return filterManagerService;
+    }
+
+    public PortletURLListener getPortletURLListener()
+    {
+        return portletURLListener;
+    }    
 }

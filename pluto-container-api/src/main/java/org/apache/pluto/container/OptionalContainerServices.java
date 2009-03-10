@@ -39,13 +39,6 @@ public interface OptionalContainerServices {
     PortletPreferencesService getPortletPreferencesService();
 
     /**
-     * Returns the portlet request context service implementation
-     * used by the container
-     * @return
-     */
-    PortletRequestContextService getPortletRequestContextService();
-    
-    /**
      * Returns the environment services implementation
      * used by the container.
      *
@@ -74,4 +67,10 @@ public interface OptionalContainerServices {
      * of PortletWindow parameters in a PortalURL
      */
     NamespaceMapper getNamespaceMapper();
+
+    /**
+     * Returns the CC/PP profile service implementation
+     * @return a CCPPProfileServiceImplementation
+     */
+    CCPPProfileService getCCPPProfileService();
 }

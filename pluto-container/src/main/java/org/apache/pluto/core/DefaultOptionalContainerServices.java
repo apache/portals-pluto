@@ -16,13 +16,13 @@
  */
 package org.apache.pluto.core;
 
+import org.apache.pluto.container.CCPPProfileService;
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
-import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.container.UserInfoService;
 import org.apache.pluto.container.driver.PortalAdministrationService;
 import org.apache.pluto.container.driver.PortalDriverServices;
@@ -42,12 +42,12 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private PortletRegistryService portletRegistryService;
     private PortletContextService portletContextService;
     private PortletInvokerService portletInvokerService;
-    private PortletRequestContextService portletRequestContextService;
     private PortletEnvironmentService portletEnvironmentService;
     private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
     private NamespaceMapper namespaceMapper;
     private PortletAppDescriptorService descriptorService;
+    private CCPPProfileService ccppProfileService;
 
     /**
      * Constructs an instance using the default portlet preferences service
@@ -58,12 +58,12 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         portletRegistryService = new PortletContextManager();
         portletContextService = (PortletContextManager)portletRegistryService;
         portletInvokerService = new DefaultPortletInvokerService(portletContextService);
-        portletRequestContextService = new DefaultPortletRequestContextService();
         portletEnvironmentService = new DefaultPortletEnvironmentService();
         portalAdministrationService = new DefaultPortalAdministrationService();
         userInfoService = new DefaultUserInfoService();
         namespaceMapper = new DefaultNamespaceMapper();
         descriptorService = new PortletAppDescriptorServiceImpl();                        
+        ccppProfileService = new DummyCCPPProfileServiceImpl();
     }
 
     /**
@@ -94,10 +94,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
             portletInvokerService = root.getPortletInvokerService();
         }
 
-        if(root.getPortletRequestContextService() != null) {
-            portletRequestContextService = root.getPortletRequestContextService();
-        }
-
         if(root.getPortletEnvironmentService() != null) {
             portletEnvironmentService = root.getPortletEnvironmentService();
         }
@@ -118,6 +114,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
         {
             descriptorService = new PortletAppDescriptorServiceImpl();
         }
+        
+        if (root.getCCPPProfileService() != null)
+        {
+            ccppProfileService = root.getCCPPProfileService();
+        }
     }
 
 
@@ -134,10 +135,6 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
 
     public PortletContextService getPortletContextService() {
         return portletContextService;
-    }
-
-    public PortletRequestContextService getPortletRequestContextService() {
-        return portletRequestContextService;
     }
 
     public PortletEnvironmentService getPortletEnvironmentService() {
@@ -163,6 +160,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public PortletAppDescriptorService getDescriptorService()
     {
         return this.descriptorService;
+    }
+
+    public CCPPProfileService getCCPPProfileService()
+    {
+        return ccppProfileService;
     }
 }
 

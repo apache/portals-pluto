@@ -21,12 +21,13 @@ import javax.portlet.PortalContext;
 import org.apache.pluto.container.CCPPProfileService;
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.EventCoordinationService;
+import org.apache.pluto.container.FilterManagerService;
 import org.apache.pluto.container.NamespaceMapper;
-import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
+import org.apache.pluto.container.PortletURLListener;
 import org.apache.pluto.container.UserInfoService;
 
 
@@ -52,11 +53,6 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
     public CCPPProfileService getCCPPProfileService()
     {
         return containerServices.getCCPPProfileService();
-    }
-
-    public PortalCallbackService getPortalCallbackService()
-    {
-        return containerServices.getPortalCallbackService();
     }
 
     public PortalContext getPortalContext()
@@ -112,5 +108,15 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
     public EventCoordinationService getEventCoordinationService()
     {
         return containerServices.getEventCoordinationService();
+    }
+
+    public FilterManagerService getFilterManagerService()
+    {
+        return containerServices.getFilterManagerService();
+    }
+
+    public PortletURLListener getPortletURLListener()
+    {
+        return containerServices.getPortletURLListener();
     }
 }

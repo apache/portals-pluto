@@ -34,7 +34,7 @@ import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
-import org.apache.pluto.container.PortletResponseContext;
+import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletURLListener;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
@@ -49,21 +49,21 @@ import org.apache.pluto.util.ArgumentUtility;
  */
 public class PortletURLImpl implements PortletURL, ResourceURL {
 
-    private PortletResponseContext responseContext;
+    private PortletMimeResponseContext responseContext;
     private PortalContext portalContext;
     private PortletURLProvider urlProvider;
     private String cacheLevel;
     private boolean filtering;
     
-    public PortletURLImpl(PortletResponseContext responseContext, boolean actionURL, boolean resourceURL)
+    public PortletURLImpl(PortletMimeResponseContext responseContext, boolean actionURL, boolean resourceURL)
     {
         this.responseContext = responseContext;
         this.portalContext = responseContext.getContainer().getRequiredContainerServices().getPortalContext();
         // TODO: actionURL/resourceURL parameters
-        urlProvider = responseContext.getContainer().getRequiredContainerServices().getPortalCallbackService().getPortletURLProvider(responseContext.getServletRequest(), responseContext.getPortletWindow());
+        urlProvider = responseContext.getPortletURLProvider();
     }
     
-    public PortletURLImpl(PortletResponseContext responseContext, boolean actionURL, boolean resourceURL, String cacheLevel)
+    public PortletURLImpl(PortletMimeResponseContext responseContext, boolean actionURL, boolean resourceURL, String cacheLevel)
     {
         this(responseContext, actionURL, resourceURL);
         this.cacheLevel = cacheLevel == null ? ResourceURL.PAGE : cacheLevel;
@@ -164,9 +164,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         filtering = true;
         try
         {
-            PortletURLListener portletURLFilterListener = responseContext.getContainer()
-            .getRequiredContainerServices()
-            .getPortalCallbackService().getPortletURLListener();
+            PortletURLListener portletURLFilterListener = responseContext.getContainer().getRequiredContainerServices().getPortletURLListener();
             PortletApplicationDefinition portletApp = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
             portletURLFilterListener.callListener(portletApp, this, urlProvider.isActionURL(), urlProvider.isResourceURL());
 

@@ -21,7 +21,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
@@ -29,7 +28,6 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.util.ArgumentUtility;
@@ -127,9 +125,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
 	public void setEvent(QName qname, Serializable value)
 	{
         ArgumentUtility.validateNotNull("qname", qname);
-        PortalCallbackService callback = getPortletContainer().getRequiredContainerServices().getPortalCallbackService();
-		Event event = callback.getEventProvider(getServletRequest(),getPortletWindow()).createEvent(qname, value);
-		responseContext.getEvents().add(event);
+		responseContext.getEvents().add(responseContext.getEventProvider().createEvent(qname, value));
 	}
 
 	public void setEvent(String name, Serializable value)

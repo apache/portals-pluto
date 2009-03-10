@@ -23,7 +23,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.container.PortalCallbackService;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.driver.PortletRegistryService;
@@ -51,7 +50,6 @@ public class DriverConfigurationImpl
     private SupportedWindowStateService supportedWindowStateService;
 
     // Container Services
-    private PortalCallbackService portalCallbackService;
     private PortletPreferencesService portletPreferencesService;
     private PortletRegistryService registryService;
     
@@ -59,13 +57,11 @@ public class DriverConfigurationImpl
                                    PropertyConfigService propertyService,
                                    RenderConfigService renderService,
                                    SupportedModesService supportedModesService,
-                                   SupportedWindowStateService supportedWindowStateService,
-                                   PortalCallbackService portalCallback) {
+                                   SupportedWindowStateService supportedWindowStateService) {
 
         this.portalUrlParser = portalUrlParser;
         this.propertyService = propertyService;
         this.renderService = renderService;
-        this.portalCallbackService = portalCallback;
         this.supportedModesService = supportedModesService;
         this.supportedWindowStateService = supportedWindowStateService;
     }
@@ -170,14 +166,6 @@ public class DriverConfigurationImpl
 //
 // Container Services
 //
-    public PortalCallbackService getPortalCallbackService() {
-        return portalCallbackService;
-    }
-
-    public void setPortalCallbackService(PortalCallbackService portalCallbackService) {
-        this.portalCallbackService = portalCallbackService;
-    }
-
     public PortletPreferencesService getPortletPreferencesService() {
         return portletPreferencesService;
     }
