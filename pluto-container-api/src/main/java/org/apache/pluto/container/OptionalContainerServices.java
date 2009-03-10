@@ -16,15 +16,9 @@
  */
 package org.apache.pluto.container;
 
-import org.apache.pluto.container.spi.optional.PortalAdministrationService;
-import org.apache.pluto.container.spi.optional.PortletContextService;
-import org.apache.pluto.container.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.container.spi.optional.PortletInfoService;
-import org.apache.pluto.container.spi.optional.PortletInvokerService;
-import org.apache.pluto.container.spi.optional.PortletPreferencesService;
-import org.apache.pluto.container.spi.optional.PortletRegistryService;
-import org.apache.pluto.container.spi.optional.PortletRequestContextService;
-import org.apache.pluto.container.spi.optional.UserInfoService;
+import org.apache.pluto.container.driver.PortalAdministrationService;
+import org.apache.pluto.container.driver.PortletContextService;
+import org.apache.pluto.container.driver.PortletRegistryService;
 
 /**
  * Defines the services necessary for integration between the Pluto Container

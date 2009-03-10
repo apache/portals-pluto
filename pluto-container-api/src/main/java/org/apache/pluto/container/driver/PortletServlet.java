@@ -45,19 +45,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.Constants;
 import org.apache.pluto.container.ContainerInvocation;
-import org.apache.pluto.container.InternalPortletConfig;
-import org.apache.pluto.container.InternalPortletContext;
+import org.apache.pluto.container.ContainerInvocationService;
+import org.apache.pluto.container.ContainerPortletConfig;
+import org.apache.pluto.container.ContainerPortletContext;
+import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
-import org.apache.pluto.container.spi.ContainerInvocationService;
-import org.apache.pluto.container.spi.FilterManager;
-import org.apache.pluto.container.spi.optional.AdministrativeRequestListener;
-import org.apache.pluto.container.spi.optional.PortalAdministrationService;
-import org.apache.pluto.container.spi.optional.PortletContextService;
-import org.apache.pluto.container.spi.optional.PortletInvocationEvent;
-import org.apache.pluto.container.spi.optional.PortletInvocationListener;
-import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * Portlet Invocation Servlet. This servlet recieves cross context requests from
@@ -115,12 +110,12 @@ public class PortletServlet extends HttpServlet
     /**
      * The internal portlet context instance.
      */
-    private InternalPortletContext portletContext;
+    private ContainerPortletContext portletContext;
 
     /**
      * The internal portlet config instance.
      */
-    private InternalPortletConfig portletConfig;
+    private ContainerPortletConfig portletConfig;
 
     /**
      * The Event Portlet instance (the same object as portlet) wrapped by this

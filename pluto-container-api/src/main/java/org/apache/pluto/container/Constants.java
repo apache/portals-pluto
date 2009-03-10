@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.container;
 
-import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * Constant values used to bind internal portlet objects as attributes,

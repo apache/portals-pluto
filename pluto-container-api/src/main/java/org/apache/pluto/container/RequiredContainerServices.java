@@ -18,10 +18,6 @@ package org.apache.pluto.container;
 
 import javax.portlet.PortalContext;
 
-import org.apache.pluto.container.spi.CCPPProfileService;
-import org.apache.pluto.container.spi.ContainerInvocationService;
-import org.apache.pluto.container.spi.EventCoordinationService;
-import org.apache.pluto.container.spi.PortalCallbackService;
 
 /**
  * This interface defines the services required for integration between the
