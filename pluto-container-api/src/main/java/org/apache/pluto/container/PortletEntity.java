@@ -22,7 +22,7 @@ import org.apache.pluto.container.om.portlet.PortletDefinition;
  * The PortletEntity encapsulates all data pertaining to a single portlet
  * instance.  This instance may appear zero or more times per user. The
  * PortletEntity consists of two primary peices of information, the Portlet
- * Definition as defined by the {@link org.apache.pluto.descriptors.portlet.PortletType} and the Wrapping Servlet
+ * Definition as defined by the {@link org.apache.pluto.container.om.portlet.impl.PortletType} and the Wrapping Servlet
  * information as defined by the{@link ServletDD}
  *
  */

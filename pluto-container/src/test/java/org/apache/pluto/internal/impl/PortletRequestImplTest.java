@@ -29,7 +29,8 @@ import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.RequiredContainerServices;
-import org.apache.pluto.core.PortletContainerImpl;
+import org.apache.pluto.container.impl.PortletContainerImpl;
+import org.apache.pluto.container.impl.RenderRequestImpl;
 import org.jmock.Mock;
 import org.jmock.cglib.MockObjectTestCase;
 

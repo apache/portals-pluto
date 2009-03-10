@@ -20,8 +20,8 @@ import javax.portlet.PortalContext;
 
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.PortletRequestContextService;
-import org.apache.pluto.core.PlutoContainerServices;
 import org.apache.pluto.driver.config.DriverConfiguration;
+import org.apache.pluto.driver.impl.PlutoContainerServices;
 
 /**
  * The Portal Driver's <code>PortletContainerServices</code> implementation. The

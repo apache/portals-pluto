@@ -41,10 +41,10 @@ import org.apache.pluto.container.EventContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PortletContextService;
+import org.apache.pluto.container.impl.EventImpl;
 import org.apache.pluto.container.om.portlet.EventDefinition;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.driver.core.PortalServletRequest;
-import org.apache.pluto.internal.impl.EventImpl;
 
 public class PortletWindowThread extends Thread {
 	

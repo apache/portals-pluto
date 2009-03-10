@@ -18,6 +18,7 @@ package org.apache.pluto.internal.impl;
 
 import java.util.Properties;
 
+import org.apache.pluto.container.impl.Environment;
 import org.apache.pluto.util.PlutoTestCase;
 
 /**

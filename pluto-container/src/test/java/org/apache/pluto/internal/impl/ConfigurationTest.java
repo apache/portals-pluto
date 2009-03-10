@@ -1,5 +1,6 @@
 package org.apache.pluto.internal.impl;
 
+import org.apache.pluto.container.impl.Configuration;
 import org.apache.pluto.util.PlutoTestCase;
 
 public class ConfigurationTest extends PlutoTestCase {

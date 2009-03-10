@@ -49,6 +49,7 @@ import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
+import org.apache.pluto.container.impl.EventImpl;
 import org.apache.pluto.container.om.portlet.EventDefinition;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
@@ -61,7 +62,6 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
-import org.apache.pluto.internal.impl.EventImpl;
 
 public class EventProviderImpl implements org.apache.pluto.container.EventProvider,
 		Cloneable {

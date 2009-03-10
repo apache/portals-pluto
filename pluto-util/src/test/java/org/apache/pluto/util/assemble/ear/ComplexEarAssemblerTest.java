@@ -27,9 +27,9 @@ import java.util.jar.JarInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.pluto.container.PortletAppDescriptorService;
+import org.apache.pluto.container.impl.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
-import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.util.assemble.ArchiveBasedAssemblyTest;
 import org.apache.pluto.util.assemble.Assembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
