@@ -16,19 +16,19 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.pluto.NamespaceMapper;
-import org.apache.pluto.OptionalContainerServices;
+import org.apache.pluto.container.NamespaceMapper;
+import org.apache.pluto.container.OptionalContainerServices;
+import org.apache.pluto.container.services.PortletAppDescriptorService;
+import org.apache.pluto.container.spi.optional.PortalAdministrationService;
+import org.apache.pluto.container.spi.optional.PortletContextService;
+import org.apache.pluto.container.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.container.spi.optional.PortletInfoService;
+import org.apache.pluto.container.spi.optional.PortletInvokerService;
+import org.apache.pluto.container.spi.optional.PortletPreferencesService;
+import org.apache.pluto.container.spi.optional.PortletRegistryService;
+import org.apache.pluto.container.spi.optional.PortletRequestContextService;
+import org.apache.pluto.container.spi.optional.UserInfoService;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
-import org.apache.pluto.services.PortletAppDescriptorService;
-import org.apache.pluto.spi.optional.PortalAdministrationService;
-import org.apache.pluto.spi.optional.PortletContextService;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.PortletInfoService;
-import org.apache.pluto.spi.optional.PortletInvokerService;
-import org.apache.pluto.spi.optional.PortletPreferencesService;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.PortletRequestContextService;
-import org.apache.pluto.spi.optional.UserInfoService;
 
 /**
  * Default Optional Container Services implementation.

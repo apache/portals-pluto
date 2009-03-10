@@ -6,8 +6,8 @@ package org.apache.pluto.core;
 import javax.ccpp.Profile;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.pluto.container.spi.CCPPProfileService;
 import org.apache.pluto.internal.impl.DummyProfile;
-import org.apache.pluto.spi.CCPPProfileService;
 
 /**
  *

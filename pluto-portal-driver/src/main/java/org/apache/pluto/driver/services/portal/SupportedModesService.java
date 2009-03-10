@@ -21,7 +21,7 @@ import java.util.Set;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 
-import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.container.PortletContainerException;
 
 /**
  * Allows clients to determine if a particular PortletMode is supported

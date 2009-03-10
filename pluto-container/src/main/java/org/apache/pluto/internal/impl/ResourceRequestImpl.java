@@ -23,7 +23,7 @@ import javax.portlet.CacheControl;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 
-import org.apache.pluto.spi.optional.PortletResourceRequestContext;
+import org.apache.pluto.container.spi.optional.PortletResourceRequestContext;
 
 public class ResourceRequestImpl extends ClientDataRequestImpl implements ResourceRequest
 {

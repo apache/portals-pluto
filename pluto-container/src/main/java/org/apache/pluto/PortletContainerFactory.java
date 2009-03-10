@@ -18,6 +18,10 @@ package org.apache.pluto;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.container.OptionalContainerServices;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.RequiredContainerServices;
 import org.apache.pluto.core.DefaultOptionalContainerServices;
 import org.apache.pluto.core.PortletContainerImpl;
 import org.apache.pluto.util.ArgumentUtility;

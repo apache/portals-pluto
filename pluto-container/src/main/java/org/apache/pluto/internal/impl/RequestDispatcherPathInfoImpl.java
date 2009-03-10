@@ -17,7 +17,7 @@
 
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.internal.RequestDispatcherPathInfo;
+import org.apache.pluto.container.RequestDispatcherPathInfo;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>

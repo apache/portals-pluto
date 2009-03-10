@@ -24,7 +24,7 @@ import java.io.UnsupportedEncodingException;
 
 import javax.portlet.ClientDataRequest;
 
-import org.apache.pluto.spi.optional.PortletRequestContext;
+import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * Implementation of the <code>javax.portlet.ClientDataRequest</code> interface.

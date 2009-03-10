@@ -26,20 +26,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.portlet.CustomPortletMode;
-import org.apache.pluto.om.portlet.CustomWindowState;
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.InitParam;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.om.portlet.PortletInfo;
-import org.apache.pluto.om.portlet.Preference;
-import org.apache.pluto.om.portlet.Preferences;
-import org.apache.pluto.om.portlet.SecurityConstraint;
-import org.apache.pluto.om.portlet.SecurityRoleRef;
-import org.apache.pluto.om.portlet.Supports;
-import org.apache.pluto.om.portlet.UserAttribute;
+import org.apache.pluto.container.om.portlet.CustomPortletMode;
+import org.apache.pluto.container.om.portlet.CustomWindowState;
+import org.apache.pluto.container.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.DisplayName;
+import org.apache.pluto.container.om.portlet.InitParam;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.PortletInfo;
+import org.apache.pluto.container.om.portlet.Preference;
+import org.apache.pluto.container.om.portlet.Preferences;
+import org.apache.pluto.container.om.portlet.SecurityConstraint;
+import org.apache.pluto.container.om.portlet.SecurityRoleRef;
+import org.apache.pluto.container.om.portlet.Supports;
+import org.apache.pluto.container.om.portlet.UserAttribute;
 
 /**
  * <p>Java class for portlet-appType complex type.</p> <p>The following schema fragment specifies the expected

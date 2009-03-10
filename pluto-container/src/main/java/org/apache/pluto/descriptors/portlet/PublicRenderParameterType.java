@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.PublicRenderParameter;
+import org.apache.pluto.container.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.PublicRenderParameter;
 
 /**
  * The public-render-parameters defines a render parameter that is allowed to be public and thus be shared with other

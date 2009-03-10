@@ -3,7 +3,7 @@
     <display-name>WarTestServletDisplayName</display-name>
     <servlet>
         <servlet-name>WarTestPortletName</servlet-name>
-        <servlet-class>org.apache.pluto.driver.PortletServlet</servlet-class>
+        <servlet-class>org.apache.pluto.container.driver.PortletServlet</servlet-class>
         <init-param>
             <param-name>portlet-name</param-name>
             <param-value>WarTestPortletName</param-value>

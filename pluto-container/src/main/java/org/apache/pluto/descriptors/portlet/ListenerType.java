@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.Listener;
+import org.apache.pluto.container.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.DisplayName;
+import org.apache.pluto.container.om.portlet.Listener;
 
 /**
  * The listenerType is used to declare listeners for this portlet application. Used in: portlet-app <p>Java class for

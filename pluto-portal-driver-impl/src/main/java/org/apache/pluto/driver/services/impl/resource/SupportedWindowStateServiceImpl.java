@@ -26,16 +26,16 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.om.portlet.CustomWindowState;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.spi.optional.PortletRegistryService;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
-import org.apache.pluto.om.portlet.CustomWindowState;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.optional.PortletRegistryService;
 
 public class SupportedWindowStateServiceImpl implements
         SupportedWindowStateService 

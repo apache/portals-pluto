@@ -18,23 +18,23 @@ package org.apache.pluto.core;
 
 import javax.portlet.PortalContext;
 
-import org.apache.pluto.NamespaceMapper;
-import org.apache.pluto.OptionalContainerServices;
-import org.apache.pluto.RequiredContainerServices;
-import org.apache.pluto.services.ContainerServices;
-import org.apache.pluto.spi.CCPPProfileService;
-import org.apache.pluto.spi.ContainerInvocationService;
-import org.apache.pluto.spi.EventCoordinationService;
-import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.spi.optional.PortalAdministrationService;
-import org.apache.pluto.spi.optional.PortletContextService;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.PortletInfoService;
-import org.apache.pluto.spi.optional.PortletInvokerService;
-import org.apache.pluto.spi.optional.PortletPreferencesService;
-import org.apache.pluto.spi.optional.PortletRegistryService;
-import org.apache.pluto.spi.optional.PortletRequestContextService;
-import org.apache.pluto.spi.optional.UserInfoService;
+import org.apache.pluto.container.NamespaceMapper;
+import org.apache.pluto.container.OptionalContainerServices;
+import org.apache.pluto.container.RequiredContainerServices;
+import org.apache.pluto.container.services.ContainerServices;
+import org.apache.pluto.container.spi.CCPPProfileService;
+import org.apache.pluto.container.spi.ContainerInvocationService;
+import org.apache.pluto.container.spi.EventCoordinationService;
+import org.apache.pluto.container.spi.PortalCallbackService;
+import org.apache.pluto.container.spi.optional.PortalAdministrationService;
+import org.apache.pluto.container.spi.optional.PortletContextService;
+import org.apache.pluto.container.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.container.spi.optional.PortletInfoService;
+import org.apache.pluto.container.spi.optional.PortletInvokerService;
+import org.apache.pluto.container.spi.optional.PortletPreferencesService;
+import org.apache.pluto.container.spi.optional.PortletRegistryService;
+import org.apache.pluto.container.spi.optional.PortletRequestContextService;
+import org.apache.pluto.container.spi.optional.UserInfoService;
 
 
 public class PlutoContainerServices implements ContainerServices

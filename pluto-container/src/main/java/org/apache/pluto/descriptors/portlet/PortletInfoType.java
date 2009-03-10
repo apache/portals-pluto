@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.PortletInfo;
+import org.apache.pluto.container.om.portlet.PortletInfo;
 
 /**
  * <p>Java class for portlet-infoType complex type. <p>The following schema fragment specifies the expected content

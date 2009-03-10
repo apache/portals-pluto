@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.DisplayName;
+import org.apache.pluto.container.om.portlet.DisplayName;
 
 /**
  * The display-name type contains a short name that is intended to be displayed by tools. It is used by display-name

@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.CustomWindowState;
-import org.apache.pluto.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.CustomWindowState;
+import org.apache.pluto.container.om.portlet.Description;
 
 /**
  * A custom window state that one or more portlets in this portlet application supports. Used in: portlet-app <p>Java

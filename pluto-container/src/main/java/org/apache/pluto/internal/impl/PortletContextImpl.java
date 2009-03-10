@@ -32,9 +32,9 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.internal.RequestDispatcherPathInfo;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.InternalPortletContext;
+import org.apache.pluto.container.RequestDispatcherPathInfo;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
  * Pluto's Portlet Context Implementation. This class implements the

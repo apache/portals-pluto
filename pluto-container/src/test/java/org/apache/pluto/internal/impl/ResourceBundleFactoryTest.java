@@ -22,9 +22,9 @@ import java.util.ResourceBundle;
 
 import junit.framework.Assert;
 
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.PortletInfo;
 import org.apache.pluto.descriptors.portlet.PortletType;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletInfo;
 import org.apache.pluto.util.PlutoTestCase;
 
 /**

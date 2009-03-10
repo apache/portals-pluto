@@ -25,10 +25,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.Filter;
-import org.apache.pluto.om.portlet.InitParam;
+import org.apache.pluto.container.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.DisplayName;
+import org.apache.pluto.container.om.portlet.Filter;
+import org.apache.pluto.container.om.portlet.InitParam;
 
 /**
  * The filter element specifies a filter that can transform the content of portlet requests and portlet responses.

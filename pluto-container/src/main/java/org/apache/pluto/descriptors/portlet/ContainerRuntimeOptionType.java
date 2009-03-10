@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 
 /**
  * The container-runtime-option element contains settings for the portlet container that the portlet expects to be

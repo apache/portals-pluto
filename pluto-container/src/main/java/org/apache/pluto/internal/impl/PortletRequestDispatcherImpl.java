@@ -34,9 +34,9 @@ import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
-import org.apache.pluto.internal.RequestDispatcherPathInfo;
-import org.apache.pluto.spi.optional.PortletRequestContext;
+import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.RequestDispatcherPathInfo;
+import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * Implementation of the <code>PortletRequestDispatcher</code> interface.

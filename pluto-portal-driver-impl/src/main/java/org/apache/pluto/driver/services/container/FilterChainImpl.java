@@ -41,7 +41,7 @@ import javax.portlet.filter.FilterChain;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
-import org.apache.pluto.om.portlet.Filter;
+import org.apache.pluto.container.om.portlet.Filter;
 
 /**
  * A <code>FilterChain</code> is an object provided by the portlet container 

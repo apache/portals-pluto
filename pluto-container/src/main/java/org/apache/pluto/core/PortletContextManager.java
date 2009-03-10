@@ -30,19 +30,19 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.internal.InternalPortletContext;
+import org.apache.pluto.container.InternalPortletConfig;
+import org.apache.pluto.container.InternalPortletContext;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.spi.optional.PortletContextService;
+import org.apache.pluto.container.spi.optional.PortletRegistryEvent;
+import org.apache.pluto.container.spi.optional.PortletRegistryListener;
+import org.apache.pluto.container.spi.optional.PortletRegistryService;
 import org.apache.pluto.internal.impl.Configuration;
 import org.apache.pluto.internal.impl.PortletConfigImpl;
 import org.apache.pluto.internal.impl.PortletContextImpl;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.spi.optional.PortletContextService;
-import org.apache.pluto.spi.optional.PortletRegistryEvent;
-import org.apache.pluto.spi.optional.PortletRegistryListener;
-import org.apache.pluto.spi.optional.PortletRegistryService;
 import org.apache.pluto.util.ClasspathScanner;
 
 /**
@@ -148,7 +148,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletContextService#unregister(org.apache.pluto.internal.InternalPortletContext)
+     * @see org.apache.pluto.container.spi.optional.PortletContextService#unregister(org.apache.pluto.container.InternalPortletContext)
      */
     public void unregister(InternalPortletContext context) {
         portletContexts.remove(context.getApplicationName());
@@ -164,28 +164,28 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletRegistryService#getRegisteredPortletApplicationNames()
+     * @see org.apache.pluto.container.spi.optional.PortletRegistryService#getRegisteredPortletApplicationNames()
      */
     public Iterator<String> getRegisteredPortletApplicationNames() {
         return new HashSet<String>(portletContexts.keySet()).iterator();
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletContextService#getPortletContexts()
+     * @see org.apache.pluto.container.spi.optional.PortletContextService#getPortletContexts()
      */
     public Iterator<InternalPortletContext> getPortletContexts() {
         return new HashSet<InternalPortletContext>(portletContexts.values()).iterator();
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletContextService#getPortletContext(java.lang.String)
+     * @see org.apache.pluto.container.spi.optional.PortletContextService#getPortletContext(java.lang.String)
      */
     public InternalPortletContext getPortletContext(String applicationName) {
         return portletContexts.get(applicationName);
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletContextService#getPortletContext(org.apache.pluto.PortletWindow)
+     * @see org.apache.pluto.container.spi.optional.PortletContextService#getPortletContext(org.apache.pluto.container.PortletWindow)
      */
     public InternalPortletContext getPortletContext(PortletWindow portletWindow) throws PortletContainerException {
         return portletContexts.get(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
@@ -193,7 +193,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
 
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletContextService#getPortletConfig(java.lang.String, java.lang.String)
+     * @see org.apache.pluto.container.spi.optional.PortletContextService#getPortletConfig(java.lang.String, java.lang.String)
      */
     public InternalPortletConfig getPortletConfig(String applicationName, String portletName) throws PortletContainerException {
         InternalPortletConfig ipc = portletConfigs.get(applicationName + "/" + portletName);
@@ -206,7 +206,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletRegistryService#getPortlet(java.lang.String, java.lang.String)
+     * @see org.apache.pluto.container.spi.optional.PortletRegistryService#getPortlet(java.lang.String, java.lang.String)
      */
     public PortletDefinition getPortlet(String applicationName, String portletName) throws PortletContainerException {
         InternalPortletConfig ipc = portletConfigs.get(applicationName + "/" + portletName);
@@ -219,7 +219,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletRegistryService#getPortletApplication(java.lang.String)
+     * @see org.apache.pluto.container.spi.optional.PortletRegistryService#getPortletApplication(java.lang.String)
      */
     public PortletApplicationDefinition getPortletApplication(String applicationName) throws PortletContainerException {
         InternalPortletContext ipc = portletContexts.get(applicationName);
@@ -232,21 +232,21 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletContextService#getClassLoader(java.lang.String)
+     * @see org.apache.pluto.container.spi.optional.PortletContextService#getClassLoader(java.lang.String)
      */
     public ClassLoader getClassLoader(String applicationName){
     	return classLoaders.get(applicationName);
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletRegistryService#addPortletRegistryListener(org.apache.pluto.spi.optional.PortletRegistryListener)
+     * @see org.apache.pluto.container.spi.optional.PortletRegistryService#addPortletRegistryListener(org.apache.pluto.container.spi.optional.PortletRegistryListener)
      */
     public void addPortletRegistryListener(PortletRegistryListener listener) {
         registryListeners.add(listener);
     }
 
     /**
-     * @see org.apache.pluto.spi.optional.PortletRegistryService#removePortletRegistryListener(org.apache.pluto.spi.optional.PortletRegistryListener)
+     * @see org.apache.pluto.container.spi.optional.PortletRegistryService#removePortletRegistryListener(org.apache.pluto.container.spi.optional.PortletRegistryListener)
      */
     public void removePortletRegistryListener(PortletRegistryListener listener) {
         registryListeners.remove(listener);

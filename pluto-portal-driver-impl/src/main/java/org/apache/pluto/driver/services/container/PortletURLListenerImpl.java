@@ -26,9 +26,9 @@ import javax.portlet.ResourceURL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.om.portlet.Listener;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.PortletURLListener;
+import org.apache.pluto.container.om.portlet.Listener;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.spi.PortletURLListener;
 
 public class PortletURLListenerImpl implements PortletURLListener {
 	/** Logger. */

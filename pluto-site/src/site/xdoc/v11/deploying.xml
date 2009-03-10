@@ -36,8 +36,9 @@ limitations under the License.
             pluto assembler before being deployed. The assembly process injects
             pluto specific information for deployment. Specifically, a servlet
             and servlet mapping are added to the deployment descriptor (web.xml). 
-            This servlet (<code>org.apache.pluto.core.PortletServlet</code>) will be 
-            used to dispatch portlet requests to the portlet application.
+            This servlet (<code>org.apache.pluto.core.PortletServlet</code> for Pluto 1.x,
+            <code>org.apache.pluto.container.driver.PortletServlet</code> for Pluto 2.x) 
+            will be used to dispatch portlet requests to the portlet application.
           </li>
           <li>
             <b>Deployment</b>: After portlet applications are assembled properly

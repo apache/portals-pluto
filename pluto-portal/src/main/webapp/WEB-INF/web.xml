@@ -84,7 +84,7 @@ limitations under the License.
 
     <servlet>
         <servlet-name>AboutPortlet</servlet-name>
-        <servlet-class>org.apache.pluto.driver.PortletServlet</servlet-class>
+        <servlet-class>org.apache.pluto.container.driver.PortletServlet</servlet-class>
         <init-param>
             <param-name>portlet-name</param-name>
             <param-value>AboutPortlet</param-value>
@@ -94,7 +94,7 @@ limitations under the License.
 
   <servlet>
     <servlet-name>AdminPortlet</servlet-name>
-    <servlet-class>org.apache.pluto.driver.PortletServlet</servlet-class>
+    <servlet-class>org.apache.pluto.container.driver.PortletServlet</servlet-class>
     <init-param>
       <param-name>portlet-name</param-name>
       <param-value>AdminPortlet</param-value>
@@ -104,7 +104,7 @@ limitations under the License.
 
   <servlet>
     <servlet-name>PlutoPageAdmin</servlet-name>
-    <servlet-class>org.apache.pluto.driver.PortletServlet</servlet-class>
+    <servlet-class>org.apache.pluto.container.driver.PortletServlet</servlet-class>
     <init-param>
       <param-name>portlet-name</param-name>
       <param-value>PlutoPageAdmin</param-value>

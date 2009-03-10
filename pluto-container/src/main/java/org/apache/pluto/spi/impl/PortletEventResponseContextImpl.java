@@ -20,9 +20,9 @@ package org.apache.pluto.spi.impl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.spi.optional.PortletEventResponseContext;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.spi.optional.PortletEventResponseContext;
 
 /**
  * @version $Id$

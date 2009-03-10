@@ -19,7 +19,7 @@ package org.apache.pluto.internal.impl;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
-import org.apache.pluto.spi.optional.PortletRequestContext;
+import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * Implementation of the <code>javax.portlet.ActionRequest</code> interface.

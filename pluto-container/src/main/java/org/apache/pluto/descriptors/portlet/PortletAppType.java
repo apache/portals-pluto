@@ -37,18 +37,18 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.portlet.ContainerRuntimeOption;
-import org.apache.pluto.om.portlet.CustomPortletMode;
-import org.apache.pluto.om.portlet.CustomWindowState;
-import org.apache.pluto.om.portlet.EventDefinition;
-import org.apache.pluto.om.portlet.Filter;
-import org.apache.pluto.om.portlet.FilterMapping;
-import org.apache.pluto.om.portlet.Listener;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.om.portlet.PublicRenderParameter;
-import org.apache.pluto.om.portlet.SecurityConstraint;
-import org.apache.pluto.om.portlet.UserAttribute;
+import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.container.om.portlet.CustomPortletMode;
+import org.apache.pluto.container.om.portlet.CustomWindowState;
+import org.apache.pluto.container.om.portlet.EventDefinition;
+import org.apache.pluto.container.om.portlet.Filter;
+import org.apache.pluto.container.om.portlet.FilterMapping;
+import org.apache.pluto.container.om.portlet.Listener;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.PublicRenderParameter;
+import org.apache.pluto.container.om.portlet.SecurityConstraint;
+import org.apache.pluto.container.om.portlet.UserAttribute;
 
 /**
  * <p>Java class for portlet-appType complex type. <p>The following schema fragment specifies the expected content

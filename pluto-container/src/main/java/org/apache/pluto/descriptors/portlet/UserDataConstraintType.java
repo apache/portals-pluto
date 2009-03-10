@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.UserDataConstraint;
+import org.apache.pluto.container.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.UserDataConstraint;
 
 /**
  * The user-data-constraintType is used to indicate how data communicated between the client and portlet should be

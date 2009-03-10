@@ -18,8 +18,8 @@ package org.apache.pluto.driver;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
@@ -73,7 +73,7 @@ public class PortalDriverFilter implements Filter {
      * This method retrieves the portlet container instance
      * from the servlet context scope.
      *
-     * @see org.apache.pluto.PortletContainer
+     * @see org.apache.pluto.container.PortletContainer
      */
     public void init(FilterConfig filterConfig) throws ServletException {
         servletContext = filterConfig.getServletContext();

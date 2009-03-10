@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.Supports;
+import org.apache.pluto.container.om.portlet.Supports;
 
 /**
  * Supports indicates the portlet modes a portlet supports for a specific content type. All portlets must support the

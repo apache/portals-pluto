@@ -16,7 +16,7 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.container.InternalPortletPreference;
 
 /**
  * TODO: javadoc

@@ -22,12 +22,12 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.PortletContainerException;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.spi.PortalCallbackService;
+import org.apache.pluto.container.spi.optional.PortletPreferencesService;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURLParser;
-import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.spi.optional.PortletPreferencesService;
 
 /**
  * Interface defining a means for retrieving driver services

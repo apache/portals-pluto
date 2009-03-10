@@ -24,8 +24,8 @@ import java.io.InputStream;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

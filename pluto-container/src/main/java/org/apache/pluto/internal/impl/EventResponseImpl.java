@@ -21,8 +21,8 @@ import java.util.Map;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 
-import org.apache.pluto.spi.optional.PortletEventResponseContext;
-import org.apache.pluto.spi.optional.PortletStateAwareResponseContext;
+import org.apache.pluto.container.spi.optional.PortletEventResponseContext;
+import org.apache.pluto.container.spi.optional.PortletStateAwareResponseContext;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**

@@ -21,7 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.apache.pluto.PortletWindowID;
+import org.apache.pluto.container.PortletWindowID;
 
 /**
  * Wraps around the internal Object IDs. By holding both the string and the

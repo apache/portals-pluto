@@ -30,17 +30,17 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.portlet.ContainerRuntimeOption;
-import org.apache.pluto.om.portlet.Description;
-import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.EventDefinitionReference;
-import org.apache.pluto.om.portlet.InitParam;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.om.portlet.PortletInfo;
-import org.apache.pluto.om.portlet.Preferences;
-import org.apache.pluto.om.portlet.SecurityRoleRef;
-import org.apache.pluto.om.portlet.Supports;
+import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.container.om.portlet.Description;
+import org.apache.pluto.container.om.portlet.DisplayName;
+import org.apache.pluto.container.om.portlet.EventDefinitionReference;
+import org.apache.pluto.container.om.portlet.InitParam;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.PortletInfo;
+import org.apache.pluto.container.om.portlet.Preferences;
+import org.apache.pluto.container.om.portlet.SecurityRoleRef;
+import org.apache.pluto.container.om.portlet.Supports;
 
 /**
  * The portlet element contains the declarative data of a portlet. Used in: portlet-app <p>Java class for portletType

@@ -20,21 +20,21 @@ package org.apache.pluto.core;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.spi.optional.PortletActionResponseContext;
+import org.apache.pluto.container.spi.optional.PortletEventResponseContext;
+import org.apache.pluto.container.spi.optional.PortletRenderResponseContext;
+import org.apache.pluto.container.spi.optional.PortletRequestContext;
+import org.apache.pluto.container.spi.optional.PortletRequestContextService;
+import org.apache.pluto.container.spi.optional.PortletResourceRequestContext;
+import org.apache.pluto.container.spi.optional.PortletResourceResponseContext;
 import org.apache.pluto.spi.impl.PortletRenderResponseContextImpl;
 import org.apache.pluto.spi.impl.PortletActionResponseContextImpl;
 import org.apache.pluto.spi.impl.PortletEventResponseContextImpl;
 import org.apache.pluto.spi.impl.PortletRequestContextImpl;
 import org.apache.pluto.spi.impl.PortletResourceRequestContextImpl;
 import org.apache.pluto.spi.impl.PortletResourceResponseContextImpl;
-import org.apache.pluto.spi.optional.PortletActionResponseContext;
-import org.apache.pluto.spi.optional.PortletEventResponseContext;
-import org.apache.pluto.spi.optional.PortletRenderResponseContext;
-import org.apache.pluto.spi.optional.PortletRequestContext;
-import org.apache.pluto.spi.optional.PortletRequestContextService;
-import org.apache.pluto.spi.optional.PortletResourceRequestContext;
-import org.apache.pluto.spi.optional.PortletResourceResponseContext;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>

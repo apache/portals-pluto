@@ -39,9 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.apache.pluto.Constants;
-import org.apache.pluto.internal.RequestDispatcherPathInfo;
-import org.apache.pluto.spi.optional.PortletRequestContext;
+import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.RequestDispatcherPathInfo;
+import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>

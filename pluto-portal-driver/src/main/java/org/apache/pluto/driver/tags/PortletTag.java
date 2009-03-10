@@ -28,8 +28,8 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortalServletRequest;
@@ -43,7 +43,7 @@ import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
  * The portlet tag is used to render a portlet specified by the portlet ID.
  *
  * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest,javax.portlet.RenderResponse)
- * @see org.apache.pluto.PortletContainer#doRender(PortletWindow, HttpServletRequest, HttpServletResponse)
+ * @see org.apache.pluto.container.PortletContainer#doRender(PortletWindow, HttpServletRequest, HttpServletResponse)
  *
  */
 public class PortletTag extends BodyTagSupport {

@@ -31,7 +31,14 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.spi.optional.PortletActionResponseContext;
+import org.apache.pluto.container.spi.optional.PortletEnvironmentService;
+import org.apache.pluto.container.spi.optional.PortletEventResponseContext;
+import org.apache.pluto.container.spi.optional.PortletRenderResponseContext;
+import org.apache.pluto.container.spi.optional.PortletRequestContext;
+import org.apache.pluto.container.spi.optional.PortletResourceRequestContext;
+import org.apache.pluto.container.spi.optional.PortletResourceResponseContext;
 import org.apache.pluto.internal.impl.ActionRequestImpl;
 import org.apache.pluto.internal.impl.ActionResponseImpl;
 import org.apache.pluto.internal.impl.EventRequestImpl;
@@ -41,13 +48,6 @@ import org.apache.pluto.internal.impl.RenderRequestImpl;
 import org.apache.pluto.internal.impl.RenderResponseImpl;
 import org.apache.pluto.internal.impl.ResourceRequestImpl;
 import org.apache.pluto.internal.impl.ResourceResponseImpl;
-import org.apache.pluto.spi.optional.PortletActionResponseContext;
-import org.apache.pluto.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.spi.optional.PortletEventResponseContext;
-import org.apache.pluto.spi.optional.PortletRenderResponseContext;
-import org.apache.pluto.spi.optional.PortletRequestContext;
-import org.apache.pluto.spi.optional.PortletResourceRequestContext;
-import org.apache.pluto.spi.optional.PortletResourceResponseContext;
 
 public class DefaultPortletEnvironmentService implements PortletEnvironmentService
 {

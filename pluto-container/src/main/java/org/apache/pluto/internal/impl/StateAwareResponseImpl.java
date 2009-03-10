@@ -29,9 +29,9 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.spi.PortalCallbackService;
-import org.apache.pluto.spi.optional.PortletStateAwareResponseContext;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.spi.PortalCallbackService;
+import org.apache.pluto.container.spi.optional.PortletStateAwareResponseContext;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**

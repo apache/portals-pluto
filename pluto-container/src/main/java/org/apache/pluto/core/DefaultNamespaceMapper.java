@@ -16,8 +16,8 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.pluto.NamespaceMapper;
-import org.apache.pluto.PortletWindowID;
+import org.apache.pluto.container.NamespaceMapper;
+import org.apache.pluto.container.PortletWindowID;
 
 /**
  * Default implementation of <code>NamespaceMapper</code> interface.

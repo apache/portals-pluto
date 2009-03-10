@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.FilterMapping;
+import org.apache.pluto.container.om.portlet.FilterMapping;
 
 /**
  * Declaration of the filter mappings in this portlet application is done by using filter-mappingType. The container

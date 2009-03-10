@@ -40,11 +40,18 @@ import javax.xml.stream.FactoryConfigurationError;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.Constants;
-import org.apache.pluto.EventContainer;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.EventContainer;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.om.portlet.EventDefinition;
+import org.apache.pluto.container.om.portlet.EventDefinitionReference;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.spi.EventProvider;
+import org.apache.pluto.container.spi.optional.PortletContextService;
+import org.apache.pluto.container.spi.optional.PortletRegistryService;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
@@ -54,15 +61,8 @@ import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 import org.apache.pluto.internal.impl.EventImpl;
-import org.apache.pluto.om.portlet.EventDefinition;
-import org.apache.pluto.om.portlet.EventDefinitionReference;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.optional.PortletContextService;
-import org.apache.pluto.spi.EventProvider;
-import org.apache.pluto.spi.optional.PortletRegistryService;
 
-public class EventProviderImpl implements org.apache.pluto.spi.EventProvider,
+public class EventProviderImpl implements org.apache.pluto.container.spi.EventProvider,
 		Cloneable {
 
 	private static final int DEFAULT_MAPSIZE = 10;

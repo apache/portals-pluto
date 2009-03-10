@@ -24,8 +24,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.portlet.Preference;
-import org.apache.pluto.om.portlet.Preferences;
+import org.apache.pluto.container.om.portlet.Preference;
+import org.apache.pluto.container.om.portlet.Preferences;
 
 /**
  * Portlet persistent preference store. Used in: portlet <p>Java class for portlet-preferencesType complex type. <p>The

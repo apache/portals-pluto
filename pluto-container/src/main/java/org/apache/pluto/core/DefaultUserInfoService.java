@@ -22,9 +22,9 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.spi.optional.UserInfoService;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.spi.optional.UserInfoService;
 
 /**
  * UserInfo

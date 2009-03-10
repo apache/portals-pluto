@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
+import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.driver.config.AdminConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 

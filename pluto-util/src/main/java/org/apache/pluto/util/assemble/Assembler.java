@@ -44,7 +44,7 @@ public interface Assembler {
      * dispatching requests from the Pluto container to portlets. 
      */
     String DISPATCH_SERVLET_CLASS =
-        	"org.apache.pluto.driver.PortletServlet";
+        	"org.apache.pluto.container.driver.PortletServlet";
 
     /**
      * Assemble a web application into a portlet web application which is

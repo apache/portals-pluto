@@ -21,9 +21,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.spi.optional.PortletResponseContext;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.spi.optional.PortletResponseContext;
 import org.w3c.dom.Element;
 
 /**

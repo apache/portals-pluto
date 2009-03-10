@@ -26,14 +26,14 @@ import javax.portlet.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.internal.InternalPortletPreference;
+import org.apache.pluto.container.InternalPortletPreference;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.Preference;
+import org.apache.pluto.container.om.portlet.Preferences;
+import org.apache.pluto.container.spi.optional.PortletPreferencesService;
 import org.apache.pluto.internal.impl.PortletPreferenceImpl;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.Preference;
-import org.apache.pluto.om.portlet.Preferences;
-import org.apache.pluto.spi.optional.PortletPreferencesService;
 
 /**
  * Default implementation of the portlet preferences service. The portlet

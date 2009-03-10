@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.apache.pluto.om.portlet.Preference;
+import org.apache.pluto.container.om.portlet.Preference;
 
 /**
  * Persistent preference values that may be used for customization and personalization by the portlet. Used in:

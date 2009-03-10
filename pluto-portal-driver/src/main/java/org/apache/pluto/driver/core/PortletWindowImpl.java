@@ -21,11 +21,11 @@ import javax.portlet.WindowState;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletEntity;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.PortletWindowID;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletEntity;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.PortletWindowID;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.internal.impl.PortletEntityImpl;

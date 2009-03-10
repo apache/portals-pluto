@@ -37,14 +37,14 @@ import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.EventContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.container.EventContainer;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.om.portlet.EventDefinition;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.spi.optional.PortletContextService;
 import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.internal.impl.EventImpl;
-import org.apache.pluto.om.portlet.EventDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.optional.PortletContextService;
 
 public class PortletWindowThread extends Thread {
 	

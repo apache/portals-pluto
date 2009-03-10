@@ -28,11 +28,11 @@ import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.spi.PortletURLProvider;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
-import org.apache.pluto.spi.PortletURLProvider;
 
 /**
  *
@@ -94,7 +94,7 @@ public class PortletURLProviderImpl implements PortletURLProvider {
 
 
     /**
-     * @see org.apache.pluto.spi.PortletURLProvider#setParameters(java.util.Map)
+     * @see org.apache.pluto.container.spi.PortletURLProvider#setParameters(java.util.Map)
      */
     public void setParameters(Map<String, String[]> parameters) {
         Iterator<Map.Entry<String, String[]>> it = parameters.entrySet().iterator();

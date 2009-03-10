@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.pluto.om.portlet.DisplayName;
-import org.apache.pluto.om.portlet.SecurityConstraint;
-import org.apache.pluto.om.portlet.UserDataConstraint;
+import org.apache.pluto.container.om.portlet.DisplayName;
+import org.apache.pluto.container.om.portlet.SecurityConstraint;
+import org.apache.pluto.container.om.portlet.UserDataConstraint;
 
 /**
  * The security-constraintType is used to associate intended security constraints with one or more portlets. Used in:

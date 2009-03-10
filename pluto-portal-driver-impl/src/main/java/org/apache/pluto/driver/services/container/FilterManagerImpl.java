@@ -27,10 +27,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceServingPortlet;
 
-import org.apache.pluto.om.portlet.Filter;
-import org.apache.pluto.om.portlet.FilterMapping;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.spi.FilterManager;
+import org.apache.pluto.container.om.portlet.Filter;
+import org.apache.pluto.container.om.portlet.FilterMapping;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.spi.FilterManager;
 
 /**
  * Manage the initialization and doFilter {@link FilterChainImpl} for the filter which are

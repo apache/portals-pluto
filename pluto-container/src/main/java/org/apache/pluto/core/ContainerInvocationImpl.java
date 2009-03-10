@@ -17,9 +17,9 @@
  */
 package org.apache.pluto.core;
 
-import org.apache.pluto.ContainerInvocation;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
+import org.apache.pluto.container.ContainerInvocation;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletWindow;
 
 /**
  * <font style="color: red">Whenever possible,

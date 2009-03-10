@@ -30,11 +30,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.om.portlet.Supports;
-import org.apache.pluto.spi.ResourceURLProvider;
-import org.apache.pluto.spi.optional.PortletResponseContext;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.om.portlet.Supports;
+import org.apache.pluto.container.spi.ResourceURLProvider;
+import org.apache.pluto.container.spi.optional.PortletResponseContext;
 import org.apache.pluto.util.ArgumentUtility;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;

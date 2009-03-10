@@ -23,7 +23,7 @@ import java.util.Vector;
 import javax.portlet.PortletContext;
 import javax.portlet.filter.FilterConfig;
 
-import org.apache.pluto.om.portlet.InitParam;
+import org.apache.pluto.container.om.portlet.InitParam;
 
 /**
  *

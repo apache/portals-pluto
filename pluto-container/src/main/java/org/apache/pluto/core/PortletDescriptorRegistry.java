@@ -22,10 +22,10 @@ import java.util.WeakHashMap;
 
 import javax.servlet.ServletContext;
 
-import org.apache.pluto.PlutoConfigurationException;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.services.PortletAppDescriptorService;
+import org.apache.pluto.container.PlutoConfigurationException;
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.services.PortletAppDescriptorService;
 import org.apache.pluto.util.StringManager;
 
 /**

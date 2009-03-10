@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.apache.pluto.om.portlet.EventDefinitionReference;
+import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 
 /**
  * The event-definition-referenceType is used to reference events declared with the event-definition element at

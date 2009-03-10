@@ -24,12 +24,12 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.ContainerInvocation;
-import org.apache.pluto.PortletWindow;
-import org.apache.pluto.driver.PlutoServices;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletInfo;
-import org.apache.pluto.spi.optional.PortletInfoService;
+import org.apache.pluto.container.ContainerInvocation;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.driver.PlutoServices;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.PortletInfo;
+import org.apache.pluto.container.spi.optional.PortletInfoService;
 import org.apache.pluto.util.StringManager;
 
 /**

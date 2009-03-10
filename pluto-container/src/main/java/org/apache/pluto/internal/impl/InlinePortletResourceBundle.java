@@ -19,7 +19,7 @@ package org.apache.pluto.internal.impl;
 import java.util.ArrayList;
 import java.util.ListResourceBundle;
 
-import org.apache.pluto.Constants;
+import org.apache.pluto.container.Constants;
 
 /**
  * InlinePortletResourceBundle implementation which provides the

@@ -21,7 +21,7 @@ import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletRequest;
 
-import org.apache.pluto.spi.optional.PortletRequestContext;
+import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * <code>javax.portlet.EventRequest</code> implementation.

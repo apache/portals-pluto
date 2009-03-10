@@ -16,8 +16,8 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.PortletEntity;
-import org.apache.pluto.om.portlet.PortletDefinition;
+import org.apache.pluto.container.PortletEntity;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 
 /**
  * The PortletEntity encapsulates all data pertaining to a single portlet

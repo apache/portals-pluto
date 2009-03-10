@@ -32,13 +32,13 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.internal.InternalPortletConfig;
-import org.apache.pluto.internal.InternalPortletContext;
-import org.apache.pluto.om.portlet.ContainerRuntimeOption;
-import org.apache.pluto.om.portlet.EventDefinitionReference;
-import org.apache.pluto.om.portlet.InitParam;
-import org.apache.pluto.om.portlet.PortletDefinition;
-import org.apache.pluto.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.InternalPortletConfig;
+import org.apache.pluto.container.InternalPortletContext;
+import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
+import org.apache.pluto.container.om.portlet.EventDefinitionReference;
+import org.apache.pluto.container.om.portlet.InitParam;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 
 public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
 
