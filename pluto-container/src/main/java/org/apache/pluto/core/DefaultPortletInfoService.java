@@ -17,9 +17,9 @@
  */
 package org.apache.pluto.core;
 
+import org.apache.pluto.container.PortletInfoService;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletInfo;
-import org.apache.pluto.container.spi.optional.PortletInfoService;
 
 
 public class DefaultPortletInfoService implements PortletInfoService {

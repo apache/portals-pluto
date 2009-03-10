@@ -18,12 +18,12 @@ package org.apache.pluto.driver.services.container;
 
 import javax.portlet.PortalContext;
 
+import org.apache.pluto.container.CCPPProfileService;
+import org.apache.pluto.container.ContainerInvocationService;
 import org.apache.pluto.container.OptionalContainerServices;
+import org.apache.pluto.container.PortalCallbackService;
+import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.RequiredContainerServices;
-import org.apache.pluto.container.spi.CCPPProfileService;
-import org.apache.pluto.container.spi.ContainerInvocationService;
-import org.apache.pluto.container.spi.PortalCallbackService;
-import org.apache.pluto.container.spi.optional.PortletPreferencesService;
 import org.apache.pluto.core.PlutoContainerServices;
 import org.apache.pluto.driver.config.DriverConfiguration;
 

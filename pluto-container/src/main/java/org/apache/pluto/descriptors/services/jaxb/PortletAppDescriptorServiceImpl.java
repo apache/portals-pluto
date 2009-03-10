@@ -19,8 +19,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.container.services.PortletAppDescriptorService;
 import org.apache.pluto.descriptors.portlet.PortletAppType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

@@ -34,12 +34,12 @@ import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.apache.pluto.container.PortletResponseContext;
+import org.apache.pluto.container.PortletURLListener;
+import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
-import org.apache.pluto.container.spi.PortletURLListener;
-import org.apache.pluto.container.spi.PortletURLProvider;
-import org.apache.pluto.container.spi.optional.PortletResponseContext;
 import org.apache.pluto.util.ArgumentUtility;
 
 /**

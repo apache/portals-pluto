@@ -22,7 +22,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
-import org.apache.pluto.container.spi.optional.PortletResourceResponseContext;
+import org.apache.pluto.container.PortletResourceResponseContext;
 
 public class ResourceResponseImpl extends MimeResponseImpl implements ResourceResponse
 {

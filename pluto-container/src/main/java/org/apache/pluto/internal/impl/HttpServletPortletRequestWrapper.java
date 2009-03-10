@@ -40,8 +40,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.RequestDispatcherPathInfo;
-import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>

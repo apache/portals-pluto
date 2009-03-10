@@ -32,22 +32,22 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.InternalPortletConfig;
-import org.apache.pluto.container.InternalPortletContext;
+import org.apache.pluto.container.ContainerPortletConfig;
+import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.InitParam;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 
-public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
+public class PortletConfigImpl implements PortletConfig, ContainerPortletConfig {
 
     private static final Log LOG = LogFactory.getLog(PortletConfigImpl.class);
 
     /**
      * The Portlet Application Context within which we exist.
      */
-    protected InternalPortletContext portletContext;
+    protected ContainerPortletContext portletContext;
 
     /**
      * The portlet descriptor.
@@ -63,7 +63,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
     
     protected Map<String, String[]> containerRuntimeOptions;
 
-    public PortletConfigImpl(InternalPortletContext portletContext,
+    public PortletConfigImpl(ContainerPortletContext portletContext,
                              PortletDefinition portletDD,
                              PortletApplicationDefinition portletAppDD) {
         this.portletContext = portletContext;
@@ -75,7 +75,7 @@ public class PortletConfigImpl implements PortletConfig, InternalPortletConfig {
         return portlet.getPortletName();
     }
 
-    public InternalPortletContext getPortletContext() {
+    public ContainerPortletContext getPortletContext() {
         return portletContext;
     }
 

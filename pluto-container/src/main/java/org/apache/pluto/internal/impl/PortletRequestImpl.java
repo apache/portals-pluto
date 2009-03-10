@@ -42,16 +42,16 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.Constants;
-import org.apache.pluto.container.InternalPortletContext;
+import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEntity;
+import org.apache.pluto.container.PortletEnvironmentService;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.SecurityRoleRef;
 import org.apache.pluto.container.om.portlet.Supports;
-import org.apache.pluto.container.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.container.spi.optional.PortletRequestContext;
 import org.apache.pluto.util.ArgumentUtility;
 import org.apache.pluto.util.Enumerator;
 import org.apache.pluto.util.StringManager;
@@ -216,7 +216,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         return requestContext;
     }
 
-    protected InternalPortletContext getPortletContext()
+    protected ContainerPortletContext getPortletContext()
     {
         return requestContext.getPortletConfig().getPortletContext();
     }

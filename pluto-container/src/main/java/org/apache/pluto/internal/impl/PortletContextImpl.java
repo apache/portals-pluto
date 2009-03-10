@@ -32,7 +32,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.InternalPortletContext;
+import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.RequestDispatcherPathInfo;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
@@ -44,7 +44,7 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
  * @version 1.1
  */
 public class PortletContextImpl
-implements PortletContext, InternalPortletContext {
+implements PortletContext, ContainerPortletContext {
 	
 	/**
 	 *  Logger.

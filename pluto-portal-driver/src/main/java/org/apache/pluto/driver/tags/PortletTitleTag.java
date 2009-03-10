@@ -39,7 +39,7 @@ public class PortletTitleTag extends TagSupport {
      * Method invoked when the start tag is encountered. This method retrieves
      * the portlet title and print it to the page.
      * 
-	 * @see org.apache.pluto.services.PortalCallbackService#setTitle(HttpServletRequest, PortletWindow, String)
+	 * @see org.apache.pluto.container.services.PortalCallbackService#setTitle(HttpServletRequest, PortletWindow, String)
 	 * @see org.apache.pluto.driver.services.container.PortalCallbackServiceImpl#setTitle(HttpServletRequest, PortletWindow, String)
 	 * 
 	 * @throws JspException

@@ -38,13 +38,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletServlet;
-import org.apache.pluto.container.spi.FilterManager;
-import org.apache.pluto.container.spi.optional.PortletContextService;
-import org.apache.pluto.container.spi.optional.PortletInvokerService;
-import org.apache.pluto.container.spi.optional.PortletRequestContext;
 import org.apache.pluto.util.StringManager;
 
 /**

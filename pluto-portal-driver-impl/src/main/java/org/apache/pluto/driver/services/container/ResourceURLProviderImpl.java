@@ -19,7 +19,7 @@ package org.apache.pluto.driver.services.container;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.spi.ResourceURLProvider;
+import org.apache.pluto.container.ResourceURLProvider;
 
 public class ResourceURLProviderImpl implements ResourceURLProvider {
 

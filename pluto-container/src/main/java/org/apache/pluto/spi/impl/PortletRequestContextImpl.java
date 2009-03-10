@@ -25,10 +25,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.container.InternalPortletConfig;
+import org.apache.pluto.container.ContainerPortletConfig;
 import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.spi.optional.PortletRequestContext;
 
 /**
  * @version $Id$
@@ -88,7 +88,7 @@ public class PortletRequestContextImpl implements PortletRequestContext
     /* (non-Javadoc)
      * @see org.apache.pluto.spi.optional.PortletRequestContext#getPortletConfig()
      */
-    public InternalPortletConfig getPortletConfig()
+    public ContainerPortletConfig getPortletConfig()
     {
         // TODO Auto-generated method stub
         return null;
@@ -157,7 +157,7 @@ public class PortletRequestContextImpl implements PortletRequestContext
     /* (non-Javadoc)
      * @see org.apache.pluto.spi.optional.PortletRequestContext#init(org.apache.pluto.internal.InternalPortletConfig)
      */
-    public void init(InternalPortletConfig portletConfig)
+    public void init(ContainerPortletConfig portletConfig)
     {
         // TODO Auto-generated method stub
     }

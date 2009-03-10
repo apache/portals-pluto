@@ -19,14 +19,14 @@ package org.apache.pluto.driver.services.container;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.pluto.container.EventProvider;
+import org.apache.pluto.container.FilterManager;
+import org.apache.pluto.container.PortalCallbackService;
+import org.apache.pluto.container.PortletURLListener;
+import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.container.spi.EventProvider;
-import org.apache.pluto.container.spi.FilterManager;
-import org.apache.pluto.container.spi.PortalCallbackService;
-import org.apache.pluto.container.spi.PortletURLListener;
-import org.apache.pluto.container.spi.PortletURLProvider;
-import org.apache.pluto.container.spi.ResourceURLProvider;
 import org.apache.pluto.driver.AttributeKeys;
 
 /**

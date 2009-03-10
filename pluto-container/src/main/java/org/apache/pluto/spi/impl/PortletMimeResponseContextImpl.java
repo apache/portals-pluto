@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.spi.optional.PortletMimeResponseContext;
 
 /**
  * @version $Id$

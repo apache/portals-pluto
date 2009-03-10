@@ -20,9 +20,9 @@ package org.apache.pluto.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.pluto.container.spi.optional.AdministrativeRequestListener;
-import org.apache.pluto.container.spi.optional.PortalAdministrationService;
-import org.apache.pluto.container.spi.optional.PortletInvocationListener;
+import org.apache.pluto.container.driver.AdministrativeRequestListener;
+import org.apache.pluto.container.driver.PortalAdministrationService;
+import org.apache.pluto.container.driver.PortletInvocationListener;
 
 public class DefaultPortalAdministrationService implements PortalAdministrationService 
 {

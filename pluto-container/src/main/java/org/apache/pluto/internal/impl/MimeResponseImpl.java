@@ -29,9 +29,9 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
+import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
-import org.apache.pluto.container.spi.optional.PortletMimeResponseContext;
 
 public class MimeResponseImpl extends PortletResponseImpl implements MimeResponse
 {

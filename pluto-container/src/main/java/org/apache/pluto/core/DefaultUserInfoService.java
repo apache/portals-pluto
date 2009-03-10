@@ -24,7 +24,7 @@ import javax.portlet.PortletRequest;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.spi.optional.UserInfoService;
+import org.apache.pluto.container.UserInfoService;
 
 /**
  * UserInfo

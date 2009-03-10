@@ -31,12 +31,12 @@ import javax.portlet.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.InternalPortletPreference;
+import org.apache.pluto.container.PortletPreference;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
-import org.apache.pluto.container.spi.optional.PortletPreferencesService;
 import org.apache.pluto.util.StringManager;
 
 /**
@@ -68,13 +68,13 @@ public class PortletPreferencesImpl implements PortletPreferences {
      * Default portlet preferences retrieved from portlet.xml, and used for
      * resetting portlet preferences.
      */
-    private Map<String,InternalPortletPreference> defaultPreferences;
+    private Map<String,PortletPreference> defaultPreferences;
     
     /**
      * Current portlet preferences: key is the preference name as a string,
      * value is the PortletPreference instance.
      */
-    private final Map<String, InternalPortletPreference> preferences = new HashMap<String, InternalPortletPreference>();
+    private final Map<String, PortletPreference> preferences = new HashMap<String, PortletPreference>();
 
     // Constructor -------------------------------------------------------------
     
@@ -103,7 +103,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             // Put default portlet preferences into preferences map.
             defaultPreferences = preferencesService.getDefaultPreferences(window, request);
             if (defaultPreferences != null) {
-                for (InternalPortletPreference p : defaultPreferences.values()) {
+                for (PortletPreference p : defaultPreferences.values()) {
                     preferences.put(p.getName(), p.clone());
                 }
             }
@@ -113,7 +113,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             
             // Merge stored portlet preferences into preferences map.
             
-            Map<String,InternalPortletPreference> storedPreferences = preferencesService
+            Map<String,PortletPreference> storedPreferences = preferencesService
             		.getStoredPreferences(window, request);
             preferences.putAll(storedPreferences);
         	
@@ -134,7 +134,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             throw new IllegalArgumentException(
             		EXCEPTIONS.getString("error.null", "Preference key "));
         }
-        InternalPortletPreference pref = preferences.get(key);
+        PortletPreference pref = preferences.get(key);
         return (pref != null && pref.isReadOnly());
     }
 
@@ -156,7 +156,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             		EXCEPTIONS.getString("error.null", "Preference key "));
         }
         String[] values = null;
-        InternalPortletPreference pref = preferences.get(key);
+        PortletPreference pref = preferences.get(key);
         if (pref != null) {
             values = pref.getValues();
         }
@@ -171,7 +171,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             throw new ReadOnlyException(EXCEPTIONS.getString(
             		"error.preference.readonly", key));
         }
-        InternalPortletPreference pref = preferences.get(key);
+        PortletPreference pref = preferences.get(key);
         if (pref != null) {
             pref.setValues(new String[] { value });
         } else {
@@ -185,7 +185,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             throw new ReadOnlyException(EXCEPTIONS.getString(
             		"error.preference.readonly"));
         }
-        InternalPortletPreference pref = preferences.get(key);
+        PortletPreference pref = preferences.get(key);
         if (pref != null) {
             pref.setValues(values);
         } else {
@@ -200,7 +200,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
 
     public Map<String,String[]> getMap() {
         Map<String,String[]> map = new HashMap<String,String[]>();
-        for (InternalPortletPreference pref : preferences.values()) {
+        for (PortletPreference pref : preferences.values()) {
             map.put(pref.getName(),
                     pref.getValues() != null ? pref.getValues().clone() : null);
         }
@@ -214,7 +214,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
             		"error.preference.readonly", "Preference key "));
         }
         // Try to reset preference to the default values.
-        InternalPortletPreference p = defaultPreferences.get(key);
+        PortletPreference p = defaultPreferences.get(key);
         if (p != null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Resetting preference for key: " + key);
@@ -295,7 +295,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     public String toString() {
     	StringBuffer buffer = new StringBuffer();    	
     	buffer.append(getClass().getName()).append("[");
-    	for (InternalPortletPreference p : preferences.values()) {
+    	for (PortletPreference p : preferences.values()) {
             buffer.append(p.getName());
             buffer.append("(readOnly:").append(p.isReadOnly()).append(")=");
             String[] values = p.getValues();

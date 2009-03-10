@@ -20,9 +20,9 @@ import java.io.IOException;
 
 import javax.portlet.ActionResponse;
 
-import org.apache.pluto.container.spi.PortalCallbackService;
-import org.apache.pluto.container.spi.ResourceURLProvider;
-import org.apache.pluto.container.spi.optional.PortletActionResponseContext;
+import org.apache.pluto.container.PortalCallbackService;
+import org.apache.pluto.container.PortletActionResponseContext;
+import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.util.ArgumentUtility;
 
 public class ActionResponseImpl extends StateAwareResponseImpl implements ActionResponse

@@ -18,16 +18,16 @@ package org.apache.pluto.core;
 
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.OptionalContainerServices;
-import org.apache.pluto.container.services.PortletAppDescriptorService;
-import org.apache.pluto.container.spi.optional.PortalAdministrationService;
-import org.apache.pluto.container.spi.optional.PortletContextService;
-import org.apache.pluto.container.spi.optional.PortletEnvironmentService;
-import org.apache.pluto.container.spi.optional.PortletInfoService;
-import org.apache.pluto.container.spi.optional.PortletInvokerService;
-import org.apache.pluto.container.spi.optional.PortletPreferencesService;
-import org.apache.pluto.container.spi.optional.PortletRegistryService;
-import org.apache.pluto.container.spi.optional.PortletRequestContextService;
-import org.apache.pluto.container.spi.optional.UserInfoService;
+import org.apache.pluto.container.PortletAppDescriptorService;
+import org.apache.pluto.container.PortletEnvironmentService;
+import org.apache.pluto.container.PortletInfoService;
+import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.PortletRequestContextService;
+import org.apache.pluto.container.UserInfoService;
+import org.apache.pluto.container.driver.PortalAdministrationService;
+import org.apache.pluto.container.driver.PortletContextService;
+import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 
 /**

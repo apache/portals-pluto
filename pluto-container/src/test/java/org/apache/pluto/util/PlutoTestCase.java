@@ -19,8 +19,8 @@ package org.apache.pluto.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.driver.PlutoServices;
-import org.apache.pluto.container.services.ContainerServices;
 import org.apache.pluto.core.PlutoContainerServices;
 import org.jmock.MockObjectTestCase;
 

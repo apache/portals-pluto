@@ -16,14 +16,14 @@
  */
 package org.apache.pluto.internal.impl;
 
-import org.apache.pluto.container.InternalPortletPreference;
+import org.apache.pluto.container.PortletPreference;
 
 /**
  * TODO: javadoc
  * @version 1.0
  * @since Sep 20, 2004
  */
-public class PortletPreferenceImpl implements InternalPortletPreference {
+public class PortletPreferenceImpl implements PortletPreference {
 
 	// Private Member Variables ------------------------------------------------
 
@@ -89,7 +89,7 @@ public class PortletPreferenceImpl implements InternalPortletPreference {
         this.readOnly = readOnly;
     }
 
-    public InternalPortletPreference clone() {
+    public PortletPreference clone() {
     	PortletPreferenceImpl copy = new PortletPreferenceImpl();
     	copy.name = this.name;
     	if (this.values != null) {
