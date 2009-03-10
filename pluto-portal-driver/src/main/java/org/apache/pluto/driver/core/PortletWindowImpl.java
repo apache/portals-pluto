@@ -26,6 +26,7 @@ import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletEntity;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.PortletWindowID;
+import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.internal.impl.PortletEntityImpl;
@@ -63,7 +64,7 @@ public class PortletWindowImpl implements PortletWindow {
             {
                 applicationName = applicationName.substring(1);
             }
-            this.entity = new PortletEntityImpl(container.getOptionalContainerServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName()));
+            this.entity = new PortletEntityImpl(PlutoServices.getServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName()));
         }
         catch (PortletContainerException ex)
         {

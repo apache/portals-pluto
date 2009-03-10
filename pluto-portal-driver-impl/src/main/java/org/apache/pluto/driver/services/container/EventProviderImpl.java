@@ -46,6 +46,7 @@ import org.apache.pluto.container.EventProvider;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.om.portlet.EventDefinition;
@@ -272,9 +273,7 @@ public class EventProviderImpl implements org.apache.pluto.container.EventProvid
 		QName eventName = event.getQName();
 		Collection<PortletWindowConfig> portlets = getAllPortlets(driverConfig);
         if (portletRegistry == null) {
-            portletRegistry = ((PortletContainer) containerServletContext
-                    .getAttribute(AttributeKeys.PORTLET_CONTAINER))
-                    .getOptionalContainerServices().getPortletRegistryService();
+            portletRegistry = PlutoServices.getServices().getPortletRegistryService();
         }
 
 		for (PortletWindowConfig portlet : portlets) {
@@ -385,7 +384,7 @@ public class EventProviderImpl implements org.apache.pluto.container.EventProvid
 			EventContainer eventContainer, PortletWindowConfig config,
 			PortletWindow window, ServletContext containerServletContext) {
 		if (portletContextService == null) {
-			portletContextService = container.getOptionalContainerServices().getPortletContextService();
+			portletContextService = PlutoServices.getServices().getPortletContextService();
 		}
 		if (portletContextService != null){
 			String windowID = window.getId().getStringId();
@@ -530,9 +529,7 @@ public class EventProviderImpl implements org.apache.pluto.container.EventProvid
 		String portletName = PortletWindowConfig
 				.parsePortletName(portletWindow.getId().getStringId());
 		if (portletRegistry == null) {
-			portletRegistry = ((PortletContainer) servletContext
-					.getAttribute(AttributeKeys.PORTLET_CONTAINER))
-					.getOptionalContainerServices().getPortletRegistryService();
+			portletRegistry = PlutoServices.getServices().getPortletRegistryService();
 		}
 		List<? extends EventDefinitionReference> events = null;
 		try {

@@ -26,7 +26,6 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -35,7 +34,6 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.descriptors.portlet.CustomPortletModeType;
-import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -105,10 +103,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
         // per render request, store a reference to the registry instead of looking
         // it up each time.  Is this premature optimization?
         if (portletRegistry == null) {
-            portletRegistry = ((PortletContainer)servletContext
-                    .getAttribute(AttributeKeys.PORTLET_CONTAINER))
-                    .getOptionalContainerServices()
-                    .getPortletRegistryService();
+            portletRegistry = PlutoServices.getServices().getPortletRegistryService();
         }
 
         try {
@@ -160,7 +155,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
 
     public void init(ServletContext ctx) throws DriverConfigurationException {
         this.servletContext = ctx;
-        this.portletContextService = portletContextService = PlutoServices.getServices().getPortletContextService();
+        this.portletContextService = PlutoServices.getServices().getPortletContextService();
         loadPortalModes();
     }    
     
@@ -186,10 +181,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
 	public boolean isPortletManagedMode(String portletId, String mode) {
 
 		if (portletRegistry == null) {
-            portletRegistry = ((PortletContainer)servletContext
-                    .getAttribute(AttributeKeys.PORTLET_CONTAINER))
-                    .getOptionalContainerServices()
-                    .getPortletRegistryService();
+            portletRegistry = PlutoServices.getServices().getPortletRegistryService();
         }
         //
         
@@ -240,10 +232,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
 	        // per render request, store a reference to the registry instead of looking
 	        // it up each time.  Is this premature optimization?
 	        if (portletRegistry == null) {
-	            portletRegistry = ((PortletContainer)servletContext
-	                    .getAttribute(AttributeKeys.PORTLET_CONTAINER))
-	                    .getOptionalContainerServices()
-	                    .getPortletRegistryService();
+	            portletRegistry = PlutoServices.getServices().getPortletRegistryService();
 	        }
 
             if (portletRegistry == null) {
@@ -283,10 +272,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
 	        }
 	        String portletName = PortletWindowConfig.parsePortletName(portletId);
 	        if (portletRegistry == null) {
-	            portletRegistry = ((PortletContainer)servletContext
-	                    .getAttribute(AttributeKeys.PORTLET_CONTAINER))
-	                    .getOptionalContainerServices()
-	                    .getPortletRegistryService();
+	            portletRegistry = PlutoServices.getServices().getPortletRegistryService();
 	        }
 	        
 		return portletContextService.getPortletConfig(applicationName, portletName);

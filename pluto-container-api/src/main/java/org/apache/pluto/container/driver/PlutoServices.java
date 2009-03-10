@@ -32,9 +32,10 @@ import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.container.UserInfoService;
 
 
-public class PlutoServices implements ContainerServices
+public class PlutoServices implements ContainerServices, PortalDriverServices
 {
-    private ContainerServices provider;
+    private ContainerServices containerServices;
+    private PortalDriverServices driverServices;
     
     private static PlutoServices singleton;
 
@@ -43,83 +44,85 @@ public class PlutoServices implements ContainerServices
         return singleton;
     }
     
-    public PlutoServices(ContainerServices provider)
+    public PlutoServices(ContainerServices containerServices, PortalDriverServices driverServices)
     {
         singleton = this;
-        this.provider = provider;
+        this.containerServices = containerServices;
+        this.driverServices = driverServices;
     }
+    
     public CCPPProfileService getCCPPProfileService()
     {
-        return provider.getCCPPProfileService();
+        return containerServices.getCCPPProfileService();
     }
 
     public ContainerInvocationService getContainerInvocationService()
     {
-        return provider.getContainerInvocationService();
+        return containerServices.getContainerInvocationService();
     }
 
     public PortalCallbackService getPortalCallbackService()
     {
-        return provider.getPortalCallbackService();
+        return containerServices.getPortalCallbackService();
     }
 
     public PortalContext getPortalContext()
     {
-        return provider.getPortalContext();
+        return containerServices.getPortalContext();
     }
 
     public NamespaceMapper getNamespaceMapper()
     {
-        return provider.getNamespaceMapper();
+        return containerServices.getNamespaceMapper();
     }
 
     public PortalAdministrationService getPortalAdministrationService()
     {
-        return provider.getPortalAdministrationService();
+        return driverServices.getPortalAdministrationService();
     }
 
     public PortletEnvironmentService getPortletEnvironmentService()
     {
-        return provider.getPortletEnvironmentService();
+        return containerServices.getPortletEnvironmentService();
     }
 
     public PortletInfoService getPortletInfoService()
     {
-        return provider.getPortletInfoService();
+        return containerServices.getPortletInfoService();
     }
 
     public PortletInvokerService getPortletInvokerService()
     {
-        return provider.getPortletInvokerService();
+        return containerServices.getPortletInvokerService();
     }
 
     public PortletPreferencesService getPortletPreferencesService()
     {
-        return provider.getPortletPreferencesService();
+        return containerServices.getPortletPreferencesService();
     }
 
     public PortletRegistryService getPortletRegistryService()
     {
-        return provider.getPortletRegistryService();
+        return driverServices.getPortletRegistryService();
     }
 
     public UserInfoService getUserInfoService()
     {
-        return provider.getUserInfoService();
+        return containerServices.getUserInfoService();
     }
     
     public PortletContextService getPortletContextService()
     {
-        return provider.getPortletContextService();
+        return driverServices.getPortletContextService();
     }
 
     public PortletRequestContextService getPortletRequestContextService()
     {
-        return provider.getPortletRequestContextService();
+        return containerServices.getPortletRequestContextService();
     }
 
     public EventCoordinationService getEventCoordinationService()
     {
-        return provider.getEventCoordinationService();
+        return containerServices.getEventCoordinationService();
     }
 }

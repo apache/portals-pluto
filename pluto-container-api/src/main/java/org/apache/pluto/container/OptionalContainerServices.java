@@ -16,10 +16,6 @@
  */
 package org.apache.pluto.container;
 
-import org.apache.pluto.container.driver.PortalAdministrationService;
-import org.apache.pluto.container.driver.PortletContextService;
-import org.apache.pluto.container.driver.PortletRegistryService;
-
 /**
  * Defines the services necessary for integration between the Pluto Container
  * and a Portal.
@@ -58,24 +54,6 @@ public interface OptionalContainerServices {
     PortletEnvironmentService getPortletEnvironmentService();
 
     /**
-     * Returns the portlet registry services implementation
-     * used by the container.
-     *
-     * @return registry service implementation
-     */
-    PortletRegistryService getPortletRegistryService();
-
-
-    /**
-     * Returns the portlet context services implementation
-     * used by the container.
-     *
-     * @return registry service implementation
-     */
-    PortletContextService getPortletContextService();
-
-
-    /**
      * Returns an invoker for the specified PortletWindow.
      *
      * @return an invoker which can be used to service the indicated portlet.
@@ -89,15 +67,6 @@ public interface OptionalContainerServices {
      * @return portlet info service implementation.
      */
     PortletInfoService getPortletInfoService();
-
-    /**
-     * Returns the admin service implementation used by
-     * the container.
-     *
-     * @return portal admin service
-     */
-    PortalAdministrationService getPortalAdministrationService();
-
 
     /**
      * Returns the user info service implementation used

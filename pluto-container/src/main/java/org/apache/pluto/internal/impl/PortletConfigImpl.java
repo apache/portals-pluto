@@ -84,7 +84,7 @@ public class PortletConfigImpl implements PortletConfig, ContainerPortletConfig 
             LOG.debug("Resource Bundle requested: "+locale);
         }
         if (bundles == null) {
-            bundles = new ResourceBundleFactory(portlet);
+            bundles = new ResourceBundleFactory(portlet, portlet.getPortletInfo());
         }
         return bundles.getResourceBundle(locale);
     }

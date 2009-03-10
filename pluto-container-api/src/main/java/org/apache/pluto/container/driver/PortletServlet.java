@@ -44,8 +44,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.Constants;
-import org.apache.pluto.container.ContainerInvocation;
-import org.apache.pluto.container.ContainerInvocationService;
 import org.apache.pluto.container.ContainerPortletConfig;
 import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.FilterManager;
@@ -128,8 +126,6 @@ public class PortletServlet extends HttpServlet
 
     private PortletContextService contextService;
 
-    private ContainerInvocationService containerInvocationService;
-
     private boolean started = false;
     Timer   startTimer = null;
 
@@ -184,7 +180,6 @@ public class PortletServlet extends HttpServlet
         if (PlutoServices.getServices() != null)
         {
             contextService = PlutoServices.getServices().getPortletContextService();
-            containerInvocationService = PlutoServices.getServices().getContainerInvocationService();
             try
             {
                 ServletConfig sConfig = getServletConfig();
@@ -380,12 +375,7 @@ public class PortletServlet extends HttpServlet
             // The requested method is ADMIN: call handlers.
             else if (methodId == Constants.METHOD_ADMIN)
             {
-
-                ContainerInvocation inv = containerInvocationService
-                        .getInvocation();
-                PortalAdministrationService pas = inv.getPortletContainer()
-                        .getOptionalContainerServices()
-                        .getPortalAdministrationService();
+                PortalAdministrationService pas = PlutoServices.getServices().getPortalAdministrationService();
 
                 for (AdministrativeRequestListener l : pas.getAdministrativeRequestListeners())
                 {
@@ -444,10 +434,7 @@ public class PortletServlet extends HttpServlet
 
     protected void notify(PortletInvocationEvent event, boolean pre, Throwable e)
     {
-        ContainerInvocation inv = containerInvocationService.getInvocation();
-        PortalAdministrationService pas = inv.getPortletContainer()
-                .getOptionalContainerServices()
-                .getPortalAdministrationService();
+        PortalAdministrationService pas = PlutoServices.getServices().getPortalAdministrationService();
 
         for (PortletInvocationListener listener : pas.getPortletInvocationListeners())
         {

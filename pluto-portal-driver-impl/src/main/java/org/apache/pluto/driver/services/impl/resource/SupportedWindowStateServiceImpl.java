@@ -26,12 +26,11 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.om.portlet.CustomWindowState;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -232,26 +231,6 @@ public class SupportedWindowStateServiceImpl implements
 
     private PortletRegistryService getPortletRegistryService()
     {
-        PortletContainer container = ((PortletContainer)servletContext                    
-                .getAttribute(AttributeKeys.PORTLET_CONTAINER));
-        
-        if ( container == null )
-        {
-            // should never happen
-            final String msg = "Unable to obtain an instance of the container.";
-            LOG.fatal( msg );
-            throw new NullPointerException( msg );
-        }       
-        
-        if ( container.getOptionalContainerServices() == null ||
-             container.getOptionalContainerServices().getPortletRegistryService() == null )
-        {
-            final String msg = "Unable to obtain the portlet registry.  The supported window state " +
-                "service cannot support custom window states.";
-            LOG.info( msg );
-            return null;
-        }
-        
-        return container.getOptionalContainerServices().getPortletRegistryService();
+        return PlutoServices.getServices().getPortletRegistryService();
     }
 }

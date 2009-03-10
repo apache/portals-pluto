@@ -24,10 +24,6 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.ContainerInvocation;
-import org.apache.pluto.container.PortletInfoService;
-import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.PortletInfo;
 import org.apache.pluto.util.StringManager;
@@ -61,7 +57,7 @@ class ResourceBundleFactory {
      */
     private String bundleName;
 
-    public ResourceBundleFactory(PortletDefinition dd) {
+    public ResourceBundleFactory(PortletDefinition dd, PortletInfo windowInfo) {
         bundleName = dd.getResourceBundle();
         if(LOG.isDebugEnabled()) {
             LOG.debug("Resource Bundle Created: "+bundleName);
@@ -69,13 +65,11 @@ class ResourceBundleFactory {
 
         PortletInfo info = dd.getPortletInfo();
 
-        PortletInfoService infoService = getPortletInfoService();
-        PortletWindow window = getWindow();
-
+        
         if(info != null) {
-            String title = infoService == null ? info.getTitle() : infoService.getTitle(window);
-            String shortTitle = infoService == null ? info.getShortTitle() : infoService.getShortTitle(window);
-            String keywords = infoService == null ? info.getKeywords() : infoService.getKeywords(window);
+            String title = windowInfo == null ? info.getTitle() : windowInfo.getTitle();
+            String shortTitle = windowInfo == null ? info.getShortTitle() : windowInfo.getShortTitle();
+            String keywords = windowInfo == null ? info.getKeywords() : windowInfo.getKeywords();
 
             defaultBundle = new InlinePortletResourceBundle(
                 title, shortTitle, keywords
@@ -117,26 +111,5 @@ class ResourceBundleFactory {
             bundles.put(locale, defaultBundle);
         }
        return (ResourceBundle)bundles.get(locale);
-    }
-
-
-    private PortletInfoService getPortletInfoService() 
-    {
-        ContainerInvocation invocation = PlutoServices.getServices().getContainerInvocationService().getInvocation();
-        //ContainerInvocationImpl invocation = ContainerInvocationImpl.getInvocation();
-        if(invocation != null) {
-            return invocation.getPortletContainer().getOptionalContainerServices().getPortletInfoService();
-        }
-        return null;
-    }
-
-    private PortletWindow getWindow() 
-    {
-        ContainerInvocation invocation = PlutoServices.getServices().getContainerInvocationService().getInvocation();
-//        ContainerInvocationImpl invocation = ContainerInvocationImpl.getInvocation();
-        if(invocation != null) {
-            return invocation.getPortletWindow();
-        }
-        return null;
     }
 }

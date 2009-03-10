@@ -26,17 +26,18 @@ import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.container.UserInfoService;
 import org.apache.pluto.container.driver.PortalAdministrationService;
+import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.descriptors.services.jaxb.PortletAppDescriptorServiceImpl;
 
 /**
- * Default Optional Container Services implementation.
+ * Default Optional Container Services and Portal Driver Services implementation.
  *
  * @version 1.0
  * @since Sep 18, 2004
  */
-public class DefaultOptionalContainerServices implements OptionalContainerServices {
+public class DefaultOptionalContainerServices implements OptionalContainerServices, PortalDriverServices {
 
     private PortletPreferencesService portletPreferencesService;
     private PortletRegistryService portletRegistryService;
@@ -74,18 +75,18 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
      * be used. Otherwise, the default portlet preferences service will be used.
      * @param root  the root optional container services implementation.
      */
-    public DefaultOptionalContainerServices(OptionalContainerServices root) {
+    public DefaultOptionalContainerServices(OptionalContainerServices root, PortalDriverServices driverServices) {
         this();
         if (root.getPortletPreferencesService() != null) {
             portletPreferencesService = root.getPortletPreferencesService();
         }
 
-        if (root.getPortletRegistryService() != null) {
-            portletRegistryService = root.getPortletRegistryService();
+        if (driverServices.getPortletRegistryService() != null) {
+            portletRegistryService = driverServices.getPortletRegistryService();
         }
 
-        if (root.getPortletContextService() != null) {
-            portletContextService = root.getPortletContextService();
+        if (driverServices.getPortletContextService() != null) {
+            portletContextService = driverServices.getPortletContextService();
         }
 
         if(root.getPortletEnvironmentService() != null) {
@@ -108,8 +109,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
             portletInfoService = root.getPortletInfoService();
         }
 
-        if(root.getPortalAdministrationService() != null) {
-            portalAdministrationService = root.getPortalAdministrationService();
+        if(driverServices.getPortalAdministrationService() != null) {
+            portalAdministrationService = driverServices.getPortalAdministrationService();
         }
 
 		if(root.getUserInfoService() != null) {
