@@ -33,7 +33,6 @@ public class FilterManagerServiceImpl implements FilterManagerService
     public FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName,
                                           String lifeCycle)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new FilterManagerImpl(portletAppDD,portletName,lifeCycle);
     }
 }
