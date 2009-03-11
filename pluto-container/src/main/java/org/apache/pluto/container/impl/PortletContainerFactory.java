@@ -22,8 +22,8 @@ import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.RequiredContainerServices;
+import org.apache.pluto.container.driver.impl.DefaultOptionalContainerServices;
 import org.apache.pluto.container.util.ArgumentUtility;
-import org.apache.pluto.driver.impl.DefaultOptionalContainerServices;
 
 /**
  * Factory used to create new PortletContainer instances.  The factor constructs

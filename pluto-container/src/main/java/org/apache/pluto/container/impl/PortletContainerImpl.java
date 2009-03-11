@@ -53,7 +53,6 @@ import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.RequiredContainerServices;
-import org.apache.pluto.container.util.StringManager;
 
 
 /**
@@ -70,9 +69,6 @@ public class PortletContainerImpl implements PortletContainer,
     
     
     // Private Member Variables ------------------------------------------------
-    
-    private static final StringManager EXCEPTIONS = StringManager.getManager(
-    		    		PortletContainerImpl.class.getPackage().getName());
     
     /** The portlet container name. */
     private final String name;

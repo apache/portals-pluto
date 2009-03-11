@@ -183,7 +183,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     public void setValues(String key, String[] values) throws ReadOnlyException {
         if (isReadOnly(key)) {
             throw new ReadOnlyException(EXCEPTIONS.getString(
-            		"error.preference.readonly"));
+            		"error.preference.readonly", key));
         }
         PortletPreference pref = preferences.get(key);
         if (pref != null) {
@@ -211,7 +211,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     	// Read-only preferences cannot be reset.
         if (isReadOnly(key)) {
             throw new ReadOnlyException(EXCEPTIONS.getString(
-            		"error.preference.readonly", "Preference key "));
+            		"error.preference.readonly", key));
         }
         // Try to reset preference to the default values.
         PortletPreference p = defaultPreferences.get(key);

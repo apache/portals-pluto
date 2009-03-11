@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 import junit.framework.Assert;
 
-import org.apache.pluto.container.impl.ResourceBundleFactory;
+import org.apache.pluto.container.driver.impl.ResourceBundleFactory;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.PortletInfo;
 import org.apache.pluto.container.om.portlet.impl.PortletType;

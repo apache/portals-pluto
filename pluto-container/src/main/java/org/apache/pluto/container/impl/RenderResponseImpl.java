@@ -24,7 +24,6 @@ import javax.portlet.RenderResponse;
 
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.util.ArgumentUtility;
-import org.apache.pluto.container.util.StringUtils;
 
 
 /**
@@ -84,12 +83,17 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
     public void setContentType(String contentType)
     {
         ArgumentUtility.validateNotNull("contentType", contentType);
-        String mimeType = StringUtils.getMimeTypeWithoutEncoding(contentType);
-        if (!isValidContentType(mimeType))
+        int index =contentType.indexOf(';');
+        if (index != -1)
         {
-            throw new IllegalArgumentException("Specified content type '" + mimeType + "' is not supported.");
+            contentType = contentType.substring(0, index);
         }
-        responseContext.setContentType(mimeType);
+        contentType.trim();
+        if (!isValidContentType(contentType))
+        {
+            throw new IllegalArgumentException("Specified content type '" + contentType + "' is not supported.");
+        }
+        responseContext.setContentType(contentType);
     }
     
     public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)

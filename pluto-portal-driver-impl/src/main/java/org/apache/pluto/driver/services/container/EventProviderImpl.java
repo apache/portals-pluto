@@ -49,7 +49,6 @@ import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
-import org.apache.pluto.container.impl.EventImpl;
 import org.apache.pluto.container.om.portlet.EventDefinition;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;

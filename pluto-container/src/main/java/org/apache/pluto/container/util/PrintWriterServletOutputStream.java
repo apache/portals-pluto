@@ -40,17 +40,6 @@ public class PrintWriterServletOutputStream extends ServletOutputStream {
      */
     private String characterEncoding;
 
-    /**
-     * Construct a ServletOutputStream that coordinates output using a base
-     * ServletOutputStream and a PrintWriter that is wrapped on top of that
-     * OutputStream.
-     * @deprecated use {@link PrintWriterServletOutputStream(PrintWriter,String)}
-     */
-    public PrintWriterServletOutputStream(PrintWriter pO) {
-        super();
-        mPrintWriter = pO;
-    }
-
     public PrintWriterServletOutputStream(PrintWriter pw, String encoding)
     {
         super();
@@ -141,5 +130,4 @@ public class PrintWriterServletOutputStream extends ServletOutputStream {
     public void println() throws IOException {
         mPrintWriter.println();
     }
-
 }

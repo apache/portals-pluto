@@ -144,9 +144,9 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         catch(Exception me) {
             throw new IOException(me.getLocalizedMessage());
         }
-        if (app.getValue() instanceof org.apache.pluto.container.portlet10.impl.PortletAppType)
+        if (app.getValue() instanceof org.apache.pluto.container.om.portlet10.impl.PortletAppType)
         {
-            return ((org.apache.pluto.container.portlet10.impl.PortletAppType)app.getValue()).upgrade();
+            return ((org.apache.pluto.container.om.portlet10.impl.PortletAppType)app.getValue()).upgrade();
         }       
         return (PortletApplicationDefinition)app.getValue();
     }
@@ -261,7 +261,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
             if (PortletApplicationDefinition.JSR_168_VERSION.equals(app.getVersion()))
             {                
                 jc = JAXBContext.newInstance("org.apache.pluto.container.om.portlet10.impl");                
-                src = new org.apache.pluto.container.portlet10.impl.PortletAppType(app);
+                src = new org.apache.pluto.container.om.portlet10.impl.PortletAppType(app);
             }
             else
             {
