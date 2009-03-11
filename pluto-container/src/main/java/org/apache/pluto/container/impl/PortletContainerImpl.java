@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.Constants;
-import org.apache.pluto.container.EventContainer;
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletActionResponseContext;
@@ -61,8 +60,8 @@ import org.apache.pluto.container.RequiredContainerServices;
  * @version 1.0
  * @since Sep 18, 2004
  */
-public class PortletContainerImpl implements PortletContainer,
-	EventContainer {
+public class PortletContainerImpl implements PortletContainer
+{
 
     /** Internal logger. */
     private static final Log LOG = LogFactory.getLog(PortletContainerImpl.class);
@@ -273,7 +272,7 @@ public class PortletContainerImpl implements PortletContainer,
                 List<Event> events = responseContext.getEvents();
                 if (!events.isEmpty())
                 {
-                    requiredContainerServices.getEventCoordinationService().processEvents(portletWindow, events);
+                    requiredContainerServices.getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
                 }
             }
 
@@ -406,9 +405,11 @@ public class PortletContainerImpl implements PortletContainer,
      * 
      * @see {@link javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest, javax.portlet.EventResponse)
      */
-    public void fireEvent(HttpServletRequest request, HttpServletResponse response,
-    		PortletWindow portletWindow, Event event) 
-    		throws PortletException, IOException, PortletContainerException
+    public void doEvent(PortletWindow portletWindow,
+                        HttpServletRequest request,
+                        HttpServletResponse response,
+                        Event event) 
+    throws PortletException, IOException, PortletContainerException
     {
     	ensureInitialized();
 
@@ -445,7 +446,7 @@ public class PortletContainerImpl implements PortletContainer,
 
         if (events != null && !events.isEmpty())
         {
-            requiredContainerServices.getEventCoordinationService().processEvents(portletWindow, events);
+            requiredContainerServices.getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
         }
 
         debugWithName("Portlet event: "+ event.getName() +" fired for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
@@ -484,16 +485,6 @@ public class PortletContainerImpl implements PortletContainer,
     	}
     }
     
-    /**
-     * Prints a message at ERROR level with the container name prefix.
-     * @param message  log message.
-     */
-    private void errorWithName(String message) {
-        if (LOG.isErrorEnabled()) {
-            LOG.info("Portlet Container [" + name + "]: " + message);
-        }
-    }
-
 	/**
 	 * Checks if render parameter are already cleared,
 	 * bye storing/reading an ID in the request
