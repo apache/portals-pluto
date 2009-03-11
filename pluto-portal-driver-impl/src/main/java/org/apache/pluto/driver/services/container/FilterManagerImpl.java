@@ -52,10 +52,6 @@ public class FilterManagerImpl implements FilterManager{
 		initFilterChain();
 	}
 	
-	public static FilterManager getFilterManager(PortletApplicationDefinition portletApp, String portletName, String lifeCycle){
-		return new FilterManagerImpl(portletApp,portletName,lifeCycle);
-	}
-	
 	private void initFilterChain(){
 		List<? extends FilterMapping> filterMappingList = portletApp.getFilterMappings();
 		if (filterMappingList!= null){
