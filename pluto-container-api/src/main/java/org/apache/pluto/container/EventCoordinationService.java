@@ -20,6 +20,8 @@ package org.apache.pluto.container;
 import java.util.List;
 
 import javax.portlet.Event;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -28,5 +30,5 @@ import javax.portlet.Event;
  */
 public interface EventCoordinationService
 {
-    void processEvents(PortletWindow portletWindow, List<Event> events);
+    void processEvents(PortletContainer container, PortletWindow portletWindow, HttpServletRequest request, HttpServletResponse response, List<Event> events);
 }

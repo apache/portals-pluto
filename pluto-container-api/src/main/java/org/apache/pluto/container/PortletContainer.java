@@ -18,6 +18,7 @@ package org.apache.pluto.container;
 
 import java.io.IOException;
 
+import javax.portlet.Event;
 import javax.portlet.PortletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -133,11 +134,32 @@ public interface PortletContainer {
      * @param portletWindow   the portlet window
      * @param servletRequest  the servlet request
      * @param servletResponse the servlet response
-     * @throws PortletContainerException if the request can not be fullfilled.
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
      */
     void doAdmin(PortletWindow portletWindow,
                  HttpServletRequest servletRequest,
                  HttpServletResponse servletResponse)
+    throws PortletException, IOException, PortletContainerException;
+
+    /**
+     * Indicates that an event should be fired in the current request and calls
+     * the processEvent method of this portlet.
+     * @param portletWindow   the portlet Window
+     * @param request         the servlet request
+     * @param response        the servlet response
+     * @param event The event.
+     * @throws PortletException          if one portlet has trouble fulfilling
+     *                                   the request
+     * @throws PortletContainerException if the portlet container implementation
+     *                                   has trouble fulfilling the request
+     */
+    public void doEvent(PortletWindow portletWindow, 
+                        HttpServletRequest request,
+                        HttpServletResponse response,
+                        Event event)
     throws PortletException, IOException, PortletContainerException;
 
     /**
