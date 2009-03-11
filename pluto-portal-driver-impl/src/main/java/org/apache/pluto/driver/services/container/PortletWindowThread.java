@@ -37,7 +37,7 @@ import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.EventContainer;
+import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -50,11 +50,12 @@ public class PortletWindowThread extends Thread {
 	/** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletWindowThread.class);
     
-	private EventProviderImpl eventProvider;
-	
+    private PortletContainer container;
+    
 	private PortletWindow portletWindow;
 	
-	private EventContainer eventContainer;
+	private HttpServletRequest request;
+    private HttpServletResponse response;
 	
 	/** PortletRegistryService used to obtain PortletApplicationConfig objects */
 	private PortletContextService portletContextService;
@@ -62,11 +63,15 @@ public class PortletWindowThread extends Thread {
 	private List<Event> events = new ArrayList<Event>();
 
 	public PortletWindowThread(ThreadGroup group, String name,
-			EventProviderImpl eventProvider, PortletWindow window, EventContainer eventContainer, PortletContextService portletContextService) {
+	                           PortletContainer container, PortletWindow window, 
+	                           HttpServletRequest request, HttpServletResponse response, 
+	                           PortletContextService portletContextService)
+	{
 		super(group, name);
-		this.eventProvider = eventProvider;
+        this.request = request;
+        this.response = response;
 		this.portletWindow = window;
-		this.eventContainer = eventContainer;
+		this.container = container;
 		this.portletContextService = portletContextService;
 	}
 
@@ -77,8 +82,7 @@ public class PortletWindowThread extends Thread {
 	public void run() {
 		super.run();
 		while (events.size() > 0) {
-			HttpServletRequest req = new PortalServletRequest(eventProvider.getRequest(), this.portletWindow);
-			HttpServletResponse res = eventProvider.getResponse();
+			HttpServletRequest req = new PortalServletRequest(this.request, this.portletWindow);
 			try {
 //				synchronized (this) {
 					Event event = events.remove(0);
@@ -126,7 +130,7 @@ public class PortletWindowThread extends Thread {
 			        		throw new IllegalStateException(e);
 						}
 			        }					
-					eventContainer.fireEvent(req, res, portletWindow, event);	
+					container.doEvent(portletWindow, req, response, event);	
 //				}
 			} catch (PortletException e) {
 				LOG.warn(e);
@@ -142,7 +146,7 @@ public class PortletWindowThread extends Thread {
 		this.events.add(event);	
 	}
 
-	private EventDefinition getEventDefintion(QName name) throws PortletContainerException {
+	private EventDefinition getEventDefintion(QName name) {
 		PortletApplicationDefinition appDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
 		for (EventDefinition def : appDD.getEventDefinitions()){
 			if (def.getQName() != null){
@@ -157,5 +161,4 @@ public class PortletWindowThread extends Thread {
 		}
 		throw new IllegalStateException();
 	}
-
 }
