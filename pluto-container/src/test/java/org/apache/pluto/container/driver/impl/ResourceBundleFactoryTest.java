@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.internal.impl;
+package org.apache.pluto.container.driver.impl;
 
 import java.util.ListResourceBundle;
 import java.util.Locale;
@@ -26,7 +26,7 @@ import org.apache.pluto.container.driver.impl.ResourceBundleFactory;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.PortletInfo;
 import org.apache.pluto.container.om.portlet.impl.PortletType;
-import org.apache.pluto.util.PlutoTestCase;
+import org.apache.pluto.container.util.PlutoTestCase;
 
 /**
  * Unit test for the resource bundle factory.

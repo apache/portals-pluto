@@ -15,7 +15,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.apache.pluto.descriptors.services.jaxb;
+package org.apache.pluto.container.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
