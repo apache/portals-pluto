@@ -27,7 +27,6 @@ import org.apache.pluto.container.PortletEntity;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.PortletWindowID;
 import org.apache.pluto.container.driver.PlutoServices;
-import org.apache.pluto.container.impl.PortletEntityImpl;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 

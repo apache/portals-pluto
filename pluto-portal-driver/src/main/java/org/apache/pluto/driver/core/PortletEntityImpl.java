@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.impl;
+package org.apache.pluto.driver.core;
 
 import org.apache.pluto.container.PortletEntity;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
