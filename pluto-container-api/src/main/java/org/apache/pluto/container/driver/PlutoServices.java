@@ -19,7 +19,6 @@ package org.apache.pluto.container.driver;
 import javax.portlet.PortalContext;
 
 import org.apache.pluto.container.CCPPProfileService;
-import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.FilterManagerService;
 import org.apache.pluto.container.NamespaceMapper;
@@ -27,13 +26,12 @@ import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
-import org.apache.pluto.container.PortletURLListener;
+import org.apache.pluto.container.PortletURLListenerService;
 import org.apache.pluto.container.UserInfoService;
 
 
-public class PlutoServices implements ContainerServices, PortalDriverServices
+public class PlutoServices implements PortalDriverServices
 {
-    private ContainerServices containerServices;
     private PortalDriverServices driverServices;
     
     private static PlutoServices singleton;
@@ -43,26 +41,25 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
         return singleton;
     }
     
-    public PlutoServices(ContainerServices containerServices, PortalDriverServices driverServices)
+    public PlutoServices(PortalDriverServices driverServices)
     {
         singleton = this;
-        this.containerServices = containerServices;
         this.driverServices = driverServices;
     }
     
     public CCPPProfileService getCCPPProfileService()
     {
-        return containerServices.getCCPPProfileService();
+        return driverServices.getCCPPProfileService();
     }
 
     public PortalContext getPortalContext()
     {
-        return containerServices.getPortalContext();
+        return driverServices.getPortalContext();
     }
 
     public NamespaceMapper getNamespaceMapper()
     {
-        return containerServices.getNamespaceMapper();
+        return driverServices.getNamespaceMapper();
     }
 
     public PortalAdministrationService getPortalAdministrationService()
@@ -72,17 +69,17 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
 
     public PortletEnvironmentService getPortletEnvironmentService()
     {
-        return containerServices.getPortletEnvironmentService();
+        return driverServices.getPortletEnvironmentService();
     }
 
     public PortletInvokerService getPortletInvokerService()
     {
-        return containerServices.getPortletInvokerService();
+        return driverServices.getPortletInvokerService();
     }
 
     public PortletPreferencesService getPortletPreferencesService()
     {
-        return containerServices.getPortletPreferencesService();
+        return driverServices.getPortletPreferencesService();
     }
 
     public PortletRegistryService getPortletRegistryService()
@@ -92,7 +89,7 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
 
     public UserInfoService getUserInfoService()
     {
-        return containerServices.getUserInfoService();
+        return driverServices.getUserInfoService();
     }
     
     public PortletContextService getPortletContextService()
@@ -102,21 +99,21 @@ public class PlutoServices implements ContainerServices, PortalDriverServices
 
     public PortletRequestContextService getPortletRequestContextService()
     {
-        return containerServices.getPortletRequestContextService();
+        return driverServices.getPortletRequestContextService();
     }
 
     public EventCoordinationService getEventCoordinationService()
     {
-        return containerServices.getEventCoordinationService();
+        return driverServices.getEventCoordinationService();
     }
 
     public FilterManagerService getFilterManagerService()
     {
-        return containerServices.getFilterManagerService();
+        return driverServices.getFilterManagerService();
     }
 
-    public PortletURLListener getPortletURLListener()
+    public PortletURLListenerService getPortletURLListenerService()
     {
-        return containerServices.getPortletURLListener();
+        return driverServices.getPortletURLListenerService();
     }
 }

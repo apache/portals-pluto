@@ -30,12 +30,13 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURL;
+import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import org.apache.pluto.container.PortletMimeResponseContext;
-import org.apache.pluto.container.PortletURLListener;
+import org.apache.pluto.container.PortletURLListenerService;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
@@ -164,10 +165,23 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         filtering = true;
         try
         {
-            PortletURLListener portletURLFilterListener = responseContext.getContainer().getRequiredContainerServices().getPortletURLListener();
+            PortletURLListenerService service = responseContext.getContainer().getRequiredContainerServices().getPortletURLListenerService();
             PortletApplicationDefinition portletApp = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
-            portletURLFilterListener.callListener(portletApp, this, urlProvider.isActionURL(), urlProvider.isResourceURL());
-
+            for (PortletURLGenerationListener listener : service.getPortletURLGenerationListeners(portletApp))
+            {
+                if (urlProvider.isActionURL())
+                {
+                    listener.filterActionURL(this);
+                }
+                else if (urlProvider.isResourceURL())
+                {
+                    listener.filterResourceURL(this);
+                }
+                else
+                {
+                    listener.filterRenderURL(this);
+                }
+            }
         }
         finally
         {

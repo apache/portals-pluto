@@ -38,7 +38,6 @@ public interface RequiredContainerServices {
     /**
      * Returns the portlet request context service implementation
      * used by the container
-     * @return
      */
     PortletRequestContextService getPortletRequestContextService();
 
@@ -48,8 +47,7 @@ public interface RequiredContainerServices {
     public FilterManagerService getFilterManagerService(); 
     
     /**
-     * Returns the PortletURLListener which calls the Filter for the URL.
-     * @return
+     * Returns the PortletURLListenerService
      */
-    public PortletURLListener getPortletURLListener();
+    public PortletURLListenerService getPortletURLListenerService();
 }

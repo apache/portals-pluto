@@ -25,7 +25,6 @@ import javax.servlet.ServletContext;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
-import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
@@ -51,7 +50,6 @@ public class DriverConfigurationImpl
 
     // Container Services
     private PortletPreferencesService portletPreferencesService;
-    private PortletRegistryService registryService;
     
     public DriverConfigurationImpl(PortalURLParser portalUrlParser,
                                    PropertyConfigService propertyService,
@@ -192,24 +190,6 @@ public class DriverConfigurationImpl
     public RenderConfigService getRenderConfigService(){
     	return renderService;
     }
-
-    public PortletRegistryService getPortletRegistryService()
-    {
-        return registryService;
-    }
-    
-    public void setPortletRegistryService(PortletRegistryService registryService)
-    {
-        this.registryService = registryService;
-    }
-    
-    /**
-     * Standard Getter.
-     * @return the configuration data of all configured portlet applications.
-     */
-//    public Collection getPortletApplications() {
-//        return registryService.getPortletApplications();
-//    }
 
     public Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException {
     	return supportedModesService.getSupportedPortletModes(portletId);

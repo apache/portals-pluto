@@ -52,12 +52,13 @@ limitations under the License.
 	
     <bean id="RequiredContainerServices"
           name="OptionalContainerServices"
-          class="org.apache.pluto.driver.services.container.ContainerServicesImpl"
+          class="org.apache.pluto.container.driver.impl.PlutoDriverServicesImpl"
           singleton="true">
       <constructor-arg><ref bean="PortalContext"/></constructor-arg>
-      <constructor-arg><ref bean="DriverConfiguration"/></constructor-arg>
-      <constructor-arg><ref bean="CCPPProfileService"/></constructor-arg>
-      <constructor-arg><ref bean="ContainerInvocationService"/></constructor-arg>
+      <constructor-arg><ref bean="PortletRequestContextService"/></constructor-arg>
+      <constructor-arg><ref bean="EventCoordinationService"/></constructor-arg>
+      <constructor-arg><ref bean="FilterManagerService"/></constructor-arg>
+      <constructor-arg><ref bean="PortletURLListenerService"/></constructor-arg>
     </bean>
 
     <bean id="PortalContext"
@@ -80,15 +81,8 @@ limitations under the License.
       <constructor-arg><ref bean="SupportedModesService"/></constructor-arg>
       <constructor-arg><ref bean="SupportedWindowStatesService"/></constructor-arg>
 
-      <!-- === Container Services === -->
-      <constructor-arg><ref bean="PortalCallbackService"/></constructor-arg>
-
-      <!--  Optional Container Services -->
-      <property name="portletRegistryService"><ref bean="PortletRegistryService"/></property>
-      
       <!--
       <property name="portletPreferencesService"><ref bean="PortletPreferencesService"/></property>
-      <property name="userAttributeService"><ref bean="UserAttributeService"/></property>
       -->
     </bean>
 
@@ -134,30 +128,21 @@ limitations under the License.
     <!-- ================================================ -->
     <!-- Container Services injected into  Configuration  -->
     <!-- ================================================ -->
-    <bean id="PortalCallbackService"
-          class="org.apache.pluto.driver.services.container.PortalCallbackServiceImpl"
-          singleton="true">
-          <constructor-arg><ref bean="PropertyManager"/></constructor-arg>          
-    </bean>
-
-    <bean id="PropertyManager"
-          class="org.apache.pluto.core.DefaultPropertyManager"
+    <bean id="PortletRequestContextService"
+          class="org.apache.pluto.driver.services.container.PortletRequestContextServiceImpl"
           singleton="true">
     </bean>
-    
-    <bean id="CCPPProfileService"
-    	  class="org.apache.pluto.core.DummyCCPPProfileServiceImpl"
-    	  singleton="true">
+    <bean id="EventCoordinationService"
+          class="org.apache.pluto.driver.services.container.EventCoordinationServiceImpl"
+          singleton="true">
+    </bean>
+    <bean id="FilterManagerService"
+          class="org.apache.pluto.driver.services.container.FilterManagerServiceImpl"
+          singleton="true">
+    </bean>
+    <bean id="PortletURLListenerService"
+          class="org.apache.pluto.driver.services.container.PortletURLListenerServiceImpl"
+          singleton="true">
     </bean>
 
-	<bean id='ContainerInvocationService'
-	      class='org.apache.pluto.core.ContainerInvocationServiceImpl'
-	      singleton='true'>
-	</bean>
-	
-	<bean id="PortletRegistryService"
-		  class="org.apache.pluto.core.PortletContextManager"
-		  singleton="true">
-    </bean>
-    
 </beans>

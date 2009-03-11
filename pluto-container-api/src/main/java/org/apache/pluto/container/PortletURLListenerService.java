@@ -14,17 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.pluto.container;
 
-package org.apache.pluto.container.driver;
+import java.util.List;
 
-import org.apache.pluto.container.ContainerServices;
+import javax.portlet.PortletURLGenerationListener;
 
-/**
- * Combines the ContainerServices and the additional services needed for the Pluto Portal Driver to integrate with the Pluto Container
- *
- * @since 2.0
- * @version $Id$
- */
-public interface PortalDriverServices extends ContainerServices, PortalDriverContainerServices
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+
+public interface PortletURLListenerService
 {
+    List<PortletURLGenerationListener> getPortletURLGenerationListeners(PortletApplicationDefinition app);
 }

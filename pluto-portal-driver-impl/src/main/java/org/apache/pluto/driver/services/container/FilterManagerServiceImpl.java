@@ -15,16 +15,25 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.container.driver;
+package org.apache.pluto.driver.services.container;
 
-import org.apache.pluto.container.ContainerServices;
+import org.apache.pluto.container.FilterManager;
+import org.apache.pluto.container.FilterManagerService;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
- * Combines the ContainerServices and the additional services needed for the Pluto Portal Driver to integrate with the Pluto Container
- *
- * @since 2.0
  * @version $Id$
+ *
  */
-public interface PortalDriverServices extends ContainerServices, PortalDriverContainerServices
+public class FilterManagerServiceImpl implements FilterManagerService
 {
+    /* (non-Javadoc)
+     * @see org.apache.pluto.container.FilterManagerService#getFilterManager(org.apache.pluto.container.om.portlet.PortletApplicationDefinition, java.lang.String, java.lang.String)
+     */
+    public FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName,
+                                          String lifeCycle)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

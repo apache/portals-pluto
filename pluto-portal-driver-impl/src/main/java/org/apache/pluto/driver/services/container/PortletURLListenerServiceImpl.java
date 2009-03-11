@@ -14,12 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container;
 
-import javax.portlet.BaseURL;
+package org.apache.pluto.driver.services.container;
 
+import java.util.List;
+
+import javax.portlet.PortletURLGenerationListener;
+
+import org.apache.pluto.container.PortletURLListenerService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
-public interface PortletURLListener {
-	public void callListener(PortletApplicationDefinition portletAppDD, BaseURL baseURL, boolean isAction, boolean isResource);
+/**
+ * @version $Id$
+ *
+ */
+public class PortletURLListenerServiceImpl implements PortletURLListenerService
+{
+    /* (non-Javadoc)
+     * @see org.apache.pluto.container.PortletURLListenerService#getPortletURLGenerationListeners(org.apache.pluto.container.om.portlet.PortletApplicationDefinition)
+     */
+    public List<PortletURLGenerationListener> getPortletURLGenerationListeners(PortletApplicationDefinition app)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

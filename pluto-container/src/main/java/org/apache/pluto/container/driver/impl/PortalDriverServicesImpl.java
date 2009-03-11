@@ -19,7 +19,6 @@ package org.apache.pluto.container.driver.impl;
 import javax.portlet.PortalContext;
 
 import org.apache.pluto.container.CCPPProfileService;
-import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.FilterManagerService;
 import org.apache.pluto.container.NamespaceMapper;
@@ -28,137 +27,117 @@ import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
-import org.apache.pluto.container.PortletURLListener;
+import org.apache.pluto.container.PortletURLListenerService;
 import org.apache.pluto.container.RequiredContainerServices;
 import org.apache.pluto.container.UserInfoService;
 import org.apache.pluto.container.driver.PortalAdministrationService;
+import org.apache.pluto.container.driver.PortalDriverContainerServices;
 import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.impl.PortletEnvironmentServiceImpl;
 
 
-public class PlutoContainerServices implements ContainerServices, PortalDriverServices
+public class PortalDriverServicesImpl implements PortalDriverServices
 {
     /*
      * required services
      */
     private PortalContext context;
+    private EventCoordinationService eventCoordinationService;
+    private PortletRequestContextService portletRequestContextService;
     private CCPPProfileService ccppProfileService;
+    private FilterManagerService filterManagerService;
+    private PortletURLListenerService portletURLListenerService;
     
     /*
      * optional services
      */
     private PortletPreferencesService portletPreferencesService;
-    private PortletRegistryService portletRegistryService;
-    private PortletContextService portletContextService;
     private PortletInvokerService portletInvokerService;
-    private PortletRequestContextService portletRequestContextService;
     private PortletEnvironmentService portletEnvironmentService;
-    private PortalAdministrationService portalAdministrationService;
     private UserInfoService userInfoService;
     private NamespaceMapper namespaceMapper;
-    private EventCoordinationService eventCoordinationService;
-    private FilterManagerService filterManagerService;
-    private PortletURLListener portletURLListener;
 
+    /*
+     * portal driver services
+     */
+    private PortletContextService portletContextService;
+    private PortletRegistryService portletRegistryService;
+    private PortalAdministrationService portalAdministrationService;
         
-    public PlutoContainerServices()
-    {
-        createDefaultPortalDriverServices();
-        createDefaultRequiredServices();
-        createDefaultOptionalServices();
-    }
-    
-    public PlutoContainerServices(RequiredContainerServices required, OptionalContainerServices optional)
-    {
-        this(required.getPortalContext(), required.getPortletRequestContextService(),
-             required.getEventCoordinationService(), required.getFilterManagerService(), 
-             required.getPortletURLListener(), optional,
-             optional instanceof PortalDriverServices ? (PortalDriverServices) optional : null);
-    }
-
-    public PlutoContainerServices(PortalContext context,
-            PortletRequestContextService portletRequestContextService,
-            FilterManagerService filterManagerService,
-            PortletURLListener portletURLListener,
-            EventCoordinationService eventCoordinationService)
+    public PortalDriverServicesImpl(PortalContext context,
+                                  PortletRequestContextService portletRequestContextService,
+                                  EventCoordinationService eventCoordinationService,
+                                  FilterManagerService filterManagerService,
+                                  PortletURLListenerService portletURLListenerService)
     {
         this.context = context;
         this.eventCoordinationService = eventCoordinationService;
-        this.createDefaultPortalDriverServices();
-        this.createDefaultOptionalServices();
+        this.portletRequestContextService = portletRequestContextService;
+        this.filterManagerService = filterManagerService;
+        this.portletURLListenerService = portletURLListenerService;
+
+        createDefaultServicesIfNeeded();
     }            
-            
-    public PlutoContainerServices(PortalContext context,
+                                  
+    public PortalDriverServicesImpl(PortalContext context,
             PortletRequestContextService portletRequestContextService,
             EventCoordinationService eventCoordinationService,
             FilterManagerService filterManagerService,
-            PortletURLListener portletURLListener,
+            PortletURLListenerService portletURLListenerService,
             OptionalContainerServices optionalServices,
-            PortalDriverServices portalDriverServices)  
+            PortletContextService portletContextService,
+            PortletRegistryService portletRegistryService,
+            PortalAdministrationService portalAdministrationService)  
     {
         this.context = context;
+        this.eventCoordinationService = eventCoordinationService;
         this.portletRequestContextService = portletRequestContextService;
         this.filterManagerService = filterManagerService;
-        this.portletURLListener = portletURLListener;
-        ccppProfileService = optionalServices.getCCPPProfileService();
-        if (ccppProfileService == null)
-            ccppProfileService = new DummyCCPPProfileServiceImpl();
-        this.eventCoordinationService = eventCoordinationService;
-        
-        portletPreferencesService = optionalServices.getPortletPreferencesService();
-        if (portletPreferencesService == null)
-            portletPreferencesService =  new DefaultPortletPreferencesService();
-        portletRegistryService = portalDriverServices != null ? portalDriverServices.getPortletRegistryService() : null;
-        if (portletRegistryService == null)
-            portletRegistryService = new PortletContextManager();
-        portletContextService = portalDriverServices != null ? portalDriverServices.getPortletContextService() : null;
-        if (portletContextService == null && portletRegistryService instanceof PortletContextService)
-        {
-            portletContextService = (PortletContextService)portletRegistryService;
-        }
-        portletInvokerService = optionalServices.getPortletInvokerService();
-        if (portletInvokerService == null)
-            portletInvokerService = new DefaultPortletInvokerService(portletContextService);
+        this.portletURLListenerService = portletURLListenerService;
+
         portletEnvironmentService = optionalServices.getPortletEnvironmentService();
-        if (portletEnvironmentService == null)
-            portletEnvironmentService = new PortletEnvironmentServiceImpl();
-        portalAdministrationService = portalDriverServices != null ? portalDriverServices.getPortalAdministrationService() : null;
-        if (portalAdministrationService == null)
-            portalAdministrationService = new DefaultPortalAdministrationService();
+        ccppProfileService = optionalServices.getCCPPProfileService();
+        portletPreferencesService = optionalServices.getPortletPreferencesService();
+        portletInvokerService = optionalServices.getPortletInvokerService();
         userInfoService = optionalServices.getUserInfoService();
-        if (userInfoService == null)
-            userInfoService = new DefaultUserInfoService();
         namespaceMapper = optionalServices.getNamespaceMapper();
-        if (namespaceMapper == null)
-            namespaceMapper = new DefaultNamespaceMapper();
+        
+        this.portletContextService = portletContextService;
+        this.portletRegistryService = portletRegistryService;        
+        this.portalAdministrationService = portalAdministrationService;
+
+        createDefaultServicesIfNeeded();
     }
     
-    protected void createDefaultPortalDriverServices()
+    public PortalDriverServicesImpl(RequiredContainerServices required, OptionalContainerServices optional)
     {
-        portletRegistryService = new PortletContextManager();
-        portletContextService = (PortletContextManager)portletRegistryService;
-        portalAdministrationService = new DefaultPortalAdministrationService();
-    }
-    
-    protected void createDefaultOptionalServices() 
-    {
-        ccppProfileService = new DummyCCPPProfileServiceImpl();
-        portletPreferencesService = new DefaultPortletPreferencesService();
-        portletInvokerService = new DefaultPortletInvokerService(portletContextService);
-        portletEnvironmentService = new PortletEnvironmentServiceImpl();
-        userInfoService = new DefaultUserInfoService();
-        namespaceMapper = new DefaultNamespaceMapper();
+        this(required.getPortalContext(), required.getPortletRequestContextService(),
+             required.getEventCoordinationService(), required.getFilterManagerService(), 
+             required.getPortletURLListenerService(), optional, null, null, null);
     }
 
-    protected void createDefaultRequiredServices() 
+    public PortalDriverServicesImpl(RequiredContainerServices required, OptionalContainerServices optional, PortalDriverContainerServices driver)
     {
-        this.context = null; // TODO
-        this.portletRequestContextService = null; // TODO
-        this.eventCoordinationService = null; // TODO
-        this.filterManagerService = null; // TODO
-        this.portletURLListener = null; // TODO
+        this(required.getPortalContext(), required.getPortletRequestContextService(),
+             required.getEventCoordinationService(), required.getFilterManagerService(), 
+             required.getPortletURLListenerService(), optional, 
+             driver.getPortletContextService(), driver.getPortletRegistryService(), 
+             driver.getPortalAdministrationService());
+    }
+
+    protected void createDefaultServicesIfNeeded()
+    {
+        portletRegistryService = portletRegistryService == null ? new PortletContextManager() : portletRegistryService;
+        portletContextService = portletContextService == null ? (PortletContextManager)portletRegistryService : portletContextService;
+        portalAdministrationService = portalAdministrationService == null ? new DefaultPortalAdministrationService() : portalAdministrationService;
+        ccppProfileService = ccppProfileService == null ? new DummyCCPPProfileServiceImpl() : ccppProfileService;
+        portletPreferencesService = portletPreferencesService == null ? new DefaultPortletPreferencesService() : portletPreferencesService;
+        portletInvokerService = portletInvokerService == null ? new DefaultPortletInvokerService(portletContextService) : portletInvokerService;
+        portletEnvironmentService = portletEnvironmentService == null ? new PortletEnvironmentServiceImpl() : portletEnvironmentService;
+        userInfoService = userInfoService == null ? new DefaultUserInfoService() : userInfoService;
+        namespaceMapper = namespaceMapper == null ? new DefaultNamespaceMapper() : namespaceMapper;
     }
     
     public PortalContext getPortalContext() 
@@ -240,8 +219,8 @@ public class PlutoContainerServices implements ContainerServices, PortalDriverSe
         return filterManagerService;
     }
 
-    public PortletURLListener getPortletURLListener()
+    public PortletURLListenerService getPortletURLListenerService()
     {
-        return portletURLListener;
+        return portletURLListenerService;
     }    
 }

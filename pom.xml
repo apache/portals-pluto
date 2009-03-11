@@ -161,6 +161,18 @@
             <organizationUrl>http://www.library.jhu.edu</organizationUrl>
         </developer>
 
+        <developer>
+            <name>Ate Douma</name>
+            <id>ate</id>
+            <email>ate#aT#apache.d0t.org</email>
+            <timezone>+2</timezone>
+            <organization>Hippo</organization>
+            <organizationUrl>http://www.onehippo.com</organizationUrl>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+    </developer>
+
     </developers>
 
 

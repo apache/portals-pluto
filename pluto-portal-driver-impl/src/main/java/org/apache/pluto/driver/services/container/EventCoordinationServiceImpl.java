@@ -15,16 +15,26 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.container.driver;
+package org.apache.pluto.driver.services.container;
 
-import org.apache.pluto.container.ContainerServices;
+import java.util.List;
+
+import javax.portlet.Event;
+
+import org.apache.pluto.container.EventCoordinationService;
+import org.apache.pluto.container.PortletWindow;
 
 /**
- * Combines the ContainerServices and the additional services needed for the Pluto Portal Driver to integrate with the Pluto Container
- *
- * @since 2.0
  * @version $Id$
+ *
  */
-public interface PortalDriverServices extends ContainerServices, PortalDriverContainerServices
+public class EventCoordinationServiceImpl implements EventCoordinationService
 {
+    /* (non-Javadoc)
+     * @see org.apache.pluto.container.EventCoordinationService#processEvents(org.apache.pluto.container.PortletWindow, java.util.List)
+     */
+    public void processEvents(PortletWindow portletWindow, List<Event> events)
+    {
+        // TODO Auto-generated method stub
+    }
 }
