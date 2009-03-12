@@ -16,10 +16,10 @@
  */
 package org.apache.pluto.container.driver.impl;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
 import org.apache.pluto.container.util.ArgumentUtility;
 
@@ -30,7 +30,7 @@ import org.apache.pluto.container.util.ArgumentUtility;
  */
 class CombinedPortletResourceBundle extends ResourceBundle {
 
-    private HashMap contents = new HashMap();
+    private HashMap<String, Object> contents = new HashMap<String, Object>();
 
     public CombinedPortletResourceBundle(InlinePortletResourceBundle inlineBundle, ResourceBundle resourceBundle) {
        dump(inlineBundle);
@@ -42,12 +42,12 @@ class CombinedPortletResourceBundle extends ResourceBundle {
         return contents.get(key);
     }
 
-    public Enumeration getKeys() {
-       return new Vector(contents.keySet()).elements();
+    public Enumeration<String> getKeys() {
+       return Collections.enumeration(contents.keySet());
     }
 
     private void dump(ResourceBundle bundle) {
-        Enumeration e = bundle.getKeys();
+        Enumeration<String> e = bundle.getKeys();
         while(e.hasMoreElements()) {
             String value = e.nextElement().toString();
             contents.put(value, bundle.getObject(value));

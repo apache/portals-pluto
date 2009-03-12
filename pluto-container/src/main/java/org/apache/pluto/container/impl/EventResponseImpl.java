@@ -16,13 +16,10 @@
 
 package org.apache.pluto.container.impl;
 
-import java.util.Map;
-
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 
 import org.apache.pluto.container.PortletEventResponseContext;
-import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.util.ArgumentUtility;
 
 /**
@@ -46,7 +43,6 @@ public class EventResponseImpl extends StateAwareResponseImpl implements EventRe
 	public void setRenderParameters(EventRequest request)
 	{
         ArgumentUtility.validateNotNull("request", request);
-	    Map<String, String[]> parameters = ((PortletStateAwareResponseContext)getResponseContext()).getRenderParameters();
-	    parameters.putAll(request.getParameterMap());
+        setRenderParameters(request.getParameterMap());
 	}
 }

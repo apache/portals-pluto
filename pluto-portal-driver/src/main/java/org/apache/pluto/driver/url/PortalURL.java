@@ -40,7 +40,7 @@ public interface PortalURL extends Cloneable {
     String getRenderPath();
 
     void addParameter(PortalURLParameter param);
-
+    
     void addPublicRenderParametersNew(Map<String, String[]> parameters);
 
     Collection<PortalURLParameter> getParameters();
@@ -48,7 +48,11 @@ public interface PortalURL extends Cloneable {
     public void addPublicParameterCurrent(String name, String[] values);
 
     public Map<String, String[]> getPublicParameters();
-
+    
+    Map<String, String[]> getNewPublicParameters();
+    
+    Map<String, String[]> getPrivateParameters();
+    
     void setActionWindow(String actionWindow);
 
     String getActionWindow();
@@ -67,13 +71,19 @@ public interface PortalURL extends Cloneable {
 
     void clearParameters(String windowId);
 
+    /**
+     * 
+     * @deprecated use toURL(boolean) instead
+     */
     String toString();
+    
+    String toURL(boolean absolute);
 
     String getServerURI();
 
     String getServletPath();
 
-    Object clone();
+    PortalURL clone();
 
     String getResourceWindow();
 
@@ -82,4 +92,12 @@ public interface PortalURL extends Cloneable {
 	PageConfig getPageConfig(ServletContext servletContext);
 
 	void addPublicParameterActionResourceParameter(String parameterName, String value);
+	
+	void setCacheability(String cacheLevel);
+	String getCacheability();
+	
+	void setResourceID(String resourceID);
+	String getResourceID();
+	
+	void merge(PortalURL url, String windowId);	
 }

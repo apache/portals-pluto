@@ -53,7 +53,10 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String PORTLET_ID = "pd";
     private static final String ACTION = "ac";
     private static final String RESOURCE = "rs";
+    private static final String RESOURCE_ID = "ri";
+    private static final String CACHE_LEVEL = "cl";
     private static final String RENDER_PARAM = "rp";
+    private static final String PRIVATE_PARAM = "pp";
     private static final String PUBLIC_RENDER_PARAM = "sp";
     private static final String WINDOW_STATE = "ws";
     private static final String PORTLET_MODE = "pm";
@@ -110,8 +113,9 @@ public class PortalURLParserImpl implements PortalURLParser {
         String contextPath = request.getContextPath();
         String servletName = request.getServletPath();
 
+        String urlBase = request.getScheme()+"://" + request.getServerName() + ":" + request.getServerPort();
         // Construct portal URL using info retrieved from servlet request.
-        PortalURL portalURL =  new RelativePortalURLImpl(contextPath, servletName, this);
+        PortalURL portalURL =  new RelativePortalURLImpl(urlBase, contextPath, servletName, this);
 
         // Support added for filter.  Should we seperate into a different impl?
         String pathInfo = request.getPathInfo();
@@ -120,7 +124,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                 int idx = servletName.indexOf(".jsp")+".jsp".length();
                 pathInfo = servletName.substring(idx);
                 servletName = servletName.substring(0, idx);
-                portalURL = new RelativePortalURLImpl(contextPath, servletName, this);
+                portalURL = new RelativePortalURLImpl(urlBase, contextPath, servletName, this);
             } else {
                 return portalURL;
             }
@@ -150,6 +154,14 @@ public class PortalURLParserImpl implements PortalURLParser {
         	else if (token.startsWith(PREFIX + ACTION)) {
         		portalURL.setActionWindow(decodeControlParameter(token)[0]);
         	}
+            // Cacheability definition: portalURL.setCacheability().
+            else if (token.startsWith(PREFIX + CACHE_LEVEL)) {
+                portalURL.setCacheability(decodeControlParameter(token)[0]);
+            }
+            // ResourceID definition: portalURL.setResourceID().
+            else if (token.startsWith(PREFIX + RESOURCE_ID)) {
+                portalURL.setResourceID(decodeControlParameter(token)[0]);
+            }
         	// Window state definition: portalURL.setWindowState().
         	else if (token.startsWith(PREFIX + WINDOW_STATE)) {
         		String[] decoded = decodeControlParameter(token);
@@ -172,7 +184,19 @@ public class PortalURLParserImpl implements PortalURLParser {
 
 
         	}
-        	else{ // besser if PREFIX + PUBLIC_PARAM
+            else if (token.startsWith(PREFIX + PRIVATE_PARAM)){
+                String value = null;
+                if (st.hasMoreTokens()) {
+                    value = st.nextToken();
+                }
+                PortalURLParameter param = decodePublicParameter(token, value);
+                if( param != null )
+                {
+                    //set private (Resource) parameter in portalURL
+                    portalURL.getPrivateParameters().put(param.getName(), param.getValues());
+                }
+            }
+        	else if (token.startsWith(PREFIX + PUBLIC_RENDER_PARAM)){
         		String value = null;
         		if (st.hasMoreTokens()) {
         			value = st.nextToken();
@@ -183,8 +207,6 @@ public class PortalURLParserImpl implements PortalURLParser {
         			//set public parameter in portalURL
     	    		portalURL.addPublicParameterCurrent(param.getName(), param.getValues());
         		}
-
-
         	}
         }
         if (renderPath.length() > 0) {
@@ -224,6 +246,20 @@ public class PortalURLParserImpl implements PortalURLParser {
         	buffer.append("/");
         	buffer.append(PREFIX).append(ACTION)
         			.append(encodeCharacters(portalURL.getActionWindow()));
+        }
+        
+        if (portalURL.getResourceWindow() != null)
+        {
+            if (portalURL.getCacheability() != null)
+            {
+                buffer.append("/");
+                buffer.append(PREFIX).append(CACHE_LEVEL).append(encodeCharacters(portalURL.getCacheability()));
+            }
+            if (portalURL.getResourceID() != null)
+            {
+                buffer.append("/");
+                buffer.append(PREFIX).append(RESOURCE_ID).append(encodeCharacters(portalURL.getResourceID()));
+            }
         }
 
         // Append portlet mode definitions.
@@ -284,7 +320,22 @@ public class PortalURLParserImpl implements PortalURLParser {
 
         encode(buffer);
 
-
+        if (portalURL.getResourceWindow() != null)
+        {
+            Map<String, String[]> privateParamList = portalURL.getPrivateParameters();
+            if (privateParamList!=null){
+                for (Iterator iter = privateParamList.keySet().iterator();iter.hasNext();){
+                    String paramname = (String)iter.next();
+                    String[] tmp = privateParamList.get(paramname);
+                    String valueString = encodeMultiValues(tmp);
+                    if (valueString.length()>0){
+                        buffer.append("/").append(encodePublicParamname(PRIVATE_PARAM, paramname));
+                        buffer.append("/").append(valueString);
+                    }
+                }
+            }
+        }
+        
         Map<String, String[]> publicParamList = portalURL.getPublicParameters();
         if (publicParamList!=null){
 	        for (Iterator iter = publicParamList.keySet().iterator();iter.hasNext();){

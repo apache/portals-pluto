@@ -19,7 +19,6 @@ package org.apache.pluto.container;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.Event;
 import javax.portlet.PortletMode;
@@ -36,7 +35,7 @@ public interface PortletStateAwareResponseContext extends PortletResponseContext
     WindowState getWindowState();
     void setWindowState(WindowState windowState);
     Map<String, String[]> getRenderParameters();
-    Set<String> getRemovedPublicRenderParameters();
+    Map<String, String[]> getPublicRenderParameters();
     EventProvider getEventProvider();
     List<Event> getEvents();
 }

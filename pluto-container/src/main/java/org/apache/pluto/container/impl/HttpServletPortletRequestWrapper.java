@@ -531,8 +531,8 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
                 {
                     String servletPath = !included ? forwardedPathInfo.getServletPath() : getServletPath();
                     if (servletPath != null)
-                    {
-                        path = servletPath + path;
+                    {                        
+                        path = (servletPath.equals("/") ? "/" : servletPath) + path;
                     }
                     else
                     {

@@ -50,7 +50,7 @@ class ResourceBundleFactory {
     /**
      * All of the previously loaded bundles.
      */
-    private Map bundles = new HashMap();
+    private Map<Locale, ResourceBundle> bundles = new HashMap<Locale, ResourceBundle>();
 
     /**
      * The name of the bundle.
@@ -87,7 +87,7 @@ class ResourceBundleFactory {
 
         // If allready loaded for this local, return immediately!
         if (bundles.containsKey(locale)) {
-            return (ResourceBundle) bundles.get(locale);
+            return bundles.get(locale);
         }
 
         try {
@@ -110,6 +110,6 @@ class ResourceBundleFactory {
             }
             bundles.put(locale, defaultBundle);
         }
-       return (ResourceBundle)bundles.get(locale);
+       return bundles.get(locale);
     }
 }

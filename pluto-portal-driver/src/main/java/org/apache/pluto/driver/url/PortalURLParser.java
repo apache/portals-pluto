@@ -11,8 +11,5 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PortalURLParser {
     PortalURL parse(HttpServletRequest request);
-
-//    String toString(PortalURL portalURL, HttpServletRequest request);
-    
     String toString(PortalURL portalURL);
 }

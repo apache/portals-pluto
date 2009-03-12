@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,21 +54,26 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     private PortletMimeResponseContext responseContext;
     private PortalContext portalContext;
     private PortletURLProvider urlProvider;
-    private String cacheLevel;
+    private String cacheLevel = ResourceURL.PAGE;
     private boolean filtering;
+    private boolean renderURL;
     
-    public PortletURLImpl(PortletMimeResponseContext responseContext, boolean actionURL, boolean resourceURL)
+    public PortletURLImpl(PortletMimeResponseContext responseContext, PortletURLProvider.TYPE type)
     {
         this.responseContext = responseContext;
         this.portalContext = responseContext.getContainer().getRequiredContainerServices().getPortalContext();
-        // TODO: actionURL/resourceURL parameters
-        urlProvider = responseContext.getPortletURLProvider();
+        urlProvider = responseContext.getPortletURLProvider(type);
+        renderURL = PortletURLProvider.TYPE.RENDER == type;
     }
     
-    public PortletURLImpl(PortletMimeResponseContext responseContext, boolean actionURL, boolean resourceURL, String cacheLevel)
+    public PortletURLImpl(PortletMimeResponseContext responseContext, String cacheLevel)
     {
-        this(responseContext, actionURL, resourceURL);
-        this.cacheLevel = cacheLevel == null ? ResourceURL.PAGE : cacheLevel;
+        this(responseContext, PortletURLProvider.TYPE.RESOURCE);
+        if (cacheLevel != null)
+        {
+            this.cacheLevel = cacheLevel;
+        }
+        urlProvider.setCacheability(this.cacheLevel);
     }
 
     private boolean isPortletModeAllowed(PortletMode mode)
@@ -122,13 +128,19 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         }
         return false;
     }
+    
+    private boolean isPublicRenderParameter(String name)
+    {
+        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
+        return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
+    }
         
     private static String[] cloneParameterValues(String[] values)
     {
         int count = 0;
         for (String s : values)
         {
-            if (!(s == null || s.length() == 0))
+            if (s != null)
             {
                 count++;
             }
@@ -143,7 +155,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
             count = 0;
             for (String s : values)
             {
-                if (!(s == null || s.length() == 0))
+                if (s != null)
                 {
                     copy[count++] = s;
                 }
@@ -169,11 +181,11 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
             PortletApplicationDefinition portletApp = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
             for (PortletURLGenerationListener listener : service.getPortletURLGenerationListeners(portletApp))
             {
-                if (urlProvider.isActionURL())
+                if (PortletURLProvider.TYPE.ACTION == urlProvider.getType())
                 {
                     listener.filterActionURL(this);
                 }
-                else if (urlProvider.isResourceURL())
+                else if (PortletURLProvider.TYPE.RESOURCE == urlProvider.getType())
                 {
                     listener.filterResourceURL(this);
                 }
@@ -229,31 +241,28 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     public void setParameter(String name, String value)
     {
         ArgumentUtility.validateNotEmpty("name", name);
-        Map<String, String[]> parameters = urlProvider.getRenderParameters();
-        if (value == null )            
+        ArgumentUtility.validateNotNull("value", value);
+        String[] values = new String[]{value};
+        urlProvider.getRenderParameters().put(name, values);
+        if (renderURL && isPublicRenderParameter(name))
         {
-            parameters.remove(name);
-        }
-        else
-        {
-            parameters.put(name, new String[]{value});
-            urlProvider.getRemovedPublicRenderParameters().remove(name);
+            urlProvider.getPublicRenderParameters().put(name, values);
         }
     }
 
     public void setParameter(String name, String[] values)
     {
         ArgumentUtility.validateNotEmpty("name", name);
-        Map<String, String[]> parameters = urlProvider.getRenderParameters();
+        ArgumentUtility.validateNotNull("values", values);
         values = cloneParameterValues(values);
         if (values == null )            
         {
-            parameters.remove(name);
+            throw new IllegalStateException("Illegal Argument: values array is empty or contains only null values");
         }
-        else
+        urlProvider.getRenderParameters().put(name, values);
+        if (renderURL && isPublicRenderParameter(name))
         {
-            parameters.put(name, values);
-            urlProvider.getRemovedPublicRenderParameters().remove(name);
+            urlProvider.getPublicRenderParameters().put(name, values);
         }
     }
 
@@ -262,30 +271,53 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         ArgumentUtility.validateNotNull("parameters", parameters);
         
         // validate map first
+        boolean emptyValuesArray;
         for (Map.Entry<? extends Object, ? extends Object> entry : parameters.entrySet())
         {
             if (entry.getKey() == null || entry.getValue() == null)
             {
-                throw new IllegalArgumentException("RenderParameters contains a null key or value entry");
+                throw new IllegalArgumentException("parameters map contains a null key or value entry");
             }
             if (!(entry.getKey() instanceof String))
             {
-                throw new IllegalArgumentException("RenderParameters contains a key which is not of type String");
+                throw new IllegalArgumentException("parameters map contains a key which is not of type String");
             }
             if (!(entry.getValue() instanceof String[]))
             {
-                throw new IllegalArgumentException("RenderParameters contains a value which is not of type String[]");
+                throw new IllegalArgumentException("parameters map contains a value which is not of type String[]");
+            }
+            emptyValuesArray = true;
+            for (String s : (String[])entry.getValue())
+            {
+                if (s != null)
+                {
+                    emptyValuesArray = false;
+                    break;
+                }
+            }
+            if (emptyValuesArray)
+            {
+                throw new IllegalStateException("parameters map contains a values array which is empty or contains only null values");
             }
         }
-        Map<String, String[]> map = urlProvider.getRenderParameters();
-        map.clear();
+        urlProvider.getRenderParameters().clear();
+        if (renderURL)
+        {
+            for (Iterator<Map.Entry<String,String[]>> iter = urlProvider.getPublicRenderParameters().entrySet().iterator(); iter.hasNext();)
+            {
+                if (iter.next().getValue() != null)
+                {
+                    iter.remove();
+                }
+            }
+        }
         for (Map.Entry<String,String[]> entry : parameters.entrySet())
         {
             String[] values = cloneParameterValues(entry.getValue());
-            if (values != null)
+            urlProvider.getRenderParameters().put(entry.getKey(), values);
+            if (renderURL && isPublicRenderParameter(entry.getKey()))
             {
-                map.put(entry.getKey(), values);
-                urlProvider.getRemovedPublicRenderParameters().remove(entry.getKey());
+                urlProvider.getPublicRenderParameters().put(entry.getKey(), values);
             }
         }
     }
@@ -334,7 +366,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     public String toString()
     {
         filterURL();
-        return urlProvider.toString();
+        return urlProvider.toURL(false);
     }
 
     // PortletURL impl ------------------------------------------------------------    
@@ -378,16 +410,18 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     public void removePublicRenderParameter(String name)
     {
         ArgumentUtility.validateNotEmpty("name", name);
-        urlProvider.getRemovedPublicRenderParameters().add(name);
-        urlProvider.getRenderParameters().remove(name);
+        if (isPublicRenderParameter(name))
+        {
+            urlProvider.getPublicRenderParameters().put(name, null);
+            urlProvider.getRenderParameters().remove(name);
+        }
     }
 
     // ResourceURL impl ------------------------------------------------------------    
     
     public String getCacheability()
     {
-        String cacheability = urlProvider.getCacheability();
-        return cacheability == null ? this.cacheLevel : cacheability;
+        return urlProvider.getCacheability();
     }
 
     public void setCacheability(String cacheLevel)
@@ -399,21 +433,21 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         }
         else if (PORTLET.equals(cacheLevel))
         {
-            if (FULL.equals(cacheLevel))
+            if (FULL.equals(this.cacheLevel))
             {
-                throw new IllegalStateException("Current Cachelevel is FULL: URLs with cacheability PORTLET not allowed");
+                throw new IllegalStateException("Current request cacheablility is FULL: URLs with cacheability PORTLET not allowed");
             }
             
         }
         else if (PAGE.equals(cacheLevel))
         {
-            if (FULL.equals(cacheLevel))
+            if (FULL.equals(this.cacheLevel))
             {
-                throw new IllegalStateException("Current Cachelevel is FULL: URLs with cacheability PORTLET not allowed");
+                throw new IllegalStateException("Current request cacheablility is FULL: URLs with cacheability PORTLET not allowed");
             }
-            else if (PORTLET.equals(cacheLevel))
+            else if (PORTLET.equals(this.cacheLevel))
             {
-                throw new IllegalStateException("Current Cachelevel is PORTLET: URLs with cacheability PAGE not allowed");
+                throw new IllegalStateException("Current request cacheablility is PORTLET: URLs with cacheability PAGE not allowed");
             }
         }
         else

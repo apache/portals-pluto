@@ -29,6 +29,7 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.PortletURLProvider.TYPE;
 
 /**
  * @version $Id$
@@ -155,9 +156,9 @@ public abstract class PortletMimeResponseContextImpl extends PortletResponseCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletMimeResponseContext#getPortletURLProvider()
+     * @see org.apache.pluto.container.PortletMimeResponseContext#getPortletURLProvider(org.apache.pluto.container.PortletURLProvider.TYPE)
      */
-    public PortletURLProvider getPortletURLProvider()
+    public PortletURLProvider getPortletURLProvider(TYPE type)
     {
         // TODO Auto-generated method stub
         return null;

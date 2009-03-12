@@ -23,6 +23,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.pluto.container.PortletResourceResponseContext;
+import org.apache.pluto.container.PortletURLProvider;
 
 public class ResourceResponseImpl extends MimeResponseImpl implements ResourceResponse
 {
@@ -33,23 +34,30 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
     {
         super(responseContext);
         this.responseContext = responseContext;
-        this.requestCacheLevel = requestCachelevel;
+        this.requestCacheLevel = requestCachelevel == null ? ResourceURL.PAGE : requestCacheLevel;
     }
 	
     public PortletURL createActionURL()
     {
-        return new PortletURLImpl(responseContext, true, false, requestCacheLevel);
+        if (ResourceURL.PAGE.equals(requestCacheLevel))
+        {
+            return new PortletURLImpl(responseContext, PortletURLProvider.TYPE.ACTION);
+        }
+        throw new IllegalStateException("Not allowed to create an ActionURL with current request cacheability level "+requestCacheLevel);
     }
     
     public PortletURL createRenderURL()
     {
-        return new PortletURLImpl(responseContext, false, false, requestCacheLevel);
+        if (ResourceURL.PAGE.equals(requestCacheLevel))
+        {
+            return new PortletURLImpl(responseContext, PortletURLProvider.TYPE.RENDER);
+        }
+        throw new IllegalStateException("Not allowed to create a RenderURL with current request cacheability level "+requestCacheLevel);
     }
-
 
     public ResourceURL createResourceURL()
     {
-        return new PortletURLImpl(responseContext, false, true, requestCacheLevel);
+        return new PortletURLImpl(responseContext, requestCacheLevel);
     }
     
 	public void setCharacterEncoding(String charset)

@@ -110,7 +110,7 @@ public class PortalRequestContext {
      * Returns the requested portal URL.
      * @return the requested portal URL.
      */
-    public PortalURL getRequestedPortalURL() {
+    public synchronized PortalURL getRequestedPortalURL() {
         if(requestedPortalURL == null) {
             DriverConfiguration config = (DriverConfiguration)
                 servletContext.getAttribute(AttributeKeys.DRIVER_CONFIG);
@@ -130,8 +130,15 @@ public class PortalRequestContext {
         return (PortalURL)getRequestedPortalURL().clone();
     }
 
-    public void setPortalURL(PortalURL portalURL){
-    	requestedPortalURL = portalURL;
+    public synchronized void setPortalURL(PortalURL portalURL, String windowId){
+        if (requestedPortalURL == null)
+        {
+            requestedPortalURL = portalURL;
+        }
+        else
+        {
+            requestedPortalURL.merge(portalURL, windowId);
+        }
     }
 
 	public ServletContext getServletContext() {

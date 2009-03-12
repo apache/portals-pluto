@@ -93,7 +93,7 @@ public class PortletPreferenceImpl implements PortletPreference {
     	PortletPreferenceImpl copy = new PortletPreferenceImpl();
     	copy.name = this.name;
     	if (this.values != null) {
-    		copy.values = (String[]) this.values.clone();
+    		copy.values = this.values.clone();
     	}
     	copy.readOnly = this.readOnly;
     	return copy;

@@ -314,7 +314,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
 
     static {
         try {
-            contextPathGetter = ServletContext.class.getMethod("getContextPath", new Class[0]);
+            contextPathGetter = ServletContext.class.getMethod("getContextPath", (Class[])null);
         }
         catch (NoSuchMethodException e) {
             LOG.warn("Servlet 2.4 or below detected.  Unable to find getContextPath on ServletContext.");
@@ -325,7 +325,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
         String contextPath = null;
         if (contextPathGetter != null) {
             try {
-                contextPath = (String) contextPathGetter.invoke(context, new Class[0]);
+                contextPath = (String) contextPathGetter.invoke(context, (Object[])null);
             } catch (Exception e) {
                 LOG.warn("Unable to directly retrieve context path from ServletContext. Computing. . . ");
             }
@@ -339,6 +339,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
     }
 
 
+    @SuppressWarnings("unchecked")
     protected static String computeContextPath(ServletContext context) {
         if (APP_ID_RESOLVERS.size() < 1) {
             List<Class> classes = null;

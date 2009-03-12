@@ -69,7 +69,7 @@ public class PortletDescriptorRegistry {
      * point I'm wondering if we really want to add another
      * config requirement in the servlet xml? Hmm. . .
      */
-    private Map cache = new WeakHashMap();
+    private Map<ServletContext, PortletApplicationDefinition> cache = new WeakHashMap<ServletContext, PortletApplicationDefinition>();
 
 
     // Constructor -------------------------------------------------------------
@@ -93,7 +93,7 @@ public class PortletDescriptorRegistry {
     throws PlutoConfigurationException {
         String className = Configuration.getPortletAppDescriptorServiceImpl();
         try {
-            Class clazz = Class.forName(className);
+            Class<?> clazz = Class.forName(className);
             portletDDService = (PortletAppDescriptorService) clazz.newInstance();
         } catch (ClassNotFoundException ex) {
             throw new PlutoConfigurationException(
@@ -120,7 +120,7 @@ public class PortletDescriptorRegistry {
      */
     public PortletApplicationDefinition getPortletAppDD(ServletContext servletContext)
     throws PortletContainerException {
-        PortletApplicationDefinition portletApp = (PortletApplicationDefinition) cache.get(servletContext);
+        PortletApplicationDefinition portletApp = cache.get(servletContext);
         if (portletApp == null) {
         	portletApp = createDefinition(servletContext);
             cache.put(servletContext, portletApp);

@@ -40,8 +40,8 @@ public class ClasspathScanner {
      * @return
      * @throws IOException
      */
-    public static List scan(String path) throws IOException {
-        List list = scan(path, ClasspathScanner.class.getClassLoader());
+    public static List<URL> scan(String path) throws IOException {
+        List<URL> list = scan(path, ClasspathScanner.class.getClassLoader());
         list.addAll(scan(path, Thread.currentThread().getContextClassLoader()));
         list.add(ClasspathScanner.class.getResource(path));
 
@@ -61,13 +61,13 @@ public class ClasspathScanner {
      * @return
      * @throws IOException
      */
-    public static List scan(String path, ClassLoader loader) throws IOException {
-        ArrayList list = new ArrayList();
+    public static List<URL> scan(String path, ClassLoader loader) throws IOException {
+        ArrayList<URL> list = new ArrayList<URL>();
         if (loader == null) {
             return list;
         }
 
-        Enumeration enumeration = loader.getResources(path);
+        Enumeration<URL> enumeration = loader.getResources(path);
         while (enumeration.hasMoreElements()) {
             list.add(enumeration.nextElement());
         }
@@ -86,6 +86,7 @@ public class ClasspathScanner {
      * @return list of classes
      * @throws java.io.IOException if an error occurs during classpath scanning.
      */
+    @SuppressWarnings("unchecked")
     public static List findConfiguredImplementations(Class implemented)
         throws IOException {
         List classes = new ArrayList();

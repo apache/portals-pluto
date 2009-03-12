@@ -43,15 +43,19 @@ public class RelativePortalURLImpl implements PortalURL {
 
     private static final Log LOG = LogFactory.getLog(RelativePortalURLImpl.class);
 
+    private String urlBase;
     private String servletPath;
     private String renderPath;
     private String actionWindow;
     private String resourceWindow;
+    private String cacheLevel;
+    private String resourceID;
 
     private Map<String, String[]> publicParameterCurrent = new HashMap<String, String[]>();
 
     private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
-
+    private Map<String, String[]> privateParameters = new HashMap<String, String[]>();
+    
     /**
      * PortalURLParser used to construct the string
      * representation of this portal url.
@@ -68,11 +72,13 @@ public class RelativePortalURLImpl implements PortalURL {
 
     /**
      * Constructs a PortalURLImpl instance using customized port.
+     * @param urlBase      the absolute (protocol://domain:port) request url base
      * @param contextPath  the servlet context path.
      * @param servletName  the servlet name.
      * @param urlParser    the {@link PortalURLParser} used to construct a string representation of the url.
      */
-    public RelativePortalURLImpl(String contextPath, String servletName, PortalURLParser urlParser) {
+    public RelativePortalURLImpl(String urlBase, String contextPath, String servletName, PortalURLParser urlParser) {
+        this.urlBase = urlBase;
     	StringBuffer buffer = new StringBuffer();
     	buffer.append(contextPath);
     	buffer.append(servletName);
@@ -171,16 +177,51 @@ public class RelativePortalURLImpl implements PortalURL {
             }
         }
     }
+    
+    public void setCacheability(String cacheLevel)
+    {
+        this.cacheLevel = cacheLevel;
+    }
+    
+    public String getCacheability()
+    {
+        return cacheLevel;
+    }
+    
+    public void setResourceID(String resourceID)
+    {
+        this.resourceID = resourceID;
+    }
+    
+    public String getResourceID()
+    {
+        return resourceID;
+    }
 
+    /**
+     * Converts to a string representing the portal URL.
+     * @deprecated use toURL(boolean absolute) instead
+     * @return a string representing the portal URL.
+     * @see PortalURLParserImpl#toString(org.apache.pluto.driver.url.PortalURL)
+     */
+    public String toString() {
+        return toURL(false);
+    }
+    
     /**
      * Converts to a string representing the portal URL.
      * @return a string representing the portal URL.
      * @see PortalURLParserImpl#toString(org.apache.pluto.driver.url.PortalURL)
      */
-    public String toString() {
-        return urlParser.toString(this);
+    public String toURL(boolean absolute)
+    {
+        String result = urlParser.toString(this);
+        if (absolute)
+        {
+            return urlBase + result;
+        }
+        return result;
     }
-
 
     /**
      * Returns the server URI (protocol, name, port).
@@ -204,12 +245,14 @@ public class RelativePortalURLImpl implements PortalURL {
      * Clone a copy of itself.
      * @return a copy of itself.
      */
-    public Object clone() {
+    public synchronized PortalURL clone() {
     	RelativePortalURLImpl portalURL = new RelativePortalURLImpl();
     	portalURL.servletPath = this.servletPath;
     	portalURL.parameters = new HashMap<String, PortalURLParameter>(parameters);
     	portalURL.portletModes = new HashMap<String, PortletMode>(portletModes);
     	portalURL.windowStates = new HashMap<String, WindowState>(windowStates);
+    	portalURL.cacheLevel = cacheLevel;
+    	portalURL.resourceID = resourceID;
     	portalURL.renderPath = renderPath;
     	portalURL.actionWindow = actionWindow;
         portalURL.urlParser = urlParser;
@@ -226,9 +269,7 @@ public class RelativePortalURLImpl implements PortalURL {
 				publicParameterNew.remove(key);
 			}
 			String[] values = parameters.get(key);
-			if (values[0]!= null){
-				publicParameterNew.put(key, values);
-			}
+            publicParameterNew.put(key, values);
 		}
     }
 
@@ -273,6 +314,16 @@ public class RelativePortalURLImpl implements PortalURL {
 		}
 		return tmp;
     }
+    
+    public Map<String, String[]> getNewPublicParameters()
+    {
+        return publicParameterNew;
+    }
+    
+    public Map<String, String[]> getPrivateParameters()
+    {
+        return privateParameters;
+    }
 
 
 	public PageConfig getPageConfig(ServletContext servletContext) {
@@ -292,5 +343,33 @@ public class RelativePortalURLImpl implements PortalURL {
 		this.resourceWindow = resourceWindow;
 	}
 
-
+	public synchronized void merge(PortalURL url, String windowId)
+	{
+        actionWindow = url.getActionWindow();
+        resourceWindow = url.getResourceWindow();
+        setPortletMode(windowId, url.getPortletMode(windowId));
+        setWindowState(windowId, url.getWindowState(windowId));
+        setCacheability(url.getCacheability());
+        setResourceID(url.getResourceID());
+        clearParameters(windowId);
+        for (PortalURLParameter param : url.getParameters())
+        {
+            if (windowId.equals(param.getWindowId()))
+            {
+                addParameter(new PortalURLParameter(param.getWindowId(), param.getName(), param.getValues()));
+            }
+        }
+        Map<String, String[]> newPublicParameters = url.getNewPublicParameters();
+        for (Map.Entry<String, String[]> entry : newPublicParameters.entrySet())
+        {
+            if (entry.getValue()[0] == null)
+            {
+                publicParameterCurrent.remove(entry.getKey());
+            }
+            else
+            {
+                publicParameterCurrent.put(entry.getKey(), entry.getValue());
+            }
+        }
+	}
 }

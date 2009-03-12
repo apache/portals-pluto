@@ -36,7 +36,7 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
     
     public PortletResourceResponseContextImpl(PortletContainer container, HttpServletRequest request,
                                               HttpServletResponse response, PortletWindow window)
-    {
+    {        
         super(container, request, response, window);
     }
 

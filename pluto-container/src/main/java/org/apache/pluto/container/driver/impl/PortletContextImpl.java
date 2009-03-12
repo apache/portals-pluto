@@ -175,43 +175,39 @@ implements PortletContext, ContainerPortletContext {
         if (exactServletMappingURLPatterns.contains(path))
         {
             servletPath = path;
-            pathInfo = null;
         }
-        else if ( path.charAt(0) == '/' && (index = path.lastIndexOf('/')) != -1)
+        else if (path.length() == 1 && defaultServletMapping)
         {
-            if (path.length() == 1 && defaultServletMapping)
+            servletPath = path;
+        }
+        else
+        {
+            String sub = path;
+            index = path.lastIndexOf('/');
+            do
             {
-                servletPath = path;
-                pathInfo = null;
-            }
-            else
-            {
-                String sub = path;
-                do
+                sub = sub.substring(0, index);
+                if (pathServletMappingURLPatterns.contains(sub))
                 {
-                    sub = sub.substring(0, index);
-                    if (pathServletMappingURLPatterns.contains(sub))
+                    servletPath = sub;
+                    if (sub.length() < path.length())
                     {
-                        servletPath = sub;
                         pathInfo = path.substring(sub.length()+1);
-                        break;
                     }
-                    index = sub.lastIndexOf('/');
+                    break;
                 }
-                while (index != -1);
+                index = sub.lastIndexOf('/');
             }
+            while (index != 0);
         }
         if (servletPath == null)
         {
-            ;            
-            if ((index = path.lastIndexOf('/')) != -1)
+            index = path.lastIndexOf('/');
+            int ext = path.indexOf('.', index);
+            if (extServletMappingURLPatterns.contains(path.substring(ext)))
             {
-                int ext = path.indexOf('.', index);
-                if (extServletMappingURLPatterns.contains(path.substring(index)))
-                {
-                    servletPath = path.substring(0, index);
-                    pathInfo = path.substring(index);
-                }
+                servletPath = index > 0 ? path.substring(0, index) : "";
+                pathInfo = path.substring(index);
             }
         }
         if (servletPath == null)

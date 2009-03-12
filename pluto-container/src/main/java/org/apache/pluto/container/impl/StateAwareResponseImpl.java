@@ -19,6 +19,8 @@ package org.apache.pluto.container.impl;
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
@@ -47,12 +49,18 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
 		this.responseContext = responseContext;
 	}
 	
+    private boolean isPublicRenderParameter(String name)
+    {
+        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
+        return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
+    }
+        
 	private static String[] cloneParameterValues(String[] values)
 	{
 	    int count = 0;
 	    for (String s : values)
 	    {
-	        if (!(s == null || s.length() == 0))
+	        if (s != null)
 	        {
 	            count++;
 	        }
@@ -67,7 +75,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
 	        count = 0;
 	        for (String s : values)
 	        {
-	            if (!(s == null || s.length() == 0))
+	            if (s != null)
 	            {
 	                copy[count++] = s;
 	            }
@@ -118,8 +126,11 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
     {
         ArgumentUtility.validateNotEmpty("name", name);
         checkSetStateChanged();
-        responseContext.getRemovedPublicRenderParameters().add(name);
-        responseContext.getRenderParameters().remove(name);
+        if (isPublicRenderParameter(name))
+        {
+            responseContext.getPublicRenderParameters().put(name, null);
+            responseContext.getRenderParameters().remove(name);
+        }
     }
 
 	public void setEvent(QName qname, Serializable value)
@@ -170,31 +181,52 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
         ArgumentUtility.validateNotNull("parameters", parameters);
         
         // validate map first
+        boolean emptyValuesArray;
         for (Map.Entry<? extends Object, ? extends Object> entry : parameters.entrySet())
         {
             if (entry.getKey() == null || entry.getValue() == null)
             {
-                throw new IllegalArgumentException("RenderParameters contains a null key or value entry");
+                throw new IllegalArgumentException("parameters map contains a null key or value entry");
             }
             if (!(entry.getKey() instanceof String))
             {
-                throw new IllegalArgumentException("RenderParameters contains a key which is not of type String");
+                throw new IllegalArgumentException("parameters map contains a key which is not of type String");
             }
             if (!(entry.getValue() instanceof String[]))
             {
-                throw new IllegalArgumentException("RenderParameters contains a value which is not of type String[]");
+                throw new IllegalArgumentException("parameters map contains a value which is not of type String[]");
+            }
+            emptyValuesArray = true;
+            for (String s : (String[])entry.getValue())
+            {
+                if (s != null)
+                {
+                    emptyValuesArray = false;
+                    break;
+                }
+            }
+            if (emptyValuesArray)
+            {
+                throw new IllegalStateException("parameters map contains a values array which is empty or contains only null values");
             }
         }
         checkSetStateChanged();
-        Map<String, String[]> map = responseContext.getRenderParameters();
-        map.clear();
+        
+        responseContext.getRenderParameters().clear();
+        for (Iterator<Map.Entry<String,String[]>> iter = responseContext.getPublicRenderParameters().entrySet().iterator(); iter.hasNext();)
+        {
+            if (iter.next().getValue() != null)
+            {
+                iter.remove();
+            }
+        }
         for (Map.Entry<String,String[]> entry : parameters.entrySet())
         {
             String[] values = cloneParameterValues(entry.getValue());
-            if (values != null)
+            responseContext.getRenderParameters().put(entry.getKey(), values);
+            if (isPublicRenderParameter(entry.getKey()))
             {
-                map.put(entry.getKey(), values);
-                responseContext.getRemovedPublicRenderParameters().remove(entry.getKey());
+                responseContext.getPublicRenderParameters().put(entry.getKey(), values);
             }
         }
     }
@@ -202,16 +234,13 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
     public void setRenderParameter(String key, String value)
     {
         ArgumentUtility.validateNotEmpty("key", key);
-        
+        ArgumentUtility.validateNotNull("value", value);
         checkSetStateChanged();
-        if (value == null || value.length() == 0)
+        String[] values = new String[]{value};
+        responseContext.getRenderParameters().put(key, values);
+        if (isPublicRenderParameter(key))
         {
-            responseContext.getRenderParameters().remove(key);
-        }
-        else
-        {
-            responseContext.getRenderParameters().put(key, new String[]{value});
-            responseContext.getRemovedPublicRenderParameters().remove(key);
+            responseContext.getPublicRenderParameters().put(key, values);
         }
     }
     
@@ -219,16 +248,16 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
     {
         ArgumentUtility.validateNotEmpty("key", key);
         ArgumentUtility.validateNotNull("values", values);
-        String[] copy = cloneParameterValues(values);
-        checkSetStateChanged();
-        if (copy == null)
+        values = cloneParameterValues(values);
+        if (values == null )            
         {
-            responseContext.getRenderParameters().remove(key);
+            throw new IllegalStateException("Illegal Argument: values array is empty or contains only null values");
         }
-        else
+        checkSetStateChanged();
+        responseContext.getRenderParameters().put(key, values);
+        if (isPublicRenderParameter(key))
         {
-            responseContext.getRenderParameters().put(key, copy);
-            responseContext.getRemovedPublicRenderParameters().remove(key);
+            responseContext.getPublicRenderParameters().put(key, values);
         }
     }
 }

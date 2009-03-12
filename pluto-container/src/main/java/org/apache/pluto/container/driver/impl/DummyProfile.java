@@ -25,7 +25,8 @@ public class DummyProfile implements Profile {
 	/* (non-Javadoc)
 	 * @see javax.ccpp.Profile#getAttributes()
 	 */
-	public Set getAttributes() {
+	@SuppressWarnings("unchecked")
+    public Set getAttributes() {
 		return null;
 	}
 
@@ -39,7 +40,8 @@ public class DummyProfile implements Profile {
 	/* (non-Javadoc)
 	 * @see javax.ccpp.Profile#getComponents()
 	 */
-	public Set getComponents() {
+	@SuppressWarnings("unchecked")
+    public Set getComponents() {
 		return null;
 	}
 

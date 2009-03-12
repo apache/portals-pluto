@@ -30,6 +30,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 import org.apache.pluto.container.PortletMimeResponseContext;
+import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
 
@@ -72,18 +73,18 @@ public class MimeResponseImpl extends PortletResponseImpl implements MimeRespons
     
     public PortletURL createActionURL()
     {
-        return new PortletURLImpl(responseContext, true, false);
+        return new PortletURLImpl(responseContext, PortletURLProvider.TYPE.ACTION);
     }
     
     public PortletURL createRenderURL()
     {
-        return new PortletURLImpl(responseContext, false, false);
+        return new PortletURLImpl(responseContext, PortletURLProvider.TYPE.RENDER);
     }
 
 
     public ResourceURL createResourceURL()
     {
-        return new PortletURLImpl(responseContext, false, true);
+        return new PortletURLImpl(responseContext, PortletURLProvider.TYPE.RESOURCE);
     }
     
     public void flushBuffer() throws IOException

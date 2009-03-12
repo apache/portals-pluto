@@ -63,7 +63,7 @@ public class PortletServlet extends HttpServlet
 {
     private static final long serialVersionUID = -5096339022539360365L;
     
-    private static class NullPortlet implements EventPortlet, ResourceServingPortlet, Portlet
+    static class NullPortlet implements EventPortlet, ResourceServingPortlet, Portlet
     {
         public void processEvent(EventRequest arg0, EventResponse arg1)
         throws PortletException, IOException

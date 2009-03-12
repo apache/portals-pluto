@@ -38,7 +38,7 @@ class InlinePortletResourceBundle extends ListResourceBundle {
     }
 
     public InlinePortletResourceBundle(String title, String shortTitle, String keywords) {
-        ArrayList temp = new ArrayList();
+        ArrayList<Object[]> temp = new ArrayList<Object[]>();
         if(title != null)
             temp.add(new Object[] {Constants.TITLE_KEY, title});
 
@@ -48,7 +48,7 @@ class InlinePortletResourceBundle extends ListResourceBundle {
         if(keywords != null)
             temp.add(new Object[] {Constants.KEYWORDS_KEY, keywords});
 
-        contents = (Object[][])temp.toArray(new Object[temp.size()][]);
+        contents = temp.toArray(new Object[temp.size()][]);
     }
 
     protected Object[][] getContents() {

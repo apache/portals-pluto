@@ -64,9 +64,9 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletStateAwareResponseContext#getRemovedPublicRenderParameters()
+     * @see org.apache.pluto.container.PortletStateAwareResponseContext#getPublicRenderParameters()
      */
-    public Set<String> getRemovedPublicRenderParameters()
+    public Map<String, String[]> getPublicRenderParameters()
     {
         // TODO Auto-generated method stub
         return null;

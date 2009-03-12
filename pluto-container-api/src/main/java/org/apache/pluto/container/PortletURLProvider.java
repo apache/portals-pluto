@@ -19,7 +19,6 @@ package org.apache.pluto.container;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
@@ -34,9 +33,9 @@ import javax.portlet.WindowState;
  */
 public interface PortletURLProvider {
 
-    boolean isActionURL();
-    boolean isRenderURL();
-    boolean isResourceURL();
+    enum TYPE { ACTION, RENDER, RESOURCE };
+    
+    TYPE getType();
 
     /**
      * Sets the new portlet mode at the URL. If no mode is set at the URL the
@@ -60,8 +59,7 @@ public interface PortletURLProvider {
     boolean isSecure();
 
     Map<String, String[]> getRenderParameters();
-    Set<String> getRemovedPublicRenderParameters();
-    
+    Map<String, String[]> getPublicRenderParameters();
     
     String getCacheability();
     void setCacheability(String cacheLevel);
@@ -71,11 +69,10 @@ public interface PortletURLProvider {
     
     /**
      * Returns the URL in string format
+     * @param absolute if true an absolute URL is required, like for embedding as a query parameter value
      * @return the URL
      */
-    String toString();
-    
-    String toQueryStringValue();
+    String toURL(boolean absolute);
     
     void write(Writer out);
     void write(Writer out, boolean escapeXML);
