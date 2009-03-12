@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 
 import org.apache.pluto.container.PortletURLProvider;
@@ -66,6 +67,10 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         {
             url.setActionWindow(null);
             url.setResourceWindow(window);
+            if (ResourceURL.FULL.equals(cacheLevel) || ResourceURL.PORTLET.equals(cacheLevel))
+            {
+                url.clearParameters(window);                
+            }
         }
         else
         {
