@@ -501,7 +501,24 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
             }
             return null;
         }
-        return portletRequest.getAttribute(name);
+        
+        /*
+         * First try to access the attribute from the *parent* request.
+         * Webcontainers typically "inject" a custom servletrequest in between the
+         * dispatched request (this) and its original "parent", to ensure proper
+         * management of requestdispatcher state.
+         * Webcontainer specific attributes therefore *must* be accessed from the
+         * *current* parent request to ensure proper behavior
+         * Without doing this, for instance Tomcat fails to properly match
+         * servlet filters properly, if at all...
+         * This should not really interfere with normal PortletRequest attribute
+         * management as the PortletRequestContext implementation is assumed to
+         * encode newly set attributes anyway or store them otherwise, hence going
+         * through the current parent request *first* should not yield those
+         * attributes.
+         */
+        Object value = getRequest().getAttribute(name);
+        return value != null ? value : portletRequest.getAttribute(name);
     }
 
     @Override
