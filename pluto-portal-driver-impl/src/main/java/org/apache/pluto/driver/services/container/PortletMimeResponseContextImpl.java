@@ -17,6 +17,7 @@
 
 package org.apache.pluto.driver.services.container;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -30,6 +31,7 @@ import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.PortletURLProvider.TYPE;
+import org.apache.pluto.container.util.PrintWriterServletOutputStream;
 
 /**
  * @version $Id$
@@ -37,130 +39,179 @@ import org.apache.pluto.container.PortletURLProvider.TYPE;
  */
 public abstract class PortletMimeResponseContextImpl extends PortletResponseContextImpl implements PortletMimeResponseContext
 {
-    public PortletMimeResponseContextImpl(PortletContainer container, HttpServletRequest request,
-                                          HttpServletResponse response, PortletWindow window)
+    private static class CacheControlImpl implements CacheControl
     {
-        super(container, request, response, window);
+        private String eTag;
+        private int expirationTime;
+        private boolean publicScope;
+        private boolean cachedContent;
+        
+        public CacheControlImpl()
+        {
+        }
+
+        public boolean useCachedContent()
+        {
+            return cachedContent;
+        }
+
+        public String getETag()
+        {
+            return this.eTag;
+        }
+
+        public int getExpirationTime()
+        {
+            return expirationTime;
+        }
+
+        public boolean isPublicScope()
+        {
+            return publicScope;
+        }
+
+        public void setETag(String eTag)
+        {
+            this.eTag = eTag;
+        }
+
+        public void setExpirationTime(int expirationTime)
+        {
+            this.expirationTime = expirationTime;
+        }
+
+        public void setPublicScope(boolean publicScope)
+        {
+            this.publicScope = publicScope;
+        }
+
+        public void setUseCachedContent(boolean cachedContent)
+        {
+            this.cachedContent = cachedContent;
+        }
+    }
+    
+    private CacheControl cacheControl;
+    private OutputStream outputStream;
+    
+    public PortletMimeResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                          HttpServletResponse containerResponse, PortletWindow window)
+    {
+        super(container, containerRequest, containerResponse, window);
+    }
+    
+    public void close()
+    {
+        cacheControl = null;
+        outputStream = null;
+        super.close();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#flushBuffer()
-     */
-    public void flushBuffer()
+    public void flushBuffer() throws IOException
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletResponse().flushBuffer();
+        }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#getBufferSize()
-     */
     public int getBufferSize()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return getServletResponse().getBufferSize();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#getCacheControl()
-     */
     public CacheControl getCacheControl()
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (isClosed())
+        {
+            return null;
+        }
+        if (cacheControl == null)
+        {
+            cacheControl = new CacheControlImpl();
+        }
+        return cacheControl;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#getCharacterEncoding()
-     */
     public String getCharacterEncoding()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return isClosed() ? null : getServletResponse().getCharacterEncoding();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#getContentType()
-     */
     public String getContentType()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return isClosed() ? null : getServletResponse().getContentType();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#getLocale()
-     */
     public Locale getLocale()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return isClosed() ? null : getServletResponse().getLocale();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#getOutputStream()
-     */
-    public OutputStream getOutputStream()
+    public OutputStream getOutputStream() throws IOException, IllegalStateException
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (isClosed())
+        {
+            return null;
+        }
+        if (outputStream == null)
+        {
+            try
+            {
+                outputStream = getServletResponse().getOutputStream();
+            }
+            catch (IllegalStateException e)
+            {
+                // handle situation where underlying ServletResponse its getWriter()
+                // has been called already anyway: return a wrapped PrintWriter in that case
+                outputStream = new PrintWriterServletOutputStream(getServletResponse().getWriter(),
+                                                                   getServletResponse().getCharacterEncoding());
+            }
+        }
+        return outputStream;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#getWriter()
-     */
-    public PrintWriter getWriter()
+    public PrintWriter getWriter() throws IOException, IllegalStateException
     {
-        // TODO Auto-generated method stub
-        return null;
+        return isClosed() ? null : getServletResponse().getWriter();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#isCommitted()
-     */
     public boolean isCommitted()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return getServletResponse().isCommitted();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#reset()
-     */
     public void reset()
     {
-        // TODO Auto-generated method stub
+        getServletResponse().reset();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#resetBuffer()
-     */
     public void resetBuffer()
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletResponse().resetBuffer();
+        }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#setBufferSize(int)
-     */
     public void setBufferSize(int size)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletResponse().setBufferSize(size);
+        }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletMimeResponseContext#setContentType(java.lang.String)
-     */
     public void setContentType(String contentType)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletResponse().setContentType(contentType);
+        }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletMimeResponseContext#getPortletURLProvider(org.apache.pluto.container.PortletURLProvider.TYPE)
-     */
     public PortletURLProvider getPortletURLProvider(TYPE type)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return isClosed() ? null : new PortletURLProviderImpl(getPortalURL(), type, getPortletWindow());
     }
 }

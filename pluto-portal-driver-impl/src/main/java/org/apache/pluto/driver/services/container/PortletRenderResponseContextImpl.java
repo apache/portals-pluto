@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.driver.AttributeKeys;
 
 /**
  * @version $Id$
@@ -34,25 +35,22 @@ import org.apache.pluto.container.PortletWindow;
 public class PortletRenderResponseContextImpl extends PortletMimeResponseContextImpl implements
                 PortletRenderResponseContext
 {
-    public PortletRenderResponseContextImpl(PortletContainer container, HttpServletRequest request,
-                                            HttpServletResponse response, PortletWindow window)
+    public PortletRenderResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                            HttpServletResponse containerResponse, PortletWindow window)
     {
-        super(container, request, response, window);
+        super(container, containerRequest, containerResponse, window);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRenderResponseContext#setNextPossiblePortletModes(java.util.Collection)
-     */
     public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)
     {
-        // TODO Auto-generated method stub
+        // not supported
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRenderResponseContext#setTitle(java.lang.String)
-     */
     public void setTitle(String title)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletRequest().setAttribute(AttributeKeys.PORTLET_TITLE, title);
+        }
     }
 }

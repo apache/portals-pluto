@@ -36,60 +36,60 @@ import org.apache.pluto.container.PortletWindow;
  */
 public class PortletRequestContextServiceImpl implements PortletRequestContextService
 {
-    public PortletRequestContext getPortletActionRequestContext(PortletContainer container, HttpServletRequest request,
-                                                                HttpServletResponse response, PortletWindow window)
+    public PortletRequestContext getPortletActionRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                                HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletRequestContextImpl(container, request, response, window);
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, true);
     }
 
     public PortletActionResponseContext getPortletActionResponseContext(PortletContainer container,
-                                                                        HttpServletRequest request,
-                                                                        HttpServletResponse response,
+                                                                        HttpServletRequest containerRequest,
+                                                                        HttpServletResponse containerResponse,
                                                                         PortletWindow window)
     {
-        return new PortletActionResponseContextImpl(container, request, response, window);
+        return new PortletActionResponseContextImpl(container, containerRequest, containerResponse, window);
     }
 
-    public PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest request,
-                                                               HttpServletResponse response, PortletWindow window)
+    public PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                               HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletRequestContextImpl(container, request, response, window);
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false);
     }
 
     public PortletEventResponseContext getPortletEventResponseContext(PortletContainer container,
-                                                                      HttpServletRequest request,
-                                                                      HttpServletResponse response, PortletWindow window)
+                                                                      HttpServletRequest containerRequest,
+                                                                      HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletEventResponseContextImpl(container, request, response, window);
+        return new PortletEventResponseContextImpl(container, containerRequest, containerResponse, window);
     }
 
-    public PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest request,
-                                                                HttpServletResponse response, PortletWindow window)
+    public PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                                HttpServletResponse containerResponse, PortletWindow window)
     {
-        return new PortletRequestContextImpl(container, request, response, window);
+        return new PortletRequestContextImpl(container, containerRequest, containerResponse, window, false);
     }
 
     public PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
-                                                                        HttpServletRequest request,
-                                                                        HttpServletResponse response,
+                                                                        HttpServletRequest containerRequest,
+                                                                        HttpServletResponse containerResponse,
                                                                         PortletWindow window)
     {
-        return new PortletRenderResponseContextImpl(container, request, response, window);
+        return new PortletRenderResponseContextImpl(container, containerRequest, containerResponse, window);
     }
 
     public PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
-                                                                          HttpServletRequest request,
-                                                                          HttpServletResponse response,
+                                                                          HttpServletRequest containerRequest,
+                                                                          HttpServletResponse containerResponse,
                                                                           PortletWindow window)
     {
-        return new PortletResourceRequestContextImpl(container, request, response, window);
+        return new PortletResourceRequestContextImpl(container, containerRequest, containerResponse, window);
     }
 
     public PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,
-                                                                            HttpServletRequest request,
-                                                                            HttpServletResponse response,
+                                                                            HttpServletRequest containerRequest,
+                                                                            HttpServletResponse containerResponse,
                                                                             PortletWindow window)
     {
-        return new PortletResourceResponseContextImpl(container, request, response, window);
+        return new PortletResourceResponseContextImpl(container, containerRequest, containerResponse, window);
     }
 }

@@ -51,7 +51,7 @@ public interface PortalURL extends Cloneable {
     
     Map<String, String[]> getNewPublicParameters();
     
-    Map<String, String[]> getPrivateParameters();
+    Map<String, String[]> getPrivateRenderParameters();
     
     void setActionWindow(String actionWindow);
 

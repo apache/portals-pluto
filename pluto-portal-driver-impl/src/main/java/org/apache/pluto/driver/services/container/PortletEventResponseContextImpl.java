@@ -32,9 +32,9 @@ public class PortletEventResponseContextImpl extends PortletStateAwareResponseCo
                 PortletEventResponseContext
 {
 
-    public PortletEventResponseContextImpl(PortletContainer container, HttpServletRequest request,
-                                           HttpServletResponse response, PortletWindow window)
+    public PortletEventResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                           HttpServletResponse containerResponse, PortletWindow window)
     {
-        super(container, request, response, window);
+        super(container, containerRequest, containerResponse, window);
     }
 }

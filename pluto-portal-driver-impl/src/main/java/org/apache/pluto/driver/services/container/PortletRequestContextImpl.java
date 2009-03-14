@@ -17,18 +17,26 @@
 
 package org.apache.pluto.driver.services.container;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletContext;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.container.ContainerPortletConfig;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.url.PortalURL;
+import org.apache.pluto.driver.url.PortalURLParameter;
 
 /**
  * @version $Id$
@@ -37,136 +45,239 @@ import org.apache.pluto.container.PortletWindow;
 public class PortletRequestContextImpl implements PortletRequestContext
 {
     private PortletContainer container;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+    private HttpServletRequest containerRequest;
+    private HttpServletResponse containerResponse;
+    private HttpServletRequest servletRequest;
+    private HttpServletResponse servletResponse;
     private PortletWindow window;
+    private PortalURL url;
+    private PortletContext portletContext;
+    private ServletContext servletContext;
+    private Cookie cookies[];
+    private boolean useRequestParameters;
     
-    public PortletRequestContextImpl(PortletContainer container, HttpServletRequest request,
-                                     HttpServletResponse response, PortletWindow window)
+    public PortletRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                     HttpServletResponse containerResponse, PortletWindow window, boolean useRequestParameters)
     {
         this.container = container;
-        this.request = request;
-        this.response = response;
+        this.containerRequest = containerRequest;
+        this.containerResponse = containerResponse;
         this.window = window;
+        this.useRequestParameters = useRequestParameters;
+        this.url = PortalRequestContext.getContext(containerRequest).createPortalURL();
+    }
+    
+    protected boolean isReservedAttributeName(String name)
+    {
+        return name.startsWith("java.") || name.startsWith("javax.");
+    }
+    
+    protected String encodeAttributeName(String name)
+    {
+        if (isReservedAttributeName(name))
+        {
+            return name;
+        }
+        return container.getOptionalContainerServices().getNamespaceMapper().encode(window.getId(), name);
+    }
+    
+    protected String decodeAttributeName(String name)
+    {
+        if (isReservedAttributeName(name))
+        {
+            return name;
+        }
+        String result = container.getOptionalContainerServices().getNamespaceMapper().decode(window.getId(), name);
+        return result != null ? result : name;
+    }
+    
+    protected Map<String, String[]> getPrivateRenderParameterMap()
+    {
+        return Collections.emptyMap();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getAttribute(java.lang.String)
-     */
+    protected PortalURL getPortalURL()
+    {
+        return url;
+    }
+    
+    protected boolean isPublicRenderParameter(String name)
+    {
+        List<String> publicRenderParameterNames = window.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
+        return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
+    }
+        
+    public void init(PortletContext portletContext, ServletContext servletContext, HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+    {
+        this.portletContext = portletContext;
+        this.servletContext = servletContext;
+        this.servletRequest = servletRequest;
+        this.servletResponse = servletResponse;
+    }
+    
     public Object getAttribute(String name)
     {
-        // TODO Auto-generated method stub
-        return null;
+        Object value = servletRequest.getAttribute(encodeAttributeName(name));
+        return value != null ? value : servletRequest.getAttribute(name);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getAttributeNames()
-     */
+    @SuppressWarnings("unchecked")
     public Enumeration<String> getAttributeNames()
     {
-        // TODO Auto-generated method stub
-        return null;
+        ArrayList<String> names = new ArrayList<String>();
+        for (Enumeration<String> e = servletRequest.getAttributeNames(); e.hasMoreElements();)
+        {
+            names.add(decodeAttributeName(e.nextElement()));
+        }
+        return Collections.enumeration(names);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getContainer()
-     */
+    public void setAttribute(String name, Object value)
+    {
+        if (value == null)
+        {
+            servletRequest.removeAttribute(encodeAttributeName(name));
+        }
+        else
+        {
+            servletRequest.setAttribute(encodeAttributeName(name), value);
+        }
+    }
+    
     public PortletContainer getContainer()
     {
         return container;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getCookies()
-     */
     public Cookie[] getCookies()
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (cookies == null)
+        {
+            cookies = servletRequest.getCookies();
+            if (cookies == null)
+            {
+                cookies = new Cookie[0];
+            }
+        }
+        return cookies.length > 0 ? cookies.clone() : null;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getPortletConfig()
-     */
-    public ContainerPortletConfig getPortletConfig()
+    public PortletContext getPortletContext()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return portletContext;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getPortletWindow()
-     */
+    public ServletContext getServletContext()
+    {
+        return servletContext;
+    }
+
     public PortletWindow getPortletWindow()
     {
         return window;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getPreferredLocale()
-     */
     public Locale getPreferredLocale()
     {
-        // TODO Auto-generated method stub
-        return null;
-    }
+        return servletRequest.getLocale();
+    }       
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getPrivateParameterMap()
-     */
+    @SuppressWarnings("unchecked")
     public Map<String, String[]> getPrivateParameterMap()
     {
-        // TODO Auto-generated method stub
-        return null;
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+        if (useRequestParameters)
+        {
+            parameters.putAll(servletRequest.getParameterMap());
+        }
+        for (Map.Entry<String, String[]> entry : getPrivateRenderParameterMap().entrySet())
+        {
+            String[] values = parameters.get(entry.getKey());
+            if (values == null)
+            {
+                parameters.put(entry.getKey(), entry.getValue());
+            }
+            else
+            {
+                String[] copy = new String[values.length+entry.getValue().length];
+                System.arraycopy(values, 0, copy, 0, values.length);
+                System.arraycopy(entry.getValue(), 0, copy, values.length, entry.getValue().length);
+                parameters.put(entry.getKey(), copy);
+            }
+        }        
+        String windowId = window.getId().getStringId();
+        for (PortalURLParameter parm : url.getParameters())
+        {
+            if (windowId.equals(parm.getWindowId()))
+            {
+                String[] values = parameters.get(parm.getName());
+                if (values == null)
+                {
+                    parameters.put(parm.getName(), parm.getValues());
+                }
+                else
+                {
+                    String[] copy = new String[values.length+parm.getValues().length];
+                    System.arraycopy(values, 0, copy, 0, values.length);
+                    System.arraycopy(parm.getValues(), 0, copy, values.length, parm.getValues().length);
+                    parameters.put(parm.getName(), copy);
+                }
+            }                            
+        }
+        return parameters;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getProperties()
-     */
+    @SuppressWarnings("unchecked")
     public Map<String, String[]> getProperties()
     {
-        // TODO Auto-generated method stub
-        return null;
+        HashMap<String, String[]> properties = new HashMap<String, String[]>();
+        for (Enumeration<String> names = servletRequest.getHeaderNames(); names.hasMoreElements(); )
+        {
+            String name = names.nextElement();
+            ArrayList<String> values = new ArrayList<String>();
+            for (Enumeration<String> headers = servletRequest.getHeaders(name); headers.hasMoreElements(); )
+            {
+                values.add(headers.nextElement());
+            }
+            int size = values.size();
+            if (size > 0)
+            {
+                properties.put(name, values.toArray(new String[size]));
+            }
+        }
+        return properties;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getPublicParameterMap()
-     */
     public Map<String, String[]> getPublicParameterMap()
     {
-        // TODO Auto-generated method stub
-        return null;
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+        for (Map.Entry<String, String[]> entry : url.getPublicParameters().entrySet())
+        {
+            if (isPublicRenderParameter(entry.getKey()))
+            {
+                parameters.put(entry.getKey(), entry.getValue());
+            }                            
+        }
+        return parameters;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getServletRequest()
-     */
+    public HttpServletRequest getContainerRequest()
+    {
+        return containerRequest;
+    }
+
+    public HttpServletResponse getContainerResponse()
+    {
+        return containerResponse;
+    }
+
     public HttpServletRequest getServletRequest()
     {
-        return request;
+        return servletRequest;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#getServletResponse()
-     */
     public HttpServletResponse getServletResponse()
     {
-        return response;
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#init(org.apache.pluto.internal.InternalPortletConfig)
-     */
-    public void init(ContainerPortletConfig portletConfig)
-    {
-        // TODO Auto-generated method stub
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletRequestContext#setAttribute(java.lang.String, java.lang.Object)
-     */
-    public void setAttribute(String name, Object value)
-    {
-        // TODO Auto-generated method stub
+        return servletResponse;
     }
 }

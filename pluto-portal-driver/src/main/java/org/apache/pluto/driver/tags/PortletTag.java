@@ -32,7 +32,6 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.core.PortalRequestContext;
-import org.apache.pluto.driver.core.PortalServletRequest;
 import org.apache.pluto.driver.core.PortalServletResponse;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
@@ -139,16 +138,14 @@ public class PortletTag extends BodyTagSupport {
             }
         }
         
-        // Create portal servlet request and response to wrap the original
-        // HTTP servlet request and response.
-        PortalServletRequest portalRequest = new PortalServletRequest(
-        		(HttpServletRequest) pageContext.getRequest(), window);
+        // Create portal servlet response to wrap the original
+        // HTTP servlet response.
         PortalServletResponse portalResponse = new PortalServletResponse(
                 (HttpServletResponse) pageContext.getResponse());
         
         // Render the portlet and cache the response.
         try {
-            container.doRender(window, portalRequest, portalResponse);
+            container.doRender(window, (HttpServletRequest)pageContext.getRequest(), portalResponse);
             response = portalResponse;
             status = SUCCESS;
         } catch (Throwable th) {

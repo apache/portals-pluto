@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.services.container;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +35,8 @@ import org.apache.pluto.driver.url.PortalURLParameter;
 /**
  *
  */
-public class PortletURLProviderImpl implements PortletURLProvider {
-
+public class PortletURLProviderImpl implements PortletURLProvider
+{
     private final PortalURL url;
     private final TYPE type;
     private final String window;
@@ -67,10 +68,17 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         {
             url.setActionWindow(null);
             url.setResourceWindow(window);
-            if (ResourceURL.FULL.equals(cacheLevel) || ResourceURL.PORTLET.equals(cacheLevel))
+            if (!ResourceURL.FULL.equals(cacheLevel))
             {
-                url.clearParameters(window);                
+                for (PortalURLParameter parm : url.getParameters())
+                {
+                    if (window.equals(parm.getWindowId()))
+                    {
+                        url.getPrivateRenderParameters().put(parm.getName(), parm.getValues());
+                    }                            
+                }
             }
+            url.clearParameters(window);
         }
         else
         {
@@ -78,17 +86,19 @@ public class PortletURLProviderImpl implements PortletURLProvider {
             url.setActionWindow(null);
             url.clearParameters(window);
         }
-        url.setPortletMode(window, portletMode);
-        url.setWindowState(window, windowState);
+        if (portletMode != null)
+        {
+            url.setPortletMode(window, portletMode);
+        }
+        if (windowState != null)
+        {
+            url.setWindowState(window, windowState);
+        }
         if (renderParameters != null)
         {
             for (Map.Entry<String,String[]> entry : renderParameters.entrySet())
             {
-                if (PortletURLProvider.TYPE.RESOURCE == type)
-                {
-                    url.getPrivateParameters().put(entry.getKey(), entry.getValue().clone());
-                }
-                else if (publicRenderParameters != null && !publicRenderParameters.containsKey(entry.getKey()))
+                if (publicRenderParameters == null || !publicRenderParameters.containsKey(entry.getKey()))
                 {
                     url.addParameter(new PortalURLParameter(window, entry.getKey(), entry.getValue()));
                 }
@@ -98,10 +108,11 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         {
             for (Map.Entry<String,String[]> entry : publicRenderParameters.entrySet())
             {
-                url.addParameter(new PortalURLParameter(window, entry.getKey(), entry.getValue() != null ? entry.getValue() : new String[]{null}));
+                url.getNewPublicParameters().put(entry.getKey(),entry.getValue() != null ? entry.getValue() : new String[]{null});
             }
         }
         url.setResourceID(resourceID);
+        url.setCacheability(cacheLevel);
         return url;
     }
     
@@ -177,31 +188,23 @@ public class PortletURLProviderImpl implements PortletURLProvider {
         this.resourceID = resourceID;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletURLProvider#toURL(boolean)
-     */
     public String toURL(boolean absolute)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return apply().toURL(absolute);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletURLProvider#write(java.io.Writer, boolean)
-     */
-    public void write(Writer out, boolean escapeXML)
+    public void write(Writer out, boolean escapeXML) throws IOException
     {
-        // TODO Auto-generated method stub
-        
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletURLProvider#write(java.io.Writer)
-     */
-    public void write(Writer out)
-    {
-        // TODO Auto-generated method stub
-        
+        String result = apply().toURL(false);
+        if (escapeXML)
+        {
+            result = result.replaceAll("&", "&amp;");
+            result = result.replaceAll("<", "&lt;");
+            result = result.replaceAll(">", "&gt;");
+            result = result.replaceAll("\'", "&#039;");
+            result = result.replaceAll("\"", "&#034;");
+        }
+        out.write(result);
     }
 
     public Map<String, List<String>> getProperties()

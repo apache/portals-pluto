@@ -121,7 +121,7 @@ public class ComplexEarAssemblerTest extends ArchiveBasedAssemblyTest {
                 
                 while ( ( warEntry = warIn.getNextJarEntry() ) != null ) {
                     if ( Assembler.PORTLET_XML.equals( warEntry.getName() ) ) {
-                        portletApp = portletSvc.read( 
+                        portletApp = portletSvc.read( "test", "/test",
                                 new ByteArrayInputStream( IOUtils.toByteArray( warIn ) ) );
                     }
                     if ( Assembler.SERVLET_XML.equals( warEntry.getName() ) ) {

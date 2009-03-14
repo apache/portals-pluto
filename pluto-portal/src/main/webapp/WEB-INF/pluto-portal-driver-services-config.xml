@@ -45,14 +45,14 @@ limitations under the License.
 <beans>
 
 	<bean id="PlutoServices"
-	      class="org.apache.pluto.driver.PlutoServices"
+	      class="org.apache.pluto.container.driver.PlutoServices"
           singleton="true">
       <constructor-arg><ref bean="RequiredContainerServices"/></constructor-arg>          	      
 	</bean>  
 	
     <bean id="RequiredContainerServices"
           name="OptionalContainerServices"
-          class="org.apache.pluto.container.driver.impl.PlutoDriverServicesImpl"
+          class="org.apache.pluto.container.driver.impl.PortalDriverServicesImpl"
           singleton="true">
       <constructor-arg><ref bean="PortalContext"/></constructor-arg>
       <constructor-arg><ref bean="PortletRequestContextService"/></constructor-arg>

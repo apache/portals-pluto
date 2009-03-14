@@ -17,7 +17,6 @@
 package org.apache.pluto.driver;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
@@ -31,9 +30,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
-import org.apache.pluto.container.driver.PlutoServices;
-import org.apache.pluto.container.om.portlet.PortletDefinition;
-import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.core.PortletWindowImpl;
 import org.apache.pluto.driver.services.portal.PageConfig;
@@ -55,9 +51,6 @@ public class PortalDriverServlet extends HttpServlet {
     /** The Portal Driver sServlet Context */
     private ServletContext servletContext = null;
     
-    /** Is the SupportedModesService initialized? */
-    private boolean isSupportedModesServiceInitialized = false;
-        
     public static final String DEFAULT_PAGE_URI =
     		"/WEB-INF/themes/pluto-default-theme.jsp";
     
@@ -89,7 +82,6 @@ public class PortalDriverServlet extends HttpServlet {
 
     }
     
-
     /**
      * Handle all requests. All POST requests are passed to this method.
      * @param request  the incoming HttpServletRequest.
@@ -154,13 +146,6 @@ public class PortalDriverServlet extends HttpServlet {
         }
         //Resource request
         else if (resourceWindowConfig != null) {
-        	try {
-        		if (request.getParameterNames().hasMoreElements())
-        			setPublicRenderParameter(request, portalURL, portalURL.getResourceWindow());
-			} catch (PortletContainerException e) {
-				LOG.error(e);
-				throw new ServletException(e);
-			}
             PortletWindowImpl portletWindow = new PortletWindowImpl(container,
                                resourceWindowConfig, portalURL);
             if (LOG.isDebugEnabled()) {
@@ -208,31 +193,6 @@ public class PortalDriverServlet extends HttpServlet {
         }
     }
 
-    private void setPublicRenderParameter(HttpServletRequest request, PortalURL portalURL, String portletID)throws ServletException, PortletContainerException {    		
-		String applicationId = PortletWindowConfig.parseContextPath(portletID);
-        String applicationName = applicationId;
-        if (applicationName.length() >0 )
-        {
-            applicationName = applicationName.substring(1);
-        }
-
-		String portletName = PortletWindowConfig.parsePortletName(portletID);
-		PortletDefinition portletDD = PlutoServices.getServices().getPortletRegistryService()
-								.getPortlet(applicationName, portletName);    		
-		Enumeration<String> parameterNames = request.getParameterNames();
-		if (parameterNames != null){
-			while(parameterNames.hasMoreElements()){
-				String parameterName = parameterNames.nextElement();
-				if (portletDD.getSupportedPublicRenderParameters() != null){
-					if (portletDD.getSupportedPublicRenderParameters().contains(parameterName)){
-						String value = request.getParameter(parameterName);
-						portalURL.addPublicParameterActionResourceParameter(parameterName, value);
-					}	
-				}
-			}
-		}
-    }
-    
     /**
      * Pass all POST requests to {@link #doGet(HttpServletRequest, HttpServletResponse)}.
      * @param request  the incoming servlet request.
@@ -244,32 +204,5 @@ public class PortalDriverServlet extends HttpServlet {
     throws ServletException, IOException {
         doGet(request, response);
     }
-    
-    
-    // Private Methods ---------------------------------------------------------
-    
-
-    /**
-     * Returns the config of the portal page to be rendered.
-     * @param currentURL  the current portal URL.
-     * @return the config of the portal page to be rendered.
-     */
-    private PageConfig getPageConfig(PortalURL currentURL) {
-        String requestedPageId = currentURL.getRenderPath();
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Rendering Portal: Requested Page: " + requestedPageId);
-        }
-        return getDriverConfiguration().getPageConfig(requestedPageId);
-    }
-
-    /**
-     * Returns the portal driver configuration object.
-     * @return the portal driver configuration object.
-     */
-    private DriverConfiguration getDriverConfiguration() {
-        return (DriverConfiguration) getServletContext().getAttribute(
-        		AttributeKeys.DRIVER_CONFIG);
-    }    
-        
 }
 

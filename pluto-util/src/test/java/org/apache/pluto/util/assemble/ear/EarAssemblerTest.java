@@ -104,7 +104,7 @@ public class EarAssemblerTest extends ArchiveBasedAssemblyTest {
                 JarInputStream warIn = new JarInputStream( earIn );
                 while ( ( warEntry = warIn.getNextJarEntry() ) != null ) {
                     if ( Assembler.PORTLET_XML.equals( warEntry.getName() ) ) {
-                    	portletApp = portletSvc.read( 
+                    	portletApp = portletSvc.read( "test", "/test",
                                 new ByteArrayInputStream( IOUtils.toByteArray( warIn ) ) );
                     }
                     if ( Assembler.SERVLET_XML.equals( warEntry.getName() ) ) {

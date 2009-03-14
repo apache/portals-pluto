@@ -85,7 +85,7 @@ public class AssemblyStreamTest extends TestCase {
     protected void verifyAssembly( InputStream webXml, InputStream portletXml ) throws Exception {
         PortletAppDescriptorService portletSvc = new PortletAppDescriptorServiceImpl();
         PlutoWebXmlRewriter webXmlRewriter = new PlutoWebXmlRewriter( webXml );
-        PortletApplicationDefinition portletApp = portletSvc.read( portletXml );
+        PortletApplicationDefinition portletApp = portletSvc.read( "test", "/test", portletXml );
         
         assertNotNull( "Web Application Descripter was null.", webXmlRewriter );
         assertNotNull( "Portlet Application Descriptor was null.", portletApp );
@@ -117,7 +117,7 @@ public class AssemblyStreamTest extends TestCase {
             
             if ( Assembler.PORTLET_XML.equals( tempEntry.getName() ) ) {
                 IOUtils.copy( assembledWarIn, portletXmlBytes );
-                portletApp = portletSvc.read( new ByteArrayInputStream( portletXmlBytes.toByteArray() ) );
+                portletApp = portletSvc.read( "test", "/test", new ByteArrayInputStream( portletXmlBytes.toByteArray() ) );
             }
             if ( Assembler.SERVLET_XML.equals( tempEntry.getName() ) ) {
                 IOUtils.copy( assembledWarIn, webXmlBytes );

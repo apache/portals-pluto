@@ -17,12 +17,17 @@
 
 package org.apache.pluto.driver.services.container;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.url.PortalURL;
 
 /**
  * @version $Id$
@@ -31,43 +36,66 @@ import org.apache.pluto.container.PortletWindow;
 public class PortletActionResponseContextImpl extends PortletStateAwareResponseContextImpl implements
                 PortletActionResponseContext
 {
-    public PortletActionResponseContextImpl(PortletContainer container, HttpServletRequest request,
-                                            HttpServletResponse response, PortletWindow window)
+    private boolean redirect;
+    private String redirectLocation;
+    private String renderURLParamName;
+    
+    public PortletActionResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                            HttpServletResponse containerResponse, PortletWindow window)
     {
-        super(container, request, response, window);
+        super(container, containerRequest, containerResponse, window);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletActionResponseContext#getResponseURL()
-     */
     public String getResponseURL()
     {
-        // TODO Auto-generated method stub
+        if (!isReleased())
+        {
+            close();
+            if (!redirect || renderURLParamName != null)
+            {
+                PortalURL url = PortalRequestContext.getContext(getServletRequest()).createPortalURL();
+                if (redirect)
+                {
+                    try
+                    {
+                        return redirectLocation + "?" + URLEncoder.encode(renderURLParamName, "UTF-8") + "=" + URLEncoder.encode(url.toURL(true), "UTF-8");
+                    }
+                    catch (UnsupportedEncodingException e)
+                    {
+                        // Cannot happen: UTF-8 is a buildin/required encoder
+                        return null;
+                    }
+                }
+                else
+                {
+                    return url.toURL(false);
+                }
+            }
+            else
+            {
+                return redirectLocation;
+            }
+        }
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletActionResponseContext#isRedirect()
-     */
     public boolean isRedirect()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return redirect;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletActionResponseContext#setRedirect(java.lang.String)
-     */
     public void setRedirect(String location)
     {
-        // TODO Auto-generated method stub
+        setRedirect(location, null);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletActionResponseContext#setRedirect(java.lang.String, java.lang.String)
-     */
     public void setRedirect(String location, String renderURLParamName)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            this.redirectLocation = location;
+            this.renderURLParamName = renderURLParamName;
+            this.redirect = true;
+        }
     }
 }

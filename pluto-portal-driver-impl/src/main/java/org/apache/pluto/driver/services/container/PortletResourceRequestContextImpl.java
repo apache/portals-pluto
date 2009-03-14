@@ -33,36 +33,24 @@ import org.apache.pluto.container.PortletWindow;
 public class PortletResourceRequestContextImpl extends PortletRequestContextImpl implements
                 PortletResourceRequestContext
 {
-    public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest request,
-                                             HttpServletResponse response, PortletWindow window)
+    public PortletResourceRequestContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                             HttpServletResponse containerResponse, PortletWindow window)
     {
-        super(container, request, response, window);
+        super(container, containerRequest, containerResponse, window, true);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResourceRequestContext#getCacheability()
-     */
     public String getCacheability()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getPortalURL().getCacheability();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResourceRequestContext#getPrivateRenderParameterMap()
-     */
     public Map<String, String[]> getPrivateRenderParameterMap()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getPortalURL().getPrivateRenderParameters();
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResourceRequestContext#getResourceID()
-     */
     public String getResourceID()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getPortalURL().getResourceID();
     }
 }

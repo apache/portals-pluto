@@ -31,16 +31,11 @@ public class PortalServletResponse
 
     private StringWriter buffer = null;
     private PrintWriter writer = null;
-    private String contentType = "text/html";
 
     public PortalServletResponse(HttpServletResponse response) {
         super(response);
         buffer = new StringWriter();
         writer = new PrintWriter(buffer);
-    }
-
-    public String getContentType() {
-        return contentType;
     }
 
     public PrintWriter getWriter() {
@@ -56,5 +51,37 @@ public class PortalServletResponse
         return super.getWriter();
     }
 
+    @Override
+    public void flushBuffer() throws IOException
+    {
+    }
 
+    @Override
+    public int getBufferSize()
+    {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public boolean isCommitted()
+    {
+        return false;
+    }
+
+    @Override
+    public void reset()
+    {
+        resetBuffer();
+    }
+
+    @Override
+    public void resetBuffer()
+    {
+        buffer.getBuffer().setLength(0);
+    }
+
+    @Override
+    public void setBufferSize(int size)
+    {
+    }
 }

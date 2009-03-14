@@ -56,7 +56,7 @@ public class PortalURLParserImpl implements PortalURLParser {
     private static final String RESOURCE_ID = "ri";
     private static final String CACHE_LEVEL = "cl";
     private static final String RENDER_PARAM = "rp";
-    private static final String PRIVATE_PARAM = "pp";
+    private static final String PRIVATE_RENDER_PARAM = "pr";
     private static final String PUBLIC_RENDER_PARAM = "sp";
     private static final String WINDOW_STATE = "ws";
     private static final String PORTLET_MODE = "pm";
@@ -184,7 +184,7 @@ public class PortalURLParserImpl implements PortalURLParser {
 
 
         	}
-            else if (token.startsWith(PREFIX + PRIVATE_PARAM)){
+            else if (token.startsWith(PREFIX + PRIVATE_RENDER_PARAM)){
                 String value = null;
                 if (st.hasMoreTokens()) {
                     value = st.nextToken();
@@ -193,7 +193,7 @@ public class PortalURLParserImpl implements PortalURLParser {
                 if( param != null )
                 {
                     //set private (Resource) parameter in portalURL
-                    portalURL.getPrivateParameters().put(param.getName(), param.getValues());
+                    portalURL.getPrivateRenderParameters().put(param.getName(), param.getValues());
                 }
             }
         	else if (token.startsWith(PREFIX + PUBLIC_RENDER_PARAM)){
@@ -233,7 +233,7 @@ public class PortalURLParserImpl implements PortalURLParser {
 
         // Start the pathInfo with the path to the render URL (page).
         if (portalURL.getRenderPath() != null) {
-        	buffer.append("/").append(portalURL.getRenderPath());
+        	buffer.append(portalURL.getRenderPath());
         }
         //Append the resource window definition, if it exists.
         if (portalURL.getResourceWindow() != null){
@@ -322,14 +322,14 @@ public class PortalURLParserImpl implements PortalURLParser {
 
         if (portalURL.getResourceWindow() != null)
         {
-            Map<String, String[]> privateParamList = portalURL.getPrivateParameters();
+            Map<String, String[]> privateParamList = portalURL.getPrivateRenderParameters();
             if (privateParamList!=null){
                 for (Iterator iter = privateParamList.keySet().iterator();iter.hasNext();){
                     String paramname = (String)iter.next();
                     String[] tmp = privateParamList.get(paramname);
                     String valueString = encodeMultiValues(tmp);
                     if (valueString.length()>0){
-                        buffer.append("/").append(encodePublicParamname(PRIVATE_PARAM, paramname));
+                        buffer.append("/").append(encodePublicParamname(PRIVATE_RENDER_PARAM, paramname));
                         buffer.append("/").append(valueString);
                     }
                 }

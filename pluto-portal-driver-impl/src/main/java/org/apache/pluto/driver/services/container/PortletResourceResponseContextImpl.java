@@ -34,33 +34,33 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
                 PortletResourceResponseContext
 {
     
-    public PortletResourceResponseContextImpl(PortletContainer container, HttpServletRequest request,
-                                              HttpServletResponse response, PortletWindow window)
+    public PortletResourceResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                              HttpServletResponse containerResponse, PortletWindow window)
     {        
-        super(container, request, response, window);
+        super(container, containerRequest, containerResponse, window);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResourceResponseContext#setCharacterEncoding(java.lang.String)
-     */
     public void setCharacterEncoding(String charset)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletResponse().setCharacterEncoding(charset);
+        }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResourceResponseContext#setContentLength(int)
-     */
     public void setContentLength(int len)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletResponse().setContentLength(len);
+        }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResourceResponseContext#setLocale(java.util.Locale)
-     */
     public void setLocale(Locale locale)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            getServletResponse().setLocale(locale);
+        }
     }
 }

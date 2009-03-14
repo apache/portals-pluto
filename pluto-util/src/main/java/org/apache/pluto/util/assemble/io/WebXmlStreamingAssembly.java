@@ -66,7 +66,7 @@ public class WebXmlStreamingAssembly
             }
             throw new IOException(e.getMessage());
         }
-        PortletApplicationDefinition portletAppDD = new PortletAppDescriptorServiceImpl().read(portletXmlIn);
+        PortletApplicationDefinition portletAppDD = new PortletAppDescriptorServiceImpl().read("test", "/test", portletXmlIn);
         portletXmlIn.close();
         for (PortletDefinition portlet : portletAppDD.getPortlets())
         {

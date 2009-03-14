@@ -43,7 +43,6 @@ import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.om.portlet.EventDefinition;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.driver.core.PortalServletRequest;
 
 public class PortletWindowThread extends Thread {
 	
@@ -82,7 +81,6 @@ public class PortletWindowThread extends Thread {
 	public void run() {
 		super.run();
 		while (events.size() > 0) {
-			HttpServletRequest req = new PortalServletRequest(this.request, this.portletWindow);
 			try {
 //				synchronized (this) {
 					Event event = events.remove(0);
@@ -130,7 +128,7 @@ public class PortletWindowThread extends Thread {
 			        		throw new IllegalStateException(e);
 						}
 			        }					
-					container.doEvent(portletWindow, req, response, event);	
+					container.doEvent(portletWindow, request, response, event);	
 //				}
 			} catch (PortletException e) {
 				LOG.warn(e);

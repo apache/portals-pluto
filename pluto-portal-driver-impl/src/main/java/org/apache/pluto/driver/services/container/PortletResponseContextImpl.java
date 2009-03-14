@@ -25,6 +25,8 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.ResourceURLProvider;
+import org.apache.pluto.driver.core.PortalRequestContext;
+import org.apache.pluto.driver.url.PortalURL;
 import org.w3c.dom.Element;
 
 /**
@@ -34,105 +36,116 @@ import org.w3c.dom.Element;
 public abstract class PortletResponseContextImpl implements PortletResponseContext
 {
     private PortletContainer container;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+    private HttpServletRequest containerRequest;
+    private HttpServletResponse containerResponse;
+    private HttpServletRequest servletRequest;
+    private HttpServletResponse servletResponse;
     private PortletWindow window;
+    private PortalURL portalURL;
+    private boolean closed;
+    private boolean released;
     
-    public PortletResponseContextImpl(PortletContainer container, HttpServletRequest request,
-                                      HttpServletResponse response, PortletWindow window)
+    public PortletResponseContextImpl(PortletContainer container, HttpServletRequest containerRequest,
+                                      HttpServletResponse containerResponse, PortletWindow window)
     {
         this.container = container;
-        this.request = request;
-        this.response = response;
+        this.containerRequest = containerRequest;
+        this.containerResponse = containerResponse;
         this.window = window;
+        this.portalURL = PortalRequestContext.getContext(containerRequest).createPortalURL();
+    }
+    
+    protected PortalURL getPortalURL()
+    {
+        return portalURL;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#addProperty(javax.servlet.http.Cookie)
-     */
+    protected boolean isClosed()
+    {
+        return closed;
+    }
+    
+    protected boolean isReleased()
+    {
+        return released;
+    }
+
+    public void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+    {
+        this.servletRequest = servletRequest;
+        this.servletResponse = servletResponse;
+    }
+    
     public void addProperty(Cookie cookie)
     {
-        // TODO Auto-generated method stub
+        if (!isClosed())
+        {
+            servletResponse.addCookie(cookie);
+        }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#addProperty(java.lang.String, org.w3c.dom.Element)
-     */
     public void addProperty(String key, Element element)
     {
-        // TODO Auto-generated method stub
+        // not supported 
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#addProperty(java.lang.String, java.lang.String)
-     */
     public void addProperty(String key, String value)
     {
-        // TODO Auto-generated method stub
+        // not supported
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#close()
-     */
     public void close()
     {
-        // TODO Auto-generated method stub
+        closed = true;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#getContainer()
-     */
     public PortletContainer getContainer()
     {
         return container;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#getPortletWindow()
-     */
     public PortletWindow getPortletWindow()
     {
         return window;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#getServletRequest()
-     */
+    public HttpServletRequest getContainerRequest()
+    {
+        return containerRequest;
+    }
+
+    public HttpServletResponse getContainerResponse()
+    {
+        return containerResponse;
+    }
+
     public HttpServletRequest getServletRequest()
     {
-        return request;
+        return servletRequest;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#getServletResponse()
-     */
     public HttpServletResponse getServletResponse()
     {
-        return response;
+        return servletResponse;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#release()
-     */
     public void release()
     {
-        // TODO Auto-generated method stub
+        closed = true;
+        released = true;
+        container = null;
+        servletRequest = null;
+        servletResponse = null;
+        window = null;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.spi.optional.PortletResponseContext#setProperty(java.lang.String, java.lang.String)
-     */
     public void setProperty(String key, String value)
     {
-        // TODO Auto-generated method stub
+        // not supported
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletResponseContext#getResourceURLProvider()
-     */
     public ResourceURLProvider getResourceURLProvider()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return isReleased() ? null : new ResourceURLProviderImpl(servletRequest,window);
     }
 }

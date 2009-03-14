@@ -127,10 +127,10 @@ public class PortalRequestContext {
     }
 
     public PortalURL createPortalURL() {
-        return (PortalURL)getRequestedPortalURL().clone();
+        return getRequestedPortalURL().clone();
     }
 
-    public synchronized void setPortalURL(PortalURL portalURL, String windowId){
+    public synchronized void mergePortalURL(PortalURL portalURL, String windowId){
         if (requestedPortalURL == null)
         {
             requestedPortalURL = portalURL;
@@ -144,6 +144,4 @@ public class PortalRequestContext {
 	public ServletContext getServletContext() {
 		return servletContext;
 	}
-
-
 }

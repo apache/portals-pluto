@@ -54,7 +54,7 @@ public class RelativePortalURLImpl implements PortalURL {
     private Map<String, String[]> publicParameterCurrent = new HashMap<String, String[]>();
 
     private Map<String, String[]> publicParameterNew = new HashMap<String, String[]>();
-    private Map<String, String[]> privateParameters = new HashMap<String, String[]>();
+    private Map<String, String[]> privateRenderParameters = new HashMap<String, String[]>();
     
     /**
      * PortalURLParser used to construct the string
@@ -249,6 +249,7 @@ public class RelativePortalURLImpl implements PortalURL {
     	RelativePortalURLImpl portalURL = new RelativePortalURLImpl();
     	portalURL.servletPath = this.servletPath;
     	portalURL.parameters = new HashMap<String, PortalURLParameter>(parameters);
+    	portalURL.privateRenderParameters = new HashMap<String, String[]>(privateRenderParameters);
     	portalURL.portletModes = new HashMap<String, PortletMode>(portletModes);
     	portalURL.windowStates = new HashMap<String, WindowState>(windowStates);
     	portalURL.cacheLevel = cacheLevel;
@@ -320,9 +321,9 @@ public class RelativePortalURLImpl implements PortalURL {
         return publicParameterNew;
     }
     
-    public Map<String, String[]> getPrivateParameters()
+    public Map<String, String[]> getPrivateRenderParameters()
     {
-        return privateParameters;
+        return privateRenderParameters;
     }
 
 
