@@ -1,3 +1,4 @@
+package org.apache.pluto.container;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -14,21 +15,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.impl;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
-
-import org.apache.pluto.container.PortletActionResponseContext;
-import org.apache.pluto.container.PortletRequestContext;
-
 /**
- * Implementation of the <code>javax.portlet.ActionRequest</code> interface.
+ * @version $Id$
+ *
  */
-public class ActionRequestImpl extends ClientDataRequestImpl implements ActionRequest
+public interface RequestDispatcherPathInfoProvider
 {
-    public ActionRequestImpl(PortletRequestContext requestContext, PortletActionResponseContext responseContext)
-    {
-        super(requestContext, responseContext, PortletRequest.ACTION_PHASE);
-    }
+    /**
+     * PortletContext attribute key for storing and retrieving this provider.
+     */
+    String CONTEXT_KEY = RequestDispatcherPathInfoProvider.class.getName();
+    
+    RequestDispatcherPathInfo getPathInfo(String contextPath, String path);
+    RequestDispatcherPathInfo getNamedRequestDispatcherPathInfo();
 }

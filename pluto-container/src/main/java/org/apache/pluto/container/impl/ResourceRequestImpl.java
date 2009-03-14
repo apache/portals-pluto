@@ -24,23 +24,25 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 
 import org.apache.pluto.container.PortletResourceRequestContext;
+import org.apache.pluto.container.PortletResourceResponseContext;
 
 public class ResourceRequestImpl extends ClientDataRequestImpl implements ResourceRequest
 {
     private PortletResourceRequestContext requestContext;
     private CacheControl cacheControl;
     
-    public ResourceRequestImpl(PortletResourceRequestContext requestContext, CacheControl cacheControl)
+    public ResourceRequestImpl(PortletResourceRequestContext requestContext, PortletResourceResponseContext responseContext)
     {
-        super(requestContext, PortletRequest.RESOURCE_PHASE);
+        super(requestContext, responseContext, PortletRequest.RESOURCE_PHASE);
         this.requestContext = requestContext;
-        this.cacheControl = cacheControl;
+        this.cacheControl = responseContext.getCacheControl();
     }
-
+    
     @Override
     public String getProperty(String name)
     {
-        return getMimeRequestProperty(name, cacheControl);
+        String result = getMimeRequestProperty(name, cacheControl);
+        return result != null ? result : super.getProperty(name);
     }
 
     public String getCacheability()

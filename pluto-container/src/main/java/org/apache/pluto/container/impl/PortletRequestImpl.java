@@ -30,6 +30,7 @@ import javax.ccpp.Profile;
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -41,13 +42,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.Constants;
-import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEntity;
 import org.apache.pluto.container.PortletEnvironmentService;
+import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
+import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.SecurityRoleRef;
@@ -78,6 +79,7 @@ public abstract class PortletRequestImpl implements PortletRequest
     private PortalContext portalContext;
     
     private PortletRequestContext requestContext;
+    private PortletResponseContext responseContext;
     
     /** The portlet session. */
     private PortletSession portletSession;
@@ -100,10 +102,14 @@ public abstract class PortletRequestImpl implements PortletRequest
     
     private final String lifecyclePhase;
     
-    public PortletRequestImpl(PortletRequestContext requestContext, String lifecyclePhase) 
+    private final String contextPath;
+    
+    public PortletRequestImpl(PortletRequestContext requestContext, PortletResponseContext responseContext, String lifecyclePhase) 
     {
         this.requestContext = requestContext;
+        this.responseContext = responseContext;
         this.lifecyclePhase = lifecyclePhase;
+        this.contextPath = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication().getContextPath();
         this.portalContext = getPortletContainer().getRequiredContainerServices().getPortalContext();
     }
     
@@ -215,9 +221,9 @@ public abstract class PortletRequestImpl implements PortletRequest
         return requestContext;
     }
 
-    protected ContainerPortletContext getPortletContext()
+    protected PortletContext getPortletContext()
     {
-        return requestContext.getPortletConfig().getPortletContext();
+        return requestContext.getPortletContext();
     }
     
     protected PortletWindow getPortletWindow() 
@@ -253,7 +259,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         {
             return Integer.toString(cacheControl.getExpirationTime());
         }
-        return getProperty(name);
+        return null;
     }
     
     // PortletRequest Impl -----------------------------------------------------
@@ -280,9 +286,13 @@ public abstract class PortletRequestImpl implements PortletRequest
             }
             return userInfo;
         }
-        else if (name.equals(Constants.REQUEST_CONTEXT))
+        else if (name.equals(PortletInvokerService.REQUEST_CONTEXT))
         {
             return requestContext;
+        }
+        else if (name.equals(PortletInvokerService.RESPONSE_CONTEXT))
+        {
+            return responseContext;
         }
         else if (name.equals(PortletRequest.CCPP_PROFILE))
         {
@@ -307,7 +317,7 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     public String getContextPath() 
     {
-        return getPortletContext().getContextPath();
+        return contextPath;
     }
 
     public Cookie[] getCookies()

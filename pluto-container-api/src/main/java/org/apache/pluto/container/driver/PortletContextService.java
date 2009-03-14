@@ -21,8 +21,6 @@ import java.util.Iterator;
 
 import javax.servlet.ServletConfig;
 
-import org.apache.pluto.container.ContainerPortletConfig;
-import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
 
@@ -45,7 +43,7 @@ public interface PortletContextService
      *
      * @return iterator of all application descriptors.
      */
-    Iterator<ContainerPortletContext> getPortletContexts();
+    Iterator<DriverPortletContext> getPortletContexts();
 
     /**
      * Retrieve the InternalPortletContext for the specified portlet application name
@@ -53,7 +51,7 @@ public interface PortletContextService
      * @param applicationName portlet application name
      * @return portlet context or null if not registered
      */
-    ContainerPortletContext getPortletContext(String applicationName)
+    DriverPortletContext getPortletContext(String applicationName)
         throws PortletContainerException;
 
     /**
@@ -62,7 +60,7 @@ public interface PortletContextService
      * @param portletWindow portlet window
      * @return portlet context or null if not registered
      */
-    ContainerPortletContext getPortletContext(PortletWindow portletWindow)
+    DriverPortletContext getPortletContext(PortletWindow portletWindow)
         throws PortletContainerException;
 
     /**
@@ -72,7 +70,7 @@ public interface PortletContextService
      * @return portletconfig
      * @throws PortletContainerException if portlet or application unknown
      */
-    ContainerPortletConfig getPortletConfig(String applicationName, String portletName)
+    DriverPortletConfig getPortletConfig(String applicationName, String portletName)
         throws PortletContainerException;
 
     /**
@@ -97,5 +95,5 @@ public interface PortletContextService
      * 
      * @param context
      */
-    void unregister(ContainerPortletContext context);
+    void unregister(DriverPortletContext context);
 }

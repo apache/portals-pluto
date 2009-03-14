@@ -41,7 +41,7 @@ public interface PortletAppDescriptorService {
      * @return Object representation of the descriptor.
      * @throws IOException if an IO error occurs.
      */
-    PortletApplicationDefinition read(InputStream in) throws IOException;
+    PortletApplicationDefinition read(String name, String contextPath, InputStream in) throws IOException;
 
     /**
      * Merge web.xml descriptor meta data with the PortletApplicationDefinition.

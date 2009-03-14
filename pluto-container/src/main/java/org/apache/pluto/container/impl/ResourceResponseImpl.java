@@ -30,11 +30,11 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
     private String requestCacheLevel;
     private PortletResourceResponseContext responseContext;
     
-    public ResourceResponseImpl(PortletResourceResponseContext responseContext, String requestCachelevel)
+    public ResourceResponseImpl(PortletResourceResponseContext responseContext, String requestCacheLevel)
     {
         super(responseContext);
         this.responseContext = responseContext;
-        this.requestCacheLevel = requestCachelevel == null ? ResourceURL.PAGE : requestCacheLevel;
+        this.requestCacheLevel = requestCacheLevel == null ? ResourceURL.PAGE : requestCacheLevel;
     }
 	
     public PortletURL createActionURL()

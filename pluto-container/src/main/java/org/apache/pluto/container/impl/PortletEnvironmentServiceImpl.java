@@ -19,7 +19,6 @@ package org.apache.pluto.container.impl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.CacheControl;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
@@ -42,9 +41,9 @@ import org.apache.pluto.container.PortletWindow;
 
 public class PortletEnvironmentServiceImpl implements PortletEnvironmentService
 {
-    public ActionRequest createActionRequest(PortletRequestContext requestContext)
+    public ActionRequest createActionRequest(PortletRequestContext requestContext, PortletActionResponseContext responseContext)
     {
-        return new ActionRequestImpl(requestContext);
+        return new ActionRequestImpl(requestContext, responseContext);
     }
 
     public ActionResponse createActionResponse(PortletActionResponseContext responseContext)
@@ -52,9 +51,9 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService
         return new ActionResponseImpl(responseContext);
     }
 
-    public EventRequest createEventRequest(PortletRequestContext requestContext, Event event)
+    public EventRequest createEventRequest(PortletRequestContext requestContext, PortletEventResponseContext responseContext, Event event)
     {
-        return new EventRequestImpl(requestContext, event);
+        return new EventRequestImpl(requestContext, responseContext, event);
     }
 
     public EventResponse createEventResponse(PortletEventResponseContext responseContext)
@@ -68,9 +67,9 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService
         return new PortletSessionImpl(portletContext, portletWindow, session);
     }
 
-    public RenderRequest createRenderRequest(PortletRequestContext requestContext, CacheControl cacheControl)
+    public RenderRequest createRenderRequest(PortletRequestContext requestContext, PortletRenderResponseContext responseContext)
     {
-        return new RenderRequestImpl(requestContext, cacheControl);
+        return new RenderRequestImpl(requestContext, responseContext);
     }
 
     public RenderResponse createRenderResponse(PortletRenderResponseContext responseContext)
@@ -78,9 +77,9 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService
         return new RenderResponseImpl(responseContext);
     }
 
-    public ResourceRequest createResourceRequest(PortletResourceRequestContext requestContext, CacheControl cacheControl)
+    public ResourceRequest createResourceRequest(PortletResourceRequestContext requestContext, PortletResourceResponseContext responseContext)
     {
-        return new ResourceRequestImpl(requestContext, cacheControl);
+        return new ResourceRequestImpl(requestContext, responseContext);
     }
 
     public ResourceResponse createResourceResponse(PortletResourceResponseContext responseContext,

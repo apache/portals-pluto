@@ -118,11 +118,11 @@ public class PortletDescriptorRegistry {
      * @return The portlet application deployment descriptor.
      * @throws PortletContainerException if the descriptor can not be found or parsed
      */
-    public PortletApplicationDefinition getPortletAppDD(ServletContext servletContext)
+    public PortletApplicationDefinition getPortletAppDD(ServletContext servletContext, String name, String contextPath)
     throws PortletContainerException {
         PortletApplicationDefinition portletApp = cache.get(servletContext);
         if (portletApp == null) {
-        	portletApp = createDefinition(servletContext);
+        	portletApp = createDefinition(servletContext, name, contextPath);
             cache.put(servletContext, portletApp);
         }
         return portletApp;
@@ -138,7 +138,7 @@ public class PortletDescriptorRegistry {
      * @return the Portlet Application Deployment Descriptor.
      * @throws PortletContainerException
      */
-    private PortletApplicationDefinition createDefinition(ServletContext servletContext)
+    private PortletApplicationDefinition createDefinition(ServletContext servletContext, String name, String contextPath)
     throws PortletContainerException {
         PortletApplicationDefinition portletApp = null;
         try {
@@ -152,7 +152,7 @@ public class PortletDescriptorRegistry {
                 throw new PortletContainerException("Cannot find '" + WEB_XML +
                     "'. Are you sure it is in the deployed package?");
             }
-            portletApp = portletDDService.read(paIn);
+            portletApp = portletDDService.read(name, contextPath, paIn);
             portletDDService.mergeWebDescriptor(portletApp, webIn);
         } catch (Exception ex) {
             throw new PortletContainerException(EXCEPTIONS.getString(

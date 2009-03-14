@@ -18,7 +18,6 @@ package org.apache.pluto.container;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.CacheControl;
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
@@ -38,16 +37,16 @@ import javax.servlet.http.HttpSession;
  */
 public interface PortletEnvironmentService
 {    
-    ActionRequest createActionRequest(PortletRequestContext requestContext);
+    ActionRequest createActionRequest(PortletRequestContext requestContext, PortletActionResponseContext responseContext);
     ActionResponse createActionResponse(PortletActionResponseContext responseContext);
 
-    EventRequest createEventRequest(PortletRequestContext requestContext, Event event);
+    EventRequest createEventRequest(PortletRequestContext requestContext, PortletEventResponseContext responseContext, Event event);
     EventResponse createEventResponse(PortletEventResponseContext responseContext);
     
-    RenderRequest createRenderRequest(PortletRequestContext requestContext, CacheControl cacheControl);
+    RenderRequest createRenderRequest(PortletRequestContext requestContext, PortletRenderResponseContext responseContext);
     RenderResponse createRenderResponse(PortletRenderResponseContext responseContext);
     
-    ResourceRequest createResourceRequest(PortletResourceRequestContext requestContext, CacheControl cacheControl);
+    ResourceRequest createResourceRequest(PortletResourceRequestContext requestContext, PortletResourceResponseContext responseContext);
     ResourceResponse createResourceResponse(PortletResourceResponseContext responseContext, String requestCacheLevel);
 
     PortletSession createPortletSession(PortletContext portletContext, PortletWindow portletWindow, HttpSession session);

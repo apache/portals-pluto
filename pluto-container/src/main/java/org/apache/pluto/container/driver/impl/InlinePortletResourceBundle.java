@@ -19,8 +19,6 @@ package org.apache.pluto.container.driver.impl;
 import java.util.ArrayList;
 import java.util.ListResourceBundle;
 
-import org.apache.pluto.container.Constants;
-
 /**
  * InlinePortletResourceBundle implementation which provides the
  * inline title, short-title, and keywords as properties from the
@@ -31,6 +29,10 @@ import org.apache.pluto.container.Constants;
  */
 class InlinePortletResourceBundle extends ListResourceBundle {
 
+   private final static String TITLE_KEY = "javax.portlet.title";
+   private final static String SHORT_TITLE_KEY = "javax.portlet.short-title";
+   private final static String KEYWORDS_KEY = "javax.portlet.keywords";
+
     private Object[][] contents;
 
     public InlinePortletResourceBundle(Object[][] contents) {
@@ -40,13 +42,13 @@ class InlinePortletResourceBundle extends ListResourceBundle {
     public InlinePortletResourceBundle(String title, String shortTitle, String keywords) {
         ArrayList<Object[]> temp = new ArrayList<Object[]>();
         if(title != null)
-            temp.add(new Object[] {Constants.TITLE_KEY, title});
+            temp.add(new Object[] {TITLE_KEY, title});
 
         if(shortTitle != null)
-            temp.add(new Object[] {Constants.SHORT_TITLE_KEY, shortTitle});
+            temp.add(new Object[] {SHORT_TITLE_KEY, shortTitle});
 
         if(keywords != null)
-            temp.add(new Object[] {Constants.KEYWORDS_KEY, keywords});
+            temp.add(new Object[] {KEYWORDS_KEY, keywords});
 
         contents = temp.toArray(new Object[temp.size()][]);
     }

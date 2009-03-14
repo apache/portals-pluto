@@ -309,10 +309,10 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			
 	        InputStream in = new ByteArrayInputStream(xml286.toString().getBytes());
 	        
-			PortletApplicationDefinition portletApp286 = jaxb.read(in);
+			PortletApplicationDefinition portletApp286 = jaxb.read("test", "/test", in);
 			
 			in = new ByteArrayInputStream(xml168.toString().getBytes());
-			PortletApplicationDefinition portletApp168 = jaxb.read(in);
+			PortletApplicationDefinition portletApp168 = jaxb.read("test", "/test", in);
 			
 			// test if portlet has the right params:
 			
@@ -384,7 +384,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 	
 	public void testReadNullDescriptor() {
 		try {
-			Assert.assertNull("Null descriptor did not return null", jaxb.read(null));
+			Assert.assertNull("Null descriptor did not return null", jaxb.read("test", "/test", null));
 			fail("exception should be thrown");
 		} catch (IOException ioe){
 			
@@ -393,7 +393,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 
     public void testParseNoExpirationCache168() throws IOException {
         InputStream inputStream = new ByteArrayInputStream(portlet168NoCache.toString().getBytes());
-        PortletApplicationDefinition portletDD = jaxb.read( inputStream );
+        PortletApplicationDefinition portletDD = jaxb.read( "test", "/test", inputStream );
 
         assertEquals( "1.0", portletDD.getVersion() );
         assertEquals( 1, portletDD.getPortlets().size() );
@@ -404,7 +404,7 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 
     public void testParseNoExpirationCache286() throws IOException {
         InputStream inputStream = new ByteArrayInputStream(portlet286NoCache.toString().getBytes());
-        PortletApplicationDefinition portletDD = jaxb.read( inputStream );
+        PortletApplicationDefinition portletDD = jaxb.read( "test", "/test", inputStream );
 
         assertEquals( "2.0", portletDD.getVersion() );
         assertEquals( 1, portletDD.getPortlets().size() );

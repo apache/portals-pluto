@@ -21,6 +21,7 @@ import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletRequest;
 
+import org.apache.pluto.container.PortletEventResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 
 /**
@@ -31,9 +32,9 @@ public class EventRequestImpl extends PortletRequestImpl implements EventRequest
 {
 	private final Event event; 
 	
-    public EventRequestImpl(PortletRequestContext requestContext, Event event)
+    public EventRequestImpl(PortletRequestContext requestContext, PortletEventResponseContext responseContext, Event event)
     {
-        super(requestContext, PortletRequest.EVENT_PHASE);
+        super(requestContext, responseContext, PortletRequest.EVENT_PHASE);
         this.event = event;
     }
     

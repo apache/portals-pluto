@@ -18,15 +18,15 @@ package org.apache.pluto.container.impl;
 
 import javax.portlet.CacheControl;
 import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.container.CCPPProfileService;
-import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.OptionalContainerServices;
-import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEnvironmentService;
+import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
@@ -55,6 +55,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
     private Mock mockHttpServletRequest = null;
     private Mock mockPortletURLProvider = null;
     private Mock mockPortletRequestContext = null;
+    private Mock mockPortletResponseContext = null;
     private Mock mockCacheControl = null;
     private PortletWindow window = null;
     
@@ -71,7 +72,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockCCPPProfileService = mock( CCPPProfileService.class );
         mockOptionalServices = mock( OptionalContainerServices.class );
         mockPortalContext = mock( PortalContext.class );
-        mockPortletContext = mock( ContainerPortletContext.class );
+        mockPortletContext = mock( PortletContext.class );
         mockPortletURLProvider = mock(PortletURLProvider.class);
         mockContainer = mock( PortletContainerImpl.class,
                 new Class[] { String.class, RequiredContainerServices.class, OptionalContainerServices.class },
@@ -79,6 +80,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         window = (PortletWindow) mock( PortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
         mockPortletRequestContext = mock ( PortletRequestContext.class );
+        mockPortletResponseContext = mock ( PortletRenderResponseContext.class );
         mockCacheControl = mock ( CacheControl.class );
 
         // Constructor expectations for RenderRequestImpl
@@ -116,7 +118,7 @@ public class PortletRequestImplTest extends MockObjectTestCase
         mockPortletRequestContext.expects(atLeastOnce()).method("getContainer").will(returnValue( mockContainer.proxy()));
         
         // Create the render request that is under test, and initialize its state
-        RenderRequestImpl request = new RenderRequestImpl( (PortletRequestContext)mockPortletRequestContext.proxy(), (CacheControl)mockCacheControl.proxy() );
+        RenderRequestImpl request = new RenderRequestImpl( (PortletRequestContext)mockPortletRequestContext.proxy(), (PortletRenderResponseContext)mockPortletResponseContext.proxy() );
 
         // Mock the HttpSession, and set its expectations: it will return 0 for the last accessed time, and 5
         // for the maximum inactive interval

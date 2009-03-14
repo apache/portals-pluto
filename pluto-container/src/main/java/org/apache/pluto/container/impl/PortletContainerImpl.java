@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.Constants;
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletActionResponseContext;
@@ -158,7 +157,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
-        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
+        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext);
         RenderResponse portletResponse = envService.createRenderResponse(responseContext);
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RENDER_PHASE);
@@ -204,7 +203,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow);
         PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
-        ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext.getCacheControl());
+        ResourceRequest portletRequest = envService.createResourceRequest(requestContext, responseContext);
         ResourceResponse portletResponse = envService.createResourceResponse(responseContext, requestContext.getCacheability());
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.RESOURCE_PHASE);
@@ -250,7 +249,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletActionRequestContext(this, request, response, portletWindow);
         PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow);
-        ActionRequest portletRequest = envService.createActionRequest(requestContext);
+        ActionRequest portletRequest = envService.createActionRequest(requestContext, responseContext);
         ActionResponse portletResponse = envService.createActionResponse(responseContext);
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.ACTION_PHASE);
@@ -322,7 +321,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
-        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
+        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext);
         RenderResponse portletResponse = envService.createRenderResponse(responseContext);
 
         try
@@ -356,7 +355,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
-        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext.getCacheControl());
+        RenderRequest portletRequest = envService.createRenderRequest(requestContext, responseContext);
         RenderResponse portletResponse = envService.createRenderResponse(responseContext);
 
         try
@@ -422,7 +421,7 @@ public class PortletContainerImpl implements PortletContainer
 
         PortletRequestContext requestContext = rcService.getPortletEventRequestContext(this, request, response, portletWindow);
         PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow);
-        EventRequest portletRequest = envService.createEventRequest(requestContext, event);
+        EventRequest portletRequest = envService.createEventRequest(requestContext, responseContext, event);
         EventResponse portletResponse = envService.createEventResponse(responseContext);
 
         FilterManager filterManager = filterInitialisation(portletWindow,PortletRequest.EVENT_PHASE);
@@ -485,24 +484,6 @@ public class PortletContainerImpl implements PortletContainer
     	}
     }
     
-	/**
-	 * Checks if render parameter are already cleared,
-	 * bye storing/reading an ID in the request
-	 * 
-	 * @param request the portlet request
-	 * 
-	 * @return true, if already cleared
-	 */
-	protected boolean isAlreadyCleared(PortletRequest request) 
-	{
-		String cleared = (String) request.getAttribute(Constants.RENDER_ALREADY_CLEARED);
-		if (cleared == null || cleared.equals("false")) {
-			request.setAttribute(Constants.RENDER_ALREADY_CLEARED,"true");
-			return false;
-		}
-		return true;
-	}    
-	
 	/**
 	 * The method initialise the FilterManager for later use in the PortletServlet
 	 * @param PortletWindow the PortletWindow

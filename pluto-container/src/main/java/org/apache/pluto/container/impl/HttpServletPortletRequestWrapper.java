@@ -23,9 +23,12 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 
@@ -34,14 +37,17 @@ import javax.portlet.PortletRequest;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.RequestDispatcherPathInfo;
+import org.apache.pluto.container.RequestDispatcherPathInfoProvider;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
@@ -49,41 +55,6 @@ import org.apache.pluto.container.RequestDispatcherPathInfo;
  */
 public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
 {
-    private static class PortletRequestParametersWrapper extends HttpServletRequestWrapper
-    {
-        private PortletRequest portletRequest;
-        
-        public PortletRequestParametersWrapper(HttpServletRequest request, PortletRequest portletRequest)
-        {
-            super(request);
-            this.portletRequest = portletRequest;
-        }
-
-        @Override
-        public String getParameter(String name)
-        {
-            return portletRequest.getParameter(name);
-        }
-
-        @Override
-        public Map<String, String[]> getParameterMap()
-        {
-            return portletRequest.getParameterMap();
-        }
-
-        @Override
-        public Enumeration<String> getParameterNames()
-        {
-            return portletRequest.getParameterNames();
-        }
-
-        @Override
-        public String[] getParameterValues(String name)
-        {
-            return portletRequest.getParameterValues(name);
-        }        
-    }
-    
     private static final String INCLUDE_CONTEXT_PATH = "javax.servlet.include.context_path";
     private static final String INCLUDE_PATH_INFO = "javax.servlet.include.path_info";
     private static final String INCLUDE_QUERY_STRING = "javax.servlet.include.query_string";
@@ -94,6 +65,18 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     private static final String FORWARD_QUERY_STRING = "javax.servlet.forward.query_string";
     private static final String FORWARD_REQUEST_URI = "javax.servlet.forward.request_uri";
     private static final String FORWARD_SERVLET_PATH = "javax.servlet.forward.servlet_path";
+    
+    private static final HashSet<String> pathInfoAttributes = 
+        new HashSet<String>(Arrays.asList(new String[] { INCLUDE_CONTEXT_PATH,
+                                                         INCLUDE_PATH_INFO,
+                                                         INCLUDE_QUERY_STRING,
+                                                         INCLUDE_REQUEST_URI,
+                                                         INCLUDE_SERVLET_PATH,
+                                                         FORWARD_CONTEXT_PATH,
+                                                         FORWARD_PATH_INFO,
+                                                         FORWARD_QUERY_STRING,
+                                                         FORWARD_REQUEST_URI,
+                                                         FORWARD_SERVLET_PATH }));
     
     /**
      * Cache for parsed dateHeader values.
@@ -114,10 +97,14 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     };
     
     private boolean included;
-    private boolean resetPathInfoAttributes;
     private RequestDispatcherPathInfo methodPathInfo;
     private RequestDispatcherPathInfo includedPathInfo;
     private RequestDispatcherPathInfo forwardedPathInfo;
+
+    private Map<String, String[]> parameterMap;
+    private Map<String, String[]> origParameterMap;
+    
+    private ServletRequest currentRequest;
     
     private final ServletContext servletContext;
     private final PortletRequest portletRequest;
@@ -126,9 +113,12 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     private final boolean renderPhase;
     private HttpSession session;
     
+    @SuppressWarnings("unchecked")
     public HttpServletPortletRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session, PortletRequest portletRequest, RequestDispatcherPathInfo pathInfo, boolean included)
     {
-        super(new PortletRequestParametersWrapper(request, portletRequest));
+        super(request);
+        currentRequest = request;
+        origParameterMap = request.getParameterMap();
         this.servletContext = servletContext;
         this.session = session;
         this.portletRequest = portletRequest;
@@ -184,43 +174,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         return dateValue.longValue();
     }
     
-    private void resetPathInfoAttributes()
-    {
-        if (includedPathInfo == null || includedPathInfo.isNamedRequestDispatcher())
-        {
-            removeAttribute(INCLUDE_CONTEXT_PATH);
-            removeAttribute(INCLUDE_PATH_INFO);
-            removeAttribute(INCLUDE_QUERY_STRING);
-            removeAttribute(INCLUDE_REQUEST_URI);
-            removeAttribute(INCLUDE_SERVLET_PATH);
-        }
-        if (forwardedPathInfo == null || forwardedPathInfo.isNamedRequestDispatcher())
-        {
-            removeAttribute(FORWARD_CONTEXT_PATH);
-            removeAttribute(FORWARD_PATH_INFO);
-            removeAttribute(FORWARD_QUERY_STRING);
-            removeAttribute(FORWARD_REQUEST_URI);
-            removeAttribute(FORWARD_SERVLET_PATH);
-        }
-        if (includedPathInfo != null && !includedPathInfo.isNamedRequestDispatcher())
-        {
-            setAttribute(INCLUDE_CONTEXT_PATH, getContextPath());
-            setAttribute(INCLUDE_PATH_INFO, includedPathInfo.getPathInfo());
-            setAttribute(INCLUDE_QUERY_STRING, includedPathInfo.getQueryString());
-            setAttribute(INCLUDE_REQUEST_URI, includedPathInfo.getRequestURI());
-            setAttribute(INCLUDE_SERVLET_PATH, includedPathInfo.getServletPath());
-        }
-        if (forwardedPathInfo != null && !forwardedPathInfo.isNamedRequestDispatcher())
-        {
-            setAttribute(FORWARD_CONTEXT_PATH, getContextPath());
-            setAttribute(FORWARD_PATH_INFO, forwardedPathInfo.getPathInfo());
-            setAttribute(FORWARD_QUERY_STRING, forwardedPathInfo.getQueryString());
-            setAttribute(FORWARD_REQUEST_URI, forwardedPathInfo.getRequestURI());
-            setAttribute(FORWARD_SERVLET_PATH, forwardedPathInfo.getServletPath());
-        }
-        resetPathInfoAttributes = false;
-    }
-    
     public boolean isForwardingPossible()
     {
         return !renderPhase;
@@ -243,7 +196,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
             forwardedPathInfo = attributesPathInfo;
         }
         this.included = included;
-        resetPathInfoAttributes = true;
     }
     
     public void restorePathInfo(RequestDispatcherPathInfo methodPathInfo, RequestDispatcherPathInfo includedPathInfo, RequestDispatcherPathInfo forwardedPathInfo, boolean included)
@@ -269,6 +221,87 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         return forwardedPathInfo;
     }
     
+    @Override
+    public String getParameter(String name)
+    {
+        String[] values = this.getParameterMap().get(name);
+        return values != null ? values[0] : null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map<String, String[]> getParameterMap()
+    {
+        if (getRequest() != currentRequest)
+        {
+            currentRequest = getRequest();
+            Map<String, String[]> currParameterMap = currentRequest.getParameterMap();
+            Map<String, String[]> diffParameterMap = new HashMap<String, String[]>();
+            
+            for (Map.Entry<String,String[]> entry : currParameterMap.entrySet())
+            {
+                String[] values = entry.getValue();
+                String[] original = origParameterMap.get(entry.getKey());
+                String[] diff = null;
+                if ( original == null )
+                {
+                    // a new parameter
+                    diff = values.clone();
+                }
+                else if ( values.length > original.length )
+                {
+                    // we've got some additional query string parameter value(s)
+                    diff = new String[values.length - original.length];
+                    System.arraycopy(values,0,diff,0,values.length-original.length);
+                }
+                if ( diff != null )
+                {
+                    diffParameterMap.put(entry.getKey(), diff);
+                }
+            }
+            if (!diffParameterMap.isEmpty())
+            {
+                currParameterMap.clear();
+                currParameterMap.putAll(portletRequest.getParameterMap());
+                for (Map.Entry<String, String[]> entry : diffParameterMap.entrySet())
+                {
+                    String[] diff = entry.getValue();
+                    String[] curr = currParameterMap.get(entry.getKey());
+                    if ( curr == null )
+                    {
+                        currParameterMap.put(entry.getKey(), diff.clone());
+                    }
+                    else
+                    {
+                        // we've got some additional query string parameter value(s)
+                        String[] copy = new String[curr.length+diff.length];
+                        System.arraycopy(diff,0,copy,0,diff.length);
+                        System.arraycopy(curr,0,copy,diff.length,curr.length);
+                        currParameterMap.put(entry.getKey(), copy);
+                    }
+                }
+                parameterMap = Collections.unmodifiableMap(currParameterMap);
+            }
+        }
+        if (parameterMap == null)
+        {
+            parameterMap = portletRequest.getParameterMap();
+        }
+        return parameterMap;
+    }
+
+    @Override
+    public Enumeration<String> getParameterNames()
+    {
+        return Collections.enumeration(this.getParameterMap().keySet());
+    }
+
+    @Override
+    public String[] getParameterValues(String name)
+    {
+        return this.getParameterMap().get(name);
+    }
+
     @Override
     public String getAuthType()
     {
@@ -329,6 +362,12 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     public String getMethod()
     {
         return renderPhase ? "GET" : super.getMethod();
+    }
+    
+    @Override
+    public String getContextPath()
+    {
+        return portletRequest.getContextPath();
     }
 
     @Override
@@ -412,9 +451,55 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public Object getAttribute(String name)
     {
-        if (resetPathInfoAttributes)
+        if (pathInfoAttributes.contains(name))
         {
-            resetPathInfoAttributes();
+            if (includedPathInfo != null && !includedPathInfo.isNamedRequestDispatcher())
+            {
+                if (INCLUDE_CONTEXT_PATH.equals(name))
+                {
+                    return getContextPath();
+                }
+                else if (INCLUDE_PATH_INFO.equals(name))
+                {
+                    return includedPathInfo.getPathInfo();
+                }
+                else if (INCLUDE_QUERY_STRING.equals(name))
+                {
+                    return includedPathInfo.getQueryString();
+                }
+                else if (INCLUDE_REQUEST_URI.equals(name))
+                {
+                    return includedPathInfo.getRequestURI();
+                }
+                else if (INCLUDE_SERVLET_PATH.equals(name))
+                {
+                    return includedPathInfo.getServletPath();
+                }
+            }
+            if (forwardedPathInfo != null && !forwardedPathInfo.isNamedRequestDispatcher())
+            {
+                if (FORWARD_CONTEXT_PATH.equals(name))
+                {
+                    return getContextPath();
+                }
+                else if (FORWARD_PATH_INFO.equals(name))
+                {
+                    return forwardedPathInfo.getPathInfo();
+                }
+                else if (FORWARD_QUERY_STRING.equals(name))
+                {
+                    return forwardedPathInfo.getQueryString();
+                }
+                else if (FORWARD_REQUEST_URI.equals(name))
+                {
+                    return forwardedPathInfo.getRequestURI();
+                }
+                else if (FORWARD_SERVLET_PATH.equals(name))
+                {
+                    return forwardedPathInfo.getServletPath();
+                }                
+            }
+            return null;
         }
         return portletRequest.getAttribute(name);
     }
@@ -422,10 +507,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public Enumeration<String> getAttributeNames()
     {
-        if (resetPathInfoAttributes)
-        {
-            resetPathInfoAttributes();
-        }
         return portletRequest.getAttributeNames();
     }
 
@@ -540,8 +621,10 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
                         // be present to build a correct RequestDispatcherPathInfo
                     }
                 }
-                PortletRequestContext requestContext = (PortletRequestContext)portletRequest.getAttribute(Constants.REQUEST_CONTEXT);
-                return new PortletRequestDispatcherImpl(dispatcher, requestContext.getPortletConfig().getPortletContext().getPathInfo(path));
+                PortletRequestContext requestContext = (PortletRequestContext)portletRequest.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
+                PortletApplicationDefinition app = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
+                RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(requestContext.getPortletContext(), app);
+                return new PortletRequestDispatcherImpl(dispatcher, provider.getPathInfo(getContextPath(),path));
             }
         }
         return null;

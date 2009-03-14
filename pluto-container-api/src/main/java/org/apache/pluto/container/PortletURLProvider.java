@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.container;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
@@ -74,8 +75,7 @@ public interface PortletURLProvider {
      */
     String toURL(boolean absolute);
     
-    void write(Writer out);
-    void write(Writer out, boolean escapeXML);
+    void write(Writer out, boolean escapeXML) throws IOException;
 
     /**
      * Gets the mutable map of vendor-specific properties as set on the BaseURL

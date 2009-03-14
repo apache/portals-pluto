@@ -25,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import javax.portlet.ClientDataRequest;
 
 import org.apache.pluto.container.PortletRequestContext;
+import org.apache.pluto.container.PortletResponseContext;
 
 /**
  * Implementation of the <code>javax.portlet.ClientDataRequest</code> interface.
@@ -34,9 +35,9 @@ public abstract class ClientDataRequestImpl extends PortletRequestImpl implement
     /** Flag indicating if the HTTP body reader has been accessed. */
     protected boolean readerAccessed = false;
 
-    public ClientDataRequestImpl(PortletRequestContext requestContext, String lifecyclePhase)
+    public ClientDataRequestImpl(PortletRequestContext requestContext, PortletResponseContext responseContext, String lifecyclePhase)
     {
-        super(requestContext, lifecyclePhase);
+        super(requestContext, responseContext, lifecyclePhase);
     }
 
     private void checkPostedFormData() 

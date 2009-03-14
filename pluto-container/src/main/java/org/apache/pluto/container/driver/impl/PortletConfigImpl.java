@@ -29,27 +29,28 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.ContainerPortletConfig;
-import org.apache.pluto.container.ContainerPortletContext;
+import org.apache.pluto.container.driver.DriverPortletConfig;
+import org.apache.pluto.container.driver.DriverPortletContext;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.InitParam;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 
-public class PortletConfigImpl implements PortletConfig, ContainerPortletConfig {
+public class PortletConfigImpl implements PortletConfig, DriverPortletConfig {
 
     private static final Log LOG = LogFactory.getLog(PortletConfigImpl.class);
 
     /**
      * The Portlet Application Context within which we exist.
      */
-    protected ContainerPortletContext portletContext;
+    protected DriverPortletContext portletContext;
 
     /**
      * The portlet descriptor.
@@ -67,7 +68,7 @@ public class PortletConfigImpl implements PortletConfig, ContainerPortletConfig 
     
     protected Set<String> supportedContainerRuntimeOptions; 
 
-    public PortletConfigImpl(ContainerPortletContext portletContext,
+    public PortletConfigImpl(DriverPortletContext portletContext,
                              PortletDefinition portletDD,
                              PortletApplicationDefinition portletAppDD) {
         this.portletContext = portletContext;
@@ -84,7 +85,7 @@ public class PortletConfigImpl implements PortletConfig, ContainerPortletConfig 
         return portlet.getPortletName();
     }
 
-    public ContainerPortletContext getPortletContext() {
+    public PortletContext getPortletContext() {
         return portletContext;
     }
 

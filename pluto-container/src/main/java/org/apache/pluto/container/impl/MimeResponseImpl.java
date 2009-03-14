@@ -41,6 +41,8 @@ public class MimeResponseImpl extends PortletResponseImpl implements MimeRespons
     
     private boolean usingWriter;
     private boolean usingStream;
+    private boolean committed;
+    private String contentType;
 
     private PortletMimeResponseContext responseContext;
     
@@ -89,6 +91,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements MimeRespons
     
     public void flushBuffer() throws IOException
     {
+        committed = true;
         responseContext.flushBuffer();
     }
 
@@ -108,7 +111,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements MimeRespons
 
     public String getContentType()
     {
-        return responseContext.getContentType();
+        return contentType;
     }
     
     public Locale getLocale()
@@ -148,26 +151,39 @@ public class MimeResponseImpl extends PortletResponseImpl implements MimeRespons
 
     public boolean isCommitted()
     {
-        return responseContext.isCommitted();
+        return committed ? true : responseContext.isCommitted();
     }
 
     public void reset()
     {
+        if (isCommitted())
+        {
+            throw new IllegalStateException("Response is already committed");
+        }
         responseContext.reset();
     }
 
     public void resetBuffer()
     {
+        if (isCommitted())
+        {
+            throw new IllegalStateException("Response is already committed");
+        }
         responseContext.resetBuffer();
     }
 
     public void setBufferSize(int size)
     {
+        if (isCommitted())
+        {
+            throw new IllegalStateException("Response is already committed");
+        }
         responseContext.setBufferSize(size);
     }
     
     public void setContentType(String contentType)
     {
+        this.contentType = contentType;
         responseContext.setContentType(contentType);
     }
     

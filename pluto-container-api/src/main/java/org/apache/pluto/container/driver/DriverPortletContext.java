@@ -14,16 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container;
+package org.apache.pluto.container.driver;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.servlet.ServletContext;
 
-import org.apache.pluto.container.om.portlet.PortletDefinition;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
-public interface ContainerPortletConfig extends PortletConfig {
+public interface DriverPortletContext extends PortletContext {
 
-    PortletDefinition getPortletDefinition();
-    ContainerPortletContext getPortletContext();
+    /**
+     * Retrieve the unique identifier for the portlet context.
+     * @return unique identifier.
+     */
+    public String getApplicationName();
+
+    /**
+     *
+     * @return servlet context within which we belong
+     */
+    public ServletContext getServletContext();
+    
+    /**
+     *
+     * @return application config
+     */
+    public PortletApplicationDefinition getPortletApplicationDefinition();
 }
 
 

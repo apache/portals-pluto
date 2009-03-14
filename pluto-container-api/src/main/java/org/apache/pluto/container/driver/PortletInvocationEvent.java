@@ -19,19 +19,19 @@ package org.apache.pluto.container.driver;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletWindow;
 
 
 public class PortletInvocationEvent {
 
-    public static int LOAD = Constants.METHOD_NOOP.intValue();
+    public static int LOAD = PortletInvokerService.METHOD_NOOP.intValue();
 
-    public static int ACTION = Constants.METHOD_ACTION.intValue();
+    public static int ACTION = PortletInvokerService.METHOD_ACTION.intValue();
 
-    public static int RENDER = Constants.METHOD_RENDER.intValue();
+    public static int RENDER = PortletInvokerService.METHOD_RENDER.intValue();
 
-    public static int ADMIN = Constants.METHOD_ADMIN.intValue();
+    public static int ADMIN = PortletInvokerService.METHOD_ADMIN.intValue();
 
     private PortletRequest portletRequest;
 

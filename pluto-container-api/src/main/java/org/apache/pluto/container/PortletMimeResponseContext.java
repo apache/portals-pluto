@@ -17,6 +17,7 @@
 
 package org.apache.pluto.container;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -35,12 +36,12 @@ public interface PortletMimeResponseContext extends PortletResponseContext
     String getContentType();
     void setContentType(String contentType);
     String getCharacterEncoding();
-    OutputStream getOutputStream();
-    PrintWriter getWriter();
+    OutputStream getOutputStream() throws IOException, IllegalStateException;
+    PrintWriter getWriter() throws IOException, IllegalStateException;
     int getBufferSize();
     void setBufferSize(int size);
     void reset();
     void resetBuffer();
-    void flushBuffer();
+    void flushBuffer() throws IOException;
     boolean isCommitted();
 }

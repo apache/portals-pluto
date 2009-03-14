@@ -20,6 +20,7 @@ import javax.portlet.CacheControl;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
+import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 
 /**
@@ -30,17 +31,18 @@ public class RenderRequestImpl extends PortletRequestImpl implements RenderReque
 {
     private CacheControl cacheControl;
     
-    public RenderRequestImpl(PortletRequestContext requestContext, CacheControl cacheControl) 
+    public RenderRequestImpl(PortletRequestContext requestContext, PortletRenderResponseContext responseContext) 
     {
-        super(requestContext, PortletRequest.RENDER_PHASE);
-        this.cacheControl = cacheControl;
+        super(requestContext, responseContext, PortletRequest.RENDER_PHASE);
+        this.cacheControl = responseContext.getCacheControl();
     }
 
     @Override
     public String getProperty(String name)
     {
-        return getMimeRequestProperty(name, cacheControl);
-    }
+        String result = getMimeRequestProperty(name, cacheControl);
+        return result != null ? result : super.getProperty(name);
+   }
 
     public String getETag()
     {

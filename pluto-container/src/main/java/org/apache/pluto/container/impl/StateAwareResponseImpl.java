@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
@@ -136,7 +137,11 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
 	public void setEvent(QName qname, Serializable value)
 	{
         ArgumentUtility.validateNotNull("qname", qname);
-		responseContext.getEvents().add(responseContext.getEventProvider().createEvent(qname, value));
+        Event event = responseContext.getEventProvider().createEvent(qname, value);
+        if (event != null)
+        {
+            responseContext.getEvents().add(event);
+        }
 	}
 
 	public void setEvent(String name, Serializable value)

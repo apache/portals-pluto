@@ -19,10 +19,8 @@ package org.apache.pluto.container.driver.impl;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
@@ -32,10 +30,10 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.ContainerPortletContext;
-import org.apache.pluto.container.RequestDispatcherPathInfo;
+import org.apache.pluto.container.RequestDispatcherPathInfoProvider;
+import org.apache.pluto.container.driver.DriverPortletContext;
 import org.apache.pluto.container.impl.PortletRequestDispatcherImpl;
-import org.apache.pluto.container.impl.RequestDispatcherPathInfoImpl;
+import org.apache.pluto.container.impl.RequestDispatcherPathInfoProviderImpl;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
@@ -46,7 +44,7 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
  * @version 1.1
  */
 public class PortletContextImpl
-implements PortletContext, ContainerPortletContext {
+implements PortletContext, DriverPortletContext {
 	
 	/**
 	 *  Logger.
@@ -60,11 +58,6 @@ implements PortletContext, ContainerPortletContext {
     protected final ServletContext servletContext;
     protected ClassLoader contextClassLoader;
 
-    protected List<String> exactServletMappingURLPatterns;
-    protected List<String> pathServletMappingURLPatterns;
-    protected List<String> extServletMappingURLPatterns;
-    protected boolean defaultServletMapping = false;
-    
     // Constructor -------------------------------------------------------------
     
     /**
@@ -104,11 +97,7 @@ implements PortletContext, ContainerPortletContext {
     }
 
     public String getContextPath() {
-        String path = portletApp.getName();
-        if (!path.equals("")) {
-            path = "/" + path;
-        }
-        return path;
+        return portletApp.getContextPath();
     }
     
     // PortletContext Impl -----------------------------------------------------
@@ -122,104 +111,8 @@ implements PortletContext, ContainerPortletContext {
         return Configuration.getServerInfo();
     }
     
-    public RequestDispatcherPathInfo getPathInfo(String path)
+    public PortletRequestDispatcher getRequestDispatcher(String path)
     {
-        String servletPath = null;
-        String pathInfo = null;
-        String queryString = null;
-        
-        int index = path.indexOf('?');
-        if (index != -1)
-        {
-            queryString = path.substring(index+1, path.length());
-            path = path.substring(0, index);
-        }
-        
-        synchronized (this)
-        {
-            if (exactServletMappingURLPatterns == null)
-            {
-                defaultServletMapping = false;
-                exactServletMappingURLPatterns = new ArrayList<String>();
-                pathServletMappingURLPatterns = new ArrayList<String>();
-                extServletMappingURLPatterns = new ArrayList<String>();
-                
-                for (String pat : portletApp.getServletMappingURLPatterns())
-                {                 
-                    if (pat.startsWith("/"))
-                    {
-                        if (pat.equals("/"))
-                        {
-                            defaultServletMapping = true;
-                        }
-                        else if (pat.endsWith("/*"))
-                        {
-                            pathServletMappingURLPatterns.add(pat.substring(0,-2));
-                        }
-                        else
-                        {
-                            exactServletMappingURLPatterns.add(pat);
-                        }
-                    }
-                    else if (pat.startsWith("*."))
-                    {
-                        extServletMappingURLPatterns.add(pat.substring(1));
-                    }
-                    else
-                    {
-                        exactServletMappingURLPatterns.add(pat);
-                    }
-                }
-            }
-        }
-        if (exactServletMappingURLPatterns.contains(path))
-        {
-            servletPath = path;
-        }
-        else if (path.length() == 1 && defaultServletMapping)
-        {
-            servletPath = path;
-        }
-        else
-        {
-            String sub = path;
-            index = path.lastIndexOf('/');
-            do
-            {
-                sub = sub.substring(0, index);
-                if (pathServletMappingURLPatterns.contains(sub))
-                {
-                    servletPath = sub;
-                    if (sub.length() < path.length())
-                    {
-                        pathInfo = path.substring(sub.length()+1);
-                    }
-                    break;
-                }
-                index = sub.lastIndexOf('/');
-            }
-            while (index != 0);
-        }
-        if (servletPath == null)
-        {
-            index = path.lastIndexOf('/');
-            int ext = path.indexOf('.', index);
-            if (extServletMappingURLPatterns.contains(path.substring(ext)))
-            {
-                servletPath = index > 0 ? path.substring(0, index) : "";
-                pathInfo = path.substring(index);
-            }
-        }
-        if (servletPath == null)
-        {
-            servletPath = path;            
-        }
-        
-        return new RequestDispatcherPathInfoImpl(getContextPath(),servletPath,pathInfo,queryString);
-    }
-
-    public PortletRequestDispatcher getRequestDispatcher(String path) {
-    	
         if (LOG.isDebugEnabled()) {
             LOG.debug("PortletRequestDispatcher requested: " + path);
         }
@@ -237,11 +130,11 @@ implements PortletContext, ContainerPortletContext {
         // Construct PortletRequestDispatcher.
         PortletRequestDispatcher portletRequestDispatcher = null;
         try {
-            RequestDispatcher servletRequestDispatcher = servletContext
-            		.getRequestDispatcher(path);
+            RequestDispatcher servletRequestDispatcher = servletContext.getRequestDispatcher(path);
             if (servletRequestDispatcher != null) {
 
-            	portletRequestDispatcher = new PortletRequestDispatcherImpl(servletRequestDispatcher, getPathInfo(path));
+                RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(this, portletApp);
+            	portletRequestDispatcher = new PortletRequestDispatcherImpl(servletRequestDispatcher, provider.getPathInfo(getContextPath(), path));
             } else {
             	if (LOG.isInfoEnabled()) {
             		LOG.info("No matching request dispatcher found for: " + path);
@@ -262,8 +155,10 @@ implements PortletContext, ContainerPortletContext {
     
     public PortletRequestDispatcher getNamedDispatcher(String name) {
         RequestDispatcher dispatcher = servletContext.getNamedDispatcher(name);
-        if (dispatcher != null) {
-            return new PortletRequestDispatcherImpl(dispatcher);
+        if (dispatcher != null)
+        {
+            RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(this, portletApp);
+            return new PortletRequestDispatcherImpl(dispatcher, provider.getNamedRequestDispatcherPathInfo());
         } else {
         	if (LOG.isInfoEnabled()) {
         		LOG.info("No matching request dispatcher found for name: "

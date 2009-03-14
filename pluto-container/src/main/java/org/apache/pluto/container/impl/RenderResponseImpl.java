@@ -80,6 +80,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
         return valid;
     }
     
+    @Override
     public void setContentType(String contentType)
     {
         ArgumentUtility.validateNotNull("contentType", contentType);
@@ -93,7 +94,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
         {
             throw new IllegalArgumentException("Specified content type '" + contentType + "' is not supported.");
         }
-        responseContext.setContentType(contentType);
+        super.setContentType(contentType);
     }
     
     public void setNextPossiblePortletModes(Collection<PortletMode> portletModes)

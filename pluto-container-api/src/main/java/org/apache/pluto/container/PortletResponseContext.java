@@ -29,7 +29,10 @@ import org.w3c.dom.Element;
  */
 public interface PortletResponseContext
 {
+    void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse);
     PortletContainer getContainer();
+    HttpServletRequest getContainerRequest();
+    HttpServletResponse getContainerResponse();
     HttpServletRequest getServletRequest();
     HttpServletResponse getServletResponse();
     PortletWindow getPortletWindow();

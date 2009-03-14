@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.Constants;
+import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.RequestDispatcherPathInfo;
 
@@ -57,20 +57,6 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
     
     
     // Constructors ------------------------------------------------------------
-    
-    /**
-     * Creates an instance. This constructor should be called to construct a
-     * named dispatcher.
-     * @param requestDispatcher  the servlet request dispatcher.
-     * @see javax.portlet.PortletContext#getNamedDispatcher(String)
-     */
-    public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher) {
-        this.requestDispatcher = requestDispatcher;
-        if (LOG.isDebugEnabled())
-        {
-        	LOG.debug("Named dispatcher created.");
-        }
-    }
     
     /**
      * Creates an instance. This constructor should be called to construct a
@@ -138,18 +124,20 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
     
     private void doDispatch(PortletRequest request, PortletResponse response, boolean included) throws PortletException, IOException
     {
+        boolean needsFlushAfterForward = false;
         if (!included)
         {
             String lifecyclePhase = (String)request.getAttribute(PortletRequest.LIFECYCLE_PHASE);
             if (PortletRequest.RENDER_PHASE.equals(lifecyclePhase) || PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase))
             {
+                needsFlushAfterForward = true;
                 ((MimeResponse)response).resetBuffer();
             }
         }
         
-        PortletRequestContext requestContext = (PortletRequestContext)request.getAttribute(Constants.REQUEST_CONTEXT);
+        PortletRequestContext requestContext = (PortletRequestContext)request.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
         HttpServletPortletRequestWrapper req = new HttpServletPortletRequestWrapper(requestContext.getServletRequest(), 
-                                                                                    requestContext.getPortletConfig().getPortletContext().getServletContext(),
+                                                                                    requestContext.getServletContext(),
                                                                                     null, // TODO: ProxySession if javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
                                                                                     request,
                                                                                     pathInfo,
@@ -167,6 +155,10 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             else
             {
                 requestDispatcher.include(req, res);
+            }
+            if (needsFlushAfterForward)
+            {
+                ((MimeResponse)response).flushBuffer();
             }
         }
         catch (ServletException sex)

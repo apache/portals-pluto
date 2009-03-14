@@ -126,7 +126,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      */
     
     @SuppressWarnings("unchecked")
-    public PortletApplicationDefinition read(InputStream in) throws IOException {
+    public PortletApplicationDefinition read(String name, String contextPath, InputStream in) throws IOException {
         JAXBElement app = null;
         try {
             JAXBContext jc = JAXBContext.newInstance( 
@@ -144,11 +144,18 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         catch(Exception me) {
             throw new IOException(me.getLocalizedMessage());
         }
+        PortletApplicationDefinition pad = null;
         if (app.getValue() instanceof org.apache.pluto.container.om.portlet10.impl.PortletAppType)
         {
-            return ((org.apache.pluto.container.om.portlet10.impl.PortletAppType)app.getValue()).upgrade();
-        }       
-        return (PortletApplicationDefinition)app.getValue();
+             pad = ((org.apache.pluto.container.om.portlet10.impl.PortletAppType)app.getValue()).upgrade();
+        }      
+        else
+        {
+            pad = (PortletApplicationDefinition)app.getValue();
+        }
+        pad.setName(name);
+        pad.setContextPath(contextPath);
+        return pad;
     }
 
     public void mergeWebDescriptor(PortletApplicationDefinition pa, InputStream webDescriptor) throws Exception

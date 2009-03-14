@@ -30,6 +30,9 @@ public interface PortletApplicationDefinition {
     String getName();
     void setName(String name);
     
+    String getContextPath();
+    void setContextPath(String contextPath);
+    
     PortletDefinition getPortlet(String portletName);
 	List<? extends PortletDefinition> getPortlets();
 	PortletDefinition addPortlet(String name);

@@ -43,12 +43,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.pluto.container.Constants;
-import org.apache.pluto.container.ContainerPortletConfig;
-import org.apache.pluto.container.ContainerPortletContext;
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
+import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 
@@ -108,12 +107,12 @@ public class PortletServlet extends HttpServlet
     /**
      * The internal portlet context instance.
      */
-    private ContainerPortletContext portletContext;
+    private DriverPortletContext portletContext;
 
     /**
      * The internal portlet config instance.
      */
-    private ContainerPortletConfig portletConfig;
+    private DriverPortletConfig portletConfig;
 
     /**
      * The Event Portlet instance (the same object as portlet) wrapped by this
@@ -302,28 +301,26 @@ public class PortletServlet extends HttpServlet
         }
         // Save portlet config into servlet request.
 
-        request.setAttribute(Constants.PORTLET_CONFIG, portletConfig);
+        request.setAttribute(PortletInvokerService.PORTLET_CONFIG, portletConfig);
 
         // Retrieve attributes from the servlet request.
-        Integer methodId = (Integer) request.getAttribute(Constants.METHOD_ID);
+        Integer methodId = (Integer) request.getAttribute(PortletInvokerService.METHOD_ID);
 
-        final PortletRequest portletRequest = (PortletRequest) request
-                .getAttribute(Constants.PORTLET_REQUEST);
+        final PortletRequest portletRequest = (PortletRequest)request.getAttribute(PortletInvokerService.PORTLET_REQUEST);
 
-        final PortletResponse portletResponse = (PortletResponse) request
-                .getAttribute(Constants.PORTLET_RESPONSE);
+        final PortletResponse portletResponse = (PortletResponse)request.getAttribute(PortletInvokerService.PORTLET_RESPONSE);
         
-        final PortletRequestContext requestContext = (PortletRequestContext)request.getAttribute(Constants.REQUEST_CONTEXT);
+        final PortletRequestContext requestContext = (PortletRequestContext)portletRequest.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
+        final PortletResponseContext responseContext = (PortletResponseContext)portletRequest.getAttribute(PortletInvokerService.RESPONSE_CONTEXT);
         
-        FilterManager filterManager = (FilterManager) request
-                .getAttribute(Constants.FILTER_MANAGER);
+        final FilterManager filterManager = (FilterManager)request.getAttribute(PortletInvokerService.FILTER_MANAGER);
 
-        requestContext.init(portletConfig);
+        requestContext.init(portletConfig.getPortletContext(), getServletContext(), request, response);
+        responseContext.init(request, response);
 
         PortletWindow window = requestContext.getPortletWindow();
 
-        PortletInvocationEvent event = new PortletInvocationEvent(
-                portletRequest, window, methodId.intValue());
+        PortletInvocationEvent event = new PortletInvocationEvent(portletRequest, window, methodId.intValue());
 
         notify(event, true, null);
 
@@ -337,7 +334,7 @@ public class PortletServlet extends HttpServlet
         {
 
             // The requested method is RENDER: call Portlet.render(..)
-            if (methodId == Constants.METHOD_RENDER)
+            if (methodId == PortletInvokerService.METHOD_RENDER)
             {
                 RenderRequest renderRequest = (RenderRequest) portletRequest;
                 RenderResponse renderResponse = (RenderResponse) portletResponse;
@@ -347,7 +344,7 @@ public class PortletServlet extends HttpServlet
 
             // The requested method is RESOURCE: call
             // ResourceServingPortlet.serveResource(..)
-            else if (methodId == Constants.METHOD_RESOURCE)
+            else if (methodId == PortletInvokerService.METHOD_RESOURCE)
             {
                 ResourceRequest resourceRequest = (ResourceRequest) portletRequest;
                 ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
@@ -356,7 +353,7 @@ public class PortletServlet extends HttpServlet
             }
 
             // The requested method is ACTION: call Portlet.processAction(..)
-            else if (methodId == Constants.METHOD_ACTION)
+            else if (methodId == PortletInvokerService.METHOD_ACTION)
             {
                 ActionRequest actionRequest = (ActionRequest) portletRequest;
                 ActionResponse actionResponse = (ActionResponse) portletResponse;
@@ -365,7 +362,7 @@ public class PortletServlet extends HttpServlet
             }
 
             // The request methode is Event: call Portlet.processEvent(..)
-            else if (methodId == Constants.METHOD_EVENT)
+            else if (methodId == PortletInvokerService.METHOD_EVENT)
             {
                 EventRequest eventRequest = (EventRequest) portletRequest;
                 EventResponse eventResponse = (EventResponse) portletResponse;
@@ -373,7 +370,7 @@ public class PortletServlet extends HttpServlet
                         loader, eventPortlet, portletContext);
             }
             // The requested method is ADMIN: call handlers.
-            else if (methodId == Constants.METHOD_ADMIN)
+            else if (methodId == PortletInvokerService.METHOD_ADMIN)
             {
                 PortalAdministrationService pas = PlutoServices.getServices().getPortalAdministrationService();
 
@@ -384,7 +381,7 @@ public class PortletServlet extends HttpServlet
             }
 
             // The requested method is NOOP: do nothing.
-            else if (methodId == Constants.METHOD_NOOP)
+            else if (methodId == PortletInvokerService.METHOD_NOOP)
             {
                 // Do nothing.
             }
@@ -428,7 +425,7 @@ public class PortletServlet extends HttpServlet
         }
         finally
         {
-            request.removeAttribute(Constants.PORTLET_CONFIG);
+            request.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
         }
     }
 

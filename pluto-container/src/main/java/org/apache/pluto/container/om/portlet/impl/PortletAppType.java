@@ -124,6 +124,8 @@ public class PortletAppType implements PortletApplicationDefinition
     @XmlTransient
     protected String name;
     @XmlTransient
+    protected String contextPath;
+    @XmlTransient
     protected Set<String> servletMappingURLPatterns;
     @XmlTransient
     protected Map<Locale, String> localeEncodingMappings;
@@ -136,6 +138,16 @@ public class PortletAppType implements PortletApplicationDefinition
     public void setName(String name)
     {
         this.name = name;
+    }
+    
+    public String getContextPath()
+    {
+        return contextPath;
+    }
+    
+    public void setContextPath(String contextPath)
+    {
+        this.contextPath = contextPath;
     }
     
     public PortletDefinition getPortlet(String portletName)

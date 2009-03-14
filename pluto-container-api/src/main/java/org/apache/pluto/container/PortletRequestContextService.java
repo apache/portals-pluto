@@ -26,31 +26,31 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PortletRequestContextService
 {
-    PortletRequestContext getPortletActionRequestContext(PortletContainer container, HttpServletRequest request,
-                                                         HttpServletResponse response, PortletWindow window);
+    PortletRequestContext getPortletActionRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                         HttpServletResponse containerResponse, PortletWindow window);
 
-    PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest request,
-                                                        HttpServletResponse response, PortletWindow window);
+    PortletRequestContext getPortletEventRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                        HttpServletResponse containerResponse, PortletWindow window);
 
     PortletResourceRequestContext getPortletResourceRequestContext(PortletContainer container,
-                                                                   HttpServletRequest request,
-                                                                   HttpServletResponse response, PortletWindow window);
+                                                                   HttpServletRequest containerRequest,
+                                                                   HttpServletResponse containerResponse, PortletWindow window);
 
-    PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest request,
-                                                         HttpServletResponse response, PortletWindow window);
+    PortletRequestContext getPortletRenderRequestContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                         HttpServletResponse containerResponse, PortletWindow window);
 
     PortletActionResponseContext getPortletActionResponseContext(PortletContainer container,
-                                                                 HttpServletRequest request,
-                                                                 HttpServletResponse response, PortletWindow window);
+                                                                 HttpServletRequest containerRequest,
+                                                                 HttpServletResponse containerResponse, PortletWindow window);
 
-    PortletEventResponseContext getPortletEventResponseContext(PortletContainer container, HttpServletRequest request,
-                                                               HttpServletResponse response, PortletWindow window);
+    PortletEventResponseContext getPortletEventResponseContext(PortletContainer container, HttpServletRequest containerRequest,
+                                                               HttpServletResponse containerResponse, PortletWindow window);
 
     PortletResourceResponseContext getPortletResourceResponseContext(PortletContainer container,
-                                                                     HttpServletRequest request,
-                                                                     HttpServletResponse response, PortletWindow window);
+                                                                     HttpServletRequest containerRequest,
+                                                                     HttpServletResponse containerResponse, PortletWindow window);
 
     PortletRenderResponseContext getPortletRenderResponseContext(PortletContainer container,
-                                                                 HttpServletRequest request,
-                                                                 HttpServletResponse response, PortletWindow window);
+                                                                 HttpServletRequest containerRequest,
+                                                                 HttpServletResponse containerResponse, PortletWindow window);
 }

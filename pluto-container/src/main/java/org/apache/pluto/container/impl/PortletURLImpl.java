@@ -37,6 +37,7 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import org.apache.pluto.container.PortletMimeResponseContext;
+import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletURLListenerService;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
@@ -51,19 +52,24 @@ import org.apache.pluto.container.util.ArgumentUtility;
  */
 public class PortletURLImpl implements PortletURL, ResourceURL {
 
-    private PortletMimeResponseContext responseContext;
+    private PortletResponseContext responseContext;
     private PortalContext portalContext;
     private PortletURLProvider urlProvider;
     private String cacheLevel = ResourceURL.PAGE;
     private boolean filtering;
     private boolean renderURL;
     
-    public PortletURLImpl(PortletMimeResponseContext responseContext, PortletURLProvider.TYPE type)
+    public PortletURLImpl(PortletResponseContext responseContext, PortletURLProvider urlProvider)
     {
         this.responseContext = responseContext;
         this.portalContext = responseContext.getContainer().getRequiredContainerServices().getPortalContext();
-        urlProvider = responseContext.getPortletURLProvider(type);
-        renderURL = PortletURLProvider.TYPE.RENDER == type;
+        this.urlProvider = urlProvider;
+        renderURL = PortletURLProvider.TYPE.RENDER == urlProvider.getType();
+    }
+    
+    public PortletURLImpl(PortletMimeResponseContext responseContext, PortletURLProvider.TYPE type)
+    {
+        this(responseContext, responseContext.getPortletURLProvider(type));
     }
     
     public PortletURLImpl(PortletMimeResponseContext responseContext, String cacheLevel)
@@ -168,7 +174,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         }
     }
     
-    private void filterURL()
+    public void filterURL()
     {
         if (filtering)
         {
@@ -359,8 +365,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
 
     public void write(Writer out) throws IOException
     {
-        filterURL();
-        urlProvider.write(out);
+        write(out, true);
     }
     
     public String toString()
