@@ -521,10 +521,21 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         return value != null ? value : portletRequest.getAttribute(name);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Enumeration<String> getAttributeNames()
     {
-        return portletRequest.getAttributeNames();
+        HashSet<String> names = new HashSet<String>();
+        Enumeration<String> e;
+        for (e = getRequest().getAttributeNames(); e.hasMoreElements();  )
+        {
+            names.add(e.nextElement());
+        }
+        for (e = portletRequest.getAttributeNames(); e.hasMoreElements();  )
+        {
+            names.add(e.nextElement());
+        }
+        return Collections.enumeration(names);
     }
 
     @Override
