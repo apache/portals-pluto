@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.portlet.ClientDataRequest;
 import javax.portlet.PortletRequest;
@@ -529,11 +530,25 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         Enumeration<String> e;
         for (e = getRequest().getAttributeNames(); e.hasMoreElements();  )
         {
-            names.add(e.nextElement());
+            try
+            {
+                names.add(e.nextElement());
+            }
+            catch(NoSuchElementException nse)
+            {
+                // ignore potential concurrent changes when run in parallel mode
+            }
         }
         for (e = portletRequest.getAttributeNames(); e.hasMoreElements();  )
         {
-            names.add(e.nextElement());
+            try
+            {
+                names.add(e.nextElement());
+            }
+            catch(NoSuchElementException nse)
+            {
+                // ignore potential concurrent changes when run in parallel mode
+            }
         }
         return Collections.enumeration(names);
     }
