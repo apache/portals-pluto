@@ -89,7 +89,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
         {
             contentType = contentType.substring(0, index);
         }
-        contentType.trim();
+        contentType = contentType.trim();
         if (!isValidContentType(contentType))
         {
             throw new IllegalArgumentException("Specified content type '" + contentType + "' is not supported.");

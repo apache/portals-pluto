@@ -16,6 +16,8 @@
  */
 package org.apache.pluto.container.impl;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -27,6 +29,10 @@ import org.apache.pluto.container.PortletURLProvider;
 
 public class ResourceResponseImpl extends MimeResponseImpl implements ResourceResponse
 {
+    private static final String DEFAULT_CONTAINER_CHARSET = "UTF-8";
+    
+    private boolean canSetLocaleEncoding = true;
+    private String charset;
     private String requestCacheLevel;
     private PortletResourceResponseContext responseContext;
     
@@ -37,6 +43,7 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
         this.requestCacheLevel = requestCacheLevel == null ? ResourceURL.PAGE : requestCacheLevel;
     }
 	
+    @Override
     public PortletURL createActionURL()
     {
         if (ResourceURL.PAGE.equals(requestCacheLevel))
@@ -46,6 +53,7 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
         throw new IllegalStateException("Not allowed to create an ActionURL with current request cacheability level "+requestCacheLevel);
     }
     
+    @Override
     public PortletURL createRenderURL()
     {
         if (ResourceURL.PAGE.equals(requestCacheLevel))
@@ -55,14 +63,56 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
         throw new IllegalStateException("Not allowed to create a RenderURL with current request cacheability level "+requestCacheLevel);
     }
 
+    @Override
     public ResourceURL createResourceURL()
     {
         return new PortletURLImpl(responseContext, requestCacheLevel);
     }
     
-	public void setCharacterEncoding(String charset)
+    @Override
+    public PrintWriter getWriter()
+    throws IllegalStateException, IOException
+    {
+        if (charset == null)
+        {
+            // enforce the default Container encoding == UTF-8 if encoding hasn't been set yet.
+            setCharacterEncoding(DEFAULT_CONTAINER_CHARSET);
+        }
+        return super.getWriter();
+    }
+    
+    @Override
+    public String getCharacterEncoding()
+    {
+        return charset != null ? charset : DEFAULT_CONTAINER_CHARSET;
+    }
+    
+	public void setCharacterEncoding(String encoding)
 	{
-	    responseContext.setCharacterEncoding(charset);
+	    if (encoding != null)
+	    {
+	        responseContext.setCharacterEncoding(charset);
+	        canSetLocaleEncoding = false;
+	        this.charset = encoding;
+	    }
+	}
+	
+	@Override
+	public void setContentType(String contentType)
+	{
+	    if (contentType != null)
+	    {
+	        int index = contentType.indexOf(';');
+	        if (index != -1 && index < contentType.length()-1) 
+	        {
+	            String encoding = contentType.substring(index+1).trim();
+	            if (encoding.length() > 0)
+	            {
+	                setCharacterEncoding(encoding);
+	            }
+	        }
+	        super.setContentType(contentType);
+	    }
 	}
 
 	public void setContentLength(int len)
@@ -72,6 +122,19 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
 
 	public void setLocale(Locale locale)
 	{
-	    responseContext.setLocale(locale);
+	    if (locale != null)
+	    {
+            responseContext.setLocale(locale);
+	        if (canSetLocaleEncoding)
+	        {
+	            String encoding = getPortletWindow().getPortletEntity().getPortletDefinition().getApplication().getLocaleEncodingMappings().get(locale);
+	            if (encoding != null)
+	            {
+	                setCharacterEncoding(encoding);
+	                // allow repeated setLocale usage for characterEncoding
+	                canSetLocaleEncoding = true;
+	            }
+	        }
+	    }
 	}
 }
