@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.container.impl;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
@@ -30,22 +31,19 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.container.ContainerInfo;
 import org.apache.pluto.container.RequestDispatcherPathInfoProvider;
-import org.apache.pluto.container.driver.DriverPortletContext;
 import org.apache.pluto.container.impl.PortletRequestDispatcherImpl;
 import org.apache.pluto.container.impl.RequestDispatcherPathInfoProviderImpl;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
- * Pluto's Portlet Context Implementation. This class implements the
- * <code>InternalPortletContext</code> which provides container specific
- * information needed for processing.
+ * Default Portlet Context Implementation.
  * 
- * @version 1.1
+ * @version $Id$
  */
-public class PortletContextImpl
-implements PortletContext, DriverPortletContext {
-	
+public class PortletContextImpl implements PortletContext
+{
 	/**
 	 *  Logger.
 	 */
@@ -54,9 +52,10 @@ implements PortletContext, DriverPortletContext {
     
     // Private Member Variables ------------------------------------------------
     
-    protected final PortletApplicationDefinition portletApp;
-    protected final ServletContext servletContext;
-    protected ClassLoader contextClassLoader;
+    protected ServletContext servletContext;
+    protected PortletApplicationDefinition portletApp;
+    protected ContainerInfo containerInfo;
+    protected List<String> supportedContainerRuntimeOptions;
 
     // Constructor -------------------------------------------------------------
     
@@ -66,38 +65,14 @@ implements PortletContext, DriverPortletContext {
      * @param portletAppDD  the portlet application descriptor.
      */
     public PortletContextImpl(ServletContext servletContext,
-                              PortletApplicationDefinition portletApp) {
+                              PortletApplicationDefinition portletApp, 
+                              ContainerInfo containerInfo, 
+                              List<String> supportedContainerRuntimeOptions)
+    {
         this.servletContext = servletContext;
         this.portletApp = portletApp;
-        init();
-    }
-    
-    private void init() {
-        setContextClassLoader(Thread.currentThread().getContextClassLoader());
-    }
-    
-    public String getApplicationName() {
-        return portletApp.getName();
-    }
-    
-    /**
-     * ClassLoader associated with this context.
-     * @return
-     */
-    public ClassLoader getContextClassLoader() {
-        return contextClassLoader;
-    }
-
-    /**
-     * ClassLoader associated with this context.
-     * @param contextClassLoader
-     */
-    public void setContextClassLoader(ClassLoader contextClassLoader) {
-        this.contextClassLoader = contextClassLoader;
-    }
-
-    public String getContextPath() {
-        return portletApp.getContextPath();
+        this.containerInfo = containerInfo;
+        this.supportedContainerRuntimeOptions = supportedContainerRuntimeOptions;
     }
     
     // PortletContext Impl -----------------------------------------------------
@@ -105,10 +80,9 @@ implements PortletContext, DriverPortletContext {
     /**
      * Retrieve the PortletContainer's server info.
      * @return the server info in the form of <i>Server/Version</i>
-     * @see Environment#getServerInfo()
      */
     public String getServerInfo() {
-        return Configuration.getServerInfo();
+        return containerInfo.getServerInfo();
     }
     
     public PortletRequestDispatcher getRequestDispatcher(String path)
@@ -134,7 +108,7 @@ implements PortletContext, DriverPortletContext {
             if (servletRequestDispatcher != null) {
 
                 RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(this, portletApp);
-            	portletRequestDispatcher = new PortletRequestDispatcherImpl(servletRequestDispatcher, provider.getPathInfo(getContextPath(), path));
+            	portletRequestDispatcher = new PortletRequestDispatcherImpl(servletRequestDispatcher, provider.getPathInfo(portletApp.getContextPath(), path));
             } else {
             	if (LOG.isInfoEnabled()) {
             		LOG.info("No matching request dispatcher found for: " + path);
@@ -173,11 +147,11 @@ implements PortletContext, DriverPortletContext {
     }
 
     public int getMajorVersion() {
-        return Configuration.getMajorSpecificationVersion();
+        return containerInfo.getMajorSpecificationVersion();
     }
 
     public int getMinorVersion() {
-        return Configuration.getMinorSpecificationVersion();
+        return containerInfo.getMinorSpecificationVersion();
     }
 
     public String getMimeType(String file) {
@@ -256,8 +230,6 @@ implements PortletContext, DriverPortletContext {
     }
     
     
-    // org.apache.pluto.core.InternalPortletContext Impl -----------------------
-    
     public ServletContext getServletContext() {
         return servletContext;
     }
@@ -267,7 +239,7 @@ implements PortletContext, DriverPortletContext {
     }
 
 	public Enumeration<String> getContainerRuntimeOptions() {
-	    return Collections.enumeration(Configuration.getSupportedContainerRuntimeOptions());
+	    return Collections.enumeration(supportedContainerRuntimeOptions);
 	}
 }
 

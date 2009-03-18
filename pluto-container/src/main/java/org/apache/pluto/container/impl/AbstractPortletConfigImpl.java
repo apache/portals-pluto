@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.container.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,47 +33,36 @@ import javax.portlet.PortletContext;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.driver.DriverPortletConfig;
-import org.apache.pluto.container.driver.DriverPortletContext;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.EventDefinitionReference;
 import org.apache.pluto.container.om.portlet.InitParam;
-import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 
-public class PortletConfigImpl implements PortletConfig, DriverPortletConfig {
-
-    private static final Log LOG = LogFactory.getLog(PortletConfigImpl.class);
-
-    /**
-     * The Portlet Application Context within which we exist.
-     */
-    protected DriverPortletContext portletContext;
-
+/**
+ * Abstract PortletConfig base class Implementation.
+ * <p>
+ * An embedding Portal can extend this base class and is only required to provide
+ * an implementation of the getResourceBundle bundle method.
+ * </p>
+ * 
+ * @version $Id$
+ */
+public abstract class AbstractPortletConfigImpl implements PortletConfig
+{
+    protected PortletContext portletContext;
     /**
      * The portlet descriptor.
      */
     protected PortletDefinition portlet;
     
-    /**
-     * The portlet application descriptor.
-     */
-    protected PortletApplicationDefinition portletApp;
-
-    protected ResourceBundleFactory bundles;
-    
     protected Map<String, String[]> containerRuntimeOptions;
     
     protected Set<String> supportedContainerRuntimeOptions; 
 
-    public PortletConfigImpl(DriverPortletContext portletContext,
-                             PortletDefinition portletDD,
-                             PortletApplicationDefinition portletAppDD) {
+    public AbstractPortletConfigImpl(PortletContext portletContext, PortletDefinition portlet)
+    {
         this.portletContext = portletContext;
-        this.portlet = portletDD;
-        this.portletApp = portletAppDD;
+        this.portlet = portlet;
         this.supportedContainerRuntimeOptions = new HashSet<String>();
         for (Enumeration<String> e = portletContext.getContainerRuntimeOptions(); e.hasMoreElements(); )
         {
@@ -81,22 +70,14 @@ public class PortletConfigImpl implements PortletConfig, DriverPortletConfig {
         }
     }
 
+    public abstract ResourceBundle getResourceBundle(Locale locale);
+    
     public String getPortletName() {
         return portlet.getPortletName();
     }
 
     public PortletContext getPortletContext() {
         return portletContext;
-    }
-
-    public ResourceBundle getResourceBundle(Locale locale) {
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Resource Bundle requested: "+locale);
-        }
-        if (bundles == null) {
-            bundles = new ResourceBundleFactory(portlet, portlet.getPortletInfo());
-        }
-        return bundles.getResourceBundle(locale);
     }
 
     public String getInitParameter(String name) {
@@ -145,16 +126,16 @@ public class PortletConfigImpl implements PortletConfig, DriverPortletConfig {
 	}
 
 	public String getDefaultNamespace() {
-		if (portletApp.getDefaultNamespace() == null)
+		if (portlet.getApplication().getDefaultNamespace() == null)
 			return XMLConstants.NULL_NS_URI;
-		return portletApp.getDefaultNamespace();
+		return portlet.getApplication().getDefaultNamespace();
 	}
 
 	public Enumeration<QName> getProcessingEventQNames() {
 	    ArrayList<QName> qnameList = new ArrayList<QName>();
         for (EventDefinitionReference ref : portlet.getSupportedProcessingEvents())
         {
-            QName name = ref.getQualifiedName(portletApp.getDefaultNamespace());
+            QName name = ref.getQualifiedName(portlet.getApplication().getDefaultNamespace());
             if (name == null)
             {
                 continue;
@@ -171,7 +152,7 @@ public class PortletConfigImpl implements PortletConfig, DriverPortletConfig {
         ArrayList<QName> qnameList = new ArrayList<QName>();
         for (EventDefinitionReference ref : portlet.getSupportedPublishingEvents())
         {
-            QName name = ref.getQualifiedName(portletApp.getDefaultNamespace());
+            QName name = ref.getQualifiedName(portlet.getApplication().getDefaultNamespace());
             if (name == null)
             {
                 continue;
@@ -204,32 +185,26 @@ public class PortletConfigImpl implements PortletConfig, DriverPortletConfig {
 	        if (containerRuntimeOptions == null)
 	        {
 	            containerRuntimeOptions = new HashMap<String, String[]>();
-	            if (portletApp.getContainerRuntimeOptions() != null)
-	            {
-	                for (ContainerRuntimeOption option : portletApp.getContainerRuntimeOptions())
-	                {
-	                    List<String> values = option.getValues();
-	                    String [] tempValues = new String[values.size()];
-	                    for (int i=0;i<values.size();i++)
-	                    {
-	                        tempValues[i] = values.get(i);
-	                    }
-	                    containerRuntimeOptions.put(option.getName(),tempValues);
-	                }
-	            }
-	            if (portlet.getContainerRuntimeOptions() != null)
-	            {
-	                for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions())
-	                {
-	                    List<String> values = option.getValues();
-	                    String [] tempValues = new String[values.size()];
-	                    for (int i=0;i<values.size();i++)
-	                    {
-	                        tempValues[i] = values.get(i);
-	                    }
-	                    containerRuntimeOptions.put(option.getName(),tempValues);
-	                }
-	            }
+                for (ContainerRuntimeOption option : portlet.getApplication().getContainerRuntimeOptions())
+                {
+                    List<String> values = option.getValues();
+                    String [] tempValues = new String[values.size()];
+                    for (int i=0;i<values.size();i++)
+                    {
+                        tempValues[i] = values.get(i);
+                    }
+                    containerRuntimeOptions.put(option.getName(),tempValues);
+                }
+                for (ContainerRuntimeOption option : portlet.getContainerRuntimeOptions())
+                {
+                    List<String> values = option.getValues();
+                    String [] tempValues = new String[values.size()];
+                    for (int i=0;i<values.size();i++)
+                    {
+                        tempValues[i] = values.get(i);
+                    }
+                    containerRuntimeOptions.put(option.getName(),tempValues);
+                }
 	            for (Iterator<String> iter = containerRuntimeOptions.keySet().iterator(); iter.hasNext(); )
 	            {
 	                String key = iter.next();

@@ -117,7 +117,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
 
             PortletApplicationDefinition portletApp = portletRegistry.getPortletAppDD(servletContext, applicationName, contextPath);
 
-            DriverPortletContext portletContext = new PortletContextImpl(servletContext, portletApp);
+            DriverPortletContext portletContext = new DriverPortletContextImpl(servletContext, portletApp);
 
             portletContexts.put(applicationName, portletContext);
 
@@ -138,7 +138,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
                 }
                 portletConfigs.put(
                     portletContext.getApplicationName() + "/" + portlet.getPortletName(),
-                    new PortletConfigImpl(portletContext, portlet, portletApp)
+                    new DriverPortletConfigImpl(portletContext, portlet)
                 );
             }
         } else {
