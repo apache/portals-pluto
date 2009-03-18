@@ -371,7 +371,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     public String toString()
     {
         filterURL();
-        return urlProvider.toURL(false);
+        return urlProvider.toURL();
     }
 
     // PortletURL impl ------------------------------------------------------------    

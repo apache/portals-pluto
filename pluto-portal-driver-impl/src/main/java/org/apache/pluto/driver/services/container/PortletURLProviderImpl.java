@@ -187,6 +187,11 @@ public class PortletURLProviderImpl implements PortletURLProvider
     {
         this.resourceID = resourceID;
     }
+    
+    public String toURL()
+    {
+        return toURL(false);
+    }
 
     public String toURL(boolean absolute)
     {

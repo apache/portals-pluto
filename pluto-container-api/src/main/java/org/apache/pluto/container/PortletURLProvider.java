@@ -68,12 +68,7 @@ public interface PortletURLProvider {
     String getResourceID();
     void setResourceID(String resourceID);
     
-    /**
-     * Returns the URL in string format
-     * @param absolute if true an absolute URL is required, like for embedding as a query parameter value
-     * @return the URL
-     */
-    String toURL(boolean absolute);
+    String toURL();
     
     void write(Writer out, boolean escapeXML) throws IOException;
 
