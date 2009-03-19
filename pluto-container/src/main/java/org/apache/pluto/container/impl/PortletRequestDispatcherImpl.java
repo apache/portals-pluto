@@ -145,9 +145,13 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
         HttpServletPortletResponseWrapper res = new HttpServletPortletResponseWrapper(requestContext.getServletResponse(),
                                                                                       request,
                                                                                       response,
-                                                                                      included);
+                                                                                      included);        
         try
         {
+            req.setAttribute(PortletInvokerService.PORTLET_CONFIG, requestContext.getPortletConfig());
+            req.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
+            req.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
+            
             if (!included && req.isForwardingPossible())
             {
                 requestDispatcher.forward(req, res);
@@ -171,6 +175,12 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             {
                 throw new PortletException(sex);
             }
+        }
+        finally
+        {
+            req.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
+            req.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+            req.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
         }
     }
 

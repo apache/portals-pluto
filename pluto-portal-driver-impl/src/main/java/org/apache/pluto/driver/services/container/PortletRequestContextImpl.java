@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletContext;
+import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +51,7 @@ public class PortletRequestContextImpl implements PortletRequestContext
     private HttpServletResponse servletResponse;
     private PortletWindow window;
     private PortalURL url;
-    private PortletContext portletContext;
+    private PortletConfig portletConfig;
     private ServletContext servletContext;
     private Cookie cookies[];
     private boolean useRequestParameters;
@@ -107,9 +107,9 @@ public class PortletRequestContextImpl implements PortletRequestContext
         return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
     }
         
-    public void init(PortletContext portletContext, ServletContext servletContext, HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+    public void init(PortletConfig portletConfig, ServletContext servletContext, HttpServletRequest servletRequest, HttpServletResponse servletResponse)
     {
-        this.portletContext = portletContext;
+        this.portletConfig = portletConfig;
         this.servletContext = servletContext;
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
@@ -162,9 +162,9 @@ public class PortletRequestContextImpl implements PortletRequestContext
         return cookies.length > 0 ? cookies.clone() : null;
     }
 
-    public PortletContext getPortletContext()
+    public PortletConfig getPortletConfig()
     {
-        return portletContext;
+        return portletConfig;
     }
 
     public ServletContext getServletContext()

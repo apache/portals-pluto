@@ -21,7 +21,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletContext;
+import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,9 +34,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PortletRequestContext
 {
-    void init(PortletContext portletContext, ServletContext servletContext, HttpServletRequest servletRequest, HttpServletResponse servletResponse);
+    void init(PortletConfig portletConfig, ServletContext servletContext, HttpServletRequest servletRequest, HttpServletResponse servletResponse);
     PortletContainer getContainer();
-    PortletContext getPortletContext();
+    PortletConfig getPortletConfig();
     ServletContext getServletContext();
     HttpServletRequest getContainerRequest();
     HttpServletResponse getContainerResponse();

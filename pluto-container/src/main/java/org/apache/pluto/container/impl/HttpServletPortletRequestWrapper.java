@@ -666,7 +666,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
                 }
                 PortletRequestContext requestContext = (PortletRequestContext)portletRequest.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
                 PortletApplicationDefinition app = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
-                RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(requestContext.getPortletContext(), app);
+                RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(requestContext.getPortletConfig().getPortletContext(), app);
                 return new PortletRequestDispatcherImpl(dispatcher, provider.getPathInfo(getContextPath(),path));
             }
         }

@@ -299,9 +299,6 @@ public class PortletServlet extends HttpServlet
         {
             throw new javax.servlet.UnavailableException("Portlet "+portletName+" unavailable");
         }
-        // Save portlet config into servlet request.
-
-        request.setAttribute(PortletInvokerService.PORTLET_CONFIG, portletConfig);
 
         // Retrieve attributes from the servlet request.
         Integer methodId = (Integer) request.getAttribute(PortletInvokerService.METHOD_ID);
@@ -314,8 +311,13 @@ public class PortletServlet extends HttpServlet
         final PortletResponseContext responseContext = (PortletResponseContext)portletRequest.getAttribute(PortletInvokerService.RESPONSE_CONTEXT);
         
         final FilterManager filterManager = (FilterManager)request.getAttribute(PortletInvokerService.FILTER_MANAGER);
+        
+        request.removeAttribute(PortletInvokerService.METHOD_ID);
+        request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+        request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+        request.removeAttribute(PortletInvokerService.FILTER_MANAGER);
 
-        requestContext.init(portletConfig.getPortletContext(), getServletContext(), request, response);
+        requestContext.init(portletConfig, getServletContext(), request, response);
         responseContext.init(request, response);
 
         PortletWindow window = requestContext.getPortletWindow();
@@ -422,10 +424,6 @@ public class PortletServlet extends HttpServlet
             System.err.println(ex.getMessage());
             throw new ServletException(ex);
 
-        }
-        finally
-        {
-            request.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
         }
     }
 

@@ -223,7 +223,7 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     protected PortletContext getPortletContext()
     {
-        return requestContext.getPortletContext();
+        return requestContext.getPortletConfig().getPortletContext();
     }
     
     protected PortletWindow getPortletWindow() 
