@@ -349,7 +349,7 @@ public abstract class PortletRequestImpl implements PortletRequest
             Locale locale = (Locale)e.nextElement();
             if (!locale.equals(preferredLocale))
             {
-                locales.add((Locale)e.nextElement());
+                locales.add(locale);
             }
         }
         return Collections.enumeration(locales);
@@ -518,7 +518,7 @@ public abstract class PortletRequestImpl implements PortletRequest
                 Locale locale = (Locale)e.nextElement();
                 if (!locale.equals(preferredLocale))
                 {
-                    locales.add(e.nextElement().toString());
+                    locales.add(locale.toString());
                 }
             }
             return Collections.enumeration(locales);
