@@ -17,8 +17,10 @@
 package org.apache.pluto.container.impl;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
@@ -31,6 +33,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,7 +49,7 @@ import org.apache.pluto.container.RequestDispatcherPathInfo;
  */
 public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, RequestDispatcher
 {	
-	/** Logger. */
+    /** Logger. */
     private static final Log LOG = LogFactory.getLog(PortletRequestDispatcherImpl.class);
     
     // Private Member Variables ------------------------------------------------
@@ -136,9 +139,18 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
         }
         
         PortletRequestContext requestContext = (PortletRequestContext)request.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
+        HttpSession session = null;
+        
+        // PLT.10.4.3. Proxied session is created and passed if javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
+        if (isPortletScopeSessionConfigured(requestContext))
+        {
+            String portletWindowId = requestContext.getPortletWindow().getId().getStringId();
+            session = ServletPortletSessionProxy.createProxy(requestContext.getServletRequest(), portletWindowId);
+        }
+        
         HttpServletPortletRequestWrapper req = new HttpServletPortletRequestWrapper(requestContext.getServletRequest(), 
                                                                                     requestContext.getServletContext(),
-                                                                                    null, // TODO: ProxySession if javax.portlet.servletDefaultSessionScope == PORTLET_SCOPE
+                                                                                    session,
                                                                                     request,
                                                                                     pathInfo,
                                                                                     included);
@@ -182,6 +194,22 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             req.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
             req.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
         }
+    }
+    
+    private boolean isPortletScopeSessionConfigured(PortletRequestContext requestContext)
+    {
+        boolean portletScopeSessionConfigured = false;
+        
+        PortletConfig portletConfig = requestContext.getPortletConfig();
+        Map<String, String []> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
+        String [] values = containerRuntimeOptions.get("javax.portlet.servletDefaultSessionScope");
+        
+        if (values != null && values.length > 0)
+        {
+            portletScopeSessionConfigured = "PORTLET_SCOPE".equals(values[0]);
+        }
+        
+        return portletScopeSessionConfigured;
     }
 
     private void doDispatch(ServletRequest request, ServletResponse response, HttpServletPortletRequestWrapper req,
