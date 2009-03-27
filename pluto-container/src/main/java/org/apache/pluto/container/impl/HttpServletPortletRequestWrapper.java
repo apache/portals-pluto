@@ -118,7 +118,6 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     public HttpServletPortletRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session, PortletRequest portletRequest, RequestDispatcherPathInfo pathInfo, boolean included)
     {
         super(request);
-        currentRequest = request;
         origParameterMap = request.getParameterMap();
         this.servletContext = servletContext;
         this.session = session;
@@ -233,7 +232,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public Map<String, String[]> getParameterMap()
     {
-        if (getRequest() != currentRequest)
+        if (currentRequest == null || getRequest() != currentRequest)
         {
             currentRequest = getRequest();
             Map<String, String[]> currParameterMap = currentRequest.getParameterMap();
