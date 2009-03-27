@@ -17,6 +17,7 @@
 package org.apache.pluto.container.impl;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -116,7 +117,14 @@ public class ServletPortletSessionProxy implements InvocationHandler
         }
         else
         {
-            retval = m.invoke(servletSession, args);
+            try
+            {
+                retval = m.invoke(servletSession, args);
+            }
+            catch (InvocationTargetException ite)
+            {
+                throw ite.getTargetException();
+            }
         }
         return retval;
     }
