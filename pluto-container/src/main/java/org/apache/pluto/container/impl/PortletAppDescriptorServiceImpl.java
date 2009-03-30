@@ -154,10 +154,13 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
 
             app = (JAXBElement) u.unmarshal(in);                
         }catch (JAXBException jaxbEx){
-            jaxbEx.printStackTrace();
-            throw new IOException(jaxbEx.getMessage());
+            final IOException ioe = new IOException(jaxbEx.getMessage());
+            ioe.initCause(jaxbEx);
+            throw ioe;
         }
         catch(Exception me) {
+            final IOException ioe = new IOException(me.getLocalizedMessage());
+            ioe.initCause(me);
             throw new IOException(me.getLocalizedMessage());
         }
         PortletApplicationDefinition pad = null;
