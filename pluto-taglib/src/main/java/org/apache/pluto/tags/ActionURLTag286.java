@@ -14,16 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* 
-
- */
-
-/*
- * Created on Feb 21, 2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
- */
 package org.apache.pluto.tags;
 
 import javax.portlet.PortletResponse;
