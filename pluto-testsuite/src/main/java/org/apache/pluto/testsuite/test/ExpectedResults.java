@@ -15,7 +15,6 @@
  * limitations under the License.
  *
  */
-
 package org.apache.pluto.testsuite.test;
 
 import java.io.IOException;
