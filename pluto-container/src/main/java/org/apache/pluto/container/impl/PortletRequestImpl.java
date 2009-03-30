@@ -100,16 +100,15 @@ public abstract class PortletRequestImpl implements PortletRequest
     
     private Profile ccppProfile = null;
     
-    private final String lifecyclePhase;
+    private String contextPath;
     
-    private final String contextPath;
+    private final String lifecyclePhase;
     
     public PortletRequestImpl(PortletRequestContext requestContext, PortletResponseContext responseContext, String lifecyclePhase) 
     {
         this.requestContext = requestContext;
         this.responseContext = responseContext;
         this.lifecyclePhase = lifecyclePhase;
-        this.contextPath = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication().getContextPath();
         this.portalContext = getPortletContainer().getRequiredContainerServices().getPortalContext();
     }
     
@@ -317,6 +316,11 @@ public abstract class PortletRequestImpl implements PortletRequest
 
     public String getContextPath() 
     {
+        if (contextPath == null)
+        {
+            contextPath = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication().getContextPath();
+        }
+
         return contextPath;
     }
 
