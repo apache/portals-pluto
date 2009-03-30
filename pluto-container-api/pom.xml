@@ -20,6 +20,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
 	<parent>
 		<groupId>org.apache.pluto</groupId>
 		<artifactId>pluto</artifactId>
@@ -29,70 +30,39 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>pluto-container-api</artifactId>
 	<packaging>jar</packaging>
-	<name>Pluto Container API</name>
+	<name>Apache Pluto Container API</name>
 	
-
-<repositories>
-	<repository>
-		<id>maven2-repository.dev.java.net</id>
-		<name>Java.net Maven 2 Repository</name>
-		<url>https://maven2-repository.dev.java.net/nonav/repository</url>
-	</repository>
-	<repository>
-		<id>maven-repository.dev.java.net</id>
-		<name>Java.net Maven 1 Repository (legacy)</name>
-		<url>https://maven-repository.dev.java.net/nonav/repository</url>
-		<layout>legacy</layout>
-	</repository>
-</repositories>
-<pluginRepositories>
-	<pluginRepository>
-		<id>maven2-repository.dev.java.net</id>
-		<url>https://maven2-repository.dev.java.net/nonav/repository</url>
-	</pluginRepository>
-</pluginRepositories>
-
-
 	<dependencies>
     <!-- Specification Libraries =========================================== -->
-    <dependency>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-api</artifactId>
-      <version>${portlet-api.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>${servlet-api.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    
+        <dependency>
+            <groupId>javax.portlet</groupId>
+            <artifactId>portlet-api</artifactId>
+            <version>${portlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+   
     <!--  CCPP Libraries -->
-    <dependency>
-      <groupId>javax.ccpp</groupId>
-      <artifactId>ccpp</artifactId>
-      <version>${ccpp-api.version}</version>
-      <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>javax.ccpp</groupId>
+            <artifactId>ccpp</artifactId>
+            <version>${ccpp-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
     
 	</dependencies>
 
 	<build>
 		<plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-      </plugin>
-				<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<!-- best lock down version of the plugin too -->
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
+            </plugin>
 		</plugins>
 	</build>
 </project>
