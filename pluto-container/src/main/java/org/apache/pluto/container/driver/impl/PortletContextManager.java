@@ -132,9 +132,8 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
             classLoaders.put(portletApp.getName(), Thread.currentThread().getContextClassLoader());
             for (PortletDefinition portlet: portletApp.getPortlets()) {
                 String appName = portletContext.getApplicationName();
-                if (appName == null)
-                {
-                    System.out.println("HELLLO");
+                if (appName == null) {
+                    throw new PortletContainerException("Portlet application name should not be null.");
                 }
                 portletConfigs.put(
                     portletContext.getApplicationName() + "/" + portlet.getPortletName(),
