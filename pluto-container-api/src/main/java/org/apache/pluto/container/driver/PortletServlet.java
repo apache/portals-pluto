@@ -118,15 +118,15 @@ public class PortletServlet extends HttpServlet
      * The Event Portlet instance (the same object as portlet) wrapped by this
      * servlet.
      */
-    private EventPortlet eventPortlet = null;
+    private EventPortlet eventPortlet;
 
     /** The resource serving portlet instance wrapped by this servlet. */
-    private ResourceServingPortlet resourceServingPortlet = null;
+    private ResourceServingPortlet resourceServingPortlet;
 
     private PortletContextService contextService;
 
     private boolean started = false;
-    Timer   startTimer = null;
+    Timer   startTimer;
 
     // HttpServlet Impl --------------------------------------------------------
 
@@ -393,13 +393,12 @@ public class PortletServlet extends HttpServlet
         }
         catch (UnavailableException ex)
         {
-            System.err.println(ex.getMessage());
-            /*
-             * if (e.isPermanent()) { throw new
-             * UnavailableException(e.getMessage()); } else { throw new
-             * UnavailableException(e.getMessage(), e.getUnavailableSeconds());
-             * }
-             */
+            //
+            // if (e.isPermanent()) { throw new
+            // UnavailableException(e.getMessage()); } else { throw new
+            // UnavailableException(e.getMessage(), e.getUnavailableSeconds());
+            // }
+            //
 
             // Portlet.destroy() isn't called by Tomcat, so we have to fix it.
             try
@@ -408,8 +407,8 @@ public class PortletServlet extends HttpServlet
             }
             catch (Throwable th)
             {
-                System.err.println(ex.getMessage());
                 // Don't care for Exception
+                this.getServletContext().log("Error during portlet destroy.", th);
             }
             // take portlet out of service
             portlet = null;
@@ -421,7 +420,6 @@ public class PortletServlet extends HttpServlet
         catch (PortletException ex)
         {
             notify(event, false, ex);
-            System.err.println(ex.getMessage());
             throw new ServletException(ex);
 
         }
