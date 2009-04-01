@@ -19,6 +19,9 @@ package org.apache.pluto.driver.services.container;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
@@ -26,6 +29,8 @@ import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -91,6 +96,23 @@ public abstract class PortletResponseContextImpl implements PortletResponseConte
     public void addProperty(String key, String value)
     {
         // not supported
+    }
+    
+    public Element createElement(String tagName) throws DOMException
+    {
+        DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder;
+        
+        try
+        {
+            docBuilder = dbfac.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+            return doc.createElement(tagName);
+        }
+        catch (ParserConfigurationException e)
+        {
+            throw new DOMException((short) 0, "Initialization failure");
+        }
     }
 
     public void close()

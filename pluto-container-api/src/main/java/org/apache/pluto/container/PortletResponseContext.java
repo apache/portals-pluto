@@ -20,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 /**
@@ -41,6 +42,7 @@ public interface PortletResponseContext
     void addProperty(String key, Element element);
     void addProperty(String key, String value);
     void setProperty(String key, String value);
+    Element createElement(String tagName) throws DOMException;
 
     /**
      * Closing the response context means processing has been completed and

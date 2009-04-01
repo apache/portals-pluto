@@ -151,19 +151,8 @@ public abstract class PortletResponseImpl implements PortletResponse
     
     public Element createElement(String tagName) throws DOMException
     {
-        DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder;
-        try
-        {
-            docBuilder = dbfac.newDocumentBuilder();
-            Document doc = docBuilder.newDocument();
-            return doc.createElement(tagName);
-        }
-        catch (ParserConfigurationException e)
-        {
-            LOG.warn(e);
-            throw new DOMException((short) 0, "Initialization failure");
-        }
+        ArgumentUtility.validateNotEmpty("tagName", tagName);
+        return responseContext.createElement(tagName);
     }
     
     public String encodeURL(String path)
