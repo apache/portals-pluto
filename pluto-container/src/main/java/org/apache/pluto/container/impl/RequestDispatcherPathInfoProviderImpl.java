@@ -34,7 +34,6 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
 {
     protected List<String> exactServletMappingURLPatterns = new ArrayList<String>();
     protected List<String> pathServletMappingURLPatterns = new ArrayList<String>();
-    protected List<String> extServletMappingURLPatterns = new ArrayList<String>();
     protected boolean defaultServletMapping = false;
     
     private RequestDispatcherPathInfoProviderImpl(Set<String> servletMappingURLPatterns)
@@ -57,8 +56,8 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
                 }
             }
             else if (pat.startsWith("*."))
-            {
-                extServletMappingURLPatterns.add(pat.substring(1));
+            {                
+                // ignore, will always fallback on full path servlet mapping
             }
             else
             {
@@ -123,16 +122,8 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
                 index = sub.lastIndexOf('/');
             }
         }
-        if (servletPath == null)
-        {
-            index = path.lastIndexOf('/');
-            int ext = path.indexOf('.', index);
-            if (ext != -1 && ext < path.length()-1 && extServletMappingURLPatterns.contains(path.substring(ext)))
-            {
-                servletPath = index > 0 ? path.substring(0, index) : "";
-                pathInfo = path.substring(index);
-            }
-        }
+        // no need to check for *. extension mapping as it simply means full path to servlet mapping
+        // which is already the default / catch-all solution
         if (servletPath == null)
         {
             servletPath = path;            
