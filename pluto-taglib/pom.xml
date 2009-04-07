@@ -29,8 +29,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>pluto-taglib</artifactId>
     <packaging>jar</packaging>
-    <name>Pluto Portlet Tag Library</name>
-    <description>Pluto's Java Portlet Specification Tag Library implementation</description>
+    <name>Apache Pluto Portlet Tag Library</name>
+    <description>Apache Pluto's Java Portlet Specification Tag Library implementation</description>
 
     <dependencies>    
         <dependency>

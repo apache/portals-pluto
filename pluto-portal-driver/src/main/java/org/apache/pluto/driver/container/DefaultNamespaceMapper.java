@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.driver.container;
 
 import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.PortletWindowID;

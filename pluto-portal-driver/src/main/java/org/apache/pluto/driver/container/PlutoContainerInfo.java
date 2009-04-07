@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.driver.container;
 
 import org.apache.pluto.container.ContainerInfo;
 

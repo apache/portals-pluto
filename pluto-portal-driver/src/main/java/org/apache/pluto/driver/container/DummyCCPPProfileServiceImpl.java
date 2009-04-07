@@ -14,29 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.driver.container;
 
-import java.util.Collections;
-import java.util.Map;
+import javax.ccpp.Profile;
+import javax.servlet.http.HttpServletRequest;
 
-import javax.portlet.PortletRequest;
-
-import org.apache.pluto.container.PortletContainerException;
-import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.UserInfoService;
+import org.apache.pluto.container.CCPPProfileService;
 
 /**
- * UserInfo
- * TODO: no real implementation yet
  *
  */
-public class DefaultUserInfoService implements UserInfoService {
+public class DummyCCPPProfileServiceImpl implements CCPPProfileService {
 
-    public Map<String, String> getUserInfo(PortletRequest request, PortletWindow window)
-        throws PortletContainerException {
-        if ( request.getRemoteUser() != null ) {
-            return Collections.emptyMap();
-        }
-        return null;
-    }
+	/* (non-Javadoc)
+	 * @see org.apache.pluto.spi.CCPPProfileService#getCCPPProfile()
+	 */
+	public Profile getCCPPProfile(HttpServletRequest httpServletRequest) {
+		return new DummyProfile();
+		// FIXME: Here we have to return a "real" javax.ccpp.Profile
+	}
+
 }

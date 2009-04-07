@@ -25,7 +25,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>pluto-util</artifactId>
-  <name>Pluto Utilities</name>
+  <name>Apache Pluto Utilities</name>
 
   <!-- The dependencies for the ApplicationServerHook project
        are those which need to be installed!

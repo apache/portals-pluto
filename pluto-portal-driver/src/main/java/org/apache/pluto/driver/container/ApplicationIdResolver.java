@@ -14,27 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.driver.container;
 
 import javax.servlet.ServletContext;
 
-/**
- <pre>
-      <context-param>
-      <param-name>org.apache.pluto.CONTEXT_PATH</param-name>
-      <param-value>/path</param-value>
-    </context-param>
- </pre>
- */
-public class InitParameterApplicationIdResolver implements ApplicationIdResolver {
+public interface ApplicationIdResolver {
 
-    public static final String CONTEXT_PATH_PARAM = "org.apache.pluto.CONTEXT_PATH";
+    public static final int DECISIVE = 1;
 
-    public String resolveApplicationId(ServletContext context) {
-        return context.getInitParameter(CONTEXT_PATH_PARAM);
-    }
+    public static final int MANUAL = 2;
 
-    public int getAuthority() {
-        return MANUAL;
-    }
+    public static final int DEFAULT = 3;
+
+    /**
+     * Resolve the applicationId for the given
+     * context.
+     *
+     * @param context
+     * @return
+     */
+    String resolveApplicationId(ServletContext context);
+
+    /**
+     * Retrive the degree of authority with which
+     * the resolver speaks.
+     * 
+     * @return
+     */
+    int getAuthority();
+
 }

@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>pluto-portal-driver-impl</artifactId>
     <packaging>jar</packaging>
-    <name>Pluto Portal Driver Implementation Classes</name>
+    <name>Apache Pluto Portal Driver Implementation Classes</name>
 
     <dependencies>
 

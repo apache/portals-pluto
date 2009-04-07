@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>pluto-testsuite</artifactId>
   <packaging>war</packaging>
-  <name>Pluto Testsuite Portlet</name>
+  <name>Apache Pluto Testsuite Portlet</name>
   
   <dependencies>
     <dependency>

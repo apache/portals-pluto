@@ -14,33 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.driver.container;
 
 import javax.servlet.ServletContext;
 
-public interface ApplicationIdResolver {
+public class AttributeApplicationIdResolver implements ApplicationIdResolver {
 
-    public static final int DECISIVE = 1;
+    public static final String CONTEXT_PATH_PARAM = "org.apache.pluto.CONTEXT_PATH";
 
-    public static final int MANUAL = 2;
+    public String resolveApplicationId(ServletContext context) {
+        return (String)context.getAttribute(CONTEXT_PATH_PARAM);
+    }
 
-    public static final int DEFAULT = 3;
 
-    /**
-     * Resolve the applicationId for the given
-     * context.
-     *
-     * @param context
-     * @return
-     */
-    String resolveApplicationId(ServletContext context);
-
-    /**
-     * Retrive the degree of authority with which
-     * the resolver speaks.
-     * 
-     * @return
-     */
-    int getAuthority();
-
+    public int getAuthority() {
+        return MANUAL;
+    }
 }

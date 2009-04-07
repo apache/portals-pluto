@@ -30,7 +30,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>pluto-portal</artifactId>
     <packaging>war</packaging>
-    <name>Pluto Portal</name>
+    <name>Apache Pluto Portal</name>
 
   <dependencies>
     

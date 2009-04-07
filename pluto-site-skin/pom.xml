@@ -26,9 +26,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>pluto-site-skin</artifactId>
-    <name>Pluto Website Skin</name>
+    <name>Apache Pluto Website Skin</name>
     <packaging>jar</packaging>
-    <description>Pluto Website Resources (CSS, images)</description>
+    <description>Apache Pluto Website Resources (CSS, images)</description>
 
     <build>
         <plugins>

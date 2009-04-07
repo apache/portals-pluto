@@ -14,20 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container.driver.impl;
+package org.apache.pluto.driver.container;
 
-import javax.servlet.ServletContext;
+import java.util.Collections;
+import java.util.Map;
 
-public class AttributeApplicationIdResolver implements ApplicationIdResolver {
+import javax.portlet.PortletRequest;
 
-    public static final String CONTEXT_PATH_PARAM = "org.apache.pluto.CONTEXT_PATH";
+import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.UserInfoService;
 
-    public String resolveApplicationId(ServletContext context) {
-        return (String)context.getAttribute(CONTEXT_PATH_PARAM);
-    }
+/**
+ * UserInfo
+ * TODO: no real implementation yet
+ *
+ */
+public class DefaultUserInfoService implements UserInfoService {
 
-
-    public int getAuthority() {
-        return MANUAL;
+    public Map<String, String> getUserInfo(PortletRequest request, PortletWindow window)
+        throws PortletContainerException {
+        if ( request.getRemoteUser() != null ) {
+            return Collections.emptyMap();
+        }
+        return null;
     }
 }
