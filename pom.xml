@@ -296,6 +296,7 @@
         <module>pluto-taglib</module>
 
         <!-- Pluto Portal and Testsuite Modules -->
+        <module>pluto-container-driver-api</module>
         <module>pluto-portal-driver</module>
         <module>pluto-portal-driver-impl</module>
         <module>pluto-portal</module>
