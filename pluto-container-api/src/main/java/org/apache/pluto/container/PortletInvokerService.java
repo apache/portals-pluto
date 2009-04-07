@@ -95,7 +95,7 @@ public interface PortletInvokerService {
     /**
      * The unique method identifier for render requests.  Render requests are
      * requested through a call to the {@link PortletContainer#doEvent(org.apache.pluto.container.PortletWindow,
-     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.portlet.Event)}
      * method.
      */
     public final static Integer METHOD_EVENT = new Integer(9);

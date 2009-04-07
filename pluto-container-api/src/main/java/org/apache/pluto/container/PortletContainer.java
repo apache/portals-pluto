@@ -33,12 +33,12 @@ import javax.servlet.http.HttpServletResponse;
  * portlet container.</TD> <TD>Performed only once per container
  * lifecycle.</TD></TR>
  * <p/>
- * <TR><TD>{@link #doAction(org.apache.pluto.PortletWindow,
+ * <TR><TD>{@link #doAction(PortletWindow,
     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}</TD>
  * <TD>Perform the action for the targeted portlet</TD> <TD>Optionally performed
  * for a single portlet per request</TD></TR>
  * <p/>
- * <TR><TD>{@link #doRender(org.apache.pluto.PortletWindow,
+ * <TR><TD>{@link #doRender(PortletWindow,
     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}</TD>
  * <TD>Render the portlet</TD> <TD>Performed once for each portlet per
  * request.</TD></TR>
