@@ -63,7 +63,9 @@ public class EventProviderImpl implements EventProvider
         {
             if (value != null && !isValueInstanceOfDefinedClass(qname, value))
             {
-                throw new IllegalArgumentException("Payload has not the right class");
+                throw new IllegalArgumentException("Payload class (" +
+                                                   value.getClass().getCanonicalName() +
+                                                   ") does not have the right class, check your defined event types in portlet.xml.");
             }
             try
             {
