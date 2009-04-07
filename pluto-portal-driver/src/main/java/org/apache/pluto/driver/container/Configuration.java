@@ -35,7 +35,7 @@ public class Configuration {
         LogFactory.getLog(Configuration.class);
 
     public static final ResourceBundle BUNDLE =
-        ResourceBundle.getBundle("org.apache.pluto.container.driver.impl.pluto-configuration");
+        ResourceBundle.getBundle("org.apache.pluto.driver.container.pluto-configuration");
 
     private static final String DESCRIPTOR_SERVICE =
         "org.apache.pluto.descriptors.services.PortletAppDescriptorService";
