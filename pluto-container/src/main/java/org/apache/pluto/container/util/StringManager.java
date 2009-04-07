@@ -89,10 +89,8 @@ public class StringManager {
                 cl = this.getClass().getClassLoader();
             }
 
-            System.out.println("Can't find resource " + bundleName +
-                               " " + cl);
-            if (cl instanceof URLClassLoader) {
-                System.out.println(((URLClassLoader) cl).getURLs());
+            if(LOG.isWarnEnabled()) {
+                LOG.warn("Can't find resource " + bundleName + " " + cl);
             }
         }
     }
