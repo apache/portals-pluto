@@ -42,7 +42,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.OptionalContainerServices;
+import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEntity;
 import org.apache.pluto.container.PortletEnvironmentService;
@@ -109,7 +109,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         this.requestContext = requestContext;
         this.responseContext = responseContext;
         this.lifecyclePhase = lifecyclePhase;
-        this.portalContext = getPortletContainer().getRequiredContainerServices().getPortalContext();
+        this.portalContext = getPortletContainer().getContainerServices().getPortalContext();
     }
     
     private void retrieveRequestProperties()
@@ -182,10 +182,7 @@ public abstract class PortletRequestImpl implements PortletRequest
             }
             return Collections.unmodifiableMap(result);
         }
-        else
-        {
-            return Collections.emptyMap();
-        }
+        return Collections.emptyMap();
     }
     
     protected Map<String, String[]> initParameterMap()
@@ -276,7 +273,7 @@ public abstract class PortletRequestImpl implements PortletRequest
             {
                 try
                 {
-                    userInfo = getPortletContainer().getOptionalContainerServices().getUserInfoService().getUserInfo(this, getPortletWindow());
+                    userInfo = getPortletContainer().getContainerServices().getUserInfoService().getUserInfo(this, getPortletWindow());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +294,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         {
             if (ccppProfile == null)
             {
-                ccppProfile = getPortletContainer().getOptionalContainerServices().getCCPPProfileService().getCCPPProfile(getServletRequest());
+                ccppProfile = getPortletContainer().getContainerServices().getCCPPProfileService().getCCPPProfile(getServletRequest());
             }
             return ccppProfile;
         }
@@ -483,8 +480,8 @@ public abstract class PortletRequestImpl implements PortletRequest
             {
                 LOG.debug("Creating new portlet session...");
             }
-            final OptionalContainerServices optionalContainerServices = getPortletContainer().getOptionalContainerServices();
-            final PortletEnvironmentService portletEnvironmentService = optionalContainerServices.getPortletEnvironmentService();
+            final ContainerServices containerServices = getPortletContainer().getContainerServices();
+            final PortletEnvironmentService portletEnvironmentService = containerServices.getPortletEnvironmentService();
             
             portletSession = portletEnvironmentService.createPortletSession(getPortletContext(), getPortletWindow(), httpSession);
         }        

@@ -24,13 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.container.CCPPProfileService;
-import org.apache.pluto.container.OptionalContainerServices;
+import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.RequiredContainerServices;
 import org.apache.pluto.container.impl.PortletContainerImpl;
 import org.apache.pluto.container.impl.RenderRequestImpl;
 import org.jmock.Mock;
@@ -46,18 +45,17 @@ import org.jmock.cglib.MockObjectTestCase;
 public class PortletRequestImplTest extends MockObjectTestCase
 {
     // Mock Objects
-    private Mock mockContainer = null;
-    private Mock mockServices = null;
-    private Mock mockCCPPProfileService = null;
-    private Mock mockOptionalServices = null;
-    private Mock mockPortalContext = null;
-    private Mock mockPortletContext = null;
-    private Mock mockHttpServletRequest = null;
-    private Mock mockPortletURLProvider = null;
-    private Mock mockPortletRequestContext = null;
-    private Mock mockPortletResponseContext = null;
-    private Mock mockCacheControl = null;
-    private PortletWindow window = null;
+    private Mock mockContainer;
+    private Mock mockServices;
+    private Mock mockCCPPProfileService;
+    private Mock mockPortalContext;
+    private Mock mockPortletContext;
+    private Mock mockHttpServletRequest;
+    private Mock mockPortletURLProvider;
+    private Mock mockPortletRequestContext;
+    private Mock mockPortletResponseContext;
+    private Mock mockCacheControl;
+    private PortletWindow window;
     
 
     /* (non-Javadoc)
@@ -68,15 +66,14 @@ public class PortletRequestImplTest extends MockObjectTestCase
         super.setUp();
 
         // Create mocks
-        mockServices = mock( RequiredContainerServices.class );
+        mockServices = mock( ContainerServices.class );
         mockCCPPProfileService = mock( CCPPProfileService.class );
-        mockOptionalServices = mock( OptionalContainerServices.class );
         mockPortalContext = mock( PortalContext.class );
         mockPortletContext = mock( PortletContext.class );
         mockPortletURLProvider = mock(PortletURLProvider.class);
         mockContainer = mock( PortletContainerImpl.class,
-                new Class[] { String.class, RequiredContainerServices.class, OptionalContainerServices.class },
-                new Object[] { "Mock Pluto Container", (RequiredContainerServices) mockServices.proxy(), (OptionalContainerServices) mockOptionalServices.proxy() } );
+                new Class[] { String.class, ContainerServices.class },
+                new Object[] { "Mock Pluto Container", (ContainerServices) mockServices.proxy() } );
         window = (PortletWindow) mock( PortletWindow.class ).proxy();
         mockHttpServletRequest = mock( HttpServletRequest.class );
         mockPortletRequestContext = mock ( PortletRequestContext.class );
@@ -107,14 +104,14 @@ public class PortletRequestImplTest extends MockObjectTestCase
                 
         Mock mockPortletEnvironmentService = mock( PortletEnvironmentService.class );
         
-        mockOptionalServices.expects( once() ).method( "getPortletEnvironmentService" ).will( returnValue( mockPortletEnvironmentService.proxy() ));
+        mockServices.expects( once() ).method( "getPortletEnvironmentService" ).will( returnValue( mockPortletEnvironmentService.proxy() ));
         
         mockCCPPProfileService.expects(once()).method("getCCPPProfile").will(returnValue( null ));
         
-        mockOptionalServices.expects(once()).method("getCCPPProfileService").will(returnValue( mockCCPPProfileService.proxy() ));
+        mockServices.expects(once()).method("getCCPPProfileService").will(returnValue( mockCCPPProfileService.proxy() ));
         
         mockContainer.expects(once()).method("getRequiredContainerServices").will(returnValue( mockServices.proxy() ));
-        mockContainer.expects(atLeastOnce()).method("getOptionalContainerServices").will(returnValue( mockOptionalServices.proxy() ));
+        mockContainer.expects(atLeastOnce()).method("getOptionalContainerServices").will(returnValue( mockServices.proxy() ));
         mockPortletRequestContext.expects(atLeastOnce()).method("getContainer").will(returnValue( mockContainer.proxy()));
         
         // Create the render request that is under test, and initialize its state

@@ -175,14 +175,8 @@ public interface PortletContainer {
     String getName();
 
     /**
-     * Retreive the required container services associated with this container.
-     * @return the required container services associated with this container.
+     * Retreive the container services associated with this container.
+     * @return the container services associated with this container.
      */
-    RequiredContainerServices getRequiredContainerServices();
-
-    /**
-     * Retrieve the optional container services associated with this contianer.
-     * @return the container services provided by either the portal or the defaults.
-     */
-    OptionalContainerServices getOptionalContainerServices();
+    ContainerServices getContainerServices();
 }

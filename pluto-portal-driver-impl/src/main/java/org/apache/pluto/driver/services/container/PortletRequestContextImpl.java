@@ -77,7 +77,7 @@ public class PortletRequestContextImpl implements PortletRequestContext
         {
             return name;
         }
-        return container.getOptionalContainerServices().getNamespaceMapper().encode(window.getId(), name);
+        return container.getContainerServices().getNamespaceMapper().encode(window.getId(), name);
     }
     
     protected String decodeAttributeName(String name)
@@ -86,7 +86,7 @@ public class PortletRequestContextImpl implements PortletRequestContext
         {
             return name;
         }
-        String result = container.getOptionalContainerServices().getNamespaceMapper().decode(window.getId(), name);
+        String result = container.getContainerServices().getNamespaceMapper().decode(window.getId(), name);
         return result != null ? result : name;
     }
     

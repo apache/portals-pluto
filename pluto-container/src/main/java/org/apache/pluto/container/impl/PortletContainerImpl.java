@@ -35,8 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.FilterManager;
-import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
@@ -50,7 +50,6 @@ import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.container.PortletResourceRequestContext;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.RequiredContainerServices;
 
 
 /**
@@ -71,12 +70,8 @@ public class PortletContainerImpl implements PortletContainer
     /** The portlet container name. */
     private final String name;
     
-    /** The required container services associated with this container. */
-    private final RequiredContainerServices requiredContainerServices;
-    
-    /** The optional container services associated with this container. */
-    private final OptionalContainerServices optionalContainerServices;
-    
+    /** The container services associated with this container. */
+    private final ContainerServices containerServices;
     
     /** Flag indicating whether or not we've been initialized. */
     private boolean initialized = false;
@@ -89,14 +84,11 @@ public class PortletContainerImpl implements PortletContainer
      *
      * @param name  the name of the container.
      * @param requiredServices  the required container services implementation.
-     * @param optionalServices  the optional container services implementation.
      */
     public PortletContainerImpl(String name,
-                                RequiredContainerServices requiredServices,
-                                OptionalContainerServices optionalServices) {
+                                ContainerServices requiredServices) {
         this.name = name;
-        this.requiredContainerServices = requiredServices;
-        this.optionalContainerServices = optionalServices;
+        this.containerServices = requiredServices;
     }
     
     
@@ -104,7 +96,6 @@ public class PortletContainerImpl implements PortletContainer
     
     /**
      * Initialize the container for use within the given configuration scope.
-     * @param servletContext  the servlet context of the portal webapp.
      */
     public void init()
     throws PortletContainerException {
@@ -151,9 +142,9 @@ public class PortletContainerImpl implements PortletContainer
         debugWithName("Render request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
-        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
@@ -179,7 +170,7 @@ public class PortletContainerImpl implements PortletContainer
     /**
      * Indicates that a portlet resource Serving occured in the current request and calls
      * the processServeResource method of this portlet.
-     * @param PortletWindow the portlet Window
+     * @param portletWindow the portlet Window
      * @param request               the servlet request
      * @param response              the servlet response
      * @throws PortletException          if one portlet has trouble fulfilling
@@ -197,9 +188,9 @@ public class PortletContainerImpl implements PortletContainer
         debugWithName("Resource request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
-        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletResourceRequestContext requestContext = rcService.getPortletResourceRequestContext(this, request, response, portletWindow);
         PortletResourceResponseContext responseContext = rcService.getPortletResourceResponseContext(this, request, response, portletWindow);
@@ -243,9 +234,9 @@ public class PortletContainerImpl implements PortletContainer
         debugWithName("Action request received for portlet: "
     			+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
     	
-        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
-        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletActionRequestContext(this, request, response, portletWindow);
         PortletActionResponseContext responseContext = rcService.getPortletActionResponseContext(this, request, response, portletWindow);
@@ -271,7 +262,7 @@ public class PortletContainerImpl implements PortletContainer
                 List<Event> events = responseContext.getEvents();
                 if (!events.isEmpty())
                 {
-                    requiredContainerServices.getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
+                    getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
                 }
             }
 
@@ -315,9 +306,9 @@ public class PortletContainerImpl implements PortletContainer
         debugWithName("Load request received for portlet: "
         		+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
         
-        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
-        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
@@ -349,9 +340,9 @@ public class PortletContainerImpl implements PortletContainer
         debugWithName("Admin request received for portlet: "
             +portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 
-        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
-        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletRenderRequestContext(this, request, response, portletWindow);
         PortletRenderResponseContext responseContext = rcService.getPortletRenderResponseContext(this, request, response, portletWindow);
@@ -373,36 +364,31 @@ public class PortletContainerImpl implements PortletContainer
     }
 
 
+    /**
+     * @see org.apache.pluto.container.PortletContainer#getName()
+     */
     public String getName() {
         return name;
     }
 
-    public RequiredContainerServices getRequiredContainerServices() {
-        return requiredContainerServices;
+    /**
+     * @see org.apache.pluto.container.PortletContainer#getContainerServices()
+     */
+    public ContainerServices getContainerServices() {
+        return containerServices;
     }
 
-    /**
-     * Retrieve the optional container services used by the container.
-     * If no implementation was provided during construction, the default
-     * instance will be returned.
-     *
-     * @return services used by the container.
-     */
-    public OptionalContainerServices getOptionalContainerServices() {
-        return optionalContainerServices;
-    }
-    
     /**
      * Fire Event for the portlet associated with the given portlet window and eventName
      * @param portletWindow  the portlet window.
      * @param request  the servlet request.
      * @param response  the servlet response.
-     * @param eventName the event name
+     * @param event the event
      * @throws PortletException
      * @throws IOException
      * @throws PortletContainerException
      * 
-     * @see {@link javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest, javax.portlet.EventResponse)
+     * @see javax.portlet.EventPortlet#processEvent(javax.portlet.EventRequest, javax.portlet.EventResponse)
      */
     public void doEvent(PortletWindow portletWindow,
                         HttpServletRequest request,
@@ -415,9 +401,9 @@ public class PortletContainerImpl implements PortletContainer
     	debugWithName("Event: "+event.getName()+" received for portlet: "
     			+ portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
 
-        PortletRequestContextService rcService = getRequiredContainerServices().getPortletRequestContextService();
-        PortletEnvironmentService envService = getOptionalContainerServices().getPortletEnvironmentService();
-        PortletInvokerService invoker = optionalContainerServices.getPortletInvokerService();
+        PortletRequestContextService rcService = getContainerServices().getPortletRequestContextService();
+        PortletEnvironmentService envService = getContainerServices().getPortletEnvironmentService();
+        PortletInvokerService invoker = getContainerServices().getPortletInvokerService();
 
         PortletRequestContext requestContext = rcService.getPortletEventRequestContext(this, request, response, portletWindow);
         PortletEventResponseContext responseContext = rcService.getPortletEventResponseContext(this, request, response, portletWindow);
@@ -445,7 +431,7 @@ public class PortletContainerImpl implements PortletContainer
 
         if (events != null && !events.isEmpty())
         {
-            requiredContainerServices.getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
+            getContainerServices().getEventCoordinationService().processEvents(this, portletWindow, request, response, events);
         }
 
         debugWithName("Portlet event: "+ event.getName() +" fired for: " + portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
@@ -493,7 +479,7 @@ public class PortletContainerImpl implements PortletContainer
 	 */
 	private FilterManager filterInitialisation(PortletWindow portletWindow,String lifeCycle) throws PortletContainerException{
 	    PortletEntity pe = portletWindow.getPortletEntity();
-        return requiredContainerServices.getFilterManagerService().getFilterManager(pe.getPortletDefinition().getApplication(),pe.getPortletDefinition().getPortletName(),lifeCycle);
+        return getContainerServices().getFilterManagerService().getFilterManager(pe.getPortletDefinition().getApplication(),pe.getPortletDefinition().getPortletName(),lifeCycle);
     }
 }
 

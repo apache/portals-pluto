@@ -351,10 +351,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         {
             return -1;
         }
-        else
-        {
-            return Integer.parseInt(property);
-        }
+        return Integer.parseInt(property);
     }
 
     @Override

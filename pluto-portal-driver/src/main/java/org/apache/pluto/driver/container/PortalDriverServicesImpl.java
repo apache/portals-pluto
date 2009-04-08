@@ -22,19 +22,18 @@ import org.apache.pluto.container.CCPPProfileService;
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.FilterManagerService;
 import org.apache.pluto.container.NamespaceMapper;
-import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.container.PortletURLListenerService;
-import org.apache.pluto.container.RequiredContainerServices;
 import org.apache.pluto.container.UserInfoService;
+import org.apache.pluto.container.driver.OptionalContainerServices;
 import org.apache.pluto.container.driver.PortalAdministrationService;
-import org.apache.pluto.container.driver.PortalDriverContainerServices;
 import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
+import org.apache.pluto.container.driver.RequiredContainerServices;
 import org.apache.pluto.container.impl.PortletEnvironmentServiceImpl;
 
 
@@ -65,22 +64,54 @@ public class PortalDriverServicesImpl implements PortalDriverServices
     private PortletContextService portletContextService;
     private PortletRegistryService portletRegistryService;
     private PortalAdministrationService portalAdministrationService;
-        
-    public PortalDriverServicesImpl(PortalContext context,
-                                  PortletRequestContextService portletRequestContextService,
-                                  EventCoordinationService eventCoordinationService,
-                                  FilterManagerService filterManagerService,
-                                  PortletURLListenerService portletURLListenerService)
-    {
-        this.context = context;
-        this.eventCoordinationService = eventCoordinationService;
-        this.portletRequestContextService = portletRequestContextService;
-        this.filterManagerService = filterManagerService;
-        this.portletURLListenerService = portletURLListenerService;
 
-        createDefaultServicesIfNeeded();
-    }            
-                                  
+    /**
+     * Constructor for just passing in the required services.
+     * @param context
+     * @param portletRequestContextService
+     * @param eventCoordinationService
+     * @param filterManagerService
+     * @param portletURLListenerService
+     */
+    public PortalDriverServicesImpl(PortalContext context,
+            PortletRequestContextService portletRequestContextService,
+            EventCoordinationService eventCoordinationService,
+            FilterManagerService filterManagerService,
+            PortletURLListenerService portletURLListenerService)  
+    {
+        this(context, portletRequestContextService, eventCoordinationService, 
+            filterManagerService, portletURLListenerService, null);
+    }
+
+    /**
+     * Constructor for passing in the required services and optional container services.
+     * @param context
+     * @param portletRequestContextService
+     * @param eventCoordinationService
+     * @param filterManagerService
+     * @param portletURLListenerService
+     * @param optionalServices Optional services (if this is null, default services are used)
+     */
+    public PortalDriverServicesImpl(PortalContext context,
+            PortletRequestContextService portletRequestContextService,
+            EventCoordinationService eventCoordinationService,
+            FilterManagerService filterManagerService,
+            PortletURLListenerService portletURLListenerService,
+            OptionalContainerServices optionalServices)  
+    {
+        this(context, portletRequestContextService, eventCoordinationService,
+             filterManagerService, portletURLListenerService, optionalServices, null, null, null);
+    }
+    
+    /**
+     * Constructor for passing in the required services and optional container services.
+     * @param context
+     * @param portletRequestContextService
+     * @param eventCoordinationService
+     * @param filterManagerService
+     * @param portletURLListenerService
+     * @param optionalServices Optional services (if this is null, default services are used)
+     */
     public PortalDriverServicesImpl(PortalContext context,
             PortletRequestContextService portletRequestContextService,
             EventCoordinationService eventCoordinationService,
@@ -90,41 +121,41 @@ public class PortalDriverServicesImpl implements PortalDriverServices
             PortletContextService portletContextService,
             PortletRegistryService portletRegistryService,
             PortalAdministrationService portalAdministrationService)  
-    {
+    {    
+        // set required first
         this.context = context;
         this.eventCoordinationService = eventCoordinationService;
         this.portletRequestContextService = portletRequestContextService;
         this.filterManagerService = filterManagerService;
         this.portletURLListenerService = portletURLListenerService;
 
-        portletEnvironmentService = optionalServices.getPortletEnvironmentService();
-        ccppProfileService = optionalServices.getCCPPProfileService();
-        portletPreferencesService = optionalServices.getPortletPreferencesService();
-        portletInvokerService = optionalServices.getPortletInvokerService();
-        userInfoService = optionalServices.getUserInfoService();
-        namespaceMapper = optionalServices.getNamespaceMapper();
-        
+        // now optional
+        if ( optionalServices != null ) {
+            ccppProfileService = optionalServices.getCCPPProfileService();
+            portletPreferencesService = optionalServices.getPortletPreferencesService();
+            portletInvokerService = optionalServices.getPortletInvokerService();
+            portletEnvironmentService = optionalServices.getPortletEnvironmentService();
+            userInfoService = optionalServices.getUserInfoService();
+            namespaceMapper = optionalServices.getNamespaceMapper();
+        }
+
+        // and finally driver
         this.portletContextService = portletContextService;
-        this.portletRegistryService = portletRegistryService;        
+        this.portletRegistryService = portletRegistryService;
         this.portalAdministrationService = portalAdministrationService;
 
         createDefaultServicesIfNeeded();
     }
     
-    public PortalDriverServicesImpl(RequiredContainerServices required, OptionalContainerServices optional)
-    {
+    /**
+     * Constructor
+     * @param required
+     * @param optional Optional services (if this is null, default services are used)
+     */
+    public PortalDriverServicesImpl(RequiredContainerServices required, OptionalContainerServices optional) {
         this(required.getPortalContext(), required.getPortletRequestContextService(),
              required.getEventCoordinationService(), required.getFilterManagerService(), 
-             required.getPortletURLListenerService(), optional, null, null, null);
-    }
-
-    public PortalDriverServicesImpl(RequiredContainerServices required, OptionalContainerServices optional, PortalDriverContainerServices driver)
-    {
-        this(required.getPortalContext(), required.getPortletRequestContextService(),
-             required.getEventCoordinationService(), required.getFilterManagerService(), 
-             required.getPortletURLListenerService(), optional, 
-             driver.getPortletContextService(), driver.getPortletRegistryService(), 
-             driver.getPortalAdministrationService());
+             required.getPortletURLListenerService(), optional);
     }
 
     protected void createDefaultServicesIfNeeded()
@@ -140,6 +171,9 @@ public class PortalDriverServicesImpl implements PortalDriverServices
         namespaceMapper = namespaceMapper == null ? new DefaultNamespaceMapper() : namespaceMapper;
     }
     
+    /**
+     * @see org.apache.pluto.container.ContainerServices#getPortalContext()
+     */
     public PortalContext getPortalContext() 
     {
         return context;
@@ -157,7 +191,6 @@ public class PortalDriverServicesImpl implements PortalDriverServices
 
     /**
      * Returns null to use pluto's default
-     * @return
      */
     public PortletRegistryService getPortletRegistryService() 
     {

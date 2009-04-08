@@ -24,12 +24,6 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
@@ -37,7 +31,6 @@ import org.apache.pluto.container.ResourceURLProvider;
 import org.apache.pluto.container.om.portlet.Supports;
 import org.apache.pluto.container.util.ArgumentUtility;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -45,9 +38,6 @@ import org.w3c.dom.Element;
  */
 public abstract class PortletResponseImpl implements PortletResponse
 {
-	
-	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletResponseImpl.class);
 	
     private String namespace;    
     private PortletResponseContext responseContext;
@@ -75,7 +65,7 @@ public abstract class PortletResponseImpl implements PortletResponse
     
     protected PortalContext getPortalContext()
     {
-        return getPortletContainer().getRequiredContainerServices().getPortalContext();
+        return getPortletContainer().getContainerServices().getPortalContext();
     }
 
     protected HttpServletRequest getServletRequest()
@@ -175,7 +165,7 @@ public abstract class PortletResponseImpl implements PortletResponse
     {
         if (namespace == null)
         {
-             namespace = getPortletContainer().getOptionalContainerServices().getNamespaceMapper().encode(getPortletWindow().getId(), "");
+             namespace = getPortletContainer().getContainerServices().getNamespaceMapper().encode(getPortletWindow().getId(), "");
              StringBuffer validNamespace = new StringBuffer();
              for (int i = 0; i < namespace.length(); i++)
              {

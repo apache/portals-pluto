@@ -62,7 +62,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     public PortletURLImpl(PortletResponseContext responseContext, PortletURLProvider urlProvider)
     {
         this.responseContext = responseContext;
-        this.portalContext = responseContext.getContainer().getRequiredContainerServices().getPortalContext();
+        this.portalContext = responseContext.getContainer().getContainerServices().getPortalContext();
         this.urlProvider = urlProvider;
         renderURL = PortletURLProvider.TYPE.RENDER == urlProvider.getType();
     }
@@ -183,7 +183,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         filtering = true;
         try
         {
-            PortletURLListenerService service = responseContext.getContainer().getRequiredContainerServices().getPortletURLListenerService();
+            PortletURLListenerService service = responseContext.getContainer().getContainerServices().getPortletURLListenerService();
             PortletApplicationDefinition portletApp = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
             for (PortletURLGenerationListener listener : service.getPortletURLGenerationListeners(portletApp))
             {

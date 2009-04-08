@@ -16,7 +16,6 @@
  */
 package org.apache.pluto.container.util;
 
-import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.Locale;

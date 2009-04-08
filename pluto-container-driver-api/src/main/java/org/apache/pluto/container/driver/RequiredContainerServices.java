@@ -14,9 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container;
+package org.apache.pluto.container.driver;
 
 import javax.portlet.PortalContext;
+
+import org.apache.pluto.container.EventCoordinationService;
+import org.apache.pluto.container.FilterManagerService;
+import org.apache.pluto.container.PortletRequestContextService;
+import org.apache.pluto.container.PortletURLListenerService;
 
 
 /**

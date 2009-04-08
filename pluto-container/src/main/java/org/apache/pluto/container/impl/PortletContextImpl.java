@@ -62,7 +62,7 @@ public class PortletContextImpl implements PortletContext
     /**
      * Constructs an instance.
      * @param servletContext  the servlet context in which we are contained.
-     * @param portletAppDD  the portlet application descriptor.
+     * @param portletApp  the portlet application descriptor.
      */
     public PortletContextImpl(ServletContext servletContext,
                               PortletApplicationDefinition portletApp, 
@@ -133,12 +133,11 @@ public class PortletContextImpl implements PortletContext
         {
             RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(this, portletApp);
             return new PortletRequestDispatcherImpl(dispatcher, provider.getNamedRequestDispatcherPathInfo());
-        } else {
-        	if (LOG.isInfoEnabled()) {
-        		LOG.info("No matching request dispatcher found for name: "
-        				+ name);
-        	}
         }
+    	if (LOG.isInfoEnabled()) {
+    		LOG.info("No matching request dispatcher found for name: "
+    				+ name);
+    	}
         return null;
     }
 

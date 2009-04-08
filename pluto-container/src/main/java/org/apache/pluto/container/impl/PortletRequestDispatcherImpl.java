@@ -183,10 +183,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             {
                 throw new PortletException(sex.getRootCause());
             } 
-            else 
-            {
-                throw new PortletException(sex);
-            }
+            throw new PortletException(sex);
         }
         finally
         {

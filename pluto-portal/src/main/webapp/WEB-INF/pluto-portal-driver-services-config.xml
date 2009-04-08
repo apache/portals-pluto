@@ -52,7 +52,7 @@ limitations under the License.
 	
     <bean id="RequiredContainerServices"
           name="OptionalContainerServices"
-          class="org.apache.pluto.container.driver.impl.PortalDriverServicesImpl"
+          class="org.apache.pluto.driver.container.PortalDriverServicesImpl"
           singleton="true">
       <constructor-arg><ref bean="PortalContext"/></constructor-arg>
       <constructor-arg><ref bean="PortletRequestContextService"/></constructor-arg>

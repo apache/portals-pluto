@@ -22,14 +22,15 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
-import org.apache.pluto.container.RequiredContainerServices;
+import org.apache.pluto.container.driver.OptionalContainerServices;
+import org.apache.pluto.container.driver.RequiredContainerServices;
 import org.apache.pluto.container.impl.PortletContainerFactory;
 import org.apache.pluto.driver.config.AdminConfiguration;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.container.PortalDriverServicesImpl;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -179,13 +180,13 @@ public class PortalStartupListener implements ServletContextListener {
             OptionalContainerServices optional =
                     (OptionalContainerServices) springContext.getBean("OptionalContainerServices");
 
-
+           
             // Create portlet container.
             LOG.debug(" [3] Creating portlet container...");
             PortletContainerFactory factory =
                     PortletContainerFactory.getInstance();
             PortletContainer container = factory.createContainer(
-                driverConfig.getContainerName(), required, optional
+                driverConfig.getContainerName(), new PortalDriverServicesImpl(required, optional)
             );
 
             // Initialize portlet container.

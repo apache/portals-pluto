@@ -140,10 +140,7 @@ public abstract class AbstractPortletConfigImpl implements PortletConfig
             {
                 continue;
             }
-            else
-            {
-                qnameList.add(name);
-            }
+            qnameList.add(name);
         }
         return Collections.enumeration(qnameList);
 	}
@@ -157,10 +154,7 @@ public abstract class AbstractPortletConfigImpl implements PortletConfig
             {
                 continue;
             }
-            else
-            {
-                qnameList.add(name);
-            }
+            qnameList.add(name);
         }
         return Collections.enumeration(qnameList);
 	}
@@ -228,9 +222,6 @@ public abstract class AbstractPortletConfigImpl implements PortletConfig
             }
             return Collections.unmodifiableMap(result);
         }
-        else
-        {
-            return Collections.emptyMap();
-        }
+        return Collections.emptyMap();
 	}
 }

@@ -244,9 +244,7 @@ public class PortletSessionImpl implements PortletSession {
         	return (id.equals(portletWindow.getId().getStringId()));
         }
     	// Application-scoped attribute names are not in portlet scope.
-    	else {
-        	return false;
-        }
+    	return false;
     }
     
     

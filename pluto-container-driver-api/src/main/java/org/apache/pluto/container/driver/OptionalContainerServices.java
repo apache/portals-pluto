@@ -14,7 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.pluto.container;
+package org.apache.pluto.container.driver;
+
+import org.apache.pluto.container.CCPPProfileService;
+import org.apache.pluto.container.NamespaceMapper;
+import org.apache.pluto.container.PortletEnvironmentService;
+import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.UserInfoService;
 
 /**
  * Defines the services necessary for integration between the Pluto Container

@@ -92,7 +92,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         this.request = request;
         
         // Get the portlet preferences service from container.
-        preferencesService = container.getOptionalContainerServices()
+        preferencesService = container.getContainerServices()
         		.getPortletPreferencesService();
         if (LOG.isDebugEnabled()) {
             LOG.debug("Using PortletPreferencesService: "

@@ -18,12 +18,12 @@ package org.apache.pluto.driver.container;
 
 import org.apache.pluto.container.CCPPProfileService;
 import org.apache.pluto.container.NamespaceMapper;
-import org.apache.pluto.container.OptionalContainerServices;
 import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.UserInfoService;
+import org.apache.pluto.container.driver.OptionalContainerServices;
 import org.apache.pluto.container.driver.PortalAdministrationService;
 import org.apache.pluto.container.driver.PortalDriverContainerServices;
 import org.apache.pluto.container.driver.PortletContextService;
