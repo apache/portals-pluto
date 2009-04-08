@@ -37,19 +37,25 @@
             <groupId>org.apache.pluto</groupId>
             <artifactId>pluto-container-api</artifactId>
             <version>${pom.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pluto</groupId>
+            <artifactId>pluto-container-driver-api</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.pluto</groupId>
             <artifactId>pluto-container</artifactId>
             <version>${pom.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.pluto</groupId>
             <artifactId>pluto-portal-driver</artifactId>
             <version>${pom.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
