@@ -37,7 +37,7 @@ import org.apache.pluto.container.driver.RequiredContainerServices;
 import org.apache.pluto.container.impl.PortletEnvironmentServiceImpl;
 
 
-public class PortalDriverServicesImpl implements PortalDriverServices
+public class PortalDriverServicesImpl implements RequiredContainerServices, OptionalContainerServices, PortalDriverServices
 {
     /*
      * required services
