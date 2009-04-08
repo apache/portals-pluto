@@ -62,6 +62,10 @@ class InstallationDependency {
             new InstallationDependency("org.apache.pluto", "pluto-taglib", 
                     VERSION_PROPERTIES.getProperty("pluto.version"));
 
+    public static final InstallationDependency CONTAINER_DRIVER_API =
+        new InstallationDependency("org.apache.pluto", "pluto-container-driver-api", 
+                VERSION_PROPERTIES.getProperty("pluto.version"));
+
     public static final InstallationDependency  PORTAL =
             new InstallationDependency("org.apache.pluto", "pluto-portal", 
                     VERSION_PROPERTIES.getProperty("pluto.version"), "war");
@@ -129,6 +133,7 @@ class InstallationDependency {
     static {
         SHARED.add(PORTLET_API);
         SHARED.add(CONTAINER_API);
+        SHARED.add(CONTAINER_DRIVER_API);
         SHARED.add(TAGLIB);
         SHARED.add(CCPP_API);
     }
