@@ -37,7 +37,6 @@ public class ClasspathScanner {
      * path.
      *
      * @param path
-     * @return
      * @throws IOException
      */
     public static List<URL> scan(String path) throws IOException {
@@ -58,7 +57,6 @@ public class ClasspathScanner {
      *
      * @param path
      * @param loader
-     * @return
      * @throws IOException
      */
     public static List<URL> scan(String path, ClassLoader loader) throws IOException {
@@ -88,7 +86,7 @@ public class ClasspathScanner {
      */
     @SuppressWarnings("unchecked")
     public static List findConfiguredImplementations(Class implemented)
-        throws IOException {
+    throws IOException {
         List classes = new ArrayList();
         List resources = scan("/META-INF/pluto.properties");
         Iterator i = resources.iterator();

@@ -34,18 +34,17 @@ import javax.servlet.http.HttpServletResponse;
  * lifecycle.</TD></TR>
  * <p/>
  * <TR><TD>{@link #doAction(PortletWindow,
-    * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}</TD>
+ * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}</TD>
  * <TD>Perform the action for the targeted portlet</TD> <TD>Optionally performed
  * for a single portlet per request</TD></TR>
  * <p/>
  * <TR><TD>{@link #doRender(PortletWindow,
-    * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}</TD>
+ * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}</TD>
  * <TD>Render the portlet</TD> <TD>Performed once for each portlet per
  * request.</TD></TR>
  * <p/>
  * <TR><TD>{@link #destroy()}</TD> <TD>Destroy and remove container from
  * service.</TD> <TD>Performed only once per container lifecylce</TD></TR>
- * @version $Id: PortletContainer.java 36010 2004-07-30 14:16:06Z ddewolf $
  */
 public interface PortletContainer {
 
@@ -75,9 +74,9 @@ public interface PortletContainer {
      *                                   has trouble fulfilling the request
      */
     void doRender(PortletWindow portletWindow,
-                         HttpServletRequest request,
-                         HttpServletResponse response)
-        throws PortletException, IOException, PortletContainerException;
+            HttpServletRequest request,
+            HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that a portlet resource Serving occured in the current request and calls
@@ -91,9 +90,9 @@ public interface PortletContainer {
      *                                   has trouble fulfilling the request
      */
     void doServeResource(PortletWindow portletWindow,
-                         HttpServletRequest request,
-                         HttpServletResponse response)
-        throws PortletException, IOException, PortletContainerException;
+            HttpServletRequest request,
+            HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that a portlet action occured in the current request and calls
@@ -107,9 +106,9 @@ public interface PortletContainer {
      *                                   has trouble fulfilling the request
      */
     void doAction(PortletWindow portletWindow,
-                         HttpServletRequest request,
-                         HttpServletResponse response)
-        throws PortletException, IOException, PortletContainerException;
+            HttpServletRequest request,
+            HttpServletResponse response)
+    throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that the portlet must be initialized
@@ -122,9 +121,9 @@ public interface PortletContainer {
      *                                   has trouble fulfilling the request
      */
     void doLoad(PortletWindow portletWindow,
-                       HttpServletRequest servletRequest,
-                       HttpServletResponse servletResponse)
-        throws PortletException, IOException, PortletContainerException;
+            HttpServletRequest servletRequest,
+            HttpServletResponse servletResponse)
+    throws PortletException, IOException, PortletContainerException;
 
     /**
      * Indicates that the portal needs to perform administrative
@@ -140,8 +139,8 @@ public interface PortletContainer {
      *                                   has trouble fulfilling the request
      */
     void doAdmin(PortletWindow portletWindow,
-                 HttpServletRequest servletRequest,
-                 HttpServletResponse servletResponse)
+            HttpServletRequest servletRequest,
+            HttpServletResponse servletResponse)
     throws PortletException, IOException, PortletContainerException;
 
     /**
@@ -156,10 +155,10 @@ public interface PortletContainer {
      * @throws PortletContainerException if the portlet container implementation
      *                                   has trouble fulfilling the request
      */
-    public void doEvent(PortletWindow portletWindow, 
-                        HttpServletRequest request,
-                        HttpServletResponse response,
-                        Event event)
+    public void doEvent(PortletWindow portletWindow,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Event event)
     throws PortletException, IOException, PortletContainerException;
 
     /**

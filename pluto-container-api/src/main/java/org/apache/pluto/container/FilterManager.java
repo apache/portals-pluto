@@ -25,6 +25,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceServingPortlet;
+
 /**
  * Manage the initialization and doFilter for the filter which are
  * declareted in the deployment descriptor.
@@ -32,7 +33,8 @@ import javax.portlet.ResourceServingPortlet;
  * @version 2.0
  */
 public interface FilterManager {
-	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
-	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
-	public void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
+
+    void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
+    void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
+    void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
 }

@@ -18,7 +18,6 @@ package org.apache.pluto.container;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
- * @version $Id$
  */
 public interface PortletActionResponseContext extends PortletStateAwareResponseContext
 {

@@ -22,34 +22,34 @@ package org.apache.pluto.container;
  */
 public interface PortletPreference {
 
-	/**
-	 * Returns the name of this portlet preference.
-	 * @return the name of this portlet preference.
-	 */
-    public String getName();
+    /**
+     * Returns the name of this portlet preference.
+     * @return the name of this portlet preference.
+     */
+    String getName();
 
     /**
      * Returns the values of this portlet preference, which is a string array.
      * @return the values of this portlet preference as a string array.
      */
-    public String[] getValues();
+    String[] getValues();
 
     /**
      * Sets values of this portlet preference.
      * @param values  values of this portlet preference to set.
      */
-    public void setValues(String[] values);
+    void setValues(String[] values);
 
     /**
      * Returns true if this portlet preference is marked as read-only.
      * @return true if this portlet preference is marked as read-only.
      */
-    public boolean isReadOnly();
+    boolean isReadOnly();
 
     /**
      * Clone a copy of itself.
      * @return a copy of itself.
      */
-    public PortletPreference clone();
+    PortletPreference clone();
 
 }

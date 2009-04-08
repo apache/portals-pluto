@@ -37,23 +37,23 @@ public interface PortletWindow {
      *  used to communicate back to the referencing portal.
      * @return unique id.
      */
-    public PortletWindowID getId();
+    PortletWindowID getId();
 
     /**
      * Retrieve the current window state for this window.
      * @return the current window state.
      */
-    public WindowState getWindowState();
+    WindowState getWindowState();
 
     /**
      * Retrieve the current portlet mode for this window.
      * @return the current portlet mode.
      */
-    public PortletMode getPortletMode();
+    PortletMode getPortletMode();
 
     /**
      * Returns the portlet entity. The return value cannot be NULL.
      * @return the portlet entity
      */
-    public PortletEntity getPortletEntity();
+    PortletEntity getPortletEntity();
 }

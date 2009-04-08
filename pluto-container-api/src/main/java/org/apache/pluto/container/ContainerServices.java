@@ -42,8 +42,8 @@ public interface ContainerServices {
     /**
      * Returns the FilterManagerService
      */
-    FilterManagerService getFilterManagerService(); 
-    
+    FilterManagerService getFilterManagerService();
+
     /**
      * Returns the PortletURLListenerService
      */
@@ -79,7 +79,7 @@ public interface ContainerServices {
      * @return user info service
      */
     UserInfoService getUserInfoService();
-    
+
     /**
      * Returns the NamespaceMapper used to retrieve the Portal
      * specific PortletWindow namespace and encoding/decoding

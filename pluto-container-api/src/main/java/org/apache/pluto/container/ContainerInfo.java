@@ -17,11 +17,10 @@
 package org.apache.pluto.container;
 
 /**
- * @version $Id$
- *
+ * Information about the container.
  */
-public interface ContainerInfo
-{
+public interface ContainerInfo {
+
     String getServerInfo();
     String getPortletContainerName();
     String getPortletContainerVersion();

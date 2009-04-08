@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 public interface CCPPProfileService {
-	
-	public Profile getCCPPProfile(HttpServletRequest httpServletRequest);
+
+    Profile getCCPPProfile(HttpServletRequest httpServletRequest);
 
 }

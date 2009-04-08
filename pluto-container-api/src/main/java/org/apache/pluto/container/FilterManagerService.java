@@ -20,14 +20,12 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
  * Service to retrieve a FilterManager for a specific Portlet in a lifecycle
- * @version $Id$
- *
  */
-public interface FilterManagerService
-{
+public interface FilterManagerService {
+
     /**
      * Returns the FilterManager, this is used to process the filter.
      * @return FilterManager
      */
-    public FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName, String lifeCycle); 
+    FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName, String lifeCycle);
 }

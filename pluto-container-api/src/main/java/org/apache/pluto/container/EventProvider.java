@@ -21,15 +21,14 @@ import java.io.Serializable;
 import javax.portlet.Event;
 import javax.xml.namespace.QName;
 
-	/**
-	 *
-	 * @author <a href="mailto:ferdy@informatik.uni-jena.de">Fred Thiele</a>
-	 * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
-	 *
-	 */
-
+/**
+ *
+ * @author <a href="mailto:ferdy@informatik.uni-jena.de">Fred Thiele</a>
+ * @author <a href="mailto:chrisra@cs.uni-jena.de">Christian Raschka</a>
+ *
+ */
 public interface EventProvider {
 
-	public Event createEvent(QName name, Serializable value)
-			throws IllegalArgumentException;
+    Event createEvent(QName name, Serializable value)
+    throws IllegalArgumentException;
 }

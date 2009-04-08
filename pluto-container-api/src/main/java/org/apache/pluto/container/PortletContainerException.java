@@ -70,6 +70,6 @@ public class PortletContainerException extends Exception {
      * @return the <CODE>Throwable</CODE> that caused this portlet exception.
      */
     public Throwable getRootCause() {
-        return (cause);
+        return cause;
     }
 }

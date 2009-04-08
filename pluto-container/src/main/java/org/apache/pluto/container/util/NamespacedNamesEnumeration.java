@@ -24,21 +24,21 @@ import java.util.NoSuchElementException;
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
  * @version $Id$
  */
-public class NamespacedNamesEnumeration implements Enumeration
+public class NamespacedNamesEnumeration implements Enumeration<String>
 {
-    private Enumeration namesEnumeration;
+    private Enumeration<String> namesEnumeration;
     private String      namespace;
-    
+
     private String nextName;
     private boolean done;
-    
-    public NamespacedNamesEnumeration(Enumeration namesEnumeration, String namespace)
+
+    public NamespacedNamesEnumeration(Enumeration<String> namesEnumeration, String namespace)
     {
         this.namesEnumeration = namesEnumeration;
         this.namespace = namespace;
         hasMoreElements();
     }
-    
+
     public boolean hasMoreElements()
     {
         if (!done)
@@ -47,7 +47,7 @@ public class NamespacedNamesEnumeration implements Enumeration
             {
                 while (namesEnumeration.hasMoreElements())
                 {
-                    String name = (String)namesEnumeration.nextElement();
+                    String name = namesEnumeration.nextElement();
                     if ( name.startsWith(namespace))
                     {
                         nextName = name.substring(namespace.length());
@@ -60,7 +60,7 @@ public class NamespacedNamesEnumeration implements Enumeration
         return !done;
     }
 
-    public Object nextElement()
+    public String nextElement()
     {
         if (done)
         {

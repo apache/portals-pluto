@@ -22,11 +22,6 @@ package org.apache.pluto.container;
  */
 public interface RequestDispatcherPathInfoProvider
 {
-    /**
-     * PortletContext attribute key for storing and retrieving this provider.
-     */
-    String CONTEXT_KEY = RequestDispatcherPathInfoProvider.class.getName();
-    
     RequestDispatcherPathInfo getPathInfo(String contextPath, String path);
     RequestDispatcherPathInfo getNamedRequestDispatcherPathInfo();
 }

@@ -27,20 +27,20 @@ public interface ResourceURLProvider {
      * http://host/wps/portal/hello.gif
      * @param path the new absolute url
      */
-    public void setAbsoluteURL(String path);
+    void setAbsoluteURL(String path);
 
     /**
      * Sets a full path URI including the context root. E.g.
      * /wps/portal/hello.gif
      * @param path the new absolute url
      */
-    public void setFullPath(String path);
+    void setFullPath(String path);
 
     /**
      * Returns a url to a resource as absolute URL starting with protocol so
      * that it can be accessed by a browser.
      * @return the URL as string
      */
-    public String toString();
+    String toString();
 
 }

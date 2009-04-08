@@ -32,14 +32,19 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
  */
 public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherPathInfoProvider
 {
+    /**
+     * PortletContext attribute key for storing and retrieving this provider.
+     */
+    private static final String CONTEXT_KEY = RequestDispatcherPathInfoProvider.class.getName();
+
     protected List<String> exactServletMappingURLPatterns = new ArrayList<String>();
     protected List<String> pathServletMappingURLPatterns = new ArrayList<String>();
     protected boolean defaultServletMapping = false;
-    
+
     private RequestDispatcherPathInfoProviderImpl(Set<String> servletMappingURLPatterns)
     {
         for (String pat : servletMappingURLPatterns)
-        {                 
+        {
             if (pat.startsWith("/"))
             {
                 if (pat.equals("/") || pat.equals("/*"))
@@ -56,7 +61,7 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
                 }
             }
             else if (pat.startsWith("*."))
-            {                
+            {
                 // ignore, will always fallback on full path servlet mapping
             }
             else
@@ -65,7 +70,7 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
             }
         }
     }
-    
+
     public static RequestDispatcherPathInfoProvider getProvider(PortletContext portletContext, PortletApplicationDefinition app)
     {
         RequestDispatcherPathInfoProvider provider = (RequestDispatcherPathInfoProvider)portletContext.getAttribute(CONTEXT_KEY);
@@ -76,7 +81,7 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
         }
         return provider;
     }
-    
+
     public RequestDispatcherPathInfo getNamedRequestDispatcherPathInfo()
     {
         return new RequestDispatcherPathInfoImpl();
@@ -87,14 +92,14 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
         String servletPath = null;
         String pathInfo = null;
         String queryString = null;
-        
+
         int index = path.indexOf('?');
         if (index != -1)
         {
             queryString = path.substring(index+1, path.length());
             path = path.substring(0, index);
         }
-        
+
         if (exactServletMappingURLPatterns.contains(path))
         {
             servletPath = path;
@@ -126,9 +131,9 @@ public class RequestDispatcherPathInfoProviderImpl implements RequestDispatcherP
         // which is already the default / catch-all solution
         if (servletPath == null)
         {
-            servletPath = path;            
+            servletPath = path;
         }
-        
+
         return new RequestDispatcherPathInfoImpl(contextPath,servletPath,pathInfo,queryString);
     }
 }

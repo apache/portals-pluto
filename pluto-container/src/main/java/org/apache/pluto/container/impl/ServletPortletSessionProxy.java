@@ -9,9 +9,9 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" 
- * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
+ * distributed under the License is distributed on an "AS IS"
+ * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package org.apache.pluto.container.impl;
@@ -23,6 +23,7 @@ import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -48,14 +49,15 @@ public class ServletPortletSessionProxy implements InvocationHandler
     public static HttpSession createProxy(HttpServletRequest request, String portletWindowId)
     {
         HttpSession servletSession = request.getSession();
-        HashSet interfaces = new HashSet();
+        HashSet<Class<? extends Object>> interfaces = new HashSet<Class<? extends Object>>();
         interfaces.add(HttpSession.class);
-        Class current = servletSession.getClass();
+        Class<? extends Object> current = servletSession.getClass();
         while (current != null)
         {
             try
             {
-                Class[] currentInterfaces = current.getInterfaces();
+                @SuppressWarnings("unchecked")
+                Class<? extends Object>[] currentInterfaces = current.getInterfaces();
                 for (int i = 0; i < currentInterfaces.length; i++)
                 {
                     interfaces.add(currentInterfaces[i]);
@@ -67,8 +69,8 @@ public class ServletPortletSessionProxy implements InvocationHandler
                 current = null;
             }
         }
-        Object proxy = Proxy.newProxyInstance(servletSession.getClass().getClassLoader(), 
-                (Class[])interfaces.toArray(new Class[interfaces.size()]), 
+        Object proxy = Proxy.newProxyInstance(servletSession.getClass().getClassLoader(),
+                interfaces.toArray(new Class[interfaces.size()]),
                 new ServletPortletSessionProxy(request.getSession(), portletWindowId));
         return (HttpSession)proxy;
     }
@@ -86,6 +88,7 @@ public class ServletPortletSessionProxy implements InvocationHandler
      * @see java.lang.reflect.InvocationHandler#invoke(java.lang.Object,
      *      java.lang.reflect.Method, java.lang.Object[])
      */
+    @SuppressWarnings("unchecked")
     public Object invoke(Object proxy, Method m, Object[] args) throws Throwable
     {
         Object retval = null;
@@ -107,8 +110,8 @@ public class ServletPortletSessionProxy implements InvocationHandler
         }
         else if ("getValueNames".equals(m.getName()) && args == null)
         {
-            ArrayList list = new ArrayList();
-            Enumeration e = new NamespacedNamesEnumeration(servletSession.getAttributeNames(), this.portletScopeAttrNamePrefix);
+            final List<String> list = new ArrayList<String>();
+            Enumeration<String> e = new NamespacedNamesEnumeration(servletSession.getAttributeNames(), this.portletScopeAttrNamePrefix);
             while (e.hasMoreElements())
             {
                 list.add(e.nextElement());

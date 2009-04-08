@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author <a href="mailto:ate@douma.nu">Ate Douma</a>
- * @version $Id$
  */
 public interface EventCoordinationService
 {

@@ -38,22 +38,22 @@ public interface PortletPreferencesService {
      * @return the default portlet preferences.
      * @throws PortletContainerException  if fail to get default preferences.
      */
-    public Map<String, PortletPreference> getDefaultPreferences(
+    Map<String, PortletPreference> getDefaultPreferences(
             PortletWindow portletWindow,
             PortletRequest request)
-    throws PortletContainerException;
+            throws PortletContainerException;
 
-	/**
-	 * Returns the stored portlet preferences.
-	 * @param portletWindow  the portlet window.
-	 * @param request  the portlet request.
-	 * @return the stored portlet preferences.
-	 * @throws PortletContainerException  if fail to get stored preferences.
-	 */
-    public Map<String, PortletPreference> getStoredPreferences(
-    		PortletWindow portletWindow,
-    		PortletRequest request)
-    throws PortletContainerException;
+    /**
+     * Returns the stored portlet preferences.
+     * @param portletWindow  the portlet window.
+     * @param request  the portlet request.
+     * @return the stored portlet preferences.
+     * @throws PortletContainerException  if fail to get stored preferences.
+     */
+    Map<String, PortletPreference> getStoredPreferences(
+            PortletWindow portletWindow,
+            PortletRequest request)
+            throws PortletContainerException;
 
     /**
      * Stores the portlet references to the persistent storage.
@@ -62,9 +62,9 @@ public interface PortletPreferencesService {
      * @param preferences  the portlet preferences to store.
      * @throws PortletContainerException  if fail to store preferences.
      */
-    public void store(PortletWindow portletWindow,
-                      PortletRequest request,
-                      Map<String, PortletPreference> preferences)
+    void store(PortletWindow portletWindow,
+            PortletRequest request,
+            Map<String, PortletPreference> preferences)
     throws PortletContainerException;
 
     /**
@@ -76,8 +76,8 @@ public interface PortletPreferencesService {
      * @param portletDefinition  the portlet definition.
      * @return the preferences validator if defined for the portlet definition.
      * @throw ValidatorException  if fail to instantiate validator instance.
-     */    
-    public PreferencesValidator getPreferencesValidator(PortletDefinition portletDefinition)
+     */
+    PreferencesValidator getPreferencesValidator(PortletDefinition portletDefinition)
     throws ValidatorException;
-    
+
 }
