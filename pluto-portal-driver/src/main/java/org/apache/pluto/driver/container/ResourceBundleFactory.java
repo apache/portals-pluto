@@ -65,20 +65,20 @@ class ResourceBundleFactory {
 
         PortletInfo info = dd.getPortletInfo();
 
-        
+
         if(info != null) {
             String title = windowInfo == null ? info.getTitle() : windowInfo.getTitle();
             String shortTitle = windowInfo == null ? info.getShortTitle() : windowInfo.getShortTitle();
             String keywords = windowInfo == null ? info.getKeywords() : windowInfo.getKeywords();
 
             defaultBundle = new InlinePortletResourceBundle(
-                title, shortTitle, keywords
+                    title, shortTitle, keywords
             );
         }
         else {
             defaultBundle = new InlinePortletResourceBundle(new Object[][] { {"a", "b"} });
         }
-   }
+    }
 
     public ResourceBundle getResourceBundle(Locale locale) {
         if(LOG.isDebugEnabled()) {
@@ -94,22 +94,22 @@ class ResourceBundleFactory {
             ResourceBundle bundle = null;
             if(bundleName != null) {
                 ClassLoader loader =
-                        Thread.currentThread().getContextClassLoader();
+                    Thread.currentThread().getContextClassLoader();
                 bundle = ResourceBundle.getBundle(bundleName, locale, loader);
                 bundles.put(locale, new CombinedPortletResourceBundle(defaultBundle, bundle));
             }
             else {
                 bundles.put(locale, defaultBundle);
             }
-       } catch (MissingResourceException mre) {
+        } catch (MissingResourceException mre) {
             if(bundleName != null && LOG.isWarnEnabled()) {
-                LOG.info(EXCEPTIONS.getString("warning.resourcebundle.notfound",bundleName, mre.getMessage()));
+                LOG.warn(EXCEPTIONS.getString("warning.resourcebundle.notfound",bundleName, mre.getMessage()));
             }
             if(LOG.isDebugEnabled()) {
                 LOG.debug("Using default bundle for locale ("+locale+").");
             }
             bundles.put(locale, defaultBundle);
         }
-       return bundles.get(locale);
+        return bundles.get(locale);
     }
 }
