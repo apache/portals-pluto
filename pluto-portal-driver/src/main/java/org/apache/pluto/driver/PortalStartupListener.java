@@ -24,8 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
-import org.apache.pluto.container.driver.OptionalContainerServices;
-import org.apache.pluto.container.driver.RequiredContainerServices;
+import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.impl.PortletContainerFactory;
 import org.apache.pluto.driver.config.AdminConfiguration;
 import org.apache.pluto.driver.config.DriverConfiguration;
@@ -171,26 +170,17 @@ public class PortalStartupListener implements ServletContextListener {
 
         try {
             LOG.info("Initializing Portlet Container. . .");
-
-            LOG.debug(" [1] Loading RequiredContainerServices. . .");
-            RequiredContainerServices required =
-                    (RequiredContainerServices) springContext.getBean("RequiredContainerServices");
-
-            LOG.debug(" [2] Loading OptionalContainerServices. . .");
-            OptionalContainerServices optional =
-                    (OptionalContainerServices) springContext.getBean("OptionalContainerServices");
-
            
             // Create portlet container.
-            LOG.debug(" [3] Creating portlet container...");
+            LOG.debug(" [1] Creating portlet container...");
             PortletContainerFactory factory =
                     PortletContainerFactory.getInstance();
             PortletContainer container = factory.createContainer(
-                driverConfig.getContainerName(), new PortalDriverServicesImpl(required, optional)
+                driverConfig.getContainerName(), (PortalDriverServices)springContext.getBean("PortalDriverServices")
             );
 
             // Initialize portlet container.
-            LOG.debug(" [4] Initializing portlet container...");
+            LOG.debug(" [2] Initializing portlet container...");
             container.init();
 
             // Save portlet container to the servlet context scope.
