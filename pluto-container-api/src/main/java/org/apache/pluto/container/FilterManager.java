@@ -18,12 +18,18 @@ package org.apache.pluto.container;
 
 import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
 
 /**
@@ -34,7 +40,8 @@ import javax.portlet.ResourceServingPortlet;
  */
 public interface FilterManager {
 
-    void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
-    void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
-    void processFilter(PortletRequest req, PortletResponse res, ClassLoader loader, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
+    void processFilter(ActionRequest req, ActionResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
+    void processFilter(RenderRequest req, RenderResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
+    void processFilter(ResourceRequest req, ResourceResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
+    void processFilter(EventRequest req, EventResponse res, ClassLoader loader, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
 }
