@@ -24,7 +24,7 @@ import org.apache.pluto.container.PortletWindow;
 
 public class PortletInvocationEvent {
 
-    public static int LOAD = PortletInvokerService.METHOD_NOOP.intValue();
+    public static int LOAD = PortletInvokerService.METHOD_LOAD.intValue();
 
     public static int ACTION = PortletInvokerService.METHOD_ACTION.intValue();
 

@@ -61,14 +61,14 @@ import org.apache.pluto.container.om.portlet.PortletDefinition;
 public class PortletServlet extends HttpServlet
 {
     private static final long serialVersionUID = -5096339022539360365L;
-    
+
     static class NullPortlet implements EventPortlet, ResourceServingPortlet, Portlet
     {
         public void processEvent(EventRequest arg0, EventResponse arg1)
         throws PortletException, IOException
         {
         }
-        
+
         public void serveResource(ResourceRequest arg0, ResourceResponse arg1)
         throws PortletException, IOException
         {
@@ -91,7 +91,7 @@ public class PortletServlet extends HttpServlet
         throws PortletException, IOException
         {
         }
-    }    
+    }
 
     // Private Member Variables ------------------------------------------------
     /**
@@ -203,7 +203,7 @@ public class PortletServlet extends HttpServlet
 
             PortletDefinition portletDD = portletConfig.getPortletDefinition();
 
-//          Create and initialize the portlet wrapped in the servlet.
+            //          Create and initialize the portlet wrapped in the servlet.
             try
             {
                 Class<?> clazz = paClassLoader.loadClass((portletDD.getPortletClass()));
@@ -231,25 +231,25 @@ public class PortletServlet extends HttpServlet
         {
             if ( startTimer != null )
             {
-              startTimer.cancel();
-              startTimer = null;
+                startTimer.cancel();
+                startTimer = null;
             }
             else if ( started && portletContext != null)
             {
-              started = false;
-              contextService.unregister(portletContext);
-              if (portlet != null)
-              {
-                  try
-                  {
-                      portlet.destroy();
-                  }
-                  catch (Exception e)
-                  {
-                      // ignore
-                  }
-                  portlet = null;
-              }
+                started = false;
+                contextService.unregister(portletContext);
+                if (portlet != null)
+                {
+                    try
+                    {
+                        portlet.destroy();
+                    }
+                    catch (Exception e)
+                    {
+                        // ignore
+                    }
+                    portlet = null;
+                }
             }
             super.destroy();
         }
@@ -257,21 +257,21 @@ public class PortletServlet extends HttpServlet
 
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException
-    {
+            {
         dispatch(request, response);
-    }
+            }
 
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException
-    {
+            {
         dispatch(request, response);
-    }
+            }
 
     protected void doPut(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException
-    {
+            {
         dispatch(request, response);
-    }
+            }
 
     // Private Methods ---------------------------------------------------------
 
@@ -294,7 +294,7 @@ public class PortletServlet extends HttpServlet
      */
     private void dispatch(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException
-    {
+            {
         if (portlet == null)
         {
             throw new javax.servlet.UnavailableException("Portlet "+portletName+" unavailable");
@@ -306,12 +306,12 @@ public class PortletServlet extends HttpServlet
         final PortletRequest portletRequest = (PortletRequest)request.getAttribute(PortletInvokerService.PORTLET_REQUEST);
 
         final PortletResponse portletResponse = (PortletResponse)request.getAttribute(PortletInvokerService.PORTLET_RESPONSE);
-        
+
         final PortletRequestContext requestContext = (PortletRequestContext)portletRequest.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
         final PortletResponseContext responseContext = (PortletResponseContext)portletRequest.getAttribute(PortletInvokerService.RESPONSE_CONTEXT);
-        
+
         final FilterManager filterManager = (FilterManager)request.getAttribute(PortletInvokerService.FILTER_MANAGER);
-        
+
         request.removeAttribute(PortletInvokerService.METHOD_ID);
         request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
         request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
@@ -382,8 +382,8 @@ public class PortletServlet extends HttpServlet
                 }
             }
 
-            // The requested method is NOOP: do nothing.
-            else if (methodId == PortletInvokerService.METHOD_NOOP)
+            // The requested method is LOAD: do nothing.
+            else if (methodId == PortletInvokerService.METHOD_LOAD)
             {
                 // Do nothing.
             }
@@ -423,7 +423,7 @@ public class PortletServlet extends HttpServlet
             throw new ServletException(ex);
 
         }
-    }
+            }
 
     protected void notify(PortletInvocationEvent event, boolean pre, Throwable e)
     {

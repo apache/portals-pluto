@@ -87,12 +87,12 @@ public interface PortletInvokerService {
     Integer METHOD_ACTION = new Integer(3);
 
     /**
-     * The unique method identifier for noop (load) requests.  Load requests are
+     * The unique method identifier for load requests.  Load requests are
      * requested through a call to the {@link PortletContainer#doLoad(org.apache.pluto.container.PortletWindow,
      * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
      * method.
      */
-    Integer METHOD_NOOP = new Integer(5);
+    Integer METHOD_LOAD = new Integer(5);
 
     /**
      * The unique method identifier for resource Serving requests.  Resource requests are
