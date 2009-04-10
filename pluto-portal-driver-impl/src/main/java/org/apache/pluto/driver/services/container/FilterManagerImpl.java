@@ -82,31 +82,31 @@ public class FilterManagerImpl implements FilterManager{
     }
 
     /**
-     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.EventRequest, javax.portlet.EventResponse, java.lang.ClassLoader, javax.portlet.EventPortlet, javax.portlet.PortletContext)
+     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.EventRequest, javax.portlet.EventResponse, javax.portlet.EventPortlet, javax.portlet.PortletContext)
      */
-    public void processFilter(EventRequest req, EventResponse res, ClassLoader loader, EventPortlet eventPortlet,PortletContext portletContext)throws PortletException, IOException{
-        filterchain.processFilter(req, res, loader, eventPortlet, portletContext);
+    public void processFilter(EventRequest req, EventResponse res, EventPortlet eventPortlet,PortletContext portletContext)throws PortletException, IOException{
+        filterchain.processFilter(req, res, eventPortlet, portletContext);
     }
 
     /**
-     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse, java.lang.ClassLoader, javax.portlet.ResourceServingPortlet, javax.portlet.PortletContext)
+     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ResourceRequest, javax.portlet.ResourceResponse, javax.portlet.ResourceServingPortlet, javax.portlet.PortletContext)
      */
-    public void processFilter(ResourceRequest req, ResourceResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet,PortletContext portletContext)throws PortletException, IOException{
-        filterchain.processFilter(req, res, loader, resourceServingPortlet, portletContext);
+    public void processFilter(ResourceRequest req, ResourceResponse res, ResourceServingPortlet resourceServingPortlet,PortletContext portletContext)throws PortletException, IOException{
+        filterchain.processFilter(req, res, resourceServingPortlet, portletContext);
     }
 
     /**
-     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.RenderResponse, java.lang.ClassLoader, javax.portlet.Portlet, javax.portlet.PortletContext)
+     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.RenderRequest, javax.portlet.RenderResponse, javax.portlet.Portlet, javax.portlet.PortletContext)
      */
-    public void processFilter(RenderRequest req, RenderResponse res, ClassLoader loader, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
-        filterchain.processFilter(req, res, loader, portlet, portletContext);
+    public void processFilter(RenderRequest req, RenderResponse res, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
+        filterchain.processFilter(req, res, portlet, portletContext);
     }
 
     /**
-     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.ClassLoader, javax.portlet.Portlet, javax.portlet.PortletContext)
+     * @see org.apache.pluto.container.FilterManager#processFilter(javax.portlet.ActionRequest, javax.portlet.ActionResponse, javax.portlet.Portlet, javax.portlet.PortletContext)
      */
-    public void processFilter(ActionRequest req, ActionResponse res, ClassLoader loader, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
-        filterchain.processFilter(req, res, loader, portlet, portletContext);
+    public void processFilter(ActionRequest req, ActionResponse res, Portlet portlet,PortletContext portletContext) throws PortletException, IOException{
+        filterchain.processFilter(req, res, portlet, portletContext);
     }
 
     private boolean isLifeCycle(Filter filter, String lifeCycle){

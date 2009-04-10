@@ -326,9 +326,6 @@ public class PortletServlet extends HttpServlet
 
         notify(event, true, null);
 
-        // Init the classloader for the filter and get the Service for
-        // processing the filters.
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
         // FilterManager filtermanager = (FilterManager) request.getAttribute(
         // "filter-manager");
 
@@ -341,7 +338,7 @@ public class PortletServlet extends HttpServlet
                 RenderRequest renderRequest = (RenderRequest) portletRequest;
                 RenderResponse renderResponse = (RenderResponse) portletResponse;
                 filterManager.processFilter(renderRequest, renderResponse,
-                        loader, portlet, portletContext);
+                        portlet, portletContext);
             }
 
             // The requested method is RESOURCE: call
@@ -351,7 +348,7 @@ public class PortletServlet extends HttpServlet
                 ResourceRequest resourceRequest = (ResourceRequest) portletRequest;
                 ResourceResponse resourceResponse = (ResourceResponse) portletResponse;
                 filterManager.processFilter(resourceRequest, resourceResponse,
-                        loader, resourceServingPortlet, portletContext);
+                        resourceServingPortlet, portletContext);
             }
 
             // The requested method is ACTION: call Portlet.processAction(..)
@@ -360,7 +357,7 @@ public class PortletServlet extends HttpServlet
                 ActionRequest actionRequest = (ActionRequest) portletRequest;
                 ActionResponse actionResponse = (ActionResponse) portletResponse;
                 filterManager.processFilter(actionRequest, actionResponse,
-                        loader, portlet, portletContext);
+                        portlet, portletContext);
             }
 
             // The request methode is Event: call Portlet.processEvent(..)
@@ -369,7 +366,7 @@ public class PortletServlet extends HttpServlet
                 EventRequest eventRequest = (EventRequest) portletRequest;
                 EventResponse eventResponse = (EventResponse) portletResponse;
                 filterManager.processFilter(eventRequest, eventResponse,
-                        loader, eventPortlet, portletContext);
+                        eventPortlet, portletContext);
             }
             // The requested method is ADMIN: call handlers.
             else if (methodId == PortletInvokerService.METHOD_ADMIN)

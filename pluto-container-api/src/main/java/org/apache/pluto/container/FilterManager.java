@@ -40,8 +40,8 @@ import javax.portlet.ResourceServingPortlet;
  */
 public interface FilterManager {
 
-    void processFilter(ActionRequest req, ActionResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
-    void processFilter(RenderRequest req, RenderResponse res, ClassLoader loader, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
-    void processFilter(ResourceRequest req, ResourceResponse res, ClassLoader loader, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
-    void processFilter(EventRequest req, EventResponse res, ClassLoader loader, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
+    void processFilter(ActionRequest req, ActionResponse res, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
+    void processFilter(RenderRequest req, RenderResponse res, Portlet portlet, PortletContext portletContext) throws PortletException, IOException;
+    void processFilter(ResourceRequest req, ResourceResponse res, ResourceServingPortlet resourceServingPortlet, PortletContext portletContext)throws PortletException, IOException;
+    void processFilter(EventRequest req, EventResponse res, EventPortlet eventPortlet, PortletContext portletContext)throws PortletException, IOException;
 }
