@@ -20,8 +20,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.services.portal.RenderConfig;
 
 /**
@@ -33,8 +33,8 @@ import org.apache.pluto.driver.services.portal.RenderConfig;
 public class ResourceConfig {
 
     /** Internal Logger. */
-    private static final Log LOG =
-        LogFactory.getLog(ResourceConfig.class);
+    private static final Logger LOG =
+        LoggerFactory.getLogger(ResourceConfig.class);
 
     /** The name of the portal. */
     private String portalName;

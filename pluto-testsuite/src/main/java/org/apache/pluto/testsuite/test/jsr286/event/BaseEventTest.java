@@ -24,8 +24,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.StateAwareResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.testsuite.TestResult;
 import org.apache.pluto.testsuite.annotations.DefaultTestPhase;
 import org.apache.pluto.testsuite.annotations.TestPhase;
@@ -36,7 +36,7 @@ public abstract class BaseEventTest extends AbstractReflectivePortletTest {
   
     private int numMethodsCache = -1;
     
-    protected Log LOG = LogFactory.getLog(getClass());
+    protected Logger LOG = LoggerFactory.getLogger(getClass());
     
     @TestPhase(PortletRequest.ACTION_PHASE)
     public TestResult checkFireEventsFromActionPhase(ActionRequest request,

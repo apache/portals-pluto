@@ -35,8 +35,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.RequestDispatcherPathInfo;
@@ -50,7 +50,7 @@ import org.apache.pluto.container.RequestDispatcherPathInfo;
 public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, RequestDispatcher
 {	
     /** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletRequestDispatcherImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletRequestDispatcherImpl.class);
     
     // Private Member Variables ------------------------------------------------
     

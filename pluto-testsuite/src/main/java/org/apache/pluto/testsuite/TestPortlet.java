@@ -40,8 +40,8 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Pluto testsuite's test portlet.
@@ -53,7 +53,7 @@ import org.apache.commons.logging.LogFactory;
 public class TestPortlet extends GenericPortlet {
 
     /** Internal logger. */
-    private static final Log LOG = LogFactory.getLog(TestPortlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TestPortlet.class);
 
 
     // Private Member Variables ------------------------------------------------

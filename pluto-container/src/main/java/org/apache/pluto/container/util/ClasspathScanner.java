@@ -25,12 +25,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClasspathScanner {
 
-    private static final Log LOG = LogFactory.getLog(ClasspathScanner.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ClasspathScanner.class);
 
     /**
      * Retrieve a lit of all urls matching the specified

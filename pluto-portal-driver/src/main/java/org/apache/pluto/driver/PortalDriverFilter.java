@@ -16,8 +16,8 @@
  */
 package org.apache.pluto.driver;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.driver.core.PortalRequestContext;
@@ -50,7 +50,7 @@ public class PortalDriverFilter implements Filter {
     /**
      * Internal Logger.
      */
-    private static final Log LOG = LogFactory.getLog(PortalDriverFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortalDriverFilter.class);
 
     /**
      * The Portal Driver sServlet Context

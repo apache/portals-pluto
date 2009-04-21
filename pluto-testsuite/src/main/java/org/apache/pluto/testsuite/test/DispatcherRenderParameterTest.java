@@ -32,8 +32,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.testsuite.TestResult;
 import org.apache.pluto.testsuite.TestUtils;
 
@@ -46,7 +46,7 @@ public class DispatcherRenderParameterTest
 extends AbstractReflectivePortletTest {
 
 	/** Internal logger. */
-	private static final Log LOG = LogFactory.getLog(
+	private static final Logger LOG = LoggerFactory.getLogger(
 			DispatcherRenderParameterTest.class);
 
 	// Static Final Constants --------------------------------------------------

@@ -24,8 +24,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.testsuite.TestResult;
 import org.apache.pluto.testsuite.TestUtils;
 import org.apache.pluto.testsuite.annotations.DefaultTestPhase;
@@ -37,7 +37,7 @@ import org.apache.pluto.testsuite.validator.PreferencesValidatorImpl;
 public class PreferenceInActionTest extends PreferenceCommonTest {
 
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PreferenceInActionTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PreferenceInActionTest.class);
 
 
     // Test Methods ------------------------------------------------------------
@@ -79,7 +79,7 @@ public class PreferenceInActionTest extends PreferenceCommonTest {
                 preferences.setValue("TEST", "OK");
             	preferences.reset("TEST");
             } catch (Throwable th) {
-            	LOG.error(th);
+            	LOG.error(th.getMessage(),th);
             }
         }
 

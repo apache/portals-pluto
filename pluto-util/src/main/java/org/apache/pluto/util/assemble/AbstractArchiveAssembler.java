@@ -20,8 +20,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.util.UtilityException;
 
 /**
@@ -32,7 +32,7 @@ import org.apache.pluto.util.UtilityException;
  */
 public abstract class AbstractArchiveAssembler extends WebXmlRewritingAssembler {
 
-    private static final Log LOG = LogFactory.getLog( AbstractArchiveAssembler.class );
+    private static final Logger LOG = LoggerFactory.getLogger( AbstractArchiveAssembler.class );
     
     /**
      * This implementation throws <code>UtilityException</code> if the source

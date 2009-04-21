@@ -16,8 +16,8 @@
  */
 package org.apache.pluto.container.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Static class that provides utility static methods for argument validation.
@@ -26,7 +26,7 @@ import org.apache.commons.logging.LogFactory;
 public class ArgumentUtility {
 
 	/** Logger. */
-    public static final Log LOG = LogFactory.getLog(ArgumentUtility.class);
+    public static final Logger LOG = LoggerFactory.getLogger(ArgumentUtility.class);
 
 
     // Static Utility Methods --------------------------------------------------

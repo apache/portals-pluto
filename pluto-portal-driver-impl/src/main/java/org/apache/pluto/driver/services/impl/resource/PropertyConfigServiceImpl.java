@@ -21,8 +21,8 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
@@ -36,8 +36,8 @@ import org.apache.pluto.driver.services.portal.PropertyConfigService;
 public class PropertyConfigServiceImpl implements
     PropertyConfigService {
 
-    private static final Log LOG =
-        LogFactory.getLog(PropertyConfigServiceImpl.class);
+    private static final Logger LOG =
+        LoggerFactory.getLogger(PropertyConfigServiceImpl.class);
 
     private ResourceConfig config;
 

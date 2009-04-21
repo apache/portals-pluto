@@ -26,8 +26,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the portlet preferences validator.
@@ -35,7 +35,7 @@ import org.apache.commons.logging.LogFactory;
 public class PreferencesValidatorImpl implements PreferencesValidator {
 
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PreferencesValidatorImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PreferencesValidatorImpl.class);
 
     public static final String CHECK_VALIDATOR_COUNT = "checkValidatorCount";
 

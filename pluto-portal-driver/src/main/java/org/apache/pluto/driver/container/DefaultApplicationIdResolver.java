@@ -21,13 +21,13 @@ import java.net.URL;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class DefaultApplicationIdResolver implements ApplicationIdResolver {
 
-    private static final Log LOG = LogFactory.getLog(DefaultApplicationIdResolver.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultApplicationIdResolver.class);
 
     private static final String WEB_XML = "/WEB-INF/web.xml";
 	private static final String JNDI_PREFIX = "jndi:/";

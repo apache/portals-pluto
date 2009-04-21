@@ -22,8 +22,8 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A class encapsulating access to portlet mode and windowstate tooltips.
@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
 class ToolTips
 {
     private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("ToolTips");
-    private static final Log LOG = LogFactory.getLog(ToolTips.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ToolTips.class);
 
     static final ToolTips MAXIMIZE = new ToolTips(BUNDLE.getString("tooltip.windowstate.maximized"));
     static final ToolTips MINIMIZE = new ToolTips(BUNDLE.getString("tooltip.windowstate.minimized"));

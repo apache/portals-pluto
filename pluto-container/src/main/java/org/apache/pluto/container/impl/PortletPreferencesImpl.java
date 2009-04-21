@@ -29,8 +29,8 @@ import javax.portlet.PreferencesValidator;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletPreference;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
@@ -49,7 +49,7 @@ import org.apache.pluto.container.util.StringManager;
 public class PortletPreferencesImpl implements PortletPreferences {
 	
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletPreferencesImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletPreferencesImpl.class);
     
     private static final StringManager EXCEPTIONS = StringManager.getManager(
     		PortletPreferencesImpl.class.getPackage().getName());

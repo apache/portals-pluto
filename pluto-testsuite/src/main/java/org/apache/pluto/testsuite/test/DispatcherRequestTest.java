@@ -30,15 +30,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.testsuite.TestResult;
 import org.apache.pluto.testsuite.TestUtils;
 
 public class DispatcherRequestTest extends AbstractReflectivePortletTest {
 	
 	/** Logger. */
-	private static final Log LOG = LogFactory.getLog(DispatcherRequestTest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DispatcherRequestTest.class);
 	
 	/** The path to the companion servlet. */
     private static final String SERVLET_PATH = "/test/DispatcherRequestTest_Servlet";

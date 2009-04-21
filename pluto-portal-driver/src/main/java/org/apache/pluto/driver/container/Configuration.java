@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Central location for Configuration info.
@@ -31,8 +31,8 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Configuration {
 
-    private static final Log LOG =
-        LogFactory.getLog(Configuration.class);
+    private static final Logger LOG =
+        LoggerFactory.getLogger(Configuration.class);
 
     public static final ResourceBundle BUNDLE =
         ResourceBundle.getBundle("org.apache.pluto.driver.container.pluto-configuration");

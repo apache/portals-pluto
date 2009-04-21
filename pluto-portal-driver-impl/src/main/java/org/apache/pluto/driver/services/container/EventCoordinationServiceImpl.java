@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
@@ -56,7 +56,7 @@ import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
 public class EventCoordinationServiceImpl implements EventCoordinationService
 {
 	/** Logger. */
-	private static final Log LOG = LogFactory.getLog(EventCoordinationServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EventCoordinationServiceImpl.class);
 
 	private static final long WAITING_CYCLE = 100;
 
@@ -122,7 +122,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService
 			try {
 				Thread.sleep(WAITING_CYCLE);
 			} catch (InterruptedException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			}
 		}
 		waitForEventExecution(threadGroup);
@@ -191,7 +191,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService
 					}
 				}
 			} catch (PortletContainerException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			}
 		}
 
@@ -254,7 +254,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService
             try {
                 portletWindowThread.join();
             } catch (InterruptedException e) {
-                LOG.warn(e);
+                LOG.warn(e.getMessage(),e);
             }
             portletWindowThreads.remove(portletWindowThread);
             portletWindowThread = new PortletWindowThread(threadGroup, config.getId(),
@@ -278,7 +278,7 @@ public class EventCoordinationServiceImpl implements EventCoordinationService
 				}
 				Thread.sleep(WAITING_CYCLE);
 			} catch (InterruptedException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			}
 		}
 	}

@@ -29,8 +29,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.PortalDriverServlet;
 import org.apache.pluto.driver.config.DriverConfiguration;
@@ -41,7 +41,7 @@ import org.apache.pluto.driver.services.portal.RenderConfigService;
 
 public class PageAdminPortlet extends GenericPlutoPortlet {
 
-    private static final Log LOG = LogFactory.getLog(PageAdminPortlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PageAdminPortlet.class);
     private static final String JSP_DIR = "/WEB-INF/fragments/admin/page/";
     private static final String VIEW_PAGE = JSP_DIR + "view.jsp";
     private static final String EDIT_PAGE = JSP_DIR + "edit.jsp";

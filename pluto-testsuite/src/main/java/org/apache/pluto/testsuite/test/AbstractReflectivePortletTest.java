@@ -32,8 +32,8 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.testsuite.PortletTest;
 import org.apache.pluto.testsuite.TestConfig;
 import org.apache.pluto.testsuite.TestResult;
@@ -46,7 +46,7 @@ import org.apache.pluto.testsuite.annotations.TestPhase;
 public abstract class AbstractReflectivePortletTest implements PortletTest {
 
     /** Logger. */
-    private static final Log LOG = LogFactory.getLog(
+    private static final Logger LOG = LoggerFactory.getLogger(
             AbstractReflectivePortletTest.class);
 
     private Map<String, String> initParameters;

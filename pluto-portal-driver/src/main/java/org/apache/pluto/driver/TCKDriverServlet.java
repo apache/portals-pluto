@@ -24,8 +24,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.driver.config.AdminConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
@@ -39,7 +39,7 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 public class TCKDriverServlet extends PortalDriverServlet {
 	
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(TCKDriverServlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TCKDriverServlet.class);
     
     private int pageCounter = 0;
     

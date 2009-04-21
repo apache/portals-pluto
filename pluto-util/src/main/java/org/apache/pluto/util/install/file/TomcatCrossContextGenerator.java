@@ -22,8 +22,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO JavaDoc
@@ -33,7 +33,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class TomcatCrossContextGenerator {
 	private static final String PLUTO_TEMP_DIR = "PlutoDomain";
-	private static Log LOG = LogFactory.getLog(TomcatCrossContextGenerator.class);
+	private static Logger LOG = LoggerFactory.getLogger(TomcatCrossContextGenerator.class);
 
     public static void main(String[] args) throws IOException {
 

@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
@@ -48,7 +48,7 @@ import org.apache.pluto.tags.el.ExpressionEvaluatorProxy;
 public class PortletTag extends BodyTagSupport {
 	
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletTag.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletTag.class);
     
     /** Status constant for failed rendering. */
     public static final int FAILED = 0;

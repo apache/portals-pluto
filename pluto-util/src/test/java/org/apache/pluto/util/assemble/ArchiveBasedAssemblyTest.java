@@ -20,8 +20,8 @@ import java.io.File;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common base test class that should be used by assembler implementations that
@@ -31,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class ArchiveBasedAssemblyTest extends TestCase {
 
-    private static final Log LOG = LogFactory.getLog( ArchiveBasedAssemblyTest.class );
+    private static final Logger LOG = LoggerFactory.getLogger( ArchiveBasedAssemblyTest.class );
     
     protected void setUp() throws Exception {
         super.setUp();

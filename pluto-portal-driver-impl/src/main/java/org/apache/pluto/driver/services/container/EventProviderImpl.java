@@ -29,8 +29,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import javax.xml.stream.FactoryConfigurationError;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.EventProvider;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
@@ -46,7 +46,7 @@ import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 public class EventProviderImpl implements EventProvider
 {
     /** Logger. */
-    private static final Log LOG = LogFactory.getLog(EventProviderImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EventProviderImpl.class);
     private PortletWindow portletWindow;
     private PortletRegistryService portletRegistry;
     
@@ -101,7 +101,7 @@ public class EventProviderImpl implements EventProvider
             }
             catch (FactoryConfigurationError e)
             {
-                LOG.warn(e);
+                LOG.warn(e.getMessage(),e);
             }
         }
         return null;

@@ -23,8 +23,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ReadOnlyException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.testsuite.TestResult;
 import org.apache.pluto.testsuite.TestUtils;
 
@@ -34,7 +34,7 @@ import org.apache.pluto.testsuite.TestUtils;
 public class PreferenceCommonTest extends AbstractReflectivePortletTest {
 
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PreferenceCommonTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PreferenceCommonTest.class);
 
     protected static final String BOGUS_KEY = "org.apache.pluto.testsuite.BOGUS_KEY";
 

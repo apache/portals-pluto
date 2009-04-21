@@ -27,8 +27,8 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
@@ -40,7 +40,7 @@ import org.apache.pluto.driver.url.PortalURLParser;
 public class PortalURLParserImpl implements PortalURLParser {
 
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortalURLParserImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortalURLParserImpl.class);
 
     /** The singleton parser instance. */
     private static final PortalURLParser PARSER = new PortalURLParserImpl();
@@ -424,7 +424,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         		if (currentValue != null)
         			currentValue = URLEncoder.encode(values[i], "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			}
         	buffer.append(currentValue != null ? currentValue : "");
             if (i + 1 < values.length) {
@@ -501,7 +501,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         	try {
         		paramValues[i] = URLDecoder.decode(paramValues[i], "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			}
         }
         // Construct portal URL parameter and return.

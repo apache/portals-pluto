@@ -34,8 +34,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletInvokerService;
@@ -55,7 +55,7 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     /**
      * Logger.
      */
-    private static final Log LOG = LogFactory.getLog(DefaultPortletInvokerService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultPortletInvokerService.class);
 
     /**
      * Exception Messages.

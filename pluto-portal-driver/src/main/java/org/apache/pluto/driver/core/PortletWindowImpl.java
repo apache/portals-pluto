@@ -19,8 +19,8 @@ package org.apache.pluto.driver.core;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletEntity;
@@ -36,7 +36,7 @@ import org.apache.pluto.driver.url.PortalURL;
 public class PortletWindowImpl implements PortletWindow {
 
     /** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletWindowImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletWindowImpl.class);
     
     // Private Member Variables ------------------------------------------------
 

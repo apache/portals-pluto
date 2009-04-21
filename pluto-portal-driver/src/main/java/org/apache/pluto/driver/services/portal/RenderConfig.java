@@ -22,14 +22,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  */
 public class RenderConfig {
-    private static final Log LOG =
-        LogFactory.getLog(RenderConfig.class);
+    private static final Logger LOG =
+        LoggerFactory.getLogger(RenderConfig.class);
 
     private Map pages;
     private String defaultPageId;

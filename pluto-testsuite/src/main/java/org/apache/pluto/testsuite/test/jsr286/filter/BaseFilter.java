@@ -21,8 +21,8 @@ import javax.portlet.PortletException;
 import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.PortletFilter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides simple implementations of the PortletFilter callback methods.
@@ -34,7 +34,7 @@ public abstract class BaseFilter implements PortletFilter {
 
     private FilterConfig filterConfig;
 
-    private Log LOG = LogFactory.getLog(getClass());
+    private Logger LOG = LoggerFactory.getLogger(getClass());
     
     public void destroy() {
         LOG.debug("destroy called on " + 

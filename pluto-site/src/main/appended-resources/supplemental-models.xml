@@ -55,42 +55,6 @@ limitations under the License.
     </supplement>
     <supplement>
         <project>
-            <groupId>avalon-framework</groupId>
-            <artifactId>avalon-framework</artifactId>
-            <name>Apache Avalon Framework</name>
-            <url>http://avalon.apache.org/</url>
-            <organization>
-                <name>Apache Software Foundation</name>
-                <url>http://www.apache.org/</url>
-            </organization>
-        </project>
-    </supplement>
-    <supplement>
-        <project>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <name>Apache Commons Logging</name>
-            <url>http://jakarta.apache.org/commons/logging/</url>
-            <organization>
-                <name>Apache Software Foundation</name>
-                <url>http://www.apache.org/</url>
-            </organization>
-        </project>
-    </supplement>
-    <supplement>
-        <project>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging-api</artifactId>
-            <name>Apache Commons Logging API</name>
-            <url>http://jakarta.apache.org/commons/logging/</url>
-            <organization>
-                <name>Apache Software Foundation</name>
-                <url>http://www.apache.org/</url>
-            </organization>
-        </project>
-    </supplement>
-    <supplement>
-        <project>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <name>Apache Commons Beanutils</name>
@@ -143,30 +107,6 @@ limitations under the License.
             <artifactId>junit</artifactId>
             <name>JUnit</name>
             <url>http://www.junit.org/</url>
-        </project>
-    </supplement>
-    <supplement>
-        <project>
-            <groupId>logkit</groupId>
-            <artifactId>logkit</artifactId>
-            <name>Apache Avalon Logkit</name>
-            <url>http://avalon.apache.org/</url>
-            <organization>
-                <name>Apache Software Foundation</name>
-                <url>http://www.apache.org/</url>
-            </organization>
-        </project>
-    </supplement>
-    <supplement>
-        <project>
-           <groupId>castor</groupId>
-           <artifactId>castor</artifactId>
-           <name>The Castor Project</name>
-           <url>http://www.castor.org/</url>
-           <organization>
-                <name>The Codehaus</name>
-                <url>http://www.codehaus.org/</url>
-            </organization>
         </project>
     </supplement>
     <supplement>

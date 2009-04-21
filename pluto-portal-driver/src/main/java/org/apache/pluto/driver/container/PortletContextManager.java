@@ -28,8 +28,8 @@ import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.driver.DriverPortletConfig;
@@ -52,9 +52,9 @@ import org.apache.pluto.container.util.ClasspathScanner;
 public class PortletContextManager implements PortletRegistryService, PortletContextService {
 
 	/**
-     * Log Instance
+     * Logger Instance
      */
-    private static final Log LOG = LogFactory.getLog(PortletContextManager.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletContextManager.class);
 
     /**
      * The PortletContext cache map: key is servlet context, and value is the

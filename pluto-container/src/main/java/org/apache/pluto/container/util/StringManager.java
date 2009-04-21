@@ -22,8 +22,8 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An internationalization / localization helper class which reduces the bother
@@ -43,7 +43,7 @@ import org.apache.commons.logging.LogFactory;
  */
 
 public class StringManager {
-    private static final Log LOG =  LogFactory.getLog(StringManager.class);
+    private static final Logger LOG =  LoggerFactory.getLogger(StringManager.class);
 
     /**
      * The ResourceBundle for this StringManager.

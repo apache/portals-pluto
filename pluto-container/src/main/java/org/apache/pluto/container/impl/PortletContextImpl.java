@@ -29,8 +29,8 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.ContainerInfo;
 import org.apache.pluto.container.RequestDispatcherPathInfoProvider;
 import org.apache.pluto.container.impl.PortletRequestDispatcherImpl;
@@ -47,7 +47,7 @@ public class PortletContextImpl implements PortletContext
 	/**
 	 *  Logger.
 	 */
-    private static final Log LOG = LogFactory.getLog(PortletContextImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletContextImpl.class);
     
     
     // Private Member Variables ------------------------------------------------

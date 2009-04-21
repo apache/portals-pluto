@@ -45,20 +45,10 @@
 
     <!-- Other Support Libraries =========================================== -->
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${commons-logging.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
             <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>logkit</groupId>
-                    <artifactId>logkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>avalon-framework</groupId>
-                    <artifactId>avalon-framework</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
     <!-- Specification Libraries =========================================== -->
@@ -80,12 +70,6 @@
 	        <artifactId>jaxb-api</artifactId>
 	        <version>${jaxb.version}</version>
 	        <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.xml.stream</groupId>
-                    <artifactId>stax-api</artifactId>
-                </exclusion>
-            </exclusions>
 	    </dependency>
 	    
 	    <dependency>
@@ -96,15 +80,15 @@
 	    </dependency>
         <dependency>
             <groupId>stax</groupId>
-            <artifactId>stax-api</artifactId>
-            <version>${stax.api.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>stax</groupId>
             <artifactId>stax</artifactId>
             <version>${stax.impl.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     
     <!--  CCPP Libraries -->
@@ -116,6 +100,12 @@
         </dependency>
 
     <!-- Testing Libraries ================================================= -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

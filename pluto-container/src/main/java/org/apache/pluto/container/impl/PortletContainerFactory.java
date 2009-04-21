@@ -16,8 +16,8 @@
  */
 package org.apache.pluto.container.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
@@ -34,7 +34,7 @@ import org.apache.pluto.container.util.ArgumentUtility;
 public class PortletContainerFactory {
 
     /** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletContainerFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletContainerFactory.class);
 
 
     /** Singleton instance of the <code>PortletContainerFactory</code>. */

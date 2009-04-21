@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.PortletInfo;
 import org.apache.pluto.container.util.StringManager;
@@ -35,8 +35,8 @@ import org.apache.pluto.container.util.StringManager;
  */
 class ResourceBundleFactory {
 
-    private static final Log LOG =
-        LogFactory.getLog(ResourceBundleFactory.class);
+    private static final Logger LOG =
+        LoggerFactory.getLogger(ResourceBundleFactory.class);
 
     private static final StringManager EXCEPTIONS =
         StringManager.getManager(ResourceBundleFactory.class.getPackage().getName());

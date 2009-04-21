@@ -24,8 +24,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -53,7 +53,7 @@ import org.apache.pluto.driver.services.portal.SupportedModesService;
 public class SupportedModesServiceImpl implements SupportedModesService
 {
     /** Logger */
-    private static final Log LOG = LogFactory.getLog(SupportedModesServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SupportedModesServiceImpl.class);
 
     
     /** PortletMode objects supported by the portal */

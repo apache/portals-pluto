@@ -36,8 +36,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
@@ -48,7 +48,7 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 public class PortletWindowThread extends Thread {
 	
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletWindowThread.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletWindowThread.class);
     
     private PortletContainer container;
     
@@ -132,11 +132,11 @@ public class PortletWindowThread extends Thread {
 					container.doEvent(portletWindow, request, response, event);	
 //				}
 			} catch (PortletException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			} catch (IOException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			} catch (PortletContainerException e) {
-				LOG.warn(e);
+				LOG.warn(e.getMessage(),e);
 			}	
 		}
 	}

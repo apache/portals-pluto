@@ -20,8 +20,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.url.PortalURL;
@@ -39,7 +39,7 @@ import org.apache.pluto.driver.url.PortalURLParser;
 public class PortalRequestContext {
 
     /** Internal Logger. */
-    private static final Log LOG = LogFactory.getLog(PortalRequestContext.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortalRequestContext.class);
 
     /**
      * The attribute key to bind the portal environment instance to servlet

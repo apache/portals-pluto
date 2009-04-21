@@ -26,8 +26,8 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.services.portal.PageConfig;
@@ -41,7 +41,7 @@ import org.apache.pluto.driver.url.PortalURLParser;
  */
 public class RelativePortalURLImpl implements PortalURL {
 
-    private static final Log LOG = LogFactory.getLog(RelativePortalURLImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RelativePortalURLImpl.class);
 
     private String urlBase;
     private String servletPath;

@@ -24,8 +24,8 @@ import java.util.Set;
 import javax.portlet.WindowState;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletRegistryService;
@@ -41,7 +41,7 @@ public class SupportedWindowStateServiceImpl implements
 {
     
     /** Logger **/
-    private static final Log LOG = LogFactory.getLog(SupportedWindowStateServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SupportedWindowStateServiceImpl.class);
     
     /**
      * Servlet context used to get a handle on the portlet container

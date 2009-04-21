@@ -40,8 +40,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEntity;
@@ -66,7 +66,7 @@ public abstract class PortletRequestImpl implements PortletRequest
 {
     public static final String ACCEPT_LANGUAGE = "Accept-Language";
     
-    private static final Log LOG = LogFactory.getLog(PortletRequestImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletRequestImpl.class);
     
     private static final StringManager EXCEPTIONS =
             StringManager.getManager(PortletRequestImpl.class.getPackage().getName());

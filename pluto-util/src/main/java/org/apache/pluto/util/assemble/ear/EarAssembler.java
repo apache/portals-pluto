@@ -27,8 +27,8 @@ import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.util.UtilityException;
 import org.apache.pluto.util.assemble.AbstractArchiveAssembler;
 import org.apache.pluto.util.assemble.AssemblerConfig;
@@ -41,7 +41,7 @@ import org.apache.pluto.util.assemble.io.JarStreamingAssembly;
  */
 public class EarAssembler extends AbstractArchiveAssembler {
 
-    private static final Log LOG = LogFactory.getLog( EarAssembler.class );
+    private static final Logger LOG = LoggerFactory.getLogger( EarAssembler.class );
     private static final int BUFLEN = 1024 * 8; // 8kb
     
     public void assembleInternal( AssemblerConfig config ) throws UtilityException, IOException {

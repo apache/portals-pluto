@@ -28,8 +28,8 @@ import javax.portlet.PortletSession;
 import javax.portlet.PortletSessionUtil;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.util.ArgumentUtility;
 
@@ -40,7 +40,7 @@ import org.apache.pluto.container.util.ArgumentUtility;
 public class PortletSessionImpl implements PortletSession {
 	
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletSessionImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletSessionImpl.class);
     
     /** The default scope (<code>PORTLET_SCOPE</code>) for storing objects. */
     protected static final int DEFAULT_SCOPE = PortletSession.PORTLET_SCOPE;

@@ -32,8 +32,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
@@ -58,7 +58,7 @@ public class PortletModeDropDownTag extends BodyTagSupport {
 
 
 	/** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletModeDropDownTag.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletModeDropDownTag.class);
         
     
     // Private Member Variables ------------------------------------------------

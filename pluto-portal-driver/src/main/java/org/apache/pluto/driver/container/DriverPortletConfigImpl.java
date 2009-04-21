@@ -21,15 +21,15 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.driver.DriverPortletConfig;
 import org.apache.pluto.container.impl.AbstractPortletConfigImpl;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 
 public class DriverPortletConfigImpl extends AbstractPortletConfigImpl implements DriverPortletConfig {
 
-    private static final Log LOG = LogFactory.getLog(DriverPortletConfigImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DriverPortletConfigImpl.class);
 
     protected ResourceBundleFactory bundles;
     

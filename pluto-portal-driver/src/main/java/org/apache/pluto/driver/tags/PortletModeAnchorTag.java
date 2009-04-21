@@ -26,8 +26,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.AttributeKeys;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.core.PortalRequestContext;
@@ -45,7 +45,7 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 public class PortletModeAnchorTag extends BodyTagSupport {
     
     /** Logger. */
-    private static final Log LOG = LogFactory.getLog(PortletModeAnchorTag.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PortletModeAnchorTag.class);
         
     
     // Private Member Variables ------------------------------------------------
