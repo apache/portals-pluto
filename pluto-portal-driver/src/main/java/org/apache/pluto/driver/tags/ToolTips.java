@@ -18,6 +18,7 @@ package org.apache.pluto.driver.tags;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Locale;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -33,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
  */
 class ToolTips
 {
-    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("ToolTips");
+    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("ToolTips", Locale.US, Thread.currentThread().getContextClassLoader());
     private static final Log LOG = LogFactory.getLog(ToolTips.class);
 
     static final ToolTips MAXIMIZE = new ToolTips(BUNDLE.getString("tooltip.windowstate.maximized"));

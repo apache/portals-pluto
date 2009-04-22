@@ -98,7 +98,7 @@ public class PortletAppDescriptorServiceImpl
                     "Configuration Error.  Resource: "+PORTLET_XML_MAPPING+" not found."
             );
         }
-        Mapping mapping = new Mapping();
+        Mapping mapping = new Mapping(getClass().getClassLoader());
         mapping.loadMapping(url);
         return mapping;
     }
