@@ -164,6 +164,8 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             req.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
             req.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
             
+            req.setDispatching(true);
+            
             if (!included && req.isForwardingPossible())
             {
                 requestDispatcher.forward(req, res);
@@ -187,6 +189,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
         }
         finally
         {
+            req.setDispatching(false);
             req.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
             req.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
             req.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);

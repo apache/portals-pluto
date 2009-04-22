@@ -113,6 +113,8 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     private final boolean renderPhase;
     private HttpSession session;
     
+    private boolean dispatching;
+    
     @SuppressWarnings("unchecked")
     public HttpServletPortletRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session, PortletRequest portletRequest, RequestDispatcherPathInfo pathInfo, boolean included)
     {
@@ -218,6 +220,16 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     public RequestDispatcherPathInfo getForwardedPathInfo()
     {
         return forwardedPathInfo;
+    }
+    
+    public void setDispatching(boolean dispatching)
+    {
+        this.dispatching = dispatching;
+    }
+    
+    public boolean isDispatching()
+    {
+        return dispatching;
     }
     
     @Override
@@ -447,7 +459,9 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public Object getAttribute(String name)
     {
-        if (pathInfoAttributes.contains(name))
+        Object value = (dispatching ? getRequest().getAttribute(name) : null);
+        
+        if (value == null && pathInfoAttributes.contains(name))
         {
             if (includedPathInfo != null && !includedPathInfo.isNamedRequestDispatcher())
             {
@@ -513,7 +527,10 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
          * through the current parent request *first* should not yield those
          * attributes.
          */
-        Object value = getRequest().getAttribute(name);
+        if (value == null && !dispatching)
+        {
+            value = getRequest().getAttribute(name);
+        }
         return value != null ? value : portletRequest.getAttribute(name);
     }
 
