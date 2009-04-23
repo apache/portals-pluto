@@ -164,8 +164,6 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             req.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
             req.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
             
-            req.setDispatching(true);
-            
             if (!included && req.isForwardingPossible())
             {
                 requestDispatcher.forward(req, res);
@@ -189,7 +187,6 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
         }
         finally
         {
-            req.setDispatching(false);
             req.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
             req.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
             req.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
@@ -220,9 +217,9 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             res.resetBuffer();
         }
         
+        ServletRequest currentInitialRequest = req.getInitialRequest();
         RequestDispatcherPathInfo currentMethodPathInfo = req.getMethodPathInfo();
-        RequestDispatcherPathInfo currentForwardedPathInfo = req.getForwardedPathInfo();
-        RequestDispatcherPathInfo currentIncludedPathInfo = req.getIncludedPathInfo();
+        Map<String,Object> currentPathInfoAttributes = req.getPathInfoAttributes();
         boolean currentIncluded = req.isIncluded();
         try
         {
@@ -235,20 +232,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             {
                 methodPathInfo = currentMethodPathInfo;
             }
-            RequestDispatcherPathInfo attributesPathInfo = null;
-            if (included) 
-            {
-                attributesPathInfo = pathInfo;
-            }
-            else if (currentForwardedPathInfo != null && !currentForwardedPathInfo.isNamedRequestDispatcher())
-            {
-                attributesPathInfo = currentForwardedPathInfo;
-            }
-            else
-            {
-                attributesPathInfo = pathInfo;
-            }
-            req.setNewPathInfo(methodPathInfo, attributesPathInfo, included);
+            req.setNewPathInfo(methodPathInfo, included);
             if (!included && req.isForwardingPossible())
             {
                 requestDispatcher.forward(request, response);
@@ -260,7 +244,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
         }
         finally
         {
-            req.restorePathInfo(currentMethodPathInfo, currentIncludedPathInfo, currentForwardedPathInfo, currentIncluded);
+            req.restorePathInfo(currentInitialRequest, currentMethodPathInfo, currentPathInfoAttributes, currentIncluded);
         }
     }    
     

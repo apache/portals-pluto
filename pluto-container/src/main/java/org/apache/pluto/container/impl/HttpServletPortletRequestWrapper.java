@@ -66,7 +66,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     private static final String FORWARD_REQUEST_URI = "javax.servlet.forward.request_uri";
     private static final String FORWARD_SERVLET_PATH = "javax.servlet.forward.servlet_path";
     
-    private static final HashSet<String> pathInfoAttributes = 
+    private static final HashSet<String> PATHINFO_ATTRIBUTE_NAMES = 
         new HashSet<String>(Arrays.asList(new String[] { INCLUDE_CONTEXT_PATH,
                                                          INCLUDE_PATH_INFO,
                                                          INCLUDE_QUERY_STRING,
@@ -98,12 +98,11 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     
     private boolean included;
     private RequestDispatcherPathInfo methodPathInfo;
-    private RequestDispatcherPathInfo includedPathInfo;
-    private RequestDispatcherPathInfo forwardedPathInfo;
 
     private Map<String, String[]> parameterMap;
     private Map<String, String[]> origParameterMap;
     
+    private ServletRequest initialRequest;
     private ServletRequest currentRequest;
     
     private final ServletContext servletContext;
@@ -112,8 +111,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     private final String lifecyclePhase;
     private final boolean renderPhase;
     private HttpSession session;
-    
-    private boolean dispatching;
+    private Map<String,Object> pathInfoAttributes = new HashMap<String,Object>();
     
     @SuppressWarnings("unchecked")
     public HttpServletPortletRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session, PortletRequest portletRequest, RequestDispatcherPathInfo pathInfo, boolean included)
@@ -126,7 +124,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         lifecyclePhase = (String)portletRequest.getAttribute(PortletRequest.LIFECYCLE_PHASE);
         clientDataRequest = PortletRequest.ACTION_PHASE.equals(lifecyclePhase) || PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase) ? (ClientDataRequest)portletRequest : null;
         renderPhase = PortletRequest.RENDER_PHASE.equals(lifecyclePhase);
-        setNewPathInfo(pathInfo, pathInfo, included);
+        setNewPathInfo(pathInfo, included);
     }
     
     /**
@@ -185,26 +183,47 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         return included;
     }
     
-    public void setNewPathInfo(RequestDispatcherPathInfo methodPathInfo, RequestDispatcherPathInfo attributesPathInfo, boolean included)
+    public void setNewPathInfo(RequestDispatcherPathInfo methodPathInfo, boolean included)
     {
+        // Only set/override forward attributes if:
+        // - first time
+        // - current request is a forward and a NamedDispatcher (meaning: no forward attributes)
+        boolean setForwardAttributes = this.methodPathInfo == null || (!this.included && this.methodPathInfo.isNamedRequestDispatcher());
+        this.initialRequest = getRequest();
         this.methodPathInfo = methodPathInfo;
-        if (included)
+        if (!methodPathInfo.isNamedRequestDispatcher())
         {
-            includedPathInfo = attributesPathInfo;
-        }
-        else
-        {
-            forwardedPathInfo = attributesPathInfo;
+            if (included)
+            {
+                pathInfoAttributes.put(INCLUDE_CONTEXT_PATH, getContextPath());
+                pathInfoAttributes.put(INCLUDE_PATH_INFO, methodPathInfo.getPathInfo());
+                pathInfoAttributes.put(INCLUDE_QUERY_STRING, methodPathInfo.getQueryString());
+                pathInfoAttributes.put(INCLUDE_REQUEST_URI, methodPathInfo.getRequestURI());
+                pathInfoAttributes.put(INCLUDE_SERVLET_PATH, methodPathInfo.getServletPath());
+            }
+            else if (setForwardAttributes)
+            {
+                pathInfoAttributes.put(FORWARD_CONTEXT_PATH, getContextPath());
+                pathInfoAttributes.put(FORWARD_PATH_INFO, methodPathInfo.getPathInfo());
+                pathInfoAttributes.put(FORWARD_QUERY_STRING, methodPathInfo.getQueryString());
+                pathInfoAttributes.put(FORWARD_REQUEST_URI, methodPathInfo.getRequestURI());
+                pathInfoAttributes.put(FORWARD_SERVLET_PATH, methodPathInfo.getServletPath());
+            }
         }
         this.included = included;
     }
     
-    public void restorePathInfo(RequestDispatcherPathInfo methodPathInfo, RequestDispatcherPathInfo includedPathInfo, RequestDispatcherPathInfo forwardedPathInfo, boolean included)
+    public void restorePathInfo(ServletRequest initialRequest, RequestDispatcherPathInfo methodPathInfo, Map<String, Object> pathInfoAttributes, boolean included)
     {
+        this.initialRequest = initialRequest;
         this.methodPathInfo = methodPathInfo;
-        this.forwardedPathInfo = forwardedPathInfo;
-        this.includedPathInfo = includedPathInfo;
+        this.pathInfoAttributes = new HashMap<String,Object>(pathInfoAttributes);
         this.included = included;
+    }
+    
+    public ServletRequest getInitialRequest()
+    {
+        return initialRequest;
     }
     
     public RequestDispatcherPathInfo getMethodPathInfo()
@@ -212,24 +231,9 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         return methodPathInfo;
     }
     
-    public RequestDispatcherPathInfo getIncludedPathInfo()
+    public Map<String,Object> getPathInfoAttributes()
     {
-        return includedPathInfo;
-    }
-    
-    public RequestDispatcherPathInfo getForwardedPathInfo()
-    {
-        return forwardedPathInfo;
-    }
-    
-    public void setDispatching(boolean dispatching)
-    {
-        this.dispatching = dispatching;
-    }
-    
-    public boolean isDispatching()
-    {
-        return dispatching;
+        return new HashMap<String,Object>(pathInfoAttributes);
     }
     
     @Override
@@ -238,7 +242,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         String[] values = this.getParameterMap().get(name);
         return values != null ? values[0] : null;
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public Map<String, String[]> getParameterMap()
@@ -459,57 +463,10 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public Object getAttribute(String name)
     {
-        Object value = (dispatching ? getRequest().getAttribute(name) : null);
-        
-        if (value == null && pathInfoAttributes.contains(name))
+        boolean initialPathInfo = !included || getRequest() == initialRequest;
+        if (initialPathInfo && PATHINFO_ATTRIBUTE_NAMES.contains(name))
         {
-            if (includedPathInfo != null && !includedPathInfo.isNamedRequestDispatcher())
-            {
-                if (INCLUDE_CONTEXT_PATH.equals(name))
-                {
-                    return getContextPath();
-                }
-                else if (INCLUDE_PATH_INFO.equals(name))
-                {
-                    return includedPathInfo.getPathInfo();
-                }
-                else if (INCLUDE_QUERY_STRING.equals(name))
-                {
-                    return includedPathInfo.getQueryString();
-                }
-                else if (INCLUDE_REQUEST_URI.equals(name))
-                {
-                    return includedPathInfo.getRequestURI();
-                }
-                else if (INCLUDE_SERVLET_PATH.equals(name))
-                {
-                    return includedPathInfo.getServletPath();
-                }
-            }
-            if (forwardedPathInfo != null && !forwardedPathInfo.isNamedRequestDispatcher())
-            {
-                if (FORWARD_CONTEXT_PATH.equals(name))
-                {
-                    return getContextPath();
-                }
-                else if (FORWARD_PATH_INFO.equals(name))
-                {
-                    return forwardedPathInfo.getPathInfo();
-                }
-                else if (FORWARD_QUERY_STRING.equals(name))
-                {
-                    return forwardedPathInfo.getQueryString();
-                }
-                else if (FORWARD_REQUEST_URI.equals(name))
-                {
-                    return forwardedPathInfo.getRequestURI();
-                }
-                else if (FORWARD_SERVLET_PATH.equals(name))
-                {
-                    return forwardedPathInfo.getServletPath();
-                }                
-            }
-            return null;
+            return methodPathInfo.isNamedRequestDispatcher() ? null : pathInfoAttributes.get(name);
         }
         
         /*
@@ -527,10 +484,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
          * through the current parent request *first* should not yield those
          * attributes.
          */
-        if (value == null && !dispatching)
-        {
-            value = getRequest().getAttribute(name);
-        }
+        Object value = getRequest().getAttribute(name);
         return value != null ? value : portletRequest.getAttribute(name);
     }
 
@@ -663,23 +617,39 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
             RequestDispatcher dispatcher = super.getRequestDispatcher(path);
             if (dispatcher != null)
             {
-                if (!path.startsWith("/"))
+                if (!included && !isForwardingPossible())
                 {
-                    String servletPath = !included ? forwardedPathInfo.getServletPath() : getServletPath();
-                    if (servletPath != null)
-                    {                        
-                        path = (servletPath.equals("/") ? "/" : servletPath) + path;
-                    }
-                    else
+                    // Special case: current "forward" dispatch is actually done using an "include" (e.g. during RENDER phase)
+                    // Thus we need to intercept a possible additional "forward" again
+                    // See also: PLT.19.4, last paragraph
+                    if (!path.startsWith("/"))
                     {
-                        // Don't know what to do here: cannot determine needed servletPath prefix which should
-                        // be present to build a correct RequestDispatcherPathInfo
+                        String servletPath = getServletPath();
+                        if (servletPath != null)
+                        {                        
+                            path = (servletPath.equals("/") ? "/" : servletPath) + path;
+                        }
+                        else
+                        {
+                            // Initial servlet dispatch was done using a NamedRequestDispatcher:
+                            // Impossible to determine the needed servletPath prefix
+                            // to build a correct RequestDispatcherPathInfo.
+                            // Only possible "solution" now is to assume "/"
+                            // However, chances are the webcontainerr then also will have been "lost" 
+                            // and returned a null value for the requestDispatcher above in which case
+                            // we'll never end up here.
+                            path = "/" + path;
+                        }
                     }
+                    PortletRequestContext requestContext = (PortletRequestContext)portletRequest.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
+                    PortletApplicationDefinition app = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
+                    RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(requestContext.getPortletConfig().getPortletContext(), app);
+                    return new PortletRequestDispatcherImpl(dispatcher, provider.getPathInfo(getContextPath(),path));
                 }
-                PortletRequestContext requestContext = (PortletRequestContext)portletRequest.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
-                PortletApplicationDefinition app = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
-                RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(requestContext.getPortletConfig().getPortletContext(), app);
-                return new PortletRequestDispatcherImpl(dispatcher, provider.getPathInfo(getContextPath(),path));
+                else
+                {
+                    return dispatcher;
+                }
             }
         }
         return null;
@@ -712,13 +682,27 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public void removeAttribute(String name)
     {
-        portletRequest.removeAttribute(name);
+        if (PATHINFO_ATTRIBUTE_NAMES.contains(name))
+        {
+            pathInfoAttributes.remove(name);
+        }
+        else
+        {
+            portletRequest.removeAttribute(name);
+        }
     }
 
     @Override
     public void setAttribute(String name, Object o)
     {
-        portletRequest.setAttribute(name, o);
+        if (PATHINFO_ATTRIBUTE_NAMES.contains(name))
+        {
+            pathInfoAttributes.put(name, o);
+        }
+        else
+        {
+            portletRequest.setAttribute(name, o);
+        }
     }
 
     @Override
