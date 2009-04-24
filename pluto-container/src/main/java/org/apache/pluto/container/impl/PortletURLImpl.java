@@ -40,6 +40,7 @@ import org.apache.pluto.container.PortletMimeResponseContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletURLListenerService;
 import org.apache.pluto.container.PortletURLProvider;
+import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Supports;
@@ -84,15 +85,12 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
 
     private boolean isPortletModeAllowed(PortletMode mode)
     {
-        return isPortletModeAllowedByPortlet(mode) && isPortletModeAllowedByPortal(mode);
-    }
-
-    private boolean isPortletModeAllowedByPortlet(PortletMode mode) 
-    {
         if(PortletMode.VIEW.equals(mode))
         {
             return true;
         }
+        
+        String modeName = mode.toString();
 
         PortletDefinition dd = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition();
 
@@ -100,29 +98,29 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         {
             for (String m : sup.getPortletModes())
             {
-                if (m.equalsIgnoreCase(mode.toString())) 
+                if (m.equalsIgnoreCase(modeName)) 
                 {
-                    return true;
+                    // check if a portlet managed mode which is always allowed.
+                    CustomPortletMode cpm = dd.getApplication().getCustomPortletMode(modeName);
+                    if (cpm != null && !cpm.isPortalManaged())
+                    {
+                        return true;
+                    }
+                    Enumeration<PortletMode> supportedModes = portalContext.getSupportedPortletModes();
+                    while (supportedModes.hasMoreElements()) 
+                    {
+                        if (supportedModes.nextElement().equals(mode)) 
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
                 }
             }
         }
         return false;
     }
 
-    private boolean isPortletModeAllowedByPortal(PortletMode mode) 
-    {
-        Enumeration<PortletMode> supportedModes = portalContext.getSupportedPortletModes();
-        while (supportedModes.hasMoreElements()) 
-        {
-            if (supportedModes.nextElement().toString().equalsIgnoreCase(
-                    (mode.toString()))) 
-            {
-                return true;
-            }
-        }
-        return false;
-    }    
-    
     private boolean isWindowStateAllowed(WindowState state)
     {
         Enumeration<WindowState> supportedStates = portalContext.getSupportedWindowStates();

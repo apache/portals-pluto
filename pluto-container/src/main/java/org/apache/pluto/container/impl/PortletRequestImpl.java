@@ -50,6 +50,7 @@ import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.om.portlet.CustomPortletMode;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.SecurityRoleRef;
 import org.apache.pluto.container.om.portlet.Supports;
@@ -132,42 +133,6 @@ public abstract class PortletRequestImpl implements PortletRequest
         }
     }
 
-    private boolean isPortletModeAllowedByPortlet(PortletMode mode) 
-    {
-        if(PortletMode.VIEW.equals(mode))
-        {
-            return true;
-        }
-
-        PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
-
-        for (Supports sup : dd.getSupports())
-        {
-            for (String m : sup.getPortletModes())
-            {
-                if (m.equalsIgnoreCase(mode.toString())) 
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean isPortletModeAllowedByPortal(PortletMode mode) 
-    {
-        Enumeration<PortletMode> supportedModes = portalContext.getSupportedPortletModes();
-        while (supportedModes.hasMoreElements()) 
-        {
-            if (supportedModes.nextElement().toString().equalsIgnoreCase(
-                    (mode.toString()))) 
-            {
-                return true;
-            }
-        }
-        return false;
-    }    
-    
     protected static Map<String, String[]> cloneParameterMap(Map<String, String[]> map)
     {
         if (!map.isEmpty())
@@ -638,8 +603,40 @@ public abstract class PortletRequestImpl implements PortletRequest
     
     public boolean isPortletModeAllowed(PortletMode mode) 
     {
-        return (isPortletModeAllowedByPortlet(mode)
-                && isPortletModeAllowedByPortal(mode));
+        if(PortletMode.VIEW.equals(mode))
+        {
+            return true;
+        }
+        
+        String modeName = mode.toString();
+
+        PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
+
+        for (Supports sup : dd.getSupports())
+        {
+            for (String m : sup.getPortletModes())
+            {
+                if (m.equalsIgnoreCase(modeName)) 
+                {
+                    // check if a portlet managed mode which is always allowed.
+                    CustomPortletMode cpm = dd.getApplication().getCustomPortletMode(modeName);
+                    if (cpm != null && !cpm.isPortalManaged())
+                    {
+                        return true;
+                    }
+                    Enumeration<PortletMode> supportedModes = portalContext.getSupportedPortletModes();
+                    while (supportedModes.hasMoreElements()) 
+                    {
+                        if (supportedModes.nextElement().equals(mode)) 
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean isRequestedSessionIdValid() 
