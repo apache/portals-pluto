@@ -22,7 +22,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
-        <groupId>org.apache.pluto</groupId>
+        <groupId>org.apache.portals.pluto</groupId>
         <artifactId>pluto</artifactId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
@@ -42,12 +42,12 @@
      </dependency>
     
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-container</artifactId>
       <version>${pom.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>org.apache.pluto</groupId>
+          <groupId>org.apache.portals.pluto</groupId>
           <artifactId>pluto-container-api</artifactId>
         </exclusion>
         <exclusion>
@@ -74,7 +74,7 @@
 	</dependency>
 	
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-portal-driver</artifactId>
       <version>${pom.version}</version>
       <scope>compile</scope>
@@ -99,7 +99,7 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-portal-driver-impl</artifactId>
       <version>${pom.version}</version>
       <scope>compile</scope>

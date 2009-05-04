@@ -26,7 +26,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.pluto</groupId>
+    <groupId>org.apache.portals.pluto</groupId>
     <artifactId>pluto</artifactId>
     <packaging>pom</packaging>
     <name>Apache Pluto</name>

@@ -20,7 +20,7 @@
 
     <parent>
         <artifactId>pluto</artifactId>
-        <groupId>org.apache.pluto</groupId>
+        <groupId>org.apache.portals.pluto</groupId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 

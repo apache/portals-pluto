@@ -20,7 +20,7 @@
 
   <parent>
     <artifactId>pluto</artifactId>
-    <groupId>org.apache.pluto</groupId>
+    <groupId>org.apache.portals.pluto</groupId>
     <version>2.0.0-SNAPSHOT</version>
   </parent>
 
@@ -66,7 +66,7 @@
             </dependencies>
           </plugin>
           <plugin>
-            <groupId>org.apache.pluto</groupId>
+            <groupId>org.apache.portals.pluto</groupId>
             <artifactId>maven-pluto-plugin</artifactId>
             <version>${pom.version}</version>
             <executions>
@@ -122,28 +122,28 @@
     
   <dependencies>
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-container</artifactId>
       <version>${pom.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-portal-driver</artifactId>
       <version>${pom.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-portal-driver-impl</artifactId>
       <version>${pom.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-portal</artifactId>
       <type>war</type>
       <version>${pom.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.pluto</groupId>
+      <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-testsuite</artifactId>
       <type>war</type>
       <version>${pom.version}</version>

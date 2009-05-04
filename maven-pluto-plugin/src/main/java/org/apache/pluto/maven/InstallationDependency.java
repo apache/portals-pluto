@@ -51,27 +51,27 @@ class InstallationDependency {
                 VERSION_PROPERTIES.getProperty("portlet-api.version"));
 
     public static final InstallationDependency CONTAINER_API =
-        new InstallationDependency("org.apache.pluto", "pluto-container-api", 
+        new InstallationDependency("org.apache.portals.pluto", "pluto-container-api", 
                 VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  CONTAINER =
-            new InstallationDependency("org.apache.pluto", "pluto-container", 
+            new InstallationDependency("org.apache.portals.pluto", "pluto-container", 
                     VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  TAGLIB =
-            new InstallationDependency("org.apache.pluto", "pluto-taglib", 
+            new InstallationDependency("org.apache.portals.pluto", "pluto-taglib", 
                     VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency CONTAINER_DRIVER_API =
-        new InstallationDependency("org.apache.pluto", "pluto-container-driver-api", 
+        new InstallationDependency("org.apache.portals.pluto", "pluto-container-driver-api", 
                 VERSION_PROPERTIES.getProperty("pluto.version"));
 
     public static final InstallationDependency  PORTAL =
-            new InstallationDependency("org.apache.pluto", "pluto-portal", 
+            new InstallationDependency("org.apache.portals.pluto", "pluto-portal", 
                     VERSION_PROPERTIES.getProperty("pluto.version"), "war");
 
     public static final InstallationDependency  TESTSUITE =
-            new InstallationDependency("org.apache.pluto", "pluto-testsuite", 
+            new InstallationDependency("org.apache.portals.pluto", "pluto-testsuite", 
                     VERSION_PROPERTIES.getProperty("pluto.version"), "war");
 
     public static final InstallationDependency  CASTOR =
