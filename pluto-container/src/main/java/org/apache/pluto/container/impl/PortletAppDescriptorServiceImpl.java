@@ -222,27 +222,6 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         NodeList children;
         Element element;
 
-        // retrieve servlet-mapping url patterns
-        nodes = (NodeList)xpath.evaluate("/"+prefix+"web-app/"+prefix+"servlet-mapping", document, XPathConstants.NODESET);
-        if (nodes != null)
-        {
-            String urlPattern;
-            
-            for (int i = 0, nsize = nodes.getLength(); i < nsize; i++)
-            {
-                element = (Element)nodes.item(i);
-                children = element.getElementsByTagName("url-pattern");
-                if (children != null && children.getLength() != 0)
-                {
-                    urlPattern = children.item(0).getTextContent().trim();
-                    if (urlPattern.length() > 0)
-                    {
-                        pa.getServletMappingURLPatterns().add(urlPattern);
-                    }
-                }
-            }
-        }
-        
         // retrieve locale-encoding-mapping
         nodes = (NodeList)xpath.evaluate("/"+prefix+"web-app/"+prefix+"locale-encoding-mapping-list/"+prefix+"locale-encoding-mapping", document, XPathConstants.NODESET);
         if (nodes != null)

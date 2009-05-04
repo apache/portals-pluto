@@ -92,4 +92,10 @@ public interface ContainerServices {
      * @return a CCPPProfileServiceImplementation
      */
     CCPPProfileService getCCPPProfileService();
+    
+    /**
+     * Returns the RequestDispatcher service implementation
+     * @return a RequestDispatcherService implementation
+     */
+    RequestDispatcherService getRequestDispatcherService();
 }

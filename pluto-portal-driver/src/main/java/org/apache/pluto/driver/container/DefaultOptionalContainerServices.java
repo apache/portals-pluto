@@ -22,6 +22,7 @@ import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.UserInfoService;
 import org.apache.pluto.container.driver.OptionalContainerServices;
 import org.apache.pluto.container.driver.PortalAdministrationService;
@@ -30,6 +31,7 @@ import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.impl.PortletEnvironmentServiceImpl;
 import org.apache.pluto.container.impl.PortletAppDescriptorServiceImpl;
+import org.apache.pluto.container.impl.RequestDispatcherServiceImpl;
 
 /**
  * Default Optional Container Services and Portal Driver Services implementation.
@@ -49,14 +51,16 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     private NamespaceMapper namespaceMapper;
     private PortletAppDescriptorService descriptorService;
     private CCPPProfileService ccppProfileService;
+    private RequestDispatcherService rdService;
 
     /**
      * Constructs an instance using the default portlet preferences service
      * implementation.
      */
     public DefaultOptionalContainerServices() {
+        rdService = new RequestDispatcherServiceImpl();
         portletPreferencesService = new DefaultPortletPreferencesService();
-        portletRegistryService = new PortletContextManager();
+        portletRegistryService = new PortletContextManager(rdService);
         portletContextService = (PortletContextManager)portletRegistryService;
         portletInvokerService = new DefaultPortletInvokerService(portletContextService);
         portletEnvironmentService = new PortletEnvironmentServiceImpl();
@@ -166,6 +170,11 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public CCPPProfileService getCCPPProfileService()
     {
         return ccppProfileService;
+    }
+
+    public RequestDispatcherService getRequestDispatcherService()
+    {
+        return rdService;
     }
 }
 

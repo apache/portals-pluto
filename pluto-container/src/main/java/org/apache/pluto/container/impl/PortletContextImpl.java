@@ -26,15 +26,10 @@ import java.util.Set;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.ContainerInfo;
-import org.apache.pluto.container.RequestDispatcherPathInfoProvider;
-import org.apache.pluto.container.impl.PortletRequestDispatcherImpl;
-import org.apache.pluto.container.impl.RequestDispatcherPathInfoProviderImpl;
+import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 
 /**
@@ -44,18 +39,13 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
  */
 public class PortletContextImpl implements PortletContext
 {
-	/**
-	 *  Logger.
-	 */
-    private static final Logger LOG = LoggerFactory.getLogger(PortletContextImpl.class);
-    
-    
     // Private Member Variables ------------------------------------------------
     
     protected ServletContext servletContext;
     protected PortletApplicationDefinition portletApp;
     protected ContainerInfo containerInfo;
     protected List<String> supportedContainerRuntimeOptions;
+    protected RequestDispatcherService rdService;
 
     // Constructor -------------------------------------------------------------
     
@@ -67,12 +57,14 @@ public class PortletContextImpl implements PortletContext
     public PortletContextImpl(ServletContext servletContext,
                               PortletApplicationDefinition portletApp, 
                               ContainerInfo containerInfo, 
-                              List<String> supportedContainerRuntimeOptions)
+                              List<String> supportedContainerRuntimeOptions,
+                              RequestDispatcherService rdService)
     {
         this.servletContext = servletContext;
         this.portletApp = portletApp;
         this.containerInfo = containerInfo;
         this.supportedContainerRuntimeOptions = supportedContainerRuntimeOptions;
+        this.rdService = rdService;
     }
     
     // PortletContext Impl -----------------------------------------------------
@@ -87,58 +79,12 @@ public class PortletContextImpl implements PortletContext
     
     public PortletRequestDispatcher getRequestDispatcher(String path)
     {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("PortletRequestDispatcher requested: " + path);
-        }
-        
-        // Check if the path name is valid. A valid path name must not be null
-        //   and must start with a slash '/' as defined by the portlet spec.
-        if (path == null || !path.startsWith("/")) {
-        	if (LOG.isInfoEnabled()) {
-        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
-        				+ "path name must begin with a slash '/'.");
-        	}
-        	return null;
-        }
-        
-        // Construct PortletRequestDispatcher.
-        PortletRequestDispatcher portletRequestDispatcher = null;
-        try {
-            RequestDispatcher servletRequestDispatcher = servletContext.getRequestDispatcher(path);
-            if (servletRequestDispatcher != null) {
-
-                RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(this, portletApp);
-            	portletRequestDispatcher = new PortletRequestDispatcherImpl(servletRequestDispatcher, provider.getPathInfo(portletApp.getContextPath(), path));
-            } else {
-            	if (LOG.isInfoEnabled()) {
-            		LOG.info("No matching request dispatcher found for: " + path);
-            	}
-            }
-        } catch (Exception ex) {
-            // We need to catch exception because of a Tomcat 4.x bug.
-            //   Tomcat throws an exception instead of return null if the path
-        	//   was not found.
-        	if (LOG.isInfoEnabled()) {
-        		LOG.info("Failed to retrieve PortletRequestDispatcher: "
-        				+ ex.getMessage());
-        	}
-        	portletRequestDispatcher = null;
-        }
-        return portletRequestDispatcher;
+        return rdService.getRequestDispatcher(servletContext, portletApp, path);
     }
     
-    public PortletRequestDispatcher getNamedDispatcher(String name) {
-        RequestDispatcher dispatcher = servletContext.getNamedDispatcher(name);
-        if (dispatcher != null)
-        {
-            RequestDispatcherPathInfoProvider provider = RequestDispatcherPathInfoProviderImpl.getProvider(this, portletApp);
-            return new PortletRequestDispatcherImpl(dispatcher, provider.getNamedRequestDispatcherPathInfo());
-        }
-    	if (LOG.isInfoEnabled()) {
-    		LOG.info("No matching request dispatcher found for name: "
-    				+ name);
-    	}
-        return null;
+    public PortletRequestDispatcher getNamedDispatcher(String name)
+    {
+        return rdService.getNamedDispatcher(servletContext, portletApp, name);
     }
 
     public InputStream getResourceAsStream(String path) {

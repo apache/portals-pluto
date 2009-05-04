@@ -39,7 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
-import org.apache.pluto.container.RequestDispatcherPathInfo;
 
 /**
  * Implementation of the <code>PortletRequestDispatcher</code> interface.
@@ -56,7 +55,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
     
     /** The nested servlet request dispatcher instance. */
     private RequestDispatcher requestDispatcher;
-    private RequestDispatcherPathInfo pathInfo;
+    private boolean namedDispatch;
     
     
     // Constructors ------------------------------------------------------------
@@ -65,13 +64,14 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
      * Creates an instance. This constructor should be called to construct a
      * portlet request dispatcher.
      * @param requestDispatcher  the servlet request dispatcher.
-     * @param pathInfo 
+     * @param namedDispatch true if requestDispatcher is a named dispatcher 
+     * @see javax.portlet.PortletContext#getNamedDispatcher(String)
      * @see javax.portlet.PortletContext#getRequestDispatcher(String)
      */
-    public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher, RequestDispatcherPathInfo pathInfo)
+    public PortletRequestDispatcherImpl(RequestDispatcher requestDispatcher, boolean namedDispatch)
     {
         this.requestDispatcher = requestDispatcher;
-    	this.pathInfo = pathInfo;
+        this.namedDispatch = namedDispatch;
     	
         if (LOG.isDebugEnabled())
         {
@@ -152,17 +152,17 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
                                                                                     requestContext.getServletContext(),
                                                                                     session,
                                                                                     request,
-                                                                                    pathInfo,
-                                                                                    included);
+                                                                                    included,
+                                                                                    namedDispatch);
         HttpServletPortletResponseWrapper res = new HttpServletPortletResponseWrapper(requestContext.getServletResponse(),
                                                                                       request,
                                                                                       response,
-                                                                                      included);        
+                                                                                      included);
         try
         {
-            req.setAttribute(PortletInvokerService.PORTLET_CONFIG, requestContext.getPortletConfig());
-            req.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
-            req.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
+            request.setAttribute(PortletInvokerService.PORTLET_CONFIG, requestContext.getPortletConfig());
+            request.setAttribute(PortletInvokerService.PORTLET_REQUEST, request);
+            request.setAttribute(PortletInvokerService.PORTLET_RESPONSE, response);
             
             if (!included && req.isForwardingPossible())
             {
@@ -170,6 +170,7 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
             }
             else
             {
+                // need to "fake" the forward using an include
                 requestDispatcher.include(req, res);
             }
             if (needsFlushAfterForward)
@@ -187,9 +188,9 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
         }
         finally
         {
-            req.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
-            req.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
-            req.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
+            request.removeAttribute(PortletInvokerService.PORTLET_CONFIG);
+            request.removeAttribute(PortletInvokerService.PORTLET_REQUEST);
+            request.removeAttribute(PortletInvokerService.PORTLET_RESPONSE);
         }
     }
     
@@ -209,45 +210,6 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
         return portletScopeSessionConfigured;
     }
 
-    private void doDispatch(ServletRequest request, ServletResponse response, HttpServletPortletRequestWrapper req,
-                            HttpServletPortletResponseWrapper res, boolean included) throws ServletException, IOException
-    {
-        if (!included)
-        {
-            res.resetBuffer();
-        }
-        
-        ServletRequest currentInitialRequest = req.getInitialRequest();
-        RequestDispatcherPathInfo currentMethodPathInfo = req.getMethodPathInfo();
-        Map<String,Object> currentPathInfoAttributes = req.getPathInfoAttributes();
-        boolean currentIncluded = req.isIncluded();
-        try
-        {
-            RequestDispatcherPathInfo methodPathInfo = null;
-            if (currentMethodPathInfo.isNamedRequestDispatcher() || !(included || pathInfo.isNamedRequestDispatcher()))
-            {
-                methodPathInfo = pathInfo;
-            }            
-            else
-            {
-                methodPathInfo = currentMethodPathInfo;
-            }
-            req.setNewPathInfo(methodPathInfo, included);
-            if (!included && req.isForwardingPossible())
-            {
-                requestDispatcher.forward(request, response);
-            }
-            else
-            {
-                requestDispatcher.include(request, response);
-            }
-        }
-        finally
-        {
-            req.restorePathInfo(currentInitialRequest, currentMethodPathInfo, currentPathInfoAttributes, currentIncluded);
-        }
-    }    
-    
     // PortletRequestDispatcher Impl -------------------------------------------
    
     public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException
@@ -265,15 +227,44 @@ public class PortletRequestDispatcherImpl implements PortletRequestDispatcher, R
 	    doDispatch(request, response, true);
     }
 	
-    // RequestDispatcher Impl -------------------------------------------
+    // Nested RequestDispatcher Impl -------------------------------------------
 	
     public void forward(ServletRequest request, ServletResponse response) throws ServletException, IOException
     {
-        doDispatch(request, response, getWrappedRequest(request), getWrappedResponse(response), false);
+        HttpServletPortletRequestWrapper req = getWrappedRequest(request);
+        HttpServletPortletResponseWrapper res = getWrappedResponse(response);
+        res.resetBuffer();
+        
+        // cache the current dispatch state
+        boolean forwarded = req.isForwarded();
+        boolean namedDispatch = req.isNamedDispatch();
+        Map<String,Object> pathAttributeValues = req.getPathAttributeValues();
+        HttpServletPortletRequestWrapper.PathMethodValues pathMethodValues = req.getInitPathMethodValues();
+        
+        // (re)initialize the request wrapper to a nested forward
+        req.setNestedForward();
+        try
+        {
+            if (req.isForwardingPossible())
+            {
+                requestDispatcher.forward(request, response);
+            }
+            else
+            {
+                // need to "fake" the forward using an include
+                requestDispatcher.include(request, response);
+            }
+        }
+        finally
+        {
+            // restore the previously cached dispatch state
+            req.restoreFromNestedForward(forwarded, namedDispatch, pathMethodValues, pathAttributeValues);
+        }
     }
 
     public void include(ServletRequest request, ServletResponse response) throws ServletException, IOException
     {
-        doDispatch(request, response, getWrappedRequest(request), getWrappedResponse(response), true);
+        // no need for special handling on a nested dispatcher include: just calling the wrapped servlet dispatcher
+        requestDispatcher.include(request, response);
     }
 }

@@ -27,6 +27,7 @@ import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.container.PortletURLListenerService;
+import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.UserInfoService;
 import org.apache.pluto.container.driver.OptionalContainerServices;
 import org.apache.pluto.container.driver.PortalAdministrationService;
@@ -35,6 +36,7 @@ import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.driver.RequiredContainerServices;
 import org.apache.pluto.container.impl.PortletEnvironmentServiceImpl;
+import org.apache.pluto.container.impl.RequestDispatcherServiceImpl;
 
 
 public class PortalDriverServicesImpl implements RequiredContainerServices, OptionalContainerServices, PortalDriverServices
@@ -57,6 +59,7 @@ public class PortalDriverServicesImpl implements RequiredContainerServices, Opti
     private PortletEnvironmentService portletEnvironmentService;
     private UserInfoService userInfoService;
     private NamespaceMapper namespaceMapper;
+    private RequestDispatcherService rdService;
 
     /*
      * portal driver services
@@ -137,6 +140,7 @@ public class PortalDriverServicesImpl implements RequiredContainerServices, Opti
             portletEnvironmentService = optionalServices.getPortletEnvironmentService();
             userInfoService = optionalServices.getUserInfoService();
             namespaceMapper = optionalServices.getNamespaceMapper();
+            rdService = optionalServices.getRequestDispatcherService();
         }
 
         // and finally driver
@@ -160,7 +164,8 @@ public class PortalDriverServicesImpl implements RequiredContainerServices, Opti
 
     protected void createDefaultServicesIfNeeded()
     {
-        portletRegistryService = portletRegistryService == null ? new PortletContextManager() : portletRegistryService;
+        rdService = rdService == null ? new RequestDispatcherServiceImpl() : rdService;
+        portletRegistryService = portletRegistryService == null ? new PortletContextManager(rdService) : portletRegistryService;
         portletContextService = portletContextService == null ? (PortletContextManager)portletRegistryService : portletContextService;
         portalAdministrationService = portalAdministrationService == null ? new DefaultPortalAdministrationService() : portalAdministrationService;
         ccppProfileService = ccppProfileService == null ? new DummyCCPPProfileServiceImpl() : ccppProfileService;
@@ -256,4 +261,9 @@ public class PortalDriverServicesImpl implements RequiredContainerServices, Opti
     {
         return portletURLListenerService;
     }    
+    
+    public RequestDispatcherService getRequestDispatcherService()
+    {
+        return rdService;
+    }
 }

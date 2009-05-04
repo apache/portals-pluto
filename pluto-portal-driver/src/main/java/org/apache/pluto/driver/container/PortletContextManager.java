@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
+import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.driver.DriverPortletConfig;
 import org.apache.pluto.container.driver.DriverPortletContext;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -87,14 +88,13 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
      * The classloader for the portal, key is portletWindow and value is the classloader.
      */
     private final Map<String,ClassLoader> classLoaders = new HashMap<String,ClassLoader>();
+    
+    private RequestDispatcherService rdService;
 
     // Constructor -------------------------------------------------------------
 
-    /**
-     * Private constructor that prevents external instantiation.
-     */
-    public PortletContextManager() {
-    	// Do nothing.
+    public PortletContextManager(RequestDispatcherService rdService) {
+        this.rdService = rdService;
     }
 
 
@@ -117,7 +117,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
 
             PortletApplicationDefinition portletApp = portletRegistry.getPortletAppDD(servletContext, applicationName, contextPath);
 
-            DriverPortletContext portletContext = new DriverPortletContextImpl(servletContext, portletApp);
+            DriverPortletContext portletContext = new DriverPortletContextImpl(servletContext, portletApp, rdService);
 
             portletContexts.put(applicationName, portletContext);
 

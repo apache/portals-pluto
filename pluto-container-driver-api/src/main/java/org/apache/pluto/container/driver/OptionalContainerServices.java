@@ -21,6 +21,7 @@ import org.apache.pluto.container.NamespaceMapper;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
+import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.UserInfoService;
 
 /**
@@ -80,4 +81,9 @@ public interface OptionalContainerServices {
      * @return a CCPPProfileServiceImplementation
      */
     CCPPProfileService getCCPPProfileService();
+
+    /**
+     * Returns the RequestDispatcherService
+     */
+    RequestDispatcherService getRequestDispatcherService();
 }

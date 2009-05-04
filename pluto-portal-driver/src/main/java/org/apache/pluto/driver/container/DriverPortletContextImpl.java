@@ -18,6 +18,7 @@ package org.apache.pluto.driver.container;
 
 import javax.servlet.ServletContext;
 
+import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.driver.DriverPortletContext;
 import org.apache.pluto.container.impl.PortletContextImpl;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
@@ -43,9 +44,10 @@ public class DriverPortletContextImpl extends PortletContextImpl implements Driv
      * @param portletAppDD  the portlet application descriptor.
      */
     public DriverPortletContextImpl(ServletContext servletContext,
-                              PortletApplicationDefinition portletApp)
+                              PortletApplicationDefinition portletApp,
+                              RequestDispatcherService rdService)
     {
-        super(servletContext, portletApp, PlutoContainerInfo.getInfo(), Configuration.getSupportedContainerRuntimeOptions());
+        super(servletContext, portletApp, PlutoContainerInfo.getInfo(), Configuration.getSupportedContainerRuntimeOptions(), rdService);
         init();
     }
     

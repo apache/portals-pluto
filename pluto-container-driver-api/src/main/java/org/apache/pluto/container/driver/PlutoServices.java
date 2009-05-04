@@ -27,6 +27,7 @@ import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletRequestContextService;
 import org.apache.pluto.container.PortletURLListenerService;
+import org.apache.pluto.container.RequestDispatcherService;
 import org.apache.pluto.container.UserInfoService;
 
 
@@ -115,5 +116,10 @@ public class PlutoServices implements PortalDriverServices
     public PortletURLListenerService getPortletURLListenerService()
     {
         return driverServices.getPortletURLListenerService();
+    }
+    
+    public RequestDispatcherService getRequestDispatcherService()
+    {
+        return driverServices.getRequestDispatcherService();
     }
 }
