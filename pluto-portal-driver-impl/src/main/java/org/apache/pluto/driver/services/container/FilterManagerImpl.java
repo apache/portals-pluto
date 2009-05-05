@@ -34,9 +34,11 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceServingPortlet;
 
 import org.apache.pluto.container.FilterManager;
+import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.Filter;
 import org.apache.pluto.container.om.portlet.FilterMapping;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 
 
 /**
@@ -51,9 +53,10 @@ public class FilterManagerImpl implements FilterManager{
     private String portletName;
     private String lifeCycle;
 
-    public FilterManagerImpl(PortletApplicationDefinition portletApp, String portletName, String lifeCycle){
-        this.portletApp = portletApp;
-        this.portletName =  portletName;
+    public FilterManagerImpl(PortletWindow portletWindow, String lifeCycle) {
+        final PortletDefinition pd = portletWindow.getPortletEntity().getPortletDefinition();
+        this.portletApp = pd.getApplication();
+        this.portletName =  pd.getPortletName();
         this.lifeCycle = lifeCycle;
         filterchain = new FilterChainImpl(lifeCycle);
         initFilterChain();

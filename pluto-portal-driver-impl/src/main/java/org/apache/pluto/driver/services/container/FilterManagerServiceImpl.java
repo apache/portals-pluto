@@ -18,20 +18,18 @@ package org.apache.pluto.driver.services.container;
 
 import org.apache.pluto.container.FilterManager;
 import org.apache.pluto.container.FilterManagerService;
-import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.PortletWindow;
 
 /**
  * @version $Id$
  *
  */
-public class FilterManagerServiceImpl implements FilterManagerService
-{
-    /* (non-Javadoc)
-     * @see org.apache.pluto.container.FilterManagerService#getFilterManager(org.apache.pluto.container.om.portlet.PortletApplicationDefinition, java.lang.String, java.lang.String)
+public class FilterManagerServiceImpl implements FilterManagerService {
+
+    /**
+     * @see org.apache.pluto.container.FilterManagerService#getFilterManager(org.apache.pluto.container.PortletWindow, java.lang.String)
      */
-    public FilterManager getFilterManager(PortletApplicationDefinition portletAppDD, String portletName,
-                                          String lifeCycle)
-    {
-        return new FilterManagerImpl(portletAppDD,portletName,lifeCycle);
+    public FilterManager getFilterManager(PortletWindow portletWindow, String lifeCycle) {
+        return new FilterManagerImpl(portletWindow, lifeCycle);
     }
 }
