@@ -474,26 +474,4 @@
             </build>        
         </profile>
     </profiles>
-
-  <!-- For what artifacts are these repositories used??? -->
-    <repositories>
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Maven 2 Repository</name>
-            <url>https://maven2-repository.dev.java.net/nonav/repository</url>
-        </repository>
-        <repository>
-            <id>maven-repository.dev.java.net</id>
-            <name>Java.net Maven 1 Repository (legacy)</name>
-            <url>https://maven-repository.dev.java.net/nonav/repository</url>
-            <layout>legacy</layout>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>maven2-repository.dev.java.net</id>
-            <url>https://maven2-repository.dev.java.net/nonav/repository</url>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
