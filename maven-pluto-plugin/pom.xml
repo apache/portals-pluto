@@ -92,7 +92,7 @@
       <plugin>
         <artifactId>maven-plugin-plugin</artifactId>        
         <configuration>
-          <goalPrefix>pluto</goalPrefix>
+          <goalPrefix>pluto2</goalPrefix>
         </configuration>
       </plugin>
       <plugin>
