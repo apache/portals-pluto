@@ -183,7 +183,7 @@
 			<arg line="install"/>
 		</exec>
 		<exec executable="mvn" vmlauncher="false" dir="${basedir}" failonerror="true">
-			<arg line="pluto:install -DinstallDir=${user.dir}/${dist.dir}"/>
+			<arg line="org.apache.portals.pluto:maven-pluto-plugin:${pluto.version}:install -DinstallDir=${user.dir}/${dist.dir}"/>
 		</exec>
 	</target>
 		
