@@ -59,8 +59,8 @@
           <artifactId>servlet-api</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>javax.portlet</groupId>
-          <artifactId>portlet-api</artifactId>
+          <groupId>org.apache.portals</groupId>
+          <artifactId>portlet-api_2.0_spec</artifactId>
         </exclusion>
         <exclusion>
           <groupId>xml-apis</groupId>

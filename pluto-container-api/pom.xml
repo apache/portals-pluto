@@ -35,9 +35,9 @@
 	<dependencies>
     <!-- Specification Libraries =========================================== -->
         <dependency>
-            <groupId>javax.portlet</groupId>
-            <artifactId>portlet-api</artifactId>
-            <version>${portlet-api.version}</version>
+            <groupId>org.apache.portals</groupId>
+            <artifactId>portlet-api_2.0_spec</artifactId>
+            <version>${portals.portlet2-api-spec.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
