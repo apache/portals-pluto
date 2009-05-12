@@ -89,11 +89,19 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
     
 	public void setCharacterEncoding(String encoding)
 	{
-	    if (encoding != null)
+        // ensure client hasn't passed us the full name/value pair; i.e
+        // charset=utf-8
+        int index = encoding.indexOf('=');
+        if (index != -1 && index < encoding.length()-1)
+        {
+          encoding = encoding.substring(index+1).trim();
+        }
+            
+	    if (encoding != null && encoding.length() > 0)
 	    {
+	        this.charset = encoding;
 	        responseContext.setCharacterEncoding(charset);
 	        canSetLocaleEncoding = false;
-	        this.charset = encoding;
 	    }
 	}
 	
