@@ -20,16 +20,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
-        <groupId>org.apache</groupId>
-        <artifactId>apache</artifactId>
-        <version>3</version>
+        <groupId>org.apache.portals</groupId>
+        <artifactId>portals-pom</artifactId>
+        <version>1.2</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.portals.pluto</groupId>
     <artifactId>pluto</artifactId>
     <packaging>pom</packaging>
-    <name>Apache Pluto</name>
+    <name>Apache Pluto Parent POM</name>
     <!-- 
     Any version changes need to be changed in:
     1. All poms of children modules
