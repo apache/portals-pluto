@@ -25,6 +25,7 @@
     <groupId>org.apache.portals.pluto</groupId>
     <artifactId>pluto</artifactId>
     <version>2.0.0-SNAPSHOT</version>
+    <relativePath>../parent</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>pluto-ant-tasks</artifactId> 
@@ -42,14 +43,11 @@
     <dependency>
       <groupId>ant</groupId>
       <artifactId>ant</artifactId>
-      <version>${ant.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 
