@@ -108,7 +108,7 @@ public class PortletWindowThread extends Thread {
 			        		// now test if object is jaxb
 			        		EventDefinition eventDefinitionDD = getEventDefintion(event.getQName()); 
 			        		
-			        		ClassLoader loader = portletContextService.getClassLoader(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
+			        		ClassLoader loader = portletContextService.getClassLoader(portletWindow.getPortletDefinition().getApplication().getName());
 			        		Class<? extends Serializable> clazz = loader.loadClass(eventDefinitionDD.getValueType()).asSubclass(Serializable.class);
 
 			        		JAXBContext jc = JAXBContext.newInstance(clazz);
@@ -146,7 +146,7 @@ public class PortletWindowThread extends Thread {
 	}
 
 	private EventDefinition getEventDefintion(QName name) {
-		PortletApplicationDefinition appDD = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
+		PortletApplicationDefinition appDD = portletWindow.getPortletDefinition().getApplication();
 		for (EventDefinition def : appDD.getEventDefinitions()){
 			if (def.getQName() != null){
 				if (def.getQName().equals(name))

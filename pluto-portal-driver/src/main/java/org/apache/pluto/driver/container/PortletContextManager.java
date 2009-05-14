@@ -189,7 +189,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
      * @see org.apache.pluto.container.driver.PortletContextService#getPortletContext(org.apache.pluto.container.PortletWindow)
      */
     public DriverPortletContext getPortletContext(PortletWindow portletWindow) throws PortletContainerException {
-        return portletContexts.get(portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName());
+        return portletContexts.get(portletWindow.getPortletDefinition().getApplication().getName());
     }
 
 

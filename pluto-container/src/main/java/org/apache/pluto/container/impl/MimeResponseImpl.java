@@ -49,7 +49,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements MimeRespons
 	{
 		super(responseContext);
 		this.responseContext = responseContext;
-		PortletDefinition portletDefinition = getPortletWindow().getPortletEntity().getPortletDefinition();
+		PortletDefinition portletDefinition = getPortletWindow().getPortletDefinition();
 		getCacheControl().setExpirationTime(portletDefinition.getExpirationCache());
 		getCacheControl().setPublicScope(PUBLIC_SCOPE.equals(portletDefinition.getCacheScope()));
 	}
@@ -59,7 +59,7 @@ public class MimeResponseImpl extends PortletResponseImpl implements MimeRespons
         if (responseContentTypes == null) 
         {
             responseContentTypes = new ArrayList<String>();
-            PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
+            PortletDefinition dd = getPortletWindow().getPortletDefinition();
             for (Supports sup : dd.getSupports())
             {
                 responseContentTypes.add(sup.getMimeType());

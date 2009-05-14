@@ -267,7 +267,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
         // Validate the preferences before storing, if a validator is defined.
         //   If the preferences cannot pass the validation,
         //   an ValidatorException will be thrown out.
-        PortletDefinition portletD = window.getPortletEntity().getPortletDefinition();
+        PortletDefinition portletD = window.getPortletDefinition();
         PreferencesValidator validator = preferencesService.getPreferencesValidator(portletD);
         if (validator != null)
         {

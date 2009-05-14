@@ -54,7 +54,7 @@ public class FilterManagerImpl implements FilterManager{
     private String lifeCycle;
 
     public FilterManagerImpl(PortletWindow portletWindow, String lifeCycle) {
-        final PortletDefinition pd = portletWindow.getPortletEntity().getPortletDefinition();
+        final PortletDefinition pd = portletWindow.getPortletDefinition();
         this.portletApp = pd.getApplication();
         this.portletName =  pd.getPortletName();
         this.lifeCycle = lifeCycle;

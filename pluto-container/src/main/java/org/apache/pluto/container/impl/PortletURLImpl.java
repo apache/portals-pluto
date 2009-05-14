@@ -92,7 +92,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         
         String modeName = mode.toString();
 
-        PortletDefinition dd = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition();
+        PortletDefinition dd = responseContext.getPortletWindow().getPortletDefinition();
 
         for (Supports sup : dd.getSupports())
         {
@@ -135,7 +135,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
     
     private boolean isPublicRenderParameter(String name)
     {
-        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
+        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletDefinition().getSupportedPublicRenderParameters();
         return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
     }
         
@@ -182,7 +182,7 @@ public class PortletURLImpl implements PortletURL, ResourceURL {
         try
         {
             PortletURLListenerService service = responseContext.getContainer().getContainerServices().getPortletURLListenerService();
-            PortletApplicationDefinition portletApp = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication();
+            PortletApplicationDefinition portletApp = responseContext.getPortletWindow().getPortletDefinition().getApplication();
             for (PortletURLGenerationListener listener : service.getPortletURLGenerationListeners(portletApp))
             {
                 if (PortletURLProvider.TYPE.ACTION == urlProvider.getType())

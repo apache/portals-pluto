@@ -135,7 +135,7 @@ public class ResourceResponseImpl extends MimeResponseImpl implements ResourceRe
             responseContext.setLocale(locale);
 	        if (canSetLocaleEncoding)
 	        {
-	            String encoding = getPortletWindow().getPortletEntity().getPortletDefinition().getApplication().getLocaleEncodingMappings().get(locale);
+	            String encoding = getPortletWindow().getPortletDefinition().getApplication().getLocaleEncodingMappings().get(locale);
 	            if (encoding != null)
 	            {
 	                setCharacterEncoding(encoding);

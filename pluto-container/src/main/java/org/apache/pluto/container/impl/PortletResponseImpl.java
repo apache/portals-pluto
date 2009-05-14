@@ -89,7 +89,7 @@ public abstract class PortletResponseImpl implements PortletResponse
         
         String modeName = mode.toString();
 
-        PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
+        PortletDefinition dd = getPortletWindow().getPortletDefinition();
 
         for (Supports sup : dd.getSupports())
         {

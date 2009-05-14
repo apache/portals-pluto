@@ -102,7 +102,7 @@ public class PortletRequestContextImpl implements PortletRequestContext
     
     protected boolean isPublicRenderParameter(String name)
     {
-        List<String> publicRenderParameterNames = window.getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
+        List<String> publicRenderParameterNames = window.getPortletDefinition().getSupportedPublicRenderParameters();
         return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
     }
         

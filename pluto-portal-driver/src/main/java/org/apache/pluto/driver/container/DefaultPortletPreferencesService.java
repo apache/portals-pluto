@@ -105,7 +105,7 @@ implements PortletPreferencesService {
                                                               PortletRequest request )
       throws PortletContainerException {
         Map<String,PortletPreference> preferences = null;
-        PortletDefinition portlet = portletWindow.getPortletEntity().getPortletDefinition();
+        PortletDefinition portlet = portletWindow.getPortletDefinition();
         Preferences prefs = portlet.getPortletPreferences();
         if (prefs != null && prefs.getPortletPreferences() != null) {
             preferences = new HashMap<String,PortletPreference>(prefs.getPortletPreferences().size());
@@ -190,7 +190,7 @@ implements PortletPreferencesService {
                                    PortletRequest request) {
     	StringBuffer buffer = new StringBuffer();
     	buffer.append("user=").append(request.getRemoteUser()).append(";");
-    	buffer.append("portletName=").append(portletWindow.getPortletEntity().getPortletDefinition().getPortletName());
+    	buffer.append("portletName=").append(portletWindow.getPortletDefinition().getPortletName());
     	return buffer.toString();
     }
 

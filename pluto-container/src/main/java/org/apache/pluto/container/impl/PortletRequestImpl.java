@@ -42,7 +42,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.pluto.container.ContainerServices;
 import org.apache.pluto.container.PortletContainer;
-import org.apache.pluto.container.PortletEntity;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletInvokerService;
 import org.apache.pluto.container.PortletRequestContext;
@@ -280,7 +279,7 @@ public abstract class PortletRequestImpl implements PortletRequest
     {
         if (contextPath == null)
         {
-            contextPath = requestContext.getPortletWindow().getPortletEntity().getPortletDefinition().getApplication().getContextPath();
+            contextPath = requestContext.getPortletWindow().getPortletDefinition().getApplication().getContextPath();
         }
 
         return contextPath;
@@ -558,7 +557,7 @@ public abstract class PortletRequestImpl implements PortletRequest
         if (contentTypes == null)
         {
             contentTypes = new ArrayList<String>();
-            PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
+            PortletDefinition dd = getPortletWindow().getPortletDefinition();
             for (Supports sup : dd.getSupports())
             {
                 contentTypes.add(sup.getMimeType());
@@ -610,7 +609,7 @@ public abstract class PortletRequestImpl implements PortletRequest
 
         String modeName = mode.toString();
 
-        PortletDefinition dd = getPortletWindow().getPortletEntity().getPortletDefinition();
+        PortletDefinition dd = getPortletWindow().getPortletDefinition();
 
         for (Supports sup : dd.getSupports())
         {
@@ -661,8 +660,7 @@ public abstract class PortletRequestImpl implements PortletRequest
      */
     public boolean isUserInRole(String roleName)
     {
-        PortletEntity entity = getPortletWindow().getPortletEntity();
-        PortletDefinition def = entity.getPortletDefinition();
+        PortletDefinition def = getPortletWindow().getPortletDefinition();
         String link = roleName;
 
         for (SecurityRoleRef r : def.getSecurityRoleRefs())

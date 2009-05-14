@@ -23,10 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
-import org.apache.pluto.container.PortletEntity;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.PortletWindowID;
 import org.apache.pluto.container.driver.PlutoServices;
+import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 
@@ -43,7 +43,7 @@ public class PortletWindowImpl implements PortletWindow {
     private PortletWindowConfig config;
     private PortalURL portalURL;
     private PortletWindowIDImpl objectIdImpl;
-    private PortletEntity entity;
+    private PortletDefinition portlet;
 
 
     // Constructor -------------------------------------------------------------
@@ -63,7 +63,7 @@ public class PortletWindowImpl implements PortletWindow {
             {
                 applicationName = applicationName.substring(1);
             }
-            this.entity = new PortletEntityImpl(PlutoServices.getServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName()));
+            this.portlet = PlutoServices.getServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName());
         }
         catch (PortletContainerException ex)
         {
@@ -100,7 +100,7 @@ public class PortletWindowImpl implements PortletWindow {
         return objectIdImpl;
     }
 
-    public PortletEntity getPortletEntity() {
-        return entity;
+    public PortletDefinition getPortletDefinition() {
+        return portlet;
     }
 }

@@ -52,7 +52,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
 	
     private boolean isPublicRenderParameter(String name)
     {
-        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletEntity().getPortletDefinition().getSupportedPublicRenderParameters();
+        List<String> publicRenderParameterNames = responseContext.getPortletWindow().getPortletDefinition().getSupportedPublicRenderParameters();
         return publicRenderParameterNames.isEmpty() ? false : publicRenderParameterNames.contains(name);
     }
         
@@ -148,7 +148,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
 	{
 	    PortletWindow window = getPortletWindow();
         String defaultNamespace;
-        defaultNamespace = window.getPortletEntity().getPortletDefinition().getApplication().getDefaultNamespace();
+        defaultNamespace = window.getPortletDefinition().getApplication().getDefaultNamespace();
         QName qname = new QName(defaultNamespace, name);
         setEvent(qname, value);
 	}

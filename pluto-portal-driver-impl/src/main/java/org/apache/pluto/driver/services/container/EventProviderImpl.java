@@ -127,7 +127,7 @@ public class EventProviderImpl implements EventProvider
         }
         if (events != null)
         {
-            String defaultNamespace = portletWindow.getPortletEntity().getPortletDefinition().getApplication()
+            String defaultNamespace = portletWindow.getPortletDefinition().getApplication()
                                                    .getDefaultNamespace();
             for (EventDefinitionReference ref : events)
             {
@@ -147,7 +147,7 @@ public class EventProviderImpl implements EventProvider
 
     private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value)
     {
-        PortletApplicationDefinition app = portletWindow.getPortletEntity().getPortletDefinition().getApplication();
+        PortletApplicationDefinition app = portletWindow.getPortletDefinition().getApplication();
         List<? extends EventDefinition> events = app.getEventDefinitions();
         if (events != null)
         {

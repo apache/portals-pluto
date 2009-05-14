@@ -19,6 +19,8 @@ package org.apache.pluto.container;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import org.apache.pluto.container.om.portlet.PortletDefinition;
+
 
 /**
  * Thin representation of the portlet window for which the container
@@ -52,8 +54,8 @@ public interface PortletWindow {
     PortletMode getPortletMode();
 
     /**
-     * Returns the portlet entity. The return value cannot be NULL.
-     * @return the portlet entity
+     * Returns the portlet description. The return value cannot be NULL.
+     * @return the portlet description.
      */
-    PortletEntity getPortletEntity();
+    PortletDefinition getPortletDefinition();
 }

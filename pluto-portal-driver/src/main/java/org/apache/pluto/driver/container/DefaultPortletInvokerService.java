@@ -202,10 +202,10 @@ public class DefaultPortletInvokerService implements PortletInvokerService {
     throws PortletException, IOException, PortletContainerException {
 
         PortletWindow portletWindow = context.getPortletWindow();
-        String appName = portletWindow.getPortletEntity().getPortletDefinition().getApplication().getName();
+        String appName = portletWindow.getPortletDefinition().getApplication().getName();
         ServletContext servletContext = portletContextService.getPortletContext(appName).getServletContext();
 
-        String uri =  PREFIX + portletWindow.getPortletEntity().getPortletDefinition().getPortletName();
+        String uri =  PREFIX + portletWindow.getPortletDefinition().getPortletName();
         if (LOG.isDebugEnabled()) {
             LOG.debug("Dispatching to portlet servlet at: " + uri);
         }
