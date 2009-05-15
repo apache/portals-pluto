@@ -621,8 +621,6 @@
     <!-- Pluto Modules ======================================================= -->
 
     <modules>
-      <!-- Parent -->
-        <module>parent</module>
       <!-- Pluto Container API -->
         <module>pluto-container-api</module>
         
