@@ -140,13 +140,6 @@
     <build>
         <plugins>
         	<plugin>
-        		<artifactId>maven-assembly-plugin</artifactId>
-        		<configuration>
-        			<descriptor>src/assemble/bin.xml</descriptor>
-        			<finalName>pluto-portal-${pom.version}</finalName>
-        		</configuration>
-        	</plugin>
-        	<plugin>
         		<groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-compiler-plugin</artifactId>
         		<!-- best lock down version of the plugin too -->

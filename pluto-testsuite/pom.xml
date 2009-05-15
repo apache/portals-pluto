@@ -91,6 +91,22 @@
       </resource>
     </resources>
     <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>ianal-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <goals>
+                <goal>verify-legal-files</goal>
+              </goals>
+              <configuration>
+                  <!--<searchPaths>WEB-INF/classes/META-INF</searchPaths>-->
+                  <!-- TODO fix skip -->
+                  <skip>true</skip>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
       <!-- configure maven-war-plugin to use updated web.xml -->
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
