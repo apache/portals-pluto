@@ -32,65 +32,64 @@
     <packaging>maven-plugin</packaging>
     <name>Maven Pluto Installer Plugin</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.portals.pluto</groupId>
-      <artifactId>pluto-util</artifactId>
-      <version>${pom.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-artifact</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-    </dependency>
-    
-    <!-- Do not remove this dep: See MNG-1178 -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-    
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.portals.pluto</groupId>
+            <artifactId>pluto-util</artifactId>
+            <version>${pom.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-artifact</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+        </dependency>
+
+        <!-- Do not remove this dep: See MNG-1178 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
   
-  <build> 
-    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>    
-    <resources>
-      <resource>
-        <directory>src/main/scripts</directory>
-        <includes>
-          <include>**/*.mmld</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>        
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <artifactId>maven-plugin-plugin</artifactId>        
-        <configuration>
-          <goalPrefix>pluto2</goalPrefix>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <build> 
+        <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>    
+        <resources>
+            <resource>
+                <directory>src/main/scripts</directory>
+                <includes>
+                    <include>**/*.mmld</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>        
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>        
+                <configuration>
+                    <goalPrefix>pluto2</goalPrefix>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <!-- Don't create distribution artifacts -->
     <profiles>
@@ -110,6 +109,3 @@
         </profile>
     </profiles>
 </project>
-
-
-
