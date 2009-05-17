@@ -21,65 +21,59 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   
-  <parent>
-    <groupId>org.apache.portals.pluto</groupId>
-    <artifactId>pluto</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>pluto-testsuite</artifactId>
-  <packaging>war</packaging>
-  <name>Apache Pluto Testsuite Portlet</name>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.apache.portals.pluto</groupId>
+        <artifactId>pluto</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>pluto-testsuite</artifactId>
+    <packaging>war</packaging>
+    <name>Apache Pluto Testsuite Portlet</name>
   
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.portals</groupId>
-      <artifactId>portlet-api_2.0_spec</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <scope>compile</scope>
-      <exclusions>
-          <exclusion>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.portals</groupId>
+            <artifactId>portlet-api_2.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-          </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>commons-digester</groupId>
-      <artifactId>commons-digester</artifactId>
-      <scope>compile</scope>
-      <exclusions>
-          <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-          </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>standard</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-  </dependencies>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>jsp-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
   
   <!-- Build configuration -->
   <build>
@@ -127,16 +121,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      
-      <plugin>
-      	<groupId>org.apache.maven.plugins</groupId>
-      	<artifactId>maven-compiler-plugin</artifactId>
-      	<!-- best lock down version of the plugin too -->
-      	<configuration>
-      		<source>1.5</source>
-      		<target>1.5</target>
-      	</configuration>
       </plugin>
     </plugins>
   </build>
