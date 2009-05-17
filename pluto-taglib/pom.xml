@@ -56,17 +56,21 @@
         </dependency>
     </dependencies>
 
-
-    <build>
-        <plugins>
-            <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-				<source>1.5</source>
-				<target>1.5</target>
-				</configuration>
-			  </plugin>
-        </plugins>
-    </build>
+    <!-- Don't create distribution artifacts -->
+    <profiles>
+        <profile>
+            <id>apache-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <skipAssembly>true</skipAssembly>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
