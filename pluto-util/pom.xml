@@ -68,7 +68,21 @@
         </dependency>
     
     </dependencies>
-    
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>rat-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                       <exclude>src/main/resources/org/apache/pluto/util/descriptors/web/web-app_2_3.dtd</exclude>
+                       <exclude>src/test/resources/org/apache/pluto/util/assemble/web-app_2_3.dtd</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <!-- Don't create distribution artifacts -->
     <profiles>
         <profile>
