@@ -95,16 +95,16 @@
 			<arg line="clean:clean"/>
 		</exec>
 		<mkdir dir="${dist.basedir}"/>
-		
+
 		<get src="http://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${tomcat.full.version}/bin/${base.name}.tar.gz"
 		     dest="${unzip.file}"
 		/>
-		
+
 		<gunzip src="${unzip.file}"
 			dest="${dist.basedir}"
 			description="Creates tar from tar.gz tomcat dist"
 		/>
-		
+
 		<untar src="${tar.file}"
 			dest="${dist.basedir}"
 			description="Untars tomcat dist"
@@ -113,7 +113,19 @@
 		<!-- Copy over README -->
 		<copy file="README" todir="${dist.dir}"/>
 
-		<!-- Add emptySessionPath="true" to Connector element in server.xml -->
+        <!-- Copy over additional licenses from pluto and testsuite web app-->
+        <copy todir="${dist.dir}" flatten="true">
+            <fileset dir="${basedir}/pluto-testsuite">
+                <include name="src/main/webapp/META-INF/*-LICENSE"/>
+            </fileset>
+		</copy>
+        <copy todir="${dist.dir}" flatten="true">
+            <fileset dir="${basedir}/pluto-portal">
+                <include name="src/main/webapp/META-INF/*-LICENSE"/>
+            </fileset>
+        </copy>
+
+         <!-- Add emptySessionPath="true" to Connector element in server.xml -->
 		<replace file="${dist.dir}/conf/server.xml"
 			token="redirectPort=&quot;8443&quot; /&gt;" 
 			value="redirectPort=&quot;8443&quot; emptySessionPath=&quot;true&quot; /&gt;" 
