@@ -85,18 +85,39 @@
             </resource>
         </resources>
         <plugins>
+            <!-- configure maven-war-plugin to use updated web.xml -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>ianal-maven-plugin</artifactId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
+                </configuration>
+            </plugin>
+            <!-- bind 'pluto:assemble' goal to 'process-resources' lifecycle -->
+            <plugin>
+                <groupId>org.apache.portals.pluto</groupId>
+                <artifactId>maven-pluto-plugin</artifactId>
+                <version>${pom.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>verify-legal-files</goal>
+                            <goal>process</goal>
                         </goals>
                         <configuration>
-                            <searchPaths>
-                                <searchPath>WEB-INF/classes/META-INF</searchPath>
-                            </searchPaths>
+                            <outputDirectory>${project.build.directory}/${build.finalName}</outputDirectory>
+                            <attached>false</attached>
                         </configuration>
                     </execution>
                 </executions>
