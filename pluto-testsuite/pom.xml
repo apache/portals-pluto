@@ -85,13 +85,21 @@
             </resource>
         </resources>
         <plugins>
-          <!-- configure maven-war-plugin to use updated web.xml -->
             <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1-beta-1</version>
-                <configuration>
-                    <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>ianal-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>verify-legal-files</goal>
+                        </goals>
+                        <configuration>
+                            <searchPaths>
+                                <searchPath>WEB-INF/classes/META-INF</searchPath>
+                            </searchPaths>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
