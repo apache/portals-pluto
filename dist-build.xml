@@ -44,8 +44,8 @@
 -->
 <project name="PlutoDistributions" default="bundle-dist">
 
-    <property name="tomcat.major.version" value="5" description="Major version of Tomcat to deploy Pluto war files."/>
-    <property name="tomcat.full.version" value="5.5.27" description="Full version of Tomcat to deploy Pluto war files."/>
+    <property name="tomcat.major.version" value="6" description="Major version of Tomcat to deploy Pluto war files."/>
+    <property name="tomcat.full.version" value="6.0.18" description="Full version of Tomcat to deploy Pluto war files."/>
 
     <xmlproperty file="pom.xml"/> <!-- picks up pluto build version from pom file -->
     <property name="pluto.version" value="${project.version}" description="Version of Pluto to build"/>
