@@ -136,6 +136,22 @@
                     </webResources>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>ianal-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>verify-legal-files</goal>
+                        </goals>
+                        <configuration>
+                            <searchPaths>
+                                <searchPath>WEB-INF/classes/META-INF</searchPath>
+                            </searchPaths>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
