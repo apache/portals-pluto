@@ -29,7 +29,6 @@
     </parent>
 
     <artifactId>pluto-portal-driver</artifactId>
-    <packaging>jar</packaging>
     <name>Apache Pluto Portal Driver</name>
 
     <dependencies>
