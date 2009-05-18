@@ -124,67 +124,19 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1-beta-1</version>
                 <configuration>
-                <webResources>
-                    <resource>
-                        <filtering>true</filtering>
-                        <directory>${pom.basedir}/src/main/resources</directory>
-                        <includes>
-                            <include>pluto-portal-driver-config.xml</include>
-                        </includes>
-                        <targetPath>WEB-INF</targetPath>
-                    </resource>
-                </webResources>
-            </configuration>
-        </plugin>
-        <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.1</version>
-            <configuration>
-                <tasks>
-                    <get src="http://archive.apache.org/dist/tomcat/tomcat-5/archive/v5.5.9/bin/jakarta-tomcat-5.5.9.tar.gz" dest="target/tomcat.tar.gz" />
-                    <gunzip src="target/tomcat.tar.gz" />
-                    <untar src="target/tomcat.tar" />
-                </tasks>
-            </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>ianal-maven-plugin</artifactId>
-          <executions>
-            <execution>
-              <goals>
-                <goal>verify-legal-files</goal>
-              </goals>
-              <configuration>
-                  <!--<searchPaths>WEB-INF/classes/META-INF</searchPaths>-->
-                  <!-- TODO fix skip -->
-                  <skip>true</skip>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <inherited>false</inherited>
-        <configuration>
-          <descriptor>src/assemble/bin.xml</descriptor>
-          <finalName>pluto-portal-${pom.version}</finalName>
-        </configuration>
-          <executions>
-            <execution>
-              <id>make-project-assembly-source-release</id>
-                <inherited>false</inherited>
-              <phase>package</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-            </execution>
-          </executions>
-      </plugin>
-
+                    <webResources>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>${pom.basedir}/src/main/resources</directory>
+                            <includes>
+                                <include>pluto-portal-driver-config.xml</include>
+                            </includes>
+                            <targetPath>WEB-INF</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
         </plugins>
-
     </build>
 
     <!-- Don't create distribution artifacts -->
@@ -205,5 +157,3 @@
         </profile>
     </profiles>
 </project>
-
-
