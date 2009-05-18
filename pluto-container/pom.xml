@@ -136,6 +136,17 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>rat-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                       <exclude>src/main/resources/org/apache/pluto/container/impl/portlet-app_1_0.xsd</exclude>
+                       <exclude>src/main/resources/org/apache/pluto/container/impl/portlet-app_2_0.xsd</exclude>
+                       <exclude>src/main/resources/org/apache/pluto/container/impl/web-app_2_3.dtd</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
