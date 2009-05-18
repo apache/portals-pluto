@@ -44,41 +44,25 @@
             <artifactId>ant</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
     </dependencies>
 
-  <build> 
-    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> 
-    <plugins>
-        <!-- todo remove -->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>ianal-maven-plugin</artifactId>
-          <executions>
-            <execution>
-              <goals>
-                <goal>verify-legal-files</goal>
-              </goals>
-              <configuration>
-                  <!--<searchPaths>WEB-INF/classes/META-INF</searchPaths>-->
-                  <!-- TODO fix skip -->
-                  <skip>true</skip>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptor>src/assemble/bin.xml</descriptor>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  
+    <!-- Don't create distribution artifacts -->
+    <profiles>
+        <profile>
+            <id>apache-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <skipAssembly>true</skipAssembly>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
 
 
