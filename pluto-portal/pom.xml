@@ -140,18 +140,18 @@
                     </webResources>
                 </configuration>
             </plugin>
+            <!-- workaround for war processing of m-r-r-plugin causing the generated NOTICE and LICENSE file to be put under WEB-INF/classes/META-INF -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>ianal-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>verify-legal-files</goal>
+                            <goal>process</goal>
                         </goals>
                         <configuration>
-                            <searchPaths>
-                                <searchPath>WEB-INF/classes/META-INF</searchPath>
-                            </searchPaths>
+                            <outputDirectory>${project.build.directory}/${build.finalName}</outputDirectory>
+                            <attached>false</attached>
                         </configuration>
                     </execution>
                 </executions>
