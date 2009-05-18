@@ -82,7 +82,6 @@
   
     <!-- Build configuration -->
     <build>
-        <finalName>pluto-testsuite</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

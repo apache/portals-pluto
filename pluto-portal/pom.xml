@@ -121,7 +121,6 @@
     </dependencies>
 
     <build>
-        <finalName>pluto-portal</finalName>
 
         <plugins>
             <plugin>
