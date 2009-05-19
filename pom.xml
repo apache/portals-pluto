@@ -518,4 +518,18 @@
         <module>maven-pluto-plugin</module>
         <module>pluto-ant-tasks</module>
     </modules>
-</project>
+
+    <profiles>
+        <profile>
+            <id>apache-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                    <!-- only include this in top level project poms -->
+                        <artifactId>maven-assembly-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles> 
+    </project>
