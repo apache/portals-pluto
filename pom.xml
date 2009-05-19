@@ -525,8 +525,24 @@
             <build>
                 <plugins>
                     <plugin>
-                    <!-- only include this in top level project poms -->
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <!--  "hack" to make it possible to override portals-pom-1.2 configuration using
+                                  descriptorRef "project" which (with the current version of the plugin
+                                  doesn't produce what we need.
+                                  This "hack" also requires setting ignoreMissingDescriptor=true (below)
+                                  See also: http://jira.codehaus.org/browse/MASSEMBLY-409
+                            -->
+                            <descriptorRefs>
+                                <descriptorRef>dummy-does-not-exist</descriptorRef>
+                            </descriptorRefs>                            
+                            <ignoreMissingDescriptor>true</ignoreMissingDescriptor>
+                            <!-- our custom assembly descriptor producing -src archives and excludes velocity.log -->
+                            <descriptors>
+                                <descriptor>src/main/assembly/project-src.xml</descriptor>
+                            </descriptors>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
