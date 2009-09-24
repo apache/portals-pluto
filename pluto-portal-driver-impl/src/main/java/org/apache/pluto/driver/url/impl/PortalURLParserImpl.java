@@ -18,20 +18,21 @@ package org.apache.pluto.driver.url.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.PortalURLParameter;
 import org.apache.pluto.driver.url.PortalURLParser;
-import org.apache.pluto.util.StringUtils;
 
 /**
  * @version 1.0
@@ -72,7 +73,41 @@ public class PortalURLParserImpl implements PortalURLParser {
             new String[] { "?",  "0xa" },
             new String[] { "\\", "0xb" },
             new String[] { "%",  "0xc" },
+            new String[] { ";",  "0xd" },
+            new String[] { "0x0",  "0xe" }
     };
+    
+    private static Map ENCODING_MAP = new HashMap();
+    
+    private static Map DECODING_MAP = new HashMap();
+
+    private static final Pattern ENCODING_PATTERN;
+    
+    private static final Pattern DECODING_PATTERN;
+    
+    private static String ESCAPE_STRING = "0xz";
+
+    static {        
+        ENCODING_MAP.put(ESCAPE_STRING, ESCAPE_STRING + ESCAPE_STRING);
+        DECODING_MAP.put(ESCAPE_STRING + ESCAPE_STRING , ESCAPE_STRING);
+
+        StringBuilder encodingPatternBuilder = new StringBuilder();
+        StringBuilder decodingPatternBuilder = new StringBuilder();
+        encodingPatternBuilder.append(ESCAPE_STRING);
+        decodingPatternBuilder.append(ESCAPE_STRING + ESCAPE_STRING);
+
+        for (int i = 0; i < ENCODINGS.length; i++) {
+            ENCODING_MAP.put(ENCODINGS[i][0], ENCODINGS[i][1]);            
+            ENCODING_MAP.put(ENCODINGS[i][1], ESCAPE_STRING + ENCODINGS[i][1]);
+            DECODING_MAP.put(ENCODINGS[i][1], Matcher.quoteReplacement(ENCODINGS[i][0]));
+            DECODING_MAP.put(ESCAPE_STRING + ENCODINGS[i][1], ENCODINGS[i][1]);
+
+            encodingPatternBuilder.append("|" + Pattern.quote(ENCODINGS[i][0]) + "|" + ENCODINGS[i][1]);
+            decodingPatternBuilder.append("|(" + ESCAPE_STRING + ")?" + ENCODINGS[i][1]);
+        }
+        ENCODING_PATTERN = Pattern.compile(encodingPatternBuilder.toString());        
+        DECODING_PATTERN = Pattern.compile(decodingPatternBuilder.toString());       
+    }
 
     // Constructor -------------------------------------------------------------
 
@@ -195,7 +230,7 @@ public class PortalURLParserImpl implements PortalURLParser {
 
         // Start the pathInfo with the path to the render URL (page).
         if (portalURL.getRenderPath() != null) {
-        	buffer.append("/").append(portalURL.getRenderPath());
+            buffer.append(portalURL.getRenderPath().startsWith("/") ? "" : "/").append(portalURL.getRenderPath());
         }
 
         // Append the action window definition, if it exists.
@@ -306,12 +341,12 @@ public class PortalURLParserImpl implements PortalURLParser {
     private String encodeMultiValues(String[] values) {
     	StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < values.length; i++) {
-        	buffer.append(values[i] != null ? values[i] : "");
+        	buffer.append(values[i] != null ? encodeCharacters(values[i]) : "");
             if (i + 1 < values.length) {
             	buffer.append(VALUE_DELIM);
             }
         }
-        return encodeCharacters(buffer.toString());
+        return buffer.toString();
     }
 
     /**
@@ -320,12 +355,13 @@ public class PortalURLParserImpl implements PortalURLParser {
      * @return the encoded string.
      */
     private String encodeCharacters(String string) {
-        for (int i = 0; i < ENCODINGS.length; i++) {
-            string = StringUtils.replace(string,
-                                         ENCODINGS[i][0],
-                                         ENCODINGS[i][1]);
+        Matcher matcher = ENCODING_PATTERN.matcher(string);
+        StringBuffer buffer = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(buffer, (String)ENCODING_MAP.get(matcher.group()));
         }
-        return string;
+        matcher.appendTail(buffer);
+        return buffer.toString();
     }
 
 
@@ -380,12 +416,13 @@ public class PortalURLParserImpl implements PortalURLParser {
 
         // Decode special characters in window ID and parameter value.
         windowId = decodeCharacters(windowId);
-        if (value != null) {
-        	value = decodeCharacters(value);
-        }
-
+        
         // Split multiple values into a value array.
         String[] paramValues = value.split(VALUE_DELIM);
+        
+        for(int i=0;i<paramValues.length;i++) {
+            paramValues[i] = decodeCharacters(paramValues[i]);
+        }
 
         // Construct portal URL parameter and return.
         return new PortalURLParameter(windowId, paramName, paramValues);
@@ -396,13 +433,14 @@ public class PortalURLParserImpl implements PortalURLParser {
      * @param string  the string value to decode.
      * @return the decoded string.
      */
-    private String decodeCharacters(String string) {
-        for (int i = 0; i < ENCODINGS.length; i++) {
-        	string = StringUtils.replace(string,
-        	                             ENCODINGS[i][1],
-        	                             ENCODINGS[i][0]);
+    private String decodeCharacters(String string) {        
+        Matcher matcher = DECODING_PATTERN.matcher(string);
+        StringBuffer buffer = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(buffer, (String)DECODING_MAP.get(matcher.group()));
         }
-        return string;
+        matcher.appendTail(buffer);
+        return buffer.toString();       
     }
 
 }
