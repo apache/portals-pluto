@@ -91,8 +91,8 @@ public class PortalURLParserImpl implements PortalURLParser {
         ENCODING_MAP.put(ESCAPE_STRING, ESCAPE_STRING + ESCAPE_STRING);
         DECODING_MAP.put(ESCAPE_STRING + ESCAPE_STRING , ESCAPE_STRING);
 
-        StringBuilder encodingPatternBuilder = new StringBuilder();
-        StringBuilder decodingPatternBuilder = new StringBuilder();
+        StringBuffer encodingPatternBuilder = new StringBuffer();
+        StringBuffer decodingPatternBuilder = new StringBuffer();
         encodingPatternBuilder.append(ESCAPE_STRING);
         decodingPatternBuilder.append(ESCAPE_STRING + ESCAPE_STRING);
 
