@@ -31,6 +31,11 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
+import javax.xml.stream.util.StreamReaderDelegate;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
@@ -142,28 +147,70 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      */
     
     @SuppressWarnings("unchecked")
-    public PortletApplicationDefinition read(String name, String contextPath, InputStream in) throws IOException {
+    public PortletApplicationDefinition read(String name, String contextPath, InputStream in) throws IOException 
+    {
         JAXBElement app = null;
-        try {
-            JAXBContext jc = JAXBContext.newInstance( 
-                    "org.apache.pluto.container.om.portlet10.impl" + ":" +
-                    "org.apache.pluto.container.om.portlet.impl", PortletAppDescriptorServiceImpl.class.getClassLoader());
-
+        
+        try 
+        {
+            ClassLoader containerClassLoader = PortletAppDescriptorServiceImpl.class.getClassLoader();
+            JAXBContext jc = JAXBContext.newInstance("org.apache.pluto.container.om.portlet10.impl" + ":" +
+                                                     "org.apache.pluto.container.om.portlet.impl", 
+                                                     containerClassLoader);
+            
+            XMLInputFactory inputFactory = getXMLInputFactory(containerClassLoader);
+            XMLStreamReader streamReader = inputFactory.createXMLStreamReader(in);
+            StreamReaderDelegate delegatingStreamReader = new StreamReaderDelegate(streamReader)
+            {
+                private String adjustedNamespaceURI = null;
+                
+                @Override
+                public int next() throws XMLStreamException
+                {
+                    int eventCode = super.next();
+                    if (eventCode == XMLEvent.START_ELEMENT && "portlet-app".equals(getLocalName()))
+                    {
+                        String version = getAttributeValue(null, "version");
+                        if ("1.0".equals(version))
+                        {
+                            adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd";
+                        }
+                        else if ("2.0".equals(version))
+                        {
+                            adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
+                        }
+                    }
+                    return eventCode;
+                }
+                
+                @Override
+                public String getNamespaceURI()
+                {
+                    String namespaceURI = super.getNamespaceURI();
+                    return (namespaceURI != null ? namespaceURI : adjustedNamespaceURI);
+                }
+            };
+            
             Unmarshaller u = jc.createUnmarshaller();
             u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 
-            app = (JAXBElement) u.unmarshal(in);                
-        }catch (JAXBException jaxbEx){
+            app = (JAXBElement) u.unmarshal(delegatingStreamReader);                
+        }
+        catch (JAXBException jaxbEx)
+        {
             final IOException ioe = new IOException(jaxbEx.getMessage());
             ioe.initCause(jaxbEx);
             throw ioe;
         }
-        catch(Exception me) {
+        catch(Exception me) 
+        {
             final IOException ioe = new IOException(me.getLocalizedMessage());
             ioe.initCause(me);
             throw new IOException(me.getLocalizedMessage());
         }
+        
         PortletApplicationDefinition pad = null;
+        
         if (app.getValue() instanceof org.apache.pluto.container.om.portlet10.impl.PortletAppType)
         {
              pad = ((org.apache.pluto.container.om.portlet10.impl.PortletAppType)app.getValue()).upgrade();
@@ -172,8 +219,10 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         {
             pad = (PortletApplicationDefinition)app.getValue();
         }
+        
         pad.setName(name);
         pad.setContextPath(contextPath);
+        
         return pad;
     }
 
@@ -285,4 +334,34 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
             throw new IOException(me.getLocalizedMessage());
         }
     }
+    
+    /*
+     * Because this service can be invoked from a portlet servlet with its own context class loader,
+     * <CODE>XMLInputFactory</CODE> should be created while the class loader switched to the container's.
+     */
+    private XMLInputFactory getXMLInputFactory(ClassLoader classLoader)
+    {
+        XMLInputFactory inputFactory = null;
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        
+        try
+        {
+            if (contextClassLoader != classLoader)
+            {
+                Thread.currentThread().setContextClassLoader(classLoader);
+            }
+            
+            inputFactory = XMLInputFactory.newInstance();
+        }
+        finally
+        {
+            if (contextClassLoader != classLoader)
+            {
+                Thread.currentThread().setContextClassLoader(contextClassLoader);
+            }
+        }
+        
+        return inputFactory;
+    }
+    
 }

@@ -20,15 +20,17 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.apache.pluto.container.impl.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 /**
  * Testclass for testing jaxb xml 2 java binding (portlet.xml)
@@ -37,11 +39,13 @@ import org.junit.Test;
 public class JaxBDescriptorServiceImplTest extends TestCase{
 	
 	private StringBuffer xmlBegin286 = new StringBuffer();
+    private StringBuffer xmlBegin286NoNamespaceURI = new StringBuffer();
 	private StringBuffer portlet286 = new StringBuffer();
 	private StringBuffer attrs286 = new StringBuffer();
 	private StringBuffer xmlEnd = new StringBuffer();
 	
 	private StringBuffer xmlBegin168 = new StringBuffer();
+    private StringBuffer xmlBegin168NoNamespaceURI = new StringBuffer();
 	private StringBuffer portlet168 = new StringBuffer();
 	private StringBuffer attrs168 = new StringBuffer();
 
@@ -64,6 +68,9 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 				"xmlns:portlet=\"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd\"\n" +
 				"xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd\n" +
 				"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd\">\n ");
+        xmlBegin286NoNamespaceURI.append("" +
+                           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                           "<portlet-app id=\"id1\" version=\"2.0\">");
 		portlet286.append(""+
 				"<portlet id=\"id2\">\n" +
 				"<description xml:lang=\"de\">description</description>\n" +
@@ -184,6 +191,9 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 				"xmlns:portlet=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\"\n" +
 				"xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\n" +
 				"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\">\n ");
+        xmlBegin168NoNamespaceURI.append("" +
+                           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                           "<portlet-app id=\"id1\" version=\"1.0\">");
 		portlet168.append(""+
 				"<portlet id=\"id2\">\n" +
 				"<description xml:lang=\"de\">description</description>\n" +
@@ -313,65 +323,108 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
 			in = new ByteArrayInputStream(xml168.toString().getBytes());
 			PortletApplicationDefinition portletApp168 = jaxb.read("test", "/test", in);
 			
-			// test if portlet has the right params:
-			
-			// test jsr168 compliant portlets
-			PortletDefinition portlet168 = (PortletDefinition)portletApp168.getPortlets().get(0);
-			assertTrue(portlet168.getExpirationCache()==50);
-			assertEquals(portlet168.getPortletName(),"portlet168");
-			assertEquals(portlet168.getInitParams().get(0).getParamValue(),"value");
-			assertEquals(portlet168.getSecurityRoleRefs().get(0).getRoleLink(), "role-link");
-			assertEquals(portletApp168.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
-			assertEquals(portletApp168.getCustomWindowStates().get(0).getWindowState(), "window-state");
-			assertEquals(portletApp168.getUserAttributes().get(0).getName(), "name" );
-			assertEquals(portletApp168.getSecurityConstraints().get(0).getPortletNames().get(0), "portlet-name");
-			assertEquals(portlet168.getExpirationCache(), 50);
-			// id (isn't supported yet)
-//			assertFalse(portletApp.getId().equals("id2"));
-//			assertTrue(portletApp.getId().equals("id1"));
-			
-			jaxb.write(portletApp168, System.out);
-			// portlet id
-			PortletDefinition portlet286 = (PortletDefinition)portletApp286.getPortlets().get(0);
-//			assertTrue(portlet1.getId().equals("id2"));
-			
-			// portlet class
-			assertTrue(portlet286.getPortletClass().equals("portlet-class"));
-			
-			// portlet info
-			// id isn't supported yet
-//			assertTrue(portlet1.getPortletInfo().getId().equals("info1"));
-			assertTrue(portlet286.getPortletInfo().getTitle().equals("title"));
-			
-			assertEquals("supports size should be 3", 3, portlet286.getSupports().size());
-			
-			assertEquals(portletApp286.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
-			assertEquals(portletApp286.getCustomWindowStates().get(0).getWindowState(), "window-state");
-			assertEquals(portletApp286.getUserAttributes().get(0).getName(), "name" );
-			assertEquals(portletApp286.getSecurityConstraints().get(0).getPortletNames().get(0), "portlet-name");
-			assertEquals(portletApp286.getEventDefinitions().get(0).getValueType(), "java-class");
-//			assertEquals(portletApp286.getRender().get(0).getName(), "QName");
-			assertEquals(portletApp286.getFilters().get(0).getLifecycles().get(0), "lifecycle");
-			assertEquals(portletApp286.getFilterMappings().get(0).getPortletNames().get(0), "portlet-name");
-			assertEquals(portletApp286.getResourceBundle(), "resource-bundle");
-			assertEquals(portletApp286.getVersion(), "2.0");
-			
-			// test container runtime options
-			assertEquals(portletApp286.getContainerRuntimeOptions().size(),1);
-			assertEquals(portletApp286.getContainerRuntimeOptions().get(0).getName(),"Runtime-Option-Portlet-App");
-			assertEquals(portletApp286.getContainerRuntimeOptions().get(0).getValues().get(0),"false");
-			
-			assertEquals(portlet286.getContainerRuntimeOptions().size(),1);
-			assertEquals(portlet286.getContainerRuntimeOptions().get(0).getName(),"Runtime-Option");
-			assertEquals(portlet286.getContainerRuntimeOptions().get(0).getValues().get(0),"true");
-            assertEquals(portlet286.getExpirationCache(), 100);
-			
-            jaxb.write(portletApp286, System.out);
+			validatePortletApp168AndPortletApp286(portletApp168, portletApp286);
 			
 		} catch (IOException e) {
-			fail("exception was thrown");
+			fail("exception was thrown: " + e);
 		}
+		
 	}
+
+    /**
+     * Test method for {@link org.apache.pluto.descriptors.services.jaxb.JaxBDescriptorServiceImpl#read(java.net.URL)}
+     * with descriptors not having namespace.
+     * @throws ParserConfigurationException 
+     * @throws SAXException 
+     */
+    @Test
+    public void testReadNoNamespaceURI() throws IOException, ParserConfigurationException, SAXException {
+        
+        try {
+            
+            StringBuffer xml286NoNamespaceURI = new StringBuffer()
+            .append(xmlBegin286NoNamespaceURI).append(portlet286)
+            .append(attrs286).append(xmlEnd);
+            
+            StringBuffer xml168NoNamespaceURI = new StringBuffer()
+            .append(xmlBegin168NoNamespaceURI).append(portlet168)
+            .append(attrs168).append(xmlEnd);
+            
+            InputStream in = new ByteArrayInputStream(xml286NoNamespaceURI.toString().getBytes());
+            
+            PortletApplicationDefinition portletApp286NoNamespaceURI = jaxb.read("test", "/test", in);
+            
+            in = new ByteArrayInputStream(xml168NoNamespaceURI.toString().getBytes());
+            PortletApplicationDefinition portletApp168NoNamespaceURI = jaxb.read("test", "/test", in);
+            
+            validatePortletApp168AndPortletApp286(portletApp168NoNamespaceURI, portletApp286NoNamespaceURI);
+            
+        } catch (IOException e) {
+            fail("exception was thrown: " + e);
+        }
+        
+    }
+    
+    /**
+     * Validates if portlet has the right params for {@link #testRead()} and {@link #testReadNoNamespaceURI()}.
+     * @param portletApp168
+     * @param portletApp286
+     * @throws IOException
+     */
+    private void validatePortletApp168AndPortletApp286(PortletApplicationDefinition portletApp168, PortletApplicationDefinition portletApp286) throws IOException {
+        // test jsr168 compliant portlets
+        PortletDefinition portlet168 = (PortletDefinition)portletApp168.getPortlets().get(0);
+        assertTrue(portlet168.getExpirationCache()==50);
+        assertEquals(portlet168.getPortletName(),"portlet168");
+        assertEquals(portlet168.getInitParams().get(0).getParamValue(),"value");
+        assertEquals(portlet168.getSecurityRoleRefs().get(0).getRoleLink(), "role-link");
+        assertEquals(portletApp168.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
+        assertEquals(portletApp168.getCustomWindowStates().get(0).getWindowState(), "window-state");
+        assertEquals(portletApp168.getUserAttributes().get(0).getName(), "name" );
+        assertEquals(portletApp168.getSecurityConstraints().get(0).getPortletNames().get(0), "portlet-name");
+        assertEquals(portlet168.getExpirationCache(), 50);
+        // id (isn't supported yet)
+//      assertFalse(portletApp.getId().equals("id2"));
+//      assertTrue(portletApp.getId().equals("id1"));
+        
+        jaxb.write(portletApp168, System.out);
+        // portlet id
+        PortletDefinition portlet286 = (PortletDefinition)portletApp286.getPortlets().get(0);
+//      assertTrue(portlet1.getId().equals("id2"));
+        
+        // portlet class
+        assertTrue(portlet286.getPortletClass().equals("portlet-class"));
+        
+        // portlet info
+        // id isn't supported yet
+//      assertTrue(portlet1.getPortletInfo().getId().equals("info1"));
+        assertTrue(portlet286.getPortletInfo().getTitle().equals("title"));
+        
+        assertEquals("supports size should be 3", 3, portlet286.getSupports().size());
+        
+        assertEquals(portletApp286.getCustomPortletModes().get(0).getPortletMode(), "portlet-mode");
+        assertEquals(portletApp286.getCustomWindowStates().get(0).getWindowState(), "window-state");
+        assertEquals(portletApp286.getUserAttributes().get(0).getName(), "name" );
+        assertEquals(portletApp286.getSecurityConstraints().get(0).getPortletNames().get(0), "portlet-name");
+        assertEquals(portletApp286.getEventDefinitions().get(0).getValueType(), "java-class");
+//      assertEquals(portletApp286.getRender().get(0).getName(), "QName");
+        assertEquals(portletApp286.getFilters().get(0).getLifecycles().get(0), "lifecycle");
+        assertEquals(portletApp286.getFilterMappings().get(0).getPortletNames().get(0), "portlet-name");
+        assertEquals(portletApp286.getResourceBundle(), "resource-bundle");
+        assertEquals(portletApp286.getVersion(), "2.0");
+        
+        // test container runtime options
+        assertEquals(portletApp286.getContainerRuntimeOptions().size(),1);
+        assertEquals(portletApp286.getContainerRuntimeOptions().get(0).getName(),"Runtime-Option-Portlet-App");
+        assertEquals(portletApp286.getContainerRuntimeOptions().get(0).getValues().get(0),"false");
+        
+        assertEquals(portlet286.getContainerRuntimeOptions().size(),1);
+        assertEquals(portlet286.getContainerRuntimeOptions().get(0).getName(),"Runtime-Option");
+        assertEquals(portlet286.getContainerRuntimeOptions().get(0).getValues().get(0),"true");
+        assertEquals(portlet286.getExpirationCache(), 100);
+        
+        jaxb.write(portletApp286, System.out);
+    }
 
 	/**
 	 * Test method for {@link org.apache.pluto.descriptors.services.jaxb.JaxBDescriptorServiceImpl#writePortletApp(com.sun.java.xml.ns.portlet.portlet_app_2_0_xsd.PortletAppType, java.io.OutputStream)}.
@@ -411,5 +464,5 @@ public class JaxBDescriptorServiceImplTest extends TestCase{
         PortletDefinition pd = (PortletDefinition) portletDD.getPortlets().get( 0 );
         assertEquals( pd.getExpirationCache(), 0 );
     }
-
+    
 }
