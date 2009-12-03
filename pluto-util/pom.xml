@@ -24,7 +24,9 @@
         <groupId>org.apache.portals.pluto</groupId>
         <version>2.0.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>pluto-util</artifactId>
+    <packaging>bundle</packaging>
     <name>Apache Pluto Utilities</name>
 
     <!-- The dependencies for the ApplicationServerHook project

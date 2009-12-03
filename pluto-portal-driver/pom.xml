@@ -17,7 +17,8 @@
   specific language governing permissions and limitations
   under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -27,6 +28,7 @@
     </parent>
 
     <artifactId>pluto-portal-driver</artifactId>
+    <packaging>bundle</packaging>
     <name>Apache Pluto Portal Driver</name>
 
     <dependencies>
@@ -65,17 +67,17 @@
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
-      <!--  CCPP Libraries -->
+        <!--  CCPP Libraries -->
         <dependency>
             <groupId>javax.ccpp</groupId>
             <artifactId>ccpp</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>jsp-api</artifactId>
-		    <scope>provided</scope>
-   	    </dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -123,8 +125,8 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
-  
-    <!-- Testing Libraries ================================================= -->
+
+        <!-- Testing Libraries ================================================= -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
@@ -149,11 +151,26 @@
 
     <build>
         <resources>
-             <resource>
-                 <directory>src/main/resources</directory>
-                 <filtering>true</filtering>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
             </resource>
-       </resources>        
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Import-Package>javax.ccpp;resolution:=optional,
+                            org.springframework.web.context;resolution:=optional,
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <!-- Don't create distribution artifacts -->

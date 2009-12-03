@@ -27,7 +27,7 @@
 	</parent>
 
 	<artifactId>pluto-container-driver-api</artifactId>
-	<packaging>jar</packaging>
+    <packaging>bundle</packaging>
 	<name>Apache Pluto Container Driver API</name>
 	
 	<dependencies>
@@ -57,7 +57,21 @@
             <scope>compile</scope>
         </dependency>
 	</dependencies>
+    <build>
+        <plugins>
+            <plugin>
+              <groupId>org.apache.felix</groupId>
+              <artifactId>maven-bundle-plugin</artifactId>
+              <configuration>
+                <instructions>
+                    <Import-Package>javax.ccpp;resolution:=optional,*</Import-Package>
+                </instructions>
+              </configuration>
+            </plugin>
+        </plugins>
 
+    </build>
+   
     <!-- Don't create distribution artifacts -->
     <profiles>
         <profile>

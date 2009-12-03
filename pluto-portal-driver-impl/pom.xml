@@ -27,6 +27,7 @@
     </parent>
 
     <artifactId>pluto-portal-driver-impl</artifactId>
+    <packaging>bundle</packaging>
     <name>Apache Pluto Portal Driver Implementation Classes</name>
 
     <dependencies>
@@ -133,6 +134,25 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+              <groupId>org.apache.felix</groupId>
+              <artifactId>maven-bundle-plugin</artifactId>
+              <configuration>
+                <instructions>
+                    <Export-Package>org.apache.pluto.driver.config.impl,
+                        org.apache.pluto.driver.services.container,
+                        org.apache.pluto.driver.services.impl.resource,
+                        org.apache.pluto.driver.url.impl
+                    </Export-Package>
+                    <Import-Package>javax.ccpp;resolution:=optional,*</Import-Package>
+                </instructions>
+              </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <!-- Don't create distribution artifacts -->
     <profiles>

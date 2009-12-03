@@ -27,6 +27,7 @@
     </parent>
 
     <artifactId>pluto-taglib</artifactId>
+    <packaging>bundle</packaging>
     <name>Apache Pluto Portlet Tag Library</name>
     <description>Apache Pluto's Java Portlet Specification Tag Library implementation</description>
 

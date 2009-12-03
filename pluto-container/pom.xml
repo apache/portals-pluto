@@ -27,6 +27,7 @@
     </parent>
   
     <artifactId>pluto-container</artifactId>
+    <packaging>bundle</packaging>
     <name>Apache Pluto Portlet Container</name>
     <description>The Apache Pluto portlet container.</description>
 
@@ -144,6 +145,20 @@
                        <exclude>src/main/resources/org/apache/pluto/container/impl/web-app_2_3.dtd</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.felix</groupId>
+              <artifactId>maven-bundle-plugin</artifactId>
+              <configuration>
+                <instructions>
+                    <Export-Package>org.apache.pluto.container.impl,
+                        org.apache.pluto.container.om.portlet.impl,
+                        org.apache.pluto.container.om.portlet10.impl,
+                        org.apache.pluto.container.util
+                    </Export-Package>
+                    <Import-Package>javax.ccpp;resolution:=optional,*</Import-Package>
+                </instructions>
+              </configuration>
             </plugin>
         </plugins>
     </build>

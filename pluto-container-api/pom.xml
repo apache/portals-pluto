@@ -27,6 +27,7 @@
 	</parent>
 
 	<artifactId>pluto-container-api</artifactId>
+    <packaging>bundle</packaging>
 	<name>Apache Pluto Container API</name>
 	
 	<dependencies>
@@ -50,6 +51,21 @@
         </dependency>
     
 	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+              <groupId>org.apache.felix</groupId>
+              <artifactId>maven-bundle-plugin</artifactId>
+              <configuration>
+                <instructions>
+                    <Import-Package>javax.ccpp;resolution:=optional,*</Import-Package>
+                </instructions>
+              </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
 
     <!-- Don't create distribution artifacts -->
     <profiles>
