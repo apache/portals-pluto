@@ -28,7 +28,8 @@ import org.apache.pluto.driver.services.portal.PageConfig;
  */
 public interface RenderConfigAdminService {
 
-    public void addPage(PageConfig config)
-        throws DriverConfigurationException;
+    void addPage(PageConfig config) throws DriverConfigurationException;
 
+    void removePage(PageConfig pageConfig) throws DriverConfigurationException;
+    
 }
