@@ -28,6 +28,7 @@ import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURLParser;
+import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Interface defining a means for retrieving driver services
@@ -52,7 +53,7 @@ public interface DriverConfiguration {
      * @throws DriverConfigurationException when an error occurs during startup.
      * @param context
      */
-    void init(ServletContext context) throws DriverConfigurationException;
+    void init(ResourceSource context) throws DriverConfigurationException;
 
     /**
      * Shutdown method used to remove the driver

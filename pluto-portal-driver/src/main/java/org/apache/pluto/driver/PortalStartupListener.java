@@ -16,12 +16,11 @@
  */
 package org.apache.pluto.driver;
 
+import java.io.InputStream;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.driver.PortalDriverServices;
@@ -29,7 +28,9 @@ import org.apache.pluto.container.impl.PortletContainerFactory;
 import org.apache.pluto.driver.config.AdminConfiguration;
 import org.apache.pluto.driver.config.DriverConfiguration;
 import org.apache.pluto.driver.config.DriverConfigurationException;
-import org.apache.pluto.driver.container.PortalDriverServicesImpl;
+import org.apache.pluto.driver.container.ResourceSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -93,7 +94,7 @@ public class PortalStartupListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         LOG.info("Starting up Pluto Portal Driver. . .");
 
-        ServletContext servletContext = event.getServletContext();
+        final ServletContext servletContext = event.getServletContext();
 
         WebApplicationContext springContext = null;
         
@@ -111,7 +112,11 @@ public class PortalStartupListener implements ServletContextListener {
         DriverConfiguration driverConfiguration = (DriverConfiguration)
                 springContext.getBean("DriverConfiguration");
 
-        driverConfiguration.init(servletContext);
+        driverConfiguration.init(new ResourceSource() {
+            public InputStream getResourceAsStream(String resourceName) {
+                return servletContext.getResourceAsStream(resourceName);
+            }
+        });
 
         LOG.debug(" [1b] Registering DriverConfiguration. . .");
         servletContext.setAttribute(DRIVER_CONFIG_KEY, driverConfiguration);

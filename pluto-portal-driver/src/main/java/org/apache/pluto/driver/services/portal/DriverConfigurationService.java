@@ -16,9 +16,8 @@
  */
 package org.apache.pluto.driver.services.portal;
 
-import javax.servlet.ServletContext;
-
 import org.apache.pluto.driver.config.DriverConfigurationException;
+import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Abstract interface defining lifecycle methods for
@@ -34,11 +33,10 @@ public interface DriverConfigurationService {
      * resources from the context and instantiate any required
      * services.
      *
-     * @param ctx the Portal's servlet context in which the
-     * service will be executing.
+     * @param resourceSource
      *
      */
-    void init(ServletContext ctx) throws DriverConfigurationException;
+    void init(ResourceSource resourceSource) throws DriverConfigurationException;
 
     /**
      * Destroy the service, notifying it of shutdown.

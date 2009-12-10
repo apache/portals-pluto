@@ -156,7 +156,6 @@
                         org.apache.pluto.container.om.portlet10.impl,
                         org.apache.pluto.container.util
                     </Export-Package>
-                    <Import-Package>javax.ccpp;resolution:=optional,*</Import-Package>
                 </instructions>
               </configuration>
             </plugin>

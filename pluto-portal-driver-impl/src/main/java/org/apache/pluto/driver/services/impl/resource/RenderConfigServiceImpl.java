@@ -20,12 +20,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.ServletContext;
-
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
+import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Default implementation of all of the portal Services.
@@ -40,16 +39,23 @@ public class RenderConfigServiceImpl
 
     private ResourceConfig config;
 
-//
+    public RenderConfigServiceImpl() {
+    }
+
+    public RenderConfigServiceImpl(ResourceConfig config) {
+        this.config = config;
+    }
+
+    //
 // Lifecycle Methods
 //
     /**
      * Initialization Lifecycle Method
-     * @param ctx
+     * @param resourceSource
      */
-    public void init(ServletContext ctx) {
+    public void init(ResourceSource resourceSource) {
         try {
-            InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
+            InputStream in = resourceSource.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
             config = ResourceConfigReader.getFactory().parse(in);
         }
         catch(Exception e) {

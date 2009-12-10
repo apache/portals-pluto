@@ -189,7 +189,14 @@
             <roles>
                 <role>Java Developer</role>
             </roles>
-    </developer>
+        </developer>
+
+        <developer>
+            <name>David Jencks</name>
+            <id>djencks</id>
+            <email>djencks#aT#apache.d0t.org</email>
+            <timezone>-7</timezone>
+        </developer>
 
     </developers>
 

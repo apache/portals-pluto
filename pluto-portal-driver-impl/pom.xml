@@ -72,6 +72,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -147,7 +148,6 @@
                         org.apache.pluto.driver.services.impl.resource,
                         org.apache.pluto.driver.url.impl
                     </Export-Package>
-                    <Import-Package>javax.ccpp;resolution:=optional,*</Import-Package>
                 </instructions>
               </configuration>
             </plugin>

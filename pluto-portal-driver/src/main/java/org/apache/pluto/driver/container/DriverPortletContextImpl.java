@@ -41,7 +41,7 @@ public class DriverPortletContextImpl extends PortletContextImpl implements Driv
     /**
      * Constructs an instance.
      * @param servletContext  the servlet context in which we are contained.
-     * @param portletAppDD  the portlet application descriptor.
+     * @param portletApp  the portlet application descriptor.
      */
     public DriverPortletContextImpl(ServletContext servletContext,
                               PortletApplicationDefinition portletApp,

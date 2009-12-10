@@ -22,7 +22,6 @@ import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
-import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +37,7 @@ import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
+import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Allows clients to determine if a particular PortletMode is supported
@@ -65,9 +65,6 @@ public class SupportedModesServiceImpl implements SupportedModesService
     /** PropertyConfig Service used to obtain supported portal modes */
     private PropertyConfigService propertyService;
 
-    /** The portal's servletContext **/
-    private ServletContext servletContext;
-    
     private PortletContextService portletContextService;
 
     /**
@@ -75,8 +72,10 @@ public class SupportedModesServiceImpl implements SupportedModesService
      *
      * @param propertyService the PropertyConfigService
      */
-    public SupportedModesServiceImpl(PropertyConfigService propertyService) {
+    public SupportedModesServiceImpl(PropertyConfigService propertyService, PortletContextService portletContextService) {
         this.propertyService = propertyService;
+        this.portletContextService = portletContextService;
+        loadPortalModes();
     }
 
     //  SupportedModesService Implementation -----------------
@@ -153,11 +152,8 @@ public class SupportedModesServiceImpl implements SupportedModesService
         LOG.debug("Supported Modes Service destroyed.");
     }
 
-    public void init(ServletContext ctx) throws DriverConfigurationException {
-        this.servletContext = ctx;
-        this.portletContextService = PlutoServices.getServices().getPortletContextService();
-        loadPortalModes();
-    }    
+    public void init(ResourceSource resourceSource) throws DriverConfigurationException {
+    }
     
 
     /** Populates the supportedPortletModesByPortal set. */
@@ -215,7 +211,7 @@ public class SupportedModesServiceImpl implements SupportedModesService
 	 * Gets all modes supported by a portlet that are defined in the portlet's supports child element 
 	 * in portlet.xml.
 	 * 
-	 * @param portlet of interest.
+	 * @param portletId of interest.
 	 * @return all portlet modes supported by a portlet.
 	 */
 	public Set<PortletMode> getSupportedPortletModes(String portletId) throws PortletContainerException {

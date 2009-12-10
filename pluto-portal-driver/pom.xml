@@ -67,7 +67,6 @@
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!--  CCPP Libraries -->
         <dependency>
             <groupId>javax.ccpp</groupId>
             <artifactId>ccpp</artifactId>
@@ -163,8 +162,7 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Import-Package>javax.ccpp;resolution:=optional,
-                            org.springframework.web.context;resolution:=optional,
+                        <Import-Package>org.springframework.web.context;resolution:=optional,
                             *
                         </Import-Package>
                     </instructions>

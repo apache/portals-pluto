@@ -19,12 +19,11 @@ package org.apache.pluto.driver.services.impl.resource;
 import java.io.InputStream;
 import java.util.Set;
 
-import javax.servlet.ServletContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
+import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Default implementation of all of the portal Services.
@@ -45,13 +44,17 @@ public class PropertyConfigServiceImpl implements
         
     }
 
+    public PropertyConfigServiceImpl(ResourceConfig config) {
+        this.config = config;
+    }
+
     /**
      * Initialization Lifecycle Method
-     * @param ctx
+     * @param resourceSource
      */
-    public void init(ServletContext ctx) {
+    public void init(ResourceSource resourceSource) {
         try {
-            InputStream in = ctx.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
+            InputStream in = resourceSource.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
             config = ResourceConfigReader.getFactory().parse(in);
         }
         catch(Exception e) {

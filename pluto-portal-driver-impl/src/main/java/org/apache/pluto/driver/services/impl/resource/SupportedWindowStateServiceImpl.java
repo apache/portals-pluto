@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.portlet.WindowState;
-import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +34,7 @@ import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.services.portal.PropertyConfigService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
+import org.apache.pluto.driver.container.ResourceSource;
 
 public class SupportedWindowStateServiceImpl implements
         SupportedWindowStateService 
@@ -44,11 +44,6 @@ public class SupportedWindowStateServiceImpl implements
     private static final Logger LOG = LoggerFactory.getLogger(SupportedWindowStateServiceImpl.class);
     
     /**
-     * Servlet context used to get a handle on the portlet container
-     */
-    private ServletContext servletContext = null;
-    
-    /** 
      * PropertyConfigService is injected by Spring.  We
      * use it to obtain the window states that the portal
      * supports.  It is protected only so that the unit
@@ -86,14 +81,38 @@ public class SupportedWindowStateServiceImpl implements
         JSR168_WINDOW_STATES.add(WindowState.NORMAL);
     }
     
-    private SupportedWindowStateServiceImpl()
-    {
-        // this impl requires a PropertyConfigService on construction.
-    }
-    
     public SupportedWindowStateServiceImpl( PropertyConfigService propertyService )
     {
         this.propertyService = propertyService;
+        LOG.debug( "Initializing SupportedWindowStateService... " );
+
+        portalSupportedWindowStates = propertyService.getSupportedWindowStates();
+        if ( LOG.isDebugEnabled() )
+        {
+            StringBuffer msg = new StringBuffer();
+
+            if ( portalSupportedWindowStates != null )
+            {
+                msg.append( "Portal supports [" + portalSupportedWindowStates.size() + "] window states.  ");
+                for ( Iterator i = portalSupportedWindowStates.iterator(); i.hasNext(); )
+                {
+                    msg.append( "[" + i.next() + "]" );
+                    if ( i.hasNext() )
+                    {
+                        msg.append(", ");
+                    }
+                }
+                LOG.debug(msg.toString());
+            }
+        }
+
+        if ( portalSupportedWindowStates == null )
+        {
+            final String msg = "Portal supported window states is null!";
+            LOG.error( msg );
+            throw new DriverConfigurationException( msg );
+        }
+        LOG.debug( "SupportedWindowStateService initialized." );
     }
     
     public boolean isWindowStateSupported(String portletId, String state)
@@ -185,52 +204,14 @@ public class SupportedWindowStateServiceImpl implements
         return false;
     }
 
-    public void destroy() throws DriverConfigurationException
-    {
-        LOG.debug( "Destroying SupportedWindowStateService... " );
-        portletRegistry = null;
-        propertyService = null;
-        portalSupportedWindowStates = null;
-        LOG.debug( "SupportedWindowStateService destroyed." );
-    }
-
-    public void init(ServletContext ctx) throws DriverConfigurationException
-    {
-        LOG.debug( "Initializing SupportedWindowStateService... " );
-
-        servletContext = ctx;
-        
-        portalSupportedWindowStates = propertyService.getSupportedWindowStates();
-        if ( LOG.isDebugEnabled() )
-        {
-            StringBuffer msg = new StringBuffer();
-            
-            if ( portalSupportedWindowStates != null )
-            {
-                msg.append( "Portal supports [" + portalSupportedWindowStates.size() + "] window states.  ");
-                for ( Iterator i = portalSupportedWindowStates.iterator(); i.hasNext(); )
-                {
-                    msg.append( "[" + i.next() + "]" );
-                    if ( i.hasNext() )
-                    {
-                        msg.append(", ");
-                    }
-                }
-                LOG.debug(msg.toString());
-            }    
-        }
-        
-        if ( portalSupportedWindowStates == null )
-        {
-            final String msg = "Portal supported window states is null!";
-            LOG.error( msg );
-            throw new DriverConfigurationException( msg );
-        }
-        LOG.debug( "SupportedWindowStateService initialized." );        
-    }
-
     private PortletRegistryService getPortletRegistryService()
     {
         return PlutoServices.getServices().getPortletRegistryService();
+    }
+
+    public void init(ResourceSource resourceSource) throws DriverConfigurationException {
+    }
+
+    public void destroy() throws DriverConfigurationException {
     }
 }
