@@ -18,165 +18,147 @@
   under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.apache.portals.pluto</groupId>
-        <artifactId>pluto</artifactId>
-        <version>2.0.1-SNAPSHOT</version>
-    </parent>
-  
-    <artifactId>pluto-container</artifactId>
-    <packaging>bundle</packaging>
-    <name>Apache Pluto Portlet Container</name>
-    <description>The Apache Pluto portlet container.</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.portals.pluto</groupId>
-            <artifactId>pluto-container-api</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.portals.pluto</groupId>
+    <artifactId>pluto</artifactId>
+    <version>2.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>pluto-container</artifactId>
+  <packaging>bundle</packaging>
+  <name>Apache Pluto Portlet Container</name>
+  <description>The Apache Pluto portlet container.</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.portals.pluto</groupId>
+      <artifactId>pluto-container-api</artifactId>
+      <version>${pom.version}</version>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- Other Support Libraries =========================================== -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
 
     <!-- Specification Libraries =========================================== -->
-        <dependency>
-            <groupId>org.apache.portals</groupId>
-            <artifactId>portlet-api_2.0_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    
-        <dependency>
-	        <groupId>javax.xml.bind</groupId>
-	        <artifactId>jaxb-api</artifactId>
-	        <scope>compile</scope>
-	    </dependency>
-	    
-	    <dependency>
-	        <groupId>com.sun.xml.bind</groupId>
-	        <artifactId>jaxb-impl</artifactId>
-	        <scope>compile</scope>
-	    </dependency>
-        <dependency>
-            <groupId>stax</groupId>
-            <artifactId>stax</artifactId>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>stax</groupId>
-                    <artifactId>stax-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-    
+    <dependency>
+      <groupId>org.apache.portals</groupId>
+      <artifactId>portlet-api_2.0_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>stax</groupId>
+      <artifactId>stax</artifactId>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>stax</groupId>
+          <artifactId>stax-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <!--  CCPP Libraries -->
-        <dependency>
-            <groupId>javax.ccpp</groupId>
-            <artifactId>ccpp</artifactId>
-            <scope>provided</scope>
-        </dependency>
+    <dependency>
+      <groupId>javax.ccpp</groupId>
+      <artifactId>ccpp</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- Testing Libraries ================================================= -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jmock</groupId>
-            <artifactId>jmock</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jmock</groupId>
-            <artifactId>jmock-cglib</artifactId>
-        </dependency>
-    </dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jmock</groupId>
+      <artifactId>jmock</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jmock</groupId>
+      <artifactId>jmock-cglib</artifactId>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </testResource>
-        </testResources>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
 
-        <plugins>
-          <!-- Surefire Plugin: Exec Tests ===================================== -->
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/PlutoTestCase.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>rat-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                       <exclude>src/main/resources/org/apache/pluto/container/impl/portlet-app_1_0.xsd</exclude>
-                       <exclude>src/main/resources/org/apache/pluto/container/impl/portlet-app_2_0.xsd</exclude>
-                       <exclude>src/main/resources/org/apache/pluto/container/impl/web-app_2_3.dtd</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.felix</groupId>
-              <artifactId>maven-bundle-plugin</artifactId>
-              <configuration>
-                <instructions>
-                    <Export-Package>org.apache.pluto.container.impl,
-                        org.apache.pluto.container.om.portlet.impl,
-                        org.apache.pluto.container.om.portlet10.impl,
-                        org.apache.pluto.container.util
-                    </Export-Package>
-                </instructions>
-              </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-    <!-- Don't create distribution artifacts -->
-    <profiles>
-        <profile>
-            <id>apache-release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <configuration>
-                            <skipAssembly>true</skipAssembly>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <plugins>
+      <!-- Surefire Plugin: Exec Tests ===================================== -->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/PlutoTestCase.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rat-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>src/main/resources/org/apache/pluto/container/impl/portlet-app_1_0.xsd</exclude>
+            <exclude>src/main/resources/org/apache/pluto/container/impl/portlet-app_2_0.xsd</exclude>
+            <exclude>src/main/resources/org/apache/pluto/container/impl/web-app_2_3.dtd</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <configuration>
+          <instructions>
+            <Export-Package>org.apache.pluto.container.impl,
+              org.apache.pluto.container.om.portlet.impl,
+              org.apache.pluto.container.om.portlet10.impl,
+              org.apache.pluto.container.util
+            </Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
