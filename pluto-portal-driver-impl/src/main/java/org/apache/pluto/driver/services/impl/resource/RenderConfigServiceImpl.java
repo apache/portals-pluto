@@ -16,15 +16,12 @@
  */
 package org.apache.pluto.driver.services.impl.resource;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.pluto.driver.config.DriverConfigurationException;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.admin.RenderConfigAdminService;
-import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Default implementation of all of the portal Services.
@@ -37,39 +34,11 @@ public class RenderConfigServiceImpl
     implements RenderConfigService, RenderConfigAdminService {
 
 
-    private ResourceConfig config;
-
-    public RenderConfigServiceImpl() {
-    }
+    private final ResourceConfig config;
 
     public RenderConfigServiceImpl(ResourceConfig config) {
         this.config = config;
     }
-
-    //
-// Lifecycle Methods
-//
-    /**
-     * Initialization Lifecycle Method
-     * @param resourceSource
-     */
-    public void init(ResourceSource resourceSource) {
-        try {
-            InputStream in = resourceSource.getResourceAsStream(ResourceConfigReader.CONFIG_FILE);
-            config = ResourceConfigReader.getFactory().parse(in);
-        }
-        catch(Exception e) {
-            throw new DriverConfigurationException(e);
-        }
-    }
-
-    /**
-     * Shutdown the ResourceService.
-     */
-    public void destroy() {
-        config = null;
-    }
-
 
     public String getPortalName() {
         return config.getPortalName();

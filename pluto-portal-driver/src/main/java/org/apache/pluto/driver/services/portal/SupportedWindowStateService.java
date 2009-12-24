@@ -24,7 +24,7 @@ package org.apache.pluto.driver.services.portal;
  * @version $Id$
  * @see javax.portlet.WindowState
  */
-public interface SupportedWindowStateService extends DriverConfigurationService {
+public interface SupportedWindowStateService {
 
     /**
      * Returns true if the portlet and the portal support the supplied

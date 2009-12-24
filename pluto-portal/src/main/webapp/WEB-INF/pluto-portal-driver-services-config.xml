@@ -44,104 +44,194 @@ limitations under the License.
 
 <beans>
 
-	<bean id="PlutoServices"
-	      class="org.apache.pluto.container.driver.PlutoServices"
-          singleton="true">
-      <constructor-arg><ref bean="PortalDriverServices"/></constructor-arg>          	      
-	</bean>  
-	
-    <bean id="PortalDriverServices"
-          class="org.apache.pluto.driver.container.PortalDriverServicesImpl"
-          singleton="true">
-      <constructor-arg><ref bean="PortalContext"/></constructor-arg>
-      <constructor-arg><ref bean="PortletRequestContextService"/></constructor-arg>
-      <constructor-arg><ref bean="EventCoordinationService"/></constructor-arg>
-      <constructor-arg><ref bean="FilterManagerService"/></constructor-arg>
-      <constructor-arg><ref bean="PortletURLListenerService"/></constructor-arg>
-    </bean>
+  <bean id="PortletContainer"
+        class="org.apache.pluto.container.impl.PortletContainerImpl"
+        init-method="init"
+        singleton="true">
+    <constructor-arg>
+      <bean factory-bean="DriverConfiguration" factory-method="getPortalName"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortalDriverServices"/>
+    </constructor-arg>
+  </bean>
 
-    <bean id="PortalContext"
-          class="org.apache.pluto.driver.services.container.PortalContextImpl">
-        <constructor-arg><ref bean="DriverConfiguration"/></constructor-arg>
-    </bean>
+  <bean id="PlutoServices"
+        class="org.apache.pluto.container.driver.PlutoServices"
+        singleton="true">
+    <constructor-arg>
+      <ref bean="PortalDriverServices"/>
+    </constructor-arg>
+  </bean>
+
+  <bean id="PortalDriverServices"
+        class="org.apache.pluto.driver.container.PortalDriverServicesImpl"
+        singleton="true">
+    <constructor-arg>
+      <ref bean="PortalContext"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletRequestContextService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="EventCoordinationService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="FilterManagerService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletURLListenerService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <null/>
+      <!--<bean class="org.apache.pluto.driver.container.DefaultOptionalContainerServices"/>-->
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="org.apache.pluto.driver.container.DefaultPortalAdministrationService"/>
+    </constructor-arg>
+  </bean>
+
+  <bean id="PortalContext"
+        class="org.apache.pluto.driver.services.container.PortalContextImpl">
+    <constructor-arg>
+      <ref bean="DriverConfiguration"/>
+    </constructor-arg>
+  </bean>
 
 
+  <!-- ================================================ -->
+  <!-- The single top element of the configuration tree -->
+  <!-- ================================================ -->
+  <bean id="DriverConfiguration"
+        class="org.apache.pluto.driver.config.impl.DriverConfigurationImpl">
 
-    <!-- ================================================ -->
-    <!-- The single top element of the configuration tree -->
-    <!-- ================================================ -->
-    <bean id="DriverConfiguration"
-          class="org.apache.pluto.driver.config.impl.DriverConfigurationImpl">
+    <!-- ===== Portal Services ===== -->
+    <constructor-arg>
+      <ref bean="PortalURLParser"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="ResourceConfigFactory"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="RenderConfigService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="SupportedModesService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="SupportedWindowStatesService"/>
+    </constructor-arg>
 
-      <!-- ===== Portal Services ===== -->
-      <constructor-arg><ref bean="PortalURLParser"/></constructor-arg>
-      <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
-      <constructor-arg><ref bean="RenderConfigService"/></constructor-arg>
-      <constructor-arg><ref bean="SupportedModesService"/></constructor-arg>
-      <constructor-arg><ref bean="SupportedWindowStatesService"/></constructor-arg>
+    <!--
+    <property name="portletPreferencesService"><ref bean="PortletPreferencesService"/></property>
+    -->
+  </bean>
 
-      <!--
-      <property name="portletPreferencesService"><ref bean="PortletPreferencesService"/></property>
-      -->
-    </bean>
-
-    <!-- ================================================ -->
-    <!-- The single top element of the administration tree -->
-    <!-- ================================================ -->
-    <bean id="AdminConfiguration" class="org.apache.pluto.driver.config.impl.AdminConfigurationImpl">
-      <property name="renderConfigAdminService"><ref bean="RenderConfigService"/></property>
-    </bean>
+  <!-- ================================================ -->
+  <!-- The single top element of the administration tree -->
+  <!-- ================================================ -->
+  <bean id="AdminConfiguration" class="org.apache.pluto.driver.config.impl.AdminConfigurationImpl">
+    <property name="renderConfigAdminService">
+      <ref bean="RenderConfigService"/>
+    </property>
+  </bean>
 
 
-    <!-- ================================================ -->
-    <!-- Portal Services injected into the Configuration  -->
-    <!-- ================================================ -->
-    <bean id="PortalURLParser"
-          class="org.apache.pluto.driver.url.impl.PortalURLParserImpl"
-          factory-method="getParser"
-          singleton="true">
-    </bean>
+  <!-- ================================================ -->
+  <!-- Portal Services injected into the Configuration  -->
+  <!-- ================================================ -->
+  <bean id="ResourceConfigFactory" class="org.apache.pluto.driver.services.impl.resource.StaticServletContextResourceConfigFactory"
+        factory-method="getResourceConfig">
+  </bean>
+  <bean id="PortalURLParser"
+        class="org.apache.pluto.driver.url.impl.PortalURLParserImpl"
+        factory-method="getParser"
+        singleton="true">
+  </bean>
 
-    <bean id="PropertyConfigService"
-          class="org.apache.pluto.driver.services.impl.resource.PropertyConfigServiceImpl"
-          singleton="true">
-    </bean>
+  <!--<bean id="ResourceConfigFactory"-->
+        <!--class="org.apache.pluto.driver.services.impl.resource.PropertyConfigServiceImpl"-->
+        <!--singleton="true">-->
+    <!--<constructor-arg>-->
+      <!--<ref bean="ResourceConfigFactory"/>-->
+    <!--</constructor-arg>-->
+  <!--</bean>-->
 
-    <bean id="RenderConfigService"
-          class="org.apache.pluto.driver.services.impl.resource.RenderConfigServiceImpl"
-          singleton="true">
-    </bean>
-    
-    <bean id="SupportedModesService"
-          class="org.apache.pluto.driver.services.impl.resource.SupportedModesServiceImpl"
-          singleton="true">
-          <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
-    </bean>
+  <bean id="RenderConfigService"
+        class="org.apache.pluto.driver.services.impl.resource.RenderConfigServiceImpl"
+        singleton="true">
+    <constructor-arg>
+      <ref bean="ResourceConfigFactory"/>
+    </constructor-arg>
+  </bean>
 
-    <bean id="SupportedWindowStatesService"
-          class="org.apache.pluto.driver.services.impl.resource.SupportedWindowStateServiceImpl"
-          singleton="true">
-          <constructor-arg><ref bean="PropertyConfigService"/></constructor-arg>
-    </bean>
+  <bean id="SupportedModesService"
+        class="org.apache.pluto.driver.services.impl.resource.SupportedModesServiceImpl"
+        singleton="true">
+    <constructor-arg>
+      <ref bean="ResourceConfigFactory"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
+  </bean>
 
-    <!-- ================================================ -->
-    <!-- Container Services injected into  Configuration  -->
-    <!-- ================================================ -->
-    <bean id="PortletRequestContextService"
-          class="org.apache.pluto.driver.services.container.PortletRequestContextServiceImpl"
-          singleton="true">
-    </bean>
-    <bean id="EventCoordinationService"
-          class="org.apache.pluto.driver.services.container.EventCoordinationServiceImpl"
-          singleton="true">
-    </bean>
-    <bean id="FilterManagerService"
-          class="org.apache.pluto.driver.services.container.FilterManagerServiceImpl"
-          singleton="true">
-    </bean>
-    <bean id="PortletURLListenerService"
-          class="org.apache.pluto.driver.services.container.PortletURLListenerServiceImpl"
-          singleton="true">
-    </bean>
+  <bean id="SupportedWindowStatesService"
+        class="org.apache.pluto.driver.services.impl.resource.SupportedWindowStateServiceImpl"
+        singleton="true">
+    <constructor-arg>
+      <ref bean="ResourceConfigFactory"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
+  </bean>
+
+  <!-- ================================================ -->
+  <!-- Container Services injected into  Configuration  -->
+  <!-- ================================================ -->
+  <bean id="PortletRequestContextService"
+        class="org.apache.pluto.driver.services.container.PortletRequestContextServiceImpl"
+        singleton="true">
+  </bean>
+  <bean id="EventCoordinationService"
+        class="org.apache.pluto.driver.services.container.EventCoordinationServiceImpl"
+        singleton="true">
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <ref bean="PortletContextService"/>
+    </constructor-arg>
+  </bean>
+  <bean id="FilterManagerService"
+        class="org.apache.pluto.driver.services.container.FilterManagerServiceImpl"
+        singleton="true">
+  </bean>
+  <bean id="PortletURLListenerService"
+        class="org.apache.pluto.driver.services.container.PortletURLListenerServiceImpl"
+        singleton="true">
+  </bean>
+  <bean id="PortletContextService"
+        class="org.apache.pluto.driver.container.PortletContextManager">
+    <constructor-arg>
+      <ref bean="RequestDispatcherService"/>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="org.apache.pluto.container.impl.PortletAppDescriptorServiceImpl"/>
+    </constructor-arg>
+  </bean>
+  <bean id="RequestDispatcherService"
+        class="org.apache.pluto.container.impl.RequestDispatcherServiceImpl">
+  </bean>
 
 </beans>

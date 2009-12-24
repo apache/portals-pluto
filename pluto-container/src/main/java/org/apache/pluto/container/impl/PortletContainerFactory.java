@@ -30,6 +30,7 @@ import org.apache.pluto.container.util.ArgumentUtility;
  *
  * @version 1.0
  * @since Sep 18, 2004
+ * @deprecated just use blueprint or spring to construct the PortletContainer
  */
 public class PortletContainerFactory {
 

@@ -21,14 +21,12 @@ import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
-import javax.servlet.ServletContext;
 
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.url.PortalURLParser;
-import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Interface defining a means for retrieving driver services
@@ -42,25 +40,6 @@ import org.apache.pluto.driver.container.ResourceSource;
  *
  */
 public interface DriverConfiguration {
-
-//
-// Lifecycle Methods
-//
-
-    /**
-     * Initialization method used to place the driver
-     * configuration into service.
-     * @throws DriverConfigurationException when an error occurs during startup.
-     * @param context
-     */
-    void init(ResourceSource context) throws DriverConfigurationException;
-
-    /**
-     * Shutdown method used to remove the driver
-     * configuration from service;
-     * @throws DriverConfigurationException when an error occurs during shutdown.
-     */
-    void destroy() throws DriverConfigurationException;
 
 //
 // Service / Configuration Methods

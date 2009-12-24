@@ -16,28 +16,10 @@
  */
 package org.apache.pluto.driver.services.container;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.portlet.Event;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.namespace.QName;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.EventCoordinationService;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.driver.PlutoServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.om.portlet.EventDefinition;
@@ -52,6 +34,15 @@ import org.apache.pluto.driver.services.portal.PageConfig;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
 import org.apache.pluto.driver.url.impl.PortalURLParserImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.Event;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
+import java.util.*;
 
 public class EventCoordinationServiceImpl implements EventCoordinationService
 {
@@ -61,23 +52,19 @@ public class EventCoordinationServiceImpl implements EventCoordinationService
 	private static final long WAITING_CYCLE = 100;
 
 	/** PortletRegistryService used to obtain PortletApplicationConfig objects */
-	private PortletRegistryService portletRegistry;
+	private final PortletRegistryService portletRegistry;
 
 	/** PortletContextService used to obtain PortletContext objects */
-    private PortletContextService portletContextService;
-    
+    private final PortletContextService portletContextService;
+
+    public EventCoordinationServiceImpl(PortletRegistryService portletRegistry, PortletContextService portletContextService) {
+        this.portletRegistry = portletRegistry;
+        this.portletContextService = portletContextService;
+    }
+
     public void processEvents(PortletContainer container, PortletWindow portletWindow, HttpServletRequest request,
                               HttpServletResponse response, List<Event> events)
     {
-        if (portletRegistry == null)
-        {
-            portletRegistry = PlutoServices.getServices().getPortletRegistryService();
-        }
-        if (portletContextService == null)
-        {
-            portletContextService = PlutoServices.getServices().getPortletContextService();
-        }
-        
         ServletContext containerServletContext = PortalRequestContext.getContext(request).getServletContext();
 		DriverConfiguration driverConfig = (DriverConfiguration) containerServletContext
 				.getAttribute(AttributeKeys.DRIVER_CONFIG);

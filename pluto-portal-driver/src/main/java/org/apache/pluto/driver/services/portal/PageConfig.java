@@ -25,11 +25,11 @@ public class PageConfig {
 
     private String name;
     private String uri;
-    private Collection portletIds;
+    private Collection<String> portletIds;
     private int orderNumber;
 
     public PageConfig() {
-        this.portletIds = new ArrayList();
+        this.portletIds = new ArrayList<String>();
     }
 
     public String getName() {
@@ -48,11 +48,11 @@ public class PageConfig {
         this.uri = uri;
     }
 
-    public Collection getPortletIds() {
+    public Collection<String> getPortletIds() {
         return portletIds;
     }
 
-    public void setPortletIds(Collection ids) {
+    public void setPortletIds(Collection<String> ids) {
         this.portletIds = ids;
     }
 

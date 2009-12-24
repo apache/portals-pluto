@@ -52,15 +52,10 @@ public class PortletDescriptorRegistry {
     private static final StringManager EXCEPTIONS = StringManager.getManager(
             PortletDescriptorRegistry.class.getPackage().getName());
 
-    /** The static singleton registry instance. */
-    private static final PortletDescriptorRegistry REGISTRY =
-    		new PortletDescriptorRegistry();
-
-
     // Private Member Variables ------------------------------------------------
 
     /** The portlet application descriptor service. */
-    private PortletAppDescriptorService portletDDService;
+    private final PortletAppDescriptorService portletDDService;
 
     /**
      * Cache of descriptors.  WeakHashMap is used so that
@@ -69,44 +64,16 @@ public class PortletDescriptorRegistry {
      * point I'm wondering if we really want to add another
      * config requirement in the servlet xml? Hmm. . .
      */
-    private Map<ServletContext, PortletApplicationDefinition> cache = new WeakHashMap<ServletContext, PortletApplicationDefinition>();
+    private final Map<ServletContext, PortletApplicationDefinition> cache = new WeakHashMap<ServletContext, PortletApplicationDefinition>();
 
 
     // Constructor -------------------------------------------------------------
 
-    /**
-     * Returns the singleton registry instance.
-     * @return the singleton registry instance.
-     */
-    public static PortletDescriptorRegistry getRegistry() {
-        return REGISTRY;
+    //someone didn't want this accessible externally.
+    PortletDescriptorRegistry(PortletAppDescriptorService portletDDService)
+    {
+        this.portletDDService = portletDDService;
     }
-
-    /**
-     * Private constructor that prevents external instantiation.
-     * We must modify the context class loader in order for
-     * the Configuration utility to find the properties file.
-     * @throws PlutoConfigurationException  if fail to instantiate portlet
-     *         application descriptor service.
-     */
-    private PortletDescriptorRegistry()
-    throws PlutoConfigurationException {
-        String className = Configuration.getPortletAppDescriptorServiceImpl();
-        try {
-            Class<?> clazz = Class.forName(className);
-            portletDDService = (PortletAppDescriptorService) clazz.newInstance();
-        } catch (ClassNotFoundException ex) {
-            throw new PlutoConfigurationException(
-            		"Unable to find class " + className, ex);
-        } catch (InstantiationException ex) {
-            throw new PlutoConfigurationException(
-            		"Unable to instantiate class " + className, ex);
-        } catch (IllegalAccessException ex) {
-            throw new PlutoConfigurationException(
-            		"Unable to access class " + className, ex);
-        }
-    }
-
 
     // Public Methods ----------------------------------------------------------
 

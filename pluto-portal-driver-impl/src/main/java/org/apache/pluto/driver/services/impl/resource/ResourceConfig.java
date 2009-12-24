@@ -23,6 +23,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.pluto.driver.services.portal.RenderConfig;
+import org.apache.pluto.driver.services.portal.PropertyConfigService;
 
 /**
  * Encapsulation of the Pluto Driver ResourceConfig Info.
@@ -30,7 +31,8 @@ import org.apache.pluto.driver.services.portal.RenderConfig;
  * @version 1.0
  * @since Sep 23, 2004
  */
-public class ResourceConfig {
+public class ResourceConfig implements PropertyConfigService
+{
 
     /** Internal Logger. */
     private static final Logger LOG =
@@ -46,25 +48,16 @@ public class ResourceConfig {
     private String containerName;
 
     /** The portlet modes we will support. */
-    private Set supportedPortletModes;
+    private final Set<String> supportedPortletModes = new HashSet<String>();
 
     /** The window states we will support. */
-    private Set supportedWindowStates;
+    private final Set<String> supportedWindowStates = new HashSet<String>();
 
     /** The portlet applications registered with us. */
-    private final Map portletApplications;
+//    private final Map portletApplications;
 
     /** Encapsulation of render configuration data. */
     private RenderConfig renderConfig;
-
-    /**
-     * Default Constructor.
-     */
-    public ResourceConfig() {
-        this.supportedWindowStates = new HashSet();
-        this.supportedPortletModes = new HashSet();
-        this.portletApplications = new java.util.HashMap();
-    }
 
     /**
      * Standard Getter.
@@ -118,7 +111,7 @@ public class ResourceConfig {
      * Standard Getter.
      * @return the names of the supported portlet modes.
      */
-    public Set getSupportedPortletModes() {
+    public Set<String> getSupportedPortletModes() {
         return supportedPortletModes;
     }
 
@@ -126,8 +119,9 @@ public class ResourceConfig {
      * Standard Setter.
      * @param supportedPortletModes the names of the supported portlet modes.
      */
-    public void setSupportedPortletModes(Set supportedPortletModes) {
-        this.supportedPortletModes = supportedPortletModes;
+    public void setSupportedPortletModes(Set<String> supportedPortletModes) {
+        this.supportedPortletModes.clear();
+        this.supportedPortletModes.addAll(supportedPortletModes);
     }
 
     /**
@@ -142,7 +136,7 @@ public class ResourceConfig {
      * Standard Getter.
      * @return the names of the supported window states.
      */
-    public Set getSupportedWindowStates() {
+    public Set<String> getSupportedWindowStates() {
         return supportedWindowStates;
     }
 
@@ -150,8 +144,9 @@ public class ResourceConfig {
      * Standard Setter.
      * @param supportedWindowStates the names of the supported window states.
      */
-    public void setSupportedWindowStates(Set supportedWindowStates) {
-        this.supportedWindowStates = supportedWindowStates;
+    public void setSupportedWindowStates(Set<String> supportedWindowStates) {
+        this.supportedWindowStates.clear();
+        this.supportedWindowStates.addAll(supportedWindowStates);
     }
 
     /**

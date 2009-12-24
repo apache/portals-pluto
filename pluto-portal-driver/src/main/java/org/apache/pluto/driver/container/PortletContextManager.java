@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.RequestDispatcherService;
+import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.driver.DriverPortletConfig;
 import org.apache.pluto.container.driver.DriverPortletContext;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -89,12 +90,14 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
      */
     private final Map<String,ClassLoader> classLoaders = new HashMap<String,ClassLoader>();
     
-    private RequestDispatcherService rdService;
+    private final RequestDispatcherService rdService;
+    private final PortletDescriptorRegistry portletRegistry;
 
     // Constructor -------------------------------------------------------------
 
-    public PortletContextManager(RequestDispatcherService rdService) {
+    public PortletContextManager(RequestDispatcherService rdService, PortletAppDescriptorService portletAppDescriptorService) {
         this.rdService = rdService;
+        portletRegistry = new PortletDescriptorRegistry(portletAppDescriptorService);
     }
 
 
@@ -113,7 +116,6 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
 	    String contextPath = getContextPath(servletContext);
         String applicationName = contextPath.substring(1);
         if (!portletContexts.containsKey(applicationName)) {
-        	PortletDescriptorRegistry portletRegistry = PortletDescriptorRegistry.getRegistry();
 
             PortletApplicationDefinition portletApp = portletRegistry.getPortletAppDD(servletContext, applicationName, contextPath);
 

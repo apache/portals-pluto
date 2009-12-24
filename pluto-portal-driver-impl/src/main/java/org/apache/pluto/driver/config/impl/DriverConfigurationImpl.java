@@ -31,7 +31,6 @@ import org.apache.pluto.driver.services.portal.RenderConfigService;
 import org.apache.pluto.driver.services.portal.SupportedModesService;
 import org.apache.pluto.driver.services.portal.SupportedWindowStateService;
 import org.apache.pluto.driver.url.PortalURLParser;
-import org.apache.pluto.driver.container.ResourceSource;
 
 /**
  * Encapsulation of the Pluto Driver ResourceConfig.
@@ -62,27 +61,6 @@ public class DriverConfigurationImpl
         this.renderService = renderService;
         this.supportedModesService = supportedModesService;
         this.supportedWindowStateService = supportedWindowStateService;
-    }
-
-    public void init(ResourceSource context) {
-        this.propertyService.init(context);
-        this.renderService.init(context);
-        this.supportedModesService.init(context);
-        this.supportedWindowStateService.init(context);
-    }
-
-    public void destroy() {
-        if(propertyService != null)
-            propertyService.destroy();
-
-        if(renderService != null)
-            renderService.destroy();
-
-        if (supportedModesService != null)
-            supportedModesService.destroy();
-
-        if (supportedWindowStateService != null)
-            supportedWindowStateService.destroy();
     }
 
     /**

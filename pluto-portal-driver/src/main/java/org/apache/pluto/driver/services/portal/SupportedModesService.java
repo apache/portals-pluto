@@ -31,7 +31,7 @@ import org.apache.pluto.container.PortletContainerException;
  * @since September 9, 2006
  * @see PortletMode
  */
-public interface SupportedModesService extends DriverConfigurationService {
+public interface SupportedModesService {
     
     /**
      * Returns true if the portlet and the portal support the supplied mode.

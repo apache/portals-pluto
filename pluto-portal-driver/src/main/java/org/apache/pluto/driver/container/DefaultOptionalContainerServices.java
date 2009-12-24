@@ -60,7 +60,7 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
     public DefaultOptionalContainerServices() {
         rdService = new RequestDispatcherServiceImpl();
         portletPreferencesService = new DefaultPortletPreferencesService();
-        portletRegistryService = new PortletContextManager(rdService);
+        portletRegistryService = new PortletContextManager(rdService, new PortletAppDescriptorServiceImpl());
         portletContextService = (PortletContextManager)portletRegistryService;
         portletInvokerService = new DefaultPortletInvokerService(portletContextService);
         portletEnvironmentService = new PortletEnvironmentServiceImpl();

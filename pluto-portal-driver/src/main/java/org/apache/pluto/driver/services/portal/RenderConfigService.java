@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @since Aug 10, 2005
  */
-public interface RenderConfigService extends DriverConfigurationService {
+public interface RenderConfigService {
 
     /**
      * Retrieve an ordered list of all PageConfig instances.

@@ -471,13 +471,13 @@ public class PortletContainerImpl implements PortletContainer
 
     /**
      * The method initialise the FilterManager for later use in the PortletServlet
-     * @param PortletWindow the PortletWindow
+     * @param portletWindow the PortletWindow
      * @param lifeCycle like ACTION_PHASE, RENDER_PHASE,...
      * @return FilterManager
      * @throws PortletContainerException
      */
-    private FilterManager filterInitialisation(PortletWindow portletWindow,String lifeCycle) throws PortletContainerException{
-        return getContainerServices().getFilterManagerService().getFilterManager(portletWindow,lifeCycle);
+    private FilterManager filterInitialisation(PortletWindow portletWindow, String lifeCycle) throws PortletContainerException{
+        return getContainerServices().getFilterManagerService().getFilterManager(portletWindow, lifeCycle);
     }
 }
 
