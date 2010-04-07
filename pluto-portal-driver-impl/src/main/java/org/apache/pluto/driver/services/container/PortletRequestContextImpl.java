@@ -68,7 +68,7 @@ public class PortletRequestContextImpl implements PortletRequestContext
     
     protected boolean isReservedAttributeName(String name)
     {
-        return name.startsWith("java.") || name.startsWith("javax.");
+        return name.startsWith("javax.servlet.");
     }
     
     protected String encodeAttributeName(String name)
