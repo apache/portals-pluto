@@ -108,47 +108,69 @@ public class PortletModeDropDownTag extends BodyTagSupport {
                 servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
         
         // Create the portlet window to render.
-        PortletWindow window = new PortletWindowImpl(container, windowConfig, requestedPortalUrl);
+        PortletWindow window = null;
+        
+        
+        try
+        {
+        	// If this fails it means that the portlet will be not available.
+        	// Render Tag will take care of it.
+        	window = new PortletWindowImpl(container, windowConfig, requestedPortalUrl);
+        }
+        catch(RuntimeException ex) 
+        {
+        	  if (LOG.isDebugEnabled()) {
+                  LOG.debug("The portlet " + windowConfig.getPortletName() + " is not available. Is already deployed?");
+              }
+        }
 		
-		PortletMode currentMode = requestedPortalUrl.getPortletMode(window.getId().getStringId());
-
         //start the markup
         StringBuffer tag = new StringBuffer();
-//        String strCurrentMode = currentMode.toString();        
-//        tag.append("Current mode: " + currentMode.toString());
-        tag.append("<form action=\"\" name=\"modeSelectionForm\" style=\"display:inline\"><select onchange=\"self.location=this.options[this.selectedIndex].value\">");
-        Set<PortletMode> modeSet = null;
-		try {
-			modeSet = driverConfig.getSupportedPortletModes(evaluatedPortletId);
-		} catch (PortletContainerException e) {
-            throw new JspException(e);
-		}
-		
-		if (modeSet != null) {
-	        Iterator<PortletMode> i = modeSet.iterator();
-	        while (i.hasNext()) {
-	        	PortletMode mode = i.next();
-	
-	            PortalURL portalUrl =  portalEnv.createPortalURL();
-	            portalUrl.setPortletMode(evaluatedPortletId, mode);
-	
-	            // Build a string buffer containing the anchor tag
-	            tag.append("<option value=\"" + portalUrl.toString() + "\"");
-	            //Add 'selected' attribute for current mode.
-	            if (mode.equals(currentMode)) {
-	            	tag.append(" selected=\"true\"");
-	            }
-	            tag.append(">");
-	            if (driverConfig.isPortletManagedMode(evaluatedPortletId, mode.toString())) {
-		            tag.append(getCustomModeDecorationName(driverConfig, mode));	            	
-	            } else {
-	            	tag.append(mode.toString().toUpperCase());
-	            }
-//	            tag.append(mode.toString().toUpperCase());
-	            tag.append("</option>");
-	        }
-		}
-        tag.append("</select></form>");
+     
+        // Do not render if we don't have a window.
+        if(window!=null)
+        {
+        	PortletMode currentMode = requestedPortalUrl.getPortletMode(window.getId().getStringId());
+
+
+        	//        String strCurrentMode = currentMode.toString();        
+        	//        tag.append("Current mode: " + currentMode.toString());
+        	tag.append("<form action=\"\" name=\"modeSelectionForm\" style=\"display:inline\"><select onchange=\"self.location=this.options[this.selectedIndex].value\">");
+        	Set<PortletMode> modeSet = null;
+        	try {
+        		modeSet = driverConfig.getSupportedPortletModes(evaluatedPortletId);
+        	} catch (PortletContainerException e) {
+        		throw new JspException(e);
+        	}
+
+        	if (modeSet != null) {
+        		Iterator<PortletMode> i = modeSet.iterator();
+        		while (i.hasNext()) {
+        			PortletMode mode = i.next();
+
+        			PortalURL portalUrl =  portalEnv.createPortalURL();
+        			portalUrl.setPortletMode(evaluatedPortletId, mode);
+
+        			// Build a string buffer containing the anchor tag
+        			tag.append("<option value=\"" + portalUrl.toString() + "\"");
+        			//Add 'selected' attribute for current mode.
+        			if (mode.equals(currentMode)) {
+        				tag.append(" selected=\"true\"");
+        			}
+        			tag.append(">");
+        			if (driverConfig.isPortletManagedMode(evaluatedPortletId, mode.toString())) {
+        				tag.append(getCustomModeDecorationName(driverConfig, mode));	            	
+        			} else {
+        				tag.append(mode.toString().toUpperCase());
+        			}
+        			//	            tag.append(mode.toString().toUpperCase());
+        			tag.append("</option>");
+        		}
+        	}
+        	tag.append("</select></form>");
+
+        }
+        
         // Print the mode anchor tag.
         try {
             JspWriter out = pageContext.getOut();

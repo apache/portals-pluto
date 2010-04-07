@@ -16,6 +16,7 @@
  */
 package org.apache.pluto.driver.tags;
 
+import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -125,23 +126,39 @@ public class PortletTag extends BodyTagSupport {
                 servletContext.getAttribute(AttributeKeys.PORTLET_CONTAINER);
         
         // Create the portlet window to render.
-        PortletWindow window = new PortletWindowImpl(container, windowConfig, portalURL);
-        
-        // Check if someone else is maximized. If yes, don't show content.
-        Map windowStates = portalURL.getWindowStates();
-        for (Iterator it = windowStates.keySet().iterator(); it.hasNext(); ) {
-            String windowId = (String) it.next();
-            WindowState windowState = (WindowState) windowStates.get(windowId);
-            if (WindowState.MAXIMIZED.equals(windowState)
-            		&& !window.getId().getStringId().equals(windowId)) {
-                return SKIP_BODY;
-            }
+        PortletWindow window = null;
+
+
+        try {
+        	window = new PortletWindowImpl(container, windowConfig, portalURL);
+        } catch(RuntimeException e) // FIXME: Prose a change to anything else, handle it.
+        {
+      	  if (LOG.isDebugEnabled()) {
+              LOG.debug("The portlet " + windowConfig.getPortletName() + " is not available. Is already deployed?");
+          }
         }
-        
-        // Create portal servlet response to wrap the original
-        // HTTP servlet response.
-        PortalServletResponse portalResponse = new PortalServletResponse(
+
+    	// Create portal servlet response to wrap the original
+    	// HTTP servlet response.
+    	PortalServletResponse portalResponse = new PortalServletResponse(
                 (HttpServletResponse) pageContext.getResponse());
+    	
+    	
+        if(window!=null)
+        {
+        	// Check if someone else is maximized. If yes, don't show content.
+        	Map windowStates = portalURL.getWindowStates();
+        	for (Iterator it = windowStates.keySet().iterator(); it.hasNext(); ) {
+        		String windowId = (String) it.next();
+        		WindowState windowState = (WindowState) windowStates.get(windowId);
+        		if (WindowState.MAXIMIZED.equals(windowState)
+        				&& !window.getId().getStringId().equals(windowId)) {
+        			return SKIP_BODY;
+        		}
+        	}
+
+        
+        }
         
         // Render the portlet and cache the response.
         try {

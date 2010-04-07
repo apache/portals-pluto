@@ -24,6 +24,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.driver.AttributeKeys;
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 
 /**
  * The portlet title tag is used to print the dynamic portlet title to the page.
@@ -57,8 +58,18 @@ public class PortletTitleTag extends TagSupport {
         
         // Print out the portlet title to page.
         try {
-            pageContext.getOut().print(pageContext.getRequest().getAttribute(
-            		AttributeKeys.PORTLET_TITLE));
+        	String title = (String) pageContext.getRequest().getAttribute(
+            		AttributeKeys.PORTLET_TITLE);
+        	
+        	if(title == null)
+        	{
+        	 	PortletWindowConfig windowConfig =
+                    PortletWindowConfig.fromId(parentTag.getEvaluatedPortletId());
+        	 	
+        		title = "[ " + windowConfig.getPortletName() + " not ready ]";
+        	}
+        	
+            pageContext.getOut().print(title);
         } catch (IOException ex) {
             throw new JspException(ex);
         }

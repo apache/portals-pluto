@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.pluto.driver.services.portal.PortletWindowConfig;
+
 /**
  * The portlet render tag is used to print portlet rendering result (or error
  * details) to the page.
@@ -60,7 +62,10 @@ public class PortletRenderTag extends TagSupport {
         // Otherwise, print the error stack trace.
         else {
             try {
-                pageContext.getOut().print("Error rendering portlet.");
+            	PortletWindowConfig windowConfig =
+                    PortletWindowConfig.fromId(parentTag.getEvaluatedPortletId());
+            	
+                pageContext.getOut().print("Error rendering portlet " + windowConfig.getPortletName() + ".");
                 pageContext.getOut().print("<pre>");
                 parentTag.getThrowable().printStackTrace(
                 		new PrintWriter(pageContext.getOut()));
