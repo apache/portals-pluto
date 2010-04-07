@@ -236,8 +236,8 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>rat-maven-plugin</artifactId>            
+                        <groupId>org.apache.rat</groupId>
+                        <artifactId>apache-rat-plugin</artifactId>
                         <configuration>
                             <excludes combine.children="append">
                                 <exclude>src/main/webapp/META-INF/SLF4J-LICENSE</exclude>
