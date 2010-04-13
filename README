@@ -29,3 +29,4 @@ JSR-286 features and create the official JSR-286 RI submitted to the Java Commun
 
 The Pluto 2.0 code was subsequently refactored within the 2.0-spi-refactoring branch to make the descriptor
 API more flexible and fix other issues. This branch became the new trunk on 11/3/2008. 
+
