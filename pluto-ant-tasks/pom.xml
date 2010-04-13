@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.portals.pluto</groupId>
     <artifactId>pluto</artifactId>
-    <version>2.0.1</version>
+    <version2.2.1/version>
   </parent>
 
   <artifactId>pluto-ant-tasks</artifactId>
