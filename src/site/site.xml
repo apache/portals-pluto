@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed  under the  License is distributed on an "AS IS" BASIS,
+WITHOUT  WARRANTIES OR CONDITIONS  OF ANY KIND, either  express  or
+implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<project name="Pluto">
+  
+  <bannerLeft>
+    <name>Pluto</name>
+    <src>http://portals.apache.org/pluto/images/apache-portals.gif</src>
+    <href>http://portals.apache.org/pluto/</href>
+  </bannerLeft>
+  <bannerRight>
+    <src>http://portals.apache.org/pluto/images/banner.png</src>
+  </bannerRight>
+  <publishDate position="left" format="MM-dd-yy hh:mm zz"/>
+  <skin>  
+      <groupId>org.apache.portals.site</groupId>
+      <artifactId>pluto-site-skin</artifactId>
+      <version>1.0</version>
+  </skin> 
+  
+  <body>
+    <breadcrumbs>
+      <item name="Home" href="http://portals.apache.org/pluto"/>
+    </breadcrumbs>
+    
+    <links>
+      <item name="JSR 168 (Portlet 1.0)" href="http://jcp.org/en/jsr/detail?id=168"/>
+      <item name="Portlet 1.0 API (Javadoc)" href="http://portals.apache.org/pluto/portlet-1.0-apidocs"/>
+      <item name="JSR 286 (Portlet 2.0)" href="http://jcp.org/en/jsr/detail?id=286"/>
+      <item name="Portlet 2.0 API (Javadoc)" href="http://portals.apache.org/pluto/portlet-2.0-apidocs"/>
+    </links>
+    
+    <menu name="The Pluto Project">
+      <item name="About Pluto" href="/index.html"/>
+      <item name="Mission" href="/mission.html"/>
+      <item name="Download" href="/download.html"/>
+      <item name="News" href="/news.html"/>
+      <item name="Status" href="/status.html"/>
+      
+      <item name="App Servers" href="/app-servers.html"/>
+      <item name="Architecture" href="/architecture.html"/>	
+
+      <item name="Resources" href="/resources.html"/>
+      
+      <item name="FAQ" href="/faq.html"/>
+      <item name="Wiki" href="http://wiki.apache.org/portals/Pluto"/>
+      <item name="Issue Tracker (JIRA)" href="https://issues.apache.org/jira/browse/PLUTO"/>
+      <item name="Powered By Pluto" href="/powered.html"/>
+      <item name="Get Involved" href="/helping.html"/>
+    </menu>
+
+	<menu name="Pluto 2.0">
+      <item name="Getting Started" href="/v20/getting-started.html"/>
+      <item name="Deploying" href="/v20/deploying.html"/>
+      <item name="Embedding" href="/v20/embedding.html"/>
+      <item name="Release Notes" href="/v20/release-notes.html"/>
+	</menu>    
+    <menu name="Pluto 1.1">
+      <item name="Getting Started" href="/v11/getting-started.html"/>
+      <item name="Deploying" href="/v11/deploying.html"/>
+      <item name="Release Notes" href="/v11/release-notes.html"/>
+    </menu>
+
+    <menu  name="Subprojects" collapse="true">
+      <item name="Overview" href="subprojects/subprojects.html"/>
+      <item name="Pluto Container API" href="subprojects/container-api.html"/>
+      <item name="Pluto Portlet Container" href="subprojects/portlet-container.html"/>
+      <item name="Pluto Portlet Tag Library" href="subprojects/tag-library.html"/>
+      <item name="Pluto Portal Driver" href="subprojects/driver.html"/>
+      <item name="Pluto Portal" href="subprojects/portal.html"/>
+      <item name="Pluto Utilities" href="subprojects/utilities.html"/>
+      <item name="Pluto Installer" href="subprojects/installer.html"/>
+      <item name="Pluto Testsuite" href="subprojects/testsuite.html"/>
+      <item name="Pluto Ant Tasks" href="subprojects/anttasks.html"/>
+      <item name="Pluto Website Skin" href="subprojects/skin.html"/>          
+	</menu>    
+	
+    <menu name='Project Info'>
+    	<item name="Project Summary" href="project-summary.html"/>
+    	<item name="Project Team" href="team-list.html"/>
+    	<item name="Project License" href="license.html"/>
+    	<item name="Mailing Lists" href="mail-lists.html"/>
+    	<item name="Source Repository" href="source-repository.html"/>
+    	<item name="Issue Tracking" href="issue-tracking.html"/>
+    </menu>
+ 
+  </body>
+  
+</project>
