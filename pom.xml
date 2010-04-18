@@ -542,6 +542,7 @@ TODO: Check if we need all of them. -->
         <module>pluto-util</module>
         <module>maven-pluto-plugin</module>
         <module>pluto-ant-tasks</module>
+        <module>pluto-site-skin</module>
       </modules>
     </profile>
     

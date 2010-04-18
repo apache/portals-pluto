@@ -25,9 +25,9 @@
   </prerequisites>
 
   <parent>
-    <groupId>org.apache.portals.site</groupId>
-    <artifactId>pluto-site</artifactId>
-    <version>1.0</version>
+    <groupId>org.apache.portals.pluto</groupId>
+    <artifactId>pluto</artifactId>
+    <version>2.0.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>pluto-site-skin</artifactId>
