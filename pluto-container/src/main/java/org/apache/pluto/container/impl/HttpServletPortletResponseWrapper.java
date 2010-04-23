@@ -17,6 +17,7 @@
 package org.apache.pluto.container.impl;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 
@@ -44,6 +45,8 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
     private final MimeResponse mimeResponse;
     private final String lifecyclePhase;
     private boolean included;
+    private OutputStream outputStream;
+    private ServletOutputStream servletOutputStream;
     
     public HttpServletPortletResponseWrapper(HttpServletResponse response, PortletRequest portletRequest, PortletResponse portletResponse, boolean included)
     {
@@ -231,7 +234,26 @@ public class HttpServletPortletResponseWrapper extends HttpServletResponseWrappe
     @Override
     public ServletOutputStream getOutputStream() throws IOException
     {
-        return mimeResponse != null ? (ServletOutputStream)mimeResponse.getPortletOutputStream() : DummyServletOutputStream.getInstance();
+    	if (servletOutputStream == null)
+    	{
+        	outputStream = mimeResponse != null ? mimeResponse.getPortletOutputStream() : DummyServletOutputStream.getInstance();
+        	if (outputStream instanceof ServletOutputStream)
+        	{
+        		servletOutputStream = (ServletOutputStream)outputStream;
+        	}
+        	else
+        	{
+        		servletOutputStream = new ServletOutputStream()
+        		{
+					@Override
+					public void write(int b) throws IOException 
+					{
+						outputStream.write(b);
+					}
+        		};
+        	}
+    	}
+    	return servletOutputStream;
     }
 
     @Override
