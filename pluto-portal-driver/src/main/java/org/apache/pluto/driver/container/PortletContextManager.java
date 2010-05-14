@@ -114,19 +114,18 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
 	public String register(ServletConfig config) throws PortletContainerException {
 	    ServletContext servletContext = config.getServletContext();
 	    String contextPath = getContextPath(servletContext);
-        String applicationName = contextPath.substring(1);
-        if (!portletContexts.containsKey(applicationName)) {
+        if (!portletContexts.containsKey(contextPath)) {
 
-            PortletApplicationDefinition portletApp = portletRegistry.getPortletAppDD(servletContext, applicationName, contextPath);
+            PortletApplicationDefinition portletApp = portletRegistry.getPortletAppDD(servletContext, contextPath, contextPath);
 
             DriverPortletContext portletContext = new DriverPortletContextImpl(servletContext, portletApp, rdService);
 
-            portletContexts.put(applicationName, portletContext);
+            portletContexts.put(contextPath, portletContext);
 
             fireRegistered(portletContext);
 
             if (LOG.isInfoEnabled()) {
-                LOG.info("Registered portlet application for context '/" + applicationName + "'");
+                LOG.info("Registered portlet application for context '" + contextPath + "'");
 
                 LOG.info("Registering "+portletApp.getPortlets().size()+" portlets for context /"+portletContext.getApplicationName());
             }
@@ -144,10 +143,10 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
             }
         } else {
              if (LOG.isInfoEnabled()) {
-                LOG.info("Portlet application for context '/" + applicationName + "' already registered.");
+                LOG.info("Portlet application for context '" + contextPath + "' already registered.");
             }
         }
-        return applicationName;
+        return contextPath;
     }
 
     /**
@@ -262,7 +261,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
         for (PortletRegistryListener l: registryListeners) {
             l.portletApplicationRegistered(event);
         }
-        LOG.info("Portlet Context '/" + context.getApplicationName() + "' registered.");
+        LOG.info("Portlet Context '" + context.getApplicationName() + "' registered.");
     }
 
     private void fireRemoved(DriverPortletContext context) {
@@ -273,7 +272,7 @@ public class PortletContextManager implements PortletRegistryService, PortletCon
             l.portletApplicationRemoved(event);
         }
 
-        LOG.info("Portlet Context '/" + context.getApplicationName() + "' removed.");
+        LOG.info("Portlet Context '" + context.getApplicationName() + "' removed.");
     }
 
 //

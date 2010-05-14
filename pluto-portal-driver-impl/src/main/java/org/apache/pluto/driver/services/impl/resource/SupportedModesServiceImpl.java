@@ -102,10 +102,6 @@ public class SupportedModesServiceImpl implements SupportedModesService
     {
         String applicationId = PortletWindowConfig.parseContextPath(portletId);
         String applicationName = applicationId;
-        if (applicationName.length() > 0)
-        {
-            applicationName = applicationName.substring(1);
-        }
         String portletName = PortletWindowConfig.parsePortletName(portletId);
 
         try
@@ -177,10 +173,10 @@ public class SupportedModesServiceImpl implements SupportedModesService
     {
         String applicationId = PortletWindowConfig.parseContextPath(portletId);
         String applicationName = applicationId;
-        if (applicationName.length() > 0)
-        {
-            applicationName = applicationName.substring(1);
-        }
+//        if (applicationName.length() > 0)
+//        {
+//            applicationName = applicationName.substring(1);
+//        }
         try
         {
             PortletApplicationDefinition portletApp = portletRegistry.getPortletApplication(applicationName);
@@ -217,10 +213,10 @@ public class SupportedModesServiceImpl implements SupportedModesService
 
         String applicationId = PortletWindowConfig.parseContextPath(portletId);
         String applicationName = applicationId;
-        if (applicationName.length() > 0)
-        {
-            applicationName = applicationName.substring(1);
-        }
+//        if (applicationName.length() > 0)
+//        {
+//            applicationName = applicationName.substring(1);
+//        }
         String portletName = PortletWindowConfig.parsePortletName(portletId);
 
         if (portletRegistry == null)
@@ -261,10 +257,10 @@ public class SupportedModesServiceImpl implements SupportedModesService
     {
         String applicationId = PortletWindowConfig.parseContextPath(portletId);
         String applicationName = applicationId;
-        if (applicationName.length() > 0)
-        {
-            applicationName = applicationName.substring(1);
-        }
+//        if (applicationName.length() > 0)
+//        {
+//            applicationName = applicationName.substring(1);
+//        }
         String portletName = PortletWindowConfig.parsePortletName(portletId);
 
         return portletContextService.getPortletConfig(applicationName, portletName);

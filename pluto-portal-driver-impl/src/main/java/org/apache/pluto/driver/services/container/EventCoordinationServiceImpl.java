@@ -125,10 +125,6 @@ public class EventCoordinationServiceImpl implements EventCoordinationService
 		for (PortletWindowConfig portlet : portlets) {
 			String contextPath = portlet.getContextPath();
             String applicationName = contextPath;
-            if (applicationName.length() >0 )
-            {
-                applicationName = applicationName.substring(1);
-            }
 			PortletApplicationDefinition portletAppDD = null;
 			try {
 				portletAppDD = portletRegistry.getPortletApplication(applicationName);

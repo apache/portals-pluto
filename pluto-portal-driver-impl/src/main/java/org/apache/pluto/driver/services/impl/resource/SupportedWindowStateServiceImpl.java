@@ -162,10 +162,6 @@ public class SupportedWindowStateServiceImpl implements
 
         String appId = PortletWindowConfig.parseContextPath(portletId);
         String applicationName = appId;
-        if (applicationName.length() > 0)
-        {
-            applicationName = applicationName.substring(1);
-        }
         PortletApplicationDefinition portletAppDD = null;
 
         if (portletRegistry == null)
