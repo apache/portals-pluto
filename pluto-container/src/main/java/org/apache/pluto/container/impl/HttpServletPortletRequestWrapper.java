@@ -198,7 +198,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     protected PathMethodValues dispPathMethodValues = new PathMethodValues();
     
     /**
-     * PATH method values provided to the invoking servlet as derived fro the current (initial or nested) request dispatch
+     * PATH method values provided to the invoking servlet as derived for the current (initial or nested) request dispatch
      */
     protected PathMethodValues pathMethodValues = new PathMethodValues();
     
@@ -976,10 +976,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public String getContextPath()
     {
-        // synchronize the derived path state values first
-        updateRequestPathState();
-        // return the derived path method value
-        return pathMethodValues.contextPath;
+        return portletRequest.getContextPath();
     }
 
     @Override
