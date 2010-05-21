@@ -59,10 +59,6 @@ public class PortletWindowImpl implements PortletWindow {
         try
         {
             String applicationName = config.getContextPath();
-            if (applicationName.length() >0 )
-            {
-                applicationName = applicationName.substring(1);
-            }
             this.portlet = PlutoServices.getServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName());
         }
         catch (PortletContainerException ex)
