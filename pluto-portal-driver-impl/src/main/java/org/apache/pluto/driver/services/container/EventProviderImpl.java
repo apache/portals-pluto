@@ -111,10 +111,6 @@ public class EventProviderImpl implements EventProvider
     {
         String applicationId = PortletWindowConfig.parseContextPath(portletWindow.getId().getStringId());
         String applicationName = applicationId;
-        if (applicationId.length() > 0)
-        {
-            applicationName = applicationId.substring(1);
-        }
         String portletName = PortletWindowConfig.parsePortletName(portletWindow.getId().getStringId());
         List<? extends EventDefinitionReference> events = null;
         try
