@@ -976,7 +976,10 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     @Override
     public String getContextPath()
     {
-        return portletRequest.getContextPath();
+        // synchronize the derived path state values first
+        updateRequestPathState();
+        // return the derived path method value
+        return pathMethodValues.contextPath;
     }
 
     @Override
