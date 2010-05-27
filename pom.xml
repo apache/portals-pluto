@@ -499,6 +499,7 @@ TODO: Check if we need all of them. -->
           <configuration>
             <instructions>
               <Implementation-Title>${project.name}</Implementation-Title>
+              <Specification-Version>${project.version}</Specification-Version>
               <Implementation-Version>${project.version}</Implementation-Version>
               <Bundle-DocURL>${project.url}</Bundle-DocURL>
             </instructions>
