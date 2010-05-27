@@ -46,8 +46,8 @@ limitations under the License.
 
           function <portlet:namespace/>doSwitchPage(select) {
               var placePortletsSelect = document.forms['adminForm'].elements['placedPortlets'];
-              for(var i=0; i < placePortletsSelect.options.length;i++) {
-                  placePortletsSelect.options[i] = null;
+              while (placePortletsSelect.options.length > 0) {
+                  placePortletsSelect.options[0] = null;
               }
 
               var disabled = select.value == 'Select. . .'
@@ -105,8 +105,8 @@ limitations under the License.
 
         function <portlet:namespace/>doSwitch(select) {
             var portletsSelectBox = document.forms['adminForm'].elements['availablePortlets'];
-            for(var i = 0; i < portletsSelectBox.options.length;i++) {
-                portletsSelectBox.options[i] = null;
+             while (portletsSelectBox.options.length > 0) {
+                portletsSelectBox.options[0] = null;
             }
             if (select.value == '-') {
                 document.forms['adminForm'].elements['availablePortlets'].disabled = true;
