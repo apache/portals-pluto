@@ -527,6 +527,13 @@ public class PortalURLParserImpl implements PortalURLParser {
 
         // Split multiple values into a value array.
         String[] paramValues = value.split(VALUE_DELIM);
+        for (int i = 0; i < paramValues.length;i++){
+        	try {
+        		paramValues[i] = URLDecoder.decode(paramValues[i], "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				LOG.warn(e.getMessage(),e);
+			}
+        }
 
         // Construct portal URL parameter and return.
         return new PortalURLParameter(null, paramName, paramValues);
