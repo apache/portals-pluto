@@ -729,8 +729,11 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     /**
      * Deriving the path state values as should be provided to the invoking servlet for a nested dispatch.
      * <p>
-     * As we are not in "control" here anymore, assume path method values and path INCLUDE attribute values
-     * as provided by the web container to be correct.
+     * We are not properly in "control" here anymore but can only assume the nested dispatch is still within
+     * the current portlet application and therefore need to reset to the initial path method values during includes.
+     * </p>
+     * <p>
+     * Furthermore, we assume at least the path INCLUDE attribute values as/if provided by the web container to be correct.
      * </p>
      * <p>
      * However we need to retain the initial dispatch forward path attribute values <em>if</em> no new values are provided.
@@ -738,10 +741,23 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
      */
     protected void setupNestedDispatchPathValues()
     {
-        // Use the web container provided path values instead of the initial dispatch path values
-        // whatever the current path method values: assume them correct
-        pathMethodValues.copy(currPathMethodValues);
-        
+        if (namedDispatch)
+        {
+            // only can/must support request.getContextPath()
+            pathMethodValues.contextPath = dispPathMethodValues.contextPath;
+        }
+        else
+        {
+            if (!forwarded || !isForwardingPossible())
+            {
+                pathMethodValues.copy(initPathMethodValues);
+            }
+            else // forwarded && isForwardingPossible()
+            {
+                pathMethodValues.copy(dispPathMethodValues);
+            }
+        }
+    	
         // whatever the current attribute include path values: assume them correct (even if null)
         pathAttributeValues.put(INCLUDE_CONTEXT_PATH, currPathAttributeValues.get(INCLUDE_CONTEXT_PATH));
         pathAttributeValues.put(INCLUDE_SERVLET_PATH, currPathAttributeValues.get(INCLUDE_SERVLET_PATH));
