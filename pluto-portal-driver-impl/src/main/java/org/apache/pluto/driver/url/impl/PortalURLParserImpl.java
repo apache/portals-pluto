@@ -356,7 +356,7 @@ public class PortalURLParserImpl implements PortalURLParser {
         }
 
         // Construct the string representing the portal URL.
-        return buffer.append(query).toString();
+        return buffer.toString();
     }
 
     public static void encode(StringBuffer url){
