@@ -226,9 +226,9 @@ generate mailto links. -->
   </contributors>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/tags/pluto-2.0.1</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-2.0.1</developerConnection>
-    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/tags/pluto-2.0.1</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/trunk</developerConnection>
+    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/trunk</url>
   </scm>
 
   <!-- Dependency Version Properties ======================================= -->
