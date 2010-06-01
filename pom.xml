@@ -41,7 +41,7 @@
  in testsuite module (src/main/webapp/WEB-INF/classes)
  5. pluto.version in Ant build file dist-build.xml.
   -->
-  <version>2.0.2</version>
+  <version>2.0.3-SNAPSHOT</version>
   <!-- Due to a bug in maven 2.0, the description must not contain any line breaks or tabs. -->
   <description>Apache Pluto is the Reference Implementation of the Java Portlet Specification.</description>
   <url>http://portals.apache.org/pluto</url>
@@ -226,9 +226,9 @@ generate mailto links. -->
   </contributors>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/tags/pluto-2.0.2</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/tags/pluto-2.0.2</developerConnection>
-    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto/tags/pluto-2.0.2</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/portals/pluto/branches/pluto-2.0.x</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/portals/pluto/branches/pluto-2.0.x</developerConnection>
+    <url>http://svn.apache.org/viewcvs.cgi/portals/pluto//branches/pluto-2.0.x</url>
   </scm>
 
   <!-- Dependency Version Properties ======================================= -->
