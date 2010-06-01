@@ -505,6 +505,18 @@ TODO: Check if we need all of them. -->
             </instructions>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <configuration>
+            <!-- During release (prepare) the org.apache.felix maven-bundle-plugin needs classpath access to just build dependent artifacts
+                 like the pluto-container-api to determine the needed OSGi imports.
+                 However, the default maven-release-plugin goals (clean verify) somehow don't provide those.
+                 To fix that, the default release plugin set of preparationGoals is changed to do an "install" instead of just "verify".
+            -->
+            <preparationGoals>clean install</preparationGoals>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
 
