@@ -17,7 +17,10 @@
 package org.apache.pluto.tags;
 
 
+import java.util.Map;
+
 import javax.portlet.BaseURL;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceResponse;
@@ -55,6 +58,21 @@ public class ResourceURLTag286 extends BaseURLTag {
 	 */
 	@Override
 	public int doStartTag() throws JspException {
+	    PortletConfig portletConfig = 
+            (PortletConfig) pageContext.getRequest().getAttribute(Constants.PORTLET_CONFIG);
+	    
+        Map<String,String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
+        if (containerRuntimeOptions != null){
+            String[] result = containerRuntimeOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
+            if (result != null){
+                if (result.length > 0){
+                    if (result[0].equals(true))
+                        escapeXml = true;
+                    else if (result[0].equals(false))
+                        escapeXml = false;
+                }
+            }
+        }
 		       
         PortletResponse portletResponse = (PortletResponse) pageContext.getRequest()
             .getAttribute(Constants.PORTLET_RESPONSE);
