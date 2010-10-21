@@ -1059,9 +1059,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
             return pathAttributeValues.get(name);
         }
         // First try to retrieve the attribute from the (possibly buffered/cached/previously set) portletRequest
-        Object value = portletRequest.getAttribute(name);
-        // if null, fall back to retrieve the attribute from the web container itself
-        return value != null ? value : getRequest().getAttribute(name);
+        return portletRequest.getAttribute(name);
     }
 
     @Override
