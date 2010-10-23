@@ -32,8 +32,6 @@ import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
  */
 public interface PortletAppDescriptorService {
 
-    PortletApplicationDefinition createPortletApplicationDefinition();
-
     /**
      * Retrieve the PortletApp deployment descriptor
      * (portlet.xml).

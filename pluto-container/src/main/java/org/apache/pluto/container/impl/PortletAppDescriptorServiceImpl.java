@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -28,6 +29,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.helpers.DefaultValidationEventHandler;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,7 +44,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.pluto.container.PortletAppDescriptorService;
 import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
-import org.apache.pluto.container.om.portlet.impl.PortletAppType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -57,6 +58,51 @@ import org.xml.sax.SAXException;
 
 public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorService{
     
+    private static class WebAppDtdEntityResolver implements EntityResolver {
+        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException
+        {
+            if (systemId.equals("http://java.sun.com/dtd/web-app_2_3.dtd"))
+            {
+                return new InputSource(getClass().getResourceAsStream("web-app_2_3.dtd"));
+            }
+            return null;
+        }
+    }
+
+    private static class NamespaceOverridingStreamReaderDelegate extends StreamReaderDelegate {
+        private String adjustedNamespaceURI = null;
+
+        private NamespaceOverridingStreamReaderDelegate(XMLStreamReader reader) {
+            super(reader);
+        }
+
+        @Override
+        public int next() throws XMLStreamException
+        {
+            int eventCode = super.next();
+            if (eventCode == XMLEvent.START_ELEMENT && "portlet-app".equals(getLocalName()))
+            {
+                String version = getAttributeValue(null, "version");
+                if ("1.0".equals(version))
+                {
+                    adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd";
+                }
+                else if ("2.0".equals(version))
+                {
+                    adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
+                }
+            }
+            return eventCode;
+        }
+
+        @Override
+        public String getNamespaceURI()
+        {
+            String namespaceURI = super.getNamespaceURI();
+            return (namespaceURI != null ? namespaceURI : adjustedNamespaceURI);
+        }
+    }
+
     private static class XPathNamespaceContext implements NamespaceContext
     {
         private String namespaceURI;
@@ -95,8 +141,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
             throw new UnsupportedOperationException();
         }
 
-        @SuppressWarnings("unchecked")
-        public Iterator getPrefixes(String namespaceURI)
+        public Iterator<?> getPrefixes(String namespaceURI)
         {
             throw new UnsupportedOperationException();
         }
@@ -110,7 +155,7 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         }
         String country = "";
         String variant = "";
-        String[] localeArray = lang.split("[-|_]");
+        String[] localeArray = LOCALE_SPLIT.split(lang);
         for (int i = 0; i < localeArray.length; i++)
         {
             if (i == 0)
@@ -129,14 +174,28 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         return new Locale(lang, country, variant);
     }    
     
+    private static final Pattern LOCALE_SPLIT = Pattern.compile("[-|_]");
     private static final String NAMESPACE_PREFIX = "xp";
     
-    private DocumentBuilderFactory domFactory;
+    private final JAXBContext jaxbContext;
+    private final XMLInputFactory xmlInputFactory;
+    private final DocumentBuilderFactory documentBuilderFactory;
 
-    
-    public PortletApplicationDefinition createPortletApplicationDefinition()
-    {
-        return new PortletAppType();
+    public PortletAppDescriptorServiceImpl() {
+        ClassLoader containerClassLoader = PortletAppDescriptorServiceImpl.class.getClassLoader();
+        try {
+            jaxbContext = JAXBContext.newInstance(org.apache.pluto.container.om.portlet10.impl.ObjectFactory.class.getPackage().getName() + ":" +
+                                                  org.apache.pluto.container.om.portlet.impl.ObjectFactory.class.getPackage().getName(), 
+                                                  containerClassLoader);
+        }
+        catch (JAXBException e) {
+            throw new IllegalStateException("Failed to initialize JAXBContext for reading and writing portlet descriptors", e);
+        }
+        
+        this.xmlInputFactory = XMLInputFactory.newInstance();
+        
+        this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        this.documentBuilderFactory.setNamespaceAware(true);
     }
     
     /**
@@ -145,72 +204,34 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      * @return WebAppDD instance representing the descriptor.
      * @throws java.io.IOException
      */
-    
-    @SuppressWarnings("unchecked")
     public PortletApplicationDefinition read(String name, String contextPath, InputStream in) throws IOException 
     {
-        JAXBElement app = null;
-        
-        try 
-        {
-            ClassLoader containerClassLoader = PortletAppDescriptorServiceImpl.class.getClassLoader();
-            JAXBContext jc = JAXBContext.newInstance("org.apache.pluto.container.om.portlet10.impl" + ":" +
-                                                     "org.apache.pluto.container.om.portlet.impl", 
-                                                     containerClassLoader);
-            
-            XMLInputFactory inputFactory = getXMLInputFactory(containerClassLoader);
-            XMLStreamReader streamReader = inputFactory.createXMLStreamReader(in);
-            StreamReaderDelegate delegatingStreamReader = new StreamReaderDelegate(streamReader)
-            {
-                private String adjustedNamespaceURI = null;
-                
-                @Override
-                public int next() throws XMLStreamException
-                {
-                    int eventCode = super.next();
-                    if (eventCode == XMLEvent.START_ELEMENT && "portlet-app".equals(getLocalName()))
-                    {
-                        String version = getAttributeValue(null, "version");
-                        if ("1.0".equals(version))
-                        {
-                            adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd";
-                        }
-                        else if ("2.0".equals(version))
-                        {
-                            adjustedNamespaceURI = "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd";
-                        }
-                    }
-                    return eventCode;
-                }
-                
-                @Override
-                public String getNamespaceURI()
-                {
-                    String namespaceURI = super.getNamespaceURI();
-                    return (namespaceURI != null ? namespaceURI : adjustedNamespaceURI);
-                }
-            };
-            
-            Unmarshaller u = jc.createUnmarshaller();
-            u.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
-
-            app = (JAXBElement) u.unmarshal(delegatingStreamReader);                
+        //Generate an xml stream reader for the input stream 
+        final XMLStreamReader streamReader;
+        try {
+            streamReader = this.xmlInputFactory.createXMLStreamReader(in);
         }
-        catch (JAXBException jaxbEx)
-        {
-            final IOException ioe = new IOException(jaxbEx.getMessage());
-            ioe.initCause(jaxbEx);
+        catch (XMLStreamException e) {
+            final IOException ioe = new IOException(e.getLocalizedMessage());
+            ioe.initCause(e);
             throw ioe;
         }
-        catch(Exception me) 
-        {
-            final IOException ioe = new IOException(me.getLocalizedMessage());
-            ioe.initCause(me);
-            throw new IOException(me.getLocalizedMessage());
+        
+        //Wrap the stream reader to make sure the namespace gets setup correctly
+        final XMLStreamReader delegatingStreamReader = new NamespaceOverridingStreamReaderDelegate(streamReader);
+
+        //Unmarshall the stream
+        final JAXBElement<?> app;
+        try {
+            final Unmarshaller unmarshaller = this.jaxbContext.createUnmarshaller();
+            unmarshaller.setEventHandler(new DefaultValidationEventHandler());
+            app = (JAXBElement<?>) unmarshaller.unmarshal(delegatingStreamReader);
         }
-        
+        catch (JAXBException e) {
+            throw new IOException(e.getMessage(), e);
+        }
+
         PortletApplicationDefinition pad = null;
-        
         if (app.getValue() instanceof org.apache.pluto.container.om.portlet10.impl.PortletAppType)
         {
              pad = ((org.apache.pluto.container.om.portlet10.impl.PortletAppType)app.getValue()).upgrade();
@@ -228,34 +249,17 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
 
     public void mergeWebDescriptor(PortletApplicationDefinition pa, InputStream webDescriptor) throws Exception
     {
-        if (domFactory == null)
-        {
-            domFactory = DocumentBuilderFactory.newInstance();
-            domFactory.setNamespaceAware(true);
-        }
-        DocumentBuilder builder = domFactory.newDocumentBuilder();
-
+        final DocumentBuilder builder = this.documentBuilderFactory.newDocumentBuilder();
+        builder.setEntityResolver(new WebAppDtdEntityResolver());
         
-        builder.setEntityResolver(new EntityResolver()
-        {
-            public InputSource resolveEntity(java.lang.String publicId, java.lang.String systemId) throws SAXException,
-                            java.io.IOException
-            {
-                if (systemId.equals("http://java.sun.com/dtd/web-app_2_3.dtd"))
-                {
-                    return new InputSource(getClass().getResourceAsStream("web-app_2_3.dtd"));
-                }
-                return null;
-            }
-        });
-        
-        Document document = builder.parse(webDescriptor);
-        Element root = document.getDocumentElement();
-        String namespace = root.getNamespaceURI();
+        final Document document = builder.parse(webDescriptor);
+        final Element root = document.getDocumentElement();
+        final String namespace = root.getNamespaceURI();
 
-        XPath xpath = XPathFactory.newInstance().newXPath();
+        final XPathFactory xpathFactory = XPathFactory.newInstance();
+        final XPath xpath = xpathFactory.newXPath();
+        
         String prefix;
-        
         if(namespace!= null && namespace.length() > 0)
         {
             prefix = NAMESPACE_PREFIX+":";
@@ -310,58 +314,25 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      */
     public void write(PortletApplicationDefinition app, OutputStream out) throws IOException {
         try {
-            JAXBContext jc = null;
-            Object src = null;
+            final Object src;
             if (PortletApplicationDefinition.JSR_168_VERSION.equals(app.getVersion()))
             {                
-                jc = JAXBContext.newInstance("org.apache.pluto.container.om.portlet10.impl");                
                 src = new org.apache.pluto.container.om.portlet10.impl.PortletAppType(app);
             }
             else
             {
-                jc = JAXBContext.newInstance("org.apache.pluto.container.om.portlet.impl");
                 src = app;
             }
-            Marshaller m = jc.createMarshaller();
-            m.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-            m.marshal(src,out);
-        }catch (JAXBException jaxbEx){
-            jaxbEx.printStackTrace();
-            throw new IOException(jaxbEx.getMessage());
+            final Marshaller marshaller = this.jaxbContext.createMarshaller();
+            marshaller.setEventHandler(new DefaultValidationEventHandler());
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.marshal(src,out);
+        }
+        catch (JAXBException jaxbEx){
+            throw new IOException(jaxbEx.getMessage(), jaxbEx);
         }
         catch(Exception me) {
-            throw new IOException(me.getLocalizedMessage());
+            throw new IOException(me.getLocalizedMessage(), me);
         }
     }
-    
-    /*
-     * Because this service can be invoked from a portlet servlet with its own context class loader,
-     * <CODE>XMLInputFactory</CODE> should be created while the class loader switched to the container's.
-     */
-    private XMLInputFactory getXMLInputFactory(ClassLoader classLoader)
-    {
-        XMLInputFactory inputFactory = null;
-        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        
-        try
-        {
-            if (contextClassLoader != classLoader)
-            {
-                Thread.currentThread().setContextClassLoader(classLoader);
-            }
-            
-            inputFactory = XMLInputFactory.newInstance();
-        }
-        finally
-        {
-            if (contextClassLoader != classLoader)
-            {
-                Thread.currentThread().setContextClassLoader(contextClassLoader);
-            }
-        }
-        
-        return inputFactory;
-    }
-    
 }
