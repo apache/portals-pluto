@@ -178,8 +178,6 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
     private static final String NAMESPACE_PREFIX = "xp";
     
     private final JAXBContext jaxbContext;
-    private final XMLInputFactory xmlInputFactory;
-    private final DocumentBuilderFactory documentBuilderFactory;
 
     public PortletAppDescriptorServiceImpl() {
         ClassLoader containerClassLoader = PortletAppDescriptorServiceImpl.class.getClassLoader();
@@ -191,11 +189,6 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         catch (JAXBException e) {
             throw new IllegalStateException("Failed to initialize JAXBContext for reading and writing portlet descriptors", e);
         }
-        
-        this.xmlInputFactory = XMLInputFactory.newInstance();
-        
-        this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        this.documentBuilderFactory.setNamespaceAware(true);
     }
     
     /**
@@ -206,10 +199,12 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      */
     public PortletApplicationDefinition read(String name, String contextPath, InputStream in) throws IOException 
     {
+        final XMLInputFactory xmlInputFactory = getXmlInputFactory();
+        
         //Generate an xml stream reader for the input stream 
         final XMLStreamReader streamReader;
         try {
-            streamReader = this.xmlInputFactory.createXMLStreamReader(in);
+            streamReader = xmlInputFactory.createXMLStreamReader(in);
         }
         catch (XMLStreamException e) {
             final IOException ioe = new IOException(e.getLocalizedMessage());
@@ -249,7 +244,9 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
 
     public void mergeWebDescriptor(PortletApplicationDefinition pa, InputStream webDescriptor) throws Exception
     {
-        final DocumentBuilder builder = this.documentBuilderFactory.newDocumentBuilder();
+        final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setNamespaceAware(true);
+        final DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
         builder.setEntityResolver(new WebAppDtdEntityResolver());
         
         final Document document = builder.parse(webDescriptor);
@@ -333,6 +330,24 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
         }
         catch(Exception me) {
             throw new IOException(me.getLocalizedMessage(), me);
+        }
+    }
+    
+    protected XMLInputFactory getXmlInputFactory() {
+        final ClassLoader portalClassLoader = this.getClass().getClassLoader();
+        final Thread currentThread = Thread.currentThread();
+        final ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+        
+        if (portalClassLoader == contextClassLoader) {
+            return XMLInputFactory.newInstance();
+        }
+        
+        try {
+            currentThread.setContextClassLoader(portalClassLoader);
+            return XMLInputFactory.newInstance();
+        }
+        finally {
+            currentThread.setContextClassLoader(contextClassLoader);
         }
     }
 }
