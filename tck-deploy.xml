@@ -1,0 +1,29 @@
+<project name="pluto-tck-deploy" basedir=".">
+    <taskdef classname="org.apache.pluto.ant.AssembleTask" name="assemblePortlet">
+        <classpath>
+            <fileset dir="pluto-ant-tasks/target">
+                <include name="pluto-ant-tasks-*.jar"/>
+            </fileset>
+        </classpath>
+    </taskdef>
+
+    <target name="deployPortletApp" description="Deploys a portlet application">
+        <!-- Check arguments -->
+        <fail message="'-DportletApp=[WAR File]' must be specified">
+            <condition>
+                <not>
+                    <isset property="portletApp" />
+                </not>
+            </condition>
+        </fail>
+        <fail message="'-DdestDir=[container/webapps]' must be specified">
+            <condition>
+                <not>
+                    <isset property="destDir" />
+                </not>
+            </condition>
+        </fail>
+
+        <assemblePortlet destdir="${destDir}" war="${portletApp}" />
+    </target>
+</project>

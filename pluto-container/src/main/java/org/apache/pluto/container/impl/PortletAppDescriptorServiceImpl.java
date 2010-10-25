@@ -223,7 +223,9 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
             app = (JAXBElement<?>) unmarshaller.unmarshal(delegatingStreamReader);
         }
         catch (JAXBException e) {
-            throw new IOException(e.getMessage(), e);
+            final IOException ioe = new IOException(e.getMessage());
+            ioe.initCause(e);
+            throw ioe;
         }
 
         PortletApplicationDefinition pad = null;
@@ -326,10 +328,14 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
             marshaller.marshal(src,out);
         }
         catch (JAXBException jaxbEx){
-            throw new IOException(jaxbEx.getMessage(), jaxbEx);
+            final IOException ioe = new IOException(jaxbEx.getMessage());
+            ioe.initCause(jaxbEx);
+            throw ioe;
         }
         catch(Exception me) {
-            throw new IOException(me.getLocalizedMessage(), me);
+            final IOException ioe = new IOException(me.getLocalizedMessage());
+            ioe.initCause(me);
+            throw ioe;
         }
     }
     
