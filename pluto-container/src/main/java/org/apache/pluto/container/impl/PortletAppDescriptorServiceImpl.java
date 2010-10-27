@@ -199,6 +199,10 @@ public class PortletAppDescriptorServiceImpl implements PortletAppDescriptorServ
      */
     public PortletApplicationDefinition read(String name, String contextPath, InputStream in) throws IOException 
     {
+        if (in == null) {
+            throw new IOException("Cannot read from a null InputStream");
+        }
+        
         final XMLInputFactory xmlInputFactory = getXmlInputFactory();
         
         //Generate an xml stream reader for the input stream 
