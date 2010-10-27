@@ -35,6 +35,7 @@ sig 2       F88341D9 2003-11-30   Lars Eilebrecht <lars@eilebrecht.org>
 sig 3       A11D56FB 2003-12-03   Geoffrey Young (http://www.modperlcookbook.org/~geoff/) <geoff@modperlcookbook.org>
 sub  1024g/0F6ED732 2003-09-26
 sig         E41EDC7E 2003-09-26   Carsten Ziegeler <cziegeler@apache.org>
+pub   1024D/E4C36AEA 2008-08-04   Eric Dalquist <edalquist@apache.org>
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.2.3 (MingW32)
