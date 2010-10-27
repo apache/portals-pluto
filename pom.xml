@@ -515,6 +515,8 @@ TODO: Check if we need all of them. -->
                  To fix that, the default release plugin set of preparationGoals is changed to do an "install" instead of just "verify".
             -->
             <preparationGoals>clean install</preparationGoals>
+            <mavenExecutorId>forked-path</mavenExecutorId>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
           </configuration>
         </plugin>
       </plugins>
