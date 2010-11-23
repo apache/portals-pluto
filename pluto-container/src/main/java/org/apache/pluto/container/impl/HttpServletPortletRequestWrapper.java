@@ -114,6 +114,36 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         }
     }
     
+    protected static final String[] DEFAULT_SERVLET_CONTAINER_MANAGED_ATTRIBUTES = { "org.apache.catalina.core.DISPATCHER_TYPE", 
+    																				 "org.apache.catalina.core.DISPATCHER_REQUEST_PATH" };
+    
+    /**
+     * <p>
+     * Some servlet containers like Tomcat (Catalina) use "injected" request attributes within their own Request (dispatch)
+     * wrapper objects to keep track of their current state. Such "injected" attributes are never really "set" or (supposed to be)
+     * visible by the current application request processing logic.
+     * </p><p>
+     * Such special attributes therefore cannot be reliably "managed" or isolated per (portlet) servlet request window as it never
+     * can be known if or when such attributes (value) might change.
+     * </p><p>
+     * And, as these attributes are used internally by the servlet container providing back the wrong (or no) value very easily
+     * can break the expected behavior.
+     * </p><p>
+     * On Tomcat this for instance happens when a forwarded portlet request itself would try an (servlet) include request. Then, its
+     * internal state using "injected" attribute "org.apache.catalina.DISPATCHER_TYPE" is changed.
+     * </p><p>
+     * To support such servlet container internal/injected attribute handling, a static servletContainerManagedAttributes HashSet
+     * is maintained containing the attribute names which value should <em>always</em> be retrieved from the current (injected) parent request.
+     * </p><p>
+     * As default the currently known two Tomcat internal/injected attribute names are used.
+     * </p><p>
+     * For other containers which might use a similar approach these reserved attribute names can be (re)set through the static
+     * method setServletContainerManagedAttributes(String[]), e.g. like with a Springframework based initialization of the container.
+     * </p>
+     */
+    protected static HashSet<String> servletContainerManagedAttributes =
+    	new HashSet<String>(Arrays.asList(DEFAULT_SERVLET_CONTAINER_MANAGED_ATTRIBUTES));
+    
     /**
      * DispatchDetection defines how a (nested) RequestDispatcher include/forward call will be detected.
      * <p>
@@ -295,6 +325,23 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
     protected final boolean renderPhase;
     
     protected HttpSession session;
+    
+    /**
+     * Set the Servlet container managed (projected) attribute names which cannot be isolated per portlet/servlet request window
+     * and therefore need to be retrieved directly from the parent (injected) servlet request object.
+     * @param names array of protected servlet container attribute names
+     */
+    public static void setServletContainerManagedAttributes(String[] names)
+    {
+    	if (names == null)
+    	{
+    		servletContainerManagedAttributes.clear();
+    	}
+    	else
+    	{
+    		servletContainerManagedAttributes = new HashSet<String>(Arrays.asList(names));
+    	}
+    }
     
     @SuppressWarnings("unchecked")
     public HttpServletPortletRequestWrapper(HttpServletRequest request, ServletContext servletContext, HttpSession session, PortletRequest portletRequest, boolean included, boolean namedDispatch)
@@ -1059,7 +1106,8 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
             return pathAttributeValues.get(name);
         }
         // First try to retrieve the attribute from the (possibly buffered/cached/previously set) portletRequest
-        Object value = portletRequest.getAttribute(name);
+        // except for servlet container injected (managed) attributes which cannot reliably be retrieved from the portletRequest
+        Object value = servletContainerManagedAttributes.contains(name) ? null : portletRequest.getAttribute(name);
         // if null, fall back to retrieve the attribute from the web container itself
         return value != null ? value : getRequest().getAttribute(name);
     }
