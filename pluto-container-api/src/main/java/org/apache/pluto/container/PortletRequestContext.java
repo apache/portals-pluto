@@ -22,6 +22,7 @@ import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +46,14 @@ public interface PortletRequestContext
     
     Enumeration<String> getAttributeNames();
     Object getAttribute(String name);
+    /**
+     * Get the attribute from the request. Generally only called by servlet code that has been dispatched
+     * to by a portlet (such as rendering a JSP).
+     * 
+     * @param name attribute name
+     * @param servletRequest The current servlet request
+     */
+    Object getAttribute(String name, ServletRequest servletRequest);
     void setAttribute(String name, Object value);
 
     Locale getPreferredLocale();

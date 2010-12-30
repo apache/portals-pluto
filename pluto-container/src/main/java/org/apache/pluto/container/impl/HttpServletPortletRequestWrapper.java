@@ -42,6 +42,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
+import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.PortletRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -318,6 +320,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
      */
     protected Map<String, String[]> parameterMap;
     
+    protected final PortletRequestContext requestContext;
     protected final ServletContext servletContext;
     protected final PortletRequest portletRequest;
     protected final ClientDataRequest clientDataRequest;
@@ -353,6 +356,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         lifecyclePhase = (String)portletRequest.getAttribute(PortletRequest.LIFECYCLE_PHASE);
         clientDataRequest = PortletRequest.ACTION_PHASE.equals(lifecyclePhase) || PortletRequest.RESOURCE_PHASE.equals(lifecyclePhase) ? (ClientDataRequest)portletRequest : null;
         renderPhase = PortletRequest.RENDER_PHASE.equals(lifecyclePhase);
+        requestContext = (PortletRequestContext )portletRequest.getAttribute(PortletInvokerService.REQUEST_CONTEXT);
         this.forwarded = !included;
         this.namedDispatch = namedDispatch;
         origParameterMap = new HashMap<String,String[]>(request.getParameterMap());
@@ -1109,7 +1113,7 @@ public class HttpServletPortletRequestWrapper extends HttpServletRequestWrapper
         // except for servlet container injected (managed) attributes which cannot reliably be retrieved from the portletRequest
         Object value = servletContainerManagedAttributes.contains(name) ? null : portletRequest.getAttribute(name);
         // if null, fall back to retrieve the attribute from the web container itself
-        return value != null ? value : getRequest().getAttribute(name);
+        return value != null ? value : requestContext.getAttribute(name, getRequest());
     }
 
     @Override

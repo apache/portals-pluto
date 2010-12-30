@@ -26,6 +26,7 @@ import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -118,6 +119,10 @@ public class PortletRequestContextImpl implements PortletRequestContext
     {
         Object value = servletRequest.getAttribute(encodeAttributeName(name));
         return value != null ? value : servletRequest.getAttribute(name);
+    }
+    
+    public Object getAttribute(String name, ServletRequest servletRequest) {
+        return servletRequest.getAttribute(name);
     }
 
     @SuppressWarnings("unchecked")

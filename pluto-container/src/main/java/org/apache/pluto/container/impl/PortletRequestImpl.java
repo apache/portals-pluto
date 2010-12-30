@@ -76,10 +76,10 @@ public abstract class PortletRequestImpl implements PortletRequest
     // Private Member Variables ------------------------------------------------
 
     /** The PortalContext within which this request is occuring. */
-    private PortalContext portalContext;
+    private final PortalContext portalContext;
 
-    private PortletRequestContext requestContext;
-    private PortletResponseContext responseContext;
+    private final PortletRequestContext requestContext;
+    private final PortletResponseContext responseContext;
 
     /** The portlet session. */
     private PortletSession portletSession;
