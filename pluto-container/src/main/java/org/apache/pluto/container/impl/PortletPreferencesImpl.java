@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -29,15 +28,15 @@ import javax.portlet.PreferencesValidator;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.pluto.container.PortletPreference;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
+import org.apache.pluto.container.PortletPreference;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.util.StringManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the <code>javax.portlet.PortletPreferences</code>
@@ -139,15 +138,21 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
 
     public String getValue(String key, String defaultValue) {
-        String[] values = getValues(key, new String[] { defaultValue });
-        String value = null;
-        if (values != null && values.length > 0) {
-        	value = values[0];
+        if (key == null) {
+            throw new IllegalArgumentException(
+                    EXCEPTIONS.getString("error.null", "Preference key "));
         }
-        if (value == null) {
-        	value = defaultValue;
+        PortletPreference pref = preferences.get(key);
+        if (pref == null) {
+            return defaultValue;
         }
-        return value;
+        
+        String[] values = pref.getValues();
+        if (values == null || values.length == 0) {
+            return null;
+        }
+        
+        return values[0];
     }
 
     public String[] getValues(String key, String[] defaultValues) {
@@ -155,15 +160,12 @@ public class PortletPreferencesImpl implements PortletPreferences {
             throw new IllegalArgumentException(
             		EXCEPTIONS.getString("error.null", "Preference key "));
         }
-        String[] values = null;
         PortletPreference pref = preferences.get(key);
-        if (pref != null) {
-            values = pref.getValues();
+        if (pref == null) {
+            return defaultValues;
         }
-        if (values == null) {
-            values = defaultValues;
-        }
-        return values;
+        
+        return pref.getValues();
     }
 
     public void setValue(String key, String value) throws ReadOnlyException {
@@ -195,7 +197,7 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
 
     public Enumeration<String> getNames() {
-        return new Vector<String>(preferences.keySet()).elements();
+        return Collections.enumeration(preferences.keySet());
     }
 
     public Map<String,String[]> getMap() {
