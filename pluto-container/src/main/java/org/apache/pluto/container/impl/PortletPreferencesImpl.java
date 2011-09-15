@@ -28,15 +28,15 @@ import javax.portlet.PreferencesValidator;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.pluto.container.PortletPreference;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
-import org.apache.pluto.container.PortletPreference;
 import org.apache.pluto.container.PortletPreferencesService;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.util.StringManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the <code>javax.portlet.PortletPreferences</code>
@@ -138,21 +138,17 @@ public class PortletPreferencesImpl implements PortletPreferences {
     }
 
     public String getValue(String key, String defaultValue) {
-        if (key == null) {
-            throw new IllegalArgumentException(
-                    EXCEPTIONS.getString("error.null", "Preference key "));
+        String[] values = getValues(key, new String[] { defaultValue });
+        String value = defaultValue;
+        if (values != null) {
+            if (values.length == 0) {
+                value = null;
+            }
+            else if (values[0] != null) {
+                value = values[0];
+            }
         }
-        PortletPreference pref = preferences.get(key);
-        if (pref == null) {
-            return defaultValue;
-        }
-        
-        String[] values = pref.getValues();
-        if (values == null || values.length == 0) {
-            return null;
-        }
-        
-        return values[0];
+        return value;
     }
 
     public String[] getValues(String key, String[] defaultValues) {
@@ -160,12 +156,15 @@ public class PortletPreferencesImpl implements PortletPreferences {
             throw new IllegalArgumentException(
             		EXCEPTIONS.getString("error.null", "Preference key "));
         }
+        String[] values = null;
         PortletPreference pref = preferences.get(key);
-        if (pref == null) {
-            return defaultValues;
+        if (pref != null) {
+            values = pref.getValues();
         }
-        
-        return pref.getValues();
+        if (values == null) {
+            values = defaultValues;
+        }
+        return values;
     }
 
     public void setValue(String key, String value) throws ReadOnlyException {
@@ -174,10 +173,11 @@ public class PortletPreferencesImpl implements PortletPreferences {
             		"error.preference.readonly", key));
         }
         PortletPreference pref = preferences.get(key);
+        String[] values = value == null ? new String[0] : new String[] { value };
         if (pref != null) {
-            pref.setValues(new String[] { value });
+            pref.setValues(values);
         } else {
-            pref = new PortletPreferenceImpl(key, new String[] { value });
+            pref = new PortletPreferenceImpl(key, values);
             preferences.put(key, pref);
         }
     }
@@ -186,6 +186,9 @@ public class PortletPreferencesImpl implements PortletPreferences {
         if (isReadOnly(key)) {
             throw new ReadOnlyException(EXCEPTIONS.getString(
             		"error.preference.readonly", key));
+        }
+        if (values == null) {
+            values = new String[0];
         }
         PortletPreference pref = preferences.get(key);
         if (pref != null) {
