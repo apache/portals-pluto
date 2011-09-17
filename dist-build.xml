@@ -44,8 +44,8 @@
 -->
 <project name="PlutoDistributions" default="bundle-dist">
 
-    <property name="tomcat.major.version" value="6" description="Major version of Tomcat to deploy Pluto war files."/>
-    <property name="tomcat.full.version" value="6.0.26" description="Full version of Tomcat to deploy Pluto war files."/>
+    <property name="tomcat.major.version" value="7" description="Major version of Tomcat to deploy Pluto war files."/>
+    <property name="tomcat.full.version" value="7.0.21" description="Full version of Tomcat to deploy Pluto war files."/>
 
     <xmlproperty file="pom.xml"/> <!-- picks up pluto build version from pom file -->
     <property name="pluto.version" value="${project.version}" description="Version of Pluto to build"/>
@@ -125,10 +125,11 @@
             </fileset>
         </copy>
 
-         <!-- Add emptySessionPath="true" to Connector element in server.xml -->
-		<replace file="${dist.dir}/conf/server.xml"
-			token="redirectPort=&quot;8443&quot; /&gt;" 
-			value="redirectPort=&quot;8443&quot; emptySessionPath=&quot;true&quot; /&gt;" 
+         <!-- Add sessionCookiePath="/" to root Context in context.xml
+             (Tomcat 6.0.27+ replacement for emptySessionPath="true" attribute of Connector element in server.xml) -->
+		<replace file="${dist.dir}/conf/context.xml"
+			token="&lt;Context&gt;" 
+			value="&lt;Context sessionCookiePath=&quot;/&quot;&gt;" 
 			summary="true"
 		/>
 		
