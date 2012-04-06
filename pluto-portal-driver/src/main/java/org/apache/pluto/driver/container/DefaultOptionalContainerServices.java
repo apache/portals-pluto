@@ -27,6 +27,7 @@ import org.apache.pluto.container.UserInfoService;
 import org.apache.pluto.container.driver.OptionalContainerServices;
 import org.apache.pluto.container.driver.PortalAdministrationService;
 import org.apache.pluto.container.driver.PortalDriverContainerServices;
+import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.impl.PortletEnvironmentServiceImpl;
@@ -57,10 +58,10 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
      * Constructs an instance using the default portlet preferences service
      * implementation.
      */
-    public DefaultOptionalContainerServices() {
+    public DefaultOptionalContainerServices(PortalDriverServices portalDriverServices) {
         rdService = new RequestDispatcherServiceImpl();
         portletPreferencesService = new DefaultPortletPreferencesService();
-        portletRegistryService = new PortletContextManager(rdService, new PortletAppDescriptorServiceImpl());
+        portletRegistryService = new PortletContextManager(portalDriverServices, new PortletAppDescriptorServiceImpl());
         portletContextService = (PortletContextManager)portletRegistryService;
         portletInvokerService = new DefaultPortletInvokerService(portletContextService);
         portletEnvironmentService = new PortletEnvironmentServiceImpl();
@@ -77,8 +78,8 @@ public class DefaultOptionalContainerServices implements OptionalContainerServic
      * be used. Otherwise, the default portlet preferences service will be used.
      * @param root  the root optional container services implementation.
      */
-    public DefaultOptionalContainerServices(OptionalContainerServices root, PortalDriverContainerServices driverServices) {
-        this();
+    public DefaultOptionalContainerServices(OptionalContainerServices root, PortalDriverServices driverServices) {
+        this(driverServices);
         if (root.getPortletPreferencesService() != null) {
             portletPreferencesService = root.getPortletPreferencesService();
         }

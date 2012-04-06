@@ -31,7 +31,7 @@ import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.PortletURLProvider;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.driver.PlutoServices;
+import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.impl.PortletURLImpl;
 import org.apache.pluto.driver.core.PortalRequestContext;
 import org.apache.pluto.driver.url.PortalURL;
@@ -129,6 +129,7 @@ public abstract class PortletStateAwareResponseContextImpl extends PortletRespon
 
     public EventProvider getEventProvider()
     {
-        return isClosed() ? null : new EventProviderImpl(getPortletWindow(), PlutoServices.getServices().getPortletRegistryService());
+        //TODO fix method for getting reference to PortletRegistryService
+        return isClosed() ? null : new EventProviderImpl(getPortletWindow(), ((PortalDriverServices)super.getContainer().getContainerServices()).getPortletRegistryService());
     }
 }

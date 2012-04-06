@@ -69,53 +69,59 @@ public interface PortletInvokerService {
      * container to the underlying <code>PortletRquest</code>.
      */
     String METHOD_ID = "org.apache.pluto.core.method";
-
+    
     /**
-     * The unique method identifier for render requests.  Render requests are
-     * requested through a call to the {@link PortletContainer#doRender(org.apache.pluto.container.PortletWindow,
-     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
-     * method.
+     * Describes the set of methods that can be invoked by the container
      */
-    Integer METHOD_RENDER = new Integer(1);
+    public enum Method {
 
-    /**
-     * The unique method identifier for render requests.  Render requests are
-     * requested through a call to the {@link PortletContainer#doAction(org.apache.pluto.container.PortletWindow,
-     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
-     * method.
-     */
-    Integer METHOD_ACTION = new Integer(3);
+        /**
+         * The unique method identifier for render requests.  Render requests are
+         * requested through a call to the {@link PortletContainer#doRender(org.apache.pluto.container.PortletWindow,
+         * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+         * method.
+         */
+        RENDER,
 
-    /**
-     * The unique method identifier for load requests.  Load requests are
-     * requested through a call to the {@link PortletContainer#doLoad(org.apache.pluto.container.PortletWindow,
-     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
-     * method.
-     */
-    Integer METHOD_LOAD = new Integer(5);
+        /**
+         * The unique method identifier for render requests.  Render requests are
+         * requested through a call to the {@link PortletContainer#doAction(org.apache.pluto.container.PortletWindow,
+         * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+         * method.
+         */
+        ACTION,
 
-    /**
-     * The unique method identifier for resource Serving requests.  Resource requests are
-     * requested through a call to the {@link PortletContainer#doServeResource(PortletWindow,
-     *  javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
-     * method.
-     */
-    Integer METHOD_RESOURCE = new Integer(7);
+        /**
+         * The unique method identifier for load requests.  Load requests are
+         * requested through a call to the {@link PortletContainer#doLoad(org.apache.pluto.container.PortletWindow,
+         * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+         * method.
+         */
+        LOAD,
 
-    /**
-     * The unique method identifier for render requests.  Render requests are
-     * requested through a call to the {@link PortletContainer#doEvent(org.apache.pluto.container.PortletWindow,
-     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.portlet.Event)}
-     * method.
-     */
-    Integer METHOD_EVENT = new Integer(9);
+        /**
+         * The unique method identifier for resource Serving requests.  Resource requests are
+         * requested through a call to the {@link PortletContainer#doServeResource(PortletWindow,
+         *  javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+         * method.
+         */
+        RESOURCE,
 
-    /**
-     * The unique method identifier for admin requests.  Admin requests
-     * are requested through a call to the {@link PortletContainer#doAdmin(PortletWindow, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
-     * method.
-     */
-    Integer  METHOD_ADMIN = new Integer(11);
+        /**
+         * The unique method identifier for render requests.  Render requests are
+         * requested through a call to the {@link PortletContainer#doEvent(org.apache.pluto.container.PortletWindow,
+         * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.portlet.Event)}
+         * method.
+         */
+        EVENT,
+
+        /**
+         * The unique method identifier for admin requests.  Admin requests
+         * are requested through a call to the {@link PortletContainer#doAdmin(PortletWindow, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
+         * method.
+         */
+        ADMIN
+    }
 
     /**
      * The public key, to store the FilterManager in the request.

@@ -83,16 +83,17 @@ public interface PortletContextService
     /**
      * Register a portlet application
      * 
-     * @param config
-     * @return
+     * @param config the portlet's config
+     * @param classLoader the portlet's classloader
+     * @param registrationCallback A callback to execute when registration is complete
      * @throws PortletContainerException
      */
-    String register(ServletConfig config) throws PortletContainerException;
+    void register(String portletName, ServletConfig config, ClassLoader classLoader, PortletServletLifecycleCallback registrationCallback) throws PortletContainerException;
     
     /**
      * Unregister a portlet application
      * 
      * @param context
      */
-    void unregister(DriverPortletContext context);
+    void unregister(DriverPortletContext portletContext, DriverPortletConfig portletConfig, PortletServletLifecycleCallback lifecycleCallback);
 }

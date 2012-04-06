@@ -18,27 +18,19 @@ package org.apache.pluto.container.driver;
 
 import javax.portlet.PortletRequest;
 
-import org.apache.pluto.container.PortletInvokerService;
+import org.apache.pluto.container.PortletInvokerService.Method;
 import org.apache.pluto.container.PortletWindow;
 
 
 public class PortletInvocationEvent {
 
-    public static int LOAD = PortletInvokerService.METHOD_LOAD.intValue();
+    private final PortletRequest portletRequest;
 
-    public static int ACTION = PortletInvokerService.METHOD_ACTION.intValue();
+    private final PortletWindow portletWindow;
 
-    public static int RENDER = PortletInvokerService.METHOD_RENDER.intValue();
+    private final Method invocationMethod;
 
-    public static int ADMIN = PortletInvokerService.METHOD_ADMIN.intValue();
-
-    private PortletRequest portletRequest;
-
-    private PortletWindow portletWindow;
-
-    private int invocationMethod;
-
-    public PortletInvocationEvent(PortletRequest portletRequest, PortletWindow portletWindow, int invocationMethod) {
+    public PortletInvocationEvent(PortletRequest portletRequest, PortletWindow portletWindow, Method invocationMethod) {
         this.portletRequest = portletRequest;
         this.portletWindow = portletWindow;
         this.invocationMethod = invocationMethod;
@@ -48,7 +40,7 @@ public class PortletInvocationEvent {
         return portletRequest;
     }
 
-    public int getInvocationMethod() {
+    public Method getInvocationMethod() {
         return invocationMethod;
     }
 

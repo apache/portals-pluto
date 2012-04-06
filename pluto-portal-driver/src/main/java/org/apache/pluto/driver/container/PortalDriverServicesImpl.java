@@ -35,9 +35,9 @@ import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.driver.PortletContextService;
 import org.apache.pluto.container.driver.PortletRegistryService;
 import org.apache.pluto.container.driver.RequiredContainerServices;
+import org.apache.pluto.container.impl.PortletAppDescriptorServiceImpl;
 import org.apache.pluto.container.impl.PortletEnvironmentServiceImpl;
 import org.apache.pluto.container.impl.RequestDispatcherServiceImpl;
-import org.apache.pluto.container.impl.PortletAppDescriptorServiceImpl;
 
 
 public class PortalDriverServicesImpl implements RequiredContainerServices, OptionalContainerServices, PortalDriverServices
@@ -166,7 +166,7 @@ public class PortalDriverServicesImpl implements RequiredContainerServices, Opti
     protected void createDefaultServicesIfNeeded()
     {
         rdService = rdService == null ? new RequestDispatcherServiceImpl() : rdService;
-        portletRegistryService = portletRegistryService == null ? new PortletContextManager(rdService, new PortletAppDescriptorServiceImpl()) : portletRegistryService;
+        portletRegistryService = portletRegistryService == null ? new PortletContextManager(this, new PortletAppDescriptorServiceImpl()) : portletRegistryService;
         portletContextService = portletContextService == null ? (PortletContextManager)portletRegistryService : portletContextService;
         portalAdministrationService = portalAdministrationService == null ? new DefaultPortalAdministrationService() : portalAdministrationService;
         ccppProfileService = ccppProfileService == null ? new DummyCCPPProfileServiceImpl() : ccppProfileService;

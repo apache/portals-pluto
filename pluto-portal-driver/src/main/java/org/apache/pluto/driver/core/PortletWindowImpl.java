@@ -19,16 +19,16 @@ package org.apache.pluto.driver.core;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
 import org.apache.pluto.container.PortletWindowID;
-import org.apache.pluto.container.driver.PlutoServices;
+import org.apache.pluto.container.driver.PortalDriverServices;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.driver.services.portal.PortletWindowConfig;
 import org.apache.pluto.driver.url.PortalURL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of <code>PortletWindow</code> interface.
@@ -59,7 +59,8 @@ public class PortletWindowImpl implements PortletWindow {
         try
         {
             String applicationName = config.getContextPath();
-            this.portlet = PlutoServices.getServices().getPortletRegistryService().getPortlet(applicationName, config.getPortletName());
+            //TODO need better way to get reference to PortletRegistryService
+            this.portlet = ((PortalDriverServices)container).getPortletRegistryService().getPortlet(applicationName, config.getPortletName());
         }
         catch (PortletContainerException ex)
         {

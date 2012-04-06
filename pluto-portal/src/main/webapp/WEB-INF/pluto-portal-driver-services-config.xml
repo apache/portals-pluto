@@ -55,13 +55,9 @@ limitations under the License.
       <ref bean="PortalDriverServices"/>
     </constructor-arg>
   </bean>
-
-  <bean id="PlutoServices"
-        class="org.apache.pluto.container.driver.PlutoServices"
-        singleton="true">
-    <constructor-arg>
-      <ref bean="PortalDriverServices"/>
-    </constructor-arg>
+  
+  <bean class="org.apache.pluto.driver.container.PlutoServicesRegistryBean">
+    <constructor-arg ref="PortalDriverServices" />
   </bean>
 
   <bean id="PortalDriverServices"
@@ -224,7 +220,7 @@ limitations under the License.
   <bean id="PortletContextService"
         class="org.apache.pluto.driver.container.PortletContextManager">
     <constructor-arg>
-      <ref bean="RequestDispatcherService"/>
+      <ref bean="PortalDriverServices"/>
     </constructor-arg>
     <constructor-arg>
       <bean class="org.apache.pluto.container.impl.PortletAppDescriptorServiceImpl"/>
