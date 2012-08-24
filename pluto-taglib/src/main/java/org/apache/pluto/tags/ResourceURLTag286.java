@@ -57,22 +57,19 @@ public class ResourceURLTag286 extends BaseURLTag {
 	 * @see org.apache.pluto.tags.BaseURLTag#doStartTag()
 	 */
 	@Override
-	public int doStartTag() throws JspException {
-	    PortletConfig portletConfig = 
-            (PortletConfig) pageContext.getRequest().getAttribute(Constants.PORTLET_CONFIG);
-	    
-        Map<String,String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
-        if (containerRuntimeOptions != null){
-            String[] result = containerRuntimeOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
-            if (result != null){
-                if (result.length > 0){
-                    if (result[0].equals(true))
-                        escapeXml = true;
-                    else if (result[0].equals(false))
-                        escapeXml = false;
-                }
-            }
-        }
+	public int doStartTag() throws JspException {                
+        
+       PortletConfig portletConfig = 
+           (PortletConfig) pageContext.getRequest().getAttribute(Constants.PORTLET_CONFIG);
+       Map<String,String[]> containerRuntimeOptions = portletConfig.getContainerRuntimeOptions();
+       if (containerRuntimeOptions != null){
+           String[] result = containerRuntimeOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
+           if (result != null){
+               if (result.length > 0){
+                   escapeXml = Boolean.parseBoolean(result[0]);
+               }
+           }
+       }
 		       
         PortletResponse portletResponse = (PortletResponse) pageContext.getRequest()
             .getAttribute(Constants.PORTLET_RESPONSE);

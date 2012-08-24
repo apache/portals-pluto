@@ -55,10 +55,7 @@ public abstract class PortletURLTag286 extends PortletURLTag168 {
         	String[] result = containerRuntimeOptions.get(Constants.ESCAPE_XML_RUNTIME_OPTION);
         	if (result != null){
         		if (result.length > 0){
-        			if (result[0].equals(true))
-        				escapeXml = true;
-        			else if (result[0].equals(false))
-        				escapeXml = false;
+        		    escapeXml = Boolean.parseBoolean(result[0]);
         		}
         	}
         }
