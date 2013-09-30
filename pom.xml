@@ -114,6 +114,19 @@ generate mailto links. -->
     </developer>
 
     <developer>
+      <name>Scott Nicklous</name>
+      <id>msnicklous</id>
+      <email>msnicklous#a@T#apache.d0t.org</email>
+      <timezone>+1</timezone>
+      <organization>IBM Corporation</organization>
+      <organizationUrl>http://www.ibm.com</organizationUrl>
+      <roles>
+        <role>Specification Lead, JSR 362 Portlet Specification 3.0</role>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
       <name>Nick Lothian</name>
       <id>nlothian</id>
       <email>nlothian#a@T#apache.d0t.org</email>
