@@ -12,6 +12,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License
+#
 
 Apach Pluto 2.1 is the second version of the JSR-286 Reference Implementation (Java Portlet API 2.0).
 See the Getting Started page on the Pluto web site (http://portals.apache.org/pluto)
