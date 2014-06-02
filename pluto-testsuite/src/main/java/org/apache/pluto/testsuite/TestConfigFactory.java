@@ -44,6 +44,7 @@ public class TestConfigFactory {
      */
     public TestConfigFactory() {
         digester = new Digester();
+        digester.setClassLoader(Thread.currentThread().getContextClassLoader());
         digester.addObjectCreate("testportlet-config", ArrayList.class);
 
 

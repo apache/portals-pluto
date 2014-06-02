@@ -135,7 +135,7 @@ public class Tomcat5FileSystemInstaller extends FileSystemInstaller {
     private String getConfigContents(String war, String contextPath) {
         StringBuffer contents = new StringBuffer();
         contents.append("<Context ")
-                .append("path=\"").append(contextPath).append("\" ")
+                .append("path=\"/").append(contextPath).append("\" ")
                 .append("docBase=\"").append(war).append("\" ")
                 .append("crossContext=\"true\">").append("</Context>");
        return contents.toString();
