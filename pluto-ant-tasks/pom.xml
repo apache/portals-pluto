@@ -34,7 +34,7 @@
     <dependency>
       <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-util</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

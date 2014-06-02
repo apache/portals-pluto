@@ -98,7 +98,7 @@
             <plugin>
                 <groupId>org.apache.portals.pluto</groupId>
                 <artifactId>maven-pluto-plugin</artifactId>
-                <version>${pom.version}</version>
+                <version>${project.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-resources</phase>
@@ -118,7 +118,7 @@
                             <goal>process</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/${build.finalName}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
                             <attached>false</attached>
                         </configuration>
                     </execution>
@@ -166,7 +166,7 @@
                                     -->
                                         <property environment="env" />
                                         <property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}" />
-                                        <copy file="target/${pom.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
+                                        <copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -203,7 +203,7 @@
                                     -->
                                         <property environment="env" />
                                         <property name="deploy.dir" value="${env.PORTLET_DEPLOY_DIR}" />
-                                        <copy file="target/${pom.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
+                                        <copy file="target/${project.build.finalName}.war" tofile="${deploy.dir}/testsuite.war" />
                                     </tasks>
                                 </configuration>
                                 <goals>

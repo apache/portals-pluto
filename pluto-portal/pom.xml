@@ -34,7 +34,7 @@
     <dependency>
       <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-container</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.portals.pluto</groupId>
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-portal-driver</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
@@ -83,7 +83,7 @@
     <dependency>
       <groupId>org.apache.portals.pluto</groupId>
       <artifactId>pluto-portal-driver-impl</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
@@ -123,7 +123,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.1-beta-1</version>
         <configuration>
           <webResources>
             <resource>
@@ -147,7 +146,7 @@
               <goal>process</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/${build.finalName}</outputDirectory>
+              <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
               <attached>false</attached>
             </configuration>
           </execution>
