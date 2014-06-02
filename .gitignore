@@ -1,0 +1,15 @@
+.classpath
+.project
+.settings
+target
+rebel.xml
+*.sh
+.idea/*
+*.iml
+faces-config.pageflow
+*.bak
+*.bak[0-9]
+.svn
+branches
+tags
+*.dir
