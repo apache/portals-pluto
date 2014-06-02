@@ -61,18 +61,18 @@
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
     </dependency>
 
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
     </dependency>
     <dependency>
       <groupId>stax</groupId>
       <artifactId>stax</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
       <exclusions>
         <exclusion>
           <groupId>stax</groupId>

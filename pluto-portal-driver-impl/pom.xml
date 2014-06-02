@@ -60,7 +60,7 @@
     <dependency>
       <groupId>commons-digester</groupId>
       <artifactId>commons-digester</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -90,13 +90,13 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
     </dependency>
 
     <dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
     </dependency>
 
     <dependency>

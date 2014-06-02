@@ -79,12 +79,12 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
     </dependency>
     <dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
-      <scope>compile</scope>
+      <scope>${dependency.scope}</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>

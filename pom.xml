@@ -266,7 +266,7 @@ generate mailto links. -->
     <stax.impl.version>1.2.0</stax.impl.version>
     <commons-digester.version>1.8</commons-digester.version>
     <commons-cli.version>1.0</commons-cli.version>
-    <slf4j.version>1.5.6</slf4j.version>
+    <slf4j.version>1.7.5</slf4j.version>
     <springframework.version>2.0.2</springframework.version>
     <maven.version>2.0.5</maven.version>
     <ant.version>1.6.5</ant.version>
@@ -291,6 +291,10 @@ TODO: Check if we need all of them. -->
     <ccpp-ri.version>1.0</ccpp-ri.version>
     <rdffilter.version>1.0</rdffilter.version>
     <jena.version>1.4.0</jena.version>
+
+    <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
+         but "provided" for deployment on tomee. See tomee profile. -->
+    <dependency.scope>compile</dependency.scope>
   </properties>
 
   <dependencyManagement>
@@ -497,9 +501,24 @@ TODO: Check if we need all of them. -->
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.apache.portals.pluto</groupId>
+          <artifactId>maven-pluto-plugin</artifactId>
+          <version>${project.version}</version>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
           <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <version>0.10</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -553,6 +572,10 @@ TODO: Check if we need all of them. -->
       <id>all</id>
       <activation>
         <activeByDefault>true</activeByDefault>
+        <!-- profile must also be activated when building for tomee -->
+        <property>
+          <name>tomee</name>
+        </property>
       </activation>
       
       <!-- Pluto Modules ======================================================= -->
@@ -585,6 +608,22 @@ TODO: Check if we need all of them. -->
       <modules />
     </profile>
     
+    <!-- To build Pluto for deployment on tomee, activate this profile -->
+    <!-- Activate using the tomee property: mvn clean install -Dtomee -->
+    <profile>
+      <id>tomee</id>
+      <activation>
+        <property>
+          <name>tomee</name>
+        </property>
+      </activation>
+      <properties>
+         <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
+              but "provided" for deployment on tomee. See tomee profile. -->
+		  <dependency.scope>provided</dependency.scope>
+      </properties>
+    </profile>
+
   </profiles>
 
 </project>
