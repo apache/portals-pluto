@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!--
+   Defines the test cases for this module.
+   For this module, the test case names are not automatically generated from.
+   the deployment descriptor, so edit this file to add new test cases.
+   This allows a portlet to define multiple test cases.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API ResponseTests test case names and page mappings -->
+<entry key="PortletResponse_addPropertyA1">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_addPropertyA2">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_addPropertyB1">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_addPropertyB2">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_addPropertyB3">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_addPropertyB4">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_addPropertyC1">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_addPropertyC2">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_setProperty1">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_setProperty2">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_setProperty3">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_encodeURL1">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_encodeURL2">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_getNamespace1">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_getNamespace2">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_createElement1">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_createElement2">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_createElement3">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_createElement4">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_createElement5">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_createElement6">V2ResponseTests_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasAddProperty">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasAddPropertyReturns">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasSetProperty">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasSetPropertyReturns">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasEncodeURL">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasEncodeURLReturns">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasGetNamespace">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasGetNamespaceReturns">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasAddPropertyA">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasAddPropertyReturnsA">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasAddPropertyB">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasAddPropertyReturnsB">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasCreateElement">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="PortletResponse_SIG_hasCreateElementReturns">V2ResponseTests_SIG_PortletResponse</entry>
+<entry key="StateAwareResponse_implementsPortletResponse2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setWindowState1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setWindowState2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setWindowState3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setPortletMode1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setPortletMode2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setPortletMode3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters4">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters5">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters6">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters7">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters8">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters9">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters10">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters11">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameters12">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA4">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA5">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA6">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA7">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterA8">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterB1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterB2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterB3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterB4">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterB5">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setRenderParameterB6">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventA1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventA2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventA3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventA4">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventA5">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventB1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventB2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventB3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventB4">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_setEventB5">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getRenderParameterMap1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getRenderParameterMap2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getRenderParameterMap3">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getRenderParameterMap4">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getPortletMode1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getPortletMode2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getWindowState1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_getWindowState2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_removePublicRenderParameter1">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_removePublicRenderParameter2">V2ResponseTests_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_implementsPortletResponse">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetWindowState">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetWindowStateReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetPortletMode">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetPortletModeReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetRenderParameters">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetRenderParametersReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetRenderParameter">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetRenderParameterReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetRenderParameterA">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetRenderParameterReturnsA">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetEvent">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetEventReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetEventA">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasSetEventReturnsA">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasGetRenderParameterMap">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasGetRenderParameterMapReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasGetPortletMode">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasGetPortletModeReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasGetWindowState">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasGetWindowStateReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasRemovePublicRenderParameter">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="StateAwareResponse_SIG_hasRemovePublicRenderParameterReturns">V2ResponseTests_SIG_StateAwareResponse</entry>
+<entry key="ActionResponse_implementsStateAwareResponse3">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_implementsStateAwareResponse4">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA1">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA2">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA3">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA4">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA5">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA6">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA7">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectA8">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB1">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB2">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB3">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB4">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB5">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB6">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB7">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB8">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB9">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB10">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB11">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_sendRedirectB12">V2ResponseTests_ActionResponse</entry>
+<entry key="ActionResponse_SIG_implementsStateAwareResponse">V2ResponseTests_SIG_ActionResponse</entry>
+<entry key="ActionResponse_SIG_hasSendRedirect">V2ResponseTests_SIG_ActionResponse</entry>
+<entry key="ActionResponse_SIG_hasSendRedirectReturns">V2ResponseTests_SIG_ActionResponse</entry>
+<entry key="ActionResponse_SIG_hasSendRedirectA">V2ResponseTests_SIG_ActionResponse</entry>
+<entry key="ActionResponse_SIG_hasSendRedirectReturnsA">V2ResponseTests_SIG_ActionResponse</entry>
+<entry key="EventResponse_implementsStateAwareResponse3">V2ResponseTests_EventResponse</entry>
+<entry key="EventResponse_implementsStateAwareResponse4">V2ResponseTests_EventResponse</entry>
+<entry key="EventResponse_setRenderParameters1">V2ResponseTests_EventResponse</entry>
+<entry key="EventResponse_setRenderParameters2">V2ResponseTests_EventResponse</entry>
+<entry key="EventResponse_SIG_implementsStateAwareResponse">V2ResponseTests_SIG_EventResponse</entry>
+<entry key="EventResponse_SIG_hasSetRenderParameters">V2ResponseTests_SIG_EventResponse</entry>
+<entry key="EventResponse_SIG_hasSetRenderParametersReturns">V2ResponseTests_SIG_EventResponse</entry>
+<entry key="MimeResponse_implementsPortletResponse2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldEXPIRATION_CACHE">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldCACHE_SCOPE">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldPUBLIC_SCOPE">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldPRIVATE_SCOPE">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldETAG">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldUSE_CACHED_CONTENT">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldNAMESPACED_RESPONSE">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_fieldMARKUP_HEAD_ELEMENT">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getContentType1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getContentType2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_setContentType1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_setContentType2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_setContentType3">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_setContentType4">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getCharacterEncoding">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getWriter1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getWriter2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getWriter3">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getLocale">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_setBufferSize1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_setBufferSize2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getBufferSize1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getBufferSize2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_flushBuffer1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_flushBuffer2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_resetBuffer1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_resetBuffer2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_isCommitted1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_isCommitted2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_reset1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_reset2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getPortletOutputStream1">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getPortletOutputStream2">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getPortletOutputStream3">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_createRenderURL">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_createActionURL">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_createResourceURL">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_getCacheControl">V2ResponseTests_MimeResponse</entry>
+<entry key="MimeResponse_SIG_implementsPortletResponse">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldEXPIRATION_CACHE">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldCACHE_SCOPE">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldPUBLIC_SCOPE">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldPRIVATE_SCOPE">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldETAG">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldUSE_CACHED_CONTENT">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldNAMESPACED_RESPONSE">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_fieldMARKUP_HEAD_ELEMENT">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetContentType">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetContentTypeReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasSetContentType">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasSetContentTypeReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetCharacterEncoding">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetCharacterEncodingReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetWriter">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetWriterReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetLocale">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetLocaleReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasSetBufferSize">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasSetBufferSizeReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetBufferSize">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetBufferSizeReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasFlushBuffer">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasFlushBufferReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasResetBuffer">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasResetBufferReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasIsCommitted">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasIsCommittedReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasReset">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasResetReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetPortletOutputStream">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetPortletOutputStreamReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasCreateRenderURL">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasCreateRenderURLReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasCreateActionURL">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasCreateActionURLReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasCreateResourceURL">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasCreateResourceURLReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetCacheControl">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="MimeResponse_SIG_hasGetCacheControlReturns">V2ResponseTests_SIG_MimeResponse</entry>
+<entry key="RenderResponse_implementsMimeResponse3">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_implementsMimeResponse4">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_setTitle1">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_setTitle2">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_setNextPossiblePortletModes1">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_setNextPossiblePortletModes2">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_setContentType1">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_setContentType2">V2ResponseTests_RenderResponse</entry>
+<entry key="RenderResponse_SIG_implementsMimeResponse">V2ResponseTests_SIG_RenderResponse</entry>
+<entry key="RenderResponse_SIG_hasSetTitle">V2ResponseTests_SIG_RenderResponse</entry>
+<entry key="RenderResponse_SIG_hasSetTitleReturns">V2ResponseTests_SIG_RenderResponse</entry>
+<entry key="RenderResponse_SIG_hasSetNextPossiblePortletModes">V2ResponseTests_SIG_RenderResponse</entry>
+<entry key="RenderResponse_SIG_hasSetNextPossiblePortletModesReturns">V2ResponseTests_SIG_RenderResponse</entry>
+<entry key="RenderResponse_SIG_hasSetContentType">V2ResponseTests_SIG_RenderResponse</entry>
+<entry key="RenderResponse_SIG_hasSetContentTypeReturns">V2ResponseTests_SIG_RenderResponse</entry>
+<entry key="ResourceResponse_implementsMimeResponse3">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_implementsMimeResponse4">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_fieldHTTP_STATUS_CODE">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setLocale1">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setLocale2">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setLocale3">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setLocale4">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setCharacterEncoding1">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setCharacterEncoding2">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setCharacterEncoding3">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setCharacterEncoding4">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setContentLength1">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setContentLength2">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_setContentLength3">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_createRenderURL1">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_createRenderURL2">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_createActionURL1">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_createActionURL2">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_createResourceURL1">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_createResourceURL2">V2ResponseTests_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_implementsMimeResponse">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_fieldHTTP_STATUS_CODE">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasSetLocale">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasSetLocaleReturns">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasSetCharacterEncoding">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasSetCharacterEncodingReturns">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasSetContentLength">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasSetContentLengthReturns">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasCreateRenderURL">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasCreateRenderURLReturns">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasCreateActionURL">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasCreateActionURLReturns">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasCreateResourceURL">V2ResponseTests_SIG_ResourceResponse</entry>
+<entry key="ResourceResponse_SIG_hasCreateResourceURLReturns">V2ResponseTests_SIG_ResourceResponse</entry>
+
+</properties>

@@ -1,0 +1,13 @@
+
+Java Portlet Specification V3.0 Technology Compatibility Kit
+Copyright 2004-2014 Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+Some concepts and XSL stylesheets adapted from the JSR 329 TCK, which 
+is hosted by The Apache Software Foundation (http://myfaces.apache.org/portlet-bridge/jsr329tck.html).
+The JSR 329 TCK is provided by The Apache Software Foundation under the Apache 2.0 license.
+
+© Copyright IBM Corp. 2014
+All rights reserved.

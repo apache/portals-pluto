@@ -1,0 +1,339 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <parent>
+      <groupId>javax.portlet</groupId>
+      <artifactId>tck</artifactId>
+      <version>3.0-SNAPSHOT</version>
+   </parent>
+
+   <artifactId>tck-driver</artifactId>
+   <packaging>jar</packaging>
+
+   <description>
+   This project builds the Junit / Selenium driver for the portlet API tck.
+   </description>
+
+   <dependencies>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.seleniumhq.selenium</groupId>
+         <artifactId>selenium-java</artifactId>
+         <scope>compile</scope>
+      </dependency>
+
+      <!-- Dependency on common module for element ID suffixes -->
+      <dependency>
+         <groupId>javax.portlet</groupId>
+         <artifactId>tck-common</artifactId>
+         <version>${project.version}</version>
+         <scope>compile</scope>
+      </dependency>
+
+
+      <!-- List the modules containing test cases in order to aggregate the output -->
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-TestModule1</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-TestModule2</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-TestModule3</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2AnnotationTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2EnvironmentTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2ExceptionTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2FilterTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2PortletTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2RequestTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2ResponseTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2URLTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2WrapperTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <finalName>${project.artifactId}</finalName>
+
+      <resources>
+         <resource>
+            <directory>src/main/resources/xml-resources</directory>
+            <targetPath>${project.build.directory}/${test.file.dir}</targetPath>
+            <includes>
+               <include>*</include>
+            </includes>
+         </resource>
+      </resources>
+
+      <plugins>
+
+         <!-- For extracting the XML transformation stylesheets from common module -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>xml-resource-dependencies</id>
+                  <phase>generate-sources</phase>
+                  <goals>
+                     <goal>unpack-dependencies</goal>
+                  </goals>
+                  <configuration>
+                     <includeArtifactIds>
+                        tck-TestModule1,
+                        tck-TestModule2,
+                        tck-TestModule3,
+                        tck-V2AnnotationTests,
+                        tck-V2EnvironmentTests,
+                        tck-V2ExceptionTests,
+                        tck-V2FilterTests,
+                        tck-V2PortletTests,
+                        tck-V2RequestTests,
+                        tck-V2ResponseTests,
+                        tck-V2URLTests,
+                        tck-V2WrapperTests
+                     </includeArtifactIds>
+                     <includes>${test.file.dir}/*.xml</includes>
+                     <outputDirectory>${project.build.directory}</outputDirectory>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <!-- For Performing xml translations to create test.xml files -->
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>xml-maven-plugin</artifactId>
+            <version>1.0</version>
+            <executions>
+               <execution>
+                  <phase>process-resources</phase>
+                  <goals>
+                     <goal>transform</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <transformationSets>
+
+                  <!-- Combine several test list files into a single module -->
+                  <transformationSet>
+                     <dir>${project.build.directory}/${test.file.dir}</dir>
+                     <includes>
+                        <include>testFiles.xml</include>
+                     </includes>
+                     <outputDir>${project.build.directory}/classes/${test.list.dir}</outputDir>
+                     <fileMappers>
+                        <fileMapper
+                           implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+                           <targetName>${test.list.name}</targetName>
+                        </fileMapper>
+                     </fileMappers>
+                     <stylesheet>${project.build.directory}/${test.file.dir}/${test.list.xsl}</stylesheet>
+                  </transformationSet>
+
+                  <!-- Combine several page files into a single page file containing 
+                     all test portal pages -->
+                  <transformationSet>
+                     <dir>${project.build.directory}/${test.file.dir}</dir>
+                     <includes>
+                        <include>pageFiles.xml</include>
+                     </includes>
+                     <outputDir>${project.build.directory}/classes/${test.list.dir}</outputDir>
+                     <fileMappers>
+                        <fileMapper
+                           implementation="org.codehaus.plexus.components.io.filemappers.MergeFileMapper">
+                           <targetName>${page.file.final.name}</targetName>
+                        </fileMapper>
+                     </fileMappers>
+                     <stylesheet>${project.build.directory}/${test.file.dir}/${page.file.final.xsl}</stylesheet>
+                  </transformationSet>
+
+               </transformationSets>
+            </configuration>
+         </plugin>
+
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+               <archive>
+                  <manifest>
+                     <mainClass>example.Selenium2Example</mainClass>
+                  </manifest>
+               </archive>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+
+   <!-- To build the tests, use "mvn clean install" from the parent directory. -->
+   <!-- To run all of the tests, use "mvn test -Prun-tck" from the driver directory. -->
+   
+   <!-- To a subset of the tests, use "mvn test -Prun-tck -Dtest.module=<match string>" from the driver directory. -->
+   <!-- the driver will then execute all tests whose test case name contains the specified string. -->
+   <!-- Example: "mvn test -Prun-tck -Dtest.module=PortletRequest" will execute all PortletRequest TCs. -->
+   
+   <profiles>
+      <profile>
+         <id>run-tck</id>
+         <build>
+            <plugins>
+
+               <!-- For running the test driver -->
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <version>2.17</version>
+                  <configuration>
+                     <testClassesDirectory>${project.build.directory}/classes</testClassesDirectory>
+                     <includes>
+                        <include>**/javax/**</include>
+                     </includes>
+                     <useFile>false</useFile>
+                     <systemProperties>
+                        <property>
+                           <name>test.server.login.url</name>
+                           <value>${test.server.login.url}</value>
+                        </property>
+                        <property>
+                           <name>test.context.base</name>
+                           <value>${test.context.base}</value>
+                        </property>
+                        <property>
+                           <name>test.url.strategy</name>
+                           <value>${test.url.strategy}</value>
+                        </property>
+                        <property>
+                           <name>test.server.host</name>
+                           <value>${test.server.host}</value>
+                        </property>
+                        <property>
+                           <name>test.server.port</name>
+                           <value>${test.server.port}</value>
+                        </property>
+                        <property>
+                           <name>test.server.username.id</name>
+                           <value>${test.server.username.id}</value>
+                        </property>
+                        <property>
+                           <name>test.server.username</name>
+                           <value>${test.server.username}</value>
+                        </property>
+                        <property>
+                           <name>test.server.password.id</name>
+                           <value>${test.server.password.id}</value>
+                        </property>
+                        <property>
+                           <name>test.server.password</name>
+                           <value>${test.server.password}</value>
+                        </property>
+                        <property>
+                           <name>test.list.file</name>
+                           <value>${project.build.directory}/classes/${test.list.dir}/${test.list.name}</value>
+                        </property>
+                        <property>
+                           <name>test.browser</name>
+                           <value>${test.browser}</value>
+                        </property>
+                        <property>
+                           <name>test.browser.webDriver</name>
+                           <value>${test.browser.webDriver}</value>
+                        </property>
+                        <property>
+                           <name>test.module</name>
+                           <value>${test.module}</value>
+                        </property>
+                     </systemProperties>
+                  </configuration>
+               </plugin>
+
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
+
+
+</project>

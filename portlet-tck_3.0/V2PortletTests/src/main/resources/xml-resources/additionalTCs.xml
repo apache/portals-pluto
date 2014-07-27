@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!--
+   Defines the test cases for this module.
+   For this module, the test case names are not automatically generated from.
+   the deployment descriptor, so edit this file to add new test cases.
+   This allows a portlet to define multiple test cases.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API PortletTests test case names and page mappings -->
+<entry key="PortletConfig_getPortletName">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getPortletContext">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getResourceBundle">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getInitParameter1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getInitParameter2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getInitParameter3">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getInitParameterNames1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getInitParameterNames2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getPublicRenderParameterNames1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getPublicRenderParameterNames2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getDefaultNamespace1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getDefaultNamespace2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getPublishingEventQNames1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getPublishingEventQNames2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getProcessingEventQNames1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getProcessingEventQNames2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getSupportedLocales1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getSupportedLocales2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getContainerRuntimeOptions1">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getContainerRuntimeOptions2">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getContainerRuntimeOptions3">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_getContainerRuntimeOptions4">V2PortletTests_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPortletName">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPortletNameReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPortletContext">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPortletContextReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetResourceBundle">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetResourceBundleReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetInitParameter">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetInitParameterReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetInitParameterNames">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetInitParameterNamesReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPublicRenderParameterNames">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPublicRenderParameterNamesReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetDefaultNamespace">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetDefaultNamespaceReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPublishingEventQNames">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetPublishingEventQNamesReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetProcessingEventQNames">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetProcessingEventQNamesReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetSupportedLocales">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetSupportedLocalesReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetContainerRuntimeOptions">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletConfig_SIG_hasGetContainerRuntimeOptionsReturns">V2PortletTests_SIG_PortletConfig</entry>
+<entry key="PortletMode_fieldEDIT">V2PortletTests_PortletMode</entry>
+<entry key="PortletMode_fieldHELP">V2PortletTests_PortletMode</entry>
+<entry key="PortletMode_fieldVIEW">V2PortletTests_PortletMode</entry>
+<entry key="PortletMode_toString">V2PortletTests_PortletMode</entry>
+<entry key="PortletMode_hashCode">V2PortletTests_PortletMode</entry>
+<entry key="PortletMode_equals">V2PortletTests_PortletMode</entry>
+<entry key="PortletMode_SIG_fieldVIEW">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_fieldEDIT">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_fieldHELP">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_constructor">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_hasToString">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_hasToStringReturns">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_hasHashCode">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_hasHashCodeReturns">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_hasEquals">V2PortletTests_SIG_PortletMode</entry>
+<entry key="PortletMode_SIG_hasEqualsReturns">V2PortletTests_SIG_PortletMode</entry>
+<entry key="WindowState_fieldMAXIMIZED">V2PortletTests_WindowState</entry>
+<entry key="WindowState_fieldMINIMIZED">V2PortletTests_WindowState</entry>
+<entry key="WindowState_fieldNORMAL">V2PortletTests_WindowState</entry>
+<entry key="WindowState_toString">V2PortletTests_WindowState</entry>
+<entry key="WindowState_hashCode">V2PortletTests_WindowState</entry>
+<entry key="WindowState_equals">V2PortletTests_WindowState</entry>
+<entry key="WindowState_SIG_fieldNORMAL">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_fieldMAXIMIZED">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_fieldMINIMIZED">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_constructor">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_hasToString">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_hasToStringReturns">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_hasHashCode">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_hasHashCodeReturns">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_hasEquals">V2PortletTests_SIG_WindowState</entry>
+<entry key="WindowState_SIG_hasEqualsReturns">V2PortletTests_SIG_WindowState</entry>
+<entry key="Portlet_init1">V2PortletTests_Portlet</entry>
+<entry key="Portlet_init2">V2PortletTests_Portlet</entry>
+<entry key="Portlet_processAction">V2PortletTests_Portlet</entry>
+<entry key="Portlet_render1">V2PortletTests_Portlet</entry>
+<entry key="Portlet_render2">V2PortletTests_Portlet</entry>
+<entry key="Portlet_destroy">V2PortletTests_Portlet</entry>
+<entry key="Portlet_SIG_hasInit">V2PortletTests_SIG_Portlet</entry>
+<entry key="Portlet_SIG_hasInitReturns">V2PortletTests_SIG_Portlet</entry>
+<entry key="Portlet_SIG_hasProcessAction">V2PortletTests_SIG_Portlet</entry>
+<entry key="Portlet_SIG_hasProcessActionReturns">V2PortletTests_SIG_Portlet</entry>
+<entry key="Portlet_SIG_hasRender">V2PortletTests_SIG_Portlet</entry>
+<entry key="Portlet_SIG_hasRenderReturns">V2PortletTests_SIG_Portlet</entry>
+<entry key="Portlet_SIG_hasDestroy">V2PortletTests_SIG_Portlet</entry>
+<entry key="Portlet_SIG_hasDestroyReturns">V2PortletTests_SIG_Portlet</entry>
+<entry key="Event_getQName1">V2PortletTests_Event</entry>
+<entry key="Event_getQName2">V2PortletTests_Event</entry>
+<entry key="Event_getName1">V2PortletTests_Event</entry>
+<entry key="Event_getName2">V2PortletTests_Event</entry>
+<entry key="Event_getValue1">V2PortletTests_Event</entry>
+<entry key="Event_getValue2">V2PortletTests_Event</entry>
+<entry key="Event_SIG_hasGetQName">V2PortletTests_SIG_Event</entry>
+<entry key="Event_SIG_hasGetQNameReturns">V2PortletTests_SIG_Event</entry>
+<entry key="Event_SIG_hasGetName">V2PortletTests_SIG_Event</entry>
+<entry key="Event_SIG_hasGetNameReturns">V2PortletTests_SIG_Event</entry>
+<entry key="Event_SIG_hasGetValue">V2PortletTests_SIG_Event</entry>
+<entry key="Event_SIG_hasGetValueReturns">V2PortletTests_SIG_Event</entry>
+<entry key="EventPortlet_processEvent">V2PortletTests_EventPortlet</entry>
+<entry key="EventPortlet_SIG_hasProcessEvent">V2PortletTests_SIG_EventPortlet</entry>
+<entry key="EventPortlet_SIG_hasProcessEventReturns">V2PortletTests_SIG_EventPortlet</entry>
+<entry key="ResourceServingPortlet_serveResource">V2PortletTests_ResourceServingPortlet</entry>
+<entry key="ResourceServingPortlet_SIG_hasServeResource">V2PortletTests_SIG_ResourceServingPortlet</entry>
+<entry key="ResourceServingPortlet_SIG_hasServeResourceReturns">V2PortletTests_SIG_ResourceServingPortlet</entry>
+<entry key="GenericPortlet_implementsPortlet2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_implementsEventPortlet2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_implementsResourceServingPortlet2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_implementsPortletConfig2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_initA">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_initB">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_processAction1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_processAction2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_processAction3">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render3">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render4">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render5">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render6">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render7">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render8">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render9">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_render10">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getTitle1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getTitle2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getTitle3">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doDispatch1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doDispatch2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doDispatch3">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doDispatch4">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doDispatch5">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doDispatch6">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doDispatch7">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doView1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doView2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doEdit1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doEdit2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doHelp1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doHelp2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getPortletConfig">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_destroy">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getPortletName">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getPortletContext">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getResourceBundle">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getInitParameter">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getInitParameterNames">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getProcessingEventQNames">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getPublishingEventQNames">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getSupportedLocales">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getContainerRuntimeOptions">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_serveResource1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_serveResource2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_serveResource3">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_processEvent1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_processEvent2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_processEvent3">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doHeaders1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_doHeaders2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getNextPossiblePortletModes1">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getNextPossiblePortletModes2">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getPublicRenderParameterNames">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_getDefaultNamespace">V2PortletTests_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_implementsPortlet">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_implementsPortletConfig">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_implementsEventPortlet">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_implementsResourceServingPortlet">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_constructor">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasInit">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasInitReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasInitA">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasInitReturnsA">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasProcessAction">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasProcessActionReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasRender">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasRenderReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetTitle">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetTitleReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoDispatch">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoDispatchReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoView">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoViewReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoEdit">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoEditReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoHelp">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoHelpReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPortletConfig">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPortletConfigReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDestroy">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDestroyReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPortletName">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPortletNameReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPortletContext">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPortletContextReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetResourceBundle">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetResourceBundleReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetInitParameter">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetInitParameterReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetInitParameterNames">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetInitParameterNamesReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetProcessingEventQNames">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetProcessingEventQNamesReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPublishingEventQNames">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPublishingEventQNamesReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetSupportedLocales">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetSupportedLocalesReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetContainerRuntimeOptions">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetContainerRuntimeOptionsReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasServeResource">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasServeResourceReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasProcessEvent">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasProcessEventReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoHeaders">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasDoHeadersReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetNextPossiblePortletModes">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetNextPossiblePortletModesReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPublicRenderParameterNames">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetPublicRenderParameterNamesReturns">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetDefaultNamespace">V2PortletTests_SIG_GenericPortlet</entry>
+<entry key="GenericPortlet_SIG_hasGetDefaultNamespaceReturns">V2PortletTests_SIG_GenericPortlet</entry>
+
+</properties>

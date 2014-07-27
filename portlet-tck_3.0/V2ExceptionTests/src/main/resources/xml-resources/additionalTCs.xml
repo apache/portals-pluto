@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!--
+   Defines the test cases for this module.
+   For this module, the test case names are not automatically generated from.
+   the deployment descriptor, so edit this file to add new test cases.
+   This allows a portlet to define multiple test cases.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API ExceptionTests test case names and page mappings -->
+<entry key="PortletException_SIG_extendsException">V2ExceptionTests_SIG_PortletException</entry>
+<entry key="PortletException_SIG_constructor">V2ExceptionTests_SIG_PortletException</entry>
+<entry key="PortletException_SIG_constructorA">V2ExceptionTests_SIG_PortletException</entry>
+<entry key="PortletException_SIG_constructorB">V2ExceptionTests_SIG_PortletException</entry>
+<entry key="PortletException_SIG_constructorC">V2ExceptionTests_SIG_PortletException</entry>
+<entry key="PortletModeException_hasGetMode2">V2ExceptionTests_PortletModeException</entry>
+<entry key="PortletModeException_SIG_extendsPortletException">V2ExceptionTests_SIG_PortletModeException</entry>
+<entry key="PortletModeException_SIG_constructor">V2ExceptionTests_SIG_PortletModeException</entry>
+<entry key="PortletModeException_SIG_constructorA">V2ExceptionTests_SIG_PortletModeException</entry>
+<entry key="PortletModeException_SIG_constructorB">V2ExceptionTests_SIG_PortletModeException</entry>
+<entry key="PortletModeException_SIG_hasGetMode">V2ExceptionTests_SIG_PortletModeException</entry>
+<entry key="PortletModeException_SIG_hasGetModeReturns">V2ExceptionTests_SIG_PortletModeException</entry>
+<entry key="PortletSecurityException_SIG_extendsPortletException">V2ExceptionTests_SIG_PortletSecurityException</entry>
+<entry key="PortletSecurityException_SIG_constructor">V2ExceptionTests_SIG_PortletSecurityException</entry>
+<entry key="PortletSecurityException_SIG_constructorA">V2ExceptionTests_SIG_PortletSecurityException</entry>
+<entry key="PortletSecurityException_SIG_constructorB">V2ExceptionTests_SIG_PortletSecurityException</entry>
+<entry key="ReadOnlyException_SIG_extendsPortletException">V2ExceptionTests_SIG_ReadOnlyException</entry>
+<entry key="ReadOnlyException_SIG_constructor">V2ExceptionTests_SIG_ReadOnlyException</entry>
+<entry key="ReadOnlyException_SIG_constructorA">V2ExceptionTests_SIG_ReadOnlyException</entry>
+<entry key="ReadOnlyException_SIG_constructorB">V2ExceptionTests_SIG_ReadOnlyException</entry>
+<entry key="UnavailableException_isPermanent1">V2ExceptionTests_UnavailableException</entry>
+<entry key="UnavailableException_isPermanent2">V2ExceptionTests_UnavailableException</entry>
+<entry key="UnavailableException_isPermanent3">V2ExceptionTests_UnavailableException</entry>
+<entry key="UnavailableException_getUnavailableSeconds1">V2ExceptionTests_UnavailableException</entry>
+<entry key="UnavailableException_getUnavailableSeconds2">V2ExceptionTests_UnavailableException</entry>
+<entry key="UnavailableException_SIG_extendsPortletException">V2ExceptionTests_SIG_UnavailableException</entry>
+<entry key="UnavailableException_SIG_constructor">V2ExceptionTests_SIG_UnavailableException</entry>
+<entry key="UnavailableException_SIG_constructorA">V2ExceptionTests_SIG_UnavailableException</entry>
+<entry key="UnavailableException_SIG_hasIsPermanent">V2ExceptionTests_SIG_UnavailableException</entry>
+<entry key="UnavailableException_SIG_hasIsPermanentReturns">V2ExceptionTests_SIG_UnavailableException</entry>
+<entry key="UnavailableException_SIG_hasGetUnavailableSeconds">V2ExceptionTests_SIG_UnavailableException</entry>
+<entry key="UnavailableException_SIG_hasGetUnavailableSecondsReturns">V2ExceptionTests_SIG_UnavailableException</entry>
+<entry key="ValidatorException_constructor2">V2ExceptionTests_ValidatorException</entry>
+<entry key="ValidatorException_constructor4">V2ExceptionTests_ValidatorException</entry>
+<entry key="ValidatorException_constructor6">V2ExceptionTests_ValidatorException</entry>
+<entry key="ValidatorException_getFailedKeys1">V2ExceptionTests_ValidatorException</entry>
+<entry key="ValidatorException_getFailedKeys2">V2ExceptionTests_ValidatorException</entry>
+<entry key="ValidatorException_SIG_extendsPortletException">V2ExceptionTests_SIG_ValidatorException</entry>
+<entry key="ValidatorException_SIG_constructor">V2ExceptionTests_SIG_ValidatorException</entry>
+<entry key="ValidatorException_SIG_constructorA">V2ExceptionTests_SIG_ValidatorException</entry>
+<entry key="ValidatorException_SIG_constructorB">V2ExceptionTests_SIG_ValidatorException</entry>
+<entry key="ValidatorException_SIG_hasGetFailedKeys">V2ExceptionTests_SIG_ValidatorException</entry>
+<entry key="ValidatorException_SIG_hasGetFailedKeysReturns">V2ExceptionTests_SIG_ValidatorException</entry>
+<entry key="WindowStateException_getState">V2ExceptionTests_WindowStateException</entry>
+<entry key="WindowStateException_SIG_extendsPortletException">V2ExceptionTests_SIG_WindowStateException</entry>
+<entry key="WindowStateException_SIG_constructor">V2ExceptionTests_SIG_WindowStateException</entry>
+<entry key="WindowStateException_SIG_constructorA">V2ExceptionTests_SIG_WindowStateException</entry>
+<entry key="WindowStateException_SIG_constructorB">V2ExceptionTests_SIG_WindowStateException</entry>
+<entry key="WindowStateException_SIG_hasGetState">V2ExceptionTests_SIG_WindowStateException</entry>
+<entry key="WindowStateException_SIG_hasGetStateReturns">V2ExceptionTests_SIG_WindowStateException</entry>
+
+</properties>
