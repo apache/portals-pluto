@@ -34,4 +34,11 @@
    <fl:file>tck-V2ResponseTests-pages.xml</fl:file>
    <fl:file>tck-V2URLTests-pages.xml</fl:file>
    <fl:file>tck-V2WrapperTests-pages.xml</fl:file>
+   <fl:file>tck-V2AddlEnvironmentTests-pages.xml</fl:file>
+   <fl:file>tck-V2AddlFilterTests-pages.xml</fl:file>
+   <fl:file>tck-V2AddlPortletTests-pages.xml</fl:file>
+   <fl:file>tck-V2AddlRequestTests-pages.xml</fl:file>
+   <fl:file>tck-V2AddlResponseTests-pages.xml</fl:file>
+   <fl:file>tck-V2AddlUrlTests-pages.xml</fl:file>
+   <fl:file>tck-V2PortletTagLibraryTests-pages.xml</fl:file>
 </fl:filelist>

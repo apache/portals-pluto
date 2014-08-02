@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!--
+   Defines the test cases for this module.
+   For this module, the test case names are not automatically generated from.
+   the deployment descriptor, so edit this file to add new test cases.
+   This allows a portlet to define multiple test cases.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API AddlResponseTests test case names and page mappings -->
+<entry key="SPEC2_12_ResponseProperties_namespace2">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_namespace4">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie1">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie2">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie3">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie4">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie5">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie6">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie7">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie8">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie9">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie10">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie11">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie12">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie13">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie14">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie15">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie16">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseProperties_cookie17">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseRedirect_redirect1">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseRedirect_redirect12">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseRedirect_redirect14">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_contentType5">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_buffering9">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_buffering10">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_buffering11">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_buffering13">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_characterEncoding2">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_characterEncoding3">V2AddlResponseTests</entry>
+<entry key="SPEC2_12_ResponseContent_characterEncoding4">V2AddlResponseTests</entry>
+
+</properties>

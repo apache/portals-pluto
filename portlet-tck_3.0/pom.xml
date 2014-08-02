@@ -128,6 +128,13 @@
       <module>V2ResponseTests</module>
       <module>V2URLTests</module>
       <module>V2WrapperTests</module>
+      <module>V2AddlEnvironmentTests</module>
+      <module>V2AddlFilterTests</module>
+      <module>V2AddlPortletTests</module>
+      <module>V2AddlRequestTests</module>
+      <module>V2AddlResponseTests</module>
+      <module>V2AddlUrlTests</module>
+      <module>V2PortletTagLibraryTests</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>

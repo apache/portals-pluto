@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!--
+   Defines the test cases for this module.
+   For this module, the test case names are not automatically generated from.
+   the deployment descriptor, so edit this file to add new test cases.
+   This allows a portlet to define multiple test cases.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API AddlPortletTests test case names and page mappings -->
+<entry key="SPEC2_2_Compatibility_deployJSR168_1">V2AddlPortletTests</entry>
+<entry key="SPEC2_2_Compatibility_deployJSR168_2">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_Initialization_initialization6">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_action2">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_action5">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_action6">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_action7">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_render1">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_render3">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_resource1">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_resource3">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_exception1">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_exception2">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_exception4">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_RequestHandling_exception5">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_GenericPortlet_actionDispatching2">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_GenericPortlet_eventDispatching1">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_GenericPortlet_eventDispatching2">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_GenericPortlet_renderDispatching8">V2AddlPortletTests</entry>
+<entry key="SPEC2_5_GenericPortlet_renderDispatching9">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle1">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle2">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle3">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle4">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle5">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle6">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle7">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle8">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle9">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getResourceBundle10">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getPublishingEventQnames3">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getPublishingEventQnames4">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getProcessingEventQnames3">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getProcessingEventQnames4">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getContainerRuntimeOptions6">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getContainerRuntimeOptions7">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getContainerRuntimeOptions8">V2AddlPortletTests</entry>
+<entry key="SPEC2_6_Config_getContainerRuntimeOptions9">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes1">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes2">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes3">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes4">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes5">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes6">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes7">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes8">V2AddlPortletTests</entry>
+<entry key="SPEC2_8_PortletModes_declaringPortletModes9">V2AddlPortletTests</entry>
+<entry key="SPEC2_9_WindowStates_declaringWindowStates1">V2AddlPortletTests</entry>
+<entry key="SPEC2_9_WindowStates_declaringWindowStates2">V2AddlPortletTests</entry>
+<entry key="SPEC2_9_WindowStates_declaringWindowStates3">V2AddlPortletTests</entry>
+<entry key="SPEC2_9_WindowStates_declaringWindowStates4">V2AddlPortletTests</entry>
+<entry key="SPEC2_9_WindowStates_declaringWindowStates5">V2AddlPortletTests</entry>
+<entry key="SPEC2_9_WindowStates_declaringWindowStates6">V2AddlPortletTests</entry>
+<entry key="SPEC2_9_WindowStates_declaringWindowStates7">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_properties3">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_properties4">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_properties7">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_properties8">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs2">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs3">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs4">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs5">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs6">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs7">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs8">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServing_resourceURLs9">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_caching1">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_caching2">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_caching3">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL1">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL2">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL3">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL4">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL5">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL6">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL7">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL8">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingFULL9">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET1">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET2">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET3">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET4">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET5">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET6">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET7">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET8">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPORTLET9">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE1">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE2">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE3">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE4">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE5">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE6">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE7">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE8">V2AddlPortletTests</entry>
+<entry key="SPEC2_13_ResourceServingCache_cachingPAGE9">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event1">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event2">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event3">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event4">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event5">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event6">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event7">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event8">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event9">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event10">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event11">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event12">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event13">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event14">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event15">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_event16">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction1">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction2">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction3">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction4">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction5">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction6">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction7">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction8">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessAction9">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent1">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent2">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent3">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent4">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent5">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent6">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent7">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent8">V2AddlPortletTests</entry>
+<entry key="SPEC2_15_Event_eventProcessEvent9">V2AddlPortletTests</entry>
+
+</properties>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   version="2.0" id="javax.portlet-tck-PortletTagLibraryTests">
+
+   <portlet>
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibV1</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibV1</portlet-class>
+
+      <init-param>
+         <name>TestParameter</name>
+         <value>TestValue</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+
+      <supported-locale>en_US</supported-locale>
+
+      <portlet-info>
+         <title>PortletTagLibraryTests_SPEC2_26_TagLibV1</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibAction</portlet-class>
+
+      <init-param>
+         <name>TestParameter</name>
+         <value>TestValue</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+
+      <supported-locale>en_US</supported-locale>
+
+      <portlet-info>
+         <title>PortletTagLibraryTests_SPEC2_26_TagLibAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibRender</portlet-class>
+
+      <init-param>
+         <name>TestParameter</name>
+         <value>TestValue</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+
+      <supported-locale>en_US</supported-locale>
+
+      <portlet-info>
+         <title>PortletTagLibraryTests_SPEC2_26_TagLibRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibResource</portlet-class>
+
+      <init-param>
+         <name>TestParameter</name>
+         <value>TestValue</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+
+      <supported-locale>en_US</supported-locale>
+
+      <portlet-info>
+         <title>PortletTagLibraryTests_SPEC2_26_TagLibResource</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibParam</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibParam</portlet-class>
+
+      <init-param>
+         <name>TestParameter</name>
+         <value>TestValue</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+
+      <supported-locale>en_US</supported-locale>
+
+      <portlet-info>
+         <title>PortletTagLibraryTests_SPEC2_26_TagLibParam</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibProperty</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibProperty</portlet-class>
+
+      <init-param>
+         <name>TestParameter</name>
+         <value>TestValue</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+
+      <supported-locale>en_US</supported-locale>
+
+      <portlet-info>
+         <title>PortletTagLibraryTests_SPEC2_26_TagLibProperty</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLib</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLib</portlet-class>
+
+      <init-param>
+         <name>TestParameter</name>
+         <value>TestValue</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+
+      <supported-locale>en_US</supported-locale>
+
+      <portlet-info>
+         <title>PortletTagLibraryTests_SPEC2_26_TagLib</title>
+      </portlet-info>
+   </portlet>
+
+
+
+</portlet-app>

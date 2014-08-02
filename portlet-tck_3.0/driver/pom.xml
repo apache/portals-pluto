@@ -127,6 +127,48 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2AddlEnvironmentTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2AddlFilterTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2AddlPortletTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2AddlRequestTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2AddlResponseTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2AddlUrlTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2PortletTagLibraryTests</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <build>
@@ -168,7 +210,14 @@
                         tck-V2RequestTests,
                         tck-V2ResponseTests,
                         tck-V2URLTests,
-                        tck-V2WrapperTests
+                        tck-V2WrapperTests,
+                        tck-V2AddlEnvironmentTests,
+                        tck-V2AddlFilterTests,
+                        tck-V2AddlPortletTests,
+                        tck-V2AddlRequestTests,
+                        tck-V2AddlResponseTests,
+                        tck-V2AddlUrlTests,
+                        tck-V2PortletTagLibraryTests
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>
