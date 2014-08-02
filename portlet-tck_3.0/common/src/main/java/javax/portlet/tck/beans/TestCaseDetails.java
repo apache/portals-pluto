@@ -38,7 +38,25 @@ import java.util.Set;
  */
 public class TestCaseDetails implements Map<String, String> {
    
-   private final Map<String, String> detailsMap = new HashMap<String, String>();
+   private Map<String, String> detailsMap = null;
+   
+   /**
+    * For use when a new instance with a new map is to be created,
+    * for example, when a portlet uses the class directly.
+    */
+   public TestCaseDetails() {
+      detailsMap = new HashMap<String, String>();
+   }
+   
+   /**
+    * Creates an instance using an existing map. Mainly for use 
+    * by classes that extend this one.
+    * 
+    * @param map  Existing test case name - test case details map.
+    */
+   public TestCaseDetails(Map<String, String> map) {
+      detailsMap = map;
+   }
 
    @Override
    public void clear() {

@@ -30,8 +30,8 @@ import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.ClassChecker;
 import javax.portlet.tck.beans.TestCaseDetails;
-import javax.portlet.tck.beans.JSR286ApiTestCaseDetails;
-import static javax.portlet.tck.beans.JSR286ApiTestCaseDetails.*;
+import javax.portlet.tck.beans.JSR286SpecTestCaseDetails;
+import static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*;
 import javax.portlet.tck.beans.TestResult;
 
 /**
@@ -70,7 +70,7 @@ public class AddlRequestTests_SPEC2_11_RequestParamsProps implements Portlet {
       }
 
       PrintWriter writer = renderResponse.getWriter();
-      JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
+      JSR286SpecTestCaseDetails tcd = new JSR286SpecTestCaseDetails();
 
       // Create result objects for the tests
 
