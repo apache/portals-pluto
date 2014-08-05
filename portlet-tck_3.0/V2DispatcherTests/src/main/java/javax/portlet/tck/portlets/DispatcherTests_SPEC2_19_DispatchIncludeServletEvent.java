@@ -99,7 +99,7 @@ public class DispatcherTests_SPEC2_19_DispatchIncludeServletEvent implements Por
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the request attribute                   */
       /* javax.servlet.include.servlet_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getSerletPath for the first servlet    */
+      /* value from HTTPServletRequest.getServletPath for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_DISPATCHINCLUDESERVLETEVENT_ATTRIBUTES3);
       /* TODO: implement test */

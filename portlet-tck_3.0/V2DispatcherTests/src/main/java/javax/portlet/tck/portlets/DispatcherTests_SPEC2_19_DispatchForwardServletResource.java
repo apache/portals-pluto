@@ -99,7 +99,7 @@ public class DispatcherTests_SPEC2_19_DispatchForwardServletResource implements 
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the request attribute                   */
       /* javax.servlet.forward.servlet_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getSerletPath for the first servlet    */
+      /* value from HTTPServletRequest.getServletPath for the first servlet   */
       /* in the forward chain"                                                */
       TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_DISPATCHFORWARDSERVLETRESOURCE_ATTRIBUTES3);
       /* TODO: implement test */
