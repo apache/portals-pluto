@@ -20,248 +20,214 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="javax.portlet-tck-DispatcherTests">
    <portlet>
       <portlet-name>DispatcherTests_SPEC2_19_Dispatch</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_Dispatch</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>DispatcherTests_SPEC2_19_Dispatch</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServlet</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchIncludeServlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchIncludeServlet</title>
+         <title>DispatcherTests_SPEC2_19_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletAction</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchIncludeServletAction</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_IncludeServlet</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_IncludeServlet</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchIncludeServletAction</title>
+         <title>DispatcherTests_SPEC2_19_IncludeServlet</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletEvent</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchIncludeServletEvent</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_IncludeServletAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_IncludeServletAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchIncludeServletEvent</title>
+         <title>DispatcherTests_SPEC2_19_IncludeServletAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchIncludeServletRender</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_IncludeServletEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_IncludeServletEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchIncludeServletRender</title>
+         <title>DispatcherTests_SPEC2_19_IncludeServletEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:DispatcherTests_SPEC2_19_IncludeServletEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests_SPEC2_19_IncludeServletEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_IncludeServletEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests_SPEC2_19_IncludeServletEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:DispatcherTests_SPEC2_19_IncludeServletEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests_SPEC2_19_IncludeServletRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_IncludeServletRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests_SPEC2_19_IncludeServletRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletResource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchIncludeServletResource</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_IncludeServletResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_IncludeServletResource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchIncludeServletResource</title>
+         <title>DispatcherTests_SPEC2_19_IncludeServletResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchForwardServlet</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchForwardServlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_ForwardServlet</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_ForwardServlet</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchForwardServlet</title>
+         <title>DispatcherTests_SPEC2_19_ForwardServlet</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletAction</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchForwardServletAction</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_ForwardServletAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_ForwardServletAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchForwardServletAction</title>
+         <title>DispatcherTests_SPEC2_19_ForwardServletAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletEvent</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchForwardServletEvent</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_ForwardServletEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_ForwardServletEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchForwardServletEvent</title>
+         <title>DispatcherTests_SPEC2_19_ForwardServletEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:DispatcherTests_SPEC2_19_ForwardServletEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests_SPEC2_19_ForwardServletEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_ForwardServletEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests_SPEC2_19_ForwardServletEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:DispatcherTests_SPEC2_19_ForwardServletEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests_SPEC2_19_ForwardServletRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_ForwardServletRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests_SPEC2_19_ForwardServletRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchForwardServletRender</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>DispatcherTests_SPEC2_19_ForwardServletResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_ForwardServletResource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchForwardServletRender</title>
+         <title>DispatcherTests_SPEC2_19_ForwardServletResource</title>
       </portlet-info>
    </portlet>
 
-   <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletResource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchForwardServletResource</portlet-class>
+   <event-definition>
+      <qname>tck:DispatcherTests_SPEC2_19_IncludeServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:DispatcherTests_SPEC2_19_ForwardServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>DispatcherTests_SPEC2_19_DispatchForwardServletResource</title>
-      </portlet-info>
-   </portlet>
-
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>
-

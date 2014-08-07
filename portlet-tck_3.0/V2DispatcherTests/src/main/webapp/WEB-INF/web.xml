@@ -18,137 +18,136 @@
     under the License.     
 -->
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>javax.portlet-tck-DispatcherTests</display-name>
+   <display-name>javax.portlet-tck-DispatcherTests</display-name>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServlet_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchIncludeServlet_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServlet_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServlet_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServlet_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchIncludeServlet_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServlet_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_IncludeServlet_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletAction_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchIncludeServletAction_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletAction_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServletAction_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletAction_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchIncludeServletAction_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletAction_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_IncludeServletAction_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletEvent_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchIncludeServletEvent_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletEvent_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServletEvent_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletEvent_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchIncludeServletEvent_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletEvent_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_IncludeServletEvent_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletRender_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchIncludeServletRender_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletRender_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServletRender_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletRender_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchIncludeServletRender_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletRender_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_IncludeServletRender_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletResource_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchIncludeServletResource_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletResource_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServletResource_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchIncludeServletResource_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchIncludeServletResource_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_IncludeServletResource_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_IncludeServletResource_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServlet_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchForwardServlet_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServlet_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_ForwardServlet_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServlet_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchForwardServlet_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServlet_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_ForwardServlet_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletAction_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchForwardServletAction_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletAction_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_ForwardServletAction_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletAction_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchForwardServletAction_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletAction_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_ForwardServletAction_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletEvent_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchForwardServletEvent_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletEvent_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_ForwardServletEvent_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletEvent_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchForwardServletEvent_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletEvent_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_ForwardServletEvent_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletRender_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchForwardServletRender_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletRender_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_ForwardServletRender_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletRender_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchForwardServletRender_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletRender_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_ForwardServletRender_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletResource_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchForwardServletResource_servlet</servlet-class>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletResource_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_ForwardServletResource_servlet</servlet-class>
       <init-param>
          <param-name>iparm1</param-name>
          <param-value>value1</param-value>
       </init-param>
    </servlet>
    <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_DispatchForwardServletResource_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_DispatchForwardServletResource_servlet</url-pattern>
+      <servlet-name>DispatcherTests_SPEC2_19_ForwardServletResource_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_ForwardServletResource_servlet</url-pattern>
    </servlet-mapping>
 
 </web-app>
-

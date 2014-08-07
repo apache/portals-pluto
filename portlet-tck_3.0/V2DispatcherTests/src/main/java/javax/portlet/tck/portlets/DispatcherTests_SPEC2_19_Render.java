@@ -39,12 +39,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests_SPEC2_19_Dispatch_event
+ * portlet DispatcherTests_SPEC2_19_Render_event
  *
  */
-public class DispatcherTests_SPEC2_19_Dispatch implements Portlet, ResourceServingPortlet {
+public class DispatcherTests_SPEC2_19_Render implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_Dispatch.class.getName();
+         DispatcherTests_SPEC2_19_Render.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -87,51 +87,41 @@ public class DispatcherTests_SPEC2_19_Dispatch implements Portlet, ResourceServi
 
       // Create result objects for the tests
 
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher1                           */
-      /* Details: "The PortletContext getRequestDispatcher method returns a   */
-      /* PortletRequestDispatcher for a path within the portlet               */
-      /* application"                                                         */
-      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER1);
+      /* TestCase: SPEC2_19_Render_getDispatcher7                             */
+      /* Details: "If the path provided to getRequestDispatcher method does   */
+      /* not start with \"/\", the method returns null"                       */
+      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_RENDER_GETDISPATCHER7);
       /* TODO: implement test */
       tr0.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher2                           */
-      /* Details: "If the path provided to getRequestDispatcher method        */
-      /* contains query strings, parameters specified in the query strings    */
-      /* must be passed to the included servlet"                              */
-      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER2);
+      /* TestCase: SPEC2_19_Render_getDispatcher8                             */
+      /* Details: "If the path provided to getRequestDispatcher method ends   */
+      /* with \"/\", the method returns null"                                 */
+      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_RENDER_GETDISPATCHER8);
       /* TODO: implement test */
       tr1.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher3                           */
-      /* Details: "If the path provided to getRequestDispatcher method        */
-      /* contains query strings, parameters specified in the query strings    */
-      /* must be passed to the forwarded servlet"                             */
-      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER3);
+      /* TestCase: SPEC2_19_Render_getDispatcher9                             */
+      /* Details: "If the path provided to getRequestDispatcher method does   */
+      /* not specify a valid path, the method returns null"                   */
+      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_RENDER_GETDISPATCHER9);
       /* TODO: implement test */
       tr2.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher4                           */
-      /* Details: "Parameters specified in the query strings must be          */
-      /* aggregated with the portlet render parameters"                       */
-      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER4);
+      /* TestCase: SPEC2_19_Render_getDispatcher10                            */
+      /* Details: "The PortletContext getNamedDispatcher method returns a     */
+      /* PortletRequestDispatcher for a servlet within the portlet            */
+      /* application"                                                         */
+      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_RENDER_GETDISPATCHER10);
       /* TODO: implement test */
       tr3.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher5                           */
-      /* Details: "If query string parameters have the same names as render   */
-      /* parameter names, the query string parameters appear in the           */
-      /* parameter values array before the render parameter values"           */
-      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER5);
+      /* TestCase: SPEC2_19_Render_getDispatcher11                            */
+      /* Details: "If the name provided to getNamedDispatcher method is not   */
+      /* valid, the method returns null"                                      */
+      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_RENDER_GETDISPATCHER11);
       /* TODO: implement test */
       tr4.writeTo(writer);
-
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher6                           */
-      /* Details: "The parameters associated with a request dispatcher are    */
-      /* scoped only for the duration of the include or forward call"         */
-      TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER6);
-      /* TODO: implement test */
-      tr5.writeTo(writer);
 
    }
 

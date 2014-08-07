@@ -29,4 +29,11 @@ public class Constants {
    public static final String CLICK_ID = "-clickme";
    public static final String SUCCESS = "Succeeded";
    public static final String FAILURE = "Failed";
+   
+   // for session attributes passing info between phases
+   public static final String RESULT_ATTR_PREFIX = "attr.result.";
+   public static final String THREADID_ATTR_PREFIX = "attr.tid.";
+   
+   // namespace for events, etc.
+   public static final String TCKNAMESPACE = "http://www.apache.org/portals/pluto/portlet-tck_3.0";
 }
