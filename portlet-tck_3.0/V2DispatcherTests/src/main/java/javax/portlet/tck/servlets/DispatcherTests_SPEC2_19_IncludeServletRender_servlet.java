@@ -65,10 +65,6 @@ public class DispatcherTests_SPEC2_19_IncludeServletRender_servlet extends HttpS
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
       PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
 
-      // check if it makes sense to continue
-      if (portletResp == null) {
-         return;
-      }
       PrintWriter writer = ((MimeResponse)portletResp).getWriter();
 
       JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();

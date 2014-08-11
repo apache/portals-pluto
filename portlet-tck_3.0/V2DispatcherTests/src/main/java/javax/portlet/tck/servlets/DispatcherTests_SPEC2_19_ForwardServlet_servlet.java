@@ -65,7 +65,7 @@ public class DispatcherTests_SPEC2_19_ForwardServlet_servlet extends HttpServlet
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
       PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
 
-      StringWriter writer = new StringWriter();
+      PrintWriter writer = ((MimeResponse)portletResp).getWriter();
 
       JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
 
@@ -105,7 +105,7 @@ public class DispatcherTests_SPEC2_19_ForwardServlet_servlet extends HttpServlet
       /* TestCase: SPEC2_19_ForwardServlet_invoke5                            */
       /* Details: "If output data exists in the response buffer that has      */
       /* not been committed, the content must be cleared before the target    */
-      /* servlet’s service method is called"                                  */
+      /* servlet's service method is called"                                  */
       TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_FORWARDSERVLET_INVOKE5);
       /* TODO: implement test */
       tr4.writeTo(writer);

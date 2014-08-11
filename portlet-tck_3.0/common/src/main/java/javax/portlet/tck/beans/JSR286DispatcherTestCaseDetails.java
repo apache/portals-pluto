@@ -188,7 +188,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
-      tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE5, "If output data exists in the response buffer that has not been committed, the content must be cleared before the target servlet’s service method is called");
+      tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE5, "If output data exists in the response buffer that has not been committed, the content must be cleared before the target servlet's service method is called");
       tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE6, "If the forward method is called after the response has been committed, an IllegalStateException exception is thrown");
       tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE7, "Cookies set by the portlet before the forward call remain valid");
       tcd.put(SPEC2_19_FORWARDSERVLET_INVOKE8, "A window state set by the portlet before the forward call remains valid");
