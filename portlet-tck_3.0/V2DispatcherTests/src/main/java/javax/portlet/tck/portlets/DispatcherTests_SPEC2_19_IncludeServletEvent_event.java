@@ -87,10 +87,13 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent_event implements Portl
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute("void", tid);
+
       StringWriter writer = new StringWriter();
 
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_IncludeServletEvent_servlet");
+            .getRequestDispatcher("/DispatcherTests_SPEC2_19_IncludeServletEvent_servlet?qparm1=qvalue&qparm2=qvalue2");
       rd.include(portletReq, portletResp);
 
    }

@@ -63,6 +63,9 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource implements Portlet,
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute("void", tid);
+
       StringWriter writer = new StringWriter();
 
    }
@@ -72,10 +75,13 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource implements Portlet,
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute("void", tid);
+
       PrintWriter writer = portletResp.getWriter();
 
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_IncludeServletResource_servlet");
+            .getRequestDispatcher("/DispatcherTests_SPEC2_19_IncludeServletResource_servlet?qparm1=qvalue&qparm2=qvalue2");
       rd.include(portletReq, portletResp);
    }
 
@@ -83,6 +89,9 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource implements Portlet,
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute("void", tid);
 
       PrintWriter writer = portletResp.getWriter();
 

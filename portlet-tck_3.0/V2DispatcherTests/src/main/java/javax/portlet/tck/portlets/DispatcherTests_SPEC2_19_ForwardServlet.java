@@ -63,6 +63,9 @@ public class DispatcherTests_SPEC2_19_ForwardServlet implements Portlet, Resourc
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute("void", tid);
+
       StringWriter writer = new StringWriter();
 
    }
@@ -71,6 +74,9 @@ public class DispatcherTests_SPEC2_19_ForwardServlet implements Portlet, Resourc
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute("void", tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -81,10 +87,13 @@ public class DispatcherTests_SPEC2_19_ForwardServlet implements Portlet, Resourc
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute("void", tid);
+
       PrintWriter writer = portletResp.getWriter();
 
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_ForwardServlet_servlet");
+            .getRequestDispatcher("/DispatcherTests_SPEC2_19_ForwardServlet_servlet?qparm1=qvalue&qparm2=qvalue2");
       rd.forward(portletReq, portletResp);
    }
 

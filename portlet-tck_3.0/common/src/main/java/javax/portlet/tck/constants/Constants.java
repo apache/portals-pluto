@@ -32,7 +32,9 @@ public class Constants {
    
    // for session attributes passing info between phases
    public static final String RESULT_ATTR_PREFIX = "attr.result.";
-   public static final String THREADID_ATTR_PREFIX = "attr.tid.";
+   
+   // for passing thread ID to servlet / jsp for comparison
+   public static final String THREADID_ATTR = "req.attr.tid";
    
    // namespace for events, etc.
    public static final String TCKNAMESPACE = "http://www.apache.org/portals/pluto/portlet-tck_3.0";

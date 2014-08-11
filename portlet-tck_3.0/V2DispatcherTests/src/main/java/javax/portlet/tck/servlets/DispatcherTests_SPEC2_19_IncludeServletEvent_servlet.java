@@ -64,6 +64,8 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent_servlet extends HttpSe
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
       PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
+      long svtTid = Thread.currentThread().getId();
+      long reqTid = (Long) portletReq.getAttribute("void");
 
       StringWriter writer = new StringWriter();
 
