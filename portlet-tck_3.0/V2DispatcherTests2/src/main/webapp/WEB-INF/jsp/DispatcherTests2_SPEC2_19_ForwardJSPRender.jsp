@@ -70,6 +70,7 @@
       /* scoped only for the duration of the forward or forward call"         */
       TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_DISPATCH4);
       /* TODO: implement test */
+      tr3.appendTcDetail("Not implemented.");
       tr3.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_invoke1                          */
@@ -99,6 +100,7 @@
       /* lifecyle method initiating the include"                              */
       TestResult tr6 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_INVOKE3);
       /* TODO: implement test */
+      tr6.appendTcDetail("Not implemented.");
       tr6.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_invoke4                          */
@@ -155,6 +157,7 @@
       /* committed, and closed by the portlet container"                      */
       TestResult tr11 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_COMMIT1);
       /* TODO: implement test */
+      tr11.appendTcDetail("Not implemented.");
       tr11.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_title1                           */
@@ -162,6 +165,7 @@
       /* call remains valid"                                                  */
       TestResult tr12 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_TITLE1);
       /* TODO: implement test */
+      tr12.appendTcDetail("Not implemented.");
       tr12.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes1                      */
@@ -171,7 +175,12 @@
       /* value from HTTPServletRequest.getRequestURI for the first servlet    */
       /* in the forward chain"                                                */
       TestResult tr13 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES1);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.forward.req.uri";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getRequestURI();
+         CompareUtils.stringsEqual(attrVal, currVal, tr13);
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes2                      */
@@ -181,7 +190,12 @@
       /* value from HTTPServletRequest.getContestPath for the first servlet   */
       /* in the forward chain"                                                */
       TestResult tr14 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES2);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.forward.context_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getContextPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr14);
+      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes3                      */
@@ -191,7 +205,12 @@
       /* value from HTTPServletRequest.getServletPath for the first servlet   */
       /* in the forward chain"                                                */
       TestResult tr15 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES3);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.forward.servlet_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getServletPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr15);
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes4                      */
@@ -201,7 +220,12 @@
       /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
       /* forward chain"                                                       */
       TestResult tr16 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES4);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.forward.path_info";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getPathInfo();
+         CompareUtils.stringsEqual(attrVal, currVal, tr16);
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes5                      */
@@ -211,14 +235,23 @@
       /* value from HTTPServletRequest.getQueryString for the first servlet   */
       /* in the forward chain"                                                */
       TestResult tr17 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES5);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.forward.query_string";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getQueryString();
+         CompareUtils.stringsEqual(attrVal, currVal, tr17);
+      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
       tr17.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes6                      */
       /* Details: "The request attribute javax.portlet.config must be set     */
       /* to the javax.portlet.PortletConfig object"                           */
       TestResult tr18 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES6);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletConfig.getClass());
+         boolean ok = cc.implementsInterface(PortletConfig.class);
+         tr18.setTcSuccess(ok);
+      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
       tr18.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes7                      */
@@ -226,7 +259,11 @@
       /* attribute javax.portlet.request must be set to the                   */
       /* javax.portlet.RenderRequest object"                                  */
       TestResult tr19 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES7);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletReq.getClass());
+         boolean ok = cc.implementsInterface(RenderRequest.class);
+         tr19.setTcSuccess(ok);
+      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
       tr19.writeTo(writer);
 
       /* TestCase: SPEC2_19_ForwardJSPRender_attributes8                      */
@@ -234,7 +271,11 @@
       /* attribute javax.portlet.response must be set to the                  */
       /* javax.portlet.RenderResponse object"                                 */
       TestResult tr20 = tcd.getTestResultFailed(SPEC2_19_FORWARDJSPRENDER_ATTRIBUTES8);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletResp.getClass());
+         boolean ok = cc.implementsInterface(RenderResponse.class);
+         tr20.setTcSuccess(ok);
+      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
       tr20.writeTo(writer);
 
 %>

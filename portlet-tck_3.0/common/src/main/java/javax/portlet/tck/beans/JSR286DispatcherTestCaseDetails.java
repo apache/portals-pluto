@@ -446,7 +446,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDESERVLETACTION_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDESERVLETACTION_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDESERVLETACTION_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDESERVLETACTION_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDESERVLETACTION_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDESERVLETACTION_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETACTION_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETACTION_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -470,7 +470,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDESERVLETEVENT_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDESERVLETEVENT_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDESERVLETEVENT_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDESERVLETEVENT_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDESERVLETEVENT_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDESERVLETEVENT_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETEVENT_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETEVENT_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -494,7 +494,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDESERVLETRENDER_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDESERVLETRENDER_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDESERVLETRENDER_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDESERVLETRENDER_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDESERVLETRENDER_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDESERVLETRENDER_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETRENDER_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETRENDER_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -516,7 +516,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -537,7 +537,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDSERVLETACTION_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDSERVLETACTION_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDSERVLETACTION_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDSERVLETACTION_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDSERVLETACTION_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDSERVLETACTION_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETACTION_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETACTION_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -559,7 +559,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDSERVLETEVENT_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDSERVLETEVENT_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDSERVLETEVENT_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDSERVLETEVENT_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDSERVLETEVENT_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDSERVLETEVENT_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETEVENT_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETEVENT_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -581,7 +581,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDSERVLETRENDER_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDSERVLETRENDER_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDSERVLETRENDER_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDSERVLETRENDER_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDSERVLETRENDER_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDSERVLETRENDER_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETRENDER_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETRENDER_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -602,7 +602,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDSERVLETRESOURCE_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -622,7 +622,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDEJSPACTION_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDEJSPACTION_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDEJSPACTION_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDEJSPACTION_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDEJSPACTION_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDEJSPACTION_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPACTION_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPACTION_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -646,7 +646,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDEJSPEVENT_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDEJSPEVENT_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDEJSPEVENT_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDEJSPEVENT_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDEJSPEVENT_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDEJSPEVENT_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPEVENT_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPEVENT_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -670,7 +670,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDEJSPRENDER_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDEJSPRENDER_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDEJSPRENDER_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDEJSPRENDER_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDEJSPRENDER_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDEJSPRENDER_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPRENDER_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPRENDER_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -692,7 +692,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call");
-      tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_INVOKE1, "The PortletRequestDispatcher include method can target a servlet ");
       tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_INCLUDEJSPRESOURCE_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -713,7 +713,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDJSPACTION_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDJSPACTION_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDJSPACTION_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDJSPACTION_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDJSPACTION_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDJSPACTION_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPACTION_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPACTION_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -735,7 +735,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDJSPEVENT_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDJSPEVENT_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDJSPEVENT_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDJSPEVENT_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDJSPEVENT_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDJSPEVENT_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPEVENT_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPEVENT_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -757,7 +757,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDJSPRENDER_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDJSPRENDER_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDJSPRENDER_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDJSPRENDER_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDJSPRENDER_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDJSPRENDER_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPRENDER_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPRENDER_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");
@@ -778,7 +778,7 @@ public class JSR286DispatcherTestCaseDetails extends TestCaseDetails {
       tcd.put(SPEC2_19_FORWARDJSPRESOURCE_DISPATCH2, "Parameters specified in the query strings must be aggregated with the portlet render parameters");
       tcd.put(SPEC2_19_FORWARDJSPRESOURCE_DISPATCH3, "If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values");
       tcd.put(SPEC2_19_FORWARDJSPRESOURCE_DISPATCH4, "The parameters associated with a request dispatcher are scoped only for the duration of the forward or forward call");
-      tcd.put(SPEC2_19_FORWARDJSPRESOURCE_INVOKE1, "The PortletRequestDispatcher include method can include a target servlet ");
+      tcd.put(SPEC2_19_FORWARDJSPRESOURCE_INVOKE1, "The PortletRequestDispatcher forward method can target a servlet ");
       tcd.put(SPEC2_19_FORWARDJSPRESOURCE_INVOKE2, "Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPRESOURCE_INVOKE3, "Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include");
       tcd.put(SPEC2_19_FORWARDJSPRESOURCE_INVOKE4, "The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation");

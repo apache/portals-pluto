@@ -121,6 +121,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* scoped only for the duration of the include or forward call"         */
       TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_DISPATCH4);
       /* TODO: implement test */
+      tr3.appendTcDetail("Not implemented.");
       tr3.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_invoke1                    */
@@ -150,6 +151,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* lifecyle method initiating the include"                              */
       TestResult tr6 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE3);
       /* TODO: implement test */
+      tr6.appendTcDetail("Not implemented.");
       tr6.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_invoke4                    */
@@ -205,6 +207,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* same lifecycle method"                                               */
       TestResult tr11 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE8);
       /* TODO: implement test */
+      tr11.appendTcDetail("Not implemented.");
       tr11.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_invoke9                    */
@@ -224,7 +227,12 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* value from HTTPServletRequest.getRequestURI for the first servlet    */
       /* in the include chain"                                                */
       TestResult tr13 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES1);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.req.uri";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getRequestURI();
+         CompareUtils.stringsEqual(attrVal, currVal, tr13);
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_attributes2                */
@@ -234,7 +242,12 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* value from HTTPServletRequest.getContestPath for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr14 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES2);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.context_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getContextPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr14);
+      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_attributes3                */
@@ -244,7 +257,12 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* value from HTTPServletRequest.getServletPath for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr15 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES3);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.servlet_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getServletPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr15);
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_attributes4                */
@@ -254,7 +272,12 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
       /* include chain"                                                       */
       TestResult tr16 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES4);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.path_info";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getPathInfo();
+         CompareUtils.stringsEqual(attrVal, currVal, tr16);
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_attributes5                */
@@ -264,14 +287,23 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* value from HTTPServletRequest.getQueryString for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr17 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES5);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.query_string";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getQueryString();
+         CompareUtils.stringsEqual(attrVal, currVal, tr17);
+      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
       tr17.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_attributes6                */
       /* Details: "The request attribute javax.portlet.config must be set     */
       /* to the javax.portlet.PortletConfig object"                           */
       TestResult tr18 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES6);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletConfig.getClass());
+         boolean ok = cc.implementsInterface(PortletConfig.class);
+         tr18.setTcSuccess(ok);
+      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
       tr18.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_attributes7                */
@@ -279,7 +311,11 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* attribute javax.portlet.request must be set to the                   */
       /* javax.portlet.ResourceRequest object"                                */
       TestResult tr19 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES7);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletReq.getClass());
+         boolean ok = cc.implementsInterface(ResourceRequest.class);
+         tr19.setTcSuccess(ok);
+      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
       tr19.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletResource_attributes8                */
@@ -287,7 +323,11 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource_servlet extends Htt
       /* attribute javax.portlet.response must be set to the                  */
       /* javax.portlet.ResourceResponse object"                               */
       TestResult tr20 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETRESOURCE_ATTRIBUTES8);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletResp.getClass());
+         boolean ok = cc.implementsInterface(ResourceResponse.class);
+         tr20.setTcSuccess(ok);
+      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
       tr20.writeTo(writer);
 
 

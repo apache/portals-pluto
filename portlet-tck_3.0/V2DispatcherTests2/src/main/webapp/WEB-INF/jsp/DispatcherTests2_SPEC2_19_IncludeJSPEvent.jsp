@@ -70,6 +70,7 @@
       /* scoped only for the duration of the include or forward call"         */
       TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_DISPATCH4);
       /* TODO: implement test */
+      tr3.appendTcDetail("Not implemented.");
       tr3.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_invoke1                           */
@@ -99,6 +100,7 @@
       /* lifecyle method initiating the include"                              */
       TestResult tr6 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE3);
       /* TODO: implement test */
+      tr6.appendTcDetail("Not implemented.");
       tr6.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_invoke4                           */
@@ -154,6 +156,7 @@
       /* same lifecycle method"                                               */
       TestResult tr11 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE8);
       /* TODO: implement test */
+      tr11.appendTcDetail("Not implemented.");
       tr11.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_invoke9                           */
@@ -171,6 +174,7 @@
       /* call remains valid"                                                  */
       TestResult tr13 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_STATE1);
       /* TODO: implement test */
+      tr13.appendTcDetail("Not implemented.");
       tr13.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_state2                            */
@@ -178,6 +182,7 @@
       /* call remains valid"                                                  */
       TestResult tr14 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_STATE2);
       /* TODO: implement test */
+      tr14.appendTcDetail("Not implemented.");
       tr14.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_state3                            */
@@ -185,6 +190,7 @@
       /* call remain valid"                                                   */
       TestResult tr15 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_STATE3);
       /* TODO: implement test */
+      tr15.appendTcDetail("Not implemented.");
       tr15.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes1                       */
@@ -194,7 +200,12 @@
       /* value from HTTPServletRequest.getRequestURI for the first servlet    */
       /* in the include chain"                                                */
       TestResult tr16 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES1);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.req.uri";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getRequestURI();
+         CompareUtils.stringsEqual(attrVal, currVal, tr16);
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes2                       */
@@ -204,7 +215,12 @@
       /* value from HTTPServletRequest.getContestPath for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr17 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES2);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.context_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getContextPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr17);
+      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
       tr17.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes3                       */
@@ -214,7 +230,12 @@
       /* value from HTTPServletRequest.getServletPath for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr18 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES3);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.servlet_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getServletPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr18);
+      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
       tr18.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes4                       */
@@ -224,7 +245,12 @@
       /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
       /* include chain"                                                       */
       TestResult tr19 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES4);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.path_info";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getPathInfo();
+         CompareUtils.stringsEqual(attrVal, currVal, tr19);
+      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
       tr19.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes5                       */
@@ -234,14 +260,23 @@
       /* value from HTTPServletRequest.getQueryString for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr20 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES5);
-      /* TODO: implement test */
+      try {
+         String name = "javax.servlet.include.query_string";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getQueryString();
+         CompareUtils.stringsEqual(attrVal, currVal, tr20);
+      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
       tr20.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes6                       */
       /* Details: "The request attribute javax.portlet.config must be set     */
       /* to the javax.portlet.PortletConfig object"                           */
       TestResult tr21 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES6);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletConfig.getClass());
+         boolean ok = cc.implementsInterface(PortletConfig.class);
+         tr21.setTcSuccess(ok);
+      } catch(Exception e) {tr21.appendTcDetail(e.toString());}
       tr21.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes7                       */
@@ -249,7 +284,11 @@
       /* attribute javax.portlet.request must be set to the                   */
       /* javax.portlet.EventRequest object"                                   */
       TestResult tr22 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES7);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletReq.getClass());
+         boolean ok = cc.implementsInterface(EventRequest.class);
+         tr22.setTcSuccess(ok);
+      } catch(Exception e) {tr22.appendTcDetail(e.toString());}
       tr22.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeJSPEvent_attributes8                       */
@@ -257,7 +296,11 @@
       /* attribute javax.portlet.response must be set to the                  */
       /* javax.portlet.EventResponse object"                                  */
       TestResult tr23 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES8);
-      /* TODO: implement test */
+      try {
+         ClassChecker cc = new ClassChecker(portletResp.getClass());
+         boolean ok = cc.implementsInterface(EventResponse.class);
+         tr23.setTcSuccess(ok);
+      } catch(Exception e) {tr23.appendTcDetail(e.toString());}
       tr23.writeTo(writer);
 
       request.getSession().setAttribute(
