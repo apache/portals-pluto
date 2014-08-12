@@ -78,14 +78,27 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction_servlet extends HttpS
       /* contains query strings, parameters specified in the query strings    */
       /* must be passed to the target servlet during an include"              */
       TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_DISPATCH1);
-      /* TODO: implement test */
+      try {
+         String qparm1 = portletReq.getParameter("qparm1");
+         String qparm2 = portletReq.getParameter("qparm2");
+         boolean ok = ((qparm1 != null) && (qparm2 != null));
+         if (ok) ok = (qparm1.equals("qvalue1") && qparm2.equals("qvalue2"));
+         if (!ok) tr0.appendTcDetail("qparm1=" + qparm1 + ", qparm2=" + qparm2);
+         tr0.setTcSuccess(ok);
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_dispatch2                    */
       /* Details: "Parameters specified in the query strings must be          */
       /* aggregated with the portlet render parameters"                       */
       TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_DISPATCH2);
-      /* TODO: implement test */
+      try {
+         String[] qparm2 = portletReq.getParameterValues("qparm2");
+         boolean ok = ((qparm2 != null) && (qparm2.length > 1));
+         String str = "qparm2 " + ((qparm2==null)?("is null"):("length="+qparm2.length));
+         if (!ok) tr1.appendTcDetail(str);
+         tr1.setTcSuccess(ok);
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_dispatch3                    */
@@ -93,7 +106,14 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction_servlet extends HttpS
       /* parameter names, the query string parameters appear in the           */
       /* parameter values array before the render parameter values"           */
       TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_DISPATCH3);
-      /* TODO: implement test */
+      try {
+         String qparm1 = portletReq.getParameter("qparm1");
+         String qparm2 = portletReq.getParameter("qparm2");
+         boolean ok = ((qparm1 != null) && (qparm2 != null));
+         if (ok) ok = (qparm1.equals("qvalue1") && qparm2.equals("qvalue2"));
+         if (!ok) tr2.appendTcDetail("qparm1=" + qparm1 + ", qparm2=" + qparm2);
+         tr2.setTcSuccess(ok);
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_dispatch4                    */
@@ -104,10 +124,13 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction_servlet extends HttpS
       tr3.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_invoke1                      */
-      /* Details: "The PortletRequestDispatcher include method can include    */
-      /* a target servlet "                                                   */
+      /* Details: "The PortletRequestDispatcher include method can target a   */
+      /* servlet "                                                            */
       TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_INVOKE1);
-      /* TODO: implement test */
+      try {
+         // If this gets executed, include worked.
+         tr4.setTcSuccess(true);
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_invoke2                      */
@@ -115,7 +138,10 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction_servlet extends HttpS
       /* can be the request and response classes from the portlet lifecyle    */
       /* method initiating the include"                                       */
       TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_INVOKE2);
-      /* TODO: implement test */
+      try {
+         // If this gets executed, include worked.
+         tr5.setTcSuccess(true);
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_invoke3                      */
@@ -131,21 +157,36 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction_servlet extends HttpS
       /* the same thread as the PortletRequestDispatcher include              */
       /* invocation"                                                          */
       TestResult tr7 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_INVOKE4);
-      /* TODO: implement test */
+      try {
+         tr7.setTcSuccess(reqTid == svtTid);
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_invoke5                      */
       /* Details: "Cookies set by the portlet before the include call         */
       /* remain valid"                                                        */
       TestResult tr8 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_INVOKE5);
-      /* TODO: implement test */
+      try {
+         Cookie[] cs = portletReq.getCookies();
+         boolean ok = false;
+         for (Cookie c : cs) {
+            if (c.getName().equals(COOKIE_PREFIX + "DispatcherTests_SPEC2_19_IncludeServletAction")) {
+               ok = true;
+               c.setMaxAge(0);  // cookie only lives for this request
+            }
+         }
+         tr8.setTcSuccess(ok);
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_invoke6                      */
       /* Details: "Properties set by the portlet before the include call      */
       /* remain valid"                                                        */
       TestResult tr9 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_INVOKE6);
-      /* TODO: implement test */
+      try {
+         String prop = portletReq.getProperty(PROP_PREFIX + "DispatcherTests_SPEC2_19_IncludeServletAction");
+         tr9.setTcSuccess(prop != null);
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_invoke7                      */
@@ -153,7 +194,10 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction_servlet extends HttpS
       /* target servlet must reflect the path used to obtain the              */
       /* RequestDispatcher"                                                   */
       TestResult tr10 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_INVOKE7);
-      /* TODO: implement test */
+      try {
+         String ctxpath= request.getContextPath();
+         tr10.setTcSuccess(ctxpath.equals("/DispatcherTests_SPEC2_19_IncludeServletAction_servlet"));
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_invoke8                      */
@@ -167,7 +211,10 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction_servlet extends HttpS
       /* Details: "The included servlet must be handled as an HTTP GET        */
       /* request"                                                             */
       TestResult tr12 = tcd.getTestResultFailed(SPEC2_19_INCLUDESERVLETACTION_INVOKE9);
-      /* TODO: implement test */
+      try {
+         String meth = request.getMethod();
+         tr12.setTcSuccess(meth.equals("GET"));
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
       /* TestCase: SPEC2_19_IncludeServletAction_state1                       */

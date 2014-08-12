@@ -25,6 +25,8 @@ import static java.util.logging.Logger.*;
 import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
@@ -64,6 +66,11 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", PROP_VALUE);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
 
@@ -79,6 +86,11 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", PROP_VALUE);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
 
@@ -90,6 +102,11 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
+
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", PROP_VALUE);
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
@@ -135,8 +152,8 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       }
 
       /* TestCase: SPEC2_19_IncludeServletEvent_invoke1                       */
-      /* Details: "The PortletRequestDispatcher include method can include    */
-      /* a target servlet "                                                   */
+      /* Details: "The PortletRequestDispatcher include method can target a   */
+      /* servlet "                                                            */
       {
          PortletURL aurl = portletResp.createActionURL();
          TestButton tb = new TestButton("SPEC2_19_IncludeServletEvent_invoke1", aurl);

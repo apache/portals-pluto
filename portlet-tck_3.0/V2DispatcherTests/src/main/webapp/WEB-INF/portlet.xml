@@ -23,73 +23,73 @@
    xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="javax.portlet-tck-DispatcherTests">
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_Render</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_Render</portlet-class>
+      <portlet-name>DispatcherTests_SPEC2_19_DispatchServletRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchServletRender</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_Render</title>
+         <title>DispatcherTests_SPEC2_19_DispatchServletRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_Action</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_Action</portlet-class>
+      <portlet-name>DispatcherTests_SPEC2_19_DispatchServletAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchServletAction</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_Action</title>
+         <title>DispatcherTests_SPEC2_19_DispatchServletAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_Event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_Event</portlet-class>
+      <portlet-name>DispatcherTests_SPEC2_19_DispatchServletEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchServletEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_Event</title>
+         <title>DispatcherTests_SPEC2_19_DispatchServletEvent</title>
       </portlet-info>
       <supported-publishing-event>
-         <qname>tck:DispatcherTests_SPEC2_19_Event</qname>
+         <qname>tck:DispatcherTests_SPEC2_19_DispatchServletEvent</qname>
       </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_Event_event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_Event_event</portlet-class>
+      <portlet-name>DispatcherTests_SPEC2_19_DispatchServletEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchServletEvent_event</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_Event_event</title>
+         <title>DispatcherTests_SPEC2_19_DispatchServletEvent_event</title>
       </portlet-info>
       <supported-processing-event>
-         <qname>tck:DispatcherTests_SPEC2_19_Event</qname>
+         <qname>tck:DispatcherTests_SPEC2_19_DispatchServletEvent</qname>
       </supported-processing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>DispatcherTests_SPEC2_19_Resource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_Resource</portlet-class>
+      <portlet-name>DispatcherTests_SPEC2_19_DispatchServletResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests_SPEC2_19_DispatchServletResource</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>DispatcherTests_SPEC2_19_Resource</title>
+         <title>DispatcherTests_SPEC2_19_DispatchServletResource</title>
       </portlet-info>
    </portlet>
 
@@ -236,7 +236,7 @@
    </portlet>
 
    <event-definition>
-      <qname>tck:DispatcherTests_SPEC2_19_Event</qname>
+      <qname>tck:DispatcherTests_SPEC2_19_DispatchServletEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

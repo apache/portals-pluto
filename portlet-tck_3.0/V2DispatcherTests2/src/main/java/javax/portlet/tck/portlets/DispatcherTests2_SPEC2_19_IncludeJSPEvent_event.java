@@ -25,6 +25,8 @@ import static java.util.logging.Logger.*;
 import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.constants.Constants.*;
@@ -87,13 +89,18 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent_event implements Portlet,
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent_event", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent_event", PROP_VALUE);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
 
       StringWriter writer = new StringWriter();
 
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_IncludeJSPEvent.jsp?qparm1=qvalue&qparm2=qvalue2");
+            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_IncludeJSPEvent.jsp?qparm1=qvalue1&qparm2=qvalue2");
       rd.include(portletReq, portletResp);
 
    }

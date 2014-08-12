@@ -165,7 +165,7 @@
    </portlet>
 
    <event-definition>
-      <qname>tck:DispatcherTests_SPEC2_19_Event</qname>
+      <qname>tck:DispatcherTests_SPEC2_19_DispatchServletEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

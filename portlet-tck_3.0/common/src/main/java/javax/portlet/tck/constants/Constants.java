@@ -36,6 +36,12 @@ public class Constants {
    // for passing thread ID to servlet / jsp for comparison
    public static final String THREADID_ATTR = "req.attr.tid";
    
+   // for cookie & property tests
+   public static final String COOKIE_PREFIX = "Cookie_";
+   public static final String COOKIE_VALUE = "CookieValue";
+   public static final String PROP_PREFIX = "Property_";
+   public static final String PROP_VALUE = "PropertyValue";
+   
    // namespace for events, etc.
    public static final String TCKNAMESPACE = "http://www.apache.org/portals/pluto/portlet-tck_3.0";
 }

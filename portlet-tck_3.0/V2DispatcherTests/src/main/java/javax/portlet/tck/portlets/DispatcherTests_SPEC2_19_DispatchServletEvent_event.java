@@ -25,6 +25,8 @@ import static java.util.logging.Logger.*;
 import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.constants.Constants.*;
@@ -35,9 +37,9 @@ import static javax.portlet.PortletSession.*;
  * This is the event processing portlet for the test cases. This portlet processes events, 
  * but does not publish them. Events are published in the main portlet for the test cases. 
  */
-public class DispatcherTests_SPEC2_19_Event_event implements Portlet, EventPortlet, ResourceServingPortlet {
+public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_Event_event.class.getName();
+         DispatcherTests_SPEC2_19_DispatchServletEvent_event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -72,10 +74,10 @@ public class DispatcherTests_SPEC2_19_Event_event implements Portlet, EventPortl
       portletResp.setContentType("text/html");
       PrintWriter writer = portletResp.getWriter();
       writer.write("<h3>Event Companion Portlet </h3>\n");
-      writer.write("<p>DispatcherTests_SPEC2_19_Event_event</p>\n");
+      writer.write("<p>DispatcherTests_SPEC2_19_DispatchServletEvent_event</p>\n");
 
       String msg = (String) portletReq.getPortletSession()
-            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_Event", APPLICATION_SCOPE);
+            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_DispatchServletEvent", APPLICATION_SCOPE);
       msg = (msg==null) ? "Not ready. click test case link." : msg;
       writer.write("<p>" + msg + "</p>\n");
 
@@ -87,6 +89,11 @@ public class DispatcherTests_SPEC2_19_Event_event implements Portlet, EventPortl
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletEvent_event", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletEvent_event", PROP_VALUE);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
 
@@ -96,59 +103,77 @@ public class DispatcherTests_SPEC2_19_Event_event implements Portlet, EventPortl
 
       // Create result objects for the tests
 
-      /* TestCase: SPEC2_19_Event_dispatch1                                   */
+      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch1                    */
       /* Details: "The PortletContext getRequestDispatcher method returns a   */
       /* PortletRequestDispatcher for a path within the portlet               */
       /* application"                                                         */
-      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_EVENT_DISPATCH1);
-      /* TODO: implement test */
+      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH1);
+      try {
+         PortletRequestDispatcher rd = portletConfig.getPortletContext()
+               .getRequestDispatcher("/DispatcherTests_SPEC2_19_DispatchServletEvent_servlet");
+         tr0.setTcSuccess(rd != null);
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Event_dispatch2                                   */
+      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch2                    */
       /* Details: "If the path provided to getRequestDispatcher method does   */
       /* not start with \"/\", the method returns null"                       */
-      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_EVENT_DISPATCH2);
-      /* TODO: implement test */
+      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH2);
+      try {
+         PortletRequestDispatcher rd = portletConfig.getPortletContext()
+               .getRequestDispatcher("DispatcherTests_SPEC2_19_DispatchServletEvent_servlet");
+         tr1.setTcSuccess(rd == null);
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Event_dispatch3                                   */
+      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch3                    */
       /* Details: "If the path provided to getRequestDispatcher method ends   */
       /* with \"/\", the method returns null"                                 */
-      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_EVENT_DISPATCH3);
-      /* TODO: implement test */
+      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH3);
+      try {
+         PortletRequestDispatcher rd = portletConfig.getPortletContext()
+               .getRequestDispatcher("DispatcherTests_SPEC2_19_DispatchServletEvent_servlet");
+         tr2.setTcSuccess(rd == null);
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Event_dispatch4                                   */
+      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch4                    */
       /* Details: "If the path provided to getRequestDispatcher method does   */
       /* not specify a valid path, the method returns null"                   */
-      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_EVENT_DISPATCH4);
-      /* TODO: implement test */
+      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH4);
+      try {
+         PortletRequestDispatcher rd = portletConfig.getPortletContext()
+               .getRequestDispatcher("/Invalid/path.jsp");
+         tr3.setTcSuccess(rd == null);
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Event_dispatch5                                   */
+      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch5                    */
       /* Details: "The PortletContext getNamedDispatcher method returns a     */
       /* PortletRequestDispatcher for a servlet within the portlet            */
       /* application"                                                         */
-      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_EVENT_DISPATCH5);
-      /* TODO: implement test */
+      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH5);
+      try {
+         PortletRequestDispatcher rd = portletConfig.getPortletContext()
+               .getNamedDispatcher("DispatcherTests_SPEC2_19_DispatchServletEvent_servlet");
+         tr4.setTcSuccess(rd != null);
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Event_dispatch6                                   */
+      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch6                    */
       /* Details: "If the name provided to getNamedDispatcher method is not   */
       /* valid, the method returns null"                                      */
-      TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_EVENT_DISPATCH6);
-      /* TODO: implement test */
+      TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH6);
+      try {
+         PortletRequestDispatcher rd = portletConfig.getPortletContext()
+               .getNamedDispatcher("/Invalid/path");
+         tr5.setTcSuccess(rd == null);
+         
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
-      /* TestCase: SPEC2_19_Event_invoke2                                     */
-      /* Details: "If the forward method is called after the response has     */
-      /* been committed, an IllegalStateException exception is thrown"        */
-      TestResult tr6 = tcd.getTestResultFailed(SPEC2_19_EVENT_INVOKE2);
-      /* TODO: implement test */
-      tr6.writeTo(writer);
-
       portletReq.getPortletSession().setAttribute(
-                   Constants.RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_Event",
+                   Constants.RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_DispatchServletEvent",
                    writer.toString(), APPLICATION_SCOPE);
 
    }

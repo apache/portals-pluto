@@ -21,6 +21,58 @@
    <display-name>javax.portlet-tck-DispatcherTests</display-name>
 
    <servlet>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletRender_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchServletRender_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletRender_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_DispatchServletRender_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletAction_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchServletAction_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletAction_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_DispatchServletAction_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletEvent_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchServletEvent_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletEvent_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_DispatchServletEvent_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletResource_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_DispatchServletResource_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests_SPEC2_19_DispatchServletResource_servlet</servlet-name>
+      <url-pattern>/DispatcherTests_SPEC2_19_DispatchServletResource_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
       <servlet-name>DispatcherTests_SPEC2_19_IncludeServletAction_servlet</servlet-name>
       <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServletAction_servlet</servlet-class>
       <init-param>

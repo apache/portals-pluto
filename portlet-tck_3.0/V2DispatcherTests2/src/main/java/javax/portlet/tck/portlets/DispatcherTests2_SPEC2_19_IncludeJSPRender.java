@@ -25,6 +25,8 @@ import static java.util.logging.Logger.*;
 import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
@@ -64,6 +66,11 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPRender implements Portlet, Reso
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPRender", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPRender", PROP_VALUE);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
 
@@ -75,6 +82,11 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPRender implements Portlet, Reso
    public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
+
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPRender", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPRender", PROP_VALUE);
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
@@ -88,13 +100,18 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPRender implements Portlet, Reso
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
+      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPRender", COOKIE_VALUE);
+      c.setMaxAge(10);
+      portletResp.addProperty(c);
+      portletResp.addProperty(PROP_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPRender", PROP_VALUE);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
 
       PrintWriter writer = portletResp.getWriter();
 
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_IncludeJSPRender.jsp?qparm1=qvalue&qparm2=qvalue2");
+            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_IncludeJSPRender.jsp?qparm1=qvalue1&qparm2=qvalue2");
       rd.include(portletReq, portletResp);
    }
 
