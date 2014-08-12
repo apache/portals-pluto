@@ -40,12 +40,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests_SPEC2_19_Render_event
+ * portlet DispatcherTests_SPEC2_19_Event_event
  *
  */
-public class DispatcherTests_SPEC2_19_Render implements Portlet, ResourceServingPortlet {
+public class DispatcherTests_SPEC2_19_Event implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_Render.class.getName();
+         DispatcherTests_SPEC2_19_Event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -69,6 +69,9 @@ public class DispatcherTests_SPEC2_19_Render implements Portlet, ResourceServing
 
       StringWriter writer = new StringWriter();
 
+      QName eventQName = new QName(TCKNAMESPACE,
+             "DispatcherTests_SPEC2_19_Event");
+      portletResp.setEvent(eventQName, "Hi!");
    }
 
    @Override
@@ -93,60 +96,70 @@ public class DispatcherTests_SPEC2_19_Render implements Portlet, ResourceServing
 
       PrintWriter writer = portletResp.getWriter();
 
-      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
-
-      // Create result objects for the tests
-
-      /* TestCase: SPEC2_19_Render_dispatch1                                  */
+      /* TestCase: SPEC2_19_Event_dispatch1                                   */
       /* Details: "The PortletContext getRequestDispatcher method returns a   */
       /* PortletRequestDispatcher for a path within the portlet               */
       /* application"                                                         */
-      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_RENDER_DISPATCH1);
-      /* TODO: implement test */
-      tr0.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton("SPEC2_19_Event_dispatch1", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: SPEC2_19_Render_dispatch2                                  */
+      /* TestCase: SPEC2_19_Event_dispatch2                                   */
       /* Details: "If the path provided to getRequestDispatcher method does   */
       /* not start with \"/\", the method returns null"                       */
-      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_RENDER_DISPATCH2);
-      /* TODO: implement test */
-      tr1.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton("SPEC2_19_Event_dispatch2", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: SPEC2_19_Render_dispatch3                                  */
+      /* TestCase: SPEC2_19_Event_dispatch3                                   */
       /* Details: "If the path provided to getRequestDispatcher method ends   */
       /* with \"/\", the method returns null"                                 */
-      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_RENDER_DISPATCH3);
-      /* TODO: implement test */
-      tr2.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton("SPEC2_19_Event_dispatch3", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: SPEC2_19_Render_dispatch4                                  */
+      /* TestCase: SPEC2_19_Event_dispatch4                                   */
       /* Details: "If the path provided to getRequestDispatcher method does   */
       /* not specify a valid path, the method returns null"                   */
-      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_RENDER_DISPATCH4);
-      /* TODO: implement test */
-      tr3.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton("SPEC2_19_Event_dispatch4", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: SPEC2_19_Render_dispatch5                                  */
+      /* TestCase: SPEC2_19_Event_dispatch5                                   */
       /* Details: "The PortletContext getNamedDispatcher method returns a     */
       /* PortletRequestDispatcher for a servlet within the portlet            */
       /* application"                                                         */
-      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_RENDER_DISPATCH5);
-      /* TODO: implement test */
-      tr4.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton("SPEC2_19_Event_dispatch5", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: SPEC2_19_Render_dispatch6                                  */
+      /* TestCase: SPEC2_19_Event_dispatch6                                   */
       /* Details: "If the name provided to getNamedDispatcher method is not   */
       /* valid, the method returns null"                                      */
-      TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_RENDER_DISPATCH6);
-      /* TODO: implement test */
-      tr5.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton("SPEC2_19_Event_dispatch6", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: SPEC2_19_Render_invoke2                                    */
+      /* TestCase: SPEC2_19_Event_invoke2                                     */
       /* Details: "If the forward method is called after the response has     */
       /* been committed, an IllegalStateException exception is thrown"        */
-      TestResult tr6 = tcd.getTestResultFailed(SPEC2_19_RENDER_INVOKE2);
-      /* TODO: implement test */
-      tr6.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         TestButton tb = new TestButton("SPEC2_19_Event_invoke2", aurl);
+         tb.writeTo(writer);
+      }
 
    }
 

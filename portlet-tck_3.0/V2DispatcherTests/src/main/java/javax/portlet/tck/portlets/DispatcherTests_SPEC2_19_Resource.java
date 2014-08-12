@@ -40,12 +40,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests_SPEC2_19_IncludeServletResource_event
+ * portlet DispatcherTests_SPEC2_19_Resource_event
  *
  */
-public class DispatcherTests_SPEC2_19_IncludeServletResource implements Portlet, ResourceServingPortlet {
+public class DispatcherTests_SPEC2_19_Resource implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_IncludeServletResource.class.getName();
+         DispatcherTests_SPEC2_19_Resource.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -81,9 +81,61 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource implements Portlet,
 
       PrintWriter writer = portletResp.getWriter();
 
-      PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_IncludeServletResource_servlet?qparm1=qvalue&qparm2=qvalue2");
-      rd.include(portletReq, portletResp);
+      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
+
+      // Create result objects for the tests
+
+      /* TestCase: SPEC2_19_Resource_dispatch1                                */
+      /* Details: "The PortletContext getRequestDispatcher method returns a   */
+      /* PortletRequestDispatcher for a path within the portlet               */
+      /* application"                                                         */
+      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_RESOURCE_DISPATCH1);
+      /* TODO: implement test */
+      tr0.writeTo(writer);
+
+      /* TestCase: SPEC2_19_Resource_dispatch2                                */
+      /* Details: "If the path provided to getRequestDispatcher method does   */
+      /* not start with \"/\", the method returns null"                       */
+      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_RESOURCE_DISPATCH2);
+      /* TODO: implement test */
+      tr1.writeTo(writer);
+
+      /* TestCase: SPEC2_19_Resource_dispatch3                                */
+      /* Details: "If the path provided to getRequestDispatcher method ends   */
+      /* with \"/\", the method returns null"                                 */
+      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_RESOURCE_DISPATCH3);
+      /* TODO: implement test */
+      tr2.writeTo(writer);
+
+      /* TestCase: SPEC2_19_Resource_dispatch4                                */
+      /* Details: "If the path provided to getRequestDispatcher method does   */
+      /* not specify a valid path, the method returns null"                   */
+      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_RESOURCE_DISPATCH4);
+      /* TODO: implement test */
+      tr3.writeTo(writer);
+
+      /* TestCase: SPEC2_19_Resource_dispatch5                                */
+      /* Details: "The PortletContext getNamedDispatcher method returns a     */
+      /* PortletRequestDispatcher for a servlet within the portlet            */
+      /* application"                                                         */
+      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_RESOURCE_DISPATCH5);
+      /* TODO: implement test */
+      tr4.writeTo(writer);
+
+      /* TestCase: SPEC2_19_Resource_dispatch6                                */
+      /* Details: "If the name provided to getNamedDispatcher method is not   */
+      /* valid, the method returns null"                                      */
+      TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_RESOURCE_DISPATCH6);
+      /* TODO: implement test */
+      tr5.writeTo(writer);
+
+      /* TestCase: SPEC2_19_Resource_invoke2                                  */
+      /* Details: "If the forward method is called after the response has     */
+      /* been committed, an IllegalStateException exception is thrown"        */
+      TestResult tr6 = tcd.getTestResultFailed(SPEC2_19_RESOURCE_INVOKE2);
+      /* TODO: implement test */
+      tr6.writeTo(writer);
+
    }
 
    @Override
@@ -96,7 +148,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource implements Portlet,
 
       PrintWriter writer = portletResp.getWriter();
 
-      writer.write("<div id=\"DispatcherTests_SPEC2_19_IncludeServletResource\">no resource output.</div>\n");
+      writer.write("<div id=\"DispatcherTests_SPEC2_19_Resource\">no resource output.</div>\n");
       ResourceURL resurl = portletResp.createResourceURL();
       resurl.setCacheability(PAGE);
       writer.write("<script>\n");
@@ -104,7 +156,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletResource implements Portlet,
       writer.write("   var xhr = new XMLHttpRequest();\n");
       writer.write("   xhr.onreadystatechange=function() {\n");
       writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
-      writer.write("         document.getElementById(\"DispatcherTests_SPEC2_19_IncludeServletResource\").innerHTML=xhr.responseText;\n");
+      writer.write("         document.getElementById(\"DispatcherTests_SPEC2_19_Resource\").innerHTML=xhr.responseText;\n");
       writer.write("      }\n");
       writer.write("   };\n");
       writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");

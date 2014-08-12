@@ -21,19 +21,6 @@
    <display-name>javax.portlet-tck-DispatcherTests</display-name>
 
    <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_IncludeServlet_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServlet_servlet</servlet-class>
-      <init-param>
-         <param-name>iparm1</param-name>
-         <param-value>value1</param-value>
-      </init-param>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_IncludeServlet_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_IncludeServlet_servlet</url-pattern>
-   </servlet-mapping>
-
-   <servlet>
       <servlet-name>DispatcherTests_SPEC2_19_IncludeServletAction_servlet</servlet-name>
       <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_IncludeServletAction_servlet</servlet-class>
       <init-param>
@@ -83,19 +70,6 @@
    <servlet-mapping>
       <servlet-name>DispatcherTests_SPEC2_19_IncludeServletResource_servlet</servlet-name>
       <url-pattern>/DispatcherTests_SPEC2_19_IncludeServletResource_servlet</url-pattern>
-   </servlet-mapping>
-
-   <servlet>
-      <servlet-name>DispatcherTests_SPEC2_19_ForwardServlet_servlet</servlet-name>
-      <servlet-class>javax.portlet.tck.servlets.DispatcherTests_SPEC2_19_ForwardServlet_servlet</servlet-class>
-      <init-param>
-         <param-name>iparm1</param-name>
-         <param-value>value1</param-value>
-      </init-param>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>DispatcherTests_SPEC2_19_ForwardServlet_servlet</servlet-name>
-      <url-pattern>/DispatcherTests_SPEC2_19_ForwardServlet_servlet</url-pattern>
    </servlet-mapping>
 
    <servlet>

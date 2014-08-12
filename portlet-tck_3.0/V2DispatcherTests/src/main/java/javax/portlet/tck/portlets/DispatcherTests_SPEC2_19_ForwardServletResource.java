@@ -26,6 +26,7 @@ import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
+import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;

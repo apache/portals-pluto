@@ -26,6 +26,7 @@ import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
+import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;
@@ -39,12 +40,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests_SPEC2_19_IncludeServlet_event
+ * portlet DispatcherTests2_SPEC2_19_ForwardJSPResource_event
  *
  */
-public class DispatcherTests_SPEC2_19_IncludeServlet implements Portlet, ResourceServingPortlet {
+public class DispatcherTests2_SPEC2_19_ForwardJSPResource implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_IncludeServlet.class.getName();
+         DispatcherTests2_SPEC2_19_ForwardJSPResource.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -80,6 +81,9 @@ public class DispatcherTests_SPEC2_19_IncludeServlet implements Portlet, Resourc
 
       PrintWriter writer = portletResp.getWriter();
 
+      PortletRequestDispatcher rd = portletConfig.getPortletContext()
+            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_ForwardJSPResource.jsp?qparm1=qvalue&qparm2=qvalue2");
+      rd.forward(portletReq, portletResp);
    }
 
    @Override
@@ -92,9 +96,21 @@ public class DispatcherTests_SPEC2_19_IncludeServlet implements Portlet, Resourc
 
       PrintWriter writer = portletResp.getWriter();
 
-      PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_IncludeServlet_servlet?qparm1=qvalue&qparm2=qvalue2");
-      rd.include(portletReq, portletResp);
+      writer.write("<div id=\"DispatcherTests2_SPEC2_19_ForwardJSPResource\">no resource output.</div>\n");
+      ResourceURL resurl = portletResp.createResourceURL();
+      resurl.setCacheability(PAGE);
+      writer.write("<script>\n");
+      writer.write("(function () {\n");
+      writer.write("   var xhr = new XMLHttpRequest();\n");
+      writer.write("   xhr.onreadystatechange=function() {\n");
+      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.write("         document.getElementById(\"DispatcherTests2_SPEC2_19_ForwardJSPResource\").innerHTML=xhr.responseText;\n");
+      writer.write("      }\n");
+      writer.write("   };\n");
+      writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+      writer.write("   xhr.send();\n");
+      writer.write("})();\n");
+      writer.write("</script>\n");
    }
 
 }

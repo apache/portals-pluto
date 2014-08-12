@@ -27,25 +27,17 @@ import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
 import javax.portlet.tck.constants.*;
-import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
+import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
 import static javax.portlet.PortletSession.*;
-import static javax.portlet.ResourceURL.*;
 
 /**
- * This portlet implements several test cases for the JSR 362 TCK. The test case names
- * are defined in the /src/main/resources/xml-resources/additionalTCs.xml
- * file. The build process will integrate the test case names defined in the 
- * additionalTCs.xml file into the complete list of test case names for execution by the driver.
- *
- * This is the main portlet for the test cases. If the test cases call for events, this portlet
- * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests_SPEC2_19_ForwardServletRender_event
- *
+ * This is the event processing portlet for the test cases. This portlet processes events, 
+ * but does not publish them. Events are published in the main portlet for the test cases. 
  */
-public class DispatcherTests_SPEC2_19_ForwardServletRender implements Portlet, ResourceServingPortlet {
+public class DispatcherTests2_SPEC2_19_IncludeJSPEvent_event implements Portlet, EventPortlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_ForwardServletRender.class.getName();
+         DispatcherTests2_SPEC2_19_IncludeJSPEvent_event.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -62,40 +54,48 @@ public class DispatcherTests_SPEC2_19_ForwardServletRender implements Portlet, R
    @Override
    public void processAction(ActionRequest portletReq, ActionResponse portletResp)
          throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
+      LOGGER.entering(LOG_CLASS, "event companion processAction - ERROR!!");
+   }
+
+   @Override
+   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
+         throws PortletException, IOException {
+      LOGGER.entering(LOG_CLASS, "event companion serveResource - ERROR!!");
+   }
+
+   @Override
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
+      
+      LOGGER.entering(LOG_CLASS, "event companion render");
+
+      portletResp.setContentType("text/html");
+      PrintWriter writer = portletResp.getWriter();
+      writer.write("<h3>Event Companion Portlet </h3>\n");
+      writer.write("<p>DispatcherTests2_SPEC2_19_IncludeJSPEvent_event</p>\n");
+
+      String msg = (String) portletReq.getPortletSession()
+            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests2_SPEC2_19_IncludeJSPEvent", APPLICATION_SCOPE);
+      msg = (msg==null) ? "Not ready. click test case link." : msg;
+      writer.write("<p>" + msg + "</p>\n");
+
+   }
+
+   @Override
+   public void processEvent(EventRequest portletReq, EventResponse portletResp)
+         throws PortletException, IOException {
+      LOGGER.entering(LOG_CLASS, "event companion processEvent");
+
 
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute("void", tid);
 
       StringWriter writer = new StringWriter();
 
-   }
-
-   @Override
-   public void serveResource(ResourceRequest portletReq, ResourceResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
-
-      PrintWriter writer = portletResp.getWriter();
-
-   }
-
-   @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "main portlet render entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
-
-      PrintWriter writer = portletResp.getWriter();
-
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_ForwardServletRender_servlet?qparm1=qvalue&qparm2=qvalue2");
-      rd.forward(portletReq, portletResp);
+            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_IncludeJSPEvent.jsp?qparm1=qvalue&qparm2=qvalue2");
+      rd.include(portletReq, portletResp);
+
    }
 
 }

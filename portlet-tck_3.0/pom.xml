@@ -136,6 +136,7 @@
       <module>V2AddlUrlTests</module>
       <module>V2PortletTagLibraryTests</module>
       <module>V2DispatcherTests</module>
+      <module>V2DispatcherTests2</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>

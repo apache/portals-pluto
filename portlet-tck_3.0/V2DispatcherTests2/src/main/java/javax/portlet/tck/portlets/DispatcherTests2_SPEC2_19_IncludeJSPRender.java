@@ -40,12 +40,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests_SPEC2_19_ForwardServletRender_event
+ * portlet DispatcherTests2_SPEC2_19_IncludeJSPRender_event
  *
  */
-public class DispatcherTests_SPEC2_19_ForwardServletRender implements Portlet, ResourceServingPortlet {
+public class DispatcherTests2_SPEC2_19_IncludeJSPRender implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_ForwardServletRender.class.getName();
+         DispatcherTests2_SPEC2_19_IncludeJSPRender.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -94,8 +94,8 @@ public class DispatcherTests_SPEC2_19_ForwardServletRender implements Portlet, R
       PrintWriter writer = portletResp.getWriter();
 
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_ForwardServletRender_servlet?qparm1=qvalue&qparm2=qvalue2");
-      rd.forward(portletReq, portletResp);
+            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_IncludeJSPRender.jsp?qparm1=qvalue&qparm2=qvalue2");
+      rd.include(portletReq, portletResp);
    }
 
 }

@@ -26,6 +26,7 @@ import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
+import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;
@@ -101,6 +102,138 @@ public class DispatcherTests_SPEC2_19_ForwardServletAction implements Portlet, R
          writer.write("<p>" + msg + "</p>\n");
          ps.removeAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_ForwardServletAction", APPLICATION_SCOPE);
       } else {
+
+         /* TestCase: SPEC2_19_ForwardServletAction_dispatch1                    */
+         /* Details: "If the path provided to getRequestDispatcher method        */
+         /* contains query strings, parameters specified in the query strings    */
+         /* must be passed to the target servlet during an forward"              */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_dispatch1", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_dispatch2                    */
+         /* Details: "Parameters specified in the query strings must be          */
+         /* aggregated with the portlet render parameters"                       */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_dispatch2", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_dispatch3                    */
+         /* Details: "If query string parameters have the same names as render   */
+         /* parameter names, the query string parameters appear in the           */
+         /* parameter values array before the render parameter values"           */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_dispatch3", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_dispatch4                    */
+         /* Details: "The parameters associated with a request dispatcher are    */
+         /* scoped only for the duration of the forward or forward call"         */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_dispatch4", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_invoke1                      */
+         /* Details: "The PortletRequestDispatcher include method can include    */
+         /* a target servlet "                                                   */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_invoke1", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_invoke2                      */
+         /* Details: "Parameters to the include method for a target servlet      */
+         /* can be the request and response classes from the portlet lifecyle    */
+         /* method initiating the include"                                       */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_invoke2", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_invoke3                      */
+         /* Details: "Parameters to the include method for a target servlet      */
+         /* can be wrapped request and response classes from the portlet         */
+         /* lifecyle method initiating the include"                              */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_invoke3", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_invoke4                      */
+         /* Details: "The portlet container must invoke the target servlet in    */
+         /* the same thread as the PortletRequestDispatcher include              */
+         /* invocation"                                                          */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_invoke4", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_invoke5                      */
+         /* Details: "Cookies set by the portlet before the forward call         */
+         /* remain valid"                                                        */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_invoke5", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_invoke6                      */
+         /* Details: "Properties set by the portlet before the forward call      */
+         /* remain valid"                                                        */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_invoke6", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_invoke7                      */
+         /* Details: "The path elements of the request object exposed to the     */
+         /* target servlet must reflect the path used to obtain the              */
+         /* RequestDispatcher"                                                   */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_invoke7", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_state1                       */
+         /* Details: "A window state set by the portlet before the forward       */
+         /* call remains valid"                                                  */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_state1", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_state2                       */
+         /* Details: "A portlet mode set by the portlet before the forward       */
+         /* call remains valid"                                                  */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_state2", aurl);
+            tb.writeTo(writer);
+         }
+
+         /* TestCase: SPEC2_19_ForwardServletAction_state3                       */
+         /* Details: "Render parameters set by the portlet before the forward    */
+         /* call remain valid"                                                   */
+         {
+            PortletURL aurl = portletResp.createActionURL();
+            TestButton tb = new TestButton("SPEC2_19_ForwardServletAction_state3", aurl);
+            tb.writeTo(writer);
+         }
 
          /* TestCase: SPEC2_19_ForwardServletAction_attributes1                  */
          /* Details: "If the request dispatcher is obtained through the          */

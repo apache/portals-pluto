@@ -26,6 +26,7 @@ import javax.xml.namespace.QName;
 import javax.portlet.*;
 import javax.portlet.filter.*;
 import javax.portlet.tck.beans.*;
+import javax.portlet.tck.constants.*;
 import static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*;
 import static javax.portlet.tck.constants.Constants.*;
 import static javax.portlet.PortletSession.*;
@@ -39,12 +40,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet DispatcherTests_SPEC2_19_Dispatch_event
+ * portlet DispatcherTests2_SPEC2_19_IncludeJSPResource_event
  *
  */
-public class DispatcherTests_SPEC2_19_Dispatch implements Portlet, ResourceServingPortlet {
+public class DispatcherTests2_SPEC2_19_IncludeJSPResource implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         DispatcherTests_SPEC2_19_Dispatch.class.getName();
+         DispatcherTests2_SPEC2_19_IncludeJSPResource.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -80,6 +81,9 @@ public class DispatcherTests_SPEC2_19_Dispatch implements Portlet, ResourceServi
 
       PrintWriter writer = portletResp.getWriter();
 
+      PortletRequestDispatcher rd = portletConfig.getPortletContext()
+            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests2_SPEC2_19_IncludeJSPResource.jsp?qparm1=qvalue&qparm2=qvalue2");
+      rd.include(portletReq, portletResp);
    }
 
    @Override
@@ -92,56 +96,21 @@ public class DispatcherTests_SPEC2_19_Dispatch implements Portlet, ResourceServi
 
       PrintWriter writer = portletResp.getWriter();
 
-      JSR286DispatcherTestCaseDetails tcd = new JSR286DispatcherTestCaseDetails();
-
-      // Create result objects for the tests
-
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher1                           */
-      /* Details: "The PortletContext getRequestDispatcher method returns a   */
-      /* PortletRequestDispatcher for a path within the portlet               */
-      /* application"                                                         */
-      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER1);
-      /* TODO: implement test */
-      tr0.writeTo(writer);
-
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher2                           */
-      /* Details: "If the path provided to getRequestDispatcher method        */
-      /* contains query strings, parameters specified in the query strings    */
-      /* must be passed to the included servlet"                              */
-      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER2);
-      /* TODO: implement test */
-      tr1.writeTo(writer);
-
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher3                           */
-      /* Details: "If the path provided to getRequestDispatcher method        */
-      /* contains query strings, parameters specified in the query strings    */
-      /* must be passed to the forwarded servlet"                             */
-      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER3);
-      /* TODO: implement test */
-      tr2.writeTo(writer);
-
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher4                           */
-      /* Details: "Parameters specified in the query strings must be          */
-      /* aggregated with the portlet render parameters"                       */
-      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER4);
-      /* TODO: implement test */
-      tr3.writeTo(writer);
-
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher5                           */
-      /* Details: "If query string parameters have the same names as render   */
-      /* parameter names, the query string parameters appear in the           */
-      /* parameter values array before the render parameter values"           */
-      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER5);
-      /* TODO: implement test */
-      tr4.writeTo(writer);
-
-      /* TestCase: SPEC2_19_Dispatch_getDispatcher6                           */
-      /* Details: "The parameters associated with a request dispatcher are    */
-      /* scoped only for the duration of the include or forward call"         */
-      TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_DISPATCH_GETDISPATCHER6);
-      /* TODO: implement test */
-      tr5.writeTo(writer);
-
+      writer.write("<div id=\"DispatcherTests2_SPEC2_19_IncludeJSPResource\">no resource output.</div>\n");
+      ResourceURL resurl = portletResp.createResourceURL();
+      resurl.setCacheability(PAGE);
+      writer.write("<script>\n");
+      writer.write("(function () {\n");
+      writer.write("   var xhr = new XMLHttpRequest();\n");
+      writer.write("   xhr.onreadystatechange=function() {\n");
+      writer.write("      if (xhr.readyState==4 && xhr.status==200) {\n");
+      writer.write("         document.getElementById(\"DispatcherTests2_SPEC2_19_IncludeJSPResource\").innerHTML=xhr.responseText;\n");
+      writer.write("      }\n");
+      writer.write("   };\n");
+      writer.write("   xhr.open(\"GET\",\"" + resurl.toString() + "\",true);\n");
+      writer.write("   xhr.send();\n");
+      writer.write("})();\n");
+      writer.write("</script>\n");
    }
 
 }
