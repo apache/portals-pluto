@@ -22,11 +22,11 @@
 
       // Create result objects for the tests
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_dispatch1                         */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch1      */
       /* Details: "If the path provided to getRequestDispatcher method        */
       /* contains query strings, parameters specified in the query strings    */
       /* must be passed to the target servlet during an include"              */
-      TestResult tr0 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_DISPATCH1);
+      TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_DISPATCH1);
       try {
          String qparm1 = portletReq.getParameter("qparm1");
          String qparm2 = portletReq.getParameter("qparm2");
@@ -37,10 +37,10 @@
       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_dispatch2                         */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch2      */
       /* Details: "Parameters specified in the query strings must be          */
       /* aggregated with the portlet render parameters"                       */
-      TestResult tr1 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_DISPATCH2);
+      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_DISPATCH2);
       try {
          String[] qparm2 = portletReq.getParameterValues("qparm2");
          boolean ok = ((qparm2 != null) && (qparm2.length > 1));
@@ -50,11 +50,11 @@
       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_dispatch3                         */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch3      */
       /* Details: "If query string parameters have the same names as render   */
       /* parameter names, the query string parameters appear in the           */
       /* parameter values array before the render parameter values"           */
-      TestResult tr2 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_DISPATCH3);
+      TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_DISPATCH3);
       try {
          String qparm1 = portletReq.getParameter("qparm1");
          String qparm2 = portletReq.getParameter("qparm2");
@@ -65,80 +65,80 @@
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_dispatch4                         */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch4      */
       /* Details: "The parameters associated with a request dispatcher are    */
       /* scoped only for the duration of the include or forward call"         */
-      TestResult tr3 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_DISPATCH4);
+      TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_DISPATCH4);
       /* TODO: implement test */
       tr3.appendTcDetail("Not implemented.");
       tr3.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_invoke1                           */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke1        */
       /* Details: "The PortletRequestDispatcher include method can target a   */
       /* servlet "                                                            */
-      TestResult tr4 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE1);
+      TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_INVOKE1);
       try {
          // If this gets executed, include worked.
          tr4.setTcSuccess(true);
       } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_invoke2                           */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke2        */
       /* Details: "Parameters to the include method for a target servlet      */
       /* can be the request and response classes from the portlet lifecyle    */
       /* method initiating the include"                                       */
-      TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE2);
+      TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_INVOKE2);
       try {
          // If this gets executed, include worked.
          tr5.setTcSuccess(true);
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_invoke3                           */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke3        */
       /* Details: "Parameters to the include method for a target servlet      */
       /* can be wrapped request and response classes from the portlet         */
       /* lifecyle method initiating the include"                              */
-      TestResult tr6 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE3);
+      TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_INVOKE3);
       /* TODO: implement test */
       tr6.appendTcDetail("Not implemented.");
       tr6.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_invoke4                           */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke4        */
       /* Details: "The portlet container must invoke the target servlet in    */
       /* the same thread as the PortletRequestDispatcher include              */
       /* invocation"                                                          */
-      TestResult tr7 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE4);
+      TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_INVOKE4);
       try {
          tr7.setTcSuccess(reqTid == svtTid);
       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_invoke7                           */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke7        */
       /* Details: "The path elements of the request object exposed to the     */
       /* target servlet must reflect the path used to obtain the              */
       /* RequestDispatcher"                                                   */
-      TestResult tr8 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE7);
+      TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_INVOKE7);
       try {
          String ctxPath= request.getContextPath();
          CompareUtils.stringsEqual(ctxPath, "/DispatcherTests2_SPEC2_19_IncludeJSPEvent", tr8);
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_invoke8                           */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke8        */
       /* Details: "The portlet can include multiple servlets during the       */
       /* same lifecycle method"                                               */
-      TestResult tr9 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_INVOKE8);
+      TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_INVOKE8);
       /* TODO: implement test */
       tr9.appendTcDetail("Not implemented.");
       tr9.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes1                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1    */
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the request attribute                   */
       /* javax.servlet.include.request_uri will be set, and equals the        */
       /* value from HTTPServletRequest.getRequestURI for the first servlet    */
       /* in the include chain"                                                */
-      TestResult tr10 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES1);
+      TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES1);
       try {
          String name = "javax.servlet.include.req.uri";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -147,13 +147,13 @@
       } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes2                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2    */
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the request attribute                   */
       /* javax.servlet.include.context_path will be set, and equals the       */
       /* value from HTTPServletRequest.getContestPath for the first servlet   */
       /* in the include chain"                                                */
-      TestResult tr11 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES2);
+      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES2);
       try {
          String name = "javax.servlet.include.context_path";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -162,13 +162,13 @@
       } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes3                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3    */
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the request attribute                   */
       /* javax.servlet.include.servlet_path will be set, and equals the       */
       /* value from HTTPServletRequest.getServletPath for the first servlet   */
       /* in the include chain"                                                */
-      TestResult tr12 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES3);
+      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES3);
       try {
          String name = "javax.servlet.include.servlet_path";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -177,13 +177,13 @@
       } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes4                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4    */
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the request attribute                   */
       /* javax.servlet.include.path_info will be set, and equals the value    */
       /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
       /* include chain"                                                       */
-      TestResult tr13 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES4);
+      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES4);
       try {
          String name = "javax.servlet.include.path_info";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -192,13 +192,13 @@
       } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes5                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5    */
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the request attribute                   */
       /* javax.servlet.include.query_string will be set, and equals the       */
       /* value from HTTPServletRequest.getQueryString for the first servlet   */
       /* in the include chain"                                                */
-      TestResult tr14 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES5);
+      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES5);
       try {
          String name = "javax.servlet.include.query_string";
          String attrVal = (String) portletReq.getAttribute(name);
@@ -207,10 +207,10 @@
       } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes6                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes6    */
       /* Details: "The request attribute javax.portlet.config must be set     */
       /* to the javax.portlet.PortletConfig object"                           */
-      TestResult tr15 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES6);
+      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES6);
       try {
          ClassChecker cc = new ClassChecker(portletConfig.getClass());
          boolean ok = cc.implementsInterface(PortletConfig.class);
@@ -218,11 +218,11 @@
       } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes7                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes7    */
       /* Details: "For includes from the processEvent method, The request     */
       /* attribute javax.portlet.request must be set to the                   */
       /* javax.portlet.EventRequest object"                                   */
-      TestResult tr16 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES7);
+      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES7);
       try {
          ClassChecker cc = new ClassChecker(portletReq.getClass());
          boolean ok = cc.implementsInterface(EventRequest.class);
@@ -230,11 +230,11 @@
       } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
-      /* TestCase: SPEC2_19_IncludeJSPEvent_attributes8                       */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes8    */
       /* Details: "For includes from the processEvent method, The request     */
       /* attribute javax.portlet.response must be set to the                  */
       /* javax.portlet.EventResponse object"                                  */
-      TestResult tr17 = tcd.getTestResultFailed(SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES8);
+      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPEVENT_ATTRIBUTES8);
       try {
          ClassChecker cc = new ClassChecker(portletResp.getClass());
          boolean ok = cc.implementsInterface(EventResponse.class);

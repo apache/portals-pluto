@@ -123,7 +123,7 @@ public class TestResult {
       final String resStr = tcSuccess?Constants.SUCCESS:Constants.FAILURE;
       
       StringBuilder sb = new StringBuilder();
-      sb.append("<div class='portletTCKTestcase' id='");
+      sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
       sb.append("'>");
       sb.append("<h4>");

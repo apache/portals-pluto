@@ -120,103 +120,103 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          ps.removeAttribute(RESULT_ATTR_PREFIX + "DispatcherTests2_SPEC2_19_IncludeJSPAction", APPLICATION_SCOPE);
       } else {
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_dispatch1                        */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch1     */
          /* Details: "If the path provided to getRequestDispatcher method        */
          /* contains query strings, parameters specified in the query strings    */
          /* must be passed to the target servlet during an include"              */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_dispatch1", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch1", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_dispatch2                        */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch2     */
          /* Details: "Parameters specified in the query strings must be          */
          /* aggregated with the portlet render parameters"                       */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_dispatch2", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch2", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_dispatch3                        */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch3     */
          /* Details: "If query string parameters have the same names as render   */
          /* parameter names, the query string parameters appear in the           */
          /* parameter values array before the render parameter values"           */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_dispatch3", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch3", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_dispatch4                        */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch4     */
          /* Details: "The parameters associated with a request dispatcher are    */
          /* scoped only for the duration of the include or forward call"         */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_dispatch4", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch4", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_invoke1                          */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke1       */
          /* Details: "The PortletRequestDispatcher include method can target a   */
          /* servlet "                                                            */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_invoke1", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke1", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_invoke2                          */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke2       */
          /* Details: "Parameters to the include method for a target servlet      */
          /* can be the request and response classes from the portlet lifecyle    */
          /* method initiating the include"                                       */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_invoke2", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke2", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_invoke3                          */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke3       */
          /* Details: "Parameters to the include method for a target servlet      */
          /* can be wrapped request and response classes from the portlet         */
          /* lifecyle method initiating the include"                              */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_invoke3", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke3", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_invoke4                          */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke4       */
          /* Details: "The portlet container must invoke the target servlet in    */
          /* the same thread as the PortletRequestDispatcher include              */
          /* invocation"                                                          */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_invoke4", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke4", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_invoke7                          */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke7       */
          /* Details: "The path elements of the request object exposed to the     */
          /* target servlet must reflect the path used to obtain the              */
          /* RequestDispatcher"                                                   */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_invoke7", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke7", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_invoke8                          */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke8       */
          /* Details: "The portlet can include multiple servlets during the       */
          /* same lifecycle method"                                               */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_invoke8", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke8", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes1                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes1   */
          /* Details: "If the request dispatcher is obtained through the          */
          /* getRequestDispatcher method, the request attribute                   */
          /* javax.servlet.include.request_uri will be set, and equals the        */
@@ -224,11 +224,11 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          /* in the include chain"                                                */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes1", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes1", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes2                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes2   */
          /* Details: "If the request dispatcher is obtained through the          */
          /* getRequestDispatcher method, the request attribute                   */
          /* javax.servlet.include.context_path will be set, and equals the       */
@@ -236,11 +236,11 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          /* in the include chain"                                                */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes2", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes2", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes3                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes3   */
          /* Details: "If the request dispatcher is obtained through the          */
          /* getRequestDispatcher method, the request attribute                   */
          /* javax.servlet.include.servlet_path will be set, and equals the       */
@@ -248,11 +248,11 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          /* in the include chain"                                                */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes3", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes3", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes4                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes4   */
          /* Details: "If the request dispatcher is obtained through the          */
          /* getRequestDispatcher method, the request attribute                   */
          /* javax.servlet.include.path_info will be set, and equals the value    */
@@ -260,11 +260,11 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          /* include chain"                                                       */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes4", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes4", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes5                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes5   */
          /* Details: "If the request dispatcher is obtained through the          */
          /* getRequestDispatcher method, the request attribute                   */
          /* javax.servlet.include.query_string will be set, and equals the       */
@@ -272,36 +272,36 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          /* in the include chain"                                                */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes5", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes5", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes6                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes6   */
          /* Details: "The request attribute javax.portlet.config must be set     */
          /* to the javax.portlet.PortletConfig object"                           */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes6", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes6", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes7                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes7   */
          /* Details: "For includes from the processAction method, The request    */
          /* attribute javax.portlet.request must be set to the                   */
          /* javax.portlet.ActionRequest object"                                  */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes7", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes7", aurl);
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeJSPAction_attributes8                      */
+         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes8   */
          /* Details: "For includes from the processAction method, The request    */
          /* attribute javax.portlet.response must be set to the                  */
          /* javax.portlet.ActionResponse object"                                 */
          {
             PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeJSPAction_attributes8", aurl);
+            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_attributes8", aurl);
             tb.writeTo(writer);
          }
 

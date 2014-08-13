@@ -113,59 +113,59 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent implements Portlet, R
 
       PrintWriter writer = portletResp.getWriter();
 
-      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch1                    */
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch1  */
       /* Details: "The PortletContext getRequestDispatcher method returns a   */
       /* PortletRequestDispatcher for a path within the portlet               */
       /* application"                                                         */
       {
          PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_DispatchServletEvent_dispatch1", aurl);
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch1", aurl);
          tb.writeTo(writer);
       }
 
-      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch2                    */
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch2  */
       /* Details: "If the path provided to getRequestDispatcher method does   */
       /* not start with \"/\", the method returns null"                       */
       {
          PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_DispatchServletEvent_dispatch2", aurl);
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch2", aurl);
          tb.writeTo(writer);
       }
 
-      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch3                    */
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch3  */
       /* Details: "If the path provided to getRequestDispatcher method ends   */
       /* with \"/\", the method returns null"                                 */
       {
          PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_DispatchServletEvent_dispatch3", aurl);
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch3", aurl);
          tb.writeTo(writer);
       }
 
-      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch4                    */
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch4  */
       /* Details: "If the path provided to getRequestDispatcher method does   */
       /* not specify a valid path, the method returns null"                   */
       {
          PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_DispatchServletEvent_dispatch4", aurl);
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch4", aurl);
          tb.writeTo(writer);
       }
 
-      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch5                    */
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch5  */
       /* Details: "The PortletContext getNamedDispatcher method returns a     */
       /* PortletRequestDispatcher for a servlet within the portlet            */
       /* application"                                                         */
       {
          PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_DispatchServletEvent_dispatch5", aurl);
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch5", aurl);
          tb.writeTo(writer);
       }
 
-      /* TestCase: SPEC2_19_DispatchServletEvent_dispatch6                    */
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch6  */
       /* Details: "If the name provided to getNamedDispatcher method is not   */
       /* valid, the method returns null"                                      */
       {
          PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_DispatchServletEvent_dispatch6", aurl);
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletEvent_dispatch6", aurl);
          tb.writeTo(writer);
       }
 
