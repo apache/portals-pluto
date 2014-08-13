@@ -142,15 +142,6 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherTests_SPEC2_19_ForwardServletEvent_dispatch4   */
-      /* Details: "The parameters associated with a request dispatcher are    */
-      /* scoped only for the duration of the forward or forward call"         */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_dispatch4", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke1     */
       /* Details: "The PortletRequestDispatcher forward method can target a   */
       /* servlet "                                                            */
@@ -161,22 +152,12 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       }
 
       /* TestCase: V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke2     */
-      /* Details: "Parameters to the include method for a target servlet      */
+      /* Details: "Parameters to the forward method for a target servlet      */
       /* can be the request and response classes from the portlet lifecyle    */
       /* method initiating the include"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke2", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke3     */
-      /* Details: "Parameters to the include method for a target servlet      */
-      /* can be wrapped request and response classes from the portlet         */
-      /* lifecyle method initiating the include"                              */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_ForwardServletEvent_invoke3", aurl);
          tb.writeTo(writer);
       }
 

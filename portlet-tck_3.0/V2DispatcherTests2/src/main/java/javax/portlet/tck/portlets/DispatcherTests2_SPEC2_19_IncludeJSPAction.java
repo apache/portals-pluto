@@ -149,15 +149,6 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
             tb.writeTo(writer);
          }
 
-         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch4     */
-         /* Details: "The parameters associated with a request dispatcher are    */
-         /* scoped only for the duration of the include or forward call"         */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_dispatch4", aurl);
-            tb.writeTo(writer);
-         }
-
          /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke1       */
          /* Details: "The PortletRequestDispatcher include method can target a   */
          /* servlet "                                                            */
@@ -174,16 +165,6 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          {
             PortletURL aurl = portletResp.createActionURL();
             TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke2", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke3       */
-         /* Details: "Parameters to the include method for a target servlet      */
-         /* can be wrapped request and response classes from the portlet         */
-         /* lifecyle method initiating the include"                              */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke3", aurl);
             tb.writeTo(writer);
          }
 
@@ -204,15 +185,6 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPAction implements Portlet, Reso
          {
             PortletURL aurl = portletResp.createActionURL();
             TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke7", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke8       */
-         /* Details: "The portlet can include multiple servlets during the       */
-         /* same lifecycle method"                                               */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPAction_invoke8", aurl);
             tb.writeTo(writer);
          }
 
