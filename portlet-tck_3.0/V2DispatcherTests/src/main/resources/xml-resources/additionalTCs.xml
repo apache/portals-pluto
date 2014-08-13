@@ -17,12 +17,6 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<!--
-   Defines the test cases for this module.
-   For this module, the test case names are not automatically generated from.
-   the deployment descriptor, so edit this file to add new test cases.
-   This allows a portlet to define multiple test cases.
--->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API DispatcherTests test case names and page mappings -->
@@ -60,14 +54,8 @@
 <entry key="SPEC2_19_IncludeServletAction_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletAction_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletAction_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletAction_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletAction_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletAction_invoke7">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletAction_invoke8">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletAction_invoke9">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletAction_state1">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletAction_state2">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletAction_state3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletAction_attributes1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletAction_attributes2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletAction_attributes3">V2DispatcherTests</entry>
@@ -84,14 +72,8 @@
 <entry key="SPEC2_19_IncludeServletEvent_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletEvent_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletEvent_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletEvent_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletEvent_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletEvent_invoke7">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletEvent_invoke8">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletEvent_invoke9">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletEvent_state1">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletEvent_state2">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletEvent_state3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletEvent_attributes1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletEvent_attributes2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletEvent_attributes3">V2DispatcherTests</entry>
@@ -108,12 +90,9 @@
 <entry key="SPEC2_19_IncludeServletRender_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletRender_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletRender_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_invoke7">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_invoke8">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_invoke9">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletRender_title1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_attributes1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_attributes2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletRender_attributes3">V2DispatcherTests</entry>
@@ -130,8 +109,6 @@
 <entry key="SPEC2_19_IncludeServletResource_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletResource_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletResource_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletResource_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_IncludeServletResource_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletResource_invoke7">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletResource_invoke8">V2DispatcherTests</entry>
 <entry key="SPEC2_19_IncludeServletResource_invoke9">V2DispatcherTests</entry>
@@ -151,12 +128,7 @@
 <entry key="SPEC2_19_ForwardServletAction_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletAction_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletAction_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletAction_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletAction_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletAction_invoke7">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletAction_state1">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletAction_state2">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletAction_state3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletAction_attributes1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletAction_attributes2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletAction_attributes3">V2DispatcherTests</entry>
@@ -173,12 +145,7 @@
 <entry key="SPEC2_19_ForwardServletEvent_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletEvent_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletEvent_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletEvent_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletEvent_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletEvent_invoke7">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletEvent_state1">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletEvent_state2">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletEvent_state3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletEvent_attributes1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletEvent_attributes2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletEvent_attributes3">V2DispatcherTests</entry>
@@ -195,11 +162,8 @@
 <entry key="SPEC2_19_ForwardServletRender_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletRender_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletRender_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletRender_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletRender_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletRender_invoke7">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletRender_commit1">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletRender_title1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletRender_attributes1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletRender_attributes2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletRender_attributes3">V2DispatcherTests</entry>
@@ -216,8 +180,6 @@
 <entry key="SPEC2_19_ForwardServletResource_invoke2">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletResource_invoke3">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletResource_invoke4">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletResource_invoke5">V2DispatcherTests</entry>
-<entry key="SPEC2_19_ForwardServletResource_invoke6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletResource_invoke7">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletResource_commit1">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletResource_attributes1">V2DispatcherTests</entry>
@@ -228,5 +190,4 @@
 <entry key="SPEC2_19_ForwardServletResource_attributes6">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletResource_attributes7">V2DispatcherTests</entry>
 <entry key="SPEC2_19_ForwardServletResource_attributes8">V2DispatcherTests</entry>
-
 </properties>

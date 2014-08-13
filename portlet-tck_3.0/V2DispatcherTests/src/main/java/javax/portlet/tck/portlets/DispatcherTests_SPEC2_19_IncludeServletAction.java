@@ -197,24 +197,6 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction implements Portlet, R
             tb.writeTo(writer);
          }
 
-         /* TestCase: SPEC2_19_IncludeServletAction_invoke5                      */
-         /* Details: "Cookies set by the portlet before the include call         */
-         /* remain valid"                                                        */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeServletAction_invoke5", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: SPEC2_19_IncludeServletAction_invoke6                      */
-         /* Details: "Properties set by the portlet before the include call      */
-         /* remain valid"                                                        */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeServletAction_invoke6", aurl);
-            tb.writeTo(writer);
-         }
-
          /* TestCase: SPEC2_19_IncludeServletAction_invoke7                      */
          /* Details: "The path elements of the request object exposed to the     */
          /* target servlet must reflect the path used to obtain the              */
@@ -231,42 +213,6 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction implements Portlet, R
          {
             PortletURL aurl = portletResp.createActionURL();
             TestButton tb = new TestButton("SPEC2_19_IncludeServletAction_invoke8", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: SPEC2_19_IncludeServletAction_invoke9                      */
-         /* Details: "The included servlet must be handled as an HTTP GET        */
-         /* request"                                                             */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeServletAction_invoke9", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: SPEC2_19_IncludeServletAction_state1                       */
-         /* Details: "A window state set by the portlet before the include       */
-         /* call remains valid"                                                  */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeServletAction_state1", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: SPEC2_19_IncludeServletAction_state2                       */
-         /* Details: "A portlet mode set by the portlet before the include       */
-         /* call remains valid"                                                  */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeServletAction_state2", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: SPEC2_19_IncludeServletAction_state3                       */
-         /* Details: "Render parameters set by the portlet before the include    */
-         /* call remain valid"                                                   */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("SPEC2_19_IncludeServletAction_state3", aurl);
             tb.writeTo(writer);
          }
 

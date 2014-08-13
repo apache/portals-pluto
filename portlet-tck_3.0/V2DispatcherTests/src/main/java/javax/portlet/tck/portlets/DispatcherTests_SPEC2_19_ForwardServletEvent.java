@@ -190,24 +190,6 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
          tb.writeTo(writer);
       }
 
-      /* TestCase: SPEC2_19_ForwardServletEvent_invoke5                       */
-      /* Details: "Cookies set by the portlet before the forward call         */
-      /* remain valid"                                                        */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_ForwardServletEvent_invoke5", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: SPEC2_19_ForwardServletEvent_invoke6                       */
-      /* Details: "Properties set by the portlet before the forward call      */
-      /* remain valid"                                                        */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_ForwardServletEvent_invoke6", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: SPEC2_19_ForwardServletEvent_invoke7                       */
       /* Details: "The path elements of the request object exposed to the     */
       /* target servlet must reflect the path used to obtain the              */
@@ -215,33 +197,6 @@ public class DispatcherTests_SPEC2_19_ForwardServletEvent implements Portlet, Re
       {
          PortletURL aurl = portletResp.createActionURL();
          TestButton tb = new TestButton("SPEC2_19_ForwardServletEvent_invoke7", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: SPEC2_19_ForwardServletEvent_state1                        */
-      /* Details: "A window state set by the portlet before the forward       */
-      /* call remains valid"                                                  */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_ForwardServletEvent_state1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: SPEC2_19_ForwardServletEvent_state2                        */
-      /* Details: "A portlet mode set by the portlet before the forward       */
-      /* call remains valid"                                                  */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_ForwardServletEvent_state2", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: SPEC2_19_ForwardServletEvent_state3                        */
-      /* Details: "Render parameters set by the portlet before the forward    */
-      /* call remain valid"                                                   */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("SPEC2_19_ForwardServletEvent_state3", aurl);
          tb.writeTo(writer);
       }
 

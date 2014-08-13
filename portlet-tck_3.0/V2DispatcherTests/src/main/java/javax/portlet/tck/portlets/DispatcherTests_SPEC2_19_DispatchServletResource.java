@@ -160,7 +160,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletResource implements Portlet
       TestResult tr5 = tcd.getTestResultFailed(SPEC2_19_DISPATCHSERVLETRESOURCE_DISPATCH6);
       try {
          PortletRequestDispatcher rd = portletConfig.getPortletContext()
-               .getNamedDispatcher("/Invalid/path");
+               .getNamedDispatcher("Invalid Name");
          tr5.setTcSuccess(rd == null);
          
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}

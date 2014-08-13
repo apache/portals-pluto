@@ -90,9 +90,9 @@ public class TestButton {
       sb.append(tcName);
       sb.append(" button (POST):");
       sb.append("</h4>");
-      sb.append("<form  class='portletTCKButton' id='" + actId + 
-                "' action='" + purl.toString() + "' method='post'>");
-      sb.append("<input type='submit' value='" + tcName + "' />");
+      sb.append("<form  class='portletTCKButton'" +
+                " action='" + purl.toString() + "' method='post'>");
+      sb.append("<input type='submit' value='" + tcName + "'  id='" + actId + "'/>");
       sb.append("</form>");
       sb.append("</div>");
 

@@ -17,12 +17,6 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<!--
-   Defines the test cases for this module.
-   For this module, the test case names are not automatically generated from.
-   the deployment descriptor, so edit this file to add new test cases.
-   This allows a portlet to define multiple test cases.
--->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API DispatcherTests2 test case names and page mappings -->
@@ -34,14 +28,8 @@
 <entry key="SPEC2_19_IncludeJSPAction_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPAction_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPAction_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPAction_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPAction_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPAction_invoke7">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPAction_invoke8">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPAction_invoke9">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPAction_state1">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPAction_state2">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPAction_state3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPAction_attributes1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPAction_attributes2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPAction_attributes3">V2DispatcherTests2</entry>
@@ -58,14 +46,8 @@
 <entry key="SPEC2_19_IncludeJSPEvent_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPEvent_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPEvent_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPEvent_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPEvent_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPEvent_invoke7">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPEvent_invoke8">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPEvent_invoke9">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPEvent_state1">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPEvent_state2">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPEvent_state3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPEvent_attributes1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPEvent_attributes2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPEvent_attributes3">V2DispatcherTests2</entry>
@@ -82,12 +64,9 @@
 <entry key="SPEC2_19_IncludeJSPRender_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPRender_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPRender_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_invoke7">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_invoke8">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_invoke9">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPRender_title1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_attributes1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_attributes2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPRender_attributes3">V2DispatcherTests2</entry>
@@ -104,8 +83,6 @@
 <entry key="SPEC2_19_IncludeJSPResource_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPResource_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPResource_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPResource_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_IncludeJSPResource_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPResource_invoke7">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPResource_invoke8">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_IncludeJSPResource_invoke9">V2DispatcherTests2</entry>
@@ -125,12 +102,7 @@
 <entry key="SPEC2_19_ForwardJSPAction_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPAction_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPAction_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPAction_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPAction_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPAction_invoke7">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPAction_state1">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPAction_state2">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPAction_state3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPAction_attributes1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPAction_attributes2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPAction_attributes3">V2DispatcherTests2</entry>
@@ -147,12 +119,7 @@
 <entry key="SPEC2_19_ForwardJSPEvent_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPEvent_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPEvent_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPEvent_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPEvent_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPEvent_invoke7">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPEvent_state1">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPEvent_state2">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPEvent_state3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPEvent_attributes1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPEvent_attributes2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPEvent_attributes3">V2DispatcherTests2</entry>
@@ -169,11 +136,8 @@
 <entry key="SPEC2_19_ForwardJSPRender_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPRender_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPRender_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPRender_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPRender_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPRender_invoke7">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPRender_commit1">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPRender_title1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPRender_attributes1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPRender_attributes2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPRender_attributes3">V2DispatcherTests2</entry>
@@ -190,8 +154,6 @@
 <entry key="SPEC2_19_ForwardJSPResource_invoke2">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPResource_invoke3">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPResource_invoke4">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPResource_invoke5">V2DispatcherTests2</entry>
-<entry key="SPEC2_19_ForwardJSPResource_invoke6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPResource_invoke7">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPResource_commit1">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPResource_attributes1">V2DispatcherTests2</entry>
@@ -202,5 +164,4 @@
 <entry key="SPEC2_19_ForwardJSPResource_attributes6">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPResource_attributes7">V2DispatcherTests2</entry>
 <entry key="SPEC2_19_ForwardJSPResource_attributes8">V2DispatcherTests2</entry>
-
 </properties>

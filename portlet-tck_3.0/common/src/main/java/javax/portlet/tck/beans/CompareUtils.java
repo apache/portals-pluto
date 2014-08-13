@@ -40,7 +40,7 @@ public class CompareUtils {
             ok = a.equals(b);
          }
          if (!ok) {
-            String str = "Value 1: " + a + ", Value 2: " + b + ".";
+            String str = "Error: " + a + " does not equal " + b + ".";
             tr.appendTcDetail(str);
          }
       }
