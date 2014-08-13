@@ -65,7 +65,7 @@ public class TCKSimpleTestDriver {
    // used to optimize access for tests on the same page
    private static String lastPage = "";
 
-   private static boolean useGeneratedUrl = true;
+   private static boolean useGeneratedUrl = true, debug = false;
 
    private static WebDriver driver;
    private String page, tcName, testUrl;
@@ -141,7 +141,7 @@ public class TCKSimpleTestDriver {
       sb.append(testContextBase);
       sb.append(page);
       testUrl = sb.toString();
-      System.out.println("Constructor - Navigating to page: " + testUrl + ", test: " + tcName);
+      System.out.println("Testing: " + tcName);
    }
 
    /**
@@ -161,9 +161,12 @@ public class TCKSimpleTestDriver {
       testContextBase = System.getProperty("test.context.base");
       String str = System.getProperty("test.url.strategy");
       useGeneratedUrl = str.equalsIgnoreCase("generateURLs");
+      str = System.getProperty("test.debug");
+      debug = str.equalsIgnoreCase("true");
       String wd = System.getProperty("test.browser.webDriver");
 
       System.out.println("before class.");
+      System.out.println("   Debug        =" + debug);
       System.out.println("   Login URL    =" + loginUrl);
       System.out.println("   Host         =" + host);
       System.out.println("   Port         =" + port);
@@ -205,7 +208,7 @@ public class TCKSimpleTestDriver {
       if (driver != null) {
          driver.quit();
       }
-      System.out.println("after class.");
+      if (debug) System.out.println("   after class.");
    }
 
    /**
@@ -213,7 +216,7 @@ public class TCKSimpleTestDriver {
     */
    @Before
    public void setUp() throws Exception {
-      System.out.println("before test.");
+      if (debug) System.out.println("   before test.");
    }
 
    /**
@@ -221,12 +224,12 @@ public class TCKSimpleTestDriver {
     */
    @After
    public void tearDown() throws Exception {
-      System.out.println("after test.");
+      if (debug) System.out.println("   after test.");
    }
 
    @Test
    public void test() {
-      System.out.println("execute test.");
+      if (debug) System.out.println("   execute test.");
       String actionId = tcName + Constants.CLICK_ID;
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
@@ -235,10 +238,9 @@ public class TCKSimpleTestDriver {
       // First look for the test results or links already being present on the page. 
       
       List<WebElement> wels = driver.findElements(By.name(tcName));
-      System.out.println("begin: wels.size=" + wels.size() + ", tcname===" + tcName + "===");
+      if (debug) System.out.println("   TC elements already on page: " + !wels.isEmpty() + ", tcname===" + tcName + "===");
       if (wels.isEmpty()) {
          wels = accessPage();
-         System.out.println("after ap: wels.size=" + wels.size() + ", tcname===" + tcName + "===");
          if ((wels == null) || wels.isEmpty()) {
             return;     // errors are handled in accessPage routine
          } 
@@ -248,12 +250,14 @@ public class TCKSimpleTestDriver {
       List<WebElement> tcels = null;
       for (WebElement wel : wels) {
          tcels = wel.findElements(By.id(resultId));
+         if (debug) System.out.println("   Results found: " + !tcels.isEmpty());
          if (!tcels.isEmpty()) break;
       }
 
       // if results aren't there, see if there is a link to be clicked
       if (tcels.isEmpty()) {
          wels = processClickable(wels);
+         if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
          if ((wels == null) || wels.isEmpty()) {
             return;      // errors are handled in processClickable routine
          }
@@ -270,20 +274,18 @@ public class TCKSimpleTestDriver {
     */
    private List<WebElement> accessPage() {
       List<WebElement> wels = driver.findElements(By.linkText(page));
-      System.out.println(" in ap: wels.size=" + wels.size() + ", page===" + page + "===");
+      if (debug) System.out.println("   Access page, link found: " + !wels.isEmpty() + ", page===" + page + "===");
       if (wels.isEmpty()) {
          //todo - retry through login page
          assertTrue("Test case " + tcName + " failed. Page " + page 
                + " link could not be found. ", false);
       } else {
          WebElement wel = wels.get(0);
-         System.out.println("in ap: wel.text===" + wel.getText() + "===, tag===" + wel.getTagName() + "===");
          wel.click();
          try {
             WebDriverWait wdw = new WebDriverWait(driver, 3);
             wdw.until(ExpectedConditions.visibilityOfElementLocated(By.name(tcName)));
             wels = driver.findElements(By.name(tcName));
-            System.out.println("in ap: after until #wels=" + wels.size());
          } catch(Exception e) {
             assertTrue("Test case " + tcName + " failed. Page " + page 
                   + " link could not be accessed. Timeout. ", false);
@@ -325,11 +327,10 @@ public class TCKSimpleTestDriver {
       
       List<WebElement> rels = null;
       List<WebElement> dels = null;
-      System.out.println("#tcels=" + tcels.size() + ", 1st name=" + tcels.get(0).getText());
+      if (debug) System.out.println("   Checking results, #TC elements: " + tcels.size());
       for (WebElement wel : tcels) {
          rels = wel.findElements(By.id(resultId));
          dels = wel.findElements(By.id(detailId));
-         System.out.println("Loop: #rels=" + rels.size() + ", #dels=" + dels.size());
          if (!rels.isEmpty() && !dels.isEmpty()) break;
       }
       
@@ -337,9 +338,10 @@ public class TCKSimpleTestDriver {
          String res = rels.get(0).getText();
          String det = "Test case " + tcName + " failed. " + dels.get(0).getText();
          boolean ok = res.contains(Constants.SUCCESS);
+         if (debug) System.out.println("   Test OK: " + ok + ", results: " + res + ", details: " + det);
          assertTrue(det, ok);
       } else {
-         System.out.println("Not found: #rels=" + rels.size() + ", #dels=" + dels.size());
+         if (debug) System.out.println("   Results not found");
          assertTrue("Test case " + tcName + " failed. Results could not be found.", false);
       }
    }
@@ -359,6 +361,8 @@ public class TCKSimpleTestDriver {
          if (!tcels.isEmpty()) break;
       }
       
+      if (debug) System.out.println("   Clickable link found: " + ((tcels != null) && !tcels.isEmpty()));
+
       if ((tcels == null) || tcels.isEmpty()) {
          assertTrue("Test case " + tcName + " failed. TCK error - Unknown TC content.", false);
          return tcels;
