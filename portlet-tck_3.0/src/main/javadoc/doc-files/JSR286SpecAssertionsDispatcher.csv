@@ -1,0 +1,382 @@
+Dispatcher Tests;;;;
+SPEC2_19;Dispatch Servlet Render;dispatch1;TRUE;The PortletContext getRequestDispatcher method returns a PortletRequestDispatcher for a path within the portlet application
+SPEC2_19;Dispatch Servlet Render;dispatch2;TRUE;If the path provided to getRequestDispatcher method does not start with "/", the method returns null
+SPEC2_19;Dispatch Servlet Render;dispatch3;TRUE;If the path provided to getRequestDispatcher method ends with "/", the method returns null
+SPEC2_19;Dispatch Servlet Render;dispatch4;TRUE;If the path provided to getRequestDispatcher method does not specify a valid path, the method returns null
+SPEC2_19;Dispatch Servlet Render;dispatch5;TRUE;The PortletContext getNamedDispatcher method returns a PortletRequestDispatcher for a servlet within the portlet application
+SPEC2_19;Dispatch Servlet Render;dispatch6;TRUE;If the name provided to getNamedDispatcher method is not valid, the method returns null
+SPEC2_19;Dispatch Servlet Render;invoke2;TRUE;If the forward method is called after the response has been committed, an IllegalStateException exception is thrown
+SPEC2_19;Dispatch Servlet Action;dispatch1;TRUE;The PortletContext getRequestDispatcher method returns a PortletRequestDispatcher for a path within the portlet application
+SPEC2_19;Dispatch Servlet Action;dispatch2;TRUE;If the path provided to getRequestDispatcher method does not start with "/", the method returns null
+SPEC2_19;Dispatch Servlet Action;dispatch3;TRUE;If the path provided to getRequestDispatcher method ends with "/", the method returns null
+SPEC2_19;Dispatch Servlet Action;dispatch4;TRUE;If the path provided to getRequestDispatcher method does not specify a valid path, the method returns null
+SPEC2_19;Dispatch Servlet Action;dispatch5;TRUE;The PortletContext getNamedDispatcher method returns a PortletRequestDispatcher for a servlet within the portlet application
+SPEC2_19;Dispatch Servlet Action;dispatch6;TRUE;If the name provided to getNamedDispatcher method is not valid, the method returns null
+SPEC2_19;Dispatch Servlet Event;dispatch1;TRUE;The PortletContext getRequestDispatcher method returns a PortletRequestDispatcher for a path within the portlet application
+SPEC2_19;Dispatch Servlet Event;dispatch2;TRUE;If the path provided to getRequestDispatcher method does not start with "/", the method returns null
+SPEC2_19;Dispatch Servlet Event;dispatch3;TRUE;If the path provided to getRequestDispatcher method ends with "/", the method returns null
+SPEC2_19;Dispatch Servlet Event;dispatch4;TRUE;If the path provided to getRequestDispatcher method does not specify a valid path, the method returns null
+SPEC2_19;Dispatch Servlet Event;dispatch5;TRUE;The PortletContext getNamedDispatcher method returns a PortletRequestDispatcher for a servlet within the portlet application
+SPEC2_19;Dispatch Servlet Event;dispatch6;TRUE;If the name provided to getNamedDispatcher method is not valid, the method returns null
+SPEC2_19;Dispatch Servlet Resource;dispatch1;TRUE;The PortletContext getRequestDispatcher method returns a PortletRequestDispatcher for a path within the portlet application
+SPEC2_19;Dispatch Servlet Resource;dispatch2;TRUE;If the path provided to getRequestDispatcher method does not start with "/", the method returns null
+SPEC2_19;Dispatch Servlet Resource;dispatch3;TRUE;If the path provided to getRequestDispatcher method ends with "/", the method returns null
+SPEC2_19;Dispatch Servlet Resource;dispatch4;TRUE;If the path provided to getRequestDispatcher method does not specify a valid path, the method returns null
+SPEC2_19;Dispatch Servlet Resource;dispatch5;TRUE;The PortletContext getNamedDispatcher method returns a PortletRequestDispatcher for a servlet within the portlet application
+SPEC2_19;Dispatch Servlet Resource;dispatch6;TRUE;If the name provided to getNamedDispatcher method is not valid, the method returns null
+SPEC2_19;Dispatch Servlet Resource;invoke2;TRUE;If the forward method is called after the response has been committed, an IllegalStateException exception is thrown
+SPEC2_19;Include Servlet Action;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include Servlet Action;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include Servlet Action;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include Servlet Action;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include Servlet Action;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Action;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include Servlet Action;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include Servlet Action;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include Servlet Action;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Action;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Action;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include Servlet Action;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include Servlet Action;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include Servlet Action;attributes7;TRUE;For includes from the processAction method, The request attribute javax.portlet.request must be set to the javax.portlet.ActionRequest object
+SPEC2_19;Include Servlet Action;attributes8;TRUE;For includes from the processAction method, The request attribute javax.portlet.response must be set to the javax.portlet.ActionResponse object
+SPEC2_19;Include Servlet Event;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include Servlet Event;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include Servlet Event;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include Servlet Event;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include Servlet Event;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Event;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include Servlet Event;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include Servlet Event;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include Servlet Event;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Event;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Event;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include Servlet Event;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include Servlet Event;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include Servlet Event;attributes7;TRUE;For includes from the processEvent method, The request attribute javax.portlet.request must be set to the javax.portlet.EventRequest object
+SPEC2_19;Include Servlet Event;attributes8;TRUE;For includes from the processEvent method, The request attribute javax.portlet.response must be set to the javax.portlet.EventResponse object
+SPEC2_19;Include Servlet Render;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include Servlet Render;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include Servlet Render;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include Servlet Render;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include Servlet Render;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Render;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include Servlet Render;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include Servlet Render;invoke9;TRUE;The included servlet must be handled as an HTTP GET request
+SPEC2_19;Include Servlet Render;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include Servlet Render;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Render;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Render;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include Servlet Render;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include Servlet Render;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include Servlet Render;attributes7;TRUE;For includes from the render method, The request attribute javax.portlet.request must be set to the javax.portlet.RenderRequest object
+SPEC2_19;Include Servlet Render;attributes8;TRUE;For includes from the render method, The request attribute javax.portlet.response must be set to the javax.portlet.RenderResponse object
+SPEC2_19;Include Servlet Resource;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include Servlet Resource;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include Servlet Resource;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include Servlet Resource;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include Servlet Resource;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Resource;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include Servlet Resource;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include Servlet Resource;invoke9;TRUE;The included servlet must be handled as an HTTP GET request
+SPEC2_19;Include Servlet Resource;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include Servlet Resource;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Resource;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include Servlet Resource;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include Servlet Resource;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include Servlet Resource;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include Servlet Resource;attributes7;TRUE;For includes from the serveResource method, The request attribute javax.portlet.request must be set to the javax.portlet.ResourceRequest object
+SPEC2_19;Include Servlet Resource;attributes8;TRUE;For includes from the serveResource method, The request attribute javax.portlet.response must be set to the javax.portlet.ResourceResponse object
+SPEC2_19;Forward Servlet Action;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward Servlet Action;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward Servlet Action;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward Servlet Action;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward Servlet Action;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward Servlet Action;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward Servlet Action;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward Servlet Action;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Action;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Action;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Action;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Action;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Action;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward Servlet Action;attributes7;TRUE;For forwards from the processAction method, The request attribute javax.portlet.request must be set to the javax.portlet.ActionRequest object
+SPEC2_19;Forward Servlet Action;attributes8;TRUE;For forwards from the processAction method, The request attribute javax.portlet.response must be set to the javax.portlet.ActionResponse object
+SPEC2_19;Forward Servlet Event;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward Servlet Event;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward Servlet Event;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward Servlet Event;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward Servlet Event;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward Servlet Event;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward Servlet Event;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward Servlet Event;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Event;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Event;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Event;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Event;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Event;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward Servlet Event;attributes7;TRUE;For forwards from the processEvent method, The request attribute javax.portlet.request must be set to the javax.portlet.EventRequest object
+SPEC2_19;Forward Servlet Event;attributes8;TRUE;For forwards from the processEvent method, The request attribute javax.portlet.response must be set to the javax.portlet.EventResponse object
+SPEC2_19;Forward Servlet Render;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward Servlet Render;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward Servlet Render;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward Servlet Render;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward Servlet Render;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward Servlet Render;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward Servlet Render;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward Servlet Render;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Render;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Render;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Render;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Render;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Render;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward Servlet Render;attributes7;TRUE;For forwards from the render method, The request attribute javax.portlet.request must be set to the javax.portlet.RenderRequest object
+SPEC2_19;Forward Servlet Render;attributes8;TRUE;For forwards from the render method, The request attribute javax.portlet.response must be set to the javax.portlet.RenderResponse object
+SPEC2_19;Forward Servlet Resource;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward Servlet Resource;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward Servlet Resource;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward Servlet Resource;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward Servlet Resource;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward Servlet Resource;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward Servlet Resource;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward Servlet Resource;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Resource;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Resource;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Resource;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Resource;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward Servlet Resource;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward Servlet Resource;attributes7;TRUE;For forwards from the serveResource method, The request attribute javax.portlet.request must be set to the javax.portlet.ResourceRequest object
+SPEC2_19;Forward Servlet Resource;attributes8;TRUE;For forwards from the serveResource method, The request attribute javax.portlet.response must be set to the javax.portlet.ResourceResponse object
+Dispatcher Tests 2;;;;
+SPEC2_19;Include JSP Action;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include JSP Action;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include JSP Action;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include JSP Action;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include JSP Action;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Action;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include JSP Action;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include JSP Action;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include JSP Action;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include JSP Action;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include JSP Action;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include JSP Action;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include JSP Action;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include JSP Action;attributes7;TRUE;For includes from the processAction method, The request attribute javax.portlet.request must be set to the javax.portlet.ActionRequest object
+SPEC2_19;Include JSP Action;attributes8;TRUE;For includes from the processAction method, The request attribute javax.portlet.response must be set to the javax.portlet.ActionResponse object
+SPEC2_19;Include JSP Event;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include JSP Event;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include JSP Event;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include JSP Event;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include JSP Event;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Event;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include JSP Event;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include JSP Event;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include JSP Event;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include JSP Event;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include JSP Event;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include JSP Event;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include JSP Event;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include JSP Event;attributes7;TRUE;For includes from the processEvent method, The request attribute javax.portlet.request must be set to the javax.portlet.EventRequest object
+SPEC2_19;Include JSP Event;attributes8;TRUE;For includes from the processEvent method, The request attribute javax.portlet.response must be set to the javax.portlet.EventResponse object
+SPEC2_19;Include JSP Render;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include JSP Render;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include JSP Render;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include JSP Render;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include JSP Render;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Render;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include JSP Render;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include JSP Render;invoke9;TRUE;The included servlet must be handled as an HTTP GET request
+SPEC2_19;Include JSP Render;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include JSP Render;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include JSP Render;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include JSP Render;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include JSP Render;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include JSP Render;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include JSP Render;attributes7;TRUE;For includes from the render method, The request attribute javax.portlet.request must be set to the javax.portlet.RenderRequest object
+SPEC2_19;Include JSP Render;attributes8;TRUE;For includes from the render method, The request attribute javax.portlet.response must be set to the javax.portlet.RenderResponse object
+SPEC2_19;Include JSP Resource;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an include
+SPEC2_19;Include JSP Resource;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Include JSP Resource;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Include JSP Resource;invoke1;TRUE;The PortletRequestDispatcher include method can target a servlet 
+SPEC2_19;Include JSP Resource;invoke2;TRUE;Parameters to the include method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Resource;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Include JSP Resource;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Include JSP Resource;invoke9;TRUE;The included servlet must be handled as an HTTP GET request
+SPEC2_19;Include JSP Resource;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the include chain
+SPEC2_19;Include JSP Resource;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the include chain
+SPEC2_19;Include JSP Resource;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the include chain
+SPEC2_19;Include JSP Resource;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the include chain
+SPEC2_19;Include JSP Resource;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.include.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the include chain
+SPEC2_19;Include JSP Resource;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Include JSP Resource;attributes7;TRUE;For includes from the serveResource method, The request attribute javax.portlet.request must be set to the javax.portlet.ResourceRequest object
+SPEC2_19;Include JSP Resource;attributes8;TRUE;For includes from the serveResource method, The request attribute javax.portlet.response must be set to the javax.portlet.ResourceResponse object
+SPEC2_19;Forward JSP Action;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward JSP Action;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward JSP Action;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward JSP Action;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward JSP Action;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward JSP Action;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward JSP Action;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward JSP Action;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward JSP Action;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Action;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Action;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward JSP Action;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward JSP Action;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward JSP Action;attributes7;TRUE;For forwards from the processAction method, The request attribute javax.portlet.request must be set to the javax.portlet.ActionRequest object
+SPEC2_19;Forward JSP Action;attributes8;TRUE;For forwards from the processAction method, The request attribute javax.portlet.response must be set to the javax.portlet.ActionResponse object
+SPEC2_19;Forward JSP Event;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward JSP Event;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward JSP Event;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward JSP Event;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward JSP Event;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward JSP Event;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward JSP Event;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward JSP Event;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward JSP Event;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Event;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Event;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward JSP Event;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward JSP Event;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward JSP Event;attributes7;TRUE;For forwards from the processEvent method, The request attribute javax.portlet.request must be set to the javax.portlet.EventRequest object
+SPEC2_19;Forward JSP Event;attributes8;TRUE;For forwards from the processEvent method, The request attribute javax.portlet.response must be set to the javax.portlet.EventResponse object
+SPEC2_19;Forward JSP Render;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward JSP Render;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward JSP Render;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward JSP Render;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward JSP Render;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward JSP Render;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward JSP Render;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward JSP Render;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward JSP Render;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Render;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Render;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward JSP Render;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward JSP Render;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward JSP Render;attributes7;TRUE;For forwards from the render method, The request attribute javax.portlet.request must be set to the javax.portlet.RenderRequest object
+SPEC2_19;Forward JSP Render;attributes8;TRUE;For forwards from the render method, The request attribute javax.portlet.response must be set to the javax.portlet.RenderResponse object
+SPEC2_19;Forward JSP Resource;dispatch1;TRUE;If the path provided to getRequestDispatcher method contains query strings, parameters specified in the query strings must be passed to the target servlet during an forward
+SPEC2_19;Forward JSP Resource;dispatch2;TRUE;Parameters specified in the query strings must be aggregated with the portlet render parameters
+SPEC2_19;Forward JSP Resource;dispatch3;TRUE;If query string parameters have the same names as render parameter names, the query string parameters appear in the parameter values array before the render parameter values
+SPEC2_19;Forward JSP Resource;invoke1;TRUE;The PortletRequestDispatcher forward method can target a servlet 
+SPEC2_19;Forward JSP Resource;invoke2;TRUE;Parameters to the forward method for a target servlet can be the request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward JSP Resource;invoke4;TRUE;The portlet container must invoke the target servlet in the same thread as the PortletRequestDispatcher include invocation
+SPEC2_19;Forward JSP Resource;invoke7;TRUE;The path elements of the request object exposed to the target servlet must reflect the path used to obtain the RequestDispatcher
+SPEC2_19;Forward JSP Resource;attributes1;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.request_uri will be set, and equals the value from HTTPServletRequest.getRequestURI for the first servlet in the forward chain
+SPEC2_19;Forward JSP Resource;attributes2;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.context_path will be set, and equals the value from HTTPServletRequest.getContestPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Resource;attributes3;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.servlet_path will be set, and equals the value from HTTPServletRequest.getServletPath for the first servlet in the forward chain
+SPEC2_19;Forward JSP Resource;attributes4;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.path_info will be set, and equals the value from HTTPServletRequest.getPathInfo for the first servlet in the forward chain
+SPEC2_19;Forward JSP Resource;attributes5;TRUE;If the request dispatcher is obtained through the getRequestDispatcher method, the request attribute javax.servlet.forward.query_string will be set, and equals the value from HTTPServletRequest.getQueryString for the first servlet in the forward chain
+SPEC2_19;Forward JSP Resource;attributes6;TRUE;The request attribute javax.portlet.config must be set to the javax.portlet.PortletConfig object
+SPEC2_19;Forward JSP Resource;attributes7;TRUE;For forwards from the serveResource method, The request attribute javax.portlet.request must be set to the javax.portlet.ResourceRequest object
+SPEC2_19;Forward JSP Resource;attributes8;TRUE;For forwards from the serveResource method, The request attribute javax.portlet.response must be set to the javax.portlet.ResourceResponse object
+Dispatcher Tests 3S;;;;
+SPEC2_19;Dispatch Servlet Render;invoke1;FALSE;If output data exists in the response buffer that has not been committed, the content must be cleared before the target servlet's service method is called
+SPEC2_19;Dispatch Servlet Action;invoke1;FALSE;If output data exists in the response buffer that has not been committed, the content must be cleared before the target servlet's service method is called
+SPEC2_19;Dispatch Servlet Event;invoke1;FALSE;If output data exists in the response buffer that has not been committed, the content must be cleared before the target servlet's service method is called
+SPEC2_19;Dispatch Servlet Resource;invoke1;FALSE;If output data exists in the response buffer that has not been committed, the content must be cleared before the target servlet's service method is called
+SPEC2_19;Include Servlet Render;title1;FALSE;A portlet title set by the portlet before the include call remains valid
+SPEC2_19;Forward Servlet Render;commit1;FALSE;Before the forward method of the RequestDispatcher interface returns, the response content must be sent and committed, and closed by the portlet container
+SPEC2_19;Forward Servlet Render;title1;FALSE;A portlet title set by the portlet before the forward call remains valid
+SPEC2_19;Forward Servlet Resource;commit1;FALSE;Before the forward method of the RequestDispatcher interface returns, the response content must be sent and committed, and closed by the portlet container
+SPEC2_19;Include JSP Render;title1;FALSE;A portlet title set by the portlet before the include call remains valid
+SPEC2_19;Forward JSP Render;commit1;FALSE;Before the forward method of the RequestDispatcher interface returns, the response content must be sent and committed, and closed by the portlet container
+SPEC2_19;Forward JSP Render;title1;FALSE;A portlet title set by the portlet before the forward call remains valid
+SPEC2_19;Forward JSP Resource;commit1;FALSE;Before the forward method of the RequestDispatcher interface returns, the response content must be sent and committed, and closed by the portlet container
+SPEC2_19;Include Servlet Action;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include Servlet Action;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Action;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Include Servlet Event;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include Servlet Event;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Event;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Include Servlet Render;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include Servlet Render;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Render;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Include Servlet Resource;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include Servlet Resource;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Resource;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Forward Servlet Action;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward Servlet Action;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward Servlet Event;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward Servlet Event;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward Servlet Render;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward Servlet Render;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward Servlet Resource;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward Servlet Resource;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Action;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include JSP Action;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Action;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Include JSP Event;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include JSP Event;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Event;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Include JSP Render;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include JSP Render;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Render;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Include JSP Resource;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Include JSP Resource;invoke3;MANUAL;Parameters to the include method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include JSP Resource;invoke8;MANUAL;The portlet can include multiple servlets during the same lifecycle method
+SPEC2_19;Forward JSP Action;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward JSP Action;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward JSP Event;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward JSP Event;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward JSP Render;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward JSP Render;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Forward JSP Resource;dispatch4;MANUAL;The parameters associated with a request dispatcher are scoped only for the duration of the include or forward call
+SPEC2_19;Forward JSP Resource;invoke3;MANUAL;Parameters to the forward method for a target servlet can be wrapped request and response classes from the portlet lifecyle method initiating the include
+SPEC2_19;Include Servlet Action;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Action;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Action;state1;OPTION;A window state set by the portlet before the include call remains valid
+SPEC2_19;Include Servlet Action;state2;OPTION;A portlet mode set by the portlet before the include call remains valid
+SPEC2_19;Include Servlet Action;state3;OPTION;Render parameters set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Event;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Event;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Event;state1;OPTION;A window state set by the portlet before the include call remains valid
+SPEC2_19;Include Servlet Event;state2;OPTION;A portlet mode set by the portlet before the include call remains valid
+SPEC2_19;Include Servlet Event;state3;OPTION;Render parameters set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Render;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Render;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Resource;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include Servlet Resource;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Forward Servlet Action;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Action;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Action;state1;OPTION;A window state set by the portlet before the forward call remains valid
+SPEC2_19;Forward Servlet Action;state2;OPTION;A portlet mode set by the portlet before the forward call remains valid
+SPEC2_19;Forward Servlet Action;state3;OPTION;Render parameters set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Event;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Event;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Event;state1;OPTION;A window state set by the portlet before the forward call remains valid
+SPEC2_19;Forward Servlet Event;state2;OPTION;A portlet mode set by the portlet before the forward call remains valid
+SPEC2_19;Forward Servlet Event;state3;OPTION;Render parameters set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Render;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Render;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Resource;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward Servlet Resource;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+SPEC2_19;Include JSP Action;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Action;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Action;state1;OPTION;A window state set by the portlet before the include call remains valid
+SPEC2_19;Include JSP Action;state2;OPTION;A portlet mode set by the portlet before the include call remains valid
+SPEC2_19;Include JSP Action;state3;OPTION;Render parameters set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Event;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Event;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Event;state1;OPTION;A window state set by the portlet before the include call remains valid
+SPEC2_19;Include JSP Event;state2;OPTION;A portlet mode set by the portlet before the include call remains valid
+SPEC2_19;Include JSP Event;state3;OPTION;Render parameters set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Render;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Render;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Resource;invoke5;OPTION;Cookies set by the portlet before the include call remain valid
+SPEC2_19;Include JSP Resource;invoke6;OPTION;Properties set by the portlet before the include call remain valid
+SPEC2_19;Forward JSP Action;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Action;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Action;state1;OPTION;A window state set by the portlet before the forward call remains valid
+SPEC2_19;Forward JSP Action;state2;OPTION;A portlet mode set by the portlet before the forward call remains valid
+SPEC2_19;Forward JSP Action;state3;OPTION;Render parameters set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Event;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Event;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Event;state1;OPTION;A window state set by the portlet before the forward call remains valid
+SPEC2_19;Forward JSP Event;state2;OPTION;A portlet mode set by the portlet before the forward call remains valid
+SPEC2_19;Forward JSP Event;state3;OPTION;Render parameters set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Render;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Render;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Resource;invoke5;OPTION;Cookies set by the portlet before the forward call remain valid
+SPEC2_19;Forward JSP Resource;invoke6;OPTION;Properties set by the portlet before the forward call remain valid
+
