@@ -43,4 +43,5 @@
    <fl:file>tck-V2PortletTagLibraryTests-tests.xml</fl:file>
    <fl:file>tck-V2DispatcherTests-tests.xml</fl:file>
    <fl:file>tck-V2DispatcherTests2-tests.xml</fl:file>
+   <fl:file>tck-V2DispatcherTests3S-tests.xml</fl:file>
 </fl:filelist>

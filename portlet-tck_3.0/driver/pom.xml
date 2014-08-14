@@ -181,6 +181,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherTests3S</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <build>
@@ -231,7 +237,8 @@
                         tck-V2AddlUrlTests,
                         tck-V2PortletTagLibraryTests,
                         tck-V2DispatcherTests,
-                        tck-V2DispatcherTests2
+                        tck-V2DispatcherTests2,
+                        tck-V2DispatcherTests3S
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
                      <outputDirectory>${project.build.directory}</outputDirectory>
