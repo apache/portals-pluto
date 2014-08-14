@@ -82,7 +82,7 @@ public class TestLink {
       final String actId = tcName + Constants.CLICK_ID;
       
       StringBuilder sb = new StringBuilder();
-      sb.append("<div class='portletTCKTestcase' id='");
+      sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
       sb.append("'>");
       sb.append("<h4>");

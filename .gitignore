@@ -13,3 +13,5 @@ faces-config.pageflow
 branches
 tags
 *.dir
+maven-eclipse.xml
+.externalToolBuilders

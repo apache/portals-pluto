@@ -98,12 +98,13 @@ public class TestResult {
    }
    
    /**
-    * Appends error message to the test case deail string to indicate
+    * Appends error message to the test case detail string to indicate
     * what went wrong when a test fails.
     * 
     * @param tcDetail   String containing detailed error message
     */
    public void appendTcDetail(String tcDetail) {
+      if (!this.tcDetail.endsWith(".")) this.tcDetail += ".";
       this.tcDetail += " " + tcDetail;
    }
 
@@ -122,7 +123,7 @@ public class TestResult {
       final String resStr = tcSuccess?Constants.SUCCESS:Constants.FAILURE;
       
       StringBuilder sb = new StringBuilder();
-      sb.append("<div class='portletTCKTestcase' id='");
+      sb.append("<div class='portletTCKTestcase' name='");
       sb.append(tcName);
       sb.append("'>");
       sb.append("<h4>");
