@@ -33,8 +33,10 @@ public class Constants {
    // for session attributes passing info between phases
    public static final String RESULT_ATTR_PREFIX = "attr.result.";
    
-   // for passing thread ID to servlet / jsp for comparison
+   // for several tests to servlet / jsp for comparison
    public static final String THREADID_ATTR = "req.attr.tid";
+   public static final String ATTR_PREFIX = "req.attr.test.";
+   public static final String PARM_PREFIX = "parm.test.";
    
    // for cookie & property tests
    public static final String COOKIE_PREFIX = "Cookie_";
