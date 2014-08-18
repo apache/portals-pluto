@@ -66,24 +66,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event imple
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      
-      LOGGER.entering(LOG_CLASS, "event companion render");
-
-      portletResp.setContentType("text/html");
-      PrintWriter writer = portletResp.getWriter();
-      writer.write("<h3>Event Companion Portlet </h3>\n");
-      writer.write("<p>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event</p>\n");
-
-      String msg = (String) portletReq.getPortletSession()
-            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest", APPLICATION_SCOPE);
-      msg = (msg==null) ? "Not ready. click test case link." : msg;
-      writer.write("<p>" + msg + "</p>\n");
-
-   }
-
-   @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
@@ -105,6 +87,72 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event imple
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest.jsp?qparm1=qvalue1&qparm2=qvalue2");
       rd.include(portletReq, portletResp);
+
+   }
+
+   @Override
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
+      
+      LOGGER.entering(LOG_CLASS, "event companion render");
+
+      portletResp.setContentType("text/html");
+      PrintWriter writer = portletResp.getWriter();
+      writer.write("<h3>Event Companion Portlet </h3>\n");
+      writer.write("<p>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event</p>\n");
+
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameter", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameterMap", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameterNames", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getParameterValues", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      String msg = (String) portletReq.getPortletSession()
+            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest", APPLICATION_SCOPE);
+      msg = (msg==null) ? "Not ready. click test case link." : msg;
+      writer.write("<p>" + msg + "</p>\n");
 
    }
 

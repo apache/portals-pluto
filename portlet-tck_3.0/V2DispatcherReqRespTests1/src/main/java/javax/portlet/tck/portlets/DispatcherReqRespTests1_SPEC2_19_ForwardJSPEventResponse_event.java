@@ -66,24 +66,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_event impl
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      
-      LOGGER.entering(LOG_CLASS, "event companion render");
-
-      portletResp.setContentType("text/html");
-      PrintWriter writer = portletResp.getWriter();
-      writer.write("<h3>Event Companion Portlet </h3>\n");
-      writer.write("<p>DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_event</p>\n");
-
-      String msg = (String) portletReq.getPortletSession()
-            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse", APPLICATION_SCOPE);
-      msg = (msg==null) ? "Not ready. click test case link." : msg;
-      writer.write("<p>" + msg + "</p>\n");
-
-   }
-
-   @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
@@ -99,6 +81,24 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_event impl
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse.jsp?qparm1=qvalue1&qparm2=qvalue2");
       rd.forward(portletReq, portletResp);
+
+   }
+
+   @Override
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
+      
+      LOGGER.entering(LOG_CLASS, "event companion render");
+
+      portletResp.setContentType("text/html");
+      PrintWriter writer = portletResp.getWriter();
+      writer.write("<h3>Event Companion Portlet </h3>\n");
+      writer.write("<p>DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_event</p>\n");
+
+      String msg = (String) portletReq.getPortletSession()
+            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse", APPLICATION_SCOPE);
+      msg = (msg==null) ? "Not ready. click test case link." : msg;
+      writer.write("<p>" + msg + "</p>\n");
 
    }
 

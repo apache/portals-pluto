@@ -49,8 +49,6 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.ibm.xml.resolver.apps.resolver;
-
 import javax.portlet.tck.constants.Constants;
 
 

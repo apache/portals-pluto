@@ -38,6 +38,8 @@ public class Constants {
    public static final String THREADID_ATTR = "req.attr.tid";
    public static final String ATTR_PREFIX = "req.attr.test.";
    public static final String PARM_PREFIX = "parm.test.";
+   public static final String PARM_NAME = "TestParm";
+   public static final String PARM_VALUE = "Value";
    
    // for cookie & property tests
    public static final String COOKIE_PREFIX = "Cookie_";

@@ -281,10 +281,10 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_serv
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETER);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter");
-            String pval = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter");
+            String hval = request.getParameter(PARM_NAME);
+            String pval = portletReq.getParameter(PARM_NAME);
             CompareUtils.stringsEqual(hval, pval, tr20);
             tr20.writeTo(writer);
          }
@@ -297,7 +297,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_serv
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERMAP);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterMap");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
             Map<String, String[]> pmap = portletReq.getParameterMap();
@@ -313,7 +313,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_serv
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERNAMES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterNames");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
             Enumeration<String> pe = portletReq.getParameterNames();
@@ -329,10 +329,10 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_serv
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCEREQUEST_GETPARAMETERVALUES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues");
-            String[] pvals = portletReq.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues");
+            String[] hvals = request.getParameterValues(PARM_NAME);
+            String[] pvals = portletReq.getParameterValues(PARM_NAME);
             CompareUtils.stringsEqual(hvals[0], pvals[0], tr23);
             tr23.writeTo(writer);
          }

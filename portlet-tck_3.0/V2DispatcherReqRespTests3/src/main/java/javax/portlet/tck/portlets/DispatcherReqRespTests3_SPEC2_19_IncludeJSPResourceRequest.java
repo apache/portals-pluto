@@ -105,54 +105,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest implemen
 
       PrintWriter writer = portletResp.getWriter();
 
-      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameter");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameter", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameter", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
-      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterMap");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterMap", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterMap", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
-      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterNames");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterNames", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterNames", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
-      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterValues");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterValues", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterValues", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
       writer.write("<div id=\"DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest\">no resource output.</div>\n");
       ResourceURL resurl = portletResp.createResourceURL();
       resurl.setCacheability(PAGE);
@@ -168,6 +120,54 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest implemen
       writer.write("   xhr.send();\n");
       writer.write("})();\n");
       writer.write("</script>\n");
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameter", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterMap", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterNames", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceRequest_getParameterValues", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
    }
 
 }

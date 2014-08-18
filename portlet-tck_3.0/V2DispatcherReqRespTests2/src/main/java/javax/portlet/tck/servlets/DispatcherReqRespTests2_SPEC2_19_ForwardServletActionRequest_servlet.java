@@ -281,10 +281,10 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETPARAMETER);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameter");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameter");
-            String pval = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameter");
+            String hval = request.getParameter(PARM_NAME);
+            String pval = portletReq.getParameter(PARM_NAME);
             CompareUtils.stringsEqual(hval, pval, tr20);
             tr20.writeTo(writer);
          }
@@ -297,7 +297,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETPARAMETERMAP);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameterMap");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
             Map<String, String[]> pmap = portletReq.getParameterMap();
@@ -313,7 +313,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETPARAMETERNAMES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameterNames");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
             Enumeration<String> pe = portletReq.getParameterNames();
@@ -329,10 +329,10 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETPARAMETERVALUES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameterValues");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameterValues");
-            String[] pvals = portletReq.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getParameterValues");
+            String[] hvals = request.getParameterValues(PARM_NAME);
+            String[] pvals = portletReq.getParameterValues(PARM_NAME);
             CompareUtils.stringsEqual(hvals[0], pvals[0], tr23);
             tr23.writeTo(writer);
          }

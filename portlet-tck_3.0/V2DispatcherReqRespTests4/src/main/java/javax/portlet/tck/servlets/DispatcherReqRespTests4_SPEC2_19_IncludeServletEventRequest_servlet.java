@@ -286,10 +286,10 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETPARAMETER);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter");
-            String pval = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter");
+            String hval = request.getParameter(PARM_NAME);
+            String pval = portletReq.getParameter(PARM_NAME);
             CompareUtils.stringsEqual(hval, pval, tr20);
             tr20.writeTo(writer);
          }
@@ -302,7 +302,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETPARAMETERMAP);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterMap");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
             Map<String, String[]> pmap = portletReq.getParameterMap();
@@ -318,7 +318,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETPARAMETERNAMES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterNames");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
             Enumeration<String> pe = portletReq.getParameterNames();
@@ -334,10 +334,10 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETPARAMETERVALUES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterValues");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterValues");
-            String[] pvals = portletReq.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterValues");
+            String[] hvals = request.getParameterValues(PARM_NAME);
+            String[] pvals = portletReq.getParameterValues(PARM_NAME);
             CompareUtils.stringsEqual(hvals[0], pvals[0], tr23);
             tr23.writeTo(writer);
          }

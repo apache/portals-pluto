@@ -230,10 +230,10 @@
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETER);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameter");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameter");
-            String pval = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameter");
+            String hval = request.getParameter(PARM_NAME);
+            String pval = portletReq.getParameter(PARM_NAME);
             CompareUtils.stringsEqual(hval, pval, tr20);
             tr20.writeTo(writer);
          }
@@ -246,7 +246,7 @@
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETERMAP);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterMap");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
             Map<String, String[]> pmap = portletReq.getParameterMap();
@@ -262,7 +262,7 @@
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETERNAMES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterNames");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
             Enumeration<String> pe = portletReq.getParameterNames();
@@ -278,10 +278,10 @@
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETERVALUES);
       try {
          // TestSetupLink
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterValues");
+         String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
-            String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterValues");
-            String[] pvals = portletReq.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterValues");
+            String[] hvals = request.getParameterValues(PARM_NAME);
+            String[] pvals = portletReq.getParameterValues(PARM_NAME);
             CompareUtils.stringsEqual(hvals[0], pvals[0], tr23);
             tr23.writeTo(writer);
          }

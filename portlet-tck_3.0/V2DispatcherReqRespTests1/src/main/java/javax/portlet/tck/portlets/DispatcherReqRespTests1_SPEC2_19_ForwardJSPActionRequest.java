@@ -334,18 +334,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          tb.writeTo(writer);
       }
 
-      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameter");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameter", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameter", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameter */
       /* Details: "In a target jsp of a forward in the Action phase, the      */
       /* method HttpServletRequest.getParameter must provide the same         */
@@ -355,18 +343,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameter", aurl);
          tb.writeTo(writer);
-      }
-
-      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterMap");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterMap", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterMap", rurl);
-            tl.writeTo(writer);
-         }
       }
 
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterMap */
@@ -380,18 +356,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          tb.writeTo(writer);
       }
 
-      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterNames");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterNames", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterNames", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterNames */
       /* Details: "In a target jsp of a forward in the Action phase, the      */
       /* method HttpServletRequest.getParameterNames must provide the same    */
@@ -401,18 +365,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterNames", aurl);
          tb.writeTo(writer);
-      }
-
-      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterValues");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterValues", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterValues", rurl);
-            tl.writeTo(writer);
-         }
       }
 
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterValues */
@@ -742,6 +694,54 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_setCharacterEncoding", aurl);
          tb.writeTo(writer);
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameter", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterMap", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterNames", rurl);
+            tl.writeTo(writer);
+         }
+      }
+
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest
+      {
+         String val = portletReq.getParameter(PARM_NAME);
+         if (val == null) {
+            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
+            rurl.setParameter(PARM_NAME, PARM_VALUE);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getParameterValues", rurl);
+            tl.writeTo(writer);
+         }
       }
 
    }

@@ -317,18 +317,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest impleme
          tb.writeTo(writer);
       }
 
-      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter */
       /* Details: "In a target servlet of a include in the Event phase, the   */
       /* method HttpServletRequest.getParameter must provide the same         */
@@ -338,18 +326,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest impleme
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameter", aurl);
          tb.writeTo(writer);
-      }
-
-      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterMap");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterMap", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterMap", rurl);
-            tl.writeTo(writer);
-         }
       }
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterMap */
@@ -363,18 +339,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest impleme
          tb.writeTo(writer);
       }
 
-      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterNames");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterNames", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterNames", rurl);
-            tl.writeTo(writer);
-         }
-      }
-
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterNames */
       /* Details: "In a target servlet of a include in the Event phase, the   */
       /* method HttpServletRequest.getParameterNames must provide the same    */
@@ -384,18 +348,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest impleme
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterNames", aurl);
          tb.writeTo(writer);
-      }
-
-      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest
-      {
-         String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterValues");
-         if (val == null) {
-            PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
-            rurl.setParameters(portletReq.getPrivateParameterMap());
-            rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterValues", "Value");
-            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterValues", rurl);
-            tl.writeTo(writer);
-         }
       }
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getParameterValues */

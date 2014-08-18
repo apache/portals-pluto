@@ -66,24 +66,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_event impl
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      
-      LOGGER.entering(LOG_CLASS, "event companion render");
-
-      portletResp.setContentType("text/html");
-      PrintWriter writer = portletResp.getWriter();
-      writer.write("<h3>Event Companion Portlet </h3>\n");
-      writer.write("<p>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_event</p>\n");
-
-      String msg = (String) portletReq.getPortletSession()
-            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse", APPLICATION_SCOPE);
-      msg = (msg==null) ? "Not ready. click test case link." : msg;
-      writer.write("<p>" + msg + "</p>\n");
-
-   }
-
-   @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
@@ -99,6 +81,24 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_event impl
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse.jsp?qparm1=qvalue1&qparm2=qvalue2");
       rd.include(portletReq, portletResp);
+
+   }
+
+   @Override
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
+      
+      LOGGER.entering(LOG_CLASS, "event companion render");
+
+      portletResp.setContentType("text/html");
+      PrintWriter writer = portletResp.getWriter();
+      writer.write("<h3>Event Companion Portlet </h3>\n");
+      writer.write("<p>DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_event</p>\n");
+
+      String msg = (String) portletReq.getPortletSession()
+            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse", APPLICATION_SCOPE);
+      msg = (msg==null) ? "Not ready. click test case link." : msg;
+      writer.write("<p>" + msg + "</p>\n");
 
    }
 
