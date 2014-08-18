@@ -49,6 +49,8 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.ibm.xml.resolver.apps.resolver;
+
 import javax.portlet.tck.constants.Constants;
 
 
@@ -348,19 +350,47 @@ public class TCKSimpleTestDriver {
 
    /**
     * Looks for a link or button that can be clicked for the TC and clicks it if found.
+    * 
+    * First looks for a test case setup link or button and clicks it if found. Then it 
+    * looks for a test case execution link and clicks it if found. 
+    * 
+    * @return  web element list containing the test case results.
     */
    @SuppressWarnings("unused")
    private List<WebElement> processClickable(List<WebElement> wels) {
+      String setupId = tcName + Constants.SETUP_ID;
       String actionId = tcName + Constants.CLICK_ID;
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
-      
       List<WebElement> tcels = null;
+
+      for (WebElement wel : wels) {
+         tcels = wel.findElements(By.id(setupId));
+         if (!tcels.isEmpty()) break;
+      }
+      if (debug) System.out.println("   Setup link found: " + ((tcels != null) && !tcels.isEmpty()));
+
+      // Click setup link if found
+      if ((tcels != null) && !tcels.isEmpty()) {
+         WebElement wel = tcels.get(0);
+         wel.click();
+         try {
+            WebDriverWait wdw = new WebDriverWait(driver, 3);
+            String expr = "//*[@id=" + resultId + "] | //*[@id=" + actionId + "]";
+            wdw.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(expr)));
+            wels = driver.findElements(By.name(tcName));
+         } catch(Exception e) {
+            assertTrue("Test case " + tcName + " failed. "  
+                     + " Setup link could not be accessed. Timeout. ", false);
+            tcels.clear();
+            return tcels;
+         }
+      }
+      
       for (WebElement wel : wels) {
          tcels = wel.findElements(By.id(actionId));
          if (!tcels.isEmpty()) break;
       }
-      
       if (debug) System.out.println("   Clickable link found: " + ((tcels != null) && !tcels.isEmpty()));
 
       if ((tcels == null) || tcels.isEmpty()) {
@@ -375,8 +405,8 @@ public class TCKSimpleTestDriver {
          wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
          tcels = driver.findElements(By.name(tcName));
       } catch(Exception e) {
-         assertTrue("Test case " + tcName + " failed. Test case " + tcName 
-               + " link could not be accessed. Timeout. ", false);
+         assertTrue("Test case " + tcName + " failed. "
+               + "Action link could not be accessed. Timeout. ", false);
          tcels.clear();
       }
       

@@ -34,30 +34,24 @@
  */
 package javax.portlet.tck.beans;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import javax.portlet.PortletURL;
 import javax.portlet.tck.constants.Constants;
 
 /**
- * Formats a link for a test case.
+ * Formats a link to set render parameters for a test case.
+ * 
+ * The test driver will look for setup links for a test case and click 
+ * those before clicking the actual test case links.
  * 
  * @author nick
  */
-public class TestLink {
-   
-   String tcName;
-   PortletURL purl;
-   String actId;
-   
+public class TestSetupLink extends TestLink {
+
    /**
     * Creates an empty test result.
     */
-   public TestLink() {
-      tcName = "";
-      actId = null;
-      purl = null;
+   public TestSetupLink() {
+      super();
    }
 
    /**
@@ -66,51 +60,9 @@ public class TestLink {
     * @param tcName     test case name
     * @param url        url for the test case
     */
-   public TestLink(String tcName, PortletURL purl) {
-      this.tcName = tcName;
-      this.actId = tcName + Constants.CLICK_ID;
-      this.purl = purl;
-   }
-
-   /**
-    * Generates HTML markup representing the test link. 
-    * 
-    * Note that the div element containing the item that is to be acted upon
-    * by the client must have an id equal to the test case name.
-    * 
-    * @return  HTML markup representing the test link
-    */
-   @Override
-   public String toString() {
-      
-      StringBuilder sb = new StringBuilder();
-      sb.append("<div class='portletTCKTestcase' name='");
-      sb.append(tcName);
-      sb.append("'>");
-      sb.append("<h4>");
-      sb.append(tcName);
-      sb.append(" link:");
-      sb.append("</h4>");
-      sb.append("<a class='portletTCKLink' id='");
-      sb.append(actId);
-      sb.append("' href='");
-      sb.append(purl.toString());
-      sb.append("'>");
-      sb.append(tcName);
-      sb.append("</a>");
-      sb.append("</div>");
-
-      return sb.toString();
-   }
-   
-   /**
-    * Generates HTML markup representing the test link and
-    * writes them to the writer provided.
-    * 
-    * @param writer  Writer to which the string is written
-    */
-   public void writeTo(Writer writer)throws IOException {
-      writer.write(this.toString());
+   public TestSetupLink(String tcName, PortletURL purl) {
+      super(tcName, purl);
+      actId = tcName + Constants.SETUP_ID;
    }
    
 }
