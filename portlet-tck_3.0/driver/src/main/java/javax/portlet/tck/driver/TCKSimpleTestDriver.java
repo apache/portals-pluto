@@ -84,6 +84,16 @@ public class TCKSimpleTestDriver {
       System.out.println("   TestFile=" + testFile);
       module = System.getProperty("test.module");
       System.out.println("   Module       =" + module);
+      
+      boolean filterTCs = (module != null && module.length() > 0);
+      boolean excTCs = true;        // include or exclude TCs
+      String filterStr = module;
+      if (filterTCs) {
+         excTCs = module.startsWith("!");
+         filterStr = module.replaceFirst("^!(.*)$", "$1");
+         System.out.println("   Filtering    = " + (excTCs?"Excluding":"Including") + 
+                            " all " + filterStr + " testcases");
+      }
 
       Properties tprops = new Properties();
       try {
@@ -97,19 +107,23 @@ public class TCKSimpleTestDriver {
       
       // See if performance can be improved by sorting the test cases by
       // the page to be accessed. The map uses the page as key and has a 
-      // set of test cases for that page as value.
+      // set of test cases for that page as value. Filter according to 
+      // test.module.
       
       TreeMap<String, Set<String>> pages = new TreeMap<String, Set<String>>();
       Set<Object> tcs = tprops.keySet();
       for (Object o : tcs) {
          String tcase = (String) o ;
-         if (module == null || module.length() <= 0 || tcase.contains(module)) {
-            String tpage = tprops.getProperty(tcase);
-            if (!pages.containsKey(tpage)) {
-               pages.put(tpage, new TreeSet<String>());
-            }
-            pages.get(tpage).add(tcase);
+         String tpage = tprops.getProperty(tcase);
+         if (filterTCs) {
+            boolean c = tcase.contains(filterStr);
+            if (excTCs && c) continue;       // exclude matches
+            if (!excTCs && !c) continue;     // exclude non-matches
          }
+         if (!pages.containsKey(tpage)) {
+            pages.put(tpage, new TreeSet<String>());
+         }
+         pages.get(tpage).add(tcase);
       }
 
       // now pass TCs, sorted by page, to the driver
