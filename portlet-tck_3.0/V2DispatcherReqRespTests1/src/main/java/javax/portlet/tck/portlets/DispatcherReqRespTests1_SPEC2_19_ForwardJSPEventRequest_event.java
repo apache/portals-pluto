@@ -89,6 +89,8 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_event imple
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
+      portletResp.setRenderParameters(portletReq);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 

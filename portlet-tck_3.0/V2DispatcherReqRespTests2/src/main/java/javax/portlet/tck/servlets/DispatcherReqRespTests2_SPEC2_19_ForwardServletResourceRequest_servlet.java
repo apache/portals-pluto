@@ -280,7 +280,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       /* functionality as ResourceRequest.getParameter"                       */
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETER);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameter");
          if (val != null) {
             String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameter");
@@ -296,7 +296,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       /* same functionality as ResourceRequest.getParameterMap"               */
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERMAP);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameterMap");
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
@@ -312,7 +312,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       /* same functionality as ResourceRequest.getParameterNames"             */
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERNAMES);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameterNames");
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
@@ -328,7 +328,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       /* same functionality as ResourceRequest.getParameterValues"            */
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERVALUES);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameterValues");
          if (val != null) {
             String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameterValues");

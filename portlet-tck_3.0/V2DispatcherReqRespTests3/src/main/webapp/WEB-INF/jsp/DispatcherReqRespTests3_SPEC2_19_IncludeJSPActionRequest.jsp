@@ -229,14 +229,15 @@
       /* functionality as ActionRequest.getParameter"                         */
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPACTIONREQUEST_GETPARAMETER);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameter");
          if (val != null) {
             String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameter");
             String pval = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameter");
             CompareUtils.stringsEqual(hval, pval, tr20);
+            tr20.writeTo(writer);
          }
       } catch(Exception e) {tr20.appendTcDetail(e.toString());}
-      tr20.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterMap */
       /* Details: "In a target jsp of a include in the Action phase, the      */
@@ -244,11 +245,15 @@
       /* functionality as ActionRequest.getParameterMap"                      */
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPACTIONREQUEST_GETPARAMETERMAP);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterMap");
          if (val != null) {
+            Map<String, String[]> hmap = request.getParameterMap();
+            Map<String, String[]> pmap = portletReq.getParameterMap();
+            CompareUtils.mapsEqual("map from HttpServletRequest", hmap, "map from ActionRequest", pmap, tr21);
+            tr21.writeTo(writer);
          }
       } catch(Exception e) {tr21.appendTcDetail(e.toString());}
-      tr21.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterNames */
       /* Details: "In a target jsp of a include in the Action phase, the      */
@@ -256,14 +261,15 @@
       /* functionality as ActionRequest.getParameterNames"                    */
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPACTIONREQUEST_GETPARAMETERNAMES);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterNames");
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
             Enumeration<String> pe = portletReq.getParameterNames();
             CompareUtils.enumsEqual("HttpServletRequest parameter names", he, "ActionRequest parameter names", pe,tr22);
+            tr22.writeTo(writer);
          }
       } catch(Exception e) {tr22.appendTcDetail(e.toString());}
-      tr22.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterValues */
       /* Details: "In a target jsp of a include in the Action phase, the      */
@@ -271,14 +277,15 @@
       /* functionality as ActionRequest.getParameterValues"                   */
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPACTIONREQUEST_GETPARAMETERVALUES);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterValues");
          if (val != null) {
             String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterValues");
             String[] pvals = portletReq.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getParameterValues");
             CompareUtils.stringsEqual(hvals[0], pvals[0], tr23);
+            tr23.writeTo(writer);
          }
       } catch(Exception e) {tr23.appendTcDetail(e.toString());}
-      tr23.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getPathInfo */
       /* Details: "In a target jsp of a include in the Action phase, the      */

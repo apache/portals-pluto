@@ -66,6 +66,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest impl
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
@@ -104,46 +105,50 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest impl
 
       PrintWriter writer = portletResp.getWriter();
 
-      // TestLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
+      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameter", rurl);
             tl.writeTo(writer);
          }
       }
 
-      // TestLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
+      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterMap");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterMap", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterMap", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterMap", rurl);
             tl.writeTo(writer);
          }
       }
 
-      // TestLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
+      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterNames");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterNames", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterNames", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterNames", rurl);
             tl.writeTo(writer);
          }
       }
 
-      // TestLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
+      // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getParameterValues", rurl);
             tl.writeTo(writer);
          }
       }

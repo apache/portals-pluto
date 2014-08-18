@@ -50,13 +50,15 @@ public class TestLink {
    String tcName;
    PortletURL purl;
    String actId;
+   String title;
    
    /**
     * Creates an empty test result.
     */
    public TestLink() {
       tcName = "";
-      actId = null;
+      actId = "";
+      title = "";
       purl = null;
    }
 
@@ -69,6 +71,7 @@ public class TestLink {
    public TestLink(String tcName, PortletURL purl) {
       this.tcName = tcName;
       this.actId = tcName + Constants.CLICK_ID;
+      this.title = " Action Link";
       this.purl = purl;
    }
 
@@ -89,7 +92,7 @@ public class TestLink {
       sb.append("'>");
       sb.append("<h4>");
       sb.append(tcName);
-      sb.append(" link:");
+      sb.append(" " + title + ":");
       sb.append("</h4>");
       sb.append("<a class='portletTCKLink' id='");
       sb.append(actId);

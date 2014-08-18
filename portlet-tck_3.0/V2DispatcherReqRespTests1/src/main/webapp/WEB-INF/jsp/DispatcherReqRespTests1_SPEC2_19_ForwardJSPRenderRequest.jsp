@@ -234,19 +234,20 @@
       /* method HttpServletRequest.getParameter must provide the same         */
       /* functionality as RenderRequest.getParameter"                         */
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETER);
-      // TestLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameter");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameter", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameter", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameter", rurl);
             tl.writeTo(writer);
          }
       }
 
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameter");
          if (val != null) {
             String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameter");
@@ -261,19 +262,20 @@
       /* method HttpServletRequest.getParameterMap must provide the same      */
       /* functionality as RenderRequest.getParameterMap"                      */
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETERMAP);
-      // TestLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterMap");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterMap", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterMap", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterMap", rurl);
             tl.writeTo(writer);
          }
       }
 
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterMap");
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
@@ -288,19 +290,20 @@
       /* method HttpServletRequest.getParameterNames must provide the same    */
       /* functionality as RenderRequest.getParameterNames"                    */
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETERNAMES);
-      // TestLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterNames");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterNames", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterNames", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterNames", rurl);
             tl.writeTo(writer);
          }
       }
 
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterNames");
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
@@ -315,19 +318,20 @@
       /* method HttpServletRequest.getParameterValues must provide the same   */
       /* functionality as RenderRequest.getParameterValues"                   */
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETPARAMETERVALUES);
-      // TestLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
+      // TestSetupLink for: DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest
       {
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterValues");
          if (val == null) {
             PortletURL rurl = ((RenderResponse)portletResp).createRenderURL();
+            rurl.setParameters(portletReq.getPrivateParameterMap());
             rurl.setParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterValues", "Value");
-            TestLink tl = new TestLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterValues", rurl);
+            TestSetupLink tl = new TestSetupLink("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterValues", rurl);
             tl.writeTo(writer);
          }
       }
 
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterValues");
          if (val != null) {
             String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getParameterValues");

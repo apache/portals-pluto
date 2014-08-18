@@ -285,14 +285,15 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_servlet
       /* functionality as EventRequest.getParameter"                          */
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETEVENTREQUEST_GETPARAMETER);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameter");
          if (val != null) {
             String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameter");
             String pval = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameter");
             CompareUtils.stringsEqual(hval, pval, tr20);
+            tr20.writeTo(writer);
          }
       } catch(Exception e) {tr20.appendTcDetail(e.toString());}
-      tr20.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterMap */
       /* Details: "In a target servlet of a forward in the Event phase, the   */
@@ -300,11 +301,15 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_servlet
       /* functionality as EventRequest.getParameterMap"                       */
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETEVENTREQUEST_GETPARAMETERMAP);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterMap");
          if (val != null) {
+            Map<String, String[]> hmap = request.getParameterMap();
+            Map<String, String[]> pmap = portletReq.getParameterMap();
+            CompareUtils.mapsEqual("map from HttpServletRequest", hmap, "map from EventRequest", pmap, tr21);
+            tr21.writeTo(writer);
          }
       } catch(Exception e) {tr21.appendTcDetail(e.toString());}
-      tr21.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterNames */
       /* Details: "In a target servlet of a forward in the Event phase, the   */
@@ -312,14 +317,15 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_servlet
       /* functionality as EventRequest.getParameterNames"                     */
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETEVENTREQUEST_GETPARAMETERNAMES);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterNames");
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
             Enumeration<String> pe = portletReq.getParameterNames();
             CompareUtils.enumsEqual("HttpServletRequest parameter names", he, "EventRequest parameter names", pe,tr22);
+            tr22.writeTo(writer);
          }
       } catch(Exception e) {tr22.appendTcDetail(e.toString());}
-      tr22.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterValues */
       /* Details: "In a target servlet of a forward in the Event phase, the   */
@@ -327,14 +333,15 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_servlet
       /* functionality as EventRequest.getParameterValues"                    */
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETEVENTREQUEST_GETPARAMETERVALUES);
       try {
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterValues");
          if (val != null) {
             String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterValues");
             String[] pvals = portletReq.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getParameterValues");
             CompareUtils.stringsEqual(hvals[0], pvals[0], tr23);
+            tr23.writeTo(writer);
          }
       } catch(Exception e) {tr23.appendTcDetail(e.toString());}
-      tr23.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getPathInfo */
       /* Details: "In a target servlet of a forward in the Event phase, the   */

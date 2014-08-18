@@ -66,6 +66,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse imp
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 

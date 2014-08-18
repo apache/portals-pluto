@@ -66,6 +66,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
@@ -104,6 +105,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_addDateHeader", aurl);
          tb.writeTo(writer);
       }
@@ -114,6 +116,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_addHeader", aurl);
          tb.writeTo(writer);
       }
@@ -124,6 +127,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_addIntHeader", aurl);
          tb.writeTo(writer);
       }
@@ -133,6 +137,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.containsHeader must return false"         */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_containsHeader", aurl);
          tb.writeTo(writer);
       }
@@ -142,6 +147,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.encodeRedirectURL must return null"       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_encodeRedirectURL1", aurl);
          tb.writeTo(writer);
       }
@@ -151,6 +157,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.encodeRedirectUrl must return null"       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_encodeRedirectUrl", aurl);
          tb.writeTo(writer);
       }
@@ -161,6 +168,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* functionality as EventResponse.encodeURL"                            */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_encodeURL1", aurl);
          tb.writeTo(writer);
       }
@@ -171,6 +179,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* functionality as EventResponse.encodeURL"                            */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_encodeUrl", aurl);
          tb.writeTo(writer);
       }
@@ -181,6 +190,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_flushBuffer", aurl);
          tb.writeTo(writer);
       }
@@ -190,6 +200,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.getBufferSize must return 0"              */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_getBufferSize", aurl);
          tb.writeTo(writer);
       }
@@ -199,6 +210,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.getCharacterEncoding must return null"    */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_getCharacterEncoding", aurl);
          tb.writeTo(writer);
       }
@@ -208,6 +220,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.getContentType must return null"          */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_getContentType", aurl);
          tb.writeTo(writer);
       }
@@ -217,6 +230,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.getLocale must return null"               */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_getLocale", aurl);
          tb.writeTo(writer);
       }
@@ -227,6 +241,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* stream that ignores all input"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_getOutputStream", aurl);
          tb.writeTo(writer);
       }
@@ -237,6 +252,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* ignores all input"                                                   */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_getWriter", aurl);
          tb.writeTo(writer);
       }
@@ -246,6 +262,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.isCommitted must return false"            */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_isCommitted", aurl);
          tb.writeTo(writer);
       }
@@ -255,6 +272,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* method HttpServletResponse.reset does not perform any operation"     */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_reset", aurl);
          tb.writeTo(writer);
       }
@@ -265,6 +283,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_resetBuffer", aurl);
          tb.writeTo(writer);
       }
@@ -275,6 +294,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_sendError", aurl);
          tb.writeTo(writer);
       }
@@ -285,6 +305,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_sendRedirect", aurl);
          tb.writeTo(writer);
       }
@@ -295,6 +316,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setBufferSize", aurl);
          tb.writeTo(writer);
       }
@@ -305,6 +327,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* any operation"                                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setCharacterEncoding", aurl);
          tb.writeTo(writer);
       }
@@ -315,6 +338,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setContentLength", aurl);
          tb.writeTo(writer);
       }
@@ -325,6 +349,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setContentType", aurl);
          tb.writeTo(writer);
       }
@@ -335,6 +360,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setDateHeader", aurl);
          tb.writeTo(writer);
       }
@@ -345,6 +371,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setHeader", aurl);
          tb.writeTo(writer);
       }
@@ -355,6 +382,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setIntHeader", aurl);
          tb.writeTo(writer);
       }
@@ -365,6 +393,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setLocale", aurl);
          tb.writeTo(writer);
       }
@@ -375,6 +404,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse implements
       /* operation"                                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_setStatus", aurl);
          tb.writeTo(writer);
       }

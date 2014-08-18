@@ -89,6 +89,8 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_event i
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
+      portletResp.setRenderParameters(portletReq);
+
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 

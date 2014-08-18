@@ -229,7 +229,7 @@
       /* functionality as ResourceRequest.getParameter"                       */
       TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETER);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameter");
          if (val != null) {
             String hval = request.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameter");
@@ -245,7 +245,7 @@
       /* functionality as ResourceRequest.getParameterMap"                    */
       TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETERMAP);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterMap");
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
@@ -261,7 +261,7 @@
       /* functionality as ResourceRequest.getParameterNames"                  */
       TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETERNAMES);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterNames");
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
@@ -277,7 +277,7 @@
       /* functionality as ResourceRequest.getParameterValues"                 */
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRESOURCEREQUEST_GETPARAMETERVALUES);
       try {
-         // TestLink
+         // TestSetupLink
          String val = portletReq.getParameter(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterValues");
          if (val != null) {
             String[] hvals = request.getParameterValues(PARM_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getParameterValues");

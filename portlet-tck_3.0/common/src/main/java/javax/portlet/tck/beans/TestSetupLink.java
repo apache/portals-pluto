@@ -63,6 +63,7 @@ public class TestSetupLink extends TestLink {
    public TestSetupLink(String tcName, PortletURL purl) {
       super(tcName, purl);
       actId = tcName + Constants.SETUP_ID;
+      this.title = " Setup Link";
    }
    
 }
