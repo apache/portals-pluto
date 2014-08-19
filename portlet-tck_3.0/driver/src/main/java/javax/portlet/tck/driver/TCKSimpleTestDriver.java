@@ -350,7 +350,7 @@ public class TCKSimpleTestDriver {
       
       if (!rels.isEmpty() && !dels.isEmpty()) {
          String res = rels.get(0).getText();
-         String det = "Test case " + tcName + " failed. " + dels.get(0).getText();
+         String det = "Test case " + tcName + ": " + dels.get(0).getText();
          boolean ok = res.contains(Constants.SUCCESS);
          if (debug) System.out.println("   Test OK: " + ok + ", results: " + res + ", details: " + det);
          assertTrue(det, ok);
@@ -386,11 +386,32 @@ public class TCKSimpleTestDriver {
       if ((tcels != null) && !tcels.isEmpty()) {
          WebElement wel = tcels.get(0);
          wel.click();
+         if (debug) System.out.println("   Clicked setup link.");
          try {
             WebDriverWait wdw = new WebDriverWait(driver, 3);
-            String expr = "//*[@id=" + resultId + "] | //*[@id=" + actionId + "]";
-            wdw.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(expr)));
+            
+            String expr = "//*[@id='" + resultId + "'] | //*[@id='" + actionId + "']";
+            if(debug) System.out.println("   xpath string: ===" + expr + "===");
+
+            wdw.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(expr)));
+            if (debug) {
+               System.out.println("   Found elements: " + (!wels.isEmpty()));
+               List<WebElement> xels = driver.findElements(By.xpath(expr));
+               for (WebElement w : xels) {
+                  System.out.println("      Element: " + w.getTagName() + ", id=" + w.getAttribute("id"));
+               }
+            }
+            
+            // check if results already found. if so, we're done.
             wels = driver.findElements(By.name(tcName));
+            for (WebElement w : wels) {
+               tcels = w.findElements(By.id(resultId));
+               if (!tcels.isEmpty()) {
+                  if (debug) System.out.println("   Results available after setup.");
+                  return wels;
+               }
+            }
+            
          } catch(Exception e) {
             assertTrue("Test case " + tcName + " failed. "  
                      + " Setup link could not be accessed. Timeout. ", false);
