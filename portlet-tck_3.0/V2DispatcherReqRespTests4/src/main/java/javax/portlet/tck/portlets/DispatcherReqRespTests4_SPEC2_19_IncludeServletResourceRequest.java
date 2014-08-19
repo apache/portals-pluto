@@ -90,8 +90,9 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest impl
       // Prereq for: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_getAttributeNames", "Value1");
 
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_servlet" + SERVLET_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceRequest_servlet?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 

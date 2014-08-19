@@ -78,8 +78,9 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
       // Prereq for: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getAttributeNames", "Value1");
 
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_servlet" + SERVLET_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_servlet?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 
@@ -425,17 +426,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getReader */
-      /* Details: "In a target servlet of a include in the Action phase,      */
-      /* the method HttpServletRequest.getReader must provide the same        */
-      /* functionality as ActionRequest.getReader"                            */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getReader", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getRealPath */
       /* Details: "In a target servlet of a include in the Action phase,      */
       /* the method HttpServletRequest.getRealPath must return null"          */
@@ -596,39 +586,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest implem
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_getUserPrincipal", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isRequestedSessionIdFromCookie */
-      /* Details: "In a target servlet of a include in the Action phase,      */
-      /* the method HttpServletRequest.isRequestedSessionIdFromCookie must    */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isRequestedSessionIdFromCookie", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isRequestedSessionIdFromURL1 */
-      /* Details: "In a target servlet of a include in the Action phase,      */
-      /* the method HttpServletRequest.isRequestedSessionIdFromURL must       */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isRequestedSessionIdFromURL1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isRequestedSessionIdFromUrl */
-      /* Details: "In a target servlet of a include in the Action phase,      */
-      /* the method HttpServletRequest.isRequestedSessionIdFromUrl must       */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletActionRequest_isRequestedSessionIdFromUrl", aurl);
          tb.writeTo(writer);
       }
 

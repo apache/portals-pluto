@@ -84,8 +84,9 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_event imple
       // Prereq for: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_getAttributeNames", "Value1");
 
+      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest" + JSP_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest.jsp?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);
 
    }

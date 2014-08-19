@@ -84,8 +84,9 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse imp
 
       PrintWriter writer = portletResp.getWriter();
 
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_servlet" + SERVLET_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_servlet?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 

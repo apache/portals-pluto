@@ -135,8 +135,15 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_servl
       /* the method HttpServletResponse.getBufferSize must provide the same   */
       /* functionality as RenderResponse.getBufferSize"                       */
       TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_GETBUFFERSIZE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         int hval = response.getBufferSize();
+         int pval = ((MimeResponse)portletResp).getBufferSize();
+         String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + RenderResponse";
+         if (hval != pval) {
+            tr6.appendTcDetail(str);
+         }
+         tr6.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_getCharacterEncoding */
@@ -144,8 +151,11 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_servl
       /* the method HttpServletResponse.getCharacterEncoding must provide     */
       /* the same functionality as RenderResponse.getCharacterEncoding"       */
       TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_GETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         String hval = response.getCharacterEncoding();
+         String pval = ((MimeResponse)portletResp).getCharacterEncoding();
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "RenderResponse", pval, tr7);
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_getContentType */
@@ -153,8 +163,11 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_servl
       /* the method HttpServletResponse.getContentType must provide the       */
       /* same functionality as RenderResponse.getContentType"                 */
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_GETCONTENTTYPE);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         String hval = response.getContentType();
+         String pval = ((MimeResponse)portletResp).getContentType();
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "RenderResponse", pval, tr8);
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_getLocale */
@@ -165,7 +178,9 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_servl
       try {
          Locale hl = response.getLocale();
          Locale pl = ((MimeResponse)portletResp).getLocale();
-         CompareUtils.stringsEqual(hl.getDisplayName(), pl.getDisplayName(), tr9);
+         String hval = hl.getDisplayName();
+         String pval = pl.getDisplayName();
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "RenderResponse", pval, tr9);
       } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
@@ -178,113 +193,111 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_servl
       tr10.appendTcDetail("Not implemented.");
       tr10.writeTo(writer);
 
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_getWriter */
-      /* Details: "In a target servlet of a forward in the Render phase,      */
-      /* the method HttpServletResponse.getWriter must provide the same       */
-      /* functionality as RenderResponse.getWriter"                           */
-      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_GETWRITER);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
-      tr11.writeTo(writer);
-
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_isCommitted */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.isCommitted must provide the same     */
       /* functionality as RenderResponse.isCommitted"                         */
-      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_ISCOMMITTED);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
-      tr12.writeTo(writer);
+      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_ISCOMMITTED);
+      try {
+         boolean hval = response.isCommitted();
+         boolean pval = ((MimeResponse)portletResp).isCommitted();
+         String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + RenderResponse";
+         if (hval != pval) {
+            tr11.appendTcDetail(str);
+         }
+         tr11.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
+      tr11.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_reset */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.reset must provide the same           */
       /* functionality as RenderResponse.reset"                               */
-      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_RESET);
+      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_RESET);
       /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
-      tr13.writeTo(writer);
+      tr12.appendTcDetail("Not implemented.");
+      tr12.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_resetBuffer */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.resetBuffer must provide the same     */
       /* functionality as RenderResponse.resetBuffer"                         */
-      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_RESETBUFFER);
+      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_RESETBUFFER);
       /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
-      tr14.writeTo(writer);
+      tr13.appendTcDetail("Not implemented.");
+      tr13.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_sendError */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.sendError does not perform any        */
       /* operation"                                                           */
-      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SENDERROR);
+      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SENDERROR);
       /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
-      tr15.writeTo(writer);
+      tr14.appendTcDetail("Not implemented.");
+      tr14.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_sendRedirect */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.sendRedirect does not perform any     */
       /* operation"                                                           */
-      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SENDREDIRECT);
+      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SENDREDIRECT);
       /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
-      tr16.writeTo(writer);
+      tr15.appendTcDetail("Not implemented.");
+      tr15.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_setBufferSize */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.setBufferSize must provide the same   */
       /* functionality as RenderResponse.setBufferSize"                       */
-      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETBUFFERSIZE);
+      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETBUFFERSIZE);
       /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
-      tr17.writeTo(writer);
+      tr16.appendTcDetail("Not implemented.");
+      tr16.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_setCharacterEncoding */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.setCharacterEncoding does not         */
       /* perform any operation"                                               */
-      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETCHARACTERENCODING);
+      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETCHARACTERENCODING);
       /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
-      tr18.writeTo(writer);
+      tr17.appendTcDetail("Not implemented.");
+      tr17.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_setContentLength */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.setContentLength does not perform     */
       /* any operation"                                                       */
-      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETCONTENTLENGTH);
+      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETCONTENTLENGTH);
       /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
-      tr19.writeTo(writer);
+      tr18.appendTcDetail("Not implemented.");
+      tr18.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_setContentType */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.setContentType must provide the       */
       /* same functionality as RenderResponse.setContentType"                 */
-      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETCONTENTTYPE);
+      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETCONTENTTYPE);
       /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+      tr19.appendTcDetail("Not implemented.");
+      tr19.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_setLocale */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.setLocale does not perform any        */
       /* operation"                                                           */
-      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETLOCALE);
+      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETLOCALE);
       /* TODO: implement test */
-      tr21.appendTcDetail("Not implemented.");
-      tr21.writeTo(writer);
+      tr20.appendTcDetail("Not implemented.");
+      tr20.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_setStatus */
       /* Details: "In a target servlet of a forward in the Render phase,      */
       /* the method HttpServletResponse.setStatus does not perform any        */
       /* operation"                                                           */
-      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETSTATUS);
+      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRENDERRESPONSE_SETSTATUS);
       /* TODO: implement test */
-      tr22.appendTcDetail("Not implemented.");
-      tr22.writeTo(writer);
+      tr21.appendTcDetail("Not implemented.");
+      tr21.writeTo(writer);
 
 
    }

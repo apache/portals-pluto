@@ -78,8 +78,9 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest implem
       // Prereq for: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getAttributeNames", "Value1");
 
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servlet" + SERVLET_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servlet?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);
    }
 
@@ -425,17 +426,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest implem
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getReader */
-      /* Details: "In a target servlet of a forward in the Action phase,      */
-      /* the method HttpServletRequest.getReader must provide the same        */
-      /* functionality as ActionRequest.getReader"                            */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getReader", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getRealPath */
       /* Details: "In a target servlet of a forward in the Action phase,      */
       /* the method HttpServletRequest.getRealPath must return null"          */
@@ -596,39 +586,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest implem
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_getUserPrincipal", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_isRequestedSessionIdFromCookie */
-      /* Details: "In a target servlet of a forward in the Action phase,      */
-      /* the method HttpServletRequest.isRequestedSessionIdFromCookie must    */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_isRequestedSessionIdFromCookie", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_isRequestedSessionIdFromURL1 */
-      /* Details: "In a target servlet of a forward in the Action phase,      */
-      /* the method HttpServletRequest.isRequestedSessionIdFromURL must       */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_isRequestedSessionIdFromURL1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_isRequestedSessionIdFromUrl */
-      /* Details: "In a target servlet of a forward in the Action phase,      */
-      /* the method HttpServletRequest.isRequestedSessionIdFromUrl must       */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_isRequestedSessionIdFromUrl", aurl);
          tb.writeTo(writer);
       }
 

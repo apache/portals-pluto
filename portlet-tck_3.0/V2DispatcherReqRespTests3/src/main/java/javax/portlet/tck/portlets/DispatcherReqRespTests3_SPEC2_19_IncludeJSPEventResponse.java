@@ -99,50 +99,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse implements
 
       PrintWriter writer = portletResp.getWriter();
 
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addCookie */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.addCookie does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addCookie", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addDateHeader */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.addDateHeader does not perform any        */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addDateHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addHeader */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.addHeader does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addIntHeader */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.addIntHeader does not perform any         */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_addIntHeader", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_containsHeader */
       /* Details: "In a target jsp of a include in the Event phase, the       */
       /* method HttpServletResponse.containsHeader must return false"         */
@@ -195,17 +151,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse implements
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_flushBuffer */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.flushBuffer does not perform any          */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_flushBuffer", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_getBufferSize */
       /* Details: "In a target jsp of a include in the Event phase, the       */
       /* method HttpServletResponse.getBufferSize must return 0"              */
@@ -246,28 +191,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse implements
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_getOutputStream */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.getOutputStream must return an output     */
-      /* stream that ignores all input"                                       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_getOutputStream", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_getWriter */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.getWriter must return a writer that       */
-      /* ignores all input"                                                   */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_getWriter", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_isCommitted */
       /* Details: "In a target jsp of a include in the Event phase, the       */
       /* method HttpServletResponse.isCommitted must return true"             */
@@ -275,148 +198,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse implements
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_isCommitted", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_reset */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.reset does not perform any operation"     */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_reset", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_resetBuffer */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.resetBuffer does not perform any          */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_resetBuffer", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_sendError */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.sendError does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_sendError", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_sendRedirect */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.sendRedirect does not perform any         */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_sendRedirect", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setBufferSize */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setBufferSize does not perform any        */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setBufferSize", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setCharacterEncoding */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setCharacterEncoding does not perform     */
-      /* any operation"                                                       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setCharacterEncoding", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setContentLength */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setContentLength does not perform any     */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setContentLength", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setContentType */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setContentType does not perform any       */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setContentType", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setDateHeader */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setDateHeader does not perform any        */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setDateHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setHeader */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setHeader does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setIntHeader */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setIntHeader does not perform any         */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setIntHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setLocale */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setLocale does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setLocale", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setStatus */
-      /* Details: "In a target jsp of a include in the Event phase, the       */
-      /* method HttpServletResponse.setStatus does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_setStatus", aurl);
          tb.writeTo(writer);
       }
 

@@ -96,8 +96,9 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderResponse implement
 
       PrintWriter writer = portletResp.getWriter();
 
+      String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderResponse" + JSP_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderResponse.jsp?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 

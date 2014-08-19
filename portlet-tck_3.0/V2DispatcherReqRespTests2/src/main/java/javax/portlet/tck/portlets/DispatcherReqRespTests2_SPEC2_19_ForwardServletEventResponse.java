@@ -99,39 +99,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse implem
 
       PrintWriter writer = portletResp.getWriter();
 
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_addDateHeader */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.addDateHeader does not perform any        */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_addDateHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_addHeader */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.addHeader does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_addHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_addIntHeader */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.addIntHeader does not perform any         */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_addIntHeader", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_containsHeader */
       /* Details: "In a target servlet of a forward in the Event phase, the   */
       /* method HttpServletResponse.containsHeader must return false"         */
@@ -184,17 +151,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse implem
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_flushBuffer */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.flushBuffer does not perform any          */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_flushBuffer", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_getBufferSize */
       /* Details: "In a target servlet of a forward in the Event phase, the   */
       /* method HttpServletResponse.getBufferSize must return 0"              */
@@ -235,28 +191,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse implem
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_getOutputStream */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.getOutputStream must return an output     */
-      /* stream that ignores all input"                                       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_getOutputStream", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_getWriter */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.getWriter must return a writer that       */
-      /* ignores all input"                                                   */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_getWriter", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_isCommitted */
       /* Details: "In a target servlet of a forward in the Event phase, the   */
       /* method HttpServletResponse.isCommitted must return false"            */
@@ -264,148 +198,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse implem
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_isCommitted", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_reset */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.reset does not perform any operation"     */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_reset", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_resetBuffer */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.resetBuffer does not perform any          */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_resetBuffer", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_sendError */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.sendError does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_sendError", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_sendRedirect */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.sendRedirect does not perform any         */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_sendRedirect", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setBufferSize */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setBufferSize does not perform any        */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setBufferSize", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setCharacterEncoding */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setCharacterEncoding does not perform     */
-      /* any operation"                                                       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setCharacterEncoding", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setContentLength */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setContentLength does not perform any     */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setContentLength", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setContentType */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setContentType does not perform any       */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setContentType", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setDateHeader */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setDateHeader does not perform any        */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setDateHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setHeader */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setHeader does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setIntHeader */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setIntHeader does not perform any         */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setIntHeader", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setLocale */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setLocale does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setLocale", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setStatus */
-      /* Details: "In a target servlet of a forward in the Event phase, the   */
-      /* method HttpServletResponse.setStatus does not perform any            */
-      /* operation"                                                           */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_setStatus", aurl);
          tb.writeTo(writer);
       }
 

@@ -84,8 +84,9 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_event imple
       // Prereq for: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getAttributeNames", "Value1");
 
+      String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest" + JSP_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest.jsp?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
 
    }

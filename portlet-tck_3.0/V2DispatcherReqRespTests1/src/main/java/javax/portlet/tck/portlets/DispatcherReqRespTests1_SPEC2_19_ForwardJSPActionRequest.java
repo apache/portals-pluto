@@ -78,8 +78,9 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
       // Prereq for: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getAttributeNames", "Value1");
 
+      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest" + JSP_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest.jsp?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);
    }
 
@@ -423,17 +424,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getReader */
-      /* Details: "In a target jsp of a forward in the Action phase, the      */
-      /* method HttpServletRequest.getReader must provide the same            */
-      /* functionality as ActionRequest.getReader"                            */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getReader", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getRealPath */
       /* Details: "In a target jsp of a forward in the Action phase, the      */
       /* method HttpServletRequest.getRealPath must return null"              */
@@ -594,39 +584,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getUserPrincipal", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_isRequestedSessionIdFromCookie */
-      /* Details: "In a target jsp of a forward in the Action phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromCookie must        */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_isRequestedSessionIdFromCookie", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_isRequestedSessionIdFromURL1 */
-      /* Details: "In a target jsp of a forward in the Action phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromURL must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_isRequestedSessionIdFromURL1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_isRequestedSessionIdFromUrl */
-      /* Details: "In a target jsp of a forward in the Action phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromUrl must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_isRequestedSessionIdFromUrl", aurl);
          tb.writeTo(writer);
       }
 

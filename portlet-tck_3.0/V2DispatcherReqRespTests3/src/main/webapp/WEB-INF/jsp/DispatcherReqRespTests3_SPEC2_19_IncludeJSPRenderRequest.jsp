@@ -28,9 +28,9 @@
       /* functionality as RenderRequest.getAttribute"                         */
       TestResult tr0 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETATTRIBUTE);
       try {
-         String ha = (String)request.getAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getAttribute");
-         String pa = (String)portletReq.getAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getAttribute");
-         CompareUtils.stringsEqual(ha, pa, tr0);
+         String hval = (String)request.getAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getAttribute");
+         String pval = (String)portletReq.getAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getAttribute");
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr0);
       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
@@ -51,8 +51,11 @@
       /* method HttpServletRequest.getAuthType must provide the same          */
       /* functionality as RenderRequest.getAuthType"                          */
       TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETAUTHTYPE);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getAuthType();
+         String pval = ((ClientDataRequest)portletReq).getAuthType();
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr2);
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getCharacterEncoding */
@@ -91,8 +94,11 @@
       /* method HttpServletRequest.getContextPath must provide the same       */
       /* functionality as RenderRequest.getContextPath"                       */
       TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETCONTEXTPATH);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getContextPath();
+         String pval = ((ClientDataRequest)portletReq).getContextPath();
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr6);
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getCookies */
@@ -100,8 +106,13 @@
       /* method HttpServletRequest.getCookies must provide the same           */
       /* functionality as RenderRequest.getCookies"                           */
       TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETCOOKIES);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         Cookie[] hvals = request.getCookies();
+         Cookie[] pvals = ((ClientDataRequest)portletReq).getCookies();
+         HashSet<Cookie> hsc = new HashSet<Cookie>(Arrays.asList(hvals));
+         HashSet<Cookie> psc = new HashSet<Cookie>(Arrays.asList(pvals));
+         CompareUtils.setsEqual("cookies from HttpServletRequest", hsc, "cookies from from RenderRequest", psc, tr7);
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getDateHeader */
@@ -203,7 +214,9 @@
       try {
          Locale hl = request.getLocale();
          Locale pl = portletReq.getLocale();
-         CompareUtils.stringsEqual(hl.getDisplayName(), pl.getDisplayName(), tr17);
+         String hval = hl.getDisplayName();
+         String pval = pl.getDisplayName();
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr17);
       } catch(Exception e) {tr17.appendTcDetail(e.toString());}
       tr17.writeTo(writer);
 
@@ -240,7 +253,7 @@
          if (val != null) {
             String hval = request.getParameter(PARM_NAME);
             String pval = portletReq.getParameter(PARM_NAME);
-            CompareUtils.stringsEqual(hval, pval, tr20);
+            CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr20);
             tr20.writeTo(writer);
          }
       } catch(Exception e) {tr20.appendTcDetail(e.toString());}
@@ -288,7 +301,9 @@
          if (val != null) {
             String[] hvals = request.getParameterValues(PARM_NAME);
             String[] pvals = portletReq.getParameterValues(PARM_NAME);
-            CompareUtils.stringsEqual(hvals[0], pvals[0], tr23);
+            String hval = ((hvals==null) ? "null" : hvals[0]);
+            String pval = ((pvals==null) ? "null" : pvals[0]);
+            CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr23);
             tr23.writeTo(writer);
          }
       } catch(Exception e) {tr23.appendTcDetail(e.toString());}
@@ -298,8 +313,12 @@
       /* method HttpServletRequest.getPathInfo must a value corresponding     */
       /* to the path used to obtain the PortletRequestDispatcher"             */
       TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETPATHINFO);
-      /* TODO: implement test */
-      tr24.appendTcDetail("Not implemented.");
+      try {
+         String sname = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest" + JSP_SUFFIX;
+         String hval = request.getPathInfo();
+         String pval = null;
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr24);
+      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
       tr24.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getPathTranslated */
@@ -308,8 +327,12 @@
       /* corresponding to the path used to obtain the                         */
       /* PortletRequestDispatcher"                                            */
       TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETPATHTRANSLATED);
-      /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
+      try {
+         String sname = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest" + JSP_SUFFIX;
+         String hval = request.getPathTranslated();
+         String pval = null;
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr25);
+      } catch(Exception e) {tr25.appendTcDetail(e.toString());}
       tr25.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getProtocol */
@@ -328,8 +351,12 @@
       /* corresponding to the query string information used to obtain the     */
       /* PortletRequestDispatcher"                                            */
       TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETQUERYSTRING);
-      /* TODO: implement test */
-      tr27.appendTcDetail("Not implemented.");
+      try {
+         String sname = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest" + JSP_SUFFIX;
+         String hval = request.getQueryString();
+         String pval = QUERY_STRING;
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr27);
+      } catch(Exception e) {tr27.appendTcDetail(e.toString());}
       tr27.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getReader */
@@ -388,8 +415,11 @@
       /* method HttpServletRequest.getRemoteUser must provide the same        */
       /* functionality as RenderRequest.getRemoteUser"                        */
       TestResult tr33 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETREMOTEUSER);
-      /* TODO: implement test */
-      tr33.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getRemoteUser();
+         String pval = ((ClientDataRequest)portletReq).getRemoteUser();
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr33);
+      } catch(Exception e) {tr33.appendTcDetail(e.toString());}
       tr33.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getRequestDispatcher */
@@ -407,8 +437,14 @@
       /* to the path and query string information used to obtain the          */
       /* PortletRequestDispatcher"                                            */
       TestResult tr35 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETREQUESTURI);
-      /* TODO: implement test */
-      tr35.appendTcDetail("Not implemented.");
+      try {
+         String sname = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest" + JSP_SUFFIX;
+         String hval = request.getRequestURI();
+         if (!hval.contains(sname)) {
+            tr35.appendTcDetail("Request URI " + hval + " does not contain " + sname);
+         }
+         tr35.setTcSuccess(hval.contains(sname));
+      } catch(Exception e) {tr35.appendTcDetail(e.toString());}
       tr35.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getRequestURL */
@@ -427,8 +463,11 @@
       /* method HttpServletRequest.getRequestedSessionId must provide the     */
       /* same functionality as RenderRequest.getRequestedSessionId"           */
       TestResult tr37 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETREQUESTEDSESSIONID);
-      /* TODO: implement test */
-      tr37.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getRequestedSessionId();
+         String pval = ((ClientDataRequest)portletReq).getRequestedSessionId();
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr37);
+      } catch(Exception e) {tr37.appendTcDetail(e.toString());}
       tr37.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getScheme */
@@ -436,8 +475,11 @@
       /* method HttpServletRequest.getScheme must provide the same            */
       /* functionality as RenderRequest.getScheme"                            */
       TestResult tr38 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETSCHEME);
-      /* TODO: implement test */
-      tr38.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getScheme();
+         String pval = ((ClientDataRequest)portletReq).getScheme();
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr38);
+      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
       tr38.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getServerName */
@@ -445,8 +487,11 @@
       /* method HttpServletRequest.getServerName must provide the same        */
       /* functionality as RenderRequest.getServerName"                        */
       TestResult tr39 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETSERVERNAME);
-      /* TODO: implement test */
-      tr39.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getServerName();
+         String pval = ((ClientDataRequest)portletReq).getServerName();
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr39);
+      } catch(Exception e) {tr39.appendTcDetail(e.toString());}
       tr39.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getServerPort */
@@ -454,8 +499,15 @@
       /* method HttpServletRequest.getServerPort must provide the same        */
       /* functionality as RenderRequest.getServerPort"                        */
       TestResult tr40 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETSERVERPORT);
-      /* TODO: implement test */
-      tr40.appendTcDetail("Not implemented.");
+      try {
+         int hval = request.getServerPort();
+         int pval = ((ClientDataRequest)portletReq).getServerPort();
+         String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
+         if (hval != pval) {
+            tr40.appendTcDetail(str);
+         }
+         tr40.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr40.appendTcDetail(e.toString());}
       tr40.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getServletPath */
@@ -464,8 +516,12 @@
       /* corresponding to the path used to obtain the                         */
       /* PortletRequestDispatcher"                                            */
       TestResult tr41 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETSERVLETPATH);
-      /* TODO: implement test */
-      tr41.appendTcDetail("Not implemented.");
+      try {
+         String sname = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest" + JSP_SUFFIX;
+         String hval = request.getServletPath();
+         String pval = sname;
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr41);
+      } catch(Exception e) {tr41.appendTcDetail(e.toString());}
       tr41.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_getSession */
@@ -483,90 +539,91 @@
       /* method HttpServletRequest.getUserPrincipal must provide the same     */
       /* functionality as RenderRequest.getUserPrincipal"                     */
       TestResult tr43 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_GETUSERPRINCIPAL);
-      /* TODO: implement test */
-      tr43.appendTcDetail("Not implemented.");
+      try {
+         java.security.Principal hpal = request.getUserPrincipal();
+         java.security.Principal ppal = ((ClientDataRequest)portletReq).getUserPrincipal();
+         String str = "Value " + hpal.toString() + " from " + "HttpServletRequest" + " does not equal value " + ppal.toString() + " + RenderRequest";
+         if (!hpal.equals(ppal)) {
+            tr43.appendTcDetail(str);
+         }
+         tr43.setTcSuccess(hpal.equals(ppal));
+      } catch(Exception e) {tr43.appendTcDetail(e.toString());}
       tr43.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_isRequestedSessionIdFromCookie */
-      /* Details: "In a target jsp of a include in the Render phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromCookie must        */
-      /* provide functionality as defined in the servlet specification"       */
-      TestResult tr44 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISREQUESTEDSESSIONIDFROMCOOKIE);
-      /* TODO: implement test */
-      tr44.appendTcDetail("Not implemented.");
-      tr44.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_isRequestedSessionIdFromURL1 */
-      /* Details: "In a target jsp of a include in the Render phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromURL must provide   */
-      /* functionality as defined in the servlet specification"               */
-      TestResult tr45 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISREQUESTEDSESSIONIDFROMURL1);
-      /* TODO: implement test */
-      tr45.appendTcDetail("Not implemented.");
-      tr45.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_isRequestedSessionIdFromUrl */
-      /* Details: "In a target jsp of a include in the Render phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromUrl must provide   */
-      /* functionality as defined in the servlet specification"               */
-      TestResult tr46 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISREQUESTEDSESSIONIDFROMURL);
-      /* TODO: implement test */
-      tr46.appendTcDetail("Not implemented.");
-      tr46.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_isRequestedSessionIdValid */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletRequest.isRequestedSessionIdValid must provide     */
       /* the same functionality as RenderRequest.isRequestedSessionIdValid"   */
-      TestResult tr47 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISREQUESTEDSESSIONIDVALID);
-      /* TODO: implement test */
-      tr47.appendTcDetail("Not implemented.");
-      tr47.writeTo(writer);
+      TestResult tr44 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISREQUESTEDSESSIONIDVALID);
+      try {
+         boolean hval = request.isRequestedSessionIdValid();
+         boolean pval = ((ClientDataRequest)portletReq).isRequestedSessionIdValid();
+         String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
+         if (hval != pval) {
+            tr44.appendTcDetail(str);
+         }
+         tr44.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr44.appendTcDetail(e.toString());}
+      tr44.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_isSecure */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletRequest.isSecure must provide the same             */
       /* functionality as RenderRequest.isSecure"                             */
-      TestResult tr48 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISSECURE);
-      /* TODO: implement test */
-      tr48.appendTcDetail("Not implemented.");
-      tr48.writeTo(writer);
+      TestResult tr45 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISSECURE);
+      try {
+         boolean hval = request.isSecure();
+         boolean pval = ((ClientDataRequest)portletReq).isSecure();
+         String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
+         if (hval != pval) {
+            tr45.appendTcDetail(str);
+         }
+         tr45.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr45.appendTcDetail(e.toString());}
+      tr45.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_isUserInRole */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletRequest.isUserInRole must provide the same         */
       /* functionality as RenderRequest.isUserInRole"                         */
-      TestResult tr49 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISUSERINROLE);
-      /* TODO: implement test */
-      tr49.appendTcDetail("Not implemented.");
-      tr49.writeTo(writer);
+      TestResult tr46 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_ISUSERINROLE);
+      try {
+         boolean hval = request.isUserInRole(ROLE_NAME);
+         boolean pval = ((ClientDataRequest)portletReq).isUserInRole(ROLE_NAME);
+         String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
+         if (hval != pval) {
+            tr46.appendTcDetail(str);
+         }
+         tr46.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr46.appendTcDetail(e.toString());}
+      tr46.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_removeAttribute */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletRequest.removeAttribute must provide the same      */
       /* functionality as RenderRequest.removeAttribute"                      */
-      TestResult tr50 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_REMOVEATTRIBUTE);
+      TestResult tr47 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_REMOVEATTRIBUTE);
       /* TODO: implement test */
-      tr50.appendTcDetail("Not implemented.");
-      tr50.writeTo(writer);
+      tr47.appendTcDetail("Not implemented.");
+      tr47.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_setAttribute */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletRequest.setAttribute must provide the same         */
       /* functionality as RenderRequest.setAttribute"                         */
-      TestResult tr51 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_SETATTRIBUTE);
+      TestResult tr48 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_SETATTRIBUTE);
       /* TODO: implement test */
-      tr51.appendTcDetail("Not implemented.");
-      tr51.writeTo(writer);
+      tr48.appendTcDetail("Not implemented.");
+      tr48.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest_setCharacterEncoding */
       /* Details: "In a target jsp of a include in the Render phase, the      */
       /* method HttpServletRequest.setCharacterEncoding does not perform      */
       /* any operation"                                                       */
-      TestResult tr52 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_SETCHARACTERENCODING);
+      TestResult tr49 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS3_SPEC2_19_INCLUDEJSPRENDERREQUEST_SETCHARACTERENCODING);
       /* TODO: implement test */
-      tr52.appendTcDetail("Not implemented.");
-      tr52.writeTo(writer);
+      tr49.appendTcDetail("Not implemented.");
+      tr49.writeTo(writer);
 
       // TestSetupLink for: DispatcherReqRespTests3_SPEC2_19_IncludeJSPRenderRequest
       {

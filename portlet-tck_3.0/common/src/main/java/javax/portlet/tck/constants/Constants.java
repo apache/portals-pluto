@@ -34,12 +34,23 @@ public class Constants {
    // for session attributes passing info between phases
    public static final String RESULT_ATTR_PREFIX = "attr.result.";
    
+   // For generating the target for the getRequestDispatcher call
+   // target = <prefix> + <servlet/jsp name> + <suffix> + <query string> 
+   public static final String SERVLET_PREFIX = "/";
+   public static final String SERVLET_SUFFIX = "";
+   public static final String JSP_PREFIX = "/WEB-INF/jsp/";
+   public static final String JSP_SUFFIX = ".jsp";
+   public static final String QUERY_STRING = "?qparm1=qvalue1&qparm2=qvalue2";
+   
    // for several tests to servlet / jsp for comparison
    public static final String THREADID_ATTR = "req.attr.tid";
    public static final String ATTR_PREFIX = "req.attr.test.";
    public static final String PARM_PREFIX = "parm.test.";
    public static final String PARM_NAME = "TestParm";
    public static final String PARM_VALUE = "Value";
+   
+   // security role name
+   public static final String ROLE_NAME  = "admin";   
    
    // for cookie & property tests
    public static final String COOKIE_PREFIX = "Cookie_";

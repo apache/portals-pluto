@@ -579,39 +579,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest impleme
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_isRequestedSessionIdFromCookie */
-      /* Details: "In a target servlet of a include in the Event phase, the   */
-      /* method HttpServletRequest.isRequestedSessionIdFromCookie must        */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_isRequestedSessionIdFromCookie", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_isRequestedSessionIdFromURL1 */
-      /* Details: "In a target servlet of a include in the Event phase, the   */
-      /* method HttpServletRequest.isRequestedSessionIdFromURL must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_isRequestedSessionIdFromURL1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_isRequestedSessionIdFromUrl */
-      /* Details: "In a target servlet of a include in the Event phase, the   */
-      /* method HttpServletRequest.isRequestedSessionIdFromUrl must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_isRequestedSessionIdFromUrl", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_isRequestedSessionIdValid */
       /* Details: "In a target servlet of a include in the Event phase, the   */
       /* method HttpServletRequest.isRequestedSessionIdValid must provide     */
@@ -664,17 +631,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest impleme
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_setAttribute", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_setCharacterEncoding */
-      /* Details: "In a target servlet of a include in the Event phase, the   */
-      /* method HttpServletRequest.setCharacterEncoding does not perform      */
-      /* any operation"                                                       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_setCharacterEncoding", aurl);
          tb.writeTo(writer);
       }
 

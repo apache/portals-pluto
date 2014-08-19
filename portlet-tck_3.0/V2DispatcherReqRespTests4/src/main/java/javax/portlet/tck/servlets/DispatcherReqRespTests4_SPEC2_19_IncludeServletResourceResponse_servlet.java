@@ -171,8 +171,15 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_ser
       /* the method HttpServletResponse.getBufferSize must provide the same   */
       /* functionality as ResourceResponse.getBufferSize"                     */
       TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_GETBUFFERSIZE);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         int hval = response.getBufferSize();
+         int pval = ((MimeResponse)portletResp).getBufferSize();
+         String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + ResourceResponse";
+         if (hval != pval) {
+            tr10.appendTcDetail(str);
+         }
+         tr10.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_getCharacterEncoding */
@@ -180,8 +187,11 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_ser
       /* the method HttpServletResponse.getCharacterEncoding must provide     */
       /* the same functionality as ResourceResponse.getCharacterEncoding"     */
       TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_GETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         String hval = response.getCharacterEncoding();
+         String pval = ((MimeResponse)portletResp).getCharacterEncoding();
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr11);
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_getContentType */
@@ -189,8 +199,11 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_ser
       /* the method HttpServletResponse.getContentType must provide the       */
       /* same functionality as ResourceResponse.getContentType"               */
       TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_GETCONTENTTYPE);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+         String hval = response.getContentType();
+         String pval = ((MimeResponse)portletResp).getContentType();
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr12);
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_getLocale */
@@ -201,7 +214,9 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_ser
       try {
          Locale hl = response.getLocale();
          Locale pl = ((MimeResponse)portletResp).getLocale();
-         CompareUtils.stringsEqual(hl.getDisplayName(), pl.getDisplayName(), tr13);
+         String hval = hl.getDisplayName();
+         String pval = pl.getDisplayName();
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr13);
       } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
@@ -214,140 +229,138 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_ser
       tr14.appendTcDetail("Not implemented.");
       tr14.writeTo(writer);
 
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_getWriter */
-      /* Details: "In a target servlet of a include in the Resource phase,    */
-      /* the method HttpServletResponse.getWriter must provide the same       */
-      /* functionality as ResourceResponse.getWriter"                         */
-      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_GETWRITER);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
-      tr15.writeTo(writer);
-
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_isCommitted */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.isCommitted must provide the same     */
       /* functionality as ResourceResponse.isCommitted"                       */
-      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_ISCOMMITTED);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
-      tr16.writeTo(writer);
+      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_ISCOMMITTED);
+      try {
+         boolean hval = response.isCommitted();
+         boolean pval = ((MimeResponse)portletResp).isCommitted();
+         String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + ResourceResponse";
+         if (hval != pval) {
+            tr15.appendTcDetail(str);
+         }
+         tr15.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
+      tr15.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_reset */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.reset must provide the same           */
       /* functionality as ResourceResponse.reset"                             */
-      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_RESET);
+      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_RESET);
       /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
-      tr17.writeTo(writer);
+      tr16.appendTcDetail("Not implemented.");
+      tr16.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_resetBuffer */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.resetBuffer must provide the same     */
       /* functionality as ResourceResponse.resetBuffer"                       */
-      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_RESETBUFFER);
+      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_RESETBUFFER);
       /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
-      tr18.writeTo(writer);
+      tr17.appendTcDetail("Not implemented.");
+      tr17.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_sendError */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.sendError does not perform any        */
       /* operation"                                                           */
-      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SENDERROR);
+      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SENDERROR);
       /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
-      tr19.writeTo(writer);
+      tr18.appendTcDetail("Not implemented.");
+      tr18.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_sendRedirect */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.sendRedirect does not perform any     */
       /* operation"                                                           */
-      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SENDREDIRECT);
+      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SENDREDIRECT);
       /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+      tr19.appendTcDetail("Not implemented.");
+      tr19.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setBufferSize */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setBufferSize must provide the same   */
       /* functionality as ResourceResponse.setBufferSize"                     */
-      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETBUFFERSIZE);
+      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETBUFFERSIZE);
       /* TODO: implement test */
-      tr21.appendTcDetail("Not implemented.");
-      tr21.writeTo(writer);
+      tr20.appendTcDetail("Not implemented.");
+      tr20.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setCharacterEncoding */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setCharacterEncoding does not         */
       /* perform any operation"                                               */
-      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETCHARACTERENCODING);
+      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETCHARACTERENCODING);
       /* TODO: implement test */
-      tr22.appendTcDetail("Not implemented.");
-      tr22.writeTo(writer);
+      tr21.appendTcDetail("Not implemented.");
+      tr21.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setContentLength */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setContentLength does not perform     */
       /* any operation"                                                       */
-      TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETCONTENTLENGTH);
+      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETCONTENTLENGTH);
       /* TODO: implement test */
-      tr23.appendTcDetail("Not implemented.");
-      tr23.writeTo(writer);
+      tr22.appendTcDetail("Not implemented.");
+      tr22.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setContentType */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setContentType does not perform any   */
       /* operation"                                                           */
-      TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETCONTENTTYPE);
+      TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETCONTENTTYPE);
       /* TODO: implement test */
-      tr24.appendTcDetail("Not implemented.");
-      tr24.writeTo(writer);
+      tr23.appendTcDetail("Not implemented.");
+      tr23.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setDateHeader */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setDateHeader does not perform any    */
       /* operation"                                                           */
-      TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETDATEHEADER);
+      TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETDATEHEADER);
       /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
-      tr25.writeTo(writer);
+      tr24.appendTcDetail("Not implemented.");
+      tr24.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setHeader */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setHeader does not perform any        */
       /* operation"                                                           */
-      TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETHEADER);
+      TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETHEADER);
       /* TODO: implement test */
-      tr26.appendTcDetail("Not implemented.");
-      tr26.writeTo(writer);
+      tr25.appendTcDetail("Not implemented.");
+      tr25.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setIntHeader */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setIntHeader does not perform any     */
       /* operation"                                                           */
-      TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETINTHEADER);
+      TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETINTHEADER);
       /* TODO: implement test */
-      tr27.appendTcDetail("Not implemented.");
-      tr27.writeTo(writer);
+      tr26.appendTcDetail("Not implemented.");
+      tr26.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setLocale */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setLocale does not perform any        */
       /* operation"                                                           */
-      TestResult tr28 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETLOCALE);
+      TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETLOCALE);
       /* TODO: implement test */
-      tr28.appendTcDetail("Not implemented.");
-      tr28.writeTo(writer);
+      tr27.appendTcDetail("Not implemented.");
+      tr27.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletResourceResponse_setStatus */
       /* Details: "In a target servlet of a include in the Resource phase,    */
       /* the method HttpServletResponse.setStatus does not perform any        */
       /* operation"                                                           */
-      TestResult tr29 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETSTATUS);
+      TestResult tr28 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRESOURCERESPONSE_SETSTATUS);
       /* TODO: implement test */
-      tr29.appendTcDetail("Not implemented.");
-      tr29.writeTo(writer);
+      tr28.appendTcDetail("Not implemented.");
+      tr28.writeTo(writer);
 
 
    }

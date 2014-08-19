@@ -90,8 +90,9 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest impl
       // Prereq for: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getAttributeNames", "Value1");
 
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet" + SERVLET_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);
    }
 

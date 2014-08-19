@@ -78,8 +78,9 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest implements
       // Prereq for: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getAttributeNames", "Value1");
 
+      String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest" + JSP_SUFFIX + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest.jsp?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 
@@ -423,17 +424,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest implements
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getReader */
-      /* Details: "In a target jsp of a include in the Action phase, the      */
-      /* method HttpServletRequest.getReader must provide the same            */
-      /* functionality as ActionRequest.getReader"                            */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getReader", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getRealPath */
       /* Details: "In a target jsp of a include in the Action phase, the      */
       /* method HttpServletRequest.getRealPath must return null"              */
@@ -594,39 +584,6 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest implements
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getUserPrincipal", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_isRequestedSessionIdFromCookie */
-      /* Details: "In a target jsp of a include in the Action phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromCookie must        */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_isRequestedSessionIdFromCookie", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_isRequestedSessionIdFromURL1 */
-      /* Details: "In a target jsp of a include in the Action phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromURL must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_isRequestedSessionIdFromURL1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_isRequestedSessionIdFromUrl */
-      /* Details: "In a target jsp of a include in the Action phase, the      */
-      /* method HttpServletRequest.isRequestedSessionIdFromUrl must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_isRequestedSessionIdFromUrl", aurl);
          tb.writeTo(writer);
       }
 

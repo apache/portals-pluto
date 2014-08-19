@@ -579,39 +579,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest implements 
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_isRequestedSessionIdFromCookie */
-      /* Details: "In a target jsp of a forward in the Event phase, the       */
-      /* method HttpServletRequest.isRequestedSessionIdFromCookie must        */
-      /* provide functionality as defined in the servlet specification"       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_isRequestedSessionIdFromCookie", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_isRequestedSessionIdFromURL1 */
-      /* Details: "In a target jsp of a forward in the Event phase, the       */
-      /* method HttpServletRequest.isRequestedSessionIdFromURL must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_isRequestedSessionIdFromURL1", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_isRequestedSessionIdFromUrl */
-      /* Details: "In a target jsp of a forward in the Event phase, the       */
-      /* method HttpServletRequest.isRequestedSessionIdFromUrl must provide   */
-      /* functionality as defined in the servlet specification"               */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_isRequestedSessionIdFromUrl", aurl);
-         tb.writeTo(writer);
-      }
-
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_isRequestedSessionIdValid */
       /* Details: "In a target jsp of a forward in the Event phase, the       */
       /* method HttpServletRequest.isRequestedSessionIdValid must provide     */
@@ -664,17 +631,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest implements 
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_setAttribute", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_setCharacterEncoding */
-      /* Details: "In a target jsp of a forward in the Event phase, the       */
-      /* method HttpServletRequest.setCharacterEncoding does not perform      */
-      /* any operation"                                                       */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_setCharacterEncoding", aurl);
          tb.writeTo(writer);
       }
 
