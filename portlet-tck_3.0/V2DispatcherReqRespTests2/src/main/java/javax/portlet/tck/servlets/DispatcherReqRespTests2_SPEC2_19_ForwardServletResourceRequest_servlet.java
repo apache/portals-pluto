@@ -181,8 +181,16 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       /* corresponding to that returned by ResourceRequest.getProperty for    */
       /* the corresponding header name"                                       */
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETDATEHEADER);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         long hval = request.getDateHeader(MOD_HEADER);
+         long pval = Long.parseLong(portletReq.getProperty(MOD_HEADER));
+         boolean ok = (hval == pval);
+         if (!ok) {
+            String str = MOD_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from ResourceRequest";
+            tr8.appendTcDetail(str);
+         }
+         tr8.setTcSuccess(ok);
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getHeader */
@@ -191,8 +199,11 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       /* corresponding to that returned by ResourceRequest.getProperty for    */
       /* the corresponding header name"                                       */
       TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETHEADER);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getHeader(ACCEPT_HEADER);
+         String pval = portletReq.getProperty(ACCEPT_HEADER);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr9);
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getHeaderNames */
@@ -201,161 +212,184 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       /* be contained in the Enumeration returned by                          */
       /* ResourceRequest.getPropertyNames"                                    */
       TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETHEADERNAMES);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         // he must be contained in pe 
+         Enumeration<String> he = request.getHeaderNames();
+         Enumeration<String> pe = portletReq.getPropertyNames();
+         HashSet<String> hs = new HashSet<String>();
+         while (he.hasMoreElements()) {
+            hs.add(he.nextElement());
+         }
+         HashSet<String> ps = new HashSet<String>();
+         while (pe.hasMoreElements()) {
+            ps.add(pe.nextElement());
+         }
+         boolean ok = ps.containsAll(hs);
+         if (!ok) {
+            hs.removeAll(ps);
+            String str = "The following headers from HttpServletRequest are not contained in ResourceRequest: ";
+            for (String h : hs) {;
+               str += "\"" + h + "\", ";
+            };
+            tr10.appendTcDetail(str);
+         }
+         tr10.setTcSuccess(ok);
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getHeaders */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getHeaders must return a value         */
-      /* corresponding to that returned by ResourceRequest.getProperty for    */
-      /* the corresponding header name"                                       */
+      /* corresponding to that returned by ResourceRequest.getProperties      */
+      /* for the corresponding header name"                                   */
       TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETHEADERS);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         Enumeration<String> he = request.getHeaders(ACCEPT_LANG_HEADER);
+         Enumeration<String> pe = portletReq.getProperties(ACCEPT_LANG_HEADER);
+         CompareUtils.enumsEqual("HttpServletRequest parameter names", he, "ResourceRequest parameter names", pe,tr11);
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getInputStream */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletRequest.getInputStream must provide the same   */
-      /* functionality as ResourceRequest.getPortletInputStream"              */
-      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETINPUTSTREAM);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
-      tr12.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getIntHeader */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getIntHeader must return a value       */
       /* corresponding to that returned by ResourceRequest.getProperty for    */
       /* the corresponding header name"                                       */
-      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETINTHEADER);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
-      tr13.writeTo(writer);
+      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETINTHEADER);
+      try {
+         int hval = request.getIntHeader(CONTENT_LENGTH_HEADER);
+         int pval = Integer.parseInt(portletReq.getProperty(CONTENT_LENGTH_HEADER));
+         boolean ok = (hval == pval);
+         if (!ok) {
+            String str = CONTENT_LENGTH_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from ResourceRequest";
+            tr12.appendTcDetail(str);
+         }
+         tr12.setTcSuccess(ok);
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
+      tr12.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getLocalAddr */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getLocalAddr must return null"         */
-      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALADDR);
+      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALADDR);
       try {
          String isval = request.getLocalAddr();
-         CompareUtils.stringsEqual(isval, null, tr14);
-      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
-      tr14.writeTo(writer);
+         CompareUtils.stringsEqual(isval, null, tr13);
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
+      tr13.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getLocalName */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getLocalName must return null"         */
-      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALNAME);
+      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALNAME);
       try {
          String isval = request.getLocalName();
-         CompareUtils.stringsEqual(isval, null, tr15);
-      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
-      tr15.writeTo(writer);
+         CompareUtils.stringsEqual(isval, null, tr14);
+      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
+      tr14.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getLocalPort */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getLocalPort must return 0"            */
-      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALPORT);
+      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALPORT);
       try {
          int isval = request.getLocalPort();
-         if (isval != 0) tr16.appendTcDetail("Returned value was: " + isval);
-         tr16.setTcSuccess(isval == 0);
-      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
-      tr16.writeTo(writer);
+         if (isval != 0) tr15.appendTcDetail("Returned value was: " + isval);
+         tr15.setTcSuccess(isval == 0);
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
+      tr15.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getLocale */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getLocale must provide the same        */
       /* functionality as ResourceRequest.getLocale"                          */
-      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALE);
+      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALE);
       try {
          Locale hl = request.getLocale();
          Locale pl = portletReq.getLocale();
          String hval = hl.getDisplayName();
          String pval = pl.getDisplayName();
-         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr17);
-      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
-      tr17.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr16);
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
+      tr16.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getLocales */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getLocales must provide the same       */
       /* functionality as ResourceRequest.getLocales"                         */
-      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALES);
+      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETLOCALES);
       try {
          Enumeration<Locale> he = request.getLocales();
          Enumeration<Locale> pe = portletReq.getLocales();
-         CompareUtils.enumsEqual("HttpServletRequest locales", he, "ResourceRequest locales", pe,tr18);
-      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
-      tr18.writeTo(writer);
+         CompareUtils.enumsEqual("HttpServletRequest locales", he, "ResourceRequest locales", pe,tr17);
+      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
+      tr17.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getMethod */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getMethod must provide the same        */
       /* functionality as ResourceRequest.getMethod"                          */
-      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETMETHOD);
+      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETMETHOD);
       try {
          String hval = request.getMethod();
          String pval = ((ClientDataRequest)portletReq).getMethod();
-         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr19);
-      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
-      tr19.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr18);
+      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
+      tr18.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameter */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getParameter must provide the same     */
       /* functionality as ResourceRequest.getParameter"                       */
-      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETER);
+      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETER);
       try {
          // TestSetupLink
          String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             String hval = request.getParameter(PARM_NAME);
             String pval = portletReq.getParameter(PARM_NAME);
-            CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr20);
-            tr20.writeTo(writer);
+            CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr19);
+            tr19.writeTo(writer);
          }
-      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameterMap */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getParameterMap must provide the       */
       /* same functionality as ResourceRequest.getParameterMap"               */
-      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERMAP);
+      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERMAP);
       try {
          // TestSetupLink
          String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Map<String, String[]> hmap = request.getParameterMap();
             Map<String, String[]> pmap = portletReq.getParameterMap();
-            CompareUtils.mapsEqual("map from HttpServletRequest", hmap, "map from ResourceRequest", pmap, tr21);
-            tr21.writeTo(writer);
+            CompareUtils.mapsEqual("map from HttpServletRequest", hmap, "map from ResourceRequest", pmap, tr20);
+            tr20.writeTo(writer);
          }
-      } catch(Exception e) {tr21.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameterNames */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getParameterNames must provide the     */
       /* same functionality as ResourceRequest.getParameterNames"             */
-      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERNAMES);
+      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERNAMES);
       try {
          // TestSetupLink
          String val = portletReq.getParameter(PARM_NAME);
          if (val != null) {
             Enumeration<String> he = request.getParameterNames();
             Enumeration<String> pe = portletReq.getParameterNames();
-            CompareUtils.enumsEqual("HttpServletRequest parameter names", he, "ResourceRequest parameter names", pe,tr22);
-            tr22.writeTo(writer);
+            CompareUtils.enumsEqual("HttpServletRequest parameter names", he, "ResourceRequest parameter names", pe,tr21);
+            tr21.writeTo(writer);
          }
-      } catch(Exception e) {tr22.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr21.appendTcDetail(e.toString());}
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getParameterValues */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getParameterValues must provide the    */
       /* same functionality as ResourceRequest.getParameterValues"            */
-      TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERVALUES);
+      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPARAMETERVALUES);
       try {
          // TestSetupLink
          String val = portletReq.getParameter(PARM_NAME);
@@ -364,254 +398,281 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
             String[] pvals = portletReq.getParameterValues(PARM_NAME);
             String hval = ((hvals==null) ? "null" : hvals[0]);
             String pval = ((pvals==null) ? "null" : pvals[0]);
-            CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr23);
-            tr23.writeTo(writer);
+            CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr22);
+            tr22.writeTo(writer);
          }
-      } catch(Exception e) {tr23.appendTcDetail(e.toString());}
+      } catch(Exception e) {tr22.appendTcDetail(e.toString());}
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getPathInfo */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getPathInfo must a value               */
       /* corresponding to the path used to obtain the                         */
       /* PortletRequestDispatcher"                                            */
-      TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPATHINFO);
+      TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPATHINFO);
       try {
          String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getPathInfo();
          String pval = null;
-         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr24);
-      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
-      tr24.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr23);
+      } catch(Exception e) {tr23.appendTcDetail(e.toString());}
+      tr23.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getPathTranslated */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getPathTranslated must a value         */
       /* corresponding to the path used to obtain the                         */
       /* PortletRequestDispatcher"                                            */
-      TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPATHTRANSLATED);
+      TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPATHTRANSLATED);
       try {
          String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getPathTranslated();
          String pval = null;
-         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr25);
-      } catch(Exception e) {tr25.appendTcDetail(e.toString());}
-      tr25.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr24);
+      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
+      tr24.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getProtocol */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getProtocol must return                */
       /* \"HTTP/1.1\""                                                        */
-      TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPROTOCOL);
+      TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETPROTOCOL);
       try {
          String isval = request.getProtocol();
-         CompareUtils.stringsEqual(isval, "HTTP/1.1", tr26);
-      } catch(Exception e) {tr26.appendTcDetail(e.toString());}
-      tr26.writeTo(writer);
+         CompareUtils.stringsEqual(isval, "HTTP/1.1", tr25);
+      } catch(Exception e) {tr25.appendTcDetail(e.toString());}
+      tr25.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getQueryString */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getQueryString must a value            */
       /* corresponding to the query string information used to obtain the     */
       /* PortletRequestDispatcher"                                            */
-      TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETQUERYSTRING);
+      TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETQUERYSTRING);
       try {
          String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getQueryString();
          String pval = QUERY_STRING;
-         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr27);
-      } catch(Exception e) {tr27.appendTcDetail(e.toString());}
-      tr27.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr26);
+      } catch(Exception e) {tr26.appendTcDetail(e.toString());}
+      tr26.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRealPath */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRealPath must return null"          */
-      TestResult tr28 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREALPATH);
+      TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREALPATH);
       try {
          String isval = request.getRealPath("/WEB-INF/portlet.xml");
-         CompareUtils.stringsEqual(isval, null, tr28);
-      } catch(Exception e) {tr28.appendTcDetail(e.toString());}
-      tr28.writeTo(writer);
+         CompareUtils.stringsEqual(isval, null, tr27);
+      } catch(Exception e) {tr27.appendTcDetail(e.toString());}
+      tr27.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRemoteAddr */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRemoteAddr must return null"        */
-      TestResult tr29 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEADDR);
+      TestResult tr28 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEADDR);
       try {
          String isval = request.getRemoteAddr();
-         CompareUtils.stringsEqual(isval, null, tr29);
-      } catch(Exception e) {tr29.appendTcDetail(e.toString());}
-      tr29.writeTo(writer);
+         CompareUtils.stringsEqual(isval, null, tr28);
+      } catch(Exception e) {tr28.appendTcDetail(e.toString());}
+      tr28.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRemoteHost */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRemoteHost must return null"        */
-      TestResult tr30 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEHOST);
+      TestResult tr29 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEHOST);
       try {
          String isval = request.getRemoteHost();
-         CompareUtils.stringsEqual(isval, null, tr30);
-      } catch(Exception e) {tr30.appendTcDetail(e.toString());}
-      tr30.writeTo(writer);
+         CompareUtils.stringsEqual(isval, null, tr29);
+      } catch(Exception e) {tr29.appendTcDetail(e.toString());}
+      tr29.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRemotePort */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRemotePort must return 0"           */
-      TestResult tr31 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEPORT);
+      TestResult tr30 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEPORT);
       try {
          int isval = request.getRemotePort();
-         if (isval != 0) tr31.appendTcDetail("Returned value was: " + isval);
-         tr31.setTcSuccess(isval == 0);
-      } catch(Exception e) {tr31.appendTcDetail(e.toString());}
-      tr31.writeTo(writer);
+         if (isval != 0) tr30.appendTcDetail("Returned value was: " + isval);
+         tr30.setTcSuccess(isval == 0);
+      } catch(Exception e) {tr30.appendTcDetail(e.toString());}
+      tr30.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRemoteUser */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRemoteUser must provide the same    */
       /* functionality as ResourceRequest.getRemoteUser"                      */
-      TestResult tr32 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEUSER);
+      TestResult tr31 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEUSER);
       try {
          String hval = request.getRemoteUser();
          String pval = ((ClientDataRequest)portletReq).getRemoteUser();
-         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr32);
-      } catch(Exception e) {tr32.appendTcDetail(e.toString());}
-      tr32.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr31);
+      } catch(Exception e) {tr31.appendTcDetail(e.toString());}
+      tr31.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRequestDispatcher */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRequestDispatcher must provide      */
       /* functionality as defined in the servlet specification"               */
-      TestResult tr33 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTDISPATCHER);
-      /* TODO: implement test */
-      tr33.appendTcDetail("Not implemented.");
-      tr33.writeTo(writer);
+      TestResult tr32 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTDISPATCHER);
+      try {
+         String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet" + SERVLET_SUFFIX;
+         RequestDispatcher hval = request.getRequestDispatcher(sname);
+         if (hval == null) {
+            tr32.appendTcDetail("Could not obtain request dispatcher for " + sname);
+         }
+         tr32.setTcSuccess(hval != null);
+      } catch(Exception e) {tr32.appendTcDetail(e.toString());}
+      tr32.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRequestURI */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRequestURI must a value             */
       /* corresponding to the path and query string information used to       */
       /* obtain the PortletRequestDispatcher"                                 */
-      TestResult tr34 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTURI);
+      TestResult tr33 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTURI);
       try {
          String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getRequestURI();
          if (!hval.contains(sname)) {
-            tr34.appendTcDetail("Request URI " + hval + " does not contain " + sname);
+            tr33.appendTcDetail("Request URI " + hval + " does not contain " + sname);
          }
-         tr34.setTcSuccess(hval.contains(sname));
-      } catch(Exception e) {tr34.appendTcDetail(e.toString());}
-      tr34.writeTo(writer);
+         tr33.setTcSuccess(hval.contains(sname));
+      } catch(Exception e) {tr33.appendTcDetail(e.toString());}
+      tr33.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRequestURL */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRequestURL must return null"        */
-      TestResult tr35 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTURL);
+      TestResult tr34 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTURL);
       try {
          StringBuffer isval = request.getRequestURL();
-         if (isval != null) tr35.appendTcDetail("Request URL is " + isval.toString());
-         tr35.setTcSuccess(isval == null);
-      } catch(Exception e) {tr35.appendTcDetail(e.toString());}
-      tr35.writeTo(writer);
+         if (isval != null) tr34.appendTcDetail("Request URL is " + isval.toString());
+         tr34.setTcSuccess(isval == null);
+      } catch(Exception e) {tr34.appendTcDetail(e.toString());}
+      tr34.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getRequestedSessionId */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getRequestedSessionId must provide     */
       /* the same functionality as ResourceRequest.getRequestedSessionId"     */
-      TestResult tr36 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTEDSESSIONID);
+      TestResult tr35 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTEDSESSIONID);
       try {
          String hval = request.getRequestedSessionId();
          String pval = ((ClientDataRequest)portletReq).getRequestedSessionId();
-         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr36);
-      } catch(Exception e) {tr36.appendTcDetail(e.toString());}
-      tr36.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr35);
+      } catch(Exception e) {tr35.appendTcDetail(e.toString());}
+      tr35.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getScheme */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getScheme must provide the same        */
       /* functionality as ResourceRequest.getScheme"                          */
-      TestResult tr37 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSCHEME);
+      TestResult tr36 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSCHEME);
       try {
          String hval = request.getScheme();
          String pval = ((ClientDataRequest)portletReq).getScheme();
-         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr37);
-      } catch(Exception e) {tr37.appendTcDetail(e.toString());}
-      tr37.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr36);
+      } catch(Exception e) {tr36.appendTcDetail(e.toString());}
+      tr36.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getServerName */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getServerName must provide the same    */
       /* functionality as ResourceRequest.getServerName"                      */
-      TestResult tr38 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVERNAME);
+      TestResult tr37 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVERNAME);
       try {
          String hval = request.getServerName();
          String pval = ((ClientDataRequest)portletReq).getServerName();
-         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr38);
-      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
-      tr38.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr37);
+      } catch(Exception e) {tr37.appendTcDetail(e.toString());}
+      tr37.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getServerPort */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getServerPort must provide the same    */
       /* functionality as ResourceRequest.getServerPort"                      */
-      TestResult tr39 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVERPORT);
+      TestResult tr38 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVERPORT);
       try {
          int hval = request.getServerPort();
          int pval = ((ClientDataRequest)portletReq).getServerPort();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
-            tr39.appendTcDetail(str);
+            tr38.appendTcDetail(str);
          }
-         tr39.setTcSuccess(hval == pval);
-      } catch(Exception e) {tr39.appendTcDetail(e.toString());}
-      tr39.writeTo(writer);
+         tr38.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
+      tr38.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getServletPath */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getServletPath must a value            */
       /* corresponding to the path used to obtain the                         */
       /* PortletRequestDispatcher"                                            */
-      TestResult tr40 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVLETPATH);
+      TestResult tr39 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVLETPATH);
       try {
          String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getServletPath();
          String pval = sname;
-         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr40);
-      } catch(Exception e) {tr40.appendTcDetail(e.toString());}
-      tr40.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr39);
+      } catch(Exception e) {tr39.appendTcDetail(e.toString());}
+      tr39.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getSession */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getSession must provide the same       */
       /* functionality as                                                     */
       /* ResourceRequest.getPortletSession(APPLICATION_SCOPE)"                */
-      TestResult tr41 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSESSION);
-      /* TODO: implement test */
-      tr41.appendTcDetail("Not implemented.");
-      tr41.writeTo(writer);
+      TestResult tr40 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSESSION);
+      try {
+         HttpSession hval = request.getSession();
+         if (hval == null) {
+            tr40.appendTcDetail("Could not get session from HttpServletRequest");
+         }
+         tr40.setTcSuccess(hval != null);
+      } catch(Exception e) {tr40.appendTcDetail(e.toString());}
+      tr40.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_getUserPrincipal */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.getUserPrincipal must provide the      */
       /* same functionality as ResourceRequest.getUserPrincipal"              */
-      TestResult tr42 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETUSERPRINCIPAL);
+      TestResult tr41 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETUSERPRINCIPAL);
       try {
          java.security.Principal hpal = request.getUserPrincipal();
          java.security.Principal ppal = ((ClientDataRequest)portletReq).getUserPrincipal();
          String str = "Value " + hpal.toString() + " from " + "HttpServletRequest" + " does not equal value " + ppal.toString() + " + ResourceRequest";
          if (!hpal.equals(ppal)) {
-            tr42.appendTcDetail(str);
+            tr41.appendTcDetail(str);
          }
-         tr42.setTcSuccess(hpal.equals(ppal));
-      } catch(Exception e) {tr42.appendTcDetail(e.toString());}
-      tr42.writeTo(writer);
+         tr41.setTcSuccess(hpal.equals(ppal));
+      } catch(Exception e) {tr41.appendTcDetail(e.toString());}
+      tr41.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_isRequestedSessionIdValid */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.isRequestedSessionIdValid must         */
       /* provide the same functionality as                                    */
       /* ResourceRequest.isRequestedSessionIdValid"                           */
-      TestResult tr43 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISREQUESTEDSESSIONIDVALID);
+      TestResult tr42 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISREQUESTEDSESSIONIDVALID);
       try {
          boolean hval = request.isRequestedSessionIdValid();
          boolean pval = ((ClientDataRequest)portletReq).isRequestedSessionIdValid();
+         String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
+         if (hval != pval) {
+            tr42.appendTcDetail(str);
+         }
+         tr42.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr42.appendTcDetail(e.toString());}
+      tr42.writeTo(writer);
+
+      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_isSecure */
+      /* Details: "In a target servlet of a forward in the Resource phase,    */
+      /* the method HttpServletRequest.isSecure must provide the same         */
+      /* functionality as ResourceRequest.isSecure"                           */
+      TestResult tr43 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISSECURE);
+      try {
+         boolean hval = request.isSecure();
+         boolean pval = ((ClientDataRequest)portletReq).isSecure();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
             tr43.appendTcDetail(str);
@@ -620,14 +681,14 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       } catch(Exception e) {tr43.appendTcDetail(e.toString());}
       tr43.writeTo(writer);
 
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_isSecure */
+      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_isUserInRole */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletRequest.isSecure must provide the same         */
-      /* functionality as ResourceRequest.isSecure"                           */
-      TestResult tr44 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISSECURE);
+      /* the method HttpServletRequest.isUserInRole must provide the same     */
+      /* functionality as ResourceRequest.isUserInRole"                       */
+      TestResult tr44 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISUSERINROLE);
       try {
-         boolean hval = request.isSecure();
-         boolean pval = ((ClientDataRequest)portletReq).isSecure();
+         boolean hval = request.isUserInRole(ROLE_NAME);
+         boolean pval = ((ClientDataRequest)portletReq).isUserInRole(ROLE_NAME);
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
             tr44.appendTcDetail(str);
@@ -636,48 +697,55 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       } catch(Exception e) {tr44.appendTcDetail(e.toString());}
       tr44.writeTo(writer);
 
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_isUserInRole */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletRequest.isUserInRole must provide the same     */
-      /* functionality as ResourceRequest.isUserInRole"                       */
-      TestResult tr45 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISUSERINROLE);
-      try {
-         boolean hval = request.isUserInRole(ROLE_NAME);
-         boolean pval = ((ClientDataRequest)portletReq).isUserInRole(ROLE_NAME);
-         String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
-         if (hval != pval) {
-            tr45.appendTcDetail(str);
-         }
-         tr45.setTcSuccess(hval == pval);
-      } catch(Exception e) {tr45.appendTcDetail(e.toString());}
-      tr45.writeTo(writer);
-
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_removeAttribute */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.removeAttribute must provide the       */
       /* same functionality as ResourceRequest.removeAttribute"               */
-      TestResult tr46 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_REMOVEATTRIBUTE);
-      /* TODO: implement test */
-      tr46.appendTcDetail("Not implemented.");
-      tr46.writeTo(writer);
+      TestResult tr45 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_REMOVEATTRIBUTE);
+      try {
+         String hname = ATTR_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_removeAttribute1";
+         String pname = ATTR_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_removeAttribute2";
+         request.setAttribute(hname, "Value");
+         portletReq.setAttribute(pname, "Value");
+         request.removeAttribute(hname);
+         portletReq.removeAttribute(pname);
+         String hval = (String)request.getAttribute(hname);
+         String pval = (String)portletReq.getAttribute(pname);
+         boolean ok = (hval == null) && (pval == null);
+         String str = "";
+         if (!ok) {;
+            if (hval != null) str += "Attribute could not be removed through HttpServletRequest." ;
+            if (pval != null) str += "Attribute could not be removed through ResourceRequest." ;
+            tr45.appendTcDetail(str);
+         };
+         tr45.setTcSuccess(ok);
+      } catch(Exception e) {tr45.appendTcDetail(e.toString());}
+      tr45.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_setAttribute */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletRequest.setAttribute must provide the same     */
       /* functionality as ResourceRequest.setAttribute"                       */
-      TestResult tr47 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_SETATTRIBUTE);
-      /* TODO: implement test */
-      tr47.appendTcDetail("Not implemented.");
-      tr47.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_setCharacterEncoding */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletRequest.setCharacterEncoding must provide      */
-      /* the same functionality as ResourceRequest.setCharacterEncoding"      */
-      TestResult tr48 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_SETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr48.appendTcDetail("Not implemented.");
-      tr48.writeTo(writer);
+      TestResult tr46 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_SETATTRIBUTE);
+      try {
+         String hname = ATTR_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_setAttribute1";
+         String pname = ATTR_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_setAttribute2";
+         request.setAttribute(hname, "Value");
+         portletReq.setAttribute(pname, "Value");
+         String hval = (String)request.getAttribute(hname);
+         String pval = (String)portletReq.getAttribute(pname);
+         request.removeAttribute(hname);
+         portletReq.removeAttribute(pname);
+         boolean ok = (hval.equals("Value") && pval.equals("Value")) ;
+         String str = "";
+         if (!ok) {;
+            if (!hval.equals("Value")) str += "Attribute could not be set/read through HttpServletRequest." ;
+            if (!pval.equals("Value")) str += "Attribute could not be set/read through ResourceRequest." ;
+            tr46.appendTcDetail(str);
+         };
+         tr46.setTcSuccess(ok);
+      } catch(Exception e) {tr46.appendTcDetail(e.toString());}
+      tr46.writeTo(writer);
 
 
    }

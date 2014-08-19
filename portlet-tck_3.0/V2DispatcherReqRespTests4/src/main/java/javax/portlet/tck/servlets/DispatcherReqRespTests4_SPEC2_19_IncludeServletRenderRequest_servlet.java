@@ -173,8 +173,16 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* corresponding to that returned by RenderRequest.getProperty for      */
       /* the corresponding header name"                                       */
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_GETDATEHEADER);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         long hval = request.getDateHeader(MOD_HEADER);
+         long pval = Long.parseLong(portletReq.getProperty(MOD_HEADER));
+         boolean ok = (hval == pval);
+         if (!ok) {
+            String str = MOD_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from RenderRequest";
+            tr8.appendTcDetail(str);
+         }
+         tr8.setTcSuccess(ok);
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_getHeader */
@@ -183,8 +191,11 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* corresponding to that returned by RenderRequest.getProperty for      */
       /* the corresponding header name"                                       */
       TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_GETHEADER);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+         String hval = request.getHeader(ACCEPT_HEADER);
+         String pval = portletReq.getProperty(ACCEPT_HEADER);
+         CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr9);
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_getHeaderNames */
@@ -193,18 +204,42 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* be contained in the Enumeration returned by                          */
       /* RenderRequest.getPropertyNames"                                      */
       TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_GETHEADERNAMES);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         // he must be contained in pe 
+         Enumeration<String> he = request.getHeaderNames();
+         Enumeration<String> pe = portletReq.getPropertyNames();
+         HashSet<String> hs = new HashSet<String>();
+         while (he.hasMoreElements()) {
+            hs.add(he.nextElement());
+         }
+         HashSet<String> ps = new HashSet<String>();
+         while (pe.hasMoreElements()) {
+            ps.add(pe.nextElement());
+         }
+         boolean ok = ps.containsAll(hs);
+         if (!ok) {
+            hs.removeAll(ps);
+            String str = "The following headers from HttpServletRequest are not contained in RenderRequest: ";
+            for (String h : hs) {;
+               str += "\"" + h + "\", ";
+            };
+            tr10.appendTcDetail(str);
+         }
+         tr10.setTcSuccess(ok);
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_getHeaders */
       /* Details: "In a target servlet of a include in the Render phase,      */
       /* the method HttpServletRequest.getHeaders must return a value         */
-      /* corresponding to that returned by RenderRequest.getProperty for      */
+      /* corresponding to that returned by RenderRequest.getProperties for    */
       /* the corresponding header name"                                       */
       TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_GETHEADERS);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         Enumeration<String> he = request.getHeaders(ACCEPT_LANG_HEADER);
+         Enumeration<String> pe = portletReq.getProperties(ACCEPT_LANG_HEADER);
+         CompareUtils.enumsEqual("HttpServletRequest parameter names", he, "RenderRequest parameter names", pe,tr11);
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_getInputStream */
@@ -223,8 +258,16 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* corresponding to that returned by RenderRequest.getProperty for      */
       /* the corresponding header name"                                       */
       TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_GETINTHEADER);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      try {
+         int hval = request.getIntHeader(CONTENT_LENGTH_HEADER);
+         int pval = Integer.parseInt(portletReq.getProperty(CONTENT_LENGTH_HEADER));
+         boolean ok = (hval == pval);
+         if (!ok) {
+            String str = CONTENT_LENGTH_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from RenderRequest";
+            tr13.appendTcDetail(str);
+         }
+         tr13.setTcSuccess(ok);
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_getLocalAddr */
@@ -481,8 +524,14 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* the method HttpServletRequest.getRequestDispatcher must provide      */
       /* functionality as defined in the servlet specification"               */
       TestResult tr34 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_GETREQUESTDISPATCHER);
-      /* TODO: implement test */
-      tr34.appendTcDetail("Not implemented.");
+      try {
+         String sname = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servlet" + SERVLET_SUFFIX;
+         RequestDispatcher hval = request.getRequestDispatcher(sname);
+         if (hval == null) {
+            tr34.appendTcDetail("Could not obtain request dispatcher for " + sname);
+         }
+         tr34.setTcSuccess(hval != null);
+      } catch(Exception e) {tr34.appendTcDetail(e.toString());}
       tr34.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_getRequestURI */
@@ -584,8 +633,13 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* functionality as                                                     */
       /* RenderRequest.getPortletSession(APPLICATION_SCOPE)"                  */
       TestResult tr42 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_GETSESSION);
-      /* TODO: implement test */
-      tr42.appendTcDetail("Not implemented.");
+      try {
+         HttpSession hval = request.getSession();
+         if (hval == null) {
+            tr42.appendTcDetail("Could not get session from HttpServletRequest");
+         }
+         tr42.setTcSuccess(hval != null);
+      } catch(Exception e) {tr42.appendTcDetail(e.toString());}
       tr42.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_getUserPrincipal */
@@ -658,8 +712,24 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* the method HttpServletRequest.removeAttribute must provide the       */
       /* same functionality as RenderRequest.removeAttribute"                 */
       TestResult tr47 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_REMOVEATTRIBUTE);
-      /* TODO: implement test */
-      tr47.appendTcDetail("Not implemented.");
+      try {
+         String hname = ATTR_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_removeAttribute1";
+         String pname = ATTR_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_removeAttribute2";
+         request.setAttribute(hname, "Value");
+         portletReq.setAttribute(pname, "Value");
+         request.removeAttribute(hname);
+         portletReq.removeAttribute(pname);
+         String hval = (String)request.getAttribute(hname);
+         String pval = (String)portletReq.getAttribute(pname);
+         boolean ok = (hval == null) && (pval == null);
+         String str = "";
+         if (!ok) {;
+            if (hval != null) str += "Attribute could not be removed through HttpServletRequest." ;
+            if (pval != null) str += "Attribute could not be removed through RenderRequest." ;
+            tr47.appendTcDetail(str);
+         };
+         tr47.setTcSuccess(ok);
+      } catch(Exception e) {tr47.appendTcDetail(e.toString());}
       tr47.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_setAttribute */
@@ -667,18 +737,25 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_servle
       /* the method HttpServletRequest.setAttribute must provide the same     */
       /* functionality as RenderRequest.setAttribute"                         */
       TestResult tr48 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_SETATTRIBUTE);
-      /* TODO: implement test */
-      tr48.appendTcDetail("Not implemented.");
+      try {
+         String hname = ATTR_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_setAttribute1";
+         String pname = ATTR_PREFIX + "V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_setAttribute2";
+         request.setAttribute(hname, "Value");
+         portletReq.setAttribute(pname, "Value");
+         String hval = (String)request.getAttribute(hname);
+         String pval = (String)portletReq.getAttribute(pname);
+         request.removeAttribute(hname);
+         portletReq.removeAttribute(pname);
+         boolean ok = (hval.equals("Value") && pval.equals("Value")) ;
+         String str = "";
+         if (!ok) {;
+            if (!hval.equals("Value")) str += "Attribute could not be set/read through HttpServletRequest." ;
+            if (!pval.equals("Value")) str += "Attribute could not be set/read through RenderRequest." ;
+            tr48.appendTcDetail(str);
+         };
+         tr48.setTcSuccess(ok);
+      } catch(Exception e) {tr48.appendTcDetail(e.toString());}
       tr48.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest_setCharacterEncoding */
-      /* Details: "In a target servlet of a include in the Render phase,      */
-      /* the method HttpServletRequest.setCharacterEncoding does not          */
-      /* perform any operation"                                               */
-      TestResult tr49 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETRENDERREQUEST_SETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr49.appendTcDetail("Not implemented.");
-      tr49.writeTo(writer);
 
       // TestSetupLink for: DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderRequest
       {

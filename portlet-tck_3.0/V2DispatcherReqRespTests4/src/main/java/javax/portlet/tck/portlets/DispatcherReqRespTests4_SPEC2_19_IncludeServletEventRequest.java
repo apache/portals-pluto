@@ -223,8 +223,8 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest impleme
       /* TestCase: V2DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_getHeaders */
       /* Details: "In a target servlet of a include in the Event phase, the   */
       /* method HttpServletRequest.getHeaders must return a value             */
-      /* corresponding to that returned by EventRequest.getProperty for the   */
-      /* corresponding header name"                                           */
+      /* corresponding to that returned by EventRequest.getProperties for     */
+      /* the corresponding header name"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());

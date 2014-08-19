@@ -223,8 +223,8 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest implements 
       /* TestCase: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventRequest_getHeaders */
       /* Details: "In a target jsp of a include in the Event phase, the       */
       /* method HttpServletRequest.getHeaders must return a value             */
-      /* corresponding to that returned by EventRequest.getProperty for the   */
-      /* corresponding header name"                                           */
+      /* corresponding to that returned by EventRequest.getProperties for     */
+      /* the corresponding header name"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());

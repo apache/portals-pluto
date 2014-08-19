@@ -108,8 +108,12 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_ser
       /* the method HttpServletResponse.encodeURL must provide the same       */
       /* functionality as ResourceResponse.encodeURL"                         */
       TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_ENCODEURL1);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         String turl = "http://www.apache.org/";
+         String hval = (String)response.encodeURL(turl);
+         String pval = (String)portletResp.encodeURL(turl);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr3);
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_encodeUrl */
@@ -117,178 +121,83 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_ser
       /* the method HttpServletResponse.encodeUrl must provide the same       */
       /* functionality as ResourceResponse.encodeURL"                         */
       TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_ENCODEURL);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         String turl = "http://www.apache.org/";
+         String hval = (String)response.encodeUrl(turl);
+         String pval = (String)portletResp.encodeURL(turl);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr4);
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_flushBuffer */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.flushBuffer must provide the same     */
-      /* functionality as ResourceResponse.flushBuffer"                       */
-      TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_FLUSHBUFFER);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
-      tr5.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_getBufferSize */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletResponse.getBufferSize must provide the same   */
       /* functionality as ResourceResponse.getBufferSize"                     */
-      TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETBUFFERSIZE);
+      TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETBUFFERSIZE);
       try {
          int hval = response.getBufferSize();
          int pval = ((MimeResponse)portletResp).getBufferSize();
          String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + ResourceResponse";
          if (hval != pval) {
-            tr6.appendTcDetail(str);
+            tr5.appendTcDetail(str);
          }
-         tr6.setTcSuccess(hval == pval);
-      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
-      tr6.writeTo(writer);
+         tr5.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
+      tr5.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_getCharacterEncoding */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletResponse.getCharacterEncoding must provide     */
       /* the same functionality as ResourceResponse.getCharacterEncoding"     */
-      TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETCHARACTERENCODING);
+      TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETCHARACTERENCODING);
       try {
          String hval = response.getCharacterEncoding();
          String pval = ((MimeResponse)portletResp).getCharacterEncoding();
-         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr7);
-      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
-      tr7.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr6);
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
+      tr6.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_getContentType */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletResponse.getContentType must provide the       */
       /* same functionality as ResourceResponse.getContentType"               */
-      TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETCONTENTTYPE);
+      TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETCONTENTTYPE);
       try {
          String hval = response.getContentType();
          String pval = ((MimeResponse)portletResp).getContentType();
-         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr8);
-      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
-      tr8.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr7);
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
+      tr7.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_getLocale */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletResponse.getLocale must provide the same       */
       /* functionality as ResourceResponse.getLocale"                         */
-      TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETLOCALE);
+      TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETLOCALE);
       try {
          Locale hl = response.getLocale();
          Locale pl = ((MimeResponse)portletResp).getLocale();
          String hval = hl.getDisplayName();
          String pval = pl.getDisplayName();
-         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr9);
-      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
-      tr9.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_getOutputStream */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.getOutputStream must provide the      */
-      /* same functionality as ResourceResponse.getPortletOutputStream"       */
-      TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_GETOUTPUTSTREAM);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
-      tr10.writeTo(writer);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ResourceResponse", pval, tr8);
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
+      tr8.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_isCommitted */
       /* Details: "In a target servlet of a forward in the Resource phase,    */
       /* the method HttpServletResponse.isCommitted must provide the same     */
       /* functionality as ResourceResponse.isCommitted"                       */
-      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_ISCOMMITTED);
+      TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_ISCOMMITTED);
       try {
          boolean hval = response.isCommitted();
          boolean pval = ((MimeResponse)portletResp).isCommitted();
          String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + ResourceResponse";
          if (hval != pval) {
-            tr11.appendTcDetail(str);
+            tr9.appendTcDetail(str);
          }
-         tr11.setTcSuccess(hval == pval);
-      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
-      tr11.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_reset */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.reset must provide the same           */
-      /* functionality as ResourceResponse.reset"                             */
-      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_RESET);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
-      tr12.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_resetBuffer */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.resetBuffer must provide the same     */
-      /* functionality as ResourceResponse.resetBuffer"                       */
-      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_RESETBUFFER);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
-      tr13.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_sendError */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.sendError does not perform any        */
-      /* operation"                                                           */
-      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_SENDERROR);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
-      tr14.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_sendRedirect */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.sendRedirect does not perform any     */
-      /* operation"                                                           */
-      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_SENDREDIRECT);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
-      tr15.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_setBufferSize */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.setBufferSize must provide the same   */
-      /* functionality as ResourceResponse.setBufferSize"                     */
-      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_SETBUFFERSIZE);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
-      tr16.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_setCharacterEncoding */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.setCharacterEncoding must provide     */
-      /* the same functionality as ResourceResponse.setCharacterEncoding"     */
-      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_SETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
-      tr17.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_setContentLength */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.setContentLength must provide the     */
-      /* same functionality as ResourceResponse.setContentLength"             */
-      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_SETCONTENTLENGTH);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
-      tr18.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_setContentType */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.setContentType must provide the       */
-      /* same functionality as ResourceResponse.setContentType"               */
-      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_SETCONTENTTYPE);
-      /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
-      tr19.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_setLocale */
-      /* Details: "In a target servlet of a forward in the Resource phase,    */
-      /* the method HttpServletResponse.setLocale must provide the same       */
-      /* functionality as ResourceResponse.setLocale"                         */
-      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCERESPONSE_SETLOCALE);
-      /* TODO: implement test */
-      tr20.appendTcDetail("Not implemented.");
-      tr20.writeTo(writer);
+         tr9.setTcSuccess(hval == pval);
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
+      tr9.writeTo(writer);
 
 
    }

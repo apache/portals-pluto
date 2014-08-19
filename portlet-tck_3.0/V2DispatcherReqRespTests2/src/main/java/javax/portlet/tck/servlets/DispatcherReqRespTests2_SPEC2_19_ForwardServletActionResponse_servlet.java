@@ -108,8 +108,12 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse_servl
       /* the method HttpServletResponse.encodeURL must provide the same       */
       /* functionality as ActionResponse.encodeURL"                           */
       TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONRESPONSE_ENCODEURL1);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         String turl = "http://www.apache.org/";
+         String hval = (String)response.encodeURL(turl);
+         String pval = (String)portletResp.encodeURL(turl);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ActionResponse", pval, tr3);
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse_encodeUrl */
@@ -117,8 +121,12 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse_servl
       /* the method HttpServletResponse.encodeUrl must provide the same       */
       /* functionality as ActionResponse.encodeURL"                           */
       TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONRESPONSE_ENCODEURL);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         String turl = "http://www.apache.org/";
+         String hval = (String)response.encodeUrl(turl);
+         String pval = (String)portletResp.encodeURL(turl);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "ActionResponse", pval, tr4);
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse_getBufferSize */
@@ -173,15 +181,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse_servl
          tr9.setTcSuccess(ok == false);
       } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
-
-      /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse_sendRedirect */
-      /* Details: "In a target servlet of a forward in the Action phase,      */
-      /* the method HttpServletResponse.sendRedirect must provide the same    */
-      /* functionality as ActionResponse.sendRedirect"                        */
-      TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONRESPONSE_SENDREDIRECT);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
-      tr10.writeTo(writer);
 
       request.getSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse",

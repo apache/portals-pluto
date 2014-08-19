@@ -223,8 +223,8 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest implements 
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest_getHeaders */
       /* Details: "In a target jsp of a forward in the Event phase, the       */
       /* method HttpServletRequest.getHeaders must return a value             */
-      /* corresponding to that returned by EventRequest.getProperty for the   */
-      /* corresponding header name"                                           */
+      /* corresponding to that returned by EventRequest.getProperties for     */
+      /* the corresponding header name"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());

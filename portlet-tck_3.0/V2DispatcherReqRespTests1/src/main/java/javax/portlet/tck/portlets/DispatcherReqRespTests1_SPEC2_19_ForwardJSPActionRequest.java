@@ -240,23 +240,12 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
       /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getHeaders */
       /* Details: "In a target jsp of a forward in the Action phase, the      */
       /* method HttpServletRequest.getHeaders must return a value             */
-      /* corresponding to that returned by ActionRequest.getProperty for      */
+      /* corresponding to that returned by ActionRequest.getProperties for    */
       /* the corresponding header name"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getHeaders", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getInputStream */
-      /* Details: "In a target jsp of a forward in the Action phase, the      */
-      /* method HttpServletRequest.getInputStream must provide the same       */
-      /* functionality as ActionRequest.getPortletInputStream"                */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_getInputStream", aurl);
          tb.writeTo(writer);
       }
 
@@ -639,17 +628,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest implements
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_setAttribute", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_setCharacterEncoding */
-      /* Details: "In a target jsp of a forward in the Action phase, the      */
-      /* method HttpServletRequest.setCharacterEncoding must provide the      */
-      /* same functionality as ActionRequest.setCharacterEncoding"            */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionRequest_setCharacterEncoding", aurl);
          tb.writeTo(writer);
       }
 

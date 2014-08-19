@@ -108,8 +108,12 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_servle
       /* method HttpServletResponse.encodeURL must provide the same           */
       /* functionality as EventResponse.encodeURL"                            */
       TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETEVENTRESPONSE_ENCODEURL1);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         String turl = "http://www.apache.org/";
+         String hval = (String)response.encodeURL(turl);
+         String pval = (String)portletResp.encodeURL(turl);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "EventResponse", pval, tr3);
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_encodeUrl */
@@ -117,8 +121,12 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_servle
       /* method HttpServletResponse.encodeUrl must provide the same           */
       /* functionality as EventResponse.encodeURL"                            */
       TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETEVENTRESPONSE_ENCODEURL);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         String turl = "http://www.apache.org/";
+         String hval = (String)response.encodeUrl(turl);
+         String pval = (String)portletResp.encodeURL(turl);
+         CompareUtils.stringsEqual("HttpServletResponse", hval, "EventResponse", pval, tr4);
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_getBufferSize */

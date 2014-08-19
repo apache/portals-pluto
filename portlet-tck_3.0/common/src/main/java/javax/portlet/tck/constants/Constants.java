@@ -49,6 +49,15 @@ public class Constants {
    public static final String PARM_NAME = "TestParm";
    public static final String PARM_VALUE = "Value";
    
+   // Some defined header names for testing properties
+   public static final String ACCEPT_HEADER = "Accept";
+   public static final String ACCEPT_LANG_HEADER = "Accept-Language";
+   public static final String ACCEPT_ENC_HEADER = "Accept-Encoding";
+   public static final String CONTENT_TYPE_HEADER = "Content-Type";
+   public static final String CONTENT_LENGTH_HEADER = "Content-Length";
+   public static final String DATE_HEADER = "Date";
+   public static final String MOD_HEADER = "If-Modified-Since";
+   
    // security role name
    public static final String ROLE_NAME  = "admin";   
    

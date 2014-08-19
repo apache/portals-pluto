@@ -209,17 +209,6 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionResponse implement
          tb.writeTo(writer);
       }
 
-      /* TestCase: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionResponse_sendRedirect */
-      /* Details: "In a target jsp of a forward in the Action phase, the      */
-      /* method HttpServletResponse.sendRedirect must provide the same        */
-      /* functionality as ActionResponse.sendRedirect"                        */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         aurl.setParameters(portletReq.getPrivateParameterMap());
-         TestButton tb = new TestButton("V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPActionResponse_sendRedirect", aurl);
-         tb.writeTo(writer);
-      }
-
    }
 
 }
