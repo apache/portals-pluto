@@ -173,11 +173,12 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       /* corresponding header name"                                           */
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETDATEHEADER);
       try {
-         long hval = request.getDateHeader(MOD_HEADER);
-         long pval = Long.parseLong(portletReq.getProperty(MOD_HEADER));
+         long hval = request.getDateHeader(DATE_HEADER);
+         String pstr = portletReq.getProperty(DATE_HEADER);
+         long pval = (pstr == null) ? -1 : Long.parseLong(pstr);
          boolean ok = (hval == pval);
          if (!ok) {
-            String str = MOD_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from EventRequest";
+            String str = DATE_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from EventRequest";
             tr8.appendTcDetail(str);
          }
          tr8.setTcSuccess(ok);
@@ -259,7 +260,8 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETINTHEADER);
       try {
          int hval = request.getIntHeader(CONTENT_LENGTH_HEADER);
-         int pval = Integer.parseInt(portletReq.getProperty(CONTENT_LENGTH_HEADER));
+         String pstr = portletReq.getProperty(CONTENT_LENGTH_HEADER);
+         int pval = (pstr == null) ? -1 : Integer.parseInt(pstr);
          boolean ok = (hval == pval);
          if (!ok) {
             String str = CONTENT_LENGTH_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from EventRequest";
@@ -410,7 +412,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       /* to the path used to obtain the PortletRequestDispatcher"             */
       TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETPATHINFO);
       try {
-         String sname = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getPathInfo();
          String pval = null;
          CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr24);
@@ -424,7 +425,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       /* PortletRequestDispatcher"                                            */
       TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETPATHTRANSLATED);
       try {
-         String sname = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getPathTranslated();
          String pval = null;
          CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr25);
@@ -448,7 +448,6 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet
       /* PortletRequestDispatcher"                                            */
       TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS4_SPEC2_19_INCLUDESERVLETEVENTREQUEST_GETQUERYSTRING);
       try {
-         String sname = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletEventRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getQueryString();
          String pval = QUERY_STRING;
          CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr27);

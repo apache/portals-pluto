@@ -48,4 +48,5 @@
    <fl:file>tck-V2DispatcherReqRespTests2-tests.xml</fl:file>
    <fl:file>tck-V2DispatcherReqRespTests3-tests.xml</fl:file>
    <fl:file>tck-V2DispatcherReqRespTests4-tests.xml</fl:file>
+   <fl:file>tck-V2DispatcherReqRespTests5S-tests.xml</fl:file>
 </fl:filelist>

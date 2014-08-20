@@ -78,7 +78,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse_event impl
 
       StringWriter writer = new StringWriter();
 
-      String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse" + JSP_SUFFIX + QUERY_STRING;
+      String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPEventResponse" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);

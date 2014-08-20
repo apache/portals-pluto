@@ -211,6 +211,12 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherReqRespTests5S</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <build>
@@ -264,6 +270,7 @@
                         tck-V2DispatcherReqRespTests2,
                         tck-V2DispatcherReqRespTests3,
                         tck-V2DispatcherReqRespTests4,
+                        tck-V2DispatcherReqRespTests5S,
                         tck-V2DispatcherTests,
                         tck-V2DispatcherTests2,
                         tck-V2DispatcherTests3S
@@ -371,6 +378,7 @@
                         <include>**/javax/**</include>
                      </includes>
                      <useFile>true</useFile>
+                     <argLine>-Xms512m -Xmx512m</argLine>
                      <systemProperties>
                         <property>
                            <name>test.server.login.url</name>

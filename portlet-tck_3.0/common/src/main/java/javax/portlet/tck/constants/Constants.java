@@ -35,12 +35,12 @@ public class Constants {
    public static final String RESULT_ATTR_PREFIX = "attr.result.";
    
    // For generating the target for the getRequestDispatcher call
-   // target = <prefix> + <servlet/jsp name> + <suffix> + <query string> 
+   // target = <prefix> + <servlet/jsp name> + <suffix> + ? + <query string> 
    public static final String SERVLET_PREFIX = "/";
    public static final String SERVLET_SUFFIX = "";
    public static final String JSP_PREFIX = "/WEB-INF/jsp/";
    public static final String JSP_SUFFIX = ".jsp";
-   public static final String QUERY_STRING = "?qparm1=qvalue1&qparm2=qvalue2";
+   public static final String QUERY_STRING = "qparm1=qvalue1&qparm2=qvalue2";
    
    // for several tests to servlet / jsp for comparison
    public static final String THREADID_ATTR = "req.attr.tid";

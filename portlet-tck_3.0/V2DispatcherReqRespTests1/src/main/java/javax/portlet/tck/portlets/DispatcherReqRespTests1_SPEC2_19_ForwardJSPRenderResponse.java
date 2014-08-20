@@ -96,7 +96,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderResponse implement
 
       PrintWriter writer = portletResp.getWriter();
 
-      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderResponse" + JSP_SUFFIX + QUERY_STRING;
+      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderResponse" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);

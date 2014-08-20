@@ -78,7 +78,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest implements
       // Prereq for: V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest_getAttributeNames", "Value1");
 
-      String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest" + JSP_SUFFIX + QUERY_STRING;
+      String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionRequest" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);

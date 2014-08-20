@@ -72,7 +72,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse imple
 
       StringWriter writer = new StringWriter();
 
-      String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_servlet" + SERVLET_SUFFIX + QUERY_STRING;
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletActionResponse_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);

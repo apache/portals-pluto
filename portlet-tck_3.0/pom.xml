@@ -142,6 +142,7 @@
       <module>V2DispatcherReqRespTests2</module>
       <module>V2DispatcherReqRespTests3</module>
       <module>V2DispatcherReqRespTests4</module>
+      <module>V2DispatcherReqRespTests5S</module>
       <module>deploy</module>
       <module>driver</module>
    </modules>

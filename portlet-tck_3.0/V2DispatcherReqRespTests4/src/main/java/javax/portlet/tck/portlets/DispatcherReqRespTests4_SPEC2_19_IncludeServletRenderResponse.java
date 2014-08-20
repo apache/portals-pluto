@@ -96,7 +96,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderResponse imple
 
       PrintWriter writer = portletResp.getWriter();
 
-      String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderResponse_servlet" + SERVLET_SUFFIX + QUERY_STRING;
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletRenderResponse_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);

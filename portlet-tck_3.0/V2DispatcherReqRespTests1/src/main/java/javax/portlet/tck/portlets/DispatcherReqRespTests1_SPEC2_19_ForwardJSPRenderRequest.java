@@ -102,7 +102,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest implements
       // Prereq for: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest_getAttributeNames", "Value1");
 
-      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest" + JSP_SUFFIX + QUERY_STRING;
+      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPRenderRequest" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);

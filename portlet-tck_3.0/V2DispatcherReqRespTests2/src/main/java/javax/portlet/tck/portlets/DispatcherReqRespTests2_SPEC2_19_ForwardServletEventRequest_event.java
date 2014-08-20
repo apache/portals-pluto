@@ -84,7 +84,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_event i
       // Prereq for: V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_getAttributeNames", "Value1");
 
-      String target = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_servlet" + SERVLET_SUFFIX + QUERY_STRING;
+      String target = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);

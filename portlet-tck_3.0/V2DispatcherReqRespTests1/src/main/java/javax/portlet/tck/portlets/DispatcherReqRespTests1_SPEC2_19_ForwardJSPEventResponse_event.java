@@ -78,7 +78,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse_event impl
 
       StringWriter writer = new StringWriter();
 
-      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse" + JSP_SUFFIX + QUERY_STRING;
+      String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);

@@ -182,11 +182,12 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       /* the corresponding header name"                                       */
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETDATEHEADER);
       try {
-         long hval = request.getDateHeader(MOD_HEADER);
-         long pval = Long.parseLong(portletReq.getProperty(MOD_HEADER));
+         long hval = request.getDateHeader(DATE_HEADER);
+         String pstr = portletReq.getProperty(DATE_HEADER);
+         long pval = (pstr == null) ? -1 : Long.parseLong(pstr);
          boolean ok = (hval == pval);
          if (!ok) {
-            String str = MOD_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from ActionRequest";
+            String str = DATE_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from ActionRequest";
             tr8.appendTcDetail(str);
          }
          tr8.setTcSuccess(ok);
@@ -258,7 +259,8 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETINTHEADER);
       try {
          int hval = request.getIntHeader(CONTENT_LENGTH_HEADER);
-         int pval = Integer.parseInt(portletReq.getProperty(CONTENT_LENGTH_HEADER));
+         String pstr = portletReq.getProperty(CONTENT_LENGTH_HEADER);
+         int pval = (pstr == null) ? -1 : Integer.parseInt(pstr);
          boolean ok = (hval == pval);
          if (!ok) {
             String str = CONTENT_LENGTH_HEADER + " from HttpServletRequest: " + hval + ", did not equal " + pval + " from ActionRequest";
@@ -410,7 +412,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       /* PortletRequestDispatcher"                                            */
       TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETPATHINFO);
       try {
-         String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getPathInfo();
          String pval = null;
          CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr23);
@@ -424,7 +425,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       /* PortletRequestDispatcher"                                            */
       TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETPATHTRANSLATED);
       try {
-         String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getPathTranslated();
          String pval = null;
          CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr24);
@@ -449,7 +449,6 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servle
       /* PortletRequestDispatcher"                                            */
       TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETACTIONREQUEST_GETQUERYSTRING);
       try {
-         String sname = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest_servlet" + SERVLET_SUFFIX;
          String hval = request.getQueryString();
          String pval = QUERY_STRING;
          CompareUtils.stringsEqual("HttpServletRequest", hval, " defined: ", pval, tr26);
