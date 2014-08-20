@@ -179,6 +179,12 @@
       </dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherTests4</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
          <artifactId>tck-V2DispatcherReqRespTests1</artifactId>
          <version>${project.version}</version>
          <type>war</type>

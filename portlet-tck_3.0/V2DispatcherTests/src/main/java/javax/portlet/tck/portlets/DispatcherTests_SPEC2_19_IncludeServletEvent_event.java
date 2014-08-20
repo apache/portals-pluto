@@ -66,6 +66,27 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent_event implements Portl
    }
 
    @Override
+   public void processEvent(EventRequest portletReq, EventResponse portletResp)
+         throws PortletException, IOException {
+      LOGGER.entering(LOG_CLASS, "event companion processEvent");
+
+
+      portletResp.setRenderParameters(portletReq);
+
+      long tid = Thread.currentThread().getId();
+      portletReq.setAttribute(THREADID_ATTR, tid);
+
+      StringWriter writer = new StringWriter();
+
+      // Now do the actual dispatch
+      String target = SERVLET_PREFIX + "DispatcherTests_SPEC2_19_IncludeServletEvent_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
+      PortletRequestDispatcher rd = portletConfig.getPortletContext()
+            .getRequestDispatcher(target);
+      rd.include(portletReq, portletResp);
+
+   }
+
+   @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       
@@ -80,28 +101,6 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent_event implements Portl
             .getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_IncludeServletEvent", APPLICATION_SCOPE);
       msg = (msg==null) ? "Not ready. click test case link." : msg;
       writer.write("<p>" + msg + "</p>\n");
-
-   }
-
-   @Override
-   public void processEvent(EventRequest portletReq, EventResponse portletResp)
-         throws PortletException, IOException {
-      LOGGER.entering(LOG_CLASS, "event companion processEvent");
-
-
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent_event", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent_event", PROP_VALUE);
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
-
-      StringWriter writer = new StringWriter();
-
-      PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests_SPEC2_19_IncludeServletEvent_servlet?qparm1=qvalue1&qparm2=qvalue2");
-      rd.include(portletReq, portletResp);
 
    }
 

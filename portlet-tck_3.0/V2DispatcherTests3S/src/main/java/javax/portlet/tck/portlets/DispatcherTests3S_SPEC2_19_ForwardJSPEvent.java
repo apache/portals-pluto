@@ -66,13 +66,9 @@ public class DispatcherTests3S_SPEC2_19_ForwardJSPEvent implements Portlet, Reso
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardJSPEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardJSPEvent", PROP_VALUE);
-
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -86,13 +82,8 @@ public class DispatcherTests3S_SPEC2_19_ForwardJSPEvent implements Portlet, Reso
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardJSPEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardJSPEvent", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -103,13 +94,8 @@ public class DispatcherTests3S_SPEC2_19_ForwardJSPEvent implements Portlet, Reso
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardJSPEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardJSPEvent", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -118,17 +104,8 @@ public class DispatcherTests3S_SPEC2_19_ForwardJSPEvent implements Portlet, Reso
       /* scoped only for the duration of the include or forward call"         */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests3S_SPEC2_19_ForwardJSPEvent_dispatch4", aurl);
-         tb.writeTo(writer);
-      }
-
-      /* TestCase: V2DispatcherTests3S_SPEC2_19_ForwardJSPEvent_invoke3       */
-      /* Details: "Parameters to the forward method for a target servlet      */
-      /* can be wrapped request and response classes from the portlet         */
-      /* lifecyle method initiating the include"                              */
-      {
-         PortletURL aurl = portletResp.createActionURL();
-         TestButton tb = new TestButton("V2DispatcherTests3S_SPEC2_19_ForwardJSPEvent_invoke3", aurl);
          tb.writeTo(writer);
       }
 

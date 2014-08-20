@@ -66,13 +66,9 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", PROP_VALUE);
-
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -86,13 +82,8 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -103,13 +94,8 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_IncludeServletEvent", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -119,6 +105,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* must be passed to the target servlet during an include"              */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_dispatch1", aurl);
          tb.writeTo(writer);
       }
@@ -128,6 +115,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* aggregated with the portlet render parameters"                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_dispatch2", aurl);
          tb.writeTo(writer);
       }
@@ -138,6 +126,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* parameter values array before the render parameter values"           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_dispatch3", aurl);
          tb.writeTo(writer);
       }
@@ -147,6 +136,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* servlet "                                                            */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_invoke1", aurl);
          tb.writeTo(writer);
       }
@@ -157,6 +147,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* method initiating the include"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_invoke2", aurl);
          tb.writeTo(writer);
       }
@@ -167,6 +158,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* invocation"                                                          */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_invoke4", aurl);
          tb.writeTo(writer);
       }
@@ -177,6 +169,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* RequestDispatcher"                                                   */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_invoke7", aurl);
          tb.writeTo(writer);
       }
@@ -189,6 +182,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes1", aurl);
          tb.writeTo(writer);
       }
@@ -201,6 +195,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes2", aurl);
          tb.writeTo(writer);
       }
@@ -213,6 +208,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes3", aurl);
          tb.writeTo(writer);
       }
@@ -225,6 +221,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* include chain"                                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes4", aurl);
          tb.writeTo(writer);
       }
@@ -237,6 +234,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes5", aurl);
          tb.writeTo(writer);
       }
@@ -246,6 +244,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* to the javax.portlet.PortletConfig object"                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes6", aurl);
          tb.writeTo(writer);
       }
@@ -256,6 +255,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* javax.portlet.EventRequest object"                                   */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes7", aurl);
          tb.writeTo(writer);
       }
@@ -266,6 +266,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletEvent implements Portlet, Re
       /* javax.portlet.EventResponse object"                                  */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_IncludeServletEvent_attributes8", aurl);
          tb.writeTo(writer);
       }

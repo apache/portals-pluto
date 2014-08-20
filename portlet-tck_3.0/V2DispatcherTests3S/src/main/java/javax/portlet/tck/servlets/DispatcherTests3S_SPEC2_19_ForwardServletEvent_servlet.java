@@ -65,7 +65,7 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletEvent_servlet extends Http
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
       PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
       long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute("void");
+      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
 
       StringWriter writer = new StringWriter();
 
@@ -80,15 +80,6 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletEvent_servlet extends Http
       /* TODO: implement test */
       tr0.appendTcDetail("Not implemented.");
       tr0.writeTo(writer);
-
-      /* TestCase: V2DispatcherTests3S_SPEC2_19_ForwardServletEvent_invoke3   */
-      /* Details: "Parameters to the forward method for a target servlet      */
-      /* can be wrapped request and response classes from the portlet         */
-      /* lifecyle method initiating the include"                              */
-      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_FORWARDSERVLETEVENT_INVOKE3);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
 
       request.getSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardServletEvent",

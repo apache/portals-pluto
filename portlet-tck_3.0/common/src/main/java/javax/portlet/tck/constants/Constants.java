@@ -43,6 +43,9 @@ public class Constants {
    public static final String QUERY_STRING = "qparm1=qvalue1&qparm2=qvalue2";
    
    // for several tests to servlet / jsp for comparison
+   public static final String MULTIPLE_INCLUDE_NAME = "MultipleIncludeServlet";
+   public static final String MULTIPLE_INCLUDE_ATTR = "req.attr.multi";
+   public static final String MULTIPLE_INCLUDE_VAL = "Included counter=";
    public static final String THREADID_ATTR = "req.attr.tid";
    public static final String ATTR_PREFIX = "req.attr.test.";
    public static final String PARM_PREFIX = "parm.test.";

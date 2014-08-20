@@ -14,7 +14,7 @@
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
       PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
       long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute("void");
+      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
 
       PrintWriter writer = ((MimeResponse)portletResp).getWriter();
 
@@ -126,7 +126,7 @@
       TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_ATTRIBUTES1);
       try {
          String name = "javax.servlet.include.req.uri";
-         String attrVal = (String) portletReq.getAttribute(name);
+         String attrVal = (String) request.getAttribute(name);
          String currVal =  request.getRequestURI();
          CompareUtils.stringsEqual(attrVal, currVal, tr8);
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}
@@ -141,7 +141,7 @@
       TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_ATTRIBUTES2);
       try {
          String name = "javax.servlet.include.context_path";
-         String attrVal = (String) portletReq.getAttribute(name);
+         String attrVal = (String) request.getAttribute(name);
          String currVal =  request.getContextPath();
          CompareUtils.stringsEqual(attrVal, currVal, tr9);
       } catch(Exception e) {tr9.appendTcDetail(e.toString());}
@@ -156,7 +156,7 @@
       TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_ATTRIBUTES3);
       try {
          String name = "javax.servlet.include.servlet_path";
-         String attrVal = (String) portletReq.getAttribute(name);
+         String attrVal = (String) request.getAttribute(name);
          String currVal =  request.getServletPath();
          CompareUtils.stringsEqual(attrVal, currVal, tr10);
       } catch(Exception e) {tr10.appendTcDetail(e.toString());}
@@ -171,7 +171,7 @@
       TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_ATTRIBUTES4);
       try {
          String name = "javax.servlet.include.path_info";
-         String attrVal = (String) portletReq.getAttribute(name);
+         String attrVal = (String) request.getAttribute(name);
          String currVal =  request.getPathInfo();
          CompareUtils.stringsEqual(attrVal, currVal, tr11);
       } catch(Exception e) {tr11.appendTcDetail(e.toString());}
@@ -186,7 +186,7 @@
       TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_ATTRIBUTES5);
       try {
          String name = "javax.servlet.include.query_string";
-         String attrVal = (String) portletReq.getAttribute(name);
+         String attrVal = (String) request.getAttribute(name);
          String currVal =  request.getQueryString();
          CompareUtils.stringsEqual(attrVal, currVal, tr12);
       } catch(Exception e) {tr12.appendTcDetail(e.toString());}

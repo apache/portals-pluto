@@ -138,6 +138,7 @@
       <module>V2DispatcherTests</module>
       <module>V2DispatcherTests2</module>
       <module>V2DispatcherTests3S</module>
+      <module>V2DispatcherTests4</module>
       <module>V2DispatcherReqRespTests1</module>
       <module>V2DispatcherReqRespTests2</module>
       <module>V2DispatcherReqRespTests3</module>
