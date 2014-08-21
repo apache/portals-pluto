@@ -109,113 +109,318 @@
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes1   */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
+      /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.forward.request_uri will be set, and equals the        */
       /* value from HTTPServletRequest.getRequestURI for the first servlet    */
       /* in the forward chain"                                                */
       TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES1);
       try {
-         String name = "javax.servlet.forward.req.uri";
-         String attrVal = (String) request.getAttribute(name);
+         String name = "javax.servlet.forward.request_uri";
+         String attrVal = (String) portletReq.getAttribute(name);
          String currVal =  request.getRequestURI();
          CompareUtils.stringsEqual(attrVal, currVal, tr7);
       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes2   */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes1a  */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
-      /* javax.servlet.forward.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.request_uri will be set, and equals the        */
+      /* value from HTTPServletRequest.getRequestURI for the first servlet    */
       /* in the forward chain"                                                */
-      TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES2);
+      TestResult tr8 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES1A);
       try {
-         String name = "javax.servlet.forward.context_path";
+         String name = "javax.servlet.forward.request_uri";
          String attrVal = (String) request.getAttribute(name);
-         String currVal =  request.getContextPath();
+         String currVal =  request.getRequestURI();
          CompareUtils.stringsEqual(attrVal, currVal, tr8);
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes3   */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes1b  */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
-      /* javax.servlet.forward.servlet_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getServletPath for the first servlet   */
-      /* in the forward chain"                                                */
-      TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES3);
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.include.request_uri will not be set"                   */
+      TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES1B);
       try {
-         String name = "javax.servlet.forward.servlet_path";
-         String attrVal = (String) request.getAttribute(name);
-         String currVal =  request.getServletPath();
-         CompareUtils.stringsEqual(attrVal, currVal, tr9);
+         String name = "javax.servlet.include.request_uri";
+         String attrVal = (String) portletReq.getAttribute(name);
+         if (attrVal != null) tr9.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr9.setTcSuccess(attrVal == null);
       } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes4   */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes1c  */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
-      /* javax.servlet.forward.path_info will be set, and equals the value    */
-      /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
-      /* forward chain"                                                       */
-      TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES4);
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.request_uri will not be set"                   */
+      TestResult tr10 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES1C);
       try {
-         String name = "javax.servlet.forward.path_info";
+         String name = "javax.servlet.include.request_uri";
          String attrVal = (String) request.getAttribute(name);
-         String currVal =  request.getPathInfo();
-         CompareUtils.stringsEqual(attrVal, currVal, tr10);
+         if (attrVal != null) tr10.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr10.setTcSuccess(attrVal == null);
       } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
-      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes5   */
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes2   */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
-      /* javax.servlet.forward.query_string will be set, and equals the       */
-      /* value from HTTPServletRequest.getQueryString for the first servlet   */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.context_path will be set, and equals the       */
+      /* value from HTTPServletRequest.getContestPath for the first servlet   */
       /* in the forward chain"                                                */
-      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES5);
+      TestResult tr11 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES2);
       try {
-         String name = "javax.servlet.forward.query_string";
-         String attrVal = (String) request.getAttribute(name);
-         String currVal =  request.getQueryString();
+         String name = "javax.servlet.forward.context_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getContextPath();
          CompareUtils.stringsEqual(attrVal, currVal, tr11);
       } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes2a  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.context_path will be set, and equals the       */
+      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* in the forward chain"                                                */
+      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES2A);
+      try {
+         String name = "javax.servlet.forward.context_path";
+         String attrVal = (String) request.getAttribute(name);
+         String currVal =  request.getContextPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr12);
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
+      tr12.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes2b  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.include.context_path will not be set"                  */
+      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES2B);
+      try {
+         String name = "javax.servlet.include.context_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         if (attrVal != null) tr13.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr13.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
+      tr13.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes2c  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.context_path will not be set"                  */
+      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES2C);
+      try {
+         String name = "javax.servlet.include.context_path";
+         String attrVal = (String) request.getAttribute(name);
+         if (attrVal != null) tr14.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr14.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
+      tr14.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes3   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.servlet_path will be set, and equals the       */
+      /* value from HTTPServletRequest.getServletPath for the first servlet   */
+      /* in the forward chain"                                                */
+      TestResult tr15 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES3);
+      try {
+         String name = "javax.servlet.forward.servlet_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getServletPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr15);
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
+      tr15.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes3a  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.servlet_path will be set, and equals the       */
+      /* value from HTTPServletRequest.getServletPath for the first servlet   */
+      /* in the forward chain"                                                */
+      TestResult tr16 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES3A);
+      try {
+         String name = "javax.servlet.forward.servlet_path";
+         String attrVal = (String) request.getAttribute(name);
+         String currVal =  request.getServletPath();
+         CompareUtils.stringsEqual(attrVal, currVal, tr16);
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
+      tr16.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes3b  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.include.servlet_path will not be set"                  */
+      TestResult tr17 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES3B);
+      try {
+         String name = "javax.servlet.include.servlet_path";
+         String attrVal = (String) portletReq.getAttribute(name);
+         if (attrVal != null) tr17.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr17.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
+      tr17.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes3c  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.servlet_path will not be set"                  */
+      TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES3C);
+      try {
+         String name = "javax.servlet.include.servlet_path";
+         String attrVal = (String) request.getAttribute(name);
+         if (attrVal != null) tr18.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr18.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
+      tr18.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes4   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.path_info will be set, and equals the value    */
+      /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
+      /* forward chain"                                                       */
+      TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES4);
+      try {
+         String name = "javax.servlet.forward.path_info";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getPathInfo();
+         CompareUtils.stringsEqual(attrVal, currVal, tr19);
+      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
+      tr19.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes4a  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.path_info will be set, and equals the value    */
+      /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
+      /* forward chain"                                                       */
+      TestResult tr20 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES4A);
+      try {
+         String name = "javax.servlet.forward.path_info";
+         String attrVal = (String) request.getAttribute(name);
+         String currVal =  request.getPathInfo();
+         CompareUtils.stringsEqual(attrVal, currVal, tr20);
+      } catch(Exception e) {tr20.appendTcDetail(e.toString());}
+      tr20.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes4b  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.include.path_info will not be set"                     */
+      TestResult tr21 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES4B);
+      try {
+         String name = "javax.servlet.include.path_info";
+         String attrVal = (String) portletReq.getAttribute(name);
+         if (attrVal != null) tr21.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr21.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr21.appendTcDetail(e.toString());}
+      tr21.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes4c  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.path_info will not be set"                     */
+      TestResult tr22 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES4C);
+      try {
+         String name = "javax.servlet.include.path_info";
+         String attrVal = (String) request.getAttribute(name);
+         if (attrVal != null) tr22.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr22.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr22.appendTcDetail(e.toString());}
+      tr22.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes5   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.query_string will be set, and equals the       */
+      /* value from HTTPServletRequest.getQueryString for the first servlet   */
+      /* in the forward chain"                                                */
+      TestResult tr23 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES5);
+      try {
+         String name = "javax.servlet.forward.query_string";
+         String attrVal = (String) portletReq.getAttribute(name);
+         String currVal =  request.getQueryString();
+         CompareUtils.stringsEqual(attrVal, currVal, tr23);
+      } catch(Exception e) {tr23.appendTcDetail(e.toString());}
+      tr23.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes5a  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.query_string will be set, and equals the       */
+      /* value from HTTPServletRequest.getQueryString for the first servlet   */
+      /* in the forward chain"                                                */
+      TestResult tr24 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES5A);
+      try {
+         String name = "javax.servlet.forward.query_string";
+         String attrVal = (String) request.getAttribute(name);
+         String currVal =  request.getQueryString();
+         CompareUtils.stringsEqual(attrVal, currVal, tr24);
+      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
+      tr24.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes5b  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.include.query_string will not be set"                  */
+      TestResult tr25 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES5B);
+      try {
+         String name = "javax.servlet.include.query_string";
+         String attrVal = (String) portletReq.getAttribute(name);
+         if (attrVal != null) tr25.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr25.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr25.appendTcDetail(e.toString());}
+      tr25.writeTo(writer);
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes5c  */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.query_string will not be set"                  */
+      TestResult tr26 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES5C);
+      try {
+         String name = "javax.servlet.include.query_string";
+         String attrVal = (String) request.getAttribute(name);
+         if (attrVal != null) tr26.appendTcDetail("Attribute should be null, but has the value of: " + attrVal);
+         tr26.setTcSuccess(attrVal == null);
+      } catch(Exception e) {tr26.appendTcDetail(e.toString());}
+      tr26.writeTo(writer);
+
       /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes6   */
       /* Details: "The request attribute javax.portlet.config must be set     */
       /* to the javax.portlet.PortletConfig object"                           */
-      TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES6);
+      TestResult tr27 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES6);
       try {
          ClassChecker cc = new ClassChecker(portletConfig.getClass());
          boolean ok = cc.implementsInterface(PortletConfig.class);
-         tr12.setTcSuccess(ok);
-      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
-      tr12.writeTo(writer);
+         tr27.setTcSuccess(ok);
+      } catch(Exception e) {tr27.appendTcDetail(e.toString());}
+      tr27.writeTo(writer);
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes7   */
       /* Details: "For forwards from the processAction method, The request    */
       /* attribute javax.portlet.request must be set to the                   */
       /* javax.portlet.ActionRequest object"                                  */
-      TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES7);
+      TestResult tr28 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES7);
       try {
          ClassChecker cc = new ClassChecker(portletReq.getClass());
          boolean ok = cc.implementsInterface(ActionRequest.class);
-         tr13.setTcSuccess(ok);
-      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
-      tr13.writeTo(writer);
+         tr28.setTcSuccess(ok);
+      } catch(Exception e) {tr28.appendTcDetail(e.toString());}
+      tr28.writeTo(writer);
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_ForwardJSPAction_attributes8   */
       /* Details: "For forwards from the processAction method, The request    */
       /* attribute javax.portlet.response must be set to the                  */
       /* javax.portlet.ActionResponse object"                                 */
-      TestResult tr14 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES8);
+      TestResult tr29 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_FORWARDJSPACTION_ATTRIBUTES8);
       try {
          ClassChecker cc = new ClassChecker(portletResp.getClass());
          boolean ok = cc.implementsInterface(ActionResponse.class);
-         tr14.setTcSuccess(ok);
-      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
-      tr14.writeTo(writer);
+         tr29.setTcSuccess(ok);
+      } catch(Exception e) {tr29.appendTcDetail(e.toString());}
+      tr29.writeTo(writer);
 
       request.getSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "DispatcherTests2_SPEC2_19_ForwardJSPAction",
