@@ -72,6 +72,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionResponse implement
 
       StringWriter writer = new StringWriter();
 
+      // Now do the actual dispatch
       String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPActionResponse" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

@@ -104,7 +104,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETAUTHTYPE);
       try {
          String hval = request.getAuthType();
-         String pval = ((ClientDataRequest)portletReq).getAuthType();
+         String pval = ((ResourceRequest)portletReq).getAuthType();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr2);
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
@@ -116,7 +116,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETCHARACTERENCODING);
       try {
          String hval = request.getCharacterEncoding();
-         String pval = ((ClientDataRequest)portletReq).getCharacterEncoding();
+         String pval = ((ResourceRequest)portletReq).getCharacterEncoding();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr3);
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
@@ -128,7 +128,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr4 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETCONTENTLENGTH);
       try {
          int hval = request.getContentLength();
-         int pval = ((ClientDataRequest)portletReq).getContentLength();
+         int pval = ((ResourceRequest)portletReq).getContentLength();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
             tr4.appendTcDetail(str);
@@ -144,7 +144,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETCONTENTTYPE);
       try {
          String hval = request.getContentType();
-         String pval = ((ClientDataRequest)portletReq).getContentType();
+         String pval = ((ResourceRequest)portletReq).getContentType();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr5);
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
@@ -156,7 +156,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETCONTEXTPATH);
       try {
          String hval = request.getContextPath();
-         String pval = ((ClientDataRequest)portletReq).getContextPath();
+         String pval = ((ResourceRequest)portletReq).getContextPath();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr6);
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
@@ -168,7 +168,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETCOOKIES);
       try {
          Cookie[] hvals = request.getCookies();
-         Cookie[] pvals = ((ClientDataRequest)portletReq).getCookies();
+         Cookie[] pvals = ((ResourceRequest)portletReq).getCookies();
          HashSet<Cookie> hsc = new HashSet<Cookie>(Arrays.asList(hvals));
          HashSet<Cookie> psc = new HashSet<Cookie>(Arrays.asList(pvals));
          CompareUtils.setsEqual("cookies from HttpServletRequest", hsc, "cookies from from ResourceRequest", psc, tr7);
@@ -334,7 +334,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr18 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETMETHOD);
       try {
          String hval = request.getMethod();
-         String pval = ((ClientDataRequest)portletReq).getMethod();
+         String pval = ((ResourceRequest)portletReq).getMethod();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr18);
       } catch(Exception e) {tr18.appendTcDetail(e.toString());}
       tr18.writeTo(writer);
@@ -503,7 +503,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr31 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREMOTEUSER);
       try {
          String hval = request.getRemoteUser();
-         String pval = ((ClientDataRequest)portletReq).getRemoteUser();
+         String pval = ((ResourceRequest)portletReq).getRemoteUser();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr31);
       } catch(Exception e) {tr31.appendTcDetail(e.toString());}
       tr31.writeTo(writer);
@@ -557,7 +557,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr35 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETREQUESTEDSESSIONID);
       try {
          String hval = request.getRequestedSessionId();
-         String pval = ((ClientDataRequest)portletReq).getRequestedSessionId();
+         String pval = ((ResourceRequest)portletReq).getRequestedSessionId();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr35);
       } catch(Exception e) {tr35.appendTcDetail(e.toString());}
       tr35.writeTo(writer);
@@ -569,7 +569,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr36 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSCHEME);
       try {
          String hval = request.getScheme();
-         String pval = ((ClientDataRequest)portletReq).getScheme();
+         String pval = ((ResourceRequest)portletReq).getScheme();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr36);
       } catch(Exception e) {tr36.appendTcDetail(e.toString());}
       tr36.writeTo(writer);
@@ -581,7 +581,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr37 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVERNAME);
       try {
          String hval = request.getServerName();
-         String pval = ((ClientDataRequest)portletReq).getServerName();
+         String pval = ((ResourceRequest)portletReq).getServerName();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "ResourceRequest", pval, tr37);
       } catch(Exception e) {tr37.appendTcDetail(e.toString());}
       tr37.writeTo(writer);
@@ -593,7 +593,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr38 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETSERVERPORT);
       try {
          int hval = request.getServerPort();
-         int pval = ((ClientDataRequest)portletReq).getServerPort();
+         int pval = ((ResourceRequest)portletReq).getServerPort();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
             tr38.appendTcDetail(str);
@@ -638,7 +638,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr41 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_GETUSERPRINCIPAL);
       try {
          java.security.Principal hpal = request.getUserPrincipal();
-         java.security.Principal ppal = ((ClientDataRequest)portletReq).getUserPrincipal();
+         java.security.Principal ppal = ((ResourceRequest)portletReq).getUserPrincipal();
          String str = "Value " + hpal.toString() + " from " + "HttpServletRequest" + " does not equal value " + ppal.toString() + " + ResourceRequest";
          if (!hpal.equals(ppal)) {
             tr41.appendTcDetail(str);
@@ -655,7 +655,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr42 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISREQUESTEDSESSIONIDVALID);
       try {
          boolean hval = request.isRequestedSessionIdValid();
-         boolean pval = ((ClientDataRequest)portletReq).isRequestedSessionIdValid();
+         boolean pval = ((ResourceRequest)portletReq).isRequestedSessionIdValid();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
             tr42.appendTcDetail(str);
@@ -671,7 +671,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr43 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISSECURE);
       try {
          boolean hval = request.isSecure();
-         boolean pval = ((ClientDataRequest)portletReq).isSecure();
+         boolean pval = ((ResourceRequest)portletReq).isSecure();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
             tr43.appendTcDetail(str);
@@ -687,7 +687,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest_serv
       TestResult tr44 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS2_SPEC2_19_FORWARDSERVLETRESOURCEREQUEST_ISUSERINROLE);
       try {
          boolean hval = request.isUserInRole(ROLE_NAME);
-         boolean pval = ((ClientDataRequest)portletReq).isUserInRole(ROLE_NAME);
+         boolean pval = ((ResourceRequest)portletReq).isUserInRole(ROLE_NAME);
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + ResourceRequest";
          if (hval != pval) {
             tr44.appendTcDetail(str);

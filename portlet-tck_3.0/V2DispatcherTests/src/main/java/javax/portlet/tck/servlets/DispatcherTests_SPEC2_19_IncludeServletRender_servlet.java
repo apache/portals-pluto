@@ -153,8 +153,9 @@ public class DispatcherTests_SPEC2_19_IncludeServletRender_servlet extends HttpS
       /* RequestDispatcher"                                                   */
       TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERTESTS_SPEC2_19_INCLUDESERVLETRENDER_INVOKE7);
       try {
-         String ctxPath= request.getContextPath();
-         CompareUtils.stringsEqual(ctxPath, "/DispatcherTests_SPEC2_19_IncludeServletRender_servlet", tr6);
+         String sname = SERVLET_PREFIX + "DispatcherTests_SPEC2_19_IncludeServletRender_servlet" + SERVLET_SUFFIX;
+         String path= request.getServletPath();
+         CompareUtils.stringsEqual(path, sname, tr6);
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 

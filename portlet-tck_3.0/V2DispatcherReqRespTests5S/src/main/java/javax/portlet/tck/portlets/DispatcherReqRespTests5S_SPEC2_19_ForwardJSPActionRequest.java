@@ -72,6 +72,7 @@ public class DispatcherReqRespTests5S_SPEC2_19_ForwardJSPActionRequest implement
 
       StringWriter writer = new StringWriter();
 
+      // Now do the actual dispatch
       String target = JSP_PREFIX + "DispatcherReqRespTests5S_SPEC2_19_ForwardJSPActionRequest" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

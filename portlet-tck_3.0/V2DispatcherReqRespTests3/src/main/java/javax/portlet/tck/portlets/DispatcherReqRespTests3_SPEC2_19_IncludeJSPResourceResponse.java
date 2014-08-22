@@ -84,6 +84,7 @@ public class DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceResponse impleme
 
       PrintWriter writer = portletResp.getWriter();
 
+      // Now do the actual dispatch
       String target = JSP_PREFIX + "DispatcherReqRespTests3_SPEC2_19_IncludeJSPResourceResponse" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

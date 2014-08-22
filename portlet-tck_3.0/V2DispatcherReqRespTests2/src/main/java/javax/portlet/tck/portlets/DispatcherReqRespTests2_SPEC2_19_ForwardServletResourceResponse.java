@@ -84,6 +84,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse imp
 
       PrintWriter writer = portletResp.getWriter();
 
+      // Now do the actual dispatch
       String target = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

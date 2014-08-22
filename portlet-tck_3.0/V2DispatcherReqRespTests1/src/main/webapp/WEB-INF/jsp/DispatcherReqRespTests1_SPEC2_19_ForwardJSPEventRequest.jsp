@@ -53,7 +53,7 @@
       TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETAUTHTYPE);
       try {
          String hval = request.getAuthType();
-         String pval = ((ClientDataRequest)portletReq).getAuthType();
+         String pval = ((EventRequest)portletReq).getAuthType();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "EventRequest", pval, tr2);
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
@@ -96,7 +96,7 @@
       TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETCONTEXTPATH);
       try {
          String hval = request.getContextPath();
-         String pval = ((ClientDataRequest)portletReq).getContextPath();
+         String pval = ((EventRequest)portletReq).getContextPath();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "EventRequest", pval, tr6);
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
@@ -108,7 +108,7 @@
       TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETCOOKIES);
       try {
          Cookie[] hvals = request.getCookies();
-         Cookie[] pvals = ((ClientDataRequest)portletReq).getCookies();
+         Cookie[] pvals = ((EventRequest)portletReq).getCookies();
          HashSet<Cookie> hsc = new HashSet<Cookie>(Arrays.asList(hvals));
          HashSet<Cookie> psc = new HashSet<Cookie>(Arrays.asList(pvals));
          CompareUtils.setsEqual("cookies from HttpServletRequest", hsc, "cookies from from EventRequest", psc, tr7);
@@ -284,7 +284,7 @@
       TestResult tr19 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETMETHOD);
       try {
          String hval = request.getMethod();
-         String pval = ((ClientDataRequest)portletReq).getMethod();
+         String pval = ((EventRequest)portletReq).getMethod();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "EventRequest", pval, tr19);
       } catch(Exception e) {tr19.appendTcDetail(e.toString());}
       tr19.writeTo(writer);
@@ -461,7 +461,7 @@
       TestResult tr33 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETREMOTEUSER);
       try {
          String hval = request.getRemoteUser();
-         String pval = ((ClientDataRequest)portletReq).getRemoteUser();
+         String pval = ((EventRequest)portletReq).getRemoteUser();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "EventRequest", pval, tr33);
       } catch(Exception e) {tr33.appendTcDetail(e.toString());}
       tr33.writeTo(writer);
@@ -515,7 +515,7 @@
       TestResult tr37 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETREQUESTEDSESSIONID);
       try {
          String hval = request.getRequestedSessionId();
-         String pval = ((ClientDataRequest)portletReq).getRequestedSessionId();
+         String pval = ((EventRequest)portletReq).getRequestedSessionId();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "EventRequest", pval, tr37);
       } catch(Exception e) {tr37.appendTcDetail(e.toString());}
       tr37.writeTo(writer);
@@ -527,7 +527,7 @@
       TestResult tr38 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETSCHEME);
       try {
          String hval = request.getScheme();
-         String pval = ((ClientDataRequest)portletReq).getScheme();
+         String pval = ((EventRequest)portletReq).getScheme();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "EventRequest", pval, tr38);
       } catch(Exception e) {tr38.appendTcDetail(e.toString());}
       tr38.writeTo(writer);
@@ -539,7 +539,7 @@
       TestResult tr39 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETSERVERNAME);
       try {
          String hval = request.getServerName();
-         String pval = ((ClientDataRequest)portletReq).getServerName();
+         String pval = ((EventRequest)portletReq).getServerName();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "EventRequest", pval, tr39);
       } catch(Exception e) {tr39.appendTcDetail(e.toString());}
       tr39.writeTo(writer);
@@ -551,7 +551,7 @@
       TestResult tr40 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETSERVERPORT);
       try {
          int hval = request.getServerPort();
-         int pval = ((ClientDataRequest)portletReq).getServerPort();
+         int pval = ((EventRequest)portletReq).getServerPort();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + EventRequest";
          if (hval != pval) {
             tr40.appendTcDetail(str);
@@ -596,7 +596,7 @@
       TestResult tr43 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_GETUSERPRINCIPAL);
       try {
          java.security.Principal hpal = request.getUserPrincipal();
-         java.security.Principal ppal = ((ClientDataRequest)portletReq).getUserPrincipal();
+         java.security.Principal ppal = ((EventRequest)portletReq).getUserPrincipal();
          String str = "Value " + hpal.toString() + " from " + "HttpServletRequest" + " does not equal value " + ppal.toString() + " + EventRequest";
          if (!hpal.equals(ppal)) {
             tr43.appendTcDetail(str);
@@ -612,7 +612,7 @@
       TestResult tr44 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_ISREQUESTEDSESSIONIDVALID);
       try {
          boolean hval = request.isRequestedSessionIdValid();
-         boolean pval = ((ClientDataRequest)portletReq).isRequestedSessionIdValid();
+         boolean pval = ((EventRequest)portletReq).isRequestedSessionIdValid();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + EventRequest";
          if (hval != pval) {
             tr44.appendTcDetail(str);
@@ -628,7 +628,7 @@
       TestResult tr45 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_ISSECURE);
       try {
          boolean hval = request.isSecure();
-         boolean pval = ((ClientDataRequest)portletReq).isSecure();
+         boolean pval = ((EventRequest)portletReq).isSecure();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + EventRequest";
          if (hval != pval) {
             tr45.appendTcDetail(str);
@@ -644,7 +644,7 @@
       TestResult tr46 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPEVENTREQUEST_ISUSERINROLE);
       try {
          boolean hval = request.isUserInRole(ROLE_NAME);
-         boolean pval = ((ClientDataRequest)portletReq).isUserInRole(ROLE_NAME);
+         boolean pval = ((EventRequest)portletReq).isUserInRole(ROLE_NAME);
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + EventRequest";
          if (hval != pval) {
             tr46.appendTcDetail(str);

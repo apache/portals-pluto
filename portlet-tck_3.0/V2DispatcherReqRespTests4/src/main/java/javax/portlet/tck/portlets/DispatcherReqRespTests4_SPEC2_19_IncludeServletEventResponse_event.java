@@ -78,6 +78,7 @@ public class DispatcherReqRespTests4_SPEC2_19_IncludeServletEventResponse_event 
 
       StringWriter writer = new StringWriter();
 
+      // Now do the actual dispatch
       String target = SERVLET_PREFIX + "DispatcherReqRespTests4_SPEC2_19_IncludeServletEventResponse_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

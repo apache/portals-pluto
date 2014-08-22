@@ -85,7 +85,7 @@
       TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERRESPONSE_GETBUFFERSIZE);
       try {
          int hval = response.getBufferSize();
-         int pval = ((MimeResponse)portletResp).getBufferSize();
+         int pval = ((RenderResponse)portletResp).getBufferSize();
          String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + RenderResponse";
          if (hval != pval) {
             tr5.appendTcDetail(str);
@@ -101,7 +101,7 @@
       TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERRESPONSE_GETCHARACTERENCODING);
       try {
          String hval = response.getCharacterEncoding();
-         String pval = ((MimeResponse)portletResp).getCharacterEncoding();
+         String pval = ((RenderResponse)portletResp).getCharacterEncoding();
          CompareUtils.stringsEqual("HttpServletResponse", hval, "RenderResponse", pval, tr6);
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
@@ -113,7 +113,7 @@
       TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERRESPONSE_GETCONTENTTYPE);
       try {
          String hval = response.getContentType();
-         String pval = ((MimeResponse)portletResp).getContentType();
+         String pval = ((RenderResponse)portletResp).getContentType();
          CompareUtils.stringsEqual("HttpServletResponse", hval, "RenderResponse", pval, tr7);
       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
@@ -139,7 +139,7 @@
       TestResult tr9 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERRESPONSE_ISCOMMITTED);
       try {
          boolean hval = response.isCommitted();
-         boolean pval = ((MimeResponse)portletResp).isCommitted();
+         boolean pval = ((RenderResponse)portletResp).isCommitted();
          String str = "Value " + hval + " from " + "HttpServletResponse" + " does not equal value " + pval + " + RenderResponse";
          if (hval != pval) {
             tr9.appendTcDetail(str);

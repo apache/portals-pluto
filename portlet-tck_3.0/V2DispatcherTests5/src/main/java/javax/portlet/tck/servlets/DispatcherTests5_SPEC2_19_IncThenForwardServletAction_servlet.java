@@ -155,8 +155,9 @@ public class DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet exten
       /* RequestDispatcher"                                                   */
       TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENFORWARDSERVLETACTION_INVOKE7);
       try {
-         String ctxPath= request.getContextPath();
-         CompareUtils.stringsEqual(ctxPath, "/DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet", tr5);
+         String sname = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet" + SERVLET_SUFFIX;
+         String path= request.getServletPath();
+         CompareUtils.stringsEqual(path, sname, tr5);
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 

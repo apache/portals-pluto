@@ -72,6 +72,7 @@ public class DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest imple
 
       StringWriter writer = new StringWriter();
 
+      // Now do the actual dispatch
       String target = SERVLET_PREFIX + "DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

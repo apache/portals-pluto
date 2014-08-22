@@ -90,6 +90,7 @@ public class DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest implemen
       // Prereq for: V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getAttributeNames
       portletReq.setAttribute(ATTR_PREFIX + "V2DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest_getAttributeNames", "Value1");
 
+      // Now do the actual dispatch
       String target = JSP_PREFIX + "DispatcherReqRespTests1_SPEC2_19_ForwardJSPResourceRequest" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

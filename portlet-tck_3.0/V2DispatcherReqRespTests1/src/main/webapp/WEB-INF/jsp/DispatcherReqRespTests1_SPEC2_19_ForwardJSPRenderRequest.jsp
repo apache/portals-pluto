@@ -53,7 +53,7 @@
       TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETAUTHTYPE);
       try {
          String hval = request.getAuthType();
-         String pval = ((ClientDataRequest)portletReq).getAuthType();
+         String pval = ((RenderRequest)portletReq).getAuthType();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr2);
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
@@ -96,7 +96,7 @@
       TestResult tr6 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETCONTEXTPATH);
       try {
          String hval = request.getContextPath();
-         String pval = ((ClientDataRequest)portletReq).getContextPath();
+         String pval = ((RenderRequest)portletReq).getContextPath();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr6);
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
@@ -108,7 +108,7 @@
       TestResult tr7 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETCOOKIES);
       try {
          Cookie[] hvals = request.getCookies();
-         Cookie[] pvals = ((ClientDataRequest)portletReq).getCookies();
+         Cookie[] pvals = ((RenderRequest)portletReq).getCookies();
          HashSet<Cookie> hsc = new HashSet<Cookie>(Arrays.asList(hvals));
          HashSet<Cookie> psc = new HashSet<Cookie>(Arrays.asList(pvals));
          CompareUtils.setsEqual("cookies from HttpServletRequest", hsc, "cookies from from RenderRequest", psc, tr7);
@@ -459,7 +459,7 @@
       TestResult tr33 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETREMOTEUSER);
       try {
          String hval = request.getRemoteUser();
-         String pval = ((ClientDataRequest)portletReq).getRemoteUser();
+         String pval = ((RenderRequest)portletReq).getRemoteUser();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr33);
       } catch(Exception e) {tr33.appendTcDetail(e.toString());}
       tr33.writeTo(writer);
@@ -513,7 +513,7 @@
       TestResult tr37 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETREQUESTEDSESSIONID);
       try {
          String hval = request.getRequestedSessionId();
-         String pval = ((ClientDataRequest)portletReq).getRequestedSessionId();
+         String pval = ((RenderRequest)portletReq).getRequestedSessionId();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr37);
       } catch(Exception e) {tr37.appendTcDetail(e.toString());}
       tr37.writeTo(writer);
@@ -525,7 +525,7 @@
       TestResult tr38 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETSCHEME);
       try {
          String hval = request.getScheme();
-         String pval = ((ClientDataRequest)portletReq).getScheme();
+         String pval = ((RenderRequest)portletReq).getScheme();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr38);
       } catch(Exception e) {tr38.appendTcDetail(e.toString());}
       tr38.writeTo(writer);
@@ -537,7 +537,7 @@
       TestResult tr39 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETSERVERNAME);
       try {
          String hval = request.getServerName();
-         String pval = ((ClientDataRequest)portletReq).getServerName();
+         String pval = ((RenderRequest)portletReq).getServerName();
          CompareUtils.stringsEqual("HttpServletRequest", hval, "RenderRequest", pval, tr39);
       } catch(Exception e) {tr39.appendTcDetail(e.toString());}
       tr39.writeTo(writer);
@@ -549,7 +549,7 @@
       TestResult tr40 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETSERVERPORT);
       try {
          int hval = request.getServerPort();
-         int pval = ((ClientDataRequest)portletReq).getServerPort();
+         int pval = ((RenderRequest)portletReq).getServerPort();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
          if (hval != pval) {
             tr40.appendTcDetail(str);
@@ -594,7 +594,7 @@
       TestResult tr43 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_GETUSERPRINCIPAL);
       try {
          java.security.Principal hpal = request.getUserPrincipal();
-         java.security.Principal ppal = ((ClientDataRequest)portletReq).getUserPrincipal();
+         java.security.Principal ppal = ((RenderRequest)portletReq).getUserPrincipal();
          String str = "Value " + hpal.toString() + " from " + "HttpServletRequest" + " does not equal value " + ppal.toString() + " + RenderRequest";
          if (!hpal.equals(ppal)) {
             tr43.appendTcDetail(str);
@@ -610,7 +610,7 @@
       TestResult tr44 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_ISREQUESTEDSESSIONIDVALID);
       try {
          boolean hval = request.isRequestedSessionIdValid();
-         boolean pval = ((ClientDataRequest)portletReq).isRequestedSessionIdValid();
+         boolean pval = ((RenderRequest)portletReq).isRequestedSessionIdValid();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
          if (hval != pval) {
             tr44.appendTcDetail(str);
@@ -626,7 +626,7 @@
       TestResult tr45 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_ISSECURE);
       try {
          boolean hval = request.isSecure();
-         boolean pval = ((ClientDataRequest)portletReq).isSecure();
+         boolean pval = ((RenderRequest)portletReq).isSecure();
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
          if (hval != pval) {
             tr45.appendTcDetail(str);
@@ -642,7 +642,7 @@
       TestResult tr46 = tcd.getTestResultFailed(V2DISPATCHERREQRESPTESTS1_SPEC2_19_FORWARDJSPRENDERREQUEST_ISUSERINROLE);
       try {
          boolean hval = request.isUserInRole(ROLE_NAME);
-         boolean pval = ((ClientDataRequest)portletReq).isUserInRole(ROLE_NAME);
+         boolean pval = ((RenderRequest)portletReq).isUserInRole(ROLE_NAME);
          String str = "Value " + hval + " from " + "HttpServletRequest" + " does not equal value " + pval + " + RenderRequest";
          if (hval != pval) {
             tr46.appendTcDetail(str);

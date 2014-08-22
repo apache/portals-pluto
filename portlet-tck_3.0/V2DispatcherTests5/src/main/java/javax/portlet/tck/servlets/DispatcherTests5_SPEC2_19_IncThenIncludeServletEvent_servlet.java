@@ -154,8 +154,9 @@ public class DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet extend
       /* must reflect the path used to obtain the RequestDispatcher"          */
       TestResult tr5 = tcd.getTestResultFailed(V2DISPATCHERTESTS5_SPEC2_19_INCTHENINCLUDESERVLETEVENT_INVOKE7);
       try {
-         String ctxPath= request.getContextPath();
-         CompareUtils.stringsEqual(ctxPath, "/DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet", tr5);
+         String sname = SERVLET_PREFIX + "DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet" + SERVLET_SUFFIX;
+         String path= request.getServletPath();
+         CompareUtils.stringsEqual(path, sname, tr5);
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 

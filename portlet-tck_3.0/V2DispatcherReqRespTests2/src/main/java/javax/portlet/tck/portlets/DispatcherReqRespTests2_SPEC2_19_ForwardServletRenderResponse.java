@@ -96,6 +96,7 @@ public class DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse imple
 
       PrintWriter writer = portletResp.getWriter();
 
+      // Now do the actual dispatch
       String target = SERVLET_PREFIX + "DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);

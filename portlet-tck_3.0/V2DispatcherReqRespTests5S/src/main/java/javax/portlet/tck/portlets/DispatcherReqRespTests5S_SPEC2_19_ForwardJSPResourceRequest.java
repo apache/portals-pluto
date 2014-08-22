@@ -84,6 +84,7 @@ public class DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceRequest impleme
 
       PrintWriter writer = portletResp.getWriter();
 
+      // Now do the actual dispatch
       String target = JSP_PREFIX + "DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceRequest" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
             .getRequestDispatcher(target);
