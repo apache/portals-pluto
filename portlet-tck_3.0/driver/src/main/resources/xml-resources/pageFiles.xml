@@ -45,6 +45,8 @@
    <fl:file>tck-V2DispatcherTests2-pages.xml</fl:file>
    <fl:file>tck-V2DispatcherTests3S-pages.xml</fl:file>
    <fl:file>tck-V2DispatcherTests4-pages.xml</fl:file>
+   <fl:file>tck-V2DispatcherTests5-pages.xml</fl:file>
+   <fl:file>tck-V2DispatcherTests6-pages.xml</fl:file>
    <fl:file>tck-V2DispatcherReqRespTests1-pages.xml</fl:file>
    <fl:file>tck-V2DispatcherReqRespTests2-pages.xml</fl:file>
    <fl:file>tck-V2DispatcherReqRespTests3-pages.xml</fl:file>

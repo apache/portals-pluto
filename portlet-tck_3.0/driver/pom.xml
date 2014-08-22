@@ -195,6 +195,18 @@
       </dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherTests5</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherTests6</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
          <artifactId>tck-V2DispatcherReqRespTests1</artifactId>
          <version>${project.version}</version>
          <type>war</type>
@@ -280,6 +292,8 @@
                         tck-V2DispatcherTests,
                         tck-V2DispatcherTests2,
                         tck-V2DispatcherTests4,
+                        tck-V2DispatcherTests5,
+                        tck-V2DispatcherTests6,
                         tck-V2DispatcherTests3S
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
@@ -441,7 +455,11 @@
                         </property>
                         <property>
                            <name>test.debug</name>
-                           <value>${test.module}</value>
+                           <value>false</value>
+                        </property>
+                        <property>
+                           <name>test.timeout</name>
+                           <value>${test.timeout}</value>
                         </property>
                      </systemProperties>
                   </configuration>

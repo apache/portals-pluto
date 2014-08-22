@@ -101,9 +101,13 @@
       <!-- Can be used with firefox or HTMLUnit without setting the test.browser.webDriver property. -->
       <!-- Use of Chrome or IE requires the webDriver to be downloaded ad available. Set the -->
       <!-- test.browser.webDriver property to point to the appropriate WebDriver server. -->
+      <test.browser>firefox</test.browser>
       <test.browser>HTMLUnit</test.browser>
       <!-- commented outline below shows configuration for the Internet Explorer  driver -->
       <!-- test.browser.webDriver>C:\ntutil\IEDriverServer_x64_2.42.0\IEDriverServer.exe</test.browser.webDriver -->
+
+     <!-- Specify timeout in seconds for the driver to wait for page load. must be an integer. -->
+      <test.timeout>3</test.timeout>
 
       <!-- Set in subprojects containing additional test case file. default is no additional file (false) -->
       <additional.testcase.uri>false</additional.testcase.uri>
@@ -139,6 +143,8 @@
       <module>V2DispatcherTests2</module>
       <module>V2DispatcherTests3S</module>
       <module>V2DispatcherTests4</module>
+      <module>V2DispatcherTests5</module>
+      <module>V2DispatcherTests6</module>
       <module>V2DispatcherReqRespTests1</module>
       <module>V2DispatcherReqRespTests2</module>
       <module>V2DispatcherReqRespTests3</module>

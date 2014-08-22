@@ -226,7 +226,7 @@ public class DispatcherTests2_SPEC2_19_ForwardJSPEvent implements Portlet, Resou
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.forward.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
       /* in the forward chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
@@ -239,7 +239,7 @@ public class DispatcherTests2_SPEC2_19_ForwardJSPEvent implements Portlet, Resou
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the servlet request attribute           */
       /* javax.servlet.forward.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
       /* in the forward chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();

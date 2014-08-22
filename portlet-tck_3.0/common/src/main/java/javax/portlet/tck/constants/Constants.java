@@ -43,7 +43,14 @@ public class Constants {
    public static final String QUERY_STRING = "qparm1=qvalue1&qparm2=qvalue2";
    
    // for several tests to servlet / jsp for comparison
-   public static final String MULTIPLE_INCLUDE_NAME = "MultipleIncludeServlet";
+   public static final String ATTR_DISPATCH_TARGET = "req.attr.dispatch.target";
+   public static final String ATTR_DISPATCH_ACTION = "req.attr.dispatch.action";
+   public static final String ATTR_DISPATCH_REQUEST_URI  = "req.attr.dispatch.request_uri ";
+   public static final String ATTR_DISPATCH_CONTEXT_PATH = "req.attr.dispatch.context_path";
+   public static final String ATTR_DISPATCH_SERVLET_PATH = "req.attr.dispatch.servlet_path";
+   public static final String ATTR_DISPATCH_PATH_INFO    = "req.attr.dispatch.path_info";
+   public static final String ATTR_DISPATCH_QUERY_STRING = "req.attr.dispatch.query_string";
+   public static final String ATTR_DISPATCH_COMMITTED = "req.attr.dispatch.committed";
    public static final String MULTIPLE_INCLUDE_ATTR = "req.attr.multi";
    public static final String MULTIPLE_INCLUDE_VAL = "Included counter=";
    public static final String THREADID_ATTR = "req.attr.tid";

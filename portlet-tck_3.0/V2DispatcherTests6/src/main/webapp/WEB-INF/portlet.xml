@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2DispatcherTests6">
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenIncludeServletAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenIncludeServletAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenIncludeServletRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenIncludeServletRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenIncludeServletResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenIncludeServletResource</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenIncludeServletResource</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenForwardServletAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenForwardServletAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenForwardServletRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenForwardServletRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherTests6_SPEC2_19_FwdThenForwardServletResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherTests6_SPEC2_19_FwdThenForwardServletResource</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherTests6_SPEC2_19_FwdThenForwardServletResource</title>
+      </portlet-info>
+   </portlet>
+
+   <event-definition>
+      <qname>tck:DispatcherTests_SPEC2_19_DispatchServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests_SPEC2_19_IncludeServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests_SPEC2_19_ForwardServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests2_SPEC2_19_IncludeJSPEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests2_SPEC2_19_ForwardJSPEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests3S_SPEC2_19_IncludeServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests3S_SPEC2_19_ForwardServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests3S_SPEC2_19_IncludeJSPEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests3S_SPEC2_19_ForwardJSPEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests4_SPEC2_19_IncludeServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests4_SPEC2_19_ForwardServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests4_SPEC2_19_IncludeJSPEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests4_SPEC2_19_ForwardJSPEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests5_SPEC2_19_IncThenForwardServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests6_SPEC2_19_FwdThenIncludeServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherTests6_SPEC2_19_FwdThenForwardServletEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
+</portlet-app>

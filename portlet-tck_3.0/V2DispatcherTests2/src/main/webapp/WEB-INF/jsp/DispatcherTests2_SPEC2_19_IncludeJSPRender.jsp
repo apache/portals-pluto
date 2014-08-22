@@ -177,7 +177,7 @@
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.include.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr12 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_ATTRIBUTES2);
       try {
@@ -192,7 +192,7 @@
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the servlet request attribute           */
       /* javax.servlet.include.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
       /* in the include chain"                                                */
       TestResult tr13 = tcd.getTestResultFailed(V2DISPATCHERTESTS2_SPEC2_19_INCLUDEJSPRENDER_ATTRIBUTES2A);
       try {

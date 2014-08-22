@@ -235,7 +235,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction implements Portlet, R
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.include.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
@@ -248,7 +248,7 @@ public class DispatcherTests_SPEC2_19_IncludeServletAction implements Portlet, R
       /* Details: "If the request dispatcher is obtained through the          */
       /* getRequestDispatcher method, the servlet request attribute           */
       /* javax.servlet.include.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
