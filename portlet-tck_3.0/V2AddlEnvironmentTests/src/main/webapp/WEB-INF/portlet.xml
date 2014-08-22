@@ -20,25 +20,16 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-AddlEnvironmentTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2AddlEnvironmentTests">
    <portlet>
       <portlet-name>AddlEnvironmentTests_SPEC2_10_Context</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_Context</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlEnvironmentTests_SPEC2_10_Context</title>
       </portlet-info>
@@ -47,69 +38,122 @@
    <portlet>
       <portlet-name>AddlEnvironmentTests_SPEC2_10_ContextOptions</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_10_ContextOptions</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlEnvironmentTests_SPEC2_10_ContextOptions</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlEnvironmentTests_SPEC2_17_Preferences</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_Preferences</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlEnvironmentTests_SPEC2_17_ActionPreferences</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_ActionPreferences</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlEnvironmentTests_SPEC2_17_Preferences</title>
+         <title>AddlEnvironmentTests_SPEC2_17_ActionPreferences</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlEnvironmentTests_SPEC2_17_EventPreferences</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_EventPreferences</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlEnvironmentTests_SPEC2_17_EventPreferences</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlEnvironmentTests_SPEC2_17_EventPreferences_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_EventPreferences_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlEnvironmentTests_SPEC2_17_EventPreferences_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlEnvironmentTests_SPEC2_17_ResourcePreferences</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_ResourcePreferences</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlEnvironmentTests_SPEC2_17_ResourcePreferences</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlEnvironmentTests_SPEC2_17_RenderPreferences</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_17_RenderPreferences</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlEnvironmentTests_SPEC2_17_RenderPreferences</title>
       </portlet-info>
    </portlet>
 
    <portlet>
       <portlet-name>AddlEnvironmentTests_SPEC2_18_Sessions</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlEnvironmentTests_SPEC2_18_Sessions</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlEnvironmentTests_SPEC2_18_Sessions</title>
       </portlet-info>
    </portlet>
 
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

@@ -17,37 +17,63 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<!--
-   Defines the test cases for this module.
-   For this module, the test case names are not automatically generated from.
-   the deployment descriptor, so edit this file to add new test cases.
-   This allows a portlet to define multiple test cases.
--->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API AddlFilterTests test case names and page mappings -->
-<entry key="SPEC2_20_PortletFilter_filter1">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter2">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter3">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter4">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter5">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter6">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter7">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter8">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter9">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter10">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter11">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter12">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter13">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter14">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filter15">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper1">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper2">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper3">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper4">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper5">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper6">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper7">V2AddlFilterTests</entry>
-<entry key="SPEC2_20_PortletFilter_filterWrapper8">V2AddlFilterTests</entry>
-
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter1">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter6">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter7">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter8">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter9">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter10">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter11">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter12">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter13">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter14">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter15">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filterWrapper1">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filterWrapper2">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Action_filter2">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter1">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter6">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter7">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter8">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter9">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter10">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter11">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter12">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter13">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter14">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter15">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filterWrapper5">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filterWrapper6">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Render_filter3">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter1">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter6">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter7">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter8">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter9">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter10">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter11">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter12">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter13">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter14">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter15">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filterWrapper3">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filterWrapper4">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Event_filter4">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter1">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter6">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter7">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter8">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter9">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter10">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter11">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter12">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter13">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter14">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter15">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filter5">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filterWrapper7">V2AddlFilterTests</entry>
+<entry key="V2AddlFilterTests_SPEC2_20_Resource_filterWrapper8">V2AddlFilterTests</entry>
 </properties>

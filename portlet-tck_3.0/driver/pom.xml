@@ -171,6 +171,18 @@
       </dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2PortletTagLibraryTests2</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2PortletTagLibraryTests3</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
          <artifactId>tck-V2DispatcherTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
@@ -284,6 +296,8 @@
                         tck-V2AddlResponseTests,
                         tck-V2AddlUrlTests,
                         tck-V2PortletTagLibraryTests,
+                        tck-V2PortletTagLibraryTests2,
+                        tck-V2PortletTagLibraryTests3,
                         tck-V2DispatcherReqRespTests1,
                         tck-V2DispatcherReqRespTests2,
                         tck-V2DispatcherReqRespTests3,

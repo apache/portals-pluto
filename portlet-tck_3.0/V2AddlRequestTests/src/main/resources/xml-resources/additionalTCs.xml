@@ -17,62 +17,96 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<!--
-   Defines the test cases for this module.
-   For this module, the test case names are not automatically generated from.
-   the deployment descriptor, so edit this file to add new test cases.
-   This allows a portlet to define multiple test cases.
--->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API AddlRequestTests test case names and page mappings -->
-<entry key="SPEC2_11_RequestParamsProps_parameters1">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters2">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters6">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters8">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters9">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters10">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters11">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters12">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters13">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters15">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestParamsProps_parameters17">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters1">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters2">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters4">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters5">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters6">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters7">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters8">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters9">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters10">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters11">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters12">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters13">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters15">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_RequestPRP_publicRenderParameters16">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes1">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes2">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes3">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes4">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes5">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes6">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes7">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes8">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_attributes9">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType1">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType2">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType3">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType4">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType5">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType6">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType7">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType8">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType9">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType10">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType11">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType12">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_contentType13">V2AddlRequestTests</entry>
-<entry key="SPEC2_11_Request_windowId4">V2AddlRequestTests</entry>
-
+<entry key="V2AddlRequestTests_SPEC2_11_Action_parameters1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_parameters2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_parameters6">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_parameters8">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_parameters9">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters15">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters16">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Action_publicRenderParameters11">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Event_parameters1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Event_parameters2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Event_parameters6">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Event_parameters12">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters15">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters16">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Event_publicRenderParameters5">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters10">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters11">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters13">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters15">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_parameters6">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters15">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters16">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters6">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Render_publicRenderParameters13a">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters6">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_parameters17">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters15">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters16">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters7">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_Resource_publicRenderParameters12">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderPRP_publicRenderParameters8">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderPRP_publicRenderParameters9">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderPRP_publicRenderParameters10">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes3">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes5">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderAttr_attributes8">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionAttr_attributes1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionAttr_attributes2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionAttr_attributes6">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventAttr_attributes1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventAttr_attributes2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventAttr_attributes7">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceAttr_attributes1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceAttr_attributes2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceAttr_attributes9">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_contentType1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_contentType2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_contentType3">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_contentType4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_contentType5">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_windowId4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_contentType6">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ActionReq_contentType7">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_contentType1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_contentType2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_contentType3">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_contentType4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_contentType5">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_windowId4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_contentType8">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_EventReq_contentType9">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType3">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType5">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_windowId4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType10">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType11">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_RenderReq_contentType13">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_contentType1">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_contentType2">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_contentType3">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_contentType4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_contentType5">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_windowId4">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_contentType12">V2AddlRequestTests</entry>
+<entry key="V2AddlRequestTests_SPEC2_11_ResourceReq_contentType13">V2AddlRequestTests</entry>
 </properties>
