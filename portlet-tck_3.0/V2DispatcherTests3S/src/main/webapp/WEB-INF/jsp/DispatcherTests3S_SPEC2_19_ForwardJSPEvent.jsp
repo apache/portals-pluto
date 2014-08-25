@@ -8,6 +8,7 @@
 <%@ page import="javax.portlet.tck.beans.*,javax.portlet.tck.constants.*" %>
 <%@ page import="static javax.portlet.tck.constants.Constants.*" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286DispatcherTestCaseDetails.*" %>
+
 <%
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");

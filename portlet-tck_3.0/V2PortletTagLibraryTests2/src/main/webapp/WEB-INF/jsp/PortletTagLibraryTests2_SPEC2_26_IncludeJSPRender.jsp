@@ -8,7 +8,6 @@
 <%@ page import="javax.portlet.tck.beans.*,javax.portlet.tck.constants.*" %>
 <%@ page import="static javax.portlet.tck.constants.Constants.*" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*" %>
-
 <%
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
@@ -115,11 +114,12 @@
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_defineObjectsRender11 */
       /* Details: "When included in the Render phase, the defineObjects tag   */
-      /* defines the variable Map<String, Object> portletSessionScope,        */
-      /* providing access to the portletSession attributes as a Map           */
-      /* equivalent to the PortletSession.getAttributeMap() call, does not    */
-      /* create a new session, only returns an existing session. If no        */
-      /* session attributes exist this method returns an empty Map."          */
+      /* defines the variable Map&lt;String, Object&gt;                       */
+      /* portletSessionScope, providing access to the portletSession          */
+      /* attributes as a Map equivalent to the                                */
+      /* PortletSession.getAttributeMap() call, does not create a new         */
+      /* session, only returns an existing session. If no session             */
+      /* attributes exist this method returns an empty Map."                  */
       TestResult tr10 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_DEFINEOBJECTSRENDER11);
       /* TODO: implement test */
       tr10.appendTcDetail("Not implemented.");
@@ -136,7 +136,7 @@
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_defineObjectsRender13 */
       /* Details: "When included in the Render phase, the defineObjects tag   */
-      /* defines the variable Map<String, String[]>                           */
+      /* defines the variable Map&lt;String, String[]&gt;                     */
       /* portletPreferencesValues, providing access to the portlet            */
       /* preferences as a Map, equivalent to the                              */
       /* PortletPreferences.getMap() call. If no portlet preferences exist,   */
@@ -288,8 +288,8 @@
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL19 */
       /* Details: "If the optional actionURL                                  */
       /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the <portlet:param> element     */
-      /* are merged with the render parameters"                               */
+      /* additional parameters specified with the &lt;portlet:param&gt;       */
+      /* element are merged with the render parameters"                       */
       TestResult tr30 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL19);
       /* TODO: implement test */
       tr30.appendTcDetail("Not implemented.");
@@ -298,9 +298,9 @@
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL20 */
       /* Details: "If the optional actionURL                                  */
       /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the <portlet:param> element     */
-      /* appear in the values array before the render parameter values if     */
-      /* there is a name conflict"                                            */
+      /* additional parameters specified with the &lt;portlet:param&gt;       */
+      /* element appear in the values array before the render parameter       */
+      /* values if there is a name conflict"                                  */
       TestResult tr31 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL20);
       /* TODO: implement test */
       tr31.appendTcDetail("Not implemented.");
@@ -333,8 +333,8 @@
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL25 */
       /* Details: "If the optional actionURL \"escapeXML\" attribute is set   */
-      /* to false, the characters \"<>&'\\\"\" are not converted to their     */
-      /* entity codes"                                                        */
+      /* to false, the characters \"&lt;&gt;&'\\\"\" are not converted to     */
+      /* their entity codes"                                                  */
       TestResult tr35 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_ACTIONURL25);
       /* TODO: implement test */
       tr35.appendTcDetail("Not implemented.");
@@ -526,8 +526,8 @@
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL19 */
       /* Details: "If the optional renderURL                                  */
       /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the <portlet:param> element     */
-      /* are merged with the render parameters"                               */
+      /* additional parameters specified with the &lt;portlet:param&gt;       */
+      /* element are merged with the render parameters"                       */
       TestResult tr58 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RENDERURL19);
       /* TODO: implement test */
       tr58.appendTcDetail("Not implemented.");
@@ -536,9 +536,9 @@
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL20 */
       /* Details: "If the optional renderURL                                  */
       /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the <portlet:param> element     */
-      /* appear in the values array before the render parameter values if     */
-      /* there is a name conflict"                                            */
+      /* additional parameters specified with the &lt;portlet:param&gt;       */
+      /* element appear in the values array before the render parameter       */
+      /* values if there is a name conflict"                                  */
       TestResult tr59 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RENDERURL20);
       /* TODO: implement test */
       tr59.appendTcDetail("Not implemented.");
@@ -571,8 +571,8 @@
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_renderURL25 */
       /* Details: "If the optional renderURL \"escapeXML\" attribute is set   */
-      /* to false, the characters \"<>&'\\\"\" are not converted to their     */
-      /* entity codes"                                                        */
+      /* to false, the characters \"&lt;&gt;&'\\\"\" are not converted to     */
+      /* their entity codes"                                                  */
       TestResult tr63 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RENDERURL25);
       /* TODO: implement test */
       tr63.appendTcDetail("Not implemented.");
@@ -612,8 +612,8 @@
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL4 */
       /* Details: "The resource parameters specified with the                 */
-      /* <portlet:param> element appear in the values array before the        */
-      /* render parameter values if there is a name conflict"                 */
+      /* &lt;portlet:param&gt; element appear in the values array before      */
+      /* the render parameter values if there is a name conflict"             */
       TestResult tr68 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL4);
       /* TODO: implement test */
       tr68.appendTcDetail("Not implemented.");
@@ -680,8 +680,8 @@
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL13 */
       /* Details: "If the optional resourceURL                                */
       /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the <portlet:param> element     */
-      /* are merged with the render parameters"                               */
+      /* additional parameters specified with the &lt;portlet:param&gt;       */
+      /* element are merged with the render parameters"                       */
       TestResult tr76 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL13);
       /* TODO: implement test */
       tr76.appendTcDetail("Not implemented.");
@@ -690,9 +690,9 @@
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL14 */
       /* Details: "If the optional resourceURL                                */
       /* \"copyCurrentRenderParameters\" attribute is set to true,            */
-      /* additional parameters specified with the <portlet:param> element     */
-      /* appear in the values array before the render parameter values if     */
-      /* there is a name conflict"                                            */
+      /* additional parameters specified with the &lt;portlet:param&gt;       */
+      /* element appear in the values array before the render parameter       */
+      /* values if there is a name conflict"                                  */
       TestResult tr77 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL14);
       /* TODO: implement test */
       tr77.appendTcDetail("Not implemented.");
@@ -725,8 +725,8 @@
 
       /* TestCase: V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL19 */
       /* Details: "If the optional resourceURL \"escapeXML\" attribute is     */
-      /* set to false, the characters \"<>&'\\\"\" are not converted to       */
-      /* their entity codes"                                                  */
+      /* set to false, the characters \"&lt;&gt;&'\\\"\" are not converted    */
+      /* to their entity codes"                                               */
       TestResult tr81 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS2_SPEC2_26_INCLUDEJSPRENDER_RESOURCEURL19);
       /* TODO: implement test */
       tr81.appendTcDetail("Not implemented.");

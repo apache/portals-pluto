@@ -103,7 +103,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig3 implements Portlet, Resource
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig3_getResourceBundle5 */
       /* Details: "If the resource bundle does not contain a                  */
       /* \"javax.portlet.title\" property, the value defined in the           */
-      /* deployment descriptor <title> element is returned by the             */
+      /* deployment descriptor &lt;title&gt; element is returned by the       */
       /* corresponding getString method call"                                 */
       TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG3_GETRESOURCEBUNDLE5);
       /* TODO: implement test */
@@ -113,8 +113,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig3 implements Portlet, Resource
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig3_getResourceBundle6 */
       /* Details: "If the resource bundle does not contain a                  */
       /* \"javax.portlet.short-title\" property, the value defined in the     */
-      /* deployment descriptor <short-title> element is returned by the       */
-      /* corresponding getString method call"                                 */
+      /* deployment descriptor &lt;short-title&gt; element is returned by     */
+      /* the corresponding getString method call"                             */
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG3_GETRESOURCEBUNDLE6);
       /* TODO: implement test */
       tr1.appendTcDetail("Not implemented.");
@@ -123,7 +123,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig3 implements Portlet, Resource
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig3_getResourceBundle7 */
       /* Details: "If the resource bundle does not contain a                  */
       /* \"javax.portlet.keywords\" property, the value defined in the        */
-      /* deployment descriptor <keywords> element is returned by the          */
+      /* deployment descriptor &lt;keywords&gt; element is returned by the    */
       /* corresponding getString method call"                                 */
       TestResult tr2 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG3_GETRESOURCEBUNDLE7);
       /* TODO: implement test */

@@ -120,7 +120,7 @@ public class AddlUrlTests_SPEC2_7_UrlAction implements Portlet, ResourceServingP
 
       /* TestCase: V2AddlUrlTests_SPEC2_7_UrlAction_actionURL6                */
       /* Details: "Action parameters can be set on the action URL through     */
-      /* the setParameterMap(Map<String, String[]>) method"                   */
+      /* the setParameterMap(Map&lt;String, String[]&gt;) method"             */
       TestResult tr5 = tcd.getTestResultFailed(V2ADDLURLTESTS_SPEC2_7_URLACTION_ACTIONURL6);
       /* TODO: implement test */
       tr5.appendTcDetail("Not implemented.");
@@ -232,7 +232,7 @@ public class AddlUrlTests_SPEC2_7_UrlAction implements Portlet, ResourceServingP
 
       /* TestCase: V2AddlUrlTests_SPEC2_7_UrlAction_actionURL6                */
       /* Details: "Action parameters can be set on the action URL through     */
-      /* the setParameterMap(Map<String, String[]>) method"                   */
+      /* the setParameterMap(Map&lt;String, String[]&gt;) method"             */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());

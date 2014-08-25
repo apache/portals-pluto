@@ -144,7 +144,7 @@ public class AddlUrlTests_SPEC2_7_UrlRender implements Portlet, ResourceServingP
 
       /* TestCase: V2AddlUrlTests_SPEC2_7_UrlRender_renderURL6                */
       /* Details: "Private render parameters can be set on the render URL     */
-      /* through the setParameterMap(Map<String, String[]>) method"           */
+      /* through the setParameterMap(Map&lt;String, String[]&gt;) method"     */
       TestResult tr5 = tcd.getTestResultFailed(V2ADDLURLTESTS_SPEC2_7_URLRENDER_RENDERURL6);
       /* TODO: implement test */
       tr5.appendTcDetail("Not implemented.");
@@ -168,7 +168,7 @@ public class AddlUrlTests_SPEC2_7_UrlRender implements Portlet, ResourceServingP
 
       /* TestCase: V2AddlUrlTests_SPEC2_7_UrlRender_renderURL9                */
       /* Details: "Public render parameters can be set on the render URL      */
-      /* through the setParameterMap(Map<String, String[]>) method"           */
+      /* through the setParameterMap(Map&lt;String, String[]&gt;) method"     */
       TestResult tr8 = tcd.getTestResultFailed(V2ADDLURLTESTS_SPEC2_7_URLRENDER_RENDERURL9);
       /* TODO: implement test */
       tr8.appendTcDetail("Not implemented.");

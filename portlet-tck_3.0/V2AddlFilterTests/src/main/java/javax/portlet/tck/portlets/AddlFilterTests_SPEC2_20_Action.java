@@ -85,8 +85,8 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
       tr0.writeTo(writer);
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter6                  */
-      /* Details: "A filter declaration can contain multiple <lifecycle>      */
-      /* tags for a single filter class"                                      */
+      /* Details: "A filter declaration can contain multiple                  */
+      /* &lt;lifecycle&gt; tags for a single filter class"                    */
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER6);
       /* TODO: implement test */
       tr1.appendTcDetail("Not implemented.");
@@ -147,7 +147,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter13                 */
       /* Details: "A filter declaration can be mapped to a portlet through    */
-      /* the deployment descriptor <filter-mapping> element"                  */
+      /* the deployment descriptor &lt;filter-mapping&gt; element"            */
       TestResult tr8 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER13);
       /* TODO: implement test */
       tr8.appendTcDetail("Not implemented.");
@@ -166,8 +166,8 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter15                 */
       /* Details: "The order the container uses in building the chain of      */
       /* filters to be applied for a particular request is the order in       */
-      /* which the <portlet-name> matching filter mappings appear in the      */
-      /* deployment descriptor"                                               */
+      /* which the &lt;portlet-name&gt; matching filter mappings appear in    */
+      /* the deployment descriptor"                                           */
       TestResult tr10 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER15);
       /* TODO: implement test */
       tr10.appendTcDetail("Not implemented.");
@@ -190,8 +190,9 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
       tr12.writeTo(writer);
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter2                  */
-      /* Details: "If the filter declaration specifies the <lifecycle> tag    */
-      /* value ACTION_PHASE, the ActionFilter.doFilter method is called"      */
+      /* Details: "If the filter declaration specifies the                    */
+      /* &lt;lifecycle&gt; tag value ACTION_PHASE, the                        */
+      /* ActionFilter.doFilter method is called"                              */
       TestResult tr13 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_ACTION_FILTER2);
       /* TODO: implement test */
       tr13.appendTcDetail("Not implemented.");
@@ -242,8 +243,8 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
       }
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter6                  */
-      /* Details: "A filter declaration can contain multiple <lifecycle>      */
-      /* tags for a single filter class"                                      */
+      /* Details: "A filter declaration can contain multiple                  */
+      /* &lt;lifecycle&gt; tags for a single filter class"                    */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -318,7 +319,7 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter13                 */
       /* Details: "A filter declaration can be mapped to a portlet through    */
-      /* the deployment descriptor <filter-mapping> element"                  */
+      /* the deployment descriptor &lt;filter-mapping&gt; element"            */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -341,8 +342,8 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter15                 */
       /* Details: "The order the container uses in building the chain of      */
       /* filters to be applied for a particular request is the order in       */
-      /* which the <portlet-name> matching filter mappings appear in the      */
-      /* deployment descriptor"                                               */
+      /* which the &lt;portlet-name&gt; matching filter mappings appear in    */
+      /* the deployment descriptor"                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -371,8 +372,9 @@ public class AddlFilterTests_SPEC2_20_Action implements Portlet, ResourceServing
       }
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Action_filter2                  */
-      /* Details: "If the filter declaration specifies the <lifecycle> tag    */
-      /* value ACTION_PHASE, the ActionFilter.doFilter method is called"      */
+      /* Details: "If the filter declaration specifies the                    */
+      /* &lt;lifecycle&gt; tag value ACTION_PHASE, the                        */
+      /* ActionFilter.doFilter method is called"                              */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());

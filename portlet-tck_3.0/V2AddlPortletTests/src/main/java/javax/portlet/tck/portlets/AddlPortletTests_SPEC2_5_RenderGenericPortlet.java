@@ -112,8 +112,8 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet implements Portlet, R
       /* TestCase: V2AddlPortletTests_SPEC2_5_RenderGenericPortlet_eventDispatching1 */
       /* Details: "The GenericPortlet processEvent method will dispatch the   */
       /* request to a subclass method annotated with the tag                  */
-      /* @ProcessEvent(qname=<eventname>), where <eventname> must be in the   */
-      /* format provided by Qname.toString()"                                 */
+      /* @ProcessEvent(qname=&lt;eventname&gt;), where &lt;eventname&gt;      */
+      /* must be in the format provided by Qname.toString()"                  */
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_EVENTDISPATCHING1);
       /* TODO: implement test */
       tr1.appendTcDetail("Not implemented.");
@@ -122,7 +122,7 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet implements Portlet, R
       /* TestCase: V2AddlPortletTests_SPEC2_5_RenderGenericPortlet_eventDispatching2 */
       /* Details: "The GenericPortlet processEvent method will dispatch the   */
       /* request to a subclass method annotated with the tag                  */
-      /* @ProcessEvent(name=<event_name_local_part>)"                         */
+      /* @ProcessEvent(name=&lt;event_name_local_part&gt;)"                   */
       TestResult tr2 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_EVENTDISPATCHING2);
       /* TODO: implement test */
       tr2.appendTcDetail("Not implemented.");
@@ -140,7 +140,7 @@ public class AddlPortletTests_SPEC2_5_RenderGenericPortlet implements Portlet, R
       /* TestCase: V2AddlPortletTests_SPEC2_5_RenderGenericPortlet_renderDispatching9 */
       /* Details: "getTitle - If a ResourceBundle containing the title        */
       /* string is not defined in the deployment descriptor, the title        */
-      /* defined in the portlet descriptor <title> element is used"           */
+      /* defined in the portlet descriptor &lt;title&gt; element is used"     */
       TestResult tr4 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_5_RENDERGENERICPORTLET_RENDERDISPATCHING9);
       /* TODO: implement test */
       tr4.appendTcDetail("Not implemented.");

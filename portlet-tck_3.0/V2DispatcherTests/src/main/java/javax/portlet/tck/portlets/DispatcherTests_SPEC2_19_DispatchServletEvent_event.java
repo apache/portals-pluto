@@ -122,7 +122,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Port
       TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH4);
       try {
          PortletRequestDispatcher rd = portletConfig.getPortletContext()
-               .getRequestDispatcher("/Invalid/path.jsp");
+               .getRequestDispatcher(" Invalid path.jsp ");
          tr3.setTcSuccess(rd == null);
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);

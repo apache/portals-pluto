@@ -109,8 +109,8 @@ public class AddlFilterTests_SPEC2_20_Render implements Portlet, ResourceServing
       tr0.writeTo(writer);
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filter6                  */
-      /* Details: "A filter declaration can contain multiple <lifecycle>      */
-      /* tags for a single filter class"                                      */
+      /* Details: "A filter declaration can contain multiple                  */
+      /* &lt;lifecycle&gt; tags for a single filter class"                    */
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTER6);
       /* TODO: implement test */
       tr1.appendTcDetail("Not implemented.");
@@ -171,7 +171,7 @@ public class AddlFilterTests_SPEC2_20_Render implements Portlet, ResourceServing
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filter13                 */
       /* Details: "A filter declaration can be mapped to a portlet through    */
-      /* the deployment descriptor <filter-mapping> element"                  */
+      /* the deployment descriptor &lt;filter-mapping&gt; element"            */
       TestResult tr8 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTER13);
       /* TODO: implement test */
       tr8.appendTcDetail("Not implemented.");
@@ -190,8 +190,8 @@ public class AddlFilterTests_SPEC2_20_Render implements Portlet, ResourceServing
       /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filter15                 */
       /* Details: "The order the container uses in building the chain of      */
       /* filters to be applied for a particular request is the order in       */
-      /* which the <portlet-name> matching filter mappings appear in the      */
-      /* deployment descriptor"                                               */
+      /* which the &lt;portlet-name&gt; matching filter mappings appear in    */
+      /* the deployment descriptor"                                           */
       TestResult tr10 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTER15);
       /* TODO: implement test */
       tr10.appendTcDetail("Not implemented.");
@@ -214,8 +214,9 @@ public class AddlFilterTests_SPEC2_20_Render implements Portlet, ResourceServing
       tr12.writeTo(writer);
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Render_filter3                  */
-      /* Details: "If the filter declaration specifies the <lifecycle> tag    */
-      /* value RENDER_PHASE, the RenderFilter.doFilter method is called"      */
+      /* Details: "If the filter declaration specifies the                    */
+      /* &lt;lifecycle&gt; tag value RENDER_PHASE, the                        */
+      /* RenderFilter.doFilter method is called"                              */
       TestResult tr13 = tcd.getTestResultFailed(V2ADDLFILTERTESTS_SPEC2_20_RENDER_FILTER3);
       /* TODO: implement test */
       tr13.appendTcDetail("Not implemented.");

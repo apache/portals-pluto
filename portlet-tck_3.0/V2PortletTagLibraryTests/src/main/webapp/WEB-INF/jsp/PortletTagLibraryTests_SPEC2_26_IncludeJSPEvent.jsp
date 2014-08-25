@@ -8,7 +8,6 @@
 <%@ page import="javax.portlet.tck.beans.*,javax.portlet.tck.constants.*" %>
 <%@ page import="static javax.portlet.tck.constants.Constants.*" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*" %>
-
 <%
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
@@ -115,11 +114,12 @@
 
       /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_defineObjects11 */
       /* Details: "When included in the Event phase, the defineObjects tag    */
-      /* defines the variable Map<String, Object> portletSessionScope,        */
-      /* providing access to the portletSession attributes as a Map           */
-      /* equivalent to the PortletSession.getAttributeMap() call, does not    */
-      /* create a new session, only returns an existing session. If no        */
-      /* session attributes exist this method returns an empty Map."          */
+      /* defines the variable Map&lt;String, Object&gt;                       */
+      /* portletSessionScope, providing access to the portletSession          */
+      /* attributes as a Map equivalent to the                                */
+      /* PortletSession.getAttributeMap() call, does not create a new         */
+      /* session, only returns an existing session. If no session             */
+      /* attributes exist this method returns an empty Map."                  */
       TestResult tr10 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPEVENT_DEFINEOBJECTS11);
       /* TODO: implement test */
       tr10.appendTcDetail("Not implemented.");
@@ -136,7 +136,7 @@
 
       /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_defineObjects13 */
       /* Details: "When included in the Event phase, the defineObjects tag    */
-      /* defines the variable Map<String, String[]>                           */
+      /* defines the variable Map&lt;String, String[]&gt;                     */
       /* portletPreferencesValues, providing access to the portlet            */
       /* preferences as a Map, equivalent to the                              */
       /* PortletPreferences.getMap() call. If no portlet preferences exist,   */

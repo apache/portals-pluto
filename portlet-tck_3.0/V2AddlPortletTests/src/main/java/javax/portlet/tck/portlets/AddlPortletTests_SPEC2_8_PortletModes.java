@@ -126,8 +126,8 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes4 */
       /* Details: "A custom portlet mode with                                 */
-      /* <portal-managed>false</portal-managed> may be declared in the        */
-      /* deployment descriptor"                                               */
+      /* &lt;portal-managed&gt;false&lt;/portal-managed&gt; may be declared   */
+      /* in the deployment descriptor"                                        */
       TestResult tr3 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES4);
       /* TODO: implement test */
       tr3.appendTcDetail("Not implemented.");
@@ -136,8 +136,8 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes5 */
       /* Details: "The PortletRequest.isPortletModeAllowed method must        */
       /* return FALSE for a custom portlet mode with                          */
-      /* <portal-managed>true</portal-managed> that is not supported by the   */
-      /* portlet container"                                                   */
+      /* &lt;portal-managed&gt;true&lt;/portal-managed&gt; that is not        */
+      /* supported by the portlet container"                                  */
       TestResult tr4 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES5);
       /* TODO: implement test */
       tr4.appendTcDetail("Not implemented.");
@@ -146,8 +146,8 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes6 */
       /* Details: "The portlet container must ignore all custom portlet       */
       /* modes in the deployment descriptor with                              */
-      /* <portal-managed>true</portal-managed> that is not supported by the   */
-      /* portlet container"                                                   */
+      /* &lt;portal-managed&gt;true&lt;/portal-managed&gt; that is not        */
+      /* supported by the portlet container"                                  */
       TestResult tr5 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES6);
       /* TODO: implement test */
       tr5.appendTcDetail("Not implemented.");
@@ -155,8 +155,8 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes7 */
       /* Details: "A custom portlet mode with                                 */
-      /* <portal-managed>false</portal-managed> corresponds to the VIEW       */
-      /* mode from the portal point of view"                                  */
+      /* &lt;portal-managed&gt;false&lt;/portal-managed&gt; corresponds to    */
+      /* the VIEW mode from the portal point of view"                         */
       TestResult tr6 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES7);
       /* TODO: implement test */
       tr6.appendTcDetail("Not implemented.");
@@ -165,7 +165,7 @@ public class AddlPortletTests_SPEC2_8_PortletModes implements Portlet, ResourceS
       /* TestCase: V2AddlPortletTests_SPEC2_8_PortletModes_declaringPortletModes8 */
       /* Details: "A custom portlet mode can have a localized decoration      */
       /* name in the resource bundle with the name of                         */
-      /* javax.portlet.app.custom-portlet-mode.<name>.decoration-name"        */
+      /* javax.portlet.app.custom-portlet-mode.&lt;name&gt;.decoration-name"  */
       TestResult tr7 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_8_PORTLETMODES_DECLARINGPORTLETMODES8);
       /* TODO: implement test */
       tr7.appendTcDetail("Not implemented.");

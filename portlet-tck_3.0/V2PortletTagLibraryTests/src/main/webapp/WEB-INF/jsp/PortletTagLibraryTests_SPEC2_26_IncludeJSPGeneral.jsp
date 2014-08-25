@@ -8,7 +8,6 @@
 <%@ page import="javax.portlet.tck.beans.*,javax.portlet.tck.constants.*" %>
 <%@ page import="static javax.portlet.tck.constants.Constants.*" %>
 <%@ page import="static javax.portlet.tck.beans.JSR286SpecTestCaseDetails.*" %>
-
 <%
 
       PortletRequest portletReq = (PortletRequest) request.getAttribute("javax.portlet.request");
@@ -24,8 +23,9 @@
       // Create result objects for the tests
 
       /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_defineObjects3 */
-      /* Details: "The version 1.0 tag library may be referenced using <%@    */
-      /* taglib uri=\"http://java.sun.com/portlet\" prefix=\"portlet\" %>"    */
+      /* Details: "The version 1.0 tag library may be referenced using        */
+      /* &lt;%@ taglib uri=\"http://java.sun.com/portlet\"                    */
+      /* prefix=\"portlet\" %&gt;"                                            */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS3);
       /* TODO: implement test */
       tr0.appendTcDetail("Not implemented.");
@@ -41,8 +41,8 @@
 
       /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral_defineObjects2 */
       /* Details: "In order to obtain version 2 support, the tag library      */
-      /* must be specified as <%@ taglib                                      */
-      /* uri=\"http://java.sun.com/portlet_2_0\" prefix=\"portlet\" %>"       */
+      /* must be specified as &lt;%@ taglib                                   */
+      /* uri=\"http://java.sun.com/portlet_2_0\" prefix=\"portlet\" %&gt;"    */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTAGLIBRARYTESTS_SPEC2_26_INCLUDEJSPGENERAL_DEFINEOBJECTS2);
       /* TODO: implement test */
       tr2.appendTcDetail("Not implemented.");

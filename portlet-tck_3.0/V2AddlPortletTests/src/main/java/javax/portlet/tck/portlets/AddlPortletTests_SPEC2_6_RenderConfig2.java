@@ -102,7 +102,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig2 implements Portlet, Resource
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig2_getResourceBundle8 */
       /* Details: "If no resource bundle is defined, the value defined in     */
-      /* the deployment descriptor <title> element is returned by the         */
+      /* the deployment descriptor &lt;title&gt; element is returned by the   */
       /* corresponding getString method call"                                 */
       TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE8);
       /* TODO: implement test */
@@ -111,8 +111,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig2 implements Portlet, Resource
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig2_getResourceBundle9 */
       /* Details: "If no resource bundle is defined, the value defined in     */
-      /* the deployment descriptor <short-title> element is returned by the   */
-      /* corresponding getString method call"                                 */
+      /* the deployment descriptor &lt;short-title&gt; element is returned    */
+      /* by the corresponding getString method call"                          */
       TestResult tr1 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE9);
       /* TODO: implement test */
       tr1.appendTcDetail("Not implemented.");
@@ -120,8 +120,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig2 implements Portlet, Resource
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig2_getResourceBundle10 */
       /* Details: "If no resource bundle is defined, the value defined in     */
-      /* the deployment descriptor <keywords> element is returned by the      */
-      /* corresponding getString method call"                                 */
+      /* the deployment descriptor &lt;keywords&gt; element is returned by    */
+      /* the corresponding getString method call"                             */
       TestResult tr2 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG2_GETRESOURCEBUNDLE10);
       /* TODO: implement test */
       tr2.appendTcDetail("Not implemented.");

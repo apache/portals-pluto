@@ -211,11 +211,12 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent implements Portlet,
 
       /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_defineObjects11 */
       /* Details: "When included in the Event phase, the defineObjects tag    */
-      /* defines the variable Map<String, Object> portletSessionScope,        */
-      /* providing access to the portletSession attributes as a Map           */
-      /* equivalent to the PortletSession.getAttributeMap() call, does not    */
-      /* create a new session, only returns an existing session. If no        */
-      /* session attributes exist this method returns an empty Map."          */
+      /* defines the variable Map&lt;String, Object&gt;                       */
+      /* portletSessionScope, providing access to the portletSession          */
+      /* attributes as a Map equivalent to the                                */
+      /* PortletSession.getAttributeMap() call, does not create a new         */
+      /* session, only returns an existing session. If no session             */
+      /* attributes exist this method returns an empty Map."                  */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -236,7 +237,7 @@ public class PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent implements Portlet,
 
       /* TestCase: V2PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_defineObjects13 */
       /* Details: "When included in the Event phase, the defineObjects tag    */
-      /* defines the variable Map<String, String[]>                           */
+      /* defines the variable Map&lt;String, String[]&gt;                     */
       /* portletPreferencesValues, providing access to the portlet            */
       /* preferences as a Map, equivalent to the                              */
       /* PortletPreferences.getMap() call. If no portlet preferences exist,   */

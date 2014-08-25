@@ -102,7 +102,7 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getResourceBundle1 */
       /* Details: "The resource bundle defined in the deployment descriptor   */
-      /* <resource-bundle> element can be obtained through the                */
+      /* &lt;resource-bundle&gt; element can be obtained through the          */
       /* PortletConfig object"                                                */
       TestResult tr0 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETRESOURCEBUNDLE1);
       /* TODO: implement test */
@@ -138,9 +138,10 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getPublishingEventQnames3 */
       /* Details: "getPublishingEventQnames - If the event was defined        */
-      /* using the <name> element rather than the <qname> element, default    */
-      /* namespace defined with the <default-namespace> element must be       */
-      /* added as the event namespace"                                        */
+      /* using the &lt;name&gt; element rather than the &lt;qname&gt;         */
+      /* element, default namespace defined with the                          */
+      /* &lt;default-namespace&gt; element must be added as the event         */
+      /* namespace"                                                           */
       TestResult tr4 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETPUBLISHINGEVENTQNAMES3);
       /* TODO: implement test */
       tr4.appendTcDetail("Not implemented.");
@@ -148,8 +149,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getPublishingEventQnames4 */
       /* Details: "getPublishingEventQnames - If the event was defined        */
-      /* using the <name> element rather than the <qname> element and there   */
-      /* is no default namespace defined, the value                           */
+      /* using the &lt;name&gt; element rather than the &lt;qname&gt;         */
+      /* element and there is no default namespace defined, the value         */
       /* XMLConstants.NULL_NS_URI must be added as the event namespace"       */
       TestResult tr5 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETPUBLISHINGEVENTQNAMES4);
       /* TODO: implement test */
@@ -158,9 +159,10 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getProcessingEventQnames3 */
       /* Details: "getProcessingEventQnames - If the event was defined        */
-      /* using the <name> element rather than the <qname> element, default    */
-      /* namespace defined with the <default-namespace> element must be       */
-      /* added as the event namespace"                                        */
+      /* using the &lt;name&gt; element rather than the &lt;qname&gt;         */
+      /* element, default namespace defined with the                          */
+      /* &lt;default-namespace&gt; element must be added as the event         */
+      /* namespace"                                                           */
       TestResult tr6 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETPROCESSINGEVENTQNAMES3);
       /* TODO: implement test */
       tr6.appendTcDetail("Not implemented.");
@@ -168,8 +170,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getProcessingEventQnames4 */
       /* Details: "getProcessingEventQnames - If the event was defined        */
-      /* using the <name> element rather than the <qname> element and there   */
-      /* is no default namespace defined, the value                           */
+      /* using the &lt;name&gt; element rather than the &lt;qname&gt;         */
+      /* element and there is no default namespace defined, the value         */
       /* XMLConstants.NULL_NS_URI must be added as the event namespace"       */
       TestResult tr7 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETPROCESSINGEVENTQNAMES4);
       /* TODO: implement test */
@@ -178,8 +180,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions6 */
       /* Details: "The returned Map contains values defined in the            */
-      /* deployment descriptor <container-runtime-option> elements at the     */
-      /* portlet application level"                                           */
+      /* deployment descriptor &lt;container-runtime-option&gt; elements at   */
+      /* the portlet application level"                                       */
       TestResult tr8 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS6);
       /* TODO: implement test */
       tr8.appendTcDetail("Not implemented.");
@@ -187,8 +189,8 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions7 */
       /* Details: "The returned Map contains values defined in the            */
-      /* deployment descriptor <container-runtime-option> elements at the     */
-      /* portlet level"                                                       */
+      /* deployment descriptor &lt;container-runtime-option&gt; elements at   */
+      /* the portlet level"                                                   */
       TestResult tr9 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS7);
       /* TODO: implement test */
       tr9.appendTcDetail("Not implemented.");
@@ -196,9 +198,9 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions8 */
       /* Details: "If the deployment descriptor contains                      */
-      /* <container-runtime-option> elements defined at both the portlet      */
-      /* and the portlet application levels, the returned Map contains a      */
-      /* merger of all values"                                                */
+      /* &lt;container-runtime-option&gt; elements defined at both the        */
+      /* portlet and the portlet application levels, the returned Map         */
+      /* contains a merger of all values"                                     */
       TestResult tr10 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS8);
       /* TODO: implement test */
       tr10.appendTcDetail("Not implemented.");
@@ -206,9 +208,9 @@ public class AddlPortletTests_SPEC2_6_RenderConfig implements Portlet, ResourceS
 
       /* TestCase: V2AddlPortletTests_SPEC2_6_RenderConfig_getContainerRuntimeOptions9 */
       /* Details: "If the deployment descriptor contains                      */
-      /* <container-runtime-option> elements of the same name defined at      */
-      /* both the portlet and the portlet application levels, the returned    */
-      /* Map contains a the value defined at the portlet level"               */
+      /* &lt;container-runtime-option&gt; elements of the same name defined   */
+      /* at both the portlet and the portlet application levels, the          */
+      /* returned Map contains a the value defined at the portlet level"      */
       TestResult tr11 = tcd.getTestResultFailed(V2ADDLPORTLETTESTS_SPEC2_6_RENDERCONFIG_GETCONTAINERRUNTIMEOPTIONS9);
       /* TODO: implement test */
       tr11.appendTcDetail("Not implemented.");

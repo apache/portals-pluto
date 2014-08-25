@@ -139,8 +139,9 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
       /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_scope5            */
       /* Details: "The PORTLET_SCOPE object must be stored in the             */
       /* APPLICATION_SCOPE with the attribute name                            */
-      /* 'javax.portlet.p.<ID>?<ATTRIBUTE_NAME>', where <ID> must be equal    */
-      /* to the ID returned by the PortletRequest.getWindowID()"              */
+      /* 'javax.portlet.p.&lt;ID&gt;?&lt;ATTRIBUTE_NAME&gt;', where           */
+      /* &lt;ID&gt; must be equal to the ID returned by the                   */
+      /* PortletRequest.getWindowID()"                                        */
       TestResult tr4 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_SCOPE5);
       /* TODO: implement test */
       tr4.appendTcDetail("Not implemented.");
@@ -222,8 +223,8 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
 
       /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_getAttributeNames1 */
       /* Details: "The getAttributeNames method can retrieve an               */
-      /* Enumeration<String> of all attribute names stored in the session     */
-      /* in PORTLET_SCOPE"                                                    */
+      /* Enumeration&lt;String&gt; of all attribute names stored in the       */
+      /* session in PORTLET_SCOPE"                                            */
       TestResult tr14 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_GETATTRIBUTENAMES1);
       /* TODO: implement test */
       tr14.appendTcDetail("Not implemented.");
@@ -231,8 +232,8 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
 
       /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_getAttributeNames2 */
       /* Details: "The getAttributeNames method that does not take a scope    */
-      /* parameter retrieves an Enumeration<String> of all attribute names    */
-      /* stored in the session in PORTLET_SCOPE"                              */
+      /* parameter retrieves an Enumeration&lt;String&gt; of all attribute    */
+      /* names stored in the session in PORTLET_SCOPE"                        */
       TestResult tr15 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_GETATTRIBUTENAMES2);
       /* TODO: implement test */
       tr15.appendTcDetail("Not implemented.");
@@ -240,8 +241,8 @@ public class AddlEnvironmentTests_SPEC2_18_Sessions implements Portlet, Resource
 
       /* TestCase: V2AddlEnvironmentTests_SPEC2_18_Sessions_getAttributeNames3 */
       /* Details: "The getAttributeNames method can retrieve an               */
-      /* Enumeration<String> of all attribute names stored in the session     */
-      /* in APPLICATION_SCOPE"                                                */
+      /* Enumeration&lt;String&gt; of all attribute names stored in the       */
+      /* session in APPLICATION_SCOPE"                                        */
       TestResult tr16 = tcd.getTestResultFailed(V2ADDLENVIRONMENTTESTS_SPEC2_18_SESSIONS_GETATTRIBUTENAMES3);
       /* TODO: implement test */
       tr16.appendTcDetail("Not implemented.");

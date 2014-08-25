@@ -132,7 +132,7 @@ public class AddlUrlTests_SPEC2_7_UrlResource implements Portlet, ResourceServin
 
       /* TestCase: V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL6            */
       /* Details: "Resource parameters can be set on the resource URL         */
-      /* through the setParameterMap(Map<String, String[]>) method"           */
+      /* through the setParameterMap(Map&lt;String, String[]&gt;) method"     */
       TestResult tr5 = tcd.getTestResultFailed(V2ADDLURLTESTS_SPEC2_7_URLRESOURCE_RESOURCEURL6);
       /* TODO: implement test */
       tr5.appendTcDetail("Not implemented.");

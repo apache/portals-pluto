@@ -110,8 +110,8 @@ public class AddlFilterTests_SPEC2_20_Event implements Portlet, ResourceServingP
       }
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filter6                   */
-      /* Details: "A filter declaration can contain multiple <lifecycle>      */
-      /* tags for a single filter class"                                      */
+      /* Details: "A filter declaration can contain multiple                  */
+      /* &lt;lifecycle&gt; tags for a single filter class"                    */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -186,7 +186,7 @@ public class AddlFilterTests_SPEC2_20_Event implements Portlet, ResourceServingP
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filter13                  */
       /* Details: "A filter declaration can be mapped to a portlet through    */
-      /* the deployment descriptor <filter-mapping> element"                  */
+      /* the deployment descriptor &lt;filter-mapping&gt; element"            */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -209,8 +209,8 @@ public class AddlFilterTests_SPEC2_20_Event implements Portlet, ResourceServingP
       /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filter15                  */
       /* Details: "The order the container uses in building the chain of      */
       /* filters to be applied for a particular request is the order in       */
-      /* which the <portlet-name> matching filter mappings appear in the      */
-      /* deployment descriptor"                                               */
+      /* which the &lt;portlet-name&gt; matching filter mappings appear in    */
+      /* the deployment descriptor"                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -239,8 +239,9 @@ public class AddlFilterTests_SPEC2_20_Event implements Portlet, ResourceServingP
       }
 
       /* TestCase: V2AddlFilterTests_SPEC2_20_Event_filter4                   */
-      /* Details: "If the filter declaration specifies the <lifecycle> tag    */
-      /* value EVENT_PHASE, the EventFilter.doFilter method is called"        */
+      /* Details: "If the filter declaration specifies the                    */
+      /* &lt;lifecycle&gt; tag value EVENT_PHASE, the EventFilter.doFilter    */
+      /* method is called"                                                    */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
