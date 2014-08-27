@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API SigTestsEvent test case names and page mappings -->
+<entry key="V2SigTestsEvent_Event_SIGEvent_hasGetName">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_Event_SIGEvent_hasGetNameReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_Event_SIGEvent_hasGetQName">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_Event_SIGEvent_hasGetQNameReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_Event_SIGEvent_hasGetValue">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_Event_SIGEvent_hasGetValueReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventRequest_SIGEvent_hasGetEvent">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventRequest_SIGEvent_hasGetEventReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventRequest_SIGEvent_hasGetMethod">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventRequest_SIGEvent_hasGetMethodReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventRequest_SIGEvent_implementsPortletRequest">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventResponse_SIGEvent_hasSetRenderParameters">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventResponse_SIGEvent_hasSetRenderParametersReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_EventResponse_SIGEvent_implementsStateAwareResponse">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldACTION_PHASE">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldACTION_SCOPE_ID">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldBASIC_AUTH">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldCCPP_PROFILE">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldCLIENT_CERT_AUTH">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldDIGEST_AUTH">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldEVENT_PHASE">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldFORM_AUTH">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldLIFECYCLE_PHASE">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldRENDER_HEADERS">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldRENDER_MARKUP">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldRENDER_PART">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldRENDER_PHASE">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldRESOURCE_PHASE">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_fieldUSER_INFO">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetAttribute">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetAttributeNames">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetAttributeNamesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetAttributeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetAuthType">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetAuthTypeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetContextPath">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetContextPathReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetCookies">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetCookiesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetLocale">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetLocaleReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetLocales">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetLocalesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameter">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameterMap">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameterMapReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameterNames">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameterNamesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameterReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameterValues">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetParameterValuesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortalContext">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortalContextReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortletMode">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortletModeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortletSession">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortletSessionA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortletSessionReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPortletSessionReturnsA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPreferences">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPreferencesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPrivateParameterMap">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPrivateParameterMapReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetProperties">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPropertiesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetProperty">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPropertyNames">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPropertyNamesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPropertyReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPublicParameterMap">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetPublicParameterMapReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetRemoteUser">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetRemoteUserReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetRequestedSessionId">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetRequestedSessionIdReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetResponseContentType">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetResponseContentTypeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetResponseContentTypes">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetResponseContentTypesReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetScheme">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetSchemeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetServerName">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetServerNameReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetServerPort">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetServerPortReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetUserPrincipal">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetUserPrincipalReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetWindowID">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetWindowIDReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetWindowState">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasGetWindowStateReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsPortletModeAllowed">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsPortletModeAllowedReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsRequestedSessionIdValid">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsRequestedSessionIdValidReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsSecure">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsSecureReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsUserInRole">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsUserInRoleReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsWindowStateAllowed">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasIsWindowStateAllowedReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasRemoveAttribute">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasRemoveAttributeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasSetAttribute">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletRequest_SIGEvent_hasSetAttributeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasAddProperty">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyB">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyReturnsA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasAddPropertyReturnsB">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasCreateElement">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasCreateElementReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasEncodeURL">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasEncodeURLReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasGetNamespace">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasGetNamespaceReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasSetProperty">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_PortletResponse_SIGEvent_hasSetPropertyReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetPortletMode">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetPortletModeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetRenderParameterMap">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetRenderParameterMapReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetWindowState">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasGetWindowStateReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasRemovePublicRenderParameter">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasRemovePublicRenderParameterReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEvent">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEventA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEventReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetEventReturnsA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetPortletMode">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetPortletModeReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetRenderParameter">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetRenderParameterA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetRenderParameterReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetRenderParameterReturnsA">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetRenderParameters">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetRenderParametersReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetWindowState">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_hasSetWindowStateReturns">V2SigTestsEvent</entry>
+<entry key="V2SigTestsEvent_StateAwareResponse_SIGEvent_implementsPortletResponse">V2SigTestsEvent</entry>
+</properties>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API SigTestsURL test case names and page mappings -->
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasAddProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasAddPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasGetParameterMap">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasGetParameterMapReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetParameterA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetParameterReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetParameters">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetParametersReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetSecure">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasSetSecureReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasToString">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasToStringReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasWrite">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasWriteA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasWriteReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRender_hasWriteReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasGetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasGetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasGetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasGetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasRemovePublicRenderParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasRemovePublicRenderParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasSetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasSetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasSetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_hasSetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRender_implementsBaseURL">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldFULL">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldPAGE">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldPORTLET">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldSHARED">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasGetCacheability">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasGetCacheabilityReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetCacheability">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetCacheabilityReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetResourceID">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetResourceIDReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_implementsBaseURL">V2SigTestsURL</entry>
+</properties>

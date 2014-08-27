@@ -54,4 +54,13 @@
    <fl:file>tck-V2DispatcherReqRespTests3-tests.xml</fl:file>
    <fl:file>tck-V2DispatcherReqRespTests4-tests.xml</fl:file>
    <fl:file>tck-V2DispatcherReqRespTests5S-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsAction-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsEnv-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsEvent-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsException-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsFilter-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsRender-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsResource-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsURL-tests.xml</fl:file>
+   <fl:file>tck-V2SigTestsWrapper-tests.xml</fl:file>
 </fl:filelist>

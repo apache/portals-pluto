@@ -247,6 +247,60 @@
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsAction</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsEnv</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsEvent</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsException</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsFilter</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsRender</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsResource</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsURL</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsWrapper</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
    </dependencies>
 
    <build>
@@ -295,6 +349,15 @@
                         tck-V2AddlRequestTests,
                         tck-V2AddlResponseTests,
                         tck-V2AddlUrlTests,
+                        tck-V2SigTestsAction,
+                        tck-V2SigTestsEnv,
+                        tck-V2SigTestsEvent,
+                        tck-V2SigTestsException,
+                        tck-V2SigTestsFilter,
+                        tck-V2SigTestsRender,
+                        tck-V2SigTestsResource,
+                        tck-V2SigTestsURL,
+                        tck-V2SigTestsWrapper,
                         tck-V2PortletTagLibraryTests,
                         tck-V2PortletTagLibraryTests2,
                         tck-V2PortletTagLibraryTests3,

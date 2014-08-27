@@ -239,6 +239,60 @@
       </dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsAction</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsEnv</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsEvent</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsException</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsFilter</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsRender</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsResource</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsURL</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsWrapper</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
          <artifactId>tck-driver</artifactId>
          <version>${project.version}</version>
          <type>jar</type>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2SigTestsAction">
+   <portlet>
+      <portlet-name>SigTestsAction_ActionRequest_SIGAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsAction_ActionRequest_SIGAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsAction_ActionRequest_SIGAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsAction_ActionResponse_SIGAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsAction_ActionResponse_SIGAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsAction_ActionResponse_SIGAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsAction_ClientDataRequest_SIGAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsAction_ClientDataRequest_SIGAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsAction_ClientDataRequest_SIGAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsAction_PortletRequest_SIGAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsAction_PortletRequest_SIGAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsAction_PortletRequest_SIGAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsAction_PortletResponse_SIGAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsAction_PortletResponse_SIGAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsAction_PortletResponse_SIGAction</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsAction_StateAwareResponse_SIGAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsAction_StateAwareResponse_SIGAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsAction_StateAwareResponse_SIGAction</title>
+      </portlet-info>
+   </portlet>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
+</portlet-app>

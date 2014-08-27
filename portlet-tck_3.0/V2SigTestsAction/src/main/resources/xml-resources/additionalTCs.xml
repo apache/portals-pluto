@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API SigTestsAction test case names and page mappings -->
+<entry key="V2SigTestsAction_ActionRequest_SIGAction_fieldACTION_NAME">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ActionRequest_SIGAction_implementsClientDataRequest">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ActionResponse_SIGAction_hasSendRedirect">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ActionResponse_SIGAction_hasSendRedirectA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ActionResponse_SIGAction_hasSendRedirectReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ActionResponse_SIGAction_hasSendRedirectReturnsA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ActionResponse_SIGAction_implementsStateAwareResponse">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetCharacterEncoding">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetCharacterEncodingReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetContentLength">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetContentLengthReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetContentType">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetContentTypeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetMethod">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetMethodReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetPortletInputStream">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetPortletInputStreamReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetReader">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasGetReaderReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasSetCharacterEncoding">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_hasSetCharacterEncodingReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_ClientDataRequest_SIGAction_implementsPortletRequest">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldACTION_PHASE">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldACTION_SCOPE_ID">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldBASIC_AUTH">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldCCPP_PROFILE">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldCLIENT_CERT_AUTH">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldDIGEST_AUTH">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldEVENT_PHASE">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldFORM_AUTH">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldLIFECYCLE_PHASE">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldRENDER_HEADERS">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldRENDER_MARKUP">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldRENDER_PART">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldRENDER_PHASE">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldRESOURCE_PHASE">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_fieldUSER_INFO">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetAttribute">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetAttributeNames">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetAttributeNamesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetAttributeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetAuthType">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetAuthTypeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetContextPath">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetContextPathReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetCookies">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetCookiesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetLocale">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetLocaleReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetLocales">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetLocalesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameter">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameterMap">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameterMapReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameterNames">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameterNamesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameterReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameterValues">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetParameterValuesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortalContext">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortalContextReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortletMode">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortletModeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortletSession">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortletSessionA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortletSessionReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPortletSessionReturnsA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPreferences">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPreferencesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPrivateParameterMap">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPrivateParameterMapReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetProperties">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPropertiesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetProperty">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPropertyNames">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPropertyNamesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPropertyReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPublicParameterMap">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetPublicParameterMapReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetRemoteUser">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetRemoteUserReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetRequestedSessionId">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetRequestedSessionIdReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetResponseContentType">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetResponseContentTypeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetResponseContentTypes">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetResponseContentTypesReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetScheme">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetSchemeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetServerName">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetServerNameReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetServerPort">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetServerPortReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetUserPrincipal">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetUserPrincipalReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetWindowID">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetWindowIDReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetWindowState">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasGetWindowStateReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsPortletModeAllowed">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsPortletModeAllowedReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsRequestedSessionIdValid">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsRequestedSessionIdValidReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsSecure">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsSecureReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsUserInRole">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsUserInRoleReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsWindowStateAllowed">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasIsWindowStateAllowedReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasRemoveAttribute">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasRemoveAttributeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasSetAttribute">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletRequest_SIGAction_hasSetAttributeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasAddProperty">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasAddPropertyA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasAddPropertyB">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasAddPropertyReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasAddPropertyReturnsA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasAddPropertyReturnsB">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasCreateElement">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasCreateElementReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasEncodeURL">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasEncodeURLReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasGetNamespace">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasGetNamespaceReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasSetProperty">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_PortletResponse_SIGAction_hasSetPropertyReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasGetPortletMode">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasGetPortletModeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasGetRenderParameterMap">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasGetRenderParameterMapReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasGetWindowState">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasGetWindowStateReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasRemovePublicRenderParameter">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasRemovePublicRenderParameterReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetEvent">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetEventA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetEventReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetEventReturnsA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetPortletMode">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetPortletModeReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetRenderParameter">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetRenderParameterA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetRenderParameterReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetRenderParameterReturnsA">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetRenderParameters">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetRenderParametersReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetWindowState">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_hasSetWindowStateReturns">V2SigTestsAction</entry>
+<entry key="V2SigTestsAction_StateAwareResponse_SIGAction_implementsPortletResponse">V2SigTestsAction</entry>
+</properties>
