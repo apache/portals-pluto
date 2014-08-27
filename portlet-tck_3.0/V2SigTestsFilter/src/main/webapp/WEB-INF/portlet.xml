@@ -112,6 +112,26 @@
          <title>SigTestsFilter_ResourceFilter_SIGRender</title>
       </portlet-info>
    </portlet>
+   
+   <filter>
+      <filter-name>SigTestsFilter_FilterChain_SIGRender_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.SigTestsFilter_FilterChain_SIGRender_filter</filter-class>
+      <lifecycle>RENDER_PHASE</lifecycle>
+   </filter>
+   <filter>
+      <filter-name>SigTestsFilter_FilterConfig_SIGRender_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.SigTestsFilter_FilterConfig_SIGRender_filter</filter-class>
+      <lifecycle>RENDER_PHASE</lifecycle>
+   </filter>
+
+   <filter-mapping>
+      <filter-name>SigTestsFilter_FilterChain_SIGRender_filter</filter-name>
+      <portlet-name>SigTestsFilter_FilterChain_SIGRender</portlet-name>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>SigTestsFilter_FilterConfig_SIGRender_filter</filter-name>
+      <portlet-name>SigTestsFilter_FilterConfig_SIGRender</portlet-name>
+   </filter-mapping>
 
    <event-definition>
       <qname>tck:SigTestsEvent_Event_SIGEvent</qname>

@@ -82,90 +82,12 @@ public class SigTestsFilter_FilterChain_SIGRender implements Portlet, ResourceSe
       long tid = Thread.currentThread().getId();
       portletReq.setAttribute(THREADID_ATTR, tid);
 
-      PrintWriter writer = portletResp.getWriter();
-
    }
 
    @Override
    public void render(RenderRequest portletReq, RenderResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
-
-      long tid = Thread.currentThread().getId();
-      portletReq.setAttribute(THREADID_ATTR, tid);
-
-      PrintWriter writer = portletResp.getWriter();
-
-      JSR286SignatureTestCaseDetails tcd = new JSR286SignatureTestCaseDetails();
-
-      // Create result objects for the tests
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilter         */
-      /* Details: "FilterChain has a doFilter(ActionRequest,                  */
-      /* ActionResponse) throws java.io.IOException, PortletException         */
-      /* method "                                                             */
-      TestResult tr0 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTER);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterA        */
-      /* Details: "FilterChain has a doFilter(EventRequest, EventResponse)    */
-      /* throws java.io.IOException, PortletException method "                */
-      TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTERA);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterB        */
-      /* Details: "FilterChain has a doFilter(RenderRequest,                  */
-      /* RenderResponse) throws java.io.IOException, PortletException         */
-      /* method "                                                             */
-      TestResult tr2 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTERB);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterC        */
-      /* Details: "FilterChain has a doFilter(ResourceRequest,                */
-      /* ResourceResponse) throws java.io.IOException, PortletException       */
-      /* method "                                                             */
-      TestResult tr3 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTERC);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
-      tr3.writeTo(writer);
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturns  */
-      /* Details: "FilterChain method doFilter(ActionRequest,                 */
-      /* ActionResponse) returns void "                                       */
-      TestResult tr4 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTERRETURNS);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
-      tr4.writeTo(writer);
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturnsA */
-      /* Details: "FilterChain method doFilter(EventRequest, EventResponse)   */
-      /* returns void "                                                       */
-      TestResult tr5 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTERRETURNSA);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
-      tr5.writeTo(writer);
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturnsB */
-      /* Details: "FilterChain method doFilter(RenderRequest,                 */
-      /* RenderResponse) returns void "                                       */
-      TestResult tr6 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTERRETURNSB);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
-      tr6.writeTo(writer);
-
-      /* TestCase: V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturnsC */
-      /* Details: "FilterChain method doFilter(ResourceRequest,               */
-      /* ResourceResponse) returns void "                                     */
-      TestResult tr7 = tcd.getTestResultFailed(V2SIGTESTSFILTER_FILTERCHAIN_SIGRENDER_HASDOFILTERRETURNSC);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
-      tr7.writeTo(writer);
 
    }
 
