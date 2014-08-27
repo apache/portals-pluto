@@ -23,28 +23,132 @@
    xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="V2SigTestsURL">
    <portlet>
-      <portlet-name>SigTestsURL_BaseURL_SIGRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_BaseURL_SIGRender</portlet-class>
+      <portlet-name>SigTestsURL_BaseURL_SIGRenderActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_BaseURL_SIGRenderActurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>SigTestsURL_BaseURL_SIGRender</title>
+         <title>SigTestsURL_BaseURL_SIGRenderActurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>SigTestsURL_PortletURL_SIGRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_PortletURL_SIGRender</portlet-class>
+      <portlet-name>SigTestsURL_BaseURL_SIGRenderRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_BaseURL_SIGRenderRenurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>SigTestsURL_PortletURL_SIGRender</title>
+         <title>SigTestsURL_BaseURL_SIGRenderRenurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_BaseURL_SIGRenderResurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_BaseURL_SIGRenderResurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_BaseURL_SIGRenderResurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_BaseURL_SIGResourceActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_BaseURL_SIGResourceActurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_BaseURL_SIGResourceActurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_BaseURL_SIGResourceRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_BaseURL_SIGResourceRenurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_BaseURL_SIGResourceRenurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_BaseURL_SIGResourceResurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_BaseURL_SIGResourceResurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_BaseURL_SIGResourceResurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_PortletURL_SIGRenderActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_PortletURL_SIGRenderActurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_PortletURL_SIGRenderActurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_PortletURL_SIGRenderRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_PortletURL_SIGRenderRenurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_PortletURL_SIGRenderRenurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_PortletURL_SIGResourceActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_PortletURL_SIGResourceActurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_PortletURL_SIGResourceActurl</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsURL_PortletURL_SIGResourceRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsURL_PortletURL_SIGResourceRenurl</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsURL_PortletURL_SIGResourceRenurl</title>
       </portlet-info>
    </portlet>
 

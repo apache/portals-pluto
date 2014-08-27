@@ -42,12 +42,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet SigTestsURL_BaseURL_SIGRender_event
+ * portlet SigTestsURL_BaseURL_SIGRenderActurl_event
  *
  */
-public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPortlet {
+public class SigTestsURL_BaseURL_SIGRenderActurl implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         SigTestsURL_BaseURL_SIGRender.class.getName();
+         SigTestsURL_BaseURL_SIGRenderActurl.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -100,11 +100,12 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
 
       // Create result objects for the tests
 
-      PortletURL url = portletResp.createRenderURL();      ClassChecker cc = new ClassChecker(url.getClass());
+      PortletURL url = portletResp.createActionURL();
+      ClassChecker cc = new ClassChecker(url.getClass());
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasAddProperty             */
-      /* Details: "BaseURL has a addProperty(String, String)  method "        */
-      TestResult tr0 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASADDPROPERTY);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasAddProperty       */
+      /* Details: "Rection URL has a addProperty(String, String)  method "    */
+      TestResult tr0 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASADDPROPERTY);
       try {
          String name = "addProperty";
          Class<?>[] exceptions = null;
@@ -113,10 +114,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasAddPropertyReturns      */
-      /* Details: "BaseURL method addProperty(String, String) returns void    */
-      /* "                                                                    */
-      TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASADDPROPERTYRETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasAddPropertyReturns */
+      /* Details: "Rection URL method addProperty(String, String) returns     */
+      /* void "                                                               */
+      TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASADDPROPERTYRETURNS);
       try {
          String name = "addProperty";
          Class<?> retType = void.class;
@@ -125,9 +126,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasGetParameterMap         */
-      /* Details: "BaseURL has a getParameterMap()  method "                  */
-      TestResult tr2 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASGETPARAMETERMAP);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasGetParameterMap   */
+      /* Details: "Rection URL has a getParameterMap()  method "              */
+      TestResult tr2 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASGETPARAMETERMAP);
       try {
          String name = "getParameterMap";
          Class<?>[] exceptions = null;
@@ -136,9 +137,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasGetParameterMapReturns  */
-      /* Details: "BaseURL method getParameterMap() returns java.util.Map "   */
-      TestResult tr3 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASGETPARAMETERMAPRETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasGetParameterMapReturns */
+      /* Details: "Rection URL method getParameterMap() returns               */
+      /* java.util.Map "                                                      */
+      TestResult tr3 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASGETPARAMETERMAPRETURNS);
       try {
          String name = "getParameterMap";
          Class<?> retType = java.util.Map.class;
@@ -147,9 +149,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetParameter            */
-      /* Details: "BaseURL has a setParameter(String, String)  method "       */
-      TestResult tr4 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPARAMETER);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameter      */
+      /* Details: "Rection URL has a setParameter(String, String)  method "   */
+      TestResult tr4 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPARAMETER);
       try {
          String name = "setParameter";
          Class<?>[] exceptions = null;
@@ -158,9 +160,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetParameterA           */
-      /* Details: "BaseURL has a setParameter(String, String[])  method "     */
-      TestResult tr5 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPARAMETERA);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameterA     */
+      /* Details: "Rection URL has a setParameter(String, String[])  method   */
+      /* "                                                                    */
+      TestResult tr5 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPARAMETERA);
       try {
          String name = "setParameter";
          Class<?>[] exceptions = null;
@@ -169,10 +172,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetParameterReturns     */
-      /* Details: "BaseURL method setParameter(String, String) returns void   */
-      /* "                                                                    */
-      TestResult tr6 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPARAMETERRETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameterReturns */
+      /* Details: "Rection URL method setParameter(String, String) returns    */
+      /* void "                                                               */
+      TestResult tr6 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPARAMETERRETURNS);
       try {
          String name = "setParameter";
          Class<?> retType = void.class;
@@ -181,10 +184,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetParameterReturnsA    */
-      /* Details: "BaseURL method setParameter(String, String[]) returns      */
-      /* void "                                                               */
-      TestResult tr7 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPARAMETERRETURNSA);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameterReturnsA */
+      /* Details: "Rection URL method setParameter(String, String[])          */
+      /* returns void "                                                       */
+      TestResult tr7 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPARAMETERRETURNSA);
       try {
          String name = "setParameter";
          Class<?> retType = void.class;
@@ -193,9 +196,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetParameters           */
-      /* Details: "BaseURL has a setParameters(java.util.Map)  method "       */
-      TestResult tr8 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPARAMETERS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameters     */
+      /* Details: "Rection URL has a setParameters(java.util.Map)  method "   */
+      TestResult tr8 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPARAMETERS);
       try {
          String name = "setParameters";
          Class<?>[] exceptions = null;
@@ -204,10 +207,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetParametersReturns    */
-      /* Details: "BaseURL method setParameters(java.util.Map) returns void   */
-      /* "                                                                    */
-      TestResult tr9 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPARAMETERSRETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParametersReturns */
+      /* Details: "Rection URL method setParameters(java.util.Map) returns    */
+      /* void "                                                               */
+      TestResult tr9 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPARAMETERSRETURNS);
       try {
          String name = "setParameters";
          Class<?> retType = void.class;
@@ -216,9 +219,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetProperty             */
-      /* Details: "BaseURL has a setProperty(String, String)  method "        */
-      TestResult tr10 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPROPERTY);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetProperty       */
+      /* Details: "Rection URL has a setProperty(String, String)  method "    */
+      TestResult tr10 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPROPERTY);
       try {
          String name = "setProperty";
          Class<?>[] exceptions = null;
@@ -227,10 +230,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetPropertyReturns      */
-      /* Details: "BaseURL method setProperty(String, String) returns void    */
-      /* "                                                                    */
-      TestResult tr11 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETPROPERTYRETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetPropertyReturns */
+      /* Details: "Rection URL method setProperty(String, String) returns     */
+      /* void "                                                               */
+      TestResult tr11 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETPROPERTYRETURNS);
       try {
          String name = "setProperty";
          Class<?> retType = void.class;
@@ -239,10 +242,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetSecure               */
-      /* Details: "BaseURL has a setSecure(boolean) throws                    */
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetSecure         */
+      /* Details: "Rection URL has a setSecure(boolean) throws                */
       /* PortletSecurityException method "                                    */
-      TestResult tr12 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETSECURE);
+      TestResult tr12 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETSECURE);
       try {
          String name = "setSecure";
          Class<?>[] exceptions = {PortletSecurityException.class};
@@ -251,9 +254,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasSetSecureReturns        */
-      /* Details: "BaseURL method setSecure(boolean) returns void "           */
-      TestResult tr13 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASSETSECURERETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetSecureReturns  */
+      /* Details: "Rection URL method setSecure(boolean) returns void "       */
+      TestResult tr13 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASSETSECURERETURNS);
       try {
          String name = "setSecure";
          Class<?> retType = void.class;
@@ -262,9 +265,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasToString                */
-      /* Details: "BaseURL has a toString()  method "                         */
-      TestResult tr14 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASTOSTRING);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasToString          */
+      /* Details: "Rection URL has a toString()  method "                     */
+      TestResult tr14 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASTOSTRING);
       try {
          String name = "toString";
          Class<?>[] exceptions = null;
@@ -273,9 +276,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasToStringReturns         */
-      /* Details: "BaseURL method toString() returns String "                 */
-      TestResult tr15 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASTOSTRINGRETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasToStringReturns   */
+      /* Details: "Rection URL method toString() returns String "             */
+      TestResult tr15 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASTOSTRINGRETURNS);
       try {
          String name = "toString";
          Class<?> retType = String.class;
@@ -284,10 +287,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasWrite                   */
-      /* Details: "BaseURL has a write(java.io.Writer) throws                 */
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasWrite             */
+      /* Details: "Rection URL has a write(java.io.Writer) throws             */
       /* java.io.IOException method "                                         */
-      TestResult tr16 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASWRITE);
+      TestResult tr16 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASWRITE);
       try {
          String name = "write";
          Class<?>[] exceptions = {java.io.IOException.class};
@@ -296,10 +299,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasWriteA                  */
-      /* Details: "BaseURL has a write(java.io.Writer, boolean) throws        */
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasWriteA            */
+      /* Details: "Rection URL has a write(java.io.Writer, boolean) throws    */
       /* java.io.IOException method "                                         */
-      TestResult tr17 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASWRITEA);
+      TestResult tr17 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASWRITEA);
       try {
          String name = "write";
          Class<?>[] exceptions = {java.io.IOException.class};
@@ -308,9 +311,9 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr17.appendTcDetail(e.toString());}
       tr17.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasWriteReturns            */
-      /* Details: "BaseURL method write(java.io.Writer) returns void "        */
-      TestResult tr18 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASWRITERETURNS);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasWriteReturns      */
+      /* Details: "Rection URL method write(java.io.Writer) returns void "    */
+      TestResult tr18 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASWRITERETURNS);
       try {
          String name = "write";
          Class<?> retType = void.class;
@@ -319,10 +322,10 @@ public class SigTestsURL_BaseURL_SIGRender implements Portlet, ResourceServingPo
       } catch(Exception e) {tr18.appendTcDetail(e.toString());}
       tr18.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_BaseURL_SIGRender_hasWriteReturnsA           */
-      /* Details: "BaseURL method write(java.io.Writer, boolean) returns      */
-      /* void "                                                               */
-      TestResult tr19 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDER_HASWRITERETURNSA);
+      /* TestCase: V2SigTestsURL_BaseURL_SIGRenderActurl_hasWriteReturnsA     */
+      /* Details: "Rection URL method write(java.io.Writer, boolean)          */
+      /* returns void "                                                       */
+      TestResult tr19 = tcd.getTestResultFailed(V2SIGTESTSURL_BASEURL_SIGRENDERACTURL_HASWRITERETURNSA);
       try {
          String name = "write";
          Class<?> retType = void.class;

@@ -42,12 +42,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet SigTestsURL_PortletURL_SIGRender_event
+ * portlet SigTestsURL_PortletURL_SIGRenderRenurl_event
  *
  */
-public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServingPortlet {
+public class SigTestsURL_PortletURL_SIGRenderRenurl implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         SigTestsURL_PortletURL_SIGRender.class.getName();
+         SigTestsURL_PortletURL_SIGRenderRenurl.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -100,11 +100,12 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
 
       // Create result objects for the tests
 
-      PortletURL url = portletResp.createRenderURL();      ClassChecker cc = new ClassChecker(url.getClass());
+      PortletURL url = portletResp.createRenderURL();
+      ClassChecker cc = new ClassChecker(url.getClass());
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasGetPortletMode       */
-      /* Details: "PortletURL has a getPortletMode()  method "                */
-      TestResult tr0 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASGETPORTLETMODE);
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetPortletMode */
+      /* Details: "Render URL has a getPortletMode()  method "                */
+      TestResult tr0 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASGETPORTLETMODE);
       try {
          String name = "getPortletMode";
          Class<?>[] exceptions = null;
@@ -113,9 +114,9 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasGetPortletModeReturns */
-      /* Details: "PortletURL method getPortletMode() returns PortletMode "   */
-      TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASGETPORTLETMODERETURNS);
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetPortletModeReturns */
+      /* Details: "Render URL method getPortletMode() returns PortletMode "   */
+      TestResult tr1 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASGETPORTLETMODERETURNS);
       try {
          String name = "getPortletMode";
          Class<?> retType = PortletMode.class;
@@ -124,9 +125,9 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasGetWindowState       */
-      /* Details: "PortletURL has a getWindowState()  method "                */
-      TestResult tr2 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASGETWINDOWSTATE);
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetWindowState */
+      /* Details: "Render URL has a getWindowState()  method "                */
+      TestResult tr2 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASGETWINDOWSTATE);
       try {
          String name = "getWindowState";
          Class<?>[] exceptions = null;
@@ -135,9 +136,9 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasGetWindowStateReturns */
-      /* Details: "PortletURL method getWindowState() returns WindowState "   */
-      TestResult tr3 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASGETWINDOWSTATERETURNS);
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetWindowStateReturns */
+      /* Details: "Render URL method getWindowState() returns WindowState "   */
+      TestResult tr3 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASGETWINDOWSTATERETURNS);
       try {
          String name = "getWindowState";
          Class<?> retType = WindowState.class;
@@ -146,10 +147,10 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasRemovePublicRenderParameter */
-      /* Details: "PortletURL has a removePublicRenderParameter(String)       */
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasRemovePublicRenderParameter */
+      /* Details: "Render URL has a removePublicRenderParameter(String)       */
       /* method "                                                             */
-      TestResult tr4 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASREMOVEPUBLICRENDERPARAMETER);
+      TestResult tr4 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASREMOVEPUBLICRENDERPARAMETER);
       try {
          String name = "removePublicRenderParameter";
          Class<?>[] exceptions = null;
@@ -158,10 +159,10 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasRemovePublicRenderParameterReturns */
-      /* Details: "PortletURL method removePublicRenderParameter(String)      */
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasRemovePublicRenderParameterReturns */
+      /* Details: "Render URL method removePublicRenderParameter(String)      */
       /* returns void "                                                       */
-      TestResult tr5 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASREMOVEPUBLICRENDERPARAMETERRETURNS);
+      TestResult tr5 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASREMOVEPUBLICRENDERPARAMETERRETURNS);
       try {
          String name = "removePublicRenderParameter";
          Class<?> retType = void.class;
@@ -170,10 +171,10 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasSetPortletMode       */
-      /* Details: "PortletURL has a setPortletMode(PortletMode) throws        */
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetPortletMode */
+      /* Details: "Render URL has a setPortletMode(PortletMode) throws        */
       /* PortletModeException method "                                        */
-      TestResult tr6 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASSETPORTLETMODE);
+      TestResult tr6 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASSETPORTLETMODE);
       try {
          String name = "setPortletMode";
          Class<?>[] exceptions = {PortletModeException.class};
@@ -182,10 +183,10 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasSetPortletModeReturns */
-      /* Details: "PortletURL method setPortletMode(PortletMode) returns      */
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetPortletModeReturns */
+      /* Details: "Render URL method setPortletMode(PortletMode) returns      */
       /* void "                                                               */
-      TestResult tr7 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASSETPORTLETMODERETURNS);
+      TestResult tr7 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASSETPORTLETMODERETURNS);
       try {
          String name = "setPortletMode";
          Class<?> retType = void.class;
@@ -194,10 +195,10 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasSetWindowState       */
-      /* Details: "PortletURL has a setWindowState(WindowState) throws        */
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetWindowState */
+      /* Details: "Render URL has a setWindowState(WindowState) throws        */
       /* WindowStateException method "                                        */
-      TestResult tr8 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASSETWINDOWSTATE);
+      TestResult tr8 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASSETWINDOWSTATE);
       try {
          String name = "setWindowState";
          Class<?>[] exceptions = {WindowStateException.class};
@@ -206,10 +207,10 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_hasSetWindowStateReturns */
-      /* Details: "PortletURL method setWindowState(WindowState) returns      */
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetWindowStateReturns */
+      /* Details: "Render URL method setWindowState(WindowState) returns      */
       /* void "                                                               */
-      TestResult tr9 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_HASSETWINDOWSTATERETURNS);
+      TestResult tr9 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_HASSETWINDOWSTATERETURNS);
       try {
          String name = "setWindowState";
          Class<?> retType = void.class;
@@ -218,9 +219,9 @@ public class SigTestsURL_PortletURL_SIGRender implements Portlet, ResourceServin
       } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
-      /* TestCase: V2SigTestsURL_PortletURL_SIGRender_implementsBaseURL       */
-      /* Details: "PortletURL implements BaseURL "                            */
-      TestResult tr10 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDER_IMPLEMENTSBASEURL);
+      /* TestCase: V2SigTestsURL_PortletURL_SIGRenderRenurl_implementsBaseURL */
+      /* Details: "Render URL implements BaseURL "                            */
+      TestResult tr10 = tcd.getTestResultFailed(V2SIGTESTSURL_PORTLETURL_SIGRENDERRENURL_IMPLEMENTSBASEURL);
       try {
          tr10.setTcSuccess(cc.implementsInterface(BaseURL.class));
       } catch(Exception e) {tr10.appendTcDetail(e.toString());}
