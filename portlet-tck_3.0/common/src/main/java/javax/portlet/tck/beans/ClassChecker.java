@@ -163,13 +163,16 @@ public class ClassChecker {
          } else {
             result = mexs.equals(exParm);
             if (LOGGER.isLoggable(Level.FINE)) {
-               LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "results of exception check: " + result);
-               LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "method exceptions: " + mexs);
-               LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", "expected exceptions: " + exParm);
+               StringBuilder sb = new StringBuilder(512);
+               sb.append("Method name: " + name + "\n");
+               sb.append("results of exception check: " + result + "\n");
+               sb.append("method exceptions: " + mexs + "\n");
+               sb.append("expected exceptions: " + exParm + "\n");
+               LOGGER.logp(Level.FINE, LOG_CLASS, "hasMethod", sb.toString());
             }
          }
          
-      } catch (Exception e) { }
+      } catch (Exception e) { LOGGER.log(Level.FINE, "problem determining method.", e);}
       
       return result;
    }
