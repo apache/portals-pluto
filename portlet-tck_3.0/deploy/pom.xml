@@ -310,6 +310,10 @@
                <include>*.xml</include>
             </includes>
          </resource>
+         <resource>
+            <directory>src/main/resources/css</directory>
+            <targetPath>${project.build.directory}/deploy-files</targetPath>
+         </resource>
       </resources>
 
 		<plugins>
