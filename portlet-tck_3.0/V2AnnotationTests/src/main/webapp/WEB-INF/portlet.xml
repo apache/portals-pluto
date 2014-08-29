@@ -23,105 +23,107 @@
    xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="V2AnnotationTests">
    <portlet>
-      <portlet-name>AnnotationTests_ProcessAction_Action</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessAction_Action</portlet-class>
+      <portlet-name>AnnotationTests_ProcessAction_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessAction_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>AnnotationTests_ProcessAction_Action</title>
+         <title>AnnotationTests_ProcessAction_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AnnotationTests_ProcessEvent_Event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_Event</portlet-class>
+      <portlet-name>AnnotationTests_ProcessEvent_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>AnnotationTests_ProcessEvent_Event</title>
+         <title>AnnotationTests_ProcessEvent_ApiEvent</title>
       </portlet-info>
       <supported-publishing-event>
-         <qname>tck:AnnotationTests_ProcessEvent_Event</qname>
+         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
       </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>AnnotationTests_ProcessEvent_Event_event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_Event_event</portlet-class>
+      <portlet-name>AnnotationTests_ProcessEvent_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_ApiEvent_event</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>AnnotationTests_ProcessEvent_Event_event</title>
+         <title>AnnotationTests_ProcessEvent_ApiEvent_event</title>
       </portlet-info>
       <supported-processing-event>
-         <qname>tck:AnnotationTests_ProcessEvent_Event</qname>
+         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
       </supported-processing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>AnnotationTests_RenderMode_Render</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_RenderMode_Render</portlet-class>
+      <portlet-name>AnnotationTests_RenderMode_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_RenderMode_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>AnnotationTests_RenderMode_Render</title>
+         <title>AnnotationTests_RenderMode_ApiRender</title>
       </portlet-info>
    </portlet>
 
+
+
    <event-definition>
-      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:RequestTests_PortletRequest_Event</qname>
+      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:RequestTests_EventRequest_Event</qname>
+      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:ResponseTests_PortletResponse_Event</qname>
+      <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:ResponseTests_StateAwareResponse_Event</qname>
+      <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:ResponseTests_EventResponse_Event</qname>
+      <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:AnnotationTests_ProcessEvent_Event</qname>
+      <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

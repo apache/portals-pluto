@@ -23,195 +23,197 @@
    xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="V2RequestTests">
    <portlet>
-      <portlet-name>RequestTests_PortletRequest_Render</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_Render</portlet-class>
+      <portlet-name>RequestTests_PortletRequest_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_PortletRequest_Render</title>
+         <title>RequestTests_PortletRequest_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_PortletRequest_Action</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_Action</portlet-class>
+      <portlet-name>RequestTests_PortletRequest_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_PortletRequest_Action</title>
+         <title>RequestTests_PortletRequest_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_PortletRequest_Event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_Event</portlet-class>
+      <portlet-name>RequestTests_PortletRequest_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_PortletRequest_Event</title>
+         <title>RequestTests_PortletRequest_ApiEvent</title>
       </portlet-info>
       <supported-publishing-event>
-         <qname>tck:RequestTests_PortletRequest_Event</qname>
+         <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
       </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_PortletRequest_Event_event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_Event_event</portlet-class>
+      <portlet-name>RequestTests_PortletRequest_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_ApiEvent_event</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_PortletRequest_Event_event</title>
+         <title>RequestTests_PortletRequest_ApiEvent_event</title>
       </portlet-info>
       <supported-processing-event>
-         <qname>tck:RequestTests_PortletRequest_Event</qname>
+         <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
       </supported-processing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_PortletRequest_Resource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_Resource</portlet-class>
+      <portlet-name>RequestTests_PortletRequest_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_PortletRequest_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_PortletRequest_Resource</title>
+         <title>RequestTests_PortletRequest_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_ClientDataRequest_Action</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_ClientDataRequest_Action</portlet-class>
+      <portlet-name>RequestTests_ClientDataRequest_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_ClientDataRequest_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_ClientDataRequest_Action</title>
+         <title>RequestTests_ClientDataRequest_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_ClientDataRequest_Resource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_ClientDataRequest_Resource</portlet-class>
+      <portlet-name>RequestTests_ClientDataRequest_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_ClientDataRequest_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_ClientDataRequest_Resource</title>
+         <title>RequestTests_ClientDataRequest_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_ActionRequest_Action</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_ActionRequest_Action</portlet-class>
+      <portlet-name>RequestTests_ActionRequest_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_ActionRequest_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_ActionRequest_Action</title>
+         <title>RequestTests_ActionRequest_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_ResourceRequest_Resource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_ResourceRequest_Resource</portlet-class>
+      <portlet-name>RequestTests_ResourceRequest_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_ResourceRequest_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_ResourceRequest_Resource</title>
+         <title>RequestTests_ResourceRequest_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_EventRequest_Event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_EventRequest_Event</portlet-class>
+      <portlet-name>RequestTests_EventRequest_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_EventRequest_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_EventRequest_Event</title>
+         <title>RequestTests_EventRequest_ApiEvent</title>
       </portlet-info>
       <supported-publishing-event>
-         <qname>tck:RequestTests_EventRequest_Event</qname>
+         <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
       </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_EventRequest_Event_event</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_EventRequest_Event_event</portlet-class>
+      <portlet-name>RequestTests_EventRequest_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_EventRequest_ApiEvent_event</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_EventRequest_Event_event</title>
+         <title>RequestTests_EventRequest_ApiEvent_event</title>
       </portlet-info>
       <supported-processing-event>
-         <qname>tck:RequestTests_EventRequest_Event</qname>
+         <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
       </supported-processing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>RequestTests_RenderRequest_Render</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.RequestTests_RenderRequest_Render</portlet-class>
+      <portlet-name>RequestTests_RenderRequest_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.RequestTests_RenderRequest_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>RequestTests_RenderRequest_Render</title>
+         <title>RequestTests_RenderRequest_ApiRender</title>
       </portlet-info>
    </portlet>
 
+
+
    <event-definition>
-      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:RequestTests_PortletRequest_Event</qname>
+      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:RequestTests_EventRequest_Event</qname>
+      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

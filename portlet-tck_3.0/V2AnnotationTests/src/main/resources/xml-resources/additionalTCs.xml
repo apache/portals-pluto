@@ -20,8 +20,8 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API AnnotationTests test case names and page mappings -->
-<entry key="V2AnnotationTests_ProcessAction_Action_name">V2AnnotationTests</entry>
-<entry key="V2AnnotationTests_ProcessEvent_Event_qname">V2AnnotationTests</entry>
-<entry key="V2AnnotationTests_ProcessEvent_Event_name">V2AnnotationTests</entry>
-<entry key="V2AnnotationTests_RenderMode_Render_name">V2AnnotationTests</entry>
+<entry key="V2AnnotationTests_ProcessAction_ApiAction_name">V2AnnotationTests</entry>
+<entry key="V2AnnotationTests_ProcessEvent_ApiEvent_qname">V2AnnotationTests</entry>
+<entry key="V2AnnotationTests_ProcessEvent_ApiEvent_name">V2AnnotationTests</entry>
+<entry key="V2AnnotationTests_RenderMode_ApiRender_name">V2AnnotationTests</entry>
 </properties>

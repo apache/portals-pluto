@@ -23,133 +23,135 @@
    xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="V2URLTests">
    <portlet>
-      <portlet-name>URLTests_BaseURL_RenderRenurl</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_RenderRenurl</portlet-class>
+      <portlet-name>URLTests_BaseURL_ApiRenderRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_ApiRenderRenurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_BaseURL_RenderRenurl</title>
+         <title>URLTests_BaseURL_ApiRenderRenurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>URLTests_BaseURL_RenderActurl</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_RenderActurl</portlet-class>
+      <portlet-name>URLTests_BaseURL_ApiRenderActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_ApiRenderActurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_BaseURL_RenderActurl</title>
+         <title>URLTests_BaseURL_ApiRenderActurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>URLTests_BaseURL_RenderResurl</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_RenderResurl</portlet-class>
+      <portlet-name>URLTests_BaseURL_ApiRenderResurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_ApiRenderResurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_BaseURL_RenderResurl</title>
+         <title>URLTests_BaseURL_ApiRenderResurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>URLTests_PortletURL_RenderRenurl</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURL_RenderRenurl</portlet-class>
+      <portlet-name>URLTests_PortletURL_ApiRenderRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURL_ApiRenderRenurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_PortletURL_RenderRenurl</title>
+         <title>URLTests_PortletURL_ApiRenderRenurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>URLTests_PortletURL_RenderActurl</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURL_RenderActurl</portlet-class>
+      <portlet-name>URLTests_PortletURL_ApiRenderActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURL_ApiRenderActurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_PortletURL_RenderActurl</title>
+         <title>URLTests_PortletURL_ApiRenderActurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>URLTests_ResourceURL_RenderResurl</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_ResourceURL_RenderResurl</portlet-class>
+      <portlet-name>URLTests_ResourceURL_ApiRenderResurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_ResourceURL_ApiRenderResurl</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_ResourceURL_RenderResurl</title>
+         <title>URLTests_ResourceURL_ApiRenderResurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>URLTests_PortletURLGenerationListener_Render</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURLGenerationListener_Render</portlet-class>
+      <portlet-name>URLTests_PortletURLGenerationListener_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURLGenerationListener_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>URLTests_PortletURLGenerationListener_Render</title>
+         <title>URLTests_PortletURLGenerationListener_ApiRender</title>
       </portlet-info>
    </portlet>
 
+
+
    <event-definition>
-      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:RequestTests_PortletRequest_Event</qname>
+      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:RequestTests_EventRequest_Event</qname>
+      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:ResponseTests_PortletResponse_Event</qname>
+      <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:ResponseTests_StateAwareResponse_Event</qname>
+      <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 
    <event-definition>
-      <qname>tck:ResponseTests_EventResponse_Event</qname>
+      <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

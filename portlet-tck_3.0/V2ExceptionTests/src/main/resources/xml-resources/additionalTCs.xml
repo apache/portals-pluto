@@ -20,16 +20,16 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API ExceptionTests test case names and page mappings -->
-<entry key="V2ExceptionTests_PortletModeException_Render_hasGetMode2">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_UnavailableException_Render_isPermanent1">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_UnavailableException_Render_isPermanent2">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_UnavailableException_Render_isPermanent3">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_UnavailableException_Render_getUnavailableSeconds1">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_UnavailableException_Render_getUnavailableSeconds2">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_ValidatorException_Render_constructor2">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_ValidatorException_Render_constructor4">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_ValidatorException_Render_constructor6">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_ValidatorException_Render_getFailedKeys1">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_ValidatorException_Render_getFailedKeys2">V2ExceptionTests</entry>
-<entry key="V2ExceptionTests_WindowStateException_Render_getState">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_PortletModeException_ApiRender_hasGetMode2">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_UnavailableException_ApiRender_isPermanent1">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_UnavailableException_ApiRender_isPermanent2">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_UnavailableException_ApiRender_isPermanent3">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_UnavailableException_ApiRender_getUnavailableSeconds1">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_UnavailableException_ApiRender_getUnavailableSeconds2">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_ValidatorException_ApiRender_constructor2">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_ValidatorException_ApiRender_constructor4">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_ValidatorException_ApiRender_constructor6">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_ValidatorException_ApiRender_getFailedKeys1">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_ValidatorException_ApiRender_getFailedKeys2">V2ExceptionTests</entry>
+<entry key="V2ExceptionTests_WindowStateException_ApiRender_getState">V2ExceptionTests</entry>
 </properties>
