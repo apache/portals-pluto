@@ -35,6 +35,10 @@
          <artifactId>portlet-api</artifactId>
       </dependency>
       <dependency>
+         <groupId>javax.servlet</groupId>
+         <artifactId>servlet-api</artifactId>
+      </dependency>
+      <dependency>
          <groupId>javax.portlet</groupId>
          <artifactId>tck-common</artifactId>
          <version>${project.version}</version>
@@ -49,6 +53,9 @@
 
       <!-- Set to true for modules that define all test cases in a file (TCs are not generated from the portlet.xml) -->
       <additional.testcases.only>true</additional.testcases.only>
+
+      <!-- put all portlets from this module on the same page -->
+      <page.file.xsl>plutoMultiPortletPage.xsl</page.file.xsl>
 
    </properties>
 

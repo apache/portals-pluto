@@ -20,360 +20,233 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-PortletTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2PortletTests">
    <portlet>
-      <portlet-name>V2PortletTests_PortletConfig</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_PortletConfig</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_PortletConfig_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_PortletConfig_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_PortletConfig</title>
+         <title>PortletTests_PortletConfig_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2PortletTests_SIG_PortletConfig</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_PortletConfig</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_PortletConfig_Render2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_PortletConfig_Render2</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_SIG_PortletConfig</title>
+         <title>PortletTests_PortletConfig_Render2</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2PortletTests_PortletMode</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_PortletMode</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_PortletMode_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_PortletMode_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_PortletMode</title>
+         <title>PortletTests_PortletMode_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2PortletTests_SIG_PortletMode</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_PortletMode</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_WindowState_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_WindowState_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_SIG_PortletMode</title>
+         <title>PortletTests_WindowState_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2PortletTests_WindowState</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_WindowState</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_Portlet_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Portlet_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_WindowState</title>
+         <title>PortletTests_Portlet_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2PortletTests_SIG_WindowState</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_WindowState</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_Portlet_Action</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Portlet_Action</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_SIG_WindowState</title>
+         <title>PortletTests_Portlet_Action</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2PortletTests_Portlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_Portlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_Event_Event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Event_Event</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_Portlet</title>
+         <title>PortletTests_Event_Event</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:PortletTests_Event_Event</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_Event_Event_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_Event_Event_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_Event_Event_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:PortletTests_Event_Event</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_EventPortlet_Event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_EventPortlet_Event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_EventPortlet_Event</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:PortletTests_EventPortlet_Event</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_EventPortlet_Event_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_EventPortlet_Event_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_EventPortlet_Event_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:PortletTests_EventPortlet_Event</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>PortletTests_ResourceServingPortlet_Resource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_ResourceServingPortlet_Resource</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>PortletTests_ResourceServingPortlet_Resource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2PortletTests_SIG_Portlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_Portlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTests_GenericPortlet_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTests_GenericPortlet_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2PortletTests_SIG_Portlet</title>
+         <title>PortletTests_GenericPortlet_Render</title>
       </portlet-info>
    </portlet>
 
-   <portlet>
-      <portlet-name>V2PortletTests_Event</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_Event</portlet-class>
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
+   <event-definition>
+      <qname>tck:RequestTests_PortletRequest_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supported-locale>en_US</supported-locale>
+   <event-definition>
+      <qname>tck:RequestTests_EventRequest_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <portlet-info>
-         <title>V2PortletTests_Event</title>
-      </portlet-info>
-   </portlet>
+   <event-definition>
+      <qname>tck:ResponseTests_PortletResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-   <portlet>
-      <portlet-name>V2PortletTests_SIG_Event</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_Event</portlet-class>
+   <event-definition>
+      <qname>tck:ResponseTests_StateAwareResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:ResponseTests_EventResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:AnnotationTests_ProcessEvent_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
+   <event-definition>
+      <qname>tck:PortletTests_Event_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supported-locale>en_US</supported-locale>
+   <event-definition>
+      <qname>tck:PortletTests_EventPortlet_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <portlet-info>
-         <title>V2PortletTests_SIG_Event</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2PortletTests_EventPortlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_EventPortlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2PortletTests_EventPortlet</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2PortletTests_SIG_EventPortlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_EventPortlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2PortletTests_SIG_EventPortlet</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2PortletTests_ResourceServingPortlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_ResourceServingPortlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2PortletTests_ResourceServingPortlet</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2PortletTests_SIG_ResourceServingPortlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_ResourceServingPortlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2PortletTests_SIG_ResourceServingPortlet</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2PortletTests_GenericPortlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_GenericPortlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2PortletTests_GenericPortlet</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2PortletTests_SIG_GenericPortlet</portlet-name>
-      <portlet-class>javax.portlet.tck.PortletTests.portlets.V2PortletTests_SIG_GenericPortlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2PortletTests_SIG_GenericPortlet</title>
-      </portlet-info>
-   </portlet>
-
-
-
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

@@ -20,448 +20,155 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-WrapperTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2WrapperTests">
    <portlet>
-      <portlet-name>V2WrapperTests_ActionRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_ActionRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_ActionRequestWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ActionRequestWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_ActionRequestWrapper</title>
+         <title>WrapperTests_ActionRequestWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_SIG_ActionRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_ActionRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_ActionResponseWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ActionResponseWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_SIG_ActionRequestWrapper</title>
+         <title>WrapperTests_ActionResponseWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_ActionResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_ActionResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_EventRequestWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventRequestWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_ActionResponseWrapper</title>
+         <title>WrapperTests_EventRequestWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_SIG_ActionResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_ActionResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_EventResponseWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventResponseWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_SIG_ActionResponseWrapper</title>
+         <title>WrapperTests_EventResponseWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_EventRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_EventRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_PortletRequestWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_PortletRequestWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_EventRequestWrapper</title>
+         <title>WrapperTests_PortletRequestWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_SIG_EventRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_EventRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_PortletResponseWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_PortletResponseWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_SIG_EventRequestWrapper</title>
+         <title>WrapperTests_PortletResponseWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_EventResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_EventResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_RenderRequestWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_RenderRequestWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_EventResponseWrapper</title>
+         <title>WrapperTests_RenderRequestWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_SIG_EventResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_EventResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_RenderResponseWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_RenderResponseWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_SIG_EventResponseWrapper</title>
+         <title>WrapperTests_RenderResponseWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_PortletRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_PortletRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_ResourceRequestWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ResourceRequestWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_PortletRequestWrapper</title>
+         <title>WrapperTests_ResourceRequestWrapper_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2WrapperTests_SIG_PortletRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_PortletRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>WrapperTests_ResourceResponseWrapper_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ResourceResponseWrapper_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2WrapperTests_SIG_PortletRequestWrapper</title>
+         <title>WrapperTests_ResourceResponseWrapper_Render</title>
       </portlet-info>
    </portlet>
 
-   <portlet>
-      <portlet-name>V2WrapperTests_PortletResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_PortletResponseWrapper</portlet-class>
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_PortletResponseWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_SIG_PortletResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_PortletResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_SIG_PortletResponseWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_RenderRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_RenderRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_RenderRequestWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_SIG_RenderRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_RenderRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_SIG_RenderRequestWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_RenderResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_RenderResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_RenderResponseWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_SIG_RenderResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_RenderResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_SIG_RenderResponseWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_ResourceRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_ResourceRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_ResourceRequestWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_SIG_ResourceRequestWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_ResourceRequestWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_SIG_ResourceRequestWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_ResourceResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_ResourceResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_ResourceResponseWrapper</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2WrapperTests_SIG_ResourceResponseWrapper</portlet-name>
-      <portlet-class>javax.portlet.tck.WrapperTests.portlets.V2WrapperTests_SIG_ResourceResponseWrapper</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2WrapperTests_SIG_ResourceResponseWrapper</title>
-      </portlet-info>
-   </portlet>
-
-
-
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

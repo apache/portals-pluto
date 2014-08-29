@@ -20,316 +20,251 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-FilterTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2FilterTests">
    <portlet>
-      <portlet-name>V2FilterTests_FilterChain</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_FilterChain</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_FilterChain_ActionFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_FilterChain_ActionFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_FilterChain</title>
+         <title>FilterTests_FilterChain_ActionFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_SIG_FilterChain</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_SIG_FilterChain</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_FilterChain_EventFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_FilterChain_EventFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_SIG_FilterChain</title>
+         <title>FilterTests_FilterChain_EventFilter</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>FilterTests_FilterChain_EventFilter_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_FilterChain_EventFilter_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>FilterTests_FilterChain_EventFilter_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>FilterTests_FilterChain_RenderFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_FilterChain_RenderFilter</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>FilterTests_FilterChain_RenderFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_FilterConfig</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_FilterConfig</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_FilterChain_ResourceFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_FilterChain_ResourceFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_FilterConfig</title>
+         <title>FilterTests_FilterChain_ResourceFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_SIG_FilterConfig</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_SIG_FilterConfig</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_FilterConfig_RenderFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_FilterConfig_RenderFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_SIG_FilterConfig</title>
+         <title>FilterTests_FilterConfig_RenderFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_PortletFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_PortletFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_PortletFilter_ActionFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_PortletFilter_ActionFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_PortletFilter</title>
+         <title>FilterTests_PortletFilter_ActionFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_SIG_PortletFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_SIG_PortletFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_PortletFilter_EventFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_PortletFilter_EventFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_SIG_PortletFilter</title>
+         <title>FilterTests_PortletFilter_EventFilter</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>FilterTests_PortletFilter_EventFilter_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_PortletFilter_EventFilter_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>FilterTests_PortletFilter_EventFilter_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>FilterTests_PortletFilter_RenderFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_PortletFilter_RenderFilter</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>FilterTests_PortletFilter_RenderFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_ActionFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_ActionFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_PortletFilter_ResourceFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_PortletFilter_ResourceFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_ActionFilter</title>
+         <title>FilterTests_PortletFilter_ResourceFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_SIG_ActionFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_SIG_ActionFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_ActionFilter_ActionFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_ActionFilter_ActionFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_SIG_ActionFilter</title>
+         <title>FilterTests_ActionFilter_ActionFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_EventFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_EventFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_EventFilter_EventFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_EventFilter_EventFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_EventFilter</title>
+         <title>FilterTests_EventFilter_EventFilter</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>FilterTests_EventFilter_EventFilter_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_EventFilter_EventFilter_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>FilterTests_EventFilter_EventFilter_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>FilterTests_RenderFilter_RenderFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_RenderFilter_RenderFilter</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>FilterTests_RenderFilter_RenderFilter</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2FilterTests_SIG_EventFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_SIG_EventFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>FilterTests_ResourceFilter_ResourceFilter</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.FilterTests_ResourceFilter_ResourceFilter</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2FilterTests_SIG_EventFilter</title>
+         <title>FilterTests_ResourceFilter_ResourceFilter</title>
       </portlet-info>
    </portlet>
 
-   <portlet>
-      <portlet-name>V2FilterTests_RenderFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_RenderFilter</portlet-class>
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2FilterTests_RenderFilter</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2FilterTests_SIG_RenderFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_SIG_RenderFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2FilterTests_SIG_RenderFilter</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2FilterTests_ResourceFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_ResourceFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2FilterTests_ResourceFilter</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2FilterTests_SIG_ResourceFilter</portlet-name>
-      <portlet-class>javax.portlet.tck.FilterTests.portlets.V2FilterTests_SIG_ResourceFilter</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2FilterTests_SIG_ResourceFilter</title>
-      </portlet-info>
-   </portlet>
-
-
-
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

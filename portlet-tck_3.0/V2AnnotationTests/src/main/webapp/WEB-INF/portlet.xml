@@ -20,140 +20,113 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-AnnotationTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2AnnotationTests">
    <portlet>
-      <portlet-name>V2AnnotationTests_ProcessAction</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_ProcessAction</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_ProcessAction_Action</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessAction_Action</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_ProcessAction</title>
+         <title>AnnotationTests_ProcessAction_Action</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2AnnotationTests_SIG_ProcessAction</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_SIG_ProcessAction</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_ProcessEvent_Event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_Event</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_SIG_ProcessAction</title>
+         <title>AnnotationTests_ProcessEvent_Event</title>
       </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AnnotationTests_ProcessEvent_Event</qname>
+      </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>V2AnnotationTests_ProcessEvent</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_ProcessEvent</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_ProcessEvent_Event_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_Event_event</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_ProcessEvent</title>
+         <title>AnnotationTests_ProcessEvent_Event_event</title>
       </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AnnotationTests_ProcessEvent_Event</qname>
+      </supported-processing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>V2AnnotationTests_SIG_ProcessEvent</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_SIG_ProcessEvent</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_RenderMode_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_RenderMode_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_SIG_ProcessEvent</title>
+         <title>AnnotationTests_RenderMode_Render</title>
       </portlet-info>
    </portlet>
 
-   <portlet>
-      <portlet-name>V2AnnotationTests_RenderMode</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_RenderMode</portlet-class>
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
+   <event-definition>
+      <qname>tck:RequestTests_PortletRequest_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supported-locale>en_US</supported-locale>
+   <event-definition>
+      <qname>tck:RequestTests_EventRequest_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <portlet-info>
-         <title>V2AnnotationTests_RenderMode</title>
-      </portlet-info>
-   </portlet>
+   <event-definition>
+      <qname>tck:ResponseTests_PortletResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-   <portlet>
-      <portlet-name>V2AnnotationTests_SIG_RenderMode</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_SIG_RenderMode</portlet-class>
+   <event-definition>
+      <qname>tck:ResponseTests_StateAwareResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:ResponseTests_EventResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:AnnotationTests_ProcessEvent_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2AnnotationTests_SIG_RenderMode</title>
-      </portlet-info>
-   </portlet>
-
-
-
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

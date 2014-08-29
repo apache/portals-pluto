@@ -20,184 +20,141 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-URLTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2URLTests">
    <portlet>
-      <portlet-name>V2URLTests_BaseURL</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_BaseURL</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>URLTests_BaseURL_RenderRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_RenderRenurl</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2URLTests_BaseURL</title>
+         <title>URLTests_BaseURL_RenderRenurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2URLTests_SIG_BaseURL</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_SIG_BaseURL</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>URLTests_BaseURL_RenderActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_RenderActurl</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2URLTests_SIG_BaseURL</title>
+         <title>URLTests_BaseURL_RenderActurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2URLTests_PortletURL</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_PortletURL</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>URLTests_BaseURL_RenderResurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_BaseURL_RenderResurl</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2URLTests_PortletURL</title>
+         <title>URLTests_BaseURL_RenderResurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2URLTests_SIG_PortletURL</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_SIG_PortletURL</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>URLTests_PortletURL_RenderRenurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURL_RenderRenurl</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2URLTests_SIG_PortletURL</title>
+         <title>URLTests_PortletURL_RenderRenurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2URLTests_ResourceURL</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_ResourceURL</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>URLTests_PortletURL_RenderActurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURL_RenderActurl</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2URLTests_ResourceURL</title>
+         <title>URLTests_PortletURL_RenderActurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2URLTests_SIG_ResourceURL</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_SIG_ResourceURL</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>URLTests_ResourceURL_RenderResurl</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_ResourceURL_RenderResurl</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2URLTests_SIG_ResourceURL</title>
+         <title>URLTests_ResourceURL_RenderResurl</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2URLTests_PortletURLGenerationListener</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_PortletURLGenerationListener</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>URLTests_PortletURLGenerationListener_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.URLTests_PortletURLGenerationListener_Render</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2URLTests_PortletURLGenerationListener</title>
+         <title>URLTests_PortletURLGenerationListener_Render</title>
       </portlet-info>
    </portlet>
 
-   <portlet>
-      <portlet-name>V2URLTests_SIG_PortletURLGenerationListener</portlet-name>
-      <portlet-class>javax.portlet.tck.URLTests.portlets.V2URLTests_SIG_PortletURLGenerationListener</portlet-class>
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_EventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
+   <event-definition>
+      <qname>tck:RequestTests_PortletRequest_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supported-locale>en_US</supported-locale>
+   <event-definition>
+      <qname>tck:RequestTests_EventRequest_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <portlet-info>
-         <title>V2URLTests_SIG_PortletURLGenerationListener</title>
-      </portlet-info>
-   </portlet>
+   <event-definition>
+      <qname>tck:ResponseTests_PortletResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
+   <event-definition>
+      <qname>tck:ResponseTests_StateAwareResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
+   <event-definition>
+      <qname>tck:ResponseTests_EventResponse_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>
