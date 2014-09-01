@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2SigTestsFilter">
+   <portlet>
+      <portlet-name>SigTestsFilter_ActionFilter_SIGRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsFilter_ActionFilter_SIGRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsFilter_ActionFilter_SIGRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsFilter_EventFilter_SIGRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsFilter_EventFilter_SIGRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsFilter_EventFilter_SIGRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsFilter_FilterChain_SIGRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsFilter_FilterChain_SIGRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsFilter_FilterChain_SIGRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsFilter_FilterConfig_SIGRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsFilter_FilterConfig_SIGRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsFilter_FilterConfig_SIGRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsFilter_PortletFilter_SIGRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsFilter_PortletFilter_SIGRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsFilter_PortletFilter_SIGRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsFilter_RenderFilter_SIGRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsFilter_RenderFilter_SIGRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsFilter_RenderFilter_SIGRender</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>SigTestsFilter_ResourceFilter_SIGRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.SigTestsFilter_ResourceFilter_SIGRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>SigTestsFilter_ResourceFilter_SIGRender</title>
+      </portlet-info>
+   </portlet>
+   
+   <filter>
+      <filter-name>SigTestsFilter_FilterChain_SIGRender_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.SigTestsFilter_FilterChain_SIGRender_filter</filter-class>
+      <lifecycle>RENDER_PHASE</lifecycle>
+   </filter>
+   <filter>
+      <filter-name>SigTestsFilter_FilterConfig_SIGRender_filter</filter-name>
+      <filter-class>javax.portlet.tck.filters.SigTestsFilter_FilterConfig_SIGRender_filter</filter-class>
+      <lifecycle>RENDER_PHASE</lifecycle>
+   </filter>
+
+   <filter-mapping>
+      <filter-name>SigTestsFilter_FilterChain_SIGRender_filter</filter-name>
+      <portlet-name>SigTestsFilter_FilterChain_SIGRender</portlet-name>
+   </filter-mapping>
+   <filter-mapping>
+      <filter-name>SigTestsFilter_FilterConfig_SIGRender_filter</filter-name>
+      <portlet-name>SigTestsFilter_FilterConfig_SIGRender</portlet-name>
+   </filter-mapping>
+
+   <event-definition>
+      <qname>tck:SigTestsEvent_Event_SIGEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:SigTestsEvent_EventRequest_SIGEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:SigTestsEvent_EventResponse_SIGEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:SigTestsEvent_PortletRequest_SIGEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:SigTestsEvent_PortletResponse_SIGEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:SigTestsEvent_StateAwareResponse_SIGEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
+</portlet-app>

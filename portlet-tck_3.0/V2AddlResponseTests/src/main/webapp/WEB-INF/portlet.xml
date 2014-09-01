@@ -20,74 +20,121 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-AddlResponseTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2AddlResponseTests">
    <portlet>
-      <portlet-name>AddlResponseTests_SPEC2_12_ResponseProperties</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_ResponseProperties</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlResponseTests_SPEC2_12_Action</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_Action</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlResponseTests_SPEC2_12_ResponseProperties</title>
+         <title>AddlResponseTests_SPEC2_12_Action</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlResponseTests_SPEC2_12_ResponseRedirect</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_ResponseRedirect</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlResponseTests_SPEC2_12_Event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_Event</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlResponseTests_SPEC2_12_ResponseRedirect</title>
+         <title>AddlResponseTests_SPEC2_12_Event</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlResponseTests_SPEC2_12_Event</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlResponseTests_SPEC2_12_Event_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_Event_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlResponseTests_SPEC2_12_Event_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlResponseTests_SPEC2_12_Event</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlResponseTests_SPEC2_12_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_Render</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlResponseTests_SPEC2_12_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlResponseTests_SPEC2_12_ResponseContent</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_ResponseContent</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlResponseTests_SPEC2_12_Resource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlResponseTests_SPEC2_12_Resource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlResponseTests_SPEC2_12_ResponseContent</title>
+         <title>AddlResponseTests_SPEC2_12_Resource</title>
       </portlet-info>
    </portlet>
 
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_EventAttr</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_EventReq</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlResponseTests_SPEC2_12_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

@@ -20,162 +20,118 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-PortletTagLibraryTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2PortletTagLibraryTests">
    <portlet>
-      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibV1</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibV1</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>PortletTagLibraryTests_SPEC2_26_TagLibV1</title>
+         <title>PortletTagLibraryTests_SPEC2_26_IncludeJSPGeneral</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibAction</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibAction</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_IncludeJSPAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_IncludeJSPAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>PortletTagLibraryTests_SPEC2_26_TagLibAction</title>
+         <title>PortletTagLibraryTests_SPEC2_26_IncludeJSPAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibRender</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>PortletTagLibraryTests_SPEC2_26_TagLibRender</title>
+         <title>PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent</title>
       </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent</qname>
+      </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibResource</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibResource</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>PortletTagLibraryTests_SPEC2_26_TagLibResource</title>
+         <title>PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent_event</title>
       </portlet-info>
+      <supported-processing-event>
+         <qname>tck:PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent</qname>
+      </supported-processing-event>
    </portlet>
 
-   <portlet>
-      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibParam</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibParam</portlet-class>
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
+   <event-definition>
+      <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supported-locale>en_US</supported-locale>
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <portlet-info>
-         <title>PortletTagLibraryTests_SPEC2_26_TagLibParam</title>
-      </portlet-info>
-   </portlet>
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_EventAttr</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-   <portlet>
-      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLibProperty</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLibProperty</portlet-class>
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_EventReq</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
+   <event-definition>
+      <qname>tck:AddlResponseTests_SPEC2_12_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <expiration-cache>0</expiration-cache>
+   <event-definition>
+      <qname>tck:AddlFilterTests_SPEC2_20_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
+   <event-definition>
+      <qname>tck:PortletTagLibraryTests_SPEC2_26_IncludeJSPEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
 
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>PortletTagLibraryTests_SPEC2_26_TagLibProperty</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>PortletTagLibraryTests_SPEC2_26_TagLib</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.PortletTagLibraryTests_SPEC2_26_TagLib</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>PortletTagLibraryTests_SPEC2_26_TagLib</title>
-      </portlet-info>
-   </portlet>
-
-
-
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API PortletTagLibraryTests3 test case names and page mappings -->
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource7">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource8">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource9">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource10">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource11">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource12">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_defineObjectsResource13">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL7">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL8">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL9">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL10">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL11">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL12">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL13">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL14">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL15">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL17">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL18">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL19">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL20">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL21">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL22">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL23">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL25">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL26">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL27">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL28">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL29">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL30">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL7">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL8">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL9">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL10">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL11">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL12">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL13">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL14">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL15">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL17">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL18">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL19">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL20">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL21">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL22">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL23">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL25">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL26">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL7">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL8">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL9">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL11">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL12">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL13">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL14">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL15">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL16">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL17">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL19">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL20">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL21">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL22">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL23">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL24">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL25">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL26">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL27">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramAction6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramRender1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramRender2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramRender3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramRender4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramRender5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramRender6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramResource1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramResource2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramResource3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramResource4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramResource5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_paramResource6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyAction1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyAction2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyAction3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyAction4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyAction5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyAction6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyRender1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyRender2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyRender3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyRender4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyRender5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyRender6">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyResource1">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyResource2">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyResource3">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyResource4">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyResource5">V2PortletTagLibraryTests3</entry>
+<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_propertyResource6">V2PortletTagLibraryTests3</entry>
+</properties>

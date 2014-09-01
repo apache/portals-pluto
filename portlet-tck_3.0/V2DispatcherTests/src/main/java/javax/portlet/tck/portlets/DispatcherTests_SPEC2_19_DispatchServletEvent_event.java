@@ -66,36 +66,15 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Port
    }
 
    @Override
-   public void render(RenderRequest portletReq, RenderResponse portletResp)
-         throws PortletException, IOException {
-      
-      LOGGER.entering(LOG_CLASS, "event companion render");
-
-      portletResp.setContentType("text/html");
-      PrintWriter writer = portletResp.getWriter();
-      writer.write("<h3>Event Companion Portlet </h3>\n");
-      writer.write("<p>DispatcherTests_SPEC2_19_DispatchServletEvent_event</p>\n");
-
-      String msg = (String) portletReq.getPortletSession()
-            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_DispatchServletEvent", APPLICATION_SCOPE);
-      msg = (msg==null) ? "Not ready. click test case link." : msg;
-      writer.write("<p>" + msg + "</p>\n");
-
-   }
-
-   @Override
    public void processEvent(EventRequest portletReq, EventResponse portletResp)
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "event companion processEvent");
 
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletEvent_event", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletEvent_event", PROP_VALUE);
+      portletResp.setRenderParameters(portletReq);
 
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -143,7 +122,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Port
       TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETEVENT_DISPATCH4);
       try {
          PortletRequestDispatcher rd = portletConfig.getPortletContext()
-               .getRequestDispatcher("/Invalid/path.jsp");
+               .getRequestDispatcher(" Invalid path.jsp ");
          tr3.setTcSuccess(rd == null);
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
@@ -175,6 +154,24 @@ public class DispatcherTests_SPEC2_19_DispatchServletEvent_event implements Port
       portletReq.getPortletSession().setAttribute(
                    Constants.RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_DispatchServletEvent",
                    writer.toString(), APPLICATION_SCOPE);
+
+   }
+
+   @Override
+   public void render(RenderRequest portletReq, RenderResponse portletResp)
+         throws PortletException, IOException {
+      
+      LOGGER.entering(LOG_CLASS, "event companion render");
+
+      portletResp.setContentType("text/html");
+      PrintWriter writer = portletResp.getWriter();
+      writer.write("<h3>Event Companion Portlet </h3>\n");
+      writer.write("<p>DispatcherTests_SPEC2_19_DispatchServletEvent_event</p>\n");
+
+      String msg = (String) portletReq.getPortletSession()
+            .getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_DispatchServletEvent", APPLICATION_SCOPE);
+      msg = (msg==null) ? "Not ready. click test case link." : msg;
+      writer.write("<p>" + msg + "</p>\n");
 
    }
 

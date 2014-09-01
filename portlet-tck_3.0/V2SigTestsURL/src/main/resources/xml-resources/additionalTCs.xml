@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API SigTestsURL test case names and page mappings -->
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasAddProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasAddPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasGetParameterMap">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasGetParameterMapReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameterA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameterReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParameters">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetParametersReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetSecure">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasSetSecureReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasToString">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasToStringReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasWrite">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasWriteA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasWriteReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderActurl_hasWriteReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasAddProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasAddPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasGetParameterMap">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasGetParameterMapReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetParameterA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetParameterReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetParameters">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetParametersReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetSecure">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasSetSecureReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasToString">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasToStringReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasWrite">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasWriteA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasWriteReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderRenurl_hasWriteReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasAddProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasAddPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasGetParameterMap">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasGetParameterMapReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetParameterA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetParameterReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetParameters">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetParametersReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetSecure">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasSetSecureReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasToString">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasToStringReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasWrite">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasWriteA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasWriteReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGRenderResurl_hasWriteReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasAddProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasAddPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasGetParameterMap">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasGetParameterMapReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetParameterA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetParameterReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetParameters">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetParametersReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetSecure">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasSetSecureReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasToString">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasToStringReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasWrite">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasWriteA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasWriteReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceActurl_hasWriteReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasAddProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasAddPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasGetParameterMap">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasGetParameterMapReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetParameterA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetParameterReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetParameters">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetParametersReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetSecure">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasSetSecureReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasToString">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasToStringReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasWrite">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasWriteA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasWriteReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceRenurl_hasWriteReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasAddProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasAddPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasGetParameterMap">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasGetParameterMapReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetParameterA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetParameterReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetParameters">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetParametersReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetProperty">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetPropertyReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetSecure">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasSetSecureReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasToString">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasToStringReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasWrite">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasWriteA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasWriteReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_BaseURL_SIGResourceResurl_hasWriteReturnsA">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasGetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasGetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasGetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasGetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasRemovePublicRenderParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasRemovePublicRenderParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasSetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasSetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasSetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_hasSetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderActurl_implementsBaseURL">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasGetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasRemovePublicRenderParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasRemovePublicRenderParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_hasSetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGRenderRenurl_implementsBaseURL">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasGetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasGetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasGetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasGetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasRemovePublicRenderParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasRemovePublicRenderParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasSetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasSetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasSetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_hasSetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceActurl_implementsBaseURL">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasGetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasGetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasGetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasGetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasRemovePublicRenderParameter">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasRemovePublicRenderParameterReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasSetPortletMode">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasSetPortletModeReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasSetWindowState">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_hasSetWindowStateReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_PortletURL_SIGResourceRenurl_implementsBaseURL">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldFULL">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldPAGE">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldPORTLET">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_fieldSHARED">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasGetCacheability">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasGetCacheabilityReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetCacheability">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetCacheabilityReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetResourceID">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_hasSetResourceIDReturns">V2SigTestsURL</entry>
+<entry key="V2SigTestsURL_ResourceURL_SIGRender_implementsBaseURL">V2SigTestsURL</entry>
+</properties>

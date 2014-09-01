@@ -20,25 +20,16 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-AddlPortletTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2AddlPortletTests">
    <portlet>
       <portlet-name>AddlPortletTests_SPEC2_2_Compatibility</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_2_Compatibility</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlPortletTests_SPEC2_2_Compatibility</title>
       </portlet-info>
@@ -47,108 +38,147 @@
    <portlet>
       <portlet-name>AddlPortletTests_SPEC2_5_Initialization</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_Initialization</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlPortletTests_SPEC2_5_Initialization</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlPortletTests_SPEC2_5_RequestHandling</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_RequestHandling</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlPortletTests_SPEC2_5_ActionHandling</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_ActionHandling</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlPortletTests_SPEC2_5_RequestHandling</title>
+         <title>AddlPortletTests_SPEC2_5_ActionHandling</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlPortletTests_SPEC2_5_GenericPortlet</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_GenericPortlet</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlPortletTests_SPEC2_5_RenderHandling</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_RenderHandling</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlPortletTests_SPEC2_5_GenericPortlet</title>
+         <title>AddlPortletTests_SPEC2_5_RenderHandling</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlPortletTests_SPEC2_6_Config</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_6_Config</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlPortletTests_SPEC2_5_ResourceHandling</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_ResourceHandling</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlPortletTests_SPEC2_6_Config</title>
+         <title>AddlPortletTests_SPEC2_5_ResourceHandling</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_5_EventHandling</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_EventHandling</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_5_EventHandling</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_5_EventHandling_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_EventHandling_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_5_EventHandling_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_5_RenderGenericPortlet</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_5_RenderGenericPortlet</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_5_RenderGenericPortlet</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_6_RenderConfig</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_6_RenderConfig</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_6_RenderConfig</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_6_RenderConfig2</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_6_RenderConfig2</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_6_RenderConfig2</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_6_RenderConfig3</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_6_RenderConfig3</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_6_RenderConfig3</title>
       </portlet-info>
    </portlet>
 
    <portlet>
       <portlet-name>AddlPortletTests_SPEC2_8_PortletModes</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_8_PortletModes</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlPortletTests_SPEC2_8_PortletModes</title>
       </portlet-info>
@@ -157,20 +187,11 @@
    <portlet>
       <portlet-name>AddlPortletTests_SPEC2_9_WindowStates</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_9_WindowStates</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlPortletTests_SPEC2_9_WindowStates</title>
       </portlet-info>
@@ -179,20 +200,11 @@
    <portlet>
       <portlet-name>AddlPortletTests_SPEC2_13_ResourceServing</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_13_ResourceServing</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlPortletTests_SPEC2_13_ResourceServing</title>
       </portlet-info>
@@ -201,20 +213,11 @@
    <portlet>
       <portlet-name>AddlPortletTests_SPEC2_13_ResourceServingCache</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_13_ResourceServingCache</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlPortletTests_SPEC2_13_ResourceServingCache</title>
       </portlet-info>
@@ -223,25 +226,110 @@
    <portlet>
       <portlet-name>AddlPortletTests_SPEC2_15_Event</portlet-name>
       <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_Event</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
          <title>AddlPortletTests_SPEC2_15_Event</title>
       </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      </supported-publishing-event>
    </portlet>
 
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_15_Event_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_Event_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_15_Event_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      </supported-processing-event>
+   </portlet>
 
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_15_RenderEventHandling</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_RenderEventHandling</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_15_RenderEventHandling</title>
+      </portlet-info>
+   </portlet>
 
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_15_EventEventHandling</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_EventEventHandling</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_15_EventEventHandling</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_15_EventEventHandling_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_EventEventHandling_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_15_EventEventHandling_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlPortletTests_SPEC2_15_ActionEventHandling</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlPortletTests_SPEC2_15_ActionEventHandling</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlPortletTests_SPEC2_15_ActionEventHandling</title>
+      </portlet-info>
+   </portlet>
+
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

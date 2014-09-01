@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2DispatcherReqRespTests2">
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletActionRequest</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletActionResponse</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderRequest</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderRequest</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderRequest</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletRenderResponse</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceRequest</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>DispatcherReqRespTests2_SPEC2_19_ForwardServletResourceResponse</title>
+      </portlet-info>
+   </portlet>
+
+   <event-definition>
+      <qname>tck:DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventRequest</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherReqRespTests1_SPEC2_19_ForwardJSPEventResponse</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherReqRespTests2_SPEC2_19_ForwardServletEventRequest</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:DispatcherReqRespTests2_SPEC2_19_ForwardServletEventResponse</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
+</portlet-app>

@@ -66,13 +66,9 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletAction", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletAction", PROP_VALUE);
-
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -120,7 +116,7 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
       TestResult tr3 = tcd.getTestResultFailed(V2DISPATCHERTESTS_SPEC2_19_DISPATCHSERVLETACTION_DISPATCH4);
       try {
          PortletRequestDispatcher rd = portletConfig.getPortletContext()
-               .getRequestDispatcher("/Invalid/path.jsp");
+               .getRequestDispatcher(" Invalid path.jsp ");
          tr3.setTcSuccess(rd == null);
       } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
@@ -159,13 +155,8 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletAction", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletAction", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -176,80 +167,80 @@ public class DispatcherTests_SPEC2_19_DispatchServletAction implements Portlet, 
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletAction", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests_SPEC2_19_DispatchServletAction", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
       PortletSession ps = portletReq.getPortletSession();
       String msg = (String) ps.getAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_DispatchServletAction", APPLICATION_SCOPE);
       if (msg != null) {
-         writer.write("<p>" + msg + "</p>\n");
+         writer.write("<p>" + msg + "</p><br/>\n");
          ps.removeAttribute(RESULT_ATTR_PREFIX + "DispatcherTests_SPEC2_19_DispatchServletAction", APPLICATION_SCOPE);
-      } else {
-
-         /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch1 */
-         /* Details: "The PortletContext getRequestDispatcher method returns a   */
-         /* PortletRequestDispatcher for a path within the portlet               */
-         /* application"                                                         */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch1", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch2 */
-         /* Details: "If the path provided to getRequestDispatcher method does   */
-         /* not start with \"/\", the method returns null"                       */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch2", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch3 */
-         /* Details: "If the path provided to getRequestDispatcher method ends   */
-         /* with \"/\", the method returns null"                                 */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch3", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch4 */
-         /* Details: "If the path provided to getRequestDispatcher method does   */
-         /* not specify a valid path, the method returns null"                   */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch4", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch5 */
-         /* Details: "The PortletContext getNamedDispatcher method returns a     */
-         /* PortletRequestDispatcher for a servlet within the portlet            */
-         /* application"                                                         */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch5", aurl);
-            tb.writeTo(writer);
-         }
-
-         /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch6 */
-         /* Details: "If the name provided to getNamedDispatcher method is not   */
-         /* valid, the method returns null"                                      */
-         {
-            PortletURL aurl = portletResp.createActionURL();
-            TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch6", aurl);
-            tb.writeTo(writer);
-         }
-
       }
+
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch1 */
+      /* Details: "The PortletContext getRequestDispatcher method returns a   */
+      /* PortletRequestDispatcher for a path within the portlet               */
+      /* application"                                                         */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch1", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch2 */
+      /* Details: "If the path provided to getRequestDispatcher method does   */
+      /* not start with \"/\", the method returns null"                       */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch2", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch3 */
+      /* Details: "If the path provided to getRequestDispatcher method ends   */
+      /* with \"/\", the method returns null"                                 */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch3", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch4 */
+      /* Details: "If the path provided to getRequestDispatcher method does   */
+      /* not specify a valid path, the method returns null"                   */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch4", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch5 */
+      /* Details: "The PortletContext getNamedDispatcher method returns a     */
+      /* PortletRequestDispatcher for a servlet within the portlet            */
+      /* application"                                                         */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch5", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch6 */
+      /* Details: "If the name provided to getNamedDispatcher method is not   */
+      /* valid, the method returns null"                                      */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests_SPEC2_19_DispatchServletAction_dispatch6", aurl);
+         tb.writeTo(writer);
+      }
+
    }
 
 }

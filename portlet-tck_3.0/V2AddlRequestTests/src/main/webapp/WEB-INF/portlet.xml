@@ -20,74 +20,271 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-AddlRequestTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2AddlRequestTests">
    <portlet>
-      <portlet-name>AddlRequestTests_SPEC2_11_RequestParamsProps</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RequestParamsProps</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlRequestTests_SPEC2_11_Action</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Action</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlRequestTests_SPEC2_11_RequestParamsProps</title>
+         <title>AddlRequestTests_SPEC2_11_Action</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlRequestTests_SPEC2_11_RequestPRP</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RequestPRP</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlRequestTests_SPEC2_11_Event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Event</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlRequestTests_SPEC2_11_RequestPRP</title>
+         <title>AddlRequestTests_SPEC2_11_Event</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_Event_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Event_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_Event_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_Render</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Render</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_Render</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>AddlRequestTests_SPEC2_11_Request</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Request</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AddlRequestTests_SPEC2_11_Resource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_Resource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>AddlRequestTests_SPEC2_11_Request</title>
+         <title>AddlRequestTests_SPEC2_11_Resource</title>
       </portlet-info>
    </portlet>
 
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_RenderPRP</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RenderPRP</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_RenderPRP</title>
+      </portlet-info>
+   </portlet>
 
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_RenderAttr</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RenderAttr</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_RenderAttr</title>
+      </portlet-info>
+   </portlet>
 
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_ActionAttr</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_ActionAttr</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_ActionAttr</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_EventAttr</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_EventAttr</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_EventAttr</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_EventAttr</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_EventAttr_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_EventAttr_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_EventAttr_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_EventAttr</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_ResourceAttr</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_ResourceAttr</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_ResourceAttr</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_ActionReq</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_ActionReq</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_ActionReq</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_EventReq</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_EventReq</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_EventReq</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_EventReq</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_EventReq_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_EventReq_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_EventReq_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AddlRequestTests_SPEC2_11_EventReq</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_RenderReq</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_RenderReq</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_RenderReq</title>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
+      <portlet-name>AddlRequestTests_SPEC2_11_ResourceReq</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AddlRequestTests_SPEC2_11_ResourceReq</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>AddlRequestTests_SPEC2_11_ResourceReq</title>
+      </portlet-info>
+   </portlet>
+
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_5_EventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlPortletTests_SPEC2_15_EventEventHandling</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlEnvironmentTests_SPEC2_17_EventPreferences</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_Event</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_EventAttr</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AddlRequestTests_SPEC2_11_EventReq</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

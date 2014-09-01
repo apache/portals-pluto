@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API DispatcherReqRespTests5S test case names and page mappings -->
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPActionRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPActionRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPActionResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPRenderResponse_setStatus">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardJSPResourceResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletActionResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletRenderResponse_setStatus">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_ForwardServletResourceResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPActionRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPActionRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPRenderResponse_setStatus">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeJSPResourceResponse_setStatus">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletActionRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletActionRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletRenderResponse_setStatus">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceRequest_getInputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceRequest_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_getOutputStream">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_sendError">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_sendRedirect">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_setCharacterEncoding">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_setContentLength">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_setContentType">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_setLocale">V2DispatcherReqRespTests5S</entry>
+<entry key="V2DispatcherReqRespTests5S_SPEC2_19_IncludeServletResourceResponse_setStatus">V2DispatcherReqRespTests5S</entry>
+</properties>

@@ -65,7 +65,7 @@ public class DispatcherTests3S_SPEC2_19_IncludeServletResource_servlet extends H
       PortletResponse portletResp = (PortletResponse) request.getAttribute("javax.portlet.response");
       PortletConfig portletConfig = (PortletConfig) request.getAttribute("javax.portlet.config");
       long svtTid = Thread.currentThread().getId();
-      long reqTid = (Long) portletReq.getAttribute("void");
+      long reqTid = (Long) portletReq.getAttribute(THREADID_ATTR);
 
       PrintWriter writer = ((MimeResponse)portletResp).getWriter();
 
@@ -80,23 +80,6 @@ public class DispatcherTests3S_SPEC2_19_IncludeServletResource_servlet extends H
       /* TODO: implement test */
       tr0.appendTcDetail("Not implemented.");
       tr0.writeTo(writer);
-
-      /* TestCase: V2DispatcherTests3S_SPEC2_19_IncludeServletResource_invoke3 */
-      /* Details: "Parameters to the include method for a target servlet      */
-      /* can be wrapped request and response classes from the portlet         */
-      /* lifecyle method initiating the include"                              */
-      TestResult tr1 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE3);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
-
-      /* TestCase: V2DispatcherTests3S_SPEC2_19_IncludeServletResource_invoke8 */
-      /* Details: "The portlet can include multiple servlets during the       */
-      /* same lifecycle method"                                               */
-      TestResult tr2 = tcd.getTestResultFailed(V2DISPATCHERTESTS3S_SPEC2_19_INCLUDESERVLETRESOURCE_INVOKE8);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
 
 
    }

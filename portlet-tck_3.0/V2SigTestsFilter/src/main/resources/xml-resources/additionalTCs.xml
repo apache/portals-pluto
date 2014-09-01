@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API SigTestsFilter test case names and page mappings -->
+<entry key="V2SigTestsFilter_ActionFilter_SIGRender_hasDoFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_ActionFilter_SIGRender_hasDoFilterReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_ActionFilter_SIGRender_implementsPortletFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_EventFilter_SIGRender_hasDoFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_EventFilter_SIGRender_hasDoFilterReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_EventFilter_SIGRender_implementsPortletFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterA">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterB">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterC">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturnsA">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturnsB">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterChain_SIGRender_hasDoFilterReturnsC">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetFilterName">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetFilterNameReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetInitParameter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetInitParameterNames">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetInitParameterNamesReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetInitParameterReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetPortletContext">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_FilterConfig_SIGRender_hasGetPortletContextReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_PortletFilter_SIGRender_hasDestroy">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_PortletFilter_SIGRender_hasDestroyReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_PortletFilter_SIGRender_hasInit">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_PortletFilter_SIGRender_hasInitReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_RenderFilter_SIGRender_hasDoFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_RenderFilter_SIGRender_hasDoFilterReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_RenderFilter_SIGRender_implementsPortletFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_ResourceFilter_SIGRender_hasDoFilter">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_ResourceFilter_SIGRender_hasDoFilterReturns">V2SigTestsFilter</entry>
+<entry key="V2SigTestsFilter_ResourceFilter_SIGRender_implementsPortletFilter">V2SigTestsFilter</entry>
+</properties>

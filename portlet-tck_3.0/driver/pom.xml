@@ -171,6 +171,18 @@
       </dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2PortletTagLibraryTests2</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2PortletTagLibraryTests3</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
          <artifactId>tck-V2DispatcherTests</artifactId>
          <version>${project.version}</version>
          <type>war</type>
@@ -184,6 +196,108 @@
       <dependency>
          <groupId>${project.groupId}</groupId>
          <artifactId>tck-V2DispatcherTests3S</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherTests4</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherTests5</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherTests6</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherReqRespTests1</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherReqRespTests2</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherReqRespTests3</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherReqRespTests4</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2DispatcherReqRespTests5S</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsAction</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsEnv</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsEvent</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsException</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsFilter</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsRender</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsResource</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsURL</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>tck-V2SigTestsWrapper</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
@@ -235,9 +349,28 @@
                         tck-V2AddlRequestTests,
                         tck-V2AddlResponseTests,
                         tck-V2AddlUrlTests,
+                        tck-V2SigTestsAction,
+                        tck-V2SigTestsEnv,
+                        tck-V2SigTestsEvent,
+                        tck-V2SigTestsException,
+                        tck-V2SigTestsFilter,
+                        tck-V2SigTestsRender,
+                        tck-V2SigTestsResource,
+                        tck-V2SigTestsURL,
+                        tck-V2SigTestsWrapper,
                         tck-V2PortletTagLibraryTests,
+                        tck-V2PortletTagLibraryTests2,
+                        tck-V2PortletTagLibraryTests3,
+                        tck-V2DispatcherReqRespTests1,
+                        tck-V2DispatcherReqRespTests2,
+                        tck-V2DispatcherReqRespTests3,
+                        tck-V2DispatcherReqRespTests4,
+                        tck-V2DispatcherReqRespTests5S,
                         tck-V2DispatcherTests,
                         tck-V2DispatcherTests2,
+                        tck-V2DispatcherTests4,
+                        tck-V2DispatcherTests5,
+                        tck-V2DispatcherTests6,
                         tck-V2DispatcherTests3S
                      </includeArtifactIds>
                      <includes>${test.file.dir}/*.xml</includes>
@@ -343,6 +476,7 @@
                         <include>**/javax/**</include>
                      </includes>
                      <useFile>true</useFile>
+                     <argLine>-Xms512m -Xmx512m</argLine>
                      <systemProperties>
                         <property>
                            <name>test.server.login.url</name>
@@ -398,7 +532,11 @@
                         </property>
                         <property>
                            <name>test.debug</name>
-                           <value>${test.module}</value>
+                           <value>false</value>
+                        </property>
+                        <property>
+                           <name>test.timeout</name>
+                           <value>${test.timeout}</value>
                         </property>
                      </systemProperties>
                   </configuration>

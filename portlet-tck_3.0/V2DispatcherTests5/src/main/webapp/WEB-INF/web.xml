@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+   <display-name>javax.portlet-tck-DispatcherTests5</display-name>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletAction_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenIncludeServletAction_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletAction_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenIncludeServletAction_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenIncludeServletEvent_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenIncludeServletRender_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletResource_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenIncludeServletResource_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenIncludeServletResource_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenIncludeServletResource_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenForwardServletAction_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletEvent_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenForwardServletEvent_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletEvent_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenForwardServletEvent_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenForwardServletRender_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet</servlet-class>
+      <init-param>
+         <param-name>iparm1</param-name>
+         <param-value>value1</param-value>
+      </init-param>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet</servlet-name>
+      <url-pattern>/DispatcherTests5_SPEC2_19_IncThenForwardServletResource_servlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>IncluderForwarderServlet</servlet-name>
+      <servlet-class>javax.portlet.tck.servlets.IncluderForwarderServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>IncluderForwarderServlet</servlet-name>
+      <url-pattern>/IncluderForwarderServlet</url-pattern>
+   </servlet-mapping>
+
+</web-app>

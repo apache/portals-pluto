@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.     
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- JSR 286 API SigTestsResource test case names and page mappings -->
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetCharacterEncoding">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetCharacterEncodingReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetContentLength">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetContentLengthReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetContentType">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetContentTypeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetMethod">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetMethodReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetPortletInputStream">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetPortletInputStreamReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetReader">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasGetReaderReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasSetCharacterEncoding">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_hasSetCharacterEncodingReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ClientDataRequest_SIGResource_implementsPortletRequest">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldCACHE_SCOPE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldETAG">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldEXPIRATION_CACHE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldMARKUP_HEAD_ELEMENT">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldNAMESPACED_RESPONSE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldPRIVATE_SCOPE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldPUBLIC_SCOPE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_fieldUSE_CACHED_CONTENT">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasCreateActionURL">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasCreateActionURLReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasCreateRenderURL">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasCreateRenderURLReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasCreateResourceURL">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasCreateResourceURLReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasFlushBuffer">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasFlushBufferReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetBufferSize">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetBufferSizeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetCacheControl">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetCacheControlReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetCharacterEncoding">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetCharacterEncodingReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetContentType">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetContentTypeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetLocale">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetLocaleReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetPortletOutputStream">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetPortletOutputStreamReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetWriter">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasGetWriterReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasIsCommitted">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasIsCommittedReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasReset">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasResetBuffer">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasResetBufferReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasResetReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasSetBufferSize">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasSetBufferSizeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasSetContentType">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_hasSetContentTypeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_MimeResponse_SIGResource_implementsPortletResponse">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldACTION_PHASE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldACTION_SCOPE_ID">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldBASIC_AUTH">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldCCPP_PROFILE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldCLIENT_CERT_AUTH">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldDIGEST_AUTH">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldEVENT_PHASE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldFORM_AUTH">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldLIFECYCLE_PHASE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldRENDER_HEADERS">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldRENDER_MARKUP">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldRENDER_PART">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldRENDER_PHASE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldRESOURCE_PHASE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_fieldUSER_INFO">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetAttribute">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetAttributeNames">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetAttributeNamesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetAttributeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetAuthType">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetAuthTypeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetContextPath">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetContextPathReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetCookies">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetCookiesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetLocale">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetLocaleReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetLocales">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetLocalesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameter">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameterMap">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameterMapReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameterNames">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameterNamesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameterReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameterValues">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetParameterValuesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortalContext">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortalContextReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortletMode">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortletModeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortletSession">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortletSessionA">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortletSessionReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPortletSessionReturnsA">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPreferences">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPreferencesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPrivateParameterMap">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPrivateParameterMapReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetProperties">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPropertiesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetProperty">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPropertyNames">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPropertyNamesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPropertyReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPublicParameterMap">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetPublicParameterMapReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetRemoteUser">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetRemoteUserReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetRequestedSessionId">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetRequestedSessionIdReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetResponseContentType">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetResponseContentTypeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetResponseContentTypes">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetResponseContentTypesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetScheme">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetSchemeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetServerName">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetServerNameReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetServerPort">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetServerPortReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetUserPrincipal">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetUserPrincipalReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetWindowID">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetWindowIDReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetWindowState">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasGetWindowStateReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsPortletModeAllowed">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsPortletModeAllowedReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsRequestedSessionIdValid">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsRequestedSessionIdValidReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsSecure">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsSecureReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsUserInRole">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsUserInRoleReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsWindowStateAllowed">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasIsWindowStateAllowedReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasRemoveAttribute">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasRemoveAttributeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasSetAttribute">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletRequest_SIGResource_hasSetAttributeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasAddProperty">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasAddPropertyA">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasAddPropertyB">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasAddPropertyReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasAddPropertyReturnsA">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasAddPropertyReturnsB">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasCreateElement">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasCreateElementReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasEncodeURL">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasEncodeURLReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasGetNamespace">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasGetNamespaceReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasSetProperty">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_PortletResponse_SIGResource_hasSetPropertyReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_fieldETAG">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetCacheability">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetCacheabilityReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetETag">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetETagReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetPrivateRenderParameterMap">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetPrivateRenderParameterMapReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetResourceID">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetResourceIDReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetResponseContentType">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetResponseContentTypeReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetResponseContentTypes">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_hasGetResponseContentTypesReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceRequest_SIGResource_implementsClientDataRequest">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_fieldHTTP_STATUS_CODE">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasCreateActionURL">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasCreateActionURLReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasCreateRenderURL">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasCreateRenderURLReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasCreateResourceURL">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasCreateResourceURLReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasSetCharacterEncoding">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasSetCharacterEncodingReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasSetContentLength">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasSetContentLengthReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasSetLocale">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_hasSetLocaleReturns">V2SigTestsResource</entry>
+<entry key="V2SigTestsResource_ResourceResponse_SIGResource_implementsMimeResponse">V2SigTestsResource</entry>
+</properties>

@@ -66,13 +66,9 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent", PROP_VALUE);
-
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -86,13 +82,8 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -103,13 +94,8 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests2_SPEC2_19_IncludeJSPEvent", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -119,6 +105,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* must be passed to the target servlet during an include"              */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch1", aurl);
          tb.writeTo(writer);
       }
@@ -128,6 +115,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* aggregated with the portlet render parameters"                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch2", aurl);
          tb.writeTo(writer);
       }
@@ -138,6 +126,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* parameter values array before the render parameter values"           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_dispatch3", aurl);
          tb.writeTo(writer);
       }
@@ -147,6 +136,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* servlet "                                                            */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke1", aurl);
          tb.writeTo(writer);
       }
@@ -157,6 +147,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* method initiating the include"                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke2", aurl);
          tb.writeTo(writer);
       }
@@ -167,6 +158,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* invocation"                                                          */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke4", aurl);
          tb.writeTo(writer);
       }
@@ -177,67 +169,248 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* RequestDispatcher"                                                   */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_invoke7", aurl);
          tb.writeTo(writer);
       }
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1    */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
+      /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.include.request_uri will be set, and equals the        */
       /* value from HTTPServletRequest.getRequestURI for the first servlet    */
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1a   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.request_uri will be set, and equals the        */
+      /* value from HTTPServletRequest.getRequestURI for the first servlet    */
+      /* in the include chain"                                                */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1a", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1b   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.request_uri will not be set"                   */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1b", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1c   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.request_uri will not be set"                   */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes1c", aurl);
          tb.writeTo(writer);
       }
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2    */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
+      /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.include.context_path will be set, and equals the       */
-      /* value from HTTPServletRequest.getContestPath for the first servlet   */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2a   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.context_path will be set, and equals the       */
+      /* value from HTTPServletRequest.getContextPath for the first servlet   */
+      /* in the include chain"                                                */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2a", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2b   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.context_path will not be set"                  */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2b", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2c   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.context_path will not be set"                  */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes2c", aurl);
          tb.writeTo(writer);
       }
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3    */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
+      /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.include.servlet_path will be set, and equals the       */
       /* value from HTTPServletRequest.getServletPath for the first servlet   */
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3a   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.servlet_path will be set, and equals the       */
+      /* value from HTTPServletRequest.getServletPath for the first servlet   */
+      /* in the include chain"                                                */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3a", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3b   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.servlet_path will not be set"                  */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3b", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3c   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.servlet_path will not be set"                  */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes3c", aurl);
          tb.writeTo(writer);
       }
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4    */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
+      /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.include.path_info will be set, and equals the value    */
       /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
       /* include chain"                                                       */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4a   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.path_info will be set, and equals the value    */
+      /* from HTTPServletRequest.getPathInfo for the first servlet in the     */
+      /* include chain"                                                       */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4a", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4b   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.path_info will not be set"                     */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4b", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4c   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.path_info will not be set"                     */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes4c", aurl);
          tb.writeTo(writer);
       }
 
       /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5    */
       /* Details: "If the request dispatcher is obtained through the          */
-      /* getRequestDispatcher method, the request attribute                   */
+      /* getRequestDispatcher method, the portlet request attribute           */
       /* javax.servlet.include.query_string will be set, and equals the       */
       /* value from HTTPServletRequest.getQueryString for the first servlet   */
       /* in the include chain"                                                */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5a   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.include.query_string will be set, and equals the       */
+      /* value from HTTPServletRequest.getQueryString for the first servlet   */
+      /* in the include chain"                                                */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5a", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5b   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the portlet request attribute           */
+      /* javax.servlet.forward.query_string will not be set"                  */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5b", aurl);
+         tb.writeTo(writer);
+      }
+
+      /* TestCase: V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5c   */
+      /* Details: "If the request dispatcher is obtained through the          */
+      /* getRequestDispatcher method, the servlet request attribute           */
+      /* javax.servlet.forward.query_string will not be set"                  */
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes5c", aurl);
          tb.writeTo(writer);
       }
 
@@ -246,6 +419,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* to the javax.portlet.PortletConfig object"                           */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes6", aurl);
          tb.writeTo(writer);
       }
@@ -256,6 +430,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* javax.portlet.EventRequest object"                                   */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes7", aurl);
          tb.writeTo(writer);
       }
@@ -266,6 +441,7 @@ public class DispatcherTests2_SPEC2_19_IncludeJSPEvent implements Portlet, Resou
       /* javax.portlet.EventResponse object"                                  */
       {
          PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
          TestButton tb = new TestButton("V2DispatcherTests2_SPEC2_19_IncludeJSPEvent_attributes8", aurl);
          tb.writeTo(writer);
       }

@@ -17,29 +17,11 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<!--
-   Defines the test cases for this module.
-   For this module, the test case names are not automatically generated from.
-   the deployment descriptor, so edit this file to add new test cases.
-   This allows a portlet to define multiple test cases.
--->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API AnnotationTests test case names and page mappings -->
-<entry key="ProcessAction_name">V2AnnotationTests_ProcessAction</entry>
-<entry key="ProcessAction_SIG_isAnnotation">V2AnnotationTests_SIG_ProcessAction</entry>
-<entry key="ProcessAction_SIG_hasName">V2AnnotationTests_SIG_ProcessAction</entry>
-<entry key="ProcessAction_SIG_hasNameReturns">V2AnnotationTests_SIG_ProcessAction</entry>
-<entry key="ProcessEvent_qname">V2AnnotationTests_ProcessEvent</entry>
-<entry key="ProcessEvent_name">V2AnnotationTests_ProcessEvent</entry>
-<entry key="ProcessEvent_SIG_isAnnotation">V2AnnotationTests_SIG_ProcessEvent</entry>
-<entry key="ProcessEvent_SIG_hasQname">V2AnnotationTests_SIG_ProcessEvent</entry>
-<entry key="ProcessEvent_SIG_hasQnameReturns">V2AnnotationTests_SIG_ProcessEvent</entry>
-<entry key="ProcessEvent_SIG_hasName">V2AnnotationTests_SIG_ProcessEvent</entry>
-<entry key="ProcessEvent_SIG_hasNameReturns">V2AnnotationTests_SIG_ProcessEvent</entry>
-<entry key="RenderMode_name">V2AnnotationTests_RenderMode</entry>
-<entry key="RenderMode_SIG_isAnnotation">V2AnnotationTests_SIG_RenderMode</entry>
-<entry key="RenderMode_SIG_hasName">V2AnnotationTests_SIG_RenderMode</entry>
-<entry key="RenderMode_SIG_hasNameReturns">V2AnnotationTests_SIG_RenderMode</entry>
-
+<entry key="V2AnnotationTests_ProcessAction_ApiAction_name">V2AnnotationTests</entry>
+<entry key="V2AnnotationTests_ProcessEvent_ApiEvent_qname">V2AnnotationTests</entry>
+<entry key="V2AnnotationTests_ProcessEvent_ApiEvent_name">V2AnnotationTests</entry>
+<entry key="V2AnnotationTests_RenderMode_ApiRender_name">V2AnnotationTests</entry>
 </properties>

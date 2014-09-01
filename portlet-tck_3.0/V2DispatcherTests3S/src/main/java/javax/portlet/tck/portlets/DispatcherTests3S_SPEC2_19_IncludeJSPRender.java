@@ -66,13 +66,9 @@ public class DispatcherTests3S_SPEC2_19_IncludeJSPRender implements Portlet, Res
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_IncludeJSPRender", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_IncludeJSPRender", PROP_VALUE);
-
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -83,13 +79,8 @@ public class DispatcherTests3S_SPEC2_19_IncludeJSPRender implements Portlet, Res
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_IncludeJSPRender", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_IncludeJSPRender", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
@@ -100,18 +91,15 @@ public class DispatcherTests3S_SPEC2_19_IncludeJSPRender implements Portlet, Res
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_IncludeJSPRender", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_IncludeJSPRender", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
+      // Now do the actual dispatch
+      String target = JSP_PREFIX + "DispatcherTests3S_SPEC2_19_IncludeJSPRender" + JSP_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/WEB-INF/jsp/DispatcherTests3S_SPEC2_19_IncludeJSPRender.jsp?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.include(portletReq, portletResp);
    }
 

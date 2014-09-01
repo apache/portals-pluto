@@ -20,316 +20,275 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-ResponseTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2ResponseTests">
    <portlet>
-      <portlet-name>V2ResponseTests_PortletResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_PortletResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_PortletResponse_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_PortletResponse_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_PortletResponse</title>
+         <title>ResponseTests_PortletResponse_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_SIG_PortletResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_SIG_PortletResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_PortletResponse_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_PortletResponse_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_SIG_PortletResponse</title>
+         <title>ResponseTests_PortletResponse_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_StateAwareResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_StateAwareResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_PortletResponse_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_PortletResponse_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_StateAwareResponse</title>
+         <title>ResponseTests_PortletResponse_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_SIG_StateAwareResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_SIG_StateAwareResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_PortletResponse_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_PortletResponse_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_SIG_StateAwareResponse</title>
+         <title>ResponseTests_PortletResponse_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>ResponseTests_PortletResponse_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_PortletResponse_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>ResponseTests_PortletResponse_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>ResponseTests_StateAwareResponse_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_StateAwareResponse_ApiEvent</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>ResponseTests_StateAwareResponse_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>ResponseTests_StateAwareResponse_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_StateAwareResponse_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>ResponseTests_StateAwareResponse_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>ResponseTests_StateAwareResponse_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_StateAwareResponse_ApiAction</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>ResponseTests_StateAwareResponse_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_ActionResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_ActionResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_ActionResponse_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_ActionResponse_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_ActionResponse</title>
+         <title>ResponseTests_ActionResponse_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_SIG_ActionResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_SIG_ActionResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_EventResponse_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_EventResponse_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_SIG_ActionResponse</title>
+         <title>ResponseTests_EventResponse_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>ResponseTests_EventResponse_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_EventResponse_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>ResponseTests_EventResponse_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>ResponseTests_MimeResponse_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_MimeResponse_ApiRender</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>ResponseTests_MimeResponse_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_EventResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_EventResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_MimeResponse_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_MimeResponse_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_EventResponse</title>
+         <title>ResponseTests_MimeResponse_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_SIG_EventResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_SIG_EventResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_RenderResponse_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_RenderResponse_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_SIG_EventResponse</title>
+         <title>ResponseTests_RenderResponse_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ResponseTests_MimeResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_MimeResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ResponseTests_ResourceResponse_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ResponseTests_ResourceResponse_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ResponseTests_MimeResponse</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ResponseTests_SIG_MimeResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_SIG_MimeResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ResponseTests_SIG_MimeResponse</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ResponseTests_RenderResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_RenderResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ResponseTests_RenderResponse</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ResponseTests_SIG_RenderResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_SIG_RenderResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ResponseTests_SIG_RenderResponse</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ResponseTests_ResourceResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_ResourceResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ResponseTests_ResourceResponse</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ResponseTests_SIG_ResourceResponse</portlet-name>
-      <portlet-class>javax.portlet.tck.ResponseTests.portlets.V2ResponseTests_SIG_ResourceResponse</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ResponseTests_SIG_ResourceResponse</title>
+         <title>ResponseTests_ResourceResponse_ApiResource</title>
       </portlet-info>
    </portlet>
 
 
 
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

@@ -66,13 +66,9 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet processAction entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardServletResource", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardServletResource", PROP_VALUE);
-
+      portletResp.setRenderParameters(portletReq.getParameterMap());
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       StringWriter writer = new StringWriter();
 
@@ -83,18 +79,15 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet serveResource entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardServletResource", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardServletResource", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 
+      // Now do the actual dispatch
+      String target = SERVLET_PREFIX + "DispatcherTests3S_SPEC2_19_ForwardServletResource_servlet" + SERVLET_SUFFIX + "?" + QUERY_STRING;
       PortletRequestDispatcher rd = portletConfig.getPortletContext()
-            .getRequestDispatcher("/DispatcherTests3S_SPEC2_19_ForwardServletResource_servlet?qparm1=qvalue1&qparm2=qvalue2");
+            .getRequestDispatcher(target);
       rd.forward(portletReq, portletResp);
    }
 
@@ -103,13 +96,8 @@ public class DispatcherTests3S_SPEC2_19_ForwardServletResource implements Portle
          throws PortletException, IOException {
       LOGGER.entering(LOG_CLASS, "main portlet render entry");
 
-      Cookie c = new Cookie(COOKIE_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardServletResource", COOKIE_VALUE);
-      c.setMaxAge(10);
-      portletResp.addProperty(c);
-      portletResp.addProperty(PROP_PREFIX +"DispatcherTests3S_SPEC2_19_ForwardServletResource", PROP_VALUE);
-
       long tid = Thread.currentThread().getId();
-      portletReq.setAttribute("void", tid);
+      portletReq.setAttribute(THREADID_ATTR, tid);
 
       PrintWriter writer = portletResp.getWriter();
 

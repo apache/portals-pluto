@@ -20,250 +20,114 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-ExceptionTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2ExceptionTests">
    <portlet>
-      <portlet-name>V2ExceptionTests_SIG_PortletException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_SIG_PortletException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ExceptionTests_PortletModeException_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ExceptionTests_PortletModeException_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ExceptionTests_SIG_PortletException</title>
+         <title>ExceptionTests_PortletModeException_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ExceptionTests_PortletModeException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_PortletModeException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ExceptionTests_UnavailableException_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ExceptionTests_UnavailableException_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ExceptionTests_PortletModeException</title>
+         <title>ExceptionTests_UnavailableException_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ExceptionTests_SIG_PortletModeException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_SIG_PortletModeException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ExceptionTests_ValidatorException_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ExceptionTests_ValidatorException_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ExceptionTests_SIG_PortletModeException</title>
+         <title>ExceptionTests_ValidatorException_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2ExceptionTests_SIG_PortletSecurityException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_SIG_PortletSecurityException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>ExceptionTests_WindowStateException_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.ExceptionTests_WindowStateException_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2ExceptionTests_SIG_PortletSecurityException</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ExceptionTests_SIG_ReadOnlyException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_SIG_ReadOnlyException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ExceptionTests_SIG_ReadOnlyException</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ExceptionTests_UnavailableException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_UnavailableException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ExceptionTests_UnavailableException</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ExceptionTests_SIG_UnavailableException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_SIG_UnavailableException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ExceptionTests_SIG_UnavailableException</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ExceptionTests_ValidatorException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_ValidatorException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ExceptionTests_ValidatorException</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ExceptionTests_SIG_ValidatorException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_SIG_ValidatorException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ExceptionTests_SIG_ValidatorException</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ExceptionTests_WindowStateException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_WindowStateException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ExceptionTests_WindowStateException</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2ExceptionTests_SIG_WindowStateException</portlet-name>
-      <portlet-class>javax.portlet.tck.ExceptionTests.portlets.V2ExceptionTests_SIG_WindowStateException</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2ExceptionTests_SIG_WindowStateException</title>
+         <title>ExceptionTests_WindowStateException_ApiRender</title>
       </portlet-info>
    </portlet>
 
 
 
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

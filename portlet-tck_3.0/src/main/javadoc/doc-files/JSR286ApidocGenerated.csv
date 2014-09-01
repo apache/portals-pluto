@@ -1,0 +1,1582 @@
+PARMS genManual=true tcDetailsClassName=JSR286SignatureTestCaseDetails singlePage=true
+Sig Tests Action;;;; 150 tests.
+ActionRequest;SIG Action;fieldACTION_NAME;TRUE;ActionRequest has String field ACTION_NAME 
+ActionRequest;SIG Action;implementsClientDataRequest;TRUE;ActionRequest implements ClientDataRequest 
+ActionResponse;SIG Action;hasSendRedirect;TRUE;ActionResponse has a sendRedirect(String) throws java.io.IOException method 
+ActionResponse;SIG Action;hasSendRedirectA;TRUE;ActionResponse has a sendRedirect(String, String) throws java.io.IOException method 
+ActionResponse;SIG Action;hasSendRedirectReturns;TRUE;ActionResponse method sendRedirect(String) returns void 
+ActionResponse;SIG Action;hasSendRedirectReturnsA;TRUE;ActionResponse method sendRedirect(String, String) returns void 
+ActionResponse;SIG Action;implementsStateAwareResponse;TRUE;ActionResponse implements StateAwareResponse 
+ClientDataRequest;SIG Action;hasGetCharacterEncoding;TRUE;ActionRequest has a getCharacterEncoding()  method 
+ClientDataRequest;SIG Action;hasGetCharacterEncodingReturns;TRUE;ActionRequest method getCharacterEncoding() returns String 
+ClientDataRequest;SIG Action;hasGetContentLength;TRUE;ActionRequest has a getContentLength()  method 
+ClientDataRequest;SIG Action;hasGetContentLengthReturns;TRUE;ActionRequest method getContentLength() returns int 
+ClientDataRequest;SIG Action;hasGetContentType;TRUE;ActionRequest has a getContentType()  method 
+ClientDataRequest;SIG Action;hasGetContentTypeReturns;TRUE;ActionRequest method getContentType() returns String 
+ClientDataRequest;SIG Action;hasGetMethod;TRUE;ActionRequest has a getMethod()  method 
+ClientDataRequest;SIG Action;hasGetMethodReturns;TRUE;ActionRequest method getMethod() returns String 
+ClientDataRequest;SIG Action;hasGetPortletInputStream;TRUE;ActionRequest has a getPortletInputStream() throws java.io.IOException method 
+ClientDataRequest;SIG Action;hasGetPortletInputStreamReturns;TRUE;ActionRequest method getPortletInputStream() returns java.io.InputStream 
+ClientDataRequest;SIG Action;hasGetReader;TRUE;ActionRequest has a getReader() throws java.io.UnsupportedEncodingException, java.io.IOException method 
+ClientDataRequest;SIG Action;hasGetReaderReturns;TRUE;ActionRequest method getReader() returns java.io.BufferedReader 
+ClientDataRequest;SIG Action;hasSetCharacterEncoding;TRUE;ActionRequest has a setCharacterEncoding(String) throws java.io.UnsupportedEncodingException method 
+ClientDataRequest;SIG Action;hasSetCharacterEncodingReturns;TRUE;ActionRequest method setCharacterEncoding(String) returns void 
+ClientDataRequest;SIG Action;implementsPortletRequest;TRUE;ActionRequest implements PortletRequest 
+PortletRequest;SIG Action;fieldACTION_PHASE;TRUE;ActionRequest has String field ACTION_PHASE 
+PortletRequest;SIG Action;fieldACTION_SCOPE_ID;TRUE;ActionRequest has String field ACTION_SCOPE_ID 
+PortletRequest;SIG Action;fieldBASIC_AUTH;TRUE;ActionRequest has String field BASIC_AUTH 
+PortletRequest;SIG Action;fieldCCPP_PROFILE;TRUE;ActionRequest has String field CCPP_PROFILE 
+PortletRequest;SIG Action;fieldCLIENT_CERT_AUTH;TRUE;ActionRequest has String field CLIENT_CERT_AUTH 
+PortletRequest;SIG Action;fieldDIGEST_AUTH;TRUE;ActionRequest has String field DIGEST_AUTH 
+PortletRequest;SIG Action;fieldEVENT_PHASE;TRUE;ActionRequest has String field EVENT_PHASE 
+PortletRequest;SIG Action;fieldFORM_AUTH;TRUE;ActionRequest has String field FORM_AUTH 
+PortletRequest;SIG Action;fieldLIFECYCLE_PHASE;TRUE;ActionRequest has String field LIFECYCLE_PHASE 
+PortletRequest;SIG Action;fieldRENDER_HEADERS;TRUE;ActionRequest has String field RENDER_HEADERS 
+PortletRequest;SIG Action;fieldRENDER_MARKUP;TRUE;ActionRequest has String field RENDER_MARKUP 
+PortletRequest;SIG Action;fieldRENDER_PART;TRUE;ActionRequest has String field RENDER_PART 
+PortletRequest;SIG Action;fieldRENDER_PHASE;TRUE;ActionRequest has String field RENDER_PHASE 
+PortletRequest;SIG Action;fieldRESOURCE_PHASE;TRUE;ActionRequest has String field RESOURCE_PHASE 
+PortletRequest;SIG Action;fieldUSER_INFO;TRUE;ActionRequest has String field USER_INFO 
+PortletRequest;SIG Action;hasGetAttribute;TRUE;ActionRequest has a getAttribute(String)  method 
+PortletRequest;SIG Action;hasGetAttributeNames;TRUE;ActionRequest has a getAttributeNames()  method 
+PortletRequest;SIG Action;hasGetAttributeNamesReturns;TRUE;ActionRequest method getAttributeNames() returns java.util.Enumeration 
+PortletRequest;SIG Action;hasGetAttributeReturns;TRUE;ActionRequest method getAttribute(String) returns Object 
+PortletRequest;SIG Action;hasGetAuthType;TRUE;ActionRequest has a getAuthType()  method 
+PortletRequest;SIG Action;hasGetAuthTypeReturns;TRUE;ActionRequest method getAuthType() returns String 
+PortletRequest;SIG Action;hasGetContextPath;TRUE;ActionRequest has a getContextPath()  method 
+PortletRequest;SIG Action;hasGetContextPathReturns;TRUE;ActionRequest method getContextPath() returns String 
+PortletRequest;SIG Action;hasGetCookies;TRUE;ActionRequest has a getCookies()  method 
+PortletRequest;SIG Action;hasGetCookiesReturns;TRUE;ActionRequest method getCookies() returns javax.servlet.http.Cookie[] 
+PortletRequest;SIG Action;hasGetLocale;TRUE;ActionRequest has a getLocale()  method 
+PortletRequest;SIG Action;hasGetLocaleReturns;TRUE;ActionRequest method getLocale() returns java.util.Locale 
+PortletRequest;SIG Action;hasGetLocales;TRUE;ActionRequest has a getLocales()  method 
+PortletRequest;SIG Action;hasGetLocalesReturns;TRUE;ActionRequest method getLocales() returns java.util.Enumeration 
+PortletRequest;SIG Action;hasGetParameter;TRUE;ActionRequest has a getParameter(String)  method 
+PortletRequest;SIG Action;hasGetParameterMap;TRUE;ActionRequest has a getParameterMap()  method 
+PortletRequest;SIG Action;hasGetParameterMapReturns;TRUE;ActionRequest method getParameterMap() returns java.util.Map 
+PortletRequest;SIG Action;hasGetParameterNames;TRUE;ActionRequest has a getParameterNames()  method 
+PortletRequest;SIG Action;hasGetParameterNamesReturns;TRUE;ActionRequest method getParameterNames() returns java.util.Enumeration 
+PortletRequest;SIG Action;hasGetParameterReturns;TRUE;ActionRequest method getParameter(String) returns String 
+PortletRequest;SIG Action;hasGetParameterValues;TRUE;ActionRequest has a getParameterValues(String)  method 
+PortletRequest;SIG Action;hasGetParameterValuesReturns;TRUE;ActionRequest method getParameterValues(String) returns String[] 
+PortletRequest;SIG Action;hasGetPortalContext;TRUE;ActionRequest has a getPortalContext()  method 
+PortletRequest;SIG Action;hasGetPortalContextReturns;TRUE;ActionRequest method getPortalContext() returns PortalContext 
+PortletRequest;SIG Action;hasGetPortletMode;TRUE;ActionRequest has a getPortletMode()  method 
+PortletRequest;SIG Action;hasGetPortletModeReturns;TRUE;ActionRequest method getPortletMode() returns PortletMode 
+PortletRequest;SIG Action;hasGetPortletSession;TRUE;ActionRequest has a getPortletSession()  method 
+PortletRequest;SIG Action;hasGetPortletSessionA;TRUE;ActionRequest has a getPortletSession(boolean)  method 
+PortletRequest;SIG Action;hasGetPortletSessionReturns;TRUE;ActionRequest method getPortletSession() returns PortletSession 
+PortletRequest;SIG Action;hasGetPortletSessionReturnsA;TRUE;ActionRequest method getPortletSession(boolean) returns PortletSession 
+PortletRequest;SIG Action;hasGetPreferences;TRUE;ActionRequest has a getPreferences()  method 
+PortletRequest;SIG Action;hasGetPreferencesReturns;TRUE;ActionRequest method getPreferences() returns PortletPreferences 
+PortletRequest;SIG Action;hasGetPrivateParameterMap;TRUE;ActionRequest has a getPrivateParameterMap()  method 
+PortletRequest;SIG Action;hasGetPrivateParameterMapReturns;TRUE;ActionRequest method getPrivateParameterMap() returns java.util.Map 
+PortletRequest;SIG Action;hasGetProperties;TRUE;ActionRequest has a getProperties(String)  method 
+PortletRequest;SIG Action;hasGetPropertiesReturns;TRUE;ActionRequest method getProperties(String) returns java.util.Enumeration 
+PortletRequest;SIG Action;hasGetProperty;TRUE;ActionRequest has a getProperty(String)  method 
+PortletRequest;SIG Action;hasGetPropertyNames;TRUE;ActionRequest has a getPropertyNames()  method 
+PortletRequest;SIG Action;hasGetPropertyNamesReturns;TRUE;ActionRequest method getPropertyNames() returns java.util.Enumeration 
+PortletRequest;SIG Action;hasGetPropertyReturns;TRUE;ActionRequest method getProperty(String) returns String 
+PortletRequest;SIG Action;hasGetPublicParameterMap;TRUE;ActionRequest has a getPublicParameterMap()  method 
+PortletRequest;SIG Action;hasGetPublicParameterMapReturns;TRUE;ActionRequest method getPublicParameterMap() returns java.util.Map 
+PortletRequest;SIG Action;hasGetRemoteUser;TRUE;ActionRequest has a getRemoteUser()  method 
+PortletRequest;SIG Action;hasGetRemoteUserReturns;TRUE;ActionRequest method getRemoteUser() returns String 
+PortletRequest;SIG Action;hasGetRequestedSessionId;TRUE;ActionRequest has a getRequestedSessionId()  method 
+PortletRequest;SIG Action;hasGetRequestedSessionIdReturns;TRUE;ActionRequest method getRequestedSessionId() returns String 
+PortletRequest;SIG Action;hasGetResponseContentType;TRUE;ActionRequest has a getResponseContentType()  method 
+PortletRequest;SIG Action;hasGetResponseContentTypeReturns;TRUE;ActionRequest method getResponseContentType() returns String 
+PortletRequest;SIG Action;hasGetResponseContentTypes;TRUE;ActionRequest has a getResponseContentTypes()  method 
+PortletRequest;SIG Action;hasGetResponseContentTypesReturns;TRUE;ActionRequest method getResponseContentTypes() returns java.util.Enumeration 
+PortletRequest;SIG Action;hasGetScheme;TRUE;ActionRequest has a getScheme()  method 
+PortletRequest;SIG Action;hasGetSchemeReturns;TRUE;ActionRequest method getScheme() returns String 
+PortletRequest;SIG Action;hasGetServerName;TRUE;ActionRequest has a getServerName()  method 
+PortletRequest;SIG Action;hasGetServerNameReturns;TRUE;ActionRequest method getServerName() returns String 
+PortletRequest;SIG Action;hasGetServerPort;TRUE;ActionRequest has a getServerPort()  method 
+PortletRequest;SIG Action;hasGetServerPortReturns;TRUE;ActionRequest method getServerPort() returns int 
+PortletRequest;SIG Action;hasGetUserPrincipal;TRUE;ActionRequest has a getUserPrincipal()  method 
+PortletRequest;SIG Action;hasGetUserPrincipalReturns;TRUE;ActionRequest method getUserPrincipal() returns java.security.Principal 
+PortletRequest;SIG Action;hasGetWindowID;TRUE;ActionRequest has a getWindowID()  method 
+PortletRequest;SIG Action;hasGetWindowIDReturns;TRUE;ActionRequest method getWindowID() returns String 
+PortletRequest;SIG Action;hasGetWindowState;TRUE;ActionRequest has a getWindowState()  method 
+PortletRequest;SIG Action;hasGetWindowStateReturns;TRUE;ActionRequest method getWindowState() returns WindowState 
+PortletRequest;SIG Action;hasIsPortletModeAllowed;TRUE;ActionRequest has a isPortletModeAllowed(PortletMode)  method 
+PortletRequest;SIG Action;hasIsPortletModeAllowedReturns;TRUE;ActionRequest method isPortletModeAllowed(PortletMode) returns boolean 
+PortletRequest;SIG Action;hasIsRequestedSessionIdValid;TRUE;ActionRequest has a isRequestedSessionIdValid()  method 
+PortletRequest;SIG Action;hasIsRequestedSessionIdValidReturns;TRUE;ActionRequest method isRequestedSessionIdValid() returns boolean 
+PortletRequest;SIG Action;hasIsSecure;TRUE;ActionRequest has a isSecure()  method 
+PortletRequest;SIG Action;hasIsSecureReturns;TRUE;ActionRequest method isSecure() returns boolean 
+PortletRequest;SIG Action;hasIsUserInRole;TRUE;ActionRequest has a isUserInRole(String)  method 
+PortletRequest;SIG Action;hasIsUserInRoleReturns;TRUE;ActionRequest method isUserInRole(String) returns boolean 
+PortletRequest;SIG Action;hasIsWindowStateAllowed;TRUE;ActionRequest has a isWindowStateAllowed(WindowState)  method 
+PortletRequest;SIG Action;hasIsWindowStateAllowedReturns;TRUE;ActionRequest method isWindowStateAllowed(WindowState) returns boolean 
+PortletRequest;SIG Action;hasRemoveAttribute;TRUE;ActionRequest has a removeAttribute(String)  method 
+PortletRequest;SIG Action;hasRemoveAttributeReturns;TRUE;ActionRequest method removeAttribute(String) returns void 
+PortletRequest;SIG Action;hasSetAttribute;TRUE;ActionRequest has a setAttribute(String, Object)  method 
+PortletRequest;SIG Action;hasSetAttributeReturns;TRUE;ActionRequest method setAttribute(String, Object) returns void 
+PortletResponse;SIG Action;hasAddProperty;TRUE;ActionResponse has a addProperty(String, String)  method 
+PortletResponse;SIG Action;hasAddPropertyA;TRUE;ActionResponse has a addProperty(javax.servlet.http.Cookie)  method 
+PortletResponse;SIG Action;hasAddPropertyB;TRUE;ActionResponse has a addProperty(String, org.w3c.dom.Element)  method 
+PortletResponse;SIG Action;hasAddPropertyReturns;TRUE;ActionResponse method addProperty(String, String) returns void 
+PortletResponse;SIG Action;hasAddPropertyReturnsA;TRUE;ActionResponse method addProperty(javax.servlet.http.Cookie) returns void 
+PortletResponse;SIG Action;hasAddPropertyReturnsB;TRUE;ActionResponse method addProperty(String, org.w3c.dom.Element) returns void 
+PortletResponse;SIG Action;hasCreateElement;TRUE;ActionResponse has a createElement(String) throws org.w3c.dom.DOMException method 
+PortletResponse;SIG Action;hasCreateElementReturns;TRUE;ActionResponse method createElement(String) returns org.w3c.dom.Element 
+PortletResponse;SIG Action;hasEncodeURL;TRUE;ActionResponse has a encodeURL(String)  method 
+PortletResponse;SIG Action;hasEncodeURLReturns;TRUE;ActionResponse method encodeURL(String) returns String 
+PortletResponse;SIG Action;hasGetNamespace;TRUE;ActionResponse has a getNamespace()  method 
+PortletResponse;SIG Action;hasGetNamespaceReturns;TRUE;ActionResponse method getNamespace() returns String 
+PortletResponse;SIG Action;hasSetProperty;TRUE;ActionResponse has a setProperty(String, String)  method 
+PortletResponse;SIG Action;hasSetPropertyReturns;TRUE;ActionResponse method setProperty(String, String) returns void 
+StateAwareResponse;SIG Action;hasGetPortletMode;TRUE;ActionResponse has a getPortletMode()  method 
+StateAwareResponse;SIG Action;hasGetPortletModeReturns;TRUE;ActionResponse method getPortletMode() returns PortletMode 
+StateAwareResponse;SIG Action;hasGetRenderParameterMap;TRUE;ActionResponse has a getRenderParameterMap()  method 
+StateAwareResponse;SIG Action;hasGetRenderParameterMapReturns;TRUE;ActionResponse method getRenderParameterMap() returns java.util.Map 
+StateAwareResponse;SIG Action;hasGetWindowState;TRUE;ActionResponse has a getWindowState()  method 
+StateAwareResponse;SIG Action;hasGetWindowStateReturns;TRUE;ActionResponse method getWindowState() returns WindowState 
+StateAwareResponse;SIG Action;hasRemovePublicRenderParameter;TRUE;ActionResponse has a removePublicRenderParameter(String)  method 
+StateAwareResponse;SIG Action;hasRemovePublicRenderParameterReturns;TRUE;ActionResponse method removePublicRenderParameter(String) returns void 
+StateAwareResponse;SIG Action;hasSetEvent;TRUE;ActionResponse has a setEvent(javax.xml.namespace.QName, java.io.Serializable)  method 
+StateAwareResponse;SIG Action;hasSetEventA;TRUE;ActionResponse has a setEvent(String, java.io.Serializable)  method 
+StateAwareResponse;SIG Action;hasSetEventReturns;TRUE;ActionResponse method setEvent(javax.xml.namespace.QName, java.io.Serializable) returns void 
+StateAwareResponse;SIG Action;hasSetEventReturnsA;TRUE;ActionResponse method setEvent(String, java.io.Serializable) returns void 
+StateAwareResponse;SIG Action;hasSetPortletMode;TRUE;ActionResponse has a setPortletMode(PortletMode) throws PortletModeException method 
+StateAwareResponse;SIG Action;hasSetPortletModeReturns;TRUE;ActionResponse method setPortletMode(PortletMode) returns void 
+StateAwareResponse;SIG Action;hasSetRenderParameter;TRUE;ActionResponse has a setRenderParameter(String, String)  method 
+StateAwareResponse;SIG Action;hasSetRenderParameterA;TRUE;ActionResponse has a setRenderParameter(String, String[])  method 
+StateAwareResponse;SIG Action;hasSetRenderParameterReturns;TRUE;ActionResponse method setRenderParameter(String, String) returns void 
+StateAwareResponse;SIG Action;hasSetRenderParameterReturnsA;TRUE;ActionResponse method setRenderParameter(String, String[]) returns void 
+StateAwareResponse;SIG Action;hasSetRenderParameters;TRUE;ActionResponse has a setRenderParameters(java.util.Map)  method 
+StateAwareResponse;SIG Action;hasSetRenderParametersReturns;TRUE;ActionResponse method setRenderParameters(java.util.Map) returns void 
+StateAwareResponse;SIG Action;hasSetWindowState;TRUE;ActionResponse has a setWindowState(WindowState) throws WindowStateException method 
+StateAwareResponse;SIG Action;hasSetWindowStateReturns;TRUE;ActionResponse method setWindowState(WindowState) returns void 
+StateAwareResponse;SIG Action;implementsPortletResponse;TRUE;ActionResponse implements PortletResponse 
+Sig Tests Env;;;; 264 tests.
+CacheControl;SIG Render;hasGetETag;TRUE;CacheControl has a getETag()  method 
+CacheControl;SIG Render;hasGetETagReturns;TRUE;CacheControl method getETag() returns String 
+CacheControl;SIG Render;hasGetExpirationTime;TRUE;CacheControl has a getExpirationTime()  method 
+CacheControl;SIG Render;hasGetExpirationTimeReturns;TRUE;CacheControl method getExpirationTime() returns int 
+CacheControl;SIG Render;hasIsPublicScope;TRUE;CacheControl has a isPublicScope()  method 
+CacheControl;SIG Render;hasIsPublicScopeReturns;TRUE;CacheControl method isPublicScope() returns boolean 
+CacheControl;SIG Render;hasSetETag;TRUE;CacheControl has a setETag(String)  method 
+CacheControl;SIG Render;hasSetETagReturns;TRUE;CacheControl method setETag(String) returns void 
+CacheControl;SIG Render;hasSetExpirationTime;TRUE;CacheControl has a setExpirationTime(int)  method 
+CacheControl;SIG Render;hasSetExpirationTimeReturns;TRUE;CacheControl method setExpirationTime(int) returns void 
+CacheControl;SIG Render;hasSetPublicScope;TRUE;CacheControl has a setPublicScope(boolean)  method 
+CacheControl;SIG Render;hasSetPublicScopeReturns;TRUE;CacheControl method setPublicScope(boolean) returns void 
+CacheControl;SIG Render;hasSetUseCachedContent;TRUE;CacheControl has a setUseCachedContent(boolean)  method 
+CacheControl;SIG Render;hasSetUseCachedContentReturns;TRUE;CacheControl method setUseCachedContent(boolean) returns void 
+CacheControl;SIG Render;hasUseCachedContent;TRUE;CacheControl has a useCachedContent()  method 
+CacheControl;SIG Render;hasUseCachedContentReturns;TRUE;CacheControl method useCachedContent() returns boolean 
+EventPortlet;SIG Render;hasProcessEvent;TRUE;EventPortlet has a processEvent(EventRequest, EventResponse) throws PortletException, java.io.IOException method 
+EventPortlet;SIG Render;hasProcessEventReturns;TRUE;EventPortlet method processEvent(EventRequest, EventResponse) returns void 
+GenericPortlet;SIG Render;constructor;TRUE;GenericPortlet provides constructor GenericPortlet() 
+GenericPortlet;SIG Render;hasDestroy;TRUE;GenericPortlet has a destroy()  method 
+GenericPortlet;SIG Render;hasDestroyReturns;TRUE;GenericPortlet method destroy() returns void 
+GenericPortlet;SIG Render;hasDoDispatch;TRUE;GenericPortlet has a doDispatch(RenderRequest, RenderResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasDoDispatchReturns;TRUE;GenericPortlet method doDispatch(RenderRequest, RenderResponse) returns void 
+GenericPortlet;SIG Render;hasDoEdit;TRUE;GenericPortlet has a doEdit(RenderRequest, RenderResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasDoEditReturns;TRUE;GenericPortlet method doEdit(RenderRequest, RenderResponse) returns void 
+GenericPortlet;SIG Render;hasDoHeaders;TRUE;GenericPortlet has a doHeaders(RenderRequest, RenderResponse)  method 
+GenericPortlet;SIG Render;hasDoHeadersReturns;TRUE;GenericPortlet method doHeaders(RenderRequest, RenderResponse) returns void 
+GenericPortlet;SIG Render;hasDoHelp;TRUE;GenericPortlet has a doHelp(RenderRequest, RenderResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasDoHelpReturns;TRUE;GenericPortlet method doHelp(RenderRequest, RenderResponse) returns void 
+GenericPortlet;SIG Render;hasDoView;TRUE;GenericPortlet has a doView(RenderRequest, RenderResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasDoViewReturns;TRUE;GenericPortlet method doView(RenderRequest, RenderResponse) returns void 
+GenericPortlet;SIG Render;hasGetContainerRuntimeOptions;TRUE;GenericPortlet has a getContainerRuntimeOptions()  method 
+GenericPortlet;SIG Render;hasGetContainerRuntimeOptionsReturns;TRUE;GenericPortlet method getContainerRuntimeOptions() returns java.util.Map 
+GenericPortlet;SIG Render;hasGetDefaultNamespace;TRUE;GenericPortlet has a getDefaultNamespace()  method 
+GenericPortlet;SIG Render;hasGetDefaultNamespaceReturns;TRUE;GenericPortlet method getDefaultNamespace() returns String 
+GenericPortlet;SIG Render;hasGetInitParameter;TRUE;GenericPortlet has a getInitParameter(String)  method 
+GenericPortlet;SIG Render;hasGetInitParameterNames;TRUE;GenericPortlet has a getInitParameterNames()  method 
+GenericPortlet;SIG Render;hasGetInitParameterNamesReturns;TRUE;GenericPortlet method getInitParameterNames() returns java.util.Enumeration 
+GenericPortlet;SIG Render;hasGetInitParameterReturns;TRUE;GenericPortlet method getInitParameter(String) returns String 
+GenericPortlet;SIG Render;hasGetNextPossiblePortletModes;TRUE;GenericPortlet has a getNextPossiblePortletModes(RenderRequest)  method 
+GenericPortlet;SIG Render;hasGetNextPossiblePortletModesReturns;TRUE;GenericPortlet method getNextPossiblePortletModes(RenderRequest) returns java.util.Collection 
+GenericPortlet;SIG Render;hasGetPortletConfig;TRUE;GenericPortlet has a getPortletConfig()  method 
+GenericPortlet;SIG Render;hasGetPortletConfigReturns;TRUE;GenericPortlet method getPortletConfig() returns PortletConfig 
+GenericPortlet;SIG Render;hasGetPortletContext;TRUE;GenericPortlet has a getPortletContext()  method 
+GenericPortlet;SIG Render;hasGetPortletContextReturns;TRUE;GenericPortlet method getPortletContext() returns PortletContext 
+GenericPortlet;SIG Render;hasGetPortletName;TRUE;GenericPortlet has a getPortletName()  method 
+GenericPortlet;SIG Render;hasGetPortletNameReturns;TRUE;GenericPortlet method getPortletName() returns String 
+GenericPortlet;SIG Render;hasGetProcessingEventQNames;TRUE;GenericPortlet has a getProcessingEventQNames()  method 
+GenericPortlet;SIG Render;hasGetProcessingEventQNamesReturns;TRUE;GenericPortlet method getProcessingEventQNames() returns java.util.Enumeration 
+GenericPortlet;SIG Render;hasGetPublicRenderParameterNames;TRUE;GenericPortlet has a getPublicRenderParameterNames()  method 
+GenericPortlet;SIG Render;hasGetPublicRenderParameterNamesReturns;TRUE;GenericPortlet method getPublicRenderParameterNames() returns java.util.Enumeration 
+GenericPortlet;SIG Render;hasGetPublishingEventQNames;TRUE;GenericPortlet has a getPublishingEventQNames()  method 
+GenericPortlet;SIG Render;hasGetPublishingEventQNamesReturns;TRUE;GenericPortlet method getPublishingEventQNames() returns java.util.Enumeration 
+GenericPortlet;SIG Render;hasGetResourceBundle;TRUE;GenericPortlet has a getResourceBundle(java.util.Locale)  method 
+GenericPortlet;SIG Render;hasGetResourceBundleReturns;TRUE;GenericPortlet method getResourceBundle(java.util.Locale) returns java.util.ResourceBundle 
+GenericPortlet;SIG Render;hasGetSupportedLocales;TRUE;GenericPortlet has a getSupportedLocales()  method 
+GenericPortlet;SIG Render;hasGetSupportedLocalesReturns;TRUE;GenericPortlet method getSupportedLocales() returns java.util.Enumeration 
+GenericPortlet;SIG Render;hasGetTitle;TRUE;GenericPortlet has a getTitle(RenderRequest)  method 
+GenericPortlet;SIG Render;hasGetTitleReturns;TRUE;GenericPortlet method getTitle(RenderRequest) returns String 
+GenericPortlet;SIG Render;hasInit;TRUE;GenericPortlet has a init(PortletConfig) throws PortletException method 
+GenericPortlet;SIG Render;hasInitA;TRUE;GenericPortlet has a init() throws PortletException method 
+GenericPortlet;SIG Render;hasInitReturns;TRUE;GenericPortlet method init(PortletConfig) returns void 
+GenericPortlet;SIG Render;hasInitReturnsA;TRUE;GenericPortlet method init() returns void 
+GenericPortlet;SIG Render;hasProcessAction;TRUE;GenericPortlet has a processAction(ActionRequest, ActionResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasProcessActionReturns;TRUE;GenericPortlet method processAction(ActionRequest, ActionResponse) returns void 
+GenericPortlet;SIG Render;hasProcessEvent;TRUE;GenericPortlet has a processEvent(EventRequest, EventResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasProcessEventReturns;TRUE;GenericPortlet method processEvent(EventRequest, EventResponse) returns void 
+GenericPortlet;SIG Render;hasRender;TRUE;GenericPortlet has a render(RenderRequest, RenderResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasRenderReturns;TRUE;GenericPortlet method render(RenderRequest, RenderResponse) returns void 
+GenericPortlet;SIG Render;hasServeResource;TRUE;GenericPortlet has a serveResource(ResourceRequest, ResourceResponse) throws PortletException, java.io.IOException method 
+GenericPortlet;SIG Render;hasServeResourceReturns;TRUE;GenericPortlet method serveResource(ResourceRequest, ResourceResponse) returns void 
+GenericPortlet;SIG Render;implementsEventPortlet;TRUE;GenericPortlet implements EventPortlet 
+GenericPortlet;SIG Render;implementsPortlet;TRUE;GenericPortlet implements Portlet 
+GenericPortlet;SIG Render;implementsPortletConfig;TRUE;GenericPortlet implements PortletConfig 
+GenericPortlet;SIG Render;implementsResourceServingPortlet;TRUE;GenericPortlet implements ResourceServingPortlet 
+PortalContext;SIG Render;fieldMARKUP_HEAD_ELEMENT_SUPPORT;TRUE;PortalContext has String field MARKUP_HEAD_ELEMENT_SUPPORT 
+PortalContext;SIG Render;hasGetPortalInfo;TRUE;PortalContext has a getPortalInfo()  method 
+PortalContext;SIG Render;hasGetPortalInfoReturns;TRUE;PortalContext method getPortalInfo() returns String 
+PortalContext;SIG Render;hasGetProperty;TRUE;PortalContext has a getProperty(String)  method 
+PortalContext;SIG Render;hasGetPropertyNames;TRUE;PortalContext has a getPropertyNames()  method 
+PortalContext;SIG Render;hasGetPropertyNamesReturns;TRUE;PortalContext method getPropertyNames() returns java.util.Enumeration 
+PortalContext;SIG Render;hasGetPropertyReturns;TRUE;PortalContext method getProperty(String) returns String 
+PortalContext;SIG Render;hasGetSupportedPortletModes;TRUE;PortalContext has a getSupportedPortletModes()  method 
+PortalContext;SIG Render;hasGetSupportedPortletModesReturns;TRUE;PortalContext method getSupportedPortletModes() returns java.util.Enumeration 
+PortalContext;SIG Render;hasGetSupportedWindowStates;TRUE;PortalContext has a getSupportedWindowStates()  method 
+PortalContext;SIG Render;hasGetSupportedWindowStatesReturns;TRUE;PortalContext method getSupportedWindowStates() returns java.util.Enumeration 
+Portlet;SIG Render;hasDestroy;TRUE;Portlet has a destroy()  method 
+Portlet;SIG Render;hasDestroyReturns;TRUE;Portlet method destroy() returns void 
+Portlet;SIG Render;hasInit;TRUE;Portlet has a init(PortletConfig) throws PortletException method 
+Portlet;SIG Render;hasInitReturns;TRUE;Portlet method init(PortletConfig) returns void 
+Portlet;SIG Render;hasProcessAction;TRUE;Portlet has a processAction(ActionRequest, ActionResponse) throws PortletException, java.io.IOException method 
+Portlet;SIG Render;hasProcessActionReturns;TRUE;Portlet method processAction(ActionRequest, ActionResponse) returns void 
+Portlet;SIG Render;hasRender;TRUE;Portlet has a render(RenderRequest, RenderResponse) throws PortletException, java.io.IOException method 
+Portlet;SIG Render;hasRenderReturns;TRUE;Portlet method render(RenderRequest, RenderResponse) returns void 
+PortletConfig;SIG Render;hasGetContainerRuntimeOptions;TRUE;PortletConfig has a getContainerRuntimeOptions()  method 
+PortletConfig;SIG Render;hasGetContainerRuntimeOptionsReturns;TRUE;PortletConfig method getContainerRuntimeOptions() returns java.util.Map 
+PortletConfig;SIG Render;hasGetDefaultNamespace;TRUE;PortletConfig has a getDefaultNamespace()  method 
+PortletConfig;SIG Render;hasGetDefaultNamespaceReturns;TRUE;PortletConfig method getDefaultNamespace() returns String 
+PortletConfig;SIG Render;hasGetInitParameter;TRUE;PortletConfig has a getInitParameter(String)  method 
+PortletConfig;SIG Render;hasGetInitParameterNames;TRUE;PortletConfig has a getInitParameterNames()  method 
+PortletConfig;SIG Render;hasGetInitParameterNamesReturns;TRUE;PortletConfig method getInitParameterNames() returns java.util.Enumeration 
+PortletConfig;SIG Render;hasGetInitParameterReturns;TRUE;PortletConfig method getInitParameter(String) returns String 
+PortletConfig;SIG Render;hasGetPortletContext;TRUE;PortletConfig has a getPortletContext()  method 
+PortletConfig;SIG Render;hasGetPortletContextReturns;TRUE;PortletConfig method getPortletContext() returns PortletContext 
+PortletConfig;SIG Render;hasGetPortletName;TRUE;PortletConfig has a getPortletName()  method 
+PortletConfig;SIG Render;hasGetPortletNameReturns;TRUE;PortletConfig method getPortletName() returns String 
+PortletConfig;SIG Render;hasGetProcessingEventQNames;TRUE;PortletConfig has a getProcessingEventQNames()  method 
+PortletConfig;SIG Render;hasGetProcessingEventQNamesReturns;TRUE;PortletConfig method getProcessingEventQNames() returns java.util.Enumeration 
+PortletConfig;SIG Render;hasGetPublicRenderParameterNames;TRUE;PortletConfig has a getPublicRenderParameterNames()  method 
+PortletConfig;SIG Render;hasGetPublicRenderParameterNamesReturns;TRUE;PortletConfig method getPublicRenderParameterNames() returns java.util.Enumeration 
+PortletConfig;SIG Render;hasGetPublishingEventQNames;TRUE;PortletConfig has a getPublishingEventQNames()  method 
+PortletConfig;SIG Render;hasGetPublishingEventQNamesReturns;TRUE;PortletConfig method getPublishingEventQNames() returns java.util.Enumeration 
+PortletConfig;SIG Render;hasGetResourceBundle;TRUE;PortletConfig has a getResourceBundle(java.util.Locale)  method 
+PortletConfig;SIG Render;hasGetResourceBundleReturns;TRUE;PortletConfig method getResourceBundle(java.util.Locale) returns java.util.ResourceBundle 
+PortletConfig;SIG Render;hasGetSupportedLocales;TRUE;PortletConfig has a getSupportedLocales()  method 
+PortletConfig;SIG Render;hasGetSupportedLocalesReturns;TRUE;PortletConfig method getSupportedLocales() returns java.util.Enumeration 
+PortletContext;SIG Render;hasGetAttribute;TRUE;PortletContext has a getAttribute(String)  method 
+PortletContext;SIG Render;hasGetAttributeNames;TRUE;PortletContext has a getAttributeNames()  method 
+PortletContext;SIG Render;hasGetAttributeNamesReturns;TRUE;PortletContext method getAttributeNames() returns java.util.Enumeration 
+PortletContext;SIG Render;hasGetAttributeReturns;TRUE;PortletContext method getAttribute(String) returns Object 
+PortletContext;SIG Render;hasGetContainerRuntimeOptions;TRUE;PortletContext has a getContainerRuntimeOptions()  method 
+PortletContext;SIG Render;hasGetContainerRuntimeOptionsReturns;TRUE;PortletContext method getContainerRuntimeOptions() returns java.util.Enumeration 
+PortletContext;SIG Render;hasGetInitParameter;TRUE;PortletContext has a getInitParameter(String)  method 
+PortletContext;SIG Render;hasGetInitParameterNames;TRUE;PortletContext has a getInitParameterNames()  method 
+PortletContext;SIG Render;hasGetInitParameterNamesReturns;TRUE;PortletContext method getInitParameterNames() returns java.util.Enumeration 
+PortletContext;SIG Render;hasGetInitParameterReturns;TRUE;PortletContext method getInitParameter(String) returns String 
+PortletContext;SIG Render;hasGetMajorVersion;TRUE;PortletContext has a getMajorVersion()  method 
+PortletContext;SIG Render;hasGetMajorVersionReturns;TRUE;PortletContext method getMajorVersion() returns int 
+PortletContext;SIG Render;hasGetMimeType;TRUE;PortletContext has a getMimeType(String)  method 
+PortletContext;SIG Render;hasGetMimeTypeReturns;TRUE;PortletContext method getMimeType(String) returns String 
+PortletContext;SIG Render;hasGetMinorVersion;TRUE;PortletContext has a getMinorVersion()  method 
+PortletContext;SIG Render;hasGetMinorVersionReturns;TRUE;PortletContext method getMinorVersion() returns int 
+PortletContext;SIG Render;hasGetNamedDispatcher;TRUE;PortletContext has a getNamedDispatcher(String)  method 
+PortletContext;SIG Render;hasGetNamedDispatcherReturns;TRUE;PortletContext method getNamedDispatcher(String) returns PortletRequestDispatcher 
+PortletContext;SIG Render;hasGetPortletContextName;TRUE;PortletContext has a getPortletContextName()  method 
+PortletContext;SIG Render;hasGetPortletContextNameReturns;TRUE;PortletContext method getPortletContextName() returns String 
+PortletContext;SIG Render;hasGetRealPath;TRUE;PortletContext has a getRealPath(String)  method 
+PortletContext;SIG Render;hasGetRealPathReturns;TRUE;PortletContext method getRealPath(String) returns String 
+PortletContext;SIG Render;hasGetRequestDispatcher;TRUE;PortletContext has a getRequestDispatcher(String)  method 
+PortletContext;SIG Render;hasGetRequestDispatcherReturns;TRUE;PortletContext method getRequestDispatcher(String) returns PortletRequestDispatcher 
+PortletContext;SIG Render;hasGetResource;TRUE;PortletContext has a getResource(String) throws java.net.MalformedURLException method 
+PortletContext;SIG Render;hasGetResourceAsStream;TRUE;PortletContext has a getResourceAsStream(String)  method 
+PortletContext;SIG Render;hasGetResourceAsStreamReturns;TRUE;PortletContext method getResourceAsStream(String) returns java.io.InputStream 
+PortletContext;SIG Render;hasGetResourcePaths;TRUE;PortletContext has a getResourcePaths(String)  method 
+PortletContext;SIG Render;hasGetResourcePathsReturns;TRUE;PortletContext method getResourcePaths(String) returns java.util.Set 
+PortletContext;SIG Render;hasGetResourceReturns;TRUE;PortletContext method getResource(String) returns java.net.URL 
+PortletContext;SIG Render;hasGetServerInfo;TRUE;PortletContext has a getServerInfo()  method 
+PortletContext;SIG Render;hasGetServerInfoReturns;TRUE;PortletContext method getServerInfo() returns String 
+PortletContext;SIG Render;hasLog;TRUE;PortletContext has a log(String)  method 
+PortletContext;SIG Render;hasLogA;TRUE;PortletContext has a log(String, Throwable)  method 
+PortletContext;SIG Render;hasLogReturns;TRUE;PortletContext method log(String) returns void 
+PortletContext;SIG Render;hasLogReturnsA;TRUE;PortletContext method log(String, Throwable) returns void 
+PortletContext;SIG Render;hasRemoveAttribute;TRUE;PortletContext has a removeAttribute(String)  method 
+PortletContext;SIG Render;hasRemoveAttributeReturns;TRUE;PortletContext method removeAttribute(String) returns void 
+PortletContext;SIG Render;hasSetAttribute;TRUE;PortletContext has a setAttribute(String, Object)  method 
+PortletContext;SIG Render;hasSetAttributeReturns;TRUE;PortletContext method setAttribute(String, Object) returns void 
+PortletMode;SIG Render;constructor;TRUE;PortletMode provides constructor PortletMode(String) 
+PortletMode;SIG Render;fieldEDIT;TRUE;PortletMode has PortletMode field EDIT 
+PortletMode;SIG Render;fieldHELP;TRUE;PortletMode has PortletMode field HELP 
+PortletMode;SIG Render;fieldVIEW;TRUE;PortletMode has PortletMode field VIEW 
+PortletMode;SIG Render;hasEquals;TRUE;PortletMode has a equals(Object)  method 
+PortletMode;SIG Render;hasEqualsReturns;TRUE;PortletMode method equals(Object) returns boolean 
+PortletMode;SIG Render;hasHashCode;TRUE;PortletMode has a hashCode()  method 
+PortletMode;SIG Render;hasHashCodeReturns;TRUE;PortletMode method hashCode() returns int 
+PortletMode;SIG Render;hasToString;TRUE;PortletMode has a toString()  method 
+PortletMode;SIG Render;hasToStringReturns;TRUE;PortletMode method toString() returns String 
+PortletPreferences;SIG Render;hasGetMap;TRUE;PortletPreferences has a getMap()  method 
+PortletPreferences;SIG Render;hasGetMapReturns;TRUE;PortletPreferences method getMap() returns java.util.Map 
+PortletPreferences;SIG Render;hasGetNames;TRUE;PortletPreferences has a getNames()  method 
+PortletPreferences;SIG Render;hasGetNamesReturns;TRUE;PortletPreferences method getNames() returns java.util.Enumeration 
+PortletPreferences;SIG Render;hasGetValue;TRUE;PortletPreferences has a getValue(String, String)  method 
+PortletPreferences;SIG Render;hasGetValueReturns;TRUE;PortletPreferences method getValue(String, String) returns String 
+PortletPreferences;SIG Render;hasGetValues;TRUE;PortletPreferences has a getValues(String, String[])  method 
+PortletPreferences;SIG Render;hasGetValuesReturns;TRUE;PortletPreferences method getValues(String, String[]) returns String[] 
+PortletPreferences;SIG Render;hasIsReadOnly;TRUE;PortletPreferences has a isReadOnly(String)  method 
+PortletPreferences;SIG Render;hasIsReadOnlyReturns;TRUE;PortletPreferences method isReadOnly(String) returns boolean 
+PortletPreferences;SIG Render;hasReset;TRUE;PortletPreferences has a reset(String) throws ReadOnlyException method 
+PortletPreferences;SIG Render;hasResetReturns;TRUE;PortletPreferences method reset(String) returns void 
+PortletPreferences;SIG Render;hasSetValue;TRUE;PortletPreferences has a setValue(String, String) throws ReadOnlyException method 
+PortletPreferences;SIG Render;hasSetValueReturns;TRUE;PortletPreferences method setValue(String, String) returns void 
+PortletPreferences;SIG Render;hasSetValues;TRUE;PortletPreferences has a setValues(String, String[]) throws ReadOnlyException method 
+PortletPreferences;SIG Render;hasSetValuesReturns;TRUE;PortletPreferences method setValues(String, String[]) returns void 
+PortletPreferences;SIG Render;hasStore;TRUE;PortletPreferences has a store() throws java.io.IOException, ValidatorException method 
+PortletPreferences;SIG Render;hasStoreReturns;TRUE;PortletPreferences method store() returns void 
+PortletRequestDispatcher;SIG Render;hasForward;TRUE;PortletRequestDispatcher has a forward(PortletRequest, PortletResponse) throws PortletException, java.io.IOException method 
+PortletRequestDispatcher;SIG Render;hasForwardReturns;TRUE;PortletRequestDispatcher method forward(PortletRequest, PortletResponse) returns void 
+PortletRequestDispatcher;SIG Render;hasInclude;TRUE;PortletRequestDispatcher has a include(RenderRequest, RenderResponse) throws PortletException, java.io.IOException method 
+PortletRequestDispatcher;SIG Render;hasIncludeA;TRUE;PortletRequestDispatcher has a include(PortletRequest, PortletResponse) throws PortletException, java.io.IOException method 
+PortletRequestDispatcher;SIG Render;hasIncludeReturns;TRUE;PortletRequestDispatcher method include(RenderRequest, RenderResponse) returns void 
+PortletRequestDispatcher;SIG Render;hasIncludeReturnsA;TRUE;PortletRequestDispatcher method include(PortletRequest, PortletResponse) returns void 
+PortletSession;SIG Render;fieldAPPLICATION_SCOPE;TRUE;PortletSession has int field APPLICATION_SCOPE 
+PortletSession;SIG Render;fieldPORTLET_SCOPE;TRUE;PortletSession has int field PORTLET_SCOPE 
+PortletSession;SIG Render;hasGetAttribute;TRUE;PortletSession has a getAttribute(String)  method 
+PortletSession;SIG Render;hasGetAttributeA;TRUE;PortletSession has a getAttribute(String, int)  method 
+PortletSession;SIG Render;hasGetAttributeMap;TRUE;PortletSession has a getAttributeMap()  method 
+PortletSession;SIG Render;hasGetAttributeMapA;TRUE;PortletSession has a getAttributeMap(int)  method 
+PortletSession;SIG Render;hasGetAttributeMapReturns;TRUE;PortletSession method getAttributeMap() returns java.util.Map 
+PortletSession;SIG Render;hasGetAttributeMapReturnsA;TRUE;PortletSession method getAttributeMap(int) returns java.util.Map 
+PortletSession;SIG Render;hasGetAttributeNames;TRUE;PortletSession has a getAttributeNames()  method 
+PortletSession;SIG Render;hasGetAttributeNamesA;TRUE;PortletSession has a getAttributeNames(int)  method 
+PortletSession;SIG Render;hasGetAttributeNamesReturns;TRUE;PortletSession method getAttributeNames() returns java.util.Enumeration 
+PortletSession;SIG Render;hasGetAttributeNamesReturnsA;TRUE;PortletSession method getAttributeNames(int) returns java.util.Enumeration 
+PortletSession;SIG Render;hasGetAttributeReturns;TRUE;PortletSession method getAttribute(String) returns Object 
+PortletSession;SIG Render;hasGetAttributeReturnsA;TRUE;PortletSession method getAttribute(String, int) returns Object 
+PortletSession;SIG Render;hasGetCreationTime;TRUE;PortletSession has a getCreationTime()  method 
+PortletSession;SIG Render;hasGetCreationTimeReturns;TRUE;PortletSession method getCreationTime() returns long 
+PortletSession;SIG Render;hasGetId;TRUE;PortletSession has a getId()  method 
+PortletSession;SIG Render;hasGetIdReturns;TRUE;PortletSession method getId() returns String 
+PortletSession;SIG Render;hasGetLastAccessedTime;TRUE;PortletSession has a getLastAccessedTime()  method 
+PortletSession;SIG Render;hasGetLastAccessedTimeReturns;TRUE;PortletSession method getLastAccessedTime() returns long 
+PortletSession;SIG Render;hasGetMaxInactiveInterval;TRUE;PortletSession has a getMaxInactiveInterval()  method 
+PortletSession;SIG Render;hasGetMaxInactiveIntervalReturns;TRUE;PortletSession method getMaxInactiveInterval() returns int 
+PortletSession;SIG Render;hasGetPortletContext;TRUE;PortletSession has a getPortletContext()  method 
+PortletSession;SIG Render;hasGetPortletContextReturns;TRUE;PortletSession method getPortletContext() returns PortletContext 
+PortletSession;SIG Render;hasInvalidate;TRUE;PortletSession has a invalidate()  method 
+PortletSession;SIG Render;hasInvalidateReturns;TRUE;PortletSession method invalidate() returns void 
+PortletSession;SIG Render;hasIsNew;TRUE;PortletSession has a isNew()  method 
+PortletSession;SIG Render;hasIsNewReturns;TRUE;PortletSession method isNew() returns boolean 
+PortletSession;SIG Render;hasRemoveAttribute;TRUE;PortletSession has a removeAttribute(String)  method 
+PortletSession;SIG Render;hasRemoveAttributeA;TRUE;PortletSession has a removeAttribute(String, int)  method 
+PortletSession;SIG Render;hasRemoveAttributeReturns;TRUE;PortletSession method removeAttribute(String) returns void 
+PortletSession;SIG Render;hasRemoveAttributeReturnsA;TRUE;PortletSession method removeAttribute(String, int) returns void 
+PortletSession;SIG Render;hasSetAttribute;TRUE;PortletSession has a setAttribute(String, Object)  method 
+PortletSession;SIG Render;hasSetAttributeA;TRUE;PortletSession has a setAttribute(String, Object, int)  method 
+PortletSession;SIG Render;hasSetAttributeReturns;TRUE;PortletSession method setAttribute(String, Object) returns void 
+PortletSession;SIG Render;hasSetAttributeReturnsA;TRUE;PortletSession method setAttribute(String, Object, int) returns void 
+PortletSession;SIG Render;hasSetMaxInactiveInterval;TRUE;PortletSession has a setMaxInactiveInterval(int)  method 
+PortletSession;SIG Render;hasSetMaxInactiveIntervalReturns;TRUE;PortletSession method setMaxInactiveInterval(int) returns void 
+PortletSessionUtil;SIG Render;constructor;TRUE;PortletSessionUtil provides constructor PortletSessionUtil() 
+PortletSessionUtil;SIG Render;hasDecodeAttributeName;TRUE;PortletSessionUtil has a decodeAttributeName(String)  method 
+PortletSessionUtil;SIG Render;hasDecodeAttributeNameReturns;TRUE;PortletSessionUtil method decodeAttributeName(String) returns String 
+PortletSessionUtil;SIG Render;hasDecodeScope;TRUE;PortletSessionUtil has a decodeScope(String)  method 
+PortletSessionUtil;SIG Render;hasDecodeScopeReturns;TRUE;PortletSessionUtil method decodeScope(String) returns int 
+PortletURLGenerationListener;SIG Render;hasFilterActionURL;TRUE;PortletURLGenerationListener has a filterActionURL(PortletURL)  method 
+PortletURLGenerationListener;SIG Render;hasFilterActionURLReturns;TRUE;PortletURLGenerationListener method filterActionURL(PortletURL) returns void 
+PortletURLGenerationListener;SIG Render;hasFilterRenderURL;TRUE;PortletURLGenerationListener has a filterRenderURL(PortletURL)  method 
+PortletURLGenerationListener;SIG Render;hasFilterRenderURLReturns;TRUE;PortletURLGenerationListener method filterRenderURL(PortletURL) returns void 
+PortletURLGenerationListener;SIG Render;hasFilterResourceURL;TRUE;PortletURLGenerationListener has a filterResourceURL(ResourceURL)  method 
+PortletURLGenerationListener;SIG Render;hasFilterResourceURLReturns;TRUE;PortletURLGenerationListener method filterResourceURL(ResourceURL) returns void 
+PreferencesValidator;SIG Render;hasValidate;TRUE;PreferencesValidator has a validate(PortletPreferences) throws ValidatorException method 
+PreferencesValidator;SIG Render;hasValidateReturns;TRUE;PreferencesValidator method validate(PortletPreferences) returns void 
+ProcessAction;SIG Render;hasName;TRUE;ProcessAction has a name()  method 
+ProcessAction;SIG Render;hasNameReturns;TRUE;ProcessAction method name() returns String 
+ProcessAction;SIG Render;isAnnotation;TRUE;ProcessAction is an Annotation 
+ProcessEvent;SIG Render;hasName;TRUE;ProcessEvent has a name()  method 
+ProcessEvent;SIG Render;hasNameReturns;TRUE;ProcessEvent method name() returns String 
+ProcessEvent;SIG Render;hasQname;TRUE;ProcessEvent has a qname()  method 
+ProcessEvent;SIG Render;hasQnameReturns;TRUE;ProcessEvent method qname() returns String 
+ProcessEvent;SIG Render;isAnnotation;TRUE;ProcessEvent is an Annotation 
+RenderMode;SIG Render;hasName;TRUE;RenderMode has a name()  method 
+RenderMode;SIG Render;hasNameReturns;TRUE;RenderMode method name() returns String 
+RenderMode;SIG Render;isAnnotation;TRUE;RenderMode is an Annotation 
+ResourceServingPortlet;SIG Render;hasServeResource;TRUE;ResourceServingPortlet has a serveResource(ResourceRequest, ResourceResponse) throws PortletException, java.io.IOException method 
+ResourceServingPortlet;SIG Render;hasServeResourceReturns;TRUE;ResourceServingPortlet method serveResource(ResourceRequest, ResourceResponse) returns void 
+WindowState;SIG Render;constructor;TRUE;WindowState provides constructor WindowState(String) 
+WindowState;SIG Render;fieldMAXIMIZED;TRUE;WindowState has WindowState field MAXIMIZED 
+WindowState;SIG Render;fieldMINIMIZED;TRUE;WindowState has WindowState field MINIMIZED 
+WindowState;SIG Render;fieldNORMAL;TRUE;WindowState has WindowState field NORMAL 
+WindowState;SIG Render;hasEquals;TRUE;WindowState has a equals(Object)  method 
+WindowState;SIG Render;hasEqualsReturns;TRUE;WindowState method equals(Object) returns boolean 
+WindowState;SIG Render;hasHashCode;TRUE;WindowState has a hashCode()  method 
+WindowState;SIG Render;hasHashCodeReturns;TRUE;WindowState method hashCode() returns int 
+WindowState;SIG Render;hasToString;TRUE;WindowState has a toString()  method 
+WindowState;SIG Render;hasToStringReturns;TRUE;WindowState method toString() returns String 
+Sig Tests Event;;;; 142 tests.
+Event;SIG Event;hasGetName;TRUE;Event has a getName()  method 
+Event;SIG Event;hasGetNameReturns;TRUE;Event method getName() returns String 
+Event;SIG Event;hasGetQName;TRUE;Event has a getQName()  method 
+Event;SIG Event;hasGetQNameReturns;TRUE;Event method getQName() returns javax.xml.namespace.QName 
+Event;SIG Event;hasGetValue;TRUE;Event has a getValue()  method 
+Event;SIG Event;hasGetValueReturns;TRUE;Event method getValue() returns java.io.Serializable 
+EventRequest;SIG Event;hasGetEvent;TRUE;EventRequest has a getEvent()  method 
+EventRequest;SIG Event;hasGetEventReturns;TRUE;EventRequest method getEvent() returns Event 
+EventRequest;SIG Event;hasGetMethod;TRUE;EventRequest has a getMethod()  method 
+EventRequest;SIG Event;hasGetMethodReturns;TRUE;EventRequest method getMethod() returns String 
+EventRequest;SIG Event;implementsPortletRequest;TRUE;EventRequest implements PortletRequest 
+EventResponse;SIG Event;hasSetRenderParameters;TRUE;EventResponse has a setRenderParameters(EventRequest)  method 
+EventResponse;SIG Event;hasSetRenderParametersReturns;TRUE;EventResponse method setRenderParameters(EventRequest) returns void 
+EventResponse;SIG Event;implementsStateAwareResponse;TRUE;EventResponse implements StateAwareResponse 
+PortletRequest;SIG Event;fieldACTION_PHASE;TRUE;EventRequest has String field ACTION_PHASE 
+PortletRequest;SIG Event;fieldACTION_SCOPE_ID;TRUE;EventRequest has String field ACTION_SCOPE_ID 
+PortletRequest;SIG Event;fieldBASIC_AUTH;TRUE;EventRequest has String field BASIC_AUTH 
+PortletRequest;SIG Event;fieldCCPP_PROFILE;TRUE;EventRequest has String field CCPP_PROFILE 
+PortletRequest;SIG Event;fieldCLIENT_CERT_AUTH;TRUE;EventRequest has String field CLIENT_CERT_AUTH 
+PortletRequest;SIG Event;fieldDIGEST_AUTH;TRUE;EventRequest has String field DIGEST_AUTH 
+PortletRequest;SIG Event;fieldEVENT_PHASE;TRUE;EventRequest has String field EVENT_PHASE 
+PortletRequest;SIG Event;fieldFORM_AUTH;TRUE;EventRequest has String field FORM_AUTH 
+PortletRequest;SIG Event;fieldLIFECYCLE_PHASE;TRUE;EventRequest has String field LIFECYCLE_PHASE 
+PortletRequest;SIG Event;fieldRENDER_HEADERS;TRUE;EventRequest has String field RENDER_HEADERS 
+PortletRequest;SIG Event;fieldRENDER_MARKUP;TRUE;EventRequest has String field RENDER_MARKUP 
+PortletRequest;SIG Event;fieldRENDER_PART;TRUE;EventRequest has String field RENDER_PART 
+PortletRequest;SIG Event;fieldRENDER_PHASE;TRUE;EventRequest has String field RENDER_PHASE 
+PortletRequest;SIG Event;fieldRESOURCE_PHASE;TRUE;EventRequest has String field RESOURCE_PHASE 
+PortletRequest;SIG Event;fieldUSER_INFO;TRUE;EventRequest has String field USER_INFO 
+PortletRequest;SIG Event;hasGetAttribute;TRUE;EventRequest has a getAttribute(String)  method 
+PortletRequest;SIG Event;hasGetAttributeNames;TRUE;EventRequest has a getAttributeNames()  method 
+PortletRequest;SIG Event;hasGetAttributeNamesReturns;TRUE;EventRequest method getAttributeNames() returns java.util.Enumeration 
+PortletRequest;SIG Event;hasGetAttributeReturns;TRUE;EventRequest method getAttribute(String) returns Object 
+PortletRequest;SIG Event;hasGetAuthType;TRUE;EventRequest has a getAuthType()  method 
+PortletRequest;SIG Event;hasGetAuthTypeReturns;TRUE;EventRequest method getAuthType() returns String 
+PortletRequest;SIG Event;hasGetContextPath;TRUE;EventRequest has a getContextPath()  method 
+PortletRequest;SIG Event;hasGetContextPathReturns;TRUE;EventRequest method getContextPath() returns String 
+PortletRequest;SIG Event;hasGetCookies;TRUE;EventRequest has a getCookies()  method 
+PortletRequest;SIG Event;hasGetCookiesReturns;TRUE;EventRequest method getCookies() returns javax.servlet.http.Cookie[] 
+PortletRequest;SIG Event;hasGetLocale;TRUE;EventRequest has a getLocale()  method 
+PortletRequest;SIG Event;hasGetLocaleReturns;TRUE;EventRequest method getLocale() returns java.util.Locale 
+PortletRequest;SIG Event;hasGetLocales;TRUE;EventRequest has a getLocales()  method 
+PortletRequest;SIG Event;hasGetLocalesReturns;TRUE;EventRequest method getLocales() returns java.util.Enumeration 
+PortletRequest;SIG Event;hasGetParameter;TRUE;EventRequest has a getParameter(String)  method 
+PortletRequest;SIG Event;hasGetParameterMap;TRUE;EventRequest has a getParameterMap()  method 
+PortletRequest;SIG Event;hasGetParameterMapReturns;TRUE;EventRequest method getParameterMap() returns java.util.Map 
+PortletRequest;SIG Event;hasGetParameterNames;TRUE;EventRequest has a getParameterNames()  method 
+PortletRequest;SIG Event;hasGetParameterNamesReturns;TRUE;EventRequest method getParameterNames() returns java.util.Enumeration 
+PortletRequest;SIG Event;hasGetParameterReturns;TRUE;EventRequest method getParameter(String) returns String 
+PortletRequest;SIG Event;hasGetParameterValues;TRUE;EventRequest has a getParameterValues(String)  method 
+PortletRequest;SIG Event;hasGetParameterValuesReturns;TRUE;EventRequest method getParameterValues(String) returns String[] 
+PortletRequest;SIG Event;hasGetPortalContext;TRUE;EventRequest has a getPortalContext()  method 
+PortletRequest;SIG Event;hasGetPortalContextReturns;TRUE;EventRequest method getPortalContext() returns PortalContext 
+PortletRequest;SIG Event;hasGetPortletMode;TRUE;EventRequest has a getPortletMode()  method 
+PortletRequest;SIG Event;hasGetPortletModeReturns;TRUE;EventRequest method getPortletMode() returns PortletMode 
+PortletRequest;SIG Event;hasGetPortletSession;TRUE;EventRequest has a getPortletSession()  method 
+PortletRequest;SIG Event;hasGetPortletSessionA;TRUE;EventRequest has a getPortletSession(boolean)  method 
+PortletRequest;SIG Event;hasGetPortletSessionReturns;TRUE;EventRequest method getPortletSession() returns PortletSession 
+PortletRequest;SIG Event;hasGetPortletSessionReturnsA;TRUE;EventRequest method getPortletSession(boolean) returns PortletSession 
+PortletRequest;SIG Event;hasGetPreferences;TRUE;EventRequest has a getPreferences()  method 
+PortletRequest;SIG Event;hasGetPreferencesReturns;TRUE;EventRequest method getPreferences() returns PortletPreferences 
+PortletRequest;SIG Event;hasGetPrivateParameterMap;TRUE;EventRequest has a getPrivateParameterMap()  method 
+PortletRequest;SIG Event;hasGetPrivateParameterMapReturns;TRUE;EventRequest method getPrivateParameterMap() returns java.util.Map 
+PortletRequest;SIG Event;hasGetProperties;TRUE;EventRequest has a getProperties(String)  method 
+PortletRequest;SIG Event;hasGetPropertiesReturns;TRUE;EventRequest method getProperties(String) returns java.util.Enumeration 
+PortletRequest;SIG Event;hasGetProperty;TRUE;EventRequest has a getProperty(String)  method 
+PortletRequest;SIG Event;hasGetPropertyNames;TRUE;EventRequest has a getPropertyNames()  method 
+PortletRequest;SIG Event;hasGetPropertyNamesReturns;TRUE;EventRequest method getPropertyNames() returns java.util.Enumeration 
+PortletRequest;SIG Event;hasGetPropertyReturns;TRUE;EventRequest method getProperty(String) returns String 
+PortletRequest;SIG Event;hasGetPublicParameterMap;TRUE;EventRequest has a getPublicParameterMap()  method 
+PortletRequest;SIG Event;hasGetPublicParameterMapReturns;TRUE;EventRequest method getPublicParameterMap() returns java.util.Map 
+PortletRequest;SIG Event;hasGetRemoteUser;TRUE;EventRequest has a getRemoteUser()  method 
+PortletRequest;SIG Event;hasGetRemoteUserReturns;TRUE;EventRequest method getRemoteUser() returns String 
+PortletRequest;SIG Event;hasGetRequestedSessionId;TRUE;EventRequest has a getRequestedSessionId()  method 
+PortletRequest;SIG Event;hasGetRequestedSessionIdReturns;TRUE;EventRequest method getRequestedSessionId() returns String 
+PortletRequest;SIG Event;hasGetResponseContentType;TRUE;EventRequest has a getResponseContentType()  method 
+PortletRequest;SIG Event;hasGetResponseContentTypeReturns;TRUE;EventRequest method getResponseContentType() returns String 
+PortletRequest;SIG Event;hasGetResponseContentTypes;TRUE;EventRequest has a getResponseContentTypes()  method 
+PortletRequest;SIG Event;hasGetResponseContentTypesReturns;TRUE;EventRequest method getResponseContentTypes() returns java.util.Enumeration 
+PortletRequest;SIG Event;hasGetScheme;TRUE;EventRequest has a getScheme()  method 
+PortletRequest;SIG Event;hasGetSchemeReturns;TRUE;EventRequest method getScheme() returns String 
+PortletRequest;SIG Event;hasGetServerName;TRUE;EventRequest has a getServerName()  method 
+PortletRequest;SIG Event;hasGetServerNameReturns;TRUE;EventRequest method getServerName() returns String 
+PortletRequest;SIG Event;hasGetServerPort;TRUE;EventRequest has a getServerPort()  method 
+PortletRequest;SIG Event;hasGetServerPortReturns;TRUE;EventRequest method getServerPort() returns int 
+PortletRequest;SIG Event;hasGetUserPrincipal;TRUE;EventRequest has a getUserPrincipal()  method 
+PortletRequest;SIG Event;hasGetUserPrincipalReturns;TRUE;EventRequest method getUserPrincipal() returns java.security.Principal 
+PortletRequest;SIG Event;hasGetWindowID;TRUE;EventRequest has a getWindowID()  method 
+PortletRequest;SIG Event;hasGetWindowIDReturns;TRUE;EventRequest method getWindowID() returns String 
+PortletRequest;SIG Event;hasGetWindowState;TRUE;EventRequest has a getWindowState()  method 
+PortletRequest;SIG Event;hasGetWindowStateReturns;TRUE;EventRequest method getWindowState() returns WindowState 
+PortletRequest;SIG Event;hasIsPortletModeAllowed;TRUE;EventRequest has a isPortletModeAllowed(PortletMode)  method 
+PortletRequest;SIG Event;hasIsPortletModeAllowedReturns;TRUE;EventRequest method isPortletModeAllowed(PortletMode) returns boolean 
+PortletRequest;SIG Event;hasIsRequestedSessionIdValid;TRUE;EventRequest has a isRequestedSessionIdValid()  method 
+PortletRequest;SIG Event;hasIsRequestedSessionIdValidReturns;TRUE;EventRequest method isRequestedSessionIdValid() returns boolean 
+PortletRequest;SIG Event;hasIsSecure;TRUE;EventRequest has a isSecure()  method 
+PortletRequest;SIG Event;hasIsSecureReturns;TRUE;EventRequest method isSecure() returns boolean 
+PortletRequest;SIG Event;hasIsUserInRole;TRUE;EventRequest has a isUserInRole(String)  method 
+PortletRequest;SIG Event;hasIsUserInRoleReturns;TRUE;EventRequest method isUserInRole(String) returns boolean 
+PortletRequest;SIG Event;hasIsWindowStateAllowed;TRUE;EventRequest has a isWindowStateAllowed(WindowState)  method 
+PortletRequest;SIG Event;hasIsWindowStateAllowedReturns;TRUE;EventRequest method isWindowStateAllowed(WindowState) returns boolean 
+PortletRequest;SIG Event;hasRemoveAttribute;TRUE;EventRequest has a removeAttribute(String)  method 
+PortletRequest;SIG Event;hasRemoveAttributeReturns;TRUE;EventRequest method removeAttribute(String) returns void 
+PortletRequest;SIG Event;hasSetAttribute;TRUE;EventRequest has a setAttribute(String, Object)  method 
+PortletRequest;SIG Event;hasSetAttributeReturns;TRUE;EventRequest method setAttribute(String, Object) returns void 
+PortletResponse;SIG Event;hasAddProperty;TRUE;EventResponse has a addProperty(String, String)  method 
+PortletResponse;SIG Event;hasAddPropertyA;TRUE;EventResponse has a addProperty(javax.servlet.http.Cookie)  method 
+PortletResponse;SIG Event;hasAddPropertyB;TRUE;EventResponse has a addProperty(String, org.w3c.dom.Element)  method 
+PortletResponse;SIG Event;hasAddPropertyReturns;TRUE;EventResponse method addProperty(String, String) returns void 
+PortletResponse;SIG Event;hasAddPropertyReturnsA;TRUE;EventResponse method addProperty(javax.servlet.http.Cookie) returns void 
+PortletResponse;SIG Event;hasAddPropertyReturnsB;TRUE;EventResponse method addProperty(String, org.w3c.dom.Element) returns void 
+PortletResponse;SIG Event;hasCreateElement;TRUE;EventResponse has a createElement(String) throws org.w3c.dom.DOMException method 
+PortletResponse;SIG Event;hasCreateElementReturns;TRUE;EventResponse method createElement(String) returns org.w3c.dom.Element 
+PortletResponse;SIG Event;hasEncodeURL;TRUE;EventResponse has a encodeURL(String)  method 
+PortletResponse;SIG Event;hasEncodeURLReturns;TRUE;EventResponse method encodeURL(String) returns String 
+PortletResponse;SIG Event;hasGetNamespace;TRUE;EventResponse has a getNamespace()  method 
+PortletResponse;SIG Event;hasGetNamespaceReturns;TRUE;EventResponse method getNamespace() returns String 
+PortletResponse;SIG Event;hasSetProperty;TRUE;EventResponse has a setProperty(String, String)  method 
+PortletResponse;SIG Event;hasSetPropertyReturns;TRUE;EventResponse method setProperty(String, String) returns void 
+StateAwareResponse;SIG Event;hasGetPortletMode;TRUE;EventResponse has a getPortletMode()  method 
+StateAwareResponse;SIG Event;hasGetPortletModeReturns;TRUE;EventResponse method getPortletMode() returns PortletMode 
+StateAwareResponse;SIG Event;hasGetRenderParameterMap;TRUE;EventResponse has a getRenderParameterMap()  method 
+StateAwareResponse;SIG Event;hasGetRenderParameterMapReturns;TRUE;EventResponse method getRenderParameterMap() returns java.util.Map 
+StateAwareResponse;SIG Event;hasGetWindowState;TRUE;EventResponse has a getWindowState()  method 
+StateAwareResponse;SIG Event;hasGetWindowStateReturns;TRUE;EventResponse method getWindowState() returns WindowState 
+StateAwareResponse;SIG Event;hasRemovePublicRenderParameter;TRUE;EventResponse has a removePublicRenderParameter(String)  method 
+StateAwareResponse;SIG Event;hasRemovePublicRenderParameterReturns;TRUE;EventResponse method removePublicRenderParameter(String) returns void 
+StateAwareResponse;SIG Event;hasSetEvent;TRUE;EventResponse has a setEvent(javax.xml.namespace.QName, java.io.Serializable)  method 
+StateAwareResponse;SIG Event;hasSetEventA;TRUE;EventResponse has a setEvent(String, java.io.Serializable)  method 
+StateAwareResponse;SIG Event;hasSetEventReturns;TRUE;EventResponse method setEvent(javax.xml.namespace.QName, java.io.Serializable) returns void 
+StateAwareResponse;SIG Event;hasSetEventReturnsA;TRUE;EventResponse method setEvent(String, java.io.Serializable) returns void 
+StateAwareResponse;SIG Event;hasSetPortletMode;TRUE;EventResponse has a setPortletMode(PortletMode) throws PortletModeException method 
+StateAwareResponse;SIG Event;hasSetPortletModeReturns;TRUE;EventResponse method setPortletMode(PortletMode) returns void 
+StateAwareResponse;SIG Event;hasSetRenderParameter;TRUE;EventResponse has a setRenderParameter(String, String)  method 
+StateAwareResponse;SIG Event;hasSetRenderParameterA;TRUE;EventResponse has a setRenderParameter(String, String[])  method 
+StateAwareResponse;SIG Event;hasSetRenderParameterReturns;TRUE;EventResponse method setRenderParameter(String, String) returns void 
+StateAwareResponse;SIG Event;hasSetRenderParameterReturnsA;TRUE;EventResponse method setRenderParameter(String, String[]) returns void 
+StateAwareResponse;SIG Event;hasSetRenderParameters;TRUE;EventResponse has a setRenderParameters(java.util.Map)  method 
+StateAwareResponse;SIG Event;hasSetRenderParametersReturns;TRUE;EventResponse method setRenderParameters(java.util.Map) returns void 
+StateAwareResponse;SIG Event;hasSetWindowState;TRUE;EventResponse has a setWindowState(WindowState) throws WindowStateException method 
+StateAwareResponse;SIG Event;hasSetWindowStateReturns;TRUE;EventResponse method setWindowState(WindowState) returns void 
+StateAwareResponse;SIG Event;implementsPortletResponse;TRUE;EventResponse implements PortletResponse 
+Sig Tests Exception;;;; 38 tests.
+PortletException;SIG Render;constructor;TRUE;PortletException provides constructor PortletException() 
+PortletException;SIG Render;constructorA;TRUE;PortletException provides constructor PortletException(String) 
+PortletException;SIG Render;constructorB;TRUE;PortletException provides constructor PortletException(String, Throwable) 
+PortletException;SIG Render;constructorC;TRUE;PortletException provides constructor PortletException(Throwable) 
+PortletException;SIG Render;extendsException;TRUE;PortletException extends Exception 
+PortletModeException;SIG Render;constructor;TRUE;PortletModeException provides constructor PortletModeException(String, PortletMode) 
+PortletModeException;SIG Render;constructorA;TRUE;PortletModeException provides constructor PortletModeException(String, Throwable, PortletMode) 
+PortletModeException;SIG Render;constructorB;TRUE;PortletModeException provides constructor PortletModeException(Throwable, PortletMode) 
+PortletModeException;SIG Render;extendsPortletException;TRUE;PortletModeException extends PortletException 
+PortletModeException;SIG Render;hasGetMode;TRUE;PortletModeException has a getMode()  method 
+PortletModeException;SIG Render;hasGetModeReturns;TRUE;PortletModeException method getMode() returns PortletMode 
+PortletSecurityException;SIG Render;constructor;TRUE;PortletSecurityException provides constructor PortletSecurityException(String) 
+PortletSecurityException;SIG Render;constructorA;TRUE;PortletSecurityException provides constructor PortletSecurityException(String, Throwable) 
+PortletSecurityException;SIG Render;constructorB;TRUE;PortletSecurityException provides constructor PortletSecurityException(Throwable) 
+PortletSecurityException;SIG Render;extendsPortletException;TRUE;PortletSecurityException extends PortletException 
+ReadOnlyException;SIG Render;constructor;TRUE;ReadOnlyException provides constructor ReadOnlyException(String) 
+ReadOnlyException;SIG Render;constructorA;TRUE;ReadOnlyException provides constructor ReadOnlyException(String, Throwable) 
+ReadOnlyException;SIG Render;constructorB;TRUE;ReadOnlyException provides constructor ReadOnlyException(Throwable) 
+ReadOnlyException;SIG Render;extendsPortletException;TRUE;ReadOnlyException extends PortletException 
+UnavailableException;SIG Render;constructor;TRUE;UnavailableException provides constructor UnavailableException(String) 
+UnavailableException;SIG Render;constructorA;TRUE;UnavailableException provides constructor UnavailableException(String, int) 
+UnavailableException;SIG Render;extendsPortletException;TRUE;UnavailableException extends PortletException 
+UnavailableException;SIG Render;hasGetUnavailableSeconds;TRUE;UnavailableException has a getUnavailableSeconds()  method 
+UnavailableException;SIG Render;hasGetUnavailableSecondsReturns;TRUE;UnavailableException method getUnavailableSeconds() returns int 
+UnavailableException;SIG Render;hasIsPermanent;TRUE;UnavailableException has a isPermanent()  method 
+UnavailableException;SIG Render;hasIsPermanentReturns;TRUE;UnavailableException method isPermanent() returns boolean 
+ValidatorException;SIG Render;constructor;TRUE;ValidatorException provides constructor ValidatorException(String, java.util.Collection) 
+ValidatorException;SIG Render;constructorA;TRUE;ValidatorException provides constructor ValidatorException(String, Throwable, java.util.Collection) 
+ValidatorException;SIG Render;constructorB;TRUE;ValidatorException provides constructor ValidatorException(Throwable, java.util.Collection) 
+ValidatorException;SIG Render;extendsPortletException;TRUE;ValidatorException extends PortletException 
+ValidatorException;SIG Render;hasGetFailedKeys;TRUE;ValidatorException has a getFailedKeys()  method 
+ValidatorException;SIG Render;hasGetFailedKeysReturns;TRUE;ValidatorException method getFailedKeys() returns java.util.Enumeration 
+WindowStateException;SIG Render;constructor;TRUE;WindowStateException provides constructor WindowStateException(String, WindowState) 
+WindowStateException;SIG Render;constructorA;TRUE;WindowStateException provides constructor WindowStateException(String, Throwable, WindowState) 
+WindowStateException;SIG Render;constructorB;TRUE;WindowStateException provides constructor WindowStateException(Throwable, WindowState) 
+WindowStateException;SIG Render;extendsPortletException;TRUE;WindowStateException extends PortletException 
+WindowStateException;SIG Render;hasGetState;TRUE;WindowStateException has a getState()  method 
+WindowStateException;SIG Render;hasGetStateReturns;TRUE;WindowStateException method getState() returns WindowState 
+Sig Tests Filter;;;; 32 tests.
+ActionFilter;SIG Render;hasDoFilter;TRUE;ActionFilter has a doFilter(ActionRequest, ActionResponse, javax.portlet.filter.FilterChain) throws java.io.IOException, PortletException method 
+ActionFilter;SIG Render;hasDoFilterReturns;TRUE;ActionFilter method doFilter(ActionRequest, ActionResponse, javax.portlet.filter.FilterChain) returns void 
+ActionFilter;SIG Render;implementsPortletFilter;TRUE;ActionFilter implements PortletFilter 
+EventFilter;SIG Render;hasDoFilter;TRUE;EventFilter has a doFilter(EventRequest, EventResponse, javax.portlet.filter.FilterChain) throws java.io.IOException, PortletException method 
+EventFilter;SIG Render;hasDoFilterReturns;TRUE;EventFilter method doFilter(EventRequest, EventResponse, javax.portlet.filter.FilterChain) returns void 
+EventFilter;SIG Render;implementsPortletFilter;TRUE;EventFilter implements PortletFilter 
+FilterChain;SIG Render;hasDoFilter;TRUE;FilterChain has a doFilter(ActionRequest, ActionResponse) throws java.io.IOException, PortletException method 
+FilterChain;SIG Render;hasDoFilterA;TRUE;FilterChain has a doFilter(EventRequest, EventResponse) throws java.io.IOException, PortletException method 
+FilterChain;SIG Render;hasDoFilterB;TRUE;FilterChain has a doFilter(RenderRequest, RenderResponse) throws java.io.IOException, PortletException method 
+FilterChain;SIG Render;hasDoFilterC;TRUE;FilterChain has a doFilter(ResourceRequest, ResourceResponse) throws java.io.IOException, PortletException method 
+FilterChain;SIG Render;hasDoFilterReturns;TRUE;FilterChain method doFilter(ActionRequest, ActionResponse) returns void 
+FilterChain;SIG Render;hasDoFilterReturnsA;TRUE;FilterChain method doFilter(EventRequest, EventResponse) returns void 
+FilterChain;SIG Render;hasDoFilterReturnsB;TRUE;FilterChain method doFilter(RenderRequest, RenderResponse) returns void 
+FilterChain;SIG Render;hasDoFilterReturnsC;TRUE;FilterChain method doFilter(ResourceRequest, ResourceResponse) returns void 
+FilterConfig;SIG Render;hasGetFilterName;TRUE;FilterConfig has a getFilterName()  method 
+FilterConfig;SIG Render;hasGetFilterNameReturns;TRUE;FilterConfig method getFilterName() returns String 
+FilterConfig;SIG Render;hasGetInitParameter;TRUE;FilterConfig has a getInitParameter(String)  method 
+FilterConfig;SIG Render;hasGetInitParameterNames;TRUE;FilterConfig has a getInitParameterNames()  method 
+FilterConfig;SIG Render;hasGetInitParameterNamesReturns;TRUE;FilterConfig method getInitParameterNames() returns java.util.Enumeration 
+FilterConfig;SIG Render;hasGetInitParameterReturns;TRUE;FilterConfig method getInitParameter(String) returns String 
+FilterConfig;SIG Render;hasGetPortletContext;TRUE;FilterConfig has a getPortletContext()  method 
+FilterConfig;SIG Render;hasGetPortletContextReturns;TRUE;FilterConfig method getPortletContext() returns PortletContext 
+PortletFilter;SIG Render;hasDestroy;TRUE;PortletFilter has a destroy()  method 
+PortletFilter;SIG Render;hasDestroyReturns;TRUE;PortletFilter method destroy() returns void 
+PortletFilter;SIG Render;hasInit;TRUE;PortletFilter has a init(javax.portlet.filter.FilterConfig) throws PortletException method 
+PortletFilter;SIG Render;hasInitReturns;TRUE;PortletFilter method init(javax.portlet.filter.FilterConfig) returns void 
+RenderFilter;SIG Render;hasDoFilter;TRUE;RenderFilter has a doFilter(RenderRequest, RenderResponse, javax.portlet.filter.FilterChain) throws java.io.IOException, PortletException method 
+RenderFilter;SIG Render;hasDoFilterReturns;TRUE;RenderFilter method doFilter(RenderRequest, RenderResponse, javax.portlet.filter.FilterChain) returns void 
+RenderFilter;SIG Render;implementsPortletFilter;TRUE;RenderFilter implements PortletFilter 
+ResourceFilter;SIG Render;hasDoFilter;TRUE;ResourceFilter has a doFilter(ResourceRequest, ResourceResponse, javax.portlet.filter.FilterChain) throws java.io.IOException, PortletException method 
+ResourceFilter;SIG Render;hasDoFilterReturns;TRUE;ResourceFilter method doFilter(ResourceRequest, ResourceResponse, javax.portlet.filter.FilterChain) returns void 
+ResourceFilter;SIG Render;implementsPortletFilter;TRUE;ResourceFilter implements PortletFilter 
+Sig Tests Render;;;; 241 tests.
+MimeResponse;SIG Render;fieldCACHE_SCOPE;TRUE;RenderResponse has String field CACHE_SCOPE 
+MimeResponse;SIG Render;fieldETAG;TRUE;RenderResponse has String field ETAG 
+MimeResponse;SIG Render;fieldEXPIRATION_CACHE;TRUE;RenderResponse has String field EXPIRATION_CACHE 
+MimeResponse;SIG Render;fieldMARKUP_HEAD_ELEMENT;TRUE;RenderResponse has String field MARKUP_HEAD_ELEMENT 
+MimeResponse;SIG Render;fieldNAMESPACED_RESPONSE;TRUE;RenderResponse has String field NAMESPACED_RESPONSE 
+MimeResponse;SIG Render;fieldPRIVATE_SCOPE;TRUE;RenderResponse has String field PRIVATE_SCOPE 
+MimeResponse;SIG Render;fieldPUBLIC_SCOPE;TRUE;RenderResponse has String field PUBLIC_SCOPE 
+MimeResponse;SIG Render;fieldUSE_CACHED_CONTENT;TRUE;RenderResponse has String field USE_CACHED_CONTENT 
+MimeResponse;SIG Render;hasCreateActionURL;TRUE;RenderResponse has a createActionURL()  method 
+MimeResponse;SIG Render;hasCreateActionURLReturns;TRUE;RenderResponse method createActionURL() returns PortletURL 
+MimeResponse;SIG Render;hasCreateRenderURL;TRUE;RenderResponse has a createRenderURL()  method 
+MimeResponse;SIG Render;hasCreateRenderURLReturns;TRUE;RenderResponse method createRenderURL() returns PortletURL 
+MimeResponse;SIG Render;hasCreateResourceURL;TRUE;RenderResponse has a createResourceURL()  method 
+MimeResponse;SIG Render;hasCreateResourceURLReturns;TRUE;RenderResponse method createResourceURL() returns ResourceURL 
+MimeResponse;SIG Render;hasFlushBuffer;TRUE;RenderResponse has a flushBuffer() throws java.io.IOException method 
+MimeResponse;SIG Render;hasFlushBufferReturns;TRUE;RenderResponse method flushBuffer() returns void 
+MimeResponse;SIG Render;hasGetBufferSize;TRUE;RenderResponse has a getBufferSize()  method 
+MimeResponse;SIG Render;hasGetBufferSizeReturns;TRUE;RenderResponse method getBufferSize() returns int 
+MimeResponse;SIG Render;hasGetCacheControl;TRUE;RenderResponse has a getCacheControl()  method 
+MimeResponse;SIG Render;hasGetCacheControlReturns;TRUE;RenderResponse method getCacheControl() returns CacheControl 
+MimeResponse;SIG Render;hasGetCharacterEncoding;TRUE;RenderResponse has a getCharacterEncoding()  method 
+MimeResponse;SIG Render;hasGetCharacterEncodingReturns;TRUE;RenderResponse method getCharacterEncoding() returns String 
+MimeResponse;SIG Render;hasGetContentType;TRUE;RenderResponse has a getContentType()  method 
+MimeResponse;SIG Render;hasGetContentTypeReturns;TRUE;RenderResponse method getContentType() returns String 
+MimeResponse;SIG Render;hasGetLocale;TRUE;RenderResponse has a getLocale()  method 
+MimeResponse;SIG Render;hasGetLocaleReturns;TRUE;RenderResponse method getLocale() returns java.util.Locale 
+MimeResponse;SIG Render;hasGetPortletOutputStream;TRUE;RenderResponse has a getPortletOutputStream() throws java.io.IOException, IllegalStateException method 
+MimeResponse;SIG Render;hasGetPortletOutputStreamReturns;TRUE;RenderResponse method getPortletOutputStream() returns java.io.OutputStream 
+MimeResponse;SIG Render;hasGetWriter;TRUE;RenderResponse has a getWriter() throws java.io.IOException, IllegalStateException method 
+MimeResponse;SIG Render;hasGetWriterReturns;TRUE;RenderResponse method getWriter() returns java.io.PrintWriter 
+MimeResponse;SIG Render;hasIsCommitted;TRUE;RenderResponse has a isCommitted()  method 
+MimeResponse;SIG Render;hasIsCommittedReturns;TRUE;RenderResponse method isCommitted() returns boolean 
+MimeResponse;SIG Render;hasReset;TRUE;RenderResponse has a reset()  method 
+MimeResponse;SIG Render;hasResetBuffer;TRUE;RenderResponse has a resetBuffer()  method 
+MimeResponse;SIG Render;hasResetBufferReturns;TRUE;RenderResponse method resetBuffer() returns void 
+MimeResponse;SIG Render;hasResetReturns;TRUE;RenderResponse method reset() returns void 
+MimeResponse;SIG Render;hasSetBufferSize;TRUE;RenderResponse has a setBufferSize(int)  method 
+MimeResponse;SIG Render;hasSetBufferSizeReturns;TRUE;RenderResponse method setBufferSize(int) returns void 
+MimeResponse;SIG Render;hasSetContentType;TRUE;RenderResponse has a setContentType(String)  method 
+MimeResponse;SIG Render;hasSetContentTypeReturns;TRUE;RenderResponse method setContentType(String) returns void 
+MimeResponse;SIG Render;implementsPortletResponse;TRUE;RenderResponse implements PortletResponse 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_FRACTIONSECOND;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_FRACTIONSECOND 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_HMS_HOUR;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_HMS_HOUR 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_HMS_MINUTE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_HMS_MINUTE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_HMS_SECOND;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_HMS_SECOND 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_TIMEZONE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_TIMEZONE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_YMD_DAY;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_YMD_DAY 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_YMD_MONTH;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_YMD_MONTH 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BDATE_YMD_YEAR;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BDATE_YMD_YEAR 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_ONLINE_EMAIL;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_ONLINE_EMAIL 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_ONLINE_URI;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_ONLINE_URI 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_POSTAL_CITY;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_POSTAL_CITY 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_POSTAL_COUNTRY;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_POSTAL_COUNTRY 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_POSTAL_NAME;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_POSTAL_NAME 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_POSTAL_ORGANIZATION;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_POSTAL_ORGANIZATION 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_POSTAL_POSTALCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_POSTAL_POSTALCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_POSTAL_STATEPROV;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_POSTAL_STATEPROV 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_POSTAL_STREET;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_POSTAL_STREET 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_FAX_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_FAX_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_FAX_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_FAX_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_FAX_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_FAX_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_FAX_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_FAX_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_FAX_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_FAX_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_MOBILE_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_MOBILE_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_MOBILE_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_MOBILE_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_MOBILE_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_MOBILE_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_MOBILE_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_MOBILE_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_MOBILE_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_MOBILE_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_PAGER_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_PAGER_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_PAGER_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_PAGER_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_PAGER_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_PAGER_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_PAGER_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_PAGER_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_PAGER_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_PAGER_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_TELEPHONE_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_TELEPHONE_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_TELEPHONE_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_TELEPHONE_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_TELEPHONE_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_TELEPHONE_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_TELEPHONE_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_TELEPHONE_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_BUSINESSINFO_TELECOM_TELEPHONE_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_BUSINESSINFO_TELECOM_TELEPHONE_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_DEPARTMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_DEPARTMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_EMPLOYER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_EMPLOYER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_GENDER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_GENDER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_ONLINE_EMAIL;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_ONLINE_EMAIL 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_ONLINE_URI;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_ONLINE_URI 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_POSTAL_CITY;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_POSTAL_CITY 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_POSTAL_COUNTRY;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_POSTAL_COUNTRY 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_POSTAL_NAME;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_POSTAL_NAME 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_POSTAL_ORGANIZATION;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_POSTAL_ORGANIZATION 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_POSTAL_POSTALCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_POSTAL_POSTALCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_POSTAL_STATEPROV;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_POSTAL_STATEPROV 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_POSTAL_STREET;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_POSTAL_STREET 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_FAX_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_FAX_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_FAX_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_FAX_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_FAX_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_FAX_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_FAX_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_FAX_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_FAX_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_FAX_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_MOBILE_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_MOBILE_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_MOBILE_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_MOBILE_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_MOBILE_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_MOBILE_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_MOBILE_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_MOBILE_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_MOBILE_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_MOBILE_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_PAGER_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_PAGER_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_PAGER_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_PAGER_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_PAGER_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_PAGER_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_PAGER_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_PAGER_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_PAGER_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_PAGER_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_TELEPHONE_COMMENT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_TELEPHONE_COMMENT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_TELEPHONE_EXT;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_TELEPHONE_EXT 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_TELEPHONE_INTCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_TELEPHONE_INTCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_TELEPHONE_LOCCODE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_TELEPHONE_LOCCODE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_HOMEINFO_TELECOM_TELEPHONE_NUMBER;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_HOMEINFO_TELECOM_TELEPHONE_NUMBER 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_JOBTITLE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_JOBTITLE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_LOGIN_ID;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_LOGIN_ID 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_NAME_FAMILY;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_NAME_FAMILY 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_NAME_GIVEN;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_NAME_GIVEN 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_NAME_MIDDLE;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_NAME_MIDDLE 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_NAME_NICKNAME;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_NAME_NICKNAME 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_NAME_PREFIX;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_NAME_PREFIX 
+PortletRequest$P3PUserInfos;SIG Render;fieldUSER_NAME_SUFFIX;TRUE;PortletRequest$P3PUserInfos has PortletRequest$P3PUserInfos field USER_NAME_SUFFIX 
+PortletRequest$P3PUserInfos;SIG Render;hasToString;TRUE;PortletRequest$P3PUserInfos has a toString()  method 
+PortletRequest$P3PUserInfos;SIG Render;hasToStringReturns;TRUE;PortletRequest$P3PUserInfos method toString() returns String 
+PortletRequest$P3PUserInfos;SIG Render;hasValueOf;TRUE;PortletRequest$P3PUserInfos has a valueOf(String)  method 
+PortletRequest$P3PUserInfos;SIG Render;hasValueOfReturns;TRUE;PortletRequest$P3PUserInfos method valueOf(String) returns PortletRequest.P3PUserInfos 
+PortletRequest$P3PUserInfos;SIG Render;hasValues;TRUE;PortletRequest$P3PUserInfos has a values()  method 
+PortletRequest$P3PUserInfos;SIG Render;hasValuesReturns;TRUE;PortletRequest$P3PUserInfos method values() returns PortletRequest.P3PUserInfos[] 
+PortletRequest$P3PUserInfos;SIG Render;isEnum;TRUE;PortletRequest$P3PUserInfos is an Enum 
+PortletRequest;SIG Render;fieldACTION_PHASE;TRUE;RenderRequest has String field ACTION_PHASE 
+PortletRequest;SIG Render;fieldACTION_SCOPE_ID;TRUE;RenderRequest has String field ACTION_SCOPE_ID 
+PortletRequest;SIG Render;fieldBASIC_AUTH;TRUE;RenderRequest has String field BASIC_AUTH 
+PortletRequest;SIG Render;fieldCCPP_PROFILE;TRUE;RenderRequest has String field CCPP_PROFILE 
+PortletRequest;SIG Render;fieldCLIENT_CERT_AUTH;TRUE;RenderRequest has String field CLIENT_CERT_AUTH 
+PortletRequest;SIG Render;fieldDIGEST_AUTH;TRUE;RenderRequest has String field DIGEST_AUTH 
+PortletRequest;SIG Render;fieldEVENT_PHASE;TRUE;RenderRequest has String field EVENT_PHASE 
+PortletRequest;SIG Render;fieldFORM_AUTH;TRUE;RenderRequest has String field FORM_AUTH 
+PortletRequest;SIG Render;fieldLIFECYCLE_PHASE;TRUE;RenderRequest has String field LIFECYCLE_PHASE 
+PortletRequest;SIG Render;fieldRENDER_HEADERS;TRUE;RenderRequest has String field RENDER_HEADERS 
+PortletRequest;SIG Render;fieldRENDER_MARKUP;TRUE;RenderRequest has String field RENDER_MARKUP 
+PortletRequest;SIG Render;fieldRENDER_PART;TRUE;RenderRequest has String field RENDER_PART 
+PortletRequest;SIG Render;fieldRENDER_PHASE;TRUE;RenderRequest has String field RENDER_PHASE 
+PortletRequest;SIG Render;fieldRESOURCE_PHASE;TRUE;RenderRequest has String field RESOURCE_PHASE 
+PortletRequest;SIG Render;fieldUSER_INFO;TRUE;RenderRequest has String field USER_INFO 
+PortletRequest;SIG Render;hasGetAttribute;TRUE;RenderRequest has a getAttribute(String)  method 
+PortletRequest;SIG Render;hasGetAttributeNames;TRUE;RenderRequest has a getAttributeNames()  method 
+PortletRequest;SIG Render;hasGetAttributeNamesReturns;TRUE;RenderRequest method getAttributeNames() returns java.util.Enumeration 
+PortletRequest;SIG Render;hasGetAttributeReturns;TRUE;RenderRequest method getAttribute(String) returns Object 
+PortletRequest;SIG Render;hasGetAuthType;TRUE;RenderRequest has a getAuthType()  method 
+PortletRequest;SIG Render;hasGetAuthTypeReturns;TRUE;RenderRequest method getAuthType() returns String 
+PortletRequest;SIG Render;hasGetContextPath;TRUE;RenderRequest has a getContextPath()  method 
+PortletRequest;SIG Render;hasGetContextPathReturns;TRUE;RenderRequest method getContextPath() returns String 
+PortletRequest;SIG Render;hasGetCookies;TRUE;RenderRequest has a getCookies()  method 
+PortletRequest;SIG Render;hasGetCookiesReturns;TRUE;RenderRequest method getCookies() returns javax.servlet.http.Cookie[] 
+PortletRequest;SIG Render;hasGetLocale;TRUE;RenderRequest has a getLocale()  method 
+PortletRequest;SIG Render;hasGetLocaleReturns;TRUE;RenderRequest method getLocale() returns java.util.Locale 
+PortletRequest;SIG Render;hasGetLocales;TRUE;RenderRequest has a getLocales()  method 
+PortletRequest;SIG Render;hasGetLocalesReturns;TRUE;RenderRequest method getLocales() returns java.util.Enumeration 
+PortletRequest;SIG Render;hasGetParameter;TRUE;RenderRequest has a getParameter(String)  method 
+PortletRequest;SIG Render;hasGetParameterMap;TRUE;RenderRequest has a getParameterMap()  method 
+PortletRequest;SIG Render;hasGetParameterMapReturns;TRUE;RenderRequest method getParameterMap() returns java.util.Map 
+PortletRequest;SIG Render;hasGetParameterNames;TRUE;RenderRequest has a getParameterNames()  method 
+PortletRequest;SIG Render;hasGetParameterNamesReturns;TRUE;RenderRequest method getParameterNames() returns java.util.Enumeration 
+PortletRequest;SIG Render;hasGetParameterReturns;TRUE;RenderRequest method getParameter(String) returns String 
+PortletRequest;SIG Render;hasGetParameterValues;TRUE;RenderRequest has a getParameterValues(String)  method 
+PortletRequest;SIG Render;hasGetParameterValuesReturns;TRUE;RenderRequest method getParameterValues(String) returns String[] 
+PortletRequest;SIG Render;hasGetPortalContext;TRUE;RenderRequest has a getPortalContext()  method 
+PortletRequest;SIG Render;hasGetPortalContextReturns;TRUE;RenderRequest method getPortalContext() returns PortalContext 
+PortletRequest;SIG Render;hasGetPortletMode;TRUE;RenderRequest has a getPortletMode()  method 
+PortletRequest;SIG Render;hasGetPortletModeReturns;TRUE;RenderRequest method getPortletMode() returns PortletMode 
+PortletRequest;SIG Render;hasGetPortletSession;TRUE;RenderRequest has a getPortletSession()  method 
+PortletRequest;SIG Render;hasGetPortletSessionA;TRUE;RenderRequest has a getPortletSession(boolean)  method 
+PortletRequest;SIG Render;hasGetPortletSessionReturns;TRUE;RenderRequest method getPortletSession() returns PortletSession 
+PortletRequest;SIG Render;hasGetPortletSessionReturnsA;TRUE;RenderRequest method getPortletSession(boolean) returns PortletSession 
+PortletRequest;SIG Render;hasGetPreferences;TRUE;RenderRequest has a getPreferences()  method 
+PortletRequest;SIG Render;hasGetPreferencesReturns;TRUE;RenderRequest method getPreferences() returns PortletPreferences 
+PortletRequest;SIG Render;hasGetPrivateParameterMap;TRUE;RenderRequest has a getPrivateParameterMap()  method 
+PortletRequest;SIG Render;hasGetPrivateParameterMapReturns;TRUE;RenderRequest method getPrivateParameterMap() returns java.util.Map 
+PortletRequest;SIG Render;hasGetProperties;TRUE;RenderRequest has a getProperties(String)  method 
+PortletRequest;SIG Render;hasGetPropertiesReturns;TRUE;RenderRequest method getProperties(String) returns java.util.Enumeration 
+PortletRequest;SIG Render;hasGetProperty;TRUE;RenderRequest has a getProperty(String)  method 
+PortletRequest;SIG Render;hasGetPropertyNames;TRUE;RenderRequest has a getPropertyNames()  method 
+PortletRequest;SIG Render;hasGetPropertyNamesReturns;TRUE;RenderRequest method getPropertyNames() returns java.util.Enumeration 
+PortletRequest;SIG Render;hasGetPropertyReturns;TRUE;RenderRequest method getProperty(String) returns String 
+PortletRequest;SIG Render;hasGetPublicParameterMap;TRUE;RenderRequest has a getPublicParameterMap()  method 
+PortletRequest;SIG Render;hasGetPublicParameterMapReturns;TRUE;RenderRequest method getPublicParameterMap() returns java.util.Map 
+PortletRequest;SIG Render;hasGetRemoteUser;TRUE;RenderRequest has a getRemoteUser()  method 
+PortletRequest;SIG Render;hasGetRemoteUserReturns;TRUE;RenderRequest method getRemoteUser() returns String 
+PortletRequest;SIG Render;hasGetRequestedSessionId;TRUE;RenderRequest has a getRequestedSessionId()  method 
+PortletRequest;SIG Render;hasGetRequestedSessionIdReturns;TRUE;RenderRequest method getRequestedSessionId() returns String 
+PortletRequest;SIG Render;hasGetResponseContentType;TRUE;RenderRequest has a getResponseContentType()  method 
+PortletRequest;SIG Render;hasGetResponseContentTypeReturns;TRUE;RenderRequest method getResponseContentType() returns String 
+PortletRequest;SIG Render;hasGetResponseContentTypes;TRUE;RenderRequest has a getResponseContentTypes()  method 
+PortletRequest;SIG Render;hasGetResponseContentTypesReturns;TRUE;RenderRequest method getResponseContentTypes() returns java.util.Enumeration 
+PortletRequest;SIG Render;hasGetScheme;TRUE;RenderRequest has a getScheme()  method 
+PortletRequest;SIG Render;hasGetSchemeReturns;TRUE;RenderRequest method getScheme() returns String 
+PortletRequest;SIG Render;hasGetServerName;TRUE;RenderRequest has a getServerName()  method 
+PortletRequest;SIG Render;hasGetServerNameReturns;TRUE;RenderRequest method getServerName() returns String 
+PortletRequest;SIG Render;hasGetServerPort;TRUE;RenderRequest has a getServerPort()  method 
+PortletRequest;SIG Render;hasGetServerPortReturns;TRUE;RenderRequest method getServerPort() returns int 
+PortletRequest;SIG Render;hasGetUserPrincipal;TRUE;RenderRequest has a getUserPrincipal()  method 
+PortletRequest;SIG Render;hasGetUserPrincipalReturns;TRUE;RenderRequest method getUserPrincipal() returns java.security.Principal 
+PortletRequest;SIG Render;hasGetWindowID;TRUE;RenderRequest has a getWindowID()  method 
+PortletRequest;SIG Render;hasGetWindowIDReturns;TRUE;RenderRequest method getWindowID() returns String 
+PortletRequest;SIG Render;hasGetWindowState;TRUE;RenderRequest has a getWindowState()  method 
+PortletRequest;SIG Render;hasGetWindowStateReturns;TRUE;RenderRequest method getWindowState() returns WindowState 
+PortletRequest;SIG Render;hasIsPortletModeAllowed;TRUE;RenderRequest has a isPortletModeAllowed(PortletMode)  method 
+PortletRequest;SIG Render;hasIsPortletModeAllowedReturns;TRUE;RenderRequest method isPortletModeAllowed(PortletMode) returns boolean 
+PortletRequest;SIG Render;hasIsRequestedSessionIdValid;TRUE;RenderRequest has a isRequestedSessionIdValid()  method 
+PortletRequest;SIG Render;hasIsRequestedSessionIdValidReturns;TRUE;RenderRequest method isRequestedSessionIdValid() returns boolean 
+PortletRequest;SIG Render;hasIsSecure;TRUE;RenderRequest has a isSecure()  method 
+PortletRequest;SIG Render;hasIsSecureReturns;TRUE;RenderRequest method isSecure() returns boolean 
+PortletRequest;SIG Render;hasIsUserInRole;TRUE;RenderRequest has a isUserInRole(String)  method 
+PortletRequest;SIG Render;hasIsUserInRoleReturns;TRUE;RenderRequest method isUserInRole(String) returns boolean 
+PortletRequest;SIG Render;hasIsWindowStateAllowed;TRUE;RenderRequest has a isWindowStateAllowed(WindowState)  method 
+PortletRequest;SIG Render;hasIsWindowStateAllowedReturns;TRUE;RenderRequest method isWindowStateAllowed(WindowState) returns boolean 
+PortletRequest;SIG Render;hasRemoveAttribute;TRUE;RenderRequest has a removeAttribute(String)  method 
+PortletRequest;SIG Render;hasRemoveAttributeReturns;TRUE;RenderRequest method removeAttribute(String) returns void 
+PortletRequest;SIG Render;hasSetAttribute;TRUE;RenderRequest has a setAttribute(String, Object)  method 
+PortletRequest;SIG Render;hasSetAttributeReturns;TRUE;RenderRequest method setAttribute(String, Object) returns void 
+PortletResponse;SIG Render;hasAddProperty;TRUE;RenderResponse has a addProperty(String, String)  method 
+PortletResponse;SIG Render;hasAddPropertyA;TRUE;RenderResponse has a addProperty(javax.servlet.http.Cookie)  method 
+PortletResponse;SIG Render;hasAddPropertyB;TRUE;RenderResponse has a addProperty(String, org.w3c.dom.Element)  method 
+PortletResponse;SIG Render;hasAddPropertyReturns;TRUE;RenderResponse method addProperty(String, String) returns void 
+PortletResponse;SIG Render;hasAddPropertyReturnsA;TRUE;RenderResponse method addProperty(javax.servlet.http.Cookie) returns void 
+PortletResponse;SIG Render;hasAddPropertyReturnsB;TRUE;RenderResponse method addProperty(String, org.w3c.dom.Element) returns void 
+PortletResponse;SIG Render;hasCreateElement;TRUE;RenderResponse has a createElement(String) throws org.w3c.dom.DOMException method 
+PortletResponse;SIG Render;hasCreateElementReturns;TRUE;RenderResponse method createElement(String) returns org.w3c.dom.Element 
+PortletResponse;SIG Render;hasEncodeURL;TRUE;RenderResponse has a encodeURL(String)  method 
+PortletResponse;SIG Render;hasEncodeURLReturns;TRUE;RenderResponse method encodeURL(String) returns String 
+PortletResponse;SIG Render;hasGetNamespace;TRUE;RenderResponse has a getNamespace()  method 
+PortletResponse;SIG Render;hasGetNamespaceReturns;TRUE;RenderResponse method getNamespace() returns String 
+PortletResponse;SIG Render;hasSetProperty;TRUE;RenderResponse has a setProperty(String, String)  method 
+PortletResponse;SIG Render;hasSetPropertyReturns;TRUE;RenderResponse method setProperty(String, String) returns void 
+RenderRequest;SIG Render;fieldETAG;TRUE;RenderRequest has String field ETAG 
+RenderRequest;SIG Render;hasGetETag;TRUE;RenderRequest has a getETag()  method 
+RenderRequest;SIG Render;hasGetETagReturns;TRUE;RenderRequest method getETag() returns String 
+RenderRequest;SIG Render;implementsPortletRequest;TRUE;RenderRequest implements PortletRequest 
+RenderResponse;SIG Render;hasSetContentType;TRUE;RenderResponse has a setContentType(String)  method 
+RenderResponse;SIG Render;hasSetContentTypeReturns;TRUE;RenderResponse method setContentType(String) returns void 
+RenderResponse;SIG Render;hasSetNextPossiblePortletModes;TRUE;RenderResponse has a setNextPossiblePortletModes(java.util.Collection)  method 
+RenderResponse;SIG Render;hasSetNextPossiblePortletModesReturns;TRUE;RenderResponse method setNextPossiblePortletModes(java.util.Collection) returns void 
+RenderResponse;SIG Render;hasSetTitle;TRUE;RenderResponse has a setTitle(String)  method 
+RenderResponse;SIG Render;hasSetTitleReturns;TRUE;RenderResponse method setTitle(String) returns void 
+RenderResponse;SIG Render;implementsMimeResponse;TRUE;RenderResponse implements MimeResponse 
+Sig Tests Resource;;;; 189 tests.
+ClientDataRequest;SIG Resource;hasGetCharacterEncoding;TRUE;ResourceRequest has a getCharacterEncoding()  method 
+ClientDataRequest;SIG Resource;hasGetCharacterEncodingReturns;TRUE;ResourceRequest method getCharacterEncoding() returns String 
+ClientDataRequest;SIG Resource;hasGetContentLength;TRUE;ResourceRequest has a getContentLength()  method 
+ClientDataRequest;SIG Resource;hasGetContentLengthReturns;TRUE;ResourceRequest method getContentLength() returns int 
+ClientDataRequest;SIG Resource;hasGetContentType;TRUE;ResourceRequest has a getContentType()  method 
+ClientDataRequest;SIG Resource;hasGetContentTypeReturns;TRUE;ResourceRequest method getContentType() returns String 
+ClientDataRequest;SIG Resource;hasGetMethod;TRUE;ResourceRequest has a getMethod()  method 
+ClientDataRequest;SIG Resource;hasGetMethodReturns;TRUE;ResourceRequest method getMethod() returns String 
+ClientDataRequest;SIG Resource;hasGetPortletInputStream;TRUE;ResourceRequest has a getPortletInputStream() throws java.io.IOException method 
+ClientDataRequest;SIG Resource;hasGetPortletInputStreamReturns;TRUE;ResourceRequest method getPortletInputStream() returns java.io.InputStream 
+ClientDataRequest;SIG Resource;hasGetReader;TRUE;ResourceRequest has a getReader() throws java.io.UnsupportedEncodingException, java.io.IOException method 
+ClientDataRequest;SIG Resource;hasGetReaderReturns;TRUE;ResourceRequest method getReader() returns java.io.BufferedReader 
+ClientDataRequest;SIG Resource;hasSetCharacterEncoding;TRUE;ResourceRequest has a setCharacterEncoding(String) throws java.io.UnsupportedEncodingException method 
+ClientDataRequest;SIG Resource;hasSetCharacterEncodingReturns;TRUE;ResourceRequest method setCharacterEncoding(String) returns void 
+ClientDataRequest;SIG Resource;implementsPortletRequest;TRUE;ResourceRequest implements PortletRequest 
+MimeResponse;SIG Resource;fieldCACHE_SCOPE;TRUE;ResourceResponse has String field CACHE_SCOPE 
+MimeResponse;SIG Resource;fieldETAG;TRUE;ResourceResponse has String field ETAG 
+MimeResponse;SIG Resource;fieldEXPIRATION_CACHE;TRUE;ResourceResponse has String field EXPIRATION_CACHE 
+MimeResponse;SIG Resource;fieldMARKUP_HEAD_ELEMENT;TRUE;ResourceResponse has String field MARKUP_HEAD_ELEMENT 
+MimeResponse;SIG Resource;fieldNAMESPACED_RESPONSE;TRUE;ResourceResponse has String field NAMESPACED_RESPONSE 
+MimeResponse;SIG Resource;fieldPRIVATE_SCOPE;TRUE;ResourceResponse has String field PRIVATE_SCOPE 
+MimeResponse;SIG Resource;fieldPUBLIC_SCOPE;TRUE;ResourceResponse has String field PUBLIC_SCOPE 
+MimeResponse;SIG Resource;fieldUSE_CACHED_CONTENT;TRUE;ResourceResponse has String field USE_CACHED_CONTENT 
+MimeResponse;SIG Resource;hasCreateActionURL;TRUE;ResourceResponse has a createActionURL()  method 
+MimeResponse;SIG Resource;hasCreateActionURLReturns;TRUE;ResourceResponse method createActionURL() returns PortletURL 
+MimeResponse;SIG Resource;hasCreateRenderURL;TRUE;ResourceResponse has a createRenderURL()  method 
+MimeResponse;SIG Resource;hasCreateRenderURLReturns;TRUE;ResourceResponse method createRenderURL() returns PortletURL 
+MimeResponse;SIG Resource;hasCreateResourceURL;TRUE;ResourceResponse has a createResourceURL()  method 
+MimeResponse;SIG Resource;hasCreateResourceURLReturns;TRUE;ResourceResponse method createResourceURL() returns ResourceURL 
+MimeResponse;SIG Resource;hasFlushBuffer;TRUE;ResourceResponse has a flushBuffer() throws java.io.IOException method 
+MimeResponse;SIG Resource;hasFlushBufferReturns;TRUE;ResourceResponse method flushBuffer() returns void 
+MimeResponse;SIG Resource;hasGetBufferSize;TRUE;ResourceResponse has a getBufferSize()  method 
+MimeResponse;SIG Resource;hasGetBufferSizeReturns;TRUE;ResourceResponse method getBufferSize() returns int 
+MimeResponse;SIG Resource;hasGetCacheControl;TRUE;ResourceResponse has a getCacheControl()  method 
+MimeResponse;SIG Resource;hasGetCacheControlReturns;TRUE;ResourceResponse method getCacheControl() returns CacheControl 
+MimeResponse;SIG Resource;hasGetCharacterEncoding;TRUE;ResourceResponse has a getCharacterEncoding()  method 
+MimeResponse;SIG Resource;hasGetCharacterEncodingReturns;TRUE;ResourceResponse method getCharacterEncoding() returns String 
+MimeResponse;SIG Resource;hasGetContentType;TRUE;ResourceResponse has a getContentType()  method 
+MimeResponse;SIG Resource;hasGetContentTypeReturns;TRUE;ResourceResponse method getContentType() returns String 
+MimeResponse;SIG Resource;hasGetLocale;TRUE;ResourceResponse has a getLocale()  method 
+MimeResponse;SIG Resource;hasGetLocaleReturns;TRUE;ResourceResponse method getLocale() returns java.util.Locale 
+MimeResponse;SIG Resource;hasGetPortletOutputStream;TRUE;ResourceResponse has a getPortletOutputStream() throws java.io.IOException, IllegalStateException method 
+MimeResponse;SIG Resource;hasGetPortletOutputStreamReturns;TRUE;ResourceResponse method getPortletOutputStream() returns java.io.OutputStream 
+MimeResponse;SIG Resource;hasGetWriter;TRUE;ResourceResponse has a getWriter() throws java.io.IOException, IllegalStateException method 
+MimeResponse;SIG Resource;hasGetWriterReturns;TRUE;ResourceResponse method getWriter() returns java.io.PrintWriter 
+MimeResponse;SIG Resource;hasIsCommitted;TRUE;ResourceResponse has a isCommitted()  method 
+MimeResponse;SIG Resource;hasIsCommittedReturns;TRUE;ResourceResponse method isCommitted() returns boolean 
+MimeResponse;SIG Resource;hasReset;TRUE;ResourceResponse has a reset()  method 
+MimeResponse;SIG Resource;hasResetBuffer;TRUE;ResourceResponse has a resetBuffer()  method 
+MimeResponse;SIG Resource;hasResetBufferReturns;TRUE;ResourceResponse method resetBuffer() returns void 
+MimeResponse;SIG Resource;hasResetReturns;TRUE;ResourceResponse method reset() returns void 
+MimeResponse;SIG Resource;hasSetBufferSize;TRUE;ResourceResponse has a setBufferSize(int)  method 
+MimeResponse;SIG Resource;hasSetBufferSizeReturns;TRUE;ResourceResponse method setBufferSize(int) returns void 
+MimeResponse;SIG Resource;hasSetContentType;TRUE;ResourceResponse has a setContentType(String)  method 
+MimeResponse;SIG Resource;hasSetContentTypeReturns;TRUE;ResourceResponse method setContentType(String) returns void 
+MimeResponse;SIG Resource;implementsPortletResponse;TRUE;ResourceResponse implements PortletResponse 
+PortletRequest;SIG Resource;fieldACTION_PHASE;TRUE;ResourceRequest has String field ACTION_PHASE 
+PortletRequest;SIG Resource;fieldACTION_SCOPE_ID;TRUE;ResourceRequest has String field ACTION_SCOPE_ID 
+PortletRequest;SIG Resource;fieldBASIC_AUTH;TRUE;ResourceRequest has String field BASIC_AUTH 
+PortletRequest;SIG Resource;fieldCCPP_PROFILE;TRUE;ResourceRequest has String field CCPP_PROFILE 
+PortletRequest;SIG Resource;fieldCLIENT_CERT_AUTH;TRUE;ResourceRequest has String field CLIENT_CERT_AUTH 
+PortletRequest;SIG Resource;fieldDIGEST_AUTH;TRUE;ResourceRequest has String field DIGEST_AUTH 
+PortletRequest;SIG Resource;fieldEVENT_PHASE;TRUE;ResourceRequest has String field EVENT_PHASE 
+PortletRequest;SIG Resource;fieldFORM_AUTH;TRUE;ResourceRequest has String field FORM_AUTH 
+PortletRequest;SIG Resource;fieldLIFECYCLE_PHASE;TRUE;ResourceRequest has String field LIFECYCLE_PHASE 
+PortletRequest;SIG Resource;fieldRENDER_HEADERS;TRUE;ResourceRequest has String field RENDER_HEADERS 
+PortletRequest;SIG Resource;fieldRENDER_MARKUP;TRUE;ResourceRequest has String field RENDER_MARKUP 
+PortletRequest;SIG Resource;fieldRENDER_PART;TRUE;ResourceRequest has String field RENDER_PART 
+PortletRequest;SIG Resource;fieldRENDER_PHASE;TRUE;ResourceRequest has String field RENDER_PHASE 
+PortletRequest;SIG Resource;fieldRESOURCE_PHASE;TRUE;ResourceRequest has String field RESOURCE_PHASE 
+PortletRequest;SIG Resource;fieldUSER_INFO;TRUE;ResourceRequest has String field USER_INFO 
+PortletRequest;SIG Resource;hasGetAttribute;TRUE;ResourceRequest has a getAttribute(String)  method 
+PortletRequest;SIG Resource;hasGetAttributeNames;TRUE;ResourceRequest has a getAttributeNames()  method 
+PortletRequest;SIG Resource;hasGetAttributeNamesReturns;TRUE;ResourceRequest method getAttributeNames() returns java.util.Enumeration 
+PortletRequest;SIG Resource;hasGetAttributeReturns;TRUE;ResourceRequest method getAttribute(String) returns Object 
+PortletRequest;SIG Resource;hasGetAuthType;TRUE;ResourceRequest has a getAuthType()  method 
+PortletRequest;SIG Resource;hasGetAuthTypeReturns;TRUE;ResourceRequest method getAuthType() returns String 
+PortletRequest;SIG Resource;hasGetContextPath;TRUE;ResourceRequest has a getContextPath()  method 
+PortletRequest;SIG Resource;hasGetContextPathReturns;TRUE;ResourceRequest method getContextPath() returns String 
+PortletRequest;SIG Resource;hasGetCookies;TRUE;ResourceRequest has a getCookies()  method 
+PortletRequest;SIG Resource;hasGetCookiesReturns;TRUE;ResourceRequest method getCookies() returns javax.servlet.http.Cookie[] 
+PortletRequest;SIG Resource;hasGetLocale;TRUE;ResourceRequest has a getLocale()  method 
+PortletRequest;SIG Resource;hasGetLocaleReturns;TRUE;ResourceRequest method getLocale() returns java.util.Locale 
+PortletRequest;SIG Resource;hasGetLocales;TRUE;ResourceRequest has a getLocales()  method 
+PortletRequest;SIG Resource;hasGetLocalesReturns;TRUE;ResourceRequest method getLocales() returns java.util.Enumeration 
+PortletRequest;SIG Resource;hasGetParameter;TRUE;ResourceRequest has a getParameter(String)  method 
+PortletRequest;SIG Resource;hasGetParameterMap;TRUE;ResourceRequest has a getParameterMap()  method 
+PortletRequest;SIG Resource;hasGetParameterMapReturns;TRUE;ResourceRequest method getParameterMap() returns java.util.Map 
+PortletRequest;SIG Resource;hasGetParameterNames;TRUE;ResourceRequest has a getParameterNames()  method 
+PortletRequest;SIG Resource;hasGetParameterNamesReturns;TRUE;ResourceRequest method getParameterNames() returns java.util.Enumeration 
+PortletRequest;SIG Resource;hasGetParameterReturns;TRUE;ResourceRequest method getParameter(String) returns String 
+PortletRequest;SIG Resource;hasGetParameterValues;TRUE;ResourceRequest has a getParameterValues(String)  method 
+PortletRequest;SIG Resource;hasGetParameterValuesReturns;TRUE;ResourceRequest method getParameterValues(String) returns String[] 
+PortletRequest;SIG Resource;hasGetPortalContext;TRUE;ResourceRequest has a getPortalContext()  method 
+PortletRequest;SIG Resource;hasGetPortalContextReturns;TRUE;ResourceRequest method getPortalContext() returns PortalContext 
+PortletRequest;SIG Resource;hasGetPortletMode;TRUE;ResourceRequest has a getPortletMode()  method 
+PortletRequest;SIG Resource;hasGetPortletModeReturns;TRUE;ResourceRequest method getPortletMode() returns PortletMode 
+PortletRequest;SIG Resource;hasGetPortletSession;TRUE;ResourceRequest has a getPortletSession()  method 
+PortletRequest;SIG Resource;hasGetPortletSessionA;TRUE;ResourceRequest has a getPortletSession(boolean)  method 
+PortletRequest;SIG Resource;hasGetPortletSessionReturns;TRUE;ResourceRequest method getPortletSession() returns PortletSession 
+PortletRequest;SIG Resource;hasGetPortletSessionReturnsA;TRUE;ResourceRequest method getPortletSession(boolean) returns PortletSession 
+PortletRequest;SIG Resource;hasGetPreferences;TRUE;ResourceRequest has a getPreferences()  method 
+PortletRequest;SIG Resource;hasGetPreferencesReturns;TRUE;ResourceRequest method getPreferences() returns PortletPreferences 
+PortletRequest;SIG Resource;hasGetPrivateParameterMap;TRUE;ResourceRequest has a getPrivateParameterMap()  method 
+PortletRequest;SIG Resource;hasGetPrivateParameterMapReturns;TRUE;ResourceRequest method getPrivateParameterMap() returns java.util.Map 
+PortletRequest;SIG Resource;hasGetProperties;TRUE;ResourceRequest has a getProperties(String)  method 
+PortletRequest;SIG Resource;hasGetPropertiesReturns;TRUE;ResourceRequest method getProperties(String) returns java.util.Enumeration 
+PortletRequest;SIG Resource;hasGetProperty;TRUE;ResourceRequest has a getProperty(String)  method 
+PortletRequest;SIG Resource;hasGetPropertyNames;TRUE;ResourceRequest has a getPropertyNames()  method 
+PortletRequest;SIG Resource;hasGetPropertyNamesReturns;TRUE;ResourceRequest method getPropertyNames() returns java.util.Enumeration 
+PortletRequest;SIG Resource;hasGetPropertyReturns;TRUE;ResourceRequest method getProperty(String) returns String 
+PortletRequest;SIG Resource;hasGetPublicParameterMap;TRUE;ResourceRequest has a getPublicParameterMap()  method 
+PortletRequest;SIG Resource;hasGetPublicParameterMapReturns;TRUE;ResourceRequest method getPublicParameterMap() returns java.util.Map 
+PortletRequest;SIG Resource;hasGetRemoteUser;TRUE;ResourceRequest has a getRemoteUser()  method 
+PortletRequest;SIG Resource;hasGetRemoteUserReturns;TRUE;ResourceRequest method getRemoteUser() returns String 
+PortletRequest;SIG Resource;hasGetRequestedSessionId;TRUE;ResourceRequest has a getRequestedSessionId()  method 
+PortletRequest;SIG Resource;hasGetRequestedSessionIdReturns;TRUE;ResourceRequest method getRequestedSessionId() returns String 
+PortletRequest;SIG Resource;hasGetResponseContentType;TRUE;ResourceRequest has a getResponseContentType()  method 
+PortletRequest;SIG Resource;hasGetResponseContentTypeReturns;TRUE;ResourceRequest method getResponseContentType() returns String 
+PortletRequest;SIG Resource;hasGetResponseContentTypes;TRUE;ResourceRequest has a getResponseContentTypes()  method 
+PortletRequest;SIG Resource;hasGetResponseContentTypesReturns;TRUE;ResourceRequest method getResponseContentTypes() returns java.util.Enumeration 
+PortletRequest;SIG Resource;hasGetScheme;TRUE;ResourceRequest has a getScheme()  method 
+PortletRequest;SIG Resource;hasGetSchemeReturns;TRUE;ResourceRequest method getScheme() returns String 
+PortletRequest;SIG Resource;hasGetServerName;TRUE;ResourceRequest has a getServerName()  method 
+PortletRequest;SIG Resource;hasGetServerNameReturns;TRUE;ResourceRequest method getServerName() returns String 
+PortletRequest;SIG Resource;hasGetServerPort;TRUE;ResourceRequest has a getServerPort()  method 
+PortletRequest;SIG Resource;hasGetServerPortReturns;TRUE;ResourceRequest method getServerPort() returns int 
+PortletRequest;SIG Resource;hasGetUserPrincipal;TRUE;ResourceRequest has a getUserPrincipal()  method 
+PortletRequest;SIG Resource;hasGetUserPrincipalReturns;TRUE;ResourceRequest method getUserPrincipal() returns java.security.Principal 
+PortletRequest;SIG Resource;hasGetWindowID;TRUE;ResourceRequest has a getWindowID()  method 
+PortletRequest;SIG Resource;hasGetWindowIDReturns;TRUE;ResourceRequest method getWindowID() returns String 
+PortletRequest;SIG Resource;hasGetWindowState;TRUE;ResourceRequest has a getWindowState()  method 
+PortletRequest;SIG Resource;hasGetWindowStateReturns;TRUE;ResourceRequest method getWindowState() returns WindowState 
+PortletRequest;SIG Resource;hasIsPortletModeAllowed;TRUE;ResourceRequest has a isPortletModeAllowed(PortletMode)  method 
+PortletRequest;SIG Resource;hasIsPortletModeAllowedReturns;TRUE;ResourceRequest method isPortletModeAllowed(PortletMode) returns boolean 
+PortletRequest;SIG Resource;hasIsRequestedSessionIdValid;TRUE;ResourceRequest has a isRequestedSessionIdValid()  method 
+PortletRequest;SIG Resource;hasIsRequestedSessionIdValidReturns;TRUE;ResourceRequest method isRequestedSessionIdValid() returns boolean 
+PortletRequest;SIG Resource;hasIsSecure;TRUE;ResourceRequest has a isSecure()  method 
+PortletRequest;SIG Resource;hasIsSecureReturns;TRUE;ResourceRequest method isSecure() returns boolean 
+PortletRequest;SIG Resource;hasIsUserInRole;TRUE;ResourceRequest has a isUserInRole(String)  method 
+PortletRequest;SIG Resource;hasIsUserInRoleReturns;TRUE;ResourceRequest method isUserInRole(String) returns boolean 
+PortletRequest;SIG Resource;hasIsWindowStateAllowed;TRUE;ResourceRequest has a isWindowStateAllowed(WindowState)  method 
+PortletRequest;SIG Resource;hasIsWindowStateAllowedReturns;TRUE;ResourceRequest method isWindowStateAllowed(WindowState) returns boolean 
+PortletRequest;SIG Resource;hasRemoveAttribute;TRUE;ResourceRequest has a removeAttribute(String)  method 
+PortletRequest;SIG Resource;hasRemoveAttributeReturns;TRUE;ResourceRequest method removeAttribute(String) returns void 
+PortletRequest;SIG Resource;hasSetAttribute;TRUE;ResourceRequest has a setAttribute(String, Object)  method 
+PortletRequest;SIG Resource;hasSetAttributeReturns;TRUE;ResourceRequest method setAttribute(String, Object) returns void 
+PortletResponse;SIG Resource;hasAddProperty;TRUE;ResourceResponse has a addProperty(String, String)  method 
+PortletResponse;SIG Resource;hasAddPropertyA;TRUE;ResourceResponse has a addProperty(javax.servlet.http.Cookie)  method 
+PortletResponse;SIG Resource;hasAddPropertyB;TRUE;ResourceResponse has a addProperty(String, org.w3c.dom.Element)  method 
+PortletResponse;SIG Resource;hasAddPropertyReturns;TRUE;ResourceResponse method addProperty(String, String) returns void 
+PortletResponse;SIG Resource;hasAddPropertyReturnsA;TRUE;ResourceResponse method addProperty(javax.servlet.http.Cookie) returns void 
+PortletResponse;SIG Resource;hasAddPropertyReturnsB;TRUE;ResourceResponse method addProperty(String, org.w3c.dom.Element) returns void 
+PortletResponse;SIG Resource;hasCreateElement;TRUE;ResourceResponse has a createElement(String) throws org.w3c.dom.DOMException method 
+PortletResponse;SIG Resource;hasCreateElementReturns;TRUE;ResourceResponse method createElement(String) returns org.w3c.dom.Element 
+PortletResponse;SIG Resource;hasEncodeURL;TRUE;ResourceResponse has a encodeURL(String)  method 
+PortletResponse;SIG Resource;hasEncodeURLReturns;TRUE;ResourceResponse method encodeURL(String) returns String 
+PortletResponse;SIG Resource;hasGetNamespace;TRUE;ResourceResponse has a getNamespace()  method 
+PortletResponse;SIG Resource;hasGetNamespaceReturns;TRUE;ResourceResponse method getNamespace() returns String 
+PortletResponse;SIG Resource;hasSetProperty;TRUE;ResourceResponse has a setProperty(String, String)  method 
+PortletResponse;SIG Resource;hasSetPropertyReturns;TRUE;ResourceResponse method setProperty(String, String) returns void 
+ResourceRequest;SIG Resource;fieldETAG;TRUE;ResourceRequest has String field ETAG 
+ResourceRequest;SIG Resource;hasGetCacheability;TRUE;ResourceRequest has a getCacheability()  method 
+ResourceRequest;SIG Resource;hasGetCacheabilityReturns;TRUE;ResourceRequest method getCacheability() returns String 
+ResourceRequest;SIG Resource;hasGetETag;TRUE;ResourceRequest has a getETag()  method 
+ResourceRequest;SIG Resource;hasGetETagReturns;TRUE;ResourceRequest method getETag() returns String 
+ResourceRequest;SIG Resource;hasGetPrivateRenderParameterMap;TRUE;ResourceRequest has a getPrivateRenderParameterMap()  method 
+ResourceRequest;SIG Resource;hasGetPrivateRenderParameterMapReturns;TRUE;ResourceRequest method getPrivateRenderParameterMap() returns java.util.Map 
+ResourceRequest;SIG Resource;hasGetResourceID;TRUE;ResourceRequest has a getResourceID()  method 
+ResourceRequest;SIG Resource;hasGetResourceIDReturns;TRUE;ResourceRequest method getResourceID() returns String 
+ResourceRequest;SIG Resource;hasGetResponseContentType;TRUE;ResourceRequest has a getResponseContentType()  method 
+ResourceRequest;SIG Resource;hasGetResponseContentTypeReturns;TRUE;ResourceRequest method getResponseContentType() returns String 
+ResourceRequest;SIG Resource;hasGetResponseContentTypes;TRUE;ResourceRequest has a getResponseContentTypes()  method 
+ResourceRequest;SIG Resource;hasGetResponseContentTypesReturns;TRUE;ResourceRequest method getResponseContentTypes() returns java.util.Enumeration 
+ResourceRequest;SIG Resource;implementsClientDataRequest;TRUE;ResourceRequest implements ClientDataRequest 
+ResourceResponse;SIG Resource;fieldHTTP_STATUS_CODE;TRUE;ResourceResponse has String field HTTP_STATUS_CODE 
+ResourceResponse;SIG Resource;hasCreateActionURL;TRUE;ResourceResponse has a createActionURL() throws IllegalStateException method 
+ResourceResponse;SIG Resource;hasCreateActionURLReturns;TRUE;ResourceResponse method createActionURL() returns PortletURL 
+ResourceResponse;SIG Resource;hasCreateRenderURL;TRUE;ResourceResponse has a createRenderURL() throws IllegalStateException method 
+ResourceResponse;SIG Resource;hasCreateRenderURLReturns;TRUE;ResourceResponse method createRenderURL() returns PortletURL 
+ResourceResponse;SIG Resource;hasCreateResourceURL;TRUE;ResourceResponse has a createResourceURL() throws IllegalStateException method 
+ResourceResponse;SIG Resource;hasCreateResourceURLReturns;TRUE;ResourceResponse method createResourceURL() returns ResourceURL 
+ResourceResponse;SIG Resource;hasSetCharacterEncoding;TRUE;ResourceResponse has a setCharacterEncoding(String)  method 
+ResourceResponse;SIG Resource;hasSetCharacterEncodingReturns;TRUE;ResourceResponse method setCharacterEncoding(String) returns void 
+ResourceResponse;SIG Resource;hasSetContentLength;TRUE;ResourceResponse has a setContentLength(int)  method 
+ResourceResponse;SIG Resource;hasSetContentLengthReturns;TRUE;ResourceResponse method setContentLength(int) returns void 
+ResourceResponse;SIG Resource;hasSetLocale;TRUE;ResourceResponse has a setLocale(java.util.Locale)  method 
+ResourceResponse;SIG Resource;hasSetLocaleReturns;TRUE;ResourceResponse method setLocale(java.util.Locale) returns void 
+ResourceResponse;SIG Resource;implementsMimeResponse;TRUE;ResourceResponse implements MimeResponse 
+Sig Tests URL;;;; 175 tests.
+BaseURL;SIG Render Acturl;hasAddProperty;TRUE;Rection URL has a addProperty(String, String)  method 
+BaseURL;SIG Render Acturl;hasAddPropertyReturns;TRUE;Rection URL method addProperty(String, String) returns void 
+BaseURL;SIG Render Acturl;hasGetParameterMap;TRUE;Rection URL has a getParameterMap()  method 
+BaseURL;SIG Render Acturl;hasGetParameterMapReturns;TRUE;Rection URL method getParameterMap() returns java.util.Map 
+BaseURL;SIG Render Acturl;hasSetParameter;TRUE;Rection URL has a setParameter(String, String)  method 
+BaseURL;SIG Render Acturl;hasSetParameterA;TRUE;Rection URL has a setParameter(String, String[])  method 
+BaseURL;SIG Render Acturl;hasSetParameterReturns;TRUE;Rection URL method setParameter(String, String) returns void 
+BaseURL;SIG Render Acturl;hasSetParameterReturnsA;TRUE;Rection URL method setParameter(String, String[]) returns void 
+BaseURL;SIG Render Acturl;hasSetParameters;TRUE;Rection URL has a setParameters(java.util.Map)  method 
+BaseURL;SIG Render Acturl;hasSetParametersReturns;TRUE;Rection URL method setParameters(java.util.Map) returns void 
+BaseURL;SIG Render Acturl;hasSetProperty;TRUE;Rection URL has a setProperty(String, String)  method 
+BaseURL;SIG Render Acturl;hasSetPropertyReturns;TRUE;Rection URL method setProperty(String, String) returns void 
+BaseURL;SIG Render Acturl;hasSetSecure;TRUE;Rection URL has a setSecure(boolean) throws PortletSecurityException method 
+BaseURL;SIG Render Acturl;hasSetSecureReturns;TRUE;Rection URL method setSecure(boolean) returns void 
+BaseURL;SIG Render Acturl;hasToString;TRUE;Rection URL has a toString()  method 
+BaseURL;SIG Render Acturl;hasToStringReturns;TRUE;Rection URL method toString() returns String 
+BaseURL;SIG Render Acturl;hasWrite;TRUE;Rection URL has a write(java.io.Writer) throws java.io.IOException method 
+BaseURL;SIG Render Acturl;hasWriteA;TRUE;Rection URL has a write(java.io.Writer, boolean) throws java.io.IOException method 
+BaseURL;SIG Render Acturl;hasWriteReturns;TRUE;Rection URL method write(java.io.Writer) returns void 
+BaseURL;SIG Render Acturl;hasWriteReturnsA;TRUE;Rection URL method write(java.io.Writer, boolean) returns void 
+BaseURL;SIG Render Renurl;hasAddProperty;TRUE;Render URL has a addProperty(String, String)  method 
+BaseURL;SIG Render Renurl;hasAddPropertyReturns;TRUE;Render URL method addProperty(String, String) returns void 
+BaseURL;SIG Render Renurl;hasGetParameterMap;TRUE;Render URL has a getParameterMap()  method 
+BaseURL;SIG Render Renurl;hasGetParameterMapReturns;TRUE;Render URL method getParameterMap() returns java.util.Map 
+BaseURL;SIG Render Renurl;hasSetParameter;TRUE;Render URL has a setParameter(String, String)  method 
+BaseURL;SIG Render Renurl;hasSetParameterA;TRUE;Render URL has a setParameter(String, String[])  method 
+BaseURL;SIG Render Renurl;hasSetParameterReturns;TRUE;Render URL method setParameter(String, String) returns void 
+BaseURL;SIG Render Renurl;hasSetParameterReturnsA;TRUE;Render URL method setParameter(String, String[]) returns void 
+BaseURL;SIG Render Renurl;hasSetParameters;TRUE;Render URL has a setParameters(java.util.Map)  method 
+BaseURL;SIG Render Renurl;hasSetParametersReturns;TRUE;Render URL method setParameters(java.util.Map) returns void 
+BaseURL;SIG Render Renurl;hasSetProperty;TRUE;Render URL has a setProperty(String, String)  method 
+BaseURL;SIG Render Renurl;hasSetPropertyReturns;TRUE;Render URL method setProperty(String, String) returns void 
+BaseURL;SIG Render Renurl;hasSetSecure;TRUE;Render URL has a setSecure(boolean) throws PortletSecurityException method 
+BaseURL;SIG Render Renurl;hasSetSecureReturns;TRUE;Render URL method setSecure(boolean) returns void 
+BaseURL;SIG Render Renurl;hasToString;TRUE;Render URL has a toString()  method 
+BaseURL;SIG Render Renurl;hasToStringReturns;TRUE;Render URL method toString() returns String 
+BaseURL;SIG Render Renurl;hasWrite;TRUE;Render URL has a write(java.io.Writer) throws java.io.IOException method 
+BaseURL;SIG Render Renurl;hasWriteA;TRUE;Render URL has a write(java.io.Writer, boolean) throws java.io.IOException method 
+BaseURL;SIG Render Renurl;hasWriteReturns;TRUE;Render URL method write(java.io.Writer) returns void 
+BaseURL;SIG Render Renurl;hasWriteReturnsA;TRUE;Render URL method write(java.io.Writer, boolean) returns void 
+BaseURL;SIG Render Resurl;hasAddProperty;TRUE;Resource URL has a addProperty(String, String)  method 
+BaseURL;SIG Render Resurl;hasAddPropertyReturns;TRUE;Resource URL method addProperty(String, String) returns void 
+BaseURL;SIG Render Resurl;hasGetParameterMap;TRUE;Resource URL has a getParameterMap()  method 
+BaseURL;SIG Render Resurl;hasGetParameterMapReturns;TRUE;Resource URL method getParameterMap() returns java.util.Map 
+BaseURL;SIG Render Resurl;hasSetParameter;TRUE;Resource URL has a setParameter(String, String)  method 
+BaseURL;SIG Render Resurl;hasSetParameterA;TRUE;Resource URL has a setParameter(String, String[])  method 
+BaseURL;SIG Render Resurl;hasSetParameterReturns;TRUE;Resource URL method setParameter(String, String) returns void 
+BaseURL;SIG Render Resurl;hasSetParameterReturnsA;TRUE;Resource URL method setParameter(String, String[]) returns void 
+BaseURL;SIG Render Resurl;hasSetParameters;TRUE;Resource URL has a setParameters(java.util.Map)  method 
+BaseURL;SIG Render Resurl;hasSetParametersReturns;TRUE;Resource URL method setParameters(java.util.Map) returns void 
+BaseURL;SIG Render Resurl;hasSetProperty;TRUE;Resource URL has a setProperty(String, String)  method 
+BaseURL;SIG Render Resurl;hasSetPropertyReturns;TRUE;Resource URL method setProperty(String, String) returns void 
+BaseURL;SIG Render Resurl;hasSetSecure;TRUE;Resource URL has a setSecure(boolean) throws PortletSecurityException method 
+BaseURL;SIG Render Resurl;hasSetSecureReturns;TRUE;Resource URL method setSecure(boolean) returns void 
+BaseURL;SIG Render Resurl;hasToString;TRUE;Resource URL has a toString()  method 
+BaseURL;SIG Render Resurl;hasToStringReturns;TRUE;Resource URL method toString() returns String 
+BaseURL;SIG Render Resurl;hasWrite;TRUE;Resource URL has a write(java.io.Writer) throws java.io.IOException method 
+BaseURL;SIG Render Resurl;hasWriteA;TRUE;Resource URL has a write(java.io.Writer, boolean) throws java.io.IOException method 
+BaseURL;SIG Render Resurl;hasWriteReturns;TRUE;Resource URL method write(java.io.Writer) returns void 
+BaseURL;SIG Render Resurl;hasWriteReturnsA;TRUE;Resource URL method write(java.io.Writer, boolean) returns void 
+BaseURL;SIG Resource Acturl;hasAddProperty;TRUE;Action URL has a addProperty(String, String)  method 
+BaseURL;SIG Resource Acturl;hasAddPropertyReturns;TRUE;Action URL method addProperty(String, String) returns void 
+BaseURL;SIG Resource Acturl;hasGetParameterMap;TRUE;Action URL has a getParameterMap()  method 
+BaseURL;SIG Resource Acturl;hasGetParameterMapReturns;TRUE;Action URL method getParameterMap() returns java.util.Map 
+BaseURL;SIG Resource Acturl;hasSetParameter;TRUE;Action URL has a setParameter(String, String)  method 
+BaseURL;SIG Resource Acturl;hasSetParameterA;TRUE;Action URL has a setParameter(String, String[])  method 
+BaseURL;SIG Resource Acturl;hasSetParameterReturns;TRUE;Action URL method setParameter(String, String) returns void 
+BaseURL;SIG Resource Acturl;hasSetParameterReturnsA;TRUE;Action URL method setParameter(String, String[]) returns void 
+BaseURL;SIG Resource Acturl;hasSetParameters;TRUE;Action URL has a setParameters(java.util.Map)  method 
+BaseURL;SIG Resource Acturl;hasSetParametersReturns;TRUE;Action URL method setParameters(java.util.Map) returns void 
+BaseURL;SIG Resource Acturl;hasSetProperty;TRUE;Action URL has a setProperty(String, String)  method 
+BaseURL;SIG Resource Acturl;hasSetPropertyReturns;TRUE;Action URL method setProperty(String, String) returns void 
+BaseURL;SIG Resource Acturl;hasSetSecure;TRUE;Action URL has a setSecure(boolean) throws PortletSecurityException method 
+BaseURL;SIG Resource Acturl;hasSetSecureReturns;TRUE;Action URL method setSecure(boolean) returns void 
+BaseURL;SIG Resource Acturl;hasToString;TRUE;Action URL has a toString()  method 
+BaseURL;SIG Resource Acturl;hasToStringReturns;TRUE;Action URL method toString() returns String 
+BaseURL;SIG Resource Acturl;hasWrite;TRUE;Action URL has a write(java.io.Writer) throws java.io.IOException method 
+BaseURL;SIG Resource Acturl;hasWriteA;TRUE;Action URL has a write(java.io.Writer, boolean) throws java.io.IOException method 
+BaseURL;SIG Resource Acturl;hasWriteReturns;TRUE;Action URL method write(java.io.Writer) returns void 
+BaseURL;SIG Resource Acturl;hasWriteReturnsA;TRUE;Action URL method write(java.io.Writer, boolean) returns void 
+BaseURL;SIG Resource Renurl;hasAddProperty;TRUE;Render URL has a addProperty(String, String)  method 
+BaseURL;SIG Resource Renurl;hasAddPropertyReturns;TRUE;Render URL method addProperty(String, String) returns void 
+BaseURL;SIG Resource Renurl;hasGetParameterMap;TRUE;Render URL has a getParameterMap()  method 
+BaseURL;SIG Resource Renurl;hasGetParameterMapReturns;TRUE;Render URL method getParameterMap() returns java.util.Map 
+BaseURL;SIG Resource Renurl;hasSetParameter;TRUE;Render URL has a setParameter(String, String)  method 
+BaseURL;SIG Resource Renurl;hasSetParameterA;TRUE;Render URL has a setParameter(String, String[])  method 
+BaseURL;SIG Resource Renurl;hasSetParameterReturns;TRUE;Render URL method setParameter(String, String) returns void 
+BaseURL;SIG Resource Renurl;hasSetParameterReturnsA;TRUE;Render URL method setParameter(String, String[]) returns void 
+BaseURL;SIG Resource Renurl;hasSetParameters;TRUE;Render URL has a setParameters(java.util.Map)  method 
+BaseURL;SIG Resource Renurl;hasSetParametersReturns;TRUE;Render URL method setParameters(java.util.Map) returns void 
+BaseURL;SIG Resource Renurl;hasSetProperty;TRUE;Render URL has a setProperty(String, String)  method 
+BaseURL;SIG Resource Renurl;hasSetPropertyReturns;TRUE;Render URL method setProperty(String, String) returns void 
+BaseURL;SIG Resource Renurl;hasSetSecure;TRUE;Render URL has a setSecure(boolean) throws PortletSecurityException method 
+BaseURL;SIG Resource Renurl;hasSetSecureReturns;TRUE;Render URL method setSecure(boolean) returns void 
+BaseURL;SIG Resource Renurl;hasToString;TRUE;Render URL has a toString()  method 
+BaseURL;SIG Resource Renurl;hasToStringReturns;TRUE;Render URL method toString() returns String 
+BaseURL;SIG Resource Renurl;hasWrite;TRUE;Render URL has a write(java.io.Writer) throws java.io.IOException method 
+BaseURL;SIG Resource Renurl;hasWriteA;TRUE;Render URL has a write(java.io.Writer, boolean) throws java.io.IOException method 
+BaseURL;SIG Resource Renurl;hasWriteReturns;TRUE;Render URL method write(java.io.Writer) returns void 
+BaseURL;SIG Resource Renurl;hasWriteReturnsA;TRUE;Render URL method write(java.io.Writer, boolean) returns void 
+BaseURL;SIG Resource Resurl;hasAddProperty;TRUE;Resource URL has a addProperty(String, String)  method 
+BaseURL;SIG Resource Resurl;hasAddPropertyReturns;TRUE;Resource URL method addProperty(String, String) returns void 
+BaseURL;SIG Resource Resurl;hasGetParameterMap;TRUE;Resource URL has a getParameterMap()  method 
+BaseURL;SIG Resource Resurl;hasGetParameterMapReturns;TRUE;Resource URL method getParameterMap() returns java.util.Map 
+BaseURL;SIG Resource Resurl;hasSetParameter;TRUE;Resource URL has a setParameter(String, String)  method 
+BaseURL;SIG Resource Resurl;hasSetParameterA;TRUE;Resource URL has a setParameter(String, String[])  method 
+BaseURL;SIG Resource Resurl;hasSetParameterReturns;TRUE;Resource URL method setParameter(String, String) returns void 
+BaseURL;SIG Resource Resurl;hasSetParameterReturnsA;TRUE;Resource URL method setParameter(String, String[]) returns void 
+BaseURL;SIG Resource Resurl;hasSetParameters;TRUE;Resource URL has a setParameters(java.util.Map)  method 
+BaseURL;SIG Resource Resurl;hasSetParametersReturns;TRUE;Resource URL method setParameters(java.util.Map) returns void 
+BaseURL;SIG Resource Resurl;hasSetProperty;TRUE;Resource URL has a setProperty(String, String)  method 
+BaseURL;SIG Resource Resurl;hasSetPropertyReturns;TRUE;Resource URL method setProperty(String, String) returns void 
+BaseURL;SIG Resource Resurl;hasSetSecure;TRUE;Resource URL has a setSecure(boolean) throws PortletSecurityException method 
+BaseURL;SIG Resource Resurl;hasSetSecureReturns;TRUE;Resource URL method setSecure(boolean) returns void 
+BaseURL;SIG Resource Resurl;hasToString;TRUE;Resource URL has a toString()  method 
+BaseURL;SIG Resource Resurl;hasToStringReturns;TRUE;Resource URL method toString() returns String 
+BaseURL;SIG Resource Resurl;hasWrite;TRUE;Resource URL has a write(java.io.Writer) throws java.io.IOException method 
+BaseURL;SIG Resource Resurl;hasWriteA;TRUE;Resource URL has a write(java.io.Writer, boolean) throws java.io.IOException method 
+BaseURL;SIG Resource Resurl;hasWriteReturns;TRUE;Resource URL method write(java.io.Writer) returns void 
+BaseURL;SIG Resource Resurl;hasWriteReturnsA;TRUE;Resource URL method write(java.io.Writer, boolean) returns void 
+PortletURL;SIG Render Acturl;hasGetPortletMode;TRUE;Rection URL has a getPortletMode()  method 
+PortletURL;SIG Render Acturl;hasGetPortletModeReturns;TRUE;Rection URL method getPortletMode() returns PortletMode 
+PortletURL;SIG Render Acturl;hasGetWindowState;TRUE;Rection URL has a getWindowState()  method 
+PortletURL;SIG Render Acturl;hasGetWindowStateReturns;TRUE;Rection URL method getWindowState() returns WindowState 
+PortletURL;SIG Render Acturl;hasRemovePublicRenderParameter;TRUE;Rection URL has a removePublicRenderParameter(String)  method 
+PortletURL;SIG Render Acturl;hasRemovePublicRenderParameterReturns;TRUE;Rection URL method removePublicRenderParameter(String) returns void 
+PortletURL;SIG Render Acturl;hasSetPortletMode;TRUE;Rection URL has a setPortletMode(PortletMode) throws PortletModeException method 
+PortletURL;SIG Render Acturl;hasSetPortletModeReturns;TRUE;Rection URL method setPortletMode(PortletMode) returns void 
+PortletURL;SIG Render Acturl;hasSetWindowState;TRUE;Rection URL has a setWindowState(WindowState) throws WindowStateException method 
+PortletURL;SIG Render Acturl;hasSetWindowStateReturns;TRUE;Rection URL method setWindowState(WindowState) returns void 
+PortletURL;SIG Render Acturl;implementsBaseURL;TRUE;Rection URL implements BaseURL 
+PortletURL;SIG Render Renurl;hasGetPortletMode;TRUE;Render URL has a getPortletMode()  method 
+PortletURL;SIG Render Renurl;hasGetPortletModeReturns;TRUE;Render URL method getPortletMode() returns PortletMode 
+PortletURL;SIG Render Renurl;hasGetWindowState;TRUE;Render URL has a getWindowState()  method 
+PortletURL;SIG Render Renurl;hasGetWindowStateReturns;TRUE;Render URL method getWindowState() returns WindowState 
+PortletURL;SIG Render Renurl;hasRemovePublicRenderParameter;TRUE;Render URL has a removePublicRenderParameter(String)  method 
+PortletURL;SIG Render Renurl;hasRemovePublicRenderParameterReturns;TRUE;Render URL method removePublicRenderParameter(String) returns void 
+PortletURL;SIG Render Renurl;hasSetPortletMode;TRUE;Render URL has a setPortletMode(PortletMode) throws PortletModeException method 
+PortletURL;SIG Render Renurl;hasSetPortletModeReturns;TRUE;Render URL method setPortletMode(PortletMode) returns void 
+PortletURL;SIG Render Renurl;hasSetWindowState;TRUE;Render URL has a setWindowState(WindowState) throws WindowStateException method 
+PortletURL;SIG Render Renurl;hasSetWindowStateReturns;TRUE;Render URL method setWindowState(WindowState) returns void 
+PortletURL;SIG Render Renurl;implementsBaseURL;TRUE;Render URL implements BaseURL 
+PortletURL;SIG Resource Acturl;hasGetPortletMode;TRUE;Action URL has a getPortletMode()  method 
+PortletURL;SIG Resource Acturl;hasGetPortletModeReturns;TRUE;Action URL method getPortletMode() returns PortletMode 
+PortletURL;SIG Resource Acturl;hasGetWindowState;TRUE;Action URL has a getWindowState()  method 
+PortletURL;SIG Resource Acturl;hasGetWindowStateReturns;TRUE;Action URL method getWindowState() returns WindowState 
+PortletURL;SIG Resource Acturl;hasRemovePublicRenderParameter;TRUE;Action URL has a removePublicRenderParameter(String)  method 
+PortletURL;SIG Resource Acturl;hasRemovePublicRenderParameterReturns;TRUE;Action URL method removePublicRenderParameter(String) returns void 
+PortletURL;SIG Resource Acturl;hasSetPortletMode;TRUE;Action URL has a setPortletMode(PortletMode) throws PortletModeException method 
+PortletURL;SIG Resource Acturl;hasSetPortletModeReturns;TRUE;Action URL method setPortletMode(PortletMode) returns void 
+PortletURL;SIG Resource Acturl;hasSetWindowState;TRUE;Action URL has a setWindowState(WindowState) throws WindowStateException method 
+PortletURL;SIG Resource Acturl;hasSetWindowStateReturns;TRUE;Action URL method setWindowState(WindowState) returns void 
+PortletURL;SIG Resource Acturl;implementsBaseURL;TRUE;Action URL implements BaseURL 
+PortletURL;SIG Resource Renurl;hasGetPortletMode;TRUE;Render URL has a getPortletMode()  method 
+PortletURL;SIG Resource Renurl;hasGetPortletModeReturns;TRUE;Render URL method getPortletMode() returns PortletMode 
+PortletURL;SIG Resource Renurl;hasGetWindowState;TRUE;Render URL has a getWindowState()  method 
+PortletURL;SIG Resource Renurl;hasGetWindowStateReturns;TRUE;Render URL method getWindowState() returns WindowState 
+PortletURL;SIG Resource Renurl;hasRemovePublicRenderParameter;TRUE;Render URL has a removePublicRenderParameter(String)  method 
+PortletURL;SIG Resource Renurl;hasRemovePublicRenderParameterReturns;TRUE;Render URL method removePublicRenderParameter(String) returns void 
+PortletURL;SIG Resource Renurl;hasSetPortletMode;TRUE;Render URL has a setPortletMode(PortletMode) throws PortletModeException method 
+PortletURL;SIG Resource Renurl;hasSetPortletModeReturns;TRUE;Render URL method setPortletMode(PortletMode) returns void 
+PortletURL;SIG Resource Renurl;hasSetWindowState;TRUE;Render URL has a setWindowState(WindowState) throws WindowStateException method 
+PortletURL;SIG Resource Renurl;hasSetWindowStateReturns;TRUE;Render URL method setWindowState(WindowState) returns void 
+PortletURL;SIG Resource Renurl;implementsBaseURL;TRUE;Render URL implements BaseURL 
+ResourceURL;SIG Render;fieldFULL;TRUE;ResourceURL has String field FULL 
+ResourceURL;SIG Render;fieldPAGE;TRUE;ResourceURL has String field PAGE 
+ResourceURL;SIG Render;fieldPORTLET;TRUE;ResourceURL has String field PORTLET 
+ResourceURL;SIG Render;fieldSHARED;TRUE;ResourceURL has String field SHARED 
+ResourceURL;SIG Render;hasGetCacheability;TRUE;ResourceURL has a getCacheability()  method 
+ResourceURL;SIG Render;hasGetCacheabilityReturns;TRUE;ResourceURL method getCacheability() returns String 
+ResourceURL;SIG Render;hasSetCacheability;TRUE;ResourceURL has a setCacheability(String)  method 
+ResourceURL;SIG Render;hasSetCacheabilityReturns;TRUE;ResourceURL method setCacheability(String) returns void 
+ResourceURL;SIG Render;hasSetResourceID;TRUE;ResourceURL has a setResourceID(String)  method 
+ResourceURL;SIG Render;hasSetResourceIDReturns;TRUE;ResourceURL method setResourceID(String) returns void 
+ResourceURL;SIG Render;implementsBaseURL;TRUE;ResourceURL implements BaseURL 
+Sig Tests Wrapper;;;; 340 tests.
+ActionRequestWrapper;SIG Render;constructor;TRUE;ActionRequestWrapper provides constructor ActionRequestWrapper(ActionRequest) 
+ActionRequestWrapper;SIG Render;extendsPortletRequestWrapper;TRUE;ActionRequestWrapper extends PortletRequestWrapper 
+ActionRequestWrapper;SIG Render;hasGetCharacterEncoding;TRUE;ActionRequestWrapper has a getCharacterEncoding()  method 
+ActionRequestWrapper;SIG Render;hasGetCharacterEncodingReturns;TRUE;ActionRequestWrapper method getCharacterEncoding() returns String 
+ActionRequestWrapper;SIG Render;hasGetContentLength;TRUE;ActionRequestWrapper has a getContentLength()  method 
+ActionRequestWrapper;SIG Render;hasGetContentLengthReturns;TRUE;ActionRequestWrapper method getContentLength() returns int 
+ActionRequestWrapper;SIG Render;hasGetContentType;TRUE;ActionRequestWrapper has a getContentType()  method 
+ActionRequestWrapper;SIG Render;hasGetContentTypeReturns;TRUE;ActionRequestWrapper method getContentType() returns String 
+ActionRequestWrapper;SIG Render;hasGetMethod;TRUE;ActionRequestWrapper has a getMethod()  method 
+ActionRequestWrapper;SIG Render;hasGetMethodReturns;TRUE;ActionRequestWrapper method getMethod() returns String 
+ActionRequestWrapper;SIG Render;hasGetPortletInputStream;TRUE;ActionRequestWrapper has a getPortletInputStream() throws java.io.IOException method 
+ActionRequestWrapper;SIG Render;hasGetPortletInputStreamReturns;TRUE;ActionRequestWrapper method getPortletInputStream() returns java.io.InputStream 
+ActionRequestWrapper;SIG Render;hasGetReader;TRUE;ActionRequestWrapper has a getReader() throws java.io.UnsupportedEncodingException, java.io.IOException method 
+ActionRequestWrapper;SIG Render;hasGetReaderReturns;TRUE;ActionRequestWrapper method getReader() returns java.io.BufferedReader 
+ActionRequestWrapper;SIG Render;hasGetRequest;TRUE;ActionRequestWrapper has a getRequest()  method 
+ActionRequestWrapper;SIG Render;hasGetRequestA;TRUE;ActionRequestWrapper has a getRequest()  method 
+ActionRequestWrapper;SIG Render;hasGetRequestReturns;TRUE;ActionRequestWrapper method getRequest() returns ActionRequest 
+ActionRequestWrapper;SIG Render;hasGetRequestReturnsA;TRUE;ActionRequestWrapper method getRequest() returns PortletRequest 
+ActionRequestWrapper;SIG Render;hasSetCharacterEncoding;TRUE;ActionRequestWrapper has a setCharacterEncoding(String) throws java.io.UnsupportedEncodingException method 
+ActionRequestWrapper;SIG Render;hasSetCharacterEncodingReturns;TRUE;ActionRequestWrapper method setCharacterEncoding(String) returns void 
+ActionRequestWrapper;SIG Render;hasSetRequest;TRUE;ActionRequestWrapper has a setRequest(ActionRequest)  method 
+ActionRequestWrapper;SIG Render;hasSetRequestReturns;TRUE;ActionRequestWrapper method setRequest(ActionRequest) returns void 
+ActionRequestWrapper;SIG Render;implementsActionRequest;TRUE;ActionRequestWrapper implements ActionRequest 
+ActionResponseWrapper;SIG Render;constructor;TRUE;ActionResponseWrapper provides constructor ActionResponseWrapper(ActionResponse) 
+ActionResponseWrapper;SIG Render;extendsPortletResponseWrapper;TRUE;ActionResponseWrapper extends PortletResponseWrapper 
+ActionResponseWrapper;SIG Render;hasGetPortletMode;TRUE;ActionResponseWrapper has a getPortletMode()  method 
+ActionResponseWrapper;SIG Render;hasGetPortletModeReturns;TRUE;ActionResponseWrapper method getPortletMode() returns PortletMode 
+ActionResponseWrapper;SIG Render;hasGetRenderParameterMap;TRUE;ActionResponseWrapper has a getRenderParameterMap()  method 
+ActionResponseWrapper;SIG Render;hasGetRenderParameterMapReturns;TRUE;ActionResponseWrapper method getRenderParameterMap() returns java.util.Map 
+ActionResponseWrapper;SIG Render;hasGetResponse;TRUE;ActionResponseWrapper has a getResponse()  method 
+ActionResponseWrapper;SIG Render;hasGetResponseA;TRUE;ActionResponseWrapper has a getResponse()  method 
+ActionResponseWrapper;SIG Render;hasGetResponseReturns;TRUE;ActionResponseWrapper method getResponse() returns ActionResponse 
+ActionResponseWrapper;SIG Render;hasGetResponseReturnsA;TRUE;ActionResponseWrapper method getResponse() returns PortletResponse 
+ActionResponseWrapper;SIG Render;hasGetWindowState;TRUE;ActionResponseWrapper has a getWindowState()  method 
+ActionResponseWrapper;SIG Render;hasGetWindowStateReturns;TRUE;ActionResponseWrapper method getWindowState() returns WindowState 
+ActionResponseWrapper;SIG Render;hasRemovePublicRenderParameter;TRUE;ActionResponseWrapper has a removePublicRenderParameter(String)  method 
+ActionResponseWrapper;SIG Render;hasRemovePublicRenderParameterReturns;TRUE;ActionResponseWrapper method removePublicRenderParameter(String) returns void 
+ActionResponseWrapper;SIG Render;hasSendRedirect;TRUE;ActionResponseWrapper has a sendRedirect(String) throws java.io.IOException method 
+ActionResponseWrapper;SIG Render;hasSendRedirectA;TRUE;ActionResponseWrapper has a sendRedirect(String, String) throws java.io.IOException method 
+ActionResponseWrapper;SIG Render;hasSendRedirectReturns;TRUE;ActionResponseWrapper method sendRedirect(String) returns void 
+ActionResponseWrapper;SIG Render;hasSendRedirectReturnsA;TRUE;ActionResponseWrapper method sendRedirect(String, String) returns void 
+ActionResponseWrapper;SIG Render;hasSetEvent;TRUE;ActionResponseWrapper has a setEvent(javax.xml.namespace.QName, java.io.Serializable)  method 
+ActionResponseWrapper;SIG Render;hasSetEventA;TRUE;ActionResponseWrapper has a setEvent(String, java.io.Serializable)  method 
+ActionResponseWrapper;SIG Render;hasSetEventReturns;TRUE;ActionResponseWrapper method setEvent(javax.xml.namespace.QName, java.io.Serializable) returns void 
+ActionResponseWrapper;SIG Render;hasSetEventReturnsA;TRUE;ActionResponseWrapper method setEvent(String, java.io.Serializable) returns void 
+ActionResponseWrapper;SIG Render;hasSetPortletMode;TRUE;ActionResponseWrapper has a setPortletMode(PortletMode) throws PortletModeException method 
+ActionResponseWrapper;SIG Render;hasSetPortletModeReturns;TRUE;ActionResponseWrapper method setPortletMode(PortletMode) returns void 
+ActionResponseWrapper;SIG Render;hasSetRenderParameter;TRUE;ActionResponseWrapper has a setRenderParameter(String, String)  method 
+ActionResponseWrapper;SIG Render;hasSetRenderParameterA;TRUE;ActionResponseWrapper has a setRenderParameter(String, String[])  method 
+ActionResponseWrapper;SIG Render;hasSetRenderParameterReturns;TRUE;ActionResponseWrapper method setRenderParameter(String, String) returns void 
+ActionResponseWrapper;SIG Render;hasSetRenderParameterReturnsA;TRUE;ActionResponseWrapper method setRenderParameter(String, String[]) returns void 
+ActionResponseWrapper;SIG Render;hasSetRenderParameters;TRUE;ActionResponseWrapper has a setRenderParameters(java.util.Map)  method 
+ActionResponseWrapper;SIG Render;hasSetRenderParametersReturns;TRUE;ActionResponseWrapper method setRenderParameters(java.util.Map) returns void 
+ActionResponseWrapper;SIG Render;hasSetResponse;TRUE;ActionResponseWrapper has a setResponse(ActionResponse)  method 
+ActionResponseWrapper;SIG Render;hasSetResponseReturns;TRUE;ActionResponseWrapper method setResponse(ActionResponse) returns void 
+ActionResponseWrapper;SIG Render;hasSetWindowState;TRUE;ActionResponseWrapper has a setWindowState(WindowState) throws WindowStateException method 
+ActionResponseWrapper;SIG Render;hasSetWindowStateReturns;TRUE;ActionResponseWrapper method setWindowState(WindowState) returns void 
+ActionResponseWrapper;SIG Render;implementsActionResponse;TRUE;ActionResponseWrapper implements ActionResponse 
+EventRequestWrapper;SIG Render;constructor;TRUE;EventRequestWrapper provides constructor EventRequestWrapper(EventRequest) 
+EventRequestWrapper;SIG Render;extendsPortletRequestWrapper;TRUE;EventRequestWrapper extends PortletRequestWrapper 
+EventRequestWrapper;SIG Render;hasGetEvent;TRUE;EventRequestWrapper has a getEvent()  method 
+EventRequestWrapper;SIG Render;hasGetEventReturns;TRUE;EventRequestWrapper method getEvent() returns Event 
+EventRequestWrapper;SIG Render;hasGetMethod;TRUE;EventRequestWrapper has a getMethod()  method 
+EventRequestWrapper;SIG Render;hasGetMethodReturns;TRUE;EventRequestWrapper method getMethod() returns String 
+EventRequestWrapper;SIG Render;hasGetRequest;TRUE;EventRequestWrapper has a getRequest()  method 
+EventRequestWrapper;SIG Render;hasGetRequestA;TRUE;EventRequestWrapper has a getRequest()  method 
+EventRequestWrapper;SIG Render;hasGetRequestReturns;TRUE;EventRequestWrapper method getRequest() returns EventRequest 
+EventRequestWrapper;SIG Render;hasGetRequestReturnsA;TRUE;EventRequestWrapper method getRequest() returns PortletRequest 
+EventRequestWrapper;SIG Render;hasSetRequest;TRUE;EventRequestWrapper has a setRequest(EventRequest)  method 
+EventRequestWrapper;SIG Render;hasSetRequestReturns;TRUE;EventRequestWrapper method setRequest(EventRequest) returns void 
+EventRequestWrapper;SIG Render;implementsEventRequest;TRUE;EventRequestWrapper implements EventRequest 
+EventResponseWrapper;SIG Render;constructor;TRUE;EventResponseWrapper provides constructor EventResponseWrapper(EventResponse) 
+EventResponseWrapper;SIG Render;extendsPortletResponseWrapper;TRUE;EventResponseWrapper extends PortletResponseWrapper 
+EventResponseWrapper;SIG Render;hasGetPortletMode;TRUE;EventResponseWrapper has a getPortletMode()  method 
+EventResponseWrapper;SIG Render;hasGetPortletModeReturns;TRUE;EventResponseWrapper method getPortletMode() returns PortletMode 
+EventResponseWrapper;SIG Render;hasGetRenderParameterMap;TRUE;EventResponseWrapper has a getRenderParameterMap()  method 
+EventResponseWrapper;SIG Render;hasGetRenderParameterMapReturns;TRUE;EventResponseWrapper method getRenderParameterMap() returns java.util.Map 
+EventResponseWrapper;SIG Render;hasGetResponse;TRUE;EventResponseWrapper has a getResponse()  method 
+EventResponseWrapper;SIG Render;hasGetResponseA;TRUE;EventResponseWrapper has a getResponse()  method 
+EventResponseWrapper;SIG Render;hasGetResponseReturns;TRUE;EventResponseWrapper method getResponse() returns EventResponse 
+EventResponseWrapper;SIG Render;hasGetResponseReturnsA;TRUE;EventResponseWrapper method getResponse() returns PortletResponse 
+EventResponseWrapper;SIG Render;hasGetWindowState;TRUE;EventResponseWrapper has a getWindowState()  method 
+EventResponseWrapper;SIG Render;hasGetWindowStateReturns;TRUE;EventResponseWrapper method getWindowState() returns WindowState 
+EventResponseWrapper;SIG Render;hasRemovePublicRenderParameter;TRUE;EventResponseWrapper has a removePublicRenderParameter(String)  method 
+EventResponseWrapper;SIG Render;hasRemovePublicRenderParameterReturns;TRUE;EventResponseWrapper method removePublicRenderParameter(String) returns void 
+EventResponseWrapper;SIG Render;hasSetEvent;TRUE;EventResponseWrapper has a setEvent(javax.xml.namespace.QName, java.io.Serializable)  method 
+EventResponseWrapper;SIG Render;hasSetEventA;TRUE;EventResponseWrapper has a setEvent(String, java.io.Serializable)  method 
+EventResponseWrapper;SIG Render;hasSetEventReturns;TRUE;EventResponseWrapper method setEvent(javax.xml.namespace.QName, java.io.Serializable) returns void 
+EventResponseWrapper;SIG Render;hasSetEventReturnsA;TRUE;EventResponseWrapper method setEvent(String, java.io.Serializable) returns void 
+EventResponseWrapper;SIG Render;hasSetPortletMode;TRUE;EventResponseWrapper has a setPortletMode(PortletMode) throws PortletModeException method 
+EventResponseWrapper;SIG Render;hasSetPortletModeReturns;TRUE;EventResponseWrapper method setPortletMode(PortletMode) returns void 
+EventResponseWrapper;SIG Render;hasSetRenderParameter;TRUE;EventResponseWrapper has a setRenderParameter(String, String)  method 
+EventResponseWrapper;SIG Render;hasSetRenderParameterA;TRUE;EventResponseWrapper has a setRenderParameter(String, String[])  method 
+EventResponseWrapper;SIG Render;hasSetRenderParameterReturns;TRUE;EventResponseWrapper method setRenderParameter(String, String) returns void 
+EventResponseWrapper;SIG Render;hasSetRenderParameterReturnsA;TRUE;EventResponseWrapper method setRenderParameter(String, String[]) returns void 
+EventResponseWrapper;SIG Render;hasSetRenderParameters;TRUE;EventResponseWrapper has a setRenderParameters(java.util.Map)  method 
+EventResponseWrapper;SIG Render;hasSetRenderParametersA;TRUE;EventResponseWrapper has a setRenderParameters(EventRequest)  method 
+EventResponseWrapper;SIG Render;hasSetRenderParametersReturns;TRUE;EventResponseWrapper method setRenderParameters(java.util.Map) returns void 
+EventResponseWrapper;SIG Render;hasSetRenderParametersReturnsA;TRUE;EventResponseWrapper method setRenderParameters(EventRequest) returns void 
+EventResponseWrapper;SIG Render;hasSetResponse;TRUE;EventResponseWrapper has a setResponse(EventResponse)  method 
+EventResponseWrapper;SIG Render;hasSetResponseReturns;TRUE;EventResponseWrapper method setResponse(EventResponse) returns void 
+EventResponseWrapper;SIG Render;hasSetWindowState;TRUE;EventResponseWrapper has a setWindowState(WindowState) throws WindowStateException method 
+EventResponseWrapper;SIG Render;hasSetWindowStateReturns;TRUE;EventResponseWrapper method setWindowState(WindowState) returns void 
+EventResponseWrapper;SIG Render;implementsEventResponse;TRUE;EventResponseWrapper implements EventResponse 
+PortletRequestWrapper;SIG Render;constructor;TRUE;PortletRequestWrapper provides constructor PortletRequestWrapper(PortletRequest) 
+PortletRequestWrapper;SIG Render;hasGetAttribute;TRUE;PortletRequestWrapper has a getAttribute(String)  method 
+PortletRequestWrapper;SIG Render;hasGetAttributeNames;TRUE;PortletRequestWrapper has a getAttributeNames()  method 
+PortletRequestWrapper;SIG Render;hasGetAttributeNamesReturns;TRUE;PortletRequestWrapper method getAttributeNames() returns java.util.Enumeration 
+PortletRequestWrapper;SIG Render;hasGetAttributeReturns;TRUE;PortletRequestWrapper method getAttribute(String) returns Object 
+PortletRequestWrapper;SIG Render;hasGetAuthType;TRUE;PortletRequestWrapper has a getAuthType()  method 
+PortletRequestWrapper;SIG Render;hasGetAuthTypeReturns;TRUE;PortletRequestWrapper method getAuthType() returns String 
+PortletRequestWrapper;SIG Render;hasGetContextPath;TRUE;PortletRequestWrapper has a getContextPath()  method 
+PortletRequestWrapper;SIG Render;hasGetContextPathReturns;TRUE;PortletRequestWrapper method getContextPath() returns String 
+PortletRequestWrapper;SIG Render;hasGetCookies;TRUE;PortletRequestWrapper has a getCookies()  method 
+PortletRequestWrapper;SIG Render;hasGetCookiesReturns;TRUE;PortletRequestWrapper method getCookies() returns javax.servlet.http.Cookie[] 
+PortletRequestWrapper;SIG Render;hasGetLocale;TRUE;PortletRequestWrapper has a getLocale()  method 
+PortletRequestWrapper;SIG Render;hasGetLocaleReturns;TRUE;PortletRequestWrapper method getLocale() returns java.util.Locale 
+PortletRequestWrapper;SIG Render;hasGetLocales;TRUE;PortletRequestWrapper has a getLocales()  method 
+PortletRequestWrapper;SIG Render;hasGetLocalesReturns;TRUE;PortletRequestWrapper method getLocales() returns java.util.Enumeration 
+PortletRequestWrapper;SIG Render;hasGetParameter;TRUE;PortletRequestWrapper has a getParameter(String)  method 
+PortletRequestWrapper;SIG Render;hasGetParameterMap;TRUE;PortletRequestWrapper has a getParameterMap()  method 
+PortletRequestWrapper;SIG Render;hasGetParameterMapReturns;TRUE;PortletRequestWrapper method getParameterMap() returns java.util.Map 
+PortletRequestWrapper;SIG Render;hasGetParameterNames;TRUE;PortletRequestWrapper has a getParameterNames()  method 
+PortletRequestWrapper;SIG Render;hasGetParameterNamesReturns;TRUE;PortletRequestWrapper method getParameterNames() returns java.util.Enumeration 
+PortletRequestWrapper;SIG Render;hasGetParameterReturns;TRUE;PortletRequestWrapper method getParameter(String) returns String 
+PortletRequestWrapper;SIG Render;hasGetParameterValues;TRUE;PortletRequestWrapper has a getParameterValues(String)  method 
+PortletRequestWrapper;SIG Render;hasGetParameterValuesReturns;TRUE;PortletRequestWrapper method getParameterValues(String) returns String[] 
+PortletRequestWrapper;SIG Render;hasGetPortalContext;TRUE;PortletRequestWrapper has a getPortalContext()  method 
+PortletRequestWrapper;SIG Render;hasGetPortalContextReturns;TRUE;PortletRequestWrapper method getPortalContext() returns PortalContext 
+PortletRequestWrapper;SIG Render;hasGetPortletMode;TRUE;PortletRequestWrapper has a getPortletMode()  method 
+PortletRequestWrapper;SIG Render;hasGetPortletModeReturns;TRUE;PortletRequestWrapper method getPortletMode() returns PortletMode 
+PortletRequestWrapper;SIG Render;hasGetPortletSession;TRUE;PortletRequestWrapper has a getPortletSession()  method 
+PortletRequestWrapper;SIG Render;hasGetPortletSessionA;TRUE;PortletRequestWrapper has a getPortletSession(boolean)  method 
+PortletRequestWrapper;SIG Render;hasGetPortletSessionReturns;TRUE;PortletRequestWrapper method getPortletSession() returns PortletSession 
+PortletRequestWrapper;SIG Render;hasGetPortletSessionReturnsA;TRUE;PortletRequestWrapper method getPortletSession(boolean) returns PortletSession 
+PortletRequestWrapper;SIG Render;hasGetPreferences;TRUE;PortletRequestWrapper has a getPreferences()  method 
+PortletRequestWrapper;SIG Render;hasGetPreferencesReturns;TRUE;PortletRequestWrapper method getPreferences() returns PortletPreferences 
+PortletRequestWrapper;SIG Render;hasGetPrivateParameterMap;TRUE;PortletRequestWrapper has a getPrivateParameterMap()  method 
+PortletRequestWrapper;SIG Render;hasGetPrivateParameterMapReturns;TRUE;PortletRequestWrapper method getPrivateParameterMap() returns java.util.Map 
+PortletRequestWrapper;SIG Render;hasGetProperties;TRUE;PortletRequestWrapper has a getProperties(String)  method 
+PortletRequestWrapper;SIG Render;hasGetPropertiesReturns;TRUE;PortletRequestWrapper method getProperties(String) returns java.util.Enumeration 
+PortletRequestWrapper;SIG Render;hasGetProperty;TRUE;PortletRequestWrapper has a getProperty(String)  method 
+PortletRequestWrapper;SIG Render;hasGetPropertyNames;TRUE;PortletRequestWrapper has a getPropertyNames()  method 
+PortletRequestWrapper;SIG Render;hasGetPropertyNamesReturns;TRUE;PortletRequestWrapper method getPropertyNames() returns java.util.Enumeration 
+PortletRequestWrapper;SIG Render;hasGetPropertyReturns;TRUE;PortletRequestWrapper method getProperty(String) returns String 
+PortletRequestWrapper;SIG Render;hasGetPublicParameterMap;TRUE;PortletRequestWrapper has a getPublicParameterMap()  method 
+PortletRequestWrapper;SIG Render;hasGetPublicParameterMapReturns;TRUE;PortletRequestWrapper method getPublicParameterMap() returns java.util.Map 
+PortletRequestWrapper;SIG Render;hasGetRemoteUser;TRUE;PortletRequestWrapper has a getRemoteUser()  method 
+PortletRequestWrapper;SIG Render;hasGetRemoteUserReturns;TRUE;PortletRequestWrapper method getRemoteUser() returns String 
+PortletRequestWrapper;SIG Render;hasGetRequest;TRUE;PortletRequestWrapper has a getRequest()  method 
+PortletRequestWrapper;SIG Render;hasGetRequestReturns;TRUE;PortletRequestWrapper method getRequest() returns PortletRequest 
+PortletRequestWrapper;SIG Render;hasGetRequestedSessionId;TRUE;PortletRequestWrapper has a getRequestedSessionId()  method 
+PortletRequestWrapper;SIG Render;hasGetRequestedSessionIdReturns;TRUE;PortletRequestWrapper method getRequestedSessionId() returns String 
+PortletRequestWrapper;SIG Render;hasGetResponseContentType;TRUE;PortletRequestWrapper has a getResponseContentType()  method 
+PortletRequestWrapper;SIG Render;hasGetResponseContentTypeReturns;TRUE;PortletRequestWrapper method getResponseContentType() returns String 
+PortletRequestWrapper;SIG Render;hasGetResponseContentTypes;TRUE;PortletRequestWrapper has a getResponseContentTypes()  method 
+PortletRequestWrapper;SIG Render;hasGetResponseContentTypesReturns;TRUE;PortletRequestWrapper method getResponseContentTypes() returns java.util.Enumeration 
+PortletRequestWrapper;SIG Render;hasGetScheme;TRUE;PortletRequestWrapper has a getScheme()  method 
+PortletRequestWrapper;SIG Render;hasGetSchemeReturns;TRUE;PortletRequestWrapper method getScheme() returns String 
+PortletRequestWrapper;SIG Render;hasGetServerName;TRUE;PortletRequestWrapper has a getServerName()  method 
+PortletRequestWrapper;SIG Render;hasGetServerNameReturns;TRUE;PortletRequestWrapper method getServerName() returns String 
+PortletRequestWrapper;SIG Render;hasGetServerPort;TRUE;PortletRequestWrapper has a getServerPort()  method 
+PortletRequestWrapper;SIG Render;hasGetServerPortReturns;TRUE;PortletRequestWrapper method getServerPort() returns int 
+PortletRequestWrapper;SIG Render;hasGetUserPrincipal;TRUE;PortletRequestWrapper has a getUserPrincipal()  method 
+PortletRequestWrapper;SIG Render;hasGetUserPrincipalReturns;TRUE;PortletRequestWrapper method getUserPrincipal() returns java.security.Principal 
+PortletRequestWrapper;SIG Render;hasGetWindowID;TRUE;PortletRequestWrapper has a getWindowID()  method 
+PortletRequestWrapper;SIG Render;hasGetWindowIDReturns;TRUE;PortletRequestWrapper method getWindowID() returns String 
+PortletRequestWrapper;SIG Render;hasGetWindowState;TRUE;PortletRequestWrapper has a getWindowState()  method 
+PortletRequestWrapper;SIG Render;hasGetWindowStateReturns;TRUE;PortletRequestWrapper method getWindowState() returns WindowState 
+PortletRequestWrapper;SIG Render;hasIsPortletModeAllowed;TRUE;PortletRequestWrapper has a isPortletModeAllowed(PortletMode)  method 
+PortletRequestWrapper;SIG Render;hasIsPortletModeAllowedReturns;TRUE;PortletRequestWrapper method isPortletModeAllowed(PortletMode) returns boolean 
+PortletRequestWrapper;SIG Render;hasIsRequestedSessionIdValid;TRUE;PortletRequestWrapper has a isRequestedSessionIdValid()  method 
+PortletRequestWrapper;SIG Render;hasIsRequestedSessionIdValidReturns;TRUE;PortletRequestWrapper method isRequestedSessionIdValid() returns boolean 
+PortletRequestWrapper;SIG Render;hasIsSecure;TRUE;PortletRequestWrapper has a isSecure()  method 
+PortletRequestWrapper;SIG Render;hasIsSecureReturns;TRUE;PortletRequestWrapper method isSecure() returns boolean 
+PortletRequestWrapper;SIG Render;hasIsUserInRole;TRUE;PortletRequestWrapper has a isUserInRole(String)  method 
+PortletRequestWrapper;SIG Render;hasIsUserInRoleReturns;TRUE;PortletRequestWrapper method isUserInRole(String) returns boolean 
+PortletRequestWrapper;SIG Render;hasIsWindowStateAllowed;TRUE;PortletRequestWrapper has a isWindowStateAllowed(WindowState)  method 
+PortletRequestWrapper;SIG Render;hasIsWindowStateAllowedReturns;TRUE;PortletRequestWrapper method isWindowStateAllowed(WindowState) returns boolean 
+PortletRequestWrapper;SIG Render;hasRemoveAttribute;TRUE;PortletRequestWrapper has a removeAttribute(String)  method 
+PortletRequestWrapper;SIG Render;hasRemoveAttributeReturns;TRUE;PortletRequestWrapper method removeAttribute(String) returns void 
+PortletRequestWrapper;SIG Render;hasSetAttribute;TRUE;PortletRequestWrapper has a setAttribute(String, Object)  method 
+PortletRequestWrapper;SIG Render;hasSetAttributeReturns;TRUE;PortletRequestWrapper method setAttribute(String, Object) returns void 
+PortletRequestWrapper;SIG Render;hasSetRequest;TRUE;PortletRequestWrapper has a setRequest(PortletRequest)  method 
+PortletRequestWrapper;SIG Render;hasSetRequestReturns;TRUE;PortletRequestWrapper method setRequest(PortletRequest) returns void 
+PortletRequestWrapper;SIG Render;implementsPortletRequest;TRUE;PortletRequestWrapper implements PortletRequest 
+PortletResponseWrapper;SIG Render;constructor;TRUE;PortletResponseWrapper provides constructor PortletResponseWrapper(PortletResponse) 
+PortletResponseWrapper;SIG Render;hasAddProperty;TRUE;PortletResponseWrapper has a addProperty(String, String)  method 
+PortletResponseWrapper;SIG Render;hasAddPropertyA;TRUE;PortletResponseWrapper has a addProperty(String, org.w3c.dom.Element)  method 
+PortletResponseWrapper;SIG Render;hasAddPropertyB;TRUE;PortletResponseWrapper has a addProperty(javax.servlet.http.Cookie)  method 
+PortletResponseWrapper;SIG Render;hasAddPropertyReturns;TRUE;PortletResponseWrapper method addProperty(String, String) returns void 
+PortletResponseWrapper;SIG Render;hasAddPropertyReturnsA;TRUE;PortletResponseWrapper method addProperty(String, org.w3c.dom.Element) returns void 
+PortletResponseWrapper;SIG Render;hasAddPropertyReturnsB;TRUE;PortletResponseWrapper method addProperty(javax.servlet.http.Cookie) returns void 
+PortletResponseWrapper;SIG Render;hasCreateElement;TRUE;PortletResponseWrapper has a createElement(String)  method 
+PortletResponseWrapper;SIG Render;hasCreateElementReturns;TRUE;PortletResponseWrapper method createElement(String) returns org.w3c.dom.Element 
+PortletResponseWrapper;SIG Render;hasEncodeURL;TRUE;PortletResponseWrapper has a encodeURL(String)  method 
+PortletResponseWrapper;SIG Render;hasEncodeURLReturns;TRUE;PortletResponseWrapper method encodeURL(String) returns String 
+PortletResponseWrapper;SIG Render;hasGetNamespace;TRUE;PortletResponseWrapper has a getNamespace()  method 
+PortletResponseWrapper;SIG Render;hasGetNamespaceReturns;TRUE;PortletResponseWrapper method getNamespace() returns String 
+PortletResponseWrapper;SIG Render;hasGetResponse;TRUE;PortletResponseWrapper has a getResponse()  method 
+PortletResponseWrapper;SIG Render;hasGetResponseReturns;TRUE;PortletResponseWrapper method getResponse() returns PortletResponse 
+PortletResponseWrapper;SIG Render;hasSetProperty;TRUE;PortletResponseWrapper has a setProperty(String, String)  method 
+PortletResponseWrapper;SIG Render;hasSetPropertyReturns;TRUE;PortletResponseWrapper method setProperty(String, String) returns void 
+PortletResponseWrapper;SIG Render;hasSetResponse;TRUE;PortletResponseWrapper has a setResponse(PortletResponse)  method 
+PortletResponseWrapper;SIG Render;hasSetResponseReturns;TRUE;PortletResponseWrapper method setResponse(PortletResponse) returns void 
+PortletResponseWrapper;SIG Render;implementsPortletResponse;TRUE;PortletResponseWrapper implements PortletResponse 
+RenderRequestWrapper;SIG Render;constructor;TRUE;RenderRequestWrapper provides constructor RenderRequestWrapper(RenderRequest) 
+RenderRequestWrapper;SIG Render;extendsPortletRequestWrapper;TRUE;RenderRequestWrapper extends PortletRequestWrapper 
+RenderRequestWrapper;SIG Render;hasGetETag;TRUE;RenderRequestWrapper has a getETag()  method 
+RenderRequestWrapper;SIG Render;hasGetETagReturns;TRUE;RenderRequestWrapper method getETag() returns String 
+RenderRequestWrapper;SIG Render;hasGetRequest;TRUE;RenderRequestWrapper has a getRequest()  method 
+RenderRequestWrapper;SIG Render;hasGetRequestA;TRUE;RenderRequestWrapper has a getRequest()  method 
+RenderRequestWrapper;SIG Render;hasGetRequestReturns;TRUE;RenderRequestWrapper method getRequest() returns RenderRequest 
+RenderRequestWrapper;SIG Render;hasGetRequestReturnsA;TRUE;RenderRequestWrapper method getRequest() returns PortletRequest 
+RenderRequestWrapper;SIG Render;hasSetRequest;TRUE;RenderRequestWrapper has a setRequest(RenderRequest)  method 
+RenderRequestWrapper;SIG Render;hasSetRequestReturns;TRUE;RenderRequestWrapper method setRequest(RenderRequest) returns void 
+RenderRequestWrapper;SIG Render;implementsRenderRequest;TRUE;RenderRequestWrapper implements RenderRequest 
+RenderResponseWrapper;SIG Render;constructor;TRUE;RenderResponseWrapper provides constructor RenderResponseWrapper(RenderResponse) 
+RenderResponseWrapper;SIG Render;extendsPortletResponseWrapper;TRUE;RenderResponseWrapper extends PortletResponseWrapper 
+RenderResponseWrapper;SIG Render;hasCreateActionURL;TRUE;RenderResponseWrapper has a createActionURL() throws IllegalStateException method 
+RenderResponseWrapper;SIG Render;hasCreateActionURLReturns;TRUE;RenderResponseWrapper method createActionURL() returns PortletURL 
+RenderResponseWrapper;SIG Render;hasCreateRenderURL;TRUE;RenderResponseWrapper has a createRenderURL() throws IllegalStateException method 
+RenderResponseWrapper;SIG Render;hasCreateRenderURLReturns;TRUE;RenderResponseWrapper method createRenderURL() returns PortletURL 
+RenderResponseWrapper;SIG Render;hasCreateResourceURL;TRUE;RenderResponseWrapper has a createResourceURL() throws IllegalStateException method 
+RenderResponseWrapper;SIG Render;hasCreateResourceURLReturns;TRUE;RenderResponseWrapper method createResourceURL() returns ResourceURL 
+RenderResponseWrapper;SIG Render;hasFlushBuffer;TRUE;RenderResponseWrapper has a flushBuffer() throws java.io.IOException method 
+RenderResponseWrapper;SIG Render;hasFlushBufferReturns;TRUE;RenderResponseWrapper method flushBuffer() returns void 
+RenderResponseWrapper;SIG Render;hasGetBufferSize;TRUE;RenderResponseWrapper has a getBufferSize()  method 
+RenderResponseWrapper;SIG Render;hasGetBufferSizeReturns;TRUE;RenderResponseWrapper method getBufferSize() returns int 
+RenderResponseWrapper;SIG Render;hasGetCacheControl;TRUE;RenderResponseWrapper has a getCacheControl()  method 
+RenderResponseWrapper;SIG Render;hasGetCacheControlReturns;TRUE;RenderResponseWrapper method getCacheControl() returns CacheControl 
+RenderResponseWrapper;SIG Render;hasGetCharacterEncoding;TRUE;RenderResponseWrapper has a getCharacterEncoding()  method 
+RenderResponseWrapper;SIG Render;hasGetCharacterEncodingReturns;TRUE;RenderResponseWrapper method getCharacterEncoding() returns String 
+RenderResponseWrapper;SIG Render;hasGetContentType;TRUE;RenderResponseWrapper has a getContentType()  method 
+RenderResponseWrapper;SIG Render;hasGetContentTypeReturns;TRUE;RenderResponseWrapper method getContentType() returns String 
+RenderResponseWrapper;SIG Render;hasGetLocale;TRUE;RenderResponseWrapper has a getLocale()  method 
+RenderResponseWrapper;SIG Render;hasGetLocaleReturns;TRUE;RenderResponseWrapper method getLocale() returns java.util.Locale 
+RenderResponseWrapper;SIG Render;hasGetPortletOutputStream;TRUE;RenderResponseWrapper has a getPortletOutputStream() throws java.io.IOException method 
+RenderResponseWrapper;SIG Render;hasGetPortletOutputStreamReturns;TRUE;RenderResponseWrapper method getPortletOutputStream() returns java.io.OutputStream 
+RenderResponseWrapper;SIG Render;hasGetResponse;TRUE;RenderResponseWrapper has a getResponse()  method 
+RenderResponseWrapper;SIG Render;hasGetResponseA;TRUE;RenderResponseWrapper has a getResponse()  method 
+RenderResponseWrapper;SIG Render;hasGetResponseReturns;TRUE;RenderResponseWrapper method getResponse() returns RenderResponse 
+RenderResponseWrapper;SIG Render;hasGetResponseReturnsA;TRUE;RenderResponseWrapper method getResponse() returns PortletResponse 
+RenderResponseWrapper;SIG Render;hasGetWriter;TRUE;RenderResponseWrapper has a getWriter() throws java.io.IOException method 
+RenderResponseWrapper;SIG Render;hasGetWriterReturns;TRUE;RenderResponseWrapper method getWriter() returns java.io.PrintWriter 
+RenderResponseWrapper;SIG Render;hasIsCommitted;TRUE;RenderResponseWrapper has a isCommitted()  method 
+RenderResponseWrapper;SIG Render;hasIsCommittedReturns;TRUE;RenderResponseWrapper method isCommitted() returns boolean 
+RenderResponseWrapper;SIG Render;hasReset;TRUE;RenderResponseWrapper has a reset()  method 
+RenderResponseWrapper;SIG Render;hasResetBuffer;TRUE;RenderResponseWrapper has a resetBuffer()  method 
+RenderResponseWrapper;SIG Render;hasResetBufferReturns;TRUE;RenderResponseWrapper method resetBuffer() returns void 
+RenderResponseWrapper;SIG Render;hasResetReturns;TRUE;RenderResponseWrapper method reset() returns void 
+RenderResponseWrapper;SIG Render;hasSetBufferSize;TRUE;RenderResponseWrapper has a setBufferSize(int)  method 
+RenderResponseWrapper;SIG Render;hasSetBufferSizeReturns;TRUE;RenderResponseWrapper method setBufferSize(int) returns void 
+RenderResponseWrapper;SIG Render;hasSetContentType;TRUE;RenderResponseWrapper has a setContentType(String)  method 
+RenderResponseWrapper;SIG Render;hasSetContentTypeReturns;TRUE;RenderResponseWrapper method setContentType(String) returns void 
+RenderResponseWrapper;SIG Render;hasSetNextPossiblePortletModes;TRUE;RenderResponseWrapper has a setNextPossiblePortletModes(java.util.Collection)  method 
+RenderResponseWrapper;SIG Render;hasSetNextPossiblePortletModesReturns;TRUE;RenderResponseWrapper method setNextPossiblePortletModes(java.util.Collection) returns void 
+RenderResponseWrapper;SIG Render;hasSetResponse;TRUE;RenderResponseWrapper has a setResponse(RenderResponse)  method 
+RenderResponseWrapper;SIG Render;hasSetResponseReturns;TRUE;RenderResponseWrapper method setResponse(RenderResponse) returns void 
+RenderResponseWrapper;SIG Render;hasSetTitle;TRUE;RenderResponseWrapper has a setTitle(String)  method 
+RenderResponseWrapper;SIG Render;hasSetTitleReturns;TRUE;RenderResponseWrapper method setTitle(String) returns void 
+RenderResponseWrapper;SIG Render;implementsRenderResponse;TRUE;RenderResponseWrapper implements RenderResponse 
+ResourceRequestWrapper;SIG Render;constructor;TRUE;ResourceRequestWrapper provides constructor ResourceRequestWrapper(ResourceRequest) 
+ResourceRequestWrapper;SIG Render;extendsPortletRequestWrapper;TRUE;ResourceRequestWrapper extends PortletRequestWrapper 
+ResourceRequestWrapper;SIG Render;hasGetCacheability;TRUE;ResourceRequestWrapper has a getCacheability()  method 
+ResourceRequestWrapper;SIG Render;hasGetCacheabilityReturns;TRUE;ResourceRequestWrapper method getCacheability() returns String 
+ResourceRequestWrapper;SIG Render;hasGetCharacterEncoding;TRUE;ResourceRequestWrapper has a getCharacterEncoding()  method 
+ResourceRequestWrapper;SIG Render;hasGetCharacterEncodingReturns;TRUE;ResourceRequestWrapper method getCharacterEncoding() returns String 
+ResourceRequestWrapper;SIG Render;hasGetContentLength;TRUE;ResourceRequestWrapper has a getContentLength()  method 
+ResourceRequestWrapper;SIG Render;hasGetContentLengthReturns;TRUE;ResourceRequestWrapper method getContentLength() returns int 
+ResourceRequestWrapper;SIG Render;hasGetContentType;TRUE;ResourceRequestWrapper has a getContentType()  method 
+ResourceRequestWrapper;SIG Render;hasGetContentTypeReturns;TRUE;ResourceRequestWrapper method getContentType() returns String 
+ResourceRequestWrapper;SIG Render;hasGetETag;TRUE;ResourceRequestWrapper has a getETag()  method 
+ResourceRequestWrapper;SIG Render;hasGetETagReturns;TRUE;ResourceRequestWrapper method getETag() returns String 
+ResourceRequestWrapper;SIG Render;hasGetMethod;TRUE;ResourceRequestWrapper has a getMethod()  method 
+ResourceRequestWrapper;SIG Render;hasGetMethodReturns;TRUE;ResourceRequestWrapper method getMethod() returns String 
+ResourceRequestWrapper;SIG Render;hasGetPortletInputStream;TRUE;ResourceRequestWrapper has a getPortletInputStream() throws java.io.IOException method 
+ResourceRequestWrapper;SIG Render;hasGetPortletInputStreamReturns;TRUE;ResourceRequestWrapper method getPortletInputStream() returns java.io.InputStream 
+ResourceRequestWrapper;SIG Render;hasGetPrivateRenderParameterMap;TRUE;ResourceRequestWrapper has a getPrivateRenderParameterMap()  method 
+ResourceRequestWrapper;SIG Render;hasGetPrivateRenderParameterMapReturns;TRUE;ResourceRequestWrapper method getPrivateRenderParameterMap() returns java.util.Map 
+ResourceRequestWrapper;SIG Render;hasGetReader;TRUE;ResourceRequestWrapper has a getReader() throws java.io.UnsupportedEncodingException, java.io.IOException method 
+ResourceRequestWrapper;SIG Render;hasGetReaderReturns;TRUE;ResourceRequestWrapper method getReader() returns java.io.BufferedReader 
+ResourceRequestWrapper;SIG Render;hasGetRequest;TRUE;ResourceRequestWrapper has a getRequest()  method 
+ResourceRequestWrapper;SIG Render;hasGetRequestA;TRUE;ResourceRequestWrapper has a getRequest()  method 
+ResourceRequestWrapper;SIG Render;hasGetRequestReturns;TRUE;ResourceRequestWrapper method getRequest() returns ResourceRequest 
+ResourceRequestWrapper;SIG Render;hasGetRequestReturnsA;TRUE;ResourceRequestWrapper method getRequest() returns PortletRequest 
+ResourceRequestWrapper;SIG Render;hasGetResourceID;TRUE;ResourceRequestWrapper has a getResourceID()  method 
+ResourceRequestWrapper;SIG Render;hasGetResourceIDReturns;TRUE;ResourceRequestWrapper method getResourceID() returns String 
+ResourceRequestWrapper;SIG Render;hasSetCharacterEncoding;TRUE;ResourceRequestWrapper has a setCharacterEncoding(String) throws java.io.UnsupportedEncodingException method 
+ResourceRequestWrapper;SIG Render;hasSetCharacterEncodingReturns;TRUE;ResourceRequestWrapper method setCharacterEncoding(String) returns void 
+ResourceRequestWrapper;SIG Render;hasSetRequest;TRUE;ResourceRequestWrapper has a setRequest(ResourceRequest)  method 
+ResourceRequestWrapper;SIG Render;hasSetRequestReturns;TRUE;ResourceRequestWrapper method setRequest(ResourceRequest) returns void 
+ResourceRequestWrapper;SIG Render;implementsResourceRequest;TRUE;ResourceRequestWrapper implements ResourceRequest 
+ResourceResponseWrapper;SIG Render;constructor;TRUE;ResourceResponseWrapper provides constructor ResourceResponseWrapper(ResourceResponse) 
+ResourceResponseWrapper;SIG Render;extendsPortletResponseWrapper;TRUE;ResourceResponseWrapper extends PortletResponseWrapper 
+ResourceResponseWrapper;SIG Render;hasCreateActionURL;TRUE;ResourceResponseWrapper has a createActionURL() throws IllegalStateException method 
+ResourceResponseWrapper;SIG Render;hasCreateActionURLReturns;TRUE;ResourceResponseWrapper method createActionURL() returns PortletURL 
+ResourceResponseWrapper;SIG Render;hasCreateRenderURL;TRUE;ResourceResponseWrapper has a createRenderURL() throws IllegalStateException method 
+ResourceResponseWrapper;SIG Render;hasCreateRenderURLReturns;TRUE;ResourceResponseWrapper method createRenderURL() returns PortletURL 
+ResourceResponseWrapper;SIG Render;hasCreateResourceURL;TRUE;ResourceResponseWrapper has a createResourceURL() throws IllegalStateException method 
+ResourceResponseWrapper;SIG Render;hasCreateResourceURLReturns;TRUE;ResourceResponseWrapper method createResourceURL() returns ResourceURL 
+ResourceResponseWrapper;SIG Render;hasFlushBuffer;TRUE;ResourceResponseWrapper has a flushBuffer() throws java.io.IOException method 
+ResourceResponseWrapper;SIG Render;hasFlushBufferReturns;TRUE;ResourceResponseWrapper method flushBuffer() returns void 
+ResourceResponseWrapper;SIG Render;hasGetBufferSize;TRUE;ResourceResponseWrapper has a getBufferSize()  method 
+ResourceResponseWrapper;SIG Render;hasGetBufferSizeReturns;TRUE;ResourceResponseWrapper method getBufferSize() returns int 
+ResourceResponseWrapper;SIG Render;hasGetCacheControl;TRUE;ResourceResponseWrapper has a getCacheControl()  method 
+ResourceResponseWrapper;SIG Render;hasGetCacheControlReturns;TRUE;ResourceResponseWrapper method getCacheControl() returns CacheControl 
+ResourceResponseWrapper;SIG Render;hasGetCharacterEncoding;TRUE;ResourceResponseWrapper has a getCharacterEncoding()  method 
+ResourceResponseWrapper;SIG Render;hasGetCharacterEncodingReturns;TRUE;ResourceResponseWrapper method getCharacterEncoding() returns String 
+ResourceResponseWrapper;SIG Render;hasGetContentType;TRUE;ResourceResponseWrapper has a getContentType()  method 
+ResourceResponseWrapper;SIG Render;hasGetContentTypeReturns;TRUE;ResourceResponseWrapper method getContentType() returns String 
+ResourceResponseWrapper;SIG Render;hasGetLocale;TRUE;ResourceResponseWrapper has a getLocale()  method 
+ResourceResponseWrapper;SIG Render;hasGetLocaleReturns;TRUE;ResourceResponseWrapper method getLocale() returns java.util.Locale 
+ResourceResponseWrapper;SIG Render;hasGetPortletOutputStream;TRUE;ResourceResponseWrapper has a getPortletOutputStream() throws java.io.IOException method 
+ResourceResponseWrapper;SIG Render;hasGetPortletOutputStreamReturns;TRUE;ResourceResponseWrapper method getPortletOutputStream() returns java.io.OutputStream 
+ResourceResponseWrapper;SIG Render;hasGetResponse;TRUE;ResourceResponseWrapper has a getResponse()  method 
+ResourceResponseWrapper;SIG Render;hasGetResponseA;TRUE;ResourceResponseWrapper has a getResponse()  method 
+ResourceResponseWrapper;SIG Render;hasGetResponseReturns;TRUE;ResourceResponseWrapper method getResponse() returns ResourceResponse 
+ResourceResponseWrapper;SIG Render;hasGetResponseReturnsA;TRUE;ResourceResponseWrapper method getResponse() returns PortletResponse 
+ResourceResponseWrapper;SIG Render;hasGetWriter;TRUE;ResourceResponseWrapper has a getWriter() throws java.io.IOException method 
+ResourceResponseWrapper;SIG Render;hasGetWriterReturns;TRUE;ResourceResponseWrapper method getWriter() returns java.io.PrintWriter 
+ResourceResponseWrapper;SIG Render;hasIsCommitted;TRUE;ResourceResponseWrapper has a isCommitted()  method 
+ResourceResponseWrapper;SIG Render;hasIsCommittedReturns;TRUE;ResourceResponseWrapper method isCommitted() returns boolean 
+ResourceResponseWrapper;SIG Render;hasReset;TRUE;ResourceResponseWrapper has a reset()  method 
+ResourceResponseWrapper;SIG Render;hasResetBuffer;TRUE;ResourceResponseWrapper has a resetBuffer()  method 
+ResourceResponseWrapper;SIG Render;hasResetBufferReturns;TRUE;ResourceResponseWrapper method resetBuffer() returns void 
+ResourceResponseWrapper;SIG Render;hasResetReturns;TRUE;ResourceResponseWrapper method reset() returns void 
+ResourceResponseWrapper;SIG Render;hasSetBufferSize;TRUE;ResourceResponseWrapper has a setBufferSize(int)  method 
+ResourceResponseWrapper;SIG Render;hasSetBufferSizeReturns;TRUE;ResourceResponseWrapper method setBufferSize(int) returns void 
+ResourceResponseWrapper;SIG Render;hasSetCharacterEncoding;TRUE;ResourceResponseWrapper has a setCharacterEncoding(String)  method 
+ResourceResponseWrapper;SIG Render;hasSetCharacterEncodingReturns;TRUE;ResourceResponseWrapper method setCharacterEncoding(String) returns void 
+ResourceResponseWrapper;SIG Render;hasSetContentLength;TRUE;ResourceResponseWrapper has a setContentLength(int)  method 
+ResourceResponseWrapper;SIG Render;hasSetContentLengthReturns;TRUE;ResourceResponseWrapper method setContentLength(int) returns void 
+ResourceResponseWrapper;SIG Render;hasSetContentType;TRUE;ResourceResponseWrapper has a setContentType(String)  method 
+ResourceResponseWrapper;SIG Render;hasSetContentTypeReturns;TRUE;ResourceResponseWrapper method setContentType(String) returns void 
+ResourceResponseWrapper;SIG Render;hasSetLocale;TRUE;ResourceResponseWrapper has a setLocale(java.util.Locale)  method 
+ResourceResponseWrapper;SIG Render;hasSetLocaleReturns;TRUE;ResourceResponseWrapper method setLocale(java.util.Locale) returns void 
+ResourceResponseWrapper;SIG Render;hasSetResponse;TRUE;ResourceResponseWrapper has a setResponse(ResourceResponse)  method 
+ResourceResponseWrapper;SIG Render;hasSetResponseReturns;TRUE;ResourceResponseWrapper method setResponse(ResourceResponse) returns void 
+ResourceResponseWrapper;SIG Render;implementsResourceResponse;TRUE;ResourceResponseWrapper implements ResourceResponse 
+

@@ -17,52 +17,44 @@
     specific language governing permissions and limitations
     under the License.     
 -->
-<!--
-   Defines the test cases for this module.
-   For this module, the test case names are not automatically generated from.
-   the deployment descriptor, so edit this file to add new test cases.
-   This allows a portlet to define multiple test cases.
--->
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <!-- JSR 286 API AddlUrlTests test case names and page mappings -->
-<entry key="SPEC2_7_UrlRender_renderURL0">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL1">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL2">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL3">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL4">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL5">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL6">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL7">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL8">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL9">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL10">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlRender_renderURL11">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL1">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL2">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL3">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL4">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL5">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL6">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL7">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlAction_actionURL8">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL1">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL2">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL3">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL4">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL5">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL6">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL7">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL8">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlResource_resourceURL9">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_portletMode1">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_portletMode2">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_portletMode4">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_windowState1">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_windowState2">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_windowState4">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_setSecure1">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_Url_setSecure3">V2AddlUrlTests</entry>
-<entry key="SPEC2_7_UrlListener_portletURLGenerationListener6">V2AddlUrlTests</entry>
-
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL1">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL2">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL3">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL4">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL5">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL6">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL7">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL8">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL9">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL10">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_renderURL11">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_portletMode1">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_portletMode2">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_portletMode4">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_windowState1">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_windowState2">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_windowState4">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_setSecure1">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlRender_setSecure3">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL1">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL2">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL3">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL4">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL5">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL6">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL7">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlAction_actionURL8">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL1">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL2">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL3">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL4">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL5">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL6">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL7">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL8">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlResource_resourceURL9">V2AddlUrlTests</entry>
+<entry key="V2AddlUrlTests_SPEC2_7_UrlListener_portletURLGenerationListener6">V2AddlUrlTests</entry>
 </properties>

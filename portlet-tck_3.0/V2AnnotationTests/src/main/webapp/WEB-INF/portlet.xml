@@ -20,140 +20,125 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-AnnotationTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2AnnotationTests">
    <portlet>
-      <portlet-name>V2AnnotationTests_ProcessAction</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_ProcessAction</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_ProcessAction_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessAction_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_ProcessAction</title>
+         <title>AnnotationTests_ProcessAction_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2AnnotationTests_SIG_ProcessAction</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_SIG_ProcessAction</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_ProcessEvent_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_SIG_ProcessAction</title>
+         <title>AnnotationTests_ProcessEvent_ApiEvent</title>
       </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
+      </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>V2AnnotationTests_ProcessEvent</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_ProcessEvent</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_ProcessEvent_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_ProcessEvent_ApiEvent_event</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_ProcessEvent</title>
+         <title>AnnotationTests_ProcessEvent_ApiEvent_event</title>
       </portlet-info>
+      <supported-processing-event>
+         <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
+      </supported-processing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>V2AnnotationTests_SIG_ProcessEvent</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_SIG_ProcessEvent</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>AnnotationTests_RenderMode_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.AnnotationTests_RenderMode_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2AnnotationTests_SIG_ProcessEvent</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2AnnotationTests_RenderMode</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_RenderMode</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2AnnotationTests_RenderMode</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2AnnotationTests_SIG_RenderMode</portlet-name>
-      <portlet-class>javax.portlet.tck.AnnotationTests.portlets.V2AnnotationTests_SIG_RenderMode</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2AnnotationTests_SIG_RenderMode</title>
+         <title>AnnotationTests_RenderMode_ApiRender</title>
       </portlet-info>
    </portlet>
 
 
 
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

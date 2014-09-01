@@ -61,14 +61,11 @@ public class TCKSimpleTestDriver {
 
    private static String loginUrl, host, port, testFile, browser, 
    username, usernameId, password, passwordId, testContextBase, module;
-   
-   // used to optimize access for tests on the same page
-   private static String lastPage = "";
-
+   private static int timeout = 3; // for waiting on page load
    private static boolean useGeneratedUrl = true, debug = false;
 
    private static WebDriver driver;
-   private String page, tcName, testUrl;
+   private String page, tcName;
 
    /**
     * Reads the consolidated list of test cases and provides the list to Junit
@@ -82,6 +79,16 @@ public class TCKSimpleTestDriver {
       System.out.println("   TestFile=" + testFile);
       module = System.getProperty("test.module");
       System.out.println("   Module       =" + module);
+      
+      boolean filterTCs = (module != null && module.length() > 0);
+      boolean excTCs = true;        // include or exclude TCs
+      String filterStr = module;
+      if (filterTCs) {
+         excTCs = module.startsWith("!");
+         filterStr = module.replaceFirst("^!(.*)$", "$1");
+         System.out.println("   Filtering    = " + (excTCs?"Excluding":"Including") + 
+                            " all " + filterStr + " testcases");
+      }
 
       Properties tprops = new Properties();
       try {
@@ -95,19 +102,23 @@ public class TCKSimpleTestDriver {
       
       // See if performance can be improved by sorting the test cases by
       // the page to be accessed. The map uses the page as key and has a 
-      // set of test cases for that page as value.
+      // set of test cases for that page as value. Filter according to 
+      // test.module.
       
       TreeMap<String, Set<String>> pages = new TreeMap<String, Set<String>>();
       Set<Object> tcs = tprops.keySet();
       for (Object o : tcs) {
          String tcase = (String) o ;
-         if (module == null || module.length() <= 0 || tcase.contains(module)) {
-            String tpage = tprops.getProperty(tcase);
-            if (!pages.containsKey(tpage)) {
-               pages.put(tpage, new TreeSet<String>());
-            }
-            pages.get(tpage).add(tcase);
+         String tpage = tprops.getProperty(tcase);
+         if (filterTCs) {
+            boolean c = tcase.contains(filterStr);
+            if (excTCs && c) continue;       // exclude matches
+            if (!excTCs && !c) continue;     // exclude non-matches
          }
+         if (!pages.containsKey(tpage)) {
+            pages.put(tpage, new TreeSet<String>());
+         }
+         pages.get(tpage).add(tcase);
       }
 
       // now pass TCs, sorted by page, to the driver
@@ -140,7 +151,7 @@ public class TCKSimpleTestDriver {
       sb.append("/");
       sb.append(testContextBase);
       sb.append(page);
-      testUrl = sb.toString();
+      sb.toString();
       System.out.println("Testing: " + tcName);
    }
 
@@ -163,10 +174,13 @@ public class TCKSimpleTestDriver {
       useGeneratedUrl = str.equalsIgnoreCase("generateURLs");
       str = System.getProperty("test.debug");
       debug = str.equalsIgnoreCase("true");
+      str = System.getProperty("test.timeout");
+      timeout = ((str != null) && str.matches("\\d+")) ? Integer.parseInt(str) : 3; 
       String wd = System.getProperty("test.browser.webDriver");
 
       System.out.println("before class.");
       System.out.println("   Debug        =" + debug);
+      System.out.println("   Timeout      =" + timeout);
       System.out.println("   Login URL    =" + loginUrl);
       System.out.println("   Host         =" + host);
       System.out.println("   Port         =" + port);
@@ -194,8 +208,7 @@ public class TCKSimpleTestDriver {
       } else {
          throw new Exception("Unsupported browser: " + browser);
       }
-      
-      lastPage = "";
+
       login();
 
    }
@@ -233,37 +246,48 @@ public class TCKSimpleTestDriver {
       String actionId = tcName + Constants.CLICK_ID;
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
-      
-      // This is optimized for many results being present on the same page.
-      // First look for the test results or links already being present on the page. 
-      
-      List<WebElement> wels = driver.findElements(By.name(tcName));
-      if (debug) System.out.println("   TC elements already on page: " + !wels.isEmpty() + ", tcname===" + tcName + "===");
-      if (wels.isEmpty()) {
-         wels = accessPage();
-         if ((wels == null) || wels.isEmpty()) {
-            return;     // errors are handled in accessPage routine
-         } 
-      }
-      
-      // Test case results or links are on the page. check for results first.
-      List<WebElement> tcels = null;
-      for (WebElement wel : wels) {
-         tcels = wel.findElements(By.id(resultId));
-         if (debug) System.out.println("   Results found: " + !tcels.isEmpty());
-         if (!tcels.isEmpty()) break;
-      }
 
-      // if results aren't there, see if there is a link to be clicked
-      if (tcels.isEmpty()) {
-         wels = processClickable(wels);
-         if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
-         if ((wels == null) || wels.isEmpty()) {
-            return;      // errors are handled in processClickable routine
+      try {
+
+         // This is optimized for many results being present on the same page.
+         // First look for the test results or links already being present on the page. 
+
+         List<WebElement> wels = driver.findElements(By.name(tcName));
+         if (debug) System.out.println("   TC elements already on page: " + !wels.isEmpty() + ", tcname===" + tcName + "===");
+         if (wels.isEmpty()) {
+            wels = accessPage();
          }
-      }
 
-      checkResults(wels);
+         // Test case results or links are on the page. check for results first.
+         List<WebElement> tcels = null;
+         for (WebElement wel : wels) {
+            tcels = wel.findElements(By.id(resultId));
+            if (debug) System.out.println("   Results found: " + !tcels.isEmpty());
+            if (!tcels.isEmpty()) break;
+         }
+
+         // if results aren't there, see if there is a link to be clicked
+         if (tcels.isEmpty()) {
+            wels = processClickable(wels);
+            if (debug) System.out.println("   After processing clickable, results found: " + !wels.isEmpty());
+         }
+
+         checkResults(wels);
+
+      } catch(Exception e) {
+         
+         // Some type of unexpected error occurred, so generate text
+         // and mark the TC as failed.
+         
+         List<WebElement> bels = driver.findElements(By.tagName("body"));
+         String err = "";
+         if (!bels.isEmpty()) {
+            err = bels.get(0).getText();
+         }
+         assertTrue("Test case " + tcName + " failed. " +  
+               " Setup link could not be accessed. \nException: " + e.toString() +
+               "\nPage text: " + err, false);
+      }
    }
 
    /**
@@ -272,25 +296,26 @@ public class TCKSimpleTestDriver {
     * 
     * @return  a list of elements for the TC (should only be one)
     */
-   private List<WebElement> accessPage() {
+   private List<WebElement> accessPage() throws Exception {
       List<WebElement> wels = driver.findElements(By.linkText(page));
       if (debug) System.out.println("   Access page, link found: " + !wels.isEmpty() + ", page===" + page + "===");
+     
       if (wels.isEmpty()) {
-         //todo - retry through login page
-         assertTrue("Test case " + tcName + " failed. Page " + page 
-               + " link could not be found. ", false);
-      } else {
-         WebElement wel = wels.get(0);
-         wel.click();
-         try {
-            WebDriverWait wdw = new WebDriverWait(driver, 3);
-            wdw.until(ExpectedConditions.visibilityOfElementLocated(By.name(tcName)));
-            wels = driver.findElements(By.name(tcName));
-         } catch(Exception e) {
-            assertTrue("Test case " + tcName + " failed. Page " + page 
-                  + " link could not be accessed. Timeout. ", false);
-            wels.clear();
+         // retry through login page
+         login();
+         wels = driver.findElements(By.linkText(page));
+         if (wels.isEmpty()) {
+            throw new Exception("Page " + page + ": link could not be found.");
          }
+      } 
+      
+      WebElement wel = wels.get(0);
+      wel.click();
+      WebDriverWait wdw = new WebDriverWait(driver, timeout);
+      wdw.until(ExpectedConditions.visibilityOfElementLocated(By.name(tcName)));
+      wels = driver.findElements(By.name(tcName));
+      if (wels.isEmpty()) {
+         throw new Exception("For test case " + tcName + ": no elements found.");
       }
       return wels;
    }
@@ -301,20 +326,21 @@ public class TCKSimpleTestDriver {
    private static void login() {
 
       driver.get(loginUrl);
+      
+      List<WebElement> uels = driver.findElements(By.id(usernameId));
+      List<WebElement> pwels = driver.findElements(By.id(passwordId));
 
       // If there is no login or password fields, don't need to login.
-      // find element will throw an exception if element can't be found.
-      try {
+      if (!uels.isEmpty() && !pwels.isEmpty()) {
 
-         WebElement userEl = driver.findElement(By.ById.id(usernameId));
-         WebElement pwEl = driver.findElement(By.ById.id(passwordId));
+         WebElement userEl = uels.get(0);
+         WebElement pwEl = pwels.get(0);
 
          // perform login
          userEl.sendKeys(username);
          pwEl.sendKeys(password);
          pwEl.submit();
 
-      } catch(Exception e) {
       }
    }
 
@@ -336,7 +362,7 @@ public class TCKSimpleTestDriver {
       
       if (!rels.isEmpty() && !dels.isEmpty()) {
          String res = rels.get(0).getText();
-         String det = "Test case " + tcName + " failed. " + dels.get(0).getText();
+         String det = "Test case " + tcName + ": " + dels.get(0).getText();
          boolean ok = res.contains(Constants.SUCCESS);
          if (debug) System.out.println("   Test OK: " + ok + ", results: " + res + ", details: " + det);
          assertTrue(det, ok);
@@ -348,38 +374,78 @@ public class TCKSimpleTestDriver {
 
    /**
     * Looks for a link or button that can be clicked for the TC and clicks it if found.
+    * 
+    * First looks for a test case setup link or button and clicks it if found. Then it 
+    * looks for a test case execution link and clicks it if found. 
+    * 
+    * @return  web element list containing the test case results.
+    * @throws Exception 
     */
    @SuppressWarnings("unused")
-   private List<WebElement> processClickable(List<WebElement> wels) {
+   private List<WebElement> processClickable(List<WebElement> wels) throws Exception {
+      String setupId = tcName + Constants.SETUP_ID;
       String actionId = tcName + Constants.CLICK_ID;
       String resultId = tcName + Constants.RESULT_ID;
       String detailId = tcName + Constants.DETAIL_ID;
-      
       List<WebElement> tcels = null;
+
+      for (WebElement wel : wels) {
+         tcels = wel.findElements(By.id(setupId));
+         if (!tcels.isEmpty()) break;
+      }
+      if (debug) System.out.println("   Setup link found: " + ((tcels != null) && !tcels.isEmpty()));
+
+      // Click setup link if found
+      if ((tcels != null) && !tcels.isEmpty()) {
+         WebElement wel = tcels.get(0);
+         wel.click();
+         if (debug) System.out.println("   Clicked setup link.");
+
+         WebDriverWait wdw = new WebDriverWait(driver, timeout);
+
+         String expr = "//*[@id='" + resultId + "'] | //*[@id='" + actionId + "']";
+         if(debug) System.out.println("   xpath string: ===" + expr + "===");
+
+         wdw.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(expr)));
+         if (debug) {
+            System.out.println("   Found elements: " + (!wels.isEmpty()));
+            List<WebElement> xels = driver.findElements(By.xpath(expr));
+            for (WebElement w : xels) {
+               System.out.println("      Element: " + w.getTagName() + ", id=" + w.getAttribute("id"));
+            }
+         }
+
+         // check if results already found. if so, we're done.
+         wels = driver.findElements(By.name(tcName));
+         for (WebElement w : wels) {
+            tcels = w.findElements(By.id(resultId));
+            if (!tcels.isEmpty()) {
+               if (debug) System.out.println("   Results available after setup.");
+               return wels;
+            }
+         }
+      }
+      
+      // Now click the action link, if present
       for (WebElement wel : wels) {
          tcels = wel.findElements(By.id(actionId));
          if (!tcels.isEmpty()) break;
       }
-      
       if (debug) System.out.println("   Clickable link found: " + ((tcels != null) && !tcels.isEmpty()));
 
       if ((tcels == null) || tcels.isEmpty()) {
-         assertTrue("Test case " + tcName + " failed. TCK error - Unknown TC content.", false);
-         return tcels;
+         throw new Exception("Test case " + tcName + " failed. TCK error - Unknown TC content.");
       }
       
       WebElement wel = tcels.get(0);
       wel.click();
-      try {
-         WebDriverWait wdw = new WebDriverWait(driver, 3);
-         wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
-         tcels = driver.findElements(By.name(tcName));
-      } catch(Exception e) {
-         assertTrue("Test case " + tcName + " failed. Test case " + tcName 
-               + " link could not be accessed. Timeout. ", false);
-         tcels.clear();
+      WebDriverWait wdw = new WebDriverWait(driver, timeout);
+      wdw.until(ExpectedConditions.visibilityOfElementLocated(By.id(resultId)));
+      tcels = driver.findElements(By.name(tcName));
+      if ((tcels == null) || tcels.isEmpty()) {
+         throw new Exception("Test case " + tcName + " failed. No results after action link click.");
       }
-      
+
       return tcels;
    }
 

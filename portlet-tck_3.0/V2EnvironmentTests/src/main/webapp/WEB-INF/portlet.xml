@@ -20,360 +20,307 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-   version="2.0" id="javax.portlet-tck-EnvironmentTests">
-
+   xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
+   version="2.0" id="V2EnvironmentTests">
    <portlet>
-      <portlet-name>V2EnvironmentTests_CacheControl</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_CacheControl</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_CacheControl_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_CacheControl_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_CacheControl</title>
+         <title>EnvironmentTests_CacheControl_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_CacheControl</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_CacheControl</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_CacheControl_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_CacheControl_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_SIG_CacheControl</title>
+         <title>EnvironmentTests_CacheControl_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_PortalContext</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_PortalContext</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortalContext_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortalContext_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_PortalContext</title>
+         <title>EnvironmentTests_PortalContext_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_PortalContext</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_PortalContext</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortletContext_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletContext_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_SIG_PortalContext</title>
+         <title>EnvironmentTests_PortletContext_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_PortletContext</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_PortletContext</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortletPreferences_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletPreferences_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_PortletContext</title>
+         <title>EnvironmentTests_PortletPreferences_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_PortletContext</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_PortletContext</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortletPreferences_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletPreferences_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_SIG_PortletContext</title>
+         <title>EnvironmentTests_PortletPreferences_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_PortletPreferences</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_PortletPreferences</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PreferencesValidator_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_PortletPreferences</title>
+         <title>EnvironmentTests_PreferencesValidator_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_PortletPreferences</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_PortletPreferences</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortletPreferences_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletPreferences_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_SIG_PortletPreferences</title>
+         <title>EnvironmentTests_PortletPreferences_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:EnvironmentTests_PortletPreferences_ApiEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>EnvironmentTests_PortletPreferences_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletPreferences_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_PortletPreferences_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:EnvironmentTests_PortletPreferences_ApiEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>EnvironmentTests_PreferencesValidator_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiEvent</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_PreferencesValidator_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:EnvironmentTests_PreferencesValidator_ApiEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>EnvironmentTests_PreferencesValidator_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_PreferencesValidator_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:EnvironmentTests_PreferencesValidator_ApiEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>EnvironmentTests_PortletPreferences_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletPreferences_ApiResource</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>EnvironmentTests_PortletPreferences_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_PreferencesValidator</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_PreferencesValidator</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PreferencesValidator_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PreferencesValidator_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_PreferencesValidator</title>
+         <title>EnvironmentTests_PreferencesValidator_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_PreferencesValidator</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_PreferencesValidator</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortletRequestDispatcher_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletRequestDispatcher_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_SIG_PreferencesValidator</title>
+         <title>EnvironmentTests_PortletRequestDispatcher_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_PortletRequestDispatcher</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_PortletRequestDispatcher</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortletSession_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletSession_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_PortletRequestDispatcher</title>
+         <title>EnvironmentTests_PortletSession_ApiRender</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_PortletRequestDispatcher</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_PortletRequestDispatcher</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
+      <portlet-name>EnvironmentTests_PortletSessionUtil_ApiRender</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.EnvironmentTests_PortletSessionUtil_ApiRender</portlet-class>
       <expiration-cache>0</expiration-cache>
-
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
-
       <supported-locale>en_US</supported-locale>
-
       <portlet-info>
-         <title>V2EnvironmentTests_SIG_PortletRequestDispatcher</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2EnvironmentTests_PortletSession</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_PortletSession</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2EnvironmentTests_PortletSession</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_PortletSession</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_PortletSession</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2EnvironmentTests_SIG_PortletSession</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2EnvironmentTests_PortletSessionUtil</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_PortletSessionUtil</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2EnvironmentTests_PortletSessionUtil</title>
-      </portlet-info>
-   </portlet>
-
-   <portlet>
-      <portlet-name>V2EnvironmentTests_SIG_PortletSessionUtil</portlet-name>
-      <portlet-class>javax.portlet.tck.EnvironmentTests.portlets.V2EnvironmentTests_SIG_PortletSessionUtil</portlet-class>
-
-      <init-param>
-         <name>TestParameter</name>
-         <value>TestValue</value>
-      </init-param>
-
-      <expiration-cache>0</expiration-cache>
-
-      <supports>
-         <mime-type>text/html</mime-type>
-      </supports>
-
-      <supported-locale>en_US</supported-locale>
-
-      <portlet-info>
-         <title>V2EnvironmentTests_SIG_PortletSessionUtil</title>
+         <title>EnvironmentTests_PortletSessionUtil_ApiRender</title>
       </portlet-info>
    </portlet>
 
 
 
+   <event-definition>
+      <qname>tck:FilterTests_FilterChain_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_PortletFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:RequestTests_EventRequest_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_PortletResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_StateAwareResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:ResponseTests_EventResponse_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:AnnotationTests_ProcessEvent_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:PortletTests_Event_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:PortletTests_EventPortlet_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:EnvironmentTests_PortletPreferences_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:EnvironmentTests_PreferencesValidator_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <public-render-parameter>
+      <identifier>tckPRP1</identifier>
+      <qname>tck:tckPRP1</qname>
+   </public-render-parameter>
 </portlet-app>

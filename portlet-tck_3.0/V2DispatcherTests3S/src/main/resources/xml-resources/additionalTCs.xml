@@ -21,43 +21,19 @@
 <properties>
 <!-- JSR 286 API DispatcherTests3S test case names and page mappings -->
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletAction_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletAction_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletAction_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletEvent_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletEvent_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletEvent_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletRender_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletRender_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletRender_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletResource_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletResource_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeServletResource_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletAction_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletAction_invoke3">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletEvent_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletEvent_invoke3">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletRender_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletRender_invoke3">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletResource_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardServletResource_invoke3">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPAction_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPAction_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPAction_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPEvent_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPEvent_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPEvent_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPRender_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPRender_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPRender_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPResource_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPResource_invoke3">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_IncludeJSPResource_invoke8">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPAction_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPAction_invoke3">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPEvent_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPEvent_invoke3">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPRender_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPRender_invoke3">V2DispatcherTests3S</entry>
 <entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPResource_dispatch4">V2DispatcherTests3S</entry>
-<entry key="V2DispatcherTests3S_SPEC2_19_ForwardJSPResource_invoke3">V2DispatcherTests3S</entry>
 </properties>
