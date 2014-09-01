@@ -100,6 +100,8 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getPortletMode().getClass());
+
       /* TestCase: V2PortletTests_PortletMode_ApiRender_constructor1          */
       /* Details: "The constructor PortletMode(java.lang.String): allows a    */
       /* PortletMode object of the specified name to be constructed"          */
@@ -120,24 +122,27 @@ public class PortletTests_PortletMode_ApiRender implements Portlet, ResourceServ
       /* Details: "Has PortletMode field EDIT with value of                   */
       /* PortletMode.EDIT "                                                   */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_FIELDEDIT);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         tr2.setTcSuccess(cc.hasField("EDIT", PortletMode.EDIT));
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_fieldHELP             */
       /* Details: "Has PortletMode field HELP with value of                   */
       /* PortletMode.HELP "                                                   */
       TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_FIELDHELP);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         tr3.setTcSuccess(cc.hasField("HELP", PortletMode.HELP));
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_fieldVIEW             */
       /* Details: "Has PortletMode field VIEW with value of                   */
       /* PortletMode.VIEW "                                                   */
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETMODE_APIRENDER_FIELDVIEW);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         tr4.setTcSuccess(cc.hasField("VIEW", PortletMode.VIEW));
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletMode_ApiRender_toString              */

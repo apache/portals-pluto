@@ -72,6 +72,8 @@ public class FilterTests_PortletFilter_ApiResourceFilter_filter implements Resou
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(PortletFilter.class);
+
       /* TestCase: V2FilterTests_PortletFilter_ApiResourceFilter_initResource1 */
       /* Details: "The init(FilterConfig): method is called when an           */
       /* ResourceFilter is configured"                                        */

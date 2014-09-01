@@ -100,6 +100,8 @@ public class ExceptionTests_WindowStateException_ApiRender implements Portlet, R
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.WindowStateException.class);
+
       /* TestCase: V2ExceptionTests_WindowStateException_ApiRender_getState   */
       /* Details: "Method getState(): Returns the WindowState object          */
       /* causing this exception"                                              */

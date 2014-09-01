@@ -82,8 +82,10 @@ public class ResponseTests_EventResponse_ApiEvent_event implements Portlet, Even
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getClass());
+
       /* TestCase: V2ResponseTests_EventResponse_ApiEvent_setRenderParameters1 */
-      /* Details: "Method setRenderParameters(java.util.Map): Copies all      */
+      /* Details: "Method setRenderParameters(EventRequest): Copies all       */
       /* render parameters set on the EventRequest to the EventResponse"      */
       TestResult tr0 = tcd.getTestResultFailed(V2RESPONSETESTS_EVENTRESPONSE_APIEVENT_SETRENDERPARAMETERS1);
       /* TODO: implement test */
@@ -91,12 +93,20 @@ public class ResponseTests_EventResponse_ApiEvent_event implements Portlet, Even
       tr0.writeTo(writer);
 
       /* TestCase: V2ResponseTests_EventResponse_ApiEvent_setRenderParameters2 */
-      /* Details: "Method setRenderParameters(java.util.Map): Throws          */
+      /* Details: "Method setRenderParameters(EventRequest): Throws           */
       /* IllegalArgumentException if the input EventRequest parameter is      */
       /* null"                                                                */
       TestResult tr1 = tcd.getTestResultFailed(V2RESPONSETESTS_EVENTRESPONSE_APIEVENT_SETRENDERPARAMETERS2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setRenderParameters((EventRequest)null);
+            tr1.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr1.setTcSuccess(true);
+         } catch (Exception e) {
+            tr1.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(

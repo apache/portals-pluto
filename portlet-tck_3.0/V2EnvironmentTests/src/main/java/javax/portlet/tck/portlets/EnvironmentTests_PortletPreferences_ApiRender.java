@@ -100,38 +100,49 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getPreferences().getClass());
+
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly1 */
-      /* Details: "Method isReadOnly(): Returns true if the preference        */
-      /* specified by the key is defined to be read-only in the deployment    */
-      /* descriptor"                                                          */
+      /* Details: "Method isReadOnly(String): Returns true if the             */
+      /* preference specified by the key is defined to be read-only in the    */
+      /* deployment descriptor"                                               */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY1);
       /* TODO: implement test */
       tr0.appendTcDetail("Not implemented.");
       tr0.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly2 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is not defined to be read-only in the           */
-      /* deployment descriptor"                                               */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is not defined to be read-only in    */
+      /* the deployment descriptor"                                           */
       TestResult tr1 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY2);
       /* TODO: implement test */
       tr1.appendTcDetail("Not implemented.");
       tr1.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly3 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is undefined"                                   */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is undefined"                        */
       TestResult tr2 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY3);
       /* TODO: implement test */
       tr2.appendTcDetail("Not implemented.");
       tr2.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_isReadOnly4 */
-      /* Details: "Method isReadOnly(): Throws IllegalArgumentException if    */
-      /* the key is null"                                                     */
+      /* Details: "Method isReadOnly(String): Throws                          */
+      /* IllegalArgumentException if the key is null"                         */
       TestResult tr3 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_ISREADONLY4);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            prefs.isReadOnly(null);
+            tr3.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr3.setTcSuccess(true);
+         } catch (Exception e) {
+            tr3.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValue1  */
@@ -163,8 +174,16 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* Details: "Method getValue(String, String): Throws                    */
       /* IllegalArgumentException if the key is null"                         */
       TestResult tr7 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUE4);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            tr7.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr7.setTcSuccess(true);
+         } catch (Exception e) {
+            tr7.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_getValues1 */
@@ -197,8 +216,17 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       /* Details: "Method getValues(String, String[]): Throws                 */
       /* IllegalArgumentException if the key is null"                         */
       TestResult tr11 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_GETVALUES4);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            String[] vals = prefs.getValues(null, new String[]{"val1-1", "val1-2"});
+            tr11.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr11.setTcSuccess(true);
+         } catch (Exception e) {
+            tr11.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_setValue4  */
@@ -245,7 +273,7 @@ public class EnvironmentTests_PortletPreferences_ApiRender implements Portlet, R
       tr16.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiRender_reset2     */
-      /* Details: "Method reset(): Throws ReadOnlyException if the            */
+      /* Details: "Method reset(String): Throws ReadOnlyException if the      */
       /* preference cannot be modified for this request"                      */
       TestResult tr17 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIRENDER_RESET2);
       /* TODO: implement test */

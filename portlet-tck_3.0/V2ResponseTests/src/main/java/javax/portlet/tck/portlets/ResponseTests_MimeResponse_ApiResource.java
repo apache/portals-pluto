@@ -88,67 +88,77 @@ public class ResponseTests_MimeResponse_ApiResource implements Portlet, Resource
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getClass());
+
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldEXPIRATION_CACHE  */
       /* Details: "Has String field EXPIRATION_CACHE with value of            */
       /* \"portlet.expiration-cache\""                                        */
       TestResult tr0 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDEXPIRATION_CACHE );
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("EXPIRATION_CACHE", "portlet.expiration-cache"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldCACHE_SCOPE  */
       /* Details: "Has String field CACHE_SCOPE with value of                 */
       /* \"portlet.cache-scope\""                                             */
       TestResult tr1 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDCACHE_SCOPE );
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         tr1.setTcSuccess(cc.hasField("CACHE_SCOPE", "portlet.cache-scope"));
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldPUBLIC_SCOPE  */
       /* Details: "Has String field PUBLIC_SCOPE with value of                */
       /* \"portlet.public-scope\""                                            */
       TestResult tr2 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPUBLIC_SCOPE );
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         tr2.setTcSuccess(cc.hasField("PUBLIC_SCOPE", "portlet.public-scope"));
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldPRIVATE_SCOPE  */
       /* Details: "Has String field PRIVATE_SCOPE with value of               */
       /* \"portlet.private-scope\""                                           */
       TestResult tr3 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDPRIVATE_SCOPE );
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         tr3.setTcSuccess(cc.hasField("PRIVATE_SCOPE", "portlet.private-scope"));
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldETAG         */
       /* Details: "Has String field ETAG with value of \"portlet.ETag\""      */
       TestResult tr4 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDETAG );
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         tr4.setTcSuccess(cc.hasField("ETAG", "portlet.ETag"));
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldUSE_CACHED_CONTENT  */
       /* Details: "Has String field USE_CACHED_CONTENT with value of          */
       /* \"portlet.use-cached-content\""                                      */
       TestResult tr5 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDUSE_CACHED_CONTENT );
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         tr5.setTcSuccess(cc.hasField("USE_CACHED_CONTENT", "portlet.use-cached-content"));
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldNAMESPACED_RESPONSE */
       /* Details: "Has String field NAMESPACED_RESPONSE with value of         */
       /* \"X-JAVAX-PORTLET-NAMESPACED-RESPONSE\""                             */
       TestResult tr6 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDNAMESPACED_RESPONSE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         tr6.setTcSuccess(cc.hasField("NAMESPACED_RESPONSE", "X-JAVAX-PORTLET-NAMESPACED-RESPONSE"));
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_fieldMARKUP_HEAD_ELEMENT */
       /* Details: "Has String field MARKUP_HEAD_ELEMENT with value of         */
       /* \"javax.portlet.markup.head.element\""                               */
       TestResult tr7 = tcd.getTestResultFailed(V2RESPONSETESTS_MIMERESPONSE_APIRESOURCE_FIELDMARKUP_HEAD_ELEMENT);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         tr7.setTcSuccess(cc.hasField("MARKUP_HEAD_ELEMENT", "javax.portlet.markup.head.element"));
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2ResponseTests_MimeResponse_ApiResource_getContentType1   */

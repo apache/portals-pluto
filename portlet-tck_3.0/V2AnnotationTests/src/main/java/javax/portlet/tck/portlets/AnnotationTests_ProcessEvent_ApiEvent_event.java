@@ -82,6 +82,8 @@ public class AnnotationTests_ProcessEvent_ApiEvent_event implements Portlet, Eve
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.ProcessEvent.class);
+
       /* TestCase: V2AnnotationTests_ProcessEvent_ApiEvent_qname              */
       /* Details: "Method qname(): On an event request, the method is         */
       /* executed if the Event qname matches the qname field"                 */

@@ -100,6 +100,8 @@ public class ExceptionTests_PortletModeException_ApiRender implements Portlet, R
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.PortletModeException.class);
+
       /* TestCase: V2ExceptionTests_PortletModeException_ApiRender_hasGetMode2 */
       /* Details: "Returns the PortletMode object causing this exception"     */
       TestResult tr0 = tcd.getTestResultFailed(V2EXCEPTIONTESTS_PORTLETMODEEXCEPTION_APIRENDER_HASGETMODE2);

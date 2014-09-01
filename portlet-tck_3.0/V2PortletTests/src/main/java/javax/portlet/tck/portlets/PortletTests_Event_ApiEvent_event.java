@@ -82,6 +82,8 @@ public class PortletTests_Event_ApiEvent_event implements Portlet, EventPortlet,
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getEvent().getClass());
+
       /* TestCase: V2PortletTests_Event_ApiEvent_getQName1                    */
       /* Details: "Method getQName(): Returns the javax.xml.namespace.QName   */
       /* object for the Event"                                                */

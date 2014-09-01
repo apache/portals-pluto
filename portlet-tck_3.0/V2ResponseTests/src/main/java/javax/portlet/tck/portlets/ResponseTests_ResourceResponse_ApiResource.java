@@ -88,12 +88,15 @@ public class ResponseTests_ResourceResponse_ApiResource implements Portlet, Reso
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getClass());
+
       /* TestCase: V2ResponseTests_ResourceResponse_ApiResource_fieldHTTP_STATUS_CODE  */
       /* Details: "Has String field HTTP_STATUS_CODE with value of            */
       /* \"portlet.http-status-code\""                                        */
       TestResult tr0 = tcd.getTestResultFailed(V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_FIELDHTTP_STATUS_CODE );
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("HTTP_STATUS_CODE", "portlet.http-status-code"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2ResponseTests_ResourceResponse_ApiResource_setLocale1    */
@@ -108,8 +111,16 @@ public class ResponseTests_ResourceResponse_ApiResource implements Portlet, Reso
       /* Details: "Method setLocale(Locale): Throws                           */
       /* IllegalArgumentException if the Locale parameter is null"            */
       TestResult tr2 = tcd.getTestResultFailed(V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_SETLOCALE4);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setLocale(null);
+            tr2.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr2.setTcSuccess(true);
+         } catch (Exception e) {
+            tr2.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2ResponseTests_ResourceResponse_ApiResource_setCharacterEncoding1 */
@@ -124,8 +135,16 @@ public class ResponseTests_ResourceResponse_ApiResource implements Portlet, Reso
       /* Details: "Method setCharacterEncoding(String): Throws                */
       /* IllegalArgumentException if the Locale parameter is null"            */
       TestResult tr4 = tcd.getTestResultFailed(V2RESPONSETESTS_RESOURCERESPONSE_APIRESOURCE_SETCHARACTERENCODING4);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setCharacterEncoding(null);
+            tr4.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr4.setTcSuccess(true);
+         } catch (Exception e) {
+            tr4.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2ResponseTests_ResourceResponse_ApiResource_setContentLength1 */

@@ -72,6 +72,8 @@ public class FilterTests_ActionFilter_ApiActionFilter_filter implements ActionFi
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(ActionFilter.class);
+
       /* TestCase: V2FilterTests_ActionFilter_ApiActionFilter_canBeConfigured1 */
       /* Details: "An ActionFilter can be configured in the portlet           */
       /* descriptor"                                                          */

@@ -82,6 +82,8 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getClass());
+
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setWindowState1 */
       /* Details: "Method setWindowState(WindowState): Sets the WindowState   */
       /* to the specified value"                                              */
@@ -188,16 +190,35 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
       /* IllegalArgumentException if the input map is null"                   */
       TestResult tr12 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS7);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setRenderParameters((Map<String, String[]>)null);
+            tr12.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr12.setTcSuccess(true);
+         } catch (Exception e) {
+            tr12.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters8 */
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
       /* IllegalArgumentException if any key in the map is null"              */
       TestResult tr13 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS8);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      try {
+         try {
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{"val1-1", "val1-2"});
+            parms.put(null, new String[]{"val2-1", "val2-2"});
+            portletResp.setRenderParameters(parms);
+            tr13.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr13.setTcSuccess(true);
+         } catch (Exception e) {
+            tr13.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters9 */
@@ -213,8 +234,19 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* Details: "Method setRenderParameters(java.util.Map): Throws          */
       /* IllegalArgumentException if the values array for any key is null "   */
       TestResult tr15 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS10);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      try {
+         try {
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{"val1-1", "val1-2"});
+            parms.put("parm2", null);
+            portletResp.setRenderParameters(parms);
+            tr15.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr15.setTcSuccess(true);
+         } catch (Exception e) {
+            tr15.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters11 */
@@ -222,8 +254,19 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* IllegalArgumentException if any element in any values array is       */
       /* null "                                                               */
       TestResult tr16 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERS11);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      try {
+         try {
+            Map<String, String[]> parms = new HashMap<String, String[]>();
+            parms.put("parm1", new String[]{null, "val1-2"});
+            parms.put("parm2", new String[]{"val2-1", "val2-2"});
+            portletResp.setRenderParameters(parms);
+            tr16.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr16.setTcSuccess(true);
+         } catch (Exception e) {
+            tr16.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameters12 */
@@ -287,8 +330,16 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* Details: "Method setRenderParameter(String, String): Throws          */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr24 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERA7);
-      /* TODO: implement test */
-      tr24.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setRenderParameter(null, "value");
+            tr24.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr24.setTcSuccess(true);
+         } catch (Exception e) {
+            tr24.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
       tr24.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterA8 */
@@ -328,16 +379,32 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* Details: "Method setRenderParameter(String, String[]): Throws        */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr29 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB4);
-      /* TODO: implement test */
-      tr29.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setRenderParameter(null, new String[]{"val1-1", "val1-2"});
+            tr29.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr29.setTcSuccess(true);
+         } catch (Exception e) {
+            tr29.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr29.appendTcDetail(e.toString());}
       tr29.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB5 */
       /* Details: "Method setRenderParameter(String, String[]): Throws        */
       /* IllegalArgumentException if the values array is null"                */
       TestResult tr30 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETRENDERPARAMETERB5);
-      /* TODO: implement test */
-      tr30.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setRenderParameter(null, new String[]{"val1-1", "val1-2"});
+            tr30.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr30.setTcSuccess(true);
+         } catch (Exception e) {
+            tr30.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr30.appendTcDetail(e.toString());}
       tr30.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setRenderParameterB6 */
@@ -363,8 +430,16 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* java.io.Serializable): Throws IllegalArgumentException if the name   */
       /* is null"                                                             */
       TestResult tr33 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTA2);
-      /* TODO: implement test */
-      tr33.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setEvent((javax.xml.namespace.QName)null, "value");
+            tr33.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr33.setTcSuccess(true);
+         } catch (Exception e) {
+            tr33.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr33.appendTcDetail(e.toString());}
       tr33.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventA3     */
@@ -407,8 +482,16 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* Details: "Method setEvent(String, java.io.Serializable): Throws      */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr38 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_SETEVENTB2);
-      /* TODO: implement test */
-      tr38.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setEvent((javax.xml.namespace.QName)null, "value");
+            tr38.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr38.setTcSuccess(true);
+         } catch (Exception e) {
+            tr38.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
       tr38.writeTo(writer);
 
       /* TestCase: V2ResponseTests_StateAwareResponse_ApiEvent_setEventB3     */
@@ -513,8 +596,16 @@ public class ResponseTests_StateAwareResponse_ApiEvent_event implements Portlet,
       /* Details: "Method removePublicRenderParameter(String): Throws         */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr51 = tcd.getTestResultFailed(V2RESPONSETESTS_STATEAWARERESPONSE_APIEVENT_REMOVEPUBLICRENDERPARAMETER2);
-      /* TODO: implement test */
-      tr51.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.removePublicRenderParameter(null);
+            tr51.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr51.setTcSuccess(true);
+         } catch (Exception e) {
+            tr51.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr51.appendTcDetail(e.toString());}
       tr51.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(

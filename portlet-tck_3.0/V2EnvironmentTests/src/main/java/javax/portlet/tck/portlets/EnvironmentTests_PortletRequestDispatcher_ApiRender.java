@@ -100,6 +100,10 @@ public class EnvironmentTests_PortletRequestDispatcher_ApiRender implements Port
 
       // Create result objects for the tests
 
+      PortletRequestDispatcher rd = portletConfig.getPortletContext()
+                              .getRequestDispatcher("/WEB-INF/portlet.xml");
+      ClassChecker cc = new ClassChecker(rd.getClass());
+
       /* TestCase: V2EnvironmentTests_PortletRequestDispatcher_ApiRender_includeA1 */
       /* Details: "Method include(PortletRequest, PortletResponse):           */
       /* Includes the content of a JSP page in the response"                  */

@@ -100,12 +100,15 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getPortalContext().getClass());
+
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_fieldMARKUP_HEAD_ELEMENT_SUPPORT */
       /* Details: "Has String field MARKUP_HEAD_ELEMENT_SUPPORT with value    */
       /* of \"javax.portlet.markup.head.element.support\" "                   */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_FIELDMARKUP_HEAD_ELEMENT_SUPPORT);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("MARKUP_HEAD_ELEMENT_SUPPORT", "javax.portlet.markup.head.element.support"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getProperty1    */
@@ -128,8 +131,17 @@ public class EnvironmentTests_PortalContext_ApiRender implements Portlet, Resour
       /* Details: "Method getProperty(String): Throws                         */
       /* IllegalArgumentException if the specified name is null "             */
       TestResult tr3 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTALCONTEXT_APIRENDER_GETPROPERTY3);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortalContext cntxt = portletReq.getPortalContext();
+            String val = cntxt.getProperty(null);
+            tr3.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr3.setTcSuccess(true);
+         } catch (Exception e) {
+            tr3.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortalContext_ApiRender_getPropertyNames1 */

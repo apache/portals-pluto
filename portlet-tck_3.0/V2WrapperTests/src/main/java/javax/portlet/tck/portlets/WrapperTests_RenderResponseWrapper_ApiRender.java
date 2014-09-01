@@ -96,106 +96,156 @@ public class WrapperTests_RenderResponseWrapper_ApiRender implements Portlet, Re
 
       PrintWriter writer = portletResp.getWriter();
 
+      RenderResponseWrapperChecker wc = new RenderResponseWrapperChecker(portletResp);
+      RenderResponseWrapper wpr = new RenderResponseWrapper(portletResp);
+      wpr.setResponse(wc);
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(RenderResponseWrapper.class);
+
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_flushBuffer */
       /* Details: "Method flushBuffer(): Calls wrapped method"                */
       TestResult tr0 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_FLUSHBUFFER);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr0, "flushBuffer", args);
+         wpr.flushBuffer();
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getBufferSize */
       /* Details: "Method getBufferSize(): Calls wrapped method"              */
       TestResult tr1 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETBUFFERSIZE);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr1, "getBufferSize", args);
+         wc.checkRetval(wpr.getBufferSize());
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getCharacterEncoding */
       /* Details: "Method getCharacterEncoding(): Calls wrapped method"       */
       TestResult tr2 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETCHARACTERENCODING);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr2, "getCharacterEncoding", args);
+         wc.checkRetval(wpr.getCharacterEncoding());
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getContentType */
       /* Details: "Method getContentType(): Calls wrapped method"             */
       TestResult tr3 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETCONTENTTYPE);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr3, "getContentType", args);
+         wc.checkRetval(wpr.getContentType());
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getLocale   */
       /* Details: "Method getLocale(): Calls wrapped method"                  */
       TestResult tr4 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETLOCALE);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr4, "getLocale", args);
+         wc.checkRetval(wpr.getLocale());
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getPortletOutputStream */
       /* Details: "Method getPortletOutputStream(): Calls wrapped method"     */
       TestResult tr5 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETPORTLETOUTPUTSTREAM);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr5, "getPortletOutputStream", args);
+         wc.checkRetval(wpr.getPortletOutputStream());
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getWriter   */
       /* Details: "Method getWriter(): Calls wrapped method"                  */
       TestResult tr6 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETWRITER);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr6, "getWriter", args);
+         wc.checkRetval(wpr.getWriter());
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_isCommitted */
       /* Details: "Method isCommitted(): Calls wrapped method"                */
       TestResult tr7 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_ISCOMMITTED);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr7, "isCommitted", args);
+         wc.checkRetval(wpr.isCommitted());
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_reset       */
       /* Details: "Method reset(): Calls wrapped method"                      */
       TestResult tr8 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_RESET);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr8, "reset", args);
+         wpr.reset();
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_resetBuffer */
       /* Details: "Method resetBuffer(): Calls wrapped method"                */
       TestResult tr9 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_RESETBUFFER);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr9, "resetBuffer", args);
+         wpr.resetBuffer();
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_setBufferSize */
       /* Details: "Method setBufferSize(int): Calls wrapped method"           */
       TestResult tr10 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_SETBUFFERSIZE);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         int parm1 = 42;
+         Object[] args = {parm1};
+         wc.prepare(tr10, "setBufferSize", args);
+         wpr.setBufferSize(parm1);
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_setContentType */
       /* Details: "Method setContentType(String): Calls wrapped method"       */
       TestResult tr11 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_SETCONTENTTYPE);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         String parm1 = "val1";
+         Object[] args = {parm1};
+         wc.prepare(tr11, "setContentType", args);
+         wpr.setContentType(parm1);
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_setTitle    */
       /* Details: "Method setTitle(String): Calls wrapped method"             */
       TestResult tr12 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_SETTITLE);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+         String parm1 = "val1";
+         Object[] args = {parm1};
+         wc.prepare(tr12, "setTitle", args);
+         wpr.setTitle(parm1);
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getCacheControl */
       /* Details: "Method getCacheControl(): Calls wrapped method"            */
       TestResult tr13 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETCACHECONTROL);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr13, "getCacheControl", args);
+         wc.checkRetval(wpr.getCacheControl());
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_setNextPossiblePortletModes */
@@ -203,44 +253,64 @@ public class WrapperTests_RenderResponseWrapper_ApiRender implements Portlet, Re
       /* setNextPossiblePortletModes(java.util.Collection): Calls wrapped     */
       /* method"                                                              */
       TestResult tr14 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_SETNEXTPOSSIBLEPORTLETMODES);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
+      try {
+         PortletMode[] modes = {PortletMode.EDIT, PortletMode.VIEW};
+         ArrayList parm1 = new ArrayList(Arrays.asList(modes));
+         Object[] args = {parm1};
+         wc.prepare(tr14, "setNextPossiblePortletModes", args);
+         wpr.setNextPossiblePortletModes(parm1);
+      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_getResponse */
-      /* Details: "Method getResponse(): Calls wrapped method"                */
+      /* Details: "Method getResponse(): Returns wrapped RenderResponse       */
+      /* object"                                                              */
       TestResult tr15 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_GETRESPONSE);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      try {
+         // The retrieved request / response object should be the wrapper checker instance
+         RenderResponse r = wpr.getResponse();
+         tr15.setTcSuccess(r == wc);
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_setResponse */
       /* Details: "Method setResponse(RenderResponse): Allows wrapped         */
       /* RenderResponse object to be set "                                    */
       TestResult tr16 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_SETRESPONSE);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      try {
+         // tested by method set up 
+         tr16.setTcSuccess(true);
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_createActionURL */
       /* Details: "Method createActionURL(): Calls wrapped method"            */
       TestResult tr17 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_CREATEACTIONURL);
-      /* TODO: implement test */
-      tr17.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr17, "createActionURL", args);
+         wc.checkRetval(wpr.createActionURL());
+      } catch(Exception e) {tr17.appendTcDetail(e.toString());}
       tr17.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_createRenderURL */
       /* Details: "Method createRenderURL(): Calls wrapped method"            */
       TestResult tr18 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_CREATERENDERURL);
-      /* TODO: implement test */
-      tr18.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr18, "createRenderURL", args);
+         wc.checkRetval(wpr.createRenderURL());
+      } catch(Exception e) {tr18.appendTcDetail(e.toString());}
       tr18.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderResponseWrapper_ApiRender_createResourceURL */
       /* Details: "Method createResourceURL(): Calls wrapped method"          */
       TestResult tr19 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERRESPONSEWRAPPER_APIRENDER_CREATERESOURCEURL);
-      /* TODO: implement test */
-      tr19.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr19, "createResourceURL", args);
+         wc.checkRetval(wpr.createResourceURL());
+      } catch(Exception e) {tr19.appendTcDetail(e.toString());}
       tr19.writeTo(writer);
 
    }

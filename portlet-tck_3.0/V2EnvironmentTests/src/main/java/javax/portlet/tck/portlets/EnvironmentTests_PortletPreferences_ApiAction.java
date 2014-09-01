@@ -76,38 +76,49 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getPreferences().getClass());
+
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly1 */
-      /* Details: "Method isReadOnly(): Returns true if the preference        */
-      /* specified by the key is defined to be read-only in the deployment    */
-      /* descriptor"                                                          */
+      /* Details: "Method isReadOnly(String): Returns true if the             */
+      /* preference specified by the key is defined to be read-only in the    */
+      /* deployment descriptor"                                               */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_ISREADONLY1);
       /* TODO: implement test */
       tr0.appendTcDetail("Not implemented.");
       tr0.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly2 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is not defined to be read-only in the           */
-      /* deployment descriptor"                                               */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is not defined to be read-only in    */
+      /* the deployment descriptor"                                           */
       TestResult tr1 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_ISREADONLY2);
       /* TODO: implement test */
       tr1.appendTcDetail("Not implemented.");
       tr1.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly3 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is undefined"                                   */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is undefined"                        */
       TestResult tr2 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_ISREADONLY3);
       /* TODO: implement test */
       tr2.appendTcDetail("Not implemented.");
       tr2.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly4 */
-      /* Details: "Method isReadOnly(): Throws IllegalArgumentException if    */
-      /* the key is null"                                                     */
+      /* Details: "Method isReadOnly(String): Throws                          */
+      /* IllegalArgumentException if the key is null"                         */
       TestResult tr3 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_ISREADONLY4);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            prefs.isReadOnly(null);
+            tr3.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr3.setTcSuccess(true);
+         } catch (Exception e) {
+            tr3.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_getValue1  */
@@ -139,8 +150,16 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       /* Details: "Method getValue(String, String): Throws                    */
       /* IllegalArgumentException if the key is null"                         */
       TestResult tr7 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUE4);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            tr7.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr7.setTcSuccess(true);
+         } catch (Exception e) {
+            tr7.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_getValues1 */
@@ -173,8 +192,17 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       /* Details: "Method getValues(String, String[]): Throws                 */
       /* IllegalArgumentException if the key is null"                         */
       TestResult tr11 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_GETVALUES4);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            String[] vals = prefs.getValues(null, new String[]{"val1-1", "val1-2"});
+            tr11.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr11.setTcSuccess(true);
+         } catch (Exception e) {
+            tr11.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_setValue1  */
@@ -214,8 +242,17 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       /* Details: "Method setValue(String, String): Throws                    */
       /* IllegalArgumentException if the key is null"                         */
       TestResult tr16 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_SETVALUE5);
-      /* TODO: implement test */
-      tr16.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            prefs.setValue(null, "value");
+            tr16.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr16.setTcSuccess(true);
+         } catch (Exception e) {
+            tr16.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr16.appendTcDetail(e.toString());}
       tr16.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_setValues1 */
@@ -263,8 +300,17 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       /* Details: "Method setValues(String, String[]): Throws                 */
       /* IllegalArgumentException if the key is null"                         */
       TestResult tr22 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_SETVALUES6);
-      /* TODO: implement test */
-      tr22.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            prefs.setValues(null, new String[]{"val1-1", "val1-2"});
+            tr22.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr22.setTcSuccess(true);
+         } catch (Exception e) {
+            tr22.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr22.appendTcDetail(e.toString());}
       tr22.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_getNames1  */
@@ -302,15 +348,15 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       tr26.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_reset1     */
-      /* Details: "Method reset(): Removes the value associated with the      */
-      /* specified key"                                                       */
+      /* Details: "Method reset(String): Removes the value associated with    */
+      /* the specified key"                                                   */
       TestResult tr27 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_RESET1);
       /* TODO: implement test */
       tr27.appendTcDetail("Not implemented.");
       tr27.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_reset2     */
-      /* Details: "Method reset(): Throws ReadOnlyException if the            */
+      /* Details: "Method reset(String): Throws ReadOnlyException if the      */
       /* preference cannot be modified for this request"                      */
       TestResult tr28 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_RESET2);
       /* TODO: implement test */
@@ -318,11 +364,20 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       tr28.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_reset3     */
-      /* Details: "Method reset(): Throws IllegalArgumentException if the     */
-      /* key is null"                                                         */
+      /* Details: "Method reset(String): Throws IllegalArgumentException if   */
+      /* the key is null"                                                     */
       TestResult tr29 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETPREFERENCES_APIACTION_RESET3);
-      /* TODO: implement test */
-      tr29.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletPreferences prefs = portletReq.getPreferences();
+            prefs.reset(null);
+            tr29.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr29.setTcSuccess(true);
+         } catch (Exception e) {
+            tr29.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr29.appendTcDetail(e.toString());}
       tr29.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_store1     */
@@ -408,9 +463,9 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly1 */
-      /* Details: "Method isReadOnly(): Returns true if the preference        */
-      /* specified by the key is defined to be read-only in the deployment    */
-      /* descriptor"                                                          */
+      /* Details: "Method isReadOnly(String): Returns true if the             */
+      /* preference specified by the key is defined to be read-only in the    */
+      /* deployment descriptor"                                               */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -419,9 +474,9 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly2 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is not defined to be read-only in the           */
-      /* deployment descriptor"                                               */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is not defined to be read-only in    */
+      /* the deployment descriptor"                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -430,8 +485,8 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly3 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is undefined"                                   */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is undefined"                        */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -440,8 +495,8 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_isReadOnly4 */
-      /* Details: "Method isReadOnly(): Throws IllegalArgumentException if    */
-      /* the key is null"                                                     */
+      /* Details: "Method isReadOnly(String): Throws                          */
+      /* IllegalArgumentException if the key is null"                         */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -687,8 +742,8 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_reset1     */
-      /* Details: "Method reset(): Removes the value associated with the      */
-      /* specified key"                                                       */
+      /* Details: "Method reset(String): Removes the value associated with    */
+      /* the specified key"                                                   */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -697,7 +752,7 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_reset2     */
-      /* Details: "Method reset(): Throws ReadOnlyException if the            */
+      /* Details: "Method reset(String): Throws ReadOnlyException if the      */
       /* preference cannot be modified for this request"                      */
       {
          PortletURL aurl = portletResp.createActionURL();
@@ -707,8 +762,8 @@ public class EnvironmentTests_PortletPreferences_ApiAction implements Portlet, R
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiAction_reset3     */
-      /* Details: "Method reset(): Throws IllegalArgumentException if the     */
-      /* key is null"                                                         */
+      /* Details: "Method reset(String): Throws IllegalArgumentException if   */
+      /* the key is null"                                                     */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());

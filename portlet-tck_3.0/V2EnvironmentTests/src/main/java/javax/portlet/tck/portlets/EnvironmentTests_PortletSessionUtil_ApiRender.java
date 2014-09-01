@@ -100,6 +100,8 @@ public class EnvironmentTests_PortletSessionUtil_ApiRender implements Portlet, R
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.PortletSessionUtil.class);
+
       /* TestCase: V2EnvironmentTests_PortletSessionUtil_ApiRender_decodeAttributeName1 */
       /* Details: "Method decodeAttributeName(String): Returns a String       */
       /* containing the decoded name of the attribute if the input name is    */

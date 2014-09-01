@@ -76,6 +76,8 @@ public class ResponseTests_ActionResponse_ApiAction implements Portlet, Resource
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getClass());
+
       /* TestCase: V2ResponseTests_ActionResponse_ApiAction_sendRedirectA1    */
       /* Details: "Method sendRedirect(String): Allows a redirect response    */
       /* to be sent to the client"                                            */

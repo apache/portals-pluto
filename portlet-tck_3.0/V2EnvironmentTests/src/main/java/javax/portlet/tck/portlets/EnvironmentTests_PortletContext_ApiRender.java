@@ -100,6 +100,8 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletConfig.getPortletContext().getClass());
+
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getServerInfo1 */
       /* Details: "Method getServerInfo(): Returns a String containing        */
       /* information about the portlet container"                             */
@@ -375,8 +377,17 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method getAttribute(String): Throws                        */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr33 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETATTRIBUTE3);
-      /* TODO: implement test */
-      tr33.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletContext cntxt = portletConfig.getPortletContext();
+            Object val = cntxt.getAttribute(null);
+            tr33.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr33.setTcSuccess(true);
+         } catch (Exception e) {
+            tr33.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr33.appendTcDetail(e.toString());}
       tr33.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getAttributeNames1 */
@@ -417,8 +428,17 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method getInitParameter(String): Throws                    */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr38 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_GETINITPARAMETER3);
-      /* TODO: implement test */
-      tr38.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletContext cntxt = portletConfig.getPortletContext();
+            String val = cntxt.getInitParameter(null);
+            tr38.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr38.setTcSuccess(true);
+         } catch (Exception e) {
+            tr38.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
       tr38.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getInitParameterNames1 */
@@ -466,8 +486,17 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method removeAttribute(String): Throws                     */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr44 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_REMOVEATTRIBUTE2);
-      /* TODO: implement test */
-      tr44.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletContext cntxt = portletConfig.getPortletContext();
+            cntxt.removeAttribute(null);
+            tr44.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr44.setTcSuccess(true);
+         } catch (Exception e) {
+            tr44.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr44.appendTcDetail(e.toString());}
       tr44.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_setAttribute1  */
@@ -498,8 +527,17 @@ public class EnvironmentTests_PortletContext_ApiRender implements Portlet, Resou
       /* Details: "Method setAttribute(String, Object): Throws                */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr48 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETCONTEXT_APIRENDER_SETATTRIBUTE4);
-      /* TODO: implement test */
-      tr48.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletContext cntxt = portletConfig.getPortletContext();
+            cntxt.setAttribute(null, "value");
+            tr48.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr48.setTcSuccess(true);
+         } catch (Exception e) {
+            tr48.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr48.appendTcDetail(e.toString());}
       tr48.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletContext_ApiRender_getPortletContextName1 */

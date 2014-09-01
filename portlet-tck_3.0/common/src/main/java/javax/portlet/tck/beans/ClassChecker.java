@@ -26,6 +26,9 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
+
 /**
  * Tool for checking class properties such as implemented interfaces, 
  * superclass, methods with signatures, etc.
@@ -80,6 +83,69 @@ public class ClassChecker {
       try {
          Field f = cut.getField(fname);
          String fValue = (String) f.get(null);
+         if (fValue.equals(value)) {
+            result = true;
+         }
+      } catch (Exception e) { }
+      
+      return result;
+   }
+
+   /**
+    * Returns true if the class under test has a field by the specified name and value.
+    * 
+    * @param fname   Field name
+    * @param value   Field value
+    * @return        true if the class under test defines the field with the specified value
+    */
+   public boolean hasField(String fname, int value) {
+      boolean result = false;
+      
+      try {
+         Field f = cut.getField(fname);
+         int fValue = (int) f.getInt(null);
+         if (fValue == value) {
+            result = true;
+         }
+      } catch (Exception e) { }
+      
+      return result;
+   }
+
+   /**
+    * Returns true if the class under test has a field by the specified name and value.
+    * 
+    * @param fname   Field name
+    * @param value   Field value
+    * @return        true if the class under test defines the field with the specified value
+    */
+   public boolean hasField(String fname, PortletMode value) {
+      boolean result = false;
+      
+      try {
+         Field f = cut.getField(fname);
+         PortletMode fValue = (PortletMode) f.get(null);
+         if (fValue.equals(value)) {
+            result = true;
+         }
+      } catch (Exception e) { }
+      
+      return result;
+   }
+
+   /**
+    * Returns true if the class under test has a field by the specified name and value.
+    * 
+    * @param fname   Field name
+    * @param value   Field value
+    * @return        true if the class under test defines the field with the specified value
+    */
+   public boolean hasField(String fname, WindowState value) {
+      boolean result = false;
+      
+      try {
+         Field f = cut.getField(fname);
+         WindowState fValue = (WindowState) f.get(null);
          if (fValue.equals(value)) {
             result = true;
          }

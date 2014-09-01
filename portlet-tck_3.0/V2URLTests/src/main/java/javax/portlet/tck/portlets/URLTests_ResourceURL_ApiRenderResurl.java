@@ -100,34 +100,40 @@ public class URLTests_ResourceURL_ApiRenderResurl implements Portlet, ResourceSe
 
       // Create result objects for the tests
 
+      ResourceURL url = portletResp.createResourceURL();      ClassChecker cc = new ClassChecker(url.getClass());
+
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_fieldFULL           */
       /* Details: "Has String field FULL with value of \"cacheLevelFull\" "   */
       TestResult tr0 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDFULL);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("FULL", "cacheLevelFull"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_fieldPAGE           */
       /* Details: "Has String field PAGE with value of \"cacheLevelPage\" "   */
       TestResult tr1 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPAGE);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         tr1.setTcSuccess(cc.hasField("PAGE", "cacheLevelPage"));
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_fieldPORTLET        */
       /* Details: "Has String field PORTLET with value of                     */
       /* \"cacheLevelPortlet\" "                                              */
       TestResult tr2 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDPORTLET);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         tr2.setTcSuccess(cc.hasField("PORTLET", "cacheLevelPortlet"));
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_fieldSHARED         */
       /* Details: "Has String field SHARED with value of                      */
       /* \"javax.portlet.shared\" "                                           */
       TestResult tr3 = tcd.getTestResultFailed(V2URLTESTS_RESOURCEURL_APIRENDERRESURL_FIELDSHARED);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         tr3.setTcSuccess(cc.hasField("SHARED", "javax.portlet.shared"));
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2URLTests_ResourceURL_ApiRenderResurl_implementsBaseURL2  */

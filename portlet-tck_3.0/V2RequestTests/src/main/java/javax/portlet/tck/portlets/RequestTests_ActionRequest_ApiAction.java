@@ -76,12 +76,15 @@ public class RequestTests_ActionRequest_ApiAction implements Portlet, ResourceSe
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getClass());
+
       /* TestCase: V2RequestTests_ActionRequest_ApiAction_fieldACTION_NAME    */
       /* Details: "Has String field ACTION_NAME with value of                 */
       /* \"javax.portlet.action\" "                                           */
       TestResult tr0 = tcd.getTestResultFailed(V2REQUESTTESTS_ACTIONREQUEST_APIACTION_FIELDACTION_NAME);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("ACTION_NAME", "javax.portlet.action"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       portletReq.getPortletSession().setAttribute(

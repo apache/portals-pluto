@@ -88,6 +88,8 @@ public class PortletTests_ResourceServingPortlet_ApiResource implements Portlet,
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(GenericPortlet.class);
+
       /* TestCase: V2PortletTests_ResourceServingPortlet_ApiResource_serveResource */
       /* Details: "Method serveResource(ResourceRequest, ResourceResponse):   */
       /* is called to allow the portlet to generate resource content "        */

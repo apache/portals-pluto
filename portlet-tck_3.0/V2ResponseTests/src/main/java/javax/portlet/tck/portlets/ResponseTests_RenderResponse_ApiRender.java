@@ -100,6 +100,8 @@ public class ResponseTests_RenderResponse_ApiRender implements Portlet, Resource
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getClass());
+
       /* TestCase: V2ResponseTests_RenderResponse_ApiRender_setTitle2         */
       /* Details: "Method setTitle(String): Sets the portlet title to the     */
       /* specified value"                                                     */

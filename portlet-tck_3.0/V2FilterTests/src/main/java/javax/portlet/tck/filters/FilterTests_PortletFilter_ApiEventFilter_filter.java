@@ -72,6 +72,8 @@ public class FilterTests_PortletFilter_ApiEventFilter_filter implements EventFil
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(PortletFilter.class);
+
       /* TestCase: V2FilterTests_PortletFilter_ApiEventFilter_initEvent1      */
       /* Details: "The init(FilterConfig): method is called when an           */
       /* EventFilter is configured"                                           */

@@ -100,11 +100,14 @@ public class RequestTests_RenderRequest_ApiRender implements Portlet, ResourceSe
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getClass());
+
       /* TestCase: V2RequestTests_RenderRequest_ApiRender_fieldETAG           */
       /* Details: "Has String field ETAG with value of \"portlet.ETag\" "     */
       TestResult tr0 = tcd.getTestResultFailed(V2REQUESTTESTS_RENDERREQUEST_APIRENDER_FIELDETAG);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("ETAG", "portlet.ETag"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2RequestTests_RenderRequest_ApiRender_getETag2            */

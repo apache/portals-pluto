@@ -100,6 +100,8 @@ public class EnvironmentTests_CacheControl_ApiRender implements Portlet, Resourc
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getCacheControl().getClass());
+
       /* TestCase: V2EnvironmentTests_CacheControl_ApiRender_getExpirationTime1 */
       /* Details: "Method getExpirationTime(): Returns the expiration time    */
       /* set through setExpirationTime"                                       */

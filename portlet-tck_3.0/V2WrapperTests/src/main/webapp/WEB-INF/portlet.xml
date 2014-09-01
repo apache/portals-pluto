@@ -23,55 +23,93 @@
    xmlns:tck="http://www.apache.org/portals/pluto/portlet-tck_3.0"
    version="2.0" id="V2WrapperTests">
    <portlet>
-      <portlet-name>WrapperTests_ActionRequestWrapper_ApiRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ActionRequestWrapper_ApiRender</portlet-class>
+      <portlet-name>WrapperTests_ActionRequestWrapper_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ActionRequestWrapper_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>WrapperTests_ActionRequestWrapper_ApiRender</title>
+         <title>WrapperTests_ActionRequestWrapper_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>WrapperTests_ActionResponseWrapper_ApiRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ActionResponseWrapper_ApiRender</portlet-class>
+      <portlet-name>WrapperTests_ActionResponseWrapper_ApiAction</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ActionResponseWrapper_ApiAction</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>WrapperTests_ActionResponseWrapper_ApiRender</title>
+         <title>WrapperTests_ActionResponseWrapper_ApiAction</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>WrapperTests_EventRequestWrapper_ApiRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventRequestWrapper_ApiRender</portlet-class>
+      <portlet-name>WrapperTests_EventRequestWrapper_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventRequestWrapper_ApiEvent</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>WrapperTests_EventRequestWrapper_ApiRender</title>
+         <title>WrapperTests_EventRequestWrapper_ApiEvent</title>
       </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      </supported-publishing-event>
    </portlet>
 
    <portlet>
-      <portlet-name>WrapperTests_EventResponseWrapper_ApiRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventResponseWrapper_ApiRender</portlet-class>
+      <portlet-name>WrapperTests_EventRequestWrapper_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventRequestWrapper_ApiEvent_event</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>WrapperTests_EventResponseWrapper_ApiRender</title>
+         <title>WrapperTests_EventRequestWrapper_ApiEvent_event</title>
       </portlet-info>
+      <supported-processing-event>
+         <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      </supported-processing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>WrapperTests_EventResponseWrapper_ApiEvent</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventResponseWrapper_ApiEvent</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>WrapperTests_EventResponseWrapper_ApiEvent</title>
+      </portlet-info>
+      <supported-publishing-event>
+         <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
+      </supported-publishing-event>
+   </portlet>
+
+   <portlet>
+      <portlet-name>WrapperTests_EventResponseWrapper_ApiEvent_event</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_EventResponseWrapper_ApiEvent_event</portlet-class>
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+      </supports>
+      <supported-locale>en_US</supported-locale>
+      <portlet-info>
+         <title>WrapperTests_EventResponseWrapper_ApiEvent_event</title>
+      </portlet-info>
+      <supported-processing-event>
+         <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
+      </supported-processing-event>
    </portlet>
 
    <portlet>
@@ -127,28 +165,28 @@
    </portlet>
 
    <portlet>
-      <portlet-name>WrapperTests_ResourceRequestWrapper_ApiRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ResourceRequestWrapper_ApiRender</portlet-class>
+      <portlet-name>WrapperTests_ResourceRequestWrapper_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ResourceRequestWrapper_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>WrapperTests_ResourceRequestWrapper_ApiRender</title>
+         <title>WrapperTests_ResourceRequestWrapper_ApiResource</title>
       </portlet-info>
    </portlet>
 
    <portlet>
-      <portlet-name>WrapperTests_ResourceResponseWrapper_ApiRender</portlet-name>
-      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ResourceResponseWrapper_ApiRender</portlet-class>
+      <portlet-name>WrapperTests_ResourceResponseWrapper_ApiResource</portlet-name>
+      <portlet-class>javax.portlet.tck.portlets.WrapperTests_ResourceResponseWrapper_ApiResource</portlet-class>
       <expiration-cache>0</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
       <supported-locale>en_US</supported-locale>
       <portlet-info>
-         <title>WrapperTests_ResourceResponseWrapper_ApiRender</title>
+         <title>WrapperTests_ResourceResponseWrapper_ApiResource</title>
       </portlet-info>
    </portlet>
 
@@ -166,6 +204,16 @@
 
    <event-definition>
       <qname>tck:FilterTests_EventFilter_ApiEventFilter</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>
 

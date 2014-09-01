@@ -88,121 +88,138 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getClass());
+
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldUSER_INFO   */
       /* Details: "Has String field USER_INFO with value of                   */
       /* \"javax.portlet.userinfo\" "                                         */
       TestResult tr0 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDUSER_INFO);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("USER_INFO", "javax.portlet.userinfo"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldCCPP_PROFILE */
       /* Details: "Has String field CCPP_PROFILE with value of                */
       /* \"javax.portlet.ccpp\" "                                             */
       TestResult tr1 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDCCPP_PROFILE);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         tr1.setTcSuccess(cc.hasField("CCPP_PROFILE", "javax.portlet.ccpp"));
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldBASIC_AUTH  */
       /* Details: "Has String field BASIC_AUTH with value of \"BASIC\" "      */
       TestResult tr2 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDBASIC_AUTH);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         tr2.setTcSuccess(cc.hasField("BASIC_AUTH", "BASIC"));
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldFORM_AUTH   */
       /* Details: "Has String field FORM_AUTH with value of \"FORM\" "        */
       TestResult tr3 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDFORM_AUTH);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         tr3.setTcSuccess(cc.hasField("FORM_AUTH", "FORM"));
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldCLIENT_CERT_AUTH */
       /* Details: "Has String field CLIENT_CERT_AUTH with value of            */
       /* \"CLIENT_CERT\" "                                                    */
       TestResult tr4 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDCLIENT_CERT_AUTH);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         tr4.setTcSuccess(cc.hasField("CLIENT_CERT_AUTH", "CLIENT_CERT"));
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldDIGEST_AUTH */
       /* Details: "Has String field DIGEST_AUTH with value of \"DIGEST\" "    */
       TestResult tr5 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDDIGEST_AUTH);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         tr5.setTcSuccess(cc.hasField("DIGEST_AUTH", "DIGEST"));
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldACTION_PHASE */
       /* Details: "Has String field ACTION_PHASE with value of                */
       /* \"ACTION_PHASE\" "                                                   */
       TestResult tr6 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDACTION_PHASE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         tr6.setTcSuccess(cc.hasField("ACTION_PHASE", "ACTION_PHASE"));
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldEVENT_PHASE */
       /* Details: "Has String field EVENT_PHASE with value of                 */
       /* \"EVENT_PHASE\" "                                                    */
       TestResult tr7 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDEVENT_PHASE);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         tr7.setTcSuccess(cc.hasField("EVENT_PHASE", "EVENT_PHASE"));
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldRENDER_PHASE */
       /* Details: "Has String field RENDER_PHASE with value of                */
       /* \"RENDER_PHASE\" "                                                   */
       TestResult tr8 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_PHASE);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         tr8.setTcSuccess(cc.hasField("RENDER_PHASE", "RENDER_PHASE"));
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldRESOURCE_PHASE */
       /* Details: "Has String field RESOURCE_PHASE with value of              */
       /* \"RESOURCE_PHASE\" "                                                 */
       TestResult tr9 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRESOURCE_PHASE);
-      /* TODO: implement test */
-      tr9.appendTcDetail("Not implemented.");
+      try {
+         tr9.setTcSuccess(cc.hasField("RESOURCE_PHASE", "RESOURCE_PHASE"));
+      } catch(Exception e) {tr9.appendTcDetail(e.toString());}
       tr9.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldLIFECYCLE_PHASE */
       /* Details: "Has String field LIFECYCLE_PHASE with value of             */
       /* \"javax.portlet.lifecycle_phase\" "                                  */
       TestResult tr10 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDLIFECYCLE_PHASE);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         tr10.setTcSuccess(cc.hasField("LIFECYCLE_PHASE", "javax.portlet.lifecycle_phase"));
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldRENDER_PART */
       /* Details: "Has String field RENDER_PART with value of                 */
       /* \"javax.portlet.render_part\" "                                      */
       TestResult tr11 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_PART);
-      /* TODO: implement test */
-      tr11.appendTcDetail("Not implemented.");
+      try {
+         tr11.setTcSuccess(cc.hasField("RENDER_PART", "javax.portlet.render_part"));
+      } catch(Exception e) {tr11.appendTcDetail(e.toString());}
       tr11.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldRENDER_HEADERS */
       /* Details: "Has String field RENDER_HEADERS with value of              */
       /* \"RENDER_HEADERS\" "                                                 */
       TestResult tr12 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_HEADERS);
-      /* TODO: implement test */
-      tr12.appendTcDetail("Not implemented.");
+      try {
+         tr12.setTcSuccess(cc.hasField("RENDER_HEADERS", "RENDER_HEADERS"));
+      } catch(Exception e) {tr12.appendTcDetail(e.toString());}
       tr12.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldRENDER_MARKUP */
       /* Details: "Has String field RENDER_MARKUP with value of               */
       /* \"RENDER_MARKUP\" "                                                  */
       TestResult tr13 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDRENDER_MARKUP);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      try {
+         tr13.setTcSuccess(cc.hasField("RENDER_MARKUP", "RENDER_MARKUP"));
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_fieldACTION_SCOPE_ID */
       /* Details: "Has String field ACTION_SCOPE_ID with value of             */
       /* \"javax.portlet.as\" "                                               */
       TestResult tr14 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_FIELDACTION_SCOPE_ID);
-      /* TODO: implement test */
-      tr14.appendTcDetail("Not implemented.");
+      try {
+         tr14.setTcSuccess(cc.hasField("ACTION_SCOPE_ID", "javax.portlet.as"));
+      } catch(Exception e) {tr14.appendTcDetail(e.toString());}
       tr14.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_isWindowStateAllowed1 */
@@ -327,8 +344,16 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getProperty(String): Throws                         */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr30 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTY3);
-      /* TODO: implement test */
-      tr30.appendTcDetail("Not implemented.");
+      try {
+         try {
+            String val = portletReq.getProperty(null);
+            tr30.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr30.setTcSuccess(true);
+         } catch (Exception e) {
+            tr30.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr30.appendTcDetail(e.toString());}
       tr30.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getProperties1   */
@@ -351,8 +376,16 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getProperties(String): Throws                       */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr33 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPROPERTIES3);
-      /* TODO: implement test */
-      tr33.appendTcDetail("Not implemented.");
+      try {
+         try {
+            Enumeration<String> es = portletReq.getProperties(null);
+            tr33.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr33.setTcSuccess(true);
+         } catch (Exception e) {
+            tr33.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr33.appendTcDetail(e.toString());}
       tr33.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getPropertyNames1 */
@@ -496,8 +529,16 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getAttribute(String): Throws                        */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr51 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETATTRIBUTE3);
-      /* TODO: implement test */
-      tr51.appendTcDetail("Not implemented.");
+      try {
+         try {
+            Object val = portletReq.getAttribute(null);
+            tr51.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr51.setTcSuccess(true);
+         } catch (Exception e) {
+            tr51.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr51.appendTcDetail(e.toString());}
       tr51.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getAttributeNames1 */
@@ -553,8 +594,16 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getParameter(String): Throws                        */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr58 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETER5);
-      /* TODO: implement test */
-      tr58.appendTcDetail("Not implemented.");
+      try {
+         try {
+            String val = portletReq.getParameter(null);
+            tr58.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr58.setTcSuccess(true);
+         } catch (Exception e) {
+            tr58.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr58.appendTcDetail(e.toString());}
       tr58.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterNames1 */
@@ -602,8 +651,16 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method getParameterValues(String): Throws                  */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr64 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_GETPARAMETERVALUES4);
-      /* TODO: implement test */
-      tr64.appendTcDetail("Not implemented.");
+      try {
+         try {
+            String[] vals = portletReq.getParameterValues(null);
+            tr64.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr64.setTcSuccess(true);
+         } catch (Exception e) {
+            tr64.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr64.appendTcDetail(e.toString());}
       tr64.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getParameterMap1 */
@@ -667,8 +724,16 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method setAttribute(String, Object): Throws                */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr72 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_SETATTRIBUTE3);
-      /* TODO: implement test */
-      tr72.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletReq.setAttribute(null, "value");
+            tr72.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr72.setTcSuccess(true);
+         } catch (Exception e) {
+            tr72.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr72.appendTcDetail(e.toString());}
       tr72.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_removeAttribute1 */
@@ -683,8 +748,16 @@ public class RequestTests_PortletRequest_ApiResource implements Portlet, Resourc
       /* Details: "Method removeAttribute(String): Throws                     */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr74 = tcd.getTestResultFailed(V2REQUESTTESTS_PORTLETREQUEST_APIRESOURCE_REMOVEATTRIBUTE2);
-      /* TODO: implement test */
-      tr74.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletReq.removeAttribute(null);
+            tr74.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr74.setTcSuccess(true);
+         } catch (Exception e) {
+            tr74.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr74.appendTcDetail(e.toString());}
       tr74.writeTo(writer);
 
       /* TestCase: V2RequestTests_PortletRequest_ApiResource_getRequestedSessionId1 */

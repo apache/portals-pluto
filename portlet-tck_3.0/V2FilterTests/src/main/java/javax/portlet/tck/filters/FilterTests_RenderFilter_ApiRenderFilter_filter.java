@@ -72,6 +72,8 @@ public class FilterTests_RenderFilter_ApiRenderFilter_filter implements RenderFi
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(RenderFilter.class);
+
       /* TestCase: V2FilterTests_RenderFilter_ApiRenderFilter_canBeConfigured1 */
       /* Details: "An RenderFilter can be configured in the portlet           */
       /* descriptor"                                                          */

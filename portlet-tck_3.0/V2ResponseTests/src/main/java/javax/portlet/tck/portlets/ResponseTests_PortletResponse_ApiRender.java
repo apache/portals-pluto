@@ -100,6 +100,8 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletResp.getClass());
+
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyA1    */
       /* Details: "Method addProperty(javax.servlet.http.Cookie): Adds the    */
       /* specified cookie property to the response"                           */
@@ -112,8 +114,16 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method addProperty(javax.servlet.http.Cookie): Throws      */
       /* IllegalArgumentException if the specified cookie is null"            */
       TestResult tr1 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYA2);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.addProperty(null);
+            tr1.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr1.setTcSuccess(true);
+         } catch (Exception e) {
+            tr1.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyB1    */
@@ -146,8 +156,17 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Throws    */
       /* IllegalArgumentException if the specified key is null"               */
       TestResult tr5 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYB4);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         try {
+            org.w3c.dom.Element el = portletResp.createElement("p");
+            portletResp.addProperty((String)null, el);
+            tr5.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr5.setTcSuccess(true);
+         } catch (Exception e) {
+            tr5.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_addPropertyC1    */
@@ -162,8 +181,16 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method addProperty(String, String): Throws                 */
       /* IllegalArgumentException if the specified key is null"               */
       TestResult tr7 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_ADDPROPERTYC2);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.addProperty(null, "value");
+            tr7.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr7.setTcSuccess(true);
+         } catch (Exception e) {
+            tr7.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_setProperty1     */
@@ -186,8 +213,16 @@ public class ResponseTests_PortletResponse_ApiRender implements Portlet, Resourc
       /* Details: "Method setProperty(String, String): Throws                 */
       /* IllegalArgumentException if the specified key is null"               */
       TestResult tr10 = tcd.getTestResultFailed(V2RESPONSETESTS_PORTLETRESPONSE_APIRENDER_SETPROPERTY3);
-      /* TODO: implement test */
-      tr10.appendTcDetail("Not implemented.");
+      try {
+         try {
+            portletResp.setProperty(null, "value");
+            tr10.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr10.setTcSuccess(true);
+         } catch (Exception e) {
+            tr10.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr10.appendTcDetail(e.toString());}
       tr10.writeTo(writer);
 
       /* TestCase: V2ResponseTests_PortletResponse_ApiRender_encodeURL1       */

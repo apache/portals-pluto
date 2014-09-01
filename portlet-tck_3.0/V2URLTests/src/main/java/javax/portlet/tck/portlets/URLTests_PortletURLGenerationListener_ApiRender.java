@@ -100,6 +100,8 @@ public class URLTests_PortletURLGenerationListener_ApiRender implements Portlet,
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(PortletURLGenerationListener.class);
+
       /* TestCase: V2URLTests_PortletURLGenerationListener_ApiRender_configuration */
       /* Details: "A PortletURLGenerationListener can be configured in the    */
       /* portlet deployment descriptor"                                       */

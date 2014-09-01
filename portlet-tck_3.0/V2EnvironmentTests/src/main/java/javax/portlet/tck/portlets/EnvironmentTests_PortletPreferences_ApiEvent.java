@@ -100,9 +100,9 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet, Re
       PrintWriter writer = portletResp.getWriter();
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly1 */
-      /* Details: "Method isReadOnly(): Returns true if the preference        */
-      /* specified by the key is defined to be read-only in the deployment    */
-      /* descriptor"                                                          */
+      /* Details: "Method isReadOnly(String): Returns true if the             */
+      /* preference specified by the key is defined to be read-only in the    */
+      /* deployment descriptor"                                               */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -111,9 +111,9 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet, Re
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly2 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is not defined to be read-only in the           */
-      /* deployment descriptor"                                               */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is not defined to be read-only in    */
+      /* the deployment descriptor"                                           */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -122,8 +122,8 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet, Re
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly3 */
-      /* Details: "Method isReadOnly(): Returns false if the preference       */
-      /* specified by the key is undefined"                                   */
+      /* Details: "Method isReadOnly(String): Returns false if the            */
+      /* preference specified by the key is undefined"                        */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -132,8 +132,8 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet, Re
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_isReadOnly4 */
-      /* Details: "Method isReadOnly(): Throws IllegalArgumentException if    */
-      /* the key is null"                                                     */
+      /* Details: "Method isReadOnly(String): Throws                          */
+      /* IllegalArgumentException if the key is null"                         */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -379,8 +379,8 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet, Re
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_reset1      */
-      /* Details: "Method reset(): Removes the value associated with the      */
-      /* specified key"                                                       */
+      /* Details: "Method reset(String): Removes the value associated with    */
+      /* the specified key"                                                   */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());
@@ -389,7 +389,7 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet, Re
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_reset2      */
-      /* Details: "Method reset(): Throws ReadOnlyException if the            */
+      /* Details: "Method reset(String): Throws ReadOnlyException if the      */
       /* preference cannot be modified for this request"                      */
       {
          PortletURL aurl = portletResp.createActionURL();
@@ -399,8 +399,8 @@ public class EnvironmentTests_PortletPreferences_ApiEvent implements Portlet, Re
       }
 
       /* TestCase: V2EnvironmentTests_PortletPreferences_ApiEvent_reset3      */
-      /* Details: "Method reset(): Throws IllegalArgumentException if the     */
-      /* key is null"                                                         */
+      /* Details: "Method reset(String): Throws IllegalArgumentException if   */
+      /* the key is null"                                                     */
       {
          PortletURL aurl = portletResp.createActionURL();
          aurl.setParameters(portletReq.getPrivateParameterMap());

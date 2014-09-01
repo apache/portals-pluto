@@ -76,6 +76,8 @@ public class RequestTests_ClientDataRequest_ApiAction implements Portlet, Resour
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getClass());
+
       /* TestCase: V2RequestTests_ClientDataRequest_ApiAction_getPortletInputStream1 */
       /* Details: "Method getPortletInputStream(): Returns an InputStream     */
       /* object"                                                              */

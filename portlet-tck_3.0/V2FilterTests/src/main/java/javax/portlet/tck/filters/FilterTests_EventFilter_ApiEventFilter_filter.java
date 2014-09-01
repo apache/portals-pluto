@@ -72,6 +72,8 @@ public class FilterTests_EventFilter_ApiEventFilter_filter implements EventFilte
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(EventFilter.class);
+
       /* TestCase: V2FilterTests_EventFilter_ApiEventFilter_canBeConfigured1  */
       /* Details: "An EventFilter can be configured in the portlet            */
       /* descriptor"                                                          */

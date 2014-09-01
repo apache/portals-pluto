@@ -100,6 +100,8 @@ public class ExceptionTests_ValidatorException_ApiRender implements Portlet, Res
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.ValidatorException.class);
+
       /* TestCase: V2ExceptionTests_ValidatorException_ApiRender_constructor2 */
       /* Details: "For ValidatorException(java.lang.String,                   */
       /* java.util.Collection&lt;java.lang.String&gt;), the failedKeys        */

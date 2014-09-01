@@ -42,12 +42,12 @@ import static javax.portlet.ResourceURL.*;
  *
  * This is the main portlet for the test cases. If the test cases call for events, this portlet
  * will initiate the events, but not process them. The processing is done in the companion 
- * portlet WrapperTests_EventRequestWrapper_ApiRender_event
+ * portlet WrapperTests_EventRequestWrapper_ApiEvent_event
  *
  */
-public class WrapperTests_EventRequestWrapper_ApiRender implements Portlet, ResourceServingPortlet {
+public class WrapperTests_EventRequestWrapper_ApiEvent implements Portlet, ResourceServingPortlet {
    private static final String LOG_CLASS = 
-         WrapperTests_EventRequestWrapper_ApiRender.class.getName();
+         WrapperTests_EventRequestWrapper_ApiEvent.class.getName();
    private final Logger LOGGER = Logger.getLogger(LOG_CLASS);
    
    private PortletConfig portletConfig = null;
@@ -72,6 +72,9 @@ public class WrapperTests_EventRequestWrapper_ApiRender implements Portlet, Reso
 
       StringWriter writer = new StringWriter();
 
+      QName eventQName = new QName(TCKNAMESPACE,
+             "WrapperTests_EventRequestWrapper_ApiEvent");
+      portletResp.setEvent(eventQName, "Hi!");
    }
 
    @Override
@@ -96,46 +99,43 @@ public class WrapperTests_EventRequestWrapper_ApiRender implements Portlet, Reso
 
       PrintWriter writer = portletResp.getWriter();
 
-      JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
-
-      // Create result objects for the tests
-
-      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiRender_getRequest    */
+      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiEvent_getRequest     */
       /* Details: "Method getRequest(): Returns wrapped EventRequest          */
       /* object"                                                              */
-      TestResult tr0 = tcd.getTestResultFailed(V2WRAPPERTESTS_EVENTREQUESTWRAPPER_APIRENDER_GETREQUEST);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
-      tr0.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2WrapperTests_EventRequestWrapper_ApiEvent_getRequest", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiRender_setRequest    */
+      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiEvent_setRequest     */
       /* Details: "Method setRequest(EventRequest): Allows wrapped            */
       /* EventRequest object to be set"                                       */
-      TestResult tr1 = tcd.getTestResultFailed(V2WRAPPERTESTS_EVENTREQUESTWRAPPER_APIRENDER_SETREQUEST);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
-      tr1.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2WrapperTests_EventRequestWrapper_ApiEvent_setRequest", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiRender_getEvent1     */
+      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiEvent_getEvent1      */
       /* Details: "Method getEvent(): Calls wrapped method"                   */
-      TestResult tr2 = tcd.getTestResultFailed(V2WRAPPERTESTS_EVENTREQUESTWRAPPER_APIRENDER_GETEVENT1);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
-      tr2.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2WrapperTests_EventRequestWrapper_ApiEvent_getEvent1", aurl);
+         tb.writeTo(writer);
+      }
 
-      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiRender_getEvent2     */
-      /* Details: "Method getEvent(): Returns Event object"                   */
-      TestResult tr3 = tcd.getTestResultFailed(V2WRAPPERTESTS_EVENTREQUESTWRAPPER_APIRENDER_GETEVENT2);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
-      tr3.writeTo(writer);
-
-      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiRender_getMethod     */
+      /* TestCase: V2WrapperTests_EventRequestWrapper_ApiEvent_getMethod      */
       /* Details: "Method getMethod(): Calls wrapped method"                  */
-      TestResult tr4 = tcd.getTestResultFailed(V2WRAPPERTESTS_EVENTREQUESTWRAPPER_APIRENDER_GETMETHOD);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
-      tr4.writeTo(writer);
+      {
+         PortletURL aurl = portletResp.createActionURL();
+         aurl.setParameters(portletReq.getPrivateParameterMap());
+         TestButton tb = new TestButton("V2WrapperTests_EventRequestWrapper_ApiEvent_getMethod", aurl);
+         tb.writeTo(writer);
+      }
 
    }
 

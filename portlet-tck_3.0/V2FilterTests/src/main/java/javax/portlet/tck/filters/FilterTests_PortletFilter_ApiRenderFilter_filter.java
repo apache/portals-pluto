@@ -72,6 +72,8 @@ public class FilterTests_PortletFilter_ApiRenderFilter_filter implements RenderF
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(PortletFilter.class);
+
       /* TestCase: V2FilterTests_PortletFilter_ApiRenderFilter_initRender1    */
       /* Details: "The init(FilterConfig): method is called when an           */
       /* RenderFilter is configured"                                          */

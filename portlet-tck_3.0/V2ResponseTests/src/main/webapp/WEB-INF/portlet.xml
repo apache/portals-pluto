@@ -253,6 +253,16 @@
    </event-definition>
 
    <event-definition>
+      <qname>tck:WrapperTests_EventRequestWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
+      <qname>tck:WrapperTests_EventResponseWrapper_ApiEvent</qname>
+      <value-type>java.lang.String</value-type>
+   </event-definition>
+
+   <event-definition>
       <qname>tck:RequestTests_PortletRequest_ApiEvent</qname>
       <value-type>java.lang.String</value-type>
    </event-definition>

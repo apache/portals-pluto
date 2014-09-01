@@ -100,18 +100,22 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet, Resou
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getPortletSession().getClass());
+
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_fieldAPPLICATION_SCOPE */
       /* Details: "Has int field APPLICATION_SCOPE with value of 0x01 "       */
       TestResult tr0 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_FIELDAPPLICATION_SCOPE);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("APPLICATION_SCOPE", 0x01));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_fieldPORTLET_SCOPE */
       /* Details: "Has int field PORTLET_SCOPE with value of 0x02 "           */
       TestResult tr1 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_FIELDPORTLET_SCOPE);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         tr1.setTcSuccess(cc.hasField("PORTLET_SCOPE", 0x02));
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeA1 */
@@ -134,8 +138,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet, Resou
       /* Details: "Method getAttribute(String): Throws                        */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr4 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEA3);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletSession sess = portletReq.getPortletSession();
+            Object val = sess.getAttribute(null);
+            tr4.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr4.setTcSuccess(true);
+         } catch (Exception e) {
+            tr4.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeA4 */
@@ -167,8 +180,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet, Resou
       /* Details: "Method getAttribute(String): Throws                        */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr8 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_GETATTRIBUTEB3);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletSession sess = portletReq.getPortletSession();
+            Object val = sess.getAttribute(null);
+            tr8.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr8.setTcSuccess(true);
+         } catch (Exception e) {
+            tr8.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_getAttributeB4 */
@@ -320,8 +342,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet, Resou
       /* Details: "Method removeAttribute(String): Throws                     */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr26 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_REMOVEATTRIBUTEA4);
-      /* TODO: implement test */
-      tr26.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletSession sess = portletReq.getPortletSession();
+            sess.removeAttribute(null);
+            tr26.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr26.setTcSuccess(true);
+         } catch (Exception e) {
+            tr26.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr26.appendTcDetail(e.toString());}
       tr26.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_removeAttributeB1 */
@@ -355,8 +386,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet, Resou
       /* Details: "Method removeAttribute(String, int): Throws                */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr30 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_REMOVEATTRIBUTEB4);
-      /* TODO: implement test */
-      tr30.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletSession sess = portletReq.getPortletSession();
+            sess.removeAttribute(null, 0x01);
+            tr30.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr30.setTcSuccess(true);
+         } catch (Exception e) {
+            tr30.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr30.appendTcDetail(e.toString());}
       tr30.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeA1 */
@@ -426,8 +466,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet, Resou
       /* Details: "Method setAttribute(String, Object): Throws                */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr38 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEA8);
-      /* TODO: implement test */
-      tr38.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletSession sess = portletReq.getPortletSession();
+            sess.setAttribute(null, "value");
+            tr38.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr38.setTcSuccess(true);
+         } catch (Exception e) {
+            tr38.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr38.appendTcDetail(e.toString());}
       tr38.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setAttributeB1 */
@@ -497,8 +546,17 @@ public class EnvironmentTests_PortletSession_ApiRender implements Portlet, Resou
       /* Details: "Method setAttribute(String, Object, int): Throws           */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr46 = tcd.getTestResultFailed(V2ENVIRONMENTTESTS_PORTLETSESSION_APIRENDER_SETATTRIBUTEB8);
-      /* TODO: implement test */
-      tr46.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletSession sess = portletReq.getPortletSession();
+            sess.setAttribute(null, "value", 0x01);
+            tr46.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr46.setTcSuccess(true);
+         } catch (Exception e) {
+            tr46.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr46.appendTcDetail(e.toString());}
       tr46.writeTo(writer);
 
       /* TestCase: V2EnvironmentTests_PortletSession_ApiRender_setMaxInactiveInterval1 */

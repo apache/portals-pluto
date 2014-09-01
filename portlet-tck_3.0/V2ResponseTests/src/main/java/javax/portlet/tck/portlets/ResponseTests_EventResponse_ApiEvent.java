@@ -100,7 +100,7 @@ public class ResponseTests_EventResponse_ApiEvent implements Portlet, ResourceSe
       PrintWriter writer = portletResp.getWriter();
 
       /* TestCase: V2ResponseTests_EventResponse_ApiEvent_setRenderParameters1 */
-      /* Details: "Method setRenderParameters(java.util.Map): Copies all      */
+      /* Details: "Method setRenderParameters(EventRequest): Copies all       */
       /* render parameters set on the EventRequest to the EventResponse"      */
       {
          PortletURL aurl = portletResp.createActionURL();
@@ -110,7 +110,7 @@ public class ResponseTests_EventResponse_ApiEvent implements Portlet, ResourceSe
       }
 
       /* TestCase: V2ResponseTests_EventResponse_ApiEvent_setRenderParameters2 */
-      /* Details: "Method setRenderParameters(java.util.Map): Throws          */
+      /* Details: "Method setRenderParameters(EventRequest): Throws           */
       /* IllegalArgumentException if the input EventRequest parameter is      */
       /* null"                                                                */
       {

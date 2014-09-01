@@ -100,6 +100,8 @@ public class AnnotationTests_RenderMode_ApiRender implements Portlet, ResourceSe
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.RenderMode.class);
+
       /* TestCase: V2AnnotationTests_RenderMode_ApiRender_name                */
       /* Details: "Method name(): On a render request, the method is          */
       /* executed if the portlet mode matches the name field"                 */

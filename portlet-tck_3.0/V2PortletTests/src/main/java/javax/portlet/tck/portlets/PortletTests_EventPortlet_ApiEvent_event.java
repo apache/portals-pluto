@@ -82,6 +82,8 @@ public class PortletTests_EventPortlet_ApiEvent_event implements Portlet, EventP
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(GenericPortlet.class);
+
       /* TestCase: V2PortletTests_EventPortlet_ApiEvent_processEvent          */
       /* Details: "Method processEvent(EventRequest, EventResponse): is       */
       /* called when an event is targeted to the portlet"                     */

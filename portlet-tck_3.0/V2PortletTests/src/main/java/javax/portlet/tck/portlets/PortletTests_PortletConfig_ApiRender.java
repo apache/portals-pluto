@@ -100,6 +100,8 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletConfig.getClass());
+
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getPortletName      */
       /* Details: "Method getPortletName(): Returns a String containing the   */
       /* portlet name"                                                        */
@@ -136,8 +138,16 @@ public class PortletTests_PortletConfig_ApiRender implements Portlet, ResourceSe
       /* Details: "Method getInitParameter(String): Throws                    */
       /* IllegalArgumentException if the name parameter is null"              */
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_PORTLETCONFIG_APIRENDER_GETINITPARAMETER3);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         try {
+            String val = portletConfig.getInitParameter(null);
+            tr4.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr4.setTcSuccess(true);
+         } catch (Exception e) {
+            tr4.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2PortletTests_PortletConfig_ApiRender_getInitParameterNames1 */

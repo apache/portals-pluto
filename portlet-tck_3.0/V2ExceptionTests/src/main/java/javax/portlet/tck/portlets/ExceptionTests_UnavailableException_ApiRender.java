@@ -100,6 +100,8 @@ public class ExceptionTests_UnavailableException_ApiRender implements Portlet, R
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.UnavailableException.class);
+
       /* TestCase: V2ExceptionTests_UnavailableException_ApiRender_isPermanent1 */
       /* Details: "Method isPermanent(): Returns a boolean"                   */
       TestResult tr0 = tcd.getTestResultFailed(V2EXCEPTIONTESTS_UNAVAILABLEEXCEPTION_APIRENDER_ISPERMANENT1);

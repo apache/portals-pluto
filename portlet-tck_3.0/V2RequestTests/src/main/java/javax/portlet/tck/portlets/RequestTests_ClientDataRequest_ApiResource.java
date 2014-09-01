@@ -88,6 +88,8 @@ public class RequestTests_ClientDataRequest_ApiResource implements Portlet, Reso
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getClass());
+
       /* TestCase: V2RequestTests_ClientDataRequest_ApiResource_getPortletInputStream1 */
       /* Details: "Method getPortletInputStream(): Returns an InputStream     */
       /* object"                                                              */

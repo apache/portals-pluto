@@ -96,77 +96,117 @@ public class WrapperTests_PortletResponseWrapper_ApiRender implements Portlet, R
 
       PrintWriter writer = portletResp.getWriter();
 
+      PortletResponseWrapperChecker wc = new PortletResponseWrapperChecker(portletResp);
+      PortletResponseWrapper wpr = new PortletResponseWrapper(portletResp);
+      wpr.setResponse(wc);
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
       // Create result objects for the tests
+
+      ClassChecker cc = new ClassChecker(PortletResponseWrapper.class);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_addPropertyA */
       /* Details: "Method addProperty(javax.servlet.http.Cookie): Calls       */
       /* wrapped method"                                                      */
       TestResult tr0 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_ADDPROPERTYA);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         Cookie parm1 = new Cookie("name", "Alice");
+         Object[] args = {parm1};
+         wc.prepare(tr0, "addProperty", args);
+         wpr.addProperty(parm1);
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_addPropertyB */
       /* Details: "Method addProperty(String, org.w3c.dom.Element): Calls     */
       /* wrapped method"                                                      */
       TestResult tr1 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_ADDPROPERTYB);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         String parm1 = "val1";
+         org.w3c.dom.Element parm2 = portletResp.createElement("p");
+         Object[] args = {parm1, parm2};
+         wc.prepare(tr1, "addProperty", args);
+         wpr.addProperty(parm1, parm2);
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_addPropertyC */
       /* Details: "Method addProperty(String, String): Calls wrapped          */
       /* method"                                                              */
       TestResult tr2 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_ADDPROPERTYC);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         String parm1 = "val1";
+         String parm2 = "val2";
+         Object[] args = {parm1, parm2};
+         wc.prepare(tr2, "addProperty", args);
+         wpr.addProperty(parm1, parm2);
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_encodeURL  */
       /* Details: "Method encodeURL(String): Calls wrapped method"            */
       TestResult tr3 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_ENCODEURL);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         String parm1 = "val1";
+         Object[] args = {parm1};
+         wc.prepare(tr3, "encodeURL", args);
+         wc.checkRetval(wpr.encodeURL(parm1));
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_getNamespace */
       /* Details: "Method getNamespace(): Calls wrapped method"               */
       TestResult tr4 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_GETNAMESPACE);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr4, "getNamespace", args);
+         wc.checkRetval(wpr.getNamespace());
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_setProperty */
       /* Details: "Method setProperty(String, String): Calls wrapped          */
       /* method"                                                              */
       TestResult tr5 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_SETPROPERTY);
-      /* TODO: implement test */
-      tr5.appendTcDetail("Not implemented.");
+      try {
+         String parm1 = "val1";
+         String parm2 = "val2";
+         Object[] args = {parm1, parm2};
+         wc.prepare(tr5, "setProperty", args);
+         wpr.setProperty(parm1, parm2);
+      } catch(Exception e) {tr5.appendTcDetail(e.toString());}
       tr5.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_getResponse */
       /* Details: "Method getResponse(): Returns wrapped PortletResponse      */
       /* object"                                                              */
       TestResult tr6 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_GETRESPONSE);
-      /* TODO: implement test */
-      tr6.appendTcDetail("Not implemented.");
+      try {
+         // The retrieved request / response object should be the wrapper checker instance
+         PortletResponse r = wpr.getResponse();
+         tr6.setTcSuccess(r == wc);
+      } catch(Exception e) {tr6.appendTcDetail(e.toString());}
       tr6.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_setResponse */
       /* Details: "Method setResponse(PortletResponse): Allows wrapped        */
       /* PortletResponse object to be set"                                    */
       TestResult tr7 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_SETRESPONSE);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         // tested by method set up 
+         tr7.setTcSuccess(true);
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2WrapperTests_PortletResponseWrapper_ApiRender_createElement */
       /* Details: "Method createElement(String): Calls wrapped method"        */
       TestResult tr8 = tcd.getTestResultFailed(V2WRAPPERTESTS_PORTLETRESPONSEWRAPPER_APIRENDER_CREATEELEMENT);
-      /* TODO: implement test */
-      tr8.appendTcDetail("Not implemented.");
+      try {
+         String parm1 = "val1";
+         Object[] args = {parm1};
+         wc.prepare(tr8, "createElement", args);
+         wc.checkRetval(wpr.createElement(parm1));
+      } catch(Exception e) {tr8.appendTcDetail(e.toString());}
       tr8.writeTo(writer);
 
    }

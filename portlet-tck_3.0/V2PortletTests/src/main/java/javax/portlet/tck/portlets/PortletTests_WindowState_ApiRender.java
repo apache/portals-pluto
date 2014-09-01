@@ -100,6 +100,8 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getWindowState().getClass());
+
       /* TestCase: V2PortletTests_WindowState_ApiRender_constructor1          */
       /* Details: "The constructor WindowState(java.lang.String): allows a    */
       /* WindowState object of the specified name to be constructed"          */
@@ -120,24 +122,27 @@ public class PortletTests_WindowState_ApiRender implements Portlet, ResourceServ
       /* Details: "Has WindowState field MAXIMIZED with value of              */
       /* WindowState.MAXIMIZED "                                              */
       TestResult tr2 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_FIELDMAXIMIZED);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         tr2.setTcSuccess(cc.hasField("MAXIMIZED", WindowState.MAXIMIZED));
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_fieldMINIMIZED        */
       /* Details: "Has WindowState field MINIMIZED with value of              */
       /* WindowState.MINIMIZED "                                              */
       TestResult tr3 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_FIELDMINIMIZED);
-      /* TODO: implement test */
-      tr3.appendTcDetail("Not implemented.");
+      try {
+         tr3.setTcSuccess(cc.hasField("MINIMIZED", WindowState.MINIMIZED));
+      } catch(Exception e) {tr3.appendTcDetail(e.toString());}
       tr3.writeTo(writer);
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_fieldNORMAL           */
       /* Details: "Has WindowState field NORMAL with value of                 */
       /* WindowState.NORMAL "                                                 */
       TestResult tr4 = tcd.getTestResultFailed(V2PORTLETTESTS_WINDOWSTATE_APIRENDER_FIELDNORMAL);
-      /* TODO: implement test */
-      tr4.appendTcDetail("Not implemented.");
+      try {
+         tr4.setTcSuccess(cc.hasField("NORMAL", WindowState.NORMAL));
+      } catch(Exception e) {tr4.appendTcDetail(e.toString());}
       tr4.writeTo(writer);
 
       /* TestCase: V2PortletTests_WindowState_ApiRender_toString              */

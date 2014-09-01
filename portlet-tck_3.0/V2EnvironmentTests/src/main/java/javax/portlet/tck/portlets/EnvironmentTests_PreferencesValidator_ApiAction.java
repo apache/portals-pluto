@@ -76,6 +76,8 @@ public class EnvironmentTests_PreferencesValidator_ApiAction implements Portlet,
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(PreferencesValidator.class);
+
       /* TestCase: V2EnvironmentTests_PreferencesValidator_ApiAction_canBeConfigured */
       /* Details: "A PreferencesValidator can be configured in the            */
       /* deployment descriptor"                                               */

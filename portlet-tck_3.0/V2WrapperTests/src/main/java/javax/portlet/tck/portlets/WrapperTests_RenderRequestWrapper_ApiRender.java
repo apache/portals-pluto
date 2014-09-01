@@ -96,31 +96,44 @@ public class WrapperTests_RenderRequestWrapper_ApiRender implements Portlet, Res
 
       PrintWriter writer = portletResp.getWriter();
 
+      RenderRequestWrapperChecker wc = new RenderRequestWrapperChecker(portletReq);
+      RenderRequestWrapper wpr = new RenderRequestWrapper(portletReq);
+      wpr.setRequest(wc);
       JSR286ApiTestCaseDetails tcd = new JSR286ApiTestCaseDetails();
 
       // Create result objects for the tests
+
+      ClassChecker cc = new ClassChecker(RenderRequestWrapper.class);
 
       /* TestCase: V2WrapperTests_RenderRequestWrapper_ApiRender_getRequest   */
       /* Details: "Method getRequest(): Returns wrapped RenderRequest         */
       /* object"                                                              */
       TestResult tr0 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERREQUESTWRAPPER_APIRENDER_GETREQUEST);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         // The retrieved request / response object should be the wrapper checker instance
+         RenderRequest r = wpr.getRequest();
+         tr0.setTcSuccess(r == wc);
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderRequestWrapper_ApiRender_setRequest   */
       /* Details: "Method setRequest(RenderRequest): Allows wrapped           */
       /* RenderRequest object to be set "                                     */
       TestResult tr1 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERREQUESTWRAPPER_APIRENDER_SETREQUEST);
-      /* TODO: implement test */
-      tr1.appendTcDetail("Not implemented.");
+      try {
+         // tested by method set up 
+         tr1.setTcSuccess(true);
+      } catch(Exception e) {tr1.appendTcDetail(e.toString());}
       tr1.writeTo(writer);
 
       /* TestCase: V2WrapperTests_RenderRequestWrapper_ApiRender_getETag      */
       /* Details: "Method getETag(): Calls wrapped method"                    */
       TestResult tr2 = tcd.getTestResultFailed(V2WRAPPERTESTS_RENDERREQUESTWRAPPER_APIRENDER_GETETAG);
-      /* TODO: implement test */
-      tr2.appendTcDetail("Not implemented.");
+      try {
+         Object[] args = {};
+         wc.prepare(tr2, "getETag", args);
+         wc.checkRetval(wpr.getETag());
+      } catch(Exception e) {tr2.appendTcDetail(e.toString());}
       tr2.writeTo(writer);
 
    }

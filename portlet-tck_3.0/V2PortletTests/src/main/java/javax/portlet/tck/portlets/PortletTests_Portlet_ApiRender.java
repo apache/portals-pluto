@@ -100,6 +100,8 @@ public class PortletTests_Portlet_ApiRender implements Portlet, ResourceServingP
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(GenericPortlet.class);
+
       /* TestCase: V2PortletTests_Portlet_ApiRender_init1                     */
       /* Details: "Method init(PortletConfig): is called for the portlet      */
       /* defined in the deployment descriptor"                                */

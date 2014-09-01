@@ -76,6 +76,8 @@ public class AnnotationTests_ProcessAction_ApiAction implements Portlet, Resourc
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(javax.portlet.ProcessAction.class);
+
       /* TestCase: V2AnnotationTests_ProcessAction_ApiAction_name             */
       /* Details: "Method name(): On an action request, the method is         */
       /* executed if the parameter \"javax.portlet.action\" matches the       */

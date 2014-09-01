@@ -72,6 +72,8 @@ public class FilterTests_PortletFilter_ApiActionFilter_filter implements ActionF
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(PortletFilter.class);
+
       /* TestCase: V2FilterTests_PortletFilter_ApiActionFilter_initAction1    */
       /* Details: "The init(FilterConfig): method is called when an           */
       /* ActionFilter is configured"                                          */

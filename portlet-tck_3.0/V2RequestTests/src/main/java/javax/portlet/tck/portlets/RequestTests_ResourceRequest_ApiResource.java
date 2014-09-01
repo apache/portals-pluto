@@ -88,11 +88,14 @@ public class RequestTests_ResourceRequest_ApiResource implements Portlet, Resour
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getClass());
+
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_fieldETAG       */
       /* Details: "Has String field ETAG with value of \"portlet.ETag\" "     */
       TestResult tr0 = tcd.getTestResultFailed(V2REQUESTTESTS_RESOURCEREQUEST_APIRESOURCE_FIELDETAG);
-      /* TODO: implement test */
-      tr0.appendTcDetail("Not implemented.");
+      try {
+         tr0.setTcSuccess(cc.hasField("ETAG", "portlet.ETag"));
+      } catch(Exception e) {tr0.appendTcDetail(e.toString());}
       tr0.writeTo(writer);
 
       /* TestCase: V2RequestTests_ResourceRequest_ApiResource_getETag2        */

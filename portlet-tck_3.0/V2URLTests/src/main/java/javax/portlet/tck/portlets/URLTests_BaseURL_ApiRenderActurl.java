@@ -100,6 +100,9 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
 
       // Create result objects for the tests
 
+      PortletURL url = portletResp.createActionURL();
+      ClassChecker cc = new ClassChecker(url.getClass());
+
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterA1          */
       /* Details: "Method setParameter(String, String): Sets the parameter    */
       /* value for the specified name"                                        */
@@ -160,8 +163,17 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setParameter(String, String): Throws                */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr7 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERA8);
-      /* TODO: implement test */
-      tr7.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.setParameter(null, "value");
+            tr7.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr7.setTcSuccess(true);
+         } catch (Exception e) {
+            tr7.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr7.appendTcDetail(e.toString());}
       tr7.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameterB1          */
@@ -224,8 +236,17 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setParameter(String, String[]): Throws              */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr15 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERB8);
-      /* TODO: implement test */
-      tr15.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.setParameter(null, new String[]{"val1-1", "val1-2"});
+            tr15.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr15.setTcSuccess(true);
+         } catch (Exception e) {
+            tr15.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr15.appendTcDetail(e.toString());}
       tr15.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters1          */
@@ -298,16 +319,33 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setParameters(java.util.Map): Throws                */
       /* IllegalArgumentException if the input map is null"                   */
       TestResult tr24 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS9);
-      /* TODO: implement test */
-      tr24.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.setParameters((Map<String, String[]>)null);
+            tr24.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr24.setTcSuccess(true);
+         } catch (Exception e) {
+            tr24.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr24.appendTcDetail(e.toString());}
       tr24.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters10         */
       /* Details: "Method setParameters(java.util.Map): Throws                */
       /* IllegalArgumentException if any key in the map is null"              */
       TestResult tr25 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS10);
-      /* TODO: implement test */
-      tr25.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            tr25.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr25.setTcSuccess(true);
+         } catch (Exception e) {
+            tr25.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr25.appendTcDetail(e.toString());}
       tr25.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters11         */
@@ -323,8 +361,16 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setParameters(java.util.Map): Throws                */
       /* IllegalArgumentException if the values array for any key is null "   */
       TestResult tr27 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS12);
-      /* TODO: implement test */
-      tr27.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            tr27.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr27.setTcSuccess(true);
+         } catch (Exception e) {
+            tr27.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr27.appendTcDetail(e.toString());}
       tr27.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters13         */
@@ -332,8 +378,16 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* IllegalArgumentException if any element in any values array is       */
       /* null "                                                               */
       TestResult tr28 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPARAMETERS13);
-      /* TODO: implement test */
-      tr28.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            tr28.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr28.setTcSuccess(true);
+         } catch (Exception e) {
+            tr28.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr28.appendTcDetail(e.toString());}
       tr28.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setParameters14         */
@@ -490,8 +544,17 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method addProperty(String, String): Throws                 */
       /* IllegalArgumentException if the specified key is null"               */
       TestResult tr47 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_ADDPROPERTY3);
-      /* TODO: implement test */
-      tr47.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.addProperty(null, "value");
+            tr47.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr47.setTcSuccess(true);
+         } catch (Exception e) {
+            tr47.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr47.appendTcDetail(e.toString());}
       tr47.writeTo(writer);
 
       /* TestCase: V2URLTests_BaseURL_ApiRenderActurl_setProperty1            */
@@ -514,8 +577,17 @@ public class URLTests_BaseURL_ApiRenderActurl implements Portlet, ResourceServin
       /* Details: "Method setProperty(String, String): Throws                 */
       /* IllegalArgumentException if the specified key is null"               */
       TestResult tr50 = tcd.getTestResultFailed(V2URLTESTS_BASEURL_APIRENDERACTURL_SETPROPERTY3);
-      /* TODO: implement test */
-      tr50.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.setProperty(null, "value");
+            tr50.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr50.setTcSuccess(true);
+         } catch (Exception e) {
+            tr50.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr50.appendTcDetail(e.toString());}
       tr50.writeTo(writer);
 
    }

@@ -72,6 +72,8 @@ public class FilterTests_ResourceFilter_ApiResourceFilter_filter implements Reso
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(ResourceFilter.class);
+
       /* TestCase: V2FilterTests_ResourceFilter_ApiResourceFilter_canBeConfigured1 */
       /* Details: "An ResourceFilter can be configured in the portlet         */
       /* descriptor"                                                          */

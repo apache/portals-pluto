@@ -100,6 +100,8 @@ public class PortletTests_GenericPortlet_ApiRender implements Portlet, ResourceS
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(GenericPortlet.class);
+
       /* TestCase: V2PortletTests_GenericPortlet_ApiRender_initA              */
       /* Details: "Method init(): Called when the portlet is initialized"     */
       TestResult tr0 = tcd.getTestResultFailed(V2PORTLETTESTS_GENERICPORTLET_APIRENDER_INITA);

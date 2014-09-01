@@ -100,6 +100,8 @@ public class PortletTests_PortletConfig_ApiRender2 implements Portlet, ResourceS
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletConfig.getClass());
+
       /* TestCase: V2PortletTests_PortletConfig_ApiRender2_getInitParameter2  */
       /* Details: "Method getInitParameter(String): Returns null if the       */
       /* specified initialization parameter does not exist"                   */

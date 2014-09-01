@@ -76,6 +76,8 @@ public class PortletTests_Portlet_ApiAction implements Portlet, ResourceServingP
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(GenericPortlet.class);
+
       /* TestCase: V2PortletTests_Portlet_ApiAction_processAction             */
       /* Details: "Method processAction(ActionRequest, ActionResponse): is    */
       /* called when an action URL for the portlet is triggered"              */

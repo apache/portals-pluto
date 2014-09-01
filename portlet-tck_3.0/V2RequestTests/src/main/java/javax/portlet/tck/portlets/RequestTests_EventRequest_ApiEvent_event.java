@@ -82,6 +82,8 @@ public class RequestTests_EventRequest_ApiEvent_event implements Portlet, EventP
 
       // Create result objects for the tests
 
+      ClassChecker cc = new ClassChecker(portletReq.getClass());
+
       /* TestCase: V2RequestTests_EventRequest_ApiEvent_getEvent              */
       /* Details: "Method getEvent(): Returns the Event object that           */
       /* triggered the call to the processEvent method"                       */

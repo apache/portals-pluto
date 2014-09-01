@@ -100,6 +100,9 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
 
       // Create result objects for the tests
 
+      PortletURL url = portletResp.createActionURL();
+      ClassChecker cc = new ClassChecker(url.getClass());
+
       /* TestCase: V2URLTests_PortletURL_ApiRenderActurl_setWindowState1      */
       /* Details: "Method setWindowState(WindowState): Sets the WindowState   */
       /* to be used when the URL is activated"                                */
@@ -214,8 +217,17 @@ public class URLTests_PortletURL_ApiRenderActurl implements Portlet, ResourceSer
       /* Details: "Method removePublicRenderParameter(String): Throws         */
       /* IllegalArgumentException if the name is null"                        */
       TestResult tr13 = tcd.getTestResultFailed(V2URLTESTS_PORTLETURL_APIRENDERACTURL_REMOVEPUBLICRENDERPARAMETER2);
-      /* TODO: implement test */
-      tr13.appendTcDetail("Not implemented.");
+      try {
+         try {
+            PortletURL turl = portletResp.createActionURL();
+            turl.removePublicRenderParameter(null);
+            tr13.appendTcDetail("Method did not throw an exception.");
+         } catch (IllegalArgumentException iae) {
+            tr13.setTcSuccess(true);
+         } catch (Exception e) {
+            tr13.appendTcDetail(e.toString());
+         }
+      } catch(Exception e) {tr13.appendTcDetail(e.toString());}
       tr13.writeTo(writer);
 
    }
