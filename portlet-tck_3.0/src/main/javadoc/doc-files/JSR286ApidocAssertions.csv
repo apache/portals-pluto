@@ -1,5 +1,5 @@
 PARMS genManual=true tcDetailsClassName=JSR286ApiTestCaseDetails singlePage=true
-Class;Api Keywords;Name;Test;Description
+Class / Section;Keywords;Name;Testable;Description
 Filter Tests;;;;
 FilterChain;Api Action Filter;invokeActionFilter;TRUE;Invoking doFilter(ActionRequest, ActionResponse): causes next filter to be invoked
 FilterChain;Api Action Filter;invokeActionFilter2;TRUE;Invoking doFilter(ActionRequest, ActionResponse): causes portlet action method to be invoked

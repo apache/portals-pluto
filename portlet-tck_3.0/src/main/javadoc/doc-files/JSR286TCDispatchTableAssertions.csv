@@ -1,4 +1,5 @@
 PARMS genManual=true tcDetailsClassName=JSR286DispatcherReqRespTestCaseDetails singlePage=true
+Class / Section;Keywords;Name;Testable;Description
 Dispatcher ReqResp Tests 1;;;;
 SPEC2_19;Forward JSP Action Request;getAttribute;TRUE;In a target jsp of a forward in the Action phase, the method HttpServletRequest.getAttribute must provide the same functionality as ActionRequest.getAttribute
 SPEC2_19;Forward JSP Action Request;getAttributeNames;TRUE;In a target jsp of a forward in the Action phase, the method HttpServletRequest.getAttributeNames must provide the same functionality as ActionRequest.getAttributeNames
