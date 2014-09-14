@@ -1,5 +1,5 @@
 PARMS genManual=true tcDetailsClassName=JSR286SpecTestCaseDetails singlePage=true
-Section;Title;Name;Test;Description
+Class / Section;Keywords;Name;Testable;Description
 Addl Portlet Tests;;;;
 SPEC2_2;Compatibility;deployJSR168_1;TRUE;A portlet with the JSR 168 deployment descriptor can be deployed
 SPEC2_2;Compatibility;deployJSR168_2;TRUE;A portlet implementing only the JSR 168 API can be deployed

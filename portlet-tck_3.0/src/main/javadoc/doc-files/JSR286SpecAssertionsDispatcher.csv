@@ -1,4 +1,5 @@
 PARMS genManual=true tcDetailsClassName=JSR286DispatcherTestCaseDetails singlePage=true
+Class / Section;Keywords;Name;Testable;Description
 Dispatcher Tests;;;;
 SPEC2_19;Dispatch Servlet Render;dispatch1;TRUE;The PortletContext getRequestDispatcher method returns a PortletRequestDispatcher for a path within the portlet application
 SPEC2_19;Dispatch Servlet Render;dispatch2;TRUE;If the path provided to getRequestDispatcher method does not start with "/", the method returns null

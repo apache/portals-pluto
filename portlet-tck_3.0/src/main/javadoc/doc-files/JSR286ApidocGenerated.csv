@@ -1,4 +1,5 @@
 PARMS genManual=true tcDetailsClassName=JSR286SignatureTestCaseDetails singlePage=true
+Class / Section;Keywords;Name;Testable;Description
 Sig Tests Action;;;; 150 tests.
 ActionRequest;SIG Action;fieldACTION_NAME;TRUE;ActionRequest has String field ACTION_NAME 
 ActionRequest;SIG Action;implementsClientDataRequest;TRUE;ActionRequest implements ClientDataRequest 
